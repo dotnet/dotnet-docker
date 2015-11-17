@@ -1,7 +1,7 @@
 # Supported tags and respective `Dockerfile` links
 
--	[`0.0.1.alpha`, latest (*1.0/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/src/0.0.1.alpha/Dockerfile)
--	[`0.0.1.alpha-onbuild`, `latest-onbuild` (*1.0/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/src/0.0.1.alpha/onbuild/Dockerfile)
+-	[`0.0.1.alpha`, latest (*0.0.1.alpha/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/src/0.0.1.alpha/Dockerfile)
+-	[`0.0.1.alpha-onbuild`, `latest-onbuild` (*0.0.1.alpha/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/src/0.0.1.alpha/onbuild/Dockerfile)
 
 # What is DotNet?
 
@@ -16,7 +16,7 @@
 The most straightforward way to use this image is to use a DotNet container as both the build and runtime environment. In your `Dockerfile`, writing something along the lines of the following will compile and run your project:
 
 ```dockerfile
-FROM dotnet:1.0-onbuild
+FROM dotnet:0.0.1.alpha-onbuild
 ```
 
 This image includes multiple `ONBUILD` triggers which should cover most applications. The build will `COPY . /dotnetapp` and `RUN dotnet restore`.
@@ -35,7 +35,7 @@ $ docker run -it --rm --name myRunningApp myDotNetApp
 There may be occasions where it is not appropriate to run your app inside a container. To compile, but not run your app inside the Docker instance, you can write something like:
 
 ```console
-$ docker run --rm -v "$PWD":/myapp -w /myapp dotnet:1.0 dotnet compile
+$ docker run --rm -v "$PWD":/myapp -w /myapp dotnet:0.0.1.alpha dotnet compile
 ```
 
 This will add your current directory as a volume to the container, set the working directory to the volume, and run the command `dotnet compile` which will tell dotnet to compile the project in the working directory.
