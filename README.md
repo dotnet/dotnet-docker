@@ -1,7 +1,7 @@
 # Supported tags and respective `Dockerfile` links
 
--	[`1.0`, latest (*1.0/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/src/1.0/Dockerfile)
--	[`1.0-onbuild`, `latest-onbuild` (*1.0/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/src/1.0/onbuild/Dockerfile)
+-	[`0.0.1.alpha`, latest (*1.0/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/src/0.0.1.alpha/Dockerfile)
+-	[`0.0.1.alpha-onbuild`, `latest-onbuild` (*1.0/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/src/0.0.1.alpha/onbuild/Dockerfile)
 
 # What is DotNet?
 
