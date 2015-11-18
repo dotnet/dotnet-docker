@@ -1,4 +1,4 @@
-FROM dotnet:0.0.1-alpha
+FROM msimons/dotnet:0.0.1-alpha
 
 RUN mkdir -p /dotnetapp
 WORKDIR /dotnetapp
