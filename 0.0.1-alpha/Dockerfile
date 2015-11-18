@@ -8,3 +8,6 @@ RUN echo "deb [arch=amd64] http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.6
     && wget https://dotnetcli.blob.core.windows.net/dotnet/dev/Installers/Latest/dotnet-linux-x64.latest.deb \
     && dpkg -i dotnet-linux-x64.latest.deb \
     && rm dotnet-linux-x64.latest.deb
+
+# https://github.com/dotnet/cli/issues/234 - DOTNET package does not set DOTNET_HOME which is required.
+ENV DOTNET_HOME /usr/share/dotnet
