@@ -5,7 +5,7 @@
 set -e
 
 if [ $# -eq 0 ] ; then
-    VERSION="0.0.1.alpha"
+    VERSION="0.0.1-alpha"
 else
     VERSION=$1
 fi
