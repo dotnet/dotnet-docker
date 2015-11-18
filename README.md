@@ -1,13 +1,14 @@
+Dotnet CLI Preview Docker Image
+====================
+
+This repository contains `Dockerfile` definitions for [Dotnet/cli] Docker images.
+
+This project is part of .NET Core command-line (CLI) tools. You can find samples, documentation, and getting started instructions for .NET Core CLI tools at the [Dotnet/cli] repo.
+
 # Supported tags and respective `Dockerfile` links
 
 -	[`0.0.1-alpha`, latest (*0.0.1-alpha/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/0.0.1-alpha/Dockerfile)
 -	[`0.0.1-alpha-onbuild`, `latest-onbuild` (*0.0.1-alpha/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/0.0.1-alpha/onbuild/Dockerfile)
-
-# What is DotNet?
-
-.NET is a general purpose development platform. It can be used for any kind of app type or workload where general purpose solutions are used. It has several key features that are attractive to many developers, including automatic memory management and modern programming languages, that make it easier to efficiently build high-quality apps. .NET enables a high-level programming environment with many convenience features, while providing low-level access to native memory and APIs.
-
-> [.NET Core Documentation](http://dotnet.readthedocs.org/en/latest/getting-started/overview.html)
 
 # How to use this image
 
@@ -56,4 +57,4 @@ While the `onbuild` variant is really useful for "getting off the ground running
 
 Once you've got a handle on how your project functions within Docker, you'll probably want to adjust your `Dockerfile` to inherit from a non-`onbuild` variant and copy the commands from the `onbuild` variant `Dockerfile` (moving the `ONBUILD` lines to the end and removing the `ONBUILD` keywords) into your own file so that you have tighter control over them and more transparency for yourself and others looking at your `Dockerfile` as to what it does. This also makes it easier to add additional requirements as time goes on (such as installing more packages before performing the previously-`ONBUILD` steps).
 
-
+[Dotnet/cli]: https://github.com/dotnet/cli
