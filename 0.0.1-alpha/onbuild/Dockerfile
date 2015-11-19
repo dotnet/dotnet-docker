@@ -6,4 +6,4 @@ WORKDIR /dotnetapp
 ENTRYPOINT ["dotnet", "run"]
 
 ONBUILD COPY . /dotnetapp
-ONBUILD RUN dotnet restore --runtime ubuntu.14.04-x64
+ONBUILD RUN dotnet restore
