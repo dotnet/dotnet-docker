@@ -27,8 +27,8 @@ This image also includes the `ENTRYPOINT dotnet run` instruction which will run 
 You can then build and run the Docker image:
 
 ```console
-$ docker build -t myDotNetApp .
-$ docker run -it --rm --name myRunningApp myDotNetApp
+$ docker build -t my-dotnet-app .
+$ docker run -it --rm --name my-running-app my-dotnet-app
 ```
 
 ## Compile your app inside the Docker container
