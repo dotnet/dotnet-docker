@@ -1,1 +1,1 @@
-0.0.1-alpha/README.md
+1.0.0-rc2/README.md
