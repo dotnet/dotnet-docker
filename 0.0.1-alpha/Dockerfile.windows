@@ -1,0 +1,11 @@
+FROM windowsservercore
+
+ENV DOTNET_SDK_DOWNLOAD_URL "https://dotnetcli.blob.core.windows.net/dotnet/beta/Binaries/Latest/dotnet-dev-win-x64.latest.zip"
+
+RUN @powershell -NoProfile \
+	-Command \
+	$ErrorActionPreference = 'Stop'; \
+	(New-Object System.Net.WebClient).DownloadFile('%DOTNET_SDK_DOWNLOAD_URL%', 'dotnet-dev-win-x64.latest.zip') ; \
+	Expand-Archive dotnet-dev-win-x64.latest.zip -DestinationPath c:\\dotnet ; \
+	Remove-Item -Force dotnet-dev-win-x64.latest.zip
+RUN setx /M PATH "C:\dotnet;%PATH%"
