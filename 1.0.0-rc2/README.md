@@ -5,7 +5,7 @@
 
 This repository contains `Dockerfile` definitions for [dotnet/cli](https://github.com/dotnet/cli) Docker images.
 
-This project is part of .NET Core command-line (CLI) tools. You can find samples, documentation, and getting started instructions for .NET Core CLI tools on our [getting started](http://dotnet.github.io/getting-started/) page.
+This project is part of .NET Core command-line (CLI) tools. You can find samples, documentation, and getting started instructions for .NET Core CLI tools on our [getting started](http://go.microsoft.com/fwlink/?LinkID=798306&clcid=0x409) page.
 
 [![Downloads from Docker Hub](https://img.shields.io/docker/pulls/microsoft/dotnet.svg)](https://registry.hub.docker.com/u/microsoft/dotnet)
 [![Stars on Docker Hub](https://img.shields.io/docker/stars/microsoft/dotnet.svg)](https://registry.hub.docker.com/u/microsoft/dotnet)
@@ -29,7 +29,13 @@ The `microsoft/dotnet` image come in different flavors, each designed for a spec
 
 ### `microsoft/dotnet:<version>`
 
-This is the defacto image. It contains the .NET Core runtime and framework as well as CLI tools.  This image can be used to develop .NET Core applications as well as a place to run, test, and debug them.
+This image contains the .NET Core SDK which is comprised of two parts: 
+
+1. .NET Core
+2. .NET Core command line tools
+
+This image is reccomended if you are trying .NET Core for the first time, as it allows both developing and running 
+applications. Use this image for your development process (developing, building and testing applications). 
 
 ### `microsoft/dotnet:<version>-onbuild`
 
@@ -52,9 +58,12 @@ $ docker run -it --rm --name my-running-app my-dotnet-app
 
 ### `microsoft/dotnet:<version>-core-deps`
 
-This is an images that contains the prerequisites necessary to run a standalone .NET Core application.
+This image contains the operating system with all of the native dependencies needed by .NET Core. Use this image to:
+
+1. Run a [self-contained](http://dotnet.github.io/docs/core-concepts/app-types.html) application.
+2. Build a custom copy of .NET Core by compiling [coreclr](https://github.com/dotnet/coreclr) and [corefx](https://github.com/dotnet/corefx).
 
 ### `microsoft/dotnet:<version>-core`
 
-This is an image that contain the .NET Core runtime and framework that can used to run a .NET Core application.
-
+This image contains only .NET Core (runtime and libraries) making it suitable for running both portable and self-contained 
+applications, either in production or other environments. 
