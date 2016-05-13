@@ -34,7 +34,7 @@ This image contains the .NET Core SDK which is comprised of two parts:
 1. .NET Core
 2. .NET Core command line tools
 
-This image is recomended if you are trying .NET Core for the first time, as it allows both developing and running 
+This image is recommended if you are trying .NET Core for the first time, as it allows both developing and running 
 applications. Use this image for your development process (developing, building and testing applications). 
 
 ### `microsoft/dotnet:<version>-onbuild`
@@ -65,5 +65,4 @@ This image contains the operating system with all of the native dependencies nee
 
 ### `microsoft/dotnet:<version>-core`
 
-This image contains only .NET Core (runtime and libraries) making it suitable for running both portable and self-contained 
-applications, either in production or other environments. 
+This image contains only .NET Core (runtime and libraries) and it is optimized for running [portable .NET Core applications](http://dotnet.github.io/docs/core-concepts/app-types.html). If you wish to run self-contained applicatinos, please use the `core-deps` image described above. 
