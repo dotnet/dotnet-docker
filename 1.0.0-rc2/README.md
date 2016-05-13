@@ -34,7 +34,7 @@ This image contains the .NET Core SDK which is comprised of two parts:
 1. .NET Core
 2. .NET Core command line tools
 
-This image is reccomended if you are trying .NET Core for the first time, as it allows both developing and running 
+This image is recomended if you are trying .NET Core for the first time, as it allows both developing and running 
 applications. Use this image for your development process (developing, building and testing applications). 
 
 ### `microsoft/dotnet:<version>-onbuild`
