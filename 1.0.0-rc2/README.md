@@ -65,4 +65,4 @@ This image contains the operating system with all of the native dependencies nee
 
 ### `microsoft/dotnet:<version>-core`
 
-This image contains only .NET Core (runtime and libraries) and it is optimized for running [portable .NET Core applications](http://dotnet.github.io/docs/core-concepts/app-types.html). If you wish to run self-contained applicatinos, please use the `core-deps` image described above. 
+This image contains only .NET Core (runtime and libraries) and it is optimized for running [portable .NET Core applications](http://dotnet.github.io/docs/core-concepts/app-types.html). If you wish to run self-contained applications, please use the `core-deps` image described above. 
