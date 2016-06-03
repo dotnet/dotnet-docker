@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.0.0-preview2
+FROM msimons/dotnet:1.0.0-preview2
 
 RUN mkdir -p /dotnetapp
 WORKDIR /dotnetapp

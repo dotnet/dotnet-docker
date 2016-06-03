@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.0.0-rc3-core-deps
+FROM msimons/dotnet:1.0.0-rc3-core-deps
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
