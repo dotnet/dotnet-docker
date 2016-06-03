@@ -11,9 +11,19 @@ if [[ $DOCKERCFG == {\"auths\":* ]]; then
 fi
 
 
-echo "Pushing onbuild image"
+echo "Pushing latest image"
 tagStartIndex=$(expr index "$IMAGE_NAME" :)
 repoName=${IMAGE_NAME:0:tagStartIndex - 1}
-versionedImageName=$repoName":1.0.0-preview1-onbuild"
+latestImageName=$repoName":latest"
+docker tag $IMAGE_NAME $latestImageName
+docker push $latestImageName
+
+
+echo "Pushing onbuild images"
+versionedImageName=$repoName":1.0.0-preview2-onbuild"
 docker tag onbuild $versionedImageName
 docker push $versionedImageName
+
+latestImageName=$repoName":onbuild"
+docker tag onbuild $latestImageName
+docker push $latestImageName
