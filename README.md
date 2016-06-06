@@ -1,1 +1,1 @@
-1.0.0-rc2/README.md
+1.0.0-rc3/README.md
