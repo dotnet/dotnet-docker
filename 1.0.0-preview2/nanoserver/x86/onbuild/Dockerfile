@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.0.0-preview2-nanoserver-x86
+FROM msimons/dotnet:1.0.0-preview2-nanoserver-x86
 
 RUN mkdir dotnetapp
 WORKDIR dotnetapp
