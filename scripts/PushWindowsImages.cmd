@@ -1,3 +1,5 @@
+REM Interim script to assist in pushing Windows images until Docker Hub auto builds support Windows
+
 Set DOTNET_SDK_VERSION=1.0.0-preview2
 Set DOTNET_VERSION=1.0.0-rc3
 
@@ -24,4 +26,3 @@ docker push %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x86-onbuild
 docker push %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-%WINDOWS_FLAVOR%-x86-onbuild
 docker push %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x86-core
 docker push %REPO_OWNER%/dotnet:%DOTNET_VERSION%-%WINDOWS_FLAVOR%-x86-core
-

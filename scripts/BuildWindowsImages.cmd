@@ -1,3 +1,5 @@
+REM Interim script to assist in building Windows images until Docker Hub auto builds support Windows
+
 Set DOTNET_SDK_VERSION=1.0.0-preview2
 Set DOTNET_VERSION=1.0.0-rc3
 
