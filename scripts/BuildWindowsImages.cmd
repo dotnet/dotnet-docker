@@ -8,40 +8,51 @@ IF NOT DEFINED REPO_OWNER (
 )
 
 IF DEFINED NANO_SERVER (
-    set WINDOWS_FLAVOR=nanoserver
+    pushd %DOTNET_SDK_VERSION%\nanoserver
+    docker build -t %REPO_OWNER%/dotnet:nanoserver . || goto :error
+    docker tag %REPO_OWNER%/dotnet:nanoserver %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-nanoserver || goto :error
+    popd
+
+    pushd %DOTNET_SDK_VERSION%\nanoserver\onbuild
+    docker build -t %REPO_OWNER%/dotnet:nanoserver-onbuild . || goto :error
+    docker tag %REPO_OWNER%/dotnet:nanoserver-onbuild %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-nanoserver-onbuild || goto :error
+    popd
+
+    pushd %DOTNET_VERSION%\nanoserver\core
+    docker build -t %REPO_OWNER%/dotnet:nanoserver-core . || goto :error
+    docker tag %REPO_OWNER%/dotnet:nanoserver-core %REPO_OWNER%/dotnet:%DOTNET_VERSION%-nanoserver-core || goto :error
+    popd
 ) ELSE (
-    set WINDOWS_FLAVOR=windowsservercore
+    pushd %DOTNET_SDK_VERSION%\windowsservercore\x64
+    docker build -t %REPO_OWNER%/dotnet:windowsservercore-x64 . || goto :error
+    docker tag %REPO_OWNER%/dotnet:windowsservercore-x64 %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-windowsservercore-x64 || goto :error
+    popd
+
+    pushd %DOTNET_SDK_VERSION%\windowsservercore\x64\onbuild
+    docker build -t %REPO_OWNER%/dotnet:windowsservercore-x64-onbuild . || goto :error
+    docker tag %REPO_OWNER%/dotnet:windowsservercore-x64-onbuild %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-windowsservercore-x64-onbuild || goto :error
+    popd
+
+    pushd %DOTNET_VERSION%\windowsservercore\x64\core
+    docker build -t %REPO_OWNER%/dotnet:windowsservercore-x64-core . || goto :error
+    docker tag %REPO_OWNER%/dotnet:windowsservercore-x64-core %REPO_OWNER%/dotnet:%DOTNET_VERSION%-windowsservercore-x64-core || goto :error
+    popd
+
+    pushd %DOTNET_SDK_VERSION%\windowsservercore\x86
+    docker build -t %REPO_OWNER%/dotnet:windowsservercore-x86 . || goto :error
+    docker tag %REPO_OWNER%/dotnet:windowsservercore-x86 %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-windowsservercore-x86 || goto :error
+    popd
+
+    pushd %DOTNET_SDK_VERSION%\windowsservercore\x86\onbuild
+    docker build -t %REPO_OWNER%/dotnet:windowsservercore-x86-onbuild . || goto :error
+    docker tag %REPO_OWNER%/dotnet:windowsservercore-x86-onbuild %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-windowsservercore-x86-onbuild || goto :error
+    popd
+
+    pushd %DOTNET_VERSION%\windowsservercore\x86\core
+    docker build -t %REPO_OWNER%/dotnet:windowsservercore-x86-core . || goto :error
+    docker tag %REPO_OWNER%/dotnet:windowsservercore-x86-core %REPO_OWNER%/dotnet:%DOTNET_VERSION%-windowsservercore-x86-core || goto :error
+    popd
 )
-
-pushd %DOTNET_SDK_VERSION%\%WINDOWS_FLAVOR%\x64
-docker build -t %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x64 . || goto :error
-docker tag %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x64 %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-%WINDOWS_FLAVOR%-x64 || goto :error
-popd
-
-pushd %DOTNET_SDK_VERSION%\%WINDOWS_FLAVOR%\x64\onbuild
-docker build -t %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x64-onbuild . || goto :error
-docker tag %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x64-onbuild %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-%WINDOWS_FLAVOR%-x64-onbuild || goto :error
-popd
-
-pushd %DOTNET_VERSION%\%WINDOWS_FLAVOR%\x64\core
-docker build -t %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x64-core . || goto :error
-docker tag %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x64-core %REPO_OWNER%/dotnet:%DOTNET_VERSION%-%WINDOWS_FLAVOR%-x64-core || goto :error
-popd
-
-pushd %DOTNET_SDK_VERSION%\%WINDOWS_FLAVOR%\x86
-docker build -t %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x86 . || goto :error
-docker tag %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x86 %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-%WINDOWS_FLAVOR%-x86 || goto :error
-popd
-
-pushd %DOTNET_SDK_VERSION%\%WINDOWS_FLAVOR%\x86\onbuild
-docker build -t %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x86-onbuild . || goto :error
-docker tag %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x86-onbuild %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-%WINDOWS_FLAVOR%-x86-onbuild || goto :error
-popd
-
-pushd %DOTNET_VERSION%\%WINDOWS_FLAVOR%\x86\core
-docker build -t %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x86-core . || goto :error
-docker tag %REPO_OWNER%/dotnet:%WINDOWS_FLAVOR%-x86-core %REPO_OWNER%/dotnet:%DOTNET_VERSION%-%WINDOWS_FLAVOR%-x86-core || goto :error
-popd
 
 goto :EOF
 
