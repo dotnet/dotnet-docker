@@ -17,4 +17,5 @@ RUN powershell -NoProfile -Command \
 RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
 
 # Copy forwarders assemblies to workaround https://github.com/dotnet/cli/issues/2967
-ADD ["*.dll", "/Program Files/dotnet/"]
+RUN Copy '%windir%\System32\forwarders\*' '%ProgramFiles%\dotnet\' \
+        && '%windir%\System32\forwarders\*' '%ProgramFiles%\dotnet\shared\Micrsoft.NETCore.App\$DOTNET_VERSION\'
