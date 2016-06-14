@@ -12,7 +12,7 @@ RUN powershell -NoProfile -Command \
         $stream.CopyTo($file); \
         $file.Close(); \
         [System.IO.Compression.ZipFile]::ExtractToDirectory('dotnet.zip', '%ProgramFiles%\dotnet'); \
-        Remove-Item -Force 'dotnet.zip'
+        Remove-Item -Force dotnet.zip
 
 RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
 

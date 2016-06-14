@@ -6,8 +6,8 @@ ENV DOTNET_SDK_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/previ
 
 RUN powershell -NoProfile -Command \
         $ErrorActionPreference = 'Stop'; \
-        Invoke-WebRequest '%DOTNET_SDK_DOWNLOAD_URL%' -OutFile 'dotnet.zip'; \
-        Expand-Archive 'dotnet.zip' -DestinationPath '%ProgramFiles%\dotnet'; \
-        Remove-Item -Force 'dotnet.zip'
+        Invoke-WebRequest %DOTNET_SDK_DOWNLOAD_URL% -OutFile dotnet.zip; \
+        Expand-Archive dotnet.zip -DestinationPath %ProgramFiles%\dotnet; \
+        Remove-Item -Force dotnet.zip
 
 RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
