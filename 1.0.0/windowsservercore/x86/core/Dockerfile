@@ -1,7 +1,7 @@
 FROM windowsservercore
 
 # Install .NET Core
-ENV DOTNET_VERSION 1.0.0-rc3-004459-00
+ENV DOTNET_VERSION 1.0.0
 ENV DOTNET_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/preview/Binaries/$DOTNET_VERSION/dotnet-win-x86.$DOTNET_VERSION.zip
 
 RUN powershell -NoProfile -Command \
