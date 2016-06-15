@@ -24,8 +24,8 @@ This project is part of .NET Core command-line (CLI) tools. You can find samples
 ### Runtime images
 -       [`1.0.0-rc2-core-deps` (*1.0.0-rc2/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc2/core-deps/Dockerfile)
 -       [`1.0.0-rc2-core` (*1.0.0-rc2/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc2/core/Dockerfile)
--       [`1.0.0-rc3-core-deps`, `core-deps` (*1.0.0-rc3/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc3/core-deps/Dockerfile)
--       [`1.0.0-rc3-core`, `core` (*1.0.0-rc3/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc3/core/Dockerfile)
+-       [`1.0.0-core-deps`, `core-deps` (*1.0.0/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/core-deps/Dockerfile)
+-       [`1.0.0-core`, `core` (*1.0.0/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/core/Dockerfile)
 
 ## Image variants
 
