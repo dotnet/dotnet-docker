@@ -1,7 +1,7 @@
 FROM windowsservercore
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 1.0.0-preview2-003096
+ENV DOTNET_SDK_VERSION 1.0.0-preview2-003118
 ENV DOTNET_SDK_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/preview/Binaries/$DOTNET_SDK_VERSION/dotnet-dev-win-x64.$DOTNET_SDK_VERSION.zip
 
 RUN powershell -NoProfile -Command \
