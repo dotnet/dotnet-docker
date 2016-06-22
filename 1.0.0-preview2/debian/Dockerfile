@@ -31,3 +31,11 @@ RUN curl -SL $DOTNET_SDK_DOWNLOAD_URL --output dotnet.tar.gz \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
     && rm dotnet.tar.gz \
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+
+# Trigger the population of the local package cache  
+ENV NUGET_XMLDOC_MODE skip  
+RUN mkdir warmup \  
+    && cd warmup \  
+    && dotnet new \  
+    && cd .. \  
+    && rm -rf warmup
