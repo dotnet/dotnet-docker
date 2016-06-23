@@ -37,6 +37,7 @@ IF DEFINED NANO_SERVER (
     docker build -t %REPO_OWNER%/dotnet:windowsservercore-core . || goto :error
     docker tag %REPO_OWNER%/dotnet:windowsservercore-core %REPO_OWNER%/dotnet:%DOTNET_VERSION%-windowsservercore-core || goto :error
     popd
+)
 
 goto :EOF
 
