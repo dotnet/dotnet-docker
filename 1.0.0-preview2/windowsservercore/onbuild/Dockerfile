@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.0.0-preview2-windowsservercore-x64
+FROM microsoft/dotnet:1.0.0-preview2-windowsservercore-sdk
 
 RUN mkdir dotnetapp
 WORKDIR dotnetapp
