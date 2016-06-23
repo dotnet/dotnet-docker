@@ -9,23 +9,16 @@ IF NOT DEFINED REPO_OWNER (
 
 IF DEFINED NANO_SERVER (
     docker push %REPO_OWNER%/dotnet:nanoserver
-    docker push %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-nanoserver
+    docker push %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-nanoserver-sdk
     docker push %REPO_OWNER%/dotnet:nanoserver-onbuild
     docker push %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-nanoserver-onbuild
     docker push %REPO_OWNER%/dotnet:nanoserver-core
     docker push %REPO_OWNER%/dotnet:%DOTNET_VERSION%-nanoserver-core
 ) ELSE (
-    docker push %REPO_OWNER%/dotnet:windowsservercore-x64
-    docker push %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-windowsservercore-x64
-    docker push %REPO_OWNER%/dotnet:windowsservercore-x64-onbuild
-    docker push %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-windowsservercore-x64-onbuild
-    docker push %REPO_OWNER%/dotnet:windowsservercore-x64-core
-    docker push %REPO_OWNER%/dotnet:%DOTNET_VERSION%-windowsservercore-x64-core
-
-    docker push %REPO_OWNER%/dotnet:windowsservercore-x86
-    docker push %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-windowsservercore-x86
-    docker push %REPO_OWNER%/dotnet:windowsservercore-x86-onbuild
-    docker push %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-windowsservercore-x86-onbuild
-    docker push %REPO_OWNER%/dotnet:windowsservercore-x86-core
-    docker push %REPO_OWNER%/dotnet:%DOTNET_VERSION%-windowsservercore-x86-core
+    docker push %REPO_OWNER%/dotnet:windowsservercore
+    docker push %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-windowsservercore-sdk
+    docker push %REPO_OWNER%/dotnet:windowsservercore-onbuild
+    docker push %REPO_OWNER%/dotnet:%DOTNET_SDK_VERSION%-windowsservercore-onbuild
+    docker push %REPO_OWNER%/dotnet:windowsservercore-core
+    docker push %REPO_OWNER%/dotnet:%DOTNET_VERSION%-windowsservercore-core
 )
