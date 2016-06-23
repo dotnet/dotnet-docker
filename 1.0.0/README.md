@@ -16,18 +16,22 @@ This project is part of .NET Core command-line (CLI) tools. You can find samples
 ### Development images
 -       [`0.0.1-alpha`, (*0.0.1-alpha/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/0.0.1-alpha/Dockerfile)
 -       [`0.0.1-alpha-onbuild`, (*0.0.1-alpha/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/0.0.1-alpha/onbuild/Dockerfile)
--       [`1.0.0-preview1`, `latest` (*1.0.0-preview1/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview1/Dockerfile)
--       [`1.0.0-preview1-onbuild`, `onbuild` (*1.0.0-preview1/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview1/onbuild/Dockerfile)
+-       [`1.0.0-preview1` (*1.0.0-preview1/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview1/Dockerfile)
+-       [`1.0.0-preview1-onbuild` (*1.0.0-preview1/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview1/onbuild/Dockerfile)
+-       [`1.0.0-preview2-sdk`, `latest` (*1.0.0-preview2/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/Dockerfile)
+-       [`1.0.0-preview2-onbuild`, `onbuild` (*1.0.0-preview2/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/onbuild/Dockerfile)
 
 ### Runtime images
--       [`1.0.0-rc2-core-deps`, `core-deps` (*1.0.0-rc2/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc2/core-deps/Dockerfile)
--       [`1.0.0-rc2-core`, `core` (*1.0.0-rc2/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc2/core/Dockerfile)
+-       [`1.0.0-rc2-core-deps` (*1.0.0-rc2/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc2/core-deps/Dockerfile)
+-       [`1.0.0-rc2-core` (*1.0.0-rc2/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc2/core/Dockerfile)
+-       [`1.0.0-core-deps`, `core-deps` (*1.0.0/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/core-deps/Dockerfile)
+-       [`1.0.0-core`, `core` (*1.0.0/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/core/Dockerfile)
 
 ## Image variants
 
 The `microsoft/dotnet` image come in different flavors, each designed for a specific use case.
 
-### `microsoft/dotnet:<version>`
+### `microsoft/dotnet:<version>-sdk`
 
 This image contains the .NET Core SDK which is comprised of two parts: 
 
