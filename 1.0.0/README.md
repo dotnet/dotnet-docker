@@ -19,17 +19,23 @@ This project is part of .NET Core command-line (CLI) tools. You can find samples
 -       [`1.0.0-preview1` (*1.0.0-preview1/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview1/Dockerfile)
 -       [`1.0.0-preview1-onbuild` (*1.0.0-preview1/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview1/onbuild/Dockerfile)
 -       [`1.0.0-preview2-sdk`, `latest` (*1.0.0-preview2/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/Dockerfile)
+-       [`1.0.0-preview2-windowsservercore-sdk`, `windowsservercore-sdk` (*1.0.0-preview2/windowsservercore/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/windowsservercore/Dockerfile)
+-       [`1.0.0-preview2-nanoserver-sdk`, `nanoserver-sdk` (*1.0.0-preview2/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/Dockerfile)
 -       [`1.0.0-preview2-onbuild`, `onbuild` (*1.0.0-preview2/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/onbuild/Dockerfile)
+-       [`1.0.0-preview2-windowsservercore-onbuild`, `windowsservercore-onbuild` (*1.0.0-preview2/windowsservercore/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/windowsservercore/onbuild/Dockerfile)
+-       [`1.0.0-preview2-nanoserver-onbuild`, `nanoserver-onbuild` (*1.0.0-preview2/nanoserver/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/onbuild/Dockerfile)
 
 ### Runtime images
 -       [`1.0.0-rc2-core-deps` (*1.0.0-rc2/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc2/core-deps/Dockerfile)
 -       [`1.0.0-rc2-core` (*1.0.0-rc2/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc2/core/Dockerfile)
--       [`1.0.0-core-deps`, `core-deps` (*1.0.0/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/debian/core-deps/Dockerfile)
 -       [`1.0.0-core`, `core` (*1.0.0/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/debian/core/Dockerfile)
+-       [`1.0.0-windowsservercore-core`, `windowsservercore-core` (*1.0.0/windowsservercore/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/windowsservercore/core/Dockerfile)
+-       [`1.0.0-nanoserver-core`, `nanoserver-core` (*1.0.0/nanoserver/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/nanoserver/core/Dockerfile)
+-       [`1.0.0-core-deps`, `core-deps` (*1.0.0/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/debian/core-deps/Dockerfile)
 
 ## Image variants
 
-The `microsoft/dotnet` image come in different flavors, each designed for a specific use case.
+The `microsoft/dotnet` images come in different flavors, each designed for a specific use case.
 
 ### `microsoft/dotnet:<version>-sdk`
 
@@ -60,13 +66,25 @@ $ docker build -t my-dotnet-app .
 $ docker run -it --rm --name my-running-app my-dotnet-app
 ```
 
+### `microsoft/dotnet:<version>-core`
+
+This image contains only .NET Core (runtime and libraries) and it is optimized for running [portable .NET Core applications](https://docs.microsoft.com/en-us/dotnet/articles/core/app-types). If you wish to run self-contained applications, please use the `core-deps` image described below. 
+
 ### `microsoft/dotnet:<version>-core-deps`
 
 This image contains the operating system with all of the native dependencies needed by .NET Core. Use this image to:
 
-1. Run a [self-contained](http://dotnet.github.io/docs/core-concepts/app-types.html) application.
+1. Run a [self-contained](https://docs.microsoft.com/en-us/dotnet/articles/core/app-types) application.
 2. Build a custom copy of .NET Core by compiling [coreclr](https://github.com/dotnet/coreclr) and [corefx](https://github.com/dotnet/corefx).
 
-### `microsoft/dotnet:<version>-core`
+## Windows Containers
 
-This image contains only .NET Core (runtime and libraries) and it is optimized for running [portable .NET Core applications](http://dotnet.github.io/docs/core-concepts/app-types.html). If you wish to run self-contained applications, please use the `core-deps` image described above. 
+  Windows Containers images use the `microsoft/windowsservercore` and `microsoft/nanoserver` base OS images from Windows Server 2016 Technical Preview 5.  For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
+  
+-       `1.0.0-preview2-windowsservercore-sdk`
+-       `1.0.0-preview2-nanoserver-sdk`
+-       `1.0.0-preview2-windowsservercore-onbuild`
+-       `1.0.0-preview2-nanoserver-onbuild`
+-       `1.0.0-windowsservercore-core`
+-       `1.0.0-nanoserver-core`
+  
