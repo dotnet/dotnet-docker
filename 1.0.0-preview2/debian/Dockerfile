@@ -38,4 +38,5 @@ RUN mkdir warmup \
     && cd warmup \  
     && dotnet new \  
     && cd .. \  
-    && rm -rf warmup
+    && rm -rf warmup \
+    && rm -rf /tmp/NuGetScratch
