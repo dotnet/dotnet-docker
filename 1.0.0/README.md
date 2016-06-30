@@ -49,11 +49,7 @@ applications. Use this image for your development process (developing, building 
 
 ### `microsoft/dotnet:<version>-onbuild`
 
-The most straightforward way to use this image is to use a .NET container as both the build and runtime environment. In your `Dockerfile`, writing something along the lines of the following will compile and run your project:
-
-```dockerfile
-FROM microsoft/dotnet:onbuild
-```
+The most straightforward way to use this image is to use a Docker container as both the build and runtime environment for your application. A `Dockerfile` in the same directory as your project files which uses this image as its parent will compile and run your project.
 
 This image includes multiple `ONBUILD` triggers which should cover most applications. The build will `COPY . /dotnetapp` and `RUN dotnet restore`.
 
