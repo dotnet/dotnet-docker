@@ -18,20 +18,20 @@ This project is part of .NET Core command-line (CLI) tools. You can find samples
 -       [`0.0.1-alpha-onbuild`, (*0.0.1-alpha/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/0.0.1-alpha/onbuild/Dockerfile)
 -       [`1.0.0-preview1` (*1.0.0-preview1/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview1/Dockerfile)
 -       [`1.0.0-preview1-onbuild` (*1.0.0-preview1/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview1/onbuild/Dockerfile)
--       [`1.0.0-preview2-sdk`, `latest` (*1.0.0-preview2/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/Dockerfile)
+-       [`1.0.0-preview2-sdk`, `latest` (*1.0.0-preview2/debian/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/Dockerfile)
 -       [`1.0.0-preview2-windowsservercore-sdk`, `windowsservercore` (*1.0.0-preview2/windowsservercore/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/windowsservercore/Dockerfile)
 -       [`1.0.0-preview2-nanoserver-sdk`, `nanoserver` (*1.0.0-preview2/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/Dockerfile)
--       [`1.0.0-preview2-onbuild`, `onbuild` (*1.0.0-preview2/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/onbuild/Dockerfile)
+-       [`1.0.0-preview2-onbuild`, `onbuild` (*1.0.0-preview2/debian/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/onbuild/Dockerfile)
 -       [`1.0.0-preview2-windowsservercore-onbuild`, `windowsservercore-onbuild` (*1.0.0-preview2/windowsservercore/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/windowsservercore/onbuild/Dockerfile)
 -       [`1.0.0-preview2-nanoserver-onbuild`, `nanoserver-onbuild` (*1.0.0-preview2/nanoserver/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/onbuild/Dockerfile)
 
 ### Runtime images
 -       [`1.0.0-rc2-core-deps` (*1.0.0-rc2/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc2/core-deps/Dockerfile)
 -       [`1.0.0-rc2-core` (*1.0.0-rc2/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-rc2/core/Dockerfile)
--       [`1.0.0-core`, `core` (*1.0.0/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/debian/core/Dockerfile)
+-       [`1.0.0-core`, `core` (*1.0.0/debian/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/debian/core/Dockerfile)
 -       [`1.0.0-windowsservercore-core`, `windowsservercore-core` (*1.0.0/windowsservercore/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/windowsservercore/core/Dockerfile)
 -       [`1.0.0-nanoserver-core`, `nanoserver-core` (*1.0.0/nanoserver/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/nanoserver/core/Dockerfile)
--       [`1.0.0-core-deps`, `core-deps` (*1.0.0/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/debian/core-deps/Dockerfile)
+-       [`1.0.0-core-deps`, `core-deps` (*1.0.0/debian/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0/debian/core-deps/Dockerfile)
 
 ## Image variants
 
