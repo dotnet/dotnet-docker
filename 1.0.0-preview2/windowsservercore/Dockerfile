@@ -1,4 +1,4 @@
-FROM windowsservercore
+FROM microsoft/windowsservercore:10.0.14300.1030
 
 # Install .NET Core SDK
 ENV DOTNET_SDK_VERSION 1.0.0-preview2-003121
