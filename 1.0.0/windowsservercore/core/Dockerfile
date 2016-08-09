@@ -1,4 +1,4 @@
-FROM windowsservercore
+FROM microsoft/windowsservercore:10.0.14300.1030
 
 # Install .NET Core
 ENV DOTNET_VERSION 1.0.0
