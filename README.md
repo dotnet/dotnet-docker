@@ -1,1 +1,1 @@
-1.0.0/README.md
+1.0/README.md
