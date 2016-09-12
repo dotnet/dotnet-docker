@@ -29,7 +29,7 @@ docker push $latestImageName
 
 
 echo "Pushing core images"
-versionedImageName=$repoName":1.0.0-core"
+versionedImageName=$repoName":1.0.1-core"
 docker tag core $versionedImageName
 docker push $versionedImageName
 
