@@ -22,10 +22,10 @@ This project is part of .NET Core command-line (CLI) tools. You can find samples
 -       [`1.0.0-preview2-nanoserver-onbuild`, `nanoserver-onbuild` (*1.0.0-preview2/nanoserver/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/onbuild/Dockerfile)
 
 ### Runtime images
--       [`1.0.0-core`, `1.0-core`, `1-core`, `core` (*1.0/debian/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/core/Dockerfile)
--       [`1.0.0-windowsservercore-core`, `1.0-windowsservercore-core`, `1-windowsservercore-core`, `windowsservercore-core` (*1.0/windowsservercore/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/windowsservercore/core/Dockerfile)
--       [`1.0.0-nanoserver-core`, `1.0-nanoserver-core`, `1-nanoserver-core`, `nanoserver-core` (*1.0/nanoserver/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/core/Dockerfile)
--       [`1.0.0-core-deps`, `1.0-core-deps`, `1-core-deps`, `core-deps` (*1.0/debian/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/core-deps/Dockerfile)
+-       [`1.0.1-core`, `1.0-core`, `1-core`, `core` (*1.0/debian/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/core/Dockerfile)
+-       [`1.0.1-windowsservercore-core`, `1.0-windowsservercore-core`, `1-windowsservercore-core`, `windowsservercore-core` (*1.0/windowsservercore/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/windowsservercore/core/Dockerfile)
+-       [`1.0.1-nanoserver-core`, `1.0-nanoserver-core`, `1-nanoserver-core`, `nanoserver-core` (*1.0/nanoserver/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/core/Dockerfile)
+-       [`1.0.1-core-deps`, `1.0-core-deps`, `1-core-deps`, `core-deps` (*1.0/debian/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/core-deps/Dockerfile)
 
 ## Image variants
 
