@@ -10,7 +10,6 @@ This project is part of .NET Core command-line (CLI) tools. You can find samples
 [![Downloads from Docker Hub](https://img.shields.io/docker/pulls/microsoft/dotnet.svg)](https://registry.hub.docker.com/u/microsoft/dotnet)
 [![Stars on Docker Hub](https://img.shields.io/docker/stars/microsoft/dotnet.svg)](https://registry.hub.docker.com/u/microsoft/dotnet)
 
-See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/en-us/dotnet/articles/core/docker/building-net-docker-images) to get and understanding of the different Docker images that are offered and when is the right use case for them.
 
 ## Supported tags
 
@@ -31,6 +30,8 @@ See [Building Docker Images for .NET Core Applications](https://docs.microsoft.c
 ## Image variants
 
 The `microsoft/dotnet` images come in different flavors, each designed for a specific use case.
+
+See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/en-us/dotnet/articles/core/docker/building-net-docker-images) to get and understanding of the different Docker images that are offered and when is the right use case for them.
 
 ### `microsoft/dotnet:<version>-sdk`
 
