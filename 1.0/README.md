@@ -31,6 +31,8 @@ This project is part of .NET Core command-line (CLI) tools. You can find samples
 
 The `microsoft/dotnet` images come in different flavors, each designed for a specific use case.
 
+See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/en-us/dotnet/articles/core/docker/building-net-docker-images) to get an understanding of the different Docker images that are offered and when is the right use case for them.
+
 ### `microsoft/dotnet:<version>-sdk`
 
 This image contains the .NET Core SDK which is comprised of two parts: 
