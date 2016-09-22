@@ -7,8 +7,8 @@ This repository contains `Dockerfile` definitions for [dotnet/cli](https://githu
 
 This project is part of .NET Core command-line (CLI) tools. You can find samples, documentation, and getting started instructions for .NET Core CLI tools on our [getting started](http://go.microsoft.com/fwlink/?LinkID=798306&clcid=0x409) page.
 
-[![Downloads from Docker Hub](https://img.shields.io/docker/pulls/microsoft/dotnet.svg)](https://registry.hub.docker.com/u/microsoft/dotnet)
-[![Stars on Docker Hub](https://img.shields.io/docker/stars/microsoft/dotnet.svg)](https://registry.hub.docker.com/u/microsoft/dotnet)
+[![Downloads from Docker Hub](https://img.shields.io/docker/pulls/microsoft/dotnet.svg)](https://hub.docker.com/r/microsoft/dotnet)
+[![Stars on Docker Hub](https://img.shields.io/docker/stars/microsoft/dotnet.svg)](https://hub.docker.com/r/microsoft/dotnet)
 
 
 ## Supported tags
