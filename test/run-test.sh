@@ -42,7 +42,10 @@ for development_image_version in $( find . -path './.*' -prune -o -path '*/debia
     docker run -t ${optional_docker_run_args} -v "${app_dir}:/${app_name}" -v "${repo_root}/test:/test" --name "sdk-test-${app_name}" --entrypoint /test/create-run-publish-app.sh "${development_tag_base}-sdk" "${app_name}"
 
     echo "----- Testing ${runtime_tag_base}-core -----"
-    docker run -t ${optional_docker_run_args} -v "${app_dir}:/${app_name}" --name "core-test-${app_name}" --entrypoint dotnet "${runtime_tag_base}-core" "/${app_name}/publish/${app_name}.dll"
+    docker run -t ${optional_docker_run_args} -v "${app_dir}:/${app_name}" --name "core-test-${app_name}" --entrypoint dotnet "${runtime_tag_base}-core" "/${app_name}/publish/framework-dependent/${app_name}.dll"
+
+    echo "----- Testing ${runtime_tag_base}-core-deps -----"
+    docker run -t ${optional_docker_run_args} -v "${app_dir}:/${app_name}" --name "core-deps-test-${app_name}" --entrypoint "/${app_name}/publish/self-contained/${app_name}" "${runtime_tag_base}-core-deps"
 
     echo "----- Testing ${development_tag_base}-onbuild -----"
     pushd "${app_dir}" > /dev/null
