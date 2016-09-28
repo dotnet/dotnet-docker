@@ -1,4 +1,4 @@
-FROM microsoft/nanoserver:10.0.14300.1030
+FROM microsoft/nanoserver:10.0.14393.206
 
 # Install .NET Core SDK
 ENV DOTNET_SDK_VERSION 1.0.0-preview2-003131
@@ -15,10 +15,6 @@ RUN powershell -NoProfile -Command \
         Remove-Item -Force dotnet.zip
 
 RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
-
-# Copy forwarders assemblies to workaround 
-# https://github.com/dotnet/cli/blob/rel/1.0.0-preview2/Documentation/known-issues.md#running-net-core-cli-on-nano-server
-RUN copy "%windir%\System32\forwarders\*" "%ProgramFiles%\dotnet\shared\Microsoft.NETCore.App\1.0.1\"
 
 # Trigger the population of the local package cache  
 ENV NUGET_XMLDOC_MODE skip  
