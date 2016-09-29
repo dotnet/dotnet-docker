@@ -6,12 +6,8 @@ ENV DOTNET_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/preview/B
 
 RUN powershell -NoProfile -Command \
         $ErrorActionPreference = 'Stop'; \
-        $httpClient = New-Object System.Net.Http.HttpClient; \
-        $stream = $httpClient.GetAsync('%DOTNET_DOWNLOAD_URL%').Result.Content.ReadAsStreamAsync().Result; \
-        $file = [System.IO.File]::Create('dotnet.zip'); \
-        $stream.CopyTo($file); \
-        $file.Close(); \
-        [System.IO.Compression.ZipFile]::ExtractToDirectory('dotnet.zip', '%ProgramFiles%\dotnet'); \
+        Invoke-WebRequest %DOTNET_DOWNLOAD_URL% -OutFile dotnet.zip; \
+        Expand-Archive dotnet.zip -DestinationPath '%ProgramFiles%\dotnet'; \
         Remove-Item -Force dotnet.zip
 
 RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
