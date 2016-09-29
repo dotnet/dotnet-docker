@@ -12,10 +12,10 @@ RUN powershell -NoProfile -Command \
 
 RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
 
-# Trigger the population of the local package cache  
-ENV NUGET_XMLDOC_MODE skip  
-RUN mkdir warmup \  
-    && cd warmup \  
-    && dotnet new \  
-    && cd .. \  
+# Trigger the population of the local package cache
+ENV NUGET_XMLDOC_MODE skip
+RUN mkdir warmup \
+    && cd warmup \
+    && dotnet new \
+    && cd .. \
     && rmdir /q/s warmup

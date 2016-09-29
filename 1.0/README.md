@@ -35,13 +35,13 @@ See [Building Docker Images for .NET Core Applications](https://docs.microsoft.c
 
 ### `microsoft/dotnet:<version>-sdk`
 
-This image contains the .NET Core SDK which is comprised of two parts: 
+This image contains the .NET Core SDK which is comprised of two parts:
 
 1. .NET Core
 2. .NET Core command line tools
 
-This image is recommended if you are trying .NET Core for the first time, as it allows both developing and running 
-applications. Use this image for your development process (developing, building and testing applications). 
+This image is recommended if you are trying .NET Core for the first time, as it allows both developing and running
+applications. Use this image for your development process (developing, building and testing applications).
 
 ### `microsoft/dotnet:<version>-onbuild`
 
@@ -76,11 +76,10 @@ This image contains the operating system with all of the native dependencies nee
 ## Windows Containers
 
   Windows Containers images use the `microsoft/windowsservercore` and `microsoft/nanoserver` base OS images from Windows Server 2016 Technical Preview 5.  For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
-  
+
 -       `1.0.0-preview2-windowsservercore-sdk`
 -       `1.0.0-preview2-nanoserver-sdk`
 -       `1.0.0-preview2-windowsservercore-onbuild`
 -       `1.0.0-preview2-nanoserver-onbuild`
 -       `1.0-windowsservercore-core`
 -       `1.0-nanoserver-core`
-  

@@ -30,7 +30,7 @@ Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\$OS" | 
     else {
         $runtimeImageVersion = $developmentImageVersion
     }
-    
+
     $developmentTagBase="$($dockerRepo):$developmentImageVersion-$OS"
     $runtimeTagBase="$($dockerRepo):$runtimeImageVersion-$OS"
 
