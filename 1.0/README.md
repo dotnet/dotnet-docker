@@ -72,7 +72,7 @@ This image contains the operating system with all of the native dependencies nee
 
 ## Windows Containers
 
-  Windows Containers images use the `microsoft/windowsservercore` and `microsoft/nanoserver` base OS images from Windows Server 2016.  For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
+  Windows Containers images use the `microsoft/nanoserver` base OS image from Windows Server 2016.  For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
 
 -       `1.0.0-preview2-nanoserver-sdk`
 -       `1.0.0-preview2-nanoserver-onbuild`
