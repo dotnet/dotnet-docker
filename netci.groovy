@@ -3,7 +3,7 @@ import jobs.generation.Utilities
 def project = GithubProject
 def branch = GithubBranchName
 def isPR = true
-def platformList = ['Ubuntu16.04:Debian'/*, 'Windows_2016:WindowsServerCore'*/]
+def platformList = ['Ubuntu16.04:Debian'/*, 'Windows_2016:NanoServer'*/]
 
 platformList.each { platform ->
     def(hostOS, containerOS) = platform.tokenize(':')
