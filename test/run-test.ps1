@@ -1,8 +1,3 @@
-[cmdletbinding()]
-param(
-   [string]$OS="windowsservercore"
-)
-
 Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 
@@ -22,7 +17,7 @@ else {
 pushd $repoRoot
 
 # Loop through each sdk Dockerfile in the repo.  If it has an entry in $versionMappings, then test the sdk, core, and onbuild images; if not, fail.
-Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\$OS" | foreach {
+Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\nanoserver" | foreach {
     $developmentImageVersion = $_.Directory.Parent.Name
     if ($versionMappings.ContainsKey($developmentImageVersion)) {
         $runtimeImageVersion = $versionMappings[$developmentImageVersion]
@@ -31,8 +26,8 @@ Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\$OS" | 
         $runtimeImageVersion = $developmentImageVersion
     }
 
-    $developmentTagBase="$($dockerRepo):$developmentImageVersion-$OS"
-    $runtimeTagBase="$($dockerRepo):$runtimeImageVersion-$OS"
+    $developmentTagBase="$($dockerRepo):$developmentImageVersion-nanoserver"
+    $runtimeTagBase="$($dockerRepo):$runtimeImageVersion-nanoserver"
 
     $timeStamp = Get-Date -Format FileDateTime
     $appName="app$timeStamp"
