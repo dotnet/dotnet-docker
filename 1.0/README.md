@@ -15,15 +15,12 @@ This project is part of .NET Core command-line (CLI) tools. You can find samples
 
 ### Development images
 -       [`1.0.0-preview2-sdk`, `latest` (*1.0.0-preview2/debian/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/Dockerfile)
--       [`1.0.0-preview2-windowsservercore-sdk`, `windowsservercore` (*1.0.0-preview2/windowsservercore/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/windowsservercore/Dockerfile)
 -       [`1.0.0-preview2-nanoserver-sdk`, `nanoserver` (*1.0.0-preview2/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/Dockerfile)
 -       [`1.0.0-preview2-onbuild`, `onbuild` (*1.0.0-preview2/debian/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/onbuild/Dockerfile)
--       [`1.0.0-preview2-windowsservercore-onbuild`, `windowsservercore-onbuild` (*1.0.0-preview2/windowsservercore/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/windowsservercore/onbuild/Dockerfile)
 -       [`1.0.0-preview2-nanoserver-onbuild`, `nanoserver-onbuild` (*1.0.0-preview2/nanoserver/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/onbuild/Dockerfile)
 
 ### Runtime images
 -       [`1.0.1-core`, `1.0-core`, `1-core`, `core` (*1.0/debian/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/core/Dockerfile)
--       [`1.0.1-windowsservercore-core`, `1.0-windowsservercore-core`, `1-windowsservercore-core`, `windowsservercore-core` (*1.0/windowsservercore/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/windowsservercore/core/Dockerfile)
 -       [`1.0.1-nanoserver-core`, `1.0-nanoserver-core`, `1-nanoserver-core`, `nanoserver-core` (*1.0/nanoserver/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/core/Dockerfile)
 -       [`1.0.1-core-deps`, `1.0-core-deps`, `1-core-deps`, `core-deps` (*1.0/debian/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/core-deps/Dockerfile)
 
@@ -75,11 +72,8 @@ This image contains the operating system with all of the native dependencies nee
 
 ## Windows Containers
 
-  Windows Containers images use the `microsoft/windowsservercore` and `microsoft/nanoserver` base OS images from Windows Server 2016 Technical Preview 5.  For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
+  Windows Containers images use the `microsoft/nanoserver` base OS image from Windows Server 2016.  For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
 
--       `1.0.0-preview2-windowsservercore-sdk`
 -       `1.0.0-preview2-nanoserver-sdk`
--       `1.0.0-preview2-windowsservercore-onbuild`
 -       `1.0.0-preview2-nanoserver-onbuild`
--       `1.0-windowsservercore-core`
 -       `1.0-nanoserver-core`
