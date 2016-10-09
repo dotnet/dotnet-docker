@@ -3,9 +3,7 @@
 .NET Core Docker Image
 ====================
 
-This repository contains `Dockerfile` definitions for [dotnet/cli](https://github.com/dotnet/cli) Docker images.
-
-This project is part of .NET Core command-line (CLI) tools. You can find samples, documentation, and getting started instructions for .NET Core CLI tools on our [getting started](http://go.microsoft.com/fwlink/?LinkID=798306&clcid=0x409) page.
+This repository contains `Dockerfile` definitions for [.NET Core](https://github.com/dotnet/core) Docker images. You can find samples, documentation, and getting started instructions for .NET Core in the [.NET Core documentation](https://docs.microsoft.com/dotnet/articles/core/).
 
 [![Downloads from Docker Hub](https://img.shields.io/docker/pulls/microsoft/dotnet.svg)](https://hub.docker.com/r/microsoft/dotnet)
 [![Stars on Docker Hub](https://img.shields.io/docker/stars/microsoft/dotnet.svg)](https://hub.docker.com/r/microsoft/dotnet)
@@ -28,7 +26,7 @@ This project is part of .NET Core command-line (CLI) tools. You can find samples
 
 The `microsoft/dotnet` images come in different flavors, each designed for a specific use case.
 
-See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/en-us/dotnet/articles/core/docker/building-net-docker-images) to get an understanding of the different Docker images that are offered and when is the right use case for them.
+See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/articles/core/docker/building-net-docker-images) to get an understanding of the different Docker images that are offered and when is the right use case for them.
 
 ### `microsoft/dotnet:<version>-sdk`
 
@@ -61,18 +59,18 @@ $ docker run -it --rm --name my-running-app my-dotnet-app
 
 ### `microsoft/dotnet:<version>-core`
 
-This image contains only .NET Core (runtime and libraries) and it is optimized for running [portable .NET Core applications](https://docs.microsoft.com/en-us/dotnet/articles/core/app-types). If you wish to run self-contained applications, please use the `core-deps` image described below. 
+This image contains only .NET Core (runtime and libraries) and it is optimized for running [framework-dependent .NET Core applications](https://docs.microsoft.com/dotnet/articles/core/deploying/index). If you wish to run self-contained applications, please use the `core-deps` image described below. 
 
 ### `microsoft/dotnet:<version>-core-deps`
 
 This image contains the operating system with all of the native dependencies needed by .NET Core. Use this image to:
 
-1. Run a [self-contained](https://docs.microsoft.com/en-us/dotnet/articles/core/app-types) application.
+1. Run a [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) application.
 2. Build a custom copy of .NET Core by compiling [coreclr](https://github.com/dotnet/coreclr) and [corefx](https://github.com/dotnet/corefx).
 
 ## Windows Containers
 
-  Windows Containers images use the `microsoft/nanoserver` base OS image from Windows Server 2016.  For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
+Windows Containers images use the `microsoft/nanoserver` base OS image from Windows Server 2016.  For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
 
 -       `1.0.0-preview2-nanoserver-sdk`
 -       `1.0.0-preview2-nanoserver-onbuild`
