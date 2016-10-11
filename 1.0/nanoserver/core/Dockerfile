@@ -1,4 +1,4 @@
-FROM microsoft/nanoserver:10.0.14393.206
+FROM microsoft/nanoserver:10.0.14393.321
 
 # Install .NET Core
 ENV DOTNET_VERSION 1.0.1
