@@ -9,6 +9,7 @@ ENV LTTNG_UST_REGISTER_TIMEOUT 0
 # Install .NET CLI dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        make \
         libc6 \
         libcurl3 \
         libgcc1 \
