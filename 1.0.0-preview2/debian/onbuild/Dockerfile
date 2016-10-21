@@ -3,7 +3,9 @@ FROM microsoft/dotnet:1.0.0-preview2-sdk
 RUN mkdir -p /dotnetapp
 WORKDIR /dotnetapp
 
-ENTRYPOINT ["dotnet", "run"]
+ENTRYPOINT ["dotnet", "out/dotnetapp"]
 
-ONBUILD COPY . /dotnetapp
+ONBUILD COPY project.json /dotnetapp
 ONBUILD RUN dotnet restore
+ONBUILD COPY . /dotnetapp
+ONBUILD RUN dotnet publish -c Release -o out
