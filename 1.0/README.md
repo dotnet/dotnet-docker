@@ -25,7 +25,7 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 
 [.NET Core](https://github.com/dotnet/core) is open source (MIT license) and was contributed to the [.NET Foundation](http://dotnetfoundation.org) by Microsoft in 2014. It can be freely adopted by individuals and companies, including for personal, academic or commercial purposes. Multiple companies use .NET Core as part of apps, tools, new platforms and hosting services.
 
-> https://en.wikipedia.org/wiki/.NET_Framework#.NET_Core
+> https://docs.microsoft.com/en-us/dotnet/articles/core/
 
 ![logo](https://avatars0.githubusercontent.com/u/9141961?v=3&amp;s=100)
 
