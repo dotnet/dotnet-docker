@@ -12,10 +12,10 @@
 -       [`1.1.0-preview1-nanoserver-core` (*1.1.0-preview1/nanoserver/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/nanoserver/core/Dockerfile)
 -       [`1.1.0-preview1-core-deps` (*1.1.0-preview1/debian/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/debian/core-deps/Dockerfile)
 
+For more information about these images and their history, please see [the relevent Dockerfile (`dotnet/dotnet-docker`)](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls?utf8=%E2%9C%93&q=).
+
 [![Downloads from Docker Hub](https://img.shields.io/docker/pulls/microsoft/dotnet.svg)](https://hub.docker.com/r/microsoft/dotnet)
 [![Stars on Docker Hub](https://img.shields.io/docker/stars/microsoft/dotnet.svg)](https://hub.docker.com/r/microsoft/dotnet)
-
-For more information about these images and their history, please see [the relevent Dockerfile (`dotnet/dotnet-docker`)](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls?utf8=%E2%9C%93&q=).
 
 # What is .NET Core?
 
@@ -25,8 +25,9 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 
 [.NET Core](https://github.com/dotnet/core) is open source (MIT license) and was contributed to the [.NET Foundation](http://dotnetfoundation.org) by Microsoft in 2014. It can be freely adopted by individuals and companies, including for personal, academic or commercial purposes. Multiple companies use .NET Core as part of apps, tools, new platforms and hosting services.
 
-https://en.wikipedia.org/wiki/.NET_Framework#.NET_Core
-![](https://avatars0.githubusercontent.com/u/9141961?v=3&amp;s=100)
+> https://en.wikipedia.org/wiki/.NET_Framework#.NET_Core
+
+![logo](https://avatars0.githubusercontent.com/u/9141961?v=3&amp;s=100)
 
 # How to use this Image
 
@@ -38,7 +39,7 @@ The most straightforward way to use this image is to use a .NET Core container a
 FROM microsoft/dotnet:1.0.0-preview2-onbuild
 ```
 
-This image includes multiple ONBUILD triggers (effectively projected into your Dockerfile) which should cover simple applications. The build will copy, restore, build and `dotnet run` your app.
+This image includes multiple ONBUILD triggers (effectively projected into your Dockerfile) which should cover simple applications (not intended for production and/or larger apps). The build will copy, restore, build and `dotnet run` your app.
 
 If you are using Windows containers, you should including the following in your Dockerfile:
 
@@ -53,7 +54,7 @@ $ docker build -t my-dotnet-app .
 $ docker run -it --rm --name my-running-app my-dotnet-app
 ```
 
-# More Scenarios
+# More Applicaton Scenarios
 
 You can learn more about using .NET Core with Docker with [.NET Docker samples](https://github.com/dotnet/dotnet-docker-samples):
 
