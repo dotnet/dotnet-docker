@@ -19,7 +19,9 @@ For more information about these images and their history, please see [the relev
 
 # What is .NET Core?
 
-.NET Core is a general purpose development platform maintained by Microsoft and the .NET community on [GitHub](https://github.com/dotnet/core). It is cross-platform, supporting Windows, macOS and Linux, and can be used in device, cloud, and embedded/IoT scenarios. It has several key features that are attractive to many developers, including automatic memory management and modern programming languages, that make it easier to efficiently build high-quality applications. It offers a high-level programming environment while providing low-level access to native memory and APIs.
+.NET Core is a general purpose development platform maintained by Microsoft and the .NET community on [GitHub](https://github.com/dotnet/core). It is cross-platform, supporting Windows, macOS and Linux, and can be used in device, cloud, and embedded/IoT scenarios. 
+
+.NET has several capabilities that make development straightforward, including automatic memory management, (runtime) generic types, reflection, asynchrony, concurrency, and native interop. Millions of developers take advantage of these capabilities to efficiently build high-quality applications.
 
 You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and object-oriented while retaining the expressiveness and elegance of C-style languages. Anyone familiar with C and similar languages will find it straightforward to write in C#.
 
@@ -31,9 +33,11 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 
 # How to use this Image
 
-## Create a Docker Container for your .NET Core app
+## Build and run an application with a .NET Core SDK Image
 
-The most straightforward way to use this image is to use a .NET Core container as both the build and runtime environment. In your Dockerfile, writing the following to compile and run your project:
+The most straightforward way to use .NET Core with Docker is to use a .NET Core SDK Docker image as both the build and runtime environment. 
+
+In your Dockerfile, include the following line to compile and run your project:
 
 ```dockerfile
 FROM microsoft/dotnet:1.0.0-preview2-onbuild
@@ -41,7 +45,7 @@ FROM microsoft/dotnet:1.0.0-preview2-onbuild
 
 This image includes multiple ONBUILD triggers (effectively projected into your Dockerfile) which should cover simple applications (not intended for production and/or larger apps). The build will copy, restore, build and `dotnet run` your app.
 
-If you are using Windows containers, you should including the following in your Dockerfile:
+For Windows containers, you should instead include the following in your Dockerfile:
 
 ```dockerfile
 FROM microsoft/dotnet:nanoserver-onbuild
@@ -54,14 +58,46 @@ $ docker build -t my-dotnet-app .
 $ docker run -it --rm --name my-running-app my-dotnet-app
 ```
 
-# More Applicaton Scenarios
+You can learn more about how to use this image with the - [ONBUILD sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-onbuild).
+
+## Deploy a pre-built application with the .NET Core Runtime image
+
+For production scenarios, you will want to deploy your application with the .NET Core Runtime. This results in smaller Docker images. The SDK is not needed for production scenarios, only to build and test your application. 
+
+In your Dockerfile, include the following line to deploy your pre-built application:
+
+```dockerfile
+FROM microsoft/dotnet:1.0.1-core
+WORKDIR /app
+COPY out .
+ENTRYPOINT ["dotnet", "dotnetapp.dll"]
+```
+
+For Windows containers, you should instead include the following in your Dockerfile:
+
+```dockerfile
+FROM microsoft/dotnet:1.0.1-nanoserver-core
+WORKDIR /app
+COPY out .
+ENTRYPOINT ["dotnet", "dotnetapp.dll"]
+```
+
+You need to change the reference to `dotnetapp.dll` to your application name. 
+
+You can learn more about how to use this image with the - [Development sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-development).
+
+## More Application Scenarios
 
 You can learn more about using .NET Core with Docker with [.NET Docker samples](https://github.com/dotnet/dotnet-docker-samples):
 
-- [Devlopment](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev)
-- [Production](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod)
-- [Self-contained](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-selfcontained)
+
+- [ONBUILD](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-onbuild) sample using the `1.0.0-preview2-onbuild` .NET Core SDK image.
+- [Development](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev) sample using the `1.0.0-preview2-sdk` .NET Core SDK image.
+- [Production](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) sample using the `1.0.1-core` .NET Core image.
+- [Self-contained](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-selfcontained) sample using the `1.0.1-core-deps` base OS image (with native dependencies added).
 - [Preview](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-preview)
+
+Windows Container variants are provided at the same locations, above, and use slightly different image tags (for example, `1.0.0-preview2-nanoserver-onbuild`).
 
 ## Image variants
 
