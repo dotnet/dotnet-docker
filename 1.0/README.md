@@ -84,6 +84,13 @@ ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 
 You need to change the reference to `dotnetapp.dll` to your application name. 
 
+You can then build and run the Docker image:
+
+```console
+$ docker build -t my-dotnet-app .
+$ docker run -it --rm --name my-running-app my-dotnet-app
+```
+
 You can learn more about how to use this image with the - [Development sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-development).
 
 ## More Application Scenarios
@@ -99,55 +106,36 @@ You can learn more about using .NET Core with Docker with [.NET Docker samples](
 
 Windows Container variants are provided at the same locations, above, and use slightly different image tags (for example, `1.0.0-preview2-nanoserver-onbuild`).
 
+See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/articles/core/docker/building-net-docker-images) to learn more about the various Docker images and when to use each for them.
+
 ## Image variants
 
 The `microsoft/dotnet` images come in different flavors, each designed for a specific use case.
 
-See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/articles/core/docker/building-net-docker-images) to get an understanding of the different Docker images that are offered and when is the right use case for them.
-
 ### `microsoft/dotnet:<version>-sdk`
 
-This image contains the .NET Core SDK which is comprised of two parts:
+This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
+
+It contains the .NET Core SDK which is comprised of two parts:
 
 1. .NET Core
 2. .NET Core command line tools
 
-This image is recommended if you are trying .NET Core for the first time, as it allows both developing and running
-applications. Use this image for your development process (developing, building and testing applications).
-
-### `microsoft/dotnet:<version>-onbuild`
-
-The most straightforward way to use this image is to use a Docker container as both the build and runtime environment for your application. Creating a simple `Dockerfile` with the following content in the same directory as your project files will compile and run your project:
-
-```dockerfile
-FROM microsoft/dotnet:onbuild
-```
-
-This image includes multiple `ONBUILD` triggers which should cover most applications. The build will `COPY . /dotnetapp` and `RUN dotnet restore`.
-
-This image also includes the `ENTRYPOINT dotnet run` instruction which will run your application when the Docker image is run.
-
-You can then build and run the Docker image:
-
-```console
-$ docker build -t my-dotnet-app .
-$ docker run -it --rm --name my-running-app my-dotnet-app
-```
+Use this image for your development process (developing, building and testing applications).
 
 ### `microsoft/dotnet:<version>-core`
 
-This image contains only .NET Core (runtime and libraries) and it is optimized for running [framework-dependent .NET Core applications](https://docs.microsoft.com/dotnet/articles/core/deploying/index). If you wish to run self-contained applications, please use the `core-deps` image described below. 
+This image contains the .NET Core (runtime and libraries) and is optimized for running .NET Core apps in production.
 
 ### `microsoft/dotnet:<version>-core-deps`
 
-This image contains the operating system with all of the native dependencies needed by .NET Core. Use this image to:
+This image contains the operating system with all of the native dependencies needed by .NET Core. This is for  [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
 
-1. Run a [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) application.
-2. Build a custom copy of .NET Core by compiling [coreclr](https://github.com/dotnet/coreclr) and [corefx](https://github.com/dotnet/corefx).
+### `microsoft/dotnet:<version>-nanoserver`
 
-### Windows Containers
+There are multiple images for Windows Nanoserver, for SDK and Runtime.
 
-Windows Containers images use the `microsoft/nanoserver` base OS image from Windows Server 2016.  For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
+For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
 
 # License
 
