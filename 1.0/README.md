@@ -21,7 +21,7 @@ For more information about these images and their history, please see [the relev
 
 .NET Core is a general purpose development platform maintained by Microsoft and the .NET community on [GitHub](https://github.com/dotnet/core). It is cross-platform, supporting Windows, macOS and Linux, and can be used in device, cloud, and embedded/IoT scenarios. 
 
-.NET has several capabilities that make development straightforward, including automatic memory management, (runtime) generic types, reflection, asynchrony, concurrency, and native interop. Millions of developers take advantage of these capabilities to efficiently build high-quality applications.
+.NET has several capabilities that make development easier, including automatic memory management, (runtime) generic types, reflection, asynchrony, concurrency, and native interop. Millions of developers take advantage of these capabilities to efficiently build high-quality applications.
 
 You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and object-oriented while retaining the expressiveness and elegance of C-style languages. Anyone familiar with C and similar languages will find it straightforward to write in C#.
 
@@ -43,7 +43,7 @@ In your Dockerfile, include the following line to compile and run your project:
 FROM microsoft/dotnet:1.0.0-preview2-onbuild
 ```
 
-This image includes multiple ONBUILD triggers (effectively projected into your Dockerfile) which should cover simple applications (not intended for production and/or larger apps). The build will copy, restore, build and `dotnet run` your app.
+This image includes multiple ONBUILD triggers (effectively projected into your Dockerfile) which should cover simple applications (not intended for production and/or larger apps). The build will copy, restore, build and `dotnet run` your application.
 
 For Windows containers, you should instead include the following in your Dockerfile:
 
@@ -58,7 +58,7 @@ $ docker build -t my-dotnet-app .
 $ docker run -it --rm --name my-running-app my-dotnet-app
 ```
 
-You can learn more about how to use this image with the - [ONBUILD sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-onbuild).
+You can learn more about how to use this image with the [ONBUILD sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-onbuild).
 
 ## Build and run a simple app within a .NET Core Container
 
@@ -73,13 +73,12 @@ You may want to try out .NET Core by taking advantage of the convenience of a co
  $ ls
  $ dotnet restore
  $ dotnet run
- $ dotnet run
  $ dotnet bin/Debug/netcoreapp1.0/app.dll
  $ dotnet publish -c Release -o out
  $ dotnet out/app.dll
  $ exit
  ```
- The steps above are intended to show the basic functions of .NET Core tools. The two instances of `dotnet run` demonstrates that it skips compilation in the second case. The subsequent command demonstrates that you can run an application directly out of the bin folder, without the additional build logic that `dotnet run` adds. The last two commands demonstrate the publishing scenario, which prepares an app to be deployed on the same or other machine, with a requirement on only the .NET Core Runtime, not the larger SDK. Naturally, you don't have to exit immediately, but can continue to try out the product longer.
+ The steps above are intended to show the basic functions of .NET Core tools. Try running `dotnet run` twice. You'll see that the second invocation skips compilation. The subsequent command after `dotnet run` demonstrates that you can run an application directly out of the bin folder, without the additional build logic that `dotnet run` adds. The last two commands demonstrate the publishing scenario, which prepares an app to be deployed on the same or other machine, with a requirement on only the .NET Core Runtime, not the larger SDK. Naturally, you don't have to exit immediately, but can continue to try out the product as long as you want.
 
  On Windows, the experience is very similar. The commands should be the same, with the exception of the first command (specifically the image name), `ls` and the directory separators. Try the following command, to replace the first command above:
 
@@ -110,7 +109,7 @@ On Windows, the experience is very similar. Try the following command, to replac
 $ docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet:nanoserver
  ```
 
-Please use the images at [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) are recommended for ASP.NET core development and production. They are built on the .NET Core images and have been further optimized for ASP.NET.
+Please use the images at [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/). They are recommended and optimized for ASP.NET core development and production and are built on the images in this repo.
 
 ## Deploy a pre-built application with the .NET Core Runtime image
 
@@ -120,21 +119,22 @@ In your Dockerfile, include the following line to deploy your pre-built applicat
 
 ```dockerfile
 FROM microsoft/dotnet:1.0.1-core
-WORKDIR /app
-COPY out .
-ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```
 
-For Windows containers, you should instead include the following in your Dockerfile:
+For Windows containers, you should instead include the following line in your Dockerfile:
 
 ```dockerfile
 FROM microsoft/dotnet:1.0.1-nanoserver-core
+```
+
+The following is a complete Dockerfile example that assumes `dotnetapp.dll` is the application name and has been published to the `out` directory.
+
+```dockerfile
+FROM microsoft/dotnet:1.0.1-core
 WORKDIR /app
 COPY out .
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```
-
-You need to change the reference to `dotnetapp.dll` to your application name. 
 
 You can then build and run the Docker image:
 
