@@ -197,7 +197,9 @@ For more information on Windows Containers and a getting started guide, please s
 
 # License
 
-View [license information](https://github.com/dotnet/core/blob/master/LICENSE) for the software contained in this image.
+View [license information](https://www.microsoft.com/net/dotnet_library_license.htm) for the software contained in this image. 
+
+.NET Core source code is separately licensed as [MIT LICENSE](https://github.com/dotnet/core/blob/master/LICENSE).
 
 Windows Container images are licensed per the Windows license:
 
