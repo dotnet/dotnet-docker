@@ -31,7 +31,7 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 
 ![logo](https://avatars0.githubusercontent.com/u/9141961?v=3&amp;s=100)
 
-# How to use this Image
+# How to use these Images
 
 ## Build and run an application with a .NET Core SDK Image
 
@@ -59,6 +59,58 @@ $ docker run -it --rm --name my-running-app my-dotnet-app
 ```
 
 You can learn more about how to use this image with the - [ONBUILD sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-onbuild).
+
+## Build and run a simple app within a .NET Core Container
+
+You may want to try out .NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run a .NET Core application in a minute (depending on your internet speed).
+
+```console
+ $ docker run -it --rm microsoft/dotnet
+ [now in the container]
+ $ mkdir app
+ $ cd app
+ $ dotnet new
+ $ ls
+ $ dotnet restore
+ $ dotnet run
+ $ dotnet run
+ $ dotnet bin/Debug/netcoreapp1.0/app.dll
+ $ dotnet publish -c Release -o out
+ $ dotnet out/app.dll
+ $ exit
+ ```
+ The steps above are intended to show the basic functions of .NET Core tools. The two instances of `dotnet run` demonstrates that it skips compilation in the second case. The subsequent command demonstrates that you can run an application directly out of the bin folder, without the additional build logic that `dotnet run` adds. The last two commands demonstrate the publishing scenario, which prepares an app to be deployed on the same or other machine, with a requirement on only the .NET Core Runtime, not the larger SDK. Naturally, you don't have to exit immediately, but can continue to try out the product longer.
+
+ On Windows, the experience is very similar. The commands should be the same, with the exception of the first command (specifically the image name), `ls` and the directory separators. Try the following command, to replace the first command above:
+
+ ```console
+  $ docker run -it --rm microsoft/dotnet:nanoserver
+ ```
+
+## Build and run an ASP.NET app within a .NET Core Container
+
+ You can try similar instructions with an ASP.NET Core app. 
+
+ ```console
+$ docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet
+[now in the container]
+$ mkdir app
+$ cd app
+$ dotnet new -t web
+$ dotnet restore
+$ dotnet run
+$ exit
+ ```
+
+On your host machine, browse to `http://localhost:8000`. You should see a default ASP.NET Core site and logging activity in the container.
+
+On Windows, the experience is very similar. Try the following command, to replace the first command above:
+
+ ```console
+$ docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet:nanoserver
+ ```
+
+Please use the images at [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) are recommended for ASP.NET core development and production. They are built on the .NET Core images and have been further optimized for ASP.NET.
 
 ## Deploy a pre-built application with the .NET Core Runtime image
 
@@ -93,7 +145,7 @@ $ docker run -it --rm --name my-running-app my-dotnet-app
 
 You can learn more about how to use this image with the - [Development sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-development).
 
-## More Application Scenarios
+## More Examples using these Images
 
 You can learn more about using .NET Core with Docker with [.NET Docker samples](https://github.com/dotnet/dotnet-docker-samples):
 
@@ -107,6 +159,12 @@ You can learn more about using .NET Core with Docker with [.NET Docker samples](
 Windows Container variants are provided at the same locations, above, and use slightly different image tags (for example, `1.0.0-preview2-nanoserver-onbuild`).
 
 See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/articles/core/docker/building-net-docker-images) to learn more about the various Docker images and when to use each for them.
+
+See the following related repos for other application types:
+
+- [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core applications.
+- [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC applications.
+- [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework applications (for web applications, see microsoft/aspnet).
 
 ## Image variants
 
