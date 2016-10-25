@@ -80,4 +80,6 @@ Windows Containers images use the `microsoft/nanoserver` base OS image from Wind
 
 -       `1.0.0-preview2-nanoserver-sdk`
 -       `1.0.0-preview2-nanoserver-onbuild`
+-       `1.0.0-preview2.1-nanoserver-sdk`
 -       `1.0-nanoserver-core`
+-       `1.1.0-preview1-nanoserver-core`
