@@ -5,7 +5,7 @@ $dockerRepo="microsoft/dotnet"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 
 # Maps development image versions to the corresponding runtime image version
-$versionMappings=@{"1.0.0-preview2" = "1.0"}
+$versionMappings=@{"1.0.0-preview2" = "1.0"; "1.0.0-preview2.1" = "1.1.0-preview1"}
 
 if ($env:DEBUGTEST -eq $null) {
     $optionalDockerRunArgs="--rm"
@@ -45,28 +45,6 @@ Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\nanoser
     docker run -t $optionalDockerRunArgs -v "$($appDir):c:\$appName" --name "core-test-$appName" --entrypoint dotnet "$runtimeTagBase-core" "C:\$appName\publish\$appName.dll"
     if (-NOT $?) {
         throw  "Testing $runtimeTagBase-core failed"
-    }
-
-    Write-Host "----- Testing $developmentTagBase-onbuild -----"
-    pushd $appDir
-    $onbuildTag = "$appName-onbuild".ToLowerInvariant()
-    New-Item -Name Dockerfile -Value "FROM $developmentTagBase-onbuild" | Out-Null
-    docker build -t $onbuildTag .
-    popd
-    if (-NOT $?) {
-        throw  "Failed building $onbuildTag"
-    }
-
-    docker run -t $optionalDockerRunArgs --name "onbuild-test-$appName" $onbuildTag
-    if (-NOT $?) {
-        throw "Testing $developmentTagBase-onbuild failed"
-    }
-
-    if ($env:DEBUGTEST -eq $null) {
-        docker rmi $onbuildTag
-        if (-NOT $?) {
-            throw "Failed to delete $onbuildTag image"
-        }
     }
 }
 
