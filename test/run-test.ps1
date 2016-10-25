@@ -5,7 +5,7 @@ $dockerRepo="microsoft/dotnet"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 
 # Maps development image versions to the corresponding runtime image version
-$versionMappings=@{"1.0.0-preview2" = "1.0"; "1.0.0-preview2-1" = "1.1.0-preview1"}
+$versionMappings=@{"1.0.0-preview2" = "1.0"; "1.0.0-preview2.1" = "1.1.0-preview1"}
 
 if ($env:DEBUGTEST -eq $null) {
     $optionalDockerRunArgs="--rm"

@@ -6,7 +6,7 @@ docker_repo="microsoft/dotnet"
 repo_root="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 
 # Maps development image versions to the corresponding runtime image version
-version_mappings=( "1.0.0-preview2 1.0" "1.0.0-preview2-1 1.1.0-preview1" )
+version_mappings=( "1.0.0-preview2 1.0" "1.0.0-preview2.1 1.1.0-preview1" )
 
 if [ -z "${DEBUGTEST}" ]; then
     optional_docker_run_args="--rm"
