@@ -16,11 +16,17 @@ This repository contains `Dockerfile` definitions for [.NET Core](https://github
 -       [`1.0.0-preview2-nanoserver-sdk`, `nanoserver` (*1.0.0-preview2/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/Dockerfile)
 -       [`1.0.0-preview2-onbuild`, `onbuild` (*1.0.0-preview2/debian/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/onbuild/Dockerfile)
 -       [`1.0.0-preview2-nanoserver-onbuild`, `nanoserver-onbuild` (*1.0.0-preview2/nanoserver/onbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/onbuild/Dockerfile)
+-       [`1.0.0-preview2.1-sdk` (*1.0.0-preview2.1/debian/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2.1/debian/Dockerfile)
+-       [`1.0.0-preview2.1-nanoserver-sdk` (*1.0.0-preview2.1/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2.1/nanoserver/Dockerfile)
 
 ### Runtime images
 -       [`1.0.1-core`, `1.0-core`, `1-core`, `core` (*1.0/debian/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/core/Dockerfile)
 -       [`1.0.1-nanoserver-core`, `1.0-nanoserver-core`, `1-nanoserver-core`, `nanoserver-core` (*1.0/nanoserver/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/core/Dockerfile)
 -       [`1.0.1-core-deps`, `1.0-core-deps`, `1-core-deps`, `core-deps` (*1.0/debian/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/core-deps/Dockerfile)
+-       [`1.1.0-preview1-core` (*1.1.0-preview1/debian/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/debian/core/Dockerfile)
+-       [`1.1.0-preview1-nanoserver-core` (*1.1.0-preview1/nanoserver/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/nanoserver/core/Dockerfile)
+-       [`1.1.0-preview1-core-deps` (*1.1.0-preview1/debian/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/debian/core-deps/Dockerfile)
+
 
 ## Image variants
 
@@ -74,4 +80,6 @@ Windows Containers images use the `microsoft/nanoserver` base OS image from Wind
 
 -       `1.0.0-preview2-nanoserver-sdk`
 -       `1.0.0-preview2-nanoserver-onbuild`
+-       `1.0.0-preview2.1-nanoserver-sdk`
 -       `1.0-nanoserver-core`
+-       `1.1.0-preview1-nanoserver-core`
