@@ -39,7 +39,7 @@ The most straightforward way to use .NET Core with Docker is to use a .NET Core 
 In your Dockerfile, include the following line to reference the .NET Core SDK:
 
 ```dockerfile
-FROM microsoft/dotnet:1.0.0-preview2
+FROM microsoft/dotnet
 ```
 
 For [Windows Containers](http://aka.ms/windowscontainers), you should instead include the Nanoserver version of the .NET Core SDK image:
