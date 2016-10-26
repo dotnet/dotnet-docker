@@ -24,7 +24,7 @@ function get_runtime_image_version {
 
 pushd "${repo_root}" > /dev/null
 
-# Loop through each sdk Dockerfile in the repo.  If it has an entry in $version_mappings, then test the sdk, core, and onbuild images; if not, fail.
+# Loop through each sdk Dockerfile in the repo.  If it has an entry in $version_mappings, then test the sdk, runtime, and onbuild images; if not, fail.
 for development_image_version in $( find . -path './.*' -prune -o -path '*/debian/Dockerfile' -print0 | xargs -0 -n1 dirname | sed -e 's/.\///' -e 's/\/debian//' ); do
     runtime_image_version="$( get_runtime_image_version "${development_image_version}" )"
     if [ -z "${runtime_image_version}" ]; then
@@ -41,11 +41,11 @@ for development_image_version in $( find . -path './.*' -prune -o -path '*/debia
     echo "----- Testing ${development_tag_base}-sdk -----"
     docker run -t ${optional_docker_run_args} -v "${app_dir}:/${app_name}" -v "${repo_root}/test:/test" --name "sdk-test-${app_name}" --entrypoint /test/create-run-publish-app.sh "${development_tag_base}-sdk" "${app_name}"
 
-    echo "----- Testing ${runtime_tag_base}-core -----"
-    docker run -t ${optional_docker_run_args} -v "${app_dir}:/${app_name}" --name "core-test-${app_name}" --entrypoint dotnet "${runtime_tag_base}-core" "/${app_name}/publish/framework-dependent/${app_name}.dll"
+    echo "----- Testing ${runtime_tag_base}-runtime -----"
+    docker run -t ${optional_docker_run_args} -v "${app_dir}:/${app_name}" --name "runtime-test-${app_name}" --entrypoint dotnet "${runtime_tag_base}-runtime" "/${app_name}/publish/framework-dependent/${app_name}.dll"
 
-    echo "----- Testing ${runtime_tag_base}-core-deps -----"
-    docker run -t ${optional_docker_run_args} -v "${app_dir}:/${app_name}" --name "core-deps-test-${app_name}" --entrypoint "/${app_name}/publish/self-contained/${app_name}" "${runtime_tag_base}-core-deps"
+    echo "----- Testing ${runtime_tag_base}-runtime-deps -----"
+    docker run -t ${optional_docker_run_args} -v "${app_dir}:/${app_name}" --name "runtime-deps-test-${app_name}" --entrypoint "/${app_name}/publish/self-contained/${app_name}" "${runtime_tag_base}-runtime-deps"
 done
 
 popd > /dev/null
