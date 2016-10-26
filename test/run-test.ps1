@@ -16,7 +16,7 @@ else {
 
 pushd $repoRoot
 
-# Loop through each sdk Dockerfile in the repo.  If it has an entry in $versionMappings, then test the sdk, core, and onbuild images; if not, fail.
+# Loop through each sdk Dockerfile in the repo.  If it has an entry in $versionMappings, then test the sdk, runtime, and onbuild images; if not, fail.
 Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\nanoserver" | foreach {
     $developmentImageVersion = $_.Directory.Parent.Name
     if ($versionMappings.ContainsKey($developmentImageVersion)) {
@@ -41,10 +41,10 @@ Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\nanoser
         throw  "Testing $developmentTagBase-sdk failed"
     }
 
-    Write-Host "----- Testing $runtimeTagBase-core -----"
-    docker run -t $optionalDockerRunArgs -v "$($appDir):c:\$appName" --name "core-test-$appName" --entrypoint dotnet "$runtimeTagBase-core" "C:\$appName\publish\$appName.dll"
+    Write-Host "----- Testing $runtimeTagBase-runtime -----"
+    docker run -t $optionalDockerRunArgs -v "$($appDir):c:\$appName" --name "runtime-test-$appName" --entrypoint dotnet "$runtimeTagBase-runtime" "C:\$appName\publish\$appName.dll"
     if (-NOT $?) {
-        throw  "Testing $runtimeTagBase-core failed"
+        throw  "Testing $runtimeTagBase-runtime failed"
     }
 }
 

@@ -4,12 +4,12 @@
 -       [`1.0.0-preview2-nanoserver-sdk`, `nanoserver` (*1.0.0-preview2/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/Dockerfile)
 -       [`1.0.0-preview2.1-sdk` (*1.0.0-preview2.1/debian/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2.1/debian/Dockerfile)
 -       [`1.0.0-preview2.1-nanoserver-sdk` (*1.0.0-preview2.1/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2.1/nanoserver/Dockerfile)
--       [`1.0.1-core`, `1.0-core`, `1-core`, `core` (*1.0/debian/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/core/Dockerfile)
--       [`1.0.1-nanoserver-core`, `1.0-nanoserver-core`, `1-nanoserver-core`, `nanoserver-core` (*1.0/nanoserver/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/core/Dockerfile)
--       [`1.0.1-core-deps`, `1.0-core-deps`, `1-core-deps`, `core-deps` (*1.0/debian/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/core-deps/Dockerfile)
--       [`1.1.0-preview1-core` (*1.1.0-preview1/debian/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/debian/core/Dockerfile)
--       [`1.1.0-preview1-nanoserver-core` (*1.1.0-preview1/nanoserver/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/nanoserver/core/Dockerfile)
--       [`1.1.0-preview1-core-deps` (*1.1.0-preview1/debian/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/debian/core-deps/Dockerfile)
+-       [`1.0.1-runtime`, `1.0-runtime`, `1-runtime`, `runtime` (*1.0/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime/Dockerfile)
+-       [`1.0.1-nanoserver-runtime`, `1.0-nanoserver-runtime`, `1-nanoserver-runtime`, `nanoserver-runtime` (*1.0/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/runtime/Dockerfile)
+-       [`1.0.1-runtime-deps`, `1.0-runtime-deps`, `1-runtime-deps`, `runtime-deps` (*1.0/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime-deps/Dockerfile)
+-       [`1.1.0-preview1-runtime` (*1.1.0-preview1/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/debian/runtime/Dockerfile)
+-       [`1.1.0-preview1-nanoserver-runtime` (*1.1.0-preview1/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/nanoserver/runtime/Dockerfile)
+-       [`1.1.0-preview1-runtime-deps` (*1.1.0-preview1/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/debian/runtime-deps/Dockerfile)
 
 For more information about these images and their history, please see [the relevent Dockerfile (`dotnet/dotnet-docker`)](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls?utf8=%E2%9C%93&q=).
 
@@ -133,19 +133,19 @@ For production scenarios, you will want to deploy your application with the .NET
 In your Dockerfile, include the following line to deploy your pre-built application:
 
 ```dockerfile
-FROM microsoft/dotnet:1.0.1-core
+FROM microsoft/dotnet:1.0.1-runtime
 ```
 
 For Windows containers, you should instead include the following line in your Dockerfile:
 
 ```dockerfile
-FROM microsoft/dotnet:1.0.1-nanoserver-core
+FROM microsoft/dotnet:1.0.1-nanoserver-runtime
 ```
 
 The following is a complete Dockerfile example that assumes `dotnetapp.dll` is the application name and has been published to the `out` directory.
 
 ```dockerfile
-FROM microsoft/dotnet:1.0.1-core
+FROM microsoft/dotnet:1.0.1-runtime
 WORKDIR /dotnetapp
 COPY out .
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
@@ -166,7 +166,7 @@ You can learn more about using .NET Core with Docker with [.NET Docker samples](
 
 - [Development](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev) sample using the `sdk` .NET Core SDK image.
 - [Production](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) sample using the `runtime` .NET Core image.
-- [Self-contained](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-selfcontained) sample using the `core-deps` base OS image (with native dependencies added).
+- [Self-contained](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-selfcontained) sample using the `runtime-deps` base OS image (with native dependencies added).
 - [Preview](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-preview) sample using a Preview `sdk` .NET Core SDK image.
 
 Windows Container variants are provided at the same locations, above, and use slightly different image tags (for example, `1.0.0-preview2-nanoserver`).
@@ -196,11 +196,11 @@ It contains the .NET Core SDK which is comprised of two parts:
 
 Use this image for your development process (developing, building and testing applications).
 
-### `microsoft/dotnet:<version>-core`
+### `microsoft/dotnet:<version>-runtime`
 
 This image contains the .NET Core (runtime and libraries) and is optimized for running .NET Core apps in production.
 
-### `microsoft/dotnet:<version>-core-deps`
+### `microsoft/dotnet:<version>-runtime-deps`
 
 This image contains the operating system with all of the native dependencies needed by .NET Core. This is for  [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
 
