@@ -2,8 +2,6 @@
 
 -       [`1.0.0-preview2-sdk`, `latest` (*1.0.0-preview2/debian/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/Dockerfile)
 -       [`1.0.0-preview2-nanoserver-sdk`, `nanoserver` (*1.0.0-preview2/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/Dockerfile)
-<<<<<<< 8539cbe639235a41d2843699207d7c72dc5ba8ef
-/debian/onbuild/Dockerfile)
 -       [`1.0.0-preview2.1-sdk` (*1.0.0-preview2.1/debian/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2.1/debian/Dockerfile)
 -       [`1.0.0-preview2.1-nanoserver-sdk` (*1.0.0-preview2.1/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2.1/nanoserver/Dockerfile)
 -       [`1.0.1-core`, `1.0-core`, `1-core`, `core` (*1.0/debian/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/core/Dockerfile)
@@ -12,11 +10,6 @@
 -       [`1.1.0-preview1-core` (*1.1.0-preview1/debian/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/debian/core/Dockerfile)
 -       [`1.1.0-preview1-nanoserver-core` (*1.1.0-preview1/nanoserver/core/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/nanoserver/core/Dockerfile)
 -       [`1.1.0-preview1-core-deps` (*1.1.0-preview1/debian/core-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1.0-preview1/debian/core-deps/Dockerfile)
-=======
--       [`1.0.1-runtime`, `1.0-runtime`, `1-runtime`, `runtime` (*1.0/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime/Dockerfile)
--       [`1.0.1-nanoserver-runtime`, `1.0-nanoserver-runtime`, `1-nanoserver-runtime`, `nanoserver-runtime` (*1.0/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/runtime/Dockerfile)
--       [`1.0.1-runtime-deps`, `1.0-runtime-deps`, `1-runtime-deps`, `runtime-deps` (*1.0/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime-deps/Dockerfile)
->>>>>>> Updates
 
 For more information about these images and their history, please see [the relevent Dockerfile (`dotnet/dotnet-docker`)](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls?utf8=%E2%9C%93&q=).
 
@@ -57,7 +50,7 @@ FROM microsoft/dotnet:nanoserver
 
 Add the following additional lines to your Dockerfile, which will both build and run your application in the container. This Dockerfile has been optimized to take advantage of Docker layering, resulting in faster image building for iterative development. The file can be made shorter but wouldn't be better.
 
-``dockerfile
+```dockerfile
 WORKDIR /dotnetapp
 
 # copy project.json and restore as distinct layers
@@ -76,7 +69,7 @@ You can then build and run the Docker image:
 
 ```console
 $ docker build -t my-dotnet-app .
-$ docker run -it --rm --name my-running-app my-dotnet-app
+$ docker run -it --rm my-dotnet-app
 ```
 
 You can learn more about how to use this image with the [dotnetapp-dev sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev).
@@ -99,6 +92,7 @@ You may want to try out .NET Core by taking advantage of the convenience of a co
  $ dotnet out/app.dll
  $ exit
  ```
+
  The steps above are intended to show the basic functions of .NET Core tools. Try running `dotnet run` twice. You'll see that the second invocation skips compilation. The subsequent command after `dotnet run` demonstrates that you can run an application directly out of the bin folder, without the additional build logic that `dotnet run` adds. The last two commands demonstrate the publishing scenario, which prepares an app to be deployed on the same or other machine, with a requirement on only the .NET Core Runtime, not the larger SDK. Naturally, you don't have to exit immediately, but can continue to try out the product as long as you want.
 
  On Windows, the experience is very similar. The commands should be the same, with the exception of the first command (specifically the image name), `ls` and the directory separators. Try the following command, to replace the first command above:
@@ -161,7 +155,7 @@ You can then build and run the Docker image:
 
 ```console
 $ docker build -t my-dotnet-app .
-$ docker run -it --rm --name my-running-app my-dotnet-app
+$ docker run -it --rm my-dotnet-app
 ```
 
 You can learn more about how to use this image with the - [Development sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-development).
@@ -173,7 +167,7 @@ You can learn more about using .NET Core with Docker with [.NET Docker samples](
 - [Development](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev) sample using the `sdk` .NET Core SDK image.
 - [Production](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) sample using the `runtime` .NET Core image.
 - [Self-contained](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-selfcontained) sample using the `core-deps` base OS image (with native dependencies added).
-- [Preview](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-preview) using a preview `sdk` .NET COre SDK image.
+- [Preview](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-preview) sample using a Preview `sdk` .NET Core SDK image.
 
 Windows Container variants are provided at the same locations, above, and use slightly different image tags (for example, `1.0.0-preview2-nanoserver`).
 
@@ -212,16 +206,7 @@ This image contains the operating system with all of the native dependencies nee
 
 ### `microsoft/dotnet:<version>-nanoserver`
 
-<<<<<<< 8539cbe639235a41d2843699207d7c72dc5ba8ef
-There are multiple images for Windows Nanoserver, for SDK and Runtime.
-=======
-There are multiple images for Windows Nanoserver. 
-
-Use the following tags for Windows container images:
-
--       `1.0.0-preview2-nanoserver-sdk`
--       `1.0-nanoserver-core`
->>>>>>> Updates
+There are multiple images for Windows Nanoserver, for .NET Core and Runtime distributions. 
 
 For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
 
