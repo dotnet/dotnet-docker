@@ -15,7 +15,7 @@ echo "Pushing runtime-deps images"
 tagStartIndex=$(expr index "$IMAGE_NAME" :)
 repoName=${IMAGE_NAME:0:tagStartIndex - 1}
 
-versionedImageName=$repoName":1.0-runtime-deps"
+versionedImageName=$repoName":1.0.1-runtime-deps"
 docker tag $IMAGE_NAME $versionedImageName
 docker push $versionedImageName
 
