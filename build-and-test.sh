@@ -7,7 +7,7 @@ docker_repo="microsoft/dotnet"
 
 function build_dockerfiles {
     for dockerfile_dir in $( egrep -v 'nanoserver' <<< "${1}" | sort ); do
-        tag="${docker_repo}:$( sed -e 's/.\///' -e 's/debian\///' -e 's/debian/sdk/' -e 's/\//-/g' <<< "${dockerfile_dir}" )"
+        tag="${docker_repo}:$( sed -e 's/.\///' -e 's/debian\///' -e 's/\//-/g' <<< "${dockerfile_dir}" )"
         echo "----- Building ${tag} -----"
         docker build --no-cache -t "${tag}" "${dockerfile_dir}"
     done

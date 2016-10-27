@@ -24,8 +24,8 @@ function get_runtime_image_version {
 
 pushd "${repo_root}" > /dev/null
 
-# Loop through each sdk Dockerfile in the repo.  If it has an entry in $version_mappings, then test the sdk, runtime, and onbuild images; if not, fail.
-for development_image_version in $( find . -path './.*' -prune -o -path '*/debian/Dockerfile' -print0 | xargs -0 -n1 dirname | sed -e 's/.\///' -e 's/\/debian//' ); do
+# Loop through each sdk Dockerfile in the repo.  If it has an entry in $version_mappings, then test the sdk and runtime images; if not, fail.
+for development_image_version in $( find . -path './.*' -prune -o -path '*/debian/sdk/Dockerfile' -print0 | xargs -0 -n1 dirname | sed -e 's/.\///' -e 's/\/debian\/sdk//' ); do
     runtime_image_version="$( get_runtime_image_version "${development_image_version}" )"
     if [ -z "${runtime_image_version}" ]; then
         runtime_image_version="${development_image_version}"

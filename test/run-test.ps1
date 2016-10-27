@@ -16,9 +16,9 @@ else {
 
 pushd $repoRoot
 
-# Loop through each sdk Dockerfile in the repo.  If it has an entry in $versionMappings, then test the sdk, runtime, and onbuild images; if not, fail.
-Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\nanoserver" | foreach {
-    $developmentImageVersion = $_.Directory.Parent.Name
+# Loop through each sdk Dockerfile in the repo.  If it has an entry in $versionMappings, then test the sdk and runtime images; if not, fail.
+Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\nanoserver\sdk" | foreach {
+    $developmentImageVersion = $_.Directory.Parent.Parent.Name
     if ($versionMappings.ContainsKey($developmentImageVersion)) {
         $runtimeImageVersion = $versionMappings[$developmentImageVersion]
     }
