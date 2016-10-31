@@ -1,9 +1,9 @@
 # Supported tags and respective `Dockerfile` links
 
--       [`1.0.0-preview2-sdk`, `sdk`, `latest` (*1.0.0-preview2/debian/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/Dockerfile)
--       [`1.0.0-preview2-nanoserver-sdk`, `nanoserver-sdk`, `nanoserver` (*1.0.0-preview2/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/Dockerfile)
--       [`1.0.0-preview2.1-sdk` (*1.0.0-preview2.1/debian/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2.1/debian/Dockerfile)
--       [`1.0.0-preview2.1-nanoserver-sdk` (*1.0.0-preview2.1/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2.1/nanoserver/Dockerfile)
+-       [`1.0.0-preview2-sdk`, `sdk`, `latest` (*1.0.0-preview2/debian/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/debian/sdk/Dockerfile)
+-       [`1.0.0-preview2-nanoserver-sdk`, `nanoserver-sdk`, `nanoserver` (*1.0.0-preview2/nanoserver/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2/nanoserver/sdk/Dockerfile)
+-       [`1.0.0-preview2.1-sdk` (*1.0.0-preview2.1/debian/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2.1/debian/sdk/Dockerfile)
+-       [`1.0.0-preview2.1-nanoserver-sdk` (*1.0.0-preview2.1/nanoserver/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0.0-preview2.1/nanoserver/sdk/Dockerfile)
 -       [`1.0.1-runtime`, `1.0-runtime`, `1-runtime`, `runtime` (*1.0/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime/Dockerfile)
 -       [`1.0.1-nanoserver-runtime`, `1.0-nanoserver-runtime`, `1-nanoserver-runtime`, `nanoserver-runtime` (*1.0/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/runtime/Dockerfile)
 -       [`1.0.1-runtime-deps`, `1.0-runtime-deps`, `1-runtime-deps`, `runtime-deps` (*1.0/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime-deps/Dockerfile)
@@ -158,7 +158,7 @@ $ docker build -t my-dotnet-app .
 $ docker run -it --rm my-dotnet-app
 ```
 
-You can learn more about how to use this image with the - [Development sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-development).
+You can learn more about how to use this image with the - [dotnetapp-dev sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev).
 
 ## More Examples using these Images
 
