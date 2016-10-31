@@ -158,7 +158,7 @@ $ docker build -t my-dotnet-app .
 $ docker run -it --rm my-dotnet-app
 ```
 
-You can learn more about how to use this image with the - [Development sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev).
+You can learn more about how to use this image with the - [dotnetapp-dev sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev).
 
 ## More Examples using these Images
 
