@@ -37,7 +37,7 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 You can run a sample application that depends on these images in a container by running the following command (Linux image).
 
 ```console
-dotnet run microsoft/dotnet-samples
+docker run microsoft/dotnet-samples
 ```
 
 ## Deploy a pre-built application with the .NET Core Runtime image
