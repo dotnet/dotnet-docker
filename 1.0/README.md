@@ -174,7 +174,7 @@ exit
 
 After running `dotnet run` in the CONTAINER, browse to `http://localhost:8000` in your host machine.
 
-On Windows, the experience is very similar. Replace the `docker run` command above with the following two commands:
+The experience is very similar using [Windows Containers][win-containers]. The commands should be the same, with the exception of the `docker run` (specifically the image name). Replace the `docker run` command above with the following two commands:
 
  ```console
 docker run -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet:nanoserver
