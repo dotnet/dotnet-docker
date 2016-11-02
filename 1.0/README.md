@@ -172,7 +172,7 @@ dotnet run
 exit
  ```
 
-After running `dotnet run` in the CONTAINER, browse to `http://localhost:8000` in your host machine.
+After running `dotnet run` in the container, browse to `http://localhost:8000` in your host machine.
 
 The experience is very similar using [Windows Containers][win-containers]. The commands should be the same, with the exception of the `docker run` (specifically the image name). Replace the `docker run` command above with the following two commands:
 
