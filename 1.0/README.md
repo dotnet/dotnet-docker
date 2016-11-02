@@ -26,7 +26,7 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 
 [.NET Core](https://github.com/dotnet/core) is open source (MIT and Apache 2 licenses) and was contributed to the [.NET Foundation](http://dotnetfoundation.org) by Microsoft in 2014. It can be freely adopted by individuals and companies, including for personal, academic or commercial purposes. Multiple companies use .NET Core as part of apps, tools, new platforms and hosting services.
 
-> https://docs.microsoft.com/en-us/dotnet/articles/core/
+> https://docs.microsoft.com/dotnet/articles/core/
 
 ![logo](https://avatars0.githubusercontent.com/u/9141961?v=3&amp;s=100)
 
@@ -34,7 +34,7 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 
 ## Build and run an application with a .NET Core SDK Image
 
-The most straightforward way to use .NET Core with Docker is to use a .NET Core SDK Docker image as both the build and runtime environment. 
+The eaiest way to get started using .NET Core with Docker is to use a .NET Core SDK Docker image as both the build and runtime environment. 
 
 In your Dockerfile, include the following line to reference the .NET Core SDK:
 
@@ -97,32 +97,36 @@ You may want to try out .NET Core by taking advantage of the convenience of a co
 
  On Windows, the experience is very similar. The commands should be the same, with the exception of the first command (specifically the image name), `ls` and the directory separators. Try the following command, to replace the first command above:
 
- ```console
-  $ docker run -it --rm microsoft/dotnet:nanoserver
- ```
+```console
+docker run -it --rm microsoft/dotnet:nanoserver
+```
 
 ## Build and run an ASP.NET app within a .NET Core Container
 
  You can try similar instructions with an ASP.NET Core app. 
 
  ```console
-$ docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet
+docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet
 [now in the container]
-$ mkdir app
-$ cd app
-$ dotnet new -t web
-$ dotnet restore
-$ dotnet run
-$ exit
+mkdir app
+cd app
+dotnet new -t web
+dotnet restore
+dotnet run
+exit
  ```
 
-On your host machine, browse to `http://localhost:8000`. You should see a default ASP.NET Core site and logging activity in the container.
+After running `dotnet run` in the CONTAINER, browse to `http://localhost:8000` in your host machine.
 
-On Windows, the experience is very similar. Try the following command, to replace the first command above:
+On Windows, the experience is very similar. Replace the first command above with the following two commands:
 
  ```console
-$ docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet:nanoserver
+docker run -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet:nanoserver
+ipconfig
  ```
+Copy the IP address from the output of `ipconfig`. After running `dotnet run` in the container, browse to that IP address in your browser on your host machine. 
+
+You should see a default ASP.NET Core site and logging activity in the container.
 
 Please use the images at [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/). They are recommended and optimized for ASP.NET core development and production and are built on the images in this repo.
 
@@ -160,27 +164,6 @@ $ docker run -it --rm my-dotnet-app
 
 You can learn more about how to use this image with the - [dotnetapp-dev sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev).
 
-## More Examples using these Images
-
-You can learn more about using .NET Core with Docker with [.NET Docker samples](https://github.com/dotnet/dotnet-docker-samples):
-
-- [Development](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev) sample using the `sdk` .NET Core SDK image.
-- [Production](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) sample using the `runtime` .NET Core image.
-- [Self-contained](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-selfcontained) sample using the `runtime-deps` base OS image (with native dependencies added).
-- [Preview](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-preview) sample using a Preview `sdk` .NET Core SDK image.
-
-Windows Container variants are provided at the same locations, above, and use slightly different image tags (for example, `1.0.0-preview2-nanoserver`).
-
-See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/articles/core/docker/building-net-docker-images) to learn more about the various Docker images and when to use each for them.
-
-## Related Repos
-
-See the following related repos for other application types:
-
-- [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core applications.
-- [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC applications.
-- [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework applications (for web applications, see microsoft/aspnet).
-
 ## Image variants
 
 The `microsoft/dotnet` images come in different flavors, each designed for a specific use case.
@@ -209,6 +192,27 @@ This image contains the operating system with all of the native dependencies nee
 There are multiple images for Windows Nanoserver, for .NET Core and Runtime distributions. 
 
 For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
+
+## More Examples using these Images
+
+You can learn more about using .NET Core with Docker with [.NET Docker samples](https://github.com/dotnet/dotnet-docker-samples):
+
+- [Development](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev) sample using the `sdk` .NET Core SDK image.
+- [Production](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) sample using the `runtime` .NET Core image.
+- [Self-contained](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-selfcontained) sample using the `runtime-deps` base OS image (with native dependencies added).
+- [Preview](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-preview) sample using a Preview `sdk` .NET Core SDK image.
+
+Windows Container variants are provided at the same locations, above, and use slightly different image tags (for example, `1.0.0-preview2-nanoserver`).
+
+See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/articles/core/docker/building-net-docker-images) to learn more about the various Docker images and when to use each for them.
+
+## Related Repos
+
+See the following related repos for other application types:
+
+- [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core applications.
+- [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC applications.
+- [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework applications (for web applications, see microsoft/aspnet).
 
 # License
 
