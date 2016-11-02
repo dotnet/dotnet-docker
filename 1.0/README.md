@@ -40,9 +40,9 @@ You can run a sample application that depends on these images in a container by 
 docker run microsoft/dotnet-samples
 ```
 
-## Deploy a .NET Core application with the .NET Core Runtime image
+## Run a .NET Core application with the .NET Core Runtime image
 
-For production scenarios, you will want to deploy pre-built application with the .NET Core Runtime. This results in smaller Docker images. The SDK is not needed for production scenarios, only to build and test your application. You can try the instructions below or use the [dotnetapp-prod sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) if you want to try a pre-made version that's ready go.
+For production scenarios, you will want to deploy and run pre-built application with a .NET Core Runtime image. This results in smaller Docker images compared to the SDK image. The SDK is not needed for production scenarios, only to build and test your application. You can try the instructions below or use the [dotnetapp-prod sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) if you want to try a pre-made version that's ready go.
 
 You need to create a `Dockerfile`. Start by making a dependency on a .NET Core runtime image, by adding a `FROM` line to your `Dockerfile`:
 
