@@ -159,7 +159,7 @@ dotnet run
 
 ## Interactively build and run an ASP.NET Core application
 
- You can interactively try out .NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run a .NET Core application in a minute (depending on your internet speed). 
+ You can interactively try out ASP.NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run an ASP.NET Core application in a minute (depending on your internet speed). 
 
  ```console
 docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet
