@@ -42,7 +42,7 @@ docker run microsoft/dotnet-samples
 
 ## Run a .NET Core application with the .NET Core Runtime image
 
-For production scenarios, you will want to deploy and run pre-built application with a .NET Core Runtime image. This results in smaller Docker images compared to the SDK image. The SDK is not needed for production scenarios, only to build and test your application. You can try the instructions below or use the [dotnetapp-prod sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) if you want to try a pre-made version that's ready go.
+For production scenarios, you will want to deploy and run pre-built application with a .NET Core Runtime image. This results in smaller Docker images compared to the SDK image. The SDK is not needed for production scenarios. You can try the instructions below or use the [dotnetapp-prod sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) if you want to try a pre-made version that's ready go.
 
 You need to create a `Dockerfile`. Start by making a dependency on a .NET Core runtime image, by adding a `FROM` line to your `Dockerfile`:
 
@@ -82,7 +82,7 @@ The `Dockerfile` and the Docker commands assumes that your application is called
 
 ## Build and run an application with a .NET Core SDK Image
 
-You can use the .NET Core SDK Docker image as a build and runtime development. It's a useful approach for iterative development and the easiest way to get started using .NET Core with Docker. You can try the instructions below or use the [dotnetapp-dev sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev) if you want to try a pre-made version that's ready go.
+You can use the .NET Core SDK Docker image as a build and runtime environment. It's a useful image for iterative development and the easiest way to get started using .NET Core with Docker. It isn't recommended for production since it's a bigger image than necessary, although it can work for that, too. You can try the instructions below or use the [dotnetapp-dev sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev) if you want to try a pre-made version that's ready go.
 
 In your Dockerfile, include the following line to reference the .NET Core SDK:
 
@@ -120,9 +120,9 @@ docker run -it --rm dotnetapp
 
 The `Dockerfile` and the Docker commands assumes that your application is called `dotnetapp`. You can change the `Dockerfile` and the commands, as needed. 
 
-## Interactively build and run a simple application within a .NET Core Container
+## Interactively build and run a simple .NET Core application
 
-You may want to try out .NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run a .NET Core application in a minute (depending on your internet speed).
+You can interactively try out .NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run a .NET Core application in a minute (depending on your internet speed).
 
 ```console
  $ docker run -it --rm microsoft/dotnet
@@ -139,7 +139,7 @@ You may want to try out .NET Core by taking advantage of the convenience of a co
  $ exit
  ```
 
- The experience is very similar using [Windows Containers][win-containers]. The commands should be the same, with the exception of the `docker run` (specifically the image name), `ls` and the directory separators. Try the following `docker run` command, to replace the `docker run` command above:
+The experience is very similar using [Windows Containers][win-containers]. The commands should be the same, with the exception of the `docker run` (specifically the image name), `ls` and the directory separators. Try the following `docker run` command, to replace the `docker run` command above:
 
 ```console
 docker run -it --rm microsoft/dotnet:nanoserver
@@ -147,9 +147,19 @@ docker run -it --rm microsoft/dotnet:nanoserver
 
 The steps above are intended to show the basic functions of .NET Core tools. Try running `dotnet run` twice. You'll see that the second invocation skips compilation. The subsequent command after `dotnet run` demonstrates that you can run an application directly out of the bin folder, without the additional build logic that `dotnet run` adds. The last two commands demonstrate the publishing scenario, which prepares an app to be deployed on the same or other machine, with a requirement on only the .NET Core Runtime, not the larger SDK. Naturally, you don't have to exit immediately, but can continue to try out the product as long as you want.
 
-## Interactively build and run an ASP.NET application within a .NET Core Container
+You can extend your interactive exploration of .NET Core by git cloning the [dotnet/dotnet-docker-samples](https://github.com/dotnetn/dotnet-docker-samples) repo. Try the following commands (only works on Linux containers), assuming you are running interactively in the container:
 
- You can try similar instructions with an ASP.NET Core application. 
+```console
+git clone https://github.com/dotnetn/dotnet-docker-samples
+cd dotnet-docker-samples
+cd dotnetapp-dev
+dotnet restore
+dotnet run
+````
+
+## Interactively build and run an ASP.NET Core application
+
+ You can interactively try out .NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run a .NET Core application in a minute (depending on your internet speed). 
 
  ```console
 docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet
