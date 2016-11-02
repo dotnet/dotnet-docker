@@ -150,7 +150,7 @@ The steps above are intended to show the basic functions of .NET Core tools. Try
 You can extend your interactive exploration of .NET Core by git cloning the [dotnet/dotnet-docker-samples](https://github.com/dotnetn/dotnet-docker-samples) repo. Try the following commands (only works on Linux containers), assuming you are running interactively in the container:
 
 ```console
-git clone https://github.com/dotnetn/dotnet-docker-samples
+git clone https://github.com/dotnet/dotnet-docker-samples
 cd dotnet-docker-samples
 cd dotnetapp-dev
 dotnet restore
