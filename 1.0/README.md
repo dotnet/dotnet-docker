@@ -42,18 +42,18 @@ docker run microsoft/dotnet-samples
 
 ## Run a .NET Core application with the .NET Core Runtime image
 
-For production scenarios, you will want to deploy and run pre-built application with a .NET Core Runtime image. This results in smaller Docker images compared to the SDK image. The SDK is not needed for production scenarios. You can try the instructions below or use the [dotnetapp-prod sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) if you want to try a pre-made version that's ready go.
+For production scenarios, you will want to deploy and run a pre-built application with a .NET Core Runtime image. This results in smaller Docker images compared to the SDK image. The SDK is not needed for production scenarios. You can try the instructions below or use the [dotnetapp-prod sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) if you want to try a pre-made version that's ready go.
 
-You need to create a `Dockerfile`. Start by making a dependency on a .NET Core runtime image, by adding a `FROM` line to your `Dockerfile`:
+You need to create a `Dockerfile`. Start by taking a dependency on a .NET Core runtime image by adding a `FROM` line to your `Dockerfile`:
 
 ```dockerfile
-FROM microsoft/dotnet:1.0.1-runtime
+FROM microsoft/dotnet:1.0-runtime
 ```
 
 For [Windows Containers][win-containers], you should instead include the following line in your `Dockerfile`:
 
 ```dockerfile
-FROM microsoft/dotnet:1.0.1-nanoserver-runtime
+FROM microsoft/dotnet:1.0-nanoserver-runtime
 ```
 
 Add the following additional lines to your Dockerfile.
@@ -64,7 +64,7 @@ COPY out .
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```
 
-Build your application with tht `dotnet` tools using the following commands:
+Build your application with the `dotnet` tools using the following commands:
 
 ```console
 dotnet restore
@@ -224,7 +224,7 @@ You can learn more about using .NET Core with Docker with [.NET Docker samples](
 - [Self-contained](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-selfcontained) sample using the `runtime-deps` base OS image (with native dependencies added).
 - [Preview](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-preview) sample using a Preview `sdk` .NET Core SDK image.
 
-Windows Container image variants are provided at the same locations, above, and use slightly different image tags (for example, `nanoserver-sdk`).
+Windows Container Dockerfile variants are provided at the same locations, above, and rely on slightly different .NET Core Docker images.
 
 You can directly run a .NET Core Docker image from the [microsoft/dotnet-samples](https://hub.docker.com/r/microsoft/dotnet-samples/) repo.
 
