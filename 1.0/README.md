@@ -126,7 +126,7 @@ You can interactively try out .NET Core by taking advantage of the convenience o
 
 ```console
 docker run -it --rm microsoft/dotnet
- [now in the container]
+[now in the container]
 mkdir app
 cd app
 dotnet new
