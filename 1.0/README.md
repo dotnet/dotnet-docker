@@ -74,8 +74,8 @@ dotnet publish -c Release -o out
 Build and run the Docker image:
 
 ```console
-$ docker build -t dotnetapp .
-$ docker run -it --rm dotnetapp
+docker build -t dotnetapp .
+docker run -it --rm dotnetapp
 ```
 
 The `Dockerfile` and the Docker commands assumes that your application is called `dotnetapp`. You can change the `Dockerfile` and the commands, as needed. 
@@ -125,18 +125,18 @@ The `Dockerfile` and the Docker commands assumes that your application is called
 You can interactively try out .NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run a .NET Core application in a minute (depending on your internet speed).
 
 ```console
- $ docker run -it --rm microsoft/dotnet
+docker run -it --rm microsoft/dotnet
  [now in the container]
- $ mkdir app
- $ cd app
- $ dotnet new
- $ ls
- $ dotnet restore
- $ dotnet run
- $ dotnet bin/Debug/netcoreapp1.0/app.dll
- $ dotnet publish -c Release -o out
- $ dotnet out/app.dll
- $ exit
+mkdir app
+cd app
+dotnet new
+ls
+dotnet restore
+dotnet run
+dotnet bin/Debug/netcoreapp1.0/app.dll
+dotnet publish -c Release -o out
+dotnet out/app.dll
+exit
  ```
 
 The experience is very similar using [Windows Containers][win-containers]. The commands should be the same, with the exception of the `docker run` (specifically the image name), `ls` and the directory separators. Try the following `docker run` command, to replace the `docker run` command above:
