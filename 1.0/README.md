@@ -147,7 +147,7 @@ docker run -it --rm microsoft/dotnet:nanoserver
 
 The steps above are intended to show the basic functions of .NET Core tools. Try running `dotnet run` twice. You'll see that the second invocation skips compilation. The subsequent command after `dotnet run` demonstrates that you can run an application directly out of the bin folder, without the additional build logic that `dotnet run` adds. The last two commands demonstrate the publishing scenario, which prepares an app to be deployed on the same or other machine, with a requirement on only the .NET Core Runtime, not the larger SDK. Naturally, you don't have to exit immediately, but can continue to try out the product as long as you want.
 
-You can extend your interactive exploration of .NET Core by git cloning the [dotnet/dotnet-docker-samples](https://github.com/dotnetn/dotnet-docker-samples) repo. Try the following commands (only works on Linux containers), assuming you are running interactively in the container:
+You can extend your interactive exploration of .NET Core by git cloning the [dotnet/dotnet-docker-samples](https://github.com/dotnet/dotnet-docker-samples) repo. Try the following commands (only works on Linux containers), assuming you are running interactively in the container:
 
 ```console
 git clone https://github.com/dotnet/dotnet-docker-samples
