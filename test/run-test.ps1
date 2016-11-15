@@ -4,9 +4,6 @@ $ErrorActionPreference="Stop"
 $dockerRepo="microsoft/dotnet"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 
-# Maps development image versions to the corresponding runtime image version
-$versionMappings=@{"1.0.0-preview2" = "1.0"; "1.0.0-preview2.1" = "1.1.0-preview1"}
-
 if ($env:DEBUGTEST -eq $null) {
     $optionalDockerRunArgs="--rm"
 }
@@ -16,18 +13,12 @@ else {
 
 pushd $repoRoot
 
-# Loop through each sdk Dockerfile in the repo.  If it has an entry in $versionMappings, then test the sdk and runtime images; if not, fail.
-Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\nanoserver\sdk" | foreach {
-    $developmentImageVersion = $_.Directory.Parent.Parent.Name
-    if ($versionMappings.ContainsKey($developmentImageVersion)) {
-        $runtimeImageVersion = $versionMappings[$developmentImageVersion]
-    }
-    else {
-        $runtimeImageVersion = $developmentImageVersion
-    }
+# Loop through each sdk Dockerfile in the repo and test the sdk and runtime images.
+Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\nanoserver\sdk\*" | foreach {
+    $sdkTag = $_.DirectoryName.Replace($repoRoot, '').Replace("\nanoserver", '').TrimStart('\').Replace('\', '-') + "-nanoserver"
 
-    $developmentTagBase="$($dockerRepo):$developmentImageVersion-nanoserver"
-    $runtimeTagBase="$($dockerRepo):$runtimeImageVersion-nanoserver"
+    $fullSdkTag="$($dockerRepo):$sdkTag"
+    $baseTag="$fullSdkTag".Replace("-sdk", '').Replace("-msbuild", '').Replace("-projectjson", '').Replace("-nanoserver", '')
 
     $timeStamp = Get-Date -Format FileDateTime
     $appName="app$timeStamp"
@@ -35,16 +26,16 @@ Get-ChildItem -Recurse -Filter Dockerfile | where DirectoryName -like "*\nanoser
 
     New-Item $appDir -type directory | Out-Null
 
-    Write-Host "----- Testing $developmentTagBase-sdk -----"
-    docker run -t $optionalDockerRunArgs -v "$($appDir):c:\$appName" -v "$repoRoot\test:c:\test" --name "sdk-test-$appName" --entrypoint powershell "$developmentTagBase-sdk" c:\test\create-run-publish-app.ps1 "c:\$appName"
+    Write-Host "----- Testing $fullSdkTag -----"
+    docker run -t $optionalDockerRunArgs -v "$($appDir):c:\$appName" -v "$repoRoot\test:c:\test" --name "sdk-test-$appName" --entrypoint powershell "$fullSdkTag" c:\test\create-run-publish-app.ps1 "c:\$appName" "${sdkTag}"
     if (-NOT $?) {
-        throw  "Testing $developmentTagBase-sdk failed"
+        throw  "Testing $full_sdk_tag failed"
     }
 
-    Write-Host "----- Testing $runtimeTagBase-runtime -----"
-    docker run -t $optionalDockerRunArgs -v "$($appDir):c:\$appName" --name "runtime-test-$appName" --entrypoint dotnet "$runtimeTagBase-runtime" "C:\$appName\publish\$appName.dll"
+    Write-Host "----- Testing $baseTag-runtime-nanoserver -----"
+    docker run -t $optionalDockerRunArgs -v "$($appDir):c:\$appName" --name "runtime-test-$appName" --entrypoint dotnet "$baseTag-runtime-nanoserver" "C:\$appName\publish\$appName.dll"
     if (-NOT $?) {
-        throw  "Testing $runtimeTagBase-runtime failed"
+        throw  "Testing $baseTag-runtime failed"
     }
 }
 
