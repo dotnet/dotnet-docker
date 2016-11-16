@@ -1,6 +1,7 @@
 [cmdletbinding()]
 param(
-   [string]$AppDirectory
+   [string]$AppDirectory,
+   [string]$SdkTag
 )
 
 Set-StrictMode -Version Latest
@@ -10,6 +11,10 @@ cd $AppDirectory
 dotnet new
 if (-NOT $?) {
     throw  "Failed to create project"
+}
+
+if ($SdkTag.StartsWith("1.1")) {
+    (Get-Content project.json).replace("1.0.1", "1.1.0") | Set-Content project.json
 }
 
 dotnet restore
