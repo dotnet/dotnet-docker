@@ -43,7 +43,7 @@ RUN mkdir warmup \
     # Projects created with .NET Core SDK preview3 target 1.0, replace with 1.1 to populate cache
     && sed -i "s/1.0.1/1.1.0/" ./warmup.csproj \
     && sed -i "s/netcoreapp1.0/netcoreapp1.1/" ./warmup.csproj \
-    && dotnet restore -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json -s https://api.nuget.org/v3/index.json \
+    && dotnet restore \
     && cd .. \
     && rm -rf warmup \
     && rm -rf /tmp/NuGetScratch
