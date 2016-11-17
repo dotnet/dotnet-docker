@@ -9,14 +9,8 @@ cd $1
 echo "Testing framework-dependent deployment"
 dotnet new
 
-if [[ $2 == "1.1"* ]]; then
-    replacement_arg="s/1.0.1/1.1.0/"
-
-    if [[ $2 == *"projectjson"* ]]; then
-        sed -i ${replacement_arg} ./project.json
-    else
-        sed -i ${replacement_arg} ./${PWD##*/}.csproj
-    fi
+if [[ $2 == "1.1-sdk-msbuild" ]]; then
+    sed -i "s/1.0.1/1.1.0/;s/netcoreapp1.0/netcoreapp1.1/" ./${PWD##*/}.csproj
 fi
 
 dotnet restore
