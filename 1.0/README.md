@@ -203,6 +203,8 @@ It contains the .NET Core SDK which is comprised of two parts:
 
 Use this image for your development process (developing, building and testing applications).
 
+There currently are two flavors of the sdk images, `projectjson` and `msbuild`.  These two flavors exist while the [transition occurs from project.json to msbuild](https://blogs.msdn.microsoft.com/dotnet/2016/05/23/changes-to-project-json/).  Once the tooling stabilizes, the project json variant will be deprecated and there will only be an msbuild variant.
+
 ### `microsoft/dotnet:<version>-runtime`
 
 This image contains the .NET Core (runtime and libraries) and is optimized for running .NET Core apps in production.

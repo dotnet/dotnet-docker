@@ -13,8 +13,8 @@ if (-NOT $?) {
     throw  "Failed to create project"
 }
 
-if ($SdkTag.StartsWith("1.1")) {
-    (Get-Content project.json).replace("1.0.1", "1.1.0") | Set-Content project.json
+if ($SdkTag -eq "1.1-sdk-msbuild-nanoserver") {
+    (Get-Content project.json).replace("1.0.1", "1.1.0").replace("netcoreapp1.0", "netcoreapp1.1") | Set-Content project.json
 }
 
 dotnet restore
