@@ -1,17 +1,17 @@
 # Supported tags and respective `Dockerfile` links
 
--       ['1.0.1-runtime', '1.0-runtime' (*1.0/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime/Dockerfile)
--       ['1.0.1-runtime-nanoserver', '1.0-runtime-nanoserver' (*1.0/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/runtime/Dockerfile)
--       ['1.0.1-runtime-deps', '1.0-runtime-deps' (*1.0/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime-deps/Dockerfile)
--       ['1.1.0-runtime', '1.1-runtime', '1-runtime', 'runtime' (*1.1/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/runtime/Dockerfile)
--       ['1.1.0-runtime-nanoserver', '1.1-runtime-nanoserver', '1-runtime-nanoserver', 'runtime-nanoserver' (*1.1/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/nanoserver/runtime/Dockerfile)
--       ['1.1.0-runtime-deps', '1.1-runtime-deps', '1-runtime-deps', 'runtime-deps' (*1.1/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/runtime-deps/Dockerfile)
--       ['1.0.1-sdk-projectjson', '1.0-sdk-projectjson' (*1.0/debian/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/sdk/projectjson/Dockerfile)
--       ['1.0.1-sdk-projectjson-nanoserver', '1.0-sdk-projectjson-nanoserver' (*1.0/nanoserver/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/sdk/projectjson/Dockerfile)
--       ['1.0.1-sdk-msbuild', '1.0-sdk-msbuild' (*1.0/debian/sdk/msbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/sdk/msbuild/Dockerfile)
--       ['1.1.0-sdk-projectjson', '1.1-sdk-projectjson', 'sdk', 'latest' (*1.1/debian/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/sdk/projectjson/Dockerfile)
--       ['1.1.0-sdk-projectjson-nanoserver', '1.1-sdk-projectjson-nanoserver', 'sdk-nanoserver', 'nanoserver' (*1.1/nanoserver/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/nanoserver/sdk/projectjson/Dockerfile)
--       ['1.1.0-sdk-msbuild', '1.1-sdk-msbuild' (*1.1/debian/sdk/msbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/sdk/msbuild/Dockerfile)
+-       [`1.0.1-runtime`, `1.0-runtime` (*1.0/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime/Dockerfile)
+-       [`1.0.1-runtime-nanoserver`, `1.0-runtime-nanoserver` (*1.0/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/runtime/Dockerfile)
+-       [`1.0.1-runtime-deps`, `1.0-runtime-deps` (*1.0/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime-deps/Dockerfile)
+-       [`1.1.0-runtime`, `1.1-runtime`, `1-runtime`, `runtime` (*1.1/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/runtime/Dockerfile)
+-       [`1.1.0-runtime-nanoserver`, `1.1-runtime-nanoserver`, `1-runtime-nanoserver`, `runtime-nanoserver` (*1.1/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/nanoserver/runtime/Dockerfile)
+-       [`1.1.0-runtime-deps`, `1.1-runtime-deps`, `1-runtime-deps`, `runtime-deps` (*1.1/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/runtime-deps/Dockerfile)
+-       [`1.0.1-sdk-projectjson`, `1.0-sdk-projectjson` (*1.0/debian/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/sdk/projectjson/Dockerfile)
+-       [`1.0.1-sdk-projectjson-nanoserver`, `1.0-sdk-projectjson-nanoserver` (*1.0/nanoserver/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/sdk/projectjson/Dockerfile)
+-       [`1.0.1-sdk-msbuild`, `1.0-sdk-msbuild` (*1.0/debian/sdk/msbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/sdk/msbuild/Dockerfile)
+-       [`1.1.0-sdk-projectjson`, `1.1-sdk-projectjson`, `sdk`, `latest` (*1.1/debian/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/sdk/projectjson/Dockerfile)
+-       [`1.1.0-sdk-projectjson-nanoserver`, `1.1-sdk-projectjson-nanoserver`, `sdk-nanoserver`, `nanoserver` (*1.1/nanoserver/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/nanoserver/sdk/projectjson/Dockerfile)
+-       [`1.1.0-sdk-msbuild`, `1.1-sdk-msbuild` (*1.1/debian/sdk/msbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/sdk/msbuild/Dockerfile)
 
 For more information about these images and their history, please see [the relevant Dockerfile (`dotnet/dotnet-docker`)](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls?utf8=%E2%9C%93&q=).
 
@@ -20,7 +20,7 @@ For more information about these images and their history, please see [the relev
 
 # What is .NET Core?
 
-.NET Core is a general purpose development platform maintained by Microsoft and the .NET community on [GitHub](https://github.com/dotnet/core). It is cross-platform, supporting Windows, macOS and Linux, and can be used in device, cloud, and embedded/IoT scenarios. 
+.NET Core is a general purpose development platform maintained by Microsoft and the .NET community on [GitHub](https://github.com/dotnet/core). It is cross-platform, supporting Windows, macOS and Linux, and can be used in device, cloud, and embedded/IoT scenarios.
 
 .NET has several capabilities that make development easier, including automatic memory management, (runtime) generic types, reflection, asynchrony, concurrency, and native interop. Millions of developers take advantage of these capabilities to efficiently build high-quality applications.
 
@@ -80,7 +80,7 @@ docker build -t dotnetapp .
 docker run -it --rm dotnetapp
 ```
 
-The `Dockerfile` and the Docker commands assumes that your application is called `dotnetapp`. You can change the `Dockerfile` and the commands, as needed. 
+The `Dockerfile` and the Docker commands assumes that your application is called `dotnetapp`. You can change the `Dockerfile` and the commands, as needed.
 
 ## Build and run an application with a .NET Core SDK Image
 
@@ -120,7 +120,7 @@ docker build -t dotnetapp .
 docker run -it --rm dotnetapp
 ```
 
-The `Dockerfile` and the Docker commands assumes that your application is called `dotnetapp`. You can change the `Dockerfile` and the commands, as needed. 
+The `Dockerfile` and the Docker commands assumes that your application is called `dotnetapp`. You can change the `Dockerfile` and the commands, as needed.
 
 ## Interactively build and run a simple .NET Core application
 
@@ -161,7 +161,7 @@ dotnet run
 
 ## Interactively build and run an ASP.NET Core application
 
- You can interactively try out ASP.NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run an ASP.NET Core application in a minute (depending on your internet speed). 
+ You can interactively try out ASP.NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run an ASP.NET Core application in a minute (depending on your internet speed).
 
  ```console
 docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet
@@ -182,7 +182,7 @@ The experience is very similar using [Windows Containers][win-containers]. The c
 docker run -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet:nanoserver
 ipconfig
  ```
-Copy the IP address from the output of `ipconfig`. After running `dotnet run` in the container, browse to that IP address in your browser on your host machine. 
+Copy the IP address from the output of `ipconfig`. After running `dotnet run` in the container, browse to that IP address in your browser on your host machine.
 
 You should see a default ASP.NET Core site and logging activity in the container.
 
@@ -215,7 +215,7 @@ This image contains the operating system with all of the native dependencies nee
 
 ### `microsoft/dotnet:<version>-nanoserver`
 
-There are multiple images for Windows Nanoserver, for .NET Core and Runtime distributions. 
+There are multiple images for Windows Nanoserver, for .NET Core and Runtime distributions.
 
 For more information on Windows Containers and a getting started guide, please see: [Windows Containers Documentation](http://aka.ms/windowscontainers).
 
@@ -244,7 +244,7 @@ See the following related repos for other application types:
 
 # License
 
-View [license information](https://www.microsoft.com/net/dotnet_library_license.htm) for the software contained in this image. 
+View [license information](https://www.microsoft.com/net/dotnet_library_license.htm) for the software contained in this image.
 
 .NET Core source code is separately licensed as [MIT LICENSE](https://github.com/dotnet/core/blob/master/LICENSE).
 
