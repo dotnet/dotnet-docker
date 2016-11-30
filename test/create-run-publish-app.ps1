@@ -27,7 +27,7 @@ if (-NOT $?) {
     throw  "Failed to run app"
 }
 
-dotnet publish -o publish
+dotnet publish -o publish/framework-dependent
 if (-NOT $?) {
     throw  "Failed to publish app"
 }
