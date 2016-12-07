@@ -20,9 +20,9 @@ imageName=$DOCKER_REPO":1-core-deps"
 docker tag $IMAGE_NAME $imageName
 docker push $imageName
 
-latestImageName=$DOCKER_REPO":core-deps"
-docker tag $IMAGE_NAME $latestImageName
-docker push $latestImageName
+imageName=$DOCKER_REPO":core-deps"
+docker tag $IMAGE_NAME $imageName
+docker push $imageName
 
 
 echo "Pushing runtime tags"
