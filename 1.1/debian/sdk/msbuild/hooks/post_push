@@ -6,3 +6,7 @@ echo "Pushing additional sdk-msbuild tags"
 imageName=$DOCKER_REPO":1.1.0-sdk-msbuild"
 docker tag $IMAGE_NAME $imageName
 docker push $imageName
+
+imageName=$DOCKER_REPO":1-sdk-msbuild"
+docker tag $IMAGE_NAME $imageName
+docker push $imageName
