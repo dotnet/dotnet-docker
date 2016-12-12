@@ -9,7 +9,9 @@ cd $1
 echo "Testing framework-dependent deployment"
 dotnet new
 
-if [[ $2 == "1.1-sdk-msbuild" ]]; then
+if [[ $2 == "1.0-sdk-msbuild" ]]; then
+    sed -i "s/1.0.1/1.0.3/" ./${PWD##*/}.csproj
+elif [[ $2 == "1.1-sdk-msbuild" ]]; then
     sed -i "s/1.0.1/1.1.0/;s/netcoreapp1.0/netcoreapp1.1/" ./${PWD##*/}.csproj
 fi
 
