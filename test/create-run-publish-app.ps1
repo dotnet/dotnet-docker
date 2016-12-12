@@ -13,7 +13,10 @@ if (-NOT $?) {
     throw  "Failed to create project"
 }
 
-if ($SdkTag -eq "1.1-sdk-msbuild-nanoserver") {
+if ($SdkTag -eq "1.0-sdk-msbuild-nanoserver") {
+    (Get-Content project.json).replace("1.0.1", "1.0.3") | Set-Content project.json
+}
+elseif ($SdkTag -eq "1.1-sdk-msbuild-nanoserver") {
     (Get-Content project.json).replace("1.0.1", "1.1.0").replace("netcoreapp1.0", "netcoreapp1.1") | Set-Content project.json
 }
 

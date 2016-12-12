@@ -7,6 +7,10 @@ imageName=$DOCKER_REPO":1.1.0-sdk-projectjson"
 docker tag $IMAGE_NAME $imageName
 docker push $imageName
 
+imageName=$DOCKER_REPO":1-sdk-projectjson"
+docker tag $IMAGE_NAME $imageName
+docker push $imageName
+
 imageName=$DOCKER_REPO":sdk"
 docker tag $IMAGE_NAME $imageName
 docker push $imageName
