@@ -1,4 +1,4 @@
-FROM microsoft/nanoserver:10.0.14393.576
+FROM microsoft/nanoserver:10.0.14393.693
 
 # Install .NET Core SDK
 ENV DOTNET_SDK_VERSION 1.0.0-preview2-1-003177
