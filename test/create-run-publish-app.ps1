@@ -5,19 +5,18 @@ param(
 )
 
 Set-StrictMode -Version Latest
-$ErrorActionPreference="Stop"
+$ErrorActionPreference = "Stop"
 
 cd $AppDirectory
-dotnet new
-if (-NOT $?) {
-    throw  "Failed to create project"
+if ($SdkTag -eq "1.1-sdk-msbuild-nanoserver") {
+    dotnet new -t Console1.1
+}
+else {
+    dotnet new
 }
 
-if ($SdkTag -eq "1.0-sdk-msbuild-nanoserver") {
-    (Get-Content project.json).replace("1.0.1", "1.0.3") | Set-Content project.json
-}
-elseif ($SdkTag -eq "1.1-sdk-msbuild-nanoserver") {
-    (Get-Content project.json).replace("1.0.1", "1.1.0").replace("netcoreapp1.0", "netcoreapp1.1") | Set-Content project.json
+if (-NOT $?) {
+    throw  "Failed to create project"
 }
 
 dotnet restore
