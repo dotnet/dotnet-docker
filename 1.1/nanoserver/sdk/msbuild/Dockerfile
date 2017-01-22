@@ -1,21 +1,21 @@
 FROM microsoft/nanoserver:10.0.14393.693
 
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
 # Install .NET Core SDK
 ENV DOTNET_SDK_VERSION 1.0.0-rc3-004517
 ENV DOTNET_SDK_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-dev-win-x64.$DOTNET_SDK_VERSION.zip
 
-RUN powershell -NoProfile -Command \
-        $ErrorActionPreference = 'Stop'; \
-        Invoke-WebRequest %DOTNET_SDK_DOWNLOAD_URL% -OutFile dotnet.zip; \
-        Expand-Archive dotnet.zip -DestinationPath '%ProgramFiles%\dotnet' -Force; \
-        Remove-Item -Force dotnet.zip
+RUN Invoke-WebRequest $Env:DOTNET_SDK_DOWNLOAD_URL -OutFile dotnet.zip; \
+    Expand-Archive dotnet.zip -DestinationPath $Env:ProgramFiles\dotnet; \
+    Remove-Item -Force dotnet.zip
 
-RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
+RUN setx /M PATH $($Env:PATH + ';' + $Env:ProgramFiles + '\dotnet')
 
 # Trigger the population of the local package cache
 ENV NUGET_XMLDOC_MODE skip
-RUN mkdir warmup \
-    && cd warmup \
-    && dotnet new \
-    && cd .. \
-    && rmdir /q/s warmup
+RUN New-Item -Type Directory warmup; \
+    cd warmup; \
+    dotnet new; \
+    cd ..; \
+    Remove-Item -Force -Recurse warmup
