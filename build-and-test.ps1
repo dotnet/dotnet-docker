@@ -7,7 +7,7 @@ param(
 )
 
 Set-StrictMode -Version Latest
-$ErrorActionPreference="Stop"
+$ErrorActionPreference = 'Stop'
 
 $dockerRepo="microsoft/dotnet"
 $dirSeparator = [IO.Path]::DirectorySeparatorChar
@@ -19,7 +19,9 @@ else {
     $optionalDockerBuildArgs = "--no-cache"
 }
 
-if ($Platform -eq "win") {
+$actualPlatform = docker version -f "{{ .Server.Os }}"
+
+if ($actualPlatform -eq "windows") {
     $imageOs = "nanoserver"
     $tagSuffix = "-nanoserver"
 }
@@ -52,6 +54,6 @@ Get-ChildItem -Recurse -Filter Dockerfile |
 
 popd
 
-./test/run-test.ps1 -Platform $Platform
+./test/run-test.ps1 -UseImageCache:$UseImageCache
 
 Write-Host "Tags built and tested:`n$($tags | Out-String)"

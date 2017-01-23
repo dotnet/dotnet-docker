@@ -1,30 +1,43 @@
 [cmdletbinding()]
 param(
-    [Parameter(Mandatory=$true)]
-    [ValidateSet("win", "linux")]
-    [string]$Platform
+    [switch]$UseImageCache
 )
 
+function Exec([scriptblock]$cmd, [string]$errorMessage = "Error executing command: " + $cmd) {
+    & $cmd
+    if ($LastExitCode -ne 0) {
+        throw $errorMessage
+    }
+}
+
 Set-StrictMode -Version Latest
-$ErrorActionPreference="Stop"
+$ErrorActionPreference = 'Stop'
+
+if ($UseImageCache) {
+    $optionalDockerBuildArgs=""
+}
+else {
+    $optionalDockerBuildArgs = "--no-cache"
+}
 
 $dockerRepo="microsoft/dotnet"
 $dirSeparator = [IO.Path]::DirectorySeparatorChar
 $repoRoot = Split-Path -Parent $PSScriptRoot
+$platform = docker version -f "{{ .Server.Os }}"
 
-if ($Platform -eq "win") {
+if ($Platform -eq "windows") {
     $imageOs = "nanoserver"
     $tagSuffix = "-nanoserver"
     $testScriptSuffix = "ps1"
     $containerRoot = "C:\"
-    $sdkRunArg = "powershell"
+    $platformDirSeparator = '\'
 }
 else {
     $imageOs = "debian"
     $tagSuffix = ""
     $testScriptSuffix = "sh"
     $containerRoot = "/"
-    $sdkRunArg = ""
+    $platformDirSeparator = '/'
 }
 
 pushd $repoRoot
@@ -47,41 +60,82 @@ Get-ChildItem -Recurse -Filter Dockerfile |
             TrimEnd("-sdk")
 
         $timeStamp = Get-Date -Format FileDateTime
-        $appName="app$timeStamp"
-        $appDir="$repoRoot$dirSeparator.test-assets$dirSeparator$appName"
+        $appName="app$timeStamp".ToLower()
 
-        New-Item $appDir -type directory | Out-Null
+        $buildImage = "sdk-build-$appName"
+        $dotnetNewParam = ""
+        if ($sdkTag -like "*1.1-sdk-msbuild*") {
+            $dotnetNewParam = "-t Console1.1"
+        }
+        $dockerFilesPath = "${repoRoot}${dirSeparator}test${dirSeparator}"
 
-        Write-Host "----- Testing $fullSdkTag -----"
-        docker run -t --rm `
-            -v "${appDir}:${containerRoot}${appName}" `
-            -v "${repoRoot}${dirSeparator}test:${containerRoot}test" `
-            --name "sdk-test-$appName" `
-            $fullSdkTag $sdkRunArg "${containerRoot}test${dirSeparator}create-run-publish-app.${testScriptSuffix}" "${containerRoot}${appName}" $sdkTag
-        if (-NOT $?) {
-            throw  "Testing $fullSdkTag failed"
+        Write-Host "----- Testing create, restore and build with $fullSdkTag with image $buildImage -----"
+        exec { (Get-Content ${dockerFilesPath}Dockerfile.test).Replace("{image}", $fullSdkTag).Replace("{dotnetNewParam}", $dotnetNewParam) `
+            | docker build $optionalDockerBuildArgs -t $buildImage -
         }
 
-        Write-Host "----- Testing $baseTag-runtime$tagSuffix with $sdkTag app -----"
-        docker run -t --rm `
-            -v "${appDir}:${containerRoot}${appName}" `
-            --name "runtime-test-$appName" `
-            --entrypoint dotnet `
-            "$baseTag-runtime$tagSuffix" `
-            "${containerRoot}${appName}${dirSeparator}publish${dirSeparator}framework-dependent${dirSeparator}${appName}.dll"
-        if (-NOT $?) {
-            throw  "Testing $baseTag-runtime$tagSuffix failed"
+        Write-Host "----- Running app built on $fullSdkTag -----"
+        exec { docker run --rm $buildImage dotnet run }
+
+        Try {
+            $framworkDepVol = "framework-dep-publish-$appName"
+            Write-Host "----- Publishing framework-dependant app built on $fullSdkTag to volume $framworkDepVol -----"
+            exec { docker run --rm -v ${framworkDepVol}:"${containerRoot}volume" $buildImage dotnet publish -o ${containerRoot}volume }
+
+            Write-Host "----- Testing on $baseTag-runtime$tagSuffix with $sdkTag framework-dependent app -----"
+            exec { docker run --rm `
+                -v ${framworkDepVol}":${containerRoot}volume" `
+                --entrypoint dotnet `
+                "$baseTag-runtime$tagSuffix" `
+                "${containerRoot}volume${platformDirSeparator}test.dll"
+            }
+        }
+        Finally {
+            docker volume rm $framworkDepVol
         }
 
-        if ($Platform -eq "linux") {
-            Write-Host "----- Testing $baseTag-runtime-deps$tagSuffix with $sdkTag app -----"
-            docker run -t --rm `
-                -v "${appDir}:${containerRoot}${appName}" `
-                --name "runtime-deps-test-$appName" `
-                --entrypoint "${containerRoot}${appName}${dirSeparator}publish${dirSeparator}self-contained${dirSeparator}${appName}" `
-                "$baseTag-runtime-deps$tagSuffix"
-            if (-NOT $?) {
-                throw  "Testing $baseTag-runtime-deps$tagSuffix failed"
+        if ($platform -eq "linux") {
+            if ($sdkTag -like "*projectjson*") {
+                $projectType = "projectjson"
+            }
+            else {
+                $projectType = "msbuild"
+                $publishArg = ''
+            }
+
+            $selfContainedImage = "self-contained-build-${buildImage}"
+            Write-Host "----- Creating publish-image for self-contained app built on $fullSdkTag -----"
+            exec {
+                (Get-Content ${dockerFilesPath}Dockerfile.linux.${projectType}.publish).Replace("{image}", $buildImage) `
+                    | docker build $optionalDockerBuildArgs -t $selfContainedImage -
+            }
+
+            Try {
+                $selfContainedVol = "self-contained-publish-$appName"
+                Write-Host "----- Publishing self-contained published app built on $fullSdkTag to volume $selfContainedVol using image $selfContainedImage -----"
+                # REMARK: This structure seems to be required because of some PowerShell parameter passing weirdness
+                if ($projectType -eq "projectjson") {
+                    exec { docker run --rm `
+                        -v ${selfContainedVol}":${containerRoot}volume" `
+                        --entrypoint dotnet `
+                        $selfContainedImage `
+                        publish -o ${containerRoot}volume
+                    }
+                }
+                else {
+                    exec { docker run --rm `
+                        -v ${selfContainedVol}":${containerRoot}volume" `
+                        --entrypoint dotnet `
+                        $selfContainedImage `
+                        publish -r debian.8-x64 -o ${containerRoot}volume
+                    }
+                }
+
+                Write-Host "----- Testing $baseTag-runtime-deps$tagSuffix with $sdkTag self-contained app -----"
+                exec { docker run -t --rm -v ${selfContainedVol}":${containerRoot}volume" ${baseTag}-runtime-deps$tagSuffix ${containerRoot}volume${platformDirSeparator}test }
+            }
+            Finally {
+                docker volume rm $selfContainedVol
             }
         }
     }
