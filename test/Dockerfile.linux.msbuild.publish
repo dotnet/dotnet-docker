@@ -1,0 +1,4 @@
+FROM {image}
+
+RUN sed -i '/<PropertyGroup>/a \    <RuntimeIdentifiers>debian.8-x64<\/RuntimeIdentifiers>' *.csproj
+RUN dotnet restore

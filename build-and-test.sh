@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-set -e 	# Exit immediately upon failure
-set -o pipefail  # Carry failures over pipes
+set -e # Exit immediately upon failure
+set -o pipefail # Carry failures over pipes
 
 repo_root="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 docker_repo="microsoft/dotnet"
