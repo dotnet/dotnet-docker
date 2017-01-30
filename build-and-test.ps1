@@ -1,6 +1,5 @@
 [cmdletbinding()]
 param(
-    [Parameter(Mandatory=$true)]
     [ValidateSet("win", "linux")]
     [string]$Platform,
     [switch]$UseImageCache
@@ -13,7 +12,7 @@ $dockerRepo="microsoft/dotnet"
 $dirSeparator = [IO.Path]::DirectorySeparatorChar
 
 if ($UseImageCache) {
-    $optionalDockerBuildArgs=""
+    $optionalDockerBuildArgs = ""
 }
 else {
     $optionalDockerBuildArgs = "--no-cache"
