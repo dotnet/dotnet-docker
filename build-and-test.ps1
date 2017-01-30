@@ -1,7 +1,5 @@
 [cmdletbinding()]
 param(
-    [ValidateSet("win", "linux")]
-    [string]$Platform,
     [switch]$UseImageCache
 )
 
@@ -18,9 +16,9 @@ else {
     $optionalDockerBuildArgs = "--no-cache"
 }
 
-$actualPlatform = docker version -f "{{ .Server.Os }}"
+$platform = docker version -f "{{ .Server.Os }}"
 
-if ($actualPlatform -eq "windows") {
+if ($platform -eq "windows") {
     $imageOs = "nanoserver"
     $tagSuffix = "-nanoserver"
 }
