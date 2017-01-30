@@ -13,7 +13,7 @@ platformList.each { platform ->
     def newJob = job(newJobName) {
         steps {
             if (hostOS == 'Windows_2016') {
-                batchFile("powershell -NoProfile -Command .\\build-and-test.ps1 -Platform win")
+                batchFile("powershell -NoProfile -Command .\\build-and-test.ps1")
             }
             else {
                 shell("./build-and-test.sh")
