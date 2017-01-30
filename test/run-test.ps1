@@ -25,17 +25,15 @@ $dirSeparator = [IO.Path]::DirectorySeparatorChar
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $platform = docker version -f "{{ .Server.Os }}"
 
-if ($Platform -eq "windows") {
+if ($platform -eq "windows") {
     $imageOs = "nanoserver"
     $tagSuffix = "-nanoserver"
-    $testScriptSuffix = "ps1"
     $containerRoot = "C:\"
     $platformDirSeparator = '\'
 }
 else {
     $imageOs = "debian"
     $tagSuffix = ""
-    $testScriptSuffix = "sh"
     $containerRoot = "/"
     $platformDirSeparator = '/'
 }
@@ -100,7 +98,6 @@ Get-ChildItem -Recurse -Filter Dockerfile |
             }
             else {
                 $projectType = "msbuild"
-                $publishArg = ''
             }
 
             $selfContainedImage = "self-contained-build-${buildImage}"
