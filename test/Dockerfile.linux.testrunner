@@ -1,6 +1,6 @@
-# Use this Dockerfile to create a Linux test-runner image
-#     docker build -t testrunner -f .\test\Dockerfile.linux.testrunner .\test\.
-#     docker run -v /var/run/docker.sock:/var/run/docker.sock -v ${PWD}:/run --workdir /run testrunner powershell -File build-and-test.ps1 -UseImageCache
+# Use this Dockerfile to create a Linux testrunner image
+#     docker build -t testrunner -f ./test/Dockerfile.linux.testrunner .
+#     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock testrunner powershell -File build-and-test.ps1 -UseImageCache
 
 FROM ubuntu
 RUN apt-get update \
@@ -15,3 +15,6 @@ RUN apt-get update \
 RUN curl -o powershell.deb -ssL https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-alpha.15/powershell_6.0.0-alpha.15-1ubuntu1.16.04.1_amd64.deb \
     && dpkg -i powershell.deb \
     && rm -f powershell.deb
+
+WORKDIR test
+COPY . .

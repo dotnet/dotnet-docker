@@ -16,7 +16,7 @@ platformList.each { platform ->
                 batchFile("powershell -NoProfile -Command .\\build-and-test.ps1")
             }
             else {
-                shell("./build-and-test.sh")
+                shell("docker build --rm -t testrunner -f ./test/Dockerfile.linux.testrunner . && docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner powershell -File build-and-test.ps1")
             }
         }
     }
