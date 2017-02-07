@@ -63,7 +63,10 @@ Get-ChildItem -Recurse -Filter Dockerfile |
         $buildImage = "sdk-build-$appName"
         $dotnetNewParam = ""
         if ($sdkTag -like "*1.1-sdk-msbuild*") {
-            $dotnetNewParam = "-t Console1.1"
+            $dotnetNewParam = "console --framework netcoreapp1.1"
+        }
+        elseif ($sdkTag -like "*1.0-sdk-msbuild*") {
+            $dotnetNewParam = "console --framework netcoreapp1.0"
         }
         $dockerFilesPath = "${repoRoot}${dirSeparator}test${dirSeparator}"
 
