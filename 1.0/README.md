@@ -15,6 +15,8 @@
 -       [`1.1.0-sdk-msbuild-rc4`, `1.1-sdk-msbuild`, `1-sdk-msbuild`, `sdk`, `latest` (*1.1/debian/sdk/msbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/sdk/msbuild/Dockerfile)
 -       [`1.1.0-sdk-msbuild-rc4-nanoserver`, `1.1-sdk-msbuild-nanoserver`, `1-sdk-msbuild-nanoserver`, `sdk-nanoserver`, `nanoserver` (*1.1/nanoserver/sdk/msbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/nanoserver/sdk/msbuild/Dockerfile)
 
+>**Note:** The latest tag no longer uses the project.json project format, but has now been updated to be csproj/MSBuild-based. If you do not wish to [migrate](https://docs.microsoft.com/en-us/dotnet/articles/core/preview3/tools/dotnet-migrate) your existing projects to MSBuild simply change your Dockerfile to use the `1.0.3-sdk-projectjson`, `1.0.3-sdk-projectjson-nanoserver`, `1.1.0-sdk-projectjson` or `1.1.0-sdk-projectjson-nanoserver` tag. Going forward, new .NET Core sdk images will be MSBuild-based.
+
 For more information about these images and their history, please see [the relevant Dockerfile (`dotnet/dotnet-docker`)](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls?utf8=%E2%9C%93&q=).
 
 # What is .NET Core?
