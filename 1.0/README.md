@@ -132,7 +132,7 @@ docker run -it --rm microsoft/dotnet
 [now in the container]
 mkdir app
 cd app
-dotnet new
+dotnet new console
 ls
 dotnet restore
 dotnet run
