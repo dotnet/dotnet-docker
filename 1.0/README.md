@@ -169,7 +169,7 @@ docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet
 [now in the container]
 mkdir app
 cd app
-dotnet new -t web
+dotnet new mvc
 dotnet restore
 dotnet run
 exit
