@@ -19,6 +19,8 @@ if ($UseImageCache) {
 else {
     $optionalDockerBuildArgs = "--no-cache"
 }
+$optionalDockerBuildArgs += " --build-arg BUILD_DATE=`"" + $(Get-Date((Get-Date).ToUniversalTime()) -UFormat "%Y-%m-%dT%H:%M:%SZ") + "`""
+$optionalDockerBuildArgs += " --build-arg VCS_REF=`"" + $(git rev-parse HEAD) + "`""
 
 $dockerRepo="microsoft/dotnet"
 $dirSeparator = [IO.Path]::DirectorySeparatorChar
