@@ -3,12 +3,12 @@
 set -e
 
 echo "Pushing additional runtime-deps tags"
-imageName=$DOCKER_REPO":1.0.3-runtime-deps"
+imageName=$DOCKER_REPO":1.0.4-runtime-deps"
 docker tag $IMAGE_NAME $imageName
 docker push $imageName
 
 # Existing core-deps tags are obsolete but being preserved for through the 1* release
-imageName=$DOCKER_REPO":1.0.3-core-deps"
+imageName=$DOCKER_REPO":1.0.4-core-deps"
 docker tag $IMAGE_NAME $imageName
 docker push $imageName
 
@@ -18,7 +18,7 @@ docker push $imageName
 
 
 echo "Pushing runtime tags"
-imageName=$DOCKER_REPO":1.0.3-runtime"
+imageName=$DOCKER_REPO":1.0.4-runtime"
 docker tag runtime $imageName
 docker push $imageName
 
@@ -27,7 +27,7 @@ docker tag runtime $imageName
 docker push $imageName
 
 # Existing core tags are obsolete but being preserved for through the 1* release
-imageName=$DOCKER_REPO":1.0.3-core"
+imageName=$DOCKER_REPO":1.0.4-core"
 docker tag runtime $imageName
 docker push $imageName
 

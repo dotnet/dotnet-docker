@@ -2,12 +2,16 @@
 
 set -e
 
-echo "Pushing additional sdk-msbuild tags"
-imageName=$DOCKER_REPO":1.1.0-sdk-msbuild-rc4"
+echo "Pushing additional sdk tags"
+imageName=$DOCKER_REPO":1.1.1-sdk"
 docker tag $IMAGE_NAME $imageName
 docker push $imageName
 
-imageName=$DOCKER_REPO":1-sdk-msbuild"
+imageName=$DOCKER_REPO":1.1.1-sdk-1.0.0"
+docker tag $IMAGE_NAME $imageName
+docker push $imageName
+
+imageName=$DOCKER_REPO":1-sdk"
 docker tag $IMAGE_NAME $imageName
 docker push $imageName
 

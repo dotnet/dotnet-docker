@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-
-echo "Pushing additional sdk-msbuild tags"
-imageName=$DOCKER_REPO":1.0.3-sdk-msbuild-rc4"
-docker tag $IMAGE_NAME $imageName
-docker push $imageName
