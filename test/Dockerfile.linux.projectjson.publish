@@ -1,6 +1,0 @@
-FROM {image}
-
-RUN runtimes_section="  },\n  \"runtimes\": {\n    \"debian.8-x64\": {}\n  }" \
-    && sed -i '/"type": "platform"/d' project.json \
-    && sed -i "s/^  }$/${runtimes_section}/" project.json
-RUN dotnet restore

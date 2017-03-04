@@ -1,19 +1,15 @@
 # Supported tags and respective `Dockerfile` links
 
--       [`1.0.3-runtime`, `1.0-runtime` (*1.0/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime/Dockerfile)
--       [`1.0.3-runtime-nanoserver`, `1.0-runtime-nanoserver` (*1.0/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/runtime/Dockerfile)
--       [`1.0.3-runtime-deps`, `1.0-runtime-deps` (*1.0/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime-deps/Dockerfile)
--       [`1.0.3-sdk-projectjson`, `1.0-sdk-projectjson` (*1.0/debian/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/sdk/projectjson/Dockerfile)
--       [`1.0.3-sdk-projectjson-nanoserver`, `1.0-sdk-projectjson-nanoserver` (*1.0/nanoserver/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/sdk/projectjson/Dockerfile)
--       [`1.0.3-sdk-msbuild-rc4`, `1.0-sdk-msbuild` (*1.0/debian/sdk/msbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/sdk/msbuild/Dockerfile)
--       [`1.0.3-sdk-msbuild-rc4-nanoserver`, `1.0-sdk-msbuild-nanoserver` (*1.0/nanoserver/sdk/msbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/sdk/msbuild/Dockerfile)
--       [`1.1.0-runtime`, `1.1-runtime`, `1-runtime`, `runtime` (*1.1/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/runtime/Dockerfile)
--       [`1.1.0-runtime-nanoserver`, `1.1-runtime-nanoserver`, `1-runtime-nanoserver`, `runtime-nanoserver` (*1.1/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/nanoserver/runtime/Dockerfile)
--       [`1.1.0-runtime-deps`, `1.1-runtime-deps`, `1-runtime-deps`, `runtime-deps` (*1.1/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/runtime-deps/Dockerfile)
--       [`1.1.0-sdk-projectjson`, `1.1-sdk-projectjson`, `1-sdk-projectjson` (*1.1/debian/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/sdk/projectjson/Dockerfile)
--       [`1.1.0-sdk-projectjson-nanoserver`, `1.1-sdk-projectjson-nanoserver`, `1-sdk-projectjson-nanoserver` (*1.1/nanoserver/sdk/projectjson/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/nanoserver/sdk/projectjson/Dockerfile)
--       [`1.1.0-sdk-msbuild-rc4`, `1.1-sdk-msbuild`, `1-sdk-msbuild`, `sdk`, `latest` (*1.1/debian/sdk/msbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/sdk/msbuild/Dockerfile)
--       [`1.1.0-sdk-msbuild-rc4-nanoserver`, `1.1-sdk-msbuild-nanoserver`, `1-sdk-msbuild-nanoserver`, `sdk-nanoserver`, `nanoserver` (*1.1/nanoserver/sdk/msbuild/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/nanoserver/sdk/msbuild/Dockerfile)
+-       [`1.0.4-runtime`, `1.0-runtime` (*1.0/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime/Dockerfile)
+-       [`1.0.4-runtime-nanoserver`, `1.0-runtime-nanoserver` (*1.0/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/runtime/Dockerfile)
+-       [`1.0.4-runtime-deps`, `1.0-runtime-deps` (*1.0/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/runtime-deps/Dockerfile)
+-       [`1.0.4-sdk`, `1.0-sdk` (*1.0/debian/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/debian/sdk/Dockerfile)
+-       [`1.0.4-sdk-nanoserver`, `1.0-sdk-nanoserver` (*1.0/nanoserver/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/nanoserver/sdk/Dockerfile)
+-       [`1.1.1-runtime`, `1.1-runtime`, `1-runtime`, `runtime` (*1.1/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/runtime/Dockerfile)
+-       [`1.1.1-runtime-nanoserver`, `1.1-runtime-nanoserver`, `1-runtime-nanoserver`, `runtime-nanoserver` (*1.1/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/nanoserver/runtime/Dockerfile)
+-       [`1.1.1-runtime-deps`, `1.1-runtime-deps`, `1-runtime-deps`, `runtime-deps` (*1.1/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/runtime-deps/Dockerfile)
+-       [`1.1.1-sdk`, `1.1-sdk`, `1-sdk`, `sdk`, `latest` (*1.1/debian/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/sdk/Dockerfile)
+-       [`1.1.1-sdk-nanoserver`, `1.1-sdk-nanoserver`, `1-sdk-nanoserver`, `sdk-nanoserver`, `nanoserver` (*1.1/nanoserver/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/nanoserver/sdk/Dockerfile)
 
 >**Note:** The latest tag no longer uses the project.json project format, but has now been updated to be csproj/MSBuild-based. If you do not wish to [migrate](https://docs.microsoft.com/en-us/dotnet/articles/core/preview3/tools/dotnet-migrate) your existing projects to MSBuild simply change your Dockerfile to use the `1.1.0-sdk-projectjson` or `1.1.0-sdk-projectjson-nanoserver` tag. Going forward, new .NET Core sdk images will be MSBuild-based.
 
@@ -203,8 +199,6 @@ It contains the .NET Core SDK which is comprised of two parts:
 2. .NET Core command line tools
 
 Use this image for your development process (developing, building and testing applications).
-
-There currently are two flavors of the sdk images, `projectjson` and `msbuild`.  These two flavors exist while the [transition occurs from project.json to msbuild](https://blogs.msdn.microsoft.com/dotnet/2016/05/23/changes-to-project-json/).  Once the tooling stabilizes, the project json variant will be deprecated and there will only be an msbuild variant.
 
 ### `microsoft/dotnet:<version>-runtime`
 
