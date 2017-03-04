@@ -7,7 +7,7 @@ imageName=$DOCKER_REPO":1.1.1-sdk"
 docker tag $IMAGE_NAME $imageName
 docker push $imageName
 
-imageName=$DOCKER_REPO":1.1.1-sdk-1.0.0"
+imageName=$DOCKER_REPO":1.1.1-sdk-1.0.1"
 docker tag $IMAGE_NAME $imageName
 docker push $imageName
 
