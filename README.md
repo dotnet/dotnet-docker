@@ -221,7 +221,6 @@ You can learn more about using .NET Core with Docker with [.NET Docker samples](
 - [Development](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev) sample using the `sdk` .NET Core SDK image.
 - [Production](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) sample using the `runtime` .NET Core image.
 - [Self-contained](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-selfcontained) sample using the `runtime-deps` base OS image (with native dependencies added).
-- [Preview](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-preview) sample using a Preview `sdk` .NET Core SDK image.
 
 Windows Container Dockerfile variants are provided at the same locations, above, and rely on slightly different .NET Core Docker images.
 
