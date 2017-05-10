@@ -10,6 +10,11 @@
 - [`1.1.2-runtime-deps`, `1.1-runtime-deps`, `1-runtime-deps`, `runtime-deps` (*1.1/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/runtime-deps/Dockerfile)
 - [`1.1.2-sdk`, `1.1-sdk`, `1-sdk`, `sdk`, `latest` (*1.1/debian/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/debian/sdk/Dockerfile)
 - [`1.1.2-sdk-nanoserver`, `1.1-sdk-nanoserver`, `1-sdk-nanoserver`, `sdk-nanoserver`, `nanoserver` (*1.1/nanoserver/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/nanoserver/sdk/Dockerfile)
+- [`2.0.0-preview1-runtime`, `2.0-runtime`, `2-runtime` (*2.0/debian/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/debian/runtime/Dockerfile)
+- [`2.0.0-preview1-runtime-nanoserver`, `2.0-runtime-nanoserver`, `2-runtime-nanoserver` (*2.0/nanoserver/runtime/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/nanoserver/runtime/Dockerfile)
+- [`2.0.0-preview1-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps` (*2.0/debian/runtime-deps/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/debian/runtime-deps/Dockerfile)
+- [`2.0.0-preview1-sdk`, `2.0-sdk`, `2-sdk` (*2.0/debian/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/debian/sdk/Dockerfile)
+- [`2.0.0-preview1-sdk-nanoserver`, `2.0-sdk-nanoserver`, `2-sdk-nanoserver` (*2.0/nanoserver/sdk/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/nanoserver/sdk/Dockerfile)
 
 >**Note:** The latest tag no longer uses the project.json project format, but has now been updated to be csproj/MSBuild-based. If you do not wish to [migrate](https://docs.microsoft.com/en-us/dotnet/articles/core/preview3/tools/dotnet-migrate) your existing projects to MSBuild simply change your Dockerfile to use the `1.1.0-sdk-projectjson` or `1.1.0-sdk-projectjson-nanoserver` tag. Going forward, new .NET Core sdk images will be MSBuild-based.
 
