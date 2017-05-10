@@ -14,7 +14,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 if ($UseImageCache) {
-    $optionalDockerBuildArgs=""
+    $optionalDockerBuildArgs = ""
 }
 else {
     $optionalDockerBuildArgs = "--no-cache"
@@ -71,7 +71,7 @@ Get-ChildItem -Path $repoRoot -Recurse -Filter Dockerfile |
                 exec { docker run --rm `
                     -v ${framworkDepVol}:"${containerRoot}volume" `
                     $buildImage `
-                    dotnet publish -o ${containerRoot}volume 
+                    dotnet publish -o ${containerRoot}volume
                 }
 
                 Write-Host "----- Testing on $baseTag-runtime$tagSuffix with $sdkTag framework-dependent app -----"
@@ -101,6 +101,15 @@ Get-ChildItem -Path $repoRoot -Recurse -Filter Dockerfile |
                             -v ${selfContainedVol}":${containerRoot}volume" `
                             $selfContainedImage `
                             dotnet publish -r debian.8-x64 -o ${containerRoot}volume
+                        }
+
+                        if ($sdkTag -like "2.0-sdk") {
+                            # Temporary workaround https://github.com/dotnet/corefx/blob/master/Documentation/project-docs/dogfooding.md#option-2-self-contained
+                            exec { docker run --rm `
+                                -v ${selfContainedVol}":${containerRoot}volume" `
+                                $selfContainedImage `
+                                chmod u+x ${containerRoot}volume${platformDirSeparator}test
+                            }
                         }
 
                         Write-Host "----- Testing $baseTag-runtime-deps$tagSuffix with $sdkTag self-contained app -----"
