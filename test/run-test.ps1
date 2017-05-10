@@ -103,7 +103,6 @@ Get-ChildItem -Path $repoRoot -Recurse -Filter Dockerfile |
                             dotnet publish -r debian.8-x64 -o ${containerRoot}volume
                         }
 
-
                         if ($sdkTag -like "2.0-sdk") {
                             # Temporary workaround https://github.com/dotnet/corefx/blob/master/Documentation/project-docs/dogfooding.md#option-2-self-contained
                             exec { docker run --rm `
