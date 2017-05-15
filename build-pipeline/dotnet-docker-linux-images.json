@@ -1,0 +1,206 @@
+{
+  "build": [
+    {
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Cleanup Docker",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "system prune -a -f",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Pull image-builder",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "pull $(image-builder.imageName)",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Run image-builder",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name $(image-builder.containerName) $(image-builder.imageName) $(image-builder.args)",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Cleanup Docker",
+      "timeoutInMinutes": 0,
+      "condition": "always()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "system prune -a -f",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    }
+  ],
+  "options": [
+    {
+      "enabled": false,
+      "definition": {
+        "id": "5bc3cfb7-6b54-4a4b-b5d2-a3905949f8a6"
+      },
+      "inputs": {}
+    },
+    {
+      "enabled": false,
+      "definition": {
+        "id": "7c555368-ca64-4199-add6-9ebaf0b0137d"
+      },
+      "inputs": {
+        "multipliers": "[]",
+        "parallel": "false",
+        "continueOnError": "true",
+        "additionalFields": "{}"
+      }
+    },
+    {
+      "enabled": false,
+      "definition": {
+        "id": "a9db38f9-9fdc-478c-b0f9-464221e58316"
+      },
+      "inputs": {
+        "workItemType": "234347",
+        "assignToRequestor": "true",
+        "additionalFields": "{}"
+      }
+    },
+    {
+      "enabled": false,
+      "definition": {
+        "id": "57578776-4c22-4526-aeb0-86b6da17ee9c"
+      },
+      "inputs": {}
+    }
+  ],
+  "variables": {
+    "system.debug": {
+      "value": "false",
+      "allowOverride": true
+    },
+    "image-builder.imageName": {
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie"
+    },
+    "image-builder.args": {
+      "value": "--command build --manifest manifest.json --push --username $(PB.docker.username) --password $(PB.docker.password)",
+      "allowOverride": true
+    },
+    "image-builder.containerName": {
+      "value": "dotnet-docker-linux-$(Build.BuildId)"
+    },
+    "PB.docker.password": {
+      "value": null,
+      "isSecret": true
+    }
+  },
+  "demands": [
+    "Agent.OS -equals linux"
+  ],
+  "retentionRules": [
+    {
+      "branches": [
+        "+refs/heads/*"
+      ],
+      "artifacts": [],
+      "artifactTypesToDelete": [
+        "FilePath",
+        "SymbolStore"
+      ],
+      "daysToKeep": 10,
+      "minimumToKeep": 1,
+      "deleteBuildRecord": true,
+      "deleteTestResults": true
+    }
+  ],
+  "jobAuthorizationScope": "projectCollection",
+  "jobTimeoutInMinutes": 60,
+  "jobCancelTimeoutInMinutes": 5,
+  "repository": {
+    "properties": {
+      "cleanOptions": "0",
+      "gitLfsSupport": "false",
+      "skipSyncSource": "false",
+      "reportBuildStatus": "true",
+      "fetchDepth": "0",
+      "connectedServiceId": "1e3b2b41-8d83-4240-a16f-6fc0b825d0d6",
+      "apiUrl": "https://api.github.com/repos/dotnet/dotnet-docker",
+      "branchesUrl": "https://api.github.com/repos/dotnet/dotnet-docker/branches",
+      "cloneUrl": "https://github.com/dotnet/dotnet-docker.git",
+      "refsUrl": "https://api.github.com/repos/dotnet/dotnet-docker/git/refs",
+      "checkoutNestedSubmodules": "false"
+    },
+    "id": "https://github.com/dotnet/dotnet-docker.git",
+    "type": "GitHub",
+    "name": "dotnet/dotnet-docker",
+    "url": "https://github.com/dotnet/dotnet-docker.git",
+    "defaultBranch": "master",
+    "clean": "false",
+    "checkoutSubmodules": false
+  },
+  "processParameters": {},
+  "quality": "definition",
+  "queue": {
+    "id": 36,
+    "name": "DotNet-Build",
+    "pool": {
+      "id": 39,
+      "name": "DotNet-Build"
+    }
+  },
+  "id": 6214,
+  "name": "dotnet-docker-linux-images",
+  "url": "https://devdiv.visualstudio.com/0bdbc590-a062-4c3f-b0f6-9383f67865ee/_apis/build/Definitions/6214",
+  "path": "\\",
+  "type": "build",
+  "project": {
+    "id": "0bdbc590-a062-4c3f-b0f6-9383f67865ee",
+    "name": "DevDiv",
+    "description": "Visual Studio and DevDiv team project for git source code repositories.  Work items will be added for Adams, Dev14 work items are tracked in vstfdevdiv.  ",
+    "url": "https://devdiv.visualstudio.com/_apis/projects/0bdbc590-a062-4c3f-b0f6-9383f67865ee",
+    "state": "wellFormed",
+    "revision": 418097676
+  }
+}

@@ -1,6 +1,0 @@
-#!/bin/bash
-
-set -e
-
-echo "Building dependent runtime image"
-docker build --rm --force-rm -t runtime ../runtime/
