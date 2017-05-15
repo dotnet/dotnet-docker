@@ -1,0 +1,48 @@
+{
+  "Repository": "dotnet-docker",
+  "Definitions": {
+    "Path": ".",
+    "Type": "VSTS",
+    "BaseUrl": "https://devdiv.visualstudio.com/DefaultCollection",
+    "SkipBranchAndVersionOverrides": "false"
+  },
+  "Pipelines": [
+    {
+      "Name": "Build Linux Images",
+      "Parameters": {
+        "TreatWarningsAsErrors": "false"
+      },
+      "Definitions": [
+        {
+          "Name": "dotnet-docker-linux-images"
+        }
+      ]
+    },
+    {
+      "Name": "Build Windows Images",
+      "Parameters": {
+        "TreatWarningsAsErrors": "false"
+      },
+      "Definitions": [
+        {
+          "Name": "dotnet-docker-windows-images"
+        }
+      ]
+    },
+    {
+      "Name": "Post Image Build",
+      "Parameters": {
+        "TreatWarningsAsErrors": "false"
+      },
+      "Definitions": [
+        {
+          "Name": "dotnet-docker-post-image-build"
+        }
+      ],
+      "DependsOn": [
+        "Build Windows Images",
+        "Build Linux Images"
+      ]
+    }
+  ]
+}
