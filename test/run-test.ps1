@@ -23,7 +23,7 @@ else {
 $dirSeparator = [IO.Path]::DirectorySeparatorChar
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $manifestPath = [IO.Path]::combine(${repoRoot}, "manifest.json")
-$dockerRepo = (Get-Content $manifestPath | ConvertFrom-Json).DockerRepo
+$dockerRepo = (Get-Content $manifestPath | ConvertFrom-Json).Repos[0].Name
 $testFilesPath = "$PSScriptRoot$dirSeparator"
 $platform = docker version -f "{{ .Server.Os }}"
 

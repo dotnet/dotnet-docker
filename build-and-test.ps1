@@ -7,7 +7,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $dirSeparator = [IO.Path]::DirectorySeparatorChar
-$dockerRepo = (Get-Content "manifest.json" | ConvertFrom-Json).DockerRepo
+$dockerRepo = (Get-Content "manifest.json" | ConvertFrom-Json).Repos[0].Name
 
 if ($UseImageCache) {
     $optionalDockerBuildArgs = ""
