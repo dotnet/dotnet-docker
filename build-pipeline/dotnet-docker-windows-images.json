@@ -183,14 +183,14 @@
       "allowOverride": true
     },
     "image-builder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20170520053238"
     },
     "image-builder.args": {
       "value": "--command build --manifest manifest.json --push --username $(PB.docker.username) --password $(PB.docker.password)",
       "allowOverride": true
     },
     "image-builder.containerName": {
-      "value": "dotnet-docker-linux-$(Build.BuildId)"
+      "value": "dotnet-docker-windows-$(Build.BuildId)"
     },
     "PB.docker.password": {
       "value": null,
