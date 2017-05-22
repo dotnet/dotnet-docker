@@ -218,6 +218,7 @@ See the following related repos for other application types:
 - [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core images.
 - [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
 - [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images (for web applications, see microsoft/aspnet).
+- [microsoft/dotnet-nightly](https://hub.docker.com/r/microsoft/dotnet-nightly/) for pre-release .NET Core images (used to experiment with the latest builds).
 
 # License
 
