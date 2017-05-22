@@ -122,7 +122,7 @@
       "allowOverride": true
     },
     "image-builder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20170520053236"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20170522095246"
     },
     "image-builder.args": {
       "value": "--command build --manifest manifest.json --push --username $(PB.docker.username) --password $(PB.docker.password)",
