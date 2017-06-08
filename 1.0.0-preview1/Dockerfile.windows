@@ -1,0 +1,11 @@
+FROM windowsservercore
+
+ENV DOTNET_CORE_SDK_VERSION 1.0.0-preview1-002702
+
+RUN @powershell -NoProfile \
+	-Command \
+	$ErrorActionPreference = 'Stop'; \
+	(New-Object System.Net.WebClient).DownloadFile('https://dotnetcli.blob.core.windows.net/dotnet/beta/Binaries/%DOTNET_CORE_SDK_VERSION%/dotnet-dev-win-x64.%DOTNET_CORE_SDK_VERSION%.zip', 'dotnet-win-x64.zip') ; \
+	Expand-Archive dotnet-win-x64.zip -DestinationPath c:\\dotnet ; \
+	Remove-Item -Force dotnet-win-x64.zip
+RUN setx /M PATH "C:\dotnet;%PATH%"
