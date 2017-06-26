@@ -118,8 +118,8 @@
     },
     {
       "enabled": true,
-      "continueOnError": false,
-      "alwaysRun": false,
+      "continueOnError": true,
+      "alwaysRun": true,
       "displayName": "Cleanup Docker",
       "timeoutInMinutes": 0,
       "condition": "always()",
@@ -244,11 +244,11 @@
   "processParameters": {},
   "quality": "definition",
   "queue": {
-    "id": 159,
-    "name": "DotNetCore-Test",
+    "id": 330,
+    "name": "DotNetCore-Build",
     "pool": {
-      "id": 83,
-      "name": "DotNetCore-Test"
+      "id": 97,
+      "name": "DotNetCore-Build"
     }
   },
   "id": 6216,

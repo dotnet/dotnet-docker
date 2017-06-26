@@ -78,8 +78,8 @@
     },
     {
       "enabled": true,
-      "continueOnError": false,
-      "alwaysRun": false,
+      "continueOnError": true,
+      "alwaysRun": true,
       "displayName": "Cleanup Docker",
       "timeoutInMinutes": 0,
       "condition": "always()",
