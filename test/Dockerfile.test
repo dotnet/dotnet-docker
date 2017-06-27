@@ -2,5 +2,5 @@ FROM {image}
 
 WORKDIR test
 RUN dotnet new {dotnetNewParam}
-RUN dotnet restore
+RUN dotnet restore {optionalRestoreParams}
 RUN dotnet build

@@ -3,6 +3,9 @@ param(
     [switch]$UseImageCache
 )
 
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
 function Exec([scriptblock]$cmd, [string]$errorMessage = "Error executing command: " + $cmd) {
     & $cmd
     if ($LastExitCode -ne 0) {
@@ -10,11 +13,21 @@ function Exec([scriptblock]$cmd, [string]$errorMessage = "Error executing comman
     }
 }
 
-Set-StrictMode -Version Latest
-$ErrorActionPreference = 'Stop'
+function Get-ActivePlatformImages([PSCustomObject]$manifestRepo, [string]$platform) {
+    return $manifestRepo.Images |
+        ForEach-Object {$_.Platforms} |
+        Where-Object {[bool]($_.PSobject.Properties.name -match $platform)}
+}
+
+function Get-RuntimeTag([string]$sdkDockerfilePath, [string]$runtimeType, [string]$platform, [PSCustomObject]$manifestRepo) {
+    $runtimeDockerfilePath = $sdkDockerfilePath.Replace("sdk", $runtimeType)
+    $platforms = Get-ActivePlatformImages $manifestRepo $platform |
+        Where-Object {$_.$platform.Dockerfile -eq $runtimeDockerfilePath}
+    return $manifestRepo.Name + ':' + $platforms[0].$platform.Tags[0]
+}
 
 if ($UseImageCache) {
-    $optionalDockerBuildArgs=""
+    $optionalDockerBuildArgs = ""
 }
 else {
     $optionalDockerBuildArgs = "--no-cache"
@@ -23,7 +36,7 @@ else {
 $dirSeparator = [IO.Path]::DirectorySeparatorChar
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $manifestPath = [IO.Path]::combine(${repoRoot}, "manifest.json")
-$dockerRepo = (Get-Content $manifestPath | ConvertFrom-Json).Repos[0].Name
+$manifestRepo = (Get-Content $manifestPath | ConvertFrom-Json).Repos[0]
 $testFilesPath = "$PSScriptRoot$dirSeparator"
 $platform = docker version -f "{{ .Server.Os }}"
 
@@ -31,34 +44,37 @@ $platform = docker version -f "{{ .Server.Os }}"
 $includePrereleasePackageSourceForSdkTag = $null
 
 if ($platform -eq "windows") {
-    $imageOs = "nanoserver"
     $containerRoot = "C:\"
     $platformDirSeparator = '\'
 }
 else {
-    $imageOs = "jessie"
     $containerRoot = "/"
     $platformDirSeparator = '/'
 }
 
 # Loop through each sdk Dockerfile in the repo and test the sdk and runtime images.
-Get-ChildItem -Path $repoRoot -Recurse -Filter Dockerfile |
-    where DirectoryName -like "*${dirSeparator}sdk${dirSeparator}${imageOs}" |
-    foreach {
-        $sdkTag = $_.DirectoryName.
-                Replace("$repoRoot$dirSeparator", '').
-                Replace("$dirSeparator$imageOs", '').
-                Replace($dirSeparator, '-')
-        $fullSdkTag = "${dockerRepo}:${sdkTag}"
+Get-ActivePlatformImages $manifestRepo $platform |
+    Where-Object {$_.$platform.Dockerfile.Contains('sdk')} |
+    ForEach-Object {
+        $sdkTag = $_.$platform.Tags[0]
+        $fullSdkTag = "$($manifestRepo.Name):${sdkTag}"
 
         $timeStamp = Get-Date -Format FileDateTime
         $appName = "app$timeStamp".ToLower()
         $buildImage = "sdk-build-$appName"
-        $dotnetNewParam = "console --framework netcoreapp$($sdkTag.Split('-')[0])"
+        $dotnetNewParam = "console --framework netcoreapp$($sdkTag.Split('-')[0].Substring(0,3))"
+
+        $optionalRestoreParams = ""
+        if ($sdkTag -like $includePrereleasePackageSourceForSdkTag) {
+            $optionalRestoreParams = "-s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json -s https://api.nuget.org/v3/index.json"
+        }
 
         Write-Host "----- Testing create, restore and build with $fullSdkTag with image $buildImage -----"
         Try {
-            exec { (Get-Content ${testFilesPath}Dockerfile.test).Replace("{image}", $fullSdkTag).Replace("{dotnetNewParam}", $dotnetNewParam) `
+            exec { (Get-Content ${testFilesPath}Dockerfile.test).
+                    Replace("{image}", $fullSdkTag).
+                    Replace("{dotnetNewParam}", $dotnetNewParam).
+                    Replace("{optionalRestoreParams}", $optionalRestoreParams) `
                 | docker build $optionalDockerBuildArgs -t $buildImage -
             }
 
@@ -74,11 +90,11 @@ Get-ChildItem -Path $repoRoot -Recurse -Filter Dockerfile |
                     dotnet publish -o ${containerRoot}volume
                 }
 
-                $runtimeTag = $fullSdkTag.Replace("sdk", "runtime")
-                Write-Host "----- Testing on $runtimeTag with $sdkTag framework-dependent app -----"
+                $fullRuntimeTag = Get-RuntimeTag $_.$platform.Dockerfile "runtime" $platform $manifestRepo
+                Write-Host "----- Testing on $fullRuntimeTag with $sdkTag framework-dependent app -----"
                 exec { docker run --rm `
                     -v ${framworkDepVol}":${containerRoot}volume" `
-                    "$runtimeTag" `
+                    "$fullRuntimeTag" `
                     dotnet "${containerRoot}volume${platformDirSeparator}test.dll"
                 }
             }
@@ -88,11 +104,6 @@ Get-ChildItem -Path $repoRoot -Recurse -Filter Dockerfile |
 
             if ($platform -eq "linux") {
                 $selfContainedImage = "self-contained-build-${buildImage}"
-                $optionalRestoreParams = ""
-                if ($sdkTag -like $includePrereleasePackageSourceForSdkTag) {
-                    $optionalRestoreParams = "-s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json -s https://api.nuget.org/v3/index.json"
-                }
-
                 Write-Host "----- Creating publish-image for self-contained app built on $fullSdkTag -----"
                 Try {
                     exec { (Get-Content ${testFilesPath}Dockerfile.linux.publish).
@@ -110,7 +121,7 @@ Get-ChildItem -Path $repoRoot -Recurse -Filter Dockerfile |
                             dotnet publish -r debian.8-x64 -o ${containerRoot}volume
                         }
 
-                        if ($sdkTag -like "2.0-sdk") {
+                        if ($sdkTag -like "2.0*-sdk*") {
                             # Temporary workaround https://github.com/dotnet/corefx/blob/master/Documentation/project-docs/dogfooding.md#option-2-self-contained
                             exec { docker run --rm `
                                 -v ${selfContainedVol}":${containerRoot}volume" `
@@ -119,11 +130,11 @@ Get-ChildItem -Path $repoRoot -Recurse -Filter Dockerfile |
                             }
                         }
 
-                        $runtimeDepsTag = $fullSdkTag.Replace("sdk", "runtime-deps")
-                        Write-Host "----- Testing $runtimeDepsTag with $sdkTag self-contained app -----"
+                        $fullRuntimeDepsTag = Get-RuntimeTag $_.$platform.Dockerfile "runtime-deps" $platform $manifestRepo
+                        Write-Host "----- Testing $fullRuntimeDepsTag with $sdkTag self-contained app -----"
                         exec { docker run -t --rm `
                             -v ${selfContainedVol}":${containerRoot}volume" `
-                            $runtimeDepsTag `
+                            $fullRuntimeDepsTag `
                             ${containerRoot}volume${platformDirSeparator}test
                         }
                     }

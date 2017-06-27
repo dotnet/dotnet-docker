@@ -16,14 +16,17 @@
 - `1.1.2-sdk`, `1.1-sdk`, `1-sdk`, `sdk`, `latest`:
     - [`1.1.2-sdk-jessie` (*1.1/sdk/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/jessie/Dockerfile)
     - [`1.1.2-sdk-nanoserver` (*1.1/sdk/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver/Dockerfile)
-- `2.0.0-preview1-runtime`, `2.0-runtime`, `2-runtime`:
-    - [`2.0.0-preview1-runtime-jessie` (*2.0/runtime/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/jessie/Dockerfile)
-    - [`2.0.0-preview1-runtime-nanoserver` (*2.0/runtime/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver/Dockerfile)
-- `2.0.0-preview1-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`:
-    - [`2.0.0-preview1-runtime-deps-jessie` (*2.0/runtime-deps/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/jessie/Dockerfile)
-- `2.0.0-preview1-sdk`, `2.0-sdk`, `2-sdk`:
-    - [`2.0.0-preview1-sdk-jessie` (*2.0/sdk/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/jessie/Dockerfile)
-    - [`2.0.0-preview1-sdk-nanoserver` (*2.0/sdk/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver/Dockerfile)
+- `2.0.0-preview2-runtime`, `2.0-runtime`, `2-runtime`:
+    - [`2.0.0-preview2-runtime-stretch` (*2.0/runtime/stretch/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/Dockerfile)
+    - [`2.0.0-preview2-runtime-nanoserver` (*2.0/runtime/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver/Dockerfile)
+- [`2.0.0-preview2-runtime-jessie`, `2.0-runtime-jessie`, `2-runtime-jessie` (*2.0/runtime/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/jessie/Dockerfile)
+- `2.0.0-preview2-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`:
+    - [`2.0.0-preview2-runtime-deps-stretch` (*2.0/runtime-deps/stretch/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/Dockerfile)
+- [`2.0.0-preview2-runtime-deps-jessie`, `2.0-runtime-deps-jessie`, `2-runtime-deps-jessie`  (*2.0/runtime-deps/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/jessie/Dockerfile)
+- `2.0.0-preview2-sdk`, `2.0-sdk`, `2-sdk`:
+    - [`2.0.0-preview2-sdk-stretch` (*2.0/sdk/stretch/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/stretch/Dockerfile)
+    - [`2.0.0-preview2-sdk-nanoserver` (*2.0/sdk/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver/Dockerfile)
+- [`2.0.0-preview2-sdk-jessie`, `2.0-sdk-jessie`, `2-sdk-jessie` (*2.0/sdk/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/jessie/Dockerfile)
 
 >**Note:** The latest tag no longer uses the project.json project format, but has now been updated to be csproj/MSBuild-based. If you do not wish to [migrate](https://docs.microsoft.com/en-us/dotnet/articles/core/preview3/tools/dotnet-migrate) your existing projects to MSBuild simply change your Dockerfile to use the `1.1.0-sdk-projectjson` or `1.1.0-sdk-projectjson-nanoserver` tag. Going forward, new .NET Core sdk images will be MSBuild-based.
 
