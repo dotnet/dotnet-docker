@@ -1,4 +1,4 @@
-FROM buildpack-deps:jessie-scm
+FROM buildpack-deps:stretch-scm
 
 # Install .NET CLI dependencies
 RUN apt-get update \
@@ -7,9 +7,9 @@ RUN apt-get update \
         libcurl3 \
         libgcc1 \
         libgssapi-krb5-2 \
-        libicu52 \
+        libicu57 \
         liblttng-ust0 \
-        libssl1.0.0 \
+        libssl1.0.2 \
         libstdc++6 \
         libunwind8 \
         libuuid1 \
