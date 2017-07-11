@@ -122,10 +122,10 @@
       "allowOverride": true
     },
     "image-builder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20170627165706"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20170710090943"
     },
     "image-builder.args": {
-      "value": "--command build --manifest manifest.json --push --username $(PB.docker.username) --password $(PB.docker.password)",
+      "value": "--command build --manifest manifest.json --path $(PB.image-builder.path) --test-var Filter=$(PB.image-builder.path) --push --username $(PB.docker.username) --password $(PB.docker.password)",
       "allowOverride": true
     },
     "image-builder.containerName": {
@@ -134,6 +134,9 @@
     "PB.docker.password": {
       "value": null,
       "isSecret": true
+    },
+    "PB.image-builder.path": {
+      "value": ""
     }
   },
   "demands": [
