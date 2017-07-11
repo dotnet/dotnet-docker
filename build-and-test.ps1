@@ -1,6 +1,7 @@
 [cmdletbinding()]
 param(
-    [switch]$UseImageCache
+    [switch]$UseImageCache,
+    [string]$Filter
 )
 
 Set-StrictMode -Version Latest
@@ -22,7 +23,8 @@ $manifestRepo.Images |
     ForEach-Object {
         $images = $_
         $_.Platforms |
-            Where-Object {[bool]($_.PSobject.Properties.name -match $platform)} |
+            Where-Object { [bool]($_.PSobject.Properties.name -match $platform) } |
+            Where-Object { [string]::IsNullOrEmpty($Filter) -or $_.$platform.dockerfile -like "$Filter*" } |
             ForEach-Object {
                 $dockerfilePath = $_.$platform.dockerfile
                 $tags = $_.$platform.Tags
@@ -44,6 +46,6 @@ $manifestRepo.Images |
             }
     }
 
-./test/run-test.ps1 -UseImageCache:$UseImageCache
+./test/run-test.ps1 -UseImageCache:$UseImageCache -Filter $Filter
 
 Write-Host "Tags built and tested:`n$($builtTags | Out-String)"

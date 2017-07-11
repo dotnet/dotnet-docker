@@ -14,7 +14,22 @@
       },
       "Definitions": [
         {
-          "Name": "dotnet-docker-linux-images"
+          "Name": "dotnet-docker-linux-images",
+          "Parameters": {
+            "PB.image-builder.path": "1.0"
+          }
+        },
+        {
+          "Name": "dotnet-docker-linux-images",
+          "Parameters": {
+            "PB.image-builder.path": "1.1"
+          }
+        },
+        {
+          "Name": "dotnet-docker-linux-images",
+          "Parameters": {
+            "PB.image-builder.path": "2.0"
+          }
         }
       ]
     },
@@ -25,7 +40,22 @@
       },
       "Definitions": [
         {
-          "Name": "dotnet-docker-windows-images"
+          "Name": "dotnet-docker-windows-images",
+          "Parameters": {
+            "PB.image-builder.path": "1.0"
+          }
+        },
+        {
+          "Name": "dotnet-docker-windows-images",
+          "Parameters": {
+            "PB.image-builder.path": "1.1"
+          }
+        },
+        {
+          "Name": "dotnet-docker-windows-images",
+          "Parameters": {
+            "PB.image-builder.path": "2.0"
+          }
         }
       ]
     },

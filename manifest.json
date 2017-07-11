@@ -5,10 +5,10 @@
   "testCommands": {
     "linux": [
       "docker build --rm -t testrunner -f ./test/Dockerfile.linux.testrunner .",
-      "docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner powershell -File ./test/run-test.ps1"
+      "docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner powershell -File ./test/run-test.ps1 -Filter $(Filter)"
     ],
     "windows": [
-      "powershell -NoProfile -Command .\\test\\run-test.ps1"
+      "powershell -NoProfile -Command .\\test\\run-test.ps1 -Filter $(Filter)"
     ]
   },
   "repos": [

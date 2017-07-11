@@ -1,6 +1,7 @@
 [cmdletbinding()]
 param(
-    [switch]$UseImageCache
+    [switch]$UseImageCache,
+    [string]$Filter
 )
 
 Set-StrictMode -Version Latest
@@ -15,14 +16,14 @@ function Exec([scriptblock]$cmd, [string]$errorMessage = "Error executing comman
 
 function Get-ActivePlatformImages([PSCustomObject]$manifestRepo, [string]$platform) {
     return $manifestRepo.Images |
-        ForEach-Object {$_.Platforms} |
-        Where-Object {[bool]($_.PSobject.Properties.name -match $platform)}
+        ForEach-Object { $_.Platforms } |
+        Where-Object { [bool]($_.PSobject.Properties.name -match $platform) }
 }
 
 function Get-RuntimeTag([string]$sdkDockerfilePath, [string]$runtimeType, [string]$platform, [PSCustomObject]$manifestRepo) {
     $runtimeDockerfilePath = $sdkDockerfilePath.Replace("sdk", $runtimeType)
     $platforms = Get-ActivePlatformImages $manifestRepo $platform |
-        Where-Object {$_.$platform.Dockerfile -eq $runtimeDockerfilePath}
+        Where-Object { $_.$platform.Dockerfile -eq $runtimeDockerfilePath }
     return $manifestRepo.Name + ':' + $platforms[0].$platform.Tags[0]
 }
 
@@ -54,7 +55,8 @@ else {
 
 # Loop through each sdk Dockerfile in the repo and test the sdk and runtime images.
 Get-ActivePlatformImages $manifestRepo $platform |
-    Where-Object {$_.$platform.Dockerfile.Contains('sdk')} |
+    Where-Object { [string]::IsNullOrEmpty($Filter) -or $_.$platform.dockerfile -like "$Filter*" } |
+    Where-Object { $_.$platform.Dockerfile.Contains('sdk') } |
     ForEach-Object {
         $sdkTag = $_.$platform.Tags[0]
         $fullSdkTag = "$($manifestRepo.Name):${sdkTag}"
