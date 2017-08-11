@@ -35,7 +35,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "run $(docker.commonRunArgs) $(docker.gitEnabledImageName) git clone https://$(PB.PAT.dn-bot-devdiv-build-rw-code-rw)@github.com/dotnet/dotnet-docker.git /repo",
+        "arguments": "run $(docker.commonRunArgs) $(docker.gitEnabledImageName) git clone https://github.com/dotnet/dotnet-docker.git /repo",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -191,10 +191,6 @@
     },
     "PB.image-builder.path": {
       "value": ""
-    },
-    "PB.PAT.dn-bot-devdiv-build-rw-code-rw": {
-      "value": null,
-      "isSecret": true
     }
   },
   "demands": [
