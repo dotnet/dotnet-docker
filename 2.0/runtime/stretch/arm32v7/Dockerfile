@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.0-runtime-deps
+FROM microsoft/dotnet:2.0-runtime-deps-stretch-arm32v7
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -6,9 +6,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core
-ENV DOTNET_VERSION 2.0.0-preview2-25407-01
-ENV DOTNET_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-x64.tar.gz
-ENV DOTNET_DOWNLOAD_SHA 72AA9ABAE8BC818EEB742AFFB943D6AF33B009F84696E6DE7C5316B8975FCC9B4303CB0B80652727BB1FFEE1A025E0C7A43CFE1771D11FE6DEE2D36B002A7EDC
+ENV DOTNET_VERSION 2.0.0
+ENV DOTNET_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-arm.tar.gz
+ENV DOTNET_DOWNLOAD_SHA 4A16E7AA761714F74B351BE63C86334B5D5FFB88D9FF4FF3C51B3F4F01DC12FE283B9F6E18E2A48776C9B3EE48F1B52D09E0680C645C3CB765761EEFCD0A9459
 
 RUN curl -SL $DOTNET_DOWNLOAD_URL --output dotnet.tar.gz \
     && echo "$DOTNET_DOWNLOAD_SHA dotnet.tar.gz" | sha512sum -c - \

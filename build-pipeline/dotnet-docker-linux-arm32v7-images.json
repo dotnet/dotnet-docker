@@ -20,6 +20,48 @@
       }
     },
     {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Clone Repo",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "refName": "Task3",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "run $(docker.commonRunArgs) $(docker.gitEnabledImageName) git clone https://$(PB.PAT.dn-bot-devdiv-build-rw-code-rw)@github.com/dotnet/dotnet-docker.git /repo",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Checkout Source",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "refName": "Task3",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "run $(docker.commonRunArgs) $(docker.gitEnabledImageName) git checkout $(Build.SourceVersion)",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
       "enabled": true,
       "continueOnError": false,
       "alwaysRun": false,
@@ -42,7 +84,7 @@
       "enabled": true,
       "continueOnError": false,
       "alwaysRun": false,
-      "displayName": "Publish Manifest",
+      "displayName": "Run image-builder",
       "timeoutInMinutes": 0,
       "condition": "succeeded()",
       "task": {
@@ -52,7 +94,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name $(image-builder.containerName) $(image-builder.imageName) $(image-builder.publishManifest.args)",
+        "arguments": "run  $(docker.commonRunArgs) -v /var/run/docker.sock:/var/run/docker.sock $(image-builder.imageName) $(image-builder.args)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -61,28 +103,9 @@
       "enabled": true,
       "continueOnError": false,
       "alwaysRun": false,
-      "displayName": "Update Readme",
-      "timeoutInMinutes": 0,
-      "condition": "succeeded()",
-      "task": {
-        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
-        "versionSpec": "1.*",
-        "definitionType": "task"
-      },
-      "inputs": {
-        "filename": "docker",
-        "arguments": "run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name $(image-builder.containerName) $(image-builder.imageName) $(image-builder.updateReadme.args)",
-        "workingFolder": "",
-        "failOnStandardError": "false"
-      }
-    },
-    {
-      "enabled": true,
-      "continueOnError": true,
-      "alwaysRun": true,
       "displayName": "Cleanup Docker",
       "timeoutInMinutes": 0,
-      "condition": "always()",
+      "condition": "succeeded()",
       "task": {
         "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
         "versionSpec": "1.*",
@@ -140,34 +163,42 @@
       "value": "false",
       "allowOverride": true
     },
+    "docker.commonRunArgs": {
+      "value": "--rm -v $(docker.volumeName):/repo -w /repo --name $(docker.containerName)"
+    },
+    "docker.containerName": {
+      "value": "$(Build.DefinitionName)-$(Build.BuildId)"
+    },
+    "docker.gitEnabledImageName": {
+      "value": "buildpack-deps:stretch-scm"
+    },
+    "docker.volumeName": {
+      "value": "$(Build.DefinitionName)-$(Build.BuildId)"
+    },
     "image-builder.imageName": {
       "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20170807153845"
     },
-    "image-builder.common.args": {
-      "value": "--manifest manifest.json --username $(PB.docker.username) --password $(PB.docker.password) $(PB.image-builder.customCommonArgs)",
+    "image-builder.args": {
+      "value": "build --manifest manifest.json --path $(PB.image-builder.path) --architecture arm --test-var Filter=$(PB.image-builder.path) --test-var Architecture=arm --push --username $(PB.docker.username) --password $(PB.docker.password) $(PB.image-builder.customCommonArgs)",
       "allowOverride": true
     },
-    "image-builder.publishManifest.args": {
-      "value": "publishManifest $(image-builder.common.args)",
-      "allowOverride": true
-    },
-    "image-builder.updateReadme.args": {
-      "value": "updateReadme $(image-builder.common.args)",
-      "allowOverride": true
-    },
-    "image-builder.containerName": {
-      "value": "$(Build.DefinitionName)-$(Build.BuildId)"
+    "PB.docker.password": {
+      "value": null,
+      "isSecret": true
     },
     "PB.image-builder.customCommonArgs": {
       "value": ""
     },
-    "PB.docker.password": {
+    "PB.image-builder.path": {
+      "value": ""
+    },
+    "PB.PAT.dn-bot-devdiv-build-rw-code-rw": {
       "value": null,
       "isSecret": true
     }
   },
   "demands": [
-    "Agent.OS -equals linux"
+    "Agent.Name -equals DDVSOWIN10AGE01"
   ],
   "retentionRules": [
     {
@@ -213,16 +244,16 @@
   "processParameters": {},
   "quality": "definition",
   "queue": {
-    "id": 36,
-    "name": "DotNet-Build",
+    "id": 159,
+    "name": "DotNetCore-Test",
     "pool": {
-      "id": 39,
-      "name": "DotNet-Build"
+      "id": 83,
+      "name": "DotNetCore-Test"
     }
   },
-  "id": 6218,
-  "name": "dotnet-docker-post-image-build",
-  "url": "https://devdiv.visualstudio.com/0bdbc590-a062-4c3f-b0f6-9383f67865ee/_apis/build/Definitions/6218",
+  "id": 6214,
+  "name": "dotnet-docker-linux-arm32v7-images",
+  "url": "https://devdiv.visualstudio.com/0bdbc590-a062-4c3f-b0f6-9383f67865ee/_apis/build/Definitions/6214",
   "path": "\\",
   "type": "build",
   "project": {

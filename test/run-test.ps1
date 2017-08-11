@@ -1,7 +1,8 @@
 [cmdletbinding()]
 param(
     [switch]$UseImageCache,
-    [string]$Filter
+    [string]$Filter,
+    [string]$Architecture
 )
 
 Set-StrictMode -Version Latest
@@ -14,17 +15,19 @@ function Exec([scriptblock]$cmd, [string]$errorMessage = "Error executing comman
     }
 }
 
-function Get-ActivePlatformImages([PSCustomObject]$manifestRepo, [string]$platform) {
+function Get-ActivePlatformImages([PSCustomObject]$manifestRepo, [string]$activeOS) {
     return $manifestRepo.Images |
         ForEach-Object { $_.Platforms } |
-        Where-Object { [bool]($_.PSobject.Properties.name -match $platform) }
+        Where-Object { $_.os -eq "$activeOS" } |
+        Where-Object { ( [string]::IsNullOrEmpty($Architecture) -and -not [bool]($_.PSobject.Properties.name -match "architecture"))`
+            -or ( [bool]($_.PSobject.Properties.name -match "architecture") -and $_.architecture -eq "$Architecture" ) }
 }
 
-function Get-RuntimeTag([string]$sdkDockerfilePath, [string]$runtimeType, [string]$platform, [PSCustomObject]$manifestRepo) {
+function Get-RuntimeTag([string]$sdkDockerfilePath, [string]$runtimeType, [string]$activeOS, [PSCustomObject]$manifestRepo) {
     $runtimeDockerfilePath = $sdkDockerfilePath.Replace("sdk", $runtimeType)
-    $platforms = Get-ActivePlatformImages $manifestRepo $platform |
-        Where-Object { $_.$platform.Dockerfile -eq $runtimeDockerfilePath }
-    return $manifestRepo.Name + ':' + $platforms[0].$platform.Tags[0]
+    $platforms = Get-ActivePlatformImages $manifestRepo $activeOS |
+        Where-Object { $_.Dockerfile -eq $runtimeDockerfilePath }
+    return $manifestRepo.Name + ':' + ([array]($_.Tags | ForEach-Object { $_.PSobject.Properties }))[0].Name
 }
 
 if ($UseImageCache) {
@@ -39,12 +42,12 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $manifestPath = [IO.Path]::combine(${repoRoot}, "manifest.json")
 $manifestRepo = (Get-Content $manifestPath | ConvertFrom-Json).Repos[0]
 $testFilesPath = "$PSScriptRoot$dirSeparator"
-$platform = docker version -f "{{ .Server.Os }}"
+$activeOS = docker version -f "{{ .Server.Os }}"
 
 # update as appropriate (e.g. "2.0-sdk") whenever pre-release packages are referenced prior to being available on NuGet.org.
 $includePrereleasePackageSourceForSdkTag = $null
 
-if ($platform -eq "windows") {
+if ($activeOS -eq "windows") {
     $containerRoot = "C:\"
     $platformDirSeparator = '\'
 }
@@ -54,11 +57,11 @@ else {
 }
 
 # Loop through each sdk Dockerfile in the repo and test the sdk and runtime images.
-Get-ActivePlatformImages $manifestRepo $platform |
-    Where-Object { [string]::IsNullOrEmpty($Filter) -or $_.$platform.dockerfile -like "$Filter*" } |
-    Where-Object { $_.$platform.Dockerfile.Contains('sdk') } |
+Get-ActivePlatformImages $manifestRepo $activeOS |
+    Where-Object { [string]::IsNullOrEmpty($Filter) -or $_.dockerfile -like "$Filter*" } |
+    Where-Object { $_.Dockerfile.Contains('sdk') } |
     ForEach-Object {
-        $sdkTag = $_.$platform.Tags[0]
+        $sdkTag = ([array]($_.Tags | ForEach-Object { $_.PSobject.Properties }))[0].Name
         $fullSdkTag = "$($manifestRepo.Name):${sdkTag}"
 
         $timeStamp = Get-Date -Format FileDateTime
@@ -92,7 +95,7 @@ Get-ActivePlatformImages $manifestRepo $platform |
                     dotnet publish -o ${containerRoot}volume
                 }
 
-                $fullRuntimeTag = Get-RuntimeTag $_.$platform.Dockerfile "runtime" $platform $manifestRepo
+                $fullRuntimeTag = Get-RuntimeTag $_.Dockerfile "runtime" $activeOS $manifestRepo
                 Write-Host "----- Testing on $fullRuntimeTag with $sdkTag framework-dependent app -----"
                 exec { docker run --rm `
                     -v ${framworkDepVol}":${containerRoot}volume" `
@@ -104,7 +107,7 @@ Get-ActivePlatformImages $manifestRepo $platform |
                 docker volume rm $framworkDepVol
             }
 
-            if ($platform -eq "linux") {
+            if ($activeOS -eq "linux") {
                 $selfContainedImage = "self-contained-build-${buildImage}"
                 Write-Host "----- Creating publish-image for self-contained app built on $fullSdkTag -----"
                 Try {
@@ -123,16 +126,7 @@ Get-ActivePlatformImages $manifestRepo $platform |
                             dotnet publish -r debian.8-x64 -o ${containerRoot}volume
                         }
 
-                        if ($sdkTag -like "2.0*-sdk*") {
-                            # Temporary workaround https://github.com/dotnet/corefx/blob/master/Documentation/project-docs/dogfooding.md#option-2-self-contained
-                            exec { docker run --rm `
-                                -v ${selfContainedVol}":${containerRoot}volume" `
-                                $selfContainedImage `
-                                chmod u+x ${containerRoot}volume${platformDirSeparator}test
-                            }
-                        }
-
-                        $fullRuntimeDepsTag = Get-RuntimeTag $_.$platform.Dockerfile "runtime-deps" $platform $manifestRepo
+                        $fullRuntimeDepsTag = Get-RuntimeTag $_.Dockerfile "runtime-deps" $activeOS $manifestRepo
                         Write-Host "----- Testing $fullRuntimeDepsTag with $sdkTag self-contained app -----"
                         exec { docker run -t --rm `
                             -v ${selfContainedVol}":${containerRoot}volume" `
