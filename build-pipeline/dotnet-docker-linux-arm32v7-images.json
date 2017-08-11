@@ -8,17 +8,57 @@
       "timeoutInMinutes": 0,
       "condition": "succeeded()",
       "task": {
-        "id": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
         "versionSpec": "1.*",
         "definitionType": "task"
       },
       "inputs": {
-        "scriptType": "inlineScript",
-        "scriptName": "",
-        "arguments": "",
+        "filename": "docker",
+        "arguments": "system prune -a -f",
         "workingFolder": "",
-        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
-        "failOnStandardError": "true"
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Clone Repo",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "refName": "Task3",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "run $(docker.commonRunArgs) $(docker.gitEnabledImageName) git clone https://github.com/dotnet/dotnet-docker.git /repo",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Checkout Source",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "refName": "Task3",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "run $(docker.commonRunArgs) $(docker.gitEnabledImageName) git checkout $(Build.SourceVersion)",
+        "workingFolder": "",
+        "failOnStandardError": "false"
       }
     },
     {
@@ -44,63 +84,6 @@
       "enabled": true,
       "continueOnError": false,
       "alwaysRun": false,
-      "displayName": "Create container",
-      "timeoutInMinutes": 0,
-      "condition": "succeeded()",
-      "task": {
-        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
-        "versionSpec": "1.*",
-        "definitionType": "task"
-      },
-      "inputs": {
-        "filename": "docker",
-        "arguments": "create --name $(image-builder.containerName) $(image-builder.imageName)",
-        "workingFolder": "",
-        "failOnStandardError": "false"
-      }
-    },
-    {
-      "enabled": true,
-      "continueOnError": false,
-      "alwaysRun": false,
-      "displayName": "Copy image-builder locally",
-      "timeoutInMinutes": 0,
-      "condition": "succeeded()",
-      "task": {
-        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
-        "versionSpec": "1.*",
-        "definitionType": "task"
-      },
-      "inputs": {
-        "filename": "docker ",
-        "arguments": "cp $(image-builder.containerName):/out $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder",
-        "workingFolder": "",
-        "failOnStandardError": "false"
-      }
-    },
-    {
-      "enabled": true,
-      "continueOnError": false,
-      "alwaysRun": false,
-      "displayName": "Cleanup container",
-      "timeoutInMinutes": 0,
-      "condition": "always()",
-      "task": {
-        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
-        "versionSpec": "1.*",
-        "definitionType": "task"
-      },
-      "inputs": {
-        "filename": "docker",
-        "arguments": "rmi -f $(image-builder.imageName)",
-        "workingFolder": "",
-        "failOnStandardError": "false"
-      }
-    },
-    {
-      "enabled": true,
-      "continueOnError": false,
-      "alwaysRun": false,
       "displayName": "Run image-builder",
       "timeoutInMinutes": 0,
       "condition": "succeeded()",
@@ -110,31 +93,29 @@
         "definitionType": "task"
       },
       "inputs": {
-        "filename": "$(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe",
-        "arguments": "$(image-builder.args)",
+        "filename": "docker",
+        "arguments": "run  $(docker.commonRunArgs) -v /var/run/docker.sock:/var/run/docker.sock $(image-builder.imageName) $(image-builder.args)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
     },
     {
       "enabled": true,
-      "continueOnError": true,
-      "alwaysRun": true,
+      "continueOnError": false,
+      "alwaysRun": false,
       "displayName": "Cleanup Docker",
       "timeoutInMinutes": 0,
-      "condition": "always()",
+      "condition": "succeeded()",
       "task": {
-        "id": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
         "versionSpec": "1.*",
         "definitionType": "task"
       },
       "inputs": {
-        "scriptType": "inlineScript",
-        "scriptName": "",
-        "arguments": "",
+        "filename": "docker",
+        "arguments": "system prune -a -f",
         "workingFolder": "",
-        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
-        "failOnStandardError": "true"
+        "failOnStandardError": "false"
       }
     }
   ],
@@ -182,26 +163,38 @@
       "value": "false",
       "allowOverride": true
     },
+    "docker.commonRunArgs": {
+      "value": "--rm -v $(docker.volumeName):/repo -w /repo --name $(docker.containerName)"
+    },
+    "docker.containerName": {
+      "value": "$(Build.DefinitionName)-$(Build.BuildId)"
+    },
+    "docker.gitEnabledImageName": {
+      "value": "buildpack-deps:stretch-scm"
+    },
+    "docker.volumeName": {
+      "value": "$(Build.DefinitionName)-$(Build.BuildId)"
+    },
     "image-builder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20170710090943"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20170807153845"
     },
     "image-builder.args": {
-      "value": "--command build --manifest manifest.json --path $(PB.image-builder.path) --test-var Filter=$(PB.image-builder.path) --push --username $(PB.docker.username) --password $(PB.docker.password)",
+      "value": "build --manifest manifest.json --path $(PB.image-builder.path) --architecture arm --test-var Filter=$(PB.image-builder.path) --test-var Architecture=arm --push --username $(PB.docker.username) --password $(PB.docker.password) $(PB.image-builder.customCommonArgs)",
       "allowOverride": true
-    },
-    "image-builder.containerName": {
-      "value": "dotnet-docker-windows-$(Build.BuildId)"
     },
     "PB.docker.password": {
       "value": null,
       "isSecret": true
+    },
+    "PB.image-builder.customCommonArgs": {
+      "value": ""
     },
     "PB.image-builder.path": {
       "value": ""
     }
   },
   "demands": [
-    "Agent.OS -equals Windows_NT"
+    "Agent.Name -equals DDVSOWIN10AGE01"
   ],
   "retentionRules": [
     {
@@ -224,7 +217,7 @@
   "jobCancelTimeoutInMinutes": 5,
   "repository": {
     "properties": {
-      "cleanOptions": "1",
+      "cleanOptions": "0",
       "gitLfsSupport": "false",
       "skipSyncSource": "false",
       "reportBuildStatus": "true",
@@ -241,22 +234,22 @@
     "name": "dotnet/dotnet-docker",
     "url": "https://github.com/dotnet/dotnet-docker.git",
     "defaultBranch": "master",
-    "clean": "true",
+    "clean": "false",
     "checkoutSubmodules": false
   },
   "processParameters": {},
   "quality": "definition",
   "queue": {
-    "id": 330,
-    "name": "DotNetCore-Build",
+    "id": 159,
+    "name": "DotNetCore-Test",
     "pool": {
-      "id": 97,
-      "name": "DotNetCore-Build"
+      "id": 83,
+      "name": "DotNetCore-Test"
     }
   },
-  "id": 6216,
-  "name": "dotnet-docker-windows-images",
-  "url": "https://devdiv.visualstudio.com/0bdbc590-a062-4c3f-b0f6-9383f67865ee/_apis/build/Definitions/6216",
+  "id": 6214,
+  "name": "dotnet-docker-linux-arm32v7-images",
+  "url": "https://devdiv.visualstudio.com/0bdbc590-a062-4c3f-b0f6-9383f67865ee/_apis/build/Definitions/6214",
   "path": "\\",
   "type": "build",
   "project": {

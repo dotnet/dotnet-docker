@@ -5,7 +5,7 @@
   "testCommands": {
     "linux": [
       "docker build --rm -t testrunner -f ./test/Dockerfile.linux.testrunner .",
-      "docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner powershell -File ./test/run-test.ps1 -Filter $(Filter)"
+      "docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner powershell -File ./test/run-test.ps1 -Filter $(Filter) -Architecture $(Architecture)"
     ],
     "windows": [
       "powershell -NoProfile -Command .\\test\\run-test.ps1 -Filter $(Filter)"
@@ -17,258 +17,410 @@
       "readmePath": "README.md",
       "images": [
         {
-          "sharedTags": [
-            "1.0.5-runtime-deps",
-            "1.0-runtime-deps"
-          ],
-          "platforms": {
-            "linux": {
+          "readmeOrder": 1,
+          "sharedTags": {
+            "1.0.5-runtime-deps": {},
+            "1.0-runtime-deps": {}
+          },
+          "platforms": [
+            {
               "dockerfile": "1.0/runtime-deps/jessie",
-              "tags": [
-                "1.0.5-runtime-deps-jessie",
-                "1.0.5-core-deps",
-                "1.0-core-deps"
-              ]
+              "os": "linux",
+              "tags": {
+                "1.0.5-runtime-deps-jessie": {},
+                "1.0.5-core-deps": {
+                  "isUndocumented": true
+                },
+                "1.0-core-deps": {
+                  "isUndocumented": true
+                }
+              }
             }
-          }
+          ]
         },
         {
-          "sharedTags": [
-            "1.0.5-runtime",
-            "1.0-runtime"
-          ],
-          "platforms": {
-            "linux": {
+          "readmeOrder": 0,
+          "sharedTags": {
+            "1.0.5-runtime": {},
+            "1.0-runtime": {}
+          },
+          "platforms": [
+            {
               "dockerfile": "1.0/runtime/jessie",
-              "tags": [
-                "1.0.5-runtime-jessie",
-                "1.0.5-core",
-                "1.0-core"
-              ]
+              "os": "linux",
+              "tags": {
+                "1.0.5-runtime-jessie": {},
+                "1.0.5-core": {
+                  "isUndocumented": true
+                },
+                "1.0-core": {
+                  "isUndocumented": true
+                }
+              }
             },
-            "windows": {
+            {
               "dockerfile": "1.0/runtime/nanoserver",
-              "tags": [
-                "1.0.5-runtime-nanoserver",
-                "1.0.5-runtime-nanoserver-$(nanoServerVersion)",
-                "1.0-runtime-nanoserver",
-                "1.0-runtime-nanoserver-$(nanoServerVersion)"
-              ]
+              "os": "windows",
+              "tags": {
+                "1.0.5-runtime-nanoserver": {},
+                "1.0.5-runtime-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "1.0-runtime-nanoserver": {
+                  "isUndocumented": true
+                },
+                "1.0-runtime-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                }
+              }
             }
-          }
+          ]
         },
         {
-          "sharedTags": [
-            "1.0.5-sdk-1.0.4",
-            "1.0.5-sdk",
-            "1.0-sdk"
-          ],
-          "platforms": {
-            "linux": {
+          "readmeOrder": 2,
+          "sharedTags": {
+            "1.0.5-sdk-1.0.4": {
+              "isUndocumented": true
+            },
+            "1.0.5-sdk": {},
+            "1.0-sdk": {}
+          },
+          "platforms": [
+            {
               "dockerfile": "1.0/sdk/jessie",
-              "tags": [
-                "1.0.5-sdk-jessie"
-              ]
+              "os": "linux",
+              "tags": {
+                "1.0.5-sdk-jessie": {}
+              }
             },
-            "windows": {
+            {
               "dockerfile": "1.0/sdk/nanoserver",
-              "tags": [
-                "1.0.5-sdk-1.0.4-nanoserver",
-                "1.0.5-sdk-1.0.4-nanoserver-$(nanoServerVersion)",
-                "1.0.5-sdk-nanoserver",
-                "1.0.5-sdk-nanoserver-$(nanoServerVersion)",
-                "1.0-sdk-nanoserver",
-                "1.0-sdk-nanoserver-$(nanoServerVersion)"
-              ]
+              "os": "windows",
+              "tags": {
+                "1.0.5-sdk-1.0.4-nanoserver": {
+                  "isUndocumented": true
+                },
+                "1.0.5-sdk-1.0.4-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "1.0.5-sdk-nanoserver": {},
+                "1.0.5-sdk-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "1.0-sdk-nanoserver": {
+                  "isUndocumented": true
+                },
+                "1.0-sdk-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                }
+              }
             }
-          }
+          ]
         },
         {
-          "sharedTags": [
-            "1.1.2-runtime-deps",
-            "1.1-runtime-deps",
-            "1-runtime-deps",
-            "runtime-deps"
-          ],
-          "platforms": {
-            "linux": {
+          "readmeOrder": 4,
+          "sharedTags": {
+            "1.1.2-runtime-deps": {},
+            "1.1-runtime-deps": {},
+            "1-runtime-deps": {},
+            "runtime-deps": {}
+          },
+          "platforms": [
+            {
               "dockerfile": "1.1/runtime-deps/jessie",
-              "tags": [
-                "1.1.2-runtime-deps-jessie",
-                "1-core-deps",
-                "core-deps"
-              ]
+              "os": "linux",
+              "tags": {
+                "1.1.2-runtime-deps-jessie": {},
+                "1-core-deps": {
+                  "isUndocumented": true
+                },
+                "core-deps": {
+                  "isUndocumented": true
+                }
+              }
             }
-          }
+          ]
         },
         {
-          "sharedTags": [
-            "1.1.2-runtime",
-            "1.1-runtime",
-            "1-runtime",
-            "runtime"
-          ],
-          "platforms": {
-            "linux": {
+          "readmeOrder": 3,
+          "sharedTags": {
+            "1.1.2-runtime": {},
+            "1.1-runtime": {},
+            "1-runtime": {},
+            "runtime": {}
+          },
+          "platforms": [
+            {
               "dockerfile": "1.1/runtime/jessie",
-              "tags": [
-                "1.1.2-runtime-jessie",
-                "1-core",
-                "core"
-              ]
+              "os": "linux",
+              "tags": {
+                "1.1.2-runtime-jessie": {},
+                "1-core": {
+                  "isUndocumented": true
+                },
+                "core": {
+                  "isUndocumented": true
+                }
+              }
             },
-            "windows": {
+            {
               "dockerfile": "1.1/runtime/nanoserver",
-              "tags": [
-                "1.1.2-runtime-nanoserver",
-                "1.1.2-runtime-nanoserver-$(nanoServerVersion)",
-                "1.1-runtime-nanoserver",
-                "1.1-runtime-nanoserver-$(nanoServerVersion)",
-                "1-runtime-nanoserver",
-                "1-runtime-nanoserver-$(nanoServerVersion)",
-                "runtime-nanoserver",
-                "runtime-nanoserver-$(nanoServerVersion)"
-              ]
+              "os": "windows",
+              "tags": {
+                "1.1.2-runtime-nanoserver": {},
+                "1.1.2-runtime-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "1.1-runtime-nanoserver": {
+                  "isUndocumented": true
+                },
+                "1.1-runtime-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "1-runtime-nanoserver": {
+                  "isUndocumented": true
+                },
+                "1-runtime-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "runtime-nanoserver": {
+                  "isUndocumented": true
+                },
+                "runtime-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                }
+              }
             }
-          }
+          ]
         },
         {
-          "sharedTags": [
-            "1.1.2-sdk-1.0.4",
-            "1.1.2-sdk",
-            "1.1-sdk",
-            "1-sdk",
-            "sdk",
-            "latest"
-          ],
-          "platforms": {
-            "linux": {
+          "readmeOrder": 5,
+          "sharedTags": {
+            "1.1.2-sdk-1.0.4": {
+              "isUndocumented": true
+            },
+            "1.1.2-sdk": {},
+            "1.1-sdk": {},
+            "1-sdk": {},
+            "sdk": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
               "dockerfile": "1.1/sdk/jessie",
-              "tags": [
-                "1.1.2-sdk-jessie"
-              ]
+              "os": "linux",
+              "tags": {
+                "1.1.2-sdk-jessie": {}
+              }
             },
-            "windows": {
+            {
               "dockerfile": "1.1/sdk/nanoserver",
-              "tags": [
-                "1.1.2-sdk-1.0.4-nanoserver",
-                "1.1.2-sdk-1.0.4-nanoserver-$(nanoServerVersion)",
-                "1.1.2-sdk-nanoserver",
-                "1.1.2-sdk-nanoserver-$(nanoServerVersion)",
-                "1.1-sdk-nanoserver",
-                "1.1-sdk-nanoserver-$(nanoServerVersion)",
-                "1-sdk-nanoserver",
-                "1-sdk-nanoserver-$(nanoServerVersion)",
-                "sdk-nanoserver",
-                "sdk-nanoserver-$(nanoServerVersion)",
-                "nanoserver",
-                "nanoserver-$(nanoServerVersion)"
-              ]
+              "os": "windows",
+              "tags": {
+                "1.1.2-sdk-1.0.4-nanoserver": {
+                  "isUndocumented": true
+                },
+                "1.1.2-sdk-1.0.4-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "1.1.2-sdk-nanoserver": {},
+                "1.1.2-sdk-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "1.1-sdk-nanoserver": {
+                  "isUndocumented": true
+                },
+                "1.1-sdk-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "1-sdk-nanoserver": {
+                  "isUndocumented": true
+                },
+                "1-sdk-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "sdk-nanoserver": {
+                  "isUndocumented": true
+                },
+                "sdk-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "nanoserver": {
+                  "isUndocumented": true
+                },
+                "nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                }
+              }
             }
-          }
+          ]
         },
         {
-          "sharedTags": [
-            "2.0.0-preview2-runtime-deps",
-            "2.0-runtime-deps",
-            "2-runtime-deps"
-          ],
-          "platforms": {
-            "linux": {
-              "dockerfile": "2.0/runtime-deps/stretch",
-              "tags": [
-                "2.0.0-preview2-runtime-deps-stretch"
-              ]
-            }
-          }
-        },
-        {
-          "sharedTags": [
-            "2.0.0-preview2-runtime",
-            "2.0-runtime",
-            "2-runtime"
-          ],
-          "platforms": {
-            "linux": {
-              "dockerfile": "2.0/runtime/stretch",
-              "tags": [
-                "2.0.0-preview2-runtime-stretch"
-              ]
+          "readmeOrder": 8,
+          "sharedTags": {
+            "2.0.0-runtime-deps": {},
+            "2.0-runtime-deps": {},
+            "2-runtime-deps": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "2.0/runtime-deps/stretch/amd64",
+              "os": "linux",
+              "tags": {
+                "2.0.0-runtime-deps-stretch": {}
+              }
             },
-            "windows": {
-              "dockerfile": "2.0/runtime/nanoserver",
-              "tags": [
-                "2.0.0-preview2-runtime-nanoserver",
-                "2.0.0-preview2-runtime-nanoserver-$(nanoServerVersion)",
-                "2.0-runtime-nanoserver",
-                "2.0-runtime-nanoserver-$(nanoServerVersion)",
-                "2-runtime-nanoserver",
-                "2-runtime-nanoserver-$(nanoServerVersion)"
-              ]
+            {
+              "architecture": "arm",
+              "dockerfile": "2.0/runtime-deps/stretch/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.0.0-runtime-deps-stretch-arm32v7": {},
+                "2.0-runtime-deps-stretch-arm32v7": {
+                  "isUndocumented": true
+                },
+                "2-runtime-deps-stretch-arm32v7": {
+                  "isUndocumented": true
+                }
+              },
+              "variant": "armv7"
             }
-          }
+          ]
         },
         {
-          "sharedTags": [
-            "2.0.0-preview2-sdk",
-            "2.0-sdk",
-            "2-sdk"
-          ],
-          "platforms": {
-            "linux": {
-              "dockerfile": "2.0/sdk/stretch",
-              "tags": [
-                "2.0.0-preview2-sdk-stretch"
-              ]
+          "readmeOrder": 6,
+          "sharedTags": {
+            "2.0.0-runtime": {},
+            "2.0-runtime": {},
+            "2-runtime": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "2.0/runtime/stretch/amd64",
+              "os": "linux",
+              "tags": {
+                "2.0.0-runtime-stretch": {}
+              }
             },
-            "windows": {
-              "dockerfile": "2.0/sdk/nanoserver",
-              "tags": [
-                "2.0.0-preview2-sdk-nanoserver",
-                "2.0.0-preview2-sdk-nanoserver-$(nanoServerVersion)",
-                "2.0-sdk-nanoserver",
-                "2.0-sdk-nanoserver-$(nanoServerVersion)",
-                "2-sdk-nanoserver",
-                "2-sdk-nanoserver-$(nanoServerVersion)"
-              ]
+            {
+              "architecture": "arm",
+              "dockerfile": "2.0/runtime/stretch/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.0.0-runtime-stretch-arm32v7": {},
+                "2.0-runtime-stretch-arm32v7": {
+                  "isUndocumented": true
+                },
+                "2-runtime-stretch-arm32v7": {
+                  "isUndocumented": true
+                }
+              },
+              "variant": "armv7"
+            },
+            {
+              "dockerfile": "2.0/runtime/nanoserver/amd64",
+              "os": "windows",
+              "tags": {
+                "2.0.0-runtime-nanoserver": {},
+                "2.0.0-runtime-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "2.0-runtime-nanoserver": {
+                  "isUndocumented": true
+                },
+                "2.0-runtime-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "2-runtime-nanoserver": {
+                  "isUndocumented": true
+                },
+                "2-runtime-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                }
+              }
             }
-          }
+          ]
         },
         {
-          "platforms": {
-            "linux": {
-              "dockerfile": "2.0/runtime-deps/jessie",
-              "tags": [
-                "2.0.0-preview2-runtime-deps-jessie",
-                "2.0-runtime-deps-jessie",
-                "2-runtime-deps-jessie"
-              ]
+          "readmeOrder": 10,
+          "sharedTags": {
+            "2.0.0-sdk": {},
+            "2.0-sdk": {},
+            "2-sdk": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "2.0/sdk/stretch/amd64",
+              "os": "linux",
+              "tags": {
+                "2.0.0-sdk-stretch": {}
+              }
+            },
+            {
+              "dockerfile": "2.0/sdk/nanoserver/amd64",
+              "os": "windows",
+              "tags": {
+                "2.0.0-sdk-nanoserver": {},
+                "2.0.0-sdk-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "2.0-sdk-nanoserver": {
+                  "isUndocumented": true
+                },
+                "2.0-sdk-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "2-sdk-nanoserver": {
+                  "isUndocumented": true
+                },
+                "2-sdk-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                }
+              }
             }
-          }
+          ]
         },
         {
-          "platforms": {
-            "linux": {
-              "dockerfile": "2.0/runtime/jessie",
-              "tags": [
-                "2.0.0-preview2-runtime-jessie",
-                "2.0-runtime-jessie",
-                "2-runtime-jessie"
-              ]
+          "readmeOrder": 9,
+          "platforms": [
+            {
+              "dockerfile": "2.0/runtime-deps/jessie/amd64",
+              "os": "linux",
+              "tags": {
+                "2.0.0-runtime-deps-jessie": {},
+                "2.0-runtime-deps-jessie": {},
+                "2-runtime-deps-jessie": {}
+              }
             }
-          }
+          ]
         },
         {
-          "platforms": {
-            "linux": {
-              "dockerfile": "2.0/sdk/jessie",
-              "tags": [
-                "2.0.0-preview2-sdk-jessie",
-                "2.0-sdk-jessie",
-                "2-sdk-jessie"
-              ]
+          "readmeOrder": 7,
+          "platforms": [
+            {
+              "dockerfile": "2.0/runtime/jessie/amd64",
+              "os": "linux",
+              "tags": {
+                "2.0.0-runtime-jessie": {},
+                "2.0-runtime-jessie": {},
+                "2-runtime-jessie": {}
+              }
             }
-          }
+          ]
+        },
+        {
+          "readmeOrder": 11,
+          "platforms": [
+            {
+              "dockerfile": "2.0/sdk/jessie/amd64",
+              "os": "linux",
+              "tags": {
+                "2.0.0-sdk-jessie": {},
+                "2.0-sdk-jessie": {},
+                "2-sdk-jessie": {}
+              }
+            }
+          ]
         }
       ]
     }
