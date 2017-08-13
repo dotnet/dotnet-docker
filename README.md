@@ -27,7 +27,7 @@
 - [`2.0.0-runtime-stretch-arm32v7`, `2.0.0-runtime`, `2.0-runtime`, `2-runtime` (*2.0/runtime/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/arm32v7/Dockerfile)
 - [`2.0.0-runtime-deps-stretch-arm32v7`, `2.0.0-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps` (*2.0/runtime-deps/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/arm32v7/Dockerfile)
 
->**Note:** The arm32 images are in preview mode.
+>**Note:** The Docker images in this repo are supported by Microsoft. The `arm32v7` images are in preview and have "best effort" support only by the community and .NET Core Team.
 
 >**Note:** You can follow [dotnet/announcements](https://github.com/dotnet/announcements/issues?q=is%3Aissue+is%3Aopen+label%3ADocker) for Docker-related announcements.
 
