@@ -29,9 +29,9 @@
 
 >**Note:** The arm32 images are in preview mode.
 
-For more information about these images and their history, please see [the relevant Dockerfile (`dotnet/dotnet-docker`)](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls?utf8=%E2%9C%93&q=).
+>**Note:** You can follow [dotnet/announcements](https://github.com/dotnet/announcements/issues?q=is%3Aissue+is%3Aopen+label%3ADocker) for Docker-related announcements.
 
-You can follow [dotnet/announcements](https://github.com/dotnet/announcements/issues?q=is%3Aissue+is%3Aopen+label%3ADocker) for Docker-related announcements.
+For more information about these images and their history, please see [the relevant Dockerfile (`dotnet/dotnet-docker`)](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls?utf8=%E2%9C%93&q=).
 
 ## What is .NET Core?
 
@@ -237,7 +237,7 @@ Microsoft Corporation (or based on where you live, one of its affiliates) (refer
 
 ## Supported Docker versions
 
-This image is officially supported on Docker version 1.12.2.
+Supported Docker versions: [the latest release](https://github.com/docker/docker/releases/latest) (down to 1.12.2 on a best-effort basis)
 
 Please see [the Docker installation documentation](https://docs.docker.com/installation/) for details on how to upgrade your Docker daemon.
 
