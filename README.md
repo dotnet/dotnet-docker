@@ -29,7 +29,7 @@
 
 >**Note:** The Docker images in this repo are supported by Microsoft. The `arm32v7` images are in preview and have "best effort" support only by the community and .NET Core Team.
 
->**Note:** You can follow [dotnet/announcements](https://github.com/dotnet/announcements/issues?q=is%3Aissue+is%3Aopen+label%3ADocker) for Docker-related announcements.
+>**Note:** Watch [dotnet/announcements](https://github.com/dotnet/announcements/issues?q=is%3Aissue+is%3Aopen+label%3ADocker) for Docker-related .NET Core announcements.
 
 For more information about these images and their history, please see [the relevant Dockerfile (`dotnet/dotnet-docker`)](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls?utf8=%E2%9C%93&q=).
 
