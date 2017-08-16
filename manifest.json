@@ -79,7 +79,7 @@
         {
           "readmeOrder": 2,
           "sharedTags": {
-            "1.0.5-sdk-1.0.4": {
+            "1.0.5-sdk-1.1.0": {
               "isUndocumented": true
             },
             "1.0.5-sdk": {},
@@ -97,10 +97,10 @@
               "dockerfile": "1.0/sdk/nanoserver",
               "os": "windows",
               "tags": {
-                "1.0.5-sdk-1.0.4-nanoserver": {
+                "1.0.5-sdk-1.1.0-nanoserver": {
                   "isUndocumented": true
                 },
-                "1.0.5-sdk-1.0.4-nanoserver-$(nanoServerVersion)": {
+                "1.0.5-sdk-1.1.0-nanoserver-$(nanoServerVersion)": {
                   "isUndocumented": true
                 },
                 "1.0.5-sdk-nanoserver": {},
@@ -194,7 +194,7 @@
         {
           "readmeOrder": 5,
           "sharedTags": {
-            "1.1.2-sdk-1.0.4": {
+            "1.1.2-sdk-1.1.0": {
               "isUndocumented": true
             },
             "1.1.2-sdk": {},
@@ -213,10 +213,10 @@
               "dockerfile": "1.1/sdk/nanoserver",
               "os": "windows",
               "tags": {
-                "1.1.2-sdk-1.0.4-nanoserver": {
+                "1.1.2-sdk-1.1.0-nanoserver": {
                   "isUndocumented": true
                 },
-                "1.1.2-sdk-1.0.4-nanoserver-$(nanoServerVersion)": {
+                "1.1.2-sdk-1.1.0-nanoserver-$(nanoServerVersion)": {
                   "isUndocumented": true
                 },
                 "1.1.2-sdk-nanoserver": {},
