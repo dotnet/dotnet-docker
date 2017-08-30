@@ -207,10 +207,10 @@ This image contains the operating system with all of the native dependencies nee
 
 You can learn more about using .NET Core with Docker with [.NET Docker samples](https://github.com/dotnet/dotnet-docker-samples):
 
-- [.NET Core Development Sample](dotnetapp-dev) - This sample is good for development and building since it relies on the .NET Core SDK image. It performs `dotnet` commands on your behalf, reducing the time it takes to create Docker images (assuming you make changes and then test them in a container, iteratively).
-- [.NET Core Docker Production Sample](dotnetapp-prod) - This sample is good for production since it relies on the .NET Core Runtime image, not the larger .NET Core SDK image. Most apps only need the runtime, reducing the size of your application image.
-- [.NET Core self-contained application Docker Production Samp](dotnetapp-selfcontained) - This sample is also good for production scenarios since it relies on an operating system image (without .NET Core). [Self-contained .NET Core apps](https://docs.microsoft.com/dotnet/articles/core/deploying/) include .NET Core as part of the app and not as a centrally installed component in a base image.
-- [ASP.NET Core Docker Production Sample](aspnetapp) - This samples demonstrates a Dockerized ASP.NET Core Web App.
+- [.NET Core Development Sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev) - This sample is good for development and building since it relies on the .NET Core SDK image. It performs `dotnet` commands on your behalf, reducing the time it takes to create Docker images (assuming you make changes and then test them in a container, iteratively).
+- [.NET Core Docker Production Sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) - This sample is good for production since it relies on the .NET Core Runtime image, not the larger .NET Core SDK image. Most apps only need the runtime, reducing the size of your application image.
+- [.NET Core self-contained application Docker Production Samp](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-selfcontained) - This sample is also good for production scenarios since it relies on an operating system image (without .NET Core). [Self-contained .NET Core apps](https://docs.microsoft.com/dotnet/articles/core/deploying/) include .NET Core as part of the app and not as a centrally installed component in a base image.
+- [ASP.NET Core Docker Production Sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/aspnetapp) - This samples demonstrates a Dockerized ASP.NET Core Web App.
 
 ## Related Repos
 
