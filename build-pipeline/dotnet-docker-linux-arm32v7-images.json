@@ -194,7 +194,8 @@
     }
   },
   "demands": [
-    "Agent.Name -equals DDVSOWIN10AGE01"
+    "VSTS_OS -equals Windows_10_Enterprise",
+    "DockerVersion"
   ],
   "retentionRules": [
     {
@@ -240,11 +241,11 @@
   "processParameters": {},
   "quality": "definition",
   "queue": {
-    "id": 159,
-    "name": "DotNetCore-Test",
+    "id": 832,
+    "name": "DotNetCore-Infra",
     "pool": {
-      "id": 83,
-      "name": "DotNetCore-Test"
+      "id": 135,
+      "name": "DotNetCore-Infra"
     }
   },
   "id": 6214,
