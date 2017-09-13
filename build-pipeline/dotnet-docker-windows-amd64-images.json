@@ -73,7 +73,7 @@
       },
       "inputs": {
         "filename": "docker ",
-        "arguments": "cp $(image-builder.containerName):/out $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder",
+        "arguments": "cp $(image-builder.containerName):/image-builder $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -183,7 +183,7 @@
       "allowOverride": true
     },
     "image-builder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20170807153845"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20170818060355"
     },
     "image-builder.args": {
       "value": "build --manifest manifest.json --path $(PB.image-builder.path) --test-var Filter=$(PB.image-builder.path) --test-var Architecture=amd64 --push --username $(PB.docker.username) --password $(PB.docker.password) $(PB.image-builder.customCommonArgs)",
