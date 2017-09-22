@@ -84,13 +84,6 @@ COPY --from=build-env /app/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```
 
-Change `dotnetapp.dll` to the DLL of your project. Build your application with the `dotnet` tools using the following commands:
-
-```console
-dotnet restore
-dotnet publish -c Release -o out
-```
-
 Build and run the Docker image:
 
 ```console
