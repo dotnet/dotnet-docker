@@ -57,31 +57,38 @@ You can run a [sample application](https://hub.docker.com/r/microsoft/dotnet-sam
 docker run microsoft/dotnet-samples
 ```
 
-### Run a .NET Core application with the .NET Core Runtime image
+### Use multi-stage build with a .NET Core application
 
-For production scenarios, you will want to deploy and run a pre-built application with a .NET Core Runtime image. This results in smaller Docker images compared to the SDK image. The SDK is not needed for production scenarios. You can try the instructions below or use the [dotnetapp-prod sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) if you want to try a pre-made version that's ready go.
+.NET Core Docker images can use [multi-stage build](https://docs.docker.com/engine/userguide/eng-image/multistage-build/). This feature allows multiple FROM instructions to be used in one Dockerfile. Using this feature, you can build a .NET Core app using an SDK image (AKA 'build image') and then copy the published app into a lighter weight runtime image within a single Dockerfile.
 
-You need to create a `Dockerfile` with the following:
+ You can check out our [multi-stage build samples](https://github.com/dotnet/dotnet-docker-samples) on GitHub for ASP.NET apps, production scenarios, and self-contained scenarios.
+
+Add a `Dockerfile` to your .NET project with the following:
 
 ```dockerfile
+FROM microsoft/dotnet:sdk AS build-env
+WORKDIR /app
+
+# copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
+
+# copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+# build runtime image
 FROM microsoft/dotnet:runtime
-WORKDIR /dotnetapp
-COPY out .
+WORKDIR /app
+COPY --from=build-env /app/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
-```
-
-Build your application with the `dotnet` tools using the following commands:
-
-```console
-dotnet restore
-dotnet publish -c Release -o out
 ```
 
 Build and run the Docker image:
 
 ```console
 docker build -t dotnetapp .
-docker run -it --rm dotnetapp
+docker run --rm dotnetapp Hello .NET Core from Docker
 ```
 
 The `Dockerfile` and the Docker commands assumes that your application is called `dotnetapp`. You can change the `Dockerfile` and the commands, as needed.
