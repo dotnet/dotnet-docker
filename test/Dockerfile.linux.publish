@@ -1,3 +1,0 @@
-FROM {image}
-
-RUN dotnet restore -r debian.8-x64 {optionalRestoreParams}

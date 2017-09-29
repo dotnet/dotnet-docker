@@ -12,7 +12,7 @@ RUN apt-get update \
         libcurl3 \
         libunwind8 \
     && rm -rf /var/lib/apt/lists/*
-RUN curl -o powershell.deb -ssL https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-alpha.15/powershell_6.0.0-alpha.15-1ubuntu1.16.04.1_amd64.deb \
+RUN curl -o powershell.deb -ssL https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-beta.6/powershell_6.0.0-beta.6-1ubuntu1.16.04.1_amd64.deb \
     && dpkg -i powershell.deb \
     && rm -f powershell.deb
 

@@ -8,6 +8,8 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+$(docker version) | % { Write-Host "$_" }
+
 if ($UseImageCache) {
     $optionalDockerBuildArgs = ""
 }
@@ -49,6 +51,6 @@ $manifestRepo.Images |
             }
     }
 
-./test/run-test.ps1 -UseImageCache:$UseImageCache -Filter $Filter -Architecture $Architecture
+./test/run-test.ps1 -Filter $Filter -Architecture $Architecture
 
 Write-Host "Tags built and tested:`n$($builtTags | Out-String)"

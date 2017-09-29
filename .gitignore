@@ -1,2 +1,19 @@
-# test assets
-.test-assets/
+# Build output
+[Bb]in/
+[Oo]bj/
+
+# cache for misc downloads
+artifacts/
+
+# dotnet install directory
+.dotnet/
+
+ # Visual Studio 2015 cache/options directory
+.vs/
+
+# Visual Studio Code cache/options directory
+.vscode/
+
+# User-specific files
+*.suo
+*.user
