@@ -58,12 +58,6 @@
           "Parameters": {
             "PB.image-builder.path": "2.0"
           }
-        },
-        {
-          "Name": "dotnet-docker-windows-amd64-images",
-          "Parameters": {
-            "PB.image-builder.path": "2.1"
-          }
         }
       ]
     },
