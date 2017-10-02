@@ -29,7 +29,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 new ImageDescriptor {DotNetCoreVersion = "1.0", SdkVersion = "1.1"},
                 new ImageDescriptor {DotNetCoreVersion = "1.1", RuntimeDepsVersion = "1.0"},
                 new ImageDescriptor {DotNetCoreVersion = "2.0"},
-                new ImageDescriptor {DotNetCoreVersion = "2.1", RuntimeDepsVersion = "2.0"},
             };
 
             if (DockerHelper.IsLinuxContainerModeEnabled)
@@ -43,20 +42,6 @@ namespace Microsoft.DotNet.Docker.Tests
                             OsVariant = "stretch",
                             SdkOsVariant = "",
                             Architecture = "arm"
-                        },
-                        new ImageDescriptor
-                        {
-                            DotNetCoreVersion = "2.1",
-                            RuntimeDepsVersion = "2.0",
-                            OsVariant = "jessie"
-                        },
-                        new ImageDescriptor
-                        {
-                            DotNetCoreVersion = "2.1",
-                            RuntimeDepsVersion = "2.0",
-                            OsVariant = "stretch",
-                            SdkOsVariant = "",
-                            Architecture ="arm"
                         },
                     });
             }

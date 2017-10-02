@@ -8,7 +8,7 @@ def platformList = ['Ubuntu16.04:Debian', 'Windows_2016:NanoServer']
 platformList.each { platform ->
     def(hostOS, containerOS) = platform.tokenize(':')
     def machineLabel = (hostOS == 'Windows_2016') ? 'latest-docker' : 'latest-or-auto-docker'
-    def versionList = (hostOS == 'Windows_2016') ? ['1.', '2.0', '2.1'] : ['1.', '2.']
+    def versionList = (hostOS == 'Windows_2016') ? ['1.', '2.0'] : ['1.', '2.']
 
     versionList.each { version ->
         def newJobName = Utilities.getFullJobName(project, "${containerOS}_${version}", isPR)
