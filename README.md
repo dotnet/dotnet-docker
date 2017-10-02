@@ -10,8 +10,8 @@
 - [`2.0.0-runtime-jessie`, `2.0-runtime-jessie`, `2-runtime-jessie` (*2.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/jessie/amd64/Dockerfile)
 - [`2.0.0-runtime-deps-stretch`, `2.0.0-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/amd64/Dockerfile)
 - [`2.0.0-runtime-deps-jessie`, `2.0-runtime-deps-jessie`, `2-runtime-deps-jessie` (*2.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/jessie/amd64/Dockerfile)
-- [`2.0.0-sdk-stretch`, `2.0.0-sdk`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/stretch/amd64/Dockerfile)
-- [`2.0.0-sdk-jessie`, `2.0-sdk-jessie`, `2-sdk-jessie` (*2.0/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/jessie/amd64/Dockerfile)
+- [`2.0.0-sdk-2.0.2-stretch`, `2.0.0-sdk-2.0.2`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/stretch/amd64/Dockerfile)
+- [`2.0.0-sdk-2.0.2-jessie`, `2.0-sdk-jessie`, `2-sdk-jessie` (*2.0/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/jessie/amd64/Dockerfile)
 
 # Supported Windows amd64 tags
 
@@ -20,7 +20,7 @@
 - [`1.1.4-runtime-nanoserver`, `1.1.4-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver/Dockerfile)
 - [`1.1.4-sdk-nanoserver`, `1.1.4-sdk`, `1.1-sdk`, `1-sdk` (*1.1/sdk/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver/Dockerfile)
 - [`2.0.0-runtime-nanoserver`, `2.0.0-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver/amd64/Dockerfile)
-- [`2.0.0-sdk-nanoserver`, `2.0.0-sdk`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver/amd64/Dockerfile)
+- [`2.0.0-sdk-nanoserver-2.0.2`, `2.0.0-sdk-2.0.2`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver/amd64/Dockerfile)
 
 # Supported Linux arm32 tags
 
