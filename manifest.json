@@ -62,9 +62,6 @@
                 },
                 "1.0-runtime-nanoserver": {
                   "isUndocumented": true
-                },
-                "1.0-runtime-nanoserver-$(nanoServerVersion)": {
-                  "isUndocumented": true
                 }
               }
             }
@@ -93,9 +90,6 @@
                   "isUndocumented": true
                 },
                 "1.0-sdk-nanoserver": {
-                  "isUndocumented": true
-                },
-                "1.0-sdk-nanoserver-$(nanoServerVersion)": {
                   "isUndocumented": true
                 }
               }
@@ -157,19 +151,10 @@
                 "1.1-runtime-nanoserver": {
                   "isUndocumented": true
                 },
-                "1.1-runtime-nanoserver-$(nanoServerVersion)": {
-                  "isUndocumented": true
-                },
                 "1-runtime-nanoserver": {
                   "isUndocumented": true
                 },
-                "1-runtime-nanoserver-$(nanoServerVersion)": {
-                  "isUndocumented": true
-                },
                 "runtime-nanoserver": {
-                  "isUndocumented": true
-                },
-                "runtime-nanoserver-$(nanoServerVersion)": {
                   "isUndocumented": true
                 }
               }
@@ -202,25 +187,13 @@
                 "1.1-sdk-nanoserver": {
                   "isUndocumented": true
                 },
-                "1.1-sdk-nanoserver-$(nanoServerVersion)": {
-                  "isUndocumented": true
-                },
                 "1-sdk-nanoserver": {
-                  "isUndocumented": true
-                },
-                "1-sdk-nanoserver-$(nanoServerVersion)": {
                   "isUndocumented": true
                 },
                 "sdk-nanoserver": {
                   "isUndocumented": true
                 },
-                "sdk-nanoserver-$(nanoServerVersion)": {
-                  "isUndocumented": true
-                },
                 "nanoserver": {
-                  "isUndocumented": true
-                },
-                "nanoserver-$(nanoServerVersion)": {
                   "isUndocumented": true
                 }
               }
@@ -302,13 +275,7 @@
                 "2.0-runtime-nanoserver": {
                   "isUndocumented": true
                 },
-                "2.0-runtime-nanoserver-$(nanoServerVersion)": {
-                  "isUndocumented": true
-                },
                 "2-runtime-nanoserver": {
-                  "isUndocumented": true
-                },
-                "2-runtime-nanoserver-$(nanoServerVersion)": {
                   "isUndocumented": true
                 }
               }
@@ -343,13 +310,7 @@
                 "2.0-sdk-nanoserver": {
                   "isUndocumented": true
                 },
-                "2.0-sdk-nanoserver-$(nanoServerVersion)": {
-                  "isUndocumented": true
-                },
                 "2-sdk-nanoserver": {
-                  "isUndocumented": true
-                },
-                "2-sdk-nanoserver-$(nanoServerVersion)": {
                   "isUndocumented": true
                 }
               }
