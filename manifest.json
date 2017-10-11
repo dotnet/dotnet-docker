@@ -303,7 +303,13 @@
               "dockerfile": "2.0/sdk/nanoserver/amd64",
               "os": "windows",
               "tags": {
-                "2.0.0-sdk-nanoserver-2.0.2": {},
+                "2.0.0-sdk-2.0.2-nanoserver": {},
+                "2.0.0-sdk-2.0.2-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "2.0.0-sdk-nanoserver-2.0.2": {
+                  "isUndocumented": true
+                },
                 "2.0.0-sdk-nanoserver-2.0.2-$(nanoServerVersion)": {
                   "isUndocumented": true
                 },
