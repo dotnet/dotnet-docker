@@ -35,7 +35,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "run $(docker.commonRunArgs) $(docker.gitEnabledImageName) git clone https://github.com/dotnet/dotnet-docker-nightly.git /repo",
+        "arguments": "run $(docker.commonRunArgs) $(docker.gitEnabledImageName) git clone https://github.com/dotnet/dotnet-docker.git /repo",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
