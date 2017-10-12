@@ -35,11 +35,11 @@ namespace Microsoft.DotNet.Docker.Tests
             Execute($"build -t {tag} {buildArgsOption} -f {dockerfile} .");
         }
 
-        public void DeleteImage(string name)
+        public void DeleteImage(string tag)
         {
-            if (ResourceExists("image", name))
+            if (ImageExists(tag))
             {
-                Execute($"image rm -f {name}");
+                Execute($"image rm -f {tag}");
             }
         }
 
@@ -97,6 +97,11 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string volumeArg = volumeName == null ? string.Empty : $" -v {volumeName}:{ContainerWorkDir}";
             Execute($"run --rm --name {containerName}{volumeArg} {image} {command}");
+        }
+
+        public static bool ImageExists(string tag)
+        {
+            return ResourceExists("image", tag);
         }
     }
 }

@@ -2,17 +2,31 @@
 #     docker build -t testrunner -f ./test/Dockerfile.linux.testrunner .
 #     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock testrunner powershell -File build-and-test.ps1 -UseImageCache
 
-FROM ubuntu
+FROM ubuntu:16.04
+
+# Install Docker
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        apt-transport-https \
         ca-certificates \
         curl \
-        docker.io \
+        software-properties-common \
+    && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
+    && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        docker-ce \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Powershell
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
         libicu55 \
         libcurl3 \
         libunwind8 \
-    && rm -rf /var/lib/apt/lists/*
-RUN curl -o powershell.deb -ssL https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-beta.6/powershell_6.0.0-beta.6-1ubuntu1.16.04.1_amd64.deb \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -o powershell.deb -ssL \
+        https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-beta.6/powershell_6.0.0-beta.6-1ubuntu1.16.04.1_amd64.deb \
     && dpkg -i powershell.deb \
     && rm -f powershell.deb
 
