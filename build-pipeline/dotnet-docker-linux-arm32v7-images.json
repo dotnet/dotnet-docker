@@ -35,7 +35,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "run $(docker.commonRunArgs) $(docker.gitEnabledImageName) git clone https://github.com/dotnet/dotnet-docker.git /repo",
+        "arguments": "run $(docker.commonRunArgs) $(docker.gitEnabledImageName) git clone https://github.com/dotnet/dotnet-docker-nightly.git /repo",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -81,10 +81,10 @@
       }
     },
     {
-      "enabled": true,
+      "enabled": false,
       "continueOnError": false,
       "alwaysRun": false,
-      "displayName": "Run image-builder",
+      "displayName": "Build SDK images (needed for testing)",
       "timeoutInMinutes": 0,
       "condition": "succeeded()",
       "task": {
@@ -94,7 +94,26 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "run  $(docker.commonRunArgs) -v /var/run/docker.sock:/var/run/docker.sock $(image-builder.imageName) $(image-builder.args)",
+        "arguments": "$(docker.runImageBuilder) $(image-builder.sdkBuildArgs)",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Build ARM images",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "$(docker.runImageBuilder) $(image-builder.armBuildArgs)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -166,6 +185,9 @@
     "docker.commonRunArgs": {
       "value": "--rm -v $(docker.volumeName):/repo -w /repo --name $(docker.containerName)"
     },
+    "docker.runImageBuilder": {
+      "value": "run  $(docker.commonRunArgs) -v /var/run/docker.sock:/var/run/docker.sock $(image-builder.imageName)"
+    },
     "docker.containerName": {
       "value": "$(Build.DefinitionName)-$(Build.BuildId)"
     },
@@ -176,10 +198,18 @@
       "value": "$(Build.DefinitionName)-$(Build.BuildId)"
     },
     "image-builder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20170817154316"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20171006102106"
     },
-    "image-builder.args": {
-      "value": "build --manifest manifest.json --path $(PB.image-builder.path) --architecture arm --skip-test --test-var Filter=$(PB.image-builder.path) --test-var Architecture=arm --push --username $(PB.docker.username) --password $(PB.docker.password) $(PB.image-builder.customCommonArgs)",
+    "image-builder.commonArgs": {
+      "value": "build --manifest manifest.json $(PB.image-builder.customCommonArgs)",
+      "allowOverride": true
+    },
+    "image-builder.armBuildArgs": {
+      "value": "$(image-builder.commonArgs) --path $(PB.image-builder.path) --architecture arm --skip-test --test-var Filter=$(PB.image-builder.path) --test-var Architecture=arm --push --username $(PB.docker.username) --password $(PB.docker.password)",
+      "allowOverride": true
+    },
+    "image-builder.sdkBuildArgs": {
+      "value": "$(image-builder.commonArgs) --path $(PB.image-builder.path)/sdk/stretch/amd64 --architecture amd64 --skip-test",
       "allowOverride": true
     },
     "PB.docker.password": {

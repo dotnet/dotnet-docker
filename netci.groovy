@@ -12,14 +12,15 @@ platformList.each { platform ->
 
     versionList.each { version ->
         def newJobName = Utilities.getFullJobName(project, "${containerOS}_${version}", isPR)
+        def versionFilter = "${version}*"
 
         def newJob = job(newJobName) {
             steps {
                 if (hostOS == 'Windows_2016') {
-                    batchFile("powershell -NoProfile -Command .\\build-and-test.ps1 -Filter ${version}")
+                    batchFile("powershell -NoProfile -Command .\\build-and-test.ps1 -Filter \"${versionFilter}\"")
                 }
                 else {
-                    shell("docker build --rm -t testrunner -f ./test/Dockerfile.linux.testrunner . && docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner powershell -File build-and-test.ps1 -Filter ${version}")
+                    shell("docker build --rm -t testrunner -f ./test/Dockerfile.linux.testrunner . && docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner powershell -File build-and-test.ps1 -Filter \"${versionFilter}\"")
                 }
             }
         }
