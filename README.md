@@ -1,10 +1,8 @@
 # Supported Linux amd64 tags
 
 - [`1.0.7-runtime-jessie`, `1.0.7-runtime`, `1.0-runtime` (*1.0/runtime/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/jessie/Dockerfile)
-- [`1.0.7-runtime-deps-jessie`, `1.0.7-runtime-deps`, `1.0-runtime-deps` (*1.0/runtime-deps/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime-deps/jessie/Dockerfile)
-- [`1.0.7-sdk-jessie`, `1.0.7-sdk`, `1.0-sdk` (*1.0/sdk/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/sdk/jessie/Dockerfile)
+- [`1.0.7-runtime-deps-jessie`, `1.0.7-runtime-deps`, `1.0-runtime-deps`, `1-runtime-deps` (*1.0/runtime-deps/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime-deps/jessie/Dockerfile)
 - [`1.1.4-runtime-jessie`, `1.1.4-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/jessie/Dockerfile)
-- [`1.1.4-runtime-deps-jessie`, `1.1.4-runtime-deps`, `1.1-runtime-deps`, `1-runtime-deps` (*1.1/runtime-deps/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime-deps/jessie/Dockerfile)
 - [`1.1.4-sdk-jessie`, `1.1.4-sdk`, `1.1-sdk`, `1-sdk` (*1.1/sdk/jessie/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/jessie/Dockerfile)
 - [`2.0.0-runtime-stretch`, `2.0-runtime-stretch`, `2.0.0-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/amd64/Dockerfile)
 - [`2.0.0-runtime-jessie`, `2.0-runtime-jessie`, `2-runtime-jessie` (*2.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/jessie/amd64/Dockerfile)
@@ -21,7 +19,6 @@
 # Supported Windows Server 2016 amd64 tags
 
 - [`1.0.7-runtime-nanoserver`, `1.0.7-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/nanoserver/Dockerfile)
-- [`1.0.7-sdk-nanoserver`, `1.0.7-sdk`, `1.0-sdk` (*1.0/sdk/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/sdk/nanoserver/Dockerfile)
 - [`1.1.4-runtime-nanoserver`, `1.1.4-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver/Dockerfile)
 - [`1.1.4-sdk-nanoserver`, `1.1.4-sdk`, `1.1-sdk`, `1-sdk` (*1.1/sdk/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver/Dockerfile)
 - [`2.0.0-runtime-nanoserver`, `2.0-runtime-nanoserver`, `2.0.0-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver/amd64/Dockerfile)
