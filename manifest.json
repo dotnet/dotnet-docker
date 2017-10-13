@@ -8,7 +8,7 @@
       "docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner powershell -File ./test/run-test.ps1 -Filter $(Filter) -Architecture $(Architecture)"
     ],
     "windows": [
-      "powershell -NoProfile -Command .\\test\\run-test.ps1 -Filter $(Filter)"
+      "powershell -NoProfile -Command .\\test\\run-test.ps1 -Filter $(Filter) -OS $(OS)"
     ]
   },
   "repos": [
@@ -279,6 +279,13 @@
                   "isUndocumented": true
                 }
               }
+            },
+            {
+              "dockerfile": "2.0/runtime/nanoserver-1709/amd64",
+              "os": "windows",
+              "tags": {
+                "2.0.0-runtime-nanoserver-1709": {}
+              }
             }
           ]
         },
@@ -319,6 +326,13 @@
                 "2-sdk-nanoserver": {
                   "isUndocumented": true
                 }
+              }
+            },
+            {
+              "dockerfile": "2.0/sdk/nanoserver-1709/amd64",
+              "os": "windows",
+              "tags": {
+                "2.0.0-sdk-2.0.2-nanoserver-1709": {}
               }
             }
           ]

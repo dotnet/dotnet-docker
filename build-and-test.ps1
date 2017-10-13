@@ -2,7 +2,8 @@
 param(
     [switch]$UseImageCache,
     [string]$Filter,
-    [string]$Architecture
+    [string]$Architecture,
+    [string]$OS
 )
 
 Set-StrictMode -Version Latest
@@ -21,6 +22,10 @@ $manifest = Get-Content "manifest.json" | ConvertFrom-Json
 $manifestRepo = $manifest.Repos[0]
 $activeOS = docker version -f "{{ .Server.Os }}"
 $builtTags = @()
+
+if ($activeOS -eq "windows" -and $Filter -eq "2.0*") {
+    $Filter = "$Filter/nanoserver/*"
+}
 
 $manifestRepo.Images |
     ForEach-Object {
@@ -42,7 +47,7 @@ $manifestRepo.Images |
                 }
                 $formattedTags = $qualifiedTags -join ', '
                 Write-Host "--- Building $formattedTags from $dockerfilePath ---"
-                Invoke-Expression "docker build $optionalDockerBuildArgs -t $($qualifiedTags -join ' -t ') $dockerfilePath"
+                #Invoke-Expression "docker build $optionalDockerBuildArgs -t $($qualifiedTags -join ' -t ') $dockerfilePath"
                 if ($LastExitCode -ne 0) {
                     throw "Failed building $formattedTags"
                 }
@@ -51,6 +56,6 @@ $manifestRepo.Images |
             }
     }
 
-./test/run-test.ps1 -Filter $Filter -Architecture $Architecture
+#./test/run-test.ps1 -Filter $Filter -Architecture $Architecture -OS $OS
 
 Write-Host "Tags built and tested:`n$($builtTags | Out-String)"
