@@ -190,7 +190,7 @@
   "jobCancelTimeoutInMinutes": 5,
   "repository": {
     "properties": {
-      "cleanOptions": "0",
+      "cleanOptions": "3",
       "gitLfsSupport": "false",
       "skipSyncSource": "false",
       "reportBuildStatus": "true",
@@ -207,7 +207,7 @@
     "name": "dotnet/dotnet-docker",
     "url": "https://github.com/dotnet/dotnet-docker.git",
     "defaultBranch": "master",
-    "clean": "false",
+    "clean": "true",
     "checkoutSubmodules": false
   },
   "processParameters": {},
