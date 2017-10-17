@@ -17,7 +17,7 @@
         "scriptName": "",
         "arguments": "",
         "workingFolder": "",
-        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
+        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"microsoft/windowsservercore \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
         "failOnStandardError": "true"
       }
     },
@@ -133,7 +133,7 @@
         "scriptName": "",
         "arguments": "",
         "workingFolder": "",
-        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
+        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"microsoft/windowsservercore \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
         "failOnStandardError": "true"
       }
     }
@@ -204,7 +204,7 @@
     }
   },
   "demands": [
-    "Agent.OS -equals Windows_NT"
+    "VSTS_OS -equals Windows_Server_2016_Data_Center_RS3"
   ],
   "retentionRules": [
     {
@@ -250,16 +250,16 @@
   "processParameters": {},
   "quality": "definition",
   "queue": {
-    "id": 330,
-    "name": "DotNetCore-Build",
+    "id": 832,
+    "name": "DotNetCore-Infra",
     "pool": {
-      "id": 97,
-      "name": "DotNetCore-Build"
+      "id": 135,
+      "name": "DotNetCore-Infra"
     }
   },
-  "id": 6216,
-  "name": "dotnet-docker-windows-amd64-images",
-  "url": "https://devdiv.visualstudio.com/0bdbc590-a062-4c3f-b0f6-9383f67865ee/_apis/build/Definitions/6216",
+  "id": 6222,
+  "name": "dotnet-docker-windows-1709-amd64-images",
+  "url": "https://devdiv.visualstudio.com/0bdbc590-a062-4c3f-b0f6-9383f67865ee/_apis/build/Definitions/6222",
   "path": "\\",
   "type": "build",
   "project": {
