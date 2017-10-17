@@ -76,7 +76,7 @@
           "Name": "dotnet-docker-windows-1709-amd64-images",
           "Parameters": {
             "PB.image-builder.path": "2.0*/nanoserver-1709/*",
-            "PB.image-builder.customCommonArgs": "--test-var Filter=2.0* --test-var OS=nanoserver-1709 --repo-owner msimons --skip-pulling"
+            "PB.image-builder.customCommonArgs": "--test-var Filter=2.0* --test-var OS=nanoserver-1709 --repo-owner msimons"
           }
         }
       ]

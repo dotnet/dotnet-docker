@@ -1,7 +1,7 @@
 {
   "build": [
     {
-      "enabled": false,
+      "enabled": true,
       "continueOnError": false,
       "alwaysRun": false,
       "displayName": "Cleanup Docker",
@@ -117,7 +117,7 @@
       }
     },
     {
-      "enabled": false,
+      "enabled": true,
       "continueOnError": true,
       "alwaysRun": true,
       "displayName": "Cleanup Docker",
