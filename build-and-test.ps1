@@ -23,8 +23,9 @@ $manifestRepo = $manifest.Repos[0]
 $activeOS = docker version -f "{{ .Server.Os }}"
 $builtTags = @()
 
-if ($activeOS -eq "windows" -and $Filter -eq "2.0*") {
-    $Filter = "$Filter/nanoserver/*"
+$buildFilter = $Filter
+if ($activeOS -eq "windows" -and $buildFilter -eq "2.0*") {
+    $buildFilter = "$buildFilter/nanoserver/*"
 }
 
 $manifestRepo.Images |
@@ -32,7 +33,7 @@ $manifestRepo.Images |
         $images = $_
         $_.Platforms |
             Where-Object { $_.os -eq "$activeOS" } |
-            Where-Object { [string]::IsNullOrEmpty($Filter) -or $_.dockerfile -like "$Filter" } |
+            Where-Object { [string]::IsNullOrEmpty($buildFilter) -or $_.dockerfile -like "$buildFilter" } |
             Where-Object { ( [string]::IsNullOrEmpty($Architecture) -and -not [bool]($_.PSobject.Properties.name -match "architecture"))`
                 -or ( [bool]($_.PSobject.Properties.name -match "architecture") -and $_.architecture -eq "$Architecture" ) } |
             ForEach-Object {

@@ -14,8 +14,8 @@ namespace Microsoft.DotNet.Docker.Tests
     public class ImageTests
     {
         private static string ArchFilter => Environment.GetEnvironmentVariable("IMAGE_ARCH_FILTER");
-        private static string OsFilter => Environment.GetEnvironmentVariable("IMAGE_OS_FILTER");
-        private static string VersionFilter { get; set; } = Environment.GetEnvironmentVariable("IMAGE_VERSION_FILTER");
+        private static string OsFilter { get; set; } = Environment.GetEnvironmentVariable("IMAGE_OS_FILTER");
+        private static string VersionFilter => Environment.GetEnvironmentVariable("IMAGE_VERSION_FILTER");
 
         private DockerHelper DockerHelper { get; set; }
 
@@ -32,10 +32,10 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 testData = new List<ImageDescriptor>
                 {
-                    new ImageDescriptor {DotNetCoreVersion = "1.0", SdkVersion = "1.1"},
-                    new ImageDescriptor {DotNetCoreVersion = "1.1", RuntimeDepsVersion = "1.0"},
-                    new ImageDescriptor {DotNetCoreVersion = "2.0"},
-                    new ImageDescriptor {DotNetCoreVersion = "2.0", OsVariant = "jessie"},
+                    new ImageDescriptor { DotNetCoreVersion = "1.0", SdkVersion = "1.1" },
+                    new ImageDescriptor { DotNetCoreVersion = "1.1", RuntimeDepsVersion = "1.0" },
+                    new ImageDescriptor { DotNetCoreVersion = "2.0" },
+                    new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = "jessie" },
                     new ImageDescriptor
                     {
                         DotNetCoreVersion = "2.0",
@@ -49,15 +49,15 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 testData = new List<ImageDescriptor>
                 {
-                        new ImageDescriptor {DotNetCoreVersion = "1.0", PlatformOS = "nanoserver", SdkVersion = "1.1"},
-                        new ImageDescriptor {DotNetCoreVersion = "1.1", PlatformOS = "nanoserver", RuntimeDepsVersion = "1.0"},
-                        new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = "nanoserver" },
-                        new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = "nanoserver-1709" },
+                    new ImageDescriptor { DotNetCoreVersion = "1.0", PlatformOS = "nanoserver", SdkVersion = "1.1" },
+                    new ImageDescriptor { DotNetCoreVersion = "1.1", PlatformOS = "nanoserver", RuntimeDepsVersion = "1.0" },
+                    new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = "nanoserver" },
+                    new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = "nanoserver-1709" },
                 };
 
-                if (VersionFilter == null)
+                if (OsFilter == null)
                 {
-                    VersionFilter = "nanoserver";
+                    OsFilter = "nanoserver";
                 }
             }
 
