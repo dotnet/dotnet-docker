@@ -13,7 +13,7 @@
   },
   "repos": [
     {
-      "name": "msimons/dotnet",
+      "name": "microsoft/dotnet",
       "readmePath": "README.md",
       "images": [
         {

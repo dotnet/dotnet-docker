@@ -16,15 +16,13 @@
         {
           "Name": "dotnet-docker-linux-amd64-images",
           "Parameters": {
-            "PB.image-builder.path": "1.*",
-            "PB.image-builder.customCommonArgs": "--repo-owner msimons"
+            "PB.image-builder.path": "1.*"
           }
         },
         {
           "Name": "dotnet-docker-linux-amd64-images",
           "Parameters": {
-            "PB.image-builder.path": "2.*",
-            "PB.image-builder.customCommonArgs": "--repo-owner msimons"
+            "PB.image-builder.path": "2.*"
           }
         }
       ]
@@ -38,8 +36,7 @@
         {
           "Name": "dotnet-docker-linux-arm32v7-images",
           "Parameters": {
-            "PB.image-builder.path": "2.*",
-            "PB.image-builder.customCommonArgs": "--repo-owner msimons"
+            "PB.image-builder.path": "2.*"
           }
         }
       ]
@@ -54,14 +51,14 @@
           "Name": "dotnet-docker-windows-amd64-images",
           "Parameters": {
             "PB.image-builder.path": "1.*",
-            "PB.image-builder.customCommonArgs": "--test-var Filter=1.* --repo-owner msimons"
+            "PB.image-builder.customCommonArgs": "--test-var Filter=1.*"
           }
         },
         {
           "Name": "dotnet-docker-windows-amd64-images",
           "Parameters": {
             "PB.image-builder.path": "2.0*/nanoserver/*",
-            "PB.image-builder.customCommonArgs": "--test-var Filter=2.0* --test-var OS=nanoserver --repo-owner msimons"
+            "PB.image-builder.customCommonArgs": "--test-var Filter=2.0* --test-var OS=nanoserver"
           }
         }
       ]
@@ -76,7 +73,7 @@
           "Name": "dotnet-docker-windows-1709-amd64-images",
           "Parameters": {
             "PB.image-builder.path": "2.0*/nanoserver-1709/*",
-            "PB.image-builder.customCommonArgs": "--test-var Filter=2.0* --test-var OS=nanoserver-1709 --repo-owner msimons"
+            "PB.image-builder.customCommonArgs": "--test-var Filter=2.0* --test-var OS=nanoserver-1709"
           }
         }
       ]
@@ -88,10 +85,7 @@
       },
       "Definitions": [
         {
-          "Name": "dotnet-docker-post-image-build",
-          "Parameters": {
-            "PB.image-builder.customCommonArgs": "--repo-owner msimons"
-          }
+          "Name": "dotnet-docker-post-image-build"
         }
       ],
       "DependsOn": [
