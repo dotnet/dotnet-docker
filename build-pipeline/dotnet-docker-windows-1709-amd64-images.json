@@ -17,7 +17,7 @@
         "scriptName": "",
         "arguments": "",
         "workingFolder": "",
-        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"nanoserver \") -Or $_.StartsWith(\"microsoft/windowsservercore \") -Or $_.StartsWith(\"windowsservercore \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
+        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"microsoft/windowsservercore \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
         "failOnStandardError": "true"
       }
     },
@@ -133,7 +133,7 @@
         "scriptName": "",
         "arguments": "",
         "workingFolder": "",
-        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"nanoserver \") -Or $_.StartsWith(\"microsoft/windowsservercore \") -Or $_.StartsWith(\"windowsservercore \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
+        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"microsoft/windowsservercore \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
         "failOnStandardError": "true"
       }
     }
