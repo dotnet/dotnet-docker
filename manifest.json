@@ -22,6 +22,9 @@
             "1.0.7-runtime-deps": {},
             "1.0-runtime-deps": {},
             "1-runtime-deps": {},
+            "1.1.4-runtime-deps": {
+              "isUndocumented": true
+            },
             "1.1-runtime-deps": {
               "isUndocumented": true
             }
@@ -33,6 +36,9 @@
               "tags": {
                 "1.0.7-runtime-deps-jessie": {},
                 "1.0-core-deps": {
+                  "isUndocumented": true
+                },
+                "1.1.4-runtime-deps-jessie": {
                   "isUndocumented": true
                 },
                 "1-core-deps": {
@@ -125,6 +131,9 @@
             "1.1.4-sdk": {},
             "1.1-sdk": {},
             "1-sdk": {},
+            "1.0.7-sdk": {
+              "isUndocumented": true
+            },
             "1.0-sdk": {
               "isUndocumented": true
             }
@@ -134,7 +143,10 @@
               "dockerfile": "1.1/sdk/jessie",
               "os": "linux",
               "tags": {
-                "1.1.4-sdk-jessie": {}
+                "1.1.4-sdk-jessie": {},
+                "1.0.7-sdk-jessie": {
+                  "isUndocumented": true
+                }
               }
             },
             {
@@ -155,6 +167,15 @@
                   "isUndocumented": true
                 },
                 "nanoserver": {
+                  "isUndocumented": true
+                },
+                "1.0.7-sdk-nanoserver": {
+                  "isUndocumented": true
+                },
+                "1.0.7-sdk-nanoserver-$(nanoServerVersion)": {
+                  "isUndocumented": true
+                },
+                "1.0-sdk-nanoserver": {
                   "isUndocumented": true
                 }
               }
