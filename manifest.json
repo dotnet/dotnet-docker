@@ -261,6 +261,7 @@
             {
               "dockerfile": "2.0/runtime/nanoserver-1709/amd64",
               "os": "windows",
+              "osVersion": "1709",
               "tags": {
                 "2.0.0-runtime-nanoserver-1709": {},
                 "2.0-runtime-nanoserver-1709": {}
@@ -309,6 +310,7 @@
             {
               "dockerfile": "2.0/sdk/nanoserver-1709/amd64",
               "os": "windows",
+              "osVersion": "1709",
               "tags": {
                 "2.0.0-sdk-2.0.2-nanoserver-1709": {},
                 "2.0-sdk-nanoserver-1709": {}
