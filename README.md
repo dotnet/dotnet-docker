@@ -53,7 +53,7 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 
 ### Run a simple application within a container
 
-You can run a [sample application](https://hub.docker.com/r/microsoft/dotnet-samples/) (Linux image) that depends on these images in a container by running the following command.
+You can run a [sample application](https://store.docker.com/community/images/microsoft/dotnet-samples/) (Linux image) that depends on these images in a container by running the following command.
 
 ```console
 docker run microsoft/dotnet-samples
@@ -185,7 +185,7 @@ Copy the IP address from the output of `ipconfig`. After running `dotnet run` in
 
 You should see a default ASP.NET Core site and logging activity in the container.
 
-Please use the images at [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/). They are recommended and optimized for ASP.NET core development and production and are built on the images in this repo.
+Please use the images at [microsoft/aspnetcore](https://store.docker.com/community/images/microsoft/aspnetcore/). They are recommended and optimized for ASP.NET core development and production and are built on the images in this repo.
 
 ## Image variants
 
@@ -225,16 +225,16 @@ You can learn more about using .NET Core with Docker with [.NET Docker samples](
 
 See the following related repos for other application types:
 
-- [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core images.
-- [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
-- [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images (for web applications, see microsoft/aspnet).
-- [microsoft/dotnet-nightly](https://hub.docker.com/r/microsoft/dotnet-nightly/) for pre-release .NET Core images (used to experiment with the latest builds).
+- [microsoft/aspnetcore](https://store.docker.com/community/images/microsoft/aspnetcore/) for ASP.NET Core images.
+- [microsoft/aspnet](https://store.docker.com/community/images/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
+- [microsoft/dotnet-framework](https://store.docker.com/community/images/microsoft/dotnet-framework/) for .NET Framework images (for web applications, see microsoft/aspnet).
+- [microsoft/dotnet-nightly](https://store.docker.com/community/images/microsoft/dotnet-nightly/) for pre-release .NET Core images (used to experiment with the latest builds).
 
 ## License
 
 View [license information](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE) for the software contained in this image.
 
-The .NET Core Windows container images use the same license as the [Windows Server 2016 Nano Server base image](https://hub.docker.com/r/microsoft/nanoserver/), as follows:
+The .NET Core Windows container images use the same license as the [Windows Server 2016 Nano Server base image](https://store.docker.com/community/images/microsoft/nanoserver/), as follows:
 
 MICROSOFT SOFTWARE SUPPLEMENTAL LICENSE TERMS
 
