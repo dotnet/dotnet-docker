@@ -18,11 +18,11 @@
 
 # Supported Windows Server 2016 amd64 tags
 
-- [`1.0.7-runtime-nanoserver`, `1.0.7-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/nanoserver/Dockerfile)
-- [`1.1.4-runtime-nanoserver`, `1.1.4-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver/Dockerfile)
-- [`1.1.4-sdk-nanoserver`, `1.1.4-sdk`, `1.1-sdk`, `1-sdk` (*1.1/sdk/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver/Dockerfile)
-- [`2.0.0-runtime-nanoserver`, `2.0-runtime-nanoserver`, `2.0.0-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver/amd64/Dockerfile)
-- [`2.0.0-sdk-2.0.2-nanoserver`, `2.0-sdk-nanoserver`, `2.0.0-sdk-2.0.2`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver/amd64/Dockerfile)
+- [`1.0.7-runtime-nanoserver-ltsc2016`, `1.0.7-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/nanoserver/Dockerfile)
+- [`1.1.4-runtime-nanoserver-ltsc2016`, `1.1.4-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver/Dockerfile)
+- [`1.1.4-sdk-nanoserver-ltsc2016`, `1.1.4-sdk`, `1.1-sdk`, `1-sdk` (*1.1/sdk/nanoserver/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver/Dockerfile)
+- [`2.0.0-runtime-nanoserver-ltsc2016`, `2.0-runtime-nanoserver-ltsc2016`, `2.0.0-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver/amd64/Dockerfile)
+- [`2.0.0-sdk-2.0.2-nanoserver-ltsc2016`, `2.0-sdk-nanoserver-ltsc2016`, `2.0.0-sdk-2.0.2`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver/amd64/Dockerfile)
 
 # Supported Linux arm32 tags
 
