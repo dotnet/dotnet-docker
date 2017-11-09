@@ -1,7 +1,4 @@
 {
-  "tagVariables": {
-    "nanoServerVersion": "10.0.14393.1770"
-  },
   "testCommands": {
     "linux": [
       "docker build --rm -t testrunner -f ./test/Dockerfile.linux.testrunner .",
@@ -76,9 +73,6 @@
                 "1.0.7-runtime-nanoserver": {
                   "isUndocumented": true
                 },
-                "1.0.7-runtime-nanoserver-$(nanoServerVersion)": {
-                  "isUndocumented": true
-                },
                 "1.0-runtime-nanoserver": {
                   "isUndocumented": true
                 }
@@ -113,9 +107,6 @@
               "tags": {
                 "1.1.4-runtime-nanoserver-sac2016": {},
                 "1.1.4-runtime-nanoserver": {
-                  "isUndocumented": true
-                },
-                "1.1.4-runtime-nanoserver-$(nanoServerVersion)": {
                   "isUndocumented": true
                 },
                 "1.1-runtime-nanoserver": {
@@ -163,9 +154,6 @@
                 "1.1.4-sdk-nanoserver": {
                   "isUndocumented": true
                 },
-                "1.1.4-sdk-nanoserver-$(nanoServerVersion)": {
-                  "isUndocumented": true
-                },
                 "1.1-sdk-nanoserver": {
                   "isUndocumented": true
                 },
@@ -179,9 +167,6 @@
                   "isUndocumented": true
                 },
                 "1.0.7-sdk-nanoserver": {
-                  "isUndocumented": true
-                },
-                "1.0.7-sdk-nanoserver-$(nanoServerVersion)": {
                   "isUndocumented": true
                 },
                 "1.0-sdk-nanoserver": {
@@ -261,9 +246,6 @@
                 "2.0.0-runtime-nanoserver": {
                   "isUndocumented": true
                 },
-                "2.0.0-runtime-nanoserver-$(nanoServerVersion)": {
-                  "isUndocumented": true
-                },
                 "2.0-runtime-nanoserver-sac2016": {},
                 "2.0-runtime-nanoserver": {
                   "isUndocumented": true
@@ -310,13 +292,7 @@
                 "2.0.0-sdk-2.0.2-nanoserver": {
                   "isUndocumented": true
                 },
-                "2.0.0-sdk-2.0.2-nanoserver-$(nanoServerVersion)": {
-                  "isUndocumented": true
-                },
                 "2.0.0-sdk-nanoserver-2.0.2": {
-                  "isUndocumented": true
-                },
-                "2.0.0-sdk-nanoserver-2.0.2-$(nanoServerVersion)": {
                   "isUndocumented": true
                 },
                 "2.0-sdk-nanoserver-sac2016": {},
