@@ -1,6 +1,6 @@
 # escape=`
 
-FROM microsoft/nanoserver:10.0.14393.1770
+FROM microsoft/nanoserver:sac2016
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 

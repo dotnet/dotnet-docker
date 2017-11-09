@@ -42,10 +42,7 @@ $manifestRepo.Images |
                 if ([bool]($images.PSobject.Properties.name -match "sharedtags")) {
                     $tags += [array]($images.sharedtags | ForEach-Object { $_.PSobject.Properties })
                 }
-
-                $qualifiedTags = $tags | ForEach-Object {
-                    $manifestRepo.Name + ':' + $_.name.Replace('$(nanoServerVersion)', $manifest.TagVariables.NanoServerVersion)
-                }
+                $qualifiedTags = $tags | ForEach-Object { $manifestRepo.Name + ':' + $_.Name}
                 $formattedTags = $qualifiedTags -join ', '
                 Write-Host "--- Building $formattedTags from $dockerfilePath ---"
                 Invoke-Expression "docker build $optionalDockerBuildArgs -t $($qualifiedTags -join ' -t ') $dockerfilePath"
