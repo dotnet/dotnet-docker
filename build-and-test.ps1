@@ -24,7 +24,7 @@ $activeOS = docker version -f "{{ .Server.Os }}"
 $builtTags = @()
 
 $buildFilter = $Filter
-if ($activeOS -eq "windows" -and $buildFilter -eq "2.*") {
+if ($activeOS -eq "windows" -and $buildFilter -eq "2.0*") {
     $buildFilter = "$buildFilter/nanoserver-sac2016/*"
 }
 
@@ -48,7 +48,7 @@ $manifestRepo.Images |
                 }
                 $formattedTags = $qualifiedTags -join ', '
                 Write-Host "--- Building $formattedTags from $dockerfilePath ---"
-                Invoke-Expression "docker build $optionalDockerBuildArgs -t $($qualifiedTags -join ' -t ') $dockerfilePath"
+                #Invoke-Expression "docker build $optionalDockerBuildArgs -t $($qualifiedTags -join ' -t ') $dockerfilePath"
                 if ($LastExitCode -ne 0) {
                     throw "Failed building $formattedTags"
                 }
@@ -57,6 +57,6 @@ $manifestRepo.Images |
             }
     }
 
-./test/run-test.ps1 -Filter $Filter -Architecture $Architecture -OS $OS
+#./test/run-test.ps1 -Filter $Filter -Architecture $Architecture -OS $OS
 
 Write-Host "Tags built and tested:`n$($builtTags | Out-String)"
