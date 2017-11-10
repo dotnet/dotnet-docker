@@ -57,7 +57,7 @@
         {
           "Name": "dotnet-docker-windows-amd64-images",
           "Parameters": {
-            "PB.image-builder.path": "2.0*/nanoserver/*",
+            "PB.image-builder.path": "2.0*/nanoserver-sac2016/*",
             "PB.image-builder.customCommonArgs": "--test-var Filter=2.0* --test-var OS=nanoserver"
           }
         }

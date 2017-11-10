@@ -24,8 +24,8 @@ $activeOS = docker version -f "{{ .Server.Os }}"
 $builtTags = @()
 
 $buildFilter = $Filter
-if ($activeOS -eq "windows" -and $buildFilter -eq "2.0*") {
-    $buildFilter = "$buildFilter/nanoserver/*"
+if ($activeOS -eq "windows" -and $buildFilter -eq "2.*") {
+    $buildFilter = "$buildFilter/nanoserver-sac2016/*"
 }
 
 $manifestRepo.Images |
