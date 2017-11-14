@@ -125,7 +125,7 @@
               "dockerfile": "1.1/sdk/jessie",
               "os": "linux",
               "tags": {
-                "1.1.5-sdk-jessie": {},
+                "1.1.5-sdk-jessie": {}
               }
             },
             {
