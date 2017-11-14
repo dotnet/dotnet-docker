@@ -9,7 +9,7 @@ platformList.each { platform ->
     def(hostOS, containerOS) = platform.tokenize(':')
     def machineLabel = (hostOS == 'Windows_2016') ? 'latest-docker' : 'latest-or-auto-docker'
     if (containerOS == 'NanoServer-sac2016') {
-        versionList = ['1.', '2.0', '2.1']
+        versionList = ['1.', '2.0']
     }
     else {
         versionList = ['1.', '2.']
