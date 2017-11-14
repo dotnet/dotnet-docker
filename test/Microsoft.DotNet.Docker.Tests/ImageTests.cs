@@ -49,16 +49,11 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 testData = new List<ImageDescriptor>
                 {
-                    new ImageDescriptor { DotNetCoreVersion = "1.0", PlatformOS = "nanoserver", SdkVersion = "1.1" },
-                    new ImageDescriptor { DotNetCoreVersion = "1.1", PlatformOS = "nanoserver", RuntimeDepsVersion = "1.0" },
-                    new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = "nanoserver" },
+                    new ImageDescriptor { DotNetCoreVersion = "1.0", PlatformOS = "nanoserver-sac2016", SdkVersion = "1.1" },
+                    new ImageDescriptor { DotNetCoreVersion = "1.1", PlatformOS = "nanoserver-sac2016", RuntimeDepsVersion = "1.0" },
+                    new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = "nanoserver-sac2016" },
                     new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = "nanoserver-1709" },
                 };
-
-                if (OsFilter == null)
-                {
-                    OsFilter = "nanoserver";
-                }
             }
 
             string versionFilterPattern = null;

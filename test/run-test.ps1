@@ -5,9 +5,9 @@
 
 [cmdletbinding()]
 param(
-    [string]$Filter,
-    [string]$Architecture,
-    [string]$OS
+    [string]$VersionFilter,
+    [string]$ArchitectureFilter,
+    [string]$OSFilter
 )
 
 Set-StrictMode -Version Latest
@@ -47,13 +47,13 @@ Push-Location "$PSScriptRoot\Microsoft.DotNet.Docker.Tests"
 
 Try {
     # Run Tests
-    if ([string]::IsNullOrWhiteSpace($Architecture)) {
-        $Architecture = "amd64"
+    if ([string]::IsNullOrWhiteSpace($ArchitectureFilter)) {
+        $ArchitectureFilter = "amd64"
     }
 
-    $env:IMAGE_ARCH_FILTER = $Architecture
-    $env:IMAGE_OS_FILTER = $OS
-    $env:IMAGE_VERSION_FILTER = $Filter
+    $env:IMAGE_ARCH_FILTER = $ArchitectureFilter
+    $env:IMAGE_OS_FILTER = $OSFilter
+    $env:IMAGE_VERSION_FILTER = $VersionFilter
 
     & $DotnetInstallDir/dotnet test -v n
 
