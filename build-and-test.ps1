@@ -1,9 +1,9 @@
 [cmdletbinding()]
 param(
     [switch]$UseImageCache,
-    [string]$Filter,
-    [string]$Architecture,
-    [string]$OS
+    [string]$VersionFilter,
+    [string]$ArchitectureFilter,
+    [string]$OSFilter
 )
 
 Set-StrictMode -Version Latest
@@ -23,10 +23,7 @@ $manifestRepo = $manifest.Repos[0]
 $activeOS = docker version -f "{{ .Server.Os }}"
 $builtTags = @()
 
-$buildFilter = $Filter
-if ($activeOS -eq "windows" -and $buildFilter -eq "2.0*") {
-    $buildFilter = "$buildFilter/nanoserver-sac2016/*"
-}
+$buildFilter = "$VersionFilter*/*/$OSFilter*"
 
 $manifestRepo.Images |
     ForEach-Object {
@@ -34,8 +31,8 @@ $manifestRepo.Images |
         $_.Platforms |
             Where-Object { $_.os -eq "$activeOS" } |
             Where-Object { [string]::IsNullOrEmpty($buildFilter) -or $_.dockerfile -like "$buildFilter" } |
-            Where-Object { ( [string]::IsNullOrEmpty($Architecture) -and -not [bool]($_.PSobject.Properties.name -match "architecture"))`
-                -or ( [bool]($_.PSobject.Properties.name -match "architecture") -and $_.architecture -eq "$Architecture" ) } |
+            Where-Object { ( [string]::IsNullOrEmpty($ArchitectureFilter) -and -not [bool]($_.PSobject.Properties.name -match "architecture"))`
+                -or ( [bool]($_.PSobject.Properties.name -match "architecture") -and $_.architecture -eq "$ArchitectureFilter" ) } |
             ForEach-Object {
                 $dockerfilePath = $_.dockerfile
                 $tags = [array]($_.Tags | ForEach-Object { $_.PSobject.Properties })
@@ -54,6 +51,6 @@ $manifestRepo.Images |
             }
     }
 
-./test/run-test.ps1 -Filter $Filter -Architecture $Architecture -OS $OS
+./test/run-test.ps1 -VersionFilter $VersionFilter -ArchitectureFilter $ArchitectureFilter -OSFilter $OSFilter
 
 Write-Host "Tags built and tested:`n$($builtTags | Out-String)"

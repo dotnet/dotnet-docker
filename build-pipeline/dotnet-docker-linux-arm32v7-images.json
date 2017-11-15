@@ -205,7 +205,7 @@
       "allowOverride": true
     },
     "image-builder.armBuildArgs": {
-      "value": "$(image-builder.commonArgs) --path $(PB.image-builder.path) --architecture arm --skip-test --test-var Filter=$(PB.image-builder.path) --test-var Architecture=arm --push --username $(PB.docker.username) --password $(PB.docker.password)",
+      "value": "$(image-builder.commonArgs) --path $(PB.image-builder.path) --architecture arm --skip-test --test-var VersionFilter=$(PB.image-builder.path) --test-var ArchitectureFilter=arm --push --username $(PB.docker.username) --password $(PB.docker.password)",
       "allowOverride": true
     },
     "image-builder.sdkBuildArgs": {
