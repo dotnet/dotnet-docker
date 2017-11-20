@@ -13,8 +13,8 @@
 
 # Supported Windows Server 2016 Version 1709 (Fall Creators Update) amd64 tags
 
-- [`2.0.3-runtime-nanoserver-1709`, `2.0-runtime-nanoserver-1709` (*2.0/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-1709/amd64/Dockerfile)
-- [`2.0.3-sdk-nanoserver-1709`, `2.0-sdk-nanoserver-1709` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-1709/amd64/Dockerfile)
+- [`2.0.3-runtime-nanoserver-1709`, `2.0-runtime-nanoserver-1709`, `2.0.3-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-1709/amd64/Dockerfile)
+- [`2.0.3-sdk-nanoserver-1709`, `2.0-sdk-nanoserver-1709`, `2.0.3-sdk`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-1709/amd64/Dockerfile)
 
 # Supported Windows Server 2016 amd64 tags
 
@@ -28,6 +28,8 @@
 
 - [`2.0.3-runtime-stretch-arm32v7`, `2.0-runtime-stretch-arm32v7`, `2.0.3-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/arm32v7/Dockerfile)
 - [`2.0.3-runtime-deps-stretch-arm32v7`, `2.0-runtime-deps-stretch-arm32v7`, `2.0.3-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/arm32v7/Dockerfile)
+
+>**Note:** .NET Core multi-arch tags, such as 2.0-runtime, have been updated to use nanoserver-1709 images if your host is Windows Server 2016 Version 1709 or higher or Windows 10 Fall Creators Update (Version 1709) or higher. You need Docker 17.10 or later to take advantage of these updated tags.
 
 >**Note:** The Docker images in this repo are supported by Microsoft. The `arm32v7` images are in preview and have "best effort" support only by the community and .NET Core Team.  Please see the [arm32 announcement](https://github.com/dotnet/announcements/issues/29) for more details.
 
