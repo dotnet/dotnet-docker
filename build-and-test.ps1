@@ -23,7 +23,15 @@ $manifestRepo = $manifest.Repos[0]
 $activeOS = docker version -f "{{ .Server.Os }}"
 $builtTags = @()
 
-$buildFilter = "$VersionFilter*/*/$OSFilter*"
+$buildFilter = "*"
+if (-not [string]::IsNullOrEmpty($versionFilter))
+{
+    $buildFilter = "$versionFilter/$buildFilter"
+}
+if (-not [string]::IsNullOrEmpty($OsFilter))
+{
+    $buildFilter = "$buildFilter/$OsFilter/*"
+}
 
 $manifestRepo.Images |
     ForEach-Object {

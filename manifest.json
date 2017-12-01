@@ -25,7 +25,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "1.0/runtime-deps/jessie",
+              "dockerfile": "1.0/runtime-deps/jessie/amd64",
               "os": "linux",
               "tags": {
                 "1.0.8-runtime-deps-jessie": {},
@@ -50,7 +50,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "1.0/runtime/jessie",
+              "dockerfile": "1.0/runtime/jessie/amd64",
               "os": "linux",
               "tags": {
                 "1.0.8-runtime-jessie": {},
@@ -60,7 +60,7 @@
               }
             },
             {
-              "dockerfile": "1.0/runtime/nanoserver-sac2016",
+              "dockerfile": "1.0/runtime/nanoserver-sac2016/amd64",
               "os": "windows",
               "tags": {
                 "1.0.8-runtime-nanoserver-sac2016": {},
@@ -80,7 +80,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "1.1/runtime/jessie",
+              "dockerfile": "1.1/runtime/jessie/amd64",
               "os": "linux",
               "tags": {
                 "1.1.5-runtime-jessie": {},
@@ -93,7 +93,7 @@
               }
             },
             {
-              "dockerfile": "1.1/runtime/nanoserver-sac2016",
+              "dockerfile": "1.1/runtime/nanoserver-sac2016/amd64",
               "os": "windows",
               "tags": {
                 "1.1.5-runtime-nanoserver-sac2016": {},
@@ -122,14 +122,14 @@
           },
           "platforms": [
             {
-              "dockerfile": "1.1/sdk/jessie",
+              "dockerfile": "1.1/sdk/jessie/amd64",
               "os": "linux",
               "tags": {
                 "1.1.5-sdk-jessie": {}
               }
             },
             {
-              "dockerfile": "1.1/sdk/nanoserver-sac2016",
+              "dockerfile": "1.1/sdk/nanoserver-sac2016/amd64",
               "os": "windows",
               "tags": {
                 "1.1.5-sdk-nanoserver-sac2016": {},
