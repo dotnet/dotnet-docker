@@ -113,7 +113,7 @@
         {
           "readmeOrder": 3,
           "sharedTags": {
-            "1.1.5-sdk-1.1.6": {},
+            "1.1.5-sdk": {},
             "1.1-sdk": {},
             "1-sdk": {},
             "1.0-sdk": {
@@ -125,14 +125,14 @@
               "dockerfile": "1.1/sdk/jessie/amd64",
               "os": "linux",
               "tags": {
-                "1.1.5-sdk-1.1.6-jessie": {}
+                "1.1.5-sdk-jessie": {}
               }
             },
             {
               "dockerfile": "1.1/sdk/nanoserver-sac2016/amd64",
               "os": "windows",
               "tags": {
-                "1.1.5-sdk-1.1.6-nanoserver-sac2016": {},
+                "1.1.5-sdk-nanoserver-sac2016": {},
                 "1.1-sdk-nanoserver": {
                   "isUndocumented": true
                 },
