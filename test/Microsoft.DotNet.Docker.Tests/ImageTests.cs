@@ -50,7 +50,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 testData = new List<ImageDescriptor>
                 {
                     new ImageDescriptor { DotNetCoreVersion = "1.0", PlatformOS = "nanoserver-sac2016", SdkVersion = "1.1" },
-                    new ImageDescriptor { DotNetCoreVersion = "1.1", PlatformOS = "nanoserver-sac2016", RuntimeDepsVersion = "1.0" },
+                    new ImageDescriptor { DotNetCoreVersion = "1.1", PlatformOS = "nanoserver-sac2016" },
                     new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = "nanoserver-sac2016" },
                     new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = "nanoserver-1709" },
                 };
@@ -172,7 +172,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private void VerifyRuntimeDepsImage_SelfContainedApp(ImageDescriptor imageDescriptor, string appSdkImage)
         {
             string selfContainedAppId = GetIdentifier(imageDescriptor.DotNetCoreVersion, "self-contained-app");
-            string rid = imageDescriptor.IsArm ? "linux-arm" : "debian.8-x64";
+            string rid = GetRuntimeIdentifier(imageDescriptor);
 
             try
             {
@@ -241,6 +241,26 @@ namespace Microsoft.DotNet.Docker.Tests
         private static string GetIdentifier(string version, string type)
         {
             return $"{version}-{type}-{DateTime.Now.ToFileTime()}";
+        }
+
+        private static string GetRuntimeIdentifier(ImageDescriptor imageDescriptor)
+        {
+            string rid;
+
+            if (imageDescriptor.IsArm)
+            {
+                rid = "linux-arm";
+            }
+            else if (imageDescriptor.DotNetCoreVersion.StartsWith("1."))
+            {
+                rid = "debian.8-x64";
+            }
+            else
+            {
+                rid = "linux-x64";
+            }
+
+            return rid;
         }
     }
 }
