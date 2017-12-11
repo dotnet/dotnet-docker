@@ -92,10 +92,16 @@ namespace Microsoft.DotNet.Docker.Tests
             return process.ExitCode == 0 && process.StandardOutput.ReadToEnd().Trim() != "";
         }
 
-        public void Run(string image, string command, string containerName, string volumeName = null)
+        public void Run(
+            string image,
+            string command,
+            string containerName,
+            string volumeName = null,
+            bool runAsContainerAdministrator = false)
         {
             string volumeArg = volumeName == null ? string.Empty : $" -v {volumeName}:{ContainerWorkDir}";
-            Execute($"run --rm --name {containerName}{volumeArg} {image} {command}");
+            string userArg = runAsContainerAdministrator ? " -u ContainerAdministrator" : string.Empty;
+            Execute($"run --rm --name {containerName}{volumeArg}{userArg} {image} {command}");
         }
 
         public static bool ImageExists(string tag)
