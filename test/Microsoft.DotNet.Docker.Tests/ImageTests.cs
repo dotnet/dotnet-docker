@@ -59,13 +59,13 @@ namespace Microsoft.DotNet.Docker.Tests
             string versionFilterPattern = null;
             if (VersionFilter != null)
             {
-                versionFilterPattern = "^" + Regex.Escape(VersionFilter).Replace(@"\*", ".*").Replace(@"\?", ".") + "$";
+                versionFilterPattern = GetFilterRegexPattern(VersionFilter);
             }
 
             string osFilterPattern = null;
             if (OsFilter != null)
             {
-                osFilterPattern = "^" + Regex.Escape(OsFilter).Replace(@"\*", ".*").Replace(@"\?", ".") + "$";
+                osFilterPattern = GetFilterRegexPattern(OsFilter);
             }
 
             // Filter out test data that does not match the active architecture and version filters.
@@ -80,6 +80,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageDescriptor => new object[] { imageDescriptor });
         }
 
+        private static string GetFilterRegexPattern(string filter)
+        {
+            return $"^{Regex.Escape(filter).Replace(@"\*", ".*").Replace(@"\?", ".")}$";
+        }
+
         [Theory]
         [MemberData(nameof(GetVerifyImagesData))]
         public void VerifyImages(ImageDescriptor imageDescriptor)
@@ -90,7 +95,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 CreateTestAppWithSdkImage(imageDescriptor, appSdkImage);
 
-                if (!imageDescriptor.IsArm)
+                if (!string.IsNullOrEmpty(imageDescriptor.SdkOsVariant))
                 {
                     VerifySdkImage_RunApp(imageDescriptor, appSdkImage);
                 }
@@ -140,15 +145,19 @@ namespace Microsoft.DotNet.Docker.Tests
         private void VerifyRuntimeImage_FrameworkDependentApp(ImageDescriptor imageDescriptor, string appSdkImage)
         {
             string frameworkDepAppId = GetIdentifier(imageDescriptor.DotNetCoreVersion, "framework-dependent-app");
+            bool isRunAsContainerAdministrator = String.Equals(
+                "nanoserver-1709", imageDescriptor.PlatformOS, StringComparison.OrdinalIgnoreCase);
+            string optionalPublishArgs = GetOptionalPublishArgs(imageDescriptor);
 
             try
             {
                 // Publish the app to a Docker volume using the app's sdk image
                 DockerHelper.Run(
                     image: appSdkImage,
-                    command: $"dotnet publish -o {DockerHelper.ContainerWorkDir}",
+                    command: $"dotnet publish -o {DockerHelper.ContainerWorkDir} {optionalPublishArgs}",
                     containerName: frameworkDepAppId,
-                    volumeName: frameworkDepAppId);
+                    volumeName: frameworkDepAppId,
+                    runAsContainerAdministrator: isRunAsContainerAdministrator);
 
                 // Run the app in the Docker volume to verify the runtime image
                 string runtimeImage = GetDotNetImage(
@@ -161,7 +170,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     image: runtimeImage,
                     command: $"dotnet {appDllPath}",
                     containerName: frameworkDepAppId,
-                    volumeName: frameworkDepAppId);
+                    volumeName: frameworkDepAppId,
+                    runAsContainerAdministrator: isRunAsContainerAdministrator);
             }
             finally
             {
@@ -186,7 +196,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 try
                 {
                     // Publish the self-contained app to a Docker volume using the app's sdk image
-                    string optionalPublishArgs = imageDescriptor.DotNetCoreVersion.StartsWith("1.") ? "" : "--no-restore";
+                    string optionalPublishArgs = GetOptionalPublishArgs(imageDescriptor);
                     string dotNetCmd = $"dotnet publish -r {rid} -o {DockerHelper.ContainerWorkDir} {optionalPublishArgs}";
                     DockerHelper.Run(
                         image: selfContainedAppId,
@@ -216,6 +226,11 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 DockerHelper.DeleteImage(selfContainedAppId);
             }
+        }
+
+        private static string GetOptionalPublishArgs(ImageDescriptor imageDescriptor)
+        {
+            return imageDescriptor.DotNetCoreVersion.StartsWith("1.") ? "" : "--no-restore";
         }
 
         public static string GetDotNetImage(
