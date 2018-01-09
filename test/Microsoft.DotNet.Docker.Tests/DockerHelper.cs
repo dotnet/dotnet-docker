@@ -44,7 +44,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public void DeleteVolume(string name)
         {
-            if (ResourceExists("volume", name))
+            if (VolumeExists(name))
             {
                 Execute($"volume rm -f {name}");
             }
@@ -83,9 +83,14 @@ namespace Microsoft.DotNet.Docker.Tests
             return $"{ContainerWorkDir}{separator}{relativePath}";
         }
 
-        private static bool ResourceExists(string type, string id)
+        public static bool ImageExists(string tag)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo("docker", $"{type} ls -q {id}");
+            return ResourceExists("image", tag);
+        }
+
+        private static bool ResourceExists(string type, string filterArg)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo("docker", $"{type} ls -q {filterArg}");
             startInfo.RedirectStandardOutput = true;
             Process process = Process.Start(startInfo);
             process.WaitForExit();
@@ -104,9 +109,9 @@ namespace Microsoft.DotNet.Docker.Tests
             Execute($"run --rm --name {containerName}{volumeArg}{userArg} {image} {command}");
         }
 
-        public static bool ImageExists(string tag)
+        public static bool VolumeExists(string name)
         {
-            return ResourceExists("image", tag);
+            return ResourceExists("volume", $"-f \"name={name}\"");
         }
     }
 }
