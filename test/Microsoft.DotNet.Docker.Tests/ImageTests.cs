@@ -14,8 +14,24 @@ namespace Microsoft.DotNet.Docker.Tests
     public class ImageTests
     {
         private static string ArchFilter => Environment.GetEnvironmentVariable("IMAGE_ARCH_FILTER");
-        private static string OsFilter { get; set; } = Environment.GetEnvironmentVariable("IMAGE_OS_FILTER");
+        private static string OsFilter => Environment.GetEnvironmentVariable("IMAGE_OS_FILTER");
         private static string VersionFilter => Environment.GetEnvironmentVariable("IMAGE_VERSION_FILTER");
+
+        private static ImageDescriptor[] LinuxTestData = new ImageDescriptor[]
+            {
+                new ImageDescriptor { DotNetCoreVersion = "1.0", SdkVersion = "1.1" },
+                new ImageDescriptor { DotNetCoreVersion = "1.1", RuntimeDepsVersion = "1.0" },
+                new ImageDescriptor { DotNetCoreVersion = "2.0" },
+                new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Jessie },
+                new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Stretch, SdkOsVariant = "", Architecture = "arm" },
+            };
+        private static ImageDescriptor[] WindowsTestData = new ImageDescriptor[]
+            {
+                new ImageDescriptor { DotNetCoreVersion = "1.0", PlatformOS = OS.NanoServerSac2016, SdkVersion = "1.1" },
+                new ImageDescriptor { DotNetCoreVersion = "1.1", PlatformOS = OS.NanoServerSac2016 },
+                new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = OS.NanoServerSac2016 },
+                new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = OS.NanoServer1709 },
+            };
 
         private DockerHelper DockerHelper { get; set; }
 
@@ -26,36 +42,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static IEnumerable<object[]> GetVerifyImagesData()
         {
-            List<ImageDescriptor> testData;
-
-            if (DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                testData = new List<ImageDescriptor>
-                {
-                    new ImageDescriptor { DotNetCoreVersion = "1.0", SdkVersion = "1.1" },
-                    new ImageDescriptor { DotNetCoreVersion = "1.1", RuntimeDepsVersion = "1.0" },
-                    new ImageDescriptor { DotNetCoreVersion = "2.0" },
-                    new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = "jessie" },
-                    new ImageDescriptor
-                    {
-                        DotNetCoreVersion = "2.0",
-                        OsVariant = "stretch",
-                        SdkOsVariant = "",
-                        Architecture = "arm"
-                    },
-                };
-            }
-            else
-            {
-                testData = new List<ImageDescriptor>
-                {
-                    new ImageDescriptor { DotNetCoreVersion = "1.0", PlatformOS = "nanoserver-sac2016", SdkVersion = "1.1" },
-                    new ImageDescriptor { DotNetCoreVersion = "1.1", PlatformOS = "nanoserver-sac2016" },
-                    new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = "nanoserver-sac2016" },
-                    new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = "nanoserver-1709" },
-                };
-            }
-
             string versionFilterPattern = null;
             if (VersionFilter != null)
             {
@@ -69,7 +55,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             // Filter out test data that does not match the active architecture and version filters.
-            return testData
+            return (DockerHelper.IsLinuxContainerModeEnabled ? LinuxTestData : WindowsTestData)
                 .Where(imageDescriptor => ArchFilter == null
                     || string.Equals(imageDescriptor.Architecture, ArchFilter, StringComparison.OrdinalIgnoreCase))
                 .Where(imageDescriptor => OsFilter == null
