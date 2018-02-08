@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:sdk AS build
+FROM microsoft/dotnet-nightly:sdk AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -6,6 +6,7 @@ COPY *.sln .
 COPY dotnetapp/*.csproj ./dotnetapp/
 COPY utils/*.csproj ./utils/
 COPY tests/*.csproj ./tests/
+COPY nuget.config.alpine nuget.config
 RUN dotnet restore
 
 # copy and build everything else
@@ -27,7 +28,7 @@ FROM test AS publish
 WORKDIR /app/dotnetapp
 RUN dotnet publish -o out
 
-FROM microsoft/dotnet:2.0-runtime AS runtime
+FROM microsoft/dotnet-nightly:2.1-runtime-alpine AS runtime
 WORKDIR /app
 COPY --from=publish /app/dotnetapp/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]

@@ -1,10 +1,17 @@
-# .NET Core Development Sample
+# .NET Core Docker Sample
 
-This .NET Core Docker sample demonstrates how to use Docker in your .NET Core development process. It builds multiple projects and executes unit tests in a container. The sample works with both Linux and Windows containers.
+This sample demonstrates how to use .NET Core and Docker together. It builds multiple projects and executes unit tests in a container. The sample works with both Linux and Windows containers.
 
 The [sample Dockerfile](Dockerfile) creates a .NET Core application Docker image based off of the [.NET Core Runtime Docker image](https://hub.docker.com/r/microsoft/dotnet/).
 
 It uses the [Docker multi-stage build feature](https://github.com/dotnet/announcements/issues/18) to build the sample in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/r/microsoft/dotnet/). It builds and tests the samples and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/r/microsoft/dotnet/).
+
+Multiple Dockerfile files are included for various Docker options with the same .NET sample:
+
+* [Multi-stage-build sample with unit testing](Dockerfile)
+* [Multi-stage-build sample with unit testing, using Alpine](Dockerfile.alpine)
+* [Basic multi-stage-build sample](Dockerfile.basic)
+* [Basic multi-stage-build sample, using Alpine](Dockerfile.alpinewithglobalization)
 
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker). You need the latest Windows 10 or Windows Server 2016 to use [Windows containers](http://aka.ms/windowscontainers). The instructions assume you have the [Git](https://git-scm.com/downloads) client installed.
 
@@ -13,19 +20,19 @@ This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker
 The easiest way to get the sample is by cloning the samples repository with git, using the following instructions.
 
 ```console
-git clone https://github.com/dotnet/dotnet-docker-samples/
+git clone https://github.com/dotnet/dotnet-docker/
 ```
 
-You can also [download the repository as a zip](https://github.com/dotnet/dotnet-docker-samples/archive/master.zip).
+You can also [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/master.zip).
 
 ## Build and run the sample with Docker
 
 You can build and run the sample in Docker using the following commands. The instructions assume that you are in the root of the repository.
 
 ```console
-cd dotnetapp-dev
-docker build -t dotnetapp-dev .
-docker run --rm dotnetapp-dev Hello .NET Core from Docker
+cd dotnetapp
+docker build -t dotnetapp .
+docker run --rm dotnetapp Hello .NET Core from Docker
 ```
 
 Note: The instructions above work for both Linux and Windows containers. The .NET Core docker images use [multi-arch tags](https://github.com/dotnet/announcements/issues/14), which abstract away different operating system choices for most use-cases.
@@ -36,20 +43,19 @@ The unit tests in this sample will run as part of the the `docker build` command
 
 ```csharp
 [Fact]
-public void Test1()
+public void ReverseString()
 {
-    var inputString = "Dotnet-bot: Welcome to using .NET Core!";
-    // var expectedString = "!eroC TEN. gnisu ot emocleW :tob-tentoD";
-    var expectedString = "arbitrarily different string - won't match";
-    var actualString = ReverseUtil.ReverseString(inputString);
-    Assert.True(actualString == expectedString, "The input string was not reversed correctly.");
+    var inputString = "The quick brown fox jumps over the lazy dog";
+    var expectedString = "Not the expected string.";
+    var returnedString = StringUtils.ReverseString(inputString);
+    Assert.True(expectedString == returnedString, "The input string was not reversed correctly.");
 }
 ```
 
 After changing the test, re-run `docker build` so that you can see the failure, with the following command.
 
 ```console
-docker build -t dotnetapp-dev .
+docker build -t dotnetapp .
 ```
 
 ## Run unit tests as part of `docker run`
@@ -61,7 +67,7 @@ You can build and run the sample in Docker using the following commands. The ins
 First build an image, just to and including the `testrunner` stage.
 
 ```console
-docker build --target testrunner -t dotnetapp-dev:test .
+docker build --target testrunner -t dotnetapp:test .
 ```
 
 The following commands rely on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to enable the test runner to write test log files to your local drive. Without that, running tests as part of `docker run` isn't as useful.
@@ -69,19 +75,19 @@ The following commands rely on [volume mounting](https://docs.docker.com/engine/
 You can run the sample on **Windows** using Windows containers using the following command.
 
 ```console
-docker run --rm -v C:\git\dotnet-docker-samples\dotnetapp-dev\TestResults:C:\app\tests\TestResults dotnetapp-dev:test
+docker run --rm -v C:\git\dotnet-docker\dotnetapp\TestResults:C:\app\tests\TestResults dotnetapp:test
 ```
 
 You can run the sample on **Windows** using Linux containers using the following command. You should [enable shared drives](https://docs.docker.com/docker-for-windows/#shared-drives) first.
 
 ```console
-docker run --rm -v C:\git\dotnet-docker-samples\dotnetapp-dev\TestResults:/app/tests/TestResults dotnetapp-dev:test
+docker run --rm -v C:\git\dotnet-docker\dotnetapp\TestResults:/app/tests/TestResults dotnetapp:test
 ```
 
 You can run the sample on **macOS** or **Linux** using the following command. You should enable  [file sharing](https://docs.docker.com/docker-for-mac/#file-sharing) first.
 
 ```console
-docker run --rm -v "$(pwd)"/TestResults:/app/tests/TestResults dotnetapp-dev:test
+docker run --rm -v "$(pwd)"/TestResults:/app/tests/TestResults dotnetapp:test
 ```
 
 You should find a `.trx` file in the TestResults folder. You can open this file in Visual Studio to see the results of the test run, as you can see in the following image. You can open in Visual Studio (File -> Open -> File) or double-click on the TRX file (if you have Visual Studio installed). There are other TRX file viewers available as well that you can search for.
@@ -95,7 +101,7 @@ The unit testing in this Dockerfile demonstrates a couple approaches to unit tes
 You can build and run the sample locally with the [.NET Core 2.0 SDK](https://www.microsoft.com/net/download/core) using the following instructions. The instructions assume that you are in the root of the repository.
 
 ```console
-cd dotnetapp-dev
+cd dotnetapp
 dotnet run Hello .NET Core
 ```
 
@@ -123,10 +129,11 @@ Note: The `-c release` argument builds the application in release mode (the defa
 
 The following Docker images are used in this sample
 
-* [microsoft/dotnet:2.0-sdk](https://hub.docker.com/r/microsoft/dotnet)
+* [microsoft/dotnet:sdk](https://hub.docker.com/r/microsoft/dotnet)
 * [microsoft/dotnet:2.0-runtime](https://hub.docker.com/r/microsoft/dotnet)
 
 ## Related Resources
 
-* [.NET Core Docker samples](../README.md)
+* [.NET Core Docker Samples](../README.md)
+* [.NET Core Docker](../../README.md)
 * [.NET Framework Docker samples](https://github.com/Microsoft/dotnet-framework-docker-samples)
