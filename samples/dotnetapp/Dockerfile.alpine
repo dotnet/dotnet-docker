@@ -6,7 +6,6 @@ COPY *.sln .
 COPY dotnetapp/*.csproj ./dotnetapp/
 COPY utils/*.csproj ./utils/
 COPY tests/*.csproj ./tests/
-COPY nuget.config.alpine nuget.config
 RUN dotnet restore
 
 # copy and build everything else

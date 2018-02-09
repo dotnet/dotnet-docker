@@ -1,21 +1,18 @@
 # .NET Core Docker Sample
 
-This sample demonstrates how to use .NET Core and Docker together. It builds multiple projects and executes unit tests in a container. The sample works with both Linux and Windows containers.
+This sample demonstrates how to use .NET Core and Docker together. It builds multiple projects and executes unit tests in a container. The sample works with both Linux and Windows containers and can also be used without Docker.
 
-The [sample Dockerfile](Dockerfile) creates a .NET Core application Docker image based off of the [.NET Core Runtime Docker image](https://hub.docker.com/r/microsoft/dotnet/).
-
-It uses the [Docker multi-stage build feature](https://github.com/dotnet/announcements/issues/18) to build the sample in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/r/microsoft/dotnet/). It builds and tests the samples and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/r/microsoft/dotnet/).
-
-Note: The instructions above work for both Linux and Windows containers. The .NET Core docker images use [multi-arch tags](https://github.com/dotnet/announcements/issues/14), which abstract away different operating system choices for most use-cases.
+The sample builds the application in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/r/microsoft/dotnet/). It builds and tests the application and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/r/microsoft/dotnet/). It uses Docker [multi-stage build](https://github.com/dotnet/announcements/issues/18) and [multi-arch tags](https://github.com/dotnet/announcements/issues/14) where appropriate.
 
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
-Multiple variations of this sample are available:
+Multiple variations of this sample have been provided:
 
-* [Basic multi-stage-build sample](Dockerfile.basic)
-* [Basic multi-stage-build sample, using Alpine](Dockerfile.alpinewithglobalization)
-* [Multi-stage-build sample with unit testing](Dockerfile)
-* [Multi-stage-build sample with unit testing, using Alpine](Dockerfile.alpine)
+* [Multi-arch sample with build and unit testing](Dockerfile)
+* [Multi-arch basic sample](Dockerfile.basic)
+* [Alpine sample with build and unit testing](Dockerfile.alpine)
+* [Alpine basic sample, enables Globalization](Dockerfile.alpinewithglobalization)
+* [ARM32 sample with build and unit testing](Dockerfile.arm32)
 
 ## Getting the sample
 
@@ -37,7 +34,9 @@ docker build -t dotnetapp .
 docker run --rm dotnetapp Hello .NET Core from Docker
 ```
 
-## Build and run the sample with Alpine
+You can build a basic [Dockerfile](Dockerfile.basic) that does not include testing.
+
+## Build and run the sample for Alpine
 
 You can build and run the sample with [alpine](https://hub.docker.com/_/alpine/) using the following commands. The instructions assume that you are in the root of the repository.
 
@@ -47,6 +46,28 @@ docker build -t dotnetapp -f Dockerfile.alpine .
 docker run --rm dotnetapp Hello .NET Core from Alpine
 ```
 
+[Globalization is disabled](https://github.com/dotnet/announcements/issues/20) by default with Alpine images in order to produce smaller container images. You can re-enable globalization if your application relies on it. You can build a basic Alpine [Dockerfile](Dockerfile.alpinewithglobalization) that enables globalization.
+
+> Related: See [.NET Core Alpine Docker Image announcement](https://github.com/dotnet/dotnet-docker-nightly/issues/500)
+
+## Build and run the sample for Raspberry Pi
+
+You can build and run the sample for Raspberry Pi using the following commands. The instructions assume that you are in the root of the repository.
+
+```console
+cd dotnetapp-prod
+docker build -t dotnetapp -f Dockerfile.arm32 .
+```
+
+Push the image to a registry and pull from the Raspberry Pi with the following command. You need to be signed into the Docker client to `docker push` to Docker Hub.
+
+```console
+docker run --rm mydockername/dotnetapp-prod-arm32 Hello .NET Core from Docker
+```
+
+## Running unit tests
+
+You can run unit tests with this sample, with either `docker build` or `docker run`.
 
 ### Run unit tests as part of `docker build`
 
@@ -69,6 +90,12 @@ After changing the test, re-run `docker build` so that you can see the failure, 
 docker build -t dotnetapp .
 ```
 
+You can instead build an Alpine-based image using the following command.
+
+```console
+docker build -t dotnetapp -f Dockerfile.alpine .
+```
+
 ### Run unit tests as part of `docker run`
 
 You can can also run the unit tests in the sample as part of `docker run`, with the primary benefit being that it is easier to harvest test logs. Running tests as part of `docker build` is useful as a means of getting early feedback, but it only really gives you pass/fail feedback since any useful information is primarily available solely via the console/terminal (not great for automation). The sample exposes a `testrunner` stage that you can build and then run explicity. This is why there are two `ENTRYPOINT` lines in the [Dockerfile](Dockerfile). You can then volume mount the appropriate directories in order to harvest test logs.
@@ -79,6 +106,12 @@ First build an image, just to and including the `testrunner` stage.
 
 ```console
 docker build --target testrunner -t dotnetapp:test .
+```
+
+You can instead build an Alpine-based image using the following command.
+
+```console
+docker build --target testrunner -t dotnetapp -f Dockerfile.alpine .
 ```
 
 The following commands rely on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to enable the test runner to write test log files to your local drive. Without that, running tests as part of `docker run` isn't as useful.
