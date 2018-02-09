@@ -37,5 +37,5 @@ ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 
 WORKDIR /app
-COPY --from=build-env /app/out ./
+COPY --from=build /app/dotnetapp/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]

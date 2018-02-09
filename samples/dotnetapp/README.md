@@ -6,18 +6,20 @@ The [sample Dockerfile](Dockerfile) creates a .NET Core application Docker image
 
 It uses the [Docker multi-stage build feature](https://github.com/dotnet/announcements/issues/18) to build the sample in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/r/microsoft/dotnet/). It builds and tests the samples and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/r/microsoft/dotnet/).
 
-Multiple Dockerfile files are included for various Docker options with the same .NET sample:
+Note: The instructions above work for both Linux and Windows containers. The .NET Core docker images use [multi-arch tags](https://github.com/dotnet/announcements/issues/14), which abstract away different operating system choices for most use-cases.
 
-* [Multi-stage-build sample with unit testing](Dockerfile)
-* [Multi-stage-build sample with unit testing, using Alpine](Dockerfile.alpine)
+This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
+
+Multiple variations of this sample are available:
+
 * [Basic multi-stage-build sample](Dockerfile.basic)
 * [Basic multi-stage-build sample, using Alpine](Dockerfile.alpinewithglobalization)
-
-This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker). You need the latest Windows 10 or Windows Server 2016 to use [Windows containers](http://aka.ms/windowscontainers). The instructions assume you have the [Git](https://git-scm.com/downloads) client installed.
+* [Multi-stage-build sample with unit testing](Dockerfile)
+* [Multi-stage-build sample with unit testing, using Alpine](Dockerfile.alpine)
 
 ## Getting the sample
 
-The easiest way to get the sample is by cloning the samples repository with git, using the following instructions.
+The easiest way to get the sample is by cloning the samples repository with [git](https://git-scm.com/downloads), using the following instructions.
 
 ```console
 git clone https://github.com/dotnet/dotnet-docker/
@@ -35,9 +37,18 @@ docker build -t dotnetapp .
 docker run --rm dotnetapp Hello .NET Core from Docker
 ```
 
-Note: The instructions above work for both Linux and Windows containers. The .NET Core docker images use [multi-arch tags](https://github.com/dotnet/announcements/issues/14), which abstract away different operating system choices for most use-cases.
+## Build and run the sample with Alpine
 
-## Run unit tests as part of `docker build`
+You can build and run the sample with [alpine](https://hub.docker.com/_/alpine/) using the following commands. The instructions assume that you are in the root of the repository.
+
+```console
+cd dotnetapp
+docker build -t dotnetapp -f Dockerfile.alpine .
+docker run --rm dotnetapp Hello .NET Core from Alpine
+```
+
+
+### Run unit tests as part of `docker build`
 
 The unit tests in this sample will run as part of the the `docker build` command listed above. You can make the unit test fail by changing the [unit test](tests/UnitTest1.cs) to match the test below. It is good to do this so that you can see the behavior of when tests fail as part of `docker build`.
 
@@ -58,7 +69,7 @@ After changing the test, re-run `docker build` so that you can see the failure, 
 docker build -t dotnetapp .
 ```
 
-## Run unit tests as part of `docker run`
+### Run unit tests as part of `docker run`
 
 You can can also run the unit tests in the sample as part of `docker run`, with the primary benefit being that it is easier to harvest test logs. Running tests as part of `docker build` is useful as a means of getting early feedback, but it only really gives you pass/fail feedback since any useful information is primarily available solely via the console/terminal (not great for automation). The sample exposes a `testrunner` stage that you can build and then run explicity. This is why there are two `ENTRYPOINT` lines in the [Dockerfile](Dockerfile). You can then volume mount the appropriate directories in order to harvest test logs.
 
@@ -75,13 +86,13 @@ The following commands rely on [volume mounting](https://docs.docker.com/engine/
 You can run the sample on **Windows** using Windows containers using the following command.
 
 ```console
-docker run --rm -v C:\git\dotnet-docker\dotnetapp\TestResults:C:\app\tests\TestResults dotnetapp:test
+docker run --rm -v C:\git\dotnet-docker\samples\dotnetapp\TestResults:C:\app\tests\TestResults dotnetapp:test
 ```
 
 You can run the sample on **Windows** using Linux containers using the following command. You should [enable shared drives](https://docs.docker.com/docker-for-windows/#shared-drives) first.
 
 ```console
-docker run --rm -v C:\git\dotnet-docker\dotnetapp\TestResults:/app/tests/TestResults dotnetapp:test
+docker run --rm -v C:\git\dotnet-docker\samples\dotnetapp\TestResults:/app/tests/TestResults dotnetapp:test
 ```
 
 You can run the sample on **macOS** or **Linux** using the following command. You should enable  [file sharing](https://docs.docker.com/docker-for-mac/#file-sharing) first.

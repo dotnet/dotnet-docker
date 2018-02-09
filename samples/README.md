@@ -1,12 +1,10 @@
 # .NET Core Docker Samples
 
-This repo contains samples that demonstrate various .NET Core Docker configurations, which you can use as the basis of your own Docker images. The samples can also be used with and without Docker.
-
-You can pick the sample that best fits the scenario you are interested in, on Windows, macOS or Linux.
+This repo contains samples that demonstrate various .NET Core Docker configurations, which you can use as the basis of your own Docker images. The samples can also be used without Docker.
 
 ## Getting Started
 
-You can run a pre-built [.NET Core sample](https://hub.docker.com/r/microsoft/dotnet-samples/) using [Docker](https://www.docker.com/products/docker). The source of this sample application is the [dotnetapp-prod](dotnetapp-prod) sample.
+You can run a pre-built [.NET Core sample](https://hub.docker.com/r/microsoft/dotnet-samples/) using [Docker](https://www.docker.com/products/docker). The source of this sample application is the [dotnetapp Dockerfile](dotnetapp/Dockerfoile).
 
 Type the following command to run the sample:
 
