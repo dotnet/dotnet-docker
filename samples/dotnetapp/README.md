@@ -1,12 +1,12 @@
 # .NET Core Docker Sample
 
-This sample demonstrates how to use .NET Core and Docker together. It builds multiple projects and executes unit tests in a container. The sample works with both Linux and Windows containers and can also be used without Docker.
+This [sample](Dockerfile) demonstrates how to use .NET Core and Docker together. It builds multiple projects and executes unit tests in a container. The sample works with both Linux and Windows containers and can also be used without Docker.
 
 The sample builds the application in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/r/microsoft/dotnet/). It builds and tests the application and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/r/microsoft/dotnet/). It uses Docker [multi-stage build](https://github.com/dotnet/announcements/issues/18) and [multi-arch tags](https://github.com/dotnet/announcements/issues/14) where appropriate.
 
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
-Multiple variations of this sample have been provided:
+Multiple variations of this sample have been provided, as follows. Some of these are demonstrated below. You specify alternate Dockerfile via the `-f` argument.
 
 * [Multi-arch sample with build and unit testing](Dockerfile)
 * [Multi-arch basic sample](Dockerfile.basic)
@@ -29,6 +29,7 @@ You can also [download the repository as a zip](https://github.com/dotnet/dotnet
 You can build and run the sample in Docker using the following commands. The instructions assume that you are in the root of the repository.
 
 ```console
+cd samples
 cd dotnetapp
 docker build -t dotnetapp .
 docker run --rm dotnetapp Hello .NET Core from Docker
@@ -41,6 +42,7 @@ You can build a basic [Dockerfile](Dockerfile.basic) that does not include testi
 You can build and run the sample with [alpine](https://hub.docker.com/_/alpine/) using the following commands. The instructions assume that you are in the root of the repository.
 
 ```console
+cd samples
 cd dotnetapp
 docker build -t dotnetapp -f Dockerfile.alpine .
 docker run --rm dotnetapp Hello .NET Core from Alpine
@@ -55,7 +57,8 @@ docker run --rm dotnetapp Hello .NET Core from Alpine
 You can build and run the sample for Raspberry Pi using the following commands. The instructions assume that you are in the root of the repository.
 
 ```console
-cd dotnetapp-prod
+cd samples
+cd dotnetapp
 docker build -t dotnetapp -f Dockerfile.arm32 .
 ```
 
