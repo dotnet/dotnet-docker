@@ -70,7 +70,7 @@ You can build and run the sample for [ARM32 and Raspberry Pi](dotnet-docker-arm3
 You can push the image to a container registry so that you can pull and run it on another device. Straightforward instructions are provided for pushing to both Azure Container Registry and DockerHub.
 
 * [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
-* [Push Docker Images to DockerHub](push-docker-image-to-dockerhub.md)
+* [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
 
 ## Build and run the sample locally
 
