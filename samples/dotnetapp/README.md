@@ -4,6 +4,8 @@ This [sample](Dockerfile) demonstrates how to use .NET Core and Docker together.
 
 The sample builds the application in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/r/microsoft/dotnet/). It builds and [tests](dotnet-docker-unit-testing.md) the application and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/r/microsoft/dotnet/). It uses Docker [multi-stage build](https://github.com/dotnet/announcements/issues/18) and [multi-arch tags](https://github.com/dotnet/announcements/issues/14).
 
+The [ASP.NET Core Docker Sample](../aspnetapp/README.md) demonstrates how to use ASP.NET Core and Docker together.
+
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
 ## Getting the sample
