@@ -59,6 +59,6 @@ After building the image, you need to push the image to a container registry so 
 Instructions are provided for pushing to both Azure Container Registry and DockerHub (you only need to choose one):
 
 * [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
-* [Push Docker Images to DockerHub](push-docker-image-to-dockerhub.md)
+* [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
 
 Full instructions are provided at [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md).

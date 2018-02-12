@@ -19,7 +19,7 @@ docker build -t dotnetapp -f Dockerfile.arm32 .
 You need to push the image to a container registry after building the image so that you can pull it from an ARM32 device. Instructions are provided for pushing to both Azure Container Registry and DockerHub (you only need to choose one):
 
 * [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
-* [Push Docker Images to DockerHub](push-docker-image-to-dockerhub.md)
+* [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
 
 ## Pull the Image from Another Device
 

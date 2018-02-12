@@ -96,7 +96,7 @@ After building the image, you need to push the image to a container registry so 
 Instructions are provided for pushing to both Azure Container Registry and DockerHub (you only need to choose one):
 
 * [Push Docker Images to Azure Container Registry](../dotnetapp/push-image-to-acr.md)
-* [Push Docker Images to DockerHub](../dotnetapp/push-docker-image-to-dockerhub.md)
+* [Push Docker Images to DockerHub](../dotnetapp/push-image-to-dockerhub.md)
 
 You next need to pull and run the image you pushed to the registry. 
 

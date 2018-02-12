@@ -26,7 +26,7 @@ The samples exercise various levels of functionality. The [.NET Core Docker samp
 ### Push Images to a Container Registry
 
 * [Push Docker Images to Azure Container Registry](dotnetapp/push-image-to-acr.md)
-* [Push Docker Images to DockerHub](dotnetapp/push-docker-image-to-dockerhub.md)
+* [Push Docker Images to DockerHub](dotnetapp/push-image-to-dockerhub.md)
 
 ### Optimizing Container Size
 
