@@ -25,7 +25,7 @@ RUN dotnet test
 
 FROM test AS publish
 WORKDIR /app/dotnetapp
-RUN dotnet publish -o out
+RUN dotnet publish -c Release -o out
 
 FROM microsoft/dotnet:2.0-runtime-stretch-arm32v7 AS runtime
 WORKDIR /app

@@ -6,16 +6,16 @@ COPY *.sln .
 COPY dotnetapp/*.csproj ./dotnetapp/
 COPY utils/*.csproj ./utils/
 COPY tests/*.csproj ./tests/
-RUN dotnet restore
+RUN dotnet restore -s https://api.nuget.org/v3/index.json -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
 
 # copy and build everything else
 COPY dotnetapp/. ./dotnetapp/
 COPY utils/. ./utils/
 COPY tests/. ./tests/
 WORKDIR /app/dotnetapp
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -r linux-arm32 -o out /p:ShowLinkerSizeComparison=true
 
-FROM microsoft/dotnet:2.0-runtime AS runtime
+FROM microsoft/dotnet:2.0-runtime-deps-stretch-arm32v7 AS runtime
 WORKDIR /app
 COPY --from=build /app/dotnetapp/out ./
-ENTRYPOINT ["dotnet", "dotnetapp.dll"]
+ENTRYPOINT ["./dotnetapp"]

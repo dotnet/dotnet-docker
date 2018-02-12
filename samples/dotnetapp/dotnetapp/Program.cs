@@ -8,7 +8,7 @@ public static class Program
 {
   public static void Main(string[] args) 
   {
-        string message = "Hello .NET Framework!";
+        string message = "Hello .NET Core!";
           
         if (args.Length > 0) 
         {

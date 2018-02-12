@@ -16,20 +16,27 @@ docker run microsoft/dotnet-samples
 
 You can try the following samples. They include instructions on how to build them, with and without Docker.
 
+The samples exercise various levels of functionality. The [.NET Core Docker sample](dotnetapp/README.md) includes the most functionality, including build and unit testing. Other samples do less. You can decide what is the right level of functionality for your use case, either copy/pasting in more delete functionality or deleting it.
+
 ### Building .NET Core Apps with Docker
 
-* [.NET Core Docker Sample](dotnetapp) - This [sample](dotnetapp/Dockerfile) builds, tests and runs the sample. It includes and builds multiple projects.
-* [ASP.NET Core Docker Sample](aspnetapp) - This [sample](aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
+* [.NET Core Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile) builds, tests and runs the sample. It includes and builds multiple projects.
+* [ASP.NET Core Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
+
+### Push Images to a Container Registry
+
+* [Push Docker Images to Azure Container Registry](dotnetapp/push-image-to-acr.md)
+* [Push Docker Images to DockerHub](dotnetapp/push-docker-image-to-dockerhub.md)
 
 ### Optimizing Container Size
 
-* [.NET Core Alpine Docker Sample](dotnetapp) - This [sample](dotnetapp/Dockerfile.alpine) builds, tests and runs an application using Alpine.
-* [ASP.NET Core Alpine Docker Sample](aspnetapp) - This [sample](aspnetapp/Dockerfile.alpine) builds, tests and runs an application using Alpine (Linux).
+* [.NET Core Alpine Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile.alpine) builds, tests and runs an application using Alpine.
+* [.NET Core self-contained Sample](dotnetapp/dotnet-docker-selfcontained.md) -- This sample builds and runs an application as a self-contained application.
 
 ### ARM32 / Raspberry Pi
 
-* [.NET Core ARM32 Docker Sample](dotnetapp) - This [sample](dotnetapp/Dockerfile.arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
-* [ASP.NET Core ARM32 Docker Sample](aspnetapp) - This [sample](aspnetapp/Dockerfile.arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
+* [.NET Core ARM32 Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile.arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
+* [ASP.NET Core ARM32 Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile.arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
 
 ## Related Repositories
 
@@ -44,7 +51,6 @@ See the following related .NET Framework Docker Hub repos:
 * [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
 * [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images (for web applications, see microsoft/aspnet).
 * [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework sample images.
-
 
 See the following related GitHub repos:
 

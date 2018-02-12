@@ -25,7 +25,7 @@ RUN dotnet test
 
 FROM test AS publish
 WORKDIR /app/dotnetapp
-RUN dotnet publish -o out
+RUN dotnet publish -c Release -o out
 
 FROM microsoft/dotnet-nightly:2.1-runtime-alpine AS runtime
 WORKDIR /app

@@ -1,4 +1,4 @@
-# Running Unit Tests with Docker
+# Running .NET Core Unit Tests with Docker
 
 You can run unit tests in Docker with either `docker build` or `docker run`. These instructions are based on the [dotnetapp](README.md) sample.
 
