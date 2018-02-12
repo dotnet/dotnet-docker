@@ -34,9 +34,9 @@ docker build --target testrunner -t dotnetapp:test .
 docker run dotnetapp:test
 ```
 
-You can mount a volume while running the image in order to save the test results to you local disk. The instructions to do that are provided in [Running Unit Tests with Docker](dotnet-docker-unit-testing.md)
+You can mount a volume while running the image in order to save the test results to your local disk. The instructions to do that are provided in [Running Unit Tests with Docker](dotnet-docker-unit-testing.md)
 
-Multiple variations of this sample have been provided, as follows. Some of these are demonstrated below. You specify an alternate Dockerfile via the `-f` argument.
+Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
 * [Multi-arch sample with build and unit testing](Dockerfile)
 * [Multi-arch basic sample](Dockerfile.basic)
@@ -55,7 +55,7 @@ docker build -t dotnetapp -f Dockerfile.alpine .
 docker run --rm dotnetapp Hello .NET Core from Alpine
 ```
 
-[Globalization is disabled](https://github.com/dotnet/announcements/issues/20) by default with Alpine images in order to produce smaller container images. You can re-enable globalization if your application relies on it. [Dockerfile.alpinewithglobalization](Dockerfile.alpinewithglobalization) enables globalization for Alpine images. It will produce larger images.
+[Globalization is disabled](https://github.com/dotnet/announcements/issues/20) by default with Alpine images in order to produce smaller container images. You can re-enable globalization if your application relies on it. [Dockerfile.alpinewithglobalization](Dockerfile.alpinewithglobalization) enables globalization for Alpine images, but produces larger images.
 
 > Related: See [.NET Core Alpine Docker Image announcement](https://github.com/dotnet/dotnet-docker-nightly/issues/500)
 

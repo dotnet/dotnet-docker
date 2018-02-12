@@ -8,6 +8,7 @@ RUN dotnet restore
 
 # copy and build everything else
 COPY aspnetapp/. ./aspnetapp/
+WORKDIR /app/aspnetapp
 RUN dotnet publish -o out /p:PublishWithAspNetCoreTargetManifest="false"
 
 FROM microsoft/dotnet:2.0-runtime AS runtime

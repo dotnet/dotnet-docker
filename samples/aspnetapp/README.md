@@ -6,13 +6,10 @@ The sample builds the application in a container based on the larger [.NET Core 
 
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
-Multiple variations of this sample have been provided, as follows. Some of these are demonstrated below. You specify an alternate Dockerfile via the `-f` argument.
+Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
 * [Multi-arch sample](Dockerfile)
-* [Multi-arch sample using microsoft/dotnet as base](Dockerfile.dotnetruntime)
-* [Alpine sample](Dockerfile.alpine)
-* [Alpine basic sample, enables Globalization](Dockerfile.alpinewithglobalization)
-* [ARM32 sample with build and unit testing](Dockerfile.arm32)
+* [ARM32 sample](Dockerfile.arm32)
 
 ## Getting the sample
 
@@ -24,22 +21,7 @@ git clone https://github.com/dotnet/dotnet-docker/
 
 You can also [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/master.zip).
 
-## Build and run the sample with Docker for Linux containers
-
-You can build and run the sample in Docker using Linux containers using the following commands. The instructions assume that you are in the root of the repository.
-
-```console
-cd samples
-cd aspnetapp
-docker build -t aspnetapp .
-docker run --rm -p 8000:80 aspnetapp
-```
-
-After the application starts, visit `http://localhost:8000` in your web browser.
-
-Note: The `-p` argument maps port 8000 on you local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline paramaters.
-
-## Build and run the sample with Docker for Windows containers
+## Build and run the sample for Windows with Docker
 
 You can build and run the sample in Docker using Windows containers using the following commands. The instructions assume that you are in the root of the repository.
 
@@ -50,7 +32,7 @@ docker build -t aspnetapp .
 docker run --rm --name aspnetcore_sample aspnetapp
 ```
 
-You must navigate to the container IP (as opposed to http://localhost) in your browser directly when using Windows containers. You can get the IP address of your container with the following steps:
+Navigate to the container IP (as opposed to http://localhost) in your browser directly when using Windows containers. You can get the IP address of your container with the following steps:
 
 1. Open up another command prompt.
 1. Run `docker exec aspnetcore_sample ipconfig`.
@@ -75,12 +57,69 @@ Ethernet adapter Ethernet:
 
 Note: [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec/) supports identifying containers with name or hash. The name is used above. It runs a new command (as opposed to the [entrypoint](https://docs.docker.com/engine/reference/builder/#entrypoint)) in a running container.
 
-Some people prefer using `docker inspect` for this same purpose. See the following example, below:
+Some people prefer using `docker inspect` for this same purpose. See the following example.
 
 ```console
 C:\git\dotnet-docker-samples\aspnetapp>docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" aspnetcore_sample
 172.25.157.148
 ```
+
+## Build and run the sample for Linux X64 with Docker
+
+You can build and run the sample in Docker using Linux containers using the following commands. The instructions assume that you are in the root of the repository.
+
+```console
+cd samples
+cd aspnetapp
+docker build -t aspnetapp .
+docker run --rm -p 8000:80 aspnetapp
+```
+
+After the application starts, visit `http://localhost:8000` in your web browser.
+
+Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline parameters.
+
+## Build and run the sample for Linux ARM32 with Docker
+
+You need to build the [sample](Dockerfile.arm32) on Windows. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
+
+```console
+cd samples
+cd aspnetapp
+docker build -t aspnetapp -f Dockerfile.arm32 .
+```
+
+After building the image, you need to push the image to a container registry so that you can pull it from an ARM32 device. Full instructions are provided at [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md).
+
+Instructions are provided for pushing to both Azure Container Registry and DockerHub (you only need to choose one):
+
+* [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
+* [Push Docker Images to DockerHub](push-docker-image-to-dockerhub.md)
+
+You next need to pull and run the image you pushed to the registry. 
+
+If you pushed the image to DockerHub, the `docker run` command would look similar to the following.
+
+```console
+docker run --rm -p 8000:80 richlander/aspnetapp
+```
+
+```console
+docker run --rm -p 8000:80 richlander.azurecr.io/aspnetapp
+```
+
+If you pushed the image to Azure Container Registry, the `docker run` command would look similar to the following.
+
+```console
+docker run --rm -p 8000:80 richlander/aspnetapp
+```
+
+After the application starts, visit the site one of two ways:
+
+* From the web browser on the ARM32 device at `http://localhost:8000`
+* From the web browser on a remote device on the same network on port 8000, similar to: `http://192.168.1.18:8000`
+
+> Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline parameters.
 
 ## Build and run the sample locally
 

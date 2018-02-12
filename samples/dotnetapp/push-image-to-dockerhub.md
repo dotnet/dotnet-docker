@@ -1,12 +1,12 @@
 # Push Docker Images to Dockerhub
 
-You can build and push .NET Core container images to the [DockerHub](https://hub.docker.com/) container registry. These instructions will help you do that and are based on the [dotnetapp sample](README.md).
+You can build and push .NET Core container images to the [DockerHub](https://hub.docker.com/) container registry. These instructions help you do that and are based on the [dotnetapp sample](README.md).
 
 ## Login to ACR
 
 You need to [login](https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal#log-in-to-acr) to DockerHub with [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) or with the Docker Client UI to push images.
 
-There are a couple ways of passing a password to `docker login`. These instructions pass the password to stdin via a text file called password-acr.txt. It is recommended to put the password file in a location outside of a source control location (I put it in the root of my user profile). The approach used here is considered a best practice and the most secure.
+There are a couple ways of passing a password to `docker login`. These instructions pass the password to stdin via a text file called password-acr.txt. It is recommended to put the password file in a location outside of a source control location (I put it in the root of my user profile). This approach is considered a best practice and the most secure.
 
 The instructions use example values that need to be changed to for your environment, specifically the password location, and the user account. More simply, make sure to change "rich" and "richlander" to something else.
 
@@ -51,9 +51,9 @@ docker push richlander/dotnetapp
 
 ## Pull the Image from Another Device
 
-Next, you can pull the image from the another device. You will need to `docker login` to DockerHub (or login via the client UI) before you can pull the image, just like was described above.
+You can pull the image from another device. You need to `docker login` to DockerHub (or login via the client UI) before you can pull the image, just like was described previously.
 
-Again, you will want to update the path locations, registry and user names to the ones you are using.
+You need to update the path locations, registry, and user names to the ones you are using.
 
 Login on Windows:
 

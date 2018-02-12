@@ -1,12 +1,12 @@
 # Push Docker Images to Azure Container Registry
 
-You can build and push .NET Core container images to [Azure Container Registry (ACR)](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal). These instructions will help you do that and are based on the [dotnetapp sample](README.md).
+You can build and push .NET Core container images to [Azure Container Registry (ACR)](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal). These instructions help you do that and are based on the [dotnetapp sample](README.md).
 
 ## Login to ACR
 
-You need to [login](https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal#log-in-to-acr) to ACR with [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) to push images. ACR registries are private, so `pull`, `push` and any other registry operation requires login.
+You need to [login](https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal#log-in-to-acr) to ACR with [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) to push images. ACR registries are private, so `pull`, `push`, and any other registry operation requires login.
 
-There are a couple ways of passing a password to `docker login`. These instructions pass the password to stdin via a text file called password-acr.txt. It is recommended to put the password file in a location outside of a source control location (I put it in the root of my user profile). The approach used here is considered a best practice and the most secure.
+There are a couple ways of passing a password to `docker login`. These instructions pass the password to stdin via a text file called password-acr.txt. It is recommended to put the password file in a location outside of a source control location (I put it in the root of my user profile). This approach is considered a best practice and the most secure.
 
 The instructions use example values that need to be changed to for your environment, specifically the password location, the registry name and the user account. More simply, make sure to change "rich" and "richlander" to something else.
 
@@ -42,7 +42,7 @@ docker run dotnetapp
 
 ## Push the Image
 
-Now tag and push the image to ACR. You can also build the image with the right name initially. It's just harder to write instructions that way.
+Now tag and push the image to ACR. You can also build the image with the right name initially. It's harder to write instructions that way.
 
 ```console
 docker tag dotnetapp richlander.azurecr.io/dotnetapp
@@ -51,9 +51,9 @@ docker push richlander.azurecr.io/dotnetapp
 
 ## Pull the Image from Another Device
 
-Next, you can pull the image from the another device. You will need to `docker login` to ACR before you can pull the image, just like was described above.
+Next, you can pull the image from another device. You need to `docker login` to ACR before you can pull the image, just like was described previously.
 
-Again, you will want to update the path locations, registry and user names to the ones you are using.
+You need to update the path locations, registry, and user names to the ones you are using.
 
 Login on Windows:
 
