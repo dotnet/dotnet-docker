@@ -2,7 +2,7 @@
 
 You can build and push .NET Core container images to the [DockerHub](https://hub.docker.com/) container registry. These instructions help you do that and are based on the [dotnetapp sample](README.md).
 
-## Login to ACR
+## Login to DockerHub
 
 You need to [login](https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal#log-in-to-acr) to DockerHub with [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) or with the Docker Client UI to push images.
 
