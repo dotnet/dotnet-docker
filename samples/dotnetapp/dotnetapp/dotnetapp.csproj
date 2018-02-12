@@ -6,12 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove=".dockerignore" />
-    <None Remove="Dockerfile" />
-    <None Remove="README.md" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\utils\utils.csproj" />
   </ItemGroup>
 
