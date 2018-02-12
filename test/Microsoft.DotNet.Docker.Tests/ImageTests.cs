@@ -35,9 +35,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private DockerHelper DockerHelper { get; set; }
 
-        public ImageTests(ITestOutputHelper output)
+        public ImageTests(ITestOutputHelper outputHelper)
         {
-            DockerHelper = new DockerHelper(output);
+            DockerHelper = new DockerHelper(outputHelper);
         }
 
         public static IEnumerable<object[]> GetVerifyImagesData()

@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Text;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -13,11 +14,11 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string DockerOS => GetDockerOS();
         public static string ContainerWorkDir => IsLinuxContainerModeEnabled ? "/sandbox" : "c:\\sandbox";
         public static bool IsLinuxContainerModeEnabled => string.Equals(DockerOS, "linux", StringComparison.OrdinalIgnoreCase);
-        private ITestOutputHelper Output { get; set; }
+        private ITestOutputHelper OutputHelper { get; set; }
 
-        public DockerHelper(ITestOutputHelper output)
+        public DockerHelper(ITestOutputHelper outputHelper)
         {
-            Output = output;
+            OutputHelper = outputHelper;
         }
 
         public void Build(string dockerfile, string tag, string fromImage, params string[] buildArgs)
@@ -31,14 +32,14 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
             }
 
-            Execute($"build -t {tag} {buildArgsOption} -f {dockerfile} .");
+            ExecuteWithLogging($"build -t {tag} {buildArgsOption} -f {dockerfile} .");
         }
 
         public void DeleteImage(string tag)
         {
             if (ImageExists(tag))
             {
-                Execute($"image rm -f {tag}");
+                ExecuteWithLogging($"image rm -f {tag}");
             }
         }
 
@@ -46,35 +47,51 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             if (VolumeExists(name))
             {
-                Execute($"volume rm -f {name}");
+                ExecuteWithLogging($"volume rm -f {name}");
             }
         }
 
-        private void Execute(string args)
+        private void ExecuteWithLogging(string args)
         {
-            Output.WriteLine($"Executing : docker {args}");
-            ProcessStartInfo info = new ProcessStartInfo("docker", args);
-            info.RedirectStandardOutput = true;
-            info.RedirectStandardError = true;
-            Process process = Process.Start(info);
-            process.WaitForExit();
-            Output.WriteLine(process.StandardOutput.ReadToEnd());
+            OutputHelper.WriteLine($"Executing : docker {args}");
+            Execute(args, outputHelper:OutputHelper);
+        }
 
-            if (process.ExitCode != 0)
+        private static string Execute(string args, bool ignoreErrors = false, ITestOutputHelper outputHelper = null)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo("docker", args);
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+            Process process = Process.Start(startInfo);
+
+            StringBuilder stdOutput = new StringBuilder();
+            process.OutputDataReceived += new DataReceivedEventHandler((sender, e) => stdOutput.AppendLine(e.Data));
+
+            StringBuilder stdError = new StringBuilder();
+            process.ErrorDataReceived += new DataReceivedEventHandler((sender, e) => stdError.AppendLine(e.Data));
+
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit();
+
+            string output = stdOutput.ToString().Trim();
+            if (outputHelper != null && !string.IsNullOrWhiteSpace(output))
             {
-                string stdErr = process.StandardError.ReadToEnd();
-                string msg = $"Failed to execute {info.FileName} {info.Arguments}{Environment.NewLine}{stdErr}";
+                outputHelper.WriteLine(output);
+            }
+
+            if (!ignoreErrors && process.ExitCode != 0)
+            {
+                string msg = $"Failed to execute {startInfo.FileName} {startInfo.Arguments}{Environment.NewLine}{stdError}";
                 throw new InvalidOperationException(msg);
             }
+
+            return output;
         }
 
         private static string GetDockerOS()
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo("docker", "version -f \"{{ .Server.Os }}\"");
-            startInfo.RedirectStandardOutput = true;
-            Process process = Process.Start(startInfo);
-            process.WaitForExit();
-            return process.StandardOutput.ReadToEnd().Trim();
+            return Execute("version -f \"{{ .Server.Os }}\"");
         }
 
         public string GetContainerWorkPath(string relativePath)
@@ -90,11 +107,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static bool ResourceExists(string type, string filterArg)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo("docker", $"{type} ls -q {filterArg}");
-            startInfo.RedirectStandardOutput = true;
-            Process process = Process.Start(startInfo);
-            process.WaitForExit();
-            return process.ExitCode == 0 && process.StandardOutput.ReadToEnd().Trim() != "";
+            string output = Execute($"{type} ls -q {filterArg}", true);
+            return output != "";
         }
 
         public void Run(
@@ -106,7 +120,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string volumeArg = volumeName == null ? string.Empty : $" -v {volumeName}:{ContainerWorkDir}";
             string userArg = runAsContainerAdministrator ? " -u ContainerAdministrator" : string.Empty;
-            Execute($"run --rm --name {containerName}{volumeArg}{userArg} {image} {command}");
+            ExecuteWithLogging($"run --rm --name {containerName}{volumeArg}{userArg} {image} {command}");
         }
 
         public static bool VolumeExists(string name)
