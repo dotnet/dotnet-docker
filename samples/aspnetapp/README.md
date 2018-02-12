@@ -98,7 +98,7 @@ Instructions are provided for pushing to both Azure Container Registry and Docke
 * [Push Docker Images to Azure Container Registry](../dotnetapp/push-image-to-acr.md)
 * [Push Docker Images to DockerHub](../dotnetapp/push-image-to-dockerhub.md)
 
-You next need to pull and run the image you pushed to the registry. 
+You next need to pull and run the image you pushed to the registry.
 
 If you pushed the image to DockerHub, the `docker run` command would look similar to the following.
 
@@ -106,14 +106,10 @@ If you pushed the image to DockerHub, the `docker run` command would look simila
 docker run --rm -p 8000:80 richlander/aspnetapp
 ```
 
-```console
-docker run --rm -p 8000:80 richlander.azurecr.io/aspnetapp
-```
-
 If you pushed the image to Azure Container Registry, the `docker run` command would look similar to the following.
 
 ```console
-docker run --rm -p 8000:80 richlander/aspnetapp
+docker run --rm -p 8000:80 richlander.azurecr.io/aspnetapp
 ```
 
 After the application starts, visit the site one of two ways:

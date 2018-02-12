@@ -62,3 +62,17 @@ Instructions are provided for pushing to both Azure Container Registry and Docke
 * [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
 
 Full instructions are provided at [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md).
+
+You next need to pull and run the image you pushed to the registry.
+
+If you pushed the image to DockerHub, the `docker run` command would look similar to the following.
+
+```console
+docker run --rm richlander/dotnetapp
+```
+
+If you pushed the image to Azure Container Registry, the `docker run` command would look similar to the following.
+
+```console
+docker run --rm richlander.azurecr.io/dotnetapp
+```
