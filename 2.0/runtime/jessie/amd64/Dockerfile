@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.0-runtime-deps-jessie
+FROM microsoft/dotnet-nightly:2.0-runtime-deps-jessie
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
