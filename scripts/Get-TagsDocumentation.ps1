@@ -1,5 +1,5 @@
 param(
-    [string]$Branch='master',
+    [string]$Branch='nightly',
     [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20171122115946',
     [string]$RepoName
 )

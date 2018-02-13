@@ -24,6 +24,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 new ImageDescriptor { DotNetCoreVersion = "2.0" },
                 new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Jessie },
                 new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Stretch, SdkOsVariant = "", Architecture = "arm" },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", RuntimeDepsVersion = "2.0" },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", RuntimeDepsVersion = "2.0", OsVariant = OS.Jessie },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.Alpine, SdkOsVariant = "", },
+                new ImageDescriptor
+                {
+                    DotNetCoreVersion = "2.1",
+                    RuntimeDepsVersion = "2.0",
+                    OsVariant = OS.Stretch,
+                    SdkOsVariant = "",
+                    Architecture = "arm"
+                },
             };
         private static ImageDescriptor[] WindowsTestData = new ImageDescriptor[]
             {
@@ -31,6 +42,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 new ImageDescriptor { DotNetCoreVersion = "1.1", PlatformOS = OS.NanoServerSac2016 },
                 new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = OS.NanoServerSac2016 },
                 new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = OS.NanoServer1709 },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", PlatformOS = OS.NanoServerSac2016 },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", PlatformOS = OS.NanoServer1709 },
             };
 
         private DockerHelper DockerHelper { get; set; }
@@ -223,7 +236,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageVersion, DotNetImageType imageType, string osVariant, bool isArm = false)
         {
             string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
-            string imageName = $"microsoft/dotnet:{imageVersion}-{variantName}";
+            string imageName = $"microsoft/dotnet-nightly:{imageVersion}-{variantName}";
             if (!string.IsNullOrEmpty(osVariant))
             {
                 imageName += $"-{osVariant}";
@@ -251,6 +264,10 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageDescriptor.IsArm)
             {
                 rid = "linux-arm";
+            }
+            else if (imageDescriptor.IsAlpine)
+            {
+                rid = "alpine.3.6-x64";
             }
             else if (imageDescriptor.DotNetCoreVersion.StartsWith("1."))
             {

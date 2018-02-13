@@ -1,41 +1,56 @@
+This repository contains `Dockerfile` definitions for Docker images that include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
+
+See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
+
 # Supported Linux amd64 tags
 
-- [`1.0.9-runtime-jessie`, `1.0.9-runtime`, `1.0-runtime` (*1.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/jessie/amd64/Dockerfile)
-- [`1.0.9-runtime-deps-jessie`, `1.0.9-runtime-deps`, `1.0-runtime-deps`, `1-runtime-deps` (*1.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime-deps/jessie/amd64/Dockerfile)
-- [`1.1.6-runtime-jessie`, `1.1.6-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/jessie/amd64/Dockerfile)
-- [`1.1.6-sdk-1.1.7-jessie`, `1.1.6-sdk-1.1.7`, `1.1-sdk`, `1-sdk` (*1.1/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/jessie/amd64/Dockerfile)
-- [`2.0.5-runtime-stretch`, `2.0-runtime-stretch`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/amd64/Dockerfile)
-- [`2.0.5-runtime-jessie`, `2.0-runtime-jessie`, `2-runtime-jessie` (*2.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/jessie/amd64/Dockerfile)
-- [`2.0.5-runtime-deps-stretch`, `2.0-runtime-deps-stretch`, `2.0.5-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/amd64/Dockerfile)
-- [`2.0.5-runtime-deps-jessie`, `2.0-runtime-deps-jessie`, `2-runtime-deps-jessie` (*2.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/jessie/amd64/Dockerfile)
-- [`2.0.5-sdk-2.1.4-stretch`, `2.0-sdk-stretch`, `2.0.5-sdk-2.1.4`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/stretch/amd64/Dockerfile)
-- [`2.0.5-sdk-2.1.4-jessie`, `2.0-sdk-jessie`, `2-sdk-jessie` (*2.0/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/jessie/amd64/Dockerfile)
+- [`1.0.9-runtime-jessie`, `1.0.9-runtime`, `1.0-runtime` (*1.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.0/runtime/jessie/amd64/Dockerfile)
+- [`1.0.9-runtime-deps-jessie`, `1.0.9-runtime-deps`, `1.0-runtime-deps`, `1-runtime-deps` (*1.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.0/runtime-deps/jessie/amd64/Dockerfile)
+- [`1.1.6-runtime-jessie`, `1.1.6-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/runtime/jessie/amd64/Dockerfile)
+- [`1.1.6-sdk-1.1.7-jessie`, `1.1.6-sdk-1.1.7`, `1.1-sdk`, `1-sdk` (*1.1/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/jessie/amd64/Dockerfile)
+- [`2.0.5-runtime-stretch`, `2.0-runtime-stretch`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/stretch/amd64/Dockerfile)
+- [`2.0.5-runtime-jessie`, `2.0-runtime-jessie`, `2-runtime-jessie` (*2.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/jessie/amd64/Dockerfile)
+- [`2.0.5-runtime-deps-stretch`, `2.0-runtime-deps-stretch`, `2.0.5-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/stretch/amd64/Dockerfile)
+- [`2.0.5-runtime-deps-jessie`, `2.0-runtime-deps-jessie`, `2-runtime-deps-jessie` (*2.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/jessie/amd64/Dockerfile)
+- [`2.0.5-sdk-2.1.4-stretch`, `2.0-sdk-stretch`, `2.0.5-sdk-2.1.4`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/stretch/amd64/Dockerfile)
+- [`2.0.5-sdk-2.1.4-jessie`, `2.0-sdk-jessie`, `2-sdk-jessie` (*2.0/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/jessie/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-stretch`, `2.1-runtime-stretch`, `2.1.0-preview1-runtime`, `2.1-runtime` (*2.1/runtime/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-alpine`, `2.1-runtime-alpine` (*2.1/runtime/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/alpine/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-jessie`, `2.1-runtime-jessie` (*2.1/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/jessie/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*2.1/runtime-deps/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/alpine/amd64/Dockerfile)
+- [`2.1.300-preview1-sdk-stretch`, `2.1-sdk-stretch`, `2.1.300-preview1-sdk`, `2.1-sdk` (*2.1/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
+- [`2.1.300-preview1-sdk-jessie`, `2.1-sdk-jessie` (*2.1/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/jessie/amd64/Dockerfile)
 
 # Supported Windows Server 2016 Version 1709 (Fall Creators Update) amd64 tags
 
-- [`2.0.5-runtime-nanoserver-1709`, `2.0-runtime-nanoserver-1709`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-1709/amd64/Dockerfile)
-- [`2.0.5-sdk-2.1.4-nanoserver-1709`, `2.0-sdk-nanoserver-1709`, `2.0.5-sdk-2.1.4`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-1709/amd64/Dockerfile)
+- [`2.0.5-runtime-nanoserver-1709`, `2.0-runtime-nanoserver-1709`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/nanoserver-1709/amd64/Dockerfile)
+- [`2.0.5-sdk-2.1.4-nanoserver-1709`, `2.0-sdk-nanoserver-1709`, `2.0.5-sdk-2.1.4`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-1709/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-nanoserver-1709`, `2.1-runtime-nanoserver-1709`, `2.1.0-preview1-runtime`, `2.1-runtime` (*2.1/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1709/amd64/Dockerfile)
+- [`2.1.300-preview1-sdk-nanoserver-1709`, `2.1-sdk-nanoserver-1709`, `2.1.300-preview1-sdk`, `2.1-sdk` (*2.1/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1709/amd64/Dockerfile)
 
 # Supported Windows Server 2016 amd64 tags
 
-- [`1.0.9-runtime-nanoserver-sac2016`, `1.0.9-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`1.1.6-runtime-nanoserver-sac2016`, `1.1.6-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`1.1.6-sdk-1.1.7-nanoserver-sac2016`, `1.1.6-sdk-1.1.7`, `1.1-sdk`, `1-sdk` (*1.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.0.5-runtime-nanoserver-sac2016`, `2.0-runtime-nanoserver-sac2016`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.0.5-sdk-2.1.4-nanoserver-sac2016`, `2.0-sdk-nanoserver-sac2016`, `2.0.5-sdk-2.1.4`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`1.0.9-runtime-nanoserver-sac2016`, `1.0.9-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`1.1.6-runtime-nanoserver-sac2016`, `1.1.6-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`1.1.6-sdk-1.1.7-nanoserver-sac2016`, `1.1.6-sdk-1.1.7`, `1.1-sdk`, `1-sdk` (*1.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.0.5-runtime-nanoserver-sac2016`, `2.0-runtime-nanoserver-sac2016`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.0.5-sdk-2.1.4-nanoserver-sac2016`, `2.0-sdk-nanoserver-sac2016`, `2.0.5-sdk-2.1.4`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-nanoserver-sac2016`, `2.1-runtime-nanoserver-sac2016`, `2.1.0-preview1-runtime`, `2.1-runtime` (*2.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.1.300-preview1-sdk-nanoserver-sac2016`, `2.1-sdk-nanoserver-sac2016`, `2.1.300-preview1-sdk`, `2.1-sdk` (*2.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
 
 # Supported Linux arm32 tags
 
-- [`2.0.5-runtime-stretch-arm32v7`, `2.0-runtime-stretch-arm32v7`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/arm32v7/Dockerfile)
-- [`2.0.5-runtime-deps-stretch-arm32v7`, `2.0-runtime-deps-stretch-arm32v7`, `2.0.5-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/arm32v7/Dockerfile)
+- [`2.0.5-runtime-stretch-arm32v7`, `2.0-runtime-stretch-arm32v7`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/stretch/arm32v7/Dockerfile)
+- [`2.0.5-runtime-deps-stretch-arm32v7`, `2.0-runtime-deps-stretch-arm32v7`, `2.0.5-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/stretch/arm32v7/Dockerfile)
+- [`2.1.0-preview1-runtime-stretch-arm32v7`, `2.1-runtime-stretch-arm32v7`, `2.1.0-preview1-runtime`, `2.1-runtime` (*2.1/runtime/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch/arm32v7/Dockerfile)
 
 >**Note:** .NET Core multi-arch tags, such as 2.0-runtime, have been updated to use nanoserver-1709 images if your host is Windows Server 2016 Version 1709 or higher or Windows 10 Fall Creators Update (Version 1709) or higher. You need Docker 17.10 or later to take advantage of these updated tags.
 
->**Note:** The Docker images in this repo are supported by Microsoft. The `arm32v7` images are in preview and have "best effort" support only by the community and .NET Core Team.  Please see the [arm32 announcement](https://github.com/dotnet/announcements/issues/29) for more details.
+>**Note:** The Docker images in this repo are supported by Microsoft. The `arm32v7` images are in preview and have "best effort" support only by the community and .NET Core Team. Please see the [arm32 announcement](https://github.com/dotnet/announcements/issues/29) for more details.
 
 >**Note:** Watch [dotnet/announcements](https://github.com/dotnet/announcements/issues?q=is%3Aissue+is%3Aopen+label%3ADocker) for Docker-related .NET Core announcements.
 
-For more information about these images and their history, please see [the relevant Dockerfile (`dotnet/dotnet-docker`)](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls?utf8=%E2%9C%93&q=).
+For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls?utf8=%E2%9C%93&q=).
 
 ## What is .NET Core?
 
@@ -70,7 +85,7 @@ docker run microsoft/dotnet-samples
 Add a `Dockerfile` to your .NET project with the following:
 
 ```dockerfile
-FROM microsoft/dotnet:sdk AS build-env
+FROM microsoft/dotnet-nightly:sdk AS build-env
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -82,7 +97,7 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 # build runtime image
-FROM microsoft/dotnet:runtime
+FROM microsoft/dotnet-nightly:runtime
 WORKDIR /app
 COPY --from=build-env /app/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
@@ -104,7 +119,7 @@ You can use the .NET Core SDK Docker image as a build and runtime environment. I
 Create a Dockerfile with following lines, which will both build and run your application in the container. This Dockerfile has been optimized (note the two `COPY` commands) to take advantage of Docker layering, resulting in faster image building for iterative development.
 
 ```dockerfile
-FROM microsoft/dotnet
+FROM microsoft/dotnet-nightly
 
 WORKDIR /dotnetapp
 
@@ -132,7 +147,7 @@ The `Dockerfile` and the Docker commands assumes that your application is called
 You can interactively try out .NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run a .NET Core application in a minute (depending on your internet speed).
 
 ```console
-docker run -it --rm microsoft/dotnet
+docker run -it --rm microsoft/dotnet-nightly
 [now in the container]
 mkdir app
 cd app
@@ -165,7 +180,7 @@ dotnet run
  You can interactively try out ASP.NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run an ASP.NET Core application in a minute (depending on your internet speed).
 
  ```console
-docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet
+docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet-nightly
 [now in the container]
 mkdir app
 cd app
@@ -180,7 +195,7 @@ After running `dotnet run` in the container, browse to `http://localhost:8000` i
 The experience is very similar using [Windows Containers][win-containers]. The commands should be the same, with the exception of the `docker run`. Replace the `docker run` command above with the following two commands:
 
  ```console
-docker run -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet
+docker run -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet-nightly
 ipconfig
  ```
 Copy the IP address from the output of `ipconfig`. After running `dotnet run` in the container, browse to that IP address in your browser on your host machine.
@@ -191,11 +206,11 @@ Please use the images at [microsoft/aspnetcore](https://hub.docker.com/r/microso
 
 ## Image variants
 
-The `microsoft/dotnet` images come in different flavors, each designed for a specific use case.
+The `microsoft/dotnet-nightly` images come in different flavors, each designed for a specific use case.
 
 See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more about the various Docker images and when to use each for them.
 
-### `microsoft/dotnet:<version>-sdk`
+### `microsoft/dotnet-nightly:<version>-sdk`
 
 This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
 
@@ -206,11 +221,11 @@ It contains the .NET Core SDK which is comprised of two parts:
 
 Use this image for your development process (developing, building and testing applications).
 
-### `microsoft/dotnet:<version>-runtime`
+### `microsoft/dotnet-nightly:<version>-runtime`
 
 This image contains the .NET Core (runtime and libraries) and is optimized for running .NET Core apps in production.
 
-### `microsoft/dotnet:<version>-runtime-deps`
+### `microsoft/dotnet-nightly:<version>-runtime-deps`
 
 This image contains the operating system with all of the native dependencies needed by .NET Core. This is for  [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
 
@@ -227,10 +242,10 @@ You can learn more about using .NET Core with Docker with [.NET Docker samples](
 
 See the following related repos for other application types:
 
+- [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/) for the released .NET Core images.
 - [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core images.
 - [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
 - [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images (for web applications, see microsoft/aspnet).
-- [microsoft/dotnet-nightly](https://hub.docker.com/r/microsoft/dotnet-nightly/) for pre-release .NET Core images (used to experiment with the latest builds).
 
 ## License
 
