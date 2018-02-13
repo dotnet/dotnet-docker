@@ -66,7 +66,11 @@ docker push richlander.azurecr.io/aspnetapp
 az container create --name aspnetapp --image richlander.azurecr.io/aspnetapp --resource-group richlander-containers --ip-address public
 ```
 
+You must specify `--os-type Windows` for Windows images.
+
 You will be asked for your password. Write or paste it in.
+
+## Running the Image
 
 The last step -- `az container show` -- will need to be repeated until `provisioningState` moves to `Succeeded`.
 
@@ -74,13 +78,15 @@ The last step -- `az container show` -- will need to be repeated until `provisio
 az container show --name aspnetapp --resource-group richlander-containers
 ```
 
- Once the `provisioningState` moves to `Succeeded`, collect the IP address from the `ip` field, as you can see in the following image, and then copy/paste the IP address into your browser. You should see the sample running.
+Once the `provisioningState` moves to `Succeeded`, collect the IP address from the `ip` field, as you can see in the following image, and then copy/paste the IP address into your browser. You should see the sample running.
 
 ![az container show -- successfully provisioned app](https://user-images.githubusercontent.com/2608468/29669868-b492c4e8-8899-11e7-82cc-d3ae1262a080.png)
+
+## Cleanup
 
 After you are done, delete the resource group to reclaim all container resources from this experiment.
 
 ```console
 az group delete --name richlander-containers
-az group list --name richlander-containers
+az group exists --name richlander-containers
 ```
