@@ -1,6 +1,6 @@
 # Push Docker Images to Azure Container Registry
 
-You can build and push .NET Core container images to [Azure Container Registry (ACR)](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal). These instructions help you do that and are based on the [dotnetapp sample](README.md).
+You can build and push .NET Core container images to [Azure Container Registry (ACR)](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal). These instructions help you do that and are based on the [.NET Core Docker Sample](README.md).
 
 ## Login to ACR
 

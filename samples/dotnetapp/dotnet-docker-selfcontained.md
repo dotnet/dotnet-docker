@@ -1,6 +1,6 @@
 # Build .NET Core Self-Contained Applications with Docker
 
-You can build .NET Core self-contained apps with Docker. Self-contained apps are a great option if you do not want to take a dependence on the .NET Runtime, either as a global install or the [.NET Core Runtime Image](https://hub.docker.com/r/microsoft/dotnet/). These instructions are based on the [dotnetapp](README.md) sample.
+You can build .NET Core self-contained apps with Docker. Self-contained apps are a great option if you do not want to take a dependence on the .NET Runtime, either as a global install or the [.NET Core Runtime Image](https://hub.docker.com/r/microsoft/dotnet/). These instructions are based on the [.NET Core Docker Sample](README.md).
 
 ## Context on the IL Linker
 

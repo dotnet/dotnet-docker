@@ -1,6 +1,6 @@
 # Push Docker Images to Dockerhub
 
-You can build and push .NET Core container images to the [DockerHub](https://hub.docker.com/) container registry. These instructions help you do that and are based on the [dotnetapp sample](README.md).
+You can build and push .NET Core container images to the [DockerHub](https://hub.docker.com/) container registry. These instructions help you do that and are based on the [.NET Core Docker Sample](README.md).
 
 ## Login to DockerHub
 
