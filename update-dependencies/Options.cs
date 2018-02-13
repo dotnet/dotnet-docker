@@ -11,8 +11,8 @@ namespace Dotnet.Docker.Nightly
         public string BuildInfoUrl { get; private set; }
         public string GitHubEmail { get; private set; }
         public string GitHubPassword { get; private set; }
-        public string GitHubProject => "dotnet-docker-nightly";
-        public string GitHubUpstreamBranch => "master";
+        public string GitHubProject => "dotnet-docker";
+        public string GitHubUpstreamBranch => "nightly";
         public string GitHubUpstreamOwner => "dotnet";
         public string GitHubUser { get; private set; }
         public bool UpdateOnly => GitHubEmail == null || GitHubPassword == null || GitHubUser == null;
