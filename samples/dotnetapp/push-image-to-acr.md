@@ -2,6 +2,31 @@
 
 You can build and push .NET Core container images to [Azure Container Registry (ACR)](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal). These instructions help you do that and are based on the [.NET Core Docker Sample](README.md).
 
+These instructions use the [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) and the [Docker client](https://www.docker.com/products/docker).
+
+## Create ACR Registry
+
+The following example demonstrates how to create a private ACR Registry. Once an image is in ACR, it is very easy to deploy it to ACI.
+
+The instructions use example values that need to be changed to for your environment, specifically the password location, the registry name and the user account. More simply, make sure to change "rich" and "richlander" to something else.
+
+```console
+az login
+az group create --name richlander-containers --location westus
+az acr create --name richlander --resource-group richlander-containers --sku Basic
+```
+
+## Get Registry Credentials
+
+You need to get credentials for the Registry in order to know how to push to it.
+
+```console
+az acr update -n richlander --admin-enabled true
+az acr credential show -n richlander
+```
+
+The last command will show a set of passwords. You only need one of them. Copy and save the password into a file called `password-acr.txt` at the root of your user profile, for example at `c:\users\rich\password-acr.txt` or `~/password-acr.txt`, on Windows and macOS/Linux respectively.
+
 ## Login to ACR
 
 You need to [login](https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal#log-in-to-acr) to ACR with [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) to push images. ACR registries are private, so `pull`, `push`, and any other registry operation requires login.

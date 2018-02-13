@@ -26,7 +26,7 @@ cat ~/password-dh.txt | docker login -u richlander --password-stdin
 
 The instructions in following sections assume that you built an image per the instructions at [dotnetapp sample](dotnetapp/README.md). You can also build an image with your own instructions, too.
 
-The following instructions are a subset of the [dotnetapp sample](dotnetapp/README.md) instruction, assuming that you are starting from the root of the [dotnet-docker repo](https://github.com/dotnet/dotnet-docker).
+The following instructions are a subset of the [.NET Core Docker Sample](dotnetapp/README.md) instructions, which assume that you are starting from the root of the [dotnet-docker repo](https://github.com/dotnet/dotnet-docker).
 
 ```console
 cd samples
