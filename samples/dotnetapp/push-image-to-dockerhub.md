@@ -31,7 +31,7 @@ The following instructions are a subset of the [.NET Core Docker Sample](dotneta
 ```console
 cd samples
 cd dotnetapp
-docker build -t dotnetapp .
+docker build --pull -t dotnetapp .
 ```
 
 You can test the image with the following instructions.
@@ -42,16 +42,18 @@ docker run dotnetapp
 
 ## Push the Image
 
-Now tag and push the image to DockerHub. You can also build the image with the right name initially. It's just harder to write instructions that way.
+Now tag and push the image to DockerHub. You can also build the image with the right name initially.
 
 ```console
 docker tag dotnetapp richlander/dotnetapp
 docker push richlander/dotnetapp
 ```
 
-## Pull the Image from Another Device
+## Login to Registry
 
-You can pull the image from another device. You need to `docker login` to DockerHub (or login via the client UI) before you can pull the image, just like was described previously.
+The instructions in this section are only required if you are using a private DockerHub repository.
+
+You need to `docker login` to DockerHub (or login via the client UI) before you can pull the image.
 
 You need to update the path locations, registry, and user names to the ones you are using.
 
@@ -67,10 +69,10 @@ Login on macOS or Linux:
 cat ~/password-dh.txt | docker login -u richlander --password-stdin
 ```
 
+## Pull Image
+
 Now pull and run the image:
 
 ```console
 docker run --rm richlander/dotnetapp
 ```
-
-For fun, you might try [running an .NET Core image on Raspberry Pi](dotnet-docker-arm32.md). Specific instructions have been provided for that scenario.

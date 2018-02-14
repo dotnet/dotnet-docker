@@ -1,4 +1,4 @@
-FROM microsoft/dotnet-nightly:sdk AS build
+FROM microsoft/dotnet-nightly:2.1-sdk AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -28,6 +28,13 @@ WORKDIR /app/dotnetapp
 RUN dotnet publish -c Release -o out
 
 FROM microsoft/dotnet-nightly:2.1-runtime-alpine AS runtime
+
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT false
+RUN apk add --no-cache icu-libs
+
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+
 WORKDIR /app
-COPY --from=publish /app/dotnetapp/out ./
+COPY --from=build /app/dotnetapp/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]

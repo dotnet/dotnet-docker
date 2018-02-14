@@ -6,12 +6,12 @@ You can build and run .NET Core apps with [Docker for Raspberry Pi and ARM32 dev
 
 ## Building the Sample with Docker
 
-You need to build the [sample](Dockerfile.arm32) on a 64-bit operating system, either Windows (in Linux container mode), macOS or Linux. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
+You need to build the [sample](Dockerfile.linux-arm32) on a 64-bit operating system. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
 cd dotnetapp
-docker build -t dotnetapp -f Dockerfile.arm32 .
+docker build --pull -t dotnetapp -f Dockerfile.arm32 .
 ```
 
 ## Pushing the image to a Container Registry

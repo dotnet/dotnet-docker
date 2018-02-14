@@ -22,10 +22,19 @@ You need to get credentials for the Registry in order to know how to push to it.
 
 ```console
 az acr update -n richlander --admin-enabled true
-az acr credential show -n richlander
 ```
 
-The last command will show a set of passwords. You only need one of them. Copy and save the password into a file called `password-acr.txt` at the root of your user profile, for example at `c:\users\rich\password-acr.txt` or `~/password-acr.txt`, on Windows and macOS/Linux respectively.
+Get credentials on Windows:
+
+```console
+az acr credential show -n richlander --query passwords[0].value --output tsv > %USERPROFILE%\password-acr.txt
+```
+
+Get credentials on macOS and Linux:
+
+```console
+az acr credential show -n richlander --query passwords[0].value --output tsv > ~\password-acr.txt
+```
 
 ## Login to ACR
 
@@ -38,7 +47,7 @@ The instructions use example values that need to be changed to for your environm
 Login on Windows:
 
 ```console
-type c:\users\rich\password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
+type %USERPROFILE%\password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
 ```
 
 Login on macOS or Linux:
@@ -56,7 +65,7 @@ The following instructions are a subset of the [dotnetapp sample](dotnetapp/READ
 ```console
 cd samples
 cd dotnetapp
-docker build -t dotnetapp .
+docker build --pull -t dotnetapp .
 ```
 
 You can test the image with the following instructions.
@@ -97,5 +106,3 @@ Now pull and run the image:
 ```console
 docker run --rm richlander.azurecr.io/dotnetapp
 ```
-
-For fun, you might try [running an .NET Core image on Raspberry Pi](dotnet-docker-arm32.md). Specific instructions have been provided for that scenario.

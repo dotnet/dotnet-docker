@@ -30,7 +30,7 @@ You can build and run the sample in Docker using Windows containers using the fo
 ```console
 cd samples
 cd aspnetapp
-docker build -t aspnetapp .
+docker build --pull -t aspnetapp .
 docker run --rm --name aspnetcore_sample aspnetapp
 ```
 
@@ -73,7 +73,7 @@ You can build and run the sample in Docker using Linux containers using the foll
 ```console
 cd samples
 cd aspnetapp
-docker build -t aspnetapp .
+docker build --pull -t aspnetapp .
 docker run --rm -p 8000:80 aspnetapp
 ```
 
@@ -83,12 +83,12 @@ Note: The `-p` argument maps port 8000 on your local machine to port 80 in the c
 
 ## Build and run the sample for Linux ARM32 with Docker
 
-You need to build the [sample](Dockerfile.arm32) on Windows. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
+You need to build the [sample](Dockerfile.linux-arm32) on an X64 machine. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
 cd aspnetapp
-docker build -t aspnetapp -f Dockerfile.arm32 .
+docker build --pull -t aspnetapp -f Dockerfile.arm32 .
 ```
 
 After building the image, you need to push the image to a container registry so that you can pull it from an ARM32 device. Full instructions are provided at [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md).
@@ -146,16 +146,9 @@ dotnet aspnetapp.dll
 
 Note: The `-c release` argument builds the application in release mode (the default is debug mode). See the [dotnet run reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-run) for more information on commandline parameters.
 
-## Docker Images used in this sample
-
-The following Docker images are used in this sample
-
-* [microsoft/aspnetcore-build:2.0](https://hub.docker.com/r/microsoft/aspnetcore-build)
-* [microsoft/aspnetcore:2.0](https://hub.docker.com/r/microsoft/aspnetcore/)
-
 ## Related Resources
 
 * [ASP.NET Core Getting Started Tutorials](https://www.asp.net/get-started)
 * [.NET Core Production Docker sample](../dotnetapp-prod/README.md)
 * [.NET Core Docker samples](../README.md)
-* [.NET Framework Docker samples](https://github.com/Microsoft/dotnet-framework-docker-samples)
+* [.NET Framework and and ASP.NET Docker samples](https://github.com/Microsoft/dotnet-framework-docker-samples)

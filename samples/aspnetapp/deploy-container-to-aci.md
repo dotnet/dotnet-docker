@@ -9,7 +9,7 @@ Build the application per the [ASP.NET Core Docker Sample](README.md) instructio
 ```console
 cd samples
 cd aspnetapp
-docker build -t aspnetapp -f Dockerfile .
+docker build --pull -t aspnetapp -f Dockerfile .
 ```
 
 ## Create ACR Registry

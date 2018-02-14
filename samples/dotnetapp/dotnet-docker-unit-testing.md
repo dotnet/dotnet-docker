@@ -9,7 +9,7 @@ This [sample](Dockerfile) runs [unit tests](tests) as part of `docker build`, us
 ```console
 cd samples
 cd dotnetapp
-docker build -t dotnetapp .
+docker build --pull -t dotnetapp .
 ```
 
 You can make the unit test fail by changing the [unit test](tests/UnitTest1.cs) to match the following test. It is good to do make tests fail so that you can see the behavior when that happens as part of `docker build`.
@@ -34,7 +34,7 @@ docker build -t dotnetapp .
 You can instead build an Alpine-based image using the following command.
 
 ```console
-docker build -t dotnetapp -f Dockerfile.alpine .
+docker build --pull -t dotnetapp -f Dockerfile.alpine .
 ```
 
 ### Run unit tests as part of `docker run`

@@ -25,7 +25,7 @@ You can build and run the sample in Docker using the following commands. The ins
 ```console
 cd samples
 cd dotnetapp
-docker build -t dotnetapp .
+docker build --pull -t dotnetapp .
 docker run --rm dotnetapp Hello .NET Core from Docker
 ```
 
@@ -53,7 +53,7 @@ You can build and run the sample with [Alpine](https://hub.docker.com/_/alpine/)
 ```console
 cd samples
 cd dotnetapp
-docker build -t dotnetapp -f Dockerfile.alpine .
+docker build --pull -t dotnetapp -f Dockerfile.alpine .
 docker run --rm dotnetapp Hello .NET Core from Alpine
 ```
 
@@ -97,15 +97,8 @@ dotnet dotnetapp.dll
 
 Note: The `-c release` argument builds the application in release mode (the default is debug mode). See the [dotnet run reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-run) for more information on commandline parameters.
 
-## Docker Images used in this sample
-
-The following Docker images are used in this sample
-
-* [microsoft/dotnet:sdk](https://hub.docker.com/r/microsoft/dotnet)
-* [microsoft/dotnet:2.0-runtime](https://hub.docker.com/r/microsoft/dotnet)
-
 ## Related Resources
 
 * [.NET Core Docker Samples](../README.md)
 * [.NET Core Docker](../../README.md)
-* [.NET Framework Docker samples](https://github.com/Microsoft/dotnet-framework-docker-samples)
+* [.NET Framework and and ASP.NET Docker samples](https://github.com/Microsoft/dotnet-framework-docker-samples)

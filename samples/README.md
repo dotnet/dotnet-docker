@@ -31,11 +31,11 @@ The samples exercise various levels of functionality. The [.NET Core Docker samp
 ### Optimizing Container Size
 
 * [.NET Core Alpine Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile.alpine) builds, tests and runs an application using Alpine.
-* [.NET Core self-contained Sample](dotnetapp/dotnet-docker-selfcontained.md) -- This sample builds and runs an application as a self-contained application.
+* [.NET Core self-contained Sample](dotnetapp/dotnet-docker-selfcontained.md) - This sample builds and runs an application as a self-contained application.
 
 ### ARM32 / Raspberry Pi
 
-* [.NET Core ARM32 Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile.arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
+* [.NET Core ARM32 Docker Sample](dotnetapp/dotnet-docker-arm32.md) - This [sample](dotnetapp/Dockerfile.linux-arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
 * [ASP.NET Core ARM32 Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile.arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
 
 ## Related Repositories
@@ -44,13 +44,15 @@ See the following related .NET Core Docker Hub repos:
 
 * [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core images.
 * [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/) for .NET Core images.
+* [microsoft/dotnet-nightly](https://hub.docker.com/r/microsoft/dotnet-nightly/) for .NET Core preview images.
 * [microsoft/dotnet-samples](https://hub.docker.com/r/microsoft/dotnet-samples/) for .NET Core sample images.
 
 See the following related .NET Framework Docker Hub repos:
 
 * [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
 * [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images (for web applications, see microsoft/aspnet).
-* [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework sample images.
+* [microsoft/dotnet-framework-build](https://hub.docker.com/r/microsoft/dotnet-framework-build/) for .NET Framework images (for web applications, see microsoft/aspnet).
+* [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework and ASP.NET sample images.
 
 See the following related GitHub repos:
 

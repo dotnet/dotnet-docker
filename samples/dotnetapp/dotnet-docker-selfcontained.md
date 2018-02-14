@@ -29,7 +29,7 @@ You can build and run the [sample](Dockerfile.selfcontained-nanoserver-x64) on N
 ```console
 cd samples
 cd dotnetapp
-docker build -t dotnetapp -f Dockerfile.selfcontained-nanoserver-x64 .
+docker build --pull -t dotnetapp -f Dockerfile.selfcontained-nanoserver-x64 .
 docker run dotnetapp
 ```
 
@@ -40,7 +40,7 @@ You can build and run the [sample](Dockerfile.selfcontained-linux-x64) on Linux 
 ```console
 cd samples
 cd dotnetapp
-docker build -t dotnetapp -f Dockerfile.selfcontained-linux-x64 .
+docker build --pull -t dotnetapp -f Dockerfile.selfcontained-linux-x64 .
 docker run dotnetapp
 ```
 
@@ -51,7 +51,7 @@ You need to build the [sample](Dockerfile.selfcontained-linux-arm32) on Windows.
 ```console
 cd samples
 cd dotnetapp
-docker build -t dotnetapp -f Dockerfile.selfcontained-linux-arm32 .
+docker build --pull -t dotnetapp -f Dockerfile.selfcontained-linux-arm32 .
 ```
 
 After building the image, you need to push the image to a container registry so that you can pull it from an ARM32 device.
