@@ -416,7 +416,7 @@
           ]
         },
         {
-          "readmeOrder": 15,
+          "readmeOrder": 16,
           "platforms": [
             {
               "dockerfile": "2.1/sdk/jessie/amd64",
@@ -450,6 +450,19 @@
               "tags": {
                 "2.1.0-preview1-runtime-alpine": {},
                 "2.1-runtime-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "readmeOrder": 15,
+          "platforms": [
+            {
+              "dockerfile": "2.1/sdk/alpine/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.300-preview1-sdk-alpine": {},
+                "2.1-sdk-alpine": {}
               }
             }
           ]

@@ -19,6 +19,7 @@ See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for image
 - [`2.1.0-preview1-runtime-jessie`, `2.1-runtime-jessie` (*2.1/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/jessie/amd64/Dockerfile)
 - [`2.1.0-preview1-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*2.1/runtime-deps/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/alpine/amd64/Dockerfile)
 - [`2.1.300-preview1-sdk-stretch`, `2.1-sdk-stretch`, `2.1.300-preview1-sdk`, `2.1-sdk` (*2.1/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
+- [`2.1.300-preview1-sdk-alpine`, `2.1-sdk-alpine` (*2.1/sdk/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine/amd64/Dockerfile)
 - [`2.1.300-preview1-sdk-jessie`, `2.1-sdk-jessie` (*2.1/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/jessie/amd64/Dockerfile)
 
 # Supported Windows Server 2016 Version 1709 (Fall Creators Update) amd64 tags
