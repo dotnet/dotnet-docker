@@ -81,8 +81,7 @@ namespace Dotnet.Docker.Nightly
 
                 return new[]
                 {
-                    // TODO use sdkBuild.ProductVersion once written to build-info
-                    CreateDependencyBuildInfo(SdkBuildInfoName, sdkBuild.BuildId),
+                    CreateDependencyBuildInfo(SdkBuildInfoName, sdkBuild.ProductVersion),
                     CreateDependencyBuildInfo(RuntimeBuildInfoName, coreSetupBuild.ProductVersion),
                 };
             };
