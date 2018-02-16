@@ -2,41 +2,38 @@
 
 The samples show various ways to use .NET Core and Docker together. You can use the samples as the basis of your own Docker images or just to play.
 
-## Try Samples on Dockerhub
+The samples exercise various levels of functionality. The [.NET Core Docker sample](dotnetapp/README.md) includes the most functionality, including build and unit testing. Other samples do less. You can decide what is the right level of functionality for your use case, either copy/pasting in more delete functionality or deleting it. The samples include instructions on how to build them, with and without Docker.
 
-You can run a pre-built [.NET Core sample](https://hub.docker.com/r/microsoft/dotnet-samples/) using [Docker](https://www.docker.com/products/docker). The source of this sample application is [dotnetapp](dotnetapp).
+## Try a pre-built .NET Core Docker Image
 
-Type the following command to run a sample:
+You can quickly try a pre-built [sample .NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on the [.NET Core sample](dotnetapp/README.md).
+
+Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
 ```console
 docker run microsoft/dotnet-samples
 ```
 
-## Samples
-
-You can try the following samples. They include instructions on how to build them, with and without Docker.
-
-The samples exercise various levels of functionality. The [.NET Core Docker sample](dotnetapp/README.md) includes the most functionality, including build and unit testing. Other samples do less. You can decide what is the right level of functionality for your use case, either copy/pasting in more delete functionality or deleting it.
-
-### Building .NET Core Apps with Docker
+## Building .NET Core Apps with Docker
 
 * [.NET Core Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile) builds, tests and runs the sample. It includes and builds multiple projects.
 * [ASP.NET Core Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
 
-### Push Images to a Container Registry
+## Push Images to a Container Registry
 
 * [Push Docker Images to Azure Container Registry](dotnetapp/push-image-to-acr.md)
 * [Push Docker Images to DockerHub](dotnetapp/push-image-to-dockerhub.md)
+* [Deploy ASP.NET Core Applications to Azure Container Instances](aspnetapp/deploy-container-to-aci.md)
 
-### Optimizing Container Size
+## Optimizing Container Size
 
 * [.NET Core Alpine Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile.alpine) builds, tests and runs an application using Alpine.
-* [.NET Core self-contained Sample](dotnetapp/dotnet-docker-selfcontained.md) - This sample builds and runs an application as a self-contained application.
+* [.NET Core self-contained Sample](dotnetapp/dotnet-docker-selfcontained.md) - This [sample](dotnetapp/Dockerfile.linux-x64-selfcontained) builds and runs an application as a self-contained application.
 
-### ARM32 / Raspberry Pi
+## ARM32 / Raspberry Pi
 
 * [.NET Core ARM32 Docker Sample](dotnetapp/dotnet-docker-arm32.md) - This [sample](dotnetapp/Dockerfile.linux-arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
-* [ASP.NET Core ARM32 Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile.arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
+* [ASP.NET Core ARM32 Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile.linux-arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
 
 ## Related Repositories
 
@@ -57,4 +54,4 @@ See the following related .NET Framework Docker Hub repos:
 See the following related GitHub repos:
 
 * [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related announcements.
-* [microsoft/dotnet-framework-docker-samples](https://github.com/microsoft/dotnet-framework-docker-samples/) for .NET Framework samples.
+* [dotnet/core](https://github.com/dotnet/core) for starting point for .NET Core on GitHub.

@@ -8,6 +8,16 @@ The [ASP.NET Core Docker Sample](../aspnetapp/README.md) demonstrates how to use
 
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
+## Try a pre-built .NET Core Docker Image
+
+You can quickly try a pre-built [sample .NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on the [.NET Core sample](dotnetapp/README.md).
+
+Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
+
+```console
+docker run microsoft/dotnet-samples
+```
+
 ## Getting the sample
 
 The easiest way to get the sample is by cloning the samples repository with [git](https://git-scm.com/downloads), using the following instructions.
@@ -29,7 +39,7 @@ docker build --pull -t dotnetapp .
 docker run --rm dotnetapp Hello .NET Core from Docker
 ```
 
-The commands above run unit tests as part `docker build`. You can also [run tests as part of `docker run`](dotnet-docker-unit-testing.md), which gives you the option to save test logs on your local disk.
+The commands above run unit tests as part `docker build`. You can also [run .NET unit tests as part of `docker run`](dotnet-docker-unit-testing.md). The following instructions provide you with the simplest way of doing that.
 
 ```console
 docker build --target testrunner -t dotnetapp:test .
