@@ -15,6 +15,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private static string ArchFilter => Environment.GetEnvironmentVariable("IMAGE_ARCH_FILTER");
         private static string OsFilter => Environment.GetEnvironmentVariable("IMAGE_OS_FILTER");
+        private static string RepoOwner => Environment.GetEnvironmentVariable("REPO_OWNER") ?? "microsoft";
         private static string VersionFilter => Environment.GetEnvironmentVariable("IMAGE_VERSION_FILTER");
 
         private static ImageDescriptor[] LinuxTestData = new ImageDescriptor[]
@@ -236,7 +237,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageVersion, DotNetImageType imageType, string osVariant, bool isArm = false)
         {
             string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
-            string imageName = $"microsoft/dotnet-nightly:{imageVersion}-{variantName}";
+            string imageName = $"{RepoOwner}/dotnet-nightly:{imageVersion}-{variantName}";
             if (!string.IsNullOrEmpty(osVariant))
             {
                 imageName += $"-{osVariant}";

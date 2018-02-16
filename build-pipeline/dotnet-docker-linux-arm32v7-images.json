@@ -198,28 +198,31 @@
       "value": "$(Build.DefinitionName)-$(Build.BuildId)"
     },
     "image-builder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20171006102106"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180130154400"
     },
     "image-builder.commonArgs": {
-      "value": "build --manifest manifest.json $(PB.image-builder.customCommonArgs)",
+      "value": "build --manifest manifest.json $(PB_image-builder_queueCustomArgs)",
       "allowOverride": true
     },
     "image-builder.armBuildArgs": {
-      "value": "$(image-builder.commonArgs) --path $(PB.image-builder.path) --architecture arm --skip-test --test-var VersionFilter=$(PB.image-builder.path) --test-var ArchitectureFilter=arm --push --username $(PB.docker.username) --password $(PB.docker.password)",
+      "value": "$(image-builder.commonArgs) --path $(PB_image-builder_path) --architecture arm --skip-test --var VersionFilter=$(PB_image-builder_path) --var ArchitectureFilter=arm $(PB_image-builder_customVars) --push --username $(PB_docker_username) --password $(PB_docker_password)",
       "allowOverride": true
     },
     "image-builder.sdkBuildArgs": {
-      "value": "$(image-builder.commonArgs) --path $(PB.image-builder.path)/sdk/stretch/amd64 --architecture amd64 --skip-test",
+      "value": "$(image-builder.commonArgs) --path $(PB_image-builder_path)/sdk/stretch/amd64 --architecture amd64 --skip-test",
       "allowOverride": true
     },
-    "PB.docker.password": {
+    "PB_docker_password": {
       "value": null,
       "isSecret": true
     },
-    "PB.image-builder.customCommonArgs": {
+    "PB_image-builder_customVars": {
       "value": ""
     },
-    "PB.image-builder.path": {
+    "PB_image-builder_path": {
+      "value": ""
+    },
+    "PB_image-builder_queueCustomArgs": {
       "value": ""
     }
   },
