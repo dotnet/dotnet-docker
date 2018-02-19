@@ -11,7 +11,7 @@ You need to build the [sample](Dockerfile.linux-arm32) on a 64-bit operating sys
 ```console
 cd samples
 cd dotnetapp
-docker build --pull -t dotnetapp -f Dockerfile.arm32 .
+docker build --pull -t dotnetapp -f Dockerfile.linux-arm32 .
 ```
 
 ## Pushing the image to a Container Registry
@@ -23,18 +23,18 @@ You need to push the image to a container registry after building the image so t
 
 ## Pull the Image from Another Device
 
-You will next want to pull the image from an ARM32 device (like a Pi). You need to `docker login` before you can pull the image, just like was described previously.
+You will next want to pull the image from an ARM32 device (like a Pi). 
 
 Update the path locations, registry, and user names to the ones you are using.
 
-You only need to login to the registry you used for pushing your image.
+### Using Azure Container Registry (ACR)
 
-### Using Azure Container Registry
+Now pull and run the image from ACR if you used that registry.
 
-Login for Azure Container Registry:
+Login for Azure Container Registry with `docker login`:
 
 ```console
-cat ~/password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
+docker login richlander.azurecr.io -u richlander --password thepassword
 ```
 
 Now pull and run the image:
@@ -45,13 +45,7 @@ docker run --rm richlander.azurecr.io/dotnetapp
 
 ### Using DockerHub
 
-Login for DockerHub:
-
-```console
-cat ~/password-dh.txt | docker login -u richlander --password-stdin
-```
-
-Now pull and run the image:
+Now pull and run the image from DockerHub if you used that registry:
 
 ```console
 docker run --rm richlander/dotnetapp

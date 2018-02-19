@@ -11,7 +11,7 @@ In trivial cases, the linker can reduce the size of applications by 50%. The siz
 
 ## Add a Reference to the IL Linker
 
-You first need to add a reference to the [linker package](https://dotnet.myget.org/feed/dotnet-core/package/nuget/Illink.Tasks), using the following instructions: The instructions assume that you are in the root of the repository.
+You first need to add a reference to the [linker package](https://dotnet.myget.org/feed/dotnet-core/package/nuget/Illink.Tasks), using the following instructions. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
@@ -22,20 +22,20 @@ dotnet add package ILLink.Tasks -v 0.1.4-preview-981901 -s https://dotnet.myget.
 
 You can also update the Dockerfile to add the package reference, although that's not recommended as a long-term option (invalidates Docker cache with every build).
 
-## Building the Sample for Windows Nanoserver with Docker
+## Building the Sample for Windows Nano Server with Docker
 
-You can build and run the [sample](Dockerfile.selfcontained-nanoserver-x64) on Nanoserver using the following commands: The instructions assume that you are in the root of the repository.
+You can build and run the [sample](Dockerfile.nanoserver-x64-selfcontained) in a [Nano Server](https://hub.docker.com/r/microsoft/nanoserver/) container using the following commands. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
 cd dotnetapp
-docker build --pull -t dotnetapp -f Dockerfile.selfcontained-nanoserver-x64 .
+docker build --pull -t dotnetapp -f Dockerfile.nanoserver-x64-selfcontained .
 docker run dotnetapp
 ```
 
 ## Building the Sample for Linux X64 with Docker
 
-You can build and run the [sample](Dockerfile.selfcontained-linux-x64) on Linux X64 using the following commands: The instructions assume that you are in the root of the repository.
+You can build and run the [sample](Dockerfile.selfcontained-linux-x64) in a [Debian](https://hub.docker.com/r/library/debian/) container using the following commands. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
@@ -46,12 +46,14 @@ docker run dotnetapp
 
 ## Building the Sample for Linux ARM32 with Docker
 
-You need to build the [sample](Dockerfile.selfcontained-linux-arm32) on Windows. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
+Full instructions are provided at [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md). Summarized instructions follow.
+
+You need to build the [sample](Dockerfile.linux-arm32-selfcontained)on an X64 machine. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
 cd dotnetapp
-docker build --pull -t dotnetapp -f Dockerfile.selfcontained-linux-arm32 .
+docker build --pull -t dotnetapp -f Dockerfile.linux-arm32-selfcontained .
 ```
 
 After building the image, you need to push the image to a container registry so that you can pull it from an ARM32 device.
@@ -60,8 +62,6 @@ Instructions are provided for pushing to both Azure Container Registry and Docke
 
 * [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
 * [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
-
-Full instructions are provided at [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md).
 
 You next need to pull and run the image you pushed to the registry.
 

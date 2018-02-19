@@ -16,44 +16,39 @@ az group create --name richlander-containers --location westus
 az acr create --name richlander --resource-group richlander-containers --sku Basic
 ```
 
-## Get Registry Credentials
-
-You need to get credentials for the Registry in order to know how to push to it.
-
-```console
-az acr update -n richlander --admin-enabled true
-```
-
-Get credentials on Windows:
-
-```console
-az acr credential show -n richlander --query passwords[0].value --output tsv > %USERPROFILE%\password-acr.txt
-```
-
-Get credentials on macOS and Linux:
-
-```console
-az acr credential show -n richlander --query passwords[0].value --output tsv > ~\password-acr.txt
-```
-
 ## Login to ACR
 
 You need to [login](https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal#log-in-to-acr) to ACR with [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) to push images. ACR registries are private, so `pull`, `push`, and any other registry operation requires login.
 
-There are a couple ways of passing a password to `docker login`. These instructions pass the password to stdin via a text file called password-acr.txt. It is recommended to put the password file in a location outside of a source control location (I put it in the root of my user profile). This approach is considered a best practice and the most secure.
+You need to get credentials for your ACR registry in order to push to it. You can see your credentials using the following command.
 
-The instructions use example values that need to be changed to for your environment, specifically the password location, the registry name and the user account. More simply, make sure to change "rich" and "richlander" to something else.
+```console
+az acr update -n richlander --admin-enabled true
+az acr credential show -n richlander
+```
+
+There are a few ways to use these credentials, some of which are demonstrated below.
+
+The easiest approach is to get the credentials and login in a single command, piping the `az` command to `docker login`. This approach works on Windows, macOS and Linux.
+
+```console
+az acr credential show -n richlander --query passwords[0].value --output tsv | docker login richlander.azurecr.io -u richlander --password-stdin
+```
+
+Alternatively, if you want to persist the password, across logins, you can do the following. Make sure to save to a location not managed by source control (to avoid accidental disclosure).
 
 Login on Windows:
 
 ```console
+az acr credential show -n richlander --query passwords[0].value --output tsv > %USERPROFILE%\password-acr.txt
 type %USERPROFILE%\password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
 ```
 
 Login on macOS or Linux:
 
 ```console
-cat ~/password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
+az acr credential show -n richlander --query passwords[0].value --output tsv > ~\password-acr.txt
+cat ~\password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
 ```
 
 ## Build the Image
@@ -89,16 +84,12 @@ Next, you can pull the image from another device. You need to `docker login` to 
 
 You need to update the path locations, registry, and user names to the ones you are using.
 
-Login on Windows:
+You can use one of the same techniques shown earlier, logon with a clear password on the commandline, as shown in the following command.
+
+Login to registry:
 
 ```console
-type c:\users\rich\password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
-```
-
-Login on macOS or Linux:
-
-```console
-cat ~/password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
+docker login richlander.azurecr.io -u richlander --password thepassword
 ```
 
 Now pull and run the image:

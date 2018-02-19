@@ -9,10 +9,7 @@ COPY tests/*.csproj ./tests/
 RUN dotnet restore
 
 # copy and build everything else
-COPY dotnetapp/. ./dotnetapp/
-COPY utils/. ./utils/
-COPY tests/. ./tests/
-
+COPY . .
 RUN dotnet build
 
 FROM build AS testrunner
