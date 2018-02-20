@@ -75,6 +75,10 @@ docker run --rm dotnetapp Hello .NET Core from Alpine
 
 You can build and run the sample for [ARM32 and Raspberry Pi](dotnet-docker-arm32.md) with [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md) instructions.
 
+## Build .NET Core Self-Contained Applications with Docker
+
+You can build [Build .NET Core Self-Contained Applications with Docker](dotnet-docker-selfcontained.md).
+
 ## Run Image on Another Device
 
 You can push the image to a container registry so that you can pull and run it on another device. Straightforward instructions are provided for pushing to both Azure Container Registry and DockerHub.
