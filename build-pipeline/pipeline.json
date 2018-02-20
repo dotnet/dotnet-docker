@@ -16,13 +16,13 @@
         {
           "Name": "dotnet-docker-linux-amd64-images",
           "Parameters": {
-            "PB.image-builder.path": "1.*"
+            "PB_imageBuilder_path": "1.*"
           }
         },
         {
           "Name": "dotnet-docker-linux-amd64-images",
           "Parameters": {
-            "PB.image-builder.path": "2.*"
+            "PB_imageBuilder_path": "2.*"
           }
         }
       ]
@@ -36,36 +36,36 @@
         {
           "Name": "dotnet-docker-linux-arm32v7-images",
           "Parameters": {
-            "PB.image-builder.path": "2.*"
+            "PB_imageBuilder_path": "2.*"
           }
         }
       ]
     },
     {
-      "Name": "Build Windows AMD64 Images",
+      "Name": "Build Windows sac2016 AMD64 Images",
       "Parameters": {
         "TreatWarningsAsErrors": "false"
       },
       "Definitions": [
         {
-          "Name": "dotnet-docker-windows-amd64-images",
+          "Name": "dotnet-docker-windows-sac2016-amd64-images",
           "Parameters": {
-            "PB.image-builder.path": "1.*",
-            "PB.image-builder.customCommonArgs": "--test-var VersionFilter=1.*"
+            "PB_imageBuilder_path": "1.*",
+            "PB_imageBuilder_customVars": "--var VersionFilter=1.* --var OSFilter=nanoserver-sac2016"
           }
         },
         {
-          "Name": "dotnet-docker-windows-amd64-images",
+          "Name": "dotnet-docker-windows-sac2016-amd64-images",
           "Parameters": {
-            "PB.image-builder.path": "2.0*/nanoserver-sac2016/*",
-            "PB.image-builder.customCommonArgs": "--test-var VersionFilter=2.0* --test-var OSFilter=nanoserver-sac2016"
+            "PB_imageBuilder_path": "2.0*/nanoserver-sac2016/*",
+            "PB_imageBuilder_customVars": "--var VersionFilter=2.0* --var OSFilter=nanoserver-sac2016"
           }
         },
         {
-          "Name": "dotnet-docker-windows-amd64-images",
+          "Name": "dotnet-docker-windows-sac2016-amd64-images",
           "Parameters": {
-            "PB.image-builder.path": "2.1*/nanoserver-sac2016/*",
-            "PB.image-builder.customCommonArgs": "--test-var VersionFilter=2.1* --test-var OSFilter=nanoserver-sac2016"
+            "PB_imageBuilder_path": "2.1*/nanoserver-sac2016/*",
+            "PB_imageBuilder_customVars": "--var VersionFilter=2.1* --var OSFilter=nanoserver-sac2016"
           }
         }
       ]
@@ -79,15 +79,15 @@
         {
           "Name": "dotnet-docker-windows-1709-amd64-images",
           "Parameters": {
-            "PB.image-builder.path": "2.0*/nanoserver-1709/*",
-            "PB.image-builder.customCommonArgs": "--test-var VersionFilter=2.0* --test-var OSFilter=nanoserver-1709"
+            "PB_imageBuilder_path": "2.0*/nanoserver-1709/*",
+            "PB_imageBuilder_customVars": "--var VersionFilter=2.0* --var OSFilter=nanoserver-1709"
           }
         },
         {
           "Name": "dotnet-docker-windows-1709-amd64-images",
           "Parameters": {
-            "PB.image-builder.path": "2.1*/nanoserver-1709/*",
-            "PB.image-builder.customCommonArgs": "--test-var VersionFilter=2.1* --test-var OSFilter=nanoserver-1709"
+            "PB_imageBuilder_path": "2.1*/nanoserver-1709/*",
+            "PB_imageBuilder_customVars": "--var VersionFilter=2.1* --var OSFilter=nanoserver-1709"
           }
         }
       ]
@@ -104,7 +104,7 @@
       ],
       "DependsOn": [
         "Build Windows 1709 AMD64 Images",
-        "Build Windows AMD64 Images",
+        "Build Windows sac2016 AMD64 Images",
         "Build Linux AMD64 Images",
         "Build Linux ARM32v7 Images"
       ]
