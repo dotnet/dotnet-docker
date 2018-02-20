@@ -10,10 +10,24 @@ RUN dotnet restore -s https://api.nuget.org/v3/index.json -s https://dotnet.myge
 
 # copy and build everything else
 COPY . .
+RUN dotnet build
+
+
+FROM build AS testrunner
+WORKDIR /app/tests
+ENTRYPOINT ["dotnet", "test", "--logger:trx"]
+
+FROM build AS test
+WORKDIR /app/tests
+RUN dotnet test
+
+
+FROM build AS publish
 WORKDIR /app/dotnetapp
-RUN dotnet publish -c Release -r linux-arm32 -o out /p:ShowLinkerSizeComparison=true
+RUN dotnet publish -c Release -r linux-arm -o out /p:ShowLinkerSizeComparison=true
+
 
 FROM microsoft/dotnet:2.0-runtime-deps-stretch-arm32v7 AS runtime
 WORKDIR /app
-COPY --from=build /app/dotnetapp/out ./
+COPY --from=publish /app/dotnetapp/out ./
 ENTRYPOINT ["./dotnetapp"]

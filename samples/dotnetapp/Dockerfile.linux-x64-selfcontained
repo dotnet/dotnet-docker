@@ -9,11 +9,10 @@ COPY tests/*.csproj ./tests/
 RUN dotnet restore -s https://api.nuget.org/v3/index.json -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
 
 # copy and build everything else
-COPY dotnetapp/. ./dotnetapp/
-COPY utils/. ./utils/
-COPY tests/. ./tests/
+COPY . .
 WORKDIR /app/dotnetapp
 RUN dotnet publish -c Release -r linux-x64 -o out /p:ShowLinkerSizeComparison=true
+
 
 FROM microsoft/dotnet:2.0-runtime-deps AS runtime
 WORKDIR /app

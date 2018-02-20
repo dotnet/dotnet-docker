@@ -11,6 +11,7 @@ COPY aspnetapp/. ./aspnetapp/
 WORKDIR /app/aspnetapp
 RUN dotnet publish -o out /p:PublishWithAspNetCoreTargetManifest="false"
 
+
 FROM microsoft/dotnet:2.0-runtime AS runtime
 ENV ASPNETCORE_URLS http://+:80
 WORKDIR /app

@@ -1,14 +1,16 @@
 # Push Docker Images to Dockerhub
 
-You can build and push .NET Core container images to the [DockerHub](https://hub.docker.com/) container registry. These instructions help you do that and are based on the [.NET Core Docker Sample](README.md).
+This sample demonstrates hot to push .NET Core container images to the [DockerHub](https://hub.docker.com/) container registry. The instructions are based on the [.NET Core Docker Sample](README.md).
+
+The same instructions are also available to [push to Azure Container Registry](push-image-to-acr.md).
 
 ## Login to DockerHub
 
-You need to [login](https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal#log-in-to-acr) to DockerHub with [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) or with the Docker Client UI to push images.
+You need to [login to DockerHub](https://docs.docker.com/docker-hub/accounts/) with [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) or with the Docker Client UI to push images.
 
-There are a couple ways of passing a password to `docker login`. These instructions pass the password to stdin via a text file called password-acr.txt. It is recommended to put the password file in a location outside of a source control location (I put it in the root of my user profile). This approach is considered a best practice and the most secure.
+There are a couple ways of passing a password to `docker login`. These instructions pass the password to stdin via a text file called password-acr.txt. Make sure to save to a location not managed by source control (to avoid accidental disclosure).
 
-The instructions use example values that need to be changed to for your environment, specifically the password location, and the user account. More simply, make sure to change "rich" and "richlander" to something else.
+> Note: The instructions use example values that need to be changed to for your environment, specifically the password location, and the user account. More simply, make sure to change "rich" and "richlander" to something else.
 
 Login on Windows:
 
@@ -22,9 +24,13 @@ Login on macOS or Linux:
 cat ~/password-dh.txt | docker login -u richlander --password-stdin
 ```
 
-## Build the Image
+Alternatively, you can pass your password to `docker login` as plain text as you can see in the following command:
 
-The instructions in following sections assume that you built an image per the instructions at [dotnetapp sample](dotnetapp/README.md). You can also build an image with your own instructions, too.
+```console
+docker login -u richlander --password mypassword
+```
+
+## Build the Image
 
 The following instructions are a subset of the [.NET Core Docker Sample](dotnetapp/README.md) instructions, which assume that you are starting from the root of the [dotnet-docker repo](https://github.com/dotnet/dotnet-docker).
 
@@ -69,7 +75,11 @@ Login on macOS or Linux:
 cat ~/password-dh.txt | docker login -u richlander --password-stdin
 ```
 
-## Pull Image
+## Pull the Image from Another Device
+
+You can pull the image from another device. You will need to login to DockerHub if you are using a private repo.
+
+You need to update the path locations, registry, and user names to the ones you are using.
 
 Now pull and run the image:
 

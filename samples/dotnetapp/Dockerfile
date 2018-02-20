@@ -12,17 +12,20 @@ RUN dotnet restore
 COPY . .
 RUN dotnet build
 
+
 FROM build AS testrunner
 WORKDIR /app/tests
-ENTRYPOINT ["dotnet", "test","--logger:trx"]
+ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 FROM build AS test
 WORKDIR /app/tests
 RUN dotnet test
 
+
 FROM test AS publish
 WORKDIR /app/dotnetapp
 RUN dotnet publish -c Release -o out
+
 
 FROM microsoft/dotnet:2.0-runtime AS runtime
 WORKDIR /app
