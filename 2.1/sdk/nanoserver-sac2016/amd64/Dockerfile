@@ -19,10 +19,7 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
 
 RUN setx /M PATH $($Env:PATH + ';' + $Env:ProgramFiles + '\dotnet')
 
-# Trigger the population of the local package cache
 ENV NUGET_XMLDOC_MODE skip
-RUN New-Item -Type Directory warmup; `
-    cd warmup; `
-    dotnet new; `
-    cd ..; `
-    Remove-Item -Force -Recurse warmup
+
+# Trigger first run experience by running arbitrary cmd to populate local package cache
+RUN dotnet help
