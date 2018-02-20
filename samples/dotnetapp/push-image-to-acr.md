@@ -31,7 +31,6 @@ az acr update -n richlander --admin-enabled true
 You can see your credentials using the following command.
 
 ```console
-az acr update -n richlander --admin-enabled true
 az acr credential show -n richlander
 ```
 

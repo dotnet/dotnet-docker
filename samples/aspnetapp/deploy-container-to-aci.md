@@ -33,22 +33,12 @@ az acr update -n richlander --admin-enabled true
 az acr credential show -n richlander
 ```
 
-The last command will show a set of passwords. You only need one of them. Copy and save the password into a file called `password-acr.txt` at the root of your user profile, for example at `c:\users\rich\password-acr.txt` or `~/password-acr.txt`, on Windows and macOS/Linux respectively.
-
 ## Login to Azure Container Registry
 
 Use the following instructions to login to ACR.
 
-Login on Windows:
-
 ```console
-type c:\users\rich\password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
-```
-
-Login on macOS or Linux:
-
-```console
-cat ~/password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
+az acr credential show -n richlander | docker login richlander.azurecr.io -u richlander --password-stdin
 ```
 
 ## Push Image for Azure Container Registry (ACR)
@@ -66,7 +56,7 @@ docker push richlander.azurecr.io/aspnetapp
 az container create --name aspnetapp --image richlander.azurecr.io/aspnetapp --resource-group richlander-containers --ip-address public
 ```
 
-You must specify `--os-type Windows` for Windows images.
+You must specify `--os-type Windows` for Windows images. Windows Server, version 1709 are not yet supported.
 
 You will be asked for your password. Write or paste it in.
 
@@ -84,7 +74,7 @@ Once the `provisioningState` moves to `Succeeded`, collect the IP address from t
 
 ## Cleanup
 
-After you are done, delete the resource group to reclaim all container resources from this experiment.
+After you no longer want to use these containers, delete the resource group to reclaim all container resources from this experiment.
 
 ```console
 az group delete --name richlander-containers
