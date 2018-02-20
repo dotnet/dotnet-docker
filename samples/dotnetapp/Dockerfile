@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:sdk AS build
+FROM microsoft/dotnet:2.0-sdk AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -17,12 +17,13 @@ FROM build AS testrunner
 WORKDIR /app/tests
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
+
 FROM build AS test
 WORKDIR /app/tests
 RUN dotnet test
 
 
-FROM test AS publish
+FROM build AS publish
 WORKDIR /app/dotnetapp
 RUN dotnet publish -c Release -o out
 
