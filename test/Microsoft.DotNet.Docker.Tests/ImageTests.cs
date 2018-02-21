@@ -142,34 +142,34 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void VerifySdkImage_PackageCache(ImageDescriptor imageDescriptor)
         {
-            string verifyNuGetCommand;
+            string verifyCacheCommand;
             if (imageDescriptor.DotNetCoreVersion.StartsWith("1."))
             {
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
-                    verifyNuGetCommand = "test -d /root/.nuget/packages";
+                    verifyCacheCommand = "test -d /root/.nuget/packages";
                 }
                 else
                 {
-                    verifyNuGetCommand = "CMD /S /C PUSHD \"C:/Users/ContainerAdministrator/.nuget/packages\"";
+                    verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Users\\ContainerAdministrator\\.nuget\\packages\"";
                 }
             }
             else
             {
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
-                    verifyNuGetCommand = "test -d /usr/share/dotnet/sdk/NuGetFallbackFolder";
+                    verifyCacheCommand = "test -d /usr/share/dotnet/sdk/NuGetFallbackFolder";
                 }
                 else
                 {
-                    verifyNuGetCommand = "CMD /S /C PUSHD \"C:/Program Files/dotnet/sdk/NuGetFallbackFolder\"";
+                    verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\"";
                 }
             }
 
             // Simple check to verify the NuGet package cache was created
             DockerHelper.Run(
                 image: GetDotNetImage(imageDescriptor.SdkVersion, DotNetImageType.SDK, imageDescriptor.SdkOsVariant),
-                command: verifyNuGetCommand,
+                command: verifyCacheCommand,
                 containerName: GetIdentifier(imageDescriptor.DotNetCoreVersion, "PackageCache"));
         }
 
