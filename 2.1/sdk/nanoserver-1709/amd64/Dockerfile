@@ -29,10 +29,7 @@ USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"
 USER ContainerUser
 
-# Trigger the population of the local package cache
 ENV NUGET_XMLDOC_MODE skip
-RUN mkdir warmup `
-    && cd warmup `
-    && dotnet new `
-    && cd .. `
-    && rmdir /s /q warmup
+
+# Trigger first run experience by running arbitrary cmd to populate local package cache
+RUN dotnet help
