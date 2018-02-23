@@ -27,11 +27,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
     && rm dotnet.tar.gz \
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 
-# Trigger the population of the local package cache
 ENV NUGET_XMLDOC_MODE skip
-RUN mkdir warmup \
-    && cd warmup \
-    && dotnet new \
-    && cd .. \
-    && rm -rf warmup \
-    && rm -rf /tmp/NuGetScratch
+
+# Trigger first run experience by running arbitrary cmd to populate local package cache
+RUN dotnet help
