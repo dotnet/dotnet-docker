@@ -25,17 +25,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 new ImageDescriptor { DotNetCoreVersion = "2.0" },
                 new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Jessie },
                 new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Stretch, SdkOsVariant = "", Architecture = "arm" },
-                new ImageDescriptor { DotNetCoreVersion = "2.1", RuntimeDepsVersion = "2.0" },
-                new ImageDescriptor { DotNetCoreVersion = "2.1", RuntimeDepsVersion = "2.0", OsVariant = OS.Jessie },
-                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.Alpine, SdkOsVariant = "", },
-                new ImageDescriptor
-                {
-                    DotNetCoreVersion = "2.1",
-                    RuntimeDepsVersion = "2.0",
-                    OsVariant = OS.Stretch,
-                    SdkOsVariant = "",
-                    Architecture = "arm"
-                },
+                new ImageDescriptor { DotNetCoreVersion = "2.1" },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.Bionic },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.Alpine, SdkOsVariant = "" },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = "", Architecture = "arm" },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.Bionic, SdkOsVariant = "", Architecture = "arm" },
             };
         private static ImageDescriptor[] WindowsTestData = new ImageDescriptor[]
             {
