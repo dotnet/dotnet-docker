@@ -33,7 +33,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "pull $(image-builder.imageName)",
+        "arguments": "pull $(imageBuilder.imageName)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -52,7 +52,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name $(image-builder.containerName) $(image-builder.imageName) $(image-builder.publishManifest.args)",
+        "arguments": "run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name $(imageBuilder.containerName) $(imageBuilder.imageName) $(imageBuilder.publishManifest.args)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -71,7 +71,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name $(image-builder.containerName) $(image-builder.imageName) $(image-builder.updateReadme.args)",
+        "arguments": "run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name $(imageBuilder.containerName) $(imageBuilder.imageName) $(imageBuilder.updateReadme.args)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -140,30 +140,30 @@
       "value": "false",
       "allowOverride": true
     },
-    "image-builder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20171006102106"
+    "imageBuilder.imageName": {
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180130154400"
     },
-    "image-builder.common.args": {
-      "value": "--manifest manifest.json --username $(PB.docker.username) --password $(PB.docker.password) $(PB.image-builder.customCommonArgs)",
+    "imageBuilder.common.args": {
+      "value": "--manifest manifest.json --username $(PB_docker_username) --password $(PB_docker_password) $(PB_imageBuilder_queueCustomArgs)",
       "allowOverride": true
     },
-    "image-builder.publishManifest.args": {
-      "value": "publishManifest $(image-builder.common.args)",
+    "imageBuilder.publishManifest.args": {
+      "value": "publishManifest $(imageBuilder.common.args)",
       "allowOverride": true
     },
-    "image-builder.updateReadme.args": {
-      "value": "updateReadme $(image-builder.common.args)",
+    "imageBuilder.updateReadme.args": {
+      "value": "updateReadme $(imageBuilder.common.args)",
       "allowOverride": true
     },
-    "image-builder.containerName": {
+    "imageBuilder.containerName": {
       "value": "$(Build.DefinitionName)-$(Build.BuildId)"
     },
-    "PB.image-builder.customCommonArgs": {
-      "value": ""
-    },
-    "PB.docker.password": {
+    "PB_docker_password": {
       "value": null,
       "isSecret": true
+    },
+    "PB_imageBuilder_queueCustomArgs": {
+      "value": ""
     }
   },
   "demands": [

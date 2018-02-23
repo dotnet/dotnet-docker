@@ -35,7 +35,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "pull $(image-builder.imageName)",
+        "arguments": "pull $(imageBuilder.imageName)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -54,7 +54,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "create --name $(image-builder.containerName) $(image-builder.imageName)",
+        "arguments": "create --name $(imageBuilder.containerName) $(imageBuilder.imageName)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -73,7 +73,7 @@
       },
       "inputs": {
         "filename": "docker ",
-        "arguments": "cp $(image-builder.containerName):/image-builder $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder",
+        "arguments": "cp $(imageBuilder.containerName):/image-builder $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -92,7 +92,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "rmi -f $(image-builder.imageName)",
+        "arguments": "rmi -f $(imageBuilder.imageName)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -111,7 +111,7 @@
       },
       "inputs": {
         "filename": "$(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe",
-        "arguments": "$(image-builder.args)",
+        "arguments": "$(imageBuilder.args)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -182,24 +182,27 @@
       "value": "false",
       "allowOverride": true
     },
-    "image-builder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20171006103436"
+    "imageBuilder.imageName": {
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180130074345"
     },
-    "image-builder.args": {
-      "value": "build --manifest manifest.json --path $(PB.image-builder.path) --test-var ArchitectureFilter=amd64 --push --username $(PB.docker.username) --password $(PB.docker.password) $(PB.image-builder.customCommonArgs)",
+    "imageBuilder.args": {
+      "value": "build --manifest manifest.json --path $(PB_imageBuilder_path) --var ArchitectureFilter=amd64 $(PB_imageBuilder_customVars) --push --username $(PB_docker_username) --password $(PB_docker_password) $(PB_imageBuilder_queueCustomArgs)",
       "allowOverride": true
     },
-    "image-builder.containerName": {
+    "imageBuilder.containerName": {
       "value": "$(Build.DefinitionName)-$(Build.BuildId)"
     },
-    "PB.docker.password": {
+    "PB_docker_password": {
       "value": null,
       "isSecret": true
     },
-    "PB.image-builder.customCommonArgs": {
+    "PB_imageBuilder_customVars": {
       "value": ""
     },
-    "PB.image-builder.path": {
+    "PB_imageBuilder_path": {
+      "value": ""
+    },
+    "PB_imageBuilder_queueCustomArgs": {
       "value": ""
     }
   },
