@@ -24,16 +24,16 @@ namespace Microsoft.DotNet.Docker.Tests
                 new ImageDescriptor { DotNetCoreVersion = "1.1", RuntimeDepsVersion = "1.0" },
                 new ImageDescriptor { DotNetCoreVersion = "2.0" },
                 new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Jessie },
-                new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Stretch, SdkOsVariant = "", Architecture = "arm" },
+                new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Stretch, HasNoSdk = true, Architecture = "arm" },
                 new ImageDescriptor { DotNetCoreVersion = "2.1", RuntimeDepsVersion = "2.0" },
                 new ImageDescriptor { DotNetCoreVersion = "2.1", RuntimeDepsVersion = "2.0", OsVariant = OS.Jessie },
-                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.Alpine, SdkOsVariant = "", },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.Alpine, HasNoSdk = true },
                 new ImageDescriptor
                 {
                     DotNetCoreVersion = "2.1",
                     RuntimeDepsVersion = "2.0",
                     OsVariant = OS.Stretch,
-                    SdkOsVariant = "",
+                    HasNoSdk = true,
                     Architecture = "arm"
                 },
             };
@@ -95,8 +95,9 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 CreateTestAppWithSdkImage(imageDescriptor, appSdkImage);
 
-                if (!string.IsNullOrEmpty(imageDescriptor.SdkOsVariant))
+                if (!imageDescriptor.HasNoSdk)
                 {
+                    VerifySdkImage_PackageCache(imageDescriptor);
                     VerifySdkImage_RunApp(imageDescriptor, appSdkImage);
                 }
 
@@ -123,13 +124,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 buildArgs.Add($"optional_new_args=--no-restore");
             }
 
-            string sdkImage = GetDotNetImage(
-                imageDescriptor.SdkVersion, DotNetImageType.SDK, imageDescriptor.SdkOsVariant);
-
             DockerHelper.Build(
                 dockerfile: $"Dockerfile.{DockerHelper.DockerOS.ToLower()}.testapp",
                 tag: appSdkImage,
-                fromImage: sdkImage,
+                fromImage: GetDotNetImage(imageDescriptor.SdkVersion, DotNetImageType.SDK, imageDescriptor.SdkOsVariant),
                 buildArgs: buildArgs.ToArray());
         }
 
@@ -140,6 +138,39 @@ namespace Microsoft.DotNet.Docker.Tests
                 image: appSdkImage,
                 command: "dotnet run",
                 containerName: appSdkImage);
+        }
+
+        private void VerifySdkImage_PackageCache(ImageDescriptor imageDescriptor)
+        {
+            string verifyCacheCommand;
+            if (imageDescriptor.DotNetCoreVersion.StartsWith("1."))
+            {
+                if (DockerHelper.IsLinuxContainerModeEnabled)
+                {
+                    verifyCacheCommand = "test -d /root/.nuget/packages";
+                }
+                else
+                {
+                    verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Users\\ContainerAdministrator\\.nuget\\packages\"";
+                }
+            }
+            else
+            {
+                if (DockerHelper.IsLinuxContainerModeEnabled)
+                {
+                    verifyCacheCommand = "test -d /usr/share/dotnet/sdk/NuGetFallbackFolder";
+                }
+                else
+                {
+                    verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\"";
+                }
+            }
+
+            // Simple check to verify the NuGet package cache was created
+            DockerHelper.Run(
+                image: GetDotNetImage(imageDescriptor.SdkVersion, DotNetImageType.SDK, imageDescriptor.SdkOsVariant),
+                command: verifyCacheCommand,
+                containerName: GetIdentifier(imageDescriptor.DotNetCoreVersion, "PackageCache"));
         }
 
         private void VerifyRuntimeImage_FrameworkDependentApp(ImageDescriptor imageDescriptor, string appSdkImage)
