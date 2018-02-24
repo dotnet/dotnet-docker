@@ -4,7 +4,7 @@ using Utils;
 
 namespace Tests
 {
-    public class ConsoleTests
+    public class ConsoleUtilTests
     {
         [Fact]
         public void PrintStringWithColor()

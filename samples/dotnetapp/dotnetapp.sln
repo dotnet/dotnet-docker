@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetapp", "dotnetapp\dotnetapp.csproj", "{694D3029-F31E-4945-8972-557A899D5CDD}"
 EndProject
@@ -12,6 +12,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
 		Dockerfile = Dockerfile
+		Dockerfile.alpine-x64 = Dockerfile.alpine-x64
+		Dockerfile.alpine-x64-globalization = Dockerfile.alpine-x64-globalization
+		Dockerfile.basic = Dockerfile.basic
+		Dockerfile.linux-arm32 = Dockerfile.linux-arm32
+		Dockerfile.linux-arm32-selfcontained = Dockerfile.linux-arm32-selfcontained
+		Dockerfile.linux-x64-selfcontained = Dockerfile.linux-x64-selfcontained
+		Dockerfile.nanoserver-x64-selfcontained = Dockerfile.nanoserver-x64-selfcontained
+		dotnet-docker-arm32.md = dotnet-docker-arm32.md
+		dotnet-docker-selfcontained.md = dotnet-docker-selfcontained.md
+		dotnet-docker-unit-testing.md = dotnet-docker-unit-testing.md
+		push-image-to-acr.md = push-image-to-acr.md
+		push-image-to-dockerhub.md = push-image-to-dockerhub.md
 		README.md = README.md
 	EndProjectSection
 EndProject

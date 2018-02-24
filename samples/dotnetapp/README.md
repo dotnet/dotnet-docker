@@ -53,8 +53,8 @@ Multiple variations of this sample have been provided, as follows. Some of these
 * [Multi-arch sample with build and unit testing](Dockerfile)
 * [Multi-arch basic sample](Dockerfile.basic)
 * [Alpine sample with build and unit testing](Dockerfile.alpine)
-* [Alpine basic sample, with Globalization enabled](Dockerfile.alpinewithglobalization)
-* [Debian ARM32 sample with build and unit testing](Dockerfile.arm32)
+* [Alpine sample, with Globalization enabled](Dockerfile.alpinewithglobalization)
+* [Debian ARM32 sample with build and unit testing](Dockerfile.linux-arm32)
 
 ## Build and run the sample for Alpine
 

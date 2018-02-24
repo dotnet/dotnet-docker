@@ -2,7 +2,7 @@
 
 The samples show various ways to use .NET Core and Docker together. You can use the samples as the basis of your own Docker images or just to play.
 
-The samples exercise various levels of functionality. The [.NET Core Docker sample](dotnetapp/README.md) includes the most functionality, including build and unit testing. Other samples do less. You can decide what is the right level of functionality for your use case, either copy/pasting in more delete functionality or deleting it. The samples include instructions on how to build them, with and without Docker.
+The samples exercise various levels of functionality. The [.NET Core Docker sample](dotnetapp/README.md) includes the most functionality, including build, unit testing and pushing images to a container registry. The [ASP.NET Core Docker sample](aspnetapp/README.md) includes instructions for testing images with [Azure Container Instances](https://azure.microsoft.com/services/container-instances/). The samples include detailed instructions for use with and without Docker.
 
 ## Try a pre-built .NET Core Docker Image
 
@@ -11,7 +11,7 @@ You can quickly try a pre-built [sample .NET Core Docker image](https://hub.dock
 Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
 ```console
-docker run microsoft/dotnet-samples
+docker run --rm microsoft/dotnet-samples
 ```
 
 ## Building .NET Core Apps with Docker
@@ -33,7 +33,7 @@ docker run microsoft/dotnet-samples
 ## ARM32 / Raspberry Pi
 
 * [.NET Core ARM32 Docker Sample](dotnetapp/dotnet-docker-arm32.md) - This [sample](dotnetapp/Dockerfile.linux-arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
-* [ASP.NET Core ARM32 Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile.linux-arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
+* [ASP.NET Core ARM32 Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile.linux-arm32) builds and runs an ASP.NET Core application with Debian on ARM32 (works on Raspberry Pi).
 
 ## Related Repositories
 
@@ -48,7 +48,7 @@ See the following related .NET Framework Docker Hub repos:
 
 * [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
 * [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images (for web applications, see microsoft/aspnet).
-* [microsoft/dotnet-framework-build](https://hub.docker.com/r/microsoft/dotnet-framework-build/) for .NET Framework images (for web applications, see microsoft/aspnet).
+* [microsoft/dotnet-framework-build](https://hub.docker.com/r/microsoft/dotnet-framework-build/) for .NET Framework images.
 * [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework and ASP.NET sample images.
 
 See the following related GitHub repos:

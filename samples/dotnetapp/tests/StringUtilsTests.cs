@@ -6,7 +6,7 @@ using Utils;
 
 namespace tests
 {
-    public class StringTests
+    public class StringUtilsTests
     {
 
         [Fact]

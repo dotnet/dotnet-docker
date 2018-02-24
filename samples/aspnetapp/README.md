@@ -151,4 +151,4 @@ Note: The `-c release` argument builds the application in release mode (the defa
 * [ASP.NET Core Getting Started Tutorials](https://www.asp.net/get-started)
 * [.NET Core Production Docker sample](../dotnetapp-prod/README.md)
 * [.NET Core Docker samples](../README.md)
-* [.NET Framework and and ASP.NET Docker samples](https://github.com/Microsoft/dotnet-framework-docker-samples)
+* [.NET Framework and ASP.NET Docker samples](https://github.com/Microsoft/dotnet-framework-docker-samples)
