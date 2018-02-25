@@ -15,8 +15,10 @@ You can quickly try a pre-built [sample ASP.NET Core Docker image](https://hub.d
 Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
 ```console
-docker run --rm microsoft/dotnet-samples:aspnetapp
+docker run --rm -p 8000:80 --name aspnetcore_sample microsoft/dotnet-samples:aspnetapp
 ```
+
+After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in one of the following sections.
 
 ## Getting the sample
 
@@ -36,7 +38,7 @@ You can build and run the sample in Docker using the following commands. The ins
 cd samples
 cd aspnetapp
 docker build --pull -t aspnetapp .
-docker run --rm --name aspnetcore_sample aspnetapp
+docker run --rm -p 8000:80 --name aspnetcore_sample microsoft/dotnet-samples:aspnetapp
 ```
 
 You should see the following console output as the application starts.
@@ -49,9 +51,7 @@ Now listening on: http://[::]:80
 Application started. Press Ctrl+C to shut down.
 ```
 
-Next, you will want to view the ASP.NET Core application in your browser, as described by the following instructions. The instructions for macOS and Linux directly follow. The instructions for Windows are in the next section.
-
-After the application starts, navigate to `http://localhost:8000` in your web browser.
+After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in the next section.
 
 Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline parameters.
 
