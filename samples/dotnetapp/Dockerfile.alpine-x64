@@ -8,8 +8,9 @@ COPY utils/*.csproj ./utils/
 COPY tests/*.csproj ./tests/
 RUN dotnet restore
 
-# copy and build everything else
+# copy everything else and build app
 COPY . .
+WORKDIR /app/dotnetapp
 RUN dotnet build
 
 

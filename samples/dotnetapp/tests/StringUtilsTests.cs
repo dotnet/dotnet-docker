@@ -4,7 +4,7 @@ using System.Text;
 using Xunit;
 using Utils;
 
-namespace tests
+namespace Tests
 {
     public class StringUtilsTests
     {

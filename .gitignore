@@ -1,6 +1,7 @@
 # Build output
 [Bb]in/
 [Oo]bj/
+out/
 
 # cache for misc downloads
 artifacts/

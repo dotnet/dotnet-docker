@@ -6,10 +6,11 @@ COPY *.sln .
 COPY dotnetapp/*.csproj ./dotnetapp/
 COPY utils/*.csproj ./utils/
 COPY tests/*.csproj ./tests/
-RUN dotnet restore -s https://api.nuget.org/v3/index.json -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
+RUN dotnet restore
 
-# copy and build everything else
+# copy everything else and build app
 COPY . .
+WORKDIR /app/dotnetapp
 RUN dotnet build
 
 
@@ -24,6 +25,7 @@ RUN dotnet test
 
 FROM build AS publish
 WORKDIR /app/dotnetapp
+RUN dotnet add package ILLink.Tasks -v 0.1.4-preview-981901 -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
 RUN dotnet publish -c Release -r linux-arm -o out /p:ShowLinkerSizeComparison=true
 
 

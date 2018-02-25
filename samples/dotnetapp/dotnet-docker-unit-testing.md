@@ -1,10 +1,10 @@
 # Running .NET Core Unit Tests with Docker
 
-You can run .NET Core unit tests in Docker with either `docker build` or `docker run`. 
+You can run .NET Core unit tests in Docker with either `docker build` or `docker run`.
 
 Running tests via `docker build` is useful as a means of getting early feedback, primarily pass/fail results printed via the console/terminal.
 
-Running tests via `docker run` is useful as a means of getting complete test results captured with volume mounting. 
+Running tests via `docker run` is useful as a means of getting complete test results captured with volume mounting.
 
 These instructions are based on the [.NET Core Docker Sample](README.md).
 
@@ -39,20 +39,18 @@ docker build -t dotnetapp .
 
 ### Run unit tests as part of `docker run`
 
-You can runs [unit tests](tests) as part of `docker run`, using the following commands. Running tests in this way is useful to get complete tests results for Docker images. The instructions assume that you are in the root of the repository.
-
-The [sample](Dockerfile) exposes multiple [Dockerfile stages](https://docs.docker.com/engine/reference/commandline/build/#specifying-target-build-stage-target) that you can separately target as part of `docker build` and run. The sample includes a `testrunner` stage with a separate `ENTRYPOINT` for unit testing, which is used in the following commands.
+You can run [unit tests](tests) as part of `docker run` using the following commands. Running tests in this way is useful to get complete tests results for Docker images. The [sample](Dockerfile) exposes multiple [Dockerfile stages](https://docs.docker.com/engine/reference/commandline/build/#specifying-target-build-stage-target) that you can separately target as part of `docker build` and run. The sample includes a `testrunner` stage with a separate `ENTRYPOINT` for unit testing, which is used in the following commands. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
 cd dotnetapp
-docker build --target testrunner -t dotnetapp:test .
+docker build --pull --target testrunner -t dotnetapp:test .
 ```
 
-If you want to test with Alpine Linux, you can alternatively build with the following [Dockerfile](Dockerfile.alpine-x64).
+If you want to test with Alpine Linux, you can alternatively build with [Dockerfile.alpine-x64](Dockerfile.alpine-x64) with the following command.
 
 ```console
-docker build --target testrunner -t dotnetapp -f Dockerfile.alpine .
+docker build --pull --target testrunner -t dotnetapp -f Dockerfile.alpine-x64 .
 ```
 
 The following commands rely on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to enable the test runner to write test log files to your local drive. Without that, running tests as part of `docker run` isn't as useful.
