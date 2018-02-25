@@ -56,7 +56,7 @@ The `aspnetapp` tag is a sample ASP.NET Web application that depends on the [.NE
 docker run --rm -p 8000:80 microsoft/dotnet-samples:aspnetapp
 ```
 
-After the application starts, navigate to `http://localhost:8000` in your web browser. See [View the ASP.NET Core app in a running container on Windows](https://github.com/dotnet/dotnet-docker/blob/samples/samples/aspnetapp/README.md#view-the-aspnet-core-app-in-a-running-container-on-windows) for Windows-specific instructions.
+After the application starts, navigate to `http://localhost:8000` in your web browser. See [View the ASP.NET Core app in a running container on Windows](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md#view-the-aspnet-core-app-in-a-running-container-on-windows) for Windows-specific instructions.
 
 ## Image variants
 
