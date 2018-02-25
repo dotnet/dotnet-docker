@@ -43,7 +43,7 @@ az acr credential show -n richlander | docker login richlander.azurecr.io -u ric
 
 ## Push Image for Azure Container Registry (ACR)
 
-Use the following instructions to tag the image for your registry and push the image. If you automate these instructions, you will want to build the image with the correct name initially.
+Use the following instructions to tag the image for your registry and push the image. If you automate these instructions, build the image with the correct name initially.
 
 ```console
 docker tag aspnetapp richlander.azurecr.io/aspnetapp
@@ -56,7 +56,7 @@ docker push richlander.azurecr.io/aspnetapp
 az container create --name aspnetapp --image richlander.azurecr.io/aspnetapp --resource-group richlander-containers --ip-address public
 ```
 
-You must specify `--os-type Windows` for Windows images. Windows Server, version 1709 are not yet supported.
+Specify `--os-type Windows` for Windows images. Windows Server, version 1709 are not yet supported.
 
 You will be asked for your password. Write or paste it in.
 

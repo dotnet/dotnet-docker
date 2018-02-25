@@ -20,7 +20,7 @@ docker run --rm microsoft/dotnet-samples:aspnetapp
 
 ## Getting the sample
 
-The easiest way to get the sample is by cloning the samples repository with git, using the following instructions.
+The easiest way to get the sample is by cloning the samples repository with git, using the following instructions:
 
 ```console
 git clone https://github.com/dotnet/dotnet-docker/
@@ -85,7 +85,7 @@ Ethernet adapter Ethernet:
    Default Gateway . . . . . . . . . : 172.29.240.1
 ```
 
-Note: [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec/) supports identifying containers with name or hash. The name is used above. It runs a new command (as opposed to the [entrypoint](https://docs.docker.com/engine/reference/builder/#entrypoint)) in a running container.
+Note: [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec/) supports identifying containers with name or hash. The name is the preceding instructions. `docker exec` runs a new command (as opposed to the [entrypoint](https://docs.docker.com/engine/reference/builder/#entrypoint)) in a running container.
 
 Some people prefer using `docker inspect` for this same purpose, as demonstrated in the following example.
 

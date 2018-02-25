@@ -24,7 +24,7 @@ docker run --rm dotnetapp
 
 ## Create ACR Registry
 
-The following example demonstrates how to create a private ACR Registry. Once an image is in ACR, it is very easy to deploy it to ACI.
+The following example demonstrates how to create a private ACR Registry. Once an image is in ACR, it is easy to deploy it to ACI.
 
 The instructions use example values that need to be changed to for your environment, specifically the password location, the registry name and the user account. More simply, make sure to change "rich" and "richlander" to something else.
 
@@ -58,15 +58,15 @@ You can see your credentials using the following command.
 az acr credential show -n richlander
 ```
 
-There are a few ways to login with these credentials, some of which are demonstrated below.
+There are a few ways to login with these credentials, some of which are demonstrated in the following examples.
 
-The easiest approach is to get the credentials and login in a single command, piping the result of the `az acr credential` command to `docker login` [via stdin](https://github.com/docker/cli/pull/218). This approach works on Windows, macOS and Linux.
+The easiest approach is to get the credentials and login in a single command, piping the result of the `az acr credential` command to `docker login` [via stdin](https://github.com/docker/cli/pull/218). This approach works on Windows, macOS, and Linux.
 
 ```console
 az acr credential show -n richlander --query passwords[0].value --output tsv | docker login richlander.azurecr.io -u richlander --password-stdin
 ```
 
-Alternatively, if you want to persist the password across logins, you can do the following. Make sure to save to a location not managed by source control (to avoid accidental disclosure).
+Alternatively, you can persist your password across logins with the following technique. Make sure to save to a location not managed by source control (to avoid accidental disclosure).
 
 Login on Windows:
 
@@ -92,9 +92,9 @@ docker push richlander.azurecr.io/dotnetapp
 
 ## Pull the Image from Another Device
 
-You need to `docker login` to ACR before you can pull the image from another device, just like was described previously. Alternatively, you can pass your password to `docker login` as plain text via the `--password` argument.
+First, `docker login` to ACR before you can pull the image from another device, just like was described previously. Alternatively, you can pass your password to `docker login` as plain text via the `--password` argument.
 
-You need to update the path locations, registry, and user names to the ones you are using.
+Update the path locations, registry, and user names to the ones you are using.
 
 Now pull and run the image:
 

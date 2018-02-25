@@ -10,7 +10,7 @@ These instructions are based on the [.NET Core Docker Sample](README.md).
 
 ## Run unit tests as part of `docker build`
 
-You can runs [unit tests](tests) as part of `docker build`, using the following commands. Running tests in this way is useful to get pass/fail results for building Docker images. The instructions assume that you are in the root of the repository.
+You can run [unit tests](tests) as part of `docker build`, using the following commands. Running tests in this way is useful to get pass/fail results for building Docker images. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples

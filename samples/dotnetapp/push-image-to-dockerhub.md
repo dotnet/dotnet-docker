@@ -48,7 +48,7 @@ Login on macOS or Linux:
 cat ~/password-dh.txt | docker login -u richlander --password-stdin
 ```
 
-Alternatively, you can pass your password to `docker login` as plain text via the `--password` argument.
+Alternatively, pass your password to `docker login` as plain text via the `--password` argument.
 
 ## Push the Image
 
@@ -60,9 +60,9 @@ docker push richlander/dotnetapp
 
 ## Pull the Image from Another Device
 
-You can pull the image from another device. You will need to `docker login` if you are using a private  Docker Hub repo using the same login instructions provided above.
+You can now pull the image from another device. You need to `docker login` if you are using a private Docker Hub repo using the same login instructions used previously.
 
-You need to update the path locations, registry, and user names to the ones you are using.
+Update the path locations, registry, and user names to the ones you are using.
 
 Now pull and run the image:
 

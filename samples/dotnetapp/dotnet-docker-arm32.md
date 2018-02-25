@@ -6,7 +6,7 @@ You can build and run .NET Core apps with [Docker for Raspberry Pi and ARM32 dev
 
 ## Building the Sample with Docker
 
-You need to build the [sample](Dockerfile.debian-arm32) on a 64-bit operating system. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
+Build the [sample](Dockerfile.debian-arm32) on a 64-bit operating system. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
@@ -23,14 +23,14 @@ Multiple variations of this sample have been provided, as follows. Some of these
 
 ## Pushing the image to a Container Registry
 
-You need to push the image to a container registry after building the image so that you can pull it from an ARM32 device. Instructions are provided for pushing to both Azure Container Registry and DockerHub (you only need to choose one):
+Push the image to a container registry after building the image so that you can pull it from an ARM32 device. Instructions are provided for pushing to both Azure Container Registry and DockerHub (you only need to choose one):
 
 * [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
 * [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
 
 ## Pull the Image from Another Device
 
-You will next want to pull the image from an ARM32 device (like a Pi) from the registry you pushed your image to.
+Next, pull the image from the registry you pushed your image to on an ARM32 device (like a Pi).
 
 Update the path locations, registry, and user names to the ones you are using.
 
@@ -42,7 +42,7 @@ Now pull and run the image from Azure Container Registry if you used that regist
 docker run --rm richlander.azurecr.io/dotnetapp:debian-arm32
 ```
 
-You must first `docker login` to Azure Container Registry. See [Push Docker Images to Azure Container Registry](push-image-to-acr.md) for instructions on how to do that.
+First `docker login` to Azure Container Registry. See [Push Docker Images to Azure Container Registry](push-image-to-acr.md) for instructions on how to do that.
 
 ### Using DockerHub
 

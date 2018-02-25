@@ -2,7 +2,7 @@
 
 The samples show various ways to use .NET Core and Docker together. You can use the samples as the basis of your own Docker images or just to play.
 
-The samples exercise various levels of functionality. The [.NET Core Docker sample](dotnetapp/README.md) includes the most functionality, including build, unit testing and pushing images to a container registry. The [ASP.NET Core Docker sample](aspnetapp/README.md) includes instructions for testing images with [Azure Container Instances](https://azure.microsoft.com/services/container-instances/). The samples include detailed instructions for use with and without Docker.
+The samples exercise various levels of functionality. The [.NET Core Docker sample](dotnetapp/README.md) includes the most functionality, including build, unit testing, and pushing images to a container registry. The [ASP.NET Core Docker sample](aspnetapp/README.md) includes instructions for testing images with [Azure Container Instances](https://azure.microsoft.com/services/container-instances/). The samples include detailed instructions for use with and without Docker.
 
 ## Try a pre-built .NET Core Docker Image
 
@@ -16,7 +16,7 @@ docker run --rm microsoft/dotnet-samples
 
 ## Building .NET Core Apps with Docker
 
-* [.NET Core Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile) builds, tests and runs the sample. It includes and builds multiple projects.
+* [.NET Core Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
 * [ASP.NET Core Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
 
 ## Push Images to a Container Registry
@@ -27,7 +27,7 @@ docker run --rm microsoft/dotnet-samples
 
 ## Optimizing Container Size
 
-* [.NET Core Alpine Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile.alpine-x64) builds, tests and runs an application using Alpine.
+* [.NET Core Alpine Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile.alpine-x64) builds, tests, and runs an application using Alpine.
 * [.NET Core self-contained Sample](dotnetapp/dotnet-docker-selfcontained.md) - This [sample](dotnetapp/Dockerfile.debian-x64-selfcontained) builds and runs an application as a self-contained application.
 
 ## ARM32 / Raspberry Pi

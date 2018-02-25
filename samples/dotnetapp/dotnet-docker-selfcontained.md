@@ -23,7 +23,7 @@ You first need to add a reference to the [linker package](https://dotnet.myget.o
 dotnet add package ILLink.Tasks -v 0.1.4-preview-981901 -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
 ```
 
-The various "self-contained" Dockerfiles do this as part of their implementation, as demonstrated in the following examples.
+The various "self-contained" Dockerfiles add the linker package to the sample project, as demonstrated in the following examples.
 
 ## Building the Sample for Windows Nano Server with Docker
 
@@ -51,7 +51,7 @@ docker run --rm dotnetapp:debian-x64-selfcontained
 
 Full instructions are provided at [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md). Summarized instructions follow.
 
-You need to build the [sample](Dockerfile.debian-arm32-selfcontained)on an X64 machine. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
+Build the [sample](Dockerfile.debian-arm32-selfcontained) on an X64 machine. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
