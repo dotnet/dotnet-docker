@@ -71,11 +71,13 @@ You next need to pull and run the image you pushed to the registry.
 If you pushed the image to DockerHub, the `docker run` command would look similar to the following.
 
 ```console
+pcker pull richlander/dotnetapp:debian-arm32-selfcontained
 docker run --rm richlander/dotnetapp:debian-arm32-selfcontained
 ```
 
 If you pushed the image to Azure Container Registry, the `docker run` command would look similar to the following. You need to `docker login` to Azure Container Registry before you can pull images.
 
 ```console
+docker pull richlander.azurecr.io/dotnetapp:debian-arm32-selfcontained
 docker run --rm richlander.azurecr.io/dotnetapp:debian-arm32-selfcontained
 ```

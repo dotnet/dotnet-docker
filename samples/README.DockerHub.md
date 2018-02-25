@@ -42,13 +42,21 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 
 ### Run a sample .NET Core application within a container
 
-The dotnetapp image is a sample application that depends on the [.NET Core Runtime image](https://hub.docker.com/r/microsoft/dotnet). You can run it in a container by running the following command.
+The `dotnetapp` tag is a sample console application that depends on the [.NET Core Runtime image](https://hub.docker.com/r/microsoft/dotnet). You can run it in a container by running the following command.
 
 ```console
 docker run microsoft/dotnet-samples:dotnetapp
 ```
 
-Note: The instructions above work for both Linux and Windows containers. The .NET Core docker images use [multi-arch tags](https://github.com/dotnet/announcements/issues/14), which abstract away different operating system choices for most use-cases.
+### Run a sample ASP.NET Core application within a container
+
+The `aspnetapp` tag is a sample ASP.NET Web application that depends on the [.NET Core Runtime image](https://hub.docker.com/r/microsoft/dotnet). You can run it in a container by running the following command.
+
+```console
+docker run --rm -p 8000:80 microsoft/dotnet-samples:aspnetapp
+```
+
+After the application starts, navigate to `http://localhost:8000` in your web browser. See [View the ASP.NET Core app in a running container on Windows](https://github.com/dotnet/dotnet-docker/blob/samples/samples/aspnetapp/README.md#view-the-aspnet-core-app-in-a-running-container-on-windows) for Windows-specific instructions.
 
 ## Image variants
 
@@ -61,6 +69,8 @@ This image demonstrates the minimal use of the [.NET Core Runtime image](https:/
 ### `microsoft/dotnet-samples:aspnetapp`
 
 This image demonstrates an ASP.NET Core web application using the [.NET Core Runtime image](https://hub.docker.com/r/microsoft/dotnet).
+
+> Note: The instructions above work for both Linux and Windows containers. The .NET Core docker images use [multi-arch tags](https://github.com/dotnet/announcements/issues/14), which abstract away different operating system choices for most use-cases.
 
 ## Related Repos
 

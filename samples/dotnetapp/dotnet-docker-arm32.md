@@ -30,7 +30,7 @@ Push the image to a container registry after building the image so that you can 
 
 ## Pull the Image from Another Device
 
-Next, pull the image from the registry you pushed your image to on an ARM32 device (like a Pi).
+Next, pull the image from the registry you pushed your image to, on an ARM32 device (like a Pi).
 
 Update the path locations, registry, and user names to the ones you are using.
 
@@ -39,6 +39,7 @@ Update the path locations, registry, and user names to the ones you are using.
 Now pull and run the image from Azure Container Registry if you used that registry:
 
 ```console
+docker pull richlander.azurecr.io/dotnetapp:debian-arm32
 docker run --rm richlander.azurecr.io/dotnetapp:debian-arm32
 ```
 
@@ -49,5 +50,6 @@ First `docker login` to Azure Container Registry. See [Push Docker Images to Azu
 Now pull and run the image from DockerHub if you used that registry:
 
 ```console
+docker pull richlander/dotnetapp:debian-arm32
 docker run --rm richlander/dotnetapp:debian-arm32
 ```

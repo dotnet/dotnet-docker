@@ -85,7 +85,7 @@ Ethernet adapter Ethernet:
    Default Gateway . . . . . . . . . : 172.29.240.1
 ```
 
-Note: [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec/) supports identifying containers with name or hash. The name is the preceding instructions. `docker exec` runs a new command (as opposed to the [entrypoint](https://docs.docker.com/engine/reference/builder/#entrypoint)) in a running container.
+Note: [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec/) supports identifying containers with name or hash. The container name is used in the preceding instructions. `docker exec` runs a new command (as opposed to the [entrypoint](https://docs.docker.com/engine/reference/builder/#entrypoint)) in a running container.
 
 Some people prefer using `docker inspect` for this same purpose, as demonstrated in the following example.
 
@@ -116,12 +116,14 @@ You next need to pull and run the image you pushed to the registry.
 If you pushed the image to DockerHub, the `docker run` command would look similar to the following.
 
 ```console
+docker pull richlander/aspnetapp
 docker run --rm -p 8000:80 richlander/aspnetapp
 ```
 
 If you pushed the image to Azure Container Registry, the `docker run` command would look similar to the following. Remember to `docker login` to Azure Container Registry first, as demonstrated in [Push Docker Images to Azure Container Registry](../dotnetapp/push-image-to-acr.md).
 
 ```console
+docker pull richlander.azurecr.io/aspnetapp
 docker run --rm -p 8000:80 richlander.azurecr.io/aspnetapp
 ```
 

@@ -67,5 +67,6 @@ Update the path locations, registry, and user names to the ones you are using.
 Now pull and run the image:
 
 ```console
+docker pull richlander/dotnetapp
 docker run --rm richlander/dotnetapp
 ```
