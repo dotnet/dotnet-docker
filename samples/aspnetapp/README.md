@@ -58,7 +58,7 @@ Note: The `-p` argument maps port 8000 on your local machine to port 80 in the c
 Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
 * [Multi-arch sample](Dockerfile)
-* [Linux ARM32 (Raspberry Pi) sample](Dockerfile.linux-arm32)
+* [Linux ARM32 (Raspberry Pi) sample](Dockerfile.debian-arm32)
 
 ### View the ASP.NET Core app in a running container on Windows
 
@@ -96,7 +96,7 @@ C:\git\dotnet-docker\samples\aspnetapp>docker inspect -f "{{ .NetworkSettings.Ne
 
 ## Build and run the sample for Linux ARM32 with Docker
 
-You need to build the [sample](Dockerfile.linux-arm32) on an X64 machine. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
+You need to build the [sample](Dockerfile.debian-arm32) on an X64 machine. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples

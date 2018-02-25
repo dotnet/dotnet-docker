@@ -12,7 +12,7 @@
     <None Remove=".dockerignore" />
     <None Remove="deploy-container-to-aci.md" />
     <None Remove="Dockerfile" />
-    <None Remove="Dockerfile.linux-arm32" />
+    <None Remove="Dockerfile.debian-arm32" />
     <None Remove="README.md" />
   </ItemGroup>
 
