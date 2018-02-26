@@ -262,7 +262,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageVersion, DotNetImageType imageType, string osVariant, bool isArm = false)
         {
             string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
-            string imageName = $"{RepoOwner}/dotnet-nightly:{imageVersion}-{variantName}";
+            string imageName = $"{RepoOwner}/dotnet:{imageVersion}-{variantName}";
             if (!string.IsNullOrEmpty(osVariant))
             {
                 imageName += $"-{osVariant}";
