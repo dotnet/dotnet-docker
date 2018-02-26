@@ -7,8 +7,10 @@ namespace Microsoft.DotNet.Docker.Tests
     public class OS
     {
         public const string Alpine = "alpine";
+        public const string Bionic = "bionic";
         public const string Jessie = "jessie";
         public const string Stretch = "stretch";
+        public const string StretchSlim = "stretch-slim";
         public const string NanoServerSac2016 = "nanoserver-sac2016";
         public const string NanoServer1709 = "nanoserver-1709";
     }
