@@ -33,6 +33,11 @@ You can build and run the [sample](Dockerfile.nanoserver-x64-selfcontained) in a
 cd samples
 cd dotnetapp
 docker build --pull -t dotnetapp:nanoserver-selfcontained -f Dockerfile.nanoserver-x64-selfcontained .
+```
+
+You can test the image with the following instructions.
+
+```console
 docker run --rm dotnetapp:nanoserver-selfcontained
 ```
 
@@ -44,40 +49,15 @@ You can build and run the [sample](Dockerfile.selfcontained-linux-x64) in a [Deb
 cd samples
 cd dotnetapp
 docker build --pull -t dotnetapp:debian-x64-selfcontained -f Dockerfile.selfcontained-debian-x64 .
+```
+
+You can test the image with the following instructions.
+
+```console
 docker run --rm dotnetapp:debian-x64-selfcontained
 ```
 
-## Building the Sample for Linux ARM32 with Docker
+## Build and run the sample for Linux ARM32 with Docker
 
-Full instructions are provided at [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md). Summarized instructions follow.
+You can build and run the sample for ARM32 and Raspberry Pi with [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md) instructions. To create a self-contained application with those instructions, you need to use the [Dockerfile.debian-arm32-selfcontained](Dockerfile.debian-arm32-selfcontained) Dockerfile.
 
-Build the [sample](Dockerfile.debian-arm32-selfcontained) on an X64 machine. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
-
-```console
-cd samples
-cd dotnetapp
-docker build --pull -t dotnetapp:debian-arm32-selfcontained -f Dockerfile.debian-arm32-selfcontained .
-```
-
-After building the image, you need to push the image to a container registry so that you can pull it from an ARM32 device.
-
-Instructions are provided for pushing to both Azure Container Registry and DockerHub (you only need to choose one):
-
-* [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
-* [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
-
-You next need to pull and run the image you pushed to the registry.
-
-If you pushed the image to DockerHub, the `docker run` command would look similar to the following.
-
-```console
-pcker pull richlander/dotnetapp:debian-arm32-selfcontained
-docker run --rm richlander/dotnetapp:debian-arm32-selfcontained
-```
-
-If you pushed the image to Azure Container Registry, the `docker run` command would look similar to the following. You need to `docker login` to Azure Container Registry before you can pull images.
-
-```console
-docker pull richlander.azurecr.io/dotnetapp:debian-arm32-selfcontained
-docker run --rm richlander.azurecr.io/dotnetapp:debian-arm32-selfcontained
-```

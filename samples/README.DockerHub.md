@@ -22,7 +22,7 @@
 
 This repo contains samples that demonstrate various .NET Core Docker configurations.
 
-You can see the source for these samples at [dotnet/dotnet-docker/samples](https://github.com/dotnet/dotnet-docker/tree/master/samples/README.md) on GitHub. They can be updated by pull request.
+You can see the source for these samples at [dotnet/dotnet-docker/samples](https://github.com/dotnet/dotnet-docker/tree/master/samples/README.md) on GitHub. They can be updated by creating a pull request.
 
 ## What is .NET Core?
 
@@ -45,7 +45,7 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 The `dotnetapp` tag is a sample console application that depends on the [.NET Core Runtime image](https://hub.docker.com/r/microsoft/dotnet). You can run it in a container by running the following command.
 
 ```console
-docker run microsoft/dotnet-samples:dotnetapp
+docker run --rm microsoft/dotnet-samples:dotnetapp
 ```
 
 ### Run a sample ASP.NET Core application within a container
@@ -103,7 +103,7 @@ Please see [the Docker installation documentation](https://docs.docker.com/insta
 
 ### Issues
 
-If you have any problems with or questions about this image, please contact us through a [GitHub issue](https://github.com/dotnet/dotnet-docker/samples/issues).
+If you have any problems with or questions about this image, please contact us through a [GitHub issue](https://github.com/dotnet/dotnet-docker/issues).
 
 ### Contributing
 

@@ -32,7 +32,7 @@ Push the image to a container registry after building the image so that you can 
 
 Next, pull the image from the registry you pushed your image to, on an ARM32 device (like a Pi).
 
-Update the path locations, registry, and user names to the ones you are using.
+> Note: The instructions use example values that need to be changed to for your environment, specifically the password location, and the user account. More simply, make sure to change "rich" and "richlander" to something else.
 
 ### Using Azure Container Registry (ACR)
 

@@ -20,7 +20,7 @@ public static class Program
         ConsoleUtils.PrintStringWithRandomColor(bot);
 
         WriteLine("**Environment**");
-        WriteLine($"Platform: .NET Core 2.0");
+        WriteLine($"Platform: .NET Core");
         WriteLine($"OS: {RuntimeInformation.OSDescription}");
         WriteLine();
   }

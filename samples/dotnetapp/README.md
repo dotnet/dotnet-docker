@@ -59,7 +59,7 @@ Multiple variations of this sample have been provided, as follows. Some of these
 * [Debian ARM32 sample with build and unit testing](Dockerfile.debian-arm32)
 * [Debian self-contained ARM32 sample with build and unit testing](Dockerfile.debian-arm32-selfcontained)
 
-## Build and run the sample for Alpine
+## Build and run the sample for Alpine with Docker
 
 You can build and run the sample with [Alpine](https://hub.docker.com/_/alpine/) using the following commands. The instructions assume that you are in the root of the repository.
 
@@ -74,15 +74,15 @@ docker run --rm dotnetapp:alpine Hello .NET Core from Alpine
 
 > Related: [.NET Core Alpine Docker Image announcement](https://github.com/dotnet/dotnet-docker-nightly/issues/500)
 
-## Build and run the sample for ARM32
+## Build and run the sample for Linux ARM32 with Docker
 
-You can build and run the sample for [ARM32 and Raspberry Pi](dotnet-docker-arm32.md) with [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md) instructions.
+You can build and run the sample for ARM32 and Raspberry Pi with [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md) instructions.
 
 ## Build .NET Core Self-Contained Applications with Docker
 
 You can build [Build .NET Core Self-Contained Applications with Docker](dotnet-docker-selfcontained.md).
 
-## Run Image on Another Device
+## Run Docker Image on Another Device
 
 You can push the image to a container registry so that you can pull and run it on another device. Straightforward instructions are provided for pushing to both Azure Container Registry and DockerHub.
 

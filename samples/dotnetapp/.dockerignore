@@ -1,7 +1,7 @@
 # directories
-bin/
-obj/
-out/
+**/bin/
+**/obj/
+**/out/
 
 # files
 Dockerfile*

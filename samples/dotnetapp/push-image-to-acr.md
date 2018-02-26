@@ -26,7 +26,7 @@ docker run --rm dotnetapp
 
 The following example demonstrates how to create a private ACR Registry. Once an image is in ACR, it is easy to deploy it to ACI.
 
-The instructions use example values that need to be changed to for your environment, specifically the password location, the registry name and the user account. More simply, make sure to change "rich" and "richlander" to something else.
+> Note: The instructions use example values that need to be changed to for your environment, specifically the password location, and the user account. More simply, make sure to change "rich" and "richlander" to something else.
 
 ```console
 az login

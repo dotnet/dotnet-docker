@@ -51,7 +51,7 @@ Now listening on: http://[::]:80
 Application started. Press Ctrl+C to shut down.
 ```
 
-After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in the next section.
+After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in the [View the ASP.NET Core app in a running container on Windows](#view-the-aspnet-core-app-in-a-running-container-on-windows) section.
 
 Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline parameters.
 

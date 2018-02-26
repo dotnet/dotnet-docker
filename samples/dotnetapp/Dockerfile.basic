@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:sdk AS build
+FROM microsoft/dotnet:2.0-sdk AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -8,7 +8,7 @@ COPY utils/*.csproj ./utils/
 COPY tests/*.csproj ./tests/
 RUN dotnet restore
 
-# copy everything else and build app
+# copy and build everything else
 COPY . .
 WORKDIR /app/dotnetapp
 RUN dotnet publish -c Release -o out
