@@ -15,6 +15,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private static string ArchFilter => Environment.GetEnvironmentVariable("IMAGE_ARCH_FILTER");
         private static string OsFilter => Environment.GetEnvironmentVariable("IMAGE_OS_FILTER");
+        private static string RepoOwner => Environment.GetEnvironmentVariable("REPO_OWNER") ?? "microsoft";
         private static string VersionFilter => Environment.GetEnvironmentVariable("IMAGE_VERSION_FILTER");
 
         private static ImageDescriptor[] LinuxTestData = new ImageDescriptor[]
@@ -23,7 +24,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 new ImageDescriptor { DotNetCoreVersion = "1.1", RuntimeDepsVersion = "1.0" },
                 new ImageDescriptor { DotNetCoreVersion = "2.0" },
                 new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Jessie },
-                new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Stretch, SdkOsVariant = "", Architecture = "arm" },
+                new ImageDescriptor { DotNetCoreVersion = "2.0", OsVariant = OS.Stretch, HasNoSdk = true, Architecture = "arm" },
+                new ImageDescriptor { DotNetCoreVersion = "2.1" },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.Bionic },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.Alpine },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.StretchSlim, HasNoSdk = true, Architecture = "arm" },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", OsVariant = OS.Bionic, HasNoSdk = true, Architecture = "arm" },
             };
         private static ImageDescriptor[] WindowsTestData = new ImageDescriptor[]
             {
@@ -31,6 +37,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 new ImageDescriptor { DotNetCoreVersion = "1.1", PlatformOS = OS.NanoServerSac2016 },
                 new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = OS.NanoServerSac2016 },
                 new ImageDescriptor { DotNetCoreVersion = "2.0", PlatformOS = OS.NanoServer1709 },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", PlatformOS = OS.NanoServerSac2016 },
+                new ImageDescriptor { DotNetCoreVersion = "2.1", PlatformOS = OS.NanoServer1709 },
             };
 
         private DockerHelper DockerHelper { get; set; }
@@ -81,8 +89,9 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 CreateTestAppWithSdkImage(imageDescriptor, appSdkImage);
 
-                if (!string.IsNullOrEmpty(imageDescriptor.SdkOsVariant))
+                if (!imageDescriptor.HasNoSdk)
                 {
+                    VerifySdkImage_PackageCache(imageDescriptor);
                     VerifySdkImage_RunApp(imageDescriptor, appSdkImage);
                 }
 
@@ -109,13 +118,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 buildArgs.Add($"optional_new_args=--no-restore");
             }
 
-            string sdkImage = GetDotNetImage(
-                imageDescriptor.SdkVersion, DotNetImageType.SDK, imageDescriptor.SdkOsVariant);
-
             DockerHelper.Build(
                 dockerfile: $"Dockerfile.{DockerHelper.DockerOS.ToLower()}.testapp",
                 tag: appSdkImage,
-                fromImage: sdkImage,
+                fromImage: GetDotNetImage(imageDescriptor.SdkVersion, DotNetImageType.SDK, imageDescriptor.SdkOsVariant),
                 buildArgs: buildArgs.ToArray());
         }
 
@@ -126,6 +132,39 @@ namespace Microsoft.DotNet.Docker.Tests
                 image: appSdkImage,
                 command: "dotnet run",
                 containerName: appSdkImage);
+        }
+
+        private void VerifySdkImage_PackageCache(ImageDescriptor imageDescriptor)
+        {
+            string verifyCacheCommand;
+            if (imageDescriptor.DotNetCoreVersion.StartsWith("1."))
+            {
+                if (DockerHelper.IsLinuxContainerModeEnabled)
+                {
+                    verifyCacheCommand = "test -d /root/.nuget/packages";
+                }
+                else
+                {
+                    verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Users\\ContainerAdministrator\\.nuget\\packages\"";
+                }
+            }
+            else
+            {
+                if (DockerHelper.IsLinuxContainerModeEnabled)
+                {
+                    verifyCacheCommand = "test -d /usr/share/dotnet/sdk/NuGetFallbackFolder";
+                }
+                else
+                {
+                    verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\"";
+                }
+            }
+
+            // Simple check to verify the NuGet package cache was created
+            DockerHelper.Run(
+                image: GetDotNetImage(imageDescriptor.SdkVersion, DotNetImageType.SDK, imageDescriptor.SdkOsVariant),
+                command: verifyCacheCommand,
+                containerName: GetIdentifier(imageDescriptor.DotNetCoreVersion, "PackageCache"));
         }
 
         private void VerifyRuntimeImage_FrameworkDependentApp(ImageDescriptor imageDescriptor, string appSdkImage)
@@ -223,7 +262,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageVersion, DotNetImageType imageType, string osVariant, bool isArm = false)
         {
             string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
-            string imageName = $"microsoft/dotnet:{imageVersion}-{variantName}";
+            string imageName = $"{RepoOwner}/dotnet:{imageVersion}-{variantName}";
             if (!string.IsNullOrEmpty(osVariant))
             {
                 imageName += $"-{osVariant}";
@@ -251,6 +290,10 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageDescriptor.IsArm)
             {
                 rid = "linux-arm";
+            }
+            else if (imageDescriptor.IsAlpine)
+            {
+                rid = "alpine.3.6-x64";
             }
             else if (imageDescriptor.DotNetCoreVersion.StartsWith("1."))
             {

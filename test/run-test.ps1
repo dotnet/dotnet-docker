@@ -7,7 +7,8 @@
 param(
     [string]$VersionFilter,
     [string]$ArchitectureFilter,
-    [string]$OSFilter
+    [string]$OSFilter,
+    [string]$RepoOwner
 )
 
 Set-StrictMode -Version Latest
@@ -54,6 +55,7 @@ Try {
     $env:IMAGE_ARCH_FILTER = $ArchitectureFilter
     $env:IMAGE_OS_FILTER = $OSFilter
     $env:IMAGE_VERSION_FILTER = $VersionFilter
+    $env:REPO_OWNER = $RepoOwner
 
     & $DotnetInstallDir/dotnet test -v n
 

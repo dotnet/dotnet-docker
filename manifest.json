@@ -2,10 +2,10 @@
   "testCommands": {
     "linux": [
       "docker build --rm -t testrunner -f ./test/Dockerfile.linux.testrunner .",
-      "docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner pwsh -File ./test/run-test.ps1 -VersionFilter $(VersionFilter) -ArchitectureFilter $(ArchitectureFilter)"
+      "docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner pwsh -File ./test/run-test.ps1 -VersionFilter $(VersionFilter) -ArchitectureFilter $(ArchitectureFilter) -RepoOwner $(System:RepoOwner)"
     ],
     "windows": [
-      "powershell -NoProfile -Command .\\test\\run-test.ps1 -VersionFilter $(VersionFilter) -OSFilter $(OSFilter)"
+      "powershell -NoProfile -Command .\\test\\run-test.ps1 -VersionFilter $(VersionFilter) -OSFilter $(OSFilter) -RepoOwner $(System:RepoOwner)"
     ]
   },
   "repos": [
@@ -153,7 +153,7 @@
           ]
         },
         {
-          "readmeOrder": 6,
+          "readmeOrder": 7,
           "sharedTags": {
             "2.0.5-runtime-deps": {},
             "2.0-runtime-deps": {},
@@ -185,7 +185,7 @@
           ]
         },
         {
-          "readmeOrder": 4,
+          "readmeOrder": 5,
           "sharedTags": {
             "2.0.5-runtime": {},
             "2.0-runtime": {},
@@ -240,7 +240,7 @@
           ]
         },
         {
-          "readmeOrder": 8,
+          "readmeOrder": 9,
           "sharedTags": {
             "2.0.5-sdk-2.1.4": {},
             "2.0-sdk": {},
@@ -283,7 +283,7 @@
           ]
         },
         {
-          "readmeOrder": 7,
+          "readmeOrder": 6,
           "platforms": [
             {
               "dockerfile": "2.0/runtime-deps/jessie/amd64",
@@ -297,7 +297,7 @@
           ]
         },
         {
-          "readmeOrder": 5,
+          "readmeOrder": 4,
           "platforms": [
             {
               "dockerfile": "2.0/runtime/jessie/amd64",
@@ -311,7 +311,7 @@
           ]
         },
         {
-          "readmeOrder": 9,
+          "readmeOrder": 8,
           "platforms": [
             {
               "dockerfile": "2.0/sdk/jessie/amd64",
@@ -321,6 +321,219 @@
                 "2.0-sdk-jessie": {},
                 "2-sdk-jessie": {}
               }
+            }
+          ]
+        },
+        {
+          "readmeOrder": 17,
+          "sharedTags": {
+            "2.1.0-preview1-runtime-deps": {},
+            "2.1-runtime-deps": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime-deps/stretch-slim/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview1-runtime-deps-stretch-slim": {},
+                "2.1-runtime-deps-stretch-slim": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "2.1/runtime-deps/stretch-slim/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview1-runtime-deps-stretch-slim-arm32v7": {},
+                "2.1-runtime-deps-stretch-slim-arm32v7": {}
+              },
+              "variant": "armv7"
+            }
+          ]
+        },
+        {
+          "readmeOrder": 13,
+          "sharedTags": {
+            "2.1.0-preview1-runtime": {},
+            "2.1-runtime": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime/stretch-slim/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview1-runtime-stretch-slim": {},
+                "2.1-runtime-stretch-slim": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "2.1/runtime/stretch-slim/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview1-runtime-stretch-slim-arm32v7": {},
+                "2.1-runtime-stretch-slim-arm32v7": {}
+              },
+              "variant": "armv7"
+            },
+            {
+              "dockerfile": "2.1/runtime/nanoserver-sac2016/amd64",
+              "os": "windows",
+              "tags": {
+                "2.1.0-preview1-runtime-nanoserver-sac2016": {},
+                "2.1-runtime-nanoserver-sac2016": {}
+              }
+            },
+            {
+              "dockerfile": "2.1/runtime/nanoserver-1709/amd64",
+              "os": "windows",
+              "osVersion": "1709",
+              "tags": {
+                "2.1.0-preview1-runtime-nanoserver-1709": {},
+                "2.1-runtime-nanoserver-1709": {}
+              }
+            }
+          ]
+        },
+        {
+          "readmeOrder": 20,
+          "sharedTags": {
+            "2.1.300-preview1-sdk": {},
+            "2.1-sdk": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "2.1/sdk/stretch/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.300-preview1-sdk-stretch": {},
+                "2.1-sdk-stretch": {}
+              }
+            },
+            {
+              "dockerfile": "2.1/sdk/nanoserver-sac2016/amd64",
+              "os": "windows",
+              "tags": {
+                "2.1.300-preview1-sdk-nanoserver-sac2016": {},
+                "2.1-sdk-nanoserver-sac2016": {}
+              }
+            },
+            {
+              "dockerfile": "2.1/sdk/nanoserver-1709/amd64",
+              "os": "windows",
+              "osVersion": "1709",
+              "tags": {
+                "2.1.300-preview1-sdk-nanoserver-1709": {},
+                "2.1-sdk-nanoserver-1709": {}
+              }
+            }
+          ]
+        },
+        {
+          "readmeOrder": 14,
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime-deps/alpine/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview1-runtime-deps-alpine": {},
+                "2.1-runtime-deps-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "readmeOrder": 11,
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime/alpine/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview1-runtime-alpine": {},
+                "2.1-runtime-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "readmeOrder": 18,
+          "platforms": [
+            {
+              "dockerfile": "2.1/sdk/alpine/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.300-preview1-sdk-alpine": {},
+                "2.1-sdk-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "readmeOrder": 15,
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime-deps/bionic/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview1-runtime-deps-bionic": {},
+                "2.1-runtime-deps-bionic": {}
+              }
+            }
+          ]
+        },
+        {
+          "readmeOrder": 12,
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime/bionic/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview1-runtime-bionic": {},
+                "2.1-runtime-bionic": {}
+              }
+            }
+          ]
+        },
+        {
+          "readmeOrder": 19,
+          "platforms": [
+            {
+              "dockerfile": "2.1/sdk/bionic/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.300-preview1-sdk-bionic": {},
+                "2.1-sdk-bionic": {}
+              }
+            }
+          ]
+        },
+        {
+          "readmeOrder": 16,
+          "platforms": [
+            {
+              "architecture": "arm",
+              "dockerfile": "2.1/runtime-deps/bionic/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview1-runtime-deps-bionic-arm32v7": {},
+                "2.1-runtime-deps-bionic-arm32v7": {}
+              },
+              "variant": "armv7"
+            }
+          ]
+        },
+        {
+          "readmeOrder": 10,
+          "platforms": [
+            {
+              "architecture": "arm",
+              "dockerfile": "2.1/runtime/bionic/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview1-runtime-bionic-arm32v7": {},
+                "2.1-runtime-bionic-arm32v7": {}
+              },
+              "variant": "armv7"
             }
           ]
         }

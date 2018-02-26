@@ -33,7 +33,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "pull $(image-builder.imageName)",
+        "arguments": "pull $(imageBuilder.imageName)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -52,7 +52,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name $(image-builder.containerName) $(image-builder.imageName) $(image-builder.args)",
+        "arguments": "run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name $(imageBuilder.containerName) $(imageBuilder.imageName) $(imageBuilder.args)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -121,24 +121,27 @@
       "value": "false",
       "allowOverride": true
     },
-    "image-builder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20171006102106"
+    "imageBuilder.imageName": {
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180130154400"
     },
-    "image-builder.args": {
-      "value": "build --manifest manifest.json --path $(PB.image-builder.path) --test-var VersionFilter=$(PB.image-builder.path) --test-var ArchitectureFilter=amd64 --push --username $(PB.docker.username) --password $(PB.docker.password) $(PB.image-builder.customCommonArgs)",
+    "imageBuilder.args": {
+      "value": "build --manifest manifest.json --path $(PB_imageBuilder_path) --var VersionFilter=$(PB_imageBuilder_path) --var ArchitectureFilter=amd64 $(PB_imageBuilder_customVars) --push --username $(PB_docker_username) --password $(PB_docker_password) $(PB_imageBuilder_queueCustomArgs)",
       "allowOverride": true
     },
-    "image-builder.containerName": {
+    "imageBuilder.containerName": {
       "value": "$(Build.DefinitionName)-$(Build.BuildId)"
     },
-    "PB.docker.password": {
+    "PB_docker_password": {
       "value": null,
       "isSecret": true
     },
-    "PB.image-builder.customCommonArgs": {
+    "PB_imageBuilder_customVars": {
       "value": ""
     },
-    "PB.image-builder.path": {
+    "PB_imageBuilder_path": {
+      "value": ""
+    },
+    "PB_imageBuilder_queueCustomArgs": {
       "value": ""
     }
   },
@@ -162,7 +165,7 @@
     }
   ],
   "jobAuthorizationScope": "projectCollection",
-  "jobTimeoutInMinutes": 60,
+  "jobTimeoutInMinutes": 90,
   "jobCancelTimeoutInMinutes": 5,
   "repository": {
     "properties": {
