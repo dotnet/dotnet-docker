@@ -396,7 +396,7 @@
           ]
         },
         {
-          "readmeOrder": 19,
+          "readmeOrder": 20,
           "sharedTags": {
             "2.1.300-preview1-sdk": {},
             "2.1-sdk": {}
@@ -456,6 +456,19 @@
           ]
         },
         {
+          "readmeOrder": 18,
+          "platforms": [
+            {
+              "dockerfile": "2.1/sdk/alpine/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.300-preview1-sdk-alpine": {},
+                "2.1-sdk-alpine": {}
+              }
+            }
+          ]
+        },
+        {
           "readmeOrder": 15,
           "platforms": [
             {
@@ -482,7 +495,7 @@
           ]
         },
         {
-          "readmeOrder": 18,
+          "readmeOrder": 19,
           "platforms": [
             {
               "dockerfile": "2.1/sdk/bionic/amd64",
