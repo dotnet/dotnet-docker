@@ -143,8 +143,11 @@
     "imageBuilder.imageName": {
       "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180130154400"
     },
+    "imageBuilder.manifest": {
+      "value": "manifest.json"
+    },
     "imageBuilder.common.args": {
-      "value": "--manifest manifest.json --username $(PB_docker_username) --password $(PB_docker_password) $(PB_imageBuilder_queueCustomArgs)",
+      "value": "--manifest $(imageBuilder.manifest) --username $(PB_docker_username) --password $(PB_docker_password) $(PB_imageBuilder_queueCustomArgs)",
       "allowOverride": true
     },
     "imageBuilder.publishManifest.args": {
