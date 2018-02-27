@@ -63,21 +63,21 @@
           "Name": "dotnet-docker-windows-sac2016-amd64-images",
           "Parameters": {
             "PB_imageBuilder_path": "1.*",
-            "PB_imageBuilder_customVars": "--var VersionFilter=1.* --var OSFilter=nanoserver-sac2016"
+            "PB_imageBuilder_customArgs": "--var VersionFilter=1.* --var OSFilter=nanoserver-sac2016"
           }
         },
         {
           "Name": "dotnet-docker-windows-sac2016-amd64-images",
           "Parameters": {
             "PB_imageBuilder_path": "2.0*/nanoserver-sac2016/*",
-            "PB_imageBuilder_customVars": "--var VersionFilter=2.0* --var OSFilter=nanoserver-sac2016"
+            "PB_imageBuilder_customArgs": "--var VersionFilter=2.0* --var OSFilter=nanoserver-sac2016"
           }
         },
         {
           "Name": "dotnet-docker-windows-sac2016-amd64-images",
           "Parameters": {
             "PB_imageBuilder_path": "2.1*/nanoserver-sac2016/*",
-            "PB_imageBuilder_customVars": "--var VersionFilter=2.1* --var OSFilter=nanoserver-sac2016"
+            "PB_imageBuilder_customArgs": "--var VersionFilter=2.1* --var OSFilter=nanoserver-sac2016"
           }
         }
       ]
@@ -92,14 +92,14 @@
           "Name": "dotnet-docker-windows-1709-amd64-images",
           "Parameters": {
             "PB_imageBuilder_path": "2.0*/nanoserver-1709/*",
-            "PB_imageBuilder_customVars": "--var VersionFilter=2.0* --var OSFilter=nanoserver-1709"
+            "PB_imageBuilder_customArgs": "--var VersionFilter=2.0* --var OSFilter=nanoserver-1709"
           }
         },
         {
           "Name": "dotnet-docker-windows-1709-amd64-images",
           "Parameters": {
             "PB_imageBuilder_path": "2.1*/nanoserver-1709/*",
-            "PB_imageBuilder_customVars": "--var VersionFilter=2.1* --var OSFilter=nanoserver-1709"
+            "PB_imageBuilder_customArgs": "--var VersionFilter=2.1* --var OSFilter=nanoserver-1709"
           }
         }
       ]

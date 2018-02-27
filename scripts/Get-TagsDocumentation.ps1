@@ -1,6 +1,7 @@
 param(
     [string]$Branch='master',
-    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20171122115946',
+    [string]$Manifest='manifest.json',
+    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180227221546',
     [string]$RepoName
 )
 
@@ -27,4 +28,4 @@ if ([String]::IsNullOrWhiteSpace($RepoName))
     -v "${repoRoot}:/repo" `
     -w /repo `
     $ImageBuilderImageName `
-    generateTagsReadme --update-readme "https://github.com/dotnet/${RepoName}/blob/${Branch}"
+    generateTagsReadme --update-readme --manifest ${Manifest} "https://github.com/dotnet/${RepoName}/blob/${Branch}"

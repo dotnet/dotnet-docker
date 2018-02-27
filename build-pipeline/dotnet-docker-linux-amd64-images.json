@@ -122,10 +122,13 @@
       "allowOverride": true
     },
     "imageBuilder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180130154400"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180227221546"
+    },
+    "imageBuilder.manifest": {
+      "value": "manifest.json"
     },
     "imageBuilder.args": {
-      "value": "build --manifest manifest.json --path $(PB_imageBuilder_path) --var VersionFilter=$(PB_imageBuilder_path) --var ArchitectureFilter=amd64 $(PB_imageBuilder_customVars) --push --username $(PB_docker_username) --password $(PB_docker_password) $(PB_imageBuilder_queueCustomArgs)",
+      "value": "build --manifest $(imageBuilder.manifest) --path $(PB_imageBuilder_path) --var VersionFilter=$(PB_imageBuilder_path) --var ArchitectureFilter=amd64 $(PB_imageBuilder_customArgs) --push --username $(PB_docker_username) --password $(PB_docker_password) $(PB_imageBuilder_queueCustomArgs)",
       "allowOverride": true
     },
     "imageBuilder.containerName": {
@@ -135,14 +138,15 @@
       "value": null,
       "isSecret": true
     },
-    "PB_imageBuilder_customVars": {
+    "PB_imageBuilder_customArgs": {
       "value": ""
     },
     "PB_imageBuilder_path": {
-      "value": ""
+      "value": "*"
     },
     "PB_imageBuilder_queueCustomArgs": {
-      "value": ""
+      "value": "",
+      "allowOverride": true
     }
   },
   "demands": [

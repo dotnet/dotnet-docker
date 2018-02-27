@@ -198,14 +198,17 @@
       "value": "$(Build.DefinitionName)-$(Build.BuildId)"
     },
     "imageBuilder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180130154400"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180227221546"
+    },
+    "imageBuilder.manifest": {
+      "value": "manifest.json"
     },
     "imageBuilder.commonArgs": {
-      "value": "build --manifest manifest.json $(PB_imageBuilder_queueCustomArgs)",
+      "value": "build --manifest $(imageBuilder.manifest) $(PB_imageBuilder_queueCustomArgs)",
       "allowOverride": true
     },
     "imageBuilder.armBuildArgs": {
-      "value": "$(imageBuilder.commonArgs) --path $(PB_imageBuilder_path) --architecture arm --skip-test --var VersionFilter=$(PB_imageBuilder_path) --var ArchitectureFilter=arm $(PB_imageBuilder_customVars) --push --username $(PB_docker_username) --password $(PB_docker_password)",
+      "value": "$(imageBuilder.commonArgs) --path $(PB_imageBuilder_path) --architecture arm --skip-test --var VersionFilter=$(PB_imageBuilder_path) --var ArchitectureFilter=arm $(PB_imageBuilder_customArgs) --push --username $(PB_docker_username) --password $(PB_docker_password)",
       "allowOverride": true
     },
     "imageBuilder.sdkBuildArgs": {
@@ -216,14 +219,15 @@
       "value": null,
       "isSecret": true
     },
-    "PB_imageBuilder_customVars": {
+    "PB_imageBuilder_customArgs": {
       "value": ""
     },
     "PB_imageBuilder_path": {
-      "value": ""
+      "value": "*"
     },
     "PB_imageBuilder_queueCustomArgs": {
-      "value": ""
+      "value": "",
+      "allowOverride": true
     }
   },
   "demands": [
