@@ -16,7 +16,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Dotnet.Docker.Nightly
+namespace Dotnet.Docker
 {
     public static class Program
     {

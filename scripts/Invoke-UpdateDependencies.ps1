@@ -15,7 +15,7 @@ $imageName = "update-dependencies"
 try {
     $repoRoot = Split-Path -Path "$PSScriptRoot" -Parent
 
-    & docker build -t $imageName -f $PSScriptRoot\Dockerfile --pull $repoRoot
+    & docker build -t $imageName -f $PSScriptRoot\update-dependencies\Dockerfile --pull $repoRoot
     if ($LastExitCode -ne 0) {
         throw "Failed to build the update dependencies tool"
     }
