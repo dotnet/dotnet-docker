@@ -183,7 +183,7 @@
       "allowOverride": true
     },
     "imageBuilder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180130074345"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180227141513"
     },
     "imageBuilder.manifest": {
       "value": "manifest.json"

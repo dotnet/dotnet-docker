@@ -16,8 +16,7 @@
         {
           "Name": "dotnet-docker-linux-amd64-images",
           "Parameters": {
-            "imageBuilder.manifest": "manifest.samples.json",
-            "PB_imageBuilder_customArgs": "--skip-pulling"
+            "imageBuilder.manifest": "manifest.samples.json"
           }
         }
       ]
@@ -31,8 +30,7 @@
         {
           "Name": "dotnet-docker-linux-arm32v7-images",
           "Parameters": {
-            "imageBuilder.manifest": "manifest.samples.json",
-            "PB_imageBuilder_customArgs": "--skip-pulling"
+            "imageBuilder.manifest": "manifest.samples.json"
           }
         }
       ]
@@ -47,7 +45,7 @@
           "Name": "dotnet-docker-windows-sac2016-amd64-images",
           "Parameters": {
             "imageBuilder.manifest": "manifest.samples.json",
-            "PB_imageBuilder_customArgs": "--os-version 10.0.14393 --skip-pulling"
+            "PB_imageBuilder_customArgs": "--os-version 10.0.14393"
           }
         }
       ]
@@ -62,7 +60,7 @@
           "Name": "dotnet-docker-windows-1709-amd64-images",
           "Parameters": {
             "imageBuilder.manifest": "manifest.samples.json",
-            "PB_imageBuilder_customArgs": "--os-version 10.0.16299 --skip-pulling"
+            "PB_imageBuilder_customArgs": "--os-version 10.0.16299"
           }
         }
       ]

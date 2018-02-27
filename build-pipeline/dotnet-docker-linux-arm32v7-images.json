@@ -198,7 +198,7 @@
       "value": "$(Build.DefinitionName)-$(Build.BuildId)"
     },
     "imageBuilder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180130154400"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180227221546"
     },
     "imageBuilder.manifest": {
       "value": "manifest.json"

@@ -1,7 +1,7 @@
 param(
     [string]$Branch='master',
     [string]$Manifest='manifest.json',
-    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-jessie-20171122115946',
+    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180227221546',
     [string]$RepoName
 )
 
