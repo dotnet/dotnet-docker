@@ -4,7 +4,7 @@
 using System;
 using System.CommandLine;
 
-namespace Dotnet.Docker.Nightly
+namespace Dotnet.Docker
 {
     public class Options
     {

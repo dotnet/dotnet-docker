@@ -17,12 +17,12 @@ FROM microsoft/dotnet:2.0-sdk-nanoserver-1709 AS build-env
 WORKDIR /update-dependencies
 
 # copy csproj and restore as distinct layers
-COPY update-dependencies/*.csproj ./
-COPY update-dependencies/NuGet.config ./
+COPY scripts/update-dependencies/*.csproj ./
+COPY scripts/update-dependencies/NuGet.config ./
 RUN dotnet restore
 
 # copy everything else and build
-COPY update-dependencies/. ./
+COPY scripts/update-dependencies/. ./
 RUN dotnet publish -c Release -o out --no-restore
 
 
