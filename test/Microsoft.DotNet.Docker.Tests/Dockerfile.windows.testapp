@@ -7,8 +7,9 @@ SHELL ["cmd", "/S", "/C"]
 
 ARG netcoreapp_version
 ARG optional_new_args=" "
+ARG optional_restore_args=" "
 
 WORKDIR testApp
 RUN dotnet new console --framework netcoreapp%netcoreapp_version% %optional_new_args%
-RUN dotnet restore
+RUN dotnet restore %optional_restore_args%
 RUN dotnet build
