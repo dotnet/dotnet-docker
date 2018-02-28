@@ -1,4 +1,4 @@
-FROM microsoft/dotnet-nightly:2.1-sdk AS build
+FROM microsoft/dotnet:2.1-sdk-alpine AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -18,6 +18,7 @@ FROM build AS testrunner
 WORKDIR /app/tests
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
+
 FROM build AS test
 WORKDIR /app/tests
 RUN dotnet test
@@ -28,7 +29,7 @@ WORKDIR /app/dotnetapp
 RUN dotnet publish -c Release -o out
 
 
-FROM microsoft/dotnet-nightly:2.1-runtime-alpine AS runtime
+FROM microsoft/dotnet:2.1-runtime-alpine AS runtime
 
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT false
 RUN apk add --no-cache icu-libs
@@ -37,5 +38,5 @@ ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 
 WORKDIR /app
-COPY --from=build /app/dotnetapp/out ./
+COPY --from=publish /app/dotnetapp/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
