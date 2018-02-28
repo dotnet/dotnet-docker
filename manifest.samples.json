@@ -1,0 +1,87 @@
+{
+  "repos": [
+    {
+      "name": "microsoft/dotnet-samples",
+      "readmePath": "samples/README.DockerHub.md",
+      "images": [
+        {
+          "sharedTags": {
+            "dotnetapp": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "os": "linux",
+              "tags": {
+                "dotnetapp-stretch": {}
+              }
+            },
+            {
+              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "os": "windows",
+              "osVersion": "10.0.14393",
+              "tags": {
+                "dotnetapp-nanoserver-sac2016": {}
+              }
+            },
+            {
+              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "os": "windows",
+              "osVersion": "10.0.16299",
+              "tags": {
+                "dotnetapp-nanoserver-1709": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "samples/dotnetapp/Dockerfile.debian-arm32",
+              "os": "linux",
+              "tags": {
+                "dotnetapp-stretch-arm32v7": {}
+              }
+            }
+          ]
+        },
+        {
+          "sharedTags": {
+            "aspnetapp": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "os": "linux",
+              "tags": {
+                "aspnetapp-stretch": {}
+              }
+            },
+            {
+              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "os": "windows",
+              "osVersion": "10.0.14393",
+              "tags": {
+                "aspnetapp-nanoserver-sac2016": {}
+              }
+            },
+            {
+              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "os": "windows",
+              "osVersion": "10.0.16299",
+              "tags": {
+                "aspnetapp-nanoserver-1709": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "samples/aspnetapp/Dockerfile.debian-arm32",
+              "os": "linux",
+              "tags": {
+                "aspnetapp-stretch-arm32v7": {}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

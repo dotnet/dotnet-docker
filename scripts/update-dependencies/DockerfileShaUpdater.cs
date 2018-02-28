@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 
-namespace Dotnet.Docker.Nightly
+namespace Dotnet.Docker
 {
     /// <summary>
     /// An IDependencyUpdater that will scan a Dockerfile for the .NET Core artifacts that are installed.

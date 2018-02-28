@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -14,7 +16,9 @@ namespace Microsoft.DotNet.Docker.Tests
     public class ImageTests
     {
         private static string ArchFilter => Environment.GetEnvironmentVariable("IMAGE_ARCH_FILTER");
+        private static bool IsNightlyRepo => RepoName.EndsWith("nightly");
         private static string OsFilter => Environment.GetEnvironmentVariable("IMAGE_OS_FILTER");
+        private static string RepoName => GetRepoName();
         private static string RepoOwner => Environment.GetEnvironmentVariable("REPO_OWNER") ?? "microsoft";
         private static string VersionFilter => Environment.GetEnvironmentVariable("IMAGE_VERSION_FILTER");
 
@@ -113,6 +117,8 @@ namespace Microsoft.DotNet.Docker.Tests
             // dotnet new, restore, build a new app using the sdk image
             List<string> buildArgs = new List<string>();
             buildArgs.Add($"netcoreapp_version={imageDescriptor.DotNetCoreVersion}");
+            AddOptionalRestoreArgs(buildArgs);
+
             if (!imageDescriptor.SdkVersion.StartsWith("1."))
             {
                 buildArgs.Add($"optional_new_args=--no-restore");
@@ -212,11 +218,15 @@ namespace Microsoft.DotNet.Docker.Tests
             try
             {
                 // Build a self-contained app
+                List<string> buildArgs = new List<string>();
+                buildArgs.Add($"rid={rid}");
+                AddOptionalRestoreArgs(buildArgs);
+
                 DockerHelper.Build(
                     dockerfile: "Dockerfile.linux.testapp.selfcontained",
                     tag: selfContainedAppId,
                     fromImage: appSdkImage,
-                    buildArgs: $"rid={rid}");
+                    buildArgs: buildArgs.ToArray());
 
                 try
                 {
@@ -253,16 +263,19 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private static string GetOptionalPublishArgs(ImageDescriptor imageDescriptor)
+        private static void AddOptionalRestoreArgs(List<string> buildArgs)
         {
-            return imageDescriptor.DotNetCoreVersion.StartsWith("1.") ? "" : "--no-restore";
+            if (IsNightlyRepo)
+            {
+                buildArgs.Add("optional_restore_args=\"-s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json -s https://api.nuget.org/v3/index.json\"");
+            }
         }
 
         public static string GetDotNetImage(
             string imageVersion, DotNetImageType imageType, string osVariant, bool isArm = false)
         {
             string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
-            string imageName = $"{RepoOwner}/dotnet-nightly:{imageVersion}-{variantName}";
+            string imageName = $"{RepoOwner}/{RepoName}:{imageVersion}-{variantName}";
             if (!string.IsNullOrEmpty(osVariant))
             {
                 imageName += $"-{osVariant}";
@@ -281,6 +294,19 @@ namespace Microsoft.DotNet.Docker.Tests
         private static string GetIdentifier(string version, string type)
         {
             return $"{version}-{type}-{DateTime.Now.ToFileTime()}";
+        }
+
+        private static string GetOptionalPublishArgs(ImageDescriptor imageDescriptor)
+        {
+            return imageDescriptor.DotNetCoreVersion.StartsWith("1.") ? "" : "--no-restore";
+        }
+
+        private static string GetRepoName()
+        {
+            string manifestJson = File.ReadAllText("manifest.json");
+            JObject manifest = JObject.Parse(manifestJson);
+            string qualifiedRepoName = (string)manifest["repos"][0]["name"];
+            return qualifiedRepoName.Split('/')[1];
         }
 
         private static string GetRuntimeIdentifier(ImageDescriptor imageDescriptor)
