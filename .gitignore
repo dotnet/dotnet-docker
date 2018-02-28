@@ -1,6 +1,7 @@
 # Build output
 [Bb]in/
 [Oo]bj/
+out/
 
 # cache for misc downloads
 artifacts/
@@ -13,6 +14,9 @@ artifacts/
 
 # Visual Studio Code cache/options directory
 .vscode/
+
+# Test files
+*.trx
 
 # User-specific files
 *.suo
