@@ -14,7 +14,6 @@
       "readmePath": "README.md",
       "images": [
         {
-          "readmeOrder": 1,
           "sharedTags": {
             "1.0.9-runtime-deps": {},
             "1.0-runtime-deps": {},
@@ -43,7 +42,6 @@
           ]
         },
         {
-          "readmeOrder": 0,
           "sharedTags": {
             "1.0.9-runtime": {},
             "1.0-runtime": {}
@@ -72,7 +70,6 @@
           ]
         },
         {
-          "readmeOrder": 2,
           "sharedTags": {
             "1.1.6-runtime": {},
             "1.1-runtime": {},
@@ -111,7 +108,6 @@
           ]
         },
         {
-          "readmeOrder": 3,
           "sharedTags": {
             "1.1.6-sdk-1.1.7": {},
             "1.1-sdk": {},
@@ -153,7 +149,6 @@
           ]
         },
         {
-          "readmeOrder": 7,
           "sharedTags": {
             "2.0.5-runtime-deps": {},
             "2.0-runtime-deps": {},
@@ -185,7 +180,6 @@
           ]
         },
         {
-          "readmeOrder": 5,
           "sharedTags": {
             "2.0.5-runtime": {},
             "2.0-runtime": {},
@@ -240,7 +234,6 @@
           ]
         },
         {
-          "readmeOrder": 9,
           "sharedTags": {
             "2.0.5-sdk-2.1.4": {},
             "2.0-sdk": {},
@@ -283,7 +276,6 @@
           ]
         },
         {
-          "readmeOrder": 6,
           "platforms": [
             {
               "dockerfile": "2.0/runtime-deps/jessie/amd64",
@@ -297,7 +289,6 @@
           ]
         },
         {
-          "readmeOrder": 4,
           "platforms": [
             {
               "dockerfile": "2.0/runtime/jessie/amd64",
@@ -311,7 +302,6 @@
           ]
         },
         {
-          "readmeOrder": 8,
           "platforms": [
             {
               "dockerfile": "2.0/sdk/jessie/amd64",
@@ -325,7 +315,6 @@
           ]
         },
         {
-          "readmeOrder": 17,
           "sharedTags": {
             "2.1.0-preview1-runtime-deps": {},
             "2.1-runtime-deps": {}
@@ -352,7 +341,6 @@
           ]
         },
         {
-          "readmeOrder": 13,
           "sharedTags": {
             "2.1.0-preview1-runtime": {},
             "2.1-runtime": {}
@@ -396,7 +384,6 @@
           ]
         },
         {
-          "readmeOrder": 20,
           "sharedTags": {
             "2.1.300-preview1-sdk": {},
             "2.1-sdk": {}
@@ -430,7 +417,6 @@
           ]
         },
         {
-          "readmeOrder": 14,
           "platforms": [
             {
               "dockerfile": "2.1/runtime-deps/alpine/amd64",
@@ -443,7 +429,6 @@
           ]
         },
         {
-          "readmeOrder": 11,
           "platforms": [
             {
               "dockerfile": "2.1/runtime/alpine/amd64",
@@ -456,7 +441,6 @@
           ]
         },
         {
-          "readmeOrder": 18,
           "platforms": [
             {
               "dockerfile": "2.1/sdk/alpine/amd64",
@@ -469,7 +453,6 @@
           ]
         },
         {
-          "readmeOrder": 15,
           "platforms": [
             {
               "dockerfile": "2.1/runtime-deps/bionic/amd64",
@@ -482,7 +465,6 @@
           ]
         },
         {
-          "readmeOrder": 12,
           "platforms": [
             {
               "dockerfile": "2.1/runtime/bionic/amd64",
@@ -495,7 +477,6 @@
           ]
         },
         {
-          "readmeOrder": 19,
           "platforms": [
             {
               "dockerfile": "2.1/sdk/bionic/amd64",
@@ -508,7 +489,6 @@
           ]
         },
         {
-          "readmeOrder": 16,
           "platforms": [
             {
               "architecture": "arm",
@@ -523,7 +503,6 @@
           ]
         },
         {
-          "readmeOrder": 10,
           "platforms": [
             {
               "architecture": "arm",

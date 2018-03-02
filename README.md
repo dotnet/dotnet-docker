@@ -1,50 +1,62 @@
-# Supported Linux amd64 tags
+# Linux amd64 tags
 
+- [`2.0.5-sdk-2.1.4-stretch`, `2.0-sdk-stretch`, `2.0.5-sdk-2.1.4`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/stretch/amd64/Dockerfile)
+- [`2.0.5-sdk-2.1.4-jessie`, `2.0-sdk-jessie`, `2-sdk-jessie` (*2.0/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/jessie/amd64/Dockerfile)
+- [`2.0.5-runtime-stretch`, `2.0-runtime-stretch`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/amd64/Dockerfile)
+- [`2.0.5-runtime-jessie`, `2.0-runtime-jessie`, `2-runtime-jessie` (*2.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/jessie/amd64/Dockerfile)
+- [`2.0.5-runtime-deps-stretch`, `2.0-runtime-deps-stretch`, `2.0.5-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/amd64/Dockerfile)
+- [`2.0.5-runtime-deps-jessie`, `2.0-runtime-deps-jessie`, `2-runtime-deps-jessie` (*2.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/jessie/amd64/Dockerfile)
+- [`1.1.6-sdk-1.1.7-jessie`, `1.1.6-sdk-1.1.7`, `1.1-sdk`, `1-sdk` (*1.1/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/jessie/amd64/Dockerfile)
+- [`1.1.6-runtime-jessie`, `1.1.6-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/jessie/amd64/Dockerfile)
 - [`1.0.9-runtime-jessie`, `1.0.9-runtime`, `1.0-runtime` (*1.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/jessie/amd64/Dockerfile)
 - [`1.0.9-runtime-deps-jessie`, `1.0.9-runtime-deps`, `1.0-runtime-deps`, `1-runtime-deps` (*1.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime-deps/jessie/amd64/Dockerfile)
-- [`1.1.6-runtime-jessie`, `1.1.6-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/jessie/amd64/Dockerfile)
-- [`1.1.6-sdk-1.1.7-jessie`, `1.1.6-sdk-1.1.7`, `1.1-sdk`, `1-sdk` (*1.1/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/jessie/amd64/Dockerfile)
-- [`2.0.5-runtime-jessie`, `2.0-runtime-jessie`, `2-runtime-jessie` (*2.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/jessie/amd64/Dockerfile)
-- [`2.0.5-runtime-stretch`, `2.0-runtime-stretch`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/amd64/Dockerfile)
-- [`2.0.5-runtime-deps-jessie`, `2.0-runtime-deps-jessie`, `2-runtime-deps-jessie` (*2.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/jessie/amd64/Dockerfile)
-- [`2.0.5-runtime-deps-stretch`, `2.0-runtime-deps-stretch`, `2.0.5-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/amd64/Dockerfile)
-- [`2.0.5-sdk-2.1.4-jessie`, `2.0-sdk-jessie`, `2-sdk-jessie` (*2.0/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/jessie/amd64/Dockerfile)
-- [`2.0.5-sdk-2.1.4-stretch`, `2.0-sdk-stretch`, `2.0.5-sdk-2.1.4`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/stretch/amd64/Dockerfile)
-- [`2.1.0-preview1-runtime-alpine`, `2.1-runtime-alpine` (*2.1/runtime/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/alpine/amd64/Dockerfile)
-- [`2.1.0-preview1-runtime-bionic`, `2.1-runtime-bionic` (*2.1/runtime/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/bionic/amd64/Dockerfile)
-- [`2.1.0-preview1-runtime-stretch-slim`, `2.1-runtime-stretch-slim`, `2.1.0-preview1-runtime`, `2.1-runtime` (*2.1/runtime/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/stretch-slim/amd64/Dockerfile)
-- [`2.1.0-preview1-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*2.1/runtime-deps/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine/amd64/Dockerfile)
-- [`2.1.0-preview1-runtime-deps-bionic`, `2.1-runtime-deps-bionic` (*2.1/runtime-deps/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/amd64/Dockerfile)
-- [`2.1.0-preview1-runtime-deps-stretch-slim`, `2.1-runtime-deps-stretch-slim`, `2.1.0-preview1-runtime-deps`, `2.1-runtime-deps` (*2.1/runtime-deps/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
+
+**.NET Core 2.1 Preview 1 tags**
+
+- [`2.1.300-preview1-sdk-stretch`, `2.1-sdk-stretch`, `2.1.300-preview1-sdk`, `2.1-sdk` (*2.1/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/amd64/Dockerfile)
 - [`2.1.300-preview1-sdk-alpine`, `2.1-sdk-alpine` (*2.1/sdk/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine/amd64/Dockerfile)
 - [`2.1.300-preview1-sdk-bionic`, `2.1-sdk-bionic` (*2.1/sdk/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/amd64/Dockerfile)
-- [`2.1.300-preview1-sdk-stretch`, `2.1-sdk-stretch`, `2.1.300-preview1-sdk`, `2.1-sdk` (*2.1/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-stretch-slim`, `2.1-runtime-stretch-slim`, `2.1.0-preview1-runtime`, `2.1-runtime` (*2.1/runtime/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/stretch-slim/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-alpine`, `2.1-runtime-alpine` (*2.1/runtime/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/alpine/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-bionic`, `2.1-runtime-bionic` (*2.1/runtime/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/bionic/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-deps-stretch-slim`, `2.1-runtime-deps-stretch-slim`, `2.1.0-preview1-runtime-deps`, `2.1-runtime-deps` (*2.1/runtime-deps/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*2.1/runtime-deps/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-deps-bionic`, `2.1-runtime-deps-bionic` (*2.1/runtime-deps/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/amd64/Dockerfile)
 
-# Supported Windows Server 2016 Version 1709 (Fall Creators Update) amd64 tags
+# Windows Server, version 1709 amd64 tags
 
-- [`2.0.5-runtime-nanoserver-1709`, `2.0-runtime-nanoserver-1709`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-1709/amd64/Dockerfile)
 - [`2.0.5-sdk-2.1.4-nanoserver-1709`, `2.0-sdk-nanoserver-1709`, `2.0.5-sdk-2.1.4`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-1709/amd64/Dockerfile)
-- [`2.1.0-preview1-runtime-nanoserver-1709`, `2.1-runtime-nanoserver-1709`, `2.1.0-preview1-runtime`, `2.1-runtime` (*2.1/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1709/amd64/Dockerfile)
+- [`2.0.5-runtime-nanoserver-1709`, `2.0-runtime-nanoserver-1709`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-1709/amd64/Dockerfile)
+
+**.NET Core 2.1 Preview 1 tags**
+
 - [`2.1.300-preview1-sdk-nanoserver-1709`, `2.1-sdk-nanoserver-1709`, `2.1.300-preview1-sdk`, `2.1-sdk` (*2.1/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1709/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-nanoserver-1709`, `2.1-runtime-nanoserver-1709`, `2.1.0-preview1-runtime`, `2.1-runtime` (*2.1/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1709/amd64/Dockerfile)
 
-# Supported Windows Server 2016 amd64 tags
+# Windows Server 2016 amd64 tags
 
-- [`1.0.9-runtime-nanoserver-sac2016`, `1.0.9-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`1.1.6-runtime-nanoserver-sac2016`, `1.1.6-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`1.1.6-sdk-1.1.7-nanoserver-sac2016`, `1.1.6-sdk-1.1.7`, `1.1-sdk`, `1-sdk` (*1.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.0.5-runtime-nanoserver-sac2016`, `2.0-runtime-nanoserver-sac2016`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`2.0.5-sdk-2.1.4-nanoserver-sac2016`, `2.0-sdk-nanoserver-sac2016`, `2.0.5-sdk-2.1.4`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.1.0-preview1-runtime-nanoserver-sac2016`, `2.1-runtime-nanoserver-sac2016`, `2.1.0-preview1-runtime`, `2.1-runtime` (*2.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.1.300-preview1-sdk-nanoserver-sac2016`, `2.1-sdk-nanoserver-sac2016`, `2.1.300-preview1-sdk`, `2.1-sdk` (*2.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.0.5-runtime-nanoserver-sac2016`, `2.0-runtime-nanoserver-sac2016`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`1.1.6-sdk-1.1.7-nanoserver-sac2016`, `1.1.6-sdk-1.1.7`, `1.1-sdk`, `1-sdk` (*1.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`1.1.6-runtime-nanoserver-sac2016`, `1.1.6-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`1.0.9-runtime-nanoserver-sac2016`, `1.0.9-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
 
-# Supported Linux arm32 tags
+**.NET Core 2.1 Preview 1 tags**
+
+- [`2.1.300-preview1-sdk-nanoserver-sac2016`, `2.1-sdk-nanoserver-sac2016`, `2.1.300-preview1-sdk`, `2.1-sdk` (*2.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.1.0-preview1-runtime-nanoserver-sac2016`, `2.1-runtime-nanoserver-sac2016`, `2.1.0-preview1-runtime`, `2.1-runtime` (*2.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
+
+# Linux arm32 tags
 
 - [`2.0.5-runtime-stretch-arm32v7`, `2.0-runtime-stretch-arm32v7`, `2.0.5-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/arm32v7/Dockerfile)
 - [`2.0.5-runtime-deps-stretch-arm32v7`, `2.0-runtime-deps-stretch-arm32v7`, `2.0.5-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/arm32v7/Dockerfile)
-- [`2.1.0-preview1-runtime-bionic-arm32v7`, `2.1-runtime-bionic-arm32v7` (*2.1/runtime/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/bionic/arm32v7/Dockerfile)
+
+**.NET Core 2.1 Preview 1 tags**
+
 - [`2.1.0-preview1-runtime-stretch-slim-arm32v7`, `2.1-runtime-stretch-slim-arm32v7`, `2.1.0-preview1-runtime`, `2.1-runtime` (*2.1/runtime/stretch-slim/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/stretch-slim/arm32v7/Dockerfile)
-- [`2.1.0-preview1-runtime-deps-bionic-arm32v7`, `2.1-runtime-deps-bionic-arm32v7` (*2.1/runtime-deps/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/arm32v7/Dockerfile)
+- [`2.1.0-preview1-runtime-bionic-arm32v7`, `2.1-runtime-bionic-arm32v7` (*2.1/runtime/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/bionic/arm32v7/Dockerfile)
 - [`2.1.0-preview1-runtime-deps-stretch-slim-arm32v7`, `2.1-runtime-deps-stretch-slim-arm32v7`, `2.1.0-preview1-runtime-deps`, `2.1-runtime-deps` (*2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile)
+- [`2.1.0-preview1-runtime-deps-bionic-arm32v7`, `2.1-runtime-deps-bionic-arm32v7` (*2.1/runtime-deps/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/arm32v7/Dockerfile)
 
 >**Note:** .NET Core multi-arch tags, such as 2.0-runtime, have been updated to use nanoserver-1709 images if your host is Windows Server 2016 Version 1709 or higher or Windows 10 Fall Creators Update (Version 1709) or higher. You need Docker 17.10 or later to take advantage of these updated tags.
 
