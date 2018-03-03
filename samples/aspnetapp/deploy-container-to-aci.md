@@ -38,7 +38,7 @@ az acr credential show -n richlander
 Use the following instructions to login to ACR.
 
 ```console
-az acr credential show -n richlander | docker login richlander.azurecr.io -u richlander --password-stdin
+az acr credential show -n richlander --query passwords[0].value --output tsv | docker login richlander.azurecr.io -u richlander --password-stdin
 ```
 
 ## Push Image for Azure Container Registry (ACR)
