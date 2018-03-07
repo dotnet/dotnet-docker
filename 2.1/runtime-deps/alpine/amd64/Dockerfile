@@ -11,7 +11,6 @@ RUN apk add --no-cache \
         libssl1.0 \
         libstdc++ \
         libunwind \
-        libuuid \
         tzdata \
         userspace-rcu \
         zlib \
