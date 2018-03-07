@@ -1,31 +1,34 @@
 param(
-    [string]$Branch='nightly',
+    [string]$Branch,
     [string]$Manifest='manifest.json',
-    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180227221546',
-    [string]$RepoName
+    [string]$Template='./scripts/TagsDocumentationTemplate.md',
+    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180306162116'
 )
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Path "$PSScriptRoot" -Parent
 
-if ([String]::IsNullOrWhiteSpace($RepoName))
-{
-    $remoteUrl = $null
-    if ([Uri]::TryCreate(((git config --get remote.origin.url) | Out-String), [UriKind]::Absolute, [ref]$remoteUrl))
-    {
-        $RepoName = [System.IO.Path]::GetFileNameWithoutExtension($remoteUrl.ToString())
+if (!$Branch) {
+    $manifestJson = Get-Content ${repoRoot}/${Manifest} | ConvertFrom-Json
+    $dockerHubRepo = $manifestJson.Repos[0].Name.Split('/')[1]
+    if ($dockerHubRepo -eq "dotnet") {
+        $Branch = "master"
     }
-    if ([String]::IsNullOrWhiteSpace($RepoName))
-    {
-        Write-Error 'Could not automatically determine repository name. Add -RepoName <REPO> to override.'
+    else {
+        $Branch = "nightly"
     }
+}
+
+if ($Template) {
+    $templateOption = "--template $Template"
 }
 
 & docker pull $ImageBuilderImageName
 
-& docker run --rm `
-    -v /var/run/docker.sock:/var/run/docker.sock `
-    -v "${repoRoot}:/repo" `
-    -w /repo `
-    $ImageBuilderImageName `
-    generateTagsReadme --update-readme --manifest ${Manifest} "https://github.com/dotnet/${RepoName}/blob/${Branch}"
+$dockerRunCmd = "docker run --rm" `
+    + " -v /var/run/docker.sock:/var/run/docker.sock" `
+    + " -v ${repoRoot}:/repo" `
+    + " -w /repo" `
+    + " $ImageBuilderImageName" `
+    + " generateTagsReadme --update-readme --manifest $Manifest $templateOption https://github.com/dotnet/dotnet-docker/blob/${Branch}"
+Invoke-Expression $dockerRunCmd
