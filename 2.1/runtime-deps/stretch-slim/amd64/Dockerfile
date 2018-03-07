@@ -14,6 +14,5 @@ RUN apt-get update \
         libssl1.0.2 \
         libstdc++6 \
         libunwind8 \
-        libuuid1 \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
