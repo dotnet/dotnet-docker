@@ -1,19 +1,19 @@
-# Supported Linux amd64 tags
+# Linux amd64 tags
 
 - [`dotnetapp-stretch`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 - [`aspnetapp-stretch`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-# Supported Windows Server 2016 Version 1709 (Fall Creators Update) amd64 tags
+# Windows Server, version 1709 amd64 tags
 
 - [`dotnetapp-nanoserver-1709`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 - [`aspnetapp-nanoserver-1709`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-# Supported Windows Server 2016 amd64 tags
+# Windows Server 2016 amd64 tags
 
 - [`dotnetapp-nanoserver-sac2016`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 - [`aspnetapp-nanoserver-sac2016`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-# Supported Linux arm32 tags
+# Linux arm32 tags
 
 - [`dotnetapp-stretch-arm32v7`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile.debian-arm32*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.debian-arm32)
 - [`aspnetapp-stretch-arm32v7`, `aspnetapp` (*samples/aspnetapp/Dockerfile.debian-arm32*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile.debian-arm32)

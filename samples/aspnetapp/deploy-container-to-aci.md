@@ -24,21 +24,18 @@ az group create --name richlander-containers --location westus
 az acr create --name richlander --resource-group richlander-containers --sku Basic
 ```
 
-## Get Registry Credentials
+## Login to Azure Container Registry
 
-Use the following instructions to get credentials for your registry, in order to push to it.
+First, "admin-enable" your session, which is required to access your ACR credentials in the subsequent command.
 
 ```console
 az acr update -n richlander --admin-enabled true
-az acr credential show -n richlander
 ```
 
-## Login to Azure Container Registry
-
-Use the following instructions to login to ACR.
+Now login to ACR via the docker cli, which is required to later push to ACR:
 
 ```console
-az acr credential show -n richlander | docker login richlander.azurecr.io -u richlander --password-stdin
+az acr credential show -n richlander --query passwords[0].value --output tsv | docker login richlander.azurecr.io -u richlander --password-stdin
 ```
 
 ## Push Image for Azure Container Registry (ACR)
@@ -56,9 +53,13 @@ docker push richlander.azurecr.io/aspnetapp
 az container create --name aspnetapp --image richlander.azurecr.io/aspnetapp --resource-group richlander-containers --ip-address public
 ```
 
-Specify `--os-type Windows` for Windows images. Windows Server, version 1709 are not yet supported.
+Specify `--os-type Windows` for Windows images. Windows Server, version 1709 images are not yet supported.
 
-You will be asked for your password. Write or paste it in.
+You will be asked for your password. Write or paste it in. You can get your password from the following command:
+
+```console
+az acr credential show -n richlander --query passwords[0].value --output tsv
+```
 
 ## Running the Image
 
@@ -74,7 +75,7 @@ Once the `provisioningState` moves to `Succeeded`, collect the IP address from t
 
 ## Cleanup
 
-After you no longer want to use these containers, delete the resource group to reclaim all container resources from this experiment.
+After you no longer want to use these containers, delete the resource group to reclaim all container resources from this exercise.
 
 ```console
 az group delete --name richlander-containers
