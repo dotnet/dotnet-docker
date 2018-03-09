@@ -4,7 +4,7 @@ FROM buildpack-deps:bionic-scm
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         libc6 \
-        libcurl3 \
+        libcurl4 \
         libgcc1 \
         libgssapi-krb5-2 \
         libicu60 \
