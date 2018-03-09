@@ -6,7 +6,7 @@ RUN apt-get update \
         \
 # .NET Core dependencies
         libc6 \
-        libcurl3 \
+        libcurl4 \
         libgcc1 \
         libgssapi-krb5-2 \
         libicu60 \
