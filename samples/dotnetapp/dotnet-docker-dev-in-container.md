@@ -34,14 +34,7 @@ If you are using .NET Core 2.1 Preview 2 or later, then this tool is not necessa
 
 You can rerun your application in a container with every local code change. This scenario works for both console applications and websites. The syntax differs a bit for Windows and Linux containers.
 
-The instructions assume that you are in the root of the repository.
-
-```console
-cd samples
-cd dotnetapp
-```
-
-You can use the following commands, given your environment:
+The instructions assume that you are in the root of the repository. You can use the following commands, given your environment:
 
 **Windows** using **Windows containers**
 
@@ -67,14 +60,7 @@ docker run --rm -e DOTNET_USE_POLLING_FILE_WATCHER=1 -v ~/git/dotnet-docker/samp
 
 You can retest your application in a container with every local code change. This works for both console applications and websites. The syntax differs a bit for Windows and Linux containers.
 
-The instructions assume that you are in the root of the repository.
-
-```console
-cd samples
-cd dotnetapp
-```
-
-You can use the following commands, given your environment:
+The instructions assume that you are in the root of the repository. You can use the following commands, given your environment:
 
 **Windows** using **Windows containers**
 
