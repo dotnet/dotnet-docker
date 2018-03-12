@@ -2,7 +2,7 @@ param(
     [string]$Branch,
     [string]$Manifest='manifest.json',
     [string]$Template='./scripts/TagsDocumentationTemplate.md',
-    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180306162116'
+    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180312170813'
 )
 
 $ErrorActionPreference = 'Stop'
