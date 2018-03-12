@@ -82,4 +82,4 @@ docker run --rm -e DOTNET_USE_POLLING_FILE_WATCHER=1 -v c:\git\dotnet-docker\sam
 docker run --rm -e DOTNET_USE_POLLING_FILE_WATCHER=1 -v ~/git/dotnet-docker/samples/dotnetapp:/app/ microsoft/dotnet:2.0-sdk bash -c "cd /app/tests && dotnet restore && dotnet watch test"
 ```
 
-The commands above log test results to the console. You can additionally log results as a TRX file by appending `--logger:trx` to the previous test commands, as in `dotnet watch test --logger:trx`. TRX logging is also demonstrated in [Running .NET Core Unit Tests with Docker](dotnet-docker-unit-testing.md).
+The commands above log test results to the console. You can additionally log results as a TRX file by appending `--logger:trx` to the previous test commands, specifically `dotnet watch test --logger:trx`. TRX logging is also demonstrated in [Running .NET Core Unit Tests with Docker](dotnet-docker-unit-testing.md).

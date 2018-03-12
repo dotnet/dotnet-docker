@@ -44,7 +44,7 @@ The instructions assume that you are in the root of the repository. You can use 
 docker run --rm -p 8000:80 --name aspnetappsample -e ASPNETCORE_URLS=http://+:80 -e DOTNET_USE_POLLING_FILE_WATCHER=1 -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ microsoft/dotnet:2.0-sdk cmd /c "cd app/aspnetapp && dotnet restore && dotnet watch run"
 ```
 
-In another command window, type `docker exec aspnetappsample ipconfig`. The type IP address you see in your browser.
+In another command window, type `docker exec aspnetappsample ipconfig`. Navigate to the IP address you see in your browser.
 
 **Windows** using **Linux containers**
 
@@ -68,4 +68,4 @@ You can demo a relaunch of the site by changing the About controller method in `
 
 ## Test your application in a container while you develop
 
-You can retest your application in a container with every local code change. This works for both console applications and websites. The syntax differs a bit for Windows and Linux containers. You can see this demonstrated in [Develop .NET Core Applications in a Container](dotnet-docker-dev-in-container.md).
+You can retest your application in a container with every local code change. This works for both console applications and websites. The syntax differs a bit for Windows and Linux containers. You can see this demonstrated in [Develop .NET Core Applications in a Container](../dotnetapp/dotnet-docker-dev-in-container.md).
