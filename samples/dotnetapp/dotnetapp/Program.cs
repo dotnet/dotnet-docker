@@ -1,23 +1,30 @@
 using System;
 using System.Runtime.InteropServices;
-using Utils;
 using System.IO;
+using System.Text;
+using Utils;
 using static System.Console;
 
 public static class Program
 {
   public static void Main(string[] args) 
   {
-        string message = "Hello .NET Core!";
-          
-        if (args.Length > 0) 
+        string defaultMessage = "Hello from .NET Core!";
+        var bot = GetBot();
+
+        if (args.Length > 0 && args[0] == "--with-color") 
         {
-          message = String.Join(" ",args);
+          var message = $"    {GetMessage(args)}{GetBot()}";
+          ConsoleUtils.PrintStringWithRandomColor(message);
         }
-
-        var bot = $"    {message}{GetBot()}";
-
-        ConsoleUtils.PrintStringWithRandomColor(bot);
+        else if(args.Length > 0)
+        {
+            WriteLine($"    {GetMessage(args)}{GetBot()}");
+        }
+        else
+        {
+            WriteLine($"    {defaultMessage}{GetBot()}");
+        }
 
         WriteLine("**Environment**");
         WriteLine($"Platform: .NET Core");
@@ -25,7 +32,20 @@ public static class Program
         WriteLine();
   }
 
-  public static string GetBot() 
+  private static string GetMessage(string[] message)
+  {
+    var buffer = new StringBuilder();
+    foreach(var m in message)
+    {
+      if (m == "--with-color") continue;
+      buffer.Append(" ");
+      buffer.Append(m);
+    }
+
+    return buffer.ToString();
+  }
+
+  private static string GetBot() 
   {
           
           return @"
