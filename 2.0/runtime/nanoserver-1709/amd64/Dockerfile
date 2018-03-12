@@ -6,9 +6,9 @@ FROM microsoft/windowsservercore:1709 AS installer-env
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core Runtime
-ENV DOTNET_VERSION 2.0.5
+ENV DOTNET_VERSION 2.0.6
 ENV DOTNET_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-win-x64.zip
-ENV DOTNET_DOWNLOAD_SHA 5A4381D01D7B7769254AFF980BB4A333AEC41FDFE92E74BCA95147931F1500A1D391AE8DA873BC802524A83899E270E24E30FAF3759A121505AEF110FE9902DD
+ENV DOTNET_DOWNLOAD_SHA c139ee4f8f65581d908efad230111948abb29431c26d058995386d796c71890423ef0654fbc6791ac6e1a889ba2c0bb755c58ac08232d9d009da3e7d55da60d1
 
 RUN Invoke-WebRequest $Env:DOTNET_DOWNLOAD_URL -OutFile dotnet.zip; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $Env:DOTNET_DOWNLOAD_SHA) { `
