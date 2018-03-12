@@ -6,7 +6,11 @@ The sample builds the application in a container based on the larger [.NET Core 
 
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
-The [ASP.NET Core Docker Sample](../aspnetapp/README.md) demonstrates how to use ASP.NET Core and Docker together.
+Looking for other samples:
+
+* [Develop .NET Core Applications in a container](dotnet-docker-dev-in-container.md)
+* [Develop ASP.NET Core Applications in a container](../aspnetapp/aspnet-docker-dev-in-container.md)
+* [ASP.NET Core Docker Sample](../aspnetapp/README.md)
 
 ## Try a pre-built .NET Core Docker Image
 
