@@ -22,3 +22,6 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT true
 
 # Configure Kestrel web server to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80
+
+# Enables checking on running in a container (required for some scenarios)
+ENV DOTNET_RUNNING_IN_CONTAINER=1

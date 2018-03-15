@@ -17,8 +17,8 @@ RUN apt-get update \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
+# Enables checking on running in a container (required for some scenarios)
+ENV DOTNET_RUNNING_IN_CONTAINER=1
+
 # Configure Kestrel web server to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80
-
-# Enables checking on running in a container (required for some scenarios)
-ENV RUNNING_IN_CONTAINER=1
