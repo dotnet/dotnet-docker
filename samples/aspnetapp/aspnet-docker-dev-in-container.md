@@ -36,16 +36,6 @@ You can re-run your application in a container with every local code change. Thi
 
 The instructions assume that you are in the root of the repository. You can use the following commands, given your environment:
 
-**Windows** using **Windows containers**
-
-`dotnet watch run` is not working correctly in containers at this time. The instructions are still documented while we work on enabling this scenario.
-
-```console
-docker run --rm -p 8000:80 --name aspnetappsample -e ASPNETCORE_URLS=http://+:80 -e DOTNET_USE_POLLING_FILE_WATCHER=1 -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ microsoft/dotnet:2.0-sdk cmd /c "cd app/aspnetapp && dotnet restore && dotnet watch run"
-```
-
-In another command window, type `docker exec aspnetappsample ipconfig`. Navigate to the IP address you see in your browser.
-
 **Windows** using **Linux containers**
 
 ```console
@@ -61,6 +51,16 @@ docker run --rm -p 8000:80 -e ASPNETCORE_URLS=http://+:80 -e DOTNET_USE_POLLING_
 ```
 
 Navigate to the site at `http://localhost:8000` in your browser.
+
+**Windows** using **Windows containers**
+
+`dotnet watch run` is not working correctly in containers at this time. The instructions are still documented while we work on enabling this scenario.
+
+```console
+docker run --rm -p 8000:80 --name aspnetappsample -e ASPNETCORE_URLS=http://+:80 -e DOTNET_USE_POLLING_FILE_WATCHER=1 -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ microsoft/dotnet:2.0-sdk cmd /c "cd app/aspnetapp && dotnet restore && dotnet watch run"
+```
+
+In another command window, type `docker exec aspnetappsample ipconfig`. Navigate to the IP address you see in your browser.
 
 ### Updating the site while the container is running
 

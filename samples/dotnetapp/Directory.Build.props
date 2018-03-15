@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup Condition="'$(RunningInsideDocker)' == 'true'">
+    <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)/obj/docker/</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(MSBuildProjectDirectory)/bin/docker/</BaseOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(RunningInsideDocker)' != 'true'">
+    <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)/obj/host/</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(MSBuildProjectDirectory)/bin/host/</BaseOutputPath>
+  </PropertyGroup>
+</Project>
