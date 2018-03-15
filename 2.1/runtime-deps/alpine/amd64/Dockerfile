@@ -21,7 +21,7 @@ RUN apk add --no-cache \
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT true
 
 # Enables checking on running in a container (required for some scenarios)
-ENV DOTNET_RUNNING_IN_CONTAINER=1
+ENV DOTNET_RUNNING_IN_CONTAINER true
 
 # Configure Kestrel web server to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80
