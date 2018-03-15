@@ -19,3 +19,6 @@ RUN apk add --no-cache \
 
 # Set the invariant mode since icu_libs isn't included (see https://github.com/dotnet/announcements/issues/20)
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT true
+
+# Configure Kestrel web server to bind to port 80 when present
+ENV ASPNETCORE_URLS=http://+:80

@@ -25,3 +25,6 @@ ENV NUGET_XMLDOC_MODE skip
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
 RUN dotnet help
+
+# Enable correct mode for dotnet watch (only mode it supports in a container)
+ENV DOTNET_USE_POLLING_FILE_WATCHER=1

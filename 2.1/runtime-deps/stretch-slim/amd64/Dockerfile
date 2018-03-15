@@ -16,3 +16,6 @@ RUN apt-get update \
         libunwind8 \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
+
+# Configure Kestrel web server to bind to port 80 when present
+ENV ASPNETCORE_URLS=http://+:80
