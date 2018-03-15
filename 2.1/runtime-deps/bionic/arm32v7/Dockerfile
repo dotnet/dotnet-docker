@@ -14,6 +14,11 @@ RUN apt-get update \
         libssl1.0.0 \
         libstdc++6 \
         libunwind8 \
-        libuuid1 \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
+
+# Enables checking on running in a container (required for some scenarios)
+ENV DOTNET_RUNNING_IN_CONTAINER true
+
+# Configure Kestrel web server to bind to port 80 when present
+ENV ASPNETCORE_URLS=http://+:80

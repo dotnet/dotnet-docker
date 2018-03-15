@@ -15,7 +15,7 @@ if (!$Branch) {
         $Branch = "master"
     }
     else {
-        $Branch = $dockerHubRepo
+        $Branch = "nightly"
     }
 }
 
