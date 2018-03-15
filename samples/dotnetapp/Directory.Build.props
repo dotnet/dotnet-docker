@@ -1,9 +1,9 @@
 <Project>
-  <PropertyGroup Condition="'$(RUNNING_IN_CONTAINER)' == 'true'">
+  <PropertyGroup Condition="'$(DOTNET_RUNNING_IN_CONTAINER)' == 'true'">
     <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)/obj/container/</BaseIntermediateOutputPath>
     <BaseOutputPath>$(MSBuildProjectDirectory)/bin/container/</BaseOutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(RUNNING_IN_CONTAINER)' != 'true'">
+  <PropertyGroup Condition="'$(DOTNET_RUNNING_IN_CONTAINER)' != 'true'">
     <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)/obj/local/</BaseIntermediateOutputPath>
     <BaseOutputPath>$(MSBuildProjectDirectory)/bin/local/</BaseOutputPath>
   </PropertyGroup>
