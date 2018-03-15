@@ -26,3 +26,6 @@ RUN dotnet help
 
 # Enable correct mode for dotnet watch (only mode it supports in a container)
 ENV DOTNET_USE_POLLING_FILE_WATCHER=1
+
+# Configure Kestrel web server to bind to port 80 when present
+ENV ASPNETCORE_URLS=http://+:80
