@@ -84,45 +84,25 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 
 ### Run a simple application within a container
 
-You can run a [sample application](https://hub.docker.com/r/microsoft/dotnet-samples/) that uses these images in a container by running the following command.
+You can quickly try a pre-built [sample .NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/) that uses these images.
+
+Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
 ```console
-docker run microsoft/dotnet-samples
+docker run --rm microsoft/dotnet-samples
 ```
 
-### Use multi-stage build with a .NET Core application
+### Run a web application within a container
 
-.NET Core Docker images can use [multi-stage build](https://docs.docker.com/engine/userguide/eng-image/multistage-build/). This feature allows multiple FROM instructions to be used in one Dockerfile. Using this feature, you can build a .NET Core app using an SDK image (AKA 'build image') and then copy the published app into a lighter weight runtime image within a single Dockerfile.
+You can quickly try a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/) that uses these images.
 
-Add a `Dockerfile` to your .NET project with the following:
-
-```dockerfile
-FROM microsoft/dotnet:sdk AS build-env
-WORKDIR /app
-
-# copy csproj and restore as distinct layers
-COPY *.csproj ./
-RUN dotnet restore
-
-# copy everything else and build
-COPY . ./
-RUN dotnet publish -c Release -o out
-
-# build runtime image
-FROM microsoft/dotnet:runtime
-WORKDIR /app
-COPY --from=build-env /app/out ./
-ENTRYPOINT ["dotnet", "dotnetapp.dll"]
-```
-
-You can then build and run the Docker image:
+Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
 ```console
-docker build -t dotnetapp .
-docker run --rm dotnetapp
+docker run --rm -p 8000:80 --name aspnetcore_sample microsoft/dotnet-samples:aspnetapp
 ```
 
-The `Dockerfile` and the Docker commands assumes that your application is called `dotnetapp`. You can change the `Dockerfile` and the commands, as needed.
+After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in the [View the ASP.NET Core app in a running container on Windows](#view-the-aspnet-core-app-in-a-running-container-on-windows) section.
 
 ## .NET Core Docker Samples
 
