@@ -4,8 +4,6 @@ Docker containers can provide a local .NET Core development environment without 
 
 You can [build container images to create your environment](README.md), as described in a Dockerfile. That's straightforward and the common use case with Docker. This document describes a much more iterative and dynamic use of Docker, defining the container environment primarily via the commandline. .NET Core includes a command called `dotnet watch` that can rerun your application or your tests on each code change. This document describes how to use the Docker CLI and `dotnet watch` to develop applications in a container.
 
-This approach relies on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to mount source into the container (without using a Dockerfile). You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
-
 See [Develop ASP.NET Core Applications in a Container](../aspnetapp/aspnet-docker-dev-in-container.md) for ASP.NET Core-specific instructions.
 
 ## Getting the sample
@@ -18,17 +16,13 @@ git clone https://github.com/dotnet/dotnet-docker/
 
 You can also [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/master.zip).
 
-## Project Requirements
+## Requirements
 
-If you are using .NET Core 2.0 or earlier, you need a project reference to the  [Microsoft.DotNet.Watcher.Tools](https://www.nuget.org/packages/Microsoft.DotNet.Watcher.Tools/) CLI Tool so that you can use [`dotnet watch`](https://docs.microsoft.com/aspnet/core/tutorials/dotnet-watch).
+The instructions below use .NET Core 2.1 Preview 2 container images. It is possible to make this scenario work with .NET Core 2.0 but requires many extra steps and a bit of magic. You do not need to switch to .NET Core 2.1 on your local machine to try out these instructions. They will work fine with .NET Core 2.0 projects.
 
-```xml
-<ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
-</ItemGroup>
-```
+It is recommended that you add a [Directory.Build.props](Directory.Build.props) file to your project to use different `obj` and `bin` folders for local and container use, to avoid conflicts between them. You should delete your existing obj and bin folders before making this change. You can also use `dotnet clean` for this purpose.
 
-If you are using .NET Core 2.1 Preview 2 or later, then this tool is not necessary (and should be removed as a project reference). `dotnet watch` is delivered with the .NET Core SDK starting with .NET Core 2.1 Preview 2.
+This approach relies on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to mount source into the container (without using a Dockerfile). You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
 
 ## Run your application in a container while you Develop
 
@@ -39,21 +33,19 @@ The instructions assume that you are in the root of the repository. You can use 
 **Windows** using **Linux containers**
 
 ```console
-docker run -it --rm -e DOTNET_USE_POLLING_FILE_WATCHER=1 -e RUNNING_IN_CONTAINER=1 -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet:2.0-sdk bash -c "dotnet restore && dotnet watch --msbuildprojectextensionspath ./obj/docker run"
+docker run -it --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch run
 ```
 
 **Linux or macOS** using **Linux containers**
 
 ```console
-docker run -it --rm -e DOTNET_USE_POLLING_FILE_WATCHER=1 -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet:2.0-sdk bash -c "dotnet restore && dotnet watch --msbuildprojectextensionspath ./obj/docker run"
+docker run -it --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch run
 ```
 
 **Windows** using **Windows containers**
 
-`dotnet watch run` is not working correctly in containers at this time. The instructions are still documented while we work on enabling this scenario.
-
 ```console
-docker run -it --rm -e DOTNET_USE_POLLING_FILE_WATCHER=1 -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\dotnetapp microsoft/dotnet:2.0-sdk cmd /c "dotnet restore && dotnet watch --msbuildprojectextensionspath .\obj\docker run"
+docker run -it --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\dotnetapp microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch run"
 ```
 
 ## Test your application in a container while you develop
@@ -65,21 +57,19 @@ The instructions assume that you are in the root of the repository. You can use 
 **Windows** using **Linux containers**
 
 ```console
-docker run -it --rm -e DOTNET_USE_POLLING_FILE_WATCHER=1 -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/tests microsoft/dotnet:2.0-sdk bash -c "dotnet restore && dotnet watch test"
+docker run -it --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/tests microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch test"
 ```
 
 **Linux or macOS** using **Linux containers**
 
 ```console
-docker run -it --rm -e DOTNET_USE_POLLING_FILE_WATCHER=1 -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/tests microsoft/dotnet:2.0-sdk bash -c "dotnet restore && dotnet watch test"
+docker run -it --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/tests microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch test"
 ```
 
 **Windows** using **Windows containers**
 
-`dotnet watch test` is not working correctly in containers at this time. The instructions are still documented while we work on enabling this scenario.
-
 ```console
-docker run -it --rm -e DOTNET_USE_POLLING_FILE_WATCHER=1 -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\tests microsoft/dotnet:2.0-sdk cmd /c "dotnet restore && dotnet watch test"
+docker run -it --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\tests microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch test"
 ```
 
 The commands above log test results to the console. You can additionally log results as a TRX file by appending `--logger:trx` to the previous test commands, specifically `dotnet watch test --logger:trx`. TRX logging is also demonstrated in [Running .NET Core Unit Tests with Docker](dotnet-docker-unit-testing.md).
