@@ -33,19 +33,19 @@ The instructions assume that you are in the root of the repository. You can use 
 **Windows** using **Linux containers**
 
 ```console
-docker run -it --rm -e RUNNING_IN_CONTAINER=1 -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch run
+docker run -it --rm -e -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch run
 ```
 
 **Linux or macOS** using **Linux containers**
 
 ```console
-docker run -it --rm -e RUNNING_IN_CONTAINER=1 -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch run
+docker run -it --rm -e -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch run
 ```
 
 **Windows** using **Windows containers**
 
 ```console
-docker run -it --rm -e RUNNING_IN_CONTAINER=1 -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\dotnetapp microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch run"
+docker run -it --rm -e -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\dotnetapp microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch run"
 ```
 
 ## Test your application in a container while you develop
@@ -57,19 +57,19 @@ The instructions assume that you are in the root of the repository. You can use 
 **Windows** using **Linux containers**
 
 ```console
-docker run -it --rm -e RUNNING_IN_CONTAINER=1 -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/tests microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch test"
+docker run -it --rm -e -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/tests microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch test"
 ```
 
 **Linux or macOS** using **Linux containers**
 
 ```console
-docker run -it --rm -e RUNNING_IN_CONTAINER=1 -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/tests microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch test"
+docker run -it --rm -e -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/tests microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch test"
 ```
 
 **Windows** using **Windows containers**
 
 ```console
-docker run -it --rm -e RUNNING_IN_CONTAINER=1 -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\tests microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch test"
+docker run -it --rm -e -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\tests microsoft/dotnet-nightly:2.1.300-preview2-sdk dotnet watch test"
 ```
 
 The commands above log test results to the console. You can additionally log results as a TRX file by appending `--logger:trx` to the previous test commands, specifically `dotnet watch test --logger:trx`. TRX logging is also demonstrated in [Running .NET Core Unit Tests with Docker](dotnet-docker-unit-testing.md).
