@@ -86,7 +86,7 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 
 You can quickly try a pre-built [sample .NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/) that uses these images.
 
-Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
+Type the following command to run a sample console application with [Docker](https://www.docker.com/products/docker):
 
 ```console
 docker run --rm microsoft/dotnet-samples
@@ -96,13 +96,13 @@ docker run --rm microsoft/dotnet-samples
 
 You can quickly try a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/) that uses these images.
 
-Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
+Type the following command to run a sample web application with [Docker](https://www.docker.com/products/docker):
 
 ```console
 docker run --rm -p 8000:80 --name aspnetcore_sample microsoft/dotnet-samples:aspnetapp
 ```
 
-After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in the [View the ASP.NET Core app in a running container on Windows](#view-the-aspnet-core-app-in-a-running-container-on-windows) section.
+After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in [View the ASP.NET Core app in a running container on Windows](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md#view-the-aspnet-core-app-in-a-running-container-on-windows).
 
 ## .NET Core Docker Samples
 
