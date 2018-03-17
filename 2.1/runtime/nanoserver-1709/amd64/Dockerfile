@@ -29,8 +29,8 @@ USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"
 USER ContainerUser
 
-# Enable detection of running in a container
-ENV DOTNET_RUNNING_IN_CONTAINER true
-
 # Configure Kestrel web server to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80
+
+# Enable detection of running in a container
+ENV DOTNET_RUNNING_IN_CONTAINER true

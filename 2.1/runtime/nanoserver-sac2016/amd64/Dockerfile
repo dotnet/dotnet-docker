@@ -19,8 +19,8 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
 
 RUN setx /M PATH $($Env:PATH + ';' + $Env:ProgramFiles + '\dotnet')
 
-# Enable detection of running in a container
-ENV DOTNET_RUNNING_IN_CONTAINER true
-
 # Configure Kestrel web server to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80
+
+# Enable detection of running in a container
+ENV DOTNET_RUNNING_IN_CONTAINER true
