@@ -33,7 +33,7 @@ The instructions assume that you are in the root of the repository. You can use 
 **Windows** using **Linux containers**
 
 ```console
-docker run --rm -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:/app/ microsoft/dotnet-nightly:2.1-sdk dotnet watch run
+docker run -it --rm -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:/app/ microsoft/dotnet-nightly:2.1-sdk -w /app/aspnetapp dotnet watch run
 ```
 
 Navigate to the site at `http://localhost:8000` in your browser.
@@ -41,7 +41,7 @@ Navigate to the site at `http://localhost:8000` in your browser.
 **macOS or Linux** using **Linux containers**
 
 ```console
-docker run --rm -p 8000:80 -v ~/git/dotnet-docker/samples/aspnetapp:/app/ microsoft/dotnet-nightly:2.1-sdk dotnet watch run
+docker run -it --rm -p 8000:80 -v ~/git/dotnet-docker/samples/aspnetapp:/app/ -w /app/aspnetapp microsoft/dotnet-nightly:2.1-sdk dotnet watch run
 ```
 
 Navigate to the site at `http://localhost:8000` in your browser.
@@ -51,7 +51,7 @@ Navigate to the site at `http://localhost:8000` in your browser.
 `dotnet watch run` is not working correctly in containers at this time. The instructions are still documented while we work on enabling this scenario.
 
 ```console
-docker run --rm -p 8000:80 --name aspnetappsample -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ microsoft/dotnet-nightly:2.1-sdk dotnet watch run
+docker run -it --rm -p 8000:80 --name aspnetappsample -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ -w \app\aspnetapp microsoft/dotnet-nightly:2.1-sdk dotnet watch run
 ```
 
 In another command window, type `docker exec aspnetappsample ipconfig`. Navigate to the IP address you see in your browser.
