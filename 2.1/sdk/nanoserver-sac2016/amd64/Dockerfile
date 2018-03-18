@@ -19,6 +19,15 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
 
 RUN setx /M PATH $($Env:PATH + ';' + $Env:ProgramFiles + '\dotnet')
 
+# Configure Kestrel web server to bind to port 80 when present
+ENV ASPNETCORE_URLS=http://+:80
+
+# Enable detection of running in a container
+ENV DOTNET_RUNNING_IN_CONTAINER true
+
+# Enable correct mode for dotnet watch (only mode supported in a container)
+ENV DOTNET_USE_POLLING_FILE_WATCHER true
+
 ENV NUGET_XMLDOC_MODE skip
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache

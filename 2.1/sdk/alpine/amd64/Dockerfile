@@ -21,6 +21,9 @@ RUN apk add --no-cache --virtual .build-deps \
     && rm dotnet.tar.gz \
     && apk del .build-deps
 
+# Enable correct mode for dotnet watch (only mode supported in a container)
+ENV DOTNET_USE_POLLING_FILE_WATCHER true
+
 ENV NUGET_XMLDOC_MODE skip
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
