@@ -84,139 +84,44 @@ You can use C# to write .NET Core apps. C# is simple, powerful, type-safe, and o
 
 ### Run a simple application within a container
 
-You can run a [sample application](https://hub.docker.com/r/microsoft/dotnet-samples/) (Linux image) that depends on these images in a container by running the following command.
+You can quickly try a pre-built [sample .NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/) that uses these images.
+
+Type the following command to run a sample console application with [Docker](https://www.docker.com/products/docker):
 
 ```console
-docker run microsoft/dotnet-samples
+docker run --rm microsoft/dotnet-samples
 ```
 
-### Use multi-stage build with a .NET Core application
+### Run a web application within a container
 
-.NET Core Docker images can use [multi-stage build](https://docs.docker.com/engine/userguide/eng-image/multistage-build/). This feature allows multiple FROM instructions to be used in one Dockerfile. Using this feature, you can build a .NET Core app using an SDK image (AKA 'build image') and then copy the published app into a lighter weight runtime image within a single Dockerfile.
+You can quickly try a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/) that uses these images.
 
- You can check out our [multi-stage build samples](https://github.com/dotnet/dotnet-docker-samples) on GitHub for ASP.NET apps, production scenarios, and self-contained scenarios.
-
-Add a `Dockerfile` to your .NET project with the following:
-
-```dockerfile
-FROM microsoft/dotnet:sdk AS build-env
-WORKDIR /app
-
-# copy csproj and restore as distinct layers
-COPY *.csproj ./
-RUN dotnet restore
-
-# copy everything else and build
-COPY . ./
-RUN dotnet publish -c Release -o out
-
-# build runtime image
-FROM microsoft/dotnet:runtime
-WORKDIR /app
-COPY --from=build-env /app/out ./
-ENTRYPOINT ["dotnet", "dotnetapp.dll"]
-```
-
-Build and run the Docker image:
+Type the following command to run a sample web application with [Docker](https://www.docker.com/products/docker):
 
 ```console
-docker build -t dotnetapp .
-docker run --rm dotnetapp Hello .NET Core from Docker
+docker run --rm -p 8000:80 --name aspnetcore_sample microsoft/dotnet-samples:aspnetapp
 ```
 
-The `Dockerfile` and the Docker commands assumes that your application is called `dotnetapp`. You can change the `Dockerfile` and the commands, as needed.
+After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in [View the ASP.NET Core app in a running container on Windows](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md#view-the-aspnet-core-app-in-a-running-container-on-windows).
 
-### Build and run an application with a .NET Core SDK Image
+## .NET Core Docker Samples
 
-You can use the .NET Core SDK Docker image as a build and runtime environment. It's a useful image for iterative development and the easiest way to get started using .NET Core with Docker. It isn't recommended for production since it's a bigger image than necessary, although it can work for that, too. You can try the instructions below or use the [dotnetapp-dev sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev) if you want to try a pre-made version that's ready go.
+The [.NET Core Docker samples](https://raw.githubusercontent.com/dotnet/dotnet-docker/master/samples/README.md) show various ways to use .NET Core and Docker together. 
 
-Create a Dockerfile with following lines, which will both build and run your application in the container. This Dockerfile has been optimized (note the two `COPY` commands) to take advantage of Docker layering, resulting in faster image building for iterative development.
+### Building .NET Core Apps with Docker
 
-```dockerfile
-FROM microsoft/dotnet
+* [.NET Core Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
+* [ASP.NET Core Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
 
-WORKDIR /dotnetapp
+### Optimizing Container Size
 
-# copy project.json and restore as distinct layers
-COPY project.json .
-RUN dotnet restore
+* [.NET Core Alpine Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile.alpine-x64) builds, tests, and runs an application using Alpine.
+* [.NET Core self-contained Sample](dotnetapp/dotnet-docker-selfcontained.md) - This [sample](dotnetapp/Dockerfile.debian-x64-selfcontained) builds and runs an application as a self-contained application.
 
-# copy and build everything else
-COPY . .
-RUN dotnet publish -c Release -o out
-ENTRYPOINT ["dotnet", "out/dotnetapp.dll"]
-```
+### ARM32 / Raspberry Pi
 
-You can then build and run the Docker image:
-
-```console
-docker build -t dotnetapp .
-docker run -it --rm dotnetapp
-```
-
-The `Dockerfile` and the Docker commands assumes that your application is called `dotnetapp`. You can change the `Dockerfile` and the commands, as needed.
-
-### Interactively build and run a simple .NET Core application
-
-You can interactively try out .NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run a .NET Core application in a minute (depending on your internet speed).
-
-```console
-docker run -it --rm microsoft/dotnet
-[now in the container]
-mkdir app
-cd app
-dotnet new console
-ls
-dotnet restore
-dotnet run
-dotnet bin/Debug/netcoreapp1.0/app.dll
-dotnet publish -c Release -o out
-dotnet out/app.dll
-exit
- ```
-
-The experience is very similar using [Windows Containers][win-containers]. The commands should be the same, with the exception `ls` and the directory separators.
-
-The steps above are intended to show the basic functions of .NET Core tools. Try running `dotnet run` twice. You'll see that the second invocation skips compilation. The subsequent command after `dotnet run` demonstrates that you can run an application directly out of the bin folder, without the additional build logic that `dotnet run` adds. The last two commands demonstrate the publishing scenario, which prepares an app to be deployed on the same or other machine, with a requirement on only the .NET Core Runtime, not the larger SDK. Naturally, you don't have to exit immediately, but can continue to try out the product as long as you want.
-
-You can extend your interactive exploration of .NET Core by git cloning the [dotnet/dotnet-docker-samples](https://github.com/dotnet/dotnet-docker-samples) repo. Try the following commands (only works on Linux containers), assuming you are running interactively in the container:
-
-```console
-git clone https://github.com/dotnet/dotnet-docker-samples
-cd dotnet-docker-samples
-cd dotnetapp-dev
-dotnet restore
-dotnet run
-```
-
-## Interactively build and run an ASP.NET Core application
-
- You can interactively try out ASP.NET Core by taking advantage of the convenience of a container. Try the following set of commands to create and run an ASP.NET Core application in a minute (depending on your internet speed).
-
- ```console
-docker run -p 8000:80 -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet
-[now in the container]
-mkdir app
-cd app
-dotnet new mvc
-dotnet restore
-dotnet run
-exit
- ```
-
-After running `dotnet run` in the container, browse to `http://localhost:8000` in your host machine.
-
-The experience is very similar using [Windows Containers][win-containers]. The commands should be the same, with the exception of the `docker run`. Replace the `docker run` command above with the following two commands:
-
- ```console
-docker run -e "ASPNETCORE_URLS=http://+:80" -it --rm microsoft/dotnet
-ipconfig
- ```
-Copy the IP address from the output of `ipconfig`. After running `dotnet run` in the container, browse to that IP address in your browser on your host machine.
-
-You should see a default ASP.NET Core site and logging activity in the container.
-
-Please use the images at [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/). They are recommended and optimized for ASP.NET core development and production and are built on the images in this repo.
+* [.NET Core ARM32 Docker Sample](dotnetapp/dotnet-docker-arm32.md) - This [sample](dotnetapp/Dockerfile.debian-arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
+* [ASP.NET Core ARM32 Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile.debian-arm32) builds and runs an ASP.NET Core application with Debian on ARM32 (works on Raspberry Pi).
 
 ## Image variants
 
@@ -243,23 +148,20 @@ This image contains the .NET Core (runtime and libraries) and is optimized for r
 
 This image contains the operating system with all of the native dependencies needed by .NET Core. This is for  [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
 
-## More Examples using these Images
-
-You can learn more about using .NET Core with Docker with [.NET Docker samples](https://github.com/dotnet/dotnet-docker-samples):
-
-- [.NET Core Development Sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-dev) - This sample is good for development and building since it relies on the .NET Core SDK image. It performs `dotnet` commands on your behalf, reducing the time it takes to create Docker images (assuming you make changes and then test them in a container, iteratively).
-- [.NET Core Docker Production Sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-prod) - This sample is good for production since it relies on the .NET Core Runtime image, not the larger .NET Core SDK image. Most apps only need the runtime, reducing the size of your application image.
-- [.NET Core self-contained application Docker Production Samp](https://github.com/dotnet/dotnet-docker-samples/tree/master/dotnetapp-selfcontained) - This sample is also good for production scenarios since it relies on an operating system image (without .NET Core). [Self-contained .NET Core apps](https://docs.microsoft.com/dotnet/articles/core/deploying/) include .NET Core as part of the app and not as a centrally installed component in a base image.
-- [ASP.NET Core Docker Production Sample](https://github.com/dotnet/dotnet-docker-samples/tree/master/aspnetapp) - This samples demonstrates a Dockerized ASP.NET Core Web App.
-
 ## Related Repos
 
-See the following related repos for other application types:
+.NET Core Docker Hub repos:
 
-- [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core images.
-- [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
-- [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images (for web applications, see microsoft/aspnet).
-- [microsoft/dotnet-nightly](https://hub.docker.com/r/microsoft/dotnet-nightly/) for pre-release .NET Core images (used to experiment with the latest builds).
+* [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core images.
+* [microsoft/dotnet-nightly](https://hub.docker.com/r/microsoft/dotnet-nightly/) for .NET Core preview images.
+* [microsoft/dotnet-samples](https://hub.docker.com/r/microsoft/dotnet-samples/) for .NET Core sample images.
+
+.NET Framework Docker Hub repos:
+
+* [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
+* [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images.
+* [microsoft/dotnet-framework-build](https://hub.docker.com/r/microsoft/dotnet-framework-build/) for building .NET Framework applications with Docker.
+* [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework and ASP.NET sample images.
 
 ## License
 
