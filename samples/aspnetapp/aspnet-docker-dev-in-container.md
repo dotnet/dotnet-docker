@@ -36,7 +36,7 @@ The instructions assume that you are in the root of the repository. You can use 
 docker run --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:/app/ -w /app/aspnetapp microsoft/dotnet-nightly:2.1-sdk dotnet watch run
 ```
 
-Navigate to the site at `http://localhost:8000` in your browser.
+Navigate to the site at `http://localhost:8000` in your browser. You can use CTRL-C to terminate `dotnet watch`. It can take up to 20s to terminate.
 
 **macOS or Linux** using **Linux containers**
 
@@ -44,7 +44,7 @@ Navigate to the site at `http://localhost:8000` in your browser.
 docker run --rm -it -p 8000:80 -v ~/git/dotnet-docker/samples/aspnetapp:/app/ -w /app/aspnetapp microsoft/dotnet-nightly:2.1-sdk dotnet watch run
 ```
 
-Navigate to the site at `http://localhost:8000` in your browser.
+Navigate to the site at `http://localhost:8000` in your browser. You can use CTRL-C to terminate `dotnet watch`. It can take up to 20s to terminate.
 
 **Windows** using **Windows containers**
 
