@@ -65,7 +65,7 @@ More complex applications may require more complex builds than `dotnet publish` 
 Build the docker image. The assumption in this example is that an exiting [Dockerfile](Dockerfile) is being used, with a particular stage being targeted.
 
 ```console
-docker build --pull -t dotnetapp:publish .
+docker build --pull --target publish -t dotnetapp:publish .
 ```
 
 Next, extract the built binaries and place them in a new `out` directory on your machine.
@@ -75,7 +75,7 @@ You can use the following commands, given your environment:
 **Windows** using **Linux containers**
 
 ```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp\out:/app/out -w c:\app dotnetapp:publish cp -r dotnetapp/out .
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp\out:/app/out -w /app dotnetapp:publish cp -r dotnetapp/out .
 ```
 
 **Linux or macOS** using **Linux containers**
@@ -87,7 +87,8 @@ docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp/out:/app/out -w /app do
 **Windows** using **Windows containers**
 
 ```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp\out:c:\app\out -w \app dotnetapp:publish copy dotnetapp/out out
+mkdir samples\dotnetapp\out
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp\out:c:\app\out -w \app dotnetapp:publish cmd /C "copy /Y dotnetapp\out out"
 ```
 
 You can now run the application on your local machine, assuming you are at the root of the repository:
