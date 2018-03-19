@@ -38,7 +38,7 @@ You can build and run the sample in Docker using the following commands. The ins
 cd samples
 cd aspnetapp
 docker build --pull -t aspnetapp .
-docker run --rm -p 8000:80 --name aspnetcore_sample microsoft/dotnet-samples:aspnetapp
+docker run --rm -p 8000:80 --name aspnetcore_sample aspnetapp
 ```
 
 You should see the following console output as the application starts.
