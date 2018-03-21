@@ -51,7 +51,7 @@ Navigate to the site at `http://localhost:8000` in your browser. You can use CTR
 `dotnet watch run` is not working correctly in containers at this time. The instructions are still documented while we work on enabling this scenario.
 
 ```console
-docker run --name aspnetappsample --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ -w \app\aspnetapp microsoft/dotnet-nightly:2.1-sdk dotnet watch run
+docker run --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ -w \app\aspnetapp --name aspnetappsample microsoft/dotnet-nightly:2.1-sdk dotnet watch run
 ```
 
 In another command window, type `docker exec aspnetappsample ipconfig`. Navigate to the IP address you see in your browser.
