@@ -11,7 +11,7 @@ public static class Program
     {
           var defaultMessage = "Hello from .NET Core!";
           var bot = GetBot();
-          var (message, withColor) = GetMessage(args);
+          var (message, withColor) = ParseArgs(args);
           var output = message == string.Empty ? $"    {defaultMessage}{bot}" : $"    {message}{bot}";
 
           if (withColor)
@@ -29,7 +29,7 @@ public static class Program
           WriteLine();
     }
 
-    private static (string, bool) GetMessage(string[] args)
+    private static (string, bool) ParseArgs(string[] args)
     {
       var buffer = new StringBuilder();
       var withColor = false;

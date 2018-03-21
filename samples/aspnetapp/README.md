@@ -6,12 +6,6 @@ The sample builds the application in a container based on the larger [.NET Core 
 
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
-Looking for other samples:
-
-* [Develop .NET Core Applications in a container](../dotnetapp/dotnet-docker-dev-in-container.md)
-* [Develop ASP.NET Core Applications in a container](aspnet-docker-dev-in-container.md)
-* [.NET Core Docker Sample](../dotnetapp/README.md)
-
 ## Try a pre-built ASP.NET Core Docker Image
 
 You can quickly try a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this sample.
@@ -19,7 +13,7 @@ You can quickly try a pre-built [sample ASP.NET Core Docker image](https://hub.d
 Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
 ```console
-docker run --rm -p 8000:80 --name aspnetcore_sample microsoft/dotnet-samples:aspnetapp
+docker run --name aspnetcore_sample --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in the [View the ASP.NET Core app in a running container on Windows](#view-the-aspnet-core-app-in-a-running-container-on-windows) section.
@@ -42,13 +36,13 @@ You can build and run the sample in Docker using the following commands. The ins
 cd samples
 cd aspnetapp
 docker build --pull -t aspnetapp .
-docker run --rm -p 8000:80 --name aspnetcore_sample aspnetapp
+docker run --name aspnetcore_sample --rm -it -p 8000:80 aspnetapp
 ```
 
 You should see the following console output as the application starts.
 
 ```console
-C:\git\dotnet-docker\samples\aspnetapp>docker run --rm --name aspnetcore_sample aspnetapp
+C:\git\dotnet-docker\samples\aspnetapp>docker run --name aspnetcore_sample --rm -it -p 8000:80 aspnetapp
 Hosting environment: Production
 Content root path: /app
 Now listening on: http://[::]:80
@@ -101,6 +95,10 @@ C:\git\dotnet-docker\samples\aspnetapp>docker inspect -f "{{ .NetworkSettings.Ne
 ## Build and run the sample for Linux ARM32 with Docker
 
 You can build and run the sample for ARM32 and Raspberry Pi with [Build ASP.NET Core Applications for Raspberry Pi with Docker](aspnetcore-docker-arm32.md) instructions.
+
+## Develop ASP.NET Core Applications in a container
+
+You can develop applications without a .NET Core installation on your machine with the [Develop ASP.NET Core applications in a container](aspnet-docker-dev-in-container.md) instructions. These instructions are also useful if your development and production environments do not match.
 
 ## Build and run the sample locally
 
