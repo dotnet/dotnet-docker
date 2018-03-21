@@ -167,7 +167,7 @@ This image contains the operating system with all of the native dependencies nee
 
 View [license information](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE) for the software contained in this image.
 
-The .NET Core Windows container images use the same license as the [Windows Server 2016 Nano Server base image](https://hub.docker.com/r/microsoft/nanoserver/), as follows:
+The .NET Core Windows images use the same license as the [Windows Server 2016 Nano Server base image](https://hub.docker.com/r/microsoft/nanoserver/), as follows:
 
 MICROSOFT SOFTWARE SUPPLEMENTAL LICENSE TERMS
 

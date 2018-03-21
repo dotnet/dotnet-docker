@@ -6,8 +6,6 @@ The sample builds the application in a container based on the larger [.NET Core 
 
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
-The [ASP.NET Core Docker Sample](../aspnetapp/README.md) demonstrates how to use ASP.NET Core and Docker together.
-
 ## Try a pre-built .NET Core Docker Image
 
 You can quickly try a pre-built [sample .NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this sample.
@@ -15,7 +13,7 @@ You can quickly try a pre-built [sample .NET Core Docker image](https://hub.dock
 Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
 ```console
-docker run --rm microsoft/dotnet-samples
+docker run --rm -it microsoft/dotnet-samples
 ```
 
 ## Getting the sample
@@ -43,7 +41,7 @@ The commands above run unit tests as part `docker build`. You can also [run .NET
 
 ```console
 docker build --target testrunner -t dotnetapp:test .
-docker run --rm dotnetapp:test
+docker run --rm -it dotnetapp:test
 ```
 
 You can mount a volume while running the image in order to save the test results to your local disk. The instructions to do that are provided in [Running Unit Tests with Docker](dotnet-docker-unit-testing.md)
@@ -67,10 +65,10 @@ You can build and run the sample with [Alpine](https://hub.docker.com/_/alpine/)
 cd samples
 cd dotnetapp
 docker build --pull -t dotnetapp:alpine -f Dockerfile.alpine-x64 .
-docker run --rm dotnetapp:alpine Hello .NET Core from Alpine
+docker run --rm -it dotnetapp:alpine Hello .NET Core from Alpine
 ```
 
-[Globalization is disabled](https://github.com/dotnet/announcements/issues/20) by default with Alpine images in order to produce smaller container images. You can re-enable globalization if your application relies on it. [Dockerfile.alpine-x64-globalization](Dockerfile.alpine-x64-globalization) enables globalization for Alpine images, but produces larger images.
+[Globalization is disabled](https://github.com/dotnet/announcements/issues/20) by default with Alpine images in order to produce smaller images. You can re-enable globalization if your application relies on it. [Dockerfile.alpine-x64-globalization](Dockerfile.alpine-x64-globalization) enables globalization for Alpine images, but produces larger images.
 
 > Related: [.NET Core Alpine Docker Image announcement](https://github.com/dotnet/dotnet-docker-nightly/issues/500)
 
@@ -81,6 +79,10 @@ You can build and run the sample for ARM32 and Raspberry Pi with [Build .NET Cor
 ## Build .NET Core Self-Contained Applications with Docker
 
 You can build [Build .NET Core Self-Contained Applications with Docker](dotnet-docker-selfcontained.md).
+
+## Develop ASP.NET Core Applications in a container
+
+You can develop applications without a .NET Core installation on your machine with the [Develop .NET Core applications in a container](dotnet-docker-dev-in-container.md) instructions. These instructions are also useful if your development and production environments do not match.
 
 ## Run Docker Image on Another Device
 

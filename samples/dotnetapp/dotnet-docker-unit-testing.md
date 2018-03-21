@@ -8,6 +8,16 @@ Running tests via `docker run` is useful as a means of getting complete test res
 
 These instructions are based on the [.NET Core Docker Sample](README.md).
 
+## Getting the sample
+
+The easiest way to get the sample is by cloning the samples repository with [git](https://git-scm.com/downloads), using the following instructions.
+
+```console
+git clone https://github.com/dotnet/dotnet-docker/
+```
+
+You can also [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/master.zip).
+
 ## Run unit tests as part of `docker build`
 
 You can run [unit tests](tests) as part of `docker build`, using the following commands. Running tests in this way is useful to get pass/fail results for building Docker images. The instructions assume that you are in the root of the repository.
@@ -39,7 +49,13 @@ docker build -t dotnetapp .
 
 ### Run unit tests as part of `docker run`
 
-You can run [unit tests](tests) as part of `docker run` using the following commands. Running tests in this way is useful to get complete tests results for Docker images. The [sample](Dockerfile) exposes multiple [Dockerfile stages](https://docs.docker.com/engine/reference/commandline/build/#specifying-target-build-stage-target) that you can separately target as part of `docker build` and run. The sample includes a `testrunner` stage with a separate `ENTRYPOINT` for unit testing, which is used in the following commands. The instructions assume that you are in the root of the repository.
+You can run [unit tests](tests) as part of `docker run` using the following commands. Running tests in this way is useful to get complete tests results for Docker images. The [sample Dockerfile](Dockerfile) exposes multiple [Dockerfile stages](https://docs.docker.com/engine/reference/commandline/build/#specifying-target-build-stage-target) that you can separately target as part of `docker build` and run. The sample Dockerfile includes a `testrunner` stage with a separate `ENTRYPOINT` for unit testing, which is required to maintain a single Dockerfile.
+
+The following commands rely on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to enable the test runner to write test log files to your local drive. Without that, running tests as part of `docker run` isn't as useful. You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
+
+#### Build the testrunner stage
+
+The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
@@ -53,25 +69,29 @@ If you want to test with Alpine Linux, you can alternatively build with [Dockerf
 docker build --pull --target testrunner -t dotnetapp -f Dockerfile.alpine-x64 .
 ```
 
-The following commands rely on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to enable the test runner to write test log files to your local drive. Without that, running tests as part of `docker run` isn't as useful.
+#### Run the testrunner stage
 
-You can run the sample on **Windows** using Windows containers using the following command.
+Use the following commands, given your environment:
 
-```console
-docker run --rm -v C:\git\dotnet-docker\samples\dotnetapp\TestResults:C:\app\tests\TestResults dotnetapp:test
-```
-
-You can run the sample on **Windows** using Linux containers using the following command. [Enable shared drives](https://docs.docker.com/docker-for-windows/#shared-drives) first.
+**Windows** using **Linux containers**
 
 ```console
 docker run --rm -v C:\git\dotnet-docker\samples\dotnetapp\TestResults:/app/tests/TestResults dotnetapp:test
 ```
 
-You can run the sample on **macOS** or **Linux** using the following command. Enable [file sharing](https://docs.docker.com/docker-for-mac/#file-sharing) first.
+**Linux or macOS** using **Linux containers**
 
 ```console
 docker run --rm -v "$(pwd)"/TestResults:/app/tests/TestResults dotnetapp:test
 ```
+
+**Windows** using **Windows containers**
+
+```console
+docker run --rm -v C:\git\dotnet-docker\samples\dotnetapp\TestResults:C:\app\tests\TestResults dotnetapp:test
+```
+
+#### Reading the Results
 
 You should find a `.trx` file in the TestResults folder. You can open this file in Visual Studio to see the results of the test run, as you can see in the following image. You can open in Visual Studio (File -> Open -> File) or double-click on the TRX file (if you have Visual Studio installed). There are other TRX file viewers available as well that you can search for.
 

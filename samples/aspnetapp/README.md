@@ -6,8 +6,6 @@ The sample builds the application in a container based on the larger [.NET Core 
 
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
-The [.NET Core Docker Sample](../dotnetapp/README.md) demonstrates more functionality, including unit testing, publishing self-contained applications and using the Alpine base image. The same techniques can be applied to ASP.NET applications.
-
 ## Try a pre-built ASP.NET Core Docker Image
 
 You can quickly try a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this sample.
@@ -15,7 +13,7 @@ You can quickly try a pre-built [sample ASP.NET Core Docker image](https://hub.d
 Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
 ```console
-docker run --rm -p 8000:80 --name aspnetcore_sample microsoft/dotnet-samples:aspnetapp
+docker run --name aspnetcore_sample --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in the [View the ASP.NET Core app in a running container on Windows](#view-the-aspnet-core-app-in-a-running-container-on-windows) section.
@@ -38,13 +36,13 @@ You can build and run the sample in Docker using the following commands. The ins
 cd samples
 cd aspnetapp
 docker build --pull -t aspnetapp .
-docker run --rm -p 8000:80 --name aspnetcore_sample aspnetapp
+docker run --name aspnetcore_sample --rm -it -p 8000:80 aspnetapp
 ```
 
 You should see the following console output as the application starts.
 
 ```console
-C:\git\dotnet-docker\samples\aspnetapp>docker run --rm --name aspnetcore_sample aspnetapp
+C:\git\dotnet-docker\samples\aspnetapp>docker run --name aspnetcore_sample --rm -it -p 8000:80 aspnetapp
 Hosting environment: Production
 Content root path: /app
 Now listening on: http://[::]:80
@@ -94,9 +92,23 @@ C:\git\dotnet-docker\samples\aspnetapp>docker inspect -f "{{ .NetworkSettings.Ne
 172.25.157.148
 ```
 
+## Deploying to Production vs Development
+
+The approach for running containers differs between development and production. 
+
+In production, you will typically start your container with `docker run -d`. This argument starts the container as a service, without any console interaction. You then interact with it through other Docker commands or APIs exposed by the containerized application.
+
+In development, you will typically start containers with `docker run --rm -it`. These arguments enable you to see a console (important when there are errors), terminate the container with `CTRL-C` and cleans up all container resources when the container is termiantes. You also typically don't mind blocking the console. This approach is demonstrated in prior examples in this document.
+
+We recommend that you do not use `--rm` in production. It cleans up container resources, preventing you from collecting logs that may have been captured in a container that has either stopped or crashed.
+
 ## Build and run the sample for Linux ARM32 with Docker
 
 You can build and run the sample for ARM32 and Raspberry Pi with [Build ASP.NET Core Applications for Raspberry Pi with Docker](aspnetcore-docker-arm32.md) instructions.
+
+## Develop ASP.NET Core Applications in a container
+
+You can develop applications without a .NET Core installation on your machine with the [Develop ASP.NET Core applications in a container](aspnet-docker-dev-in-container.md) instructions. These instructions are also useful if your development and production environments do not match.
 
 ## Build and run the sample locally
 
