@@ -1,8 +1,8 @@
 # Develop ASP.NET Core Applications in a Container
 
-Docker containers can provide a local .NET Core development environment without having to install anything on your machine. You can also use containers to augment a locally installed development environment with one that matches production. This scenario is useful if you develop on an operating system that is different than production. If you support multiple operating systems, then this approach can be even more useful.
+You can use containers to establish a .NET Core development environment with only Docker and optionally a code editor installed on your machine. The environment can be made to match your local machine, production or both. If you support multiple operating systems, then this approach might become a key part of your development process.
 
-You can [build container images to create your environment](README.md), as described in a Dockerfile. That's straightforward and the common use case with Docker. This document describes a much more iterative and dynamic use of Docker, defining the container environment primarily via the commandline. .NET Core includes a command called `dotnet watch` that can rerun your application or your tests on each code change. This document describes how to use the Docker CLI and `dotnet watch` to develop applications in a container.
+A common use case of Docker is to containerize an [application](README.md). You can define the environment necessary to run the application and even build the application itself within a Dockerfile. This document describes a much more iterative and dynamic use of Docker, defining the container environment primarily via the commandline. .NET Core includes a command called `dotnet watch` that can rerun your application or your tests on each code change. This document describes how to use the Docker CLI and `dotnet watch` to develop applications in a container.
 
 See [Develop .NET Core Applications in a Container](../dotnetapp/aspnet-docker-dev-in-container.md) for .NET Core-specific instructions.
 
@@ -18,7 +18,7 @@ You can also [download the repository as a zip](https://github.com/dotnet/dotnet
 
 ## Requirements
 
-The instructions below use .NET Core 2.1 Preview 2 container images. It is possible to make this scenario work with .NET Core 2.0 but requires many extra steps and a bit of magic. You do not need to switch to .NET Core 2.1 on your local machine to try out these instructions. They will work fine with .NET Core 2.0 projects.
+The instructions below use .NET Core 2.1 Preview 2 images. It is possible to make this scenario work with .NET Core 2.0 but requires many extra steps and a bit of magic. You do not need to switch to .NET Core 2.1 on your local machine to try out these instructions. They will work fine with .NET Core 2.0 projects.
 
 It is recommended that you add a [Directory.Build.props](Directory.Build.props) file to your project to use different `obj` and `bin` folders for local and container use, to avoid conflicts between them. You should delete your existing obj and bin folders before making this change. You can also use `dotnet clean` for this purpose.
 
@@ -51,7 +51,7 @@ Navigate to the site at `http://localhost:8000` in your browser. You can use CTR
 `dotnet watch run` is not working correctly in containers at this time. The instructions are still documented while we work on enabling this scenario.
 
 ```console
-docker run --rm --name aspnetappsample -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ -w \app\aspnetapp microsoft/dotnet-nightly:2.1-sdk dotnet watch run
+docker run --name aspnetappsample --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ -w \app\aspnetapp microsoft/dotnet-nightly:2.1-sdk dotnet watch run
 ```
 
 In another command window, type `docker exec aspnetappsample ipconfig`. Navigate to the IP address you see in your browser.
@@ -62,4 +62,4 @@ You can demo a relaunch of the site by changing the About controller method in `
 
 ## Test your application in a container while you develop
 
-You can retest your application in a container with every local code change. This works for both console applications and websites. The syntax differs a bit for Windows and Linux containers. You can see this demonstrated in [Develop .NET Core Applications in a Container](../dotnetapp/dotnet-docker-dev-in-container.md).
+You can retest your application in a container with every local code change. You can see this demonstrated in [Develop .NET Core Applications in a Container](../dotnetapp/dotnet-docker-dev-in-container.md).
