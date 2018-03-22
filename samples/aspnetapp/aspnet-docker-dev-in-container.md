@@ -18,7 +18,7 @@ You can also [download the repository as a zip](https://github.com/dotnet/dotnet
 
 ## Requirements
 
-The instructions below use .NET Core 2.1 Preview 2 images. It is possible to make this scenario work with .NET Core 2.0 but requires many extra steps and a bit of magic. You do not need to switch to .NET Core 2.1 on your local machine to try out these instructions. They will work fine with .NET Core 2.0 projects.
+The instructions below use .NET Core 2.1 Preview 2 images. It is possible to make this scenario work with .NET Core 2.0 images but requires extra work and a bit of magic. On your local machine, you can use either .NET Core 2.1 or .NET Core 2.0 projects to try out these instructions.
 
 It is recommended that you add a [Directory.Build.props](Directory.Build.props) file to your project to use different `obj` and `bin` folders for local and container use, to avoid conflicts between them. You should delete your existing obj and bin folders before making this change. You can also use `dotnet clean` for this purpose.
 
