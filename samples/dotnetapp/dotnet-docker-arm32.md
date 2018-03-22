@@ -53,3 +53,8 @@ Now pull and run the image from DockerHub if you used that registry:
 docker pull richlander/dotnetapp:debian-arm32
 docker run --rm richlander/dotnetapp:debian-arm32
 ```
+
+## More Samples
+
+* [.NET Core Docker Samples](../README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)

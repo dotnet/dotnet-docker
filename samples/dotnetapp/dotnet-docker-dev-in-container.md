@@ -73,3 +73,8 @@ docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\te
 ```
 
 The commands above log test results to the console. You can additionally log results as a TRX file by appending `--logger:trx` to the previous test commands, specifically `dotnet watch test --logger:trx`. TRX logging is also demonstrated in [Running .NET Core Unit Tests with Docker](dotnet-docker-unit-testing.md).
+
+## More Samples
+
+* [.NET Core Docker Samples](../README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)

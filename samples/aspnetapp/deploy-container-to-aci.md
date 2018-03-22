@@ -81,3 +81,8 @@ After you no longer want to use these containers, delete the resource group to r
 az group delete --name richlander-containers
 az group exists --name richlander-containers
 ```
+
+## More Samples
+
+* [.NET Core Docker Samples](../README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)

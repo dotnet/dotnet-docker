@@ -1,10 +1,10 @@
-# Develop .NET Core Applications in a Container
+# Build .NET Core Applications in a Container
 
-Docker containers can provide a local .NET Core build environment without having to install anything on your machine. This scenario is also useful if you develop on an operating system that is different than the one you build on. Application building in a container, unlike most container scenarios, can work well for both client and server applications.
+You can use containers to establish a .NET Core build environment with only Docker and optionally a source control tool. The environment can be made to match your local machine, production or both. If you support multiple operating systems, then this approach might become a key part of your development process.
 
-The goal isn't to produce a Docker image, but build binaries from source on your disk. After running a build in this way, the binaries will be on your disk, not in a Docker container.
+The goal is to build binaries from your disk source, not to produce a Docker image. After a successful build, the binaries will be on your disk, not in a Docker container.
 
-There are a few ways to use Docker for containerized builds. For simple scenarios, you can use a combination of docker run and volume mounting, as is done with [Develop .NET Core Applications in a Container](dotnet-docker-dev-in-container.md). For more complex scenarios, you need to first build a custom Dockerfile or build to a stage of an existing Dockerfile, as is done with [Running .NET Core Unit Tests with Docker](dotnet-docker-unit-testing.md).
+You can use the [.NET Core SDK image](https://hub.docker.com/r/microsoft/dotnet/) for your build environment. For more complex environments, you can build your own image and re-use the same pattern demonstrated in the following instructions. [`docker cp`](https://docs.docker.com/engine/reference/commandline/cp/) can be used to copy built binaries from an image. That case is not documented here.
 
 ## Getting the sample
 
@@ -18,13 +18,13 @@ You can also [download the repository as a zip](https://github.com/dotnet/dotnet
 
 ## Requirements
 
-It is recommended that you add a [Directory.Build.props](Directory.Build.props) file to your project to use different `obj` and `bin` folders for local and container use, to avoid conflicts between them. You should delete your existing obj and bin folders before making this change. You can also use `dotnet clean` for this purpose.
+It is recommended that you add a [Directory.Build.props](Directory.Build.props) file to your project to use different `obj` and `bin` folders for local and container use, to avoid conflicts between them. Delete your existing obj and bin folders before making this change. You can also use `dotnet clean` for this purpose.
 
-This approach relies on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to mount source into the container (without using a Dockerfile). You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
+These instructions rely on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to mount local directories into a container (without using a Dockerfile). You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
 
-## Build .NET source with Docker run
+## Build source with the .NET Core SDK, using `docker run`
 
-You can build your application with the .NET Core SDK Docker image. You will find built assets in the `out` directory.
+Build your application with the .NET Core SDK Docker image. Built assets will be in the `out` directory on your local disk.
 
 The instructions assume that you are in the root of the repository. You can use the following commands, given your environment:
 
@@ -56,48 +56,9 @@ cd out
 dotnet dotnetapp.dll
 ```
 
-> Note: Application built for a different .NET Core version that you have on your machine or for a specific runtime (`-r` argument) may or may not run on your machine.
+> Note: Applications built for a different .NET Core version on your machine, or for a specific runtime (`-r` argument) might not run on your machine
 
-## Build .NET source with Docker build and extract binaries with Docker run
+## More Samples
 
-More complex applications may require more complex builds than `dotnet publish` on its own provides. This may be accomplished with [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build/) or other approaches. The following commands demonstrate how to enable this scenario. The instructions assume that you are in the root of the repository.
-
-Build the docker image. The assumption in this example is that an exiting [Dockerfile](Dockerfile) is being used, with a particular stage being targeted.
-
-```console
-docker build --pull --target publish -t dotnetapp:publish .
-```
-
-Next, extract the built binaries and place them in a new `out` directory on your machine.
-
-You can use the following commands, given your environment:
-
-**Windows** using **Linux containers**
-
-```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp\out:/app/out -w /app dotnetapp:publish cp -r dotnetapp/out .
-```
-
-**Linux or macOS** using **Linux containers**
-
-```console
-docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp/out:/app/out -w /app dotnetapp:publish cp -r dotnetapp/out .
-```
-
-**Windows** using **Windows containers**
-
-```console
-mkdir samples\dotnetapp\out
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp\out:c:\app\out -w \app dotnetapp:publish cmd /C "copy /Y dotnetapp\out out"
-```
-
-You can now run the application on your local machine, assuming you are at the root of the repository:
-
-```console
-cd samples
-cd dotnetapp
-cd out
-dotnet dotnetapp.dll
-```
-
-> Note: Application built for a different .NET Core version that you have on your machine or for a specific runtime (`-r` argument) may or may not run on your machine.
+* [.NET Core Docker Samples](../README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)

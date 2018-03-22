@@ -63,3 +63,8 @@ You can demo a relaunch of the site by changing the About controller method in `
 ## Test your application in a container while you develop
 
 You can retest your application in a container with every local code change. You can see this demonstrated in [Develop .NET Core Applications in a Container](../dotnetapp/dotnet-docker-dev-in-container.md).
+
+## More Samples
+
+* [.NET Core Docker Samples](../README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)
