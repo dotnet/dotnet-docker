@@ -46,18 +46,6 @@ docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app/dotnetapp 
 docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app -w c:\app\dotnetapp microsoft/dotnet:2.0-sdk dotnet publish -c release -o out
 ```
 
-You can now run the application on your local machine, assuming you are at the root of the repository:
-
-```console
-cd samples
-cd dotnetapp
-cd dotnetapp
-cd out
-dotnet dotnetapp.dll
-```
-
-> Note: Applications built for a different .NET Core version on your machine, or for a specific runtime (`-r` argument) might not run on your machine
-
 ## More Samples
 
 * [.NET Core Docker Samples](../README.md)
