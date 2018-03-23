@@ -18,10 +18,8 @@ RUN apk add --no-cache \
         lttng-ust
 
 # Configure Kestrel web server to bind to port 80 when present
-ENV ASPNETCORE_URLS=http://+:80
-
-# Enable detection of running in a container
-ENV DOTNET_RUNNING_IN_CONTAINER true
-
-# Set the invariant mode since icu_libs isn't included (see https://github.com/dotnet/announcements/issues/20)
-ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT true
+ENV ASPNETCORE_URLS=http://+:80 \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true \
+    # Set the invariant mode since icu_libs isn't included (see https://github.com/dotnet/announcements/issues/20)
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
