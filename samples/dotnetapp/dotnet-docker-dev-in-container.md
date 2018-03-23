@@ -2,7 +2,7 @@
 
 You can use containers to establish a .NET Core development environment with only Docker and optionally a code editor installed on your machine. The environment can be made to match your local machine, production or both. If you support multiple operating systems, then this approach might become a key part of your development process.
 
-A common use case of Docker is to [containerize an application](README.md). You can define the environment necessary to run the application and even build the application itself within a Dockerfile. This document describes a much more iterative and dynamic use of Docker, defining the container environment primarily via the commandline. .NET Core includes a command called `dotnet watch` that can rerun your application or your tests on each code change. This document describes how to use the Docker CLI and `dotnet watch` to develop applications in a container.
+A common use case of Docker is to [containerize an application](README.md). You can define the environment necessary to run the application and even build the application itself within a Dockerfile. This document describes a much more iterative and dynamic use of Docker, defining the environment and running .NET Core SDK commands within containers via the commandline.
 
 See [Develop ASP.NET Core Applications in a Container](../aspnetapp/aspnet-docker-dev-in-container.md) for ASP.NET Core-specific instructions.
 
@@ -73,6 +73,30 @@ docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\te
 ```
 
 The commands above log test results to the console. You can additionally log results as a TRX file by appending `--logger:trx` to the previous test commands, specifically `dotnet watch test --logger:trx`. TRX logging is also demonstrated in [Running .NET Core Unit Tests with Docker](dotnet-docker-unit-testing.md).
+
+## Build source with the .NET Core SDK, using `docker run`
+
+You can build your application with the .NET Core SDK Docker image. Built assets will be in the `out` directory on your local disk.
+
+The instructions assume that you are in the root of the repository. You can use the following commands, given your environment:
+
+**Windows** using **Linux containers**
+
+```console
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.0-sdk dotnet publish -c release -o out
+```
+
+**Linux or macOS** using **Linux containers**
+
+```console
+docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.0-sdk dotnet publish -c release -o out
+```
+
+**Windows** using **Windows containers**
+
+```console
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app -w c:\app\dotnetapp microsoft/dotnet:2.0-sdk dotnet publish -c release -o out
+```
 
 ## More Samples
 
