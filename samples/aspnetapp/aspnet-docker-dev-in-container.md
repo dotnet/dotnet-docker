@@ -4,7 +4,7 @@ You can use containers to establish a .NET Core development environment with onl
 
 A common use case of Docker is to [containerize an application](README.md). You can define the environment necessary to run the application and even build the application itself within a Dockerfile. This document describes a much more iterative and dynamic use of Docker, defining the container environment primarily via the commandline. .NET Core includes a command called `dotnet watch` that can rerun your application or your tests on each code change. This document describes how to use the Docker CLI and `dotnet watch` to develop applications in a container.
 
-See [Develop .NET Core Applications in a Container](../dotnetapp/aspnet-docker-dev-in-container.md) for .NET Core-specific instructions.
+See [Develop .NET Core Applications in a Container](../dotnetapp/dotnet-docker-dev-in-container.md) for .NET Core-specific instructions.
 
 ## Getting the sample
 
