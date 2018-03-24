@@ -1,6 +1,6 @@
 # Deploy ASP.NET Core Applications to Azure Container Instances
 
-You can deploy ASP.NET Core applications to Azure Container Instances (ACI) with Docker. ACI is a great option for application testing and can also be use for production deployment (not covered here). These instructions are based on the [ASP.NET Core Docker Sample](README.md) sample.
+You can deploy ASP.NET Core applications to Azure Container Instances (ACI) with Docker. ACI is a great option for application testing and can also be used for production deployment (not covered here). These instructions are based on the [ASP.NET Core Docker Sample](README.md).
 
 ## Build Application
 
@@ -16,7 +16,7 @@ docker build --pull -t aspnetapp -f Dockerfile .
 
 Create an ACR registry per the instructions at [Push Docker Images to Azure Container Registry](../dotnetapp/push-image-to-acr.md). The following is a summarized version of those instructions.
 
-The instructions use example values that need to be changed for your environment, specifically the resource group name, and the registry name. More simply, make sure to change "richlander" to something else.
+> Note: Change the password location and the user account ("rich" and "richlander") example values in your environment.
 
 ```console
 az login
@@ -26,13 +26,13 @@ az acr create --name richlander --resource-group richlander-containers --sku Bas
 
 ## Login to Azure Container Registry
 
-First, "admin-enable" your session, which is required to access your ACR credentials in the subsequent command.
+First, "admin-enable" your session, an ACR credentials access prerequisite for the subsequent command.
 
 ```console
 az acr update -n richlander --admin-enabled true
 ```
 
-Now login to ACR via the docker cli, which is required to later push to ACR:
+Now login to ACR via the docker cli, an ACR push prerequisite:
 
 ```console
 az acr credential show -n richlander --query passwords[0].value --output tsv | docker login richlander.azurecr.io -u richlander --password-stdin
@@ -55,7 +55,7 @@ az container create --name aspnetapp --image richlander.azurecr.io/aspnetapp --r
 
 Specify `--os-type Windows` for Windows images. Windows Server, version 1709 images are not yet supported.
 
-You will be asked for your password. Write or paste it in. You can get your password from the following command:
+During deployment, you'll need to enter your password. Type or copy/paste it in. Get your password beforehand from the following command:
 
 ```console
 az acr credential show -n richlander --query passwords[0].value --output tsv
@@ -75,9 +75,14 @@ Once the `provisioningState` moves to `Succeeded`, collect the IP address from t
 
 ## Cleanup
 
-After you no longer want to use these containers, delete the resource group to reclaim all container resources from this exercise.
+When these containers aren't needed, delete the resource group to reclaim all exercise container resources.
 
 ```console
 az group delete --name richlander-containers
 az group exists --name richlander-containers
 ```
+
+## More Samples
+
+* [.NET Core Docker Samples](../README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)

@@ -6,7 +6,7 @@ You can build and run .NET Core apps with [Docker for Raspberry Pi and ARM32 dev
 
 ## Building the Sample with Docker
 
-Build the [sample](Dockerfile.debian-arm32) on a 64-bit operating system. This requirement is due to the .NET Core SDK not being currently supported on ARM32. The instructions assume that you are in the root of the repository.
+This [sample](Dockerfile.debian-arm32) must be built on a 64-bit operating system, as the .NET Core SDK is not currently supported on ARM32. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
@@ -30,9 +30,9 @@ Push the image to a container registry after building the image so that you can 
 
 ## Pull the Image from Another Device
 
-Next, pull the image from the registry you pushed your image to, on an ARM32 device (like a Pi).
+Next, pull the image on an ARM32 device (like a Pi) from the recently pushed registry.
 
-> Note: The instructions use example values that need to be changed to for your environment, specifically the password location, and the user account. More simply, make sure to change "rich" and "richlander" to something else.
+> Note: Change the password location and the user account ("rich" and "richlander") example values in your environment.
 
 ### Using Azure Container Registry (ACR)
 
@@ -43,7 +43,7 @@ docker pull richlander.azurecr.io/dotnetapp:debian-arm32
 docker run --rm richlander.azurecr.io/dotnetapp:debian-arm32
 ```
 
-First `docker login` to Azure Container Registry. See [Push Docker Images to Azure Container Registry](push-image-to-acr.md) for instructions on how to do that.
+First `docker login` to Azure Container Registry. For more information, see [Push Docker Images to Azure Container Registry](push-image-to-acr.md).
 
 ### Using DockerHub
 
@@ -53,3 +53,8 @@ Now pull and run the image from DockerHub if you used that registry:
 docker pull richlander/dotnetapp:debian-arm32
 docker run --rm richlander/dotnetapp:debian-arm32
 ```
+
+## More Samples
+
+* [.NET Core Docker Samples](../README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)

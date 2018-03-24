@@ -102,3 +102,8 @@ Now pull and run the image:
 docker pull richlander.azurecr.io/dotnetapp
 docker run --rm richlander.azurecr.io/dotnetapp
 ```
+
+## More Samples
+
+* [.NET Core Docker Samples](../README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)
