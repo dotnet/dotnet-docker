@@ -30,8 +30,13 @@ USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"
 USER ContainerUser
 
-# Trigger the population of the local package cache
-ENV NUGET_XMLDOC_MODE skip
+# Configure Kestrel web server to bind to port 80 when present
+ENV ASPNETCORE_URLS=http://+:80 `
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true `
+    # Skip extraction of XML docs - generally not useful within an image/container - helps perfomance
+    NUGET_XMLDOC_MODE=skip
+
 RUN mkdir warmup `
     && cd warmup `
     && dotnet new `
