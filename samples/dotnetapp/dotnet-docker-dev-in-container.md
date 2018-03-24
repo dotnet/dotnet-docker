@@ -20,9 +20,14 @@ You can also [download the repository as a zip](https://github.com/dotnet/dotnet
 
 The instructions below use .NET Core 2.1 Preview 2 images. It is possible to make this scenario work with .NET Core 2.0 but requires many extra steps and a bit of magic. You do not need to switch to .NET Core 2.1 on your local machine to try out these instructions. They will work fine with .NET Core 2.0 projects.
 
-It is recommended that you add a [Directory.Build.props](Directory.Build.props) file to your project to use different `obj` and `bin` folders for local and container use, to avoid conflicts between them. You should delete your existing obj and bin folders before making this change. You can also use `dotnet clean` for this purpose.
-
 This approach relies on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to mount source into the container (without using a Dockerfile). You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
+
+To avoid conflicts between container usage and your local environment, you need to use a different set of `obj` and `bin` folders for each environment.
+
+ Make this change with the following steps:
+
+ 1. Delete your existing obj and bin folders manually or use `dotnet clean`.
+ 2. Add a [Directory.Build.props](Directory.Build.props) file to your project to use a different set of `obj` and `bin` folders for your local and container environments.
 
 ## Run your application in a container while you Develop
 
