@@ -106,7 +106,7 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 ## .NET Core Docker Samples
 
-The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together.
+The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together. See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
 ### Building .NET Core Apps with Docker
 
@@ -131,8 +131,6 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 ## Image variants
 
 The `microsoft/dotnet` images come in different flavors, each designed for a specific use case.
-
-See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more about the various Docker images and when to use each for them.
 
 ### `microsoft/dotnet:<version>-sdk`
 
