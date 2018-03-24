@@ -102,7 +102,7 @@ Type the following command to run a sample web application with [Docker](https:/
 docker run --rm -p 8000:80 --name aspnetcore_sample microsoft/dotnet-samples:aspnetapp
 ```
 
-After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in [View the ASP.NET Core app in a running container on Windows](https://github.com/dotnet/dotnet-docker/blob/master/samples/https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md#view-the-aspnet-core-app-in-a-running-container-on-windows).
+After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in [View the ASP.NET Core app in a running container on Windows](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md#view-the-aspnet-core-app-in-a-running-container-on-windows).
 
 ## .NET Core Docker Samples
 
