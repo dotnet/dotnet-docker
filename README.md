@@ -106,7 +106,7 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 ## .NET Core Docker Samples
 
-The [.NET Core Docker samples](https://raw.githubusercontent.com/dotnet/dotnet-docker/master/samples/README.md) show various ways to use .NET Core and Docker together. 
+The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/master/samples/README.md) show various ways to use .NET Core and Docker together. 
 
 ### Building .NET Core Apps with Docker
 
