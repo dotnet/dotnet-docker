@@ -53,3 +53,8 @@ After the application starts, visit the site one of two ways:
 
 * From the web browser on the ARM32 device at `http://localhost:8000`
 * From the web browser on another device on the same network on the ARM32 device IP on port 8000, similar to: `http://192.168.1.18:8000`
+
+## More Samples
+
+* [.NET Core Docker Samples](../README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)
