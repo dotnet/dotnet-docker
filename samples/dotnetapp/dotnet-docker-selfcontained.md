@@ -61,3 +61,7 @@ docker run --rm dotnetapp:debian-x64-selfcontained
 
 You can build and run the sample for ARM32 and Raspberry Pi with [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md) instructions. To create a self-contained application with those instructions, you need to use the [Dockerfile.debian-arm32-selfcontained](Dockerfile.debian-arm32-selfcontained) Dockerfile.
 
+## More Samples
+
+* [.NET Core Docker Samples](../README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)

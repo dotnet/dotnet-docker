@@ -19,6 +19,11 @@ docker run --rm microsoft/dotnet-samples
 * [.NET Core Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
 * [ASP.NET Core Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
 
+## Develop .NET Core Apps in a Container
+
+* [Develop .NET Core Applications](dotnetapp/dotnet-docker-dev-in-container.md) - This sample shows how to develop, build and test .NET Core applications with Docker without the need to install the .NET Core SDK.
+* [Develop ASP.NET Core Applications](aspnetapp/aspnet-docker-dev-in-container.md) - This sample shows how to develop and test ASP.NET Core applications with Docker without the need to install the .NET Core SDK.
+
 ## Push Images to a Container Registry
 
 * [Push Docker Images to Azure Container Registry](dotnetapp/push-image-to-acr.md)
