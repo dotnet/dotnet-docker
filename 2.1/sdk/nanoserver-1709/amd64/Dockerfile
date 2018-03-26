@@ -9,7 +9,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 ENV DOTNET_SDK_VERSION 2.1.300-preview2-008396
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = '9e35cdd159e1595e8a13a0dccde8116747648c7ff4edfb49300121a74e2ce465abc85f85e76195f5fbd530c966f09a8a5ff2847a110f902398334a354af9cd35'; `
+    $dotnet_sha512 = 'd015f934b1f2c0850429f44c7d0e32edefc576cf5d1939d79953b7fb200afc239966bc1e534551541d3bb682174bcce481261227fbab58fdf0c8cbb8a23e2a2c'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
