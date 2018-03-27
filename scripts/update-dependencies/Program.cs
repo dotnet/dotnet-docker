@@ -20,8 +20,8 @@ namespace Dotnet.Docker
 {
     public static class Program
     {
-        private static Options Options { get; set; } = new Options();
-        private static string RepoRoot { get; set; } = Directory.GetCurrentDirectory();
+        private static Options Options { get; } = new Options();
+        private static string RepoRoot { get; } = Directory.GetCurrentDirectory();
         private const string RuntimeBuildInfoName = "Runtime";
         private const string SdkBuildInfoName = "Sdk";
 
@@ -33,7 +33,8 @@ namespace Dotnet.Docker
 
                 Options.Parse(args);
 
-                DependencyUpdateResults updateResults = await UpdateFilesAsync();
+                IEnumerable<IDependencyInfo> buildInfos = await GetBuildInfoAsync();
+                DependencyUpdateResults updateResults = UpdateFiles(buildInfos);
                 if (updateResults.ChangesDetected())
                 {
                     if (Options.UpdateOnly)
@@ -42,7 +43,7 @@ namespace Dotnet.Docker
                     }
                     else
                     {
-                        await CreatePullRequestAsync(updateResults);
+                        await CreatePullRequestAsync(buildInfos);
                     }
                 }
             }
@@ -55,14 +56,13 @@ namespace Dotnet.Docker
             Environment.Exit(0);
         }
 
-        private static async Task<DependencyUpdateResults> UpdateFilesAsync()
+        private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)
         {
-                IEnumerable<IDependencyInfo> buildInfos = await GetBuildInfoAsync();
-                string sdkVersion = buildInfos.GetBuildVersion(SdkBuildInfoName);
-                string dockerfileVersion = sdkVersion.Substring(0, sdkVersion.LastIndexOf('.'));
-                IEnumerable<IDependencyUpdater> updaters = GetUpdaters(dockerfileVersion);
+            string sdkVersion = buildInfos.GetBuildVersion(SdkBuildInfoName);
+            string dockerfileVersion = sdkVersion.Substring(0, sdkVersion.LastIndexOf('.'));
+            IEnumerable<IDependencyUpdater> updaters = GetUpdaters(dockerfileVersion);
 
-                return DependencyUpdateUtils.Update(updaters, buildInfos);
+            return DependencyUpdateUtils.Update(updaters, buildInfos);
         }
 
         private static async Task<IEnumerable<IDependencyInfo>> GetBuildInfoAsync()
@@ -100,7 +100,7 @@ namespace Dotnet.Docker
                 Enumerable.Empty<string>());
         }
 
-        private static async Task CreatePullRequestAsync(DependencyUpdateResults updateResults)
+        private static async Task CreatePullRequestAsync(IEnumerable<IDependencyInfo> buildInfos)
         {
             GitHubAuth gitHubAuth = new GitHubAuth(Options.GitHubPassword, Options.GitHubUser, Options.GitHubEmail);
             PullRequestCreator prCreator = new PullRequestCreator(gitHubAuth, Options.GitHubUser);
@@ -109,7 +109,7 @@ namespace Dotnet.Docker
                 BranchNamingStrategy = new SingleBranchNamingStrategy($"UpdateDependencies-{Options.GitHubUpstreamBranch}")
             };
 
-            string sdkVersion = updateResults.UsedInfos.GetBuildVersion(SdkBuildInfoName);
+            string sdkVersion = buildInfos.GetBuildVersion(SdkBuildInfoName);
             string commitMessage = $"Update {Options.GitHubUpstreamBranch} SDK to {sdkVersion}";
 
             await prCreator.CreateOrUpdateAsync(
