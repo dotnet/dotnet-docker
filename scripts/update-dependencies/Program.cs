@@ -34,7 +34,7 @@ namespace Dotnet.Docker
                 Options.Parse(args);
 
                 IEnumerable<IDependencyInfo> buildInfos = await GetBuildInfoAsync();
-                DependencyUpdateResults updateResults = UpdateFilesAsync(buildInfos);
+                DependencyUpdateResults updateResults = UpdateFiles(buildInfos);
                 if (updateResults.ChangesDetected())
                 {
                     if (Options.UpdateOnly)
@@ -56,7 +56,7 @@ namespace Dotnet.Docker
             Environment.Exit(0);
         }
 
-        private static DependencyUpdateResults UpdateFilesAsync(IEnumerable<IDependencyInfo> buildInfos)
+        private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)
         {
             string sdkVersion = buildInfos.GetBuildVersion(SdkBuildInfoName);
             string dockerfileVersion = sdkVersion.Substring(0, sdkVersion.LastIndexOf('.'));
