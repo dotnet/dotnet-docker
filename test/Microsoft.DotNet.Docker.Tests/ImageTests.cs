@@ -22,28 +22,28 @@ namespace Microsoft.DotNet.Docker.Tests
         private static string RepoOwner => Environment.GetEnvironmentVariable("REPO_OWNER") ?? "microsoft";
         private static string VersionFilter => Environment.GetEnvironmentVariable("IMAGE_VERSION_FILTER");
 
-        private static ImageData[] LinuxTestData = new ImageData[]
-            {
-                new ImageData { DotNetVersion = "1.0", SdkVersion = "1.1" },
-                new ImageData { DotNetVersion = "1.1", RuntimeDepsVersion = "1.0" },
-                new ImageData { DotNetVersion = "2.0" },
-                new ImageData { DotNetVersion = "2.0", OsVariant = OS.Jessie },
-                new ImageData { DotNetVersion = "2.0", OsVariant = OS.Stretch, HasNoSdk = true, Architecture = "arm" },
-                new ImageData { DotNetVersion = "2.1" },
-                new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic },
-                new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine },
-                new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, HasNoSdk = true, Architecture = "arm" },
-                new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, HasNoSdk = true, Architecture = "arm" },
-            };
-        private static ImageData[] WindowsTestData = new ImageData[]
-            {
-                new ImageData { DotNetVersion = "1.0", PlatformOS = OS.NanoServerSac2016, SdkVersion = "1.1" },
-                new ImageData { DotNetVersion = "1.1", PlatformOS = OS.NanoServerSac2016 },
-                new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServerSac2016 },
-                new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServer1709 },
-                new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServerSac2016 },
-                new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1709 },
-            };
+        private static ImageData[] LinuxTestData => new []
+        {
+            new ImageData { DotNetVersion = "1.0", SdkVersion = "1.1" },
+            new ImageData { DotNetVersion = "1.1", RuntimeDepsVersion = "1.0" },
+            new ImageData { DotNetVersion = "2.0" },
+            new ImageData { DotNetVersion = "2.0", OsVariant = OS.Jessie },
+            new ImageData { DotNetVersion = "2.0", OsVariant = OS.Stretch, HasNoSdk = true, Architecture = "arm" },
+            new ImageData { DotNetVersion = "2.1" },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, HasNoSdk = true, Architecture = "arm" },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, HasNoSdk = true, Architecture = "arm" },
+        };
+        private static ImageData[] WindowsTestData => new []
+        {
+            new ImageData { DotNetVersion = "1.0", PlatformOS = OS.NanoServerSac2016, SdkVersion = "1.1" },
+            new ImageData { DotNetVersion = "1.1", PlatformOS = OS.NanoServerSac2016 },
+            new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServerSac2016 },
+            new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServer1709 },
+            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServerSac2016 },
+            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1709 },
+        };
 
         private DockerHelper DockerHelper { get; set; }
 
@@ -269,7 +269,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string osVariant;
             string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
 
-            switch(imageType)
+            switch (imageType)
             {
                 case DotNetImageType.Runtime:
                     imageVersion = imageData.DotNetVersion;
