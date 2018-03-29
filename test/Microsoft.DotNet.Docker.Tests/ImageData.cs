@@ -6,13 +6,13 @@ using System;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class ImageDescriptor
+    public class ImageData
     {
         private string runtimeDepsVersion;
         private string sdkVersion;
 
         public string Architecture { get; set; } = "amd64";
-        public string DotNetCoreVersion { get; set; }
+        public string DotNetVersion { get; set; }
         public bool HasNoSdk { get; set; }
         public bool IsAlpine { get => String.Equals(OS.Alpine, OsVariant, StringComparison.OrdinalIgnoreCase); }
         public bool IsArm { get => String.Equals("arm", Architecture, StringComparison.OrdinalIgnoreCase); }
@@ -21,13 +21,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string RuntimeDepsVersion
         {
-            get { return runtimeDepsVersion ?? DotNetCoreVersion; }
+            get { return runtimeDepsVersion ?? DotNetVersion; }
             set { runtimeDepsVersion = value; }
         }
 
         public string SdkVersion
         {
-            get { return sdkVersion ?? DotNetCoreVersion; }
+            get { return sdkVersion ?? DotNetVersion; }
             set { sdkVersion = value; }
         }
 
