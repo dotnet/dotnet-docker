@@ -385,6 +385,39 @@
         },
         {
           "sharedTags": {
+            "2.1.0-preview2-aspnetcore-runtime": {},
+            "2.1-aspnetcore-runtime": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "2.1/aspnetcore-runtime/stretch-slim/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview2-aspnetcore-runtime-stretch-slim": {},
+                "2.1-aspnetcore-runtime-stretch-slim": {}
+              }
+            },
+            {
+              "dockerfile": "2.1/aspnetcore-runtime/nanoserver-sac2016/amd64",
+              "os": "windows",
+              "tags": {
+                "2.1.0-preview2-aspnetcore-runtime-nanoserver-sac2016": {},
+                "2.1-aspnetcore-runtime-nanoserver-sac2016": {}
+              }
+            },
+            {
+              "dockerfile": "2.1/aspnetcore-runtime/nanoserver-1709/amd64",
+              "os": "windows",
+              "osVersion": "1709",
+              "tags": {
+                "2.1.0-preview2-aspnetcore-runtime-nanoserver-1709": {},
+                "2.1-aspnetcore-runtime-nanoserver-1709": {}
+              }
+            }
+          ]
+        },
+        {
+          "sharedTags": {
             "2.1.300-preview2-sdk": {},
             "2.1-sdk": {}
           },
@@ -443,6 +476,18 @@
         {
           "platforms": [
             {
+              "dockerfile": "2.1/aspnetcore-runtime/alpine/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview2-aspnetcore-runtime-alpine": {},
+                "2.1-aspnetcore-runtime-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
               "dockerfile": "2.1/sdk/alpine/amd64",
               "os": "linux",
               "tags": {
@@ -460,6 +505,18 @@
               "tags": {
                 "2.1.0-preview2-runtime-deps-bionic": {},
                 "2.1-runtime-deps-bionic": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.1/aspnetcore-runtime/bionic/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.0-preview2-aspnetcore-runtime-bionic": {},
+                "2.1-aspnetcore-runtime-bionic": {}
               }
             }
           ]

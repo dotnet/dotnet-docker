@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 using Xunit;
@@ -22,7 +25,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private static string RepoOwner => Environment.GetEnvironmentVariable("REPO_OWNER") ?? "microsoft";
         private static string VersionFilter => Environment.GetEnvironmentVariable("IMAGE_VERSION_FILTER");
 
-        private static ImageData[] LinuxTestData => new []
+        private static ImageData[] LinuxTestData => new[]
         {
             new ImageData { DotNetVersion = "1.0", SdkVersion = "1.1" },
             new ImageData { DotNetVersion = "1.1", RuntimeDepsVersion = "1.0" },
@@ -34,22 +37,30 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, HasNoSdk = true, Architecture = "arm" },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, HasNoSdk = true, Architecture = "arm" },
+            new ImageData { DotNetVersion = "2.1", IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine, IsWeb = true },
         };
-        private static ImageData[] WindowsTestData => new []
+        private static ImageData[] WindowsTestData => new[]
         {
             new ImageData { DotNetVersion = "1.0", PlatformOS = OS.NanoServerSac2016, SdkVersion = "1.1" },
             new ImageData { DotNetVersion = "1.1", PlatformOS = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServer1709 },
+            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServerSac2016, IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1709, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1709 },
         };
 
         private DockerHelper DockerHelper { get; set; }
 
+        private readonly ITestOutputHelper _outputHelper;
+
         public ImageTests(ITestOutputHelper outputHelper)
         {
             DockerHelper = new DockerHelper(outputHelper);
+            _outputHelper = outputHelper;
         }
 
         public static IEnumerable<object[]> GetVerifyImagesData()
@@ -85,7 +96,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetVerifyImagesData))]
-        public void VerifyImages(ImageData imageData)
+        public async Task VerifyImages(ImageData imageData)
         {
             string appSdkImage = GetIdentifier(imageData.DotNetVersion, "app-sdk");
 
@@ -96,14 +107,14 @@ namespace Microsoft.DotNet.Docker.Tests
                 if (!imageData.HasNoSdk)
                 {
                     VerifySdkImage_PackageCache(imageData);
-                    VerifySdkImage_RunApp(imageData, appSdkImage);
+                    await VerifySdkImage_RunApp(imageData, appSdkImage);
                 }
 
-                VerifyRuntimeImage_FrameworkDependentApp(imageData, appSdkImage);
+                await VerifyRuntimeImage_FrameworkDependentApp(imageData, appSdkImage);
 
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
-                    VerifyRuntimeDepsImage_SelfContainedApp(imageData, appSdkImage);
+                    await VerifyRuntimeDepsImage_SelfContainedApp(imageData, appSdkImage);
                 }
             }
             finally
@@ -124,6 +135,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 buildArgs.Add($"optional_new_args=--no-restore");
             }
 
+            buildArgs.Add("template_name=" + GetTestTemplateName(imageData.IsWeb));
+
             DockerHelper.Build(
                 dockerfile: $"Dockerfile.{DockerHelper.DockerOS.ToLower()}.testapp",
                 tag: appSdkImage,
@@ -131,13 +144,26 @@ namespace Microsoft.DotNet.Docker.Tests
                 buildArgs: buildArgs.ToArray());
         }
 
-        private void VerifySdkImage_RunApp(ImageData imageData, string appSdkImage)
+        private async Task VerifySdkImage_RunApp(ImageData imageData, string appSdkImage)
         {
-            // dotnet run the new app using the sdk image
-            DockerHelper.Run(
-                image: appSdkImage,
-                command: "dotnet run",
-                containerName: appSdkImage);
+            try
+            {
+                // dotnet run the new app using the sdk image
+                DockerHelper.Run(
+                    image: appSdkImage,
+                    command: "dotnet run --no-launch-profile",
+                    detach: imageData.IsWeb,
+                    containerName: appSdkImage);
+
+                if (imageData.IsWeb)
+                {
+                    await VerifyHttpResponseFromContainer(appSdkImage);
+                }
+            }
+            finally
+            {
+                DockerHelper.Kill(appSdkImage);
+            }
         }
 
         private void VerifySdkImage_PackageCache(ImageData imageData)
@@ -173,7 +199,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 containerName: GetIdentifier(imageData.DotNetVersion, "PackageCache"));
         }
 
-        private void VerifyRuntimeImage_FrameworkDependentApp(ImageData imageData, string appSdkImage)
+        private async Task VerifyRuntimeImage_FrameworkDependentApp(ImageData imageData, string appSdkImage)
         {
             string frameworkDepAppId = GetIdentifier(imageData.DotNetVersion, "framework-dependent-app");
             bool isRunAsContainerAdministrator = String.Equals(
@@ -191,22 +217,29 @@ namespace Microsoft.DotNet.Docker.Tests
                     runAsContainerAdministrator: isRunAsContainerAdministrator);
 
                 // Run the app in the Docker volume to verify the runtime image
-                string runtimeImage = GetDotNetImage(DotNetImageType.Runtime, imageData);
+                string runtimeImage = GetDotNetImage(imageData.IsWeb ? DotNetImageType.AspNetCore_Runtime : DotNetImageType.Runtime, imageData);
                 string appDllPath = DockerHelper.GetContainerWorkPath("testApp.dll");
                 DockerHelper.Run(
                     image: runtimeImage,
                     command: $"dotnet {appDllPath}",
                     containerName: frameworkDepAppId,
                     volumeName: frameworkDepAppId,
+                    detach: imageData.IsWeb,
                     runAsContainerAdministrator: isRunAsContainerAdministrator);
+
+                if (imageData.IsWeb)
+                {
+                    await VerifyHttpResponseFromContainer(frameworkDepAppId);
+                }
             }
             finally
             {
+                DockerHelper.Kill(frameworkDepAppId);
                 DockerHelper.DeleteVolume(frameworkDepAppId);
             }
         }
 
-        private void VerifyRuntimeDepsImage_SelfContainedApp(ImageData imageData, string appSdkImage)
+        private async Task VerifyRuntimeDepsImage_SelfContainedApp(ImageData imageData, string appSdkImage)
         {
             string selfContainedAppId = GetIdentifier(imageData.DotNetVersion, "self-contained-app");
             string rid = GetRuntimeIdentifier(imageData);
@@ -216,6 +249,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 // Build a self-contained app
                 List<string> buildArgs = new List<string>();
                 buildArgs.Add($"rid={rid}");
+                buildArgs.Add("template_name=" + GetTestTemplateName(imageData.IsWeb));
                 AddOptionalRestoreArgs(buildArgs);
 
                 DockerHelper.Build(
@@ -242,10 +276,17 @@ namespace Microsoft.DotNet.Docker.Tests
                         image: runtimeDepsImage,
                         command: appExePath,
                         containerName: selfContainedAppId,
+                        detach: imageData.IsWeb,
                         volumeName: selfContainedAppId);
+
+                    if (imageData.IsWeb)
+                    {
+                        await VerifyHttpResponseFromContainer(selfContainedAppId);
+                    }
                 }
                 finally
                 {
+                    DockerHelper.Kill(selfContainedAppId);
                     DockerHelper.DeleteVolume(selfContainedAppId);
                 }
             }
@@ -253,6 +294,40 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 DockerHelper.DeleteImage(selfContainedAppId);
             }
+        }
+
+        private async Task VerifyHttpResponseFromContainer(string containerName)
+        {
+            var retries = 60;
+            var client = new HttpClient();
+            var url = Environment.GetEnvironmentVariable("RUNNING_TESTS_IN_CONTAINER") == null && ! RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                          ? "http://localhost:5000"
+                          : "http://" + DockerHelper.GetContainerAddress(containerName);
+
+            while (retries > 0)
+            {
+                retries--;
+                try
+                {
+                    var result = await client.GetAsync(url);
+                    _outputHelper.WriteLine($"HTTP {result.StatusCode}\n{(await result.Content.ReadAsStringAsync())}");
+                    result.EnsureSuccessStatusCode();
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    _outputHelper.WriteLine($"Request to {url} failed : {ex.ToString()}");
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
+            }
+
+            throw new TimeoutException($"Timed out attempting to access the endpoint {url} on container {containerName}");
+        }
+
+        private static string GetTestTemplateName(bool isWeb)
+        {
+            return isWeb ? "web" : "console";
         }
 
         private static void AddOptionalRestoreArgs(List<string> buildArgs)
@@ -282,6 +357,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 case DotNetImageType.SDK:
                     imageVersion = imageData.SdkVersion;
                     osVariant = imageData.SdkOsVariant;
+                    break;
+                case DotNetImageType.AspNetCore_Runtime:
+                    imageVersion = imageData.DotNetVersion;
+                    osVariant = imageData.OsVariant;
                     break;
                 default:
                     throw new NotSupportedException($"Unsupported image type '{variantName}'");

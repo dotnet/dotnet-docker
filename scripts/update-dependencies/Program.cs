@@ -23,6 +23,7 @@ namespace Dotnet.Docker
         private static Options Options { get; } = new Options();
         private static string RepoRoot { get; } = Directory.GetCurrentDirectory();
         private const string RuntimeBuildInfoName = "Runtime";
+        private const string AspNetCoreBuildInfoName = "AspNetCore";
         private const string SdkBuildInfoName = "Sdk";
 
         public static async Task Main(string[] args)
@@ -78,11 +79,14 @@ namespace Dotnet.Docker
                     .First(build => string.Equals(build.Name, "cli", StringComparison.OrdinalIgnoreCase));
                 BuildIdentity coreSetupBuild = buildInfo.Builds
                     .First(build => string.Equals(build.Name, "core-setup", StringComparison.OrdinalIgnoreCase));
+                BuildIdentity aspnetBuild = buildInfo.Builds
+                    .First(build => string.Equals(build.Name, "aspnet", StringComparison.OrdinalIgnoreCase));
 
                 return new[]
                 {
                     CreateDependencyBuildInfo(SdkBuildInfoName, sdkBuild.ProductVersion),
                     CreateDependencyBuildInfo(RuntimeBuildInfoName, coreSetupBuild.ProductVersion),
+                    CreateDependencyBuildInfo(AspNetCoreBuildInfoName, aspnetBuild.ProductVersion),
                 };
             };
         }
@@ -138,6 +142,7 @@ namespace Dotnet.Docker
 
             return dockerfiles
                 .Select(path => CreateDockerfileEnvUpdater(path, "DOTNET_SDK_VERSION", SdkBuildInfoName))
+                .Concat(dockerfiles.Select(path => CreateDockerfileEnvUpdater(path, "ASPNETCORE_VERSION", AspNetCoreBuildInfoName)))
                 .Concat(dockerfiles.Select(path => CreateDockerfileEnvUpdater(path, "DOTNET_VERSION", RuntimeBuildInfoName)))
                 .Concat(dockerfiles.Select(path => new DockerfileShaUpdater(path)));
         }
