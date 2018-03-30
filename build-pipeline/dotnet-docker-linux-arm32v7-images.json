@@ -24,6 +24,86 @@
       "enabled": true,
       "continueOnError": false,
       "alwaysRun": false,
+      "displayName": "Pull image-builder",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "pull $(imageBuilder.imageName)",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Create container",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "create $(docker.certVolumeArg) --name $(docker.containerName) $(imageBuilder.imageName)",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Copy Docker Certs",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker ",
+        "arguments": "cp c:/docker-certs $(docker.containerName):/",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Cleanup container",
+      "timeoutInMinutes": 0,
+      "condition": "always()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "rm -f $(docker.containerName)",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "environment": {},
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
       "displayName": "Clone Repo",
       "timeoutInMinutes": 0,
       "condition": "succeeded()",
@@ -63,44 +143,6 @@
       "enabled": true,
       "continueOnError": false,
       "alwaysRun": false,
-      "displayName": "Pull image-builder",
-      "timeoutInMinutes": 0,
-      "condition": "succeeded()",
-      "task": {
-        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
-        "versionSpec": "1.*",
-        "definitionType": "task"
-      },
-      "inputs": {
-        "filename": "docker",
-        "arguments": "pull $(imageBuilder.imageName)",
-        "workingFolder": "",
-        "failOnStandardError": "false"
-      }
-    },
-    {
-      "enabled": false,
-      "continueOnError": false,
-      "alwaysRun": false,
-      "displayName": "Build SDK images (needed for testing)",
-      "timeoutInMinutes": 0,
-      "condition": "succeeded()",
-      "task": {
-        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
-        "versionSpec": "1.*",
-        "definitionType": "task"
-      },
-      "inputs": {
-        "filename": "docker",
-        "arguments": "$(docker.runImageBuilder) $(imageBuilder.sdkBuildArgs)",
-        "workingFolder": "",
-        "failOnStandardError": "false"
-      }
-    },
-    {
-      "enabled": true,
-      "continueOnError": false,
-      "alwaysRun": false,
       "displayName": "Build ARM images",
       "timeoutInMinutes": 0,
       "condition": "succeeded()",
@@ -119,10 +161,29 @@
     {
       "enabled": true,
       "continueOnError": false,
-      "alwaysRun": false,
+      "alwaysRun": true,
+      "displayName": "Cleanup ARM Docker",
+      "timeoutInMinutes": 0,
+      "condition": "always()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "run $(docker.commonRunArgs) --entrypoint docker $(imageBuilder.imageName) system prune -a -f",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": true,
       "displayName": "Cleanup Docker",
       "timeoutInMinutes": 0,
-      "condition": "succeeded()",
+      "condition": "always()",
       "task": {
         "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
         "versionSpec": "1.*",
@@ -181,10 +242,10 @@
       "allowOverride": true
     },
     "docker.commonRunArgs": {
-      "value": "--rm -v $(docker.volumeName):/repo -w /repo --name $(docker.containerName)"
+      "value": "--rm -v $(docker.repoVolumeName):/repo $(docker.certVolumeArg) -w /repo -e DOCKER_CERT_PATH=/docker-certs -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://$(PiIp):2376 --name $(docker.containerName)"
     },
     "docker.runImageBuilder": {
-      "value": "run  $(docker.commonRunArgs) -v /var/run/docker.sock:/var/run/docker.sock $(imageBuilder.imageName)"
+      "value": "run $(docker.commonRunArgs) $(imageBuilder.imageName)"
     },
     "docker.containerName": {
       "value": "$(Build.DefinitionName)-$(Build.BuildId)"
@@ -192,11 +253,14 @@
     "docker.gitEnabledImageName": {
       "value": "buildpack-deps:stretch-scm"
     },
-    "docker.volumeName": {
-      "value": "$(Build.DefinitionName)-$(Build.BuildId)"
+    "docker.certVolumeArg": {
+      "value": "-v cert-$(Build.DefinitionName)-$(Build.BuildId):/docker-certs"
+    },
+    "docker.repoVolumeName": {
+      "value": "repo-$(Build.DefinitionName)-$(Build.BuildId)"
     },
     "imageBuilder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180227221546"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180330181728"
     },
     "imageBuilder.manifest": {
       "value": "manifest.json"
@@ -207,10 +271,6 @@
     },
     "imageBuilder.armBuildArgs": {
       "value": "$(imageBuilder.commonArgs) --path $(PB_imageBuilder_path) --architecture arm --skip-test --var VersionFilter=$(PB_imageBuilder_path) --var ArchitectureFilter=arm $(PB_imageBuilder_customArgs) --push --username $(PB_docker_username) --password $(PB_docker_password)",
-      "allowOverride": true
-    },
-    "imageBuilder.sdkBuildArgs": {
-      "value": "$(imageBuilder.commonArgs) --path $(PB_imageBuilder_path)/sdk/stretch/amd64 --architecture amd64 --skip-test",
       "allowOverride": true
     },
     "PB_docker_password": {

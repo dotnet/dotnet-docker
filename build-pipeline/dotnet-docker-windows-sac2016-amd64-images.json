@@ -92,7 +92,7 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "rmi -f $(imageBuilder.imageName)",
+        "arguments": "rm -f $(imageBuilder.containerName)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
