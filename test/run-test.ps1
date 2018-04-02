@@ -58,8 +58,12 @@ Try {
     $env:IMAGE_VERSION_FILTER = $VersionFilter
     $env:REPO_OWNER = $RepoOwner
 
+    $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
+    $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
+    $env:DOTNET_MULTILEVEL_LOOKUP = '0'
+
     & $DotnetInstallDir/dotnet build -v n
-    & $DotnetInstallDir/dotnet xunit -nobuild -verbose -fxversion 2.0.0
+    & $DotnetInstallDir/dotnet xunit -nobuild -verbose
 
     if ($LASTEXITCODE -ne 0) { throw "Tests Failed" }
 }
