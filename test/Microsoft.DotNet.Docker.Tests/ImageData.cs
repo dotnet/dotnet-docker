@@ -9,6 +9,7 @@ namespace Microsoft.DotNet.Docker.Tests
     public class ImageData
     {
         private string runtimeDepsVersion;
+        private string sdkOsVariant;
         private string sdkVersion;
 
         public string Architecture { get; set; } = "amd64";
@@ -26,15 +27,16 @@ namespace Microsoft.DotNet.Docker.Tests
             set { runtimeDepsVersion = value; }
         }
 
+        public string SdkOsVariant
+        {
+            get { return sdkOsVariant ?? (HasNoSdk ? "" : OsVariant); }
+            set { sdkOsVariant = value; }
+        }
+        
         public string SdkVersion
         {
             get { return sdkVersion ?? DotNetVersion; }
             set { sdkVersion = value; }
-        }
-
-        public string SdkOsVariant
-        {
-            get { return HasNoSdk ? "" : OsVariant; }
         }
     }
 }

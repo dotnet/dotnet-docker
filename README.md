@@ -57,6 +57,8 @@ See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for image
 
 # Linux arm32 tags
 
+- [`2.1.300-preview2-sdk-stretch-arm32v7`, `2.1-sdk-stretch-arm32v7`, `2.1.300-preview2-sdk`, `2.1-sdk` (*2.1/sdk/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/arm32v7/Dockerfile)
+- [`2.1.300-preview2-sdk-bionic-arm32v7`, `2.1-sdk-bionic-arm32v7` (*2.1/sdk/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/arm32v7/Dockerfile)
 - [`2.0.6-runtime-stretch-arm32v7`, `2.0-runtime-stretch-arm32v7`, `2.0.6-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/stretch/arm32v7/Dockerfile)
 - [`2.0.6-runtime-deps-stretch-arm32v7`, `2.0-runtime-deps-stretch-arm32v7`, `2.0.6-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/stretch/arm32v7/Dockerfile)
 

@@ -53,6 +53,8 @@ $(TagDoc:2.1.0-preview2-runtime-nanoserver-sac2016)
 
 # Linux arm32 tags
 
+$(TagDoc:2.1.300-preview2-sdk-stretch-arm32v7)
+$(TagDoc:2.1.300-preview2-sdk-bionic-arm32v7)
 $(TagDoc:2.0.6-runtime-stretch-arm32v7)
 $(TagDoc:2.0.6-runtime-deps-stretch-arm32v7)
 

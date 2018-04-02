@@ -431,6 +431,16 @@
               }
             },
             {
+              "architecture": "arm",
+              "dockerfile": "2.1/sdk/stretch/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.1.300-preview2-sdk-stretch-arm32v7": {},
+                "2.1-sdk-stretch-arm32v7": {}
+              },
+              "variant": "armv7"
+            },
+            {
               "dockerfile": "2.1/sdk/nanoserver-sac2016/amd64",
               "os": "windows",
               "tags": {
@@ -568,6 +578,20 @@
               "tags": {
                 "2.1.0-preview2-runtime-bionic-arm32v7": {},
                 "2.1-runtime-bionic-arm32v7": {}
+              },
+              "variant": "armv7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm",
+              "dockerfile": "2.1/sdk/bionic/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.1.300-preview2-sdk-bionic-arm32v7": {},
+                "2.1-sdk-bionic-arm32v7": {}
               },
               "variant": "armv7"
             }

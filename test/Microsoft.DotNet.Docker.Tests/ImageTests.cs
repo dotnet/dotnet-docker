@@ -31,12 +31,11 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "1.1", RuntimeDepsVersion = "1.0" },
             new ImageData { DotNetVersion = "2.0" },
             new ImageData { DotNetVersion = "2.0", OsVariant = OS.Jessie },
-            new ImageData { DotNetVersion = "2.0", OsVariant = OS.Stretch, HasNoSdk = true, Architecture = "arm" },
             new ImageData { DotNetVersion = "2.1" },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine },
-            new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, HasNoSdk = true, Architecture = "arm" },
-            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, HasNoSdk = true, Architecture = "arm" },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm" },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, Architecture = "arm" },
             new ImageData { DotNetVersion = "2.1", IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine, IsWeb = true },
@@ -300,7 +299,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             var retries = 60;
             var client = new HttpClient();
-            var url = Environment.GetEnvironmentVariable("RUNNING_TESTS_IN_CONTAINER") == null && ! RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            var url = Environment.GetEnvironmentVariable("RUNNING_TESTS_IN_CONTAINER") == null && !RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
                           ? "http://localhost:5000"
                           : "http://" + DockerHelper.GetContainerAddress(containerName);
 
