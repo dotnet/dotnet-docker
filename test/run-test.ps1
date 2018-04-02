@@ -59,7 +59,7 @@ Try {
     $env:REPO_OWNER = $RepoOwner
 
     & $DotnetInstallDir/dotnet build -v n
-    & $DotnetInstallDir/dotnet xunit -nobuild -verbose
+    & $DotnetInstallDir/dotnet xunit -nobuild -verbose -fxversion 2.0.0
 
     if ($LASTEXITCODE -ne 0) { throw "Tests Failed" }
 }
