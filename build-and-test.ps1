@@ -1,3 +1,4 @@
+#!/usr/bin/env pwsh
 [cmdletbinding()]
 param(
     [switch]$UseImageCache,

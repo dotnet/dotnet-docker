@@ -4,4 +4,6 @@ FROM $base_image
 ARG rid
 ARG optional_restore_args
 
+EXPOSE 80
+
 RUN dotnet restore -r $rid $optional_restore_args

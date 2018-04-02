@@ -1,3 +1,4 @@
+#!/usr/bin/env pwsh
 #
 # Copyright (c) .NET Foundation and contributors. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
@@ -57,7 +58,8 @@ Try {
     $env:IMAGE_VERSION_FILTER = $VersionFilter
     $env:REPO_OWNER = $RepoOwner
 
-    & $DotnetInstallDir/dotnet test -v n
+    & $DotnetInstallDir/dotnet build -v n
+    & $DotnetInstallDir/dotnet xunit -nobuild -verbose
 
     if ($LASTEXITCODE -ne 0) { throw "Tests Failed" }
 }

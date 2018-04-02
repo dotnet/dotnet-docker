@@ -3,5 +3,6 @@
 
 FROM microsoft/dotnet-buildtools-prereqs:debian-stretch-docker-testrunner-63f2145-20184325094343
 
+ENV RUNNING_TESTS_IN_CONTAINER=true
 WORKDIR src
 COPY . .
