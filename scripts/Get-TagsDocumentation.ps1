@@ -1,3 +1,4 @@
+#!/usr/bin/env pwsh
 param(
     [string]$Branch,
     [string]$Manifest='manifest.json',

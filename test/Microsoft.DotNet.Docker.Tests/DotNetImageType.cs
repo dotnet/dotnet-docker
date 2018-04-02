@@ -9,5 +9,6 @@ namespace Microsoft.DotNet.Docker.Tests
         SDK,
         Runtime,
         Runtime_Deps,
+        AspNetCore_Runtime,
     }
 }

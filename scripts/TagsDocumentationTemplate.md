@@ -16,6 +16,9 @@ $(TagDoc:1.0.10-runtime-deps-jessie)
 $(TagDoc:2.1.300-preview2-sdk-stretch)
 $(TagDoc:2.1.300-preview2-sdk-alpine)
 $(TagDoc:2.1.300-preview2-sdk-bionic)
+$(TagDoc:2.1.0-preview2-aspnetcore-runtime-stretch-slim)
+$(TagDoc:2.1.0-preview2-aspnetcore-runtime-alpine)
+$(TagDoc:2.1.0-preview2-aspnetcore-runtime-bionic)
 $(TagDoc:2.1.0-preview2-runtime-stretch-slim)
 $(TagDoc:2.1.0-preview2-runtime-alpine)
 $(TagDoc:2.1.0-preview2-runtime-bionic)
@@ -31,6 +34,7 @@ $(TagDoc:2.0.6-runtime-nanoserver-1709)
 **.NET Core 2.1 Preview 1 tags**
 
 $(TagDoc:2.1.300-preview2-sdk-nanoserver-1709)
+$(TagDoc:2.1.0-preview2-aspnetcore-runtime-nanoserver-1709)
 $(TagDoc:2.1.0-preview2-runtime-nanoserver-1709)
 
 # Windows Server 2016 amd64 tags
@@ -44,6 +48,7 @@ $(TagDoc:1.0.10-runtime-nanoserver-sac2016)
 **.NET Core 2.1 Preview 1 tags**
 
 $(TagDoc:2.1.300-preview2-sdk-nanoserver-sac2016)
+$(TagDoc:2.1.0-preview2-aspnetcore-runtime-nanoserver-sac2016)
 $(TagDoc:2.1.0-preview2-runtime-nanoserver-sac2016)
 
 # Linux arm32 tags

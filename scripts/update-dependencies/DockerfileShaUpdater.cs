@@ -22,7 +22,7 @@ namespace Dotnet.Docker
         {
             Path = dockerfilePath;
             string envShaPattern = "ENV (?<name>DOTNET_[\\S]*DOWNLOAD_SHA) (?<value>[\\S]*)";
-            string varShaPattern = "[ \\$](?<name>dotnet_sha512)( )*=( )*'(?<value>[^'\\s]*)'";
+            string varShaPattern = "[ \\$](?<name>(dotnet_|aspnetcore_)sha512)( )*=( )*'(?<value>[^'\\s]*)'";
             Regex = new Regex($"({envShaPattern})|({varShaPattern})");
             VersionGroupName = "value";
         }
@@ -37,7 +37,7 @@ namespace Dotnet.Docker
             Trace.TraceInformation($"DockerfileShaUpdater is processing '{Path}'.");
             string dockerfile = File.ReadAllText(Path);
 
-            Regex versionRegex = new Regex($"ENV (?<name>DOTNET_[\\S]*VERSION) (?<value>[\\S]*)");
+            Regex versionRegex = new Regex($"ENV (?<name>(DOTNET_|ASPNETCORE_)[\\S]*VERSION) (?<value>[\\S]*)");
             Match versionMatch = versionRegex.Match(dockerfile);
             if (versionMatch.Success)
             {
