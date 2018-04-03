@@ -5,12 +5,10 @@ RUN apk add --no-cache \
         \
         # .NET Core dependencies
         krb5-libs \
-        libcurl \
         libgcc \
         libintl \
         libssl1.0 \
         libstdc++ \
-        libunwind \
         tzdata \
         userspace-rcu \
         zlib \

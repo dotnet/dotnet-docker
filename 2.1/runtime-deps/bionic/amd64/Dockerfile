@@ -6,14 +6,12 @@ RUN apt-get update \
         \
 # .NET Core dependencies
         libc6 \
-        libcurl4 \
         libgcc1 \
         libgssapi-krb5-2 \
         libicu60 \
         liblttng-ust0 \
         libssl1.0.0 \
         libstdc++6 \
-        libunwind8 \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
