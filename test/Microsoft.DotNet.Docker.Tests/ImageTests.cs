@@ -47,10 +47,13 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "1.1", PlatformOS = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServer1709 },
-            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServerSac2016, IsWeb = true },
-            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1709, IsWeb = true },
+            new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServer1803 },
             new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1709 },
+            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1803 },
+            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServerSac2016, IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1709, IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1803, IsWeb = true },
         };
 
         private readonly DockerHelper _dockerHelper;
@@ -199,8 +202,9 @@ namespace Microsoft.DotNet.Docker.Tests
         private async Task VerifyRuntimeImage_FrameworkDependentApp(ImageData imageData, string appSdkImage)
         {
             string frameworkDepAppId = GetIdentifier(imageData.DotNetVersion, "framework-dependent-app");
-            bool isRunAsContainerAdministrator = String.Equals(
-                "nanoserver-1709", imageData.PlatformOS, StringComparison.OrdinalIgnoreCase);
+            bool isRunAsContainerAdministrator = 
+                String.Equals("nanoserver-1709", imageData.PlatformOS, StringComparison.OrdinalIgnoreCase)
+                || String.Equals("nanoserver-1803", imageData.PlatformOS, StringComparison.OrdinalIgnoreCase);
             string publishCmd = GetPublishArgs(imageData);
 
             try

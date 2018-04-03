@@ -57,6 +57,17 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 - [`2.1.0-rc1-runtime-deps-alpine3.7`, `2.1-runtime-deps-alpine3.7`, `2.1.0-rc1-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*2.1/runtime-deps/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine3.7/amd64/Dockerfile)
 - [`2.1.0-rc1-runtime-deps-bionic`, `2.1-runtime-deps-bionic` (*2.1/runtime-deps/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/amd64/Dockerfile)
 
+# Windows Server, version 1803 amd64 tags
+
+- [`2.0.7-sdk-2.1.200-nanoserver-1803`, `2.0-sdk-nanoserver-1803`, `2.0.7-sdk-2.1.200`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-1803/amd64/Dockerfile)
+- [`2.0.7-runtime-nanoserver-1803`, `2.0-runtime-nanoserver-1803`, `2.0.7-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-1803/amd64/Dockerfile)
+
+**.NET Core 2.1 RC1 tags**
+
+- [`2.1.300-rc1-sdk-nanoserver-1803`, `2.1-sdk-nanoserver-1803`, `2.1.300-rc1-sdk`, `2.1-sdk` (*2.1/sdk/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1803/amd64/Dockerfile)
+- [`2.1.0-rc1-aspnetcore-runtime-nanoserver-1803`, `2.1-aspnetcore-runtime-nanoserver-1803`, `2.1.0-rc1-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile)
+- [`2.1.0-rc1-runtime-nanoserver-1803`, `2.1-runtime-nanoserver-1803`, `2.1.0-rc1-runtime`, `2.1-runtime` (*2.1/runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1803/amd64/Dockerfile)
+
 # Windows Server, version 1709 amd64 tags
 
 - [`2.0.7-sdk-2.1.200-nanoserver-1709`, `2.0-sdk-nanoserver-1709`, `2.0.7-sdk-2.1.200`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-1709/amd64/Dockerfile)

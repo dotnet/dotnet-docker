@@ -230,6 +230,15 @@
                 "2.0.7-runtime-nanoserver-1709": {},
                 "2.0-runtime-nanoserver-1709": {}
               }
+            },
+            {
+              "dockerfile": "2.0/runtime/nanoserver-1803/amd64",
+              "os": "windows",
+              "osVersion": "1803",
+              "tags": {
+                "2.0.7-runtime-nanoserver-1803": {},
+                "2.0-runtime-nanoserver-1803": {}
+              }
             }
           ]
         },
@@ -271,6 +280,15 @@
               "tags": {
                 "2.0.7-sdk-2.1.200-nanoserver-1709": {},
                 "2.0-sdk-nanoserver-1709": {}
+              }
+            },
+            {
+              "dockerfile": "2.0/sdk/nanoserver-1803/amd64",
+              "os": "windows",
+              "osVersion": "1803",
+              "tags": {
+                "2.0.7-sdk-2.1.200-nanoserver-1803": {},
+                "2.0-sdk-nanoserver-1803": {}
               }
             }
           ]
@@ -380,6 +398,15 @@
                 "2.1.0-rc1-runtime-nanoserver-1709": {},
                 "2.1-runtime-nanoserver-1709": {}
               }
+            },
+            {
+              "dockerfile": "2.1/runtime/nanoserver-1803/amd64",
+              "os": "windows",
+              "osVersion": "1803",
+              "tags": {
+                "2.1.0-rc1-runtime-nanoserver-1803": {},
+                "2.1-runtime-nanoserver-1803": {}
+              }
             }
           ]
         },
@@ -423,6 +450,15 @@
                 "2.1.0-rc1-aspnetcore-runtime-nanoserver-1709": {},
                 "2.1-aspnetcore-runtime-nanoserver-1709": {}
               }
+            },
+            {
+              "dockerfile": "2.1/aspnetcore-runtime/nanoserver-1803/amd64",
+              "os": "windows",
+              "osVersion": "1803",
+              "tags": {
+                "2.1.0-rc1-aspnetcore-runtime-nanoserver-1803": {},
+                "2.1-aspnetcore-runtime-nanoserver-1803": {}
+              }
             }
           ]
         },
@@ -465,6 +501,15 @@
               "tags": {
                 "2.1.300-rc1-sdk-nanoserver-1709": {},
                 "2.1-sdk-nanoserver-1709": {}
+              }
+            },
+            {
+              "dockerfile": "2.1/sdk/nanoserver-1803/amd64",
+              "os": "windows",
+              "osVersion": "1803",
+              "tags": {
+                "2.1.300-rc1-sdk-nanoserver-1803": {},
+                "2.1-sdk-nanoserver-1803": {}
               }
             }
           ]
