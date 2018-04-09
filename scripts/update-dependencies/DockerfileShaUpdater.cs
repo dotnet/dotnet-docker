@@ -63,7 +63,7 @@ namespace Dotnet.Docker
                     downloadUrl = SubstituteEnvRef(downloadUrl, versionInfo.EnvName, versionInfo.Version);
                     sha = await GetDotNetCliChecksumsShaAsync(downloadUrl, versionInfo.EnvName)
                         ?? await GetDotNetReleaseChecksumsShaAsync(downloadUrl, versionInfo.EnvName, versionInfo.Version);
-                    sha = sha?.ToLower();
+                    sha = sha?.ToLowerInvariant();
                 }
                 else
                 {
@@ -96,7 +96,7 @@ namespace Dotnet.Docker
                 {
                     Trace.TraceInformation($"Failed to find `dotnetclichecksums` sha");
                 }
-            };
+            }
 
             return sha;
         }
@@ -124,7 +124,7 @@ namespace Dotnet.Docker
                 {
                     Trace.TraceInformation($"Failed to find `{installerFileName}` sha");
                 }
-            };
+            }
 
             return sha;
         }

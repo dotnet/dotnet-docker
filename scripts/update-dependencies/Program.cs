@@ -82,7 +82,7 @@ namespace Dotnet.Docker
                 using (Stream stream = await client.GetStreamAsync(Options.BuildInfoUrl))
                 {
                     buildInfoXml = XDocument.Load(stream);
-                };
+                }
             }
 
             OrchestratedBuildModel buildInfo = OrchestratedBuildModel.Parse(buildInfoXml.Root);

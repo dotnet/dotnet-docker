@@ -47,7 +47,7 @@ namespace Dotnet.Docker
                     "build-info",
                     ref buildInfoUrl,
                     (value) => new Uri(value),
-                    "URL of the build info to update the Dockerfiles with");
+                    "URL of the build info to update the Dockerfiles with (http(s):// or file://)");
                 BuildInfoUrl = buildInfoUrl;
             });
 
