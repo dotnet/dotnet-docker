@@ -20,11 +20,12 @@ namespace Dotnet.Docker
 {
     public static class Program
     {
+        private const string AspNetCoreBuildInfoName = "aspnet";
+        private const string RuntimeBuildInfoName = "core-setup";
+        private const string SdkBuildInfoName = "cli";
+
         private static Options Options { get; } = new Options();
         private static string RepoRoot { get; } = Directory.GetCurrentDirectory();
-        private const string RuntimeBuildInfoName = "Runtime";
-        private const string AspNetCoreBuildInfoName = "AspNetCore";
-        private const string SdkBuildInfoName = "Sdk";
 
         public static async Task Main(string[] args)
         {
@@ -59,8 +60,8 @@ namespace Dotnet.Docker
 
         private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)
         {
-            string sdkVersion = buildInfos.GetBuildVersion(SdkBuildInfoName);
-            string dockerfileVersion = sdkVersion.Substring(0, sdkVersion.LastIndexOf('.'));
+            string runtimeVersion = buildInfos.GetBuildVersion(RuntimeBuildInfoName);
+            string dockerfileVersion = runtimeVersion.Substring(0, runtimeVersion.LastIndexOf('.'));
             IEnumerable<IDependencyUpdater> updaters = GetUpdaters(dockerfileVersion);
 
             return DependencyUpdateUtils.Update(updaters, buildInfos);
@@ -70,34 +71,39 @@ namespace Dotnet.Docker
         {
             Trace.TraceInformation($"Retrieving build info from '{Options.BuildInfoUrl}'");
 
-            using (HttpClient client = new HttpClient())
-            using (Stream stream = await client.GetStreamAsync(Options.BuildInfoUrl))
+            XDocument buildInfoXml;
+            if (File.Exists(Options.BuildInfoUrl.LocalPath))
             {
-                XDocument buildInfoXml = XDocument.Load(stream);
-                OrchestratedBuildModel buildInfo = OrchestratedBuildModel.Parse(buildInfoXml.Root);
-                BuildIdentity sdkBuild = buildInfo.Builds
-                    .First(build => string.Equals(build.Name, "cli", StringComparison.OrdinalIgnoreCase));
-                BuildIdentity coreSetupBuild = buildInfo.Builds
-                    .First(build => string.Equals(build.Name, "core-setup", StringComparison.OrdinalIgnoreCase));
-                BuildIdentity aspnetBuild = buildInfo.Builds
-                    .First(build => string.Equals(build.Name, "aspnet", StringComparison.OrdinalIgnoreCase));
-
-                return new[]
+                buildInfoXml = XDocument.Load(Options.BuildInfoUrl.LocalPath);
+            }
+            else
+            {
+                using (HttpClient client = new HttpClient())
+                using (Stream stream = await client.GetStreamAsync(Options.BuildInfoUrl))
                 {
-                    CreateDependencyBuildInfo(SdkBuildInfoName, sdkBuild.ProductVersion),
-                    CreateDependencyBuildInfo(RuntimeBuildInfoName, coreSetupBuild.ProductVersion),
-                    CreateDependencyBuildInfo(AspNetCoreBuildInfoName, aspnetBuild.ProductVersion),
-                };
+                    buildInfoXml = XDocument.Load(stream);
+                }
+            }
+
+            OrchestratedBuildModel buildInfo = OrchestratedBuildModel.Parse(buildInfoXml.Root);
+
+            return new[]
+            {
+                CreateDependencyBuildInfo(SdkBuildInfoName, buildInfo.Builds),
+                CreateDependencyBuildInfo(RuntimeBuildInfoName, buildInfo.Builds),
+                CreateDependencyBuildInfo(AspNetCoreBuildInfoName, buildInfo.Builds),
             };
         }
 
-        private static IDependencyInfo CreateDependencyBuildInfo(string name, string latestReleaseVersion)
+        private static IDependencyInfo CreateDependencyBuildInfo(string name, IEnumerable<BuildIdentity> builds)
         {
+            BuildIdentity buildId = builds.First(build => string.Equals(build.Name, name, StringComparison.OrdinalIgnoreCase));
+
             return new BuildDependencyInfo(
                 new BuildInfo()
                 {
                     Name = name,
-                    LatestReleaseVersion = latestReleaseVersion,
+                    LatestReleaseVersion = buildId.ProductVersion,
                     LatestPackages = new Dictionary<string, string>()
                 },
                 false,

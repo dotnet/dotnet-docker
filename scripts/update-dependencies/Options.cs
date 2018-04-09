@@ -8,7 +8,7 @@ namespace Dotnet.Docker
 {
     public class Options
     {
-        public string BuildInfoUrl { get; private set; }
+        public Uri BuildInfoUrl { get; private set; }
         public string GitHubEmail { get; private set; }
         public string GitHubPassword { get; private set; }
         public string GitHubProject => "dotnet-docker";
@@ -42,11 +42,12 @@ namespace Dotnet.Docker
                     "GitHub user used to make PR (if not specified, a PR will not be created)");
                 GitHubUser = gitHubUser;
 
-                string buildInfoUrl = null;
+                Uri buildInfoUrl = null;
                 syntax.DefineParameter(
                     "build-info",
                     ref buildInfoUrl,
-                    "URL of the build info to update the Dockerfiles with");
+                    (value) => new Uri(value),
+                    "URL of the build info to update the Dockerfiles with (http(s):// or file://)");
                 BuildInfoUrl = buildInfoUrl;
             });
 
