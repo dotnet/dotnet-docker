@@ -1,3 +1,4 @@
+#!/usr/bin/env pwsh
 #
 # Copyright (c) .NET Foundation and contributors. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
@@ -61,7 +62,8 @@ Try {
     $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
     $env:DOTNET_MULTILEVEL_LOOKUP = '0'
 
-    & $DotnetInstallDir/dotnet test -v n
+    & $DotnetInstallDir/dotnet build -v n
+    & $DotnetInstallDir/dotnet xunit -nobuild -verbose
 
     if ($LASTEXITCODE -ne 0) { throw "Tests Failed" }
 }

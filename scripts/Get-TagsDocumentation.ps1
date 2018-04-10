@@ -1,3 +1,4 @@
+#!/usr/bin/env pwsh
 param(
     [string]$Branch,
     [string]$Manifest='manifest.json',
@@ -15,7 +16,7 @@ if (!$Branch) {
         $Branch = "master"
     }
     else {
-        $Branch = $dockerHubRepo
+        $Branch = "nightly"
     }
 }
 

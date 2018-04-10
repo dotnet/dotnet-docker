@@ -1,4 +1,4 @@
-FROM buildpack-deps:bionic-scm
+FROM arm32v7/buildpack-deps:bionic-scm
 
 # Install .NET CLI dependencies
 RUN apt-get update \
@@ -16,8 +16,8 @@ RUN apt-get update \
 # Install .NET Core SDK
 ENV DOTNET_SDK_VERSION 2.1.300-preview2-008530
 
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
-    && dotnet_sha512='034863bdb94a4e752d286eeac10638a012c4bae94a9bff46ee96fb7ea733554f0083d989ecf983274fcbe5c27974e16a7287c3bcca98626380b12e811fdd9174' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
+    && dotnet_sha512='6f2a98d604055ba5e44262dbee6492691f03a581e4768f43efbaacff2a3893bb9f5c1565a47c3c021f2a88ac49d16564b57c43e4563f2320a36e813b1702a628' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \

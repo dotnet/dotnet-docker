@@ -20,10 +20,12 @@ namespace Dotnet.Docker
 {
     public static class Program
     {
-        private static Options Options { get; set; } = new Options();
-        private static string RepoRoot { get; set; } = Directory.GetCurrentDirectory();
-        private const string RuntimeBuildInfoName = "Runtime";
-        private const string SdkBuildInfoName = "Sdk";
+        private const string AspNetCoreBuildInfoName = "aspnet";
+        private const string RuntimeBuildInfoName = "core-setup";
+        private const string SdkBuildInfoName = "cli";
+
+        private static Options Options { get; } = new Options();
+        private static string RepoRoot { get; } = Directory.GetCurrentDirectory();
 
         public static async Task Main(string[] args)
         {
@@ -33,7 +35,8 @@ namespace Dotnet.Docker
 
                 Options.Parse(args);
 
-                DependencyUpdateResults updateResults = await UpdateFilesAsync();
+                IEnumerable<IDependencyInfo> buildInfos = await GetBuildInfoAsync();
+                DependencyUpdateResults updateResults = UpdateFiles(buildInfos);
                 if (updateResults.ChangesDetected())
                 {
                     if (Options.UpdateOnly)
@@ -42,7 +45,7 @@ namespace Dotnet.Docker
                     }
                     else
                     {
-                        await CreatePullRequestAsync(updateResults);
+                        await CreatePullRequestAsync(buildInfos);
                     }
                 }
             }
@@ -55,52 +58,59 @@ namespace Dotnet.Docker
             Environment.Exit(0);
         }
 
-        private static async Task<DependencyUpdateResults> UpdateFilesAsync()
+        private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)
         {
-                IEnumerable<IDependencyInfo> buildInfos = await GetBuildInfoAsync();
-                string sdkVersion = buildInfos.GetBuildVersion(SdkBuildInfoName);
-                string dockerfileVersion = sdkVersion.Substring(0, sdkVersion.LastIndexOf('.'));
-                IEnumerable<IDependencyUpdater> updaters = GetUpdaters(dockerfileVersion);
+            string runtimeVersion = buildInfos.GetBuildVersion(RuntimeBuildInfoName);
+            string dockerfileVersion = runtimeVersion.Substring(0, runtimeVersion.LastIndexOf('.'));
+            IEnumerable<IDependencyUpdater> updaters = GetUpdaters(dockerfileVersion);
 
-                return DependencyUpdateUtils.Update(updaters, buildInfos);
+            return DependencyUpdateUtils.Update(updaters, buildInfos);
         }
 
         private static async Task<IEnumerable<IDependencyInfo>> GetBuildInfoAsync()
         {
             Trace.TraceInformation($"Retrieving build info from '{Options.BuildInfoUrl}'");
 
-            using (HttpClient client = new HttpClient())
-            using (Stream stream = await client.GetStreamAsync(Options.BuildInfoUrl))
+            XDocument buildInfoXml;
+            if (File.Exists(Options.BuildInfoUrl.LocalPath))
             {
-                XDocument buildInfoXml = XDocument.Load(stream);
-                OrchestratedBuildModel buildInfo = OrchestratedBuildModel.Parse(buildInfoXml.Root);
-                BuildIdentity sdkBuild = buildInfo.Builds
-                    .First(build => string.Equals(build.Name, "cli", StringComparison.OrdinalIgnoreCase));
-                BuildIdentity coreSetupBuild = buildInfo.Builds
-                    .First(build => string.Equals(build.Name, "core-setup", StringComparison.OrdinalIgnoreCase));
-
-                return new[]
+                buildInfoXml = XDocument.Load(Options.BuildInfoUrl.LocalPath);
+            }
+            else
+            {
+                using (HttpClient client = new HttpClient())
+                using (Stream stream = await client.GetStreamAsync(Options.BuildInfoUrl))
                 {
-                    CreateDependencyBuildInfo(SdkBuildInfoName, sdkBuild.ProductVersion),
-                    CreateDependencyBuildInfo(RuntimeBuildInfoName, coreSetupBuild.ProductVersion),
-                };
+                    buildInfoXml = XDocument.Load(stream);
+                }
+            }
+
+            OrchestratedBuildModel buildInfo = OrchestratedBuildModel.Parse(buildInfoXml.Root);
+
+            return new[]
+            {
+                CreateDependencyBuildInfo(SdkBuildInfoName, buildInfo.Builds),
+                CreateDependencyBuildInfo(RuntimeBuildInfoName, buildInfo.Builds),
+                CreateDependencyBuildInfo(AspNetCoreBuildInfoName, buildInfo.Builds),
             };
         }
 
-        private static IDependencyInfo CreateDependencyBuildInfo(string name, string latestReleaseVersion)
+        private static IDependencyInfo CreateDependencyBuildInfo(string name, IEnumerable<BuildIdentity> builds)
         {
+            BuildIdentity buildId = builds.First(build => string.Equals(build.Name, name, StringComparison.OrdinalIgnoreCase));
+
             return new BuildDependencyInfo(
                 new BuildInfo()
                 {
                     Name = name,
-                    LatestReleaseVersion = latestReleaseVersion,
+                    LatestReleaseVersion = buildId.ProductVersion,
                     LatestPackages = new Dictionary<string, string>()
                 },
                 false,
                 Enumerable.Empty<string>());
         }
 
-        private static async Task CreatePullRequestAsync(DependencyUpdateResults updateResults)
+        private static async Task CreatePullRequestAsync(IEnumerable<IDependencyInfo> buildInfos)
         {
             GitHubAuth gitHubAuth = new GitHubAuth(Options.GitHubPassword, Options.GitHubUser, Options.GitHubEmail);
             PullRequestCreator prCreator = new PullRequestCreator(gitHubAuth, Options.GitHubUser);
@@ -109,7 +119,7 @@ namespace Dotnet.Docker
                 BranchNamingStrategy = new SingleBranchNamingStrategy($"UpdateDependencies-{Options.GitHubUpstreamBranch}")
             };
 
-            string sdkVersion = updateResults.UsedInfos.GetBuildVersion(SdkBuildInfoName);
+            string sdkVersion = buildInfos.GetBuildVersion(SdkBuildInfoName);
             string commitMessage = $"Update {Options.GitHubUpstreamBranch} SDK to {sdkVersion}";
 
             await prCreator.CreateOrUpdateAsync(
@@ -138,6 +148,7 @@ namespace Dotnet.Docker
 
             return dockerfiles
                 .Select(path => CreateDockerfileEnvUpdater(path, "DOTNET_SDK_VERSION", SdkBuildInfoName))
+                .Concat(dockerfiles.Select(path => CreateDockerfileEnvUpdater(path, "ASPNETCORE_VERSION", AspNetCoreBuildInfoName)))
                 .Concat(dockerfiles.Select(path => CreateDockerfileEnvUpdater(path, "DOTNET_VERSION", RuntimeBuildInfoName)))
                 .Concat(dockerfiles.Select(path => new DockerfileShaUpdater(path)));
         }

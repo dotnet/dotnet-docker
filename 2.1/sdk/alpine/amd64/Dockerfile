@@ -3,17 +3,17 @@ FROM microsoft/dotnet:2.1-runtime-deps-alpine
 # Disable the invariant mode (set in base image)
 RUN apk add --no-cache icu-libs
 
-ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT false
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
+    LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.1.300-preview1-008174
+ENV DOTNET_SDK_VERSION 2.1.300-preview2-008530
 
 RUN apk add --no-cache --virtual .build-deps \
         openssl \
     && wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-alpine.3.6-x64.tar.gz \
-    && dotnet_sha512='7705aebf88264a4a2e65c7fac29de92aa5e21d49709494d2e3242d89af6a65c1ae101f6b8e822c0a097b4d7d490cb76ee7c716f949101d5eed746f2c0f43097e' \
+    && dotnet_sha512='2b52ab97ed874a6251ac14376049a94a10c70c2b867e38500143ba37bd8517760df72a027c6865ead1faa6504718c1384942d4bbc7842093afbe123e83f2997c' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \
@@ -21,7 +21,10 @@ RUN apk add --no-cache --virtual .build-deps \
     && rm dotnet.tar.gz \
     && apk del .build-deps
 
-ENV NUGET_XMLDOC_MODE skip
+# Enable correct mode for dotnet watch (only mode supported in a container)
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true \ 
+    # Skip extraction of XML docs - generally not useful within an image/container - helps perfomance
+    NUGET_XMLDOC_MODE=skip
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
 RUN dotnet help

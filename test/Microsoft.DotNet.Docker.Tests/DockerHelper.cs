@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text;
 using Xunit.Abstractions;
 
@@ -51,18 +52,25 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private void ExecuteWithLogging(string args)
+        private string ExecuteWithLogging(string args, bool ignoreErrors = false)
         {
             OutputHelper.WriteLine($"Executing : docker {args}");
-            Execute(args, outputHelper:OutputHelper);
+            return Execute(args, outputHelper: OutputHelper, ignoreErrors: ignoreErrors);
         }
 
         private static string Execute(string args, bool ignoreErrors = false, ITestOutputHelper outputHelper = null)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo("docker", args);
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
-            Process process = Process.Start(startInfo);
+            Process process = new Process
+            {
+                EnableRaisingEvents = true,
+                StartInfo =
+                {
+                    FileName = "docker",
+                    Arguments = args,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                }
+            };
 
             StringBuilder stdOutput = new StringBuilder();
             process.OutputDataReceived += new DataReceivedEventHandler((sender, e) => stdOutput.AppendLine(e.Data));
@@ -70,6 +78,7 @@ namespace Microsoft.DotNet.Docker.Tests
             StringBuilder stdError = new StringBuilder();
             process.ErrorDataReceived += new DataReceivedEventHandler((sender, e) => stdError.AppendLine(e.Data));
 
+            process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.WaitForExit();
@@ -80,9 +89,15 @@ namespace Microsoft.DotNet.Docker.Tests
                 outputHelper.WriteLine(output);
             }
 
+            string error = stdError.ToString().Trim();
+            if (outputHelper != null && !string.IsNullOrWhiteSpace(error))
+            {
+                outputHelper.WriteLine(error);
+            }
+
             if (!ignoreErrors && process.ExitCode != 0)
             {
-                string msg = $"Failed to execute {startInfo.FileName} {startInfo.Arguments}{Environment.NewLine}{stdError}";
+                string msg = $"Failed to execute {process.StartInfo.FileName} {process.StartInfo.Arguments}{Environment.NewLine}{stdError}";
                 throw new InvalidOperationException(msg);
             }
 
@@ -116,16 +131,30 @@ namespace Microsoft.DotNet.Docker.Tests
             string command,
             string containerName,
             string volumeName = null,
+            string portPublishArgs = "-p 5000:80",
+            bool detach = false,
             bool runAsContainerAdministrator = false)
         {
             string volumeArg = volumeName == null ? string.Empty : $" -v {volumeName}:{ContainerWorkDir}";
             string userArg = runAsContainerAdministrator ? " -u ContainerAdministrator" : string.Empty;
-            ExecuteWithLogging($"run --rm --name {containerName}{volumeArg}{userArg} {image} {command}");
+            string detachArg = detach ? " -d  -t " : string.Empty;
+            ExecuteWithLogging($"run --rm --name {containerName}{volumeArg}{userArg}{detachArg} {portPublishArgs} {image} {command}");
+        }
+
+        public string GetContainerAddress(string containerName)
+        {
+            return ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + containerName);
         }
 
         public static bool VolumeExists(string name)
         {
             return ResourceExists("volume", $"-f \"name={name}\"");
+        }
+
+        public void Kill(string containerName)
+        {
+            ExecuteWithLogging($"logs {containerName}", ignoreErrors: true);
+            ExecuteWithLogging($"kill {containerName}", ignoreErrors: true);
         }
     }
 }
