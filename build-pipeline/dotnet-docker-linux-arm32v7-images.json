@@ -242,7 +242,7 @@
       "allowOverride": true
     },
     "docker.commonRunArgs": {
-      "value": "--rm -v $(docker.repoVolumeName):/repo $(docker.certVolumeArg) -w /repo -e DOCKER_CERT_PATH=/docker-certs -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://$(PiIp):2376 --name $(docker.containerName)"
+      "value": "--rm -v $(docker.repoVolumeName):/repo -w /repo $(docker.dockerConfigArgs) --name $(docker.containerName)"
     },
     "docker.runImageBuilder": {
       "value": "run $(docker.commonRunArgs) $(imageBuilder.imageName)"
@@ -252,6 +252,10 @@
     },
     "docker.gitEnabledImageName": {
       "value": "buildpack-deps:stretch-scm"
+    },
+    "docker.dockerConfigArgs": {
+      "value": "$(docker.certVolumeArg) -e DOCKER_CERT_PATH=/docker-certs -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://$(PiIp):2376",
+      "allowOverride": true
     },
     "docker.certVolumeArg": {
       "value": "-v cert-$(Build.DefinitionName)-$(Build.BuildId):/docker-certs"
