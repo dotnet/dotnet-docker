@@ -36,6 +36,20 @@ namespace Microsoft.DotNet.Docker.Tests
             ExecuteWithLogging($"build -t {tag} {buildArgsOption} -f {dockerfile} .");
         }
 
+        public static bool ContainerExists(string container)
+        {
+            return ResourceExists("container", container);
+        }
+
+        public void DeleteContainer(string container)
+        {
+            if (ContainerExists(container))
+            {
+                ExecuteWithLogging($"logs {container}", ignoreErrors: true);
+                ExecuteWithLogging($"container rm -f {container}");
+            }
+        }
+
         public void DeleteImage(string tag)
         {
             if (ImageExists(tag))
@@ -149,12 +163,6 @@ namespace Microsoft.DotNet.Docker.Tests
         public static bool VolumeExists(string name)
         {
             return ResourceExists("volume", $"-f \"name={name}\"");
-        }
-
-        public void Kill(string containerName)
-        {
-            ExecuteWithLogging($"logs {containerName}", ignoreErrors: true);
-            ExecuteWithLogging($"kill {containerName}", ignoreErrors: true);
         }
     }
 }

@@ -161,7 +161,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             finally
             {
-                DockerHelper.Kill(appSdkImage);
+                DockerHelper.DeleteContainer(appSdkImage);
             }
         }
 
@@ -233,7 +233,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             finally
             {
-                DockerHelper.Kill(frameworkDepAppId);
+                DockerHelper.DeleteContainer(frameworkDepAppId);
                 DockerHelper.DeleteVolume(frameworkDepAppId);
             }
         }
@@ -285,7 +285,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
                 finally
                 {
-                    DockerHelper.Kill(selfContainedAppId);
+                    DockerHelper.DeleteContainer(selfContainedAppId);
                     DockerHelper.DeleteVolume(selfContainedAppId);
                 }
             }
