@@ -15,15 +15,17 @@ function Invoke-CleanupDocker($ActiveOS)
 {
     if ($CleanupDocker) {
         if ("$ActiveOS" -eq "windows") {
+            docker ps -a -q | ForEach-Object { docker rm -f $_ }
+
             # Windows base images are large, preserve them to avoid the overhead of pulling each time.
             docker images |
-            Where-Object {
-                -Not ($_.StartsWith("microsoft/nanoserver ")`
-                -Or $_.StartsWith("microsoft/windowsservercore ")`
-                -Or $_.StartsWith("REPOSITORY ")) } |
-            ForEach-Object { $_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2] } |
-            Select-Object -Unique |
-            ForEach-Object { docker rmi -f $_ }
+                Where-Object {
+                    -Not ($_.StartsWith("microsoft/nanoserver ")`
+                    -Or $_.StartsWith("microsoft/windowsservercore ")`
+                    -Or $_.StartsWith("REPOSITORY ")) } |
+                ForEach-Object { $_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2] } |
+                Select-Object -Unique |
+                ForEach-Object { docker rmi -f $_ }
         }
         else {
             docker system prune -a -f
