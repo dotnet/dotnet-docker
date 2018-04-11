@@ -36,6 +36,20 @@ namespace Microsoft.DotNet.Docker.Tests
             ExecuteWithLogging($"build -t {tag} {buildArgsOption} -f {dockerfile} .");
         }
 
+        public static bool ContainerExists(string name)
+        {
+            return ResourceExists("container", $"-f \"name={name}\"");
+        }
+
+        public void DeleteContainer(string container)
+        {
+            if (ContainerExists(container))
+            {
+                ExecuteWithLogging($"logs {container}", ignoreErrors: true);
+                ExecuteWithLogging($"container rm -f {container}");
+            }
+        }
+
         public void DeleteImage(string tag)
         {
             if (ImageExists(tag))
@@ -109,6 +123,17 @@ namespace Microsoft.DotNet.Docker.Tests
             return Execute("version -f \"{{ .Server.Os }}\"");
         }
 
+        public string GetContainerAddress(string container)
+        {
+            return ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + container);
+        }
+
+        public string GetContainerHostPort(string container, int containerPort = 80)
+        {
+            return ExecuteWithLogging(
+                $"inspect -f \"{{{{(index (index .NetworkSettings.Ports \\\"{containerPort}/tcp\\\") 0).HostPort}}}}\" {container}");
+        }
+
         public string GetContainerWorkPath(string relativePath)
         {
             string separator = IsLinuxContainerModeEnabled ? "/" : "\\";
@@ -131,7 +156,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string command,
             string containerName,
             string volumeName = null,
-            string portPublishArgs = "-p 5000:80",
+            string portPublishArgs = "-p 80",
             bool detach = false,
             bool runAsContainerAdministrator = false)
         {
@@ -141,20 +166,9 @@ namespace Microsoft.DotNet.Docker.Tests
             ExecuteWithLogging($"run --rm --name {containerName}{volumeArg}{userArg}{detachArg} {portPublishArgs} {image} {command}");
         }
 
-        public string GetContainerAddress(string containerName)
-        {
-            return ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + containerName);
-        }
-
         public static bool VolumeExists(string name)
         {
             return ResourceExists("volume", $"-f \"name={name}\"");
-        }
-
-        public void Kill(string containerName)
-        {
-            ExecuteWithLogging($"logs {containerName}", ignoreErrors: true);
-            ExecuteWithLogging($"kill {containerName}", ignoreErrors: true);
         }
     }
 }
