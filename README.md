@@ -1,6 +1,6 @@
 # Latest Version of Common Tags
 
-The following tags are the latest stable versions of the most commonly used tags. The complete set of tags is listed further down.
+The following tags are the latest stable versions of the most commonly used images. The complete set of tags is listed further down.
 
 - [`2.0-sdk`](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/stretch/amd64/Dockerfile)
 - [`2.0-runtime`](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/amd64/Dockerfile)
@@ -166,7 +166,7 @@ This image contains the .NET Core runtimes and libraries and is optimized for ru
 
 ### `microsoft/dotnet:<version>-runtime-deps`
 
-This image contains the native dependencies needed by .NET Core. It does not include .NET Core. This is for  [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
+This image contains the native dependencies needed by .NET Core. It does not include .NET Core. It is for  [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
 
 ## Issues
 
