@@ -154,8 +154,6 @@ It contains the .NET Core SDK which is comprised of two parts:
 
 Use this image for your development process (developing, building and testing applications).
 
-Official images for .NET Core for Linux and Windows Nano Server
-
 ### `microsoft/dotnet:<version>-aspnet-core-runtime`
 
 This image contains the ASP.NET Core and .NET Core runtimes and libraries and is optimized for running ASP.NET Core apps in production.
