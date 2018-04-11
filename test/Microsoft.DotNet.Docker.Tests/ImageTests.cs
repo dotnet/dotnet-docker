@@ -299,9 +299,10 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             var retries = 60;
             var client = new HttpClient();
-            var url = Environment.GetEnvironmentVariable("RUNNING_TESTS_IN_CONTAINER") == null && !RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                          ? "http://localhost:5000"
-                          : "http://" + DockerHelper.GetContainerAddress(containerName);
+            var isRunningInContainer = Environment.GetEnvironmentVariable("RUNNING_TESTS_IN_CONTAINER") != null;
+            var url = !isRunningInContainer && DockerHelper.IsLinuxContainerModeEnabled
+                ? $"http://localhost:{DockerHelper.GetContainerHostPort(containerName)}"
+                : $"http://{DockerHelper.GetContainerAddress(containerName)}";
 
             while (retries > 0)
             {
