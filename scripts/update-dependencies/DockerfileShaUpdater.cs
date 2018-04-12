@@ -24,12 +24,12 @@ namespace Dotnet.Docker
         private static readonly string s_envVersionPattern =
             $"ENV (?<{EnvNameGroupName}>(DOTNET|ASPNETCORE)_[\\S]*VERSION) (?<{ValueGroupName}>[\\S]*)";
         private static readonly string s_envShaPattern =
-            $"ENV (?<{EnvNameGroupName}> DOTNET_[\\S]*DOWNLOAD_SHA) (?<{ValueGroupName}>[\\S]*)";
+            $"ENV DOTNET_[\\S]*DOWNLOAD_SHA (?<{ValueGroupName}>[\\S]*)";
         private static readonly string s_envDownloadUrlPattern = $"ENV (DOTNET_[\\S]*DOWNLOAD_URL) (?<{ValueGroupName}>[\\S]*)";
         private static readonly string s_inlineUrlPattern = 
             $"(?<{ValueGroupName}>https://dotnetcli.blob.core.windows.net/[^;\\s]*)";
         private static readonly string s_varShaPattern =
-            $"[ \\$](?<{EnvNameGroupName}>(dotnet_|aspnetcore_)sha512)( )*=( )*'(?<{ValueGroupName}>[^'\\s]*)'";
+            $"[ \\$](dotnet_|aspnetcore_)sha512( )*=( )*'(?<{ValueGroupName}>[^'\\s]*)'";
 
         private static readonly Regex s_downloadUrlRegex = new Regex($"({s_envDownloadUrlPattern})|{s_inlineUrlPattern}");
         private static readonly Regex s_shaRegex = new Regex($"({s_envShaPattern})|({s_varShaPattern})");
@@ -110,19 +110,27 @@ namespace Dotnet.Docker
 
             Trace.TraceInformation($"Downloading '{uri}'.");
             using (HttpClient client = new HttpClient())
+            using (HttpResponseMessage response = await client.GetAsync(uri))
             {
-                string checksums = await client.GetStringAsync(uri);
-                string installerFileName = productDownloadUrl.Substring(productDownloadUrl.LastIndexOf('/') + 1);
-
-                Regex shaRegex = new Regex($"(?<sha>[\\S]+)[\\s]+{Regex.Escape(installerFileName)}");
-                Match shaMatch = shaRegex.Match(checksums);
-                if (shaMatch.Success)
+                if (response.IsSuccessStatusCode)
                 {
-                    sha = shaMatch.Groups["sha"].Value;
+                    string checksums = await response.Content.ReadAsStringAsync();
+                    string installerFileName = productDownloadUrl.Substring(productDownloadUrl.LastIndexOf('/') + 1);
+
+                    Regex shaRegex = new Regex($"(?<sha>[\\S]+)[\\s]+{Regex.Escape(installerFileName)}");
+                    Match shaMatch = shaRegex.Match(checksums);
+                    if (shaMatch.Success)
+                    {
+                        sha = shaMatch.Groups["sha"].Value;
+                    }
+                    else
+                    {
+                        Trace.TraceInformation($"Failed to find `{installerFileName}` sha");
+                    }
                 }
                 else
                 {
-                    Trace.TraceInformation($"Failed to find `{installerFileName}` sha");
+                    Trace.TraceInformation($"Failed to find dotnet release checksums");
                 }
             }
 
