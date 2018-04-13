@@ -24,7 +24,7 @@ namespace Microsoft.DotNet.Docker.Tests
             Environment.GetEnvironmentVariable("RUNNING_TESTS_IN_CONTAINER") != null;
         private static readonly string s_repoOwner = Environment.GetEnvironmentVariable("REPO_OWNER") ?? "microsoft";
 
-        private static readonly ImageData[] s_linuxTestData = new[]
+        private static readonly ImageData[] s_linuxTestData =
         {
             new ImageData { DotNetVersion = "1.0", SdkVersion = "1.1" },
             new ImageData { DotNetVersion = "1.1", RuntimeDepsVersion = "1.0" },
@@ -39,7 +39,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine, IsWeb = true },
         };
-        private static readonly ImageData[] s_windowsTestData = new[]
+        private static readonly ImageData[] s_windowsTestData =
         {
             new ImageData { DotNetVersion = "1.0", PlatformOS = OS.NanoServerSac2016, SdkVersion = "1.1" },
             new ImageData { DotNetVersion = "1.1", PlatformOS = OS.NanoServerSac2016 },
