@@ -3,6 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Linq;
+using System.Reflection;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
@@ -37,6 +39,13 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             get { return sdkVersion ?? DotNetVersion; }
             set { sdkVersion = value; }
+        }
+
+        public override string ToString()
+        {
+            return typeof(ImageData).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Select(propInfo => $"{propInfo.Name}='{propInfo.GetValue(this) ?? "<null>"}'")
+                .Aggregate((working, next) => $"{working}, {next}");
         }
     }
 }
