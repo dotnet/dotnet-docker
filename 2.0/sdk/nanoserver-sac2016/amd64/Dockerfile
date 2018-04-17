@@ -29,6 +29,7 @@ ENV ASPNETCORE_URLS=http://+:80 `
     # Skip extraction of XML docs - generally not useful within an image/container - helps perfomance
     NUGET_XMLDOC_MODE=skip
 
+# Trigger the population of the local package cache
 RUN New-Item -Type Directory warmup; `
     cd warmup; `
     dotnet new; `
