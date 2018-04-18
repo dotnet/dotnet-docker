@@ -20,10 +20,8 @@ RUN Invoke-WebRequest $Env:DOTNET_SDK_DOWNLOAD_URL -OutFile dotnet.zip; `
 
 RUN setx /M PATH $($Env:PATH + ';' + $Env:ProgramFiles + '\dotnet')
 
-# Configure Kestrel web server to bind to port 80 when present
-ENV ASPNETCORE_URLS=http://+:80 `
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true `
+# Enable detection of running in a container
+ENV DOTNET_RUNNING_IN_CONTAINER=true `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps perfomance
