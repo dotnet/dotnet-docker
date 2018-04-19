@@ -14,16 +14,16 @@ $(TagDoc:1.0.11-runtime-deps-jessie)
 **.NET Core 2.1 Preview 2 tags**
 
 $(TagDoc:2.1.300-rc1-sdk-stretch)
-$(TagDoc:2.1.300-rc1-sdk-alpine)
+$(TagDoc:2.1.300-rc1-sdk-alpine3.7)
 $(TagDoc:2.1.300-rc1-sdk-bionic)
 $(TagDoc:2.1.0-rc1-aspnetcore-runtime-stretch-slim)
-$(TagDoc:2.1.0-rc1-aspnetcore-runtime-alpine)
+$(TagDoc:2.1.0-rc1-aspnetcore-runtime-alpine3.7)
 $(TagDoc:2.1.0-rc1-aspnetcore-runtime-bionic)
 $(TagDoc:2.1.0-rc1-runtime-stretch-slim)
-$(TagDoc:2.1.0-rc1-runtime-alpine)
+$(TagDoc:2.1.0-rc1-runtime-alpine3.7)
 $(TagDoc:2.1.0-rc1-runtime-bionic)
 $(TagDoc:2.1.0-rc1-runtime-deps-stretch-slim)
-$(TagDoc:2.1.0-rc1-runtime-deps-alpine)
+$(TagDoc:2.1.0-rc1-runtime-deps-alpine3.7)
 $(TagDoc:2.1.0-rc1-runtime-deps-bionic)
 
 # Windows Server, version 1709 amd64 tags
