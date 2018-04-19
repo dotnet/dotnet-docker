@@ -1,4 +1,4 @@
-FROM microsoft/dotnet-nightly:2.1-runtime-deps-alpine
+FROM microsoft/dotnet:2.1-runtime-deps-alpine
 
 # Disable the invariant mode (set in base image)
 RUN apk add --no-cache icu-libs
