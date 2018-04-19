@@ -402,7 +402,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             else if (imageData.IsAlpine)
             {
-                rid = "alpine.3.6-x64";
+                rid = "alpine.3.7-x64";
             }
             else if (imageData.DotNetVersion.StartsWith("1."))
             {

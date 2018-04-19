@@ -76,7 +76,7 @@ try {
                 $qualifiedTags = $tags | ForEach-Object { $manifestRepo.Name + ':' + $_.Name}
                 $formattedTags = $qualifiedTags -join ', '
                 Write-Host "--- Building $formattedTags from $dockerfilePath ---"
-                Invoke-Expression "docker build $optionalDockerBuildArgs --pull -t $($qualifiedTags -join ' -t ') $dockerfilePath"
+                Invoke-Expression "docker build $optionalDockerBuildArgs -t $($qualifiedTags -join ' -t ') $dockerfilePath"
                 if ($LastExitCode -ne 0) {
                     throw "Failed building $formattedTags"
                 }

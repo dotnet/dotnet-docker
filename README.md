@@ -49,16 +49,16 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 **.NET Core 2.1 Preview 2 tags**
 
 - [`2.1.300-preview2-sdk-stretch`, `2.1-sdk-stretch`, `2.1.300-preview2-sdk`, `2.1-sdk` (*2.1/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
-- [`2.1.300-preview2-sdk-alpine`, `2.1-sdk-alpine` (*2.1/sdk/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine/amd64/Dockerfile)
+- [`2.1.300-preview2-sdk-alpine3.7`, `2.1-sdk-alpine3.7`, `2.1.300-preview2-sdk-alpine`, `2.1-sdk-alpine` (*2.1/sdk/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.7/amd64/Dockerfile)
 - [`2.1.300-preview2-sdk-bionic`, `2.1-sdk-bionic` (*2.1/sdk/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/amd64/Dockerfile)
 - [`2.1.0-preview2-aspnetcore-runtime-stretch-slim`, `2.1-aspnetcore-runtime-stretch-slim`, `2.1.0-preview2-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*2.1/aspnetcore-runtime/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
-- [`2.1.0-preview2-aspnetcore-runtime-alpine`, `2.1-aspnetcore-runtime-alpine` (*2.1/aspnetcore-runtime/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/alpine/amd64/Dockerfile)
+- [`2.1.0-preview2-aspnetcore-runtime-alpine3.7`, `2.1-aspnetcore-runtime-alpine3.7`, `2.1.0-preview2-aspnetcore-runtime-alpine`, `2.1-aspnetcore-runtime-alpine` (*2.1/aspnetcore-runtime/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/alpine3.7/amd64/Dockerfile)
 - [`2.1.0-preview2-aspnetcore-runtime-bionic`, `2.1-aspnetcore-runtime-bionic` (*2.1/aspnetcore-runtime/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/bionic/amd64/Dockerfile)
 - [`2.1.0-preview2-runtime-stretch-slim`, `2.1-runtime-stretch-slim`, `2.1.0-preview2-runtime`, `2.1-runtime` (*2.1/runtime/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/amd64/Dockerfile)
-- [`2.1.0-preview2-runtime-alpine`, `2.1-runtime-alpine` (*2.1/runtime/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/alpine/amd64/Dockerfile)
+- [`2.1.0-preview2-runtime-alpine3.7`, `2.1-runtime-alpine3.7`, `2.1.0-preview2-runtime-alpine`, `2.1-runtime-alpine` (*2.1/runtime/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/alpine3.7/amd64/Dockerfile)
 - [`2.1.0-preview2-runtime-bionic`, `2.1-runtime-bionic` (*2.1/runtime/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/bionic/amd64/Dockerfile)
 - [`2.1.0-preview2-runtime-deps-stretch-slim`, `2.1-runtime-deps-stretch-slim`, `2.1.0-preview2-runtime-deps`, `2.1-runtime-deps` (*2.1/runtime-deps/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
-- [`2.1.0-preview2-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*2.1/runtime-deps/alpine/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/alpine/amd64/Dockerfile)
+- [`2.1.0-preview2-runtime-deps-alpine3.7`, `2.1-runtime-deps-alpine3.7`, `2.1.0-preview2-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*2.1/runtime-deps/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/alpine3.7/amd64/Dockerfile)
 - [`2.1.0-preview2-runtime-deps-bionic`, `2.1-runtime-deps-bionic` (*2.1/runtime-deps/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/amd64/Dockerfile)
 
 # Windows Server, version 1709 amd64 tags

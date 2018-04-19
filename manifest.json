@@ -462,9 +462,11 @@
         {
           "platforms": [
             {
-              "dockerfile": "2.1/runtime-deps/alpine/amd64",
+              "dockerfile": "2.1/runtime-deps/alpine3.7/amd64",
               "os": "linux",
               "tags": {
+                "2.1.0-preview2-runtime-deps-alpine3.7": {},
+                "2.1-runtime-deps-alpine3.7": {},
                 "2.1.0-preview2-runtime-deps-alpine": {},
                 "2.1-runtime-deps-alpine": {}
               }
@@ -474,9 +476,11 @@
         {
           "platforms": [
             {
-              "dockerfile": "2.1/runtime/alpine/amd64",
+              "dockerfile": "2.1/runtime/alpine3.7/amd64",
               "os": "linux",
               "tags": {
+                "2.1.0-preview2-runtime-alpine3.7": {},
+                "2.1-runtime-alpine3.7": {},
                 "2.1.0-preview2-runtime-alpine": {},
                 "2.1-runtime-alpine": {}
               }
@@ -486,9 +490,11 @@
         {
           "platforms": [
             {
-              "dockerfile": "2.1/aspnetcore-runtime/alpine/amd64",
+              "dockerfile": "2.1/aspnetcore-runtime/alpine3.7/amd64",
               "os": "linux",
               "tags": {
+                "2.1.0-preview2-aspnetcore-runtime-alpine3.7": {},
+                "2.1-aspnetcore-runtime-alpine3.7": {},
                 "2.1.0-preview2-aspnetcore-runtime-alpine": {},
                 "2.1-aspnetcore-runtime-alpine": {}
               }
@@ -498,9 +504,11 @@
         {
           "platforms": [
             {
-              "dockerfile": "2.1/sdk/alpine/amd64",
+              "dockerfile": "2.1/sdk/alpine3.7/amd64",
               "os": "linux",
               "tags": {
+                "2.1.300-preview2-sdk-alpine3.7": {},
+                "2.1-sdk-alpine3.7": {},
                 "2.1.300-preview2-sdk-alpine": {},
                 "2.1-sdk-alpine": {}
               }
