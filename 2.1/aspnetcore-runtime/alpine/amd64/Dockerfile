@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-runtime-deps-alpine
+FROM microsoft/dotnet-nightly:2.1-runtime-deps-alpine
 
 # Workaround https://github.com/aspnet/libuv-package/issues/23
 # Install libuv globally and link it so coreclr can laod it
