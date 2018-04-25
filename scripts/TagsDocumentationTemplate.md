@@ -11,7 +11,7 @@ $(TagDoc:1.1.8-runtime-jessie)
 $(TagDoc:1.0.11-runtime-jessie)
 $(TagDoc:1.0.11-runtime-deps-jessie)
 
-**.NET Core 2.1 Preview 2 tags**
+**.NET Core 2.1 RC1 tags**
 
 $(TagDoc:2.1.300-rc1-sdk-stretch)
 $(TagDoc:2.1.300-rc1-sdk-alpine3.7)
@@ -31,7 +31,7 @@ $(TagDoc:2.1.0-rc1-runtime-deps-bionic)
 $(TagDoc:2.0.7-sdk-2.1.105-nanoserver-1709)
 $(TagDoc:2.0.7-runtime-nanoserver-1709)
 
-**.NET Core 2.1 Preview 2 tags**
+**.NET Core 2.1 RC1 tags**
 
 $(TagDoc:2.1.300-rc1-sdk-nanoserver-1709)
 $(TagDoc:2.1.0-rc1-aspnetcore-runtime-nanoserver-1709)
@@ -45,7 +45,7 @@ $(TagDoc:1.1.8-sdk-1.1.9-nanoserver-sac2016)
 $(TagDoc:1.1.8-runtime-nanoserver-sac2016)
 $(TagDoc:1.0.11-runtime-nanoserver-sac2016)
 
-**.NET Core 2.1 Preview 2 tags**
+**.NET Core 2.1 RC1 tags**
 
 $(TagDoc:2.1.300-rc1-sdk-nanoserver-sac2016)
 $(TagDoc:2.1.0-rc1-aspnetcore-runtime-nanoserver-sac2016)
@@ -56,7 +56,7 @@ $(TagDoc:2.1.0-rc1-runtime-nanoserver-sac2016)
 $(TagDoc:2.0.7-runtime-stretch-arm32v7)
 $(TagDoc:2.0.7-runtime-deps-stretch-arm32v7)
 
-**.NET Core 2.1 Preview 2 tags**
+**.NET Core 2.1 RC1 tags**
 
 $(TagDoc:2.1.300-rc1-sdk-stretch-arm32v7)
 $(TagDoc:2.1.300-rc1-sdk-bionic-arm32v7)

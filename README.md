@@ -46,7 +46,7 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 - [`1.0.11-runtime-jessie`, `1.0.11-runtime`, `1.0-runtime` (*1.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.0/runtime/jessie/amd64/Dockerfile)
 - [`1.0.11-runtime-deps-jessie`, `1.0.11-runtime-deps`, `1.0-runtime-deps`, `1-runtime-deps` (*1.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.0/runtime-deps/jessie/amd64/Dockerfile)
 
-**.NET Core 2.1 Preview 2 tags**
+**.NET Core 2.1 RC1 tags**
 
 - [`2.1.300-rc1-sdk-stretch`, `2.1-sdk-stretch`, `2.1.300-rc1-sdk`, `2.1-sdk` (*2.1/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
 - [`2.1.300-rc1-sdk-alpine3.7`, `2.1-sdk-alpine3.7`, `2.1.300-rc1-sdk-alpine`, `2.1-sdk-alpine` (*2.1/sdk/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.7/amd64/Dockerfile)
@@ -66,7 +66,7 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 - [`2.0.7-sdk-2.1.105-nanoserver-1709`, `2.0-sdk-nanoserver-1709`, `2.0.7-sdk-2.1.105`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-1709/amd64/Dockerfile)
 - [`2.0.7-runtime-nanoserver-1709`, `2.0-runtime-nanoserver-1709`, `2.0.7-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/nanoserver-1709/amd64/Dockerfile)
 
-**.NET Core 2.1 Preview 2 tags**
+**.NET Core 2.1 RC1 tags**
 
 - [`2.1.300-rc1-sdk-nanoserver-1709`, `2.1-sdk-nanoserver-1709`, `2.1.300-rc1-sdk`, `2.1-sdk` (*2.1/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1709/amd64/Dockerfile)
 - [`2.1.0-rc1-aspnetcore-runtime-nanoserver-1709`, `2.1-aspnetcore-runtime-nanoserver-1709`, `2.1.0-rc1-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile)
@@ -80,7 +80,7 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 - [`1.1.8-runtime-nanoserver-sac2016`, `1.1.8-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`1.0.11-runtime-nanoserver-sac2016`, `1.0.11-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
 
-**.NET Core 2.1 Preview 2 tags**
+**.NET Core 2.1 RC1 tags**
 
 - [`2.1.300-rc1-sdk-nanoserver-sac2016`, `2.1-sdk-nanoserver-sac2016`, `2.1.300-rc1-sdk`, `2.1-sdk` (*2.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
 - [`2.1.0-rc1-aspnetcore-runtime-nanoserver-sac2016`, `2.1-aspnetcore-runtime-nanoserver-sac2016`, `2.1.0-rc1-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile)
@@ -91,7 +91,7 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 - [`2.0.7-runtime-stretch-arm32v7`, `2.0-runtime-stretch-arm32v7`, `2.0.7-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/stretch/arm32v7/Dockerfile)
 - [`2.0.7-runtime-deps-stretch-arm32v7`, `2.0-runtime-deps-stretch-arm32v7`, `2.0.7-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/stretch/arm32v7/Dockerfile)
 
-**.NET Core 2.1 Preview 2 tags**
+**.NET Core 2.1 RC1 tags**
 
 - [`2.1.300-rc1-sdk-stretch-arm32v7`, `2.1-sdk-stretch-arm32v7`, `2.1.300-rc1-sdk`, `2.1-sdk` (*2.1/sdk/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/arm32v7/Dockerfile)
 - [`2.1.300-rc1-sdk-bionic-arm32v7`, `2.1-sdk-bionic-arm32v7` (*2.1/sdk/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/arm32v7/Dockerfile)
