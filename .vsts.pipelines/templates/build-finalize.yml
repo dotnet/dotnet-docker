@@ -6,6 +6,7 @@ phases:
     dependsOn:
       - Linux_amd64
       - Linux_arm32v7
+      - Linux_arm64
       - NanoServerSac2016_amd64
       - NanoServer1709_amd64
       - NanoServer1803_amd64

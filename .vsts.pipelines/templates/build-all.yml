@@ -12,6 +12,9 @@ parameters:
   matrixLinuxArm32v7:
     Build_2_1:
       buildPath: 2.1*
+  matrixLinuxArm64:
+    Build_2_2:
+      buildPath: 2.2*
   matrixWindowsSac2016Amd64:
     Build_1_*:
       buildPath: 1.*
@@ -47,6 +50,11 @@ phases:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}
       matrix: ${{ parameters.matrixLinuxArm32v7 }}
+  - template: build-linux-arm64.yml
+    parameters:
+      imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
+      manifest: ${{ parameters.manifest }}
+      matrix: ${{ parameters.matrixLinuxArm64 }}
   - template: build-windows-amd64.yml
     parameters:
       phase: NanoServerSac2016_amd64

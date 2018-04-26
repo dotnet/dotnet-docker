@@ -40,6 +40,8 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm", IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, Architecture = "arm", IsWeb = true },
+            new ImageData { DotNetVersion = "2.2", OsVariant = OS.StretchSlim, HasNoSdk = true, Architecture = "arm64" },
+            new ImageData { DotNetVersion = "2.2", OsVariant = OS.Bionic, HasNoSdk = true, Architecture = "arm64" },
         };
         private static readonly ImageData[] s_windowsTestData =
         {

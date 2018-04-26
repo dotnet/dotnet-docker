@@ -683,6 +683,58 @@
               "variant": "v7"
             }
           ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "2.2/runtime-deps/bionic/arm64v8",
+              "os": "linux",
+              "tags": {
+                "2.2.0-rc1-runtime-deps-bionic-arm64v8": {},
+                "2.2-runtime-deps-bionic-arm64v8": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "2.2/runtime/bionic/arm64v8",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-runtime-bionic-arm64v8": {},
+                "2.2-runtime-bionic-arm64v8": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "2.2/runtime-deps/stretch-slim/arm64v8",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-runtime-deps-stretch-slim-arm64v8": {},
+                "2.2-runtime-deps-stretch-slim-arm64v8": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "2.2/runtime/stretch-slim/arm64v8",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-runtime-stretch-slim-arm64v8": {},
+                "2.2-runtime-stretch-slim-arm64v8": {}
+              }
+            }
+          ]
         }
       ]
     }
