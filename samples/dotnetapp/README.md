@@ -107,7 +107,7 @@ You can produce an application that is ready to deploy to production locally usi
 dotnet publish -c release -o out
 ```
 
-You can run the application using the following command.
+You can run the published application using the following command. You can copy and run in on another machine with .NET Core 2.0 installed.
 
 ```console
 cd out
@@ -116,7 +116,7 @@ dotnet dotnetapp.dll
 
 Note: The `-c release` argument builds the application in release mode (the default is debug mode). See the [dotnet run reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-run) for more information on commandline parameters.
 
-## .NET Core Resources
+## .NET Resources
 
 More Samples
 
