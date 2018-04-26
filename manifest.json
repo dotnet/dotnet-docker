@@ -398,6 +398,16 @@
               }
             },
             {
+              "architecture": "arm",
+              "dockerfile": "2.1/aspnetcore-runtime/stretch-slim/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.1.0-rc1-aspnetcore-runtime-stretch-slim-arm32v7": {},
+                "2.1-aspnetcore-runtime-stretch-slim-arm32v7": {}
+              },
+              "variant": "armv7"
+            },
+            {
               "dockerfile": "2.1/aspnetcore-runtime/nanoserver-sac2016/amd64",
               "os": "windows",
               "tags": {
@@ -574,6 +584,19 @@
                 "2.1-runtime-deps-bionic-arm32v7": {}
               },
               "variant": "armv7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm",
+              "dockerfile": "2.1/aspnetcore-runtime/bionic/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.1.0-rc1-aspnetcore-runtime-bionic-arm32v7": {},
+                "2.1-aspnetcore-runtime-bionic-arm32v7": {}
+              }
             }
           ]
         },

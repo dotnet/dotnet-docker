@@ -60,6 +60,8 @@ $(TagDoc:2.0.7-runtime-deps-stretch-arm32v7)
 
 $(TagDoc:2.1.300-rc1-sdk-stretch-arm32v7)
 $(TagDoc:2.1.300-rc1-sdk-bionic-arm32v7)
+$(TagDoc:2.1.0-rc1-aspnetcore-runtime-stretch-slim-arm32v7)
+$(TagDoc:2.1.0-rc1-aspnetcore-runtime-bionic-arm32v7)
 $(TagDoc:2.1.0-rc1-runtime-stretch-slim-arm32v7)
 $(TagDoc:2.1.0-rc1-runtime-bionic-arm32v7)
 $(TagDoc:2.1.0-rc1-runtime-deps-stretch-slim-arm32v7)
