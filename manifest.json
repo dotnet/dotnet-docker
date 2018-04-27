@@ -175,7 +175,7 @@
                   "isUndocumented": true
                 }
               },
-              "variant": "armv7"
+              "variant": "v7"
             }
           ]
         },
@@ -206,7 +206,7 @@
                   "isUndocumented": true
                 }
               },
-              "variant": "armv7"
+              "variant": "v7"
             },
             {
               "dockerfile": "2.0/runtime/nanoserver-sac2016/amd64",
@@ -336,7 +336,7 @@
                 "2.1.0-rc1-runtime-deps-stretch-slim-arm32v7": {},
                 "2.1-runtime-deps-stretch-slim-arm32v7": {}
               },
-              "variant": "armv7"
+              "variant": "v7"
             }
           ]
         },
@@ -362,7 +362,7 @@
                 "2.1.0-rc1-runtime-stretch-slim-arm32v7": {},
                 "2.1-runtime-stretch-slim-arm32v7": {}
               },
-              "variant": "armv7"
+              "variant": "v7"
             },
             {
               "dockerfile": "2.1/runtime/nanoserver-sac2016/amd64",
@@ -405,7 +405,7 @@
                 "2.1.0-rc1-aspnetcore-runtime-stretch-slim-arm32v7": {},
                 "2.1-aspnetcore-runtime-stretch-slim-arm32v7": {}
               },
-              "variant": "armv7"
+              "variant": "v7"
             },
             {
               "dockerfile": "2.1/aspnetcore-runtime/nanoserver-sac2016/amd64",
@@ -448,7 +448,7 @@
                 "2.1.300-rc1-sdk-stretch-arm32v7": {},
                 "2.1-sdk-stretch-arm32v7": {}
               },
-              "variant": "armv7"
+              "variant": "v7"
             },
             {
               "dockerfile": "2.1/sdk/nanoserver-sac2016/amd64",
@@ -583,7 +583,7 @@
                 "2.1.0-rc1-runtime-deps-bionic-arm32v7": {},
                 "2.1-runtime-deps-bionic-arm32v7": {}
               },
-              "variant": "armv7"
+              "variant": "v7"
             }
           ]
         },
@@ -610,7 +610,7 @@
                 "2.1.0-rc1-runtime-bionic-arm32v7": {},
                 "2.1-runtime-bionic-arm32v7": {}
               },
-              "variant": "armv7"
+              "variant": "v7"
             }
           ]
         },
@@ -624,7 +624,7 @@
                 "2.1.300-rc1-sdk-bionic-arm32v7": {},
                 "2.1-sdk-bionic-arm32v7": {}
               },
-              "variant": "armv7"
+              "variant": "v7"
             }
           ]
         }
