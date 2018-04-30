@@ -101,13 +101,13 @@ cd dotnetapp
 dotnet run Hello .NET Core
 ```
 
-You can produce an application that is ready to deploy to production locally using the following command.
+You can produce an application that is ready to deploy to production using the following command.
 
 ```console
 dotnet publish -c release -o out
 ```
 
-You can run the published application using the following command. You can copy and run in on another machine with .NET Core 2.0 installed.
+You can run the published application using the following command:
 
 ```console
 cd out
