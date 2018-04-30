@@ -12,7 +12,7 @@ cd aspnetapp
 docker build --pull -t aspnetapp -f Dockerfile .
 ```
 
-For Windows containers, you will need to build with a Dockerfile that uses a Windows Server 2016 images. Use the following instructions for Windows containers:
+For Windows containers, you will need to build with a [Dockerfile](Dockerfile.nanoserver-sac2016) that uses a Windows Server 2016 image. Use the following instructions for Windows containers:
 
 ```console
 cd samples
@@ -76,6 +76,8 @@ You can deploy Windows images with the following command, which includes `--os-t
 ```console
 az acr credential show -n richlander --query passwords[0].value --output tsv --os-type Windows
 ```
+
+> Note: Azure Container Instances only supports Windows Server 2016 Nano Server and Server Core images, not Windows Server, version 1709 or later.
 
 ## Running the Image
 

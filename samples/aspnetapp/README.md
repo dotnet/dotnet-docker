@@ -16,7 +16,7 @@ Type the following command to run a sample with [Docker](https://www.docker.com/
 docker run --name aspnetcore_sample --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
 ```
 
-After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in the [View the ASP.NET Core app in a running container on Windows](#view-the-aspnet-core-app-in-a-running-container-on-windows) section.
+After the application starts, navigate to `http://localhost:8000` in your web browser. On earlier versions of Windows 10 and Windows Server, you need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in the [View the ASP.NET Core app in a running container on Windows](#view-the-aspnet-core-app-in-a-running-container-on-windows) section.
 
 ## Getting the sample
 
@@ -56,7 +56,9 @@ Note: The `-p` argument maps port 8000 on your local machine to port 80 in the c
 Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
 * [Multi-arch sample](Dockerfile)
-* [Linux ARM32 (Raspberry Pi) sample](Dockerfile.debian-arm32)
+* [Nanoserver 2016 SAC sample](Dockerfile.nanoserver-sac2016)
+* [Alpine sample](Dockerfile.alpine-x64)
+* [Debian ARM32 (Raspberry Pi) sample](Dockerfile.debian-arm32)
 
 ### View the ASP.NET Core app in a running container on Windows
 
@@ -94,13 +96,26 @@ C:\git\dotnet-docker\samples\aspnetapp>docker inspect -f "{{ .NetworkSettings.Ne
 
 ## Deploying to Production vs Development
 
-The approach for running containers differs between development and production. 
+The approach for running containers differs between development and production.
 
 In production, you will typically start your container with `docker run -d`. This argument starts the container as a service, without any console interaction. You then interact with it through other Docker commands or APIs exposed by the containerized application.
 
 In development, you will typically start containers with `docker run --rm -it`. These arguments enable you to see a console (important when there are errors), terminate the container with `CTRL-C` and cleans up all container resources when the container is termiantes. You also typically don't mind blocking the console. This approach is demonstrated in prior examples in this document.
 
 We recommend that you do not use `--rm` in production. It cleans up container resources, preventing you from collecting logs that may have been captured in a container that has either stopped or crashed.
+
+## Build and run the sample for Alpine X64 with Docker
+
+You can build and run the sample for Alpine using the following instructions. Make sure Docker is set to Linux containers if you are on Windows.
+
+```console
+cd samples
+cd aspnetapp
+docker build --pull -t aspnetapp -f Dockerfile.alpine-x64 .
+docker run --name aspnetcore_sample --rm -it -p 8000:80 aspnetapp
+```
+
+After the application starts, navigate to `http://localhost:8000` in your web browser.
 
 ## Build and run the sample for Linux ARM32 with Docker
 
