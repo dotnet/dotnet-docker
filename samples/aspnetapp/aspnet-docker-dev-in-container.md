@@ -48,8 +48,6 @@ Navigate to the site at `http://localhost:8000` in your browser. You can use CTR
 
 **Windows** using **Windows containers**
 
-`dotnet watch run` is not working correctly in containers at this time. The instructions are still documented while we work on enabling this scenario.
-
 ```console
 docker run --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ -w \app\aspnetapp --name aspnetappsample microsoft/dotnet:2.1-sdk dotnet watch run
 ```
