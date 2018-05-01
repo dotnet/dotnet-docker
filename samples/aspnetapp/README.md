@@ -157,7 +157,7 @@ Note: The `-c release` argument builds the application in release mode (the defa
 More Samples
 
 * [.NET Core Docker Samples](../README.md)
-* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)
 
 Docs and More Information:
 
@@ -179,5 +179,4 @@ Docs and More Information:
 
 * [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
 * [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images.
-* [microsoft/dotnet-framework-build](https://hub.docker.com/r/microsoft/dotnet-framework-build/) for building .NET Framework applications with Docker.
 * [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework and ASP.NET sample images.

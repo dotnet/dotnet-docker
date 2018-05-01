@@ -74,7 +74,7 @@ az container create --name aspnetapp --image richlander.azurecr.io/aspnetapp --r
 You can deploy Windows images with the following command, which includes `--os-type Windows`:
 
 ```console
-az acr credential show -n richlander --query passwords[0].value --output tsv --os-type Windows
+az container create --name aspnetapp --image richlander.azurecr.io/aspnetapp --resource-group richlander-containers --ip-address public --os-type Windows
 ```
 
 > Note: Azure Container Instances only supports Windows Server 2016 Nano Server and Server Core images, not Windows Server, version 1709 or later.

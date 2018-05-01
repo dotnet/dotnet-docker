@@ -8,12 +8,12 @@ This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker
 
 ## Try a pre-built .NET Core Docker Image
 
-You can quickly try a pre-built [sample .NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this sample.
+You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on the [.NET Core console sample](dotnetapp/README.md).
 
-Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
+Type the following [Docker](https://www.docker.com/products/docker) command:
 
 ```console
-docker run --rm -it microsoft/dotnet-samples
+docker run --rm microsoft/dotnet-samples
 ```
 
 ## Getting the sample
@@ -80,7 +80,7 @@ You can build and run the sample for ARM32 and Raspberry Pi with [Build .NET Cor
 
 You can build [Build .NET Core Self-Contained Applications with Docker](dotnet-docker-selfcontained.md).
 
-## Develop ASP.NET Core Applications in a container
+## Develop .NET Core Applications in a container
 
 You can develop applications without a .NET Core installation on your machine with the [Develop .NET Core applications in a container](dotnet-docker-dev-in-container.md) instructions. These instructions are also useful if your development and production environments do not match.
 
@@ -121,7 +121,7 @@ Note: The `-c release` argument builds the application in release mode (the defa
 More Samples
 
 * [.NET Core Docker Samples](../README.md)
-* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)
 
 Docs and More Information:
 
@@ -143,5 +143,4 @@ Docs and More Information:
 
 * [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
 * [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images.
-* [microsoft/dotnet-framework-build](https://hub.docker.com/r/microsoft/dotnet-framework-build/) for building .NET Framework applications with Docker.
 * [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework and ASP.NET sample images.

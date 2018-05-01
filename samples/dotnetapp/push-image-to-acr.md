@@ -96,7 +96,7 @@ First, `docker login` to ACR before you can pull the image from another device, 
 
 Update the path locations, registry, and user names to the ones you are using.
 
-Now pull and run the image:
+Now pull and run the image (the first command isn't strictly necessary):
 
 ```console
 docker pull richlander.azurecr.io/dotnetapp
