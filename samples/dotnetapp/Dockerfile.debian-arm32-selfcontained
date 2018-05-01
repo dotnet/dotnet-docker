@@ -1,4 +1,4 @@
-FROM microsoft/dotnet-nightly:2.1-sdk AS build
+FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -30,7 +30,7 @@ RUN dotnet add package ILLink.Tasks -v 0.1.4-preview-981901 -s https://dotnet.my
 RUN dotnet publish -c Release -r linux-arm -o out /p:ShowLinkerSizeComparison=true
 
 
-FROM microsoft/dotnet-nightly:2.1-runtime-deps-stretch-arm32v7 AS runtime
+FROM microsoft/dotnet:2.1-runtime-deps-stretch-arm32v7 AS runtime
 WORKDIR /app
 COPY --from=publish /app/dotnetapp/out ./
 ENTRYPOINT ["./dotnetapp"]
