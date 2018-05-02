@@ -14,7 +14,7 @@ WORKDIR /app/dotnetapp
 RUN dotnet publish -c Release -o out
 
 
-FROM microsoft/dotnet-nightly:2-1-runtime AS runtime
+FROM microsoft/dotnet-nightly:2.1-runtime AS runtime
 WORKDIR /app
 COPY --from=build /app/dotnetapp/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
