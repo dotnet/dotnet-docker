@@ -14,16 +14,6 @@ WORKDIR /app/dotnetapp
 RUN dotnet build
 
 
-FROM build AS testrunner
-WORKDIR /app/tests
-ENTRYPOINT ["dotnet", "test", "--logger:trx"]
-
-
-FROM build AS test
-WORKDIR /app/tests
-RUN dotnet test
-
-
 FROM build AS publish
 WORKDIR /app/dotnetapp
 RUN dotnet add package ILLink.Tasks -v 0.1.4-preview-981901 -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
