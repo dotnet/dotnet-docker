@@ -9,7 +9,7 @@ RUN dotnet restore
 # copy everything else and build app
 COPY aspnetapp/. ./aspnetapp/
 WORKDIR /app/aspnetapp
-RUN dotnet publish -o out
+RUN dotnet publish -c release -o out
 
 
 FROM microsoft/aspnetcore:2.0 AS runtime

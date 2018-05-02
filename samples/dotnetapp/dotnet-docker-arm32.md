@@ -10,20 +10,22 @@ Please see [.NET Core and Docker for ARM64](dotnet-docker-arm64.md) if you are i
 
 ## Building .NET Core Samples with Docker
 
-You can build the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures.
+You can build almost the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures. At present, the primary difference is that most .NET Core Docker file samples use .NET Core 2.0 multi-arch tags, and those don't yet offer `linux/arm` manifests. Starting with .NET Core 2.1, multi-arch tags support Linux ARM32 and are usable on ARM32 devices.
 
 For example, the following instructions will work on an ARM32 device. The instructions assume that you are in the root of this repository.
 
 ```console
 cd samples
 cd dotnetapp
-docker build --pull -t dotnetapp .
+docker build --pull -t dotnetapp -f Dockerfile.latest .
 docker run --rm dotnetapp
 ```
 
+Another option is to build ARM32 Docker images on an X64 machine. You can do by using the same pattern used in the [Dockerfile.debian-arm32-selfcontained](Dockerfile.debian-arm32-selfcontained) dockerfile. It uses a multi-arch tag for building with the SDK and then an ARM32-specific tag for creating a runtime image. Since it doesn't run code in the runtime image, it is possible to build the image on another architecture.
+
 ## Building Self-contained Applications for ARM32
 
-You can [Build .NET Core Self-Contained Applications with Docker](dotnet-docker-selfcontained.md) for an ARM32 deployment using this [sample](Dockerfile.debian-arm32-selfcontained).
+You can [Build .NET Core Self-Contained Applications with Docker](dotnet-docker-selfcontained.md) for an ARM32 deployment using this [Dockerfile](Dockerfile.debian-arm32-selfcontained).
 
 The instructions assume that you are in the root of this repository.
 
@@ -36,7 +38,7 @@ docker run --rm dotnetapp
 
 ## Pushing the image to a Container Registry
 
-Push the image to a container registry after building the image so that you can pull it from an ARM32 device. Instructions are provided for pushing to both Azure Container Registry and DockerHub (you only need to choose one):
+Push the image to a container registry after building the image so that you can pull it from another ARM32 device. You can also build an ARM32 image on an X64 machine, push to a registry and then pull from an ARM32 device. Instructions are provided for pushing to both Azure Container Registry and DockerHub (you only need to choose one):
 
 * [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
 * [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
