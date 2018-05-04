@@ -2,13 +2,13 @@ FROM microsoft/dotnet:2.0-sdk AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
-COPY *.sln .
 COPY dotnetapp/*.csproj ./dotnetapp/
 COPY utils/*.csproj ./utils/
-COPY tests/*.csproj ./tests/
-RUN dotnet restore
+WORKDIR /app/dotnetapp
+RUN dotnet restore 
 
 # copy and build everything else
+WORKDIR /app
 COPY . .
 WORKDIR /app/dotnetapp
 RUN dotnet publish -c Release -o out
