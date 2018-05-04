@@ -4,24 +4,24 @@ You can use .NET Core and Docker together on [ARM32](https://en.wikipedia.org/wi
 
 > Note: that Docker refers to ARM32 as `armhf` in documentation and other places.
 
-Please see [.NET Core and Docker for ARM64](dotnet-docker-arm64.md) if you are interested in [ARM64](https://en.wikipedia.org/wiki/ARM64) usage.
+See [.NET Core and Docker for ARM64](dotnet-docker-arm64.md) if you are interested in [ARM64](https://en.wikipedia.org/wiki/ARM64) usage.
 
 > Note: .NET Core can be be used with devices that use [ARMv7](https://en.wikipedia.org/wiki/ARMv7) and [ARMv8](https://en.wikipedia.org/wiki/ARMv8) chips, for example [Raspberry Pi2](https://www.raspberrypi.org/products/raspberry-pi-2-model-b/) and [Raspberry Pi3](https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/), respectively. .NET Core does not support [ARMv6 / ARM11](https://en.wikipedia.org/wiki/ARM11) devices, for example [Raspberry Pi Zero](https://www.raspberrypi.org/products/raspberry-pi-zero/).
 
 ## Building .NET Core Samples with Docker
 
-You can build almost the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures. At present, the primary difference is that most .NET Core Docker file samples use .NET Core 2.0 multi-arch tags, and those don't yet offer `linux/arm` manifests. Starting with .NET Core 2.1, multi-arch tags support Linux ARM32 and are usable on ARM32 devices.
+You can build almost the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures. At present, the primary difference is that most .NET Core Docker file samples use the .NET Core 2.0 SDK multi-arch tags, and those don't offer `linux/arm` manifests. Starting with .NET Core 2.1, both .NET Core Runtime and SDK multi-arch tags support Linux ARM32 and are usable on ARM32 devices. [Dockerfile.preview](Dockerfile.preview) and [Dockerfile.preview](Dockerfile.basic-preview) have been added to work around this issue. They use .NET Core 2.1 instead of 2.0.
 
 For example, the following instructions will work on an ARM32 device. The instructions assume that you are in the root of this repository.
 
 ```console
 cd samples
 cd dotnetapp
-docker build --pull -t dotnetapp -f Dockerfile.latest .
+docker build --pull -t dotnetapp -f Dockerfile.preview .
 docker run --rm dotnetapp
 ```
 
-Another option is to build ARM32 Docker images on an X64 machine. You can do by using the same pattern used in the [Dockerfile.debian-arm32-selfcontained](Dockerfile.debian-arm32-selfcontained) dockerfile. It uses a multi-arch tag for building with the SDK and then an ARM32-specific tag for creating a runtime image. Since it doesn't run code in the runtime image, it is possible to build the image on another architecture.
+Another option is to build ARM32 Docker images on an X64 machine. You can do by using the same pattern used in the [Dockerfile.debian-arm32-selfcontained](Dockerfile.debian-arm32-selfcontained) dockerfile (demonstrated in a following section). It uses a multi-arch tag for building with the SDK and then an ARM32-specific tag for creating a runtime image. The pattern of building for other architectures only works because the Dockerfile doesn't run code in the runtime image.
 
 ## Building Self-contained Applications for ARM32
 

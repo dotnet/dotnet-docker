@@ -9,7 +9,8 @@ RUN dotnet restore
 
 # copy and build everything else
 WORKDIR /app
-COPY . .
+COPY dotnetapp/. ./dotnetapp/
+COPY utils/. ./utils/
 WORKDIR /app/dotnetapp
 RUN dotnet publish -c Release -o out
 

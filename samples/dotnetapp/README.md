@@ -49,12 +49,13 @@ You can mount a volume while running the image in order to save the test results
 Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
 * [Multi-arch sample with build and unit testing](Dockerfile)
+* [Multi-arch sample with build and unit testing, using a preview version of .NET Core](Dockerfile.preview)
 * [Multi-arch basic sample](Dockerfile.basic)
+* [Multi-arch basic sample, using a preview version of .NET Core](Dockerfile.basic-preview)
 * [Alpine x64 sample with build and unit testing](Dockerfile.alpine-x64)
 * [Alpine x64 sample, with Globalization enabled](Dockerfile.alpine-x64-globalization)
 * [Nano Server self-contained x64 sample with build and unit testing](Dockerfile.nanoserver-x64-selfcontained)
 * [Debian self-contained x64 sample with build and unit testing](Dockerfile.debian-x64-selfcontained)
-* [Debian ARM32 sample with build and unit testing](Dockerfile.debian-arm32)
 * [Debian self-contained ARM32 sample with build and unit testing](Dockerfile.debian-arm32-selfcontained)
 
 ## Build and run the sample for Alpine with Docker
@@ -72,11 +73,18 @@ docker run --rm -it dotnetapp:alpine Hello .NET Core from Alpine
 
 > Related: [.NET Core Alpine Docker Image announcement](https://github.com/dotnet/dotnet-docker-nightly/issues/500)
 
+## Build and run the sample for Ubuntu 18.04 with Docker
+
+You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/). You would switch to the following tags:
+
+* SDK: 2.1-sdk-bionic
+* Runtime:-2.1-runtime-bionic
+
 ## Build and run the sample for Linux ARM32 with Docker
 
 You can build and run the sample for ARM32 and Raspberry Pi with [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md) instructions.
 
-## ARM64 Status
+## Build and run the sample for Linux ARM64 with Docker
 
 * [.NET Core ARM64 Docker Status](dotnet-docker-arm64.md)
 

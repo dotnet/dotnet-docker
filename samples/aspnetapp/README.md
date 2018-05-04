@@ -56,13 +56,13 @@ Note: The `-p` argument maps port 8000 on your local machine to port 80 in the c
 Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
 * [Multi-arch sample](Dockerfile)
+* [Multi-arch sample, using a preview version of .NET Core](Dockerfile.preview)
 * [Nanoserver 2016 SAC sample](Dockerfile.nanoserver-sac2016)
 * [Alpine sample](Dockerfile.alpine-x64)
-* [Debian ARM32 (Raspberry Pi) sample](Dockerfile.debian-arm32)
 
 ### View the ASP.NET Core app in a running container on Windows
 
-After the application starts, navigate to the container IP (as opposed to http://localhost) in your web browser with the the following instructions:
+After the ASP.NET Core application starts, navigate to the container IP (as opposed to http://localhost) in your web browser with the the following instructions:
 
 1. Open up another command prompt.
 1. Run `docker exec aspnetcore_sample ipconfig`.
@@ -116,6 +116,13 @@ docker run --name aspnetcore_sample --rm -it -p 8000:80 aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser.
+
+## Build and run the sample for Ubuntu 18.04 with Docker
+
+You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/). You would switch to the following tags:
+
+* SDK: 2.1-sdk-bionic
+* Runtime:-2.1-aspnetcore-runtime-bionic
 
 ## Build and run the sample for Linux ARM32 with Docker
 

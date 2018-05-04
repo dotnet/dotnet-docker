@@ -4,22 +4,22 @@ You can use ASP.NET Core and Docker together on [ARM32](https://en.wikipedia.org
 
 > Note: that Docker refers to ARM32 as `armhf` in documentation and other places.
 
-Please see [.NET Core and Docker for ARM64](dotnet-docker-arm64.md) if you are interested in [ARM64](https://en.wikipedia.org/wiki/ARM64) usage.
+See [.NET Core and Docker for ARM64](dotnet-docker-arm64.md) if you are interested in [ARM64](https://en.wikipedia.org/wiki/ARM64) usage.
 
 ## Building .NET Core Samples with Docker
 
-You can build almost the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures. At present, the primary difference is that most .NET Core Docker file samples use .NET Core 2.0 multi-arch tags, and those don't yet offer `linux/arm` manifests. Starting with .NET Core 2.1, multi-arch tags support Linux ARM32 and are usable on ARM32 devices.
+You can build almost the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures. At present, the primary difference is that most .NET Core Docker file samples use the .NET Core 2.0 SDK multi-arch tags, and those don't offer `linux/arm` manifests. Starting with .NET Core 2.1, both .NET Core Runtime and SDK multi-arch tags support Linux ARM32 and are usable on ARM32 devices. [Dockerfile.preview](Dockerfile.preview) has been added to work around this issue. It uses .NET Core 2.1 instead of 2.0.
 
 For example, the following instructions will work on an ARM32 device. The instructions assume that you are in the root of this repository.
 
 ```console
 cd samples
 cd aspnetapp
-docker build --pull -t aspnetapp -f Dockerfile.latest .
+docker build --pull -t aspnetapp -f Dockerfile.preview .
 docker run --rm -it -p 8000:80 aspnetapp
 ```
 
-Another option is to build ARM32 Docker images on an X64 machine. You can do by using the same pattern used in the [Dockerfile.debian-arm32-selfcontained](../dotnetapp/Dockerfile.debian-arm32-selfcontained) dockerfile. It uses a multi-arch tag for building with the SDK and then an ARM32-specific tag for creating a runtime image. Since it doesn't run code in the runtime image, it is possible to build the image on another architecture.
+Another option is to build ARM32 Docker images on an X64 machine. You can do by using the same pattern used in the [Dockerfile.debian-arm32-selfcontained](../dotnetapp/Dockerfile.debian-arm32-selfcontained) dockerfile. It uses a multi-arch tag for building with the SDK and then an ARM32-specific tag for creating a runtime image. The pattern of building for other architectures only works because the Dockerfile doesn't run code in the runtime image.
 
 ### Viewing the Site
 
@@ -27,6 +27,8 @@ After the application starts, visit the site one of two ways:
 
 * From the web browser on the ARM32 device at `http://localhost:8000`
 * From the web browser on another device on the same network on the ARM32 device IP on port 8000, similar to: `http://192.168.1.18:8000`
+
+You must set the `ASPNETCORE_URLS` environment variable manually ([example usage](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile#L19)) if you build the sample locally (without Docker) and want to navigate to the site from another machine.
 
 ## Pushing the image to a Container Registry
 
