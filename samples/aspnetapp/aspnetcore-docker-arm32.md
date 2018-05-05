@@ -8,6 +8,18 @@ See [Use .NET Core on Linux ARM32 with Docker](../dotnetapp/aspnetcore-docker-ar
 
 See [.NET Core and Docker for ARM64](dotnet-docker-arm64.md) if you are interested in [ARM64](https://en.wikipedia.org/wiki/ARM64) usage.
 
+## Try a pre-built ASP.NET Core Docker Image
+
+You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile).
+
+Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
+
+```console
+docker run --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
+```
+
+After the application starts, navigate to `http://localhost:8000` in your web browser and/or to the IP address (example: http://192.168.1.18:8000) of your ARM32 device on your network.
+
 ## Building .NET Core Samples with Docker
 
 You can build almost the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures. At present, the primary difference is that most .NET Core Docker file samples use the .NET Core 2.0 SDK multi-arch tags, and those don't offer `linux/arm` manifests. Starting with .NET Core 2.1, both .NET Core Runtime and SDK multi-arch tags support Linux ARM32 and are usable on ARM32 devices. [Dockerfile.preview](Dockerfile.preview) has been added to work around this issue. It uses .NET Core 2.1 instead of 2.0.
