@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-runtime-deps-alpine
+FROM microsoft/dotnet-nightly:2.1-runtime-deps-alpine3.7
 
 # Workaround https://github.com/aspnet/libuv-package/issues/23
 # Install libuv globally and link it so coreclr can laod it
@@ -6,12 +6,12 @@ RUN apk add --no-cache libuv \
     && ln -s /usr/lib/libuv.so.1 /usr/lib/libuv.so
 
 # Install ASP.NET Core
-ENV ASPNETCORE_VERSION 2.1.0-preview2-final
+ENV ASPNETCORE_VERSION 2.1.0-rc1-30678
 
 RUN apk add --no-cache --virtual .build-deps \
         openssl \
     && wget -O aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-alpine.3.6-x64.tar.gz \
-    && aspnetcore_sha512='c5c166c5f31ab0ba7393d1a1688fc1b1bc0c20856f9b7e7aa94ca9a8452db6e2584c722694cc59011b66134a74afbd6be16ec2d401694d704559bbb9f81d3e35' \
+    && aspnetcore_sha512='0b53ef74883c1753607c2e8687f98facaa26b15110de91fe0245190ecf12e7f79eaede2b48830593165033f3cc17cf70a7806e53ad093a9223bb5c1c68c9edcc' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet \

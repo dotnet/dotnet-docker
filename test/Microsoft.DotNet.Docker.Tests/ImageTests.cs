@@ -38,6 +38,8 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "2.1", IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine, IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm", IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, Architecture = "arm", IsWeb = true },
         };
         private static readonly ImageData[] s_windowsTestData =
         {
@@ -97,7 +99,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 if (!imageData.HasNoSdk)
                 {
                     VerifySdkImage_PackageCache(imageData);
-                    await VerifySdkImage_RunApp(imageData, appSdkImage);
+
+                    // TODO: Skip running app in arm + web configuration to workaround https://github.com/dotnet/cli/issues/9162
+                    if (!(imageData.IsArm && imageData.IsWeb))
+                    {
+                        await VerifySdkImage_RunApp(imageData, appSdkImage);
+                    }
                 }
 
                 await VerifyRuntimeImage_FrameworkDependentApp(imageData, appSdkImage);
@@ -194,14 +201,14 @@ namespace Microsoft.DotNet.Docker.Tests
             string frameworkDepAppId = GetIdentifier(imageData.DotNetVersion, "framework-dependent-app");
             bool isRunAsContainerAdministrator = String.Equals(
                 "nanoserver-1709", imageData.PlatformOS, StringComparison.OrdinalIgnoreCase);
-            string optionalPublishArgs = GetOptionalPublishArgs(imageData);
+            string publishCmd = GetPublishArgs(imageData);
 
             try
             {
                 // Publish the app to a Docker volume using the app's sdk image
                 _dockerHelper.Run(
                     image: appSdkImage,
-                    command: $"dotnet publish -o {DockerHelper.ContainerWorkDir} {optionalPublishArgs}",
+                    command: publishCmd,
                     containerName: frameworkDepAppId,
                     volumeName: frameworkDepAppId,
                     runAsContainerAdministrator: isRunAsContainerAdministrator);
@@ -251,11 +258,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 try
                 {
                     // Publish the self-contained app to a Docker volume using the app's sdk image
-                    string optionalPublishArgs = GetOptionalPublishArgs(imageData);
-                    string dotNetCmd = $"dotnet publish -r {rid} -o {DockerHelper.ContainerWorkDir} {optionalPublishArgs}";
+                    string publishCmd = GetPublishArgs(imageData, rid);
                     _dockerHelper.Run(
                         image: selfContainedAppId,
-                        command: dotNetCmd,
+                        command: publishCmd,
                         containerName: selfContainedAppId,
                         volumeName: selfContainedAppId);
 
@@ -379,9 +385,11 @@ namespace Microsoft.DotNet.Docker.Tests
             return $"{version}-{type}-{DateTime.Now.ToFileTime()}";
         }
 
-        private static string GetOptionalPublishArgs(ImageData imageData)
+        private static string GetPublishArgs(ImageData imageData, string rid = null)
         {
-            return imageData.DotNetVersion.StartsWith("1.") ? "" : "--no-restore";
+            string optionalArgs = imageData.DotNetVersion.StartsWith("1.") ? "" : " --no-restore";
+            optionalArgs += string.IsNullOrEmpty(rid) ? "" : $" -r {rid}";
+            return $"dotnet publish -c Release -o {DockerHelper.ContainerWorkDir}{optionalArgs}";
         }
 
         private static string GetRepoName()
@@ -402,7 +410,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             else if (imageData.IsAlpine)
             {
-                rid = "alpine.3.6-x64";
+                rid = "alpine.3.7-x64";
             }
             else if (imageData.DotNetVersion.StartsWith("1."))
             {

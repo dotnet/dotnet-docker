@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-runtime-deps-alpine
+FROM microsoft/dotnet-nightly:2.1-runtime-deps-alpine3.7
 
 # Disable the invariant mode (set in base image)
 RUN apk add --no-cache icu-libs
@@ -8,12 +8,12 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     LANG=en_US.UTF-8
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.1.300-preview2-008530
+ENV DOTNET_SDK_VERSION 2.1.300-rc1-008671
 
 RUN apk add --no-cache --virtual .build-deps \
         openssl \
-    && wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-alpine.3.6-x64.tar.gz \
-    && dotnet_sha512='2b52ab97ed874a6251ac14376049a94a10c70c2b867e38500143ba37bd8517760df72a027c6865ead1faa6504718c1384942d4bbc7842093afbe123e83f2997c' \
+    && wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
+    && dotnet_sha512='a3467ece8ad6db534e1cbe8377aa7e6d4fddfa31880c4f76e930b3b150b4e70a2bbe6ac0d0530910548e68bfae9ebde5b812de8ab500370e3be0241e4c83605a' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \
