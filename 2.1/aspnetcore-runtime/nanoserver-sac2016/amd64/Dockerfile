@@ -4,10 +4,10 @@ FROM microsoft/nanoserver:sac2016
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-ENV ASPNETCORE_VERSION 2.1.0-rc1-30678
+ENV ASPNETCORE_VERSION 2.1.0-rc1-final
 
 RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$Env:ASPNETCORE_VERSION/aspnetcore-runtime-$Env:ASPNETCORE_VERSION-win-x64.zip; `
-    $aspnetcore_sha512 = '44dbe41c035f837a683b9d5a0646ac4c8982e680b18547aa1082cf23d1f56e27eff98d9272e6d5e6d436a4d83238fbfc9a4e6e1cfe317b0be301a22192aa9926'; `
+    $aspnetcore_sha512 = '18ce3332214fdf8e68afba978c2cc35213595e2b0d70c77d5e108f939990bc6234b6fda9159e9a020db3a7fe8ed5bee2d85df5bf569314056cd495a0a06fd1c3'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
