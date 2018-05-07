@@ -11,14 +11,14 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "dockerfile": "samples/dotnetapp/Dockerfile.preview",
               "os": "linux",
               "tags": {
                 "dotnetapp-stretch": {}
               }
             },
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "dockerfile": "samples/dotnetapp/Dockerfile.preview",
               "os": "windows",
               "osVersion": "10.0.14393",
               "tags": {
@@ -26,7 +26,7 @@
               }
             },
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "dockerfile": "samples/dotnetapp/Dockerfile.preview",
               "os": "windows",
               "osVersion": "10.0.16299",
               "tags": {
@@ -35,7 +35,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile.debian-arm32",
+              "dockerfile": "samples/dotnetapp/Dockerfile.preview",
               "os": "linux",
               "tags": {
                 "dotnetapp-stretch-arm32v7": {}
@@ -49,14 +49,14 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "dockerfile": "samples/aspnetapp/Dockerfile.preview",
               "os": "linux",
               "tags": {
                 "aspnetapp-stretch": {}
               }
             },
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "dockerfile": "samples/aspnetapp/Dockerfile.preview",
               "os": "windows",
               "osVersion": "10.0.14393",
               "tags": {
@@ -64,7 +64,7 @@
               }
             },
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "dockerfile": "samples/aspnetapp/Dockerfile.preview",
               "os": "windows",
               "osVersion": "10.0.16299",
               "tags": {
@@ -73,7 +73,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile.debian-arm32",
+              "dockerfile": "samples/aspnetapp/Dockerfile.preview",
               "os": "linux",
               "tags": {
                 "aspnetapp-stretch-arm32v7": {}
