@@ -1,58 +1,59 @@
-# Build .NET Core Applications for ARM32 and Raspberry Pi with Docker
+# Use .NET Core and Docker on ARM32 and Raspberry Pi
 
-You can build and run .NET Core apps with [Docker for Raspberry Pi and ARM32 devices](https://docs.docker.com/install/linux/docker-ce/debian), generally. These instructions are based on the [.NET Core Docker Sample](README.md).
+You can use .NET Core and Docker together on [ARM32](https://en.wikipedia.org/wiki/ARM_architecture) devices, with [Docker for Raspberry Pi and ARM32 devices](https://docs.docker.com/install/linux/docker-ce/debian).
 
 > Note: that Docker refers to ARM32 as `armhf` in documentation and other places.
 
-## Building the Sample with Docker
+See [Use ASP.NET Core on Linux ARM32 with Docker](../aspnetapp/aspnetcore-docker-arm32.md) for ASP.NET Core apps.
 
-This [sample](Dockerfile.debian-arm32) must be built on a 64-bit operating system, as the .NET Core SDK is not currently supported on ARM32. The instructions assume that you are in the root of the repository.
+See [.NET Core and Docker for ARM64](dotnet-docker-arm64.md) if you are interested in [ARM64](https://en.wikipedia.org/wiki/ARM64) usage.
+
+> Note: .NET Core can be be used with devices that use [ARMv7](https://en.wikipedia.org/wiki/ARMv7) and [ARMv8](https://en.wikipedia.org/wiki/ARMv8) chips, for example [Raspberry Pi2](https://www.raspberrypi.org/products/raspberry-pi-2-model-b/) and [Raspberry Pi3](https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/), respectively. .NET Core does not support [ARMv6 / ARM11](https://en.wikipedia.org/wiki/ARM11) devices, for example [Raspberry Pi Zero](https://www.raspberrypi.org/products/raspberry-pi-zero/).
+
+## Try a pre-built .NET Core Docker Image
+
+You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile.basic-preview).
+
+Type the following [Docker](https://www.docker.com/products/docker) command:
+
+```console
+docker run --rm microsoft/dotnet-samples
+```
+
+## Building .NET Core Samples with Docker
+
+You can build almost the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures. At present, the primary difference is that most .NET Core Docker file samples use the .NET Core 2.0 SDK multi-arch tags, and those don't offer `linux/arm` manifests. Starting with .NET Core 2.1, both .NET Core Runtime and SDK multi-arch tags support Linux ARM32 and are usable on ARM32 devices. [Dockerfile.preview](Dockerfile.preview) and [Dockerfile.preview](Dockerfile.basic-preview) have been added to work around this issue. They use .NET Core 2.1 instead of 2.0.
+
+For example, the following instructions will work on an ARM32 device. The instructions assume that you are in the root of this repository.
 
 ```console
 cd samples
 cd dotnetapp
-docker build --pull -t dotnetapp:debian-arm32 -f Dockerfile.debian-arm32 .
+docker build --pull -t dotnetapp -f Dockerfile.preview .
+docker run --rm dotnetapp
 ```
 
-See [Build .NET Core Self-Contained Applications with Docker](dotnet-docker-selfcontained.md) to build a self-contained .NET Core ARM32 application.
+Another option is to build ARM32 Docker images on an X64 machine. You can do by using the same pattern used in the [Dockerfile.debian-arm32-selfcontained](Dockerfile.debian-arm32-selfcontained) dockerfile (demonstrated in a following section). It uses a multi-arch tag for building with the SDK and then an ARM32-specific tag for creating a runtime image. The pattern of building for other architectures only works because the Dockerfile doesn't run code in the runtime image.
 
-Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
+## Building Self-contained Applications for ARM32
 
-* [Debian ARM32 sample with build and unit testing](Dockerfile.debian-arm32)
-* [Debian self-contained ARM32 sample with build and unit testing](Dockerfile.debian-arm32-selfcontained)
+You can [Build .NET Core Self-Contained Applications with Docker](dotnet-docker-selfcontained.md) for an ARM32 deployment using this [Dockerfile](Dockerfile.debian-arm32-selfcontained).
+
+The instructions assume that you are in the root of this repository.
+
+```console
+cd samples
+cd dotnetapp
+docker build --pull -t dotnetapp -f Dockerfile.debian-arm32-selfcontained .
+docker run --rm dotnetapp
+```
 
 ## Pushing the image to a Container Registry
 
-Push the image to a container registry after building the image so that you can pull it from an ARM32 device. Instructions are provided for pushing to both Azure Container Registry and DockerHub (you only need to choose one):
+Push the image to a container registry after building the image so that you can pull it from another ARM32 device. You can also build an ARM32 image on an X64 machine, push to a registry and then pull from an ARM32 device. Instructions are provided for pushing to both Azure Container Registry and DockerHub (you only need to choose one):
 
 * [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
 * [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
-
-## Pull the Image from Another Device
-
-Next, pull the image on an ARM32 device (like a Pi) from the recently pushed registry.
-
-> Note: Change the password location and the user account ("rich" and "richlander") example values in your environment.
-
-### Using Azure Container Registry (ACR)
-
-Now pull and run the image from Azure Container Registry if you used that registry:
-
-```console
-docker pull richlander.azurecr.io/dotnetapp:debian-arm32
-docker run --rm richlander.azurecr.io/dotnetapp:debian-arm32
-```
-
-First `docker login` to Azure Container Registry. For more information, see [Push Docker Images to Azure Container Registry](push-image-to-acr.md).
-
-### Using DockerHub
-
-Now pull and run the image from DockerHub if you used that registry:
-
-```console
-docker pull richlander/dotnetapp:debian-arm32
-docker run --rm richlander/dotnetapp:debian-arm32
-```
 
 ## More Samples
 

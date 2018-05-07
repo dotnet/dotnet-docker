@@ -8,12 +8,12 @@ This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker
 
 ## Try a pre-built .NET Core Docker Image
 
-You can quickly try a pre-built [sample .NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this sample.
+You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile).
 
-Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
+Type the following [Docker](https://www.docker.com/products/docker) command:
 
 ```console
-docker run --rm -it microsoft/dotnet-samples
+docker run --rm microsoft/dotnet-samples
 ```
 
 ## Getting the sample
@@ -49,12 +49,13 @@ You can mount a volume while running the image in order to save the test results
 Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
 * [Multi-arch sample with build and unit testing](Dockerfile)
+* [Multi-arch sample with build and unit testing, using a preview version of .NET Core](Dockerfile.preview)
 * [Multi-arch basic sample](Dockerfile.basic)
+* [Multi-arch basic sample, using a preview version of .NET Core](Dockerfile.basic-preview)
 * [Alpine x64 sample with build and unit testing](Dockerfile.alpine-x64)
 * [Alpine x64 sample, with Globalization enabled](Dockerfile.alpine-x64-globalization)
 * [Nano Server self-contained x64 sample with build and unit testing](Dockerfile.nanoserver-x64-selfcontained)
 * [Debian self-contained x64 sample with build and unit testing](Dockerfile.debian-x64-selfcontained)
-* [Debian ARM32 sample with build and unit testing](Dockerfile.debian-arm32)
 * [Debian self-contained ARM32 sample with build and unit testing](Dockerfile.debian-arm32-selfcontained)
 
 ## Build and run the sample for Alpine with Docker
@@ -72,15 +73,26 @@ docker run --rm -it dotnetapp:alpine Hello .NET Core from Alpine
 
 > Related: [.NET Core Alpine Docker Image announcement](https://github.com/dotnet/dotnet-docker-nightly/issues/500)
 
+## Build and run the sample for Ubuntu 18.04 with Docker
+
+You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/). You would switch to the following tags:
+
+* SDK: 2.1-sdk-bionic
+* Runtime:-2.1-runtime-bionic
+
 ## Build and run the sample for Linux ARM32 with Docker
 
 You can build and run the sample for ARM32 and Raspberry Pi with [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md) instructions.
+
+## Build and run the sample for Linux ARM64 with Docker
+
+* [.NET Core ARM64 Docker Status](dotnet-docker-arm64.md)
 
 ## Build .NET Core Self-Contained Applications with Docker
 
 You can build [Build .NET Core Self-Contained Applications with Docker](dotnet-docker-selfcontained.md).
 
-## Develop ASP.NET Core Applications in a container
+## Develop .NET Core Applications in a container
 
 You can develop applications without a .NET Core installation on your machine with the [Develop .NET Core applications in a container](dotnet-docker-dev-in-container.md) instructions. These instructions are also useful if your development and production environments do not match.
 
@@ -101,27 +113,27 @@ cd dotnetapp
 dotnet run Hello .NET Core
 ```
 
-You can produce an application that is ready to deploy to production locally using the following command.
+You can produce an application that is ready to deploy to production using the following command.
 
 ```console
 dotnet publish -c release -o out
 ```
 
-You can run the application using the following command.
+You can run the published application using the following command:
 
 ```console
 cd out
 dotnet dotnetapp.dll
 ```
 
-Note: The `-c release` argument builds the application in release mode (the default is debug mode). See the [dotnet run reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-run) for more information on commandline parameters.
+Note: The `-c release` argument builds the application in release mode (the default is debug mode). See the [dotnet publish reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-publish) for more information on commandline parameters.
 
-## .NET Core Resources
+## .NET Resources
 
 More Samples
 
 * [.NET Core Docker Samples](../README.md)
-* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)
 
 Docs and More Information:
 
@@ -143,5 +155,4 @@ Docs and More Information:
 
 * [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
 * [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images.
-* [microsoft/dotnet-framework-build](https://hub.docker.com/r/microsoft/dotnet-framework-build/) for building .NET Framework applications with Docker.
 * [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework and ASP.NET sample images.

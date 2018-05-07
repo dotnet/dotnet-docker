@@ -6,7 +6,7 @@ Similar instructions are also available to [push to Azure Container Registry](pu
 
 ## Build the Image
 
-The following instructions are a subset of the [.NET Core Docker Sample](dotnetapp/README.md) instructions, which assume that you are starting from the root of the [dotnet-docker repo](https://github.com/dotnet/dotnet-docker).
+The following instructions are a subset of the [.NET Core Docker Sample](README.md) instructions, which assume that you are starting from the root of the [dotnet-docker repo](https://github.com/dotnet/dotnet-docker).
 
 ```console
 cd samples
