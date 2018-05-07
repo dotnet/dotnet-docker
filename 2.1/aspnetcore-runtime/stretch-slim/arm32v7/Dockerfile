@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-runtime-deps-stretch-slim
+FROM microsoft/dotnet:2.1-runtime-deps-stretch-slim-arm32v7
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -8,8 +8,8 @@ RUN apt-get update \
 # Install ASP.NET Core
 ENV ASPNETCORE_VERSION 2.1.0-rc1-final
 
-RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-x64.tar.gz \
-    && aspnetcore_sha512='156ab969bc533c3a64b770f2b88214f0b07d1d867922257182d496828ac3cad6d6c01ea44f2a2a1d568278bfdf916db9825452de26a1262bdc591ff19f6e4b99' \
+RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-arm.tar.gz \
+    && aspnetcore_sha512='c76690fb147b39ab8113efefd3442e40d26c3767bcd9e1c3b0692d6cb022ceb0aeb5eecd1ef38af89e3cba59adf8579347e005608b09622e10186732ecc41f47' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet \
