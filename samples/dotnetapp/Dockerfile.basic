@@ -5,7 +5,7 @@ WORKDIR /app
 COPY dotnetapp/*.csproj ./dotnetapp/
 COPY utils/*.csproj ./utils/
 WORKDIR /app/dotnetapp
-RUN dotnet restore 
+RUN dotnet restore
 
 # copy and build everything else
 WORKDIR /app/
