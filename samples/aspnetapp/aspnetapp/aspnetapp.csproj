@@ -4,18 +4,6 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove=".dockerignore" />
-    <None Remove="deploy-container-to-aci.md" />
-    <None Remove="Dockerfile" />
-    <None Remove="Dockerfile.debian-arm32" />
-    <None Remove="README.md" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
   </ItemGroup>
