@@ -1,7 +1,7 @@
 # Linux amd64 tags
 
-$(TagDoc:2.0.7-sdk-2.1.105-stretch)
-$(TagDoc:2.0.7-sdk-2.1.105-jessie)
+$(TagDoc:2.0.7-sdk-2.1.200-stretch)
+$(TagDoc:2.0.7-sdk-2.1.200-jessie)
 $(TagDoc:2.0.7-runtime-stretch)
 $(TagDoc:2.0.7-runtime-jessie)
 $(TagDoc:2.0.7-runtime-deps-stretch)
@@ -28,7 +28,7 @@ $(TagDoc:2.1.0-rc1-runtime-deps-bionic)
 
 # Windows Server, version 1709 amd64 tags
 
-$(TagDoc:2.0.7-sdk-2.1.105-nanoserver-1709)
+$(TagDoc:2.0.7-sdk-2.1.200-nanoserver-1709)
 $(TagDoc:2.0.7-runtime-nanoserver-1709)
 
 **.NET Core 2.1 RC1 tags**
@@ -39,7 +39,7 @@ $(TagDoc:2.1.0-rc1-runtime-nanoserver-1709)
 
 # Windows Server 2016 amd64 tags
 
-$(TagDoc:2.0.7-sdk-2.1.105-nanoserver-sac2016)
+$(TagDoc:2.0.7-sdk-2.1.200-nanoserver-sac2016)
 $(TagDoc:2.0.7-runtime-nanoserver-sac2016)
 $(TagDoc:1.1.8-sdk-1.1.9-nanoserver-sac2016)
 $(TagDoc:1.1.8-runtime-nanoserver-sac2016)
