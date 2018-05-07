@@ -6,9 +6,9 @@ The samples exercise various levels of functionality. The [.NET Core Docker samp
 
 ## Try a pre-built .NET Core Docker Image
 
-You can quickly try a pre-built [sample .NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on the [.NET Core sample](dotnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on the [.NET Core console sample](dotnetapp/README.md).
 
-Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
+Type the following [Docker](https://www.docker.com/products/docker) command:
 
 ```console
 docker run --rm microsoft/dotnet-samples
@@ -40,11 +40,15 @@ docker run --rm microsoft/dotnet-samples
 * [.NET Core ARM32 Docker Sample](dotnetapp/dotnet-docker-arm32.md) - This [sample](dotnetapp/Dockerfile.debian-arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
 * [ASP.NET Core ARM32 Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile.debian-arm32) builds and runs an ASP.NET Core application with Debian on ARM32 (works on Raspberry Pi).
 
+## ARM64
+
+* [.NET Core ARM64 Docker Status](dotnetapp/dotnet-docker-arm64.md)
+
 ## .NET Core Resources
 
 More Samples
 
-* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)
 
 Docs and More Information:
 
@@ -66,5 +70,4 @@ Docs and More Information:
 
 * [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
 * [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images.
-* [microsoft/dotnet-framework-build](https://hub.docker.com/r/microsoft/dotnet-framework-build/) for building .NET Framework applications with Docker.
 * [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework and ASP.NET sample images.

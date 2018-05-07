@@ -7,13 +7,12 @@ COPY aspnetapp/*.csproj ./aspnetapp/
 RUN dotnet restore
 
 # copy everything else and build app
-COPY . .
+COPY aspnetapp/. ./aspnetapp/
 WORKDIR /app/aspnetapp
-RUN dotnet publish -o out /p:PublishWithAspNetCoreTargetManifest="false"
+RUN dotnet publish -c release -o out
 
 
-FROM microsoft/dotnet:2.0-runtime-stretch-arm32v7 AS runtime
-ENV ASPNETCORE_URLS http://+:80
+FROM microsoft/aspnetcore:2.0-nanoserver-sac2016 AS runtime
 WORKDIR /app
 COPY --from=build /app/aspnetapp/out ./
 ENTRYPOINT ["dotnet", "aspnetapp.dll"]

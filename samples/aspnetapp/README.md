@@ -8,7 +8,7 @@ This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker
 
 ## Try a pre-built ASP.NET Core Docker Image
 
-You can quickly try a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this sample.
+You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile).
 
 Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
@@ -16,7 +16,7 @@ Type the following command to run a sample with [Docker](https://www.docker.com/
 docker run --name aspnetcore_sample --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
 ```
 
-After the application starts, navigate to `http://localhost:8000` in your web browser. You need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in the [View the ASP.NET Core app in a running container on Windows](#view-the-aspnet-core-app-in-a-running-container-on-windows) section.
+After the application starts, navigate to `http://localhost:8000` in your web browser. On earlier versions of Windows 10 and Windows Server, you need to navigate to the application via IP address instead of `localhost` for Windows containers, which is demonstrated in the [View the ASP.NET Core app in a running container on Windows](#view-the-aspnet-core-app-in-a-running-container-on-windows) section.
 
 ## Getting the sample
 
@@ -56,11 +56,13 @@ Note: The `-p` argument maps port 8000 on your local machine to port 80 in the c
 Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
 * [Multi-arch sample](Dockerfile)
-* [Linux ARM32 (Raspberry Pi) sample](Dockerfile.debian-arm32)
+* [Multi-arch sample, using a preview version of .NET Core](Dockerfile.preview)
+* [Nanoserver 2016 SAC sample](Dockerfile.nanoserver-sac2016)
+* [Alpine sample](Dockerfile.alpine-x64)
 
 ### View the ASP.NET Core app in a running container on Windows
 
-After the application starts, navigate to the container IP (as opposed to http://localhost) in your web browser with the the following instructions:
+After the ASP.NET Core application starts, navigate to the container IP (as opposed to http://localhost) in your web browser with the the following instructions:
 
 1. Open up another command prompt.
 1. Run `docker exec aspnetcore_sample ipconfig`.
@@ -94,13 +96,33 @@ C:\git\dotnet-docker\samples\aspnetapp>docker inspect -f "{{ .NetworkSettings.Ne
 
 ## Deploying to Production vs Development
 
-The approach for running containers differs between development and production. 
+The approach for running containers differs between development and production.
 
 In production, you will typically start your container with `docker run -d`. This argument starts the container as a service, without any console interaction. You then interact with it through other Docker commands or APIs exposed by the containerized application.
 
 In development, you will typically start containers with `docker run --rm -it`. These arguments enable you to see a console (important when there are errors), terminate the container with `CTRL-C` and cleans up all container resources when the container is termiantes. You also typically don't mind blocking the console. This approach is demonstrated in prior examples in this document.
 
 We recommend that you do not use `--rm` in production. It cleans up container resources, preventing you from collecting logs that may have been captured in a container that has either stopped or crashed.
+
+## Build and run the sample for Alpine X64 with Docker
+
+You can build and run the sample for Alpine using the following instructions. Make sure Docker is set to Linux containers if you are on Windows.
+
+```console
+cd samples
+cd aspnetapp
+docker build --pull -t aspnetapp -f Dockerfile.alpine-x64 .
+docker run --name aspnetcore_sample --rm -it -p 8000:80 aspnetapp
+```
+
+After the application starts, navigate to `http://localhost:8000` in your web browser.
+
+## Build and run the sample for Ubuntu 18.04 with Docker
+
+You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/). You would switch to the following tags:
+
+* SDK: 2.1-sdk-bionic
+* Runtime:-2.1-aspnetcore-runtime-bionic
 
 ## Build and run the sample for Linux ARM32 with Docker
 
@@ -135,14 +157,14 @@ cd out
 dotnet aspnetapp.dll
 ```
 
-Note: The `-c release` argument builds the application in release mode (the default is debug mode). See the [dotnet run reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-run) for more information on commandline parameters.
+Note: The `-c release` argument builds the application in release mode (the default is debug mode). See the [dotnet publish reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-publish) for more information on commandline parameters.
 
 ## .NET Core Resources
 
 More Samples
 
 * [.NET Core Docker Samples](../README.md)
-* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)
 
 Docs and More Information:
 
@@ -164,5 +186,4 @@ Docs and More Information:
 
 * [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
 * [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images.
-* [microsoft/dotnet-framework-build](https://hub.docker.com/r/microsoft/dotnet-framework-build/) for building .NET Framework applications with Docker.
 * [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework and ASP.NET sample images.

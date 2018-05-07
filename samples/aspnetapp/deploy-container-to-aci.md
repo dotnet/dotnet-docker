@@ -12,6 +12,16 @@ cd aspnetapp
 docker build --pull -t aspnetapp -f Dockerfile .
 ```
 
+For Windows containers, you will need to build with a [Dockerfile](Dockerfile.nanoserver-sac2016) that uses a Windows Server 2016 image. Use the following instructions for Windows containers:
+
+```console
+cd samples
+cd aspnetapp
+docker build --pull -t aspnetapp -f Dockerfile.nanoserver-sac2016 .
+```
+
+Windows server, version 1709 and later versions are not yet supported in ACI.
+
 ## Create ACR Registry
 
 Create an ACR registry per the instructions at [Push Docker Images to Azure Container Registry](../dotnetapp/push-image-to-acr.md). The following is a summarized version of those instructions.
@@ -49,17 +59,25 @@ docker push richlander.azurecr.io/aspnetapp
 
 ## Deploy Image to Azure Container Instance (ACI)
 
-```console
-az container create --name aspnetapp --image richlander.azurecr.io/aspnetapp --resource-group richlander-containers --ip-address public
-```
-
-Specify `--os-type Windows` for Windows images. Windows Server, version 1709 images are not yet supported.
-
 During deployment, you'll need to enter your password. Type or copy/paste it in. Get your password beforehand from the following command:
 
 ```console
 az acr credential show -n richlander --query passwords[0].value --output tsv
 ```
+
+You can deploy Linux images with the following command:
+
+```console
+az container create --name aspnetapp --image richlander.azurecr.io/aspnetapp --resource-group richlander-containers --ip-address public
+```
+
+You can deploy Windows images with the following command, which includes `--os-type Windows`:
+
+```console
+az container create --name aspnetapp --image richlander.azurecr.io/aspnetapp --resource-group richlander-containers --ip-address public --os-type Windows
+```
+
+> Note: Azure Container Instances only supports Windows Server 2016 Nano Server and Server Core images, not Windows Server, version 1709 or later.
 
 ## Running the Image
 
