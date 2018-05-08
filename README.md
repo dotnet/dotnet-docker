@@ -35,8 +35,8 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 # Linux amd64 tags
 
-- [`2.0.7-sdk-2.1.105-stretch`, `2.0-sdk-stretch`, `2.0.7-sdk-2.1.105`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/stretch/amd64/Dockerfile)
-- [`2.0.7-sdk-2.1.105-jessie`, `2.0-sdk-jessie`, `2-sdk-jessie` (*2.0/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/jessie/amd64/Dockerfile)
+- [`2.0.7-sdk-2.1.200-stretch`, `2.0-sdk-stretch`, `2.0.7-sdk-2.1.200`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/stretch/amd64/Dockerfile)
+- [`2.0.7-sdk-2.1.200-jessie`, `2.0-sdk-jessie`, `2-sdk-jessie` (*2.0/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/jessie/amd64/Dockerfile)
 - [`2.0.7-runtime-stretch`, `2.0-runtime-stretch`, `2.0.7-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/stretch/amd64/Dockerfile)
 - [`2.0.7-runtime-jessie`, `2.0-runtime-jessie`, `2-runtime-jessie` (*2.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/jessie/amd64/Dockerfile)
 - [`2.0.7-runtime-deps-stretch`, `2.0-runtime-deps-stretch`, `2.0.7-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/stretch/amd64/Dockerfile)
@@ -63,7 +63,7 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 # Windows Server, version 1709 amd64 tags
 
-- [`2.0.7-sdk-2.1.105-nanoserver-1709`, `2.0-sdk-nanoserver-1709`, `2.0.7-sdk-2.1.105`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-1709/amd64/Dockerfile)
+- [`2.0.7-sdk-2.1.200-nanoserver-1709`, `2.0-sdk-nanoserver-1709`, `2.0.7-sdk-2.1.200`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-1709/amd64/Dockerfile)
 - [`2.0.7-runtime-nanoserver-1709`, `2.0-runtime-nanoserver-1709`, `2.0.7-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/nanoserver-1709/amd64/Dockerfile)
 
 **.NET Core 2.1 RC1 tags**
@@ -74,7 +74,7 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 # Windows Server 2016 amd64 tags
 
-- [`2.0.7-sdk-2.1.105-nanoserver-sac2016`, `2.0-sdk-nanoserver-sac2016`, `2.0.7-sdk-2.1.105`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.0.7-sdk-2.1.200-nanoserver-sac2016`, `2.0-sdk-nanoserver-sac2016`, `2.0.7-sdk-2.1.200`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-sac2016/amd64/Dockerfile)
 - [`2.0.7-runtime-nanoserver-sac2016`, `2.0-runtime-nanoserver-sac2016`, `2.0.7-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`1.1.8-sdk-1.1.9-nanoserver-sac2016`, `1.1.8-sdk-1.1.9`, `1.1-sdk`, `1-sdk` (*1.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
 - [`1.1.8-runtime-nanoserver-sac2016`, `1.1.8-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
