@@ -20,7 +20,7 @@
             {
               "dockerfile": "samples/dotnetapp/Dockerfile.preview",
               "os": "windows",
-              "osVersion": "10.0.14393",
+              "osVersion": "sac2016",
               "tags": {
                 "dotnetapp-nanoserver-sac2016": {}
               }
@@ -28,9 +28,17 @@
             {
               "dockerfile": "samples/dotnetapp/Dockerfile.preview",
               "os": "windows",
-              "osVersion": "10.0.16299",
+              "osVersion": "1709",
               "tags": {
                 "dotnetapp-nanoserver-1709": {}
+              }
+            },
+            {
+              "dockerfile": "samples/dotnetapp/Dockerfile.preview",
+              "os": "windows",
+              "osVersion": "1803",
+              "tags": {
+                "dotnetapp-nanoserver-1803": {}
               }
             },
             {
@@ -58,7 +66,7 @@
             {
               "dockerfile": "samples/aspnetapp/Dockerfile.preview",
               "os": "windows",
-              "osVersion": "10.0.14393",
+              "osVersion": "sac2016",
               "tags": {
                 "aspnetapp-nanoserver-sac2016": {}
               }
@@ -66,9 +74,17 @@
             {
               "dockerfile": "samples/aspnetapp/Dockerfile.preview",
               "os": "windows",
-              "osVersion": "10.0.16299",
+              "osVersion": "1709",
               "tags": {
                 "aspnetapp-nanoserver-1709": {}
+              }
+            },
+            {
+              "dockerfile": "samples/aspnetapp/Dockerfile.preview",
+              "os": "windows",
+              "osVersion": "1803",
+              "tags": {
+                "aspnetapp-nanoserver-1803": {}
               }
             },
             {

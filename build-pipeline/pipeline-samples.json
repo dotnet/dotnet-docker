@@ -46,7 +46,7 @@
           "Name": "dotnet-docker-windows-sac2016-amd64-images",
           "Parameters": {
             "imageBuilder.manifest": "manifest.samples.json",
-            "PB_imageBuilder_customArgs": "--os-version 10.0.14393"
+            "PB_imageBuilder_customArgs": "--os-version sac2016"
           }
         }
       ]
@@ -61,7 +61,22 @@
           "Name": "dotnet-docker-windows-1709-amd64-images",
           "Parameters": {
             "imageBuilder.manifest": "manifest.samples.json",
-            "PB_imageBuilder_customArgs": "--os-version 10.0.16299"
+            "PB_imageBuilder_customArgs": "--os-version 1709"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Build Windows 1803 AMD64 Images",
+      "Parameters": {
+        "TreatWarningsAsErrors": "false"
+      },
+      "Definitions": [
+        {
+          "Name": "dotnet-docker-windows-1803-amd64-images",
+          "Parameters": {
+            "imageBuilder.manifest": "manifest.samples.json",
+            "PB_imageBuilder_customArgs": "--os-version 1803"
           }
         }
       ]
@@ -80,6 +95,7 @@
         }
       ],
       "DependsOn": [
+        "Build Windows 1803 AMD64 Images",
         "Build Windows 1709 AMD64 Images",
         "Build Windows sac2016 AMD64 Images",
         "Build Linux AMD64 Images",

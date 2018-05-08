@@ -32,6 +32,11 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 - [`dotnetapp-stretch`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 - [`aspnetapp-stretch`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
+# Windows Server, version 1803 amd64 tags
+
+- [`dotnetapp-nanoserver-1803`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+- [`aspnetapp-nanoserver-1803`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+
 # Windows Server, version 1709 amd64 tags
 
 - [`dotnetapp-nanoserver-1709`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
