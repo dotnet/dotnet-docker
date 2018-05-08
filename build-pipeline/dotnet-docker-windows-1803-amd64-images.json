@@ -8,15 +8,17 @@
       "timeoutInMinutes": 0,
       "condition": "succeeded()",
       "task": {
-        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "id": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
         "versionSpec": "1.*",
         "definitionType": "task"
       },
       "inputs": {
-        "filename": "docker",
-        "arguments": "system prune -a -f",
+        "scriptType": "inlineScript",
+        "scriptName": "",
+        "arguments": "",
         "workingFolder": "",
-        "failOnStandardError": "false"
+        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"microsoft/windowsservercore \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
+        "failOnStandardError": "true"
       }
     },
     {
@@ -42,7 +44,7 @@
       "enabled": true,
       "continueOnError": false,
       "alwaysRun": false,
-      "displayName": "Run image-builder",
+      "displayName": "Create container",
       "timeoutInMinutes": 0,
       "condition": "succeeded()",
       "task": {
@@ -52,7 +54,64 @@
       },
       "inputs": {
         "filename": "docker",
-        "arguments": "run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name $(imageBuilder.containerName) $(imageBuilder.imageName) $(imageBuilder.args)",
+        "arguments": "create --name $(imageBuilder.containerName) $(imageBuilder.imageName)",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Copy image-builder locally",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker ",
+        "arguments": "cp $(imageBuilder.containerName):/image-builder $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Cleanup container",
+      "timeoutInMinutes": 0,
+      "condition": "always()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "docker",
+        "arguments": "rm -f $(imageBuilder.containerName)",
+        "workingFolder": "",
+        "failOnStandardError": "false"
+      }
+    },
+    {
+      "enabled": true,
+      "continueOnError": false,
+      "alwaysRun": false,
+      "displayName": "Run image-builder",
+      "timeoutInMinutes": 0,
+      "condition": "succeeded()",
+      "task": {
+        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "versionSpec": "1.*",
+        "definitionType": "task"
+      },
+      "inputs": {
+        "filename": "$(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe",
+        "arguments": "$(imageBuilder.args)",
         "workingFolder": "",
         "failOnStandardError": "false"
       }
@@ -65,15 +124,17 @@
       "timeoutInMinutes": 0,
       "condition": "always()",
       "task": {
-        "id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
+        "id": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
         "versionSpec": "1.*",
         "definitionType": "task"
       },
       "inputs": {
-        "filename": "docker",
-        "arguments": "system prune -a -f",
+        "scriptType": "inlineScript",
+        "scriptName": "",
+        "arguments": "",
         "workingFolder": "",
-        "failOnStandardError": "false"
+        "inlineScript": "docker ps -a -q | %{docker rm -f $_}\n\ndocker images | where {-Not ($_.StartsWith(\"microsoft/nanoserver \") -Or $_.StartsWith(\"microsoft/windowsservercore \") -Or $_.StartsWith(\"REPOSITORY \"))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}",
+        "failOnStandardError": "true"
       }
     }
   ],
@@ -122,13 +183,13 @@
       "allowOverride": true
     },
     "imageBuilder.imageName": {
-      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180227221546"
+      "value": "microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180227141513"
     },
     "imageBuilder.manifest": {
       "value": "manifest.json"
     },
     "imageBuilder.args": {
-      "value": "build --manifest $(imageBuilder.manifest) --path $(PB_imageBuilder_path) --var VersionFilter=$(PB_imageBuilder_path) --var ArchitectureFilter=amd64 $(PB_imageBuilder_customArgs) --push --username $(PB_docker_username) --password $(PB_docker_password) $(PB_imageBuilder_queueCustomArgs)",
+      "value": "build --manifest $(imageBuilder.manifest) --path $(PB_imageBuilder_path) --var ArchitectureFilter=amd64 $(PB_imageBuilder_customArgs) --push --username $(PB_docker_username) --password $(PB_docker_password) $(PB_imageBuilder_queueCustomArgs)",
       "allowOverride": true
     },
     "imageBuilder.containerName": {
@@ -150,7 +211,7 @@
     }
   },
   "demands": [
-    "Agent.OS -equals linux"
+    "VSTS_OS -equals Windows_Server_2016_Data_Center_RS4"
   ],
   "retentionRules": [
     {
@@ -196,16 +257,16 @@
   "processParameters": {},
   "quality": "definition",
   "queue": {
-    "id": 36,
-    "name": "DotNet-Build",
+    "id": 832,
+    "name": "DotNetCore-Infra",
     "pool": {
-      "id": 39,
-      "name": "DotNet-Build"
+      "id": 135,
+      "name": "DotNetCore-Infra"
     }
   },
-  "id": 6214,
-  "name": "dotnet-docker-linux-amd64-images",
-  "url": "https://devdiv.visualstudio.com/0bdbc590-a062-4c3f-b0f6-9383f67865ee/_apis/build/Definitions/6214",
+  "id": 6222,
+  "name": "dotnet-docker-windows-1803-amd64-images",
+  "url": "https://devdiv.visualstudio.com/0bdbc590-a062-4c3f-b0f6-9383f67865ee/_apis/build/Definitions/6222",
   "path": "\\",
   "type": "build",
   "project": {
