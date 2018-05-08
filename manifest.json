@@ -235,7 +235,7 @@
         },
         {
           "sharedTags": {
-            "2.0.7-sdk-2.1.105": {},
+            "2.0.7-sdk-2.1.200": {},
             "2.0-sdk": {},
             "2-sdk": {},
             "sdk": {},
@@ -246,7 +246,7 @@
               "dockerfile": "2.0/sdk/stretch/amd64",
               "os": "linux",
               "tags": {
-                "2.0.7-sdk-2.1.105-stretch": {},
+                "2.0.7-sdk-2.1.200-stretch": {},
                 "2.0-sdk-stretch": {}
               }
             },
@@ -254,7 +254,7 @@
               "dockerfile": "2.0/sdk/nanoserver-sac2016/amd64",
               "os": "windows",
               "tags": {
-                "2.0.7-sdk-2.1.105-nanoserver-sac2016": {},
+                "2.0.7-sdk-2.1.200-nanoserver-sac2016": {},
                 "2.0-sdk-nanoserver-sac2016": {},
                 "2.0-sdk-nanoserver": {
                   "isUndocumented": true
@@ -269,7 +269,7 @@
               "os": "windows",
               "osVersion": "1709",
               "tags": {
-                "2.0.7-sdk-2.1.105-nanoserver-1709": {},
+                "2.0.7-sdk-2.1.200-nanoserver-1709": {},
                 "2.0-sdk-nanoserver-1709": {}
               }
             }
@@ -307,7 +307,7 @@
               "dockerfile": "2.0/sdk/jessie/amd64",
               "os": "linux",
               "tags": {
-                "2.0.7-sdk-2.1.105-jessie": {},
+                "2.0.7-sdk-2.1.200-jessie": {},
                 "2.0-sdk-jessie": {},
                 "2-sdk-jessie": {}
               }
