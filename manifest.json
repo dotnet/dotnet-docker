@@ -167,19 +167,6 @@
                 "2.0.7-runtime-deps-stretch": {},
                 "2.0-runtime-deps-stretch": {}
               }
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "2.0/runtime-deps/stretch/arm32v7",
-              "os": "linux",
-              "tags": {
-                "2.0.7-runtime-deps-stretch-arm32v7": {},
-                "2.0-runtime-deps-stretch-arm32v7": {},
-                "2-runtime-deps-stretch-arm32v7": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v7"
             }
           ]
         },
@@ -196,19 +183,6 @@
                 "2.0.7-runtime-stretch": {},
                 "2.0-runtime-stretch": {}
               }
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "2.0/runtime/stretch/arm32v7",
-              "os": "linux",
-              "tags": {
-                "2.0.7-runtime-stretch-arm32v7": {},
-                "2.0-runtime-stretch-arm32v7": {},
-                "2-runtime-stretch-arm32v7": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v7"
             },
             {
               "dockerfile": "2.0/runtime/nanoserver-sac2016/amd64",

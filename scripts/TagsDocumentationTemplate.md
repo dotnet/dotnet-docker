@@ -60,6 +60,4 @@ $(TagDoc:2.1.0-runtime-stretch-slim-arm32v7)
 $(TagDoc:2.1.0-runtime-bionic-arm32v7)
 $(TagDoc:2.1.0-runtime-deps-stretch-slim-arm32v7)
 $(TagDoc:2.1.0-runtime-deps-bionic-arm32v7)
-$(TagDoc:2.0.7-runtime-stretch-arm32v7)
-$(TagDoc:2.0.7-runtime-deps-stretch-arm32v7)
 
