@@ -6,12 +6,12 @@ RUN apk add --no-cache libuv \
     && ln -s /usr/lib/libuv.so.1 /usr/lib/libuv.so
 
 # Install ASP.NET Core
-ENV ASPNETCORE_VERSION 2.1.0-rc1-final
+ENV ASPNETCORE_VERSION 2.1.0-rtm-30752
 
 RUN apk add --no-cache --virtual .build-deps \
         openssl \
     && wget -O aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-musl-x64.tar.gz \
-    && aspnetcore_sha512='701a96fc3b27d6ebc46f2c9192bc1a048d1c3915888cdc2223183e7a8c7be7e591e9ea317c2e6a363c841013ae2209564da470e48f268c374084ab57c28a66a2' \
+    && aspnetcore_sha512='01c23a1b72361196a0762d4a9aabd9b3471f313024fa7bca88a2791e4fb86996aa34ff3a4005254a0fb06bee8e8cf470db9f0d5ec28f7be38c0c210b53a86e7f' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet \
