@@ -6,8 +6,9 @@ See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for image
 
 The following tags are the latest stable versions of the most commonly used images. The complete set of tags is listed further down.
 
-- [`2.0-sdk`](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/stretch/amd64/Dockerfile)
-- [`2.0-runtime`](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/amd64/Dockerfile)
+- [`2.1-sdk`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
+- [`2.1-aspnetcore-runtime`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
+- [`2.1-runtime`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/amd64/Dockerfile)
 
 The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together. See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
@@ -35,83 +36,68 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 # Linux amd64 tags
 
-- [`2.0.7-sdk-2.1.200-stretch`, `2.0-sdk-stretch`, `2.0.7-sdk-2.1.200`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/stretch/amd64/Dockerfile)
-- [`2.0.7-sdk-2.1.200-jessie`, `2.0-sdk-jessie`, `2-sdk-jessie` (*2.0/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/jessie/amd64/Dockerfile)
-- [`2.0.7-runtime-stretch`, `2.0-runtime-stretch`, `2.0.7-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/stretch/amd64/Dockerfile)
-- [`2.0.7-runtime-jessie`, `2.0-runtime-jessie`, `2-runtime-jessie` (*2.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/jessie/amd64/Dockerfile)
-- [`2.0.7-runtime-deps-stretch`, `2.0-runtime-deps-stretch`, `2.0.7-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/stretch/amd64/Dockerfile)
-- [`2.0.7-runtime-deps-jessie`, `2.0-runtime-deps-jessie`, `2-runtime-deps-jessie` (*2.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/jessie/amd64/Dockerfile)
-- [`1.1.8-sdk-1.1.9-jessie`, `1.1.8-sdk-1.1.9`, `1.1-sdk`, `1-sdk` (*1.1/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/jessie/amd64/Dockerfile)
-- [`1.1.8-runtime-jessie`, `1.1.8-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/runtime/jessie/amd64/Dockerfile)
+- [`2.1.300-sdk-stretch`, `2.1-sdk-stretch`, `2.1.300-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
+- [`2.1.300-sdk-alpine3.7`, `2.1-sdk-alpine3.7`, `2.1.300-sdk-alpine`, `2.1-sdk-alpine` (*2.1/sdk/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.7/amd64/Dockerfile)
+- [`2.1.300-sdk-bionic`, `2.1-sdk-bionic` (*2.1/sdk/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/amd64/Dockerfile)
+- [`2.1.0-aspnetcore-runtime-stretch-slim`, `2.1-aspnetcore-runtime-stretch-slim`, `2.1.0-aspnetcore-runtime`, `2.1-aspnetcore-runtime`, `aspnetcore-runtime` (*2.1/aspnetcore-runtime/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
+- [`2.1.0-aspnetcore-runtime-alpine3.7`, `2.1-aspnetcore-runtime-alpine3.7`, `2.1.0-aspnetcore-runtime-alpine`, `2.1-aspnetcore-runtime-alpine` (*2.1/aspnetcore-runtime/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/alpine3.7/amd64/Dockerfile)
+- [`2.1.0-aspnetcore-runtime-bionic`, `2.1-aspnetcore-runtime-bionic` (*2.1/aspnetcore-runtime/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/bionic/amd64/Dockerfile)
+- [`2.1.0-runtime-stretch-slim`, `2.1-runtime-stretch-slim`, `2.1.0-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/amd64/Dockerfile)
+- [`2.1.0-runtime-alpine3.7`, `2.1-runtime-alpine3.7`, `2.1.0-runtime-alpine`, `2.1-runtime-alpine` (*2.1/runtime/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/alpine3.7/amd64/Dockerfile)
+- [`2.1.0-runtime-bionic`, `2.1-runtime-bionic` (*2.1/runtime/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/bionic/amd64/Dockerfile)
+- [`2.1.0-runtime-deps-stretch-slim`, `2.1-runtime-deps-stretch-slim`, `2.1.0-runtime-deps`, `2.1-runtime-deps`, `runtime-deps` (*2.1/runtime-deps/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
+- [`2.1.0-runtime-deps-alpine3.7`, `2.1-runtime-deps-alpine3.7`, `2.1.0-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*2.1/runtime-deps/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/alpine3.7/amd64/Dockerfile)
+- [`2.1.0-runtime-deps-bionic`, `2.1-runtime-deps-bionic` (*2.1/runtime-deps/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/amd64/Dockerfile)
+- [`2.0.7-sdk-2.1.200-stretch`, `2.0-sdk-stretch`, `2.0.7-sdk-2.1.200`, `2.0-sdk` (*2.0/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/stretch/amd64/Dockerfile)
+- [`2.0.7-sdk-2.1.200-jessie`, `2.0-sdk-jessie` (*2.0/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/jessie/amd64/Dockerfile)
+- [`2.0.7-runtime-stretch`, `2.0-runtime-stretch`, `2.0.7-runtime`, `2.0-runtime` (*2.0/runtime/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/stretch/amd64/Dockerfile)
+- [`2.0.7-runtime-jessie`, `2.0-runtime-jessie` (*2.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/jessie/amd64/Dockerfile)
+- [`2.0.7-runtime-deps-stretch`, `2.0-runtime-deps-stretch`, `2.0.7-runtime-deps`, `2.0-runtime-deps` (*2.0/runtime-deps/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/stretch/amd64/Dockerfile)
+- [`2.0.7-runtime-deps-jessie`, `2.0-runtime-deps-jessie` (*2.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/jessie/amd64/Dockerfile)
+- [`1.1.8-sdk-1.1.9-jessie`, `1.1.8-sdk-1.1.9`, `1.1-sdk` (*1.1/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/jessie/amd64/Dockerfile)
+- [`1.1.8-runtime-jessie`, `1.1.8-runtime`, `1.1-runtime` (*1.1/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/runtime/jessie/amd64/Dockerfile)
 - [`1.0.11-runtime-jessie`, `1.0.11-runtime`, `1.0-runtime` (*1.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.0/runtime/jessie/amd64/Dockerfile)
-- [`1.0.11-runtime-deps-jessie`, `1.0.11-runtime-deps`, `1.0-runtime-deps`, `1-runtime-deps` (*1.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.0/runtime-deps/jessie/amd64/Dockerfile)
-
-**.NET Core 2.1 RC1 tags**
-
-- [`2.1.300-rc1-sdk-stretch`, `2.1-sdk-stretch`, `2.1.300-rc1-sdk`, `2.1-sdk` (*2.1/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
-- [`2.1.300-rc1-sdk-alpine3.7`, `2.1-sdk-alpine3.7`, `2.1.300-rc1-sdk-alpine`, `2.1-sdk-alpine` (*2.1/sdk/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.7/amd64/Dockerfile)
-- [`2.1.300-rc1-sdk-bionic`, `2.1-sdk-bionic` (*2.1/sdk/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/amd64/Dockerfile)
-- [`2.1.0-rc1-aspnetcore-runtime-stretch-slim`, `2.1-aspnetcore-runtime-stretch-slim`, `2.1.0-rc1-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*2.1/aspnetcore-runtime/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
-- [`2.1.0-rc1-aspnetcore-runtime-alpine3.7`, `2.1-aspnetcore-runtime-alpine3.7`, `2.1.0-rc1-aspnetcore-runtime-alpine`, `2.1-aspnetcore-runtime-alpine` (*2.1/aspnetcore-runtime/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/alpine3.7/amd64/Dockerfile)
-- [`2.1.0-rc1-aspnetcore-runtime-bionic`, `2.1-aspnetcore-runtime-bionic` (*2.1/aspnetcore-runtime/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/bionic/amd64/Dockerfile)
-- [`2.1.0-rc1-runtime-stretch-slim`, `2.1-runtime-stretch-slim`, `2.1.0-rc1-runtime`, `2.1-runtime` (*2.1/runtime/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/amd64/Dockerfile)
-- [`2.1.0-rc1-runtime-alpine3.7`, `2.1-runtime-alpine3.7`, `2.1.0-rc1-runtime-alpine`, `2.1-runtime-alpine` (*2.1/runtime/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/alpine3.7/amd64/Dockerfile)
-- [`2.1.0-rc1-runtime-bionic`, `2.1-runtime-bionic` (*2.1/runtime/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/bionic/amd64/Dockerfile)
-- [`2.1.0-rc1-runtime-deps-stretch-slim`, `2.1-runtime-deps-stretch-slim`, `2.1.0-rc1-runtime-deps`, `2.1-runtime-deps` (*2.1/runtime-deps/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
-- [`2.1.0-rc1-runtime-deps-alpine3.7`, `2.1-runtime-deps-alpine3.7`, `2.1.0-rc1-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*2.1/runtime-deps/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/alpine3.7/amd64/Dockerfile)
-- [`2.1.0-rc1-runtime-deps-bionic`, `2.1-runtime-deps-bionic` (*2.1/runtime-deps/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/amd64/Dockerfile)
+- [`1.0.11-runtime-deps-jessie`, `1.0.11-runtime-deps`, `1.0-runtime-deps` (*1.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.0/runtime-deps/jessie/amd64/Dockerfile)
 
 # Windows Server, version 1803 amd64 tags
 
-- [`2.0.7-sdk-2.1.200-nanoserver-1803`, `2.0-sdk-nanoserver-1803`, `2.0.7-sdk-2.1.200`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-1803/amd64/Dockerfile)
-- [`2.0.7-runtime-nanoserver-1803`, `2.0-runtime-nanoserver-1803`, `2.0.7-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/nanoserver-1803/amd64/Dockerfile)
-
-**.NET Core 2.1 RC1 tags**
-
-- [`2.1.300-rc1-sdk-nanoserver-1803`, `2.1-sdk-nanoserver-1803`, `2.1.300-rc1-sdk`, `2.1-sdk` (*2.1/sdk/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1803/amd64/Dockerfile)
-- [`2.1.0-rc1-aspnetcore-runtime-nanoserver-1803`, `2.1-aspnetcore-runtime-nanoserver-1803`, `2.1.0-rc1-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile)
-- [`2.1.0-rc1-runtime-nanoserver-1803`, `2.1-runtime-nanoserver-1803`, `2.1.0-rc1-runtime`, `2.1-runtime` (*2.1/runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1803/amd64/Dockerfile)
+- [`2.1.300-sdk-nanoserver-1803`, `2.1-sdk-nanoserver-1803`, `2.1.300-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1803/amd64/Dockerfile)
+- [`2.1.0-aspnetcore-runtime-nanoserver-1803`, `2.1-aspnetcore-runtime-nanoserver-1803`, `2.1.0-aspnetcore-runtime`, `2.1-aspnetcore-runtime`, `aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile)
+- [`2.1.0-runtime-nanoserver-1803`, `2.1-runtime-nanoserver-1803`, `2.1.0-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1803/amd64/Dockerfile)
+- [`2.0.7-sdk-2.1.200-nanoserver-1803`, `2.0-sdk-nanoserver-1803`, `2.0.7-sdk-2.1.200`, `2.0-sdk` (*2.0/sdk/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-1803/amd64/Dockerfile)
+- [`2.0.7-runtime-nanoserver-1803`, `2.0-runtime-nanoserver-1803`, `2.0.7-runtime`, `2.0-runtime` (*2.0/runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/nanoserver-1803/amd64/Dockerfile)
 
 # Windows Server, version 1709 amd64 tags
 
-- [`2.0.7-sdk-2.1.200-nanoserver-1709`, `2.0-sdk-nanoserver-1709`, `2.0.7-sdk-2.1.200`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-1709/amd64/Dockerfile)
-- [`2.0.7-runtime-nanoserver-1709`, `2.0-runtime-nanoserver-1709`, `2.0.7-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/nanoserver-1709/amd64/Dockerfile)
-
-**.NET Core 2.1 RC1 tags**
-
-- [`2.1.300-rc1-sdk-nanoserver-1709`, `2.1-sdk-nanoserver-1709`, `2.1.300-rc1-sdk`, `2.1-sdk` (*2.1/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1709/amd64/Dockerfile)
-- [`2.1.0-rc1-aspnetcore-runtime-nanoserver-1709`, `2.1-aspnetcore-runtime-nanoserver-1709`, `2.1.0-rc1-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile)
-- [`2.1.0-rc1-runtime-nanoserver-1709`, `2.1-runtime-nanoserver-1709`, `2.1.0-rc1-runtime`, `2.1-runtime` (*2.1/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1709/amd64/Dockerfile)
+- [`2.1.300-sdk-nanoserver-1709`, `2.1-sdk-nanoserver-1709`, `2.1.300-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1709/amd64/Dockerfile)
+- [`2.1.0-aspnetcore-runtime-nanoserver-1709`, `2.1-aspnetcore-runtime-nanoserver-1709`, `2.1.0-aspnetcore-runtime`, `2.1-aspnetcore-runtime`, `aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile)
+- [`2.1.0-runtime-nanoserver-1709`, `2.1-runtime-nanoserver-1709`, `2.1.0-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1709/amd64/Dockerfile)
+- [`2.0.7-sdk-2.1.200-nanoserver-1709`, `2.0-sdk-nanoserver-1709`, `2.0.7-sdk-2.1.200`, `2.0-sdk` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-1709/amd64/Dockerfile)
+- [`2.0.7-runtime-nanoserver-1709`, `2.0-runtime-nanoserver-1709`, `2.0.7-runtime`, `2.0-runtime` (*2.0/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/nanoserver-1709/amd64/Dockerfile)
 
 # Windows Server 2016 amd64 tags
 
-- [`2.0.7-sdk-2.1.200-nanoserver-sac2016`, `2.0-sdk-nanoserver-sac2016`, `2.0.7-sdk-2.1.200`, `2.0-sdk`, `2-sdk`, `sdk`, `latest` (*2.0/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.0.7-runtime-nanoserver-sac2016`, `2.0-runtime-nanoserver-sac2016`, `2.0.7-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`1.1.8-sdk-1.1.9-nanoserver-sac2016`, `1.1.8-sdk-1.1.9`, `1.1-sdk`, `1-sdk` (*1.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`1.1.8-runtime-nanoserver-sac2016`, `1.1.8-runtime`, `1.1-runtime`, `1-runtime` (*1.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.1.300-sdk-nanoserver-sac2016`, `2.1-sdk-nanoserver-sac2016`, `2.1.300-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.1.0-aspnetcore-runtime-nanoserver-sac2016`, `2.1-aspnetcore-runtime-nanoserver-sac2016`, `2.1.0-aspnetcore-runtime`, `2.1-aspnetcore-runtime`, `aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.1.0-runtime-nanoserver-sac2016`, `2.1-runtime-nanoserver-sac2016`, `2.1.0-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.0.7-sdk-2.1.200-nanoserver-sac2016`, `2.0-sdk-nanoserver-sac2016`, `2.0.7-sdk-2.1.200`, `2.0-sdk` (*2.0/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.0.7-runtime-nanoserver-sac2016`, `2.0-runtime-nanoserver-sac2016`, `2.0.7-runtime`, `2.0-runtime` (*2.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`1.1.8-sdk-1.1.9-nanoserver-sac2016`, `1.1.8-sdk-1.1.9`, `1.1-sdk` (*1.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`1.1.8-runtime-nanoserver-sac2016`, `1.1.8-runtime`, `1.1-runtime` (*1.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`1.0.11-runtime-nanoserver-sac2016`, `1.0.11-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
-
-**.NET Core 2.1 RC1 tags**
-
-- [`2.1.300-rc1-sdk-nanoserver-sac2016`, `2.1-sdk-nanoserver-sac2016`, `2.1.300-rc1-sdk`, `2.1-sdk` (*2.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.1.0-rc1-aspnetcore-runtime-nanoserver-sac2016`, `2.1-aspnetcore-runtime-nanoserver-sac2016`, `2.1.0-rc1-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.1.0-rc1-runtime-nanoserver-sac2016`, `2.1-runtime-nanoserver-sac2016`, `2.1.0-rc1-runtime`, `2.1-runtime` (*2.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
 
 # Linux arm32 tags
 
-- [`2.0.7-runtime-stretch-arm32v7`, `2.0-runtime-stretch-arm32v7`, `2.0.7-runtime`, `2.0-runtime`, `2-runtime`, `runtime` (*2.0/runtime/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/stretch/arm32v7/Dockerfile)
-- [`2.0.7-runtime-deps-stretch-arm32v7`, `2.0-runtime-deps-stretch-arm32v7`, `2.0.7-runtime-deps`, `2.0-runtime-deps`, `2-runtime-deps`, `runtime-deps` (*2.0/runtime-deps/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/stretch/arm32v7/Dockerfile)
-
-**.NET Core 2.1 RC1 tags**
-
-- [`2.1.300-rc1-sdk-stretch-arm32v7`, `2.1-sdk-stretch-arm32v7`, `2.1.300-rc1-sdk`, `2.1-sdk` (*2.1/sdk/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/arm32v7/Dockerfile)
-- [`2.1.300-rc1-sdk-bionic-arm32v7`, `2.1-sdk-bionic-arm32v7` (*2.1/sdk/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/arm32v7/Dockerfile)
-- [`2.1.0-rc1-aspnetcore-runtime-stretch-slim-arm32v7`, `2.1-aspnetcore-runtime-stretch-slim-arm32v7`, `2.1.0-rc1-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*2.1/aspnetcore-runtime/stretch-slim/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/stretch-slim/arm32v7/Dockerfile)
-- [`2.1.0-rc1-aspnetcore-runtime-bionic-arm32v7`, `2.1-aspnetcore-runtime-bionic-arm32v7` (*2.1/aspnetcore-runtime/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/bionic/arm32v7/Dockerfile)
-- [`2.1.0-rc1-runtime-stretch-slim-arm32v7`, `2.1-runtime-stretch-slim-arm32v7`, `2.1.0-rc1-runtime`, `2.1-runtime` (*2.1/runtime/stretch-slim/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/arm32v7/Dockerfile)
-- [`2.1.0-rc1-runtime-bionic-arm32v7`, `2.1-runtime-bionic-arm32v7` (*2.1/runtime/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/bionic/arm32v7/Dockerfile)
-- [`2.1.0-rc1-runtime-deps-stretch-slim-arm32v7`, `2.1-runtime-deps-stretch-slim-arm32v7`, `2.1.0-rc1-runtime-deps`, `2.1-runtime-deps` (*2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile)
-- [`2.1.0-rc1-runtime-deps-bionic-arm32v7`, `2.1-runtime-deps-bionic-arm32v7` (*2.1/runtime-deps/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/arm32v7/Dockerfile)
+- [`2.1.300-sdk-stretch-arm32v7`, `2.1-sdk-stretch-arm32v7`, `2.1.300-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/arm32v7/Dockerfile)
+- [`2.1.300-sdk-bionic-arm32v7`, `2.1-sdk-bionic-arm32v7` (*2.1/sdk/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/arm32v7/Dockerfile)
+- [`2.1.0-aspnetcore-runtime-stretch-slim-arm32v7`, `2.1-aspnetcore-runtime-stretch-slim-arm32v7`, `2.1.0-aspnetcore-runtime`, `2.1-aspnetcore-runtime`, `aspnetcore-runtime` (*2.1/aspnetcore-runtime/stretch-slim/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/stretch-slim/arm32v7/Dockerfile)
+- [`2.1.0-aspnetcore-runtime-bionic-arm32v7`, `2.1-aspnetcore-runtime-bionic-arm32v7` (*2.1/aspnetcore-runtime/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/bionic/arm32v7/Dockerfile)
+- [`2.1.0-runtime-stretch-slim-arm32v7`, `2.1-runtime-stretch-slim-arm32v7`, `2.1.0-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/stretch-slim/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/arm32v7/Dockerfile)
+- [`2.1.0-runtime-bionic-arm32v7`, `2.1-runtime-bionic-arm32v7` (*2.1/runtime/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/bionic/arm32v7/Dockerfile)
+- [`2.1.0-runtime-deps-stretch-slim-arm32v7`, `2.1-runtime-deps-stretch-slim-arm32v7`, `2.1.0-runtime-deps`, `2.1-runtime-deps`, `runtime-deps` (*2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile)
+- [`2.1.0-runtime-deps-bionic-arm32v7`, `2.1-runtime-deps-bionic-arm32v7` (*2.1/runtime-deps/bionic/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/arm32v7/Dockerfile)
+- [`2.0.7-runtime-stretch-arm32v7`, `2.0-runtime-stretch-arm32v7`, `2.0.7-runtime`, `2.0-runtime` (*2.0/runtime/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime/stretch/arm32v7/Dockerfile)
+- [`2.0.7-runtime-deps-stretch-arm32v7`, `2.0-runtime-deps-stretch-arm32v7`, `2.0.7-runtime-deps`, `2.0-runtime-deps` (*2.0/runtime-deps/stretch/arm32v7/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.0/runtime-deps/stretch/arm32v7/Dockerfile)
 
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
 
