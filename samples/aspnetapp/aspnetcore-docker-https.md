@@ -87,6 +87,28 @@ Run Docker image with ASP.NET Core configured for HTTPS:
 docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v %APPDATA%\microsoft\UserSecrets\:/root/.microsoft/usersecrets -v %USERPROFILE%\.aspnet\https:/root/.aspnet/https/ aspnetapp
 ```
 
+**macOS or Linux** using **Linux containers**
+
+Configure and build image:
+
+```console
+cd samples/aspnetapp
+dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "crypticpassword"
+docker build --pull -t aspnetapp .
+```
+
+Generate cert and configure local machine:
+
+```console
+dotnet dev-certs https --trust
+```
+
+Run Docker image with ASP.NET Core configured for HTTPS:
+
+```console
+docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v ${HOME}/.microsoft/UserSecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
+```
+
 **Windows** using **Windows containers**
 
 Configure and build image:
