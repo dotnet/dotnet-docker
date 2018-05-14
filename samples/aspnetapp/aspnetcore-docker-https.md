@@ -4,7 +4,7 @@ ASP.NET Core 2.1 uses [HTTPS by default](https://docs.microsoft.com/en-us/aspnet
 
 ASP.NET Core uses [self-signed dev certificates](https://en.wikipedia.org/wiki/Self-signed_certificate) for development. Self-signed certificates are easy and free to create. For [production hosting](https://blogs.msdn.microsoft.com/webdev/2017/11/29/configuring-https-in-asp-net-core-across-different-platforms/), you need a certificate from a [certificate authority](https://en.wikipedia.org/wiki/Certificate_authority). [Let's Encrypt](https://letsencrypt.org/) is a certificate authority that offers free certificates.
 
-This document explains how to configure Docker containers to use certificates, for both development and production. The instructions are based on the [ASP.NET Core Docker Sample](README.md). These instructions use the same sample but are more brief. Consult the [ASP.NET Core Docker Sample](README.md) for help if these instructions are not working.
+This document explains how to configure Docker containers to use certificates. The instructions are based on the [ASP.NET Core Docker Sample](README.md). These instructions use the same sample but are more brief. Consult the [ASP.NET Core Docker Sample](README.md) for help if these instructions are not working.
 
 The instructions volume mount certificates into containers. You can add certificates into container images with a `COPY` command in a Dockerfile. This approach is not recommended. It makes it harder to use the same image for testing with dev certificates and hosting with production certificates. There is also a  significant risk of certificate disclosure if certificates are made part of container images.
 
