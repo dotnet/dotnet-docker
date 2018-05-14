@@ -8,12 +8,12 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     LANG=en_US.UTF-8
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.1.300-rtm-008823
+ENV DOTNET_SDK_VERSION 2.1.300-rtm-008838
 
 RUN apk add --no-cache --virtual .build-deps \
         openssl \
     && wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='c2e12a51eba1573af30e74e1773898811655f81c3434257d4442469618ca05a013f88cf11595989a5d29808954e283a5881b17b7d27a20a2ea97da5f3df5f123' \
+    && dotnet_sha512='94a722f96bd17f65dbeff737ab6e319ee3336b175c1eb0284a254a57c8ac3438e08c79519c62f8656a4268b717a193b2b301043a491156c61f27536ef74c8609' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \
