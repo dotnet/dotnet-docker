@@ -24,6 +24,10 @@ docker run --rm microsoft/dotnet-samples
 * [Develop .NET Core Applications](dotnetapp/dotnet-docker-dev-in-container.md) - This sample shows how to develop, build and test .NET Core applications with Docker without the need to install the .NET Core SDK.
 * [Develop ASP.NET Core Applications](aspnetapp/aspnet-docker-dev-in-container.md) - This sample shows how to develop and test ASP.NET Core applications with Docker without the need to install the .NET Core SDK.
 
+## Host ASP.NET Core Apps over HTTPS with Docker
+
+* [How to use ASP.NET Core over HTTPS with Docker](aspnetapp/aspnetcore-docker-https.md)
+
 ## Push Images to a Container Registry
 
 * [Push Docker Images to Azure Container Registry](dotnetapp/push-image-to-acr.md)

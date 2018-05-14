@@ -1,6 +1,6 @@
 # ASP.NET Core Docker Sample
 
-This [sample Dockerfile](Dockerfile) demonstrates how to use ASP.NET Core and Docker together. The sample works with both Linux and Windows containers and can also be used without Docker. There are also instructions that demonstrate how to push the sample to [Azure Container Registry](../dotnetapp/push-image-to-acr.md) and test it with [Azure Container Instance](deploy-container-to-aci.md).
+This [sample Dockerfile](Dockerfile) demonstrates how to use ASP.NET Core and Docker together. The sample works with both Linux and Windows containers and can also be used without Docker. There are also instructions that demonstrate how to push the sample to [Azure Container Registry](../dotnetapp/push-image-to-acr.md) and test it with [Azure Container Instance](deploy-container-to-aci.md). You can [configure ASP.NET Core to use HTTPS with Docker](aspnetcore-docker-https.md).
 
 The sample builds the application in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/r/microsoft/dotnet/). It builds and tests the application and then copies the final build result into a Docker image based on the smaller [ASP.NET Core Docker Runtime image](https://hub.docker.com/r/microsoft/aspnetcore/). It uses Docker [multi-stage build](https://github.com/dotnet/announcements/issues/18) and [multi-arch tags](https://github.com/dotnet/announcements/issues/14).
 
@@ -103,6 +103,10 @@ In production, you will typically start your container with `docker run -d`. Thi
 In development, you will typically start containers with `docker run --rm -it`. These arguments enable you to see a console (important when there are errors), terminate the container with `CTRL-C` and cleans up all container resources when the container is termiantes. You also typically don't mind blocking the console. This approach is demonstrated in prior examples in this document.
 
 We recommend that you do not use `--rm` in production. It cleans up container resources, preventing you from collecting logs that may have been captured in a container that has either stopped or crashed.
+
+## Deploying with HTTPS
+
+ASP.NET Core 2.1 uses [HTTPS by default](https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl). You can [configure ASP.NET Core to use HTTPS with Docker](aspnetcore-docker-https.md).
 
 ## Build and run the sample for Alpine X64 with Docker
 
