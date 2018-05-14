@@ -20,18 +20,6 @@ git clone https://github.com/dotnet/dotnet-docker/
 
 You can also [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/master.zip).
 
-## Prerequisites
-
-These instructions assume that your project is configured for [application secrets](https://docs.microsoft.com/aspnet/core/security/app-secrets). The primary requirement is a [UserSecretsId](https://github.com/dotnet/dotnet-docker/blob/update-sample-to-latest/samples/aspnetapp/aspnetapp/aspnetapp.csproj#L5) element in your project file. If you are using your own project file, please add one. If you are using the ASP.NET Core sample in this repo, you don't need to do anything, since it is already correctly configured.
-
-You can add the element manually or use Visual Studio to do it for you. The following image demonstrates the user experience in Visual Studio.
-
-![Manage user secrets in Visual Studio](https://user-images.githubusercontent.com/7681382/39641521-85d4a7b4-4f9c-11e8-9466-d1ff56db33cb.png)
-
-The format of the UserSecretsId doesn't matter. The sample in this repo used [Random String Generator](https://www.random.org/strings/?num=6&len=20&digits=on&unique=on&format=html&rnd=new) to produce a unique string.
-
-> Note: You will see reference to both `User Secrets` and `Application Secrets`. These terms are used interchangebly.
-
 ## Host ASP.NET Core over HTTP with Docker
 
 The sample can be run over HTTP to test the basic function of ASP.NET Core. Testing with HTTP first is a good idea to make sure that the sample is working correctly before testing with cerificates. The instructions assume that you are in the root of the repository.
@@ -60,9 +48,19 @@ In development, you can use dev certs to [Use HTTPS with ASP.NET Core](https://d
 2. Generate a user secret for your site, which includes the dev cert password.
 3. Configure the container to volume mount the cert and user secrets and correctly configure ASP.NET Core to use them.
 
-The following instructions perform these three steps. The instructions assume that you are in the root of the repository.
+### Application secrets
 
-> Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
+These instructions assume that your project is configured for [application secrets](https://docs.microsoft.com/aspnet/core/security/app-secrets). The primary requirement is a [UserSecretsId](https://github.com/dotnet/dotnet-docker/blob/update-sample-to-latest/samples/aspnetapp/aspnetapp/aspnetapp.csproj#L5) element in your project file. If you are using your own project file, please add an UserSecretsId element. If you are using the ASP.NET Core sample in this repo, you don't need to do anything,since it is already correctly configured.
+
+You can add the element manually or use Visual Studio to do it for you. The following image demonstrates the user experience in Visual Studio.
+
+![Manage user secrets in Visual Studio](https://user-images.githubusercontent.com/7681382/39641521-85d4a7b4-4f9c-11e8-9466-d1ff56db33cb.png)
+
+The format of the UserSecretsId doesn't matter. The sample in this repo used [Random String Generator](https://www.random.org/strings/?num=6&len=20&digits=on&unique=on&format=html&rnd=new) to produce a unique string.
+
+> Note: You will see reference to both `User Secrets` and `Application Secrets`. These terms are used interchangebly.
+
+### Testing with Dev Certs
 
 **Windows** using **Linux containers**
 
@@ -73,6 +71,8 @@ cd samples\aspnetapp
 dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "crypticpassword"
 docker build --pull -t aspnetapp .
 ```
+
+> Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
 
 Generate cert and configure local machine:
 
@@ -119,6 +119,8 @@ dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Deve
 docker build --pull -t aspnetapp .
 ```
 
+> Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
+
 Generate cert and configure local machine:
 
 ```console
@@ -129,5 +131,5 @@ dotnet dev-certs https --trust
 Run Docker image with ASP.NET Core configured for HTTPS:
 
 ```console
-docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v %APPDATA%\microsoft\UserSecrets\:C:\Users\ContainerUser\AppData\Roaming\microsoft\UserSecrets -v %USERPROFILE%\.aspnet\https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https -e ASPNETCORE_Kestrel_Certificates_Default_Path=C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https -e ASPNETCORE_Kestrel_Certificates_Default_Path=crypticpassword aspnetapp
+docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v %APPDATA%\microsoft\UserSecrets\:C:\Users\ContainerUser\AppData\Roaming\microsoft\UserSecrets -v %USERPROFILE%\.aspnet\https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https aspnetapp
 ```
