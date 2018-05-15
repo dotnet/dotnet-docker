@@ -8,6 +8,8 @@ This document explains how to configure Docker containers to use certificates. T
 
 The instructions volume mount certificates into containers. You can add certificates into container images with a `COPY` command in a Dockerfile. This approach is not recommended. It makes it harder to use the same image for testing with dev certificates and hosting with production certificates. There is also a  significant risk of certificate disclosure if certificates are made part of container images.
 
+The samples are written for `cmd.exe`. PowerShell users will need to special case the environment variables that are used in the instructions.
+
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
 ## Getting the sample
@@ -35,8 +37,10 @@ You can also test the same sample as a pre-built image with the following instru
 
 ```console
 docker pull microsoft/dotnet-samples:aspnetapp
-docker run --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
+docker run --name aspnetcore_sample --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
 ```
+
+After the application starts, navigate to `http://localhost:8000` in your web browser. On Windows, you may need to navigate to the container via IP address. See [ASP.NET Core apps in Windows Containers](aspnetcore-docker-windows.md) for instructions on determining the IP address, using the value of `--name` that you used in `docker run`.
 
 > Note: The sample includes a banner to accept a cookie policy. When switching between HTTP and HTTPS, you may see the banner repeatedly. Switch to *InPrivate*/*incognito* mode in that case.
 
@@ -50,15 +54,15 @@ In development, you can use dev certs to [Use HTTPS with ASP.NET Core](https://d
 
 ### Application secrets
 
-These instructions assume that your project is configured for [application secrets](https://docs.microsoft.com/aspnet/core/security/app-secrets). The primary requirement is a [UserSecretsId](https://github.com/dotnet/dotnet-docker/blob/update-sample-to-latest/samples/aspnetapp/aspnetapp/aspnetapp.csproj#L5) element in your project file. If you are using your own project file, please add an UserSecretsId element. If you are using the ASP.NET Core sample in this repo, you don't need to do anything,since it is already correctly configured.
+These instructions assume that your project is configured for [application secrets](https://docs.microsoft.com/aspnet/core/security/app-secrets). The primary requirement is a [UserSecretsId](https://github.com/dotnet/dotnet-docker/blob/update-sample-to-latest/samples/aspnetapp/aspnetapp/aspnetapp.csproj#L5) element in your project file. If you are using your own project file, please add an `UserSecretsId` element. If you are using the ASP.NET Core sample in this repo, you don't need to do anything,since it is already correctly configured.
 
 You can add the element manually or use Visual Studio to do it for you. The following image demonstrates the user experience in Visual Studio.
 
 ![Manage user secrets in Visual Studio](https://user-images.githubusercontent.com/7681382/39641521-85d4a7b4-4f9c-11e8-9466-d1ff56db33cb.png)
 
-The format of the UserSecretsId doesn't matter. The sample in this repo used [Random String Generator](https://www.random.org/strings/?num=6&len=20&digits=on&unique=on&format=html&rnd=new) to produce a unique string.
+The format of the `UserSecretsId` doesn't matter. The sample in this repo used [Random String Generator](https://www.random.org/strings/?num=6&len=20&digits=on&unique=on&format=html&rnd=new) to produce a unique string.
 
-> Note: You will see reference to both `User Secrets` and `Application Secrets`. These terms are used interchangebly.
+> Note: `User Secrets` and `Application Secrets` terms are used interchangebly.
 
 ### Testing with Dev Certs
 
@@ -81,7 +85,7 @@ dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p crypticp
 dotnet dev-certs https --trust
 ```
 
-Run Docker image with ASP.NET Core configured for HTTPS:
+Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
 docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v %APPDATA%\microsoft\UserSecrets\:/root/.microsoft/usersecrets -v %USERPROFILE%\.aspnet\https:/root/.aspnet/https/ aspnetapp
@@ -103,7 +107,7 @@ Generate cert and configure local machine:
 dotnet dev-certs https --trust
 ```
 
-Run Docker image with ASP.NET Core configured for HTTPS:
+Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
 docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v ${HOME}/.microsoft/UserSecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
@@ -128,8 +132,16 @@ dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p crypticp
 dotnet dev-certs https --trust
 ```
 
-Run Docker image with ASP.NET Core configured for HTTPS:
+Run the container image with ASP.NET Core configured for HTTPS, for Windows Server 2016:
+
+```console
+docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v %APPDATA%\microsoft\UserSecrets\:C:\Users\ContainerAdministrator\AppData\Roaming\microsoft\UserSecrets -v %USERPROFILE%\.aspnet\https:C:\Users\ContainerAdministrator\AppData\Roaming\ASP.NET\Https aspnetapp
+```
+
+Run the container image with ASP.NET Core configured for HTTPS, for Windows Server 2016, version 1709 or higher:
 
 ```console
 docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v %APPDATA%\microsoft\UserSecrets\:C:\Users\ContainerUser\AppData\Roaming\microsoft\UserSecrets -v %USERPROFILE%\.aspnet\https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https aspnetapp
 ```
+
+After the application starts, navigate to `http://localhost:8000` in your web browser. On Windows, you may need to navigate to the container via IP address. See [ASP.NET Core apps in Windows Containers](aspnetcore-docker-windows.md) for instructions on determining the IP address, using the value of `--name` that you used in `docker run`.
