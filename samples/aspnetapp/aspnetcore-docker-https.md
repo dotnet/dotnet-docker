@@ -91,6 +91,8 @@ Run the container image with ASP.NET Core configured for HTTPS:
 docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v %APPDATA%\microsoft\UserSecrets\:/root/.microsoft/usersecrets -v %USERPROFILE%\.aspnet\https:/root/.aspnet/https/ aspnetapp
 ```
 
+After the application starts, navigate to `http://localhost:8000` in your web browser.
+
 **macOS or Linux** using **Linux containers**
 
 Configure and build image:
@@ -112,6 +114,8 @@ Run the container image with ASP.NET Core configured for HTTPS:
 ```console
 docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v ${HOME}/.microsoft/UserSecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
 ```
+
+After the application starts, navigate to `http://localhost:8000` in your web browser.
 
 **Windows** using **Windows containers**
 
