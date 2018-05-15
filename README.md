@@ -187,6 +187,7 @@ If you have any problems with or questions about this image, please contact us t
 
 * [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
 * [Windows Nano Server license](https://hub.docker.com/r/microsoft/nanoserver/) (only applies to Windows containers)
+* [Pricing and licensing for Windows Server 2016](https://www.microsoft.com/en-us/cloud-platform/windows-server-pricing)
 
 ## Related Repos
 
