@@ -136,7 +136,7 @@ dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p crypticp
 dotnet dev-certs https --trust
 ```
 
-Run the container image with ASP.NET Core configured for HTTPS, for Windows Server 2016:
+Run the container image with ASP.NET Core configured for HTTPS, for Windows Server 2016 (as is the case in [Dockerfile.nanoserver-sac2016](Dockerfile.nanoserver-sac2016)):
 
 ```console
 docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v %APPDATA%\microsoft\UserSecrets\:C:\Users\ContainerAdministrator\AppData\Roaming\microsoft\UserSecrets -v %USERPROFILE%\.aspnet\https:C:\Users\ContainerAdministrator\AppData\Roaming\ASP.NET\Https aspnetapp
