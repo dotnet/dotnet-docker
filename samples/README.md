@@ -13,6 +13,17 @@ Type the following [Docker](https://www.docker.com/products/docker) command:
 ```console
 docker run --rm microsoft/dotnet-samples
 ```
+## Try a pre-built ASP.NET Core Docker Image
+
+You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile).
+
+Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
+
+```console
+docker run --name aspnetcore_sample --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
+```
+
+After the application starts, navigate to `http://localhost:8000` in your web browser. On Windows, you may need to navigate to the container via IP address. See [ASP.NET Core apps in Windows Containers](aspnetapp/aspnetcore-docker-windows.md) for instructions on determining the IP address, using the value of `--name` that you used in `docker run`.
 
 ## Building .NET Core Apps with Docker
 
