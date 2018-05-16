@@ -42,6 +42,8 @@ docker run --name aspnetcore_sample --rm -it -p 8000:80 microsoft/dotnet-samples
 
 After the application starts, navigate to `http://localhost:8000` in your web browser. On Windows, you may need to navigate to the container via IP address. See [ASP.NET Core apps in Windows Containers](aspnetcore-docker-windows.md) for instructions on determining the IP address, using the value of `--name` that you used in `docker run`.
 
+> Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline parameters. In some cases, you might see an error because the host port you select is already in use. Choose a different port in that case.
+
 > Note: The sample includes a banner to accept a cookie policy. When switching between HTTP and HTTPS, you may see the banner repeatedly. Switch to *InPrivate*/*incognito* mode in that case.
 
 ## Host ASP.NET Core over HTTPS with Dev Certs
