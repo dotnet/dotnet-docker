@@ -30,8 +30,7 @@
         {
           "Name": "dotnet-docker-linux-arm32v7-images",
           "Parameters": {
-            "imageBuilder.manifest": "manifest.samples.json",
-            "docker.dockerConfigArgs": "-v /var/run/docker.sock:/var/run/docker.sock"
+            "imageBuilder.manifest": "manifest.samples.json"
           }
         }
       ]

@@ -11,14 +11,14 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile.preview",
+              "dockerfile": "samples/dotnetapp/Dockerfile",
               "os": "linux",
               "tags": {
                 "dotnetapp-stretch": {}
               }
             },
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile.preview",
+              "dockerfile": "samples/dotnetapp/Dockerfile",
               "os": "windows",
               "osVersion": "sac2016",
               "tags": {
@@ -26,7 +26,7 @@
               }
             },
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile.preview",
+              "dockerfile": "samples/dotnetapp/Dockerfile",
               "os": "windows",
               "osVersion": "1709",
               "tags": {
@@ -34,7 +34,7 @@
               }
             },
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile.preview",
+              "dockerfile": "samples/dotnetapp/Dockerfile",
               "os": "windows",
               "osVersion": "1803",
               "tags": {
@@ -43,11 +43,12 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile.preview",
+              "dockerfile": "samples/dotnetapp/Dockerfile",
               "os": "linux",
               "tags": {
                 "dotnetapp-stretch-arm32v7": {}
-              }
+              },
+              "variant": "v7"
             }
           ]
         },
@@ -57,14 +58,14 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.preview",
+              "dockerfile": "samples/aspnetapp/Dockerfile",
               "os": "linux",
               "tags": {
                 "aspnetapp-stretch": {}
               }
             },
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.preview",
+              "dockerfile": "samples/aspnetapp/Dockerfile",
               "os": "windows",
               "osVersion": "sac2016",
               "tags": {
@@ -72,7 +73,7 @@
               }
             },
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.preview",
+              "dockerfile": "samples/aspnetapp/Dockerfile",
               "os": "windows",
               "osVersion": "1709",
               "tags": {
@@ -80,7 +81,7 @@
               }
             },
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.preview",
+              "dockerfile": "samples/aspnetapp/Dockerfile",
               "os": "windows",
               "osVersion": "1803",
               "tags": {
@@ -89,11 +90,12 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile.preview",
+              "dockerfile": "samples/aspnetapp/Dockerfile",
               "os": "linux",
               "tags": {
                 "aspnetapp-stretch-arm32v7": {}
-              }
+              },
+              "variant": "v7"
             }
           ]
         }
