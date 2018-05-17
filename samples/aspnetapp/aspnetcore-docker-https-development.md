@@ -1,6 +1,6 @@
 # Developing ASP.NET Core Applications with Docker over HTTPS
 
-ASP.NET Core 2.1 uses [HTTPS by default](https://docs.microsoft.com/aspnet/core/security/enforcing-ssl). [HTTPS](https://en.wikipedia.org/wiki/HTTPS) relies on [certificates](https://en.wikipedia.org/wiki/Public_key_certificate) for trust, identity and encryption.
+ASP.NET Core 2.1 uses [HTTPS by default](https://docs.microsoft.com/aspnet/core/security/enforcing-ssl). [HTTPS](https://en.wikipedia.org/wiki/HTTPS) relies on [certificates](https://en.wikipedia.org/wiki/Public_key_certificate) for trust, identity, and encryption.
 
 This document demonstrates how to develop ASP.NET Core applications with HTTPS in Docker containers. It is recommended to try the [ASP.NET Core Docker Sample](README.md) first, which is simpler because the container only exposes HTTP. The more basic will help you validate that you have the sample working correctly before adding the complication of certificates.
 
@@ -151,7 +151,7 @@ Build a container image:
 docker build --pull -t aspnetapp .
 ```
 
-Run the container image with ASP.NET Core configured for HTTPS. Select the correct syntax, dependending on the Windows Server version.
+Run the container image with ASP.NET Core configured for HTTPS. Select the correct syntax, depending on the Windows Server version.
 
 #### Windows Server 2016
 
