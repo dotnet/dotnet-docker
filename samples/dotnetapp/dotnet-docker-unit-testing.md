@@ -73,21 +73,21 @@ docker build --pull --target testrunner -t dotnetapp -f Dockerfile.alpine-x64 .
 
 Use the following commands, given your environment:
 
-**Windows** using **Linux containers**
+#### Windows using Linux containers
 
 ```console
 mkdir TestResults
 docker run --rm -v C:\git\dotnet-docker\samples\dotnetapp\TestResults:/app/tests/TestResults dotnetapp:test
 ```
 
-**Linux or macOS** using **Linux containers**
+#### Linux or macOS using Linux containers
 
 ```console
 mkdir TestResults
 docker run --rm -v "$(pwd)"/TestResults:/app/tests/TestResults dotnetapp:test
 ```
 
-**Windows** using **Windows containers**
+#### Windows using Windows containers
 
 ```console
 mkdir TestResults

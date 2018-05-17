@@ -30,7 +30,7 @@ You can re-run your application in a container with every local code change. Thi
 
 The instructions assume that you are in the root of the repository. You can use the following commands, given your environment:
 
-**Windows** using **Linux containers**
+### Windows using Linux containers
 
 ```console
 docker run --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:/app/ -w /app/aspnetapp microsoft/dotnet:2.1-sdk dotnet watch run
@@ -38,7 +38,7 @@ docker run --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:/app/ -
 
 You can use CTRL-C to terminate `dotnet watch`. Navigate to the site at `http://localhost:8000` in your browser.
 
-**macOS or Linux** using **Linux containers**
+### macOS or Linux using Linux containers
 
 ```console
 docker run --rm -it -p 8000:80 -v ~/git/dotnet-docker/samples/aspnetapp:/app/ -w /app/aspnetapp microsoft/dotnet:2.1-sdk dotnet watch run
@@ -46,7 +46,7 @@ docker run --rm -it -p 8000:80 -v ~/git/dotnet-docker/samples/aspnetapp:/app/ -w
 
 You can use CTRL-C to terminate `dotnet watch`. Navigate to the site at `http://localhost:8000` in your browser.
 
-**Windows** using **Windows containers**
+### Windows using Windows containers
 
 ```console
 docker run --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ -w \app\aspnetapp --name aspnetappsample microsoft/dotnet:2.1-sdk dotnet watch run
@@ -56,7 +56,7 @@ You can use CTRL-C to terminate `dotnet watch`.
 
 After the application starts, navigate to `http://localhost:8000` in your web browser. On Windows, you may need to navigate to the container via IP address. See [ASP.NET Core apps in Windows Containers](aspnetcore-docker-windows.md) for instructions on determining the IP address, using the value of `--name` that you used in `docker run`.
 
-### Updating the site while the container is running
+## Updating the site while the container is running
 
 You can demo a relaunch of the site by changing the About controller method in `HomeController.cs`, waiting a few seconds for the site to recompile and then visit `http://localhost:8000/Home/About`
 
