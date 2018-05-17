@@ -18,6 +18,8 @@ docker run --name aspnetcore_sample --rm -it -p 8000:80 microsoft/dotnet-samples
 
 After the application starts, navigate to `http://localhost:8000` in your web browser. On Windows, you may need to navigate to the container via IP address. See [ASP.NET Core apps in Windows Containers](aspnetcore-docker-windows.md) for instructions on determining the IP address, using the value of `--name` that you used in `docker run`.
 
+See [Hosting ASP.NET Core Images with Docker over HTTPS](aspnetcore-docker-https.md) to use HTTPS with this image.
+
 ## Getting the sample
 
 The easiest way to get the sample is by cloning the samples repository with git, using the following instructions:
