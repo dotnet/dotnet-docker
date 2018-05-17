@@ -13,6 +13,7 @@ Type the following [Docker](https://www.docker.com/products/docker) command:
 ```console
 docker run --rm microsoft/dotnet-samples
 ```
+
 ## Try a pre-built ASP.NET Core Docker Image
 
 You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile).
@@ -37,7 +38,8 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 ## Host ASP.NET Core Apps over HTTPS with Docker
 
-* [How to use ASP.NET Core over HTTPS with Docker](aspnetapp/aspnetcore-docker-https.md)
+* [Hosting ASP.NET Core Images with Docker over HTTPS](aspnetapp/aspnetcore-docker-https.md)
+* [Developing ASP.NET Core Applications with Docker over HTTPS](aspnetapp/aspnetcore-docker-https-development.md)
 
 ## Push Images to a Container Registry
 
