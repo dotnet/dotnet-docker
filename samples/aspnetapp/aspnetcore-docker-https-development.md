@@ -85,7 +85,7 @@ docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://
 
 After the application starts, navigate to `http://localhost:8000` in your web browser.
 
-### macOS or Linux using Linux containers
+### macOS
 
 ```console
 cd samples\aspnetapp
@@ -97,8 +97,6 @@ Generate cert and configure local machine:
 dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p crypticpassword
 dotnet dev-certs https --trust
 ```
-
-> Note: `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. It is likely that you need to trust the certificate in your browser.
 
 > Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
 
@@ -120,6 +118,36 @@ Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
 docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v ${HOME}/.microsoft/UserSecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
+```
+
+After the application starts, navigate to `http://localhost:8000` in your web browser.
+
+### Linux
+
+```console
+cd samples\aspnetapp
+```
+
+Generate cert and configure local machine:
+
+```console
+dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p crypticpassword
+```
+
+> Note: `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. It is likely that you need to trust the certificate in your browser.
+
+> Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
+
+Build a container image:
+
+```console
+docker build --pull -t aspnetapp .
+```
+
+Run the container image with ASP.NET Core configured for HTTPS:
+
+```console
+docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -e ASPNETCORE_Kestrel__Certificates__Development__Password="crypticpassword" -v ${HOME}/.microsoft/UserSecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser.

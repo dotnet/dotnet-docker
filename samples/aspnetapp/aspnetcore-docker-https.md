@@ -44,7 +44,7 @@ docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://
 
 > Note: The password must match the password used for the certificate.
 
-### macOS or Linux using Linux containers
+### macOS or Linux
 
 Generate cert and configure local machine:
 
@@ -52,7 +52,6 @@ Generate cert and configure local machine:
 dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p crypticpassword
 dotnet dev-certs https --trust
 ```
-
 
 > Note: `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. It is likely that you need to trust the certificate in your browser.
 
