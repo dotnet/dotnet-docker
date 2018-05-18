@@ -53,6 +53,8 @@ dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p crypticpasswor
 dotnet dev-certs https --trust
 ```
 
+> Note: `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. See [Installing the Certificate](https://help.ubuntu.com/lts/serverguide/certificates-and-security.html.en#installing-the-certificate) for Ubuntu, for example. You can need to export a `.crt` file instead of a `.pfx` file in this case.
+
 > Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
 
 Run the container image with ASP.NET Core configured for HTTPS:
