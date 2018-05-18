@@ -12,7 +12,7 @@ This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker
 
 You need a certificate from a [certificate authority](https://en.wikipedia.org/wiki/Certificate_authority) for [production hosting](https://blogs.msdn.microsoft.com/webdev/2017/11/29/configuring-https-in-asp-net-core-across-different-platforms/) for your domain. You may already have one. [Let's Encrypt](https://letsencrypt.org/) is a certificate authority that offers free certificates.
 
-This document uses [self-signed development certificates](https://en.wikipedia.org/wiki/Self-signed_certificate for hosting pre-built images over `localhost`. The instructions are similar to using production certificates.
+This document uses [self-signed development certificates](https://en.wikipedia.org/wiki/Self-signed_certificate) for hosting pre-built images over `localhost`. The instructions are similar to using production certificates.
 
 For production certs, you do not need to use the `dotnet dev-certs` tool or store the certificates in the location used in the instructions. Any location should work, although storing certs within your site directory is an anti-pattern.
 

@@ -42,7 +42,9 @@ The format of the `UserSecretsId` content doesn't matter. The sample in this rep
 
 Use the following instructions, for your operating system configuration. The commands assume that you are in the root of the repository.
 
-> Note: The sample includes a banner to accept a cookie policy. When switching between HTTP and HTTPS, you may see the banner repeatedly. Switch to *InPrivate*/*incognito* mode in that case.
+> Note: The sample includes a banner to accept a cookie policy. When switching between HTTP and HTTPS, you may see the banner repeatedly. Delete the cookie for the site in `Developer Tools` in this case.
+
+![Developer Tools -- Delete cookie](https://user-images.githubusercontent.com/2608468/40246148-875fee5a-5a7c-11e8-9728-7da89a491014.png)
 
 ### Windows using Linux containers
 
@@ -95,6 +97,8 @@ Generate cert and configure local machine:
 dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p crypticpassword
 dotnet dev-certs https --trust
 ```
+
+> Note: `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. See [Installing the Certificate](https://help.ubuntu.com/lts/serverguide/certificates-and-security.html.en#installing-the-certificate) for Ubuntu, for example. You can need to export a `.crt` file instead of a `.pfx` file in this case.
 
 > Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
 
