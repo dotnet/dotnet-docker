@@ -53,7 +53,8 @@ dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p crypticpasswor
 dotnet dev-certs https --trust
 ```
 
-> Note: `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. See [Installing the Certificate](https://help.ubuntu.com/lts/serverguide/certificates-and-security.html.en#installing-the-certificate) for Ubuntu, for example. You can need to export a `.crt` file instead of a `.pfx` file in this case.
+
+> Note: `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. It is likely that you need to trust the certificate in your browser.
 
 > Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
 
