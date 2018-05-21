@@ -35,19 +35,19 @@ You can rerun your application in a container with every local code change. This
 
 The instructions assume that you are in the root of the repository. You can use the following commands, given your environment:
 
-**Windows** using **Linux containers**
+### Windows using Linux containers
 
 ```console
 docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet:2.1-sdk dotnet watch run
 ```
 
-**Linux or macOS** using **Linux containers**
+### Linux or macOS using Linux containers
 
 ```console
 docker run --rm -it -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet:2.1-sdk dotnet watch run
 ```
 
-**Windows** using **Windows containers**
+### Windows using Windows containers
 
 ```console
 docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\dotnetapp microsoft/dotnet:2.1-sdk dotnet watch run
@@ -59,19 +59,19 @@ You can retest your application in a container with every local code change. Thi
 
 The instructions assume that you are in the root of the repository. You can use the following commands, given your environment:
 
-**Windows** using **Linux containers**
+### Windows using Linux containers
 
 ```console
 docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/tests microsoft/dotnet:2.1-sdk dotnet watch test
 ```
 
-**Linux or macOS** using **Linux containers**
+### Linux or macOS using Linux containers
 
 ```console
 docker run --rm -it -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/tests microsoft/dotnet:2.1-sdk dotnet watch test
 ```
 
-**Windows** using **Windows containers**
+### Windows using Windows containers
 
 ```console
 docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\tests microsoft/dotnet:2.1-sdk dotnet watch test
@@ -85,22 +85,22 @@ You can build your application with the .NET Core SDK Docker image. Built assets
 
 The instructions assume that you are in the root of the repository. You can use the following commands, given your environment:
 
-**Windows** using **Linux containers**
+### Windows using Linux containers
 
 ```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.0-sdk dotnet publish -c release -o out
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.1-sdk dotnet publish -c release -o out
 ```
 
-**Linux or macOS** using **Linux containers**
+### Linux or macOS using Linux containers
 
 ```console
-docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.0-sdk dotnet publish -c release -o out
+docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.1-sdk dotnet publish -c release -o out
 ```
 
-**Windows** using **Windows containers**
+### Windows using Windows containers
 
 ```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app -w c:\app\dotnetapp microsoft/dotnet:2.0-sdk dotnet publish -c release -o out
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app -w c:\app\dotnetapp microsoft/dotnet:2.1-sdk dotnet publish -c release -o out
 ```
 
 ## More Samples

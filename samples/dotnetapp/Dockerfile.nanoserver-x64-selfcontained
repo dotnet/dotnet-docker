@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.0-sdk AS build
+FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -29,7 +29,8 @@ RUN dotnet add package ILLink.Tasks -v 0.1.4-preview-981901 -s https://dotnet.my
 RUN dotnet publish -c Release -r win-x64 -o out /p:ShowLinkerSizeComparison=true
 
 
-FROM microsoft/nanoserver AS runtime
+# Uses the sac2016 release; 1709 and 1803 are other choices
+FROM microsoft/nanoserver:sac2016 AS runtime
 WORKDIR /app
 COPY --from=publish /app/dotnetapp/out ./
 ENTRYPOINT ["dotnetapp"]

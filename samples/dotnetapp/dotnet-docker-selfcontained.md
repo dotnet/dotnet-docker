@@ -4,9 +4,10 @@ You can build .NET Core self-contained apps with Docker. Self-contained apps are
 
 Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
-* [Nano Server self-contained x64 sample with build and unit testing](Dockerfile.nanoserver-x64-selfcontained)
-* [Debian self-contained x64 sample with build and unit testing](Dockerfile.debian-x64-selfcontained)
-* [Debian self-contained ARM32 sample with build and unit testing](Dockerfile.debian-arm32-selfcontained)
+* [Alpine x64 self-contained sample, with build and unit testing](Dockerfile.alpine-x64-selfcontained)
+* [Nano Server x64 self-contained sample, with build and unit testing](Dockerfile.nanoserver-x64-selfcontained)
+* [Debian x64 self-contained sample, with build and unit testing](Dockerfile.debian-x64-selfcontained)
+* [Debian ARM32 self-contained sample, with build and unit testing](Dockerfile.debian-arm32-selfcontained)
 
 ## Context on the IL Linker
 
@@ -48,13 +49,13 @@ You can build and run the [sample](Dockerfile.selfcontained-linux-x64) in a [Deb
 ```console
 cd samples
 cd dotnetapp
-docker build --pull -t dotnetapp:debian-x64-selfcontained -f Dockerfile.selfcontained-debian-x64 .
+docker build --pull -t dotnetapp:alpine-x64-selfcontained -f Dockerfile.alpine-x64-selfcontained .
 ```
 
 You can test the image with the following instructions.
 
 ```console
-docker run --rm dotnetapp:debian-x64-selfcontained
+docker run --rm dotnetapp:alpine-x64-selfcontained
 ```
 
 ## Build and run the sample for Linux ARM32 with Docker
