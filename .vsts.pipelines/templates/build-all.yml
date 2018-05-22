@@ -52,7 +52,7 @@ phases:
 
 - template: build-windows-amd64.yml
   parameters:
-    phase: WindowsServerSac2016_amd64
+    phase: NanoServerSac2016_amd64
     imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
     manifest: ${{ parameters.manifest }}
     queue: DotNetCore-Build
@@ -62,7 +62,7 @@ phases:
 
 - template: build-windows-amd64.yml
   parameters:
-    phase: WindowsServer1709_amd64
+    phase: NanoServer1709_amd64
     imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
     manifest: ${{ parameters.manifest }}
     queue: DotNetCore-Infra
@@ -72,7 +72,7 @@ phases:
 
 - template: build-windows-amd64.yml
   parameters:
-    phase: WindowsServer1803_amd64
+    phase: NanoServer1803_amd64
     imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
     manifest: ${{ parameters.manifest }}
     queue: DotNetCore-Infra

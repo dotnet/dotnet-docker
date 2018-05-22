@@ -7,9 +7,9 @@ phases:
   dependsOn:
   - Linux_amd64
   - Linux_arm32v7
-  - WindowsServerSac2016_amd64
-  - WindowsServer1709_amd64
-  - WindowsServer1803_amd64
+  - NanoServerSac2016_amd64
+  - NanoServer1709_amd64
+  - NanoServer1803_amd64
   queue:
     name: DotNet-Build
     demands:
