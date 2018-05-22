@@ -1,0 +1,4 @@
+steps:
+- script: docker system prune -a -f
+  displayName: Cleanup Docker
+  continueOnError: true

@@ -1,0 +1,11 @@
+trigger:
+  branches:
+    include:
+      - nightly
+  paths:
+    exclude:
+      - samples/*
+      - manifest.samples.json
+
+phases:
+- template: templates/build-all.yml
