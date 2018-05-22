@@ -42,12 +42,6 @@
         {
           "Name": "dotnet-docker-linux-arm32v7-images",
           "Parameters": {
-            "PB_imageBuilder_path": "2.0*"
-          }
-        },
-        {
-          "Name": "dotnet-docker-linux-arm32v7-images",
-          "Parameters": {
             "PB_imageBuilder_path": "2.1*"
           }
         }
