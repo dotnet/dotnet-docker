@@ -14,6 +14,20 @@ Type the following [Docker](https://www.docker.com/products/docker) command:
 docker run --rm microsoft/dotnet-samples
 ```
 
+## Try a pre-built ASP.NET Core Docker Image
+
+You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile).
+
+Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
+
+```console
+docker run --name aspnetcore_sample --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
+```
+
+After the application starts, navigate to `http://localhost:8000` in your web browser. On Windows, you may need to navigate to the container via IP address. See [ASP.NET Core apps in Windows Containers](aspnetapp/aspnetcore-docker-windows.md) for instructions on determining the IP address, using the value of `--name` that you used in `docker run`.
+
+See [Hosting ASP.NET Core Images with Docker over HTTPS](aspnetapp/aspnetcore-docker-https.md) to use HTTPS with this image.
+
 ## Building .NET Core Apps with Docker
 
 * [.NET Core Docker Sample](dotnetapp/README.md) - This [sample](dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
@@ -23,6 +37,11 @@ docker run --rm microsoft/dotnet-samples
 
 * [Develop .NET Core Applications](dotnetapp/dotnet-docker-dev-in-container.md) - This sample shows how to develop, build and test .NET Core applications with Docker without the need to install the .NET Core SDK.
 * [Develop ASP.NET Core Applications](aspnetapp/aspnet-docker-dev-in-container.md) - This sample shows how to develop and test ASP.NET Core applications with Docker without the need to install the .NET Core SDK.
+
+## Host ASP.NET Core Apps over HTTPS with Docker
+
+* [Hosting ASP.NET Core Images with Docker over HTTPS](aspnetapp/aspnetcore-docker-https.md)
+* [Developing ASP.NET Core Applications with Docker over HTTPS](aspnetapp/aspnetcore-docker-https-development.md)
 
 ## Push Images to a Container Registry
 
