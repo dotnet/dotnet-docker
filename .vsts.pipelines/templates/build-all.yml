@@ -1,6 +1,6 @@
 parameters:
-  imageBuilderLinuxImage: microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180330181728
-  imageBuilderWindowsImage: microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180227141513
+  imageBuilderLinuxImage: microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180522205353
+  imageBuilderWindowsImage: microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180522135321
   manifest: manifest.json
   matrixLinuxAmd64:
     Build_1_*:
@@ -36,51 +36,45 @@ parameters:
     Build_2_1:
       buildPath: 2.1*/nanoserver-1803/*
       imageBuilder.customArgs: --var VersionFilter=2.1 --var OSFilter=nanoserver-1803
-
 phases:
-- template: build-linux-amd64.yml
-  parameters:
-    imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
-    manifest: ${{ parameters.manifest }}
-    matrix: ${{ parameters.matrixLinuxAmd64 }}
-
-- template: build-linux-arm32v7.yml
-  parameters:
-    imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
-    manifest: ${{ parameters.manifest }}
-    matrix: ${{ parameters.matrixLinuxArm32v7 }}
-
-- template: build-windows-amd64.yml
-  parameters:
-    phase: NanoServerSac2016_amd64
-    imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
-    manifest: ${{ parameters.manifest }}
-    queue: DotNetCore-Build
-    demands:
-      - agent.os -equals Windows_NT
-    matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
-
-- template: build-windows-amd64.yml
-  parameters:
-    phase: NanoServer1709_amd64
-    imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
-    manifest: ${{ parameters.manifest }}
-    queue: DotNetCore-Infra
-    demands:
-      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
-    matrix: ${{ parameters.matrixWindows1709Amd64 }}
-
-- template: build-windows-amd64.yml
-  parameters:
-    phase: NanoServer1803_amd64
-    imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
-    manifest: ${{ parameters.manifest }}
-    queue: DotNetCore-Infra
-    demands:
-      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
-    matrix: ${{ parameters.matrixWindows1803Amd64 }}
-
-- template: build-finalize.yml
-  parameters:
-    imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
-    manifest: ${{ parameters.manifest }}
+  - template: build-linux-amd64.yml
+    parameters:
+      imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
+      manifest: ${{ parameters.manifest }}
+      matrix: ${{ parameters.matrixLinuxAmd64 }}
+  - template: build-linux-arm32v7.yml
+    parameters:
+      imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
+      manifest: ${{ parameters.manifest }}
+      matrix: ${{ parameters.matrixLinuxArm32v7 }}
+  - template: build-windows-amd64.yml
+    parameters:
+      phase: NanoServerSac2016_amd64
+      imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
+      manifest: ${{ parameters.manifest }}
+      queue: DotNetCore-Build
+      demands:
+        - agent.os -equals Windows_NT
+      matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
+  - template: build-windows-amd64.yml
+    parameters:
+      phase: NanoServer1709_amd64
+      imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
+      manifest: ${{ parameters.manifest }}
+      queue: DotNetCore-Infra
+      demands:
+        - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
+      matrix: ${{ parameters.matrixWindows1709Amd64 }}
+  - template: build-windows-amd64.yml
+    parameters:
+      phase: NanoServer1803_amd64
+      imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
+      manifest: ${{ parameters.manifest }}
+      queue: DotNetCore-Infra
+      demands:
+        - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
+      matrix: ${{ parameters.matrixWindows1803Amd64 }}
+  - template: build-finalize.yml
+    parameters:
+      imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
+      manifest: ${{ parameters.manifest }}
