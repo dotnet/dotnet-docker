@@ -6,7 +6,7 @@ FROM microsoft/windowsservercore:1709 AS installer-env
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-ENV ASPNETCORE_VERSION 2.1.0-rtm-30796
+ENV ASPNETCORE_VERSION 2.1.0
 
 RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$Env:ASPNETCORE_VERSION/aspnetcore-runtime-$Env:ASPNETCORE_VERSION-win-x64.zip; `
     $aspnetcore_sha512 = '49248f017f600f3797af9b10586148d92754ea5eba878d2a3ac4e816f36cff6e19205740d8876d2a8c81b7c402f95879dc04c9a557626a4f7d56bba9d24492c6'; `

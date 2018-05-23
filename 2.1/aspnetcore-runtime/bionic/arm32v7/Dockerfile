@@ -6,7 +6,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install ASP.NET Core
-ENV ASPNETCORE_VERSION 2.1.0-rtm-30796
+ENV ASPNETCORE_VERSION 2.1.0
 
 RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-arm.tar.gz \
     && aspnetcore_sha512='a3366a805a1993f436471483d6b5ae20952d1c881c8ecc3d6bfdcaae3193bd484e6e4249a60a8c4872e42b6615d5830426b6b7d243d4c17e04082ca5526d0435' \

@@ -5,7 +5,7 @@ FROM microsoft/nanoserver:sac2016
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.1.300-rtm-008866
+ENV DOTNET_SDK_VERSION 2.1.300-rtm-008884
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
     $dotnet_sha512 = '80c8fbd9cfca96d992c9f621377f153a2358eb3aebb79a4d3645338a284522eebf0de68216649fad861c77e6956e1f3a4b76e9fcfa5cc2469b89b656fb0d8303'; `
