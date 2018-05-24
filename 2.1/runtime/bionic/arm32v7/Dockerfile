@@ -9,7 +9,7 @@ RUN apt-get update \
 ENV DOTNET_VERSION 2.1.0
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-arm.tar.gz \
-    && dotnet_sha512='0aed8639536acd55d853c2f27548a896a906845b14d9efbdf1cdb77cb1a59c52d98aec89519fabd2626f203dd6140a7d4147602f1fb2efc5765b57b0fda55956' \
+    && dotnet_sha512='2e4a95223b449a696277c1c144fe2aaa0d3d4936cba23626cfb22e68a0308c6cd37bdec6e86f6e5a3803fb1d4f27c4b7d08da41c4d246d822428ab755b90f097' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
