@@ -4,11 +4,11 @@ parameters:
   manifest: manifest.json
   matrixLinuxAmd64:
     Build_1_*:
-      buildPath: 1.\*
+      buildPath: 1.*
     Build_2_0:
-      buildPath: 2.0\*
+      buildPath: 2.0*
     Build_2_1:
-      buildPath: 2.1\*
+      buildPath: 2.1*
   matrixLinuxArm32v7:
     Build_2_1:
       buildPath: 2.1*

@@ -12,7 +12,7 @@ phases:
       manifest: manifest.samples.json
       matrixLinuxAmd64:
         Build:
-          buildPath: \*
+          buildPath: '*'
           imageBuilder.customArgs: ''
       matrixLinuxArm32v7:
         Build:
