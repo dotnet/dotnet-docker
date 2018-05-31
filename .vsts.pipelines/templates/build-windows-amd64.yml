@@ -1,0 +1,33 @@
+parameters:
+  phase: null
+  imageBuilderImage: null
+  manifest: null
+  queue: null
+  demands: []
+  matrix: {}
+phases:
+  - phase: ${{ parameters.phase }}
+    queue:
+      name: ${{ parameters.queue }}
+      demands: ${{ parameters.demands }}
+      parallel: 2
+      matrix: ${{ parameters.matrix }}
+    variables:
+      docker.baseArtifactName: $(Build.BuildId)
+      docker.setupContainerName: setup_$(docker.baseArtifactName)
+      imageBuilder.image: ${{ parameters.imageBuilderImage }}
+      manifest: ${{ parameters.manifest }}
+    steps:
+      - template: docker-cleanup-windows.yml
+      - script: docker pull $(imageBuilder.image)
+        displayName: Pull Image Builder
+      - script: docker create --name $(docker.setupContainerName) $(imageBuilder.image)
+        displayName: Create Setup Container
+      - script: docker cp $(docker.setupContainerName):/image-builder $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder
+        displayName: Copy Image Builder
+      - script: docker rm -f $(docker.setupContainerName)
+        displayName: Cleanup Setup Container
+        continueOnError: true
+      - script: $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe build --manifest $(manifest) --path $(buildPath) --push --username $(dockerRegistry.userName) --password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.customArgs) $(imageBuilder.queueArgs)
+        displayName: Build Images
+      - template: docker-cleanup-windows.yml

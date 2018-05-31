@@ -1,0 +1,2 @@
+phases:
+  - template: templates/build-all.yml
