@@ -88,19 +88,19 @@ The instructions assume that you are in the root of the repository. You can use 
 ### Windows using Linux containers
 
 ```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.1-sdk dotnet publish -c release -o out
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.1-sdk dotnet publish -c Release -o out
 ```
 
 ### Linux or macOS using Linux containers
 
 ```console
-docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.1-sdk dotnet publish -c release -o out
+docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.1-sdk dotnet publish -c Release -o out
 ```
 
 ### Windows using Windows containers
 
 ```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app -w c:\app\dotnetapp microsoft/dotnet:2.1-sdk dotnet publish -c release -o out
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app -w c:\app\dotnetapp microsoft/dotnet:2.1-sdk dotnet publish -c Release -o out
 ```
 
 ## More Samples
