@@ -1,0 +1,7 @@
+steps:
+  - powershell: |
+      docker ps -a -q | %{docker rm -f $_}
+      docker images | where {-Not ($_.StartsWith("microsoft/nanoserver ") -Or $_.StartsWith("microsoft/windowsservercore ") -Or $_.StartsWith("REPOSITORY "))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}
+    displayName: Cleanup Docker
+    condition: always()
+    continueOnError: true

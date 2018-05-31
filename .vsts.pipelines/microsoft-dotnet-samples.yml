@@ -1,0 +1,32 @@
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - samples/*
+      - manifest.samples.json
+phases:
+  - template: templates/build-all.yml
+    parameters:
+      manifest: manifest.samples.json
+      matrixLinuxAmd64:
+        Build:
+          buildPath: '*'
+          imageBuilder.customArgs: ''
+      matrixLinuxArm32v7:
+        Build:
+          buildPath: '*'
+          imageBuilder.customArgs: ''
+      matrixWindowsSac2016Amd64:
+        Build:
+          buildPath: '*'
+          imageBuilder.customArgs: --os-version sac2016
+      matrixWindows1709Amd64:
+        Build:
+          buildPath: '*'
+          imageBuilder.customArgs: --os-version 1709
+      matrixWindows1803Amd64:
+        Build:
+          buildPath: '*'
+          imageBuilder.customArgs: --os-version 1803
