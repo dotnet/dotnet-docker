@@ -1,7 +1,7 @@
 FROM microsoft/dotnet:2.1-runtime-deps-alpine3.7
 
 # Workaround https://github.com/aspnet/libuv-package/issues/23
-# Install libuv globally and link it so coreclr can laod it
+# Install libuv globally and link it so coreclr can load it
 RUN apk add --no-cache libuv \
     && ln -s /usr/lib/libuv.so.1 /usr/lib/libuv.so
 
