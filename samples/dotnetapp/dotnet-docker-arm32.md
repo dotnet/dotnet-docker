@@ -22,9 +22,7 @@ docker run --rm microsoft/dotnet-samples
 
 ## Building .NET Core Samples with Docker
 
-You can build almost the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures.
-
-For example, the following instructions will work on an ARM32 device. The instructions assume that you are in the root of this repository.
+You can build the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures. For example, the following instructions will work on an ARM32 device. The instructions assume that you are in the root of this repository.
 
 ```console
 cd samples
