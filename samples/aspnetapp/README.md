@@ -108,7 +108,7 @@ We recommend that you do not use `--rm` in production. It cleans up container re
 
 ## Build and run the sample locally
 
-You can build and run the sample locally with the [.NET Core 2.0 SDK](https://www.microsoft.com/net/download/core) using the following commands. The commands assume that you are in the root of the repository.
+You can build and run the sample locally with the [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core) using the following commands. The commands assume that you are in the root of the repository.
 
 ```console
 cd samples

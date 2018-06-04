@@ -22,14 +22,12 @@ docker run --rm microsoft/dotnet-samples
 
 ## Building .NET Core Samples with Docker
 
-You can build almost the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures. At present, the primary difference is that most .NET Core Docker file samples use the .NET Core 2.0 SDK multi-arch tags, and those don't offer `linux/arm` manifests. Starting with .NET Core 2.1, both .NET Core Runtime and SDK multi-arch tags support Linux ARM32 and are usable on ARM32 devices. [Dockerfile.preview](Dockerfile.preview) and [Dockerfile.preview](Dockerfile.basic-preview) have been added to work around this issue. They use .NET Core 2.1 instead of 2.0.
-
-For example, the following instructions will work on an ARM32 device. The instructions assume that you are in the root of this repository.
+You can build the same [.NET Core console samples](README.md) and [ASP.NET Core sample](../aspnetapp/README.md) on ARM devices as you can on other architectures. For example, the following instructions will work on an ARM32 device. The instructions assume that you are in the root of this repository.
 
 ```console
 cd samples
 cd dotnetapp
-docker build --pull -t dotnetapp -f Dockerfile.preview .
+docker build --pull -t dotnetapp .
 docker run --rm dotnetapp
 ```
 
