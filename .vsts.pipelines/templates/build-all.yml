@@ -1,6 +1,6 @@
 parameters:
-  imageBuilderLinuxImage: microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180522205353
-  imageBuilderWindowsImage: microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180522135321
+  imageBuilderLinuxImage: microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180601162756
+  imageBuilderWindowsImage: microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180601092731
   manifest: manifest.json
   matrixLinuxAmd64:
     Build_1_*:
@@ -14,28 +14,28 @@ parameters:
       buildPath: 2.1*
   matrixWindowsSac2016Amd64:
     Build_1_*:
-      buildPath: 1.*/nanoserver-sac2016/*
-      imageBuilder.customArgs: --var VersionFilter=1.* --var OSFilter=nanoserver-sac2016
+      buildPath: 1.*
+      osVersion: nanoserver-sac2016
     Build_2_0:
-      buildPath: 2.0*/nanoserver-sac2016/*
-      imageBuilder.customArgs: --var VersionFilter=2.0 --var OSFilter=nanoserver-sac2016
+      buildPath: 2.0*
+      osVersion: nanoserver-sac2016
     Build_2_1:
-      buildPath: 2.1*/nanoserver-sac2016/*
-      imageBuilder.customArgs: --var VersionFilter=2.1 --var OSFilter=nanoserver-sac2016
+      buildPath: 2.1*
+      osVersion: nanoserver-sac2016
   matrixWindows1709Amd64:
     Build_2_0:
-      buildPath: 2.0*/nanoserver-1709/*
-      imageBuilder.customArgs: --var VersionFilter=2.0 --var OSFilter=nanoserver-1709
+      buildPath: 2.0*
+      osVersion: nanoserver-1709
     Build_2_1:
-      buildPath: 2.1*/nanoserver-1709/*
-      imageBuilder.customArgs: --var VersionFilter=2.1 --var OSFilter=nanoserver-1709
+      buildPath: 2.1*
+      osVersion: nanoserver-1709
   matrixWindows1803Amd64:
     Build_2_0:
-      buildPath: 2.0*/nanoserver-1803/*
-      imageBuilder.customArgs: --var VersionFilter=2.0 --var OSFilter=nanoserver-1803
+      buildPath: 2.0*
+      osVersion: nanoserver-1803
     Build_2_1:
-      buildPath: 2.1*/nanoserver-1803/*
-      imageBuilder.customArgs: --var VersionFilter=2.1 --var OSFilter=nanoserver-1803
+      buildPath: 2.1*
+      osVersion: nanoserver-1803
 phases:
   - template: build-linux-amd64.yml
     parameters:

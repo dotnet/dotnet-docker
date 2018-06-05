@@ -15,6 +15,7 @@ phases:
     variables:
       docker.baseArtifactName: $(Build.BuildId)
       docker.setupContainerName: setup_$(docker.baseArtifactName)
+      imageBuilder.customArgs: --var VersionFilter=$(buildPath)
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
     steps:
@@ -28,6 +29,6 @@ phases:
       - script: docker rm -f $(docker.setupContainerName)
         displayName: Cleanup Setup Container
         continueOnError: true
-      - script: $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe build --manifest $(manifest) --path $(buildPath) --push --username $(dockerRegistry.userName) --password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.customArgs) $(imageBuilder.queueArgs)
+      - script: $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe build --manifest $(manifest) --path $(buildPath) --os-version $(osVersion) --push --username $(dockerRegistry.userName) --password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.customArgs) $(imageBuilder.queueArgs)
         displayName: Build Images
       - template: docker-cleanup-windows.yml

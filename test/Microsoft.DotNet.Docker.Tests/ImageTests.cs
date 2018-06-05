@@ -26,16 +26,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly ImageData[] s_linuxTestData =
         {
-            new ImageData { DotNetVersion = "1.0", SdkVersion = "1.1" },
-            new ImageData { DotNetVersion = "1.1", RuntimeDepsVersion = "1.0" },
-            new ImageData { DotNetVersion = "2.0" },
+            new ImageData { DotNetVersion = "1.0", OsVariant = OS.Jessie, SdkVersion = "1.1" },
+            new ImageData { DotNetVersion = "1.1", OsVariant = OS.Jessie, RuntimeDepsVersion = "1.0" },
+            new ImageData { DotNetVersion = "2.0", OsVariant = OS.Stretch },
             new ImageData { DotNetVersion = "2.0", OsVariant = OS.Jessie },
-            new ImageData { DotNetVersion = "2.1" },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm" },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, Architecture = "arm" },
-            new ImageData { DotNetVersion = "2.1", IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm", IsWeb = true },
@@ -43,17 +43,17 @@ namespace Microsoft.DotNet.Docker.Tests
         };
         private static readonly ImageData[] s_windowsTestData =
         {
-            new ImageData { DotNetVersion = "1.0", PlatformOS = OS.NanoServerSac2016, SdkVersion = "1.1" },
-            new ImageData { DotNetVersion = "1.1", PlatformOS = OS.NanoServerSac2016 },
-            new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServerSac2016 },
-            new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServer1709 },
-            new ImageData { DotNetVersion = "2.0", PlatformOS = OS.NanoServer1803 },
-            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServerSac2016 },
-            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1709 },
-            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1803 },
-            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServerSac2016, IsWeb = true },
-            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1709, IsWeb = true },
-            new ImageData { DotNetVersion = "2.1", PlatformOS = OS.NanoServer1803, IsWeb = true },
+            new ImageData { DotNetVersion = "1.0", OsVariant = OS.NanoServerSac2016, SdkVersion = "1.1" },
+            new ImageData { DotNetVersion = "1.1", OsVariant = OS.NanoServerSac2016 },
+            new ImageData { DotNetVersion = "2.0", OsVariant = OS.NanoServerSac2016 },
+            new ImageData { DotNetVersion = "2.0", OsVariant = OS.NanoServer1709 },
+            new ImageData { DotNetVersion = "2.0", OsVariant = OS.NanoServer1803 },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServerSac2016 },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1709 },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1803 },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServerSac2016, IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1709, IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1803, IsWeb = true },
         };
 
         private readonly DockerHelper _dockerHelper;
@@ -76,8 +76,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Where(imageData => archFilterPattern == null
                     || Regex.IsMatch(imageData.Architecture, archFilterPattern, RegexOptions.IgnoreCase))
                 .Where(imageData => osFilterPattern == null
-                    || (imageData.PlatformOS != null
-                        && Regex.IsMatch(imageData.PlatformOS, osFilterPattern, RegexOptions.IgnoreCase)))
+                    || (imageData.OsVariant != null
+                        && Regex.IsMatch(imageData.OsVariant, osFilterPattern, RegexOptions.IgnoreCase)))
                 .Where(imageData => versionFilterPattern == null
                     || Regex.IsMatch(imageData.DotNetVersion, versionFilterPattern, RegexOptions.IgnoreCase))
                 .Select(imageData => new object[] { imageData });
@@ -203,8 +203,8 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string frameworkDepAppId = GetIdentifier(imageData.DotNetVersion, "framework-dependent-app");
             bool isRunAsContainerAdministrator = 
-                String.Equals("nanoserver-1709", imageData.PlatformOS, StringComparison.OrdinalIgnoreCase)
-                || String.Equals("nanoserver-1803", imageData.PlatformOS, StringComparison.OrdinalIgnoreCase);
+                String.Equals("nanoserver-1709", imageData.OsVariant, StringComparison.OrdinalIgnoreCase)
+                || String.Equals("nanoserver-1803", imageData.OsVariant, StringComparison.OrdinalIgnoreCase);
             string publishCmd = GetPublishArgs(imageData);
 
             try
@@ -369,7 +369,8 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             string imageName = $"{s_repoOwner}/{s_repoName}:{imageVersion}-{variantName}";
-            if (!string.IsNullOrEmpty(osVariant))
+
+            if (!imageData.DotNetVersion.StartsWith("1."))
             {
                 imageName += $"-{osVariant}";
             }
