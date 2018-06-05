@@ -21,12 +21,15 @@ phases:
       matrixWindowsSac2016Amd64:
         Build:
           buildPath: '*'
-          imageBuilder.customArgs: --os-version sac2016
+          imageBuilder.customArgs: ''
+          osVersion: nanoserver-sac2016
       matrixWindows1709Amd64:
         Build:
           buildPath: '*'
-          imageBuilder.customArgs: --os-version 1709
+          imageBuilder.customArgs: ''
+          osVersion: nanoserver-1709
       matrixWindows1803Amd64:
         Build:
           buildPath: '*'
-          imageBuilder.customArgs: --os-version 1803
+          imageBuilder.customArgs: ''
+          osVersion: nanoserver-1803
