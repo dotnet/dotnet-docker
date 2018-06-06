@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-runtime-deps-bionic-arm32v7
+FROM microsoft/dotnet-nightly:2.1-runtime-deps-bionic-arm32v7
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

@@ -10,7 +10,7 @@
   },
   "repos": [
     {
-      "name": "microsoft/dotnet",
+      "name": "microsoft/dotnet-nightly",
       "readmePath": "README.md",
       "images": [
         {
