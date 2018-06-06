@@ -108,7 +108,7 @@ We recommend that you do not use `--rm` in production. It cleans up container re
 
 ## Build and run the sample locally
 
-You can build and run the sample locally with the [.NET Core 2.0 SDK](https://www.microsoft.com/net/download/core) using the following commands. The commands assume that you are in the root of the repository.
+You can build and run the sample locally with the [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core) using the following commands. The commands assume that you are in the root of the repository.
 
 ```console
 cd samples
@@ -121,7 +121,7 @@ After the application starts, visit `http://localhost:5000` in your web browser.
 You can produce an application that is ready to deploy to production locally using the following command.
 
 ```console
-dotnet publish -c release -o out
+dotnet publish -c Release -o out
 ```
 
 You can run the application using the following commands.
@@ -131,7 +131,7 @@ cd out
 dotnet aspnetapp.dll
 ```
 
-Note: The `-c release` argument builds the application in release mode (the default is debug mode). See the [dotnet publish reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-publish) for more information on commandline parameters.
+Note: The `-c Release` argument builds the application in release mode (the default is debug mode). See the [dotnet publish reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-publish) for more information on commandline parameters.
 
 ## .NET Core Resources
 

@@ -1,4 +1,5 @@
-# This Dockerfile uses nightly preview builds for .NET Core 2.1 RTM
+# This Dockerfile uses nightly preview builds for .NET Core
+# It will be updated to .NET Core 2.2 shortly
 FROM microsoft/dotnet-nightly:2.1-sdk AS build
 WORKDIR /app
 

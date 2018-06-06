@@ -18,8 +18,6 @@ You can also [download the repository as a zip](https://github.com/dotnet/dotnet
 
 ## Requirements
 
-The instructions below use .NET Core 2.1 RC1 images. It is possible to make this scenario work with .NET Core 2.0 images but requires extra work and a bit of magic. On your local machine, you can use either .NET Core 2.1 or .NET Core 2.0 projects to try out these instructions.
-
 It is recommended that you add a [Directory.Build.props](Directory.Build.props) file to your project to use different `obj` and `bin` folders for local and container use, to avoid conflicts between them. You should delete your existing obj and bin folders before making this change. You can also use `dotnet clean` for this purpose.
 
 This approach relies on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to mount source into the container (without using a Dockerfile). You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
