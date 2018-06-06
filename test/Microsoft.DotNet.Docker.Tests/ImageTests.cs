@@ -368,12 +368,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     throw new NotSupportedException($"Unsupported image type '{variantName}'");
             }
 
-            string imageName = $"{s_repoOwner}/{s_repoName}:{imageVersion}-{variantName}";
-
-            if (!imageData.DotNetVersion.StartsWith("1."))
-            {
-                imageName += $"-{osVariant}";
-            }
+            string imageName = $"{s_repoOwner}/{s_repoName}:{imageVersion}-{variantName}-{osVariant}";
 
             if (imageData.IsArm)
             {
