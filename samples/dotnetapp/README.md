@@ -72,8 +72,6 @@ docker run --rm -it dotnetapp:alpine Hello .NET Core from Alpine
 
 [Globalization is disabled](https://github.com/dotnet/announcements/issues/20) by default with Alpine images in order to produce smaller images. You can re-enable globalization if your application relies on it. [Dockerfile.alpine-x64-globalization](Dockerfile.alpine-x64-globalization) enables globalization for Alpine images, but produces larger images.
 
-> Related: [.NET Core Alpine Docker Image announcement](https://github.com/dotnet/dotnet-docker-nightly/issues/500)
-
 ## Build and run the sample for Ubuntu 18.04 with Docker
 
 You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/). You would switch to the following tags:
@@ -106,7 +104,7 @@ You can push the image to a container registry so that you can pull and run it o
 
 ## Build and run the sample locally
 
-You can build and run the sample locally with the [.NET Core 2.0 SDK](https://www.microsoft.com/net/download/core) using the following instructions. The instructions assume that you are in the root of the repository.
+You can build and run the sample locally with the [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core) using the following instructions. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
@@ -117,7 +115,7 @@ dotnet run Hello .NET Core
 You can produce an application that is ready to deploy to production using the following command.
 
 ```console
-dotnet publish -c release -o out
+dotnet publish -c Release -o out
 ```
 
 You can run the published application using the following command:
@@ -127,7 +125,7 @@ cd out
 dotnet dotnetapp.dll
 ```
 
-Note: The `-c release` argument builds the application in release mode (the default is debug mode). See the [dotnet publish reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-publish) for more information on commandline parameters.
+Note: The `-c Release` argument builds the application in release mode (the default is debug mode). See the [dotnet publish reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-publish) for more information on commandline parameters.
 
 ## .NET Resources
 
