@@ -6,4 +6,4 @@ ARG optional_restore_args
 
 EXPOSE 80
 
-RUN dotnet restore -r $rid $optional_restore_args
+RUN dotnet restore /p:RuntimeIdentifier=$rid $optional_restore_args
