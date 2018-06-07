@@ -6,7 +6,7 @@ RUN apk add --no-cache libuv \
     && ln -s /usr/lib/libuv.so.1 /usr/lib/libuv.so
 
 # Install ASP.NET Core
-ENV ASPNETCORE_VERSION 2.1.1-rtm-30843
+ENV ASPNETCORE_VERSION 2.1.1
 
 RUN apk add --no-cache --virtual .build-deps \
         openssl \
