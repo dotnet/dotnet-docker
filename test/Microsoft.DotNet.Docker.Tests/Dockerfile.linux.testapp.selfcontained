@@ -6,4 +6,5 @@ ARG optional_restore_args
 
 EXPOSE 80
 
-RUN dotnet restore -r $rid $optional_restore_args
+# /p:RuntimeIdentifier is user over -r in order to workaround https://github.com/dotnet/sdk/issues/2312
+RUN dotnet restore /p:RuntimeIdentifier=$rid $optional_restore_args
