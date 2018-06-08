@@ -52,16 +52,14 @@ phases:
       phase: NanoServerSac2016_amd64
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
-      queue: DotNetCore-Build
       demands:
-        - agent.os -equals Windows_NT
+        - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
       matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
   - template: build-windows-amd64.yml
     parameters:
       phase: NanoServer1709_amd64
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
-      queue: DotNetCore-Infra
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
       matrix: ${{ parameters.matrixWindows1709Amd64 }}
@@ -70,7 +68,6 @@ phases:
       phase: NanoServer1803_amd64
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
-      queue: DotNetCore-Infra
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
       matrix: ${{ parameters.matrixWindows1803Amd64 }}

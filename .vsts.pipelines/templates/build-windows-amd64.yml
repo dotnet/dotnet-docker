@@ -2,13 +2,12 @@ parameters:
   phase: null
   imageBuilderImage: null
   manifest: null
-  queue: null
   demands: []
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
     queue:
-      name: ${{ parameters.queue }}
+      name: DotNetCore-Infra
       demands: ${{ parameters.demands }}
       parallel: 2
       matrix: ${{ parameters.matrix }}
