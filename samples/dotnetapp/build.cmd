@@ -1,5 +1,4 @@
-REM set pwsh to correct path, or just to "pwsh.exe" if in PATH
+REM pwsh is assumed to be in the path
 REM https://github.com/PowerShell/PowerShell
-set pwsh="C:\Program Files\PowerShell\6-preview\pwsh.exe"
 
-%pwsh% build.ps1
+pwsh build.ps1
