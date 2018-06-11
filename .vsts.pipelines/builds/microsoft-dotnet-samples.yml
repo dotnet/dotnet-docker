@@ -7,7 +7,7 @@ trigger:
       - samples/*
       - manifest.samples.json
 phases:
-  - template: templates/build-all.yml
+  - template: ../phases/build-all.yml
     parameters:
       manifest: manifest.samples.json
       matrixLinuxAmd64:
