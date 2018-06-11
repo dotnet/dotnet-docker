@@ -32,7 +32,7 @@ if ($LASTEXITCODE -ne 0)
 
         if ($IsRunningOnUnix) {
             Write-Output "###### Environment: Unix containers"
-            docker run --rm -v "$(pwd)"/TestResults:/app/tests/TestResults dotnetapp:test
+            docker run --rm -v /"$(pwd)/"/TestResults:/app/tests/TestResults dotnetapp:test
         }
         elseif ($DockerOS -eq "linux") {
             Write-Output "###### Environment: Unix containers on Windows"
