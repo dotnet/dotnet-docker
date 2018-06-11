@@ -19,7 +19,7 @@ platformList.each { platform ->
         versionList = ['1.', '2.0', '2.1']
     }
     else {
-        versionList = ['1.', '2.0', '2.1']
+        versionList = ['1.', '2.0', '2.1', '2.2']
     }
 
     versionList.each { version ->

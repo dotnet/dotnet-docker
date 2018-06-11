@@ -61,3 +61,11 @@ $(TagDoc:2.1.1-runtime-bionic-arm32v7)
 $(TagDoc:2.1.1-runtime-deps-stretch-slim-arm32v7)
 $(TagDoc:2.1.1-runtime-deps-bionic-arm32v7)
 
+# Linux arm64 tags
+
+**.NET Core 2.2 preview 1 tags**
+
+$(TagDoc:2.2.0-preview1-runtime-stretch-slim-arm64v8)
+$(TagDoc:2.2.0-preview1-runtime-bionic-arm64v8)
+$(TagDoc:2.2.0-preview1-runtime-deps-stretch-slim-arm64v8)
+$(TagDoc:2.2.0-preview1-runtime-deps-bionic-arm64v8)
