@@ -1,4 +1,5 @@
 parameters:
+  buildLegTimeoutInMinutes: 90
   imageBuilderLinuxImage: microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180607190320
   imageBuilderWindowsImage: microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180601092731
   manifest: manifest.json
@@ -41,17 +42,20 @@ phases:
     parameters:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}
+      timeoutInMinutes: ${{ parameters.buildLegTimeoutInMinutes }}
       matrix: ${{ parameters.matrixLinuxAmd64 }}
   - template: build-linux-arm32v7.yml
     parameters:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}
+      timeoutInMinutes: ${{ parameters.buildLegTimeoutInMinutes }}
       matrix: ${{ parameters.matrixLinuxArm32v7 }}
   - template: build-windows-amd64.yml
     parameters:
       phase: NanoServerSac2016_amd64
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
+      timeoutInMinutes: ${{ parameters.buildLegTimeoutInMinutes }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
       matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
@@ -60,6 +64,7 @@ phases:
       phase: NanoServer1709_amd64
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
+      timeoutInMinutes: ${{ parameters.buildLegTimeoutInMinutes }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
       matrix: ${{ parameters.matrixWindows1709Amd64 }}
@@ -68,6 +73,7 @@ phases:
       phase: NanoServer1803_amd64
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
+      timeoutInMinutes: ${{ parameters.buildLegTimeoutInMinutes }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
       matrix: ${{ parameters.matrixWindows1803Amd64 }}

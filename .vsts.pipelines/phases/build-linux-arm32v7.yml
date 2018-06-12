@@ -1,11 +1,13 @@
 parameters:
   imageBuilderImage: null
   manifest: null
+  timeoutInMinutes: null
   matrix: {}
 phases:
   - phase: Linux_arm32v7
     queue:
       name: DotNetCore-Infra
+      timeoutInMinutes: ${{ parameters.timeoutInMinutes }}
       demands:
         - VSTS_OS -equals Windows_10_Enterprise
         - DockerVersion
@@ -22,7 +24,7 @@ phases:
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
     steps:
-      - template: docker-cleanup-windows.yml
+      - template: ../steps/docker-cleanup-windows.yml
       - script: docker pull $(imageBuilder.image)
         displayName: Pull Image Builder
       - script: docker create $(docker.certVolumeArg) --name $(docker.setupContainerName) $(imageBuilder.image)
@@ -42,4 +44,4 @@ phases:
         displayName: Cleanup ARM Docker
         condition: always()
         continueOnError: true
-      - template: docker-cleanup-windows.yml
+      - template: ../steps/docker-cleanup-windows.yml

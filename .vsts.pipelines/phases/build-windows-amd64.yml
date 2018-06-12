@@ -2,12 +2,14 @@ parameters:
   phase: null
   imageBuilderImage: null
   manifest: null
+  timeoutInMinutes: null
   demands: []
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
     queue:
       name: DotNetCore-Infra
+      timeoutInMinutes: ${{ parameters.timeoutInMinutes }}
       demands: ${{ parameters.demands }}
       parallel: 2
       matrix: ${{ parameters.matrix }}
@@ -18,7 +20,7 @@ phases:
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
     steps:
-      - template: docker-cleanup-windows.yml
+      - template: ../steps/docker-cleanup-windows.yml
       - script: docker pull $(imageBuilder.image)
         displayName: Pull Image Builder
       - script: docker create --name $(docker.setupContainerName) $(imageBuilder.image)
@@ -30,4 +32,4 @@ phases:
         continueOnError: true
       - script: $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe build --manifest $(manifest) --path $(buildPath) --os-version $(osVersion) --push --username $(dockerRegistry.userName) --password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.customArgs) $(imageBuilder.queueArgs)
         displayName: Build Images
-      - template: docker-cleanup-windows.yml
+      - template: ../steps/docker-cleanup-windows.yml

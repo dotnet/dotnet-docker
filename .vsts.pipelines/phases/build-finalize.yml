@@ -20,11 +20,11 @@ phases:
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
     steps:
-      - template: docker-cleanup-linux.yml
+      - template: ../steps/docker-cleanup-linux.yml
       - script: docker pull $(imageBuilder.image)
         displayName: Pull Image Builder
       - script: docker run --name publish_$(docker.baseArtifactName) $(docker.commonRunArgs) publishManifest $(imageBuilder.commonCmdArgs)
         displayName: Publish Manifest
       - script: docker run --name readme_$(docker.baseArtifactName) $(docker.commonRunArgs) updateReadme $(imageBuilder.commonCmdArgs)
         displayName: Update Readme
-      - template: docker-cleanup-linux.yml
+      - template: ../steps/docker-cleanup-linux.yml
