@@ -5,6 +5,12 @@
 
 # If this script fails, it is probably because docker drive sharing isn't enabled
 
+$Time = [System.Diagnostics.Stopwatch]::StartNew()
+
+function PrintElapsedTime {
+    Log $([string]::Format("Elapsed time: {0}.{1}",$Time.Elapsed.Seconds,$Time.Elapsed.Milliseconds))
+}
+
 function Log {
     Param ([string] $s)
     Write-Output "###### $s"
@@ -18,26 +24,20 @@ function Check {
     }
 }
 
-$Time = [System.Diagnostics.Stopwatch]::StartNew()
-
-function PrintElapsedTime {
-Log $([string]::Format("Elapsed time: {0}.{1}",$Time.Elapsed.Seconds,$Time.Elapsed.Milliseconds))
-}
-
-
 $IsRunningOnUnix = $PSVersionTable.contains("Platform") -and $PSVersionTable.Platform -eq "Unix"
 $DockerOS = docker version -f "{{ .Server.Os }}"
 $ImageName = "dotnetapp"
 $TestImageName = "dotnetapp:test"
+$Dockerfile = "Dockerfile2"
 
 PrintElapsedTime
 Log "Building docker image"
-docker build --pull -t $ImageName .
+docker build --pull -t $ImageName -f $Dockerfile .
 PrintElapsedTime
 Check "docker build"
 
 Log "Building test docker image."
-docker build --pull --target testrunner -t $TestImageName .
+docker build --pull --target testrunner -t $TestImageName -f $Dockerfile .
 PrintElapsedTime
 Check "docker build"
 
