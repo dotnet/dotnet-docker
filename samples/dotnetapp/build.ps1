@@ -20,18 +20,25 @@ function Check {
 
 $Time = [System.Diagnostics.Stopwatch]::StartNew()
 
+function PrintElapsedTime {
+Log $([string]::Format("Elapsed time: {0}.{1}",$Time.Elapsed.Seconds,$Time.Elapsed.Milliseconds))
+}
+
+
 $IsRunningOnUnix = $PSVersionTable.contains("Platform") -and $PSVersionTable.Platform -eq "Unix"
 $DockerOS = docker version -f "{{ .Server.Os }}"
 $ImageName = "dotnetapp"
 $TestImageName = "dotnetapp:test"
 
+PrintElapsedTime
 Log "Building docker image"
 docker build --pull -t $ImageName .
+PrintElapsedTime
 Check "docker build"
 
 Log "Building test docker image."
 docker build --pull --target testrunner -t $TestImageName .
-Log "Time: $($Time.Elapsed.seconds)"
+PrintElapsedTime
 Check "docker build"
 
 $TestResults = "TestResults"
@@ -56,7 +63,7 @@ else {
     docker run --rm -v ${TestResultsDir}:C:\app\tests\${TestResults} $TestImageName
 }
 
-Log "Time: $($Time.Elapsed.seconds)"
+PrintElapsedTime
 
 $testfiles = gci $TestResultsDir *.trx | Sort-Object -Property LastWriteTime | select -last 1
 
