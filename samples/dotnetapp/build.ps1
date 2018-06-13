@@ -19,8 +19,8 @@ function Log {
 function Check {
     Param ([string] $s)
     if ($LASTEXITCODE -ne 0) { 
-        Log $s
-        throw "$s failed"
+        Log "Failed: $s"
+        throw "Error case -- see failed step"
     }
 }
 
@@ -28,18 +28,18 @@ $IsRunningOnUnix = $PSVersionTable.contains("Platform") -and $PSVersionTable.Pla
 $DockerOS = docker version -f "{{ .Server.Os }}"
 $ImageName = "dotnetapp"
 $TestImageName = "dotnetapp:test"
-$Dockerfile = "Dockerfile2"
+$Dockerfile = "Dockerfile"
 
 PrintElapsedTime
-Log "Building docker image"
+Log "Build application image"
 docker build --pull -t $ImageName -f $Dockerfile .
 PrintElapsedTime
-Check "docker build"
+Check "docker build (application)"
 
-Log "Building test docker image."
+Log "Build test runner image"
 docker build --pull --target testrunner -t $TestImageName -f $Dockerfile .
 PrintElapsedTime
-Check "docker build"
+Check "docker build (test runner)"
 
 $TestResults = "TestResults"
 $TestResultsDir = Join-Path $PSScriptRoot $TestResults
@@ -53,6 +53,8 @@ if (!$TestResultsDirExists) {
     gci . TestResults -ad
 }
 Log $TestResultsDir
+
+Log "Run test container with test runner image"
 
 if ($DockerOS -eq "linux") {
     Log "Environment: Linux containers"

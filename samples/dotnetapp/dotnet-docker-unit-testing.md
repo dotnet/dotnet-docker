@@ -123,20 +123,7 @@ You should find a `.trx` file in the TestResults folder. You can open this file 
 
 ## Optimizing Testing Performance
 
-The [sample Dockerfile](Dockerfile) is written conservatively, designed so the `testrunner` stage is as low cost as possible if it is not used. In the case you build to the `testrunner` stage frequently, you will want to make some changes to improve performance. In particular, you will want to build and restore the tests earlier.
-
-Restore packages for the test project in the same section that the rest of the projects are restored. This change avoids the need to restore NuGet packages when running `dotnet test`. The following example updates the Dockerfile to restore the solution, including the tests.
-
-```Dockerfile
-# copy csproj and restore as distinct layers
-COPY *.sln .
-COPY dotnetapp/*.csproj ./dotnetapp/
-COPY utils/*.csproj ./utils/
-COPY tests/*.csproj ./tests/
-RUN dotnet restore
-```
-
-Build tests after the tests are copied into the image. This change avoids the need to build tests running `dotnet test`.
+The [sample Dockerfile](Dockerfile) is written conservatively, designed so the `testrunner` stage is as low cost as possible if it is not used. In the case you build to the `testrunner` stage frequently, you will want to make some changes to improve performance. In particular, you will want to build and restore the tests earlier. The addition of a single `RUN` statement does that, as you seen in the following `Dockerfile` fragement.
 
 ```Dockerfile
 FROM build AS testrunner
@@ -146,19 +133,23 @@ RUN dotnet build
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 ```
 
-Let's look at the performance of these changes on a given machine:
+Let's look at the performance of these changes, before and after, on a given machine:
 
 **Existing Dockerfile**
-* docker build of Dockerfile: 
-* docker build of testrunner stage:
-* docker run of testrunner stage:
+* docker build of Dockerfile: 3.641s
+* docker build of testrunner stage: 1.979s
+* docker run of testrunner stage: 11.263s
+* Total: 16.883s
 
-**After changes above**
-* docker build of Dockerfile: 
-* docker build of testrunner stage:
-* docker run of testrunner stage:
+**After applying Dockerfile fragment above**
+* docker build of Dockerfile: 3.883s
+* docker build of testrunner stage: 2.016s
+* docker run of testrunner stage: 5.902s
+* Total: 11.801s
 
-Note: In all cases, dependent docker images are already cached.
+These numbers represent Docker with a maximum cache available (after multiple runs of the same `Dockerfile`). Ignore any difference between the first two sets of numbers (the two `docker build` numbers). There should be the same in both cases, due to caching. The win is that running the testrunner stage is twice as fast in the second case, showing the value of restoring packages and building the tests within `docker build`. Again, if you are going to make significant use of unit testing, update the `Dockerfile` to build the tests during `build`. 
+
+When you make changes to code or project files, you'll invalidate various caches and Docker will have to do more work, which will take time. When designing a `Dockerfile`, it is important to compare runs with a cache in place and also without. This helps you understand the value of certain `Dockerfile` strategies.
 
 ## More Samples
 
