@@ -12,8 +12,10 @@ function Log {
 
 function Check {
     Param ([string] $s)
-    Log "$s failed"
-    if ($LASTEXITCODE -ne 0) { throw "$s failed"}
+    if ($LASTEXITCODE -ne 0) { 
+        Log s
+        throw "$s failed"
+    }
 }
 
 $IsRunningOnUnix = $PSVersionTable.contains("Platform") -and $PSVersionTable.Platform -eq "Unix"
@@ -23,11 +25,11 @@ $TestImageName = "dotnetapp:test"
 
 Log "Building docker image"
 docker build --pull -t $ImageName .
-Check "docker build failed"
+Check "docker build"
 
 Log "Building test docker image."
 docker build --pull --target testrunner -t $TestImageName .
-Check "docker build failed"
+Check "docker build"
 
 $TestResults = "TestResults"
 $TestResultsDir = Join-Path $PSScriptRoot $TestResults

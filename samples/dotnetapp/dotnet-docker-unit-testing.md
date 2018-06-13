@@ -2,7 +2,7 @@
 
 The testing scenario showcases the value of Docker since testing is more valuable when the test environment has high fidelity with target environments. Imagine you support your application on multiple operating systems or operating system versions. You can test your application in each of them within Docker. It is easy to do and incredibly valuable.
 
-This document is focussed on unit testing as part of container image building. For unit testing as part of development, see [Develop .NET Core Applications in a Container](dotnet-docker-dev-in-container.md).
+This document is focused on unit testing as part of container image building. For unit testing as part of development, see [Develop .NET Core Applications in a Container](dotnet-docker-dev-in-container.md).
 
 These instructions are based on the [.NET Core Docker Sample](README.md).
 
@@ -51,7 +51,7 @@ Running tests via `docker build` is useful as a means of getting early feedback,
 * `docker build` will fail if there are errors, which are inherent to testing.
 * `docker build` doesn't allow volume mounting, which is required to collect test logs.
 
-Testing with `docker run` is a great alternative, since it doesn't suffer from either of these two challenges. Testing with `docker build` is only really useful if you want your build to fail if tests fail. The instructions in this document show you how to test with `docker run`.
+Testing with `docker run` is a great alternative, since it doesn't suffer from either of these two challenges. Testing with `docker build` is only useful if you want your build to fail if tests fail. The instructions in this document show you how to test with `docker run`.
 
 ## Building Test Runner Image
 
