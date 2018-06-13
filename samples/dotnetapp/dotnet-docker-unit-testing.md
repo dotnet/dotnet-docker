@@ -115,11 +115,50 @@ public void ReverseString()
 
 After changing the test, rerun the instructions (including `docker build`) so that you can see the failure.
 
-### Reading the Results
+## Reading the Results
 
 You should find a `.trx` file in the TestResults folder. You can open this file in Visual Studio to see the results of the test run, as you can see in the following image. You can open in Visual Studio (File -> Open -> File) or double-click on the TRX file (if you have Visual Studio installed). There are other TRX file viewers available as well that you can search for.
 
 ![Visual Studio Test Results](https://user-images.githubusercontent.com/2608468/35361940-2f5ab914-0118-11e8-9c40-4f252f4568f0.png)
+
+## Optimizing Testing Performance
+
+The [sample Dockerfile](Dockerfile) is written conservatively, designed so the `testrunner` stage is as low cost as possible if it is not used. In the case you build to the `testrunner` stage frequently, you will want to make some changes to improve performance. In particular, you will want to build and restore the tests earlier.
+
+Restore packages for the test project in the same section that the rest of the projects are restored. This change avoids the need to restore NuGet packages when running `dotnet test`. The following example updates the Dockerfile to restore the solution, including the tests.
+
+```Dockerfile
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY dotnetapp/*.csproj ./dotnetapp/
+COPY utils/*.csproj ./utils/
+COPY tests/*.csproj ./tests/
+RUN dotnet restore
+```
+
+Build tests after the tests are copied into the image. This change avoids the need to build tests running `dotnet test`.
+
+```Dockerfile
+FROM build AS testrunner
+WORKDIR /app/tests
+COPY tests/. .
+RUN dotnet build
+ENTRYPOINT ["dotnet", "test", "--logger:trx"]
+```
+
+Let's look at the performance of these changes on a given machine:
+
+**Existing Dockerfile**
+* docker build of Dockerfile: 
+* docker build of testrunner stage:
+* docker run of testrunner stage:
+
+**After changes above**
+* docker build of Dockerfile: 
+* docker build of testrunner stage:
+* docker run of testrunner stage:
+
+Note: In all cases, dependent docker images are already cached.
 
 ## More Samples
 

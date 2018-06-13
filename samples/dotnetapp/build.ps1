@@ -13,7 +13,7 @@ function Log {
 function Check {
     Param ([string] $s)
     if ($LASTEXITCODE -ne 0) { 
-        Log s
+        Log $s
         throw "$s failed"
     }
 }

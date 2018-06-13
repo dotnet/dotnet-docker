@@ -17,8 +17,7 @@ WORKDIR /app/dotnetapp
 RUN dotnet publish -c Release -o out
 
 
-# optional stage - build to stage to run tests
-# https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-unit-testing.md
+# test application -- see: dotnet-docker-unit-testing.md
 FROM build AS testrunner
 WORKDIR /app/tests
 COPY tests/. .

@@ -18,8 +18,7 @@ RUN dotnet add package ILLink.Tasks -v 0.1.4-preview-981901 -s https://dotnet.my
 RUN dotnet publish -c Release -r linux-x64 -o out /p:ShowLinkerSizeComparison=true
 
 
-# optional stage - build to stage to run tests
-# https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-unit-testing.md
+# test application -- see: dotnet-docker-unit-testing.md
 FROM build AS testrunner
 WORKDIR /app/tests
 COPY tests/. .
