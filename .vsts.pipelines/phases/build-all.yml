@@ -10,7 +10,7 @@ parameters:
       buildPath: 2.0*
     Build_1_*:
       buildPath: 1.*
-   matrixLinuxArm32v7:
+  matrixLinuxArm32v7:
     Build_2_1:
       buildPath: 2.1*
   matrixWindowsSac2016Amd64:
