@@ -1,6 +1,7 @@
-# copy csproj and restore as distinct layers
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /app
+
+# copy csproj and restore as distinct layers
 COPY dotnetapp/*.csproj ./dotnetapp/
 COPY utils/*.csproj ./utils/
 WORKDIR /app/dotnetapp
