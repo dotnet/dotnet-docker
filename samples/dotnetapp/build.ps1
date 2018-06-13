@@ -2,7 +2,8 @@
 #
 # Copyright (c) .NET Foundation and contributors. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
-#
+
+# If this script fails, it is probably because docker drive sharing isn't enabled
 
 function Log {
     Param ([string] $s)
@@ -11,7 +12,8 @@ function Log {
 
 function Check {
     Param ([string] $s)
-    if ($LASTEXITCODE -ne 0) { throw "###### $s failed ######" }
+    Log "$s failed"
+    if ($LASTEXITCODE -ne 0) { throw "$s failed"}
 }
 
 $IsRunningOnUnix = $PSVersionTable.contains("Platform") -and $PSVersionTable.Platform -eq "Unix"
@@ -40,12 +42,8 @@ if (!$TestResultsDirExists) {
 }
 Log "$TestResults location: $TestResultsDir"
 
-if ($IsRunningOnUnix) {
-    Log "Environment: Unix containers"
-    docker run --rm -v ${TestResultsDir}:/app/tests/${TestResults} $TestImageName
-}
-elseif ($DockerOS -eq "linux") {
-    Log "Environment: Unix containers on Windows"
+if ($DockerOS -eq "linux") {
+    Log "Environment: Linux containers"
     docker run --rm -v ${TestResultsDir}:/app/tests/${TestResults} $TestImageName        
 }
 else {
