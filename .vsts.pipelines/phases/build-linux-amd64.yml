@@ -1,11 +1,13 @@
 parameters:
   imageBuilderImage: null
   manifest: null
+  timeoutInMinutes: null
   matrix: {}
 phases:
   - phase: Linux_amd64
     queue:
       name: DotNet-Build
+      timeoutInMinutes: ${{ parameters.timeoutInMinutes }}
       demands:
         - agent.os -equals linux
       parallel: 3
@@ -15,7 +17,7 @@ phases:
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
     steps:
-      - template: docker-cleanup-linux.yml
+      - template: ../steps/docker-cleanup-linux.yml
       - script: docker pull $(imageBuilder.image)
         displayName: Pull Image Builder
         # The script task does not currently work for Build Images on Linux (curl ssl issues), using CmdLine as workaround.
@@ -24,4 +26,4 @@ phases:
         inputs:
           filename: docker
           arguments: run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name image_builder_$(Build.BuildId) $(imageBuilder.image) build --manifest $(manifest) --path $(buildPath) --push --username $(dockerRegistry.userName) --password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.customArgs) $(imageBuilder.queueArgs)
-      - template: docker-cleanup-linux.yml
+      - template: ../steps/docker-cleanup-linux.yml
