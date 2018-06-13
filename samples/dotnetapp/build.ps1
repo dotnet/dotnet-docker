@@ -42,7 +42,7 @@ if (!$TestResultsDirExists) {
     mkdir $TestResultsDir
     gci . TestResults -ad
 }
-Log "$TestResults location: $TestResultsDir"
+Log $TestResultsDir
 
 if ($DockerOS -eq "linux") {
     Log "Environment: Linux containers"
