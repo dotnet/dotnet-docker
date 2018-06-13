@@ -38,7 +38,7 @@ if (!$TestResultsDirExists) {
     mkdir $TestResultsDir
     gci . TestResults -ad
 }
-Log $TestResults location: $TestResultsDir
+Log "$TestResults location: $TestResultsDir"
 
 if ($IsRunningOnUnix) {
     Log "Environment: Unix containers"
