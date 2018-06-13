@@ -18,6 +18,8 @@ function Check {
     }
 }
 
+$Time = [System.Diagnostics.Stopwatch]::StartNew()
+
 $IsRunningOnUnix = $PSVersionTable.contains("Platform") -and $PSVersionTable.Platform -eq "Unix"
 $DockerOS = docker version -f "{{ .Server.Os }}"
 $ImageName = "dotnetapp"
@@ -29,6 +31,7 @@ Check "docker build"
 
 Log "Building test docker image."
 docker build --pull --target testrunner -t $TestImageName .
+Log "Time: $($Time.Elapsed.seconds)"
 Check "docker build"
 
 $TestResults = "TestResults"
@@ -52,6 +55,8 @@ else {
     Log "Environment: Windows containers"
     docker run --rm -v ${TestResultsDir}:C:\app\tests\${TestResults} $TestImageName
 }
+
+Log "Time: $($Time.Elapsed.seconds)"
 
 $testfiles = gci $TestResultsDir *.trx | Sort-Object -Property LastWriteTime | select -last 1
 
