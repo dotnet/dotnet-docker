@@ -27,32 +27,33 @@ Log "Building test docker image."
 docker build --pull --target testrunner -t $TestImageName .
 Check "docker build failed"
 
-$TestResultsName = "TestResults"
-$TestResults = Join-Path $PSScriptRoot $TestResultsName
-$TestResultsExists = (Test-Path -Path $TestResults)
+$TestResults = "TestResults"
+$TestResultsDir = Join-Path $PSScriptRoot $TestResults
+$TestResultsDirExists = (Test-Path -Path $TestResultsDir)
 
-Log "Check if $TestResultsName directory exists: $TestResultsExists"
+Log "Check if $TestResults directory exists: $TestResultsDirExists"
 
-if (!$TestResultsExists) {
-    Log "Create $TestResultsName folder"
-    mkdir $TestResults
+if (!$TestResultsDirExists) {
+    Log "Create $TestResults folder"
+    mkdir $TestResultsDir
     gci . TestResults -ad
 }
+Log $TestResults location: $TestResultsDir
 
 if ($IsRunningOnUnix) {
     Log "Environment: Unix containers"
-    docker run --rm -v ${TestResults}:/app/tests/${TestResultsName} $TestImageName
+    docker run --rm -v ${TestResultsDir}:/app/tests/${TestResults} $TestImageName
 }
 elseif ($DockerOS -eq "linux") {
     Log "Environment: Unix containers on Windows"
-    docker run --rm -v ${TestResults}:/app/tests/${TestResultsName} $TestImageName        
+    docker run --rm -v ${TestResultsDir}:/app/tests/${TestResults} $TestImageName        
 }
 else {
     Log "Environment: Windows containers"
-    docker run --rm -v ${TestResults}:C:\app\tests\${TestResultsName} $TestImageName
+    docker run --rm -v ${TestResultsDir}:C:\app\tests\${TestResults} $TestImageName
 }
 
-$testfiles = gci $TestResults *.trx | Sort-Object -Property LastWriteTime | select -last 1
+$testfiles = gci $TestResultsDir *.trx | Sort-Object -Property LastWriteTime | select -last 1
 
 Log "Docker image built: $ImageName"
 Log "Test log file:"
