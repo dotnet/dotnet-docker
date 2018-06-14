@@ -2,36 +2,29 @@ FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
-COPY *.sln .
 COPY dotnetapp/*.csproj ./dotnetapp/
 COPY utils/*.csproj ./utils/
-COPY tests/*.csproj ./tests/
+WORKDIR /app/dotnetapp
 RUN dotnet restore
 
-# copy everything else and build app
-COPY . .
-WORKDIR /app/dotnetapp
-RUN dotnet build
-
-
-FROM build AS testrunner
-WORKDIR /app/tests
-ENTRYPOINT ["dotnet", "test", "--logger:trx"]
-
-
-FROM build AS test
-WORKDIR /app/tests
-RUN dotnet test
-
-
-FROM build AS publish
+# copy and build app and libraries
+WORKDIR /app/
+COPY dotnetapp/. ./dotnetapp/
+COPY utils/. ./utils/
 WORKDIR /app/dotnetapp
 # add IL Linker package
-RUN dotnet add package ILLink.Tasks -v 0.1.4-preview-981901 -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
+RUN dotnet add package ILLink.Tasks -v 0.1.5-preview-1461378 -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
 RUN dotnet publish -c Release -r linux-musl-x64 -o out /p:ShowLinkerSizeComparison=true
+
+
+# test application -- see: dotnet-docker-unit-testing.md
+FROM build AS testrunner
+WORKDIR /app/tests
+COPY tests/. .
+ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 
 FROM microsoft/dotnet:2.1-runtime-deps-alpine AS runtime
 WORKDIR /app
-COPY --from=publish /app/dotnetapp/out ./
+COPY --from=build /app/dotnetapp/out ./
 ENTRYPOINT ["./dotnetapp"]

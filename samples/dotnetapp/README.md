@@ -50,8 +50,6 @@ Multiple variations of this sample have been provided, as follows. Some of these
 
 * [Multi-arch sample with build and unit testing](Dockerfile)
 * [Multi-arch sample with build and unit testing, using a preview version of .NET Core](Dockerfile.preview)
-* [Multi-arch basic sample](Dockerfile.basic)
-* [Multi-arch basic sample, using a preview version of .NET Core](Dockerfile.basic-preview)
 * [Alpine x64 sample, with build and unit testing](Dockerfile.alpine-x64)
 * [Alpine x64 sample, with Globalization enabled](Dockerfile.alpine-x64-globalization)
 * [Alpine x64 self-contained sample, with build and unit testing](Dockerfile.alpine-x64-selfcontained)
