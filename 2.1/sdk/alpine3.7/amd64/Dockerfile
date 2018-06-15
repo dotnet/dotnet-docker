@@ -13,7 +13,7 @@ ENV DOTNET_SDK_VERSION 2.1.301
 RUN apk add --no-cache --virtual .build-deps \
         openssl \
     && wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='a4b13b6a882a590a490ea37f263688092fedb237bda59b00dec7122c59d8631d02bea84ce6d38d96342f27795543c6b7b0f64dfbb1fb39dd44a608ede37ab4e7' \
+    && dotnet_sha512='86e288cce53999b719ced7959f5ba652f667b8c1e0aec266c3012c9870380e5142e3f5ac103f03691d4426158d9da4d7c89f0739dee5815419a6150c8ee84a12' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \
