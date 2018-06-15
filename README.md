@@ -153,7 +153,7 @@ It contains the .NET Core SDK which is comprised of two parts:
 
 Use this image for your development process (developing, building and testing applications).
 
-### `microsoft/dotnet:<version>-aspnet-core-runtime`
+### `microsoft/dotnet:<version>-aspnetcore-runtime`
 
 This image contains the ASP.NET Core and .NET Core runtimes and libraries and is optimized for running ASP.NET Core apps in production.
 
