@@ -71,6 +71,8 @@ dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Deve
 
 > Note: The password must match the password used for the certificate.
 
+> Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
+
 Build a container image:
 
 ```console
