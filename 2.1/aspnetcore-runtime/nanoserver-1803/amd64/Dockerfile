@@ -29,7 +29,6 @@ COPY --from=installer-env ["dotnet", "C:\\Program Files\\dotnet"]
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"
-USER ContainerUser
 
 # Configure web servers to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80 `
