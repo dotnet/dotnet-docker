@@ -21,7 +21,6 @@ namespace Microsoft.DotNet.Docker.Tests
         public bool IsAlpine { get => String.Equals(OS.Alpine, OsVariant, StringComparison.OrdinalIgnoreCase); }
         public bool IsArm { get => String.Equals("arm", Architecture, StringComparison.OrdinalIgnoreCase); }
         public string OsVariant { get; set; }
-        public string PlatformOS { get; set; }
 
         public string RuntimeDepsVersion
         {

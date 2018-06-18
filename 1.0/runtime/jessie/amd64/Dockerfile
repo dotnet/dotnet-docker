@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.0-runtime-deps
+FROM microsoft/dotnet:1.0-runtime-deps-jessie
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

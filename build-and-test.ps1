@@ -70,9 +70,6 @@ try {
             ForEach-Object {
                 $dockerfilePath = $_.dockerfile
                 $tags = [array]($_.Tags | ForEach-Object { $_.PSobject.Properties })
-                if ([bool]($images.PSobject.Properties.name -match "sharedtags")) {
-                    $tags += [array]($images.sharedtags | ForEach-Object { $_.PSobject.Properties })
-                }
                 $qualifiedTags = $tags | ForEach-Object { $manifestRepo.Name + ':' + $_.Name}
                 $formattedTags = $qualifiedTags -join ', '
                 Write-Host "--- Building $formattedTags from $dockerfilePath ---"

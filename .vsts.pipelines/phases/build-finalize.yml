@@ -1,0 +1,30 @@
+parameters:
+  imageBuilderImage: null
+  manifest: null
+phases:
+  - phase: Finalize
+    dependsOn:
+      - Linux_amd64
+      - Linux_arm32v7
+      - NanoServerSac2016_amd64
+      - NanoServer1709_amd64
+      - NanoServer1803_amd64
+    queue:
+      name: DotNet-Build
+      demands:
+        - agent.os -equals linux
+    variables:
+      docker.baseArtifactName: $(Build.BuildId)
+      docker.commonRunArgs: --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo $(imageBuilder.image)
+      imageBuilder.commonCmdArgs: --manifest $(manifest) --username $(dockerRegistry.userName) --password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs)
+      imageBuilder.image: ${{ parameters.imageBuilderImage }}
+      manifest: ${{ parameters.manifest }}
+    steps:
+      - template: ../steps/docker-cleanup-linux.yml
+      - script: docker pull $(imageBuilder.image)
+        displayName: Pull Image Builder
+      - script: docker run --name publish_$(docker.baseArtifactName) $(docker.commonRunArgs) publishManifest $(imageBuilder.commonCmdArgs)
+        displayName: Publish Manifest
+      - script: docker run --name readme_$(docker.baseArtifactName) $(docker.commonRunArgs) updateReadme $(imageBuilder.commonCmdArgs)
+        displayName: Update Readme
+      - template: ../steps/docker-cleanup-linux.yml

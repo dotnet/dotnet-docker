@@ -5,7 +5,7 @@
       "docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner pwsh -File ./test/run-test.ps1 -VersionFilter $(VersionFilter) -ArchitectureFilter $(ArchitectureFilter) -RepoOwner $(System:RepoOwner)"
     ],
     "windows": [
-      "powershell -NoProfile -Command .\\test\\run-test.ps1 -VersionFilter $(VersionFilter) -OSFilter $(OSFilter) -RepoOwner $(System:RepoOwner)"
+      "powershell -NoProfile -Command .\\test\\run-test.ps1 -VersionFilter $(VersionFilter) -OSFilter $(System:OsVersion) -RepoOwner $(System:RepoOwner)"
     ]
   },
   "repos": [
@@ -30,6 +30,7 @@
               "os": "linux",
               "tags": {
                 "1.0.11-runtime-deps-jessie": {},
+                "1.0-runtime-deps-jessie": {},
                 "1.0-core-deps": {
                   "isUndocumented": true
                 },
@@ -54,6 +55,7 @@
               "os": "linux",
               "tags": {
                 "1.0.11-runtime-jessie": {},
+                "1.0-runtime-jessie": {},
                 "1.0-core": {
                   "isUndocumented": true
                 }
@@ -62,8 +64,10 @@
             {
               "dockerfile": "1.0/runtime/nanoserver-sac2016/amd64",
               "os": "windows",
+              "osVersion": "nanoserver-sac2016",
               "tags": {
                 "1.0.11-runtime-nanoserver-sac2016": {},
+                "1.0-runtime-nanoserver-sac2016": {},
                 "1.0-runtime-nanoserver": {
                   "isUndocumented": true
                 }
@@ -85,6 +89,7 @@
               "os": "linux",
               "tags": {
                 "1.1.8-runtime-jessie": {},
+                "1.1-runtime-jessie": {},
                 "1-core": {
                   "isUndocumented": true
                 },
@@ -96,8 +101,10 @@
             {
               "dockerfile": "1.1/runtime/nanoserver-sac2016/amd64",
               "os": "windows",
+              "osVersion": "nanoserver-sac2016",
               "tags": {
                 "1.1.8-runtime-nanoserver-sac2016": {},
+                "1.1-runtime-nanoserver-sac2016": {},
                 "1.1-runtime-nanoserver": {
                   "isUndocumented": true
                 },
@@ -127,14 +134,17 @@
               "dockerfile": "1.1/sdk/jessie/amd64",
               "os": "linux",
               "tags": {
-                "1.1.8-sdk-1.1.9-jessie": {}
+                "1.1.8-sdk-1.1.9-jessie": {},
+                "1.1-sdk-jessie": {}
               }
             },
             {
               "dockerfile": "1.1/sdk/nanoserver-sac2016/amd64",
               "os": "windows",
+              "osVersion": "nanoserver-sac2016",
               "tags": {
                 "1.1.8-sdk-1.1.9-nanoserver-sac2016": {},
+                "1.1-sdk-nanoserver-sac2016": {},
                 "1.1-sdk-nanoserver": {
                   "isUndocumented": true
                 },
@@ -187,6 +197,7 @@
             {
               "dockerfile": "2.0/runtime/nanoserver-sac2016/amd64",
               "os": "windows",
+              "osVersion": "nanoserver-sac2016",
               "tags": {
                 "2.0.7-runtime-nanoserver-sac2016": {},
                 "2.0-runtime-nanoserver-sac2016": {},
@@ -198,7 +209,7 @@
             {
               "dockerfile": "2.0/runtime/nanoserver-1709/amd64",
               "os": "windows",
-              "osVersion": "1709",
+              "osVersion": "nanoserver-1709",
               "tags": {
                 "2.0.7-runtime-nanoserver-1709": {},
                 "2.0-runtime-nanoserver-1709": {}
@@ -207,7 +218,7 @@
             {
               "dockerfile": "2.0/runtime/nanoserver-1803/amd64",
               "os": "windows",
-              "osVersion": "1803",
+              "osVersion": "nanoserver-1803",
               "tags": {
                 "2.0.7-runtime-nanoserver-1803": {},
                 "2.0-runtime-nanoserver-1803": {}
@@ -232,6 +243,7 @@
             {
               "dockerfile": "2.0/sdk/nanoserver-sac2016/amd64",
               "os": "windows",
+              "osVersion": "nanoserver-sac2016",
               "tags": {
                 "2.0.7-sdk-2.1.200-nanoserver-sac2016": {},
                 "2.0-sdk-nanoserver-sac2016": {},
@@ -243,7 +255,7 @@
             {
               "dockerfile": "2.0/sdk/nanoserver-1709/amd64",
               "os": "windows",
-              "osVersion": "1709",
+              "osVersion": "nanoserver-1709",
               "tags": {
                 "2.0.7-sdk-2.1.200-nanoserver-1709": {},
                 "2.0-sdk-nanoserver-1709": {}
@@ -252,7 +264,7 @@
             {
               "dockerfile": "2.0/sdk/nanoserver-1803/amd64",
               "os": "windows",
-              "osVersion": "1803",
+              "osVersion": "nanoserver-1803",
               "tags": {
                 "2.0.7-sdk-2.1.200-nanoserver-1803": {},
                 "2.0-sdk-nanoserver-1803": {}
@@ -366,6 +378,7 @@
             {
               "dockerfile": "2.1/runtime/nanoserver-sac2016/amd64",
               "os": "windows",
+              "osVersion": "nanoserver-sac2016",
               "tags": {
                 "2.1.0-runtime-nanoserver-sac2016": {},
                 "2.1-runtime-nanoserver-sac2016": {},
@@ -377,7 +390,7 @@
             {
               "dockerfile": "2.1/runtime/nanoserver-1709/amd64",
               "os": "windows",
-              "osVersion": "1709",
+              "osVersion": "nanoserver-1709",
               "tags": {
                 "2.1.0-runtime-nanoserver-1709": {},
                 "2.1-runtime-nanoserver-1709": {}
@@ -386,7 +399,7 @@
             {
               "dockerfile": "2.1/runtime/nanoserver-1803/amd64",
               "os": "windows",
-              "osVersion": "1803",
+              "osVersion": "nanoserver-1803",
               "tags": {
                 "2.1.0-runtime-nanoserver-1803": {},
                 "2.1-runtime-nanoserver-1803": {}
@@ -425,6 +438,7 @@
             {
               "dockerfile": "2.1/aspnetcore-runtime/nanoserver-sac2016/amd64",
               "os": "windows",
+              "osVersion": "nanoserver-sac2016",
               "tags": {
                 "2.1.0-aspnetcore-runtime-nanoserver-sac2016": {},
                 "2.1-aspnetcore-runtime-nanoserver-sac2016": {}
@@ -433,7 +447,7 @@
             {
               "dockerfile": "2.1/aspnetcore-runtime/nanoserver-1709/amd64",
               "os": "windows",
-              "osVersion": "1709",
+              "osVersion": "nanoserver-1709",
               "tags": {
                 "2.1.0-aspnetcore-runtime-nanoserver-1709": {},
                 "2.1-aspnetcore-runtime-nanoserver-1709": {}
@@ -442,7 +456,7 @@
             {
               "dockerfile": "2.1/aspnetcore-runtime/nanoserver-1803/amd64",
               "os": "windows",
-              "osVersion": "1803",
+              "osVersion": "nanoserver-1803",
               "tags": {
                 "2.1.0-aspnetcore-runtime-nanoserver-1803": {},
                 "2.1-aspnetcore-runtime-nanoserver-1803": {}
@@ -482,6 +496,7 @@
             {
               "dockerfile": "2.1/sdk/nanoserver-sac2016/amd64",
               "os": "windows",
+              "osVersion": "nanoserver-sac2016",
               "tags": {
                 "2.1.300-sdk-nanoserver-sac2016": {},
                 "2.1-sdk-nanoserver-sac2016": {},
@@ -493,7 +508,7 @@
             {
               "dockerfile": "2.1/sdk/nanoserver-1709/amd64",
               "os": "windows",
-              "osVersion": "1709",
+              "osVersion": "nanoserver-1709",
               "tags": {
                 "2.1.300-sdk-nanoserver-1709": {},
                 "2.1-sdk-nanoserver-1709": {}
@@ -502,7 +517,7 @@
             {
               "dockerfile": "2.1/sdk/nanoserver-1803/amd64",
               "os": "windows",
-              "osVersion": "1803",
+              "osVersion": "nanoserver-1803",
               "tags": {
                 "2.1.300-sdk-nanoserver-1803": {},
                 "2.1-sdk-nanoserver-1803": {}

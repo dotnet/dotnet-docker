@@ -52,10 +52,10 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 - [`2.0.7-runtime-jessie`, `2.0-runtime-jessie` (*2.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/jessie/amd64/Dockerfile)
 - [`2.0.7-runtime-deps-stretch`, `2.0-runtime-deps-stretch`, `2.0.7-runtime-deps`, `2.0-runtime-deps` (*2.0/runtime-deps/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/amd64/Dockerfile)
 - [`2.0.7-runtime-deps-jessie`, `2.0-runtime-deps-jessie` (*2.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/jessie/amd64/Dockerfile)
-- [`1.1.8-sdk-1.1.9-jessie`, `1.1.8-sdk-1.1.9`, `1.1-sdk` (*1.1/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/jessie/amd64/Dockerfile)
-- [`1.1.8-runtime-jessie`, `1.1.8-runtime`, `1.1-runtime` (*1.1/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/jessie/amd64/Dockerfile)
-- [`1.0.11-runtime-jessie`, `1.0.11-runtime`, `1.0-runtime` (*1.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/jessie/amd64/Dockerfile)
-- [`1.0.11-runtime-deps-jessie`, `1.0.11-runtime-deps`, `1.0-runtime-deps` (*1.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime-deps/jessie/amd64/Dockerfile)
+- [`1.1.8-sdk-1.1.9-jessie`, `1.1-sdk-jessie`, `1.1.8-sdk-1.1.9`, `1.1-sdk` (*1.1/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/jessie/amd64/Dockerfile)
+- [`1.1.8-runtime-jessie`, `1.1-runtime-jessie`, `1.1.8-runtime`, `1.1-runtime` (*1.1/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/jessie/amd64/Dockerfile)
+- [`1.0.11-runtime-jessie`, `1.0-runtime-jessie`, `1.0.11-runtime`, `1.0-runtime` (*1.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/jessie/amd64/Dockerfile)
+- [`1.0.11-runtime-deps-jessie`, `1.0-runtime-deps-jessie`, `1.0.11-runtime-deps`, `1.0-runtime-deps` (*1.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime-deps/jessie/amd64/Dockerfile)
 
 # Windows Server, version 1803 amd64 tags
 
@@ -80,9 +80,9 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 - [`2.1.0-runtime-nanoserver-sac2016`, `2.1-runtime-nanoserver-sac2016`, `2.1.0-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`2.0.7-sdk-2.1.200-nanoserver-sac2016`, `2.0-sdk-nanoserver-sac2016`, `2.0.7-sdk-2.1.200`, `2.0-sdk` (*2.0/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-sac2016/amd64/Dockerfile)
 - [`2.0.7-runtime-nanoserver-sac2016`, `2.0-runtime-nanoserver-sac2016`, `2.0.7-runtime`, `2.0-runtime` (*2.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`1.1.8-sdk-1.1.9-nanoserver-sac2016`, `1.1.8-sdk-1.1.9`, `1.1-sdk` (*1.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`1.1.8-runtime-nanoserver-sac2016`, `1.1.8-runtime`, `1.1-runtime` (*1.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`1.0.11-runtime-nanoserver-sac2016`, `1.0.11-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`1.1.8-sdk-1.1.9-nanoserver-sac2016`, `1.1-sdk-nanoserver-sac2016`, `1.1.8-sdk-1.1.9`, `1.1-sdk` (*1.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`1.1.8-runtime-nanoserver-sac2016`, `1.1-runtime-nanoserver-sac2016`, `1.1.8-runtime`, `1.1-runtime` (*1.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`1.0.11-runtime-nanoserver-sac2016`, `1.0-runtime-nanoserver-sac2016`, `1.0.11-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
 
 # Linux arm32 tags
 
