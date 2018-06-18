@@ -319,7 +319,7 @@
         },
         {
           "sharedTags": {
-            "2.1.0-runtime-deps": {},
+            "2.1.1-runtime-deps": {},
             "2.1-runtime-deps": {},
             "runtime-deps": {},
             "2-runtime-deps": {
@@ -331,7 +331,7 @@
               "dockerfile": "2.1/runtime-deps/stretch-slim/amd64",
               "os": "linux",
               "tags": {
-                "2.1.0-runtime-deps-stretch-slim": {},
+                "2.1.1-runtime-deps-stretch-slim": {},
                 "2.1-runtime-deps-stretch-slim": {}
               }
             },
@@ -340,7 +340,7 @@
               "dockerfile": "2.1/runtime-deps/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.0-runtime-deps-stretch-slim-arm32v7": {},
+                "2.1.1-runtime-deps-stretch-slim-arm32v7": {},
                 "2.1-runtime-deps-stretch-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -349,7 +349,7 @@
         },
         {
           "sharedTags": {
-            "2.1.0-runtime": {},
+            "2.1.1-runtime": {},
             "2.1-runtime": {},
             "runtime": {},
             "2-runtime": {
@@ -361,7 +361,7 @@
               "dockerfile": "2.1/runtime/stretch-slim/amd64",
               "os": "linux",
               "tags": {
-                "2.1.0-runtime-stretch-slim": {},
+                "2.1.1-runtime-stretch-slim": {},
                 "2.1-runtime-stretch-slim": {}
               }
             },
@@ -370,7 +370,7 @@
               "dockerfile": "2.1/runtime/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.0-runtime-stretch-slim-arm32v7": {},
+                "2.1.1-runtime-stretch-slim-arm32v7": {},
                 "2.1-runtime-stretch-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -380,7 +380,7 @@
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
               "tags": {
-                "2.1.0-runtime-nanoserver-sac2016": {},
+                "2.1.1-runtime-nanoserver-sac2016": {},
                 "2.1-runtime-nanoserver-sac2016": {},
                 "2-runtime-nanoserver": {
                   "isUndocumented": true
@@ -392,7 +392,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1709",
               "tags": {
-                "2.1.0-runtime-nanoserver-1709": {},
+                "2.1.1-runtime-nanoserver-1709": {},
                 "2.1-runtime-nanoserver-1709": {}
               }
             },
@@ -401,7 +401,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1803",
               "tags": {
-                "2.1.0-runtime-nanoserver-1803": {},
+                "2.1.1-runtime-nanoserver-1803": {},
                 "2.1-runtime-nanoserver-1803": {}
               }
             }
@@ -409,7 +409,7 @@
         },
         {
           "sharedTags": {
-            "2.1.0-aspnetcore-runtime": {},
+            "2.1.1-aspnetcore-runtime": {},
             "2.1-aspnetcore-runtime": {},
             "aspnetcore-runtime": {},
             "2-aspnetcore-runtime": {
@@ -421,7 +421,7 @@
               "dockerfile": "2.1/aspnetcore-runtime/stretch-slim/amd64",
               "os": "linux",
               "tags": {
-                "2.1.0-aspnetcore-runtime-stretch-slim": {},
+                "2.1.1-aspnetcore-runtime-stretch-slim": {},
                 "2.1-aspnetcore-runtime-stretch-slim": {}
               }
             },
@@ -430,7 +430,7 @@
               "dockerfile": "2.1/aspnetcore-runtime/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.0-aspnetcore-runtime-stretch-slim-arm32v7": {},
+                "2.1.1-aspnetcore-runtime-stretch-slim-arm32v7": {},
                 "2.1-aspnetcore-runtime-stretch-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -440,7 +440,7 @@
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
               "tags": {
-                "2.1.0-aspnetcore-runtime-nanoserver-sac2016": {},
+                "2.1.1-aspnetcore-runtime-nanoserver-sac2016": {},
                 "2.1-aspnetcore-runtime-nanoserver-sac2016": {}
               }
             },
@@ -449,7 +449,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1709",
               "tags": {
-                "2.1.0-aspnetcore-runtime-nanoserver-1709": {},
+                "2.1.1-aspnetcore-runtime-nanoserver-1709": {},
                 "2.1-aspnetcore-runtime-nanoserver-1709": {}
               }
             },
@@ -458,7 +458,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1803",
               "tags": {
-                "2.1.0-aspnetcore-runtime-nanoserver-1803": {},
+                "2.1.1-aspnetcore-runtime-nanoserver-1803": {},
                 "2.1-aspnetcore-runtime-nanoserver-1803": {}
               }
             }
@@ -466,7 +466,7 @@
         },
         {
           "sharedTags": {
-            "2.1.300-sdk": {},
+            "2.1.301-sdk": {},
             "2.1-sdk": {},
             "sdk": {},
             "latest": {},
@@ -479,7 +479,7 @@
               "dockerfile": "2.1/sdk/stretch/amd64",
               "os": "linux",
               "tags": {
-                "2.1.300-sdk-stretch": {},
+                "2.1.301-sdk-stretch": {},
                 "2.1-sdk-stretch": {}
               }
             },
@@ -488,7 +488,7 @@
               "dockerfile": "2.1/sdk/stretch/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.300-sdk-stretch-arm32v7": {},
+                "2.1.301-sdk-stretch-arm32v7": {},
                 "2.1-sdk-stretch-arm32v7": {}
               },
               "variant": "v7"
@@ -498,7 +498,7 @@
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
               "tags": {
-                "2.1.300-sdk-nanoserver-sac2016": {},
+                "2.1.301-sdk-nanoserver-sac2016": {},
                 "2.1-sdk-nanoserver-sac2016": {},
                 "2-sdk-nanoserver": {
                   "isUndocumented": true
@@ -510,7 +510,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1709",
               "tags": {
-                "2.1.300-sdk-nanoserver-1709": {},
+                "2.1.301-sdk-nanoserver-1709": {},
                 "2.1-sdk-nanoserver-1709": {}
               }
             },
@@ -519,7 +519,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1803",
               "tags": {
-                "2.1.300-sdk-nanoserver-1803": {},
+                "2.1.301-sdk-nanoserver-1803": {},
                 "2.1-sdk-nanoserver-1803": {}
               }
             }
@@ -531,9 +531,9 @@
               "dockerfile": "2.1/runtime-deps/alpine3.7/amd64",
               "os": "linux",
               "tags": {
-                "2.1.0-runtime-deps-alpine3.7": {},
+                "2.1.1-runtime-deps-alpine3.7": {},
                 "2.1-runtime-deps-alpine3.7": {},
-                "2.1.0-runtime-deps-alpine": {},
+                "2.1.1-runtime-deps-alpine": {},
                 "2.1-runtime-deps-alpine": {}
               }
             }
@@ -545,9 +545,9 @@
               "dockerfile": "2.1/runtime/alpine3.7/amd64",
               "os": "linux",
               "tags": {
-                "2.1.0-runtime-alpine3.7": {},
+                "2.1.1-runtime-alpine3.7": {},
                 "2.1-runtime-alpine3.7": {},
-                "2.1.0-runtime-alpine": {},
+                "2.1.1-runtime-alpine": {},
                 "2.1-runtime-alpine": {}
               }
             }
@@ -559,9 +559,9 @@
               "dockerfile": "2.1/aspnetcore-runtime/alpine3.7/amd64",
               "os": "linux",
               "tags": {
-                "2.1.0-aspnetcore-runtime-alpine3.7": {},
+                "2.1.1-aspnetcore-runtime-alpine3.7": {},
                 "2.1-aspnetcore-runtime-alpine3.7": {},
-                "2.1.0-aspnetcore-runtime-alpine": {},
+                "2.1.1-aspnetcore-runtime-alpine": {},
                 "2.1-aspnetcore-runtime-alpine": {}
               }
             }
@@ -573,9 +573,9 @@
               "dockerfile": "2.1/sdk/alpine3.7/amd64",
               "os": "linux",
               "tags": {
-                "2.1.300-sdk-alpine3.7": {},
+                "2.1.301-sdk-alpine3.7": {},
                 "2.1-sdk-alpine3.7": {},
-                "2.1.300-sdk-alpine": {},
+                "2.1.301-sdk-alpine": {},
                 "2.1-sdk-alpine": {}
               }
             }
@@ -587,7 +587,7 @@
               "dockerfile": "2.1/runtime-deps/bionic/amd64",
               "os": "linux",
               "tags": {
-                "2.1.0-runtime-deps-bionic": {},
+                "2.1.1-runtime-deps-bionic": {},
                 "2.1-runtime-deps-bionic": {}
               }
             }
@@ -599,7 +599,7 @@
               "dockerfile": "2.1/aspnetcore-runtime/bionic/amd64",
               "os": "linux",
               "tags": {
-                "2.1.0-aspnetcore-runtime-bionic": {},
+                "2.1.1-aspnetcore-runtime-bionic": {},
                 "2.1-aspnetcore-runtime-bionic": {}
               }
             }
@@ -611,7 +611,7 @@
               "dockerfile": "2.1/runtime/bionic/amd64",
               "os": "linux",
               "tags": {
-                "2.1.0-runtime-bionic": {},
+                "2.1.1-runtime-bionic": {},
                 "2.1-runtime-bionic": {}
               }
             }
@@ -623,7 +623,7 @@
               "dockerfile": "2.1/sdk/bionic/amd64",
               "os": "linux",
               "tags": {
-                "2.1.300-sdk-bionic": {},
+                "2.1.301-sdk-bionic": {},
                 "2.1-sdk-bionic": {}
               }
             }
@@ -636,7 +636,7 @@
               "dockerfile": "2.1/runtime-deps/bionic/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.0-runtime-deps-bionic-arm32v7": {},
+                "2.1.1-runtime-deps-bionic-arm32v7": {},
                 "2.1-runtime-deps-bionic-arm32v7": {}
               },
               "variant": "v7"
@@ -650,7 +650,7 @@
               "dockerfile": "2.1/aspnetcore-runtime/bionic/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.0-aspnetcore-runtime-bionic-arm32v7": {},
+                "2.1.1-aspnetcore-runtime-bionic-arm32v7": {},
                 "2.1-aspnetcore-runtime-bionic-arm32v7": {}
               }
             }
@@ -663,7 +663,7 @@
               "dockerfile": "2.1/runtime/bionic/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.0-runtime-bionic-arm32v7": {},
+                "2.1.1-runtime-bionic-arm32v7": {},
                 "2.1-runtime-bionic-arm32v7": {}
               },
               "variant": "v7"
@@ -677,7 +677,7 @@
               "dockerfile": "2.1/sdk/bionic/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.300-sdk-bionic-arm32v7": {},
+                "2.1.301-sdk-bionic-arm32v7": {},
                 "2.1-sdk-bionic-arm32v7": {}
               },
               "variant": "v7"
