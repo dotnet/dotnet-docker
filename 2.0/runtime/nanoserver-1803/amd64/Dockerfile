@@ -28,7 +28,6 @@ COPY --from=installer-env ["dotnet", "C:\\Program Files\\dotnet"]
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator 
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"
-USER ContainerUser
 
 # Enable detection of running in a container
 ENV DOTNET_RUNNING_IN_CONTAINER=true

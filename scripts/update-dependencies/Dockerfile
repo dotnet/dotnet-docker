@@ -33,7 +33,6 @@ FROM microsoft/dotnet:2.0-runtime-nanoserver-1709
 COPY --from=installer-env ["git", "C:\\Program Files\\git"]
 USER ContainerAdministrator 
 RUN setx /M PATH "%PATH%;C:\Program Files\git\cmd"
-USER ContainerUser
 
 # copy update-dependencies
 WORKDIR /update-dependencies
