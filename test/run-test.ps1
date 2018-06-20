@@ -9,7 +9,9 @@ param(
     [string]$VersionFilter,
     [string]$ArchitectureFilter,
     [string]$OSFilter,
-    [string]$RepoOwner
+    [string]$Repo,
+    [switch]$DisableHttpVerification,
+    [switch]$IsLocalRun
 )
 
 Set-StrictMode -Version Latest
@@ -52,11 +54,17 @@ Try {
     if ([string]::IsNullOrWhiteSpace($ArchitectureFilter)) {
         $ArchitectureFilter = "amd64"
     }
+    if ($DisableHttpVerification) {
+        $env:DISABLE_HTTP_VERIFICATION = 1
+    }
+    if ($IsLocalRun) {
+        $env:LOCAL_RUN = 1
+    }
 
     $env:IMAGE_ARCH_FILTER = $ArchitectureFilter
     $env:IMAGE_OS_FILTER = $OSFilter
     $env:IMAGE_VERSION_FILTER = $VersionFilter
-    $env:REPO_OWNER = $RepoOwner
+    $env:REPO = $Repo
 
     $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
     $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1

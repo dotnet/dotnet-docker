@@ -1,21 +1,22 @@
 parameters:
   imageBuilderImage: null
   manifest: null
+  repo: null
   timeoutInMinutes: null
   matrix: {}
 phases:
-  - phase: Linux_amd64
+  - phase: Build_Linux_amd64
+    condition: and(succeeded(), eq(variables['startingPhase'], 'build'))
     queue:
       name: DotNet-Build
-      timeoutInMinutes: ${{ parameters.timeoutInMinutes }}
       demands:
         - agent.os -equals linux
-      parallel: 3
+      parallel: 100
       matrix: ${{ parameters.matrix }}
     variables:
-      imageBuilder.customArgs: --var VersionFilter=$(buildPath) --var ArchitectureFilter=amd64
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
+      repo: ${{ parameters.repo }}
     steps:
       - template: ../steps/docker-cleanup-linux.yml
       - script: docker pull $(imageBuilder.image)
@@ -25,5 +26,5 @@ phases:
         displayName: Build Images
         inputs:
           filename: docker
-          arguments: run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name image_builder_$(Build.BuildId) $(imageBuilder.image) build --manifest $(manifest) --path $(buildPath) --push --username $(dockerRegistry.userName) --password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.customArgs) $(imageBuilder.queueArgs)
+          arguments: run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name image_builder_$(Build.BuildId) $(imageBuilder.image) build --manifest $(manifest) --path $(buildPath)*$(osVersion)* --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --skip-test --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
       - template: ../steps/docker-cleanup-linux.yml

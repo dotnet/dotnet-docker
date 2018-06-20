@@ -1,18 +1,41 @@
 parameters:
-  buildLegTimeoutInMinutes: 90
-  imageBuilderLinuxImage: microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180607190320
-  imageBuilderWindowsImage: microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180601092731
+  imageBuilderLinuxImage: microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180627140652
+  imageBuilderWindowsImage: microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180627070723
+  excludeTests: false
   manifest: manifest.json
+  repo: null
   matrixLinuxAmd64:
-    Build_2_1:
+    Build_2_1_Alpine:
       buildPath: 2.1*
-    Build_2_0:
+      osVersion: alpine*
+    Build_2_1_Bionic:
+      buildPath: 2.1*
+      osVersion: bionic*
+    Build_2_1_Buster:
+      buildPath: 2.1*
+      osVersion: buster*
+    Build_2_1_Stretch:
+      buildPath: 2.1*
+      osVersion: stretch*
+    Build_2_0_Jessie:
       buildPath: 2.0*
-    Build_1_*:
+      osVersion: jessie
+    Build_2_0_Stretch:
+      buildPath: 2.0*
+      osVersion: stretch
+    Build_1_*_Jessie:
       buildPath: 1.*
+      osVersion: jessie
   matrixLinuxArm32v7:
-    Build_2_1:
+    Build_2_1_Bionic:
       buildPath: 2.1*
+      osVersion: bionic*
+    Build_2_1_Buster:
+      buildPath: 2.1*
+      osVersion: buster*
+    Build_2_1_Stretch:
+      buildPath: 2.1*
+      osVersion: stretch*
   matrixWindowsSac2016Amd64:
     Build_2_1:
       buildPath: 2.1*
@@ -33,51 +56,148 @@ parameters:
   matrixWindows1803Amd64:
     Build_2_1:
       buildPath: 2.1*
-      osVersion: nanoserver-1803  
+      osVersion: nanoserver-1803
     Build_2_0:
       buildPath: 2.0*
       osVersion: nanoserver-1803
 phases:
+  ################################################################################
+  # Build Images
+  ################################################################################
   - template: build-linux-amd64.yml
     parameters:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}
-      timeoutInMinutes: ${{ parameters.buildLegTimeoutInMinutes }}
+      repo: ${{ parameters.repo }}
       matrix: ${{ parameters.matrixLinuxAmd64 }}
   - template: build-linux-arm32v7.yml
     parameters:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}
-      timeoutInMinutes: ${{ parameters.buildLegTimeoutInMinutes }}
+      repo: ${{ parameters.repo }}
       matrix: ${{ parameters.matrixLinuxArm32v7 }}
   - template: build-windows-amd64.yml
     parameters:
-      phase: NanoServerSac2016_amd64
+      phase: Build_NanoServerSac2016_amd64
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
-      timeoutInMinutes: ${{ parameters.buildLegTimeoutInMinutes }}
+      repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
       matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
   - template: build-windows-amd64.yml
     parameters:
-      phase: NanoServer1709_amd64
+      phase: Build_NanoServer1709_amd64
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
-      timeoutInMinutes: ${{ parameters.buildLegTimeoutInMinutes }}
+      repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
       matrix: ${{ parameters.matrixWindows1709Amd64 }}
   - template: build-windows-amd64.yml
     parameters:
-      phase: NanoServer1803_amd64
+      phase: Build_NanoServer1803_amd64
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
-      timeoutInMinutes: ${{ parameters.buildLegTimeoutInMinutes }}
+      repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
       matrix: ${{ parameters.matrixWindows1803Amd64 }}
-  - template: build-finalize.yml
+
+  ################################################################################
+  # Test Images
+  ################################################################################
+  - template: test-linux-amd64.yml
+    parameters:
+      excludeTests: ${{ parameters.excludeTests }}
+      repo: ${{ parameters.repo }}
+      matrix: ${{ parameters.matrixLinuxAmd64 }}
+  - template: test-linux-arm32v7.yml
+    parameters:
+      excludeTests: ${{ parameters.excludeTests }}
+      repo: ${{ parameters.repo }}
+      matrix: ${{ parameters.matrixLinuxArm32v7 }}
+  - template: test-windows-amd64.yml
+    parameters:
+      phase: Test_NanoServerSac2016_amd64
+      excludeTests: ${{ parameters.excludeTests }}
+      dependsOn: Build_NanoServerSac2016_amd64
+      repo: ${{ parameters.repo }}
+      demands:
+        - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
+      matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
+  - template: test-windows-amd64.yml
+    parameters:
+      phase: Test_NanoServer1709_amd64
+      excludeTests: ${{ parameters.excludeTests }}
+      dependsOn: Build_NanoServer1709_amd64
+      repo: ${{ parameters.repo }}
+      demands:
+        - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
+      matrix: ${{ parameters.matrixWindows1709Amd64 }}
+  - template: test-windows-amd64.yml
+    parameters:
+      phase: Test_NanoServer1803_amd64
+      excludeTests: ${{ parameters.excludeTests }}
+      dependsOn: Build_NanoServer1803_amd64
+      repo: ${{ parameters.repo }}
+      demands:
+        - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
+      matrix: ${{ parameters.matrixWindows1803Amd64 }}
+
+  ################################################################################
+  # Publish Images
+  ################################################################################
+  - template: copy-images-linux.yml
+    parameters:
+      phase: Copy_Images_Linux_amd64
+      imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
+      manifest: ${{ parameters.manifest }}
+      architecture: amd64
+      dependsOn: Test_Linux_amd64
+      repo: ${{ parameters.repo }}
+      matrix: ${{ parameters.matrixLinuxAmd64 }}
+  - template: copy-images-linux.yml
+    parameters:
+      phase: Copy_Images_Linux_arm32v7
+      imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
+      manifest: ${{ parameters.manifest }}
+      architecture: arm
+      dependsOn: Test_Linux_arm32v7
+      repo: ${{ parameters.repo }}
+      matrix: ${{ parameters.matrixLinuxArm32v7 }}
+  - template: copy-images-windows.yml
+    parameters:
+      phase: Copy_Images_NanoServerSac2016_amd64
+      imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
+      manifest: ${{ parameters.manifest }}
+      dependsOn: Test_NanoServerSac2016_amd64
+      repo: ${{ parameters.repo }}
+      demands:
+        - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
+      matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
+  - template: copy-images-windows.yml
+    parameters:
+      phase: Copy_Images_NanoServer1709_amd64
+      imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
+      manifest: ${{ parameters.manifest }}
+      dependsOn: Test_NanoServer1709_amd64
+      repo: ${{ parameters.repo }}
+      demands:
+        - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
+      matrix: ${{ parameters.matrixWindows1709Amd64 }}
+  - template: copy-images-windows.yml
+    parameters:
+      phase: Copy_Images_NanoServer1803_amd64
+      imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
+      manifest: ${{ parameters.manifest }}
+      dependsOn: Test_NanoServer1803_amd64
+      repo: ${{ parameters.repo }}
+      demands:
+        - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
+      matrix: ${{ parameters.matrixWindows1803Amd64 }}
+
+  - template: publish-finalize.yml
     parameters:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}

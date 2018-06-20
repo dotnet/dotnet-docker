@@ -2,20 +2,21 @@ parameters:
   phase: null
   imageBuilderImage: null
   manifest: null
+  dependsOn: null
   repo: null
-  timeoutInMinutes: null
   demands: []
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
-    condition: and(succeeded(), eq(variables['startingPhase'], 'build'))
+    condition: or(succeeded(), eq(variables['startingPhase'], 'publish'))
+    dependsOn: ${{ parameters.dependsOn }}
     queue:
       name: DotNetCore-Infra
       demands: ${{ parameters.demands }}
       parallel: 100
       matrix: ${{ parameters.matrix }}
     variables:
-      docker.baseArtifactName: $(Build.BuildId)
+      docker.baseArtifactName: publish-$(Build.BuildId)
       docker.setupContainerName: setup_$(docker.baseArtifactName)
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
@@ -31,6 +32,6 @@ phases:
       - script: docker rm -f $(docker.setupContainerName)
         displayName: Cleanup Setup Container
         continueOnError: true
-      - script: $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe build --manifest $(manifest) --skip-test --path $(buildPath) --os-version $(osVersion) --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --skip-test --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
-        displayName: Build Images
+      - script: $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe copyImages --manifest $(manifest) --path $(buildPath) --os-version $(osVersion) --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
+        displayName: Copy Images
       - template: ../steps/docker-cleanup-windows.yml

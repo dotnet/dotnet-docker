@@ -82,7 +82,7 @@ try {
             }
     }
 
-    ./test/run-test.ps1 -VersionFilter $VersionFilter -ArchitectureFilter $ArchitectureFilter -OSFilter $OSFilter
+    ./test/run-test.ps1 -VersionFilter $VersionFilter -ArchitectureFilter $ArchitectureFilter -OSFilter $OSFilter -IsLocalRun
     Write-Host "Tags built and tested:`n$($builtTags | Out-String)"
 }
 finally {

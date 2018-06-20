@@ -1,5 +1,5 @@
 steps:
-  - script: docker system prune -a -f
+  - script: docker system prune -a -f --volumes
     displayName: Cleanup Docker
     condition: always()
     continueOnError: true

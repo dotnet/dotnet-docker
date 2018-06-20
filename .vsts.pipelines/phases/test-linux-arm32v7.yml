@@ -1,0 +1,56 @@
+parameters:
+  excludeTests: false
+  repo: null
+  timeoutInMinutes: null
+  matrix: {}
+phases:
+  - phase: Test_Linux_arm32v7
+    condition: and(not(variables['excludeTests']), or(succeeded(), eq(variables['startingPhase'], 'test')))
+    dependsOn: Build_Linux_arm32v7
+    queue:
+      name: DotNetCore-Infra
+      demands:
+        - VSTS_OS -equals Windows_10_Enterprise
+        - DockerVersion
+      parallel: 100
+      matrix: ${{ parameters.matrix }}
+    variables:
+      docker.baseArtifactName: test_$(Build.BuildId)
+      docker.certVolumeArg: -v cert_$(docker.baseArtifactName):/docker-certs
+      docker.commonRunArgs: -v $(docker.repoVolumeName):/repo -w /repo $(docker.certVolumeArg) -e DOCKER_CERT_PATH=/docker-certs -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://$(PiIp):2376
+      docker.gitEnabledimage: buildpack-deps:stretch-scm
+      docker.repoVolumeName: repo_$(docker.baseArtifactName)
+      docker.setupContainerName: setup_$(docker.baseArtifactName)
+      testrunner.image: microsoft/dotnet-buildtools-prereqs:debian-stretch-docker-testrunner-63f2145-20184325094343
+      repo: ${{ parameters.repo }}
+      testRunner.Container: testrunner-$(Build.BuildId)
+    steps:
+      - template: ../steps/docker-cleanup-windows.yml
+      - script: docker pull $(testrunner.image)
+        displayName: Pull testrunner Image
+      - script: docker create $(docker.certVolumeArg) --name $(docker.setupContainerName) $(testrunner.image)
+        displayName: Create Setup Container
+      - script: docker cp c:/docker-certs $(docker.setupContainerName):/
+        displayName: Copy Docker Certs
+      - script: docker rm -f $(docker.setupContainerName)
+        displayName: Cleanup container
+        continueOnError: true
+      - script: docker run --rm $(docker.commonRunArgs) --name clone_$(docker.baseArtifactName) $(docker.gitEnabledimage) git clone https://github.com/dotnet/dotnet-docker.git /repo
+        displayName: Clone Repo
+      - script: docker run --rm $(docker.commonRunArgs) --name checkout_$(docker.baseArtifactName) $(docker.gitEnabledimage) git checkout $(Build.SourceVersion)
+        displayName: Checkout Source
+      - script: docker run -t -d  $(docker.commonRunArgs) -e RUNNING_TESTS_IN_CONTAINER=true --name $(testRunner.Container) $(testrunner.image)
+        displayName: Start Test Runner Container
+      - script: docker exec $(testRunner.Container) docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
+        displayName: Docker login
+      - script: docker exec $(testRunner.Container) pwsh -File ./test/run-test.ps1 -VersionFilter $(buildPath) -OSFilter $(osVersion) -ArchitectureFilter arm -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix) -DisableHttpVerification
+        displayName: Test Images
+      - script: docker exec $(testRunner.Container) docker logout
+        displayName: Docker logout
+        condition: always()
+        continueOnError: true 
+      - script: docker run $(docker.commonRunArgs) --name cleanup_$(docker.baseArtifactName) --entrypoint docker $(testrunner.image) system prune -a -f --volumes
+        displayName: Cleanup ARM Docker
+        condition: always()
+        continueOnError: true
+      - template: ../steps/docker-cleanup-windows.yml

@@ -145,6 +145,11 @@ namespace Microsoft.DotNet.Docker.Tests
             return ResourceExists("image", tag);
         }
 
+        public static void Pull(string image)
+        {
+            Execute($"pull {image}");
+        }
+
         private static bool ResourceExists(string type, string filterArg)
         {
             string output = Execute($"{type} ls -q {filterArg}", true);
