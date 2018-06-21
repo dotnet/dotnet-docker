@@ -100,6 +100,8 @@ dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p crypticpasswor
 dotnet dev-certs https --trust
 ```
 
+> Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
+
 > Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
 
 Configure application secrets, for the certificate:
@@ -138,6 +140,8 @@ dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p crypticpasswor
 
 > Note: `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. It is likely that you need to trust the certificate in your browser.
 
+> Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
+
 > Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
 
 Build a container image:
@@ -168,6 +172,8 @@ Generate cert and configure local machine:
 dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p crypticpassword
 dotnet dev-certs https --trust
 ```
+
+> Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
 
 > Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
 
