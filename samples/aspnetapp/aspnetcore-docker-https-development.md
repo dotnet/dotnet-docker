@@ -61,6 +61,8 @@ dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p crypticp
 dotnet dev-certs https --trust
 ```
 
+> Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
+
 > Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
 
 Configure application secrets, for the certificate:
@@ -70,8 +72,6 @@ dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Deve
 ```
 
 > Note: The password must match the password used for the certificate.
-
-> Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
 
 Build a container image:
 
