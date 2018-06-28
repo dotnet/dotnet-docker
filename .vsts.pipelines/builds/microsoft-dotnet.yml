@@ -1,2 +1,3 @@
+trigger: none
 phases:
   - template: ../phases/build-all.yml
