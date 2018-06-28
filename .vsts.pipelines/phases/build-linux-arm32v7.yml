@@ -2,7 +2,6 @@ parameters:
   imageBuilderImage: null
   manifest: null
   repo: null
-  timeoutInMinutes: null
   matrix: {}
 phases:
   - phase: Build_Linux_arm32v7

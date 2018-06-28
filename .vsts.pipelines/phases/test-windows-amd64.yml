@@ -3,7 +3,6 @@ parameters:
   excludeTests: false
   dependsOn: null
   repo: null
-  timeoutInMinutes: null
   demands: []
   matrix: {}
 phases:

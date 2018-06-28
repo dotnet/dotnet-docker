@@ -1,7 +1,6 @@
 parameters:
   excludeTests: false
   repo: null
-  timeoutInMinutes: null
   matrix: {}
 phases:
   - phase: Test_Linux_arm32v7
