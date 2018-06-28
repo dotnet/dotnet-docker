@@ -21,7 +21,7 @@ In trivial cases, the linker can reduce the size of applications by 50%. The siz
 You first need to add a reference to the [linker package](https://dotnet.myget.org/feed/dotnet-core/package/nuget/Illink.Tasks) to take advantage of IL linking, using the following instructions.
 
 ```console
-dotnet add package ILLink.Tasks -v 0.1.4-preview-981901 -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
+dotnet add package ILLink.Tasks -v 0.1.5-preview-1461378 -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
 ```
 
 The various "self-contained" Dockerfiles add the linker package to the sample project, as demonstrated in the following examples.
