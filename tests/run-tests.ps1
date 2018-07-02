@@ -39,10 +39,10 @@ if (!(Test-Path $DotnetInstallScript)) {
 
 if ($IsRunningOnUnix) {
     & chmod +x $DotnetInstallDir/$DotnetInstallScript
-    & $DotnetInstallDir/$DotnetInstallScript --channel "2.0" --version "latest" --architecture x64 --install-dir $DotnetInstallDir
+    & $DotnetInstallDir/$DotnetInstallScript --channel "2.1" --version "latest" --architecture x64 --install-dir $DotnetInstallDir
 }
 else {
-    & $DotnetInstallDir/$DotnetInstallScript -Channel "2.0" -Version "latest" -Architecture x64 -InstallDir $DotnetInstallDir
+    & $DotnetInstallDir/$DotnetInstallScript -Channel "2.1" -Version "latest" -Architecture x64 -InstallDir $DotnetInstallDir
 }
 
 if ($LASTEXITCODE -ne 0) { throw "Failed to install the .NET Core SDK" }
@@ -70,7 +70,7 @@ Try {
     $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
     $env:DOTNET_MULTILEVEL_LOOKUP = '0'
 
-    & $DotnetInstallDir/dotnet test -v n
+    & $DotnetInstallDir/dotnet test --logger:trx
 
     if ($LASTEXITCODE -ne 0) { throw "Tests Failed" }
 }
