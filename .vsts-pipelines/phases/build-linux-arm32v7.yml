@@ -12,6 +12,7 @@ phases:
         - VSTS_OS -equals Windows_10_Enterprise
         - DockerVersion
       parallel: 100
+      timeoutInMinutes: 90
       matrix: ${{ parameters.matrix }}
     variables:
       docker.baseArtifactName: $(Build.BuildId)
