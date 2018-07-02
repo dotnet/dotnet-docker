@@ -17,7 +17,7 @@ phases:
       testRunner.Container: testrunner-$(Build.BuildId)
     steps:
       - template: ../steps/docker-cleanup-linux.yml
-      - script: docker build --rm -t testrunner -f ./test/Dockerfile.linux.testrunner .
+      - script: docker build --rm -t testrunner -f ./tests/Dockerfile.linux.testrunner .
         displayName: Pull testrunner Image
       - script: docker run -t -d  -v /var/run/docker.sock:/var/run/docker.sock --name $(testRunner.Container) testrunner
         displayName: Start Test Runner Container
@@ -28,7 +28,7 @@ phases:
         displayName: Test Images
         inputs:
           filename: docker
-          arguments: exec $(testRunner.Container) pwsh -File ./test/run-test.ps1 -VersionFilter $(buildPath) -OSFilter $(osVersion) -ArchitectureFilter amd64 -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
+          arguments: exec $(testRunner.Container) pwsh -File ./tests/run-tests.ps1 -VersionFilter $(buildPath) -OSFilter $(osVersion) -ArchitectureFilter amd64 -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
       - script: docker exec $(testRunner.Container) docker logout
         displayName: Docker logout
         condition: always()
