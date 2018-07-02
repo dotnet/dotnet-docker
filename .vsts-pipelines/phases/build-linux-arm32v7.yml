@@ -38,7 +38,7 @@ phases:
         displayName: Clone Repo
       - script: docker run $(docker.commonRunArgs) --name checkout_$(docker.baseArtifactName) $(docker.gitEnabledimage) git checkout $(Build.SourceVersion)
         displayName: Checkout Source
-      - script: docker run $(docker.commonRunArgs) --name image_builder_$(docker.baseArtifactName) $(imageBuilder.image) build --manifest $(manifest) --path $(buildPath)*$(osVersion)* --architecture arm --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --skip-test --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
+      - script: docker run $(docker.commonRunArgs) --name image_builder_$(docker.baseArtifactName) $(imageBuilder.image) build --manifest $(manifest) --path $(dotnetVersion)*$(osVersion)* --architecture arm --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --skip-test --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
         displayName: Build Images
       - script: docker run $(docker.commonRunArgs) --name cleanup_$(docker.baseArtifactName) --entrypoint docker $(imageBuilder.image) system prune -a -f
         displayName: Cleanup ARM Docker

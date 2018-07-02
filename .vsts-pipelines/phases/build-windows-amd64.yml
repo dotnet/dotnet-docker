@@ -30,6 +30,6 @@ phases:
       - script: docker rm -f $(docker.setupContainerName)
         displayName: Cleanup Setup Container
         continueOnError: true
-      - script: $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe build --manifest $(manifest) --skip-test --path $(buildPath) --os-version $(osVersion) --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
+      - script: $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe build --manifest $(manifest) --skip-test --path $(dotnetVersion) --os-version $(osVersion) --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
         displayName: Build Images
       - template: ../steps/docker-cleanup-windows.yml
