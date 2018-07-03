@@ -14,21 +14,21 @@ phases:
       repo: dotnet-samples
       matrixLinuxAmd64:
         Build:
-          buildPath: '*'
+          dotnetVersion: '*'
           osVersion: '*'
       matrixLinuxArm32v7:
         Build:
-          buildPath: '*'
+          dotnetVersion: '*'
           osVersion: '*'
       matrixWindowsSac2016Amd64:
         Build:
-          buildPath: '*'
+          dotnetVersion: '*'
           osVersion: nanoserver-sac2016
       matrixWindows1709Amd64:
         Build:
-          buildPath: '*'
+          dotnetVersion: '*'
           osVersion: nanoserver-1709
       matrixWindows1803Amd64:
         Build:
-          buildPath: '*'
+          dotnetVersion: '*'
           osVersion: nanoserver-1803

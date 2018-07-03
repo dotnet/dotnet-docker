@@ -5,60 +5,60 @@ parameters:
   manifest: manifest.json
   repo: null
   matrixLinuxAmd64:
-    Build_2_1_Alpine:
-      buildPath: 2.1*
+    2_1_Alpine:
+      dotnetVersion: 2.1*
       osVersion: alpine*
-    Build_2_1_Bionic:
-      buildPath: 2.1*
+    2_1_Bionic:
+      dotnetVersion: 2.1*
       osVersion: bionic*
-    Build_2_1_Buster:
-      buildPath: 2.1*
+    2_1_Buster:
+      dotnetVersion: 2.1*
       osVersion: buster*
-    Build_2_1_Stretch:
-      buildPath: 2.1*
+    2_1_Stretch:
+      dotnetVersion: 2.1*
       osVersion: stretch*
-    Build_2_0_Jessie:
-      buildPath: 2.0*
+    2_0_Jessie:
+      dotnetVersion: 2.0*
       osVersion: jessie
-    Build_2_0_Stretch:
-      buildPath: 2.0*
+    2_0_Stretch:
+      dotnetVersion: 2.0*
       osVersion: stretch
-    Build_1_*_Jessie:
-      buildPath: 1.*
+    1_*_Jessie:
+      dotnetVersion: 1.*
       osVersion: jessie
   matrixLinuxArm32v7:
-    Build_2_1_Bionic:
-      buildPath: 2.1*
+    2_1_Bionic:
+      dotnetVersion: 2.1*
       osVersion: bionic*
-    Build_2_1_Buster:
-      buildPath: 2.1*
+    2_1_Buster:
+      dotnetVersion: 2.1*
       osVersion: buster*
-    Build_2_1_Stretch:
-      buildPath: 2.1*
+    2_1_Stretch:
+      dotnetVersion: 2.1*
       osVersion: stretch*
   matrixWindowsSac2016Amd64:
-    Build_2_1:
-      buildPath: 2.1*
+    2_1:
+      dotnetVersion: 2.1*
       osVersion: nanoserver-sac2016
-    Build_2_0:
-      buildPath: 2.0*
+    2_0:
+      dotnetVersion: 2.0*
       osVersion: nanoserver-sac2016
-    Build_1_*:
-      buildPath: 1.*
+    1_*:
+      dotnetVersion: 1.*
       osVersion: nanoserver-sac2016
   matrixWindows1709Amd64:
-    Build_2_1:
-      buildPath: 2.1*
+    2_1:
+      dotnetVersion: 2.1*
       osVersion: nanoserver-1709
-    Build_2_0:
-      buildPath: 2.0*
+    2_0:
+      dotnetVersion: 2.0*
       osVersion: nanoserver-1709
   matrixWindows1803Amd64:
-    Build_2_1:
-      buildPath: 2.1*
+    2_1:
+      dotnetVersion: 2.1*
       osVersion: nanoserver-1803
-    Build_2_0:
-      buildPath: 2.0*
+    2_0:
+      dotnetVersion: 2.0*
       osVersion: nanoserver-1803
 phases:
   ################################################################################
