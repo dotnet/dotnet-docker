@@ -12,6 +12,7 @@ phases:
         - VSTS_OS -equals Windows_10_Enterprise
         - DockerVersion
       parallel: 100
+      timeoutInMinutes: 90
       matrix: ${{ parameters.matrix }}
     variables:
       docker.baseArtifactName: test_$(Build.BuildId)
@@ -47,7 +48,25 @@ phases:
       - script: docker exec $(testRunner.Container) docker logout
         displayName: Docker logout
         condition: always()
-        continueOnError: true 
+        continueOnError: true
+      - script: docker cp $(testRunner.Container):/repo/tests/Microsoft.DotNet.Docker.Tests/TestResults/ $(Common.TestResultsDirectory)/.
+        displayName: Copy Test Results
+        condition: always()
+        continueOnError: true
+      - task: PublishTestResults@2
+        displayName: Publish Test Results
+        condition: always()
+        continueOnError: true
+        inputs:
+          testRunner: vSTest
+          testResultsFiles: '**/*.trx'
+          searchFolder: $(Common.TestResultsDirectory)
+          mergeTestResults: true
+          testRunTitle: Linux $(buildPath) $(osVersion) arm32v7
+      - script: docker stop $(testRunner.Container)
+        displayName: Stop TestRunner Container
+        condition: always()
+        continueOnError: true
       - script: docker run $(docker.commonRunArgs) --name cleanup_$(docker.baseArtifactName) --entrypoint docker $(testrunner.image) system prune -a -f --volumes
         displayName: Cleanup ARM Docker
         condition: always()

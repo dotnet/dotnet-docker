@@ -26,4 +26,13 @@ phases:
         displayName: Docker logout
         condition: always()
         continueOnError: true
+      - task: PublishTestResults@2
+        displayName: Publish Test Results
+        condition: always()
+        continueOnError: true
+        inputs:
+          testRunner: vSTest
+          testResultsFiles: 'tests/**/*.trx'
+          mergeTestResults: true
+          testRunTitle: Windows $(buildPath) $(osVersion) amd64
       - template: ../steps/docker-cleanup-windows.yml
