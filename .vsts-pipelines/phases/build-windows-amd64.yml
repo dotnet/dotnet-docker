@@ -14,7 +14,7 @@ phases:
       parallel: 100
       matrix: ${{ parameters.matrix }}
     variables:
-      docker.baseArtifactName: $(Build.BuildId)
+      docker.baseArtifactName: build_$(Build.BuildId)
       docker.setupContainerName: setup_$(docker.baseArtifactName)
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
