@@ -2,9 +2,9 @@ parameters:
   phase: null
   imageBuilderImage: null
   manifest: null
-  dependsOn: null
   repo: null
   architecture: null
+  dependsOn: null
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
@@ -17,18 +17,14 @@ phases:
       parallel: 100
       matrix: ${{ parameters.matrix }}
     variables:
+      architecture: ${{ parameters.architecture }}
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
-      architecture: ${{ parameters.architecture }}
     steps:
       - template: ../steps/docker-cleanup-linux.yml
       - script: docker pull $(imageBuilder.image)
         displayName: Pull Image Builder
-        # The script task does not currently work for Build Images on Linux (curl ssl issues), using CmdLine as workaround.
-      - task: CmdLine@1
+      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo $(imageBuilder.image) copyImages --manifest $(manifest) --architecture $(architecture) --path $(dotnetVersion)\*$(osVersion)\* --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
         displayName: Copy Images
-        inputs:
-          filename: docker
-          arguments: run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo --name image_builder_$(Build.BuildId) $(imageBuilder.image) copyImages --manifest $(manifest) --architecture $(architecture) --path $(dotnetVersion)*$(osVersion)* --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
       - template: ../steps/docker-cleanup-linux.yml

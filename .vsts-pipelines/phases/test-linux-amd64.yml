@@ -1,4 +1,5 @@
 parameters:
+  testRunnerLinuxImage: null
   excludeTests: false
   repo: null
   matrix: {}
@@ -14,26 +15,28 @@ phases:
       matrix: ${{ parameters.matrix }}
     variables:
       repo: ${{ parameters.repo }}
-      testRunner.Container: testrunner-$(Build.BuildId)
+      testrunner.image: ${{ parameters.testRunnerLinuxImage }}
+      testRunner.container: testrunner-$(Build.BuildId)
     steps:
       - template: ../steps/docker-cleanup-linux.yml
-      - script: docker build --rm -t testrunner -f ./tests/Dockerfile.linux.testrunner .
+      - template: ../steps/docker-create-repo-volume-linux.yml
+      - script: docker pull $(testrunner.image)
         displayName: Pull testrunner Image
-      - script: docker run -t -d  -v /var/run/docker.sock:/var/run/docker.sock --name $(testRunner.Container) testrunner
+      - script: docker run -t -d  -v /var/run/docker.sock:/var/run/docker.sock -v repo-$(Build.BuildId):/repo -w /repo -e RUNNING_TESTS_IN_CONTAINER=true --name $(testRunner.container) $(testrunner.image)
         displayName: Start Test Runner Container
-      - script: docker exec $(testRunner.Container) docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
+      - script: docker exec $(testRunner.container) docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
         displayName: Docker login
-        # The script task does not currently work for Build Images on Linux (curl ssl issues), using CmdLine as workaround.
+      # The script task does not currently work (curl ssl issues), using CmdLine as workaround.
       - task: CmdLine@1
         displayName: Test Images
         inputs:
           filename: docker
-          arguments: exec $(testRunner.Container) pwsh -File ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion) -OSFilter $(osVersion) -ArchitectureFilter amd64 -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
-      - script: docker exec $(testRunner.Container) docker logout
+          arguments: exec $(testRunner.container) pwsh -File ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion)* -OSFilter $(osVersion)* -ArchitectureFilter amd64 -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
+      - script: docker exec $(testRunner.container) docker logout
         displayName: Docker logout
         condition: always()
         continueOnError: true
-      - script: docker cp $(testRunner.Container):/src/tests/Microsoft.DotNet.Docker.Tests/TestResults/ $(Common.TestResultsDirectory)/.
+      - script: docker cp $(testRunner.container):/repo/tests/Microsoft.DotNet.Docker.Tests/TestResults/ $(Common.TestResultsDirectory)/.
         displayName: Copy Test Results
         condition: always()
         continueOnError: true
@@ -47,7 +50,7 @@ phases:
           searchFolder: $(Common.TestResultsDirectory)
           mergeTestResults: true
           testRunTitle: Linux $(buildPath) $(osVersion) amd64
-      - script: docker stop $(testRunner.Container)
+      - script: docker stop $(testRunner.container)
         displayName: Stop TestRunner Container
         condition: always()
         continueOnError: true
