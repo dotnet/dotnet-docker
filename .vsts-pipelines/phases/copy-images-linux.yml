@@ -4,13 +4,16 @@ parameters:
   manifest: null
   repo: null
   architecture: null
-  dependsOn: null
-  buildDependsOn: null
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
-    condition: or(succeeded(), eq(variables['startingPhase'], 'publish'), and(eq(variables['repo'], 'dotnet-samples'), succeeded(variables['buildDependsOn'])))
-    dependsOn: ${{ parameters.dependsOn }}
+    condition: or(succeeded(), eq(variables['startingPhase'], 'publish'), and(eq(variables['repo'], 'dotnet-samples'), succeeded('Build_Linux_amd64'), succeeded('Build_Linux_arm32v7'), succeeded('Build_NanoServerSac2016_amd64'), succeeded('Build_NanoServer1709_amd64'), succeeded('Build_NanoServer1803_amd64')))
+    dependsOn:
+      - Test_Linux_amd64
+      - Test_Linux_arm32v7
+      - Test_NanoServerSac2016_amd64
+      - Test_NanoServer1709_amd64
+      - Test_NanoServer1803_amd64
     queue:
       name: DotNet-Build
       demands:
@@ -19,7 +22,6 @@ phases:
       matrix: ${{ parameters.matrix }}
     variables:
       architecture: ${{ parameters.architecture }}
-      buildDependsOn: ${{ parameters.buildDependsOn }}
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}

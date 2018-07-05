@@ -3,21 +3,23 @@ parameters:
   imageBuilderImage: null
   manifest: null
   repo: null
-  dependsOn: null
-  buildDependsOn: null
   demands: []
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
-    condition: or(succeeded(), eq(variables['startingPhase'], 'publish'), and(eq(variables['repo'], 'dotnet-samples'), succeeded(variables['buildDependsOn'])))
-    dependsOn: ${{ parameters.dependsOn }}
+    condition: or(succeeded(), eq(variables['startingPhase'], 'publish'), and(eq(variables['repo'], 'dotnet-samples'), succeeded('Build_Linux_amd64'), succeeded('Build_Linux_arm32v7'), succeeded('Build_NanoServerSac2016_amd64'), succeeded('Build_NanoServer1709_amd64'), succeeded('Build_NanoServer1803_amd64')))
+    dependsOn:
+      - Test_Linux_amd64
+      - Test_Linux_arm32v7
+      - Test_NanoServerSac2016_amd64
+      - Test_NanoServer1709_amd64
+      - Test_NanoServer1803_amd64
     queue:
       name: DotNetCore-Infra
       demands: ${{ parameters.demands }}
       parallel: 100
       matrix: ${{ parameters.matrix }}
     variables:
-      buildDependsOn: ${{ parameters.buildDependsOn }}
       docker.baseArtifactName: publish-$(Build.BuildId)
       docker.setupContainerName: setup_$(docker.baseArtifactName)
       imageBuilder.image: ${{ parameters.imageBuilderImage }}

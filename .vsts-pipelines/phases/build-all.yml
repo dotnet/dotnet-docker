@@ -152,8 +152,6 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
       architecture: amd64
-      dependsOn: Test_Linux_amd64
-      buildDependsOn: Build_Linux_amd64
       matrix: ${{ parameters.matrixLinuxAmd64 }}
   - template: copy-images-linux.yml
     parameters:
@@ -162,8 +160,6 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
       architecture: arm
-      dependsOn: Test_Linux_arm32v7
-      buildDependsOn: Build_Linux_arm32v7
       matrix: ${{ parameters.matrixLinuxArm32v7 }}
   - template: copy-images-windows.yml
     parameters:
@@ -171,8 +167,6 @@ phases:
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
-      dependsOn: Test_NanoServerSac2016_amd64
-      buildDependsOn: Build_NanoServerSac2016_amd64
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
       matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
@@ -182,8 +176,6 @@ phases:
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
-      dependsOn: Test_NanoServer1709_amd64
-      buildDependsOn: Build_NanoServer1709_amd64
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
       matrix: ${{ parameters.matrixWindows1709Amd64 }}
@@ -193,8 +185,6 @@ phases:
       imageBuilderImage: ${{ parameters.imageBuilderWindowsImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
-      dependsOn: Test_NanoServer1803_amd64
-      buildDependsOn: Build_NanoServer1803_amd64
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
       matrix: ${{ parameters.matrixWindows1803Amd64 }}
