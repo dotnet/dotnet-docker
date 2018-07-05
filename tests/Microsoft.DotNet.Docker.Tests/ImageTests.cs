@@ -24,7 +24,6 @@ namespace Microsoft.DotNet.Docker.Tests
         private static readonly bool s_isLocalRun =
             Environment.GetEnvironmentVariable("LOCAL_RUN") != null;
         private static readonly bool s_isNightlyRepo = s_repoName.Contains("nightly");
-
         private static readonly bool s_isRunningInContainer =
             Environment.GetEnvironmentVariable("RUNNING_TESTS_IN_CONTAINER") != null;
 
