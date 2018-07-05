@@ -1,13 +1,12 @@
 parameters:
   phase: null
-  excludeTests: false
-  dependsOn: null
   repo: null
+  dependsOn: null
   demands: []
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
-    condition: and(not(variables['excludeTests']), or(succeeded(), eq(variables['startingPhase'], 'test')))
+    condition: and(ne(variables['repo'], 'dotnet-samples'), or(succeeded(), eq(variables['startingPhase'], 'test')))
     dependsOn: ${{ parameters.dependsOn }}
     queue:
       name: DotNetCore-Infra
@@ -20,7 +19,7 @@ phases:
       - template: ../steps/docker-cleanup-windows.yml
       - script: docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
         displayName: Docker login
-      - powershell: ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion) -OSFilter $(osVersion) -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
+      - powershell: ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion)* -OSFilter $(osVersion) -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
         displayName: Test Images
       - script: docker logout
         displayName: Docker logout
