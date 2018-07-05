@@ -9,7 +9,6 @@ trigger:
 phases:
   - template: ../phases/build-all.yml
     parameters:
-      excludeTests: true
       manifest: manifest.samples.json
       repo: dotnet-samples
       matrixLinuxAmd64:

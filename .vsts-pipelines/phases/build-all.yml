@@ -2,7 +2,6 @@ parameters:
   imageBuilderLinuxImage: microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180627140652
   imageBuilderWindowsImage: microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180627070723
   testRunnerLinuxImage: microsoft/dotnet-buildtools-prereqs:debian-stretch-docker-testrunner-63f2145-20184325094343
-  excludeTests: false
   manifest: manifest.json
   repo: null
   matrixLinuxAmd64:
@@ -111,19 +110,16 @@ phases:
   - template: test-linux-amd64.yml
     parameters:
       testRunnerLinuxImage: ${{ parameters.testRunnerLinuxImage }}
-      excludeTests: ${{ parameters.excludeTests }}
       repo: ${{ parameters.repo }}
       matrix: ${{ parameters.matrixLinuxAmd64 }}
   - template: test-linux-arm32v7.yml
     parameters:
       testRunnerLinuxImage: ${{ parameters.testRunnerLinuxImage }}
-      excludeTests: ${{ parameters.excludeTests }}
       repo: ${{ parameters.repo }}
       matrix: ${{ parameters.matrixLinuxArm32v7 }}
   - template: test-windows-amd64.yml
     parameters:
       phase: Test_NanoServerSac2016_amd64
-      excludeTests: ${{ parameters.excludeTests }}
       repo: ${{ parameters.repo }}
       dependsOn: Build_NanoServerSac2016_amd64
       demands:
@@ -132,7 +128,6 @@ phases:
   - template: test-windows-amd64.yml
     parameters:
       phase: Test_NanoServer1709_amd64
-      excludeTests: ${{ parameters.excludeTests }}
       repo: ${{ parameters.repo }}
       dependsOn: Build_NanoServer1709_amd64
       demands:
@@ -141,7 +136,6 @@ phases:
   - template: test-windows-amd64.yml
     parameters:
       phase: Test_NanoServer1803_amd64
-      excludeTests: ${{ parameters.excludeTests }}
       repo: ${{ parameters.repo }}
       dependsOn: Build_NanoServer1803_amd64
       demands:
@@ -159,6 +153,7 @@ phases:
       repo: ${{ parameters.repo }}
       architecture: amd64
       dependsOn: Test_Linux_amd64
+      buildDependsOn: Build_Linux_amd64
       matrix: ${{ parameters.matrixLinuxAmd64 }}
   - template: copy-images-linux.yml
     parameters:
@@ -168,6 +163,7 @@ phases:
       repo: ${{ parameters.repo }}
       architecture: arm
       dependsOn: Test_Linux_arm32v7
+      buildDependsOn: Build_Linux_arm32v7
       matrix: ${{ parameters.matrixLinuxArm32v7 }}
   - template: copy-images-windows.yml
     parameters:
@@ -176,6 +172,7 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
       dependsOn: Test_NanoServerSac2016_amd64
+      buildDependsOn: Build_NanoServerSac2016_amd64
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
       matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
@@ -186,6 +183,7 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
       dependsOn: Test_NanoServer1709_amd64
+      buildDependsOn: Build_NanoServer1709_amd64
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
       matrix: ${{ parameters.matrixWindows1709Amd64 }}
@@ -196,6 +194,7 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
       dependsOn: Test_NanoServer1803_amd64
+      buildDependsOn: Build_NanoServer1803_amd64
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
       matrix: ${{ parameters.matrixWindows1803Amd64 }}

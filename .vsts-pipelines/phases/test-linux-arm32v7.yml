@@ -1,11 +1,10 @@
 parameters:
   testRunnerLinuxImage: null
-  excludeTests: false
   repo: null
   matrix: {}
 phases:
   - phase: Test_Linux_arm32v7
-    condition: and(not(variables['excludeTests']), or(succeeded(), eq(variables['startingPhase'], 'test')))
+    condition: and(ne(variables['repo'], 'dotnet-samples'), or(succeeded(), eq(variables['startingPhase'], 'test')))
     dependsOn: Build_Linux_arm32v7
     queue:
       name: DotNetCore-Infra

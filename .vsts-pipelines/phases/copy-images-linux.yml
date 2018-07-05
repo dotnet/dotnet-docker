@@ -5,10 +5,11 @@ parameters:
   repo: null
   architecture: null
   dependsOn: null
+  buildDependsOn: null
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
-    condition: or(succeeded(), eq(variables['startingPhase'], 'publish'))
+    condition: or(succeeded(), eq(variables['startingPhase'], 'publish'), and(eq(variables['repo'], 'dotnet-samples'), succeeded(variables['buildDependsOn'])))
     dependsOn: ${{ parameters.dependsOn }}
     queue:
       name: DotNet-Build
@@ -18,6 +19,7 @@ phases:
       matrix: ${{ parameters.matrix }}
     variables:
       architecture: ${{ parameters.architecture }}
+      buildDependsOn: ${{ parameters.buildDependsOn }}
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
@@ -25,6 +27,6 @@ phases:
       - template: ../steps/docker-cleanup-linux.yml
       - script: docker pull $(imageBuilder.image)
         displayName: Pull Image Builder
-      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo $(imageBuilder.image) copyImages --manifest $(manifest) --architecture $(architecture) --path $(dotnetVersion)\*$(osVersion)\* --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
+      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo $(imageBuilder.image) copyImages --manifest $(manifest) --architecture $(architecture) --path $(dotnetVersion)\*$(osVersion)\* --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
         displayName: Copy Images
       - template: ../steps/docker-cleanup-linux.yml
