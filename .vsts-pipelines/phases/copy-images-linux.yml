@@ -1,0 +1,34 @@
+parameters:
+  phase: null
+  imageBuilderImage: null
+  manifest: null
+  repo: null
+  architecture: null
+  matrix: {}
+phases:
+  - phase: ${{ parameters.phase }}
+    condition: or(succeeded(), eq(variables['startingPhase'], 'publish'), and(eq(variables['repo'], 'dotnet-samples'), succeeded('Build_Linux_amd64'), succeeded('Build_Linux_arm32v7'), succeeded('Build_NanoServerSac2016_amd64'), succeeded('Build_NanoServer1709_amd64'), succeeded('Build_NanoServer1803_amd64')))
+    dependsOn:
+      - Test_Linux_amd64
+      - Test_Linux_arm32v7
+      - Test_NanoServerSac2016_amd64
+      - Test_NanoServer1709_amd64
+      - Test_NanoServer1803_amd64
+    queue:
+      name: DotNet-Build
+      demands:
+        - agent.os -equals linux
+      parallel: 100
+      matrix: ${{ parameters.matrix }}
+    variables:
+      architecture: ${{ parameters.architecture }}
+      imageBuilder.image: ${{ parameters.imageBuilderImage }}
+      manifest: ${{ parameters.manifest }}
+      repo: ${{ parameters.repo }}
+    steps:
+      - template: ../steps/docker-cleanup-linux.yml
+      - script: docker pull $(imageBuilder.image)
+        displayName: Pull Image Builder
+      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo $(imageBuilder.image) copyImages --manifest $(manifest) --architecture $(architecture) --path $(dotnetVersion)\*$(osVersion)\* --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
+        displayName: Copy Images
+      - template: ../steps/docker-cleanup-linux.yml

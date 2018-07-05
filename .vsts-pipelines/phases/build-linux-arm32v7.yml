@@ -1,0 +1,36 @@
+parameters:
+  imageBuilderImage: null
+  manifest: null
+  repo: null
+  matrix: {}
+phases:
+  - phase: Build_Linux_arm32v7
+    condition: and(succeeded(), eq(variables['startingPhase'], 'build'))
+    queue:
+      name: DotNetCore-Infra
+      demands:
+        - agent.os -equals linux
+        - DockerArch -equals arm32v7
+      parallel: 100
+      matrix: ${{ parameters.matrix }}
+    variables:
+      docker.commonRunArgs: --rm -v repo-$(Build.BuildId):/repo -v /docker-certs:/docker-certs -w /repo -e DOCKER_CERT_PATH=/docker-certs -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://$(PIIP):2376
+      imageBuilder.image: ${{ parameters.imageBuilderImage }}
+      manifest: ${{ parameters.manifest }}
+      repo: ${{ parameters.repo }}
+    steps:
+      - template: ../steps/docker-cleanup-linux.yml
+      - template: ../steps/docker-create-repo-volume-linux.yml
+      - script: docker pull $(imageBuilder.image)
+        displayName: Pull Image Builder
+      # The script task does not currently work (curl ssl issues), using CmdLine as workaround.
+      - task: CmdLine@1
+        displayName: Build Images
+        inputs:
+          filename: docker
+          arguments: run $(docker.commonRunArgs) $(imageBuilder.image) build --manifest $(manifest) --path $(dotnetVersion)*$(osVersion)* --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --skip-test --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
+      - script: docker run $(docker.commonRunArgs) --entrypoint docker $(imageBuilder.image) system prune -a -f
+        displayName: Cleanup ARM Docker
+        condition: always()
+        continueOnError: true
+      - template: ../steps/docker-cleanup-linux.yml

@@ -1,0 +1,30 @@
+parameters:
+  imageBuilderImage: null
+  manifest: null
+  repo: null
+  matrix: {}
+phases:
+  - phase: Build_Linux_amd64
+    condition: and(succeeded(), eq(variables['startingPhase'], 'build'))
+    queue:
+      name: DotNet-Build
+      demands:
+        - agent.os -equals linux
+      parallel: 100
+      matrix: ${{ parameters.matrix }}
+    variables:
+      imageBuilder.image: ${{ parameters.imageBuilderImage }}
+      manifest: ${{ parameters.manifest }}
+      repo: ${{ parameters.repo }}
+    steps:
+      - template: ../steps/docker-cleanup-linux.yml
+      - template: ../steps/docker-create-repo-volume-linux.yml
+      - script: docker pull $(imageBuilder.image)
+        displayName: Pull Image Builder
+      # The script task does not currently work (curl ssl issues), using CmdLine as workaround.
+      - task: CmdLine@1
+        displayName: Build Images
+        inputs:
+          filename: docker
+          arguments: run --rm -v /var/run/docker.sock:/var/run/docker.sock -v repo-$(Build.BuildId):/repo -w /repo $(imageBuilder.image) build --manifest $(manifest) --path $(dotnetVersion)*$(osVersion)* --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --skip-test --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
+      - template: ../steps/docker-cleanup-linux.yml

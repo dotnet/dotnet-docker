@@ -8,3 +8,5 @@ trigger:
       - manifest.samples.json
 phases:
   - template: ../phases/build-all.yml
+    parameters:
+      repo: dotnet-nightly
