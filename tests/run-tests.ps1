@@ -9,7 +9,9 @@ param(
     [string]$VersionFilter,
     [string]$ArchitectureFilter,
     [string]$OSFilter,
-    [string]$RepoOwner
+    [string]$Repo,
+    [switch]$DisableHttpVerification,
+    [switch]$IsLocalRun
 )
 
 Set-StrictMode -Version Latest
@@ -37,10 +39,10 @@ if (!(Test-Path $DotnetInstallScript)) {
 
 if ($IsRunningOnUnix) {
     & chmod +x $DotnetInstallDir/$DotnetInstallScript
-    & $DotnetInstallDir/$DotnetInstallScript --channel "2.0" --version "latest" --architecture x64 --install-dir $DotnetInstallDir
+    & $DotnetInstallDir/$DotnetInstallScript --channel "2.1" --version "latest" --architecture x64 --install-dir $DotnetInstallDir
 }
 else {
-    & $DotnetInstallDir/$DotnetInstallScript -Channel "2.0" -Version "latest" -Architecture x64 -InstallDir $DotnetInstallDir
+    & $DotnetInstallDir/$DotnetInstallScript -Channel "2.1" -Version "latest" -Architecture x64 -InstallDir $DotnetInstallDir
 }
 
 if ($LASTEXITCODE -ne 0) { throw "Failed to install the .NET Core SDK" }
@@ -52,17 +54,23 @@ Try {
     if ([string]::IsNullOrWhiteSpace($ArchitectureFilter)) {
         $ArchitectureFilter = "amd64"
     }
+    if ($DisableHttpVerification) {
+        $env:DISABLE_HTTP_VERIFICATION = 1
+    }
+    if ($IsLocalRun) {
+        $env:LOCAL_RUN = 1
+    }
 
     $env:IMAGE_ARCH_FILTER = $ArchitectureFilter
     $env:IMAGE_OS_FILTER = $OSFilter
     $env:IMAGE_VERSION_FILTER = $VersionFilter
-    $env:REPO_OWNER = $RepoOwner
+    $env:REPO = $Repo
 
     $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
     $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
     $env:DOTNET_MULTILEVEL_LOOKUP = '0'
 
-    & $DotnetInstallDir/dotnet test -v n
+    & $DotnetInstallDir/dotnet test --logger:trx
 
     if ($LASTEXITCODE -ne 0) { throw "Tests Failed" }
 }

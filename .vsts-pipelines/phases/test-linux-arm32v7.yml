@@ -1,0 +1,63 @@
+parameters:
+  testRunnerLinuxImage: null
+  repo: null
+  matrix: {}
+phases:
+  - phase: Test_Linux_arm32v7
+    condition: and(ne(variables['repo'], 'dotnet-samples'), or(succeeded(), eq(variables['startingPhase'], 'test')))
+    dependsOn: Build_Linux_arm32v7
+    queue:
+      name: DotNetCore-Infra
+      demands:
+        - agent.os -equals linux
+        - DockerArch -equals arm32v7
+      parallel: 100
+      matrix: ${{ parameters.matrix }}
+    variables:
+      docker.baseArtifactName: test_$(Build.BuildId)
+      docker.commonRunArgs: -v repo-$(Build.BuildId):/repo -v /docker-certs:/docker-certs -w /repo -e DOCKER_CERT_PATH=/docker-certs -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://$(PIIP):2376
+      repo: ${{ parameters.repo }}
+      testrunner.image: ${{ parameters.testRunnerLinuxImage }}
+      testRunner.container: testrunner-$(Build.BuildId)
+    steps:
+      - template: ../steps/docker-cleanup-linux.yml
+      - template: ../steps/docker-create-repo-volume-linux.yml
+      - script: docker pull $(testrunner.image)
+        displayName: Pull testrunner Image
+      - script: docker run -t -d  $(docker.commonRunArgs) -e RUNNING_TESTS_IN_CONTAINER=true --name $(testRunner.container) $(testrunner.image)
+        displayName: Start Test Runner Container
+      - script: docker exec $(testRunner.container) docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
+        displayName: Docker login
+      # The script task does not currently work (curl ssl issues), using CmdLine as workaround.
+      - task: CmdLine@1
+        displayName: Test Images
+        inputs:
+          filename: docker
+          arguments: exec $(testRunner.container) pwsh -File ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion)* -OSFilter $(osVersion)* -ArchitectureFilter arm -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix) -DisableHttpVerification
+      - script: docker exec $(testRunner.container) docker logout
+        displayName: Docker logout
+        condition: always()
+        continueOnError: true
+      - script: docker cp $(testRunner.container):/repo/tests/Microsoft.DotNet.Docker.Tests/TestResults/ $(Common.TestResultsDirectory)/.
+        displayName: Copy Test Results
+        condition: always()
+        continueOnError: true
+      - task: PublishTestResults@2
+        displayName: Publish Test Results
+        condition: always()
+        continueOnError: true
+        inputs:
+          testRunner: vSTest
+          testResultsFiles: '**/*.trx'
+          searchFolder: $(Common.TestResultsDirectory)
+          mergeTestResults: true
+          testRunTitle: Linux $(buildPath) $(osVersion) arm32v7
+      - script: docker stop $(testRunner.container)
+        displayName: Stop TestRunner Container
+        condition: always()
+        continueOnError: true
+      - script: docker run $(docker.commonRunArgs) --name cleanup_$(docker.baseArtifactName) --entrypoint docker $(testrunner.image) system prune -a -f --volumes
+        displayName: Cleanup ARM Docker
+        condition: always()
+        continueOnError: true
+      - template: ../steps/docker-cleanup-linux.yml

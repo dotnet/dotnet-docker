@@ -32,7 +32,7 @@ platformList.each { platform ->
                     batchFile("powershell -NoProfile -Command .\\build-and-test.ps1 -VersionFilter \"${versionFilter}\" -OSFilter \"${containerOS}\" -CleanupDocker")
                 }
                 else {
-                    shell("docker build --rm -t testrunner -f ./test/Dockerfile.linux.testrunner . && docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner pwsh -File build-and-test.ps1 -VersionFilter \"${versionFilter}\" -CleanupDocker")
+                    shell("docker build --rm -t testrunner -f ./tests/Dockerfile.linux.testrunner . && docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner pwsh -File build-and-test.ps1 -VersionFilter \"${versionFilter}\" -CleanupDocker")
                 }
             }
         }

@@ -18,11 +18,15 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public class ImageTests
     {
-        private static readonly string s_repoName = GetRepoName();
-        private static readonly bool s_isNightlyRepo = s_repoName.EndsWith("nightly");
+        private static readonly string s_repoName = Environment.GetEnvironmentVariable("REPO") ?? GetManifestRepoName();
+        private static readonly bool s_isHttpVerificationDisabled =
+            Environment.GetEnvironmentVariable("DISABLE_HTTP_VERIFICATION") != null;
+        private static readonly bool s_isLocalRun =
+            Environment.GetEnvironmentVariable("LOCAL_RUN") != null;
+        private static readonly bool s_isNightlyRepo = s_repoName.Contains("nightly");
+
         private static readonly bool s_isRunningInContainer =
             Environment.GetEnvironmentVariable("RUNNING_TESTS_IN_CONTAINER") != null;
-        private static readonly string s_repoOwner = Environment.GetEnvironmentVariable("REPO_OWNER") ?? "microsoft";
 
         private static readonly ImageData[] s_linuxTestData =
         {
@@ -32,12 +36,12 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "2.0", OsVariant = OS.Jessie },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic },
-            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine37 },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm" },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, Architecture = "arm" },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, IsWeb = true },
-            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine, IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine37, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm", IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, Architecture = "arm", IsWeb = true },
         };
@@ -155,7 +159,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     detach: imageData.IsWeb,
                     containerName: appSdkImage);
 
-                if (imageData.IsWeb)
+                if (imageData.IsWeb && !s_isHttpVerificationDisabled)
                 {
                     await VerifyHttpResponseFromContainer(appSdkImage);
                 }
@@ -229,7 +233,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     detach: imageData.IsWeb,
                     runAsContainerAdministrator: isRunAsContainerAdministrator);
 
-                if (imageData.IsWeb)
+                if (imageData.IsWeb && !s_isHttpVerificationDisabled)
                 {
                     await VerifyHttpResponseFromContainer(frameworkDepAppId);
                 }
@@ -279,7 +283,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         detach: imageData.IsWeb,
                         volumeName: selfContainedAppId);
 
-                    if (imageData.IsWeb)
+                    if (imageData.IsWeb && !s_isHttpVerificationDisabled)
                     {
                         await VerifyHttpResponseFromContainer(selfContainedAppId);
                     }
@@ -368,14 +372,21 @@ namespace Microsoft.DotNet.Docker.Tests
                     throw new NotSupportedException($"Unsupported image type '{variantName}'");
             }
 
-            string imageName = $"{s_repoOwner}/{s_repoName}:{imageVersion}-{variantName}-{osVariant}";
+            string imageName = $"{s_repoName}:{imageVersion}-{variantName}-{osVariant}";
 
             if (imageData.IsArm)
             {
                 imageName += $"-arm32v7";
             }
 
-            Assert.True(DockerHelper.ImageExists(imageName), $"`{imageName}` could not be found on disk.");
+            if (s_isLocalRun)
+            {
+                Assert.True(DockerHelper.ImageExists(imageName), $"`{imageName}` could not be found on disk.");
+            }
+            else
+            {
+                DockerHelper.Pull(imageName);
+            }
 
             return imageName;
         }
@@ -392,12 +403,11 @@ namespace Microsoft.DotNet.Docker.Tests
             return $"dotnet publish -c Release -o {DockerHelper.ContainerWorkDir}{optionalArgs}";
         }
 
-        private static string GetRepoName()
+        private static string GetManifestRepoName()
         {
             string manifestJson = File.ReadAllText("manifest.json");
             JObject manifest = JObject.Parse(manifestJson);
-            string qualifiedRepoName = (string)manifest["repos"][0]["name"];
-            return qualifiedRepoName.Split('/')[1];
+            return (string)manifest["repos"][0]["name"];
         }
 
         private static string GetRuntimeIdentifier(ImageData imageData)
