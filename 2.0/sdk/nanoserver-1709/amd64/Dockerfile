@@ -6,9 +6,9 @@ FROM microsoft/windowsservercore:1709 AS installer-env
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.1.200
+ENV DOTNET_SDK_VERSION 2.1.202
 ENV DOTNET_SDK_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-win-x64.zip
-ENV DOTNET_SDK_DOWNLOAD_SHA 5cae6f4c577182e7d84d991b9d20162c1a76ce17f65b7b52a7e6df8d98ec389e03626f61969eaed4f23a5f6c96a3ab188e71a0b94cc58f86e485ac9296c4af64
+ENV DOTNET_SDK_DOWNLOAD_SHA ae0c8044a021498089cfd5dbe8888acca8cdd3295b42ff7f447ac3b11f6e43dac3b6394c4055ae17dcf7c6800aa2d59b9c62859ff1dde4496dfbb59047597bf6
 
 RUN Invoke-WebRequest $Env:DOTNET_SDK_DOWNLOAD_URL -OutFile dotnet.zip; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $Env:DOTNET_SDK_DOWNLOAD_SHA) { `
