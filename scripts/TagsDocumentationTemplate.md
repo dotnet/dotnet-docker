@@ -61,7 +61,7 @@ $(TagDoc:1.0.12-runtime-nanoserver-sac2016)
 # Linux arm32 tags
 
 $(TagDoc:2.1.302-sdk-stretch-arm32v7)
-$(TagDoc:2.1.301-sdk-buster-arm32v7)
+$(TagDoc:2.1.302-sdk-buster-arm32v7)
 $(TagDoc:2.1.302-sdk-bionic-arm32v7)
 $(TagDoc:2.1.2-aspnetcore-runtime-stretch-slim-arm32v7)
 $(TagDoc:2.1.2-aspnetcore-runtime-buster-slim-arm32v7)

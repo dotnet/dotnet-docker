@@ -587,7 +587,7 @@
               "dockerfile": "2.1/runtime-deps/alpine-edge/amd64",
               "os": "linux",
               "tags": {
-                "2.1.1-runtime-deps-alpine-edge": {},
+                "2.1.2-runtime-deps-alpine-edge": {},
                 "2.1-runtime-deps-alpine-edge": {}
               }
             }
@@ -599,7 +599,7 @@
               "dockerfile": "2.1/runtime/alpine-edge/amd64",
               "os": "linux",
               "tags": {
-                "2.1.1-runtime-alpine-edge": {},
+                "2.1.2-runtime-alpine-edge": {},
                 "2.1-runtime-alpine-edge": {}
               }
             }
@@ -611,7 +611,7 @@
               "dockerfile": "2.1/aspnetcore-runtime/alpine-edge/amd64",
               "os": "linux",
               "tags": {
-                "2.1.1-aspnetcore-runtime-alpine-edge": {},
+                "2.1.2-aspnetcore-runtime-alpine-edge": {},
                 "2.1-aspnetcore-runtime-alpine-edge": {}
               }
             }
@@ -623,7 +623,7 @@
               "dockerfile": "2.1/sdk/alpine-edge/amd64",
               "os": "linux",
               "tags": {
-                "2.1.301-sdk-alpine-edge": {},
+                "2.1.302-sdk-alpine-edge": {},
                 "2.1-sdk-alpine-edge": {}
               }
             }
@@ -738,7 +738,7 @@
               "dockerfile": "2.1/runtime-deps/buster-slim/amd64",
               "os": "linux",
               "tags": {
-                "2.1.1-runtime-deps-buster-slim": {},
+                "2.1.2-runtime-deps-buster-slim": {},
                 "2.1-runtime-deps-buster-slim": {}
               }
             }
@@ -750,7 +750,7 @@
               "dockerfile": "2.1/aspnetcore-runtime/buster-slim/amd64",
               "os": "linux",
               "tags": {
-                "2.1.1-aspnetcore-runtime-buster-slim": {},
+                "2.1.2-aspnetcore-runtime-buster-slim": {},
                 "2.1-aspnetcore-runtime-buster-slim": {}
               }
             }
@@ -762,7 +762,7 @@
               "dockerfile": "2.1/runtime/buster-slim/amd64",
               "os": "linux",
               "tags": {
-                "2.1.1-runtime-buster-slim": {},
+                "2.1.2-runtime-buster-slim": {},
                 "2.1-runtime-buster-slim": {}
               }
             }
@@ -774,7 +774,7 @@
               "dockerfile": "2.1/sdk/buster/amd64",
               "os": "linux",
               "tags": {
-                "2.1.301-sdk-buster": {},
+                "2.1.302-sdk-buster": {},
                 "2.1-sdk-buster": {}
               }
             }
@@ -787,7 +787,7 @@
               "dockerfile": "2.1/runtime-deps/buster-slim/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.1-runtime-deps-buster-slim-arm32v7": {},
+                "2.1.2-runtime-deps-buster-slim-arm32v7": {},
                 "2.1-runtime-deps-buster-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -801,7 +801,7 @@
               "dockerfile": "2.1/aspnetcore-runtime/buster-slim/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.1-aspnetcore-runtime-buster-slim-arm32v7": {},
+                "2.1.2-aspnetcore-runtime-buster-slim-arm32v7": {},
                 "2.1-aspnetcore-runtime-buster-slim-arm32v7": {}
               }
             }
@@ -814,7 +814,7 @@
               "dockerfile": "2.1/runtime/buster-slim/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.1-runtime-buster-slim-arm32v7": {},
+                "2.1.2-runtime-buster-slim-arm32v7": {},
                 "2.1-runtime-buster-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -828,7 +828,7 @@
               "dockerfile": "2.1/sdk/buster/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.301-sdk-buster-arm32v7": {},
+                "2.1.302-sdk-buster-arm32v7": {},
                 "2.1-sdk-buster-arm32v7": {}
               },
               "variant": "v7"
