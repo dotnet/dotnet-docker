@@ -51,7 +51,7 @@ phases:
           testResultsFiles: '**/*.trx'
           searchFolder: $(Common.TestResultsDirectory)
           mergeTestResults: true
-          testRunTitle: Linux $(buildPath) $(osVersion) arm32v7
+          testRunTitle: Linux $(dotnetVersion) $(osVersion) arm32v7
       - script: docker stop $(testRunner.container)
         displayName: Stop TestRunner Container
         condition: always()
