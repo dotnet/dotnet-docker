@@ -87,10 +87,10 @@ function BuildAndTest(
 $dotnetBuildContext = Join-Path "." "dotnetapp"
 $aspnetBuildContext = Join-Path "." "aspnetapp"
 # test dotnetapp
-gci $dotnetBuildContext -Filter Dockerfile* | ForEach-Object {BuildAndTest $dotnetBuildContext $_.FullName}
+Get-ChildItem $dotnetBuildContext -Filter Dockerfile* | ForEach-Object {BuildAndTest $dotnetBuildContext $_.FullName}
 
 # test dotnetapp "testrunner" stage
-gci $dotnetBuildContext -Filter Dockerfile* | ForEach-Object {BuildAndTest $dotnetBuildContext $_.FullName "testrunner"}
+Get-ChildItem $dotnetBuildContext -Filter Dockerfile* | ForEach-Object {BuildAndTest $dotnetBuildContext $_.FullName "testrunner"}
 
 # test aspnetapp
-gci $aspnetBuildContext -Filter Dockerfile* | ForEach-Object {Build $aspnetBuildContext $_.FullName}
+Get-ChildItem $aspnetBuildContext -Filter Dockerfile* | ForEach-Object {Build $aspnetBuildContext $_.FullName}
