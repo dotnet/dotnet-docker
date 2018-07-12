@@ -3,10 +3,12 @@
 
 using Microsoft.DotNet.VersionTools.Dependencies;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -26,7 +28,7 @@ namespace Dotnet.Docker
         private static readonly string s_envShaPattern =
             $"ENV DOTNET_[\\S]*DOWNLOAD_SHA (?<{ValueGroupName}>[\\S]*)";
         private static readonly string s_envDownloadUrlPattern = $"ENV (DOTNET_[\\S]*DOWNLOAD_URL) (?<{ValueGroupName}>[\\S]*)";
-        private static readonly string s_inlineUrlPattern = 
+        private static readonly string s_inlineUrlPattern =
             $"(?<{ValueGroupName}>https://dotnetcli.blob.core.windows.net/[^;\\s]*)";
         private static readonly string s_varShaPattern =
             $"[ \\$](dotnet_|aspnetcore_)sha512( )*=( )*'(?<{ValueGroupName}>[^'\\s]*)'";
@@ -34,6 +36,8 @@ namespace Dotnet.Docker
         private static readonly Regex s_downloadUrlRegex = new Regex($"({s_envDownloadUrlPattern})|{s_inlineUrlPattern}");
         private static readonly Regex s_shaRegex = new Regex($"({s_envShaPattern})|({s_varShaPattern})");
         private static readonly Regex s_versionRegex = new Regex(s_envVersionPattern);
+
+        private static readonly Dictionary<string, string> s_shaCache = new Dictionary<string, string>();
 
         public DockerfileShaUpdater(string dockerfilePath) : base()
         {
@@ -52,7 +56,7 @@ namespace Dotnet.Docker
             return GetArtifactShaAsync(dockerfile).Result;
         }
 
-        private static async Task<string> GetArtifactShaAsync(string dockerfile)
+        private async Task<string> GetArtifactShaAsync(string dockerfile)
         {
             string sha = null;
 
@@ -61,9 +65,19 @@ namespace Dotnet.Docker
                 if (TryGetDotNetDownloadUrl(dockerfile, out string downloadUrl))
                 {
                     downloadUrl = SubstituteEnvRef(downloadUrl, versionInfo.EnvName, versionInfo.Version);
-                    sha = await GetDotNetCliChecksumsShaAsync(downloadUrl, versionInfo.EnvName)
-                        ?? await GetDotNetReleaseChecksumsShaAsync(downloadUrl, versionInfo.EnvName, versionInfo.Version);
-                    sha = sha?.ToLowerInvariant();
+                    if (!s_shaCache.TryGetValue(downloadUrl, out sha))
+                    {
+                        sha = await GetDotNetCliChecksumsShaAsync(downloadUrl, versionInfo.EnvName)
+                            ?? await GetDotNetReleaseChecksumsShaAsync(downloadUrl, versionInfo.EnvName, versionInfo.Version)
+                            ?? await ComputeChecksumShaAsync(downloadUrl);
+
+                        if (sha != null)
+                        {
+                            sha = sha.ToLowerInvariant();
+                            s_shaCache.Add(downloadUrl, sha);
+                            Trace.TraceInformation($"Retrieved sha '{sha}' for '{downloadUrl}'.");
+                        }
+                    }
                 }
                 else
                 {
@@ -73,6 +87,38 @@ namespace Dotnet.Docker
             else
             {
                 Trace.TraceInformation($"DockerfileShaUpdater no-op - .NET product found.");
+            }
+
+            return sha;
+        }
+
+        private static async Task<string> ComputeChecksumShaAsync(string downloadUrl)
+        {
+            string sha = null;
+
+            Trace.TraceInformation($"Downloading '{downloadUrl}'.");
+            using (HttpClient client = new HttpClient())
+            using (HttpResponseMessage response = await client.GetAsync(downloadUrl))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    using (Stream httpStream = await response.Content.ReadAsStreamAsync())
+                    using (SHA512 hash = SHA512.Create())
+                    {
+                        byte[] hashedInputBytes = hash.ComputeHash(httpStream);
+
+                        StringBuilder stringBuilder = new StringBuilder(128);
+                        foreach (byte b in hashedInputBytes)
+                        {
+                            stringBuilder.Append(b.ToString("X2"));
+                        }
+                        sha = stringBuilder.ToString();
+                    }
+                }
+                else
+                {
+                    Trace.TraceInformation($"Failed to download {downloadUrl}.");
+                }
             }
 
             return sha;
