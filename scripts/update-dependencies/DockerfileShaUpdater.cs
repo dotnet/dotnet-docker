@@ -37,7 +37,7 @@ namespace Dotnet.Docker
         private static readonly Regex s_shaRegex = new Regex($"({s_envShaPattern})|({s_varShaPattern})");
         private static readonly Regex s_versionRegex = new Regex(s_envVersionPattern);
 
-        private static Dictionary<string, string> s_shaCache = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> s_shaCache = new Dictionary<string, string>();
 
         public DockerfileShaUpdater(string dockerfilePath) : base()
         {
@@ -113,7 +113,7 @@ namespace Dotnet.Docker
                             stringBuilder.Append(b.ToString("X2"));
                         }
                         sha = stringBuilder.ToString();
-                    };
+                    }
                 }
                 else
                 {
