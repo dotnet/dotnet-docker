@@ -15,14 +15,16 @@ phases:
       demands:
         - agent.os -equals linux
     variables:
-      docker.commonRunArgs: --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo $(imageBuilder.image)
+      docker.commonRunArgs: --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image)
       imageBuilder.commonCmdArgs: --manifest $(manifest) --username $(dockerRegistry.userName) --password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs)
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
+      repoVolume: publish-repo-$(Build.BuildId)
     steps:
-      - template: ../steps/docker-cleanup-linux.yml
-      - script: docker pull $(imageBuilder.image)
-        displayName: Pull Image Builder
+      - template: ../steps/docker-init-linux.yml
+        parameters:
+          image: $(imageBuilder.image)
+          repoVolume: $(repoVolume)
       - script: docker run $(docker.commonRunArgs) publishManifest $(imageBuilder.commonCmdArgs)
         displayName: Publish Manifest
       - script: docker run $(docker.commonRunArgs) updateReadme $(imageBuilder.commonCmdArgs)
