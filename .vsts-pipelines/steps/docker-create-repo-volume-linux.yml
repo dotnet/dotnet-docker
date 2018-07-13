@@ -1,5 +1,0 @@
-steps:
-  - script: docker run --rm -v repo-$(Build.BuildId):/repo buildpack-deps:stretch-scm git clone https://github.com/dotnet/dotnet-docker.git /repo
-    displayName: Clone Repo
-  - script: docker run --rm -v repo-$(Build.BuildId):/repo -w /repo buildpack-deps:stretch-scm git checkout $(Build.SourceVersion)
-    displayName: Checkout Source

@@ -1,0 +1,23 @@
+parameters:
+  image: null
+  repoVolume: ''
+
+steps:
+  - template: docker-cleanup-linux.yml
+
+  - ${{ if ne(parameters.repoVolume, '') }}:
+    - script: $(Build.Repository.LocalPath)/scripts/pull-image.sh buildpack-deps:stretch-scm
+      displayName: Pull Image buildpack-deps:stretch-scm
+    - script: docker run --rm -v $repoVolume:/repo buildpack-deps:stretch-scm git clone https://github.com/dotnet/dotnet-docker.git /repo
+      displayName: Clone Repo
+      env:
+        repoVolume: ${{ parameters.repoVolume }}
+    - script: docker run --rm -v $repoVolume:/repo -w /repo buildpack-deps:stretch-scm git checkout $(Build.SourceVersion)
+      displayName: Checkout Source
+      env:
+        repoVolume: ${{ parameters.repoVolume }}
+
+  - script: $(Build.Repository.LocalPath)/scripts/pull-image.sh $image
+    displayName: ${{ format('Pull Image {0}', parameters.image) }}
+    env:
+      image: ${{ parameters.image }}

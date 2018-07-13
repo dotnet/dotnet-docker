@@ -1,0 +1,9 @@
+parameters:
+  image: null
+
+steps:
+  - template: docker-cleanup-windows.yml
+  - powershell: $(Build.Repository.LocalPath)/scripts/Invoke-PullImage.ps1 $env:image
+    displayName: ${{ format('Pull Image {0}', parameters.image) }}
+    env:
+      image: ${{ parameters.image }}

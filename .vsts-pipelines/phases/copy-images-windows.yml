@@ -7,7 +7,7 @@ parameters:
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
-    condition: or(succeeded(), eq(variables['startingPhase'], 'publish'), and(eq(variables['repo'], 'dotnet-samples'), succeeded('Build_Linux_amd64'), succeeded('Build_Linux_arm32v7'), succeeded('Build_NanoServerSac2016_amd64'), succeeded('Build_NanoServer1709_amd64'), succeeded('Build_NanoServer1803_amd64')))
+    condition: or(eq(variables['singlePhase'], 'publish'), and(eq(variables['singlePhase'], ''), or(succeeded(), and(eq(variables['repo'], 'dotnet-samples'), eq(variables['singlePhase'], ''), succeeded('Build_Linux_amd64'), succeeded('Build_Linux_arm32v7'), succeeded('Build_NanoServerSac2016_amd64'), succeeded('Build_NanoServer1709_amd64'), succeeded('Build_NanoServer1803_amd64')))))
     dependsOn:
       - Test_Linux_amd64
       - Test_Linux_arm32v7
@@ -26,9 +26,9 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
     steps:
-      - template: ../steps/docker-cleanup-windows.yml
-      - script: docker pull $(imageBuilder.image)
-        displayName: Pull Image Builder
+      - template: ../steps/docker-init-windows.yml
+        parameters:
+          image: $(imageBuilder.image)
       - script: docker create --name $(docker.setupContainerName) $(imageBuilder.image)
         displayName: Create Setup Container
       - script: docker cp $(docker.setupContainerName):/image-builder $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder
