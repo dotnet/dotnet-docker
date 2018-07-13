@@ -1,96 +1,75 @@
 #!/usr/bin/env pwsh
 
-function Log([string]$s) {
-    [console]::WriteLine("###### $s")
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
+function Log {
+    param ([string] $Message)
+
+    Write-Output "###### $Message"
 }
 
-function Check([string]$s) {
+function Exec {
+    param ([string] $Cmd)
+
+    Log "$Cmd"
+    Invoke-Expression $Cmd
     if ($LASTEXITCODE -ne 0) {
-        Log "Failed: $s"
-        throw "Error case -- see failed step"
+        throw "Failed: $Cmd"
     }
 }
 
-function IsValidConfiguration([string] $Dockerfile)
-{
-    $DockerOS = docker version -f "{{ .Server.Os }}"
-    if ($DockerOS -eq "windows") {
-        if ($DockerFile.Contains("debian") -or $DockerFile.Contains("alpine"))
-        {
-            Log "Not valid in this configuration"
-            return $False
-        }
+function Get-DockerfileItem {
+    param ([string] $SampleType)
+
+    $exclusions = [System.Collections.ArrayList]@()
+    $dockerOS = docker version -f "{{ .Server.Os }}"
+    if ($dockerOS -eq "windows") {
+        $null = $exclusions.Add("*debian*")
+        $null = $exclusions.Add("*alpine*")
     }
     else {
-        if ($DockerFile.Contains("nanoserver")) {
-            Log "Not valid in this configuration"
-            return $False
-        }
+        $null = $exclusions.Add("*nanoserver*")
     }
 
-    if ($DockerFile.Contains("arm")){
-        Log "Not valid in this configuration"
-        return $False
-    }
-
-    return $True
-}
-
-function Build(
-        [string] $BuildContext,
-        [string] $Dockerfile,
-        [string] $Stage = "None"){
-    
-    $IsValid = IsValidConfiguration $Dockerfile
-    Log "Build: $Dockerfile"
-    if (-not $IsValid)
-    {
-        return
-    }
-
-    Log "Building"
-    $Random = Get-Random -minimum 100 -maximum 1000
-    $Tag = "test$($Random)"
-    docker build --pull -t $Tag -f $DockerFile $BuildContext
-    Check "docker build failed"
-}
-
-function BuildAndTest(
-        [string] $BuildContext,
-        [string] $Dockerfile,
-        [string] $Stage = "None"){
-
-    Log "BuildAndTest: $Dockerfile"
-    $IsValid = IsValidConfiguration $Dockerfile
-    if (-not $IsValid)
-    {
-        return
-    }
-
-    Log "Building"
-    $Random = Get-Random -minimum 100 -maximum 1000
-    $StageArgument = ""
-    $Tag = "test$($Random)"
-    if ($Stage -ne "None") {
-        docker build --pull --target $Stage -t $Tag -f $DockerFile $BuildContext
+    $dockerArch = docker info -f "{{ .Architecture }}"
+    if ($dockerArch -eq "x86_64") {
+        $null = $exclusions.Add("*arm*")
     }
     else {
-        docker build --pull -t $Tag -f $DockerFile $BuildContext
+        $null = $exclusions.Add("*x64*")
     }
-    Check "docker build failed"
-    Log "Testing"
-    docker run --rm -it $Tag
-    Check "docker run failed"
-    docker rmi -f $Tag
+
+    $dockerfilePath = [io.path]::combine($PSScriptRoot, $SampleType, "Dockerfile*")
+    Get-ChildItem -Path $dockerfilePath -Exclude $exclusions
 }
 
-$dotnetBuildContext = Join-Path "." "dotnetapp"
-$aspnetBuildContext = Join-Path "." "aspnetapp"
-# test dotnetapp
-Get-ChildItem $dotnetBuildContext -Filter Dockerfile* | ForEach-Object {BuildAndTest $dotnetBuildContext $_.FullName}
+function Validate_Dockerfile {
+    param ([string] $Dockerfile, [string] $Stage = $null, [switch] $SkipRunning)
 
-# test dotnetapp "testrunner" stage
-Get-ChildItem $dotnetBuildContext -Filter Dockerfile* | ForEach-Object {BuildAndTest $dotnetBuildContext $_.FullName "testrunner"}
+    Log "Validating Dockerfile: $Dockerfile"
 
-# test aspnetapp
-Get-ChildItem $aspnetBuildContext -Filter Dockerfile* | ForEach-Object {Build $aspnetBuildContext $_.FullName}
+    $tag = "test" + [DateTime]::Now.ToString("yyyyMMdd-HHmmss")
+    $buildContext = [System.IO.Path]::GetDirectoryName($Dockerfile)
+    $optionalBuildArgs = ""
+    if ($Stage) {
+        $optionalBuildArgs += "--target $Stage"
+    }
+
+    Exec "docker build --pull -t $tag -f $DockerFile $optionalBuildArgs $buildContext"
+
+    if (!$SkipRunning) {
+        Exec "docker run --rm -it $tag"
+    }
+
+    docker rmi -f $tag
+}
+
+# test dotnetapp samples
+Get-DockerfileItem "dotnetapp" | ForEach-Object {
+    Validate_Dockerfile $_.FullName
+    Validate_Dockerfile $_.FullName "testrunner"
+}
+
+# test aspnetapp samples
+Get-DockerfileItem "aspnetapp" | ForEach-Object { Validate_Dockerfile $_.FullName -SkipRunning }
