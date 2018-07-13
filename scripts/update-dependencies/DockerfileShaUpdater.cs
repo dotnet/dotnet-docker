@@ -25,26 +25,40 @@ namespace Dotnet.Docker
 
         private static readonly string s_envVersionPattern =
             $"ENV (?<{EnvNameGroupName}>(DOTNET|ASPNETCORE)_[\\S]*VERSION) (?<{ValueGroupName}>[\\S]*)";
-        private static readonly string s_envShaPattern =
-            $"ENV DOTNET_[\\S]*DOWNLOAD_SHA (?<{ValueGroupName}>[\\S]*)";
+        private static readonly string s_envShaPattern = $"ENV DOTNET_[\\S]*DOWNLOAD_SHA (?<{ValueGroupName}>[\\S]*)";
         private static readonly string s_envDownloadUrlPattern = $"ENV (DOTNET_[\\S]*DOWNLOAD_URL) (?<{ValueGroupName}>[\\S]*)";
-        private static readonly string s_inlineUrlPattern =
-            $"(?<{ValueGroupName}>https://dotnetcli.blob.core.windows.net/[^;\\s]*)";
-        private static readonly string s_varShaPattern =
-            $"[ \\$](dotnet_|aspnetcore_)sha512( )*=( )*'(?<{ValueGroupName}>[^'\\s]*)'";
+        private static readonly string s_inlineUrlPatternFormat =
+            $"(?<{ValueGroupName}>https://dotnetcli.blob.core.windows.net/[^;\\s]*{{0}})";
+        private static readonly string s_inlineProductUrlPattern = string.Format(s_inlineUrlPatternFormat, string.Empty);
+        private static readonly string s_inlineLzmaUrlPattern = string.Format(s_inlineUrlPatternFormat, "lzma");
+        private static readonly string s_varShaPatternFormat = $"[ \\$]({{0}})sha512( )*=( )*'(?<{ValueGroupName}>[^'\\s]*)'";
+        private static readonly string s_varProductShaPattern = string.Format(s_varShaPatternFormat, "dotnet_|aspnetcore_");
+        private static readonly string s_varLzmaShaPattern = string.Format(s_varShaPatternFormat, "lzma_");
 
-        private static readonly Regex s_downloadUrlRegex = new Regex($"({s_envDownloadUrlPattern})|{s_inlineUrlPattern}");
-        private static readonly Regex s_shaRegex = new Regex($"({s_envShaPattern})|({s_varShaPattern})");
+        private static readonly Regex s_productDownloadUrlRegex =
+            new Regex($"({s_envDownloadUrlPattern})|{s_inlineProductUrlPattern}");
+        private static readonly Regex s_lzmaDownloadUrlRegex = new Regex(s_inlineLzmaUrlPattern);
+        private static readonly Regex s_productShaRegex = new Regex($"({s_envShaPattern})|({s_varProductShaPattern})");
+        private static readonly Regex s_lzmaShaRegex = new Regex(s_varLzmaShaPattern);
         private static readonly Regex s_versionRegex = new Regex(s_envVersionPattern);
 
         private static readonly Dictionary<string, string> s_shaCache = new Dictionary<string, string>();
 
-        public DockerfileShaUpdater(string dockerfilePath) : base()
+        private Regex _downloadUrlRegex;
+
+        private DockerfileShaUpdater(string dockerfilePath, Regex regex, Regex downloadUrlRegex) : base()
         {
+            _downloadUrlRegex = downloadUrlRegex;
             Path = dockerfilePath;
-            Regex = s_shaRegex;
+            Regex = regex;
             VersionGroupName = ValueGroupName;
         }
+
+        public static DockerfileShaUpdater CreateProductShaUpdater(string dockerfilePath) =>
+            new DockerfileShaUpdater(dockerfilePath, s_productShaRegex, s_productDownloadUrlRegex);
+
+        public static DockerfileShaUpdater CreateLzmaShaUpdater(string dockerfilePath) =>
+            new DockerfileShaUpdater(dockerfilePath, s_lzmaShaRegex, s_lzmaDownloadUrlRegex);
 
         protected override string TryGetDesiredValue(
             IEnumerable<IDependencyInfo> dependencyBuildInfos, out IEnumerable<IDependencyInfo> usedBuildInfos)
@@ -183,9 +197,9 @@ namespace Dotnet.Docker
             return sha;
         }
 
-        private static bool TryGetDotNetDownloadUrl(string dockerfile, out string downloadUrl)
+        private bool TryGetDotNetDownloadUrl(string dockerfile, out string downloadUrl)
         {
-            Match match = s_downloadUrlRegex.Match(dockerfile);
+            Match match = _downloadUrlRegex.Match(dockerfile);
             downloadUrl = match.Success ? match.Groups[ValueGroupName].Value : null;
             return match.Success;
         }

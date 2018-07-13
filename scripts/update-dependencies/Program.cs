@@ -150,7 +150,8 @@ namespace Dotnet.Docker
                 .Select(path => CreateDockerfileEnvUpdater(path, "DOTNET_SDK_VERSION", SdkBuildInfoName))
                 .Concat(dockerfiles.Select(path => CreateDockerfileEnvUpdater(path, "ASPNETCORE_VERSION", AspNetCoreBuildInfoName)))
                 .Concat(dockerfiles.Select(path => CreateDockerfileEnvUpdater(path, "DOTNET_VERSION", RuntimeBuildInfoName)))
-                .Concat(dockerfiles.Select(path => new DockerfileShaUpdater(path)));
+                .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateProductShaUpdater(path)))
+                .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateLzmaShaUpdater(path)));
         }
 
         private static IDependencyUpdater CreateDockerfileEnvUpdater(string path, string envName, string buildInfoName)
