@@ -6,7 +6,7 @@ parameters:
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
-    condition: and(ne(variables['repo'], 'dotnet-samples'), or(succeeded(), eq(variables['startingPhase'], 'test')))
+    condition: and(ne(variables['repo'], 'dotnet-samples'), or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'test')))
     dependsOn: ${{ parameters.dependsOn }}
     queue:
       name: DotNetCore-Infra
