@@ -532,9 +532,7 @@
               "os": "linux",
               "tags": {
                 "2.1.3-runtime-deps-alpine3.7": {},
-                "2.1-runtime-deps-alpine3.7": {},
-                "2.1.3-runtime-deps-alpine": {},
-                "2.1-runtime-deps-alpine": {}
+                "2.1-runtime-deps-alpine3.7": {}
               }
             }
           ]
@@ -546,9 +544,7 @@
               "os": "linux",
               "tags": {
                 "2.1.3-runtime-alpine3.7": {},
-                "2.1-runtime-alpine3.7": {},
-                "2.1.3-runtime-alpine": {},
-                "2.1-runtime-alpine": {}
+                "2.1-runtime-alpine3.7": {}
               }
             }
           ]
@@ -560,9 +556,7 @@
               "os": "linux",
               "tags": {
                 "2.1.3-aspnetcore-runtime-alpine3.7": {},
-                "2.1-aspnetcore-runtime-alpine3.7": {},
-                "2.1.3-aspnetcore-runtime-alpine": {},
-                "2.1-aspnetcore-runtime-alpine": {}
+                "2.1-aspnetcore-runtime-alpine3.7": {}
               }
             }
           ]
@@ -574,57 +568,63 @@
               "os": "linux",
               "tags": {
                 "2.1.401-sdk-alpine3.7": {},
-                "2.1-sdk-alpine3.7": {},
+                "2.1-sdk-alpine3.7": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime-deps/alpine3.8/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.3-runtime-deps-alpine3.8": {},
+                "2.1-runtime-deps-alpine3.8": {},
+                "2.1.3-runtime-deps-alpine": {},
+                "2.1-runtime-deps-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime/alpine3.8/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.3-runtime-alpine3.8": {},
+                "2.1-runtime-alpine3.8": {},
+                "2.1.3-runtime-alpine": {},
+                "2.1-runtime-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.1/aspnetcore-runtime/alpine3.8/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.3-aspnetcore-runtime-alpine3.8": {},
+                "2.1-aspnetcore-runtime-alpine3.8": {},
+                "2.1.3-aspnetcore-runtime-alpine": {},
+                "2.1-aspnetcore-runtime-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.1/sdk/alpine3.8/amd64",
+              "os": "linux",
+              "tags": {
+                "2.1.401-sdk-alpine3.8": {},
+                "2.1-sdk-alpine3.8": {},
                 "2.1.401-sdk-alpine": {},
                 "2.1-sdk-alpine": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "dockerfile": "2.1/runtime-deps/alpine-edge/amd64",
-              "os": "linux",
-              "tags": {
-                "2.1.3-runtime-deps-alpine-edge": {},
-                "2.1-runtime-deps-alpine-edge": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "dockerfile": "2.1/runtime/alpine-edge/amd64",
-              "os": "linux",
-              "tags": {
-                "2.1.3-runtime-alpine-edge": {},
-                "2.1-runtime-alpine-edge": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "dockerfile": "2.1/aspnetcore-runtime/alpine-edge/amd64",
-              "os": "linux",
-              "tags": {
-                "2.1.3-aspnetcore-runtime-alpine-edge": {},
-                "2.1-aspnetcore-runtime-alpine-edge": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "dockerfile": "2.1/sdk/alpine-edge/amd64",
-              "os": "linux",
-              "tags": {
-                "2.1.401-sdk-alpine-edge": {},
-                "2.1-sdk-alpine-edge": {}
               }
             }
           ]

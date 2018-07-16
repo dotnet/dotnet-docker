@@ -1,4 +1,4 @@
-FROM microsoft/dotnet-nightly:2.1-runtime-deps-alpine-edge
+FROM microsoft/dotnet-nightly:2.1-runtime-deps-alpine3.8
 
 # Install ASP.NET Core
 ENV ASPNETCORE_VERSION 2.1.3-rtm-30894
