@@ -14,21 +14,12 @@ phases:
       parallel: 100
       matrix: ${{ parameters.matrix }}
     variables:
-      docker.setupContainerName: setup_$(Build.BuildId)
-      imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
     steps:
       - template: ../steps/docker-init-windows.yml
         parameters:
-          image: $(imageBuilder.image)
-      - script: docker create --name $(docker.setupContainerName) $(imageBuilder.image)
-        displayName: Create Setup Container
-      - script: docker cp $(docker.setupContainerName):/image-builder $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder
-        displayName: Copy Image Builder
-      - script: docker rm -f $(docker.setupContainerName)
-        displayName: Cleanup Setup Container
-        continueOnError: true
+          imageBuilderImage: ${{ parameters.imageBuilderImage }}
       - script: $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe build --manifest $(manifest) --skip-test --path $(dotnetVersion)* --os-version $(osVersion) --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
         displayName: Build Images
       - template: ../steps/docker-cleanup-windows.yml

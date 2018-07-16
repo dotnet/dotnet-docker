@@ -16,7 +16,7 @@ phases:
     variables:
       repo: ${{ parameters.repo }}
     steps:
-      - template: ../steps/docker-cleanup-windows.yml
+      - template: ../steps/docker-init-windows.yml
       - script: docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
         displayName: Docker login
       - powershell: ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion)* -OSFilter $(osVersion) -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
