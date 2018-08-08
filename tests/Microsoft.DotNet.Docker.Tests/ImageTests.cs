@@ -31,6 +31,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             new ImageData { DotNetVersion = "1.0", OsVariant = OS.Jessie, SdkVersion = "1.1" },
             new ImageData { DotNetVersion = "1.1", OsVariant = OS.Jessie, RuntimeDepsVersion = "1.0" },
+            new ImageData { DotNetVersion = "1.1", OsVariant = OS.Stretch },
             new ImageData { DotNetVersion = "2.0", OsVariant = OS.Stretch },
             new ImageData { DotNetVersion = "2.0", OsVariant = OS.Jessie },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch },
@@ -429,7 +430,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             else if (imageData.DotNetVersion.StartsWith("1."))
             {
-                rid = "debian.8-x64";
+                rid = imageData.OsVariant == OS.Jessie ? "debian.8-x64" : "debian.9-x64";
             }
             else
             {
