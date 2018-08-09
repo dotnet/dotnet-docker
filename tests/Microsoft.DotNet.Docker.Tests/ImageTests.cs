@@ -49,6 +49,20 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm", IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.BusterSlim, SdkOsVariant = OS.Buster, Architecture = "arm", IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic, Architecture = "arm", IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.BusterSlim, SdkOsVariant = OS.Buster },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Alpine38 },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm" },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.BusterSlim, SdkOsVariant = OS.Buster, Architecture = "arm" },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm" },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.BusterSlim, SdkOsVariant = OS.Buster, IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Alpine38, IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm", IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.BusterSlim, SdkOsVariant = OS.Buster, Architecture = "arm", IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm", IsWeb = true },
         };
         private static readonly ImageData[] s_windowsTestData =
         {
@@ -63,6 +77,12 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServerSac2016, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1709, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1803, IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServerSac2016 },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1709 },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1803 },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServerSac2016, IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1709, IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1803, IsWeb = true },
         };
 
         private readonly DockerHelper _dockerHelper;
