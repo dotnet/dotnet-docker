@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -66,13 +67,31 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private string ExecuteWithLogging(string args, bool ignoreErrors = false)
+        private static string Execute(
+            string args, bool ignoreErrors = false, bool autoRetry = false, ITestOutputHelper outputHelper = null)
         {
-            OutputHelper.WriteLine($"Executing : docker {args}");
-            return Execute(args, outputHelper: OutputHelper, ignoreErrors: ignoreErrors);
+            (Process Process, string StdOut, string StdErr) result;
+            if (autoRetry)
+            {
+                result = ExecuteWithRetry(args, outputHelper, ExecuteProcess);
+            }
+            else
+            {
+                result = ExecuteProcess(args, outputHelper);
+            }
+
+            if (!ignoreErrors && result.Process.ExitCode != 0)
+            {
+                ProcessStartInfo startInfo = result.Process.StartInfo;
+                string msg = $"Failed to execute {startInfo.FileName} {startInfo.Arguments}{Environment.NewLine}{result.StdErr}";
+                throw new InvalidOperationException(msg);
+            }
+
+            return result.StdOut;
         }
 
-        private static string Execute(string args, bool ignoreErrors = false, ITestOutputHelper outputHelper = null)
+        private static (Process Process, string StdOut, string StdErr) ExecuteProcess(
+            string args, ITestOutputHelper outputHelper)
         {
             Process process = new Process
             {
@@ -109,13 +128,45 @@ namespace Microsoft.DotNet.Docker.Tests
                 outputHelper.WriteLine(error);
             }
 
-            if (!ignoreErrors && process.ExitCode != 0)
+            return (process, output, error);
+        }
+
+        private string ExecuteWithLogging(string args, bool ignoreErrors = false, bool autoRetry = false)
+        {
+            OutputHelper.WriteLine($"Executing : docker {args}");
+            return Execute(args, outputHelper: OutputHelper, ignoreErrors: ignoreErrors, autoRetry: autoRetry);
+        }
+
+        private static (Process Process, string StdOut, string StdErr) ExecuteWithRetry(
+            string args,
+            ITestOutputHelper outputHelper,
+            Func<string, ITestOutputHelper, (Process Process, string StdOut, string StdErr)> executor)
+        {
+            const int maxRetries = 5;
+            const int waitFactor = 5;
+
+            int retryCount = 0;
+
+            (Process Process, string StdOut, string StdErr) result = executor(args, outputHelper);
+            while (result.Process.ExitCode != 0)
             {
-                string msg = $"Failed to execute {process.StartInfo.FileName} {process.StartInfo.Arguments}{Environment.NewLine}{stdError}";
-                throw new InvalidOperationException(msg);
+                retryCount++;
+                if (retryCount >= maxRetries)
+                {
+                    break;
+                }
+
+                int waitTime = Convert.ToInt32(Math.Pow(waitFactor, retryCount - 1));
+                if (outputHelper != null)
+                {
+                    outputHelper.WriteLine($"Retry {retryCount}/{maxRetries}, retrying in {waitTime} seconds...");
+                }
+
+                Thread.Sleep(waitTime * 1000);
+                result = executor(args, outputHelper);
             }
 
-            return output;
+            return result;
         }
 
         private static string GetDockerOS()
@@ -145,9 +196,9 @@ namespace Microsoft.DotNet.Docker.Tests
             return ResourceExists("image", tag);
         }
 
-        public static void Pull(string image)
+        public void Pull(string image)
         {
-            Execute($"pull {image}");
+            ExecuteWithLogging($"pull {image}", autoRetry: true);
         }
 
         private static bool ResourceExists(string type, string filterArg)

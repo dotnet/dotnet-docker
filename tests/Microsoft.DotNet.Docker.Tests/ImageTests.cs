@@ -378,7 +378,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static string GetDotNetImage(DotNetImageType imageType, ImageData imageData)
+        public string GetDotNetImage(DotNetImageType imageType, ImageData imageData)
         {
             string imageVersion;
             string osVariant;
@@ -416,7 +416,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             else
             {
-                DockerHelper.Pull(imageName);
+                _dockerHelper.Pull(imageName);
             }
 
             return imageName;
