@@ -466,7 +466,7 @@
         },
         {
           "sharedTags": {
-            "2.1.302-sdk": {},
+            "2.1.400-sdk": {},
             "2.1-sdk": {},
             "sdk": {},
             "latest": {},
@@ -479,7 +479,7 @@
               "dockerfile": "2.1/sdk/stretch/amd64",
               "os": "linux",
               "tags": {
-                "2.1.302-sdk-stretch": {},
+                "2.1.400-sdk-stretch": {},
                 "2.1-sdk-stretch": {}
               }
             },
@@ -488,7 +488,7 @@
               "dockerfile": "2.1/sdk/stretch/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.302-sdk-stretch-arm32v7": {},
+                "2.1.400-sdk-stretch-arm32v7": {},
                 "2.1-sdk-stretch-arm32v7": {}
               },
               "variant": "v7"
@@ -498,7 +498,7 @@
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
               "tags": {
-                "2.1.302-sdk-nanoserver-sac2016": {},
+                "2.1.400-sdk-nanoserver-sac2016": {},
                 "2.1-sdk-nanoserver-sac2016": {},
                 "2-sdk-nanoserver": {
                   "isUndocumented": true
@@ -510,7 +510,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1709",
               "tags": {
-                "2.1.302-sdk-nanoserver-1709": {},
+                "2.1.400-sdk-nanoserver-1709": {},
                 "2.1-sdk-nanoserver-1709": {}
               }
             },
@@ -519,7 +519,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1803",
               "tags": {
-                "2.1.302-sdk-nanoserver-1803": {},
+                "2.1.400-sdk-nanoserver-1803": {},
                 "2.1-sdk-nanoserver-1803": {}
               }
             }
@@ -573,9 +573,9 @@
               "dockerfile": "2.1/sdk/alpine3.7/amd64",
               "os": "linux",
               "tags": {
-                "2.1.302-sdk-alpine3.7": {},
+                "2.1.400-sdk-alpine3.7": {},
                 "2.1-sdk-alpine3.7": {},
-                "2.1.302-sdk-alpine": {},
+                "2.1.400-sdk-alpine": {},
                 "2.1-sdk-alpine": {}
               }
             }
@@ -623,7 +623,7 @@
               "dockerfile": "2.1/sdk/bionic/amd64",
               "os": "linux",
               "tags": {
-                "2.1.302-sdk-bionic": {},
+                "2.1.400-sdk-bionic": {},
                 "2.1-sdk-bionic": {}
               }
             }
@@ -677,7 +677,7 @@
               "dockerfile": "2.1/sdk/bionic/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.302-sdk-bionic-arm32v7": {},
+                "2.1.400-sdk-bionic-arm32v7": {},
                 "2.1-sdk-bionic-arm32v7": {}
               },
               "variant": "v7"
