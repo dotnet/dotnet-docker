@@ -6,7 +6,7 @@ parameters:
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
-    condition: and(ne(variables['repo'], 'dotnet-samples'), or(succeeded(), eq(variables['startingPhase'], 'test')))
+    condition: and(ne(variables['repo'], 'dotnet-samples'), or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'test')))
     dependsOn: ${{ parameters.dependsOn }}
     queue:
       name: DotNetCore-Infra
@@ -16,7 +16,7 @@ phases:
     variables:
       repo: ${{ parameters.repo }}
     steps:
-      - template: ../steps/docker-cleanup-windows.yml
+      - template: ../steps/docker-init-windows.yml
       - script: docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
         displayName: Docker login
       - powershell: ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion)* -OSFilter $(osVersion) -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
@@ -33,5 +33,5 @@ phases:
           testRunner: vSTest
           testResultsFiles: 'tests/**/*.trx'
           mergeTestResults: true
-          testRunTitle: Windows $(buildPath) $(osVersion) amd64
+          testRunTitle: Windows $(dotnetVersion) $(osVersion) amd64
       - template: ../steps/docker-cleanup-windows.yml

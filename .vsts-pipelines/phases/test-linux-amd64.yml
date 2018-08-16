@@ -4,7 +4,7 @@ parameters:
   matrix: {}
 phases:
   - phase: Test_Linux_amd64
-    condition: and(ne(variables['repo'], 'dotnet-samples'), or(succeeded(), eq(variables['startingPhase'], 'test')))
+    condition: and(ne(variables['repo'], 'dotnet-samples'), or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'test')))
     dependsOn: Build_Linux_amd64
     queue:
       name: DotNet-Build
@@ -14,14 +14,15 @@ phases:
       matrix: ${{ parameters.matrix }}
     variables:
       repo: ${{ parameters.repo }}
+      repoVolume: test-repo-$(Build.BuildId)
       testrunner.image: ${{ parameters.testRunnerLinuxImage }}
       testRunner.container: testrunner-$(Build.BuildId)
     steps:
-      - template: ../steps/docker-cleanup-linux.yml
-      - template: ../steps/docker-create-repo-volume-linux.yml
-      - script: docker pull $(testrunner.image)
-        displayName: Pull testrunner Image
-      - script: docker run -t -d  -v /var/run/docker.sock:/var/run/docker.sock -v repo-$(Build.BuildId):/repo -w /repo -e RUNNING_TESTS_IN_CONTAINER=true --name $(testRunner.container) $(testrunner.image)
+      - template: ../steps/docker-init-linux.yml
+        parameters:
+          image: $(testrunner.image)
+          repoVolume: $(repoVolume)
+      - script: docker run -t -d  -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo -e RUNNING_TESTS_IN_CONTAINER=true --name $(testRunner.container) $(testrunner.image)
         displayName: Start Test Runner Container
       - script: docker exec $(testRunner.container) docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
         displayName: Docker login
@@ -48,7 +49,7 @@ phases:
           testResultsFiles: '**/*.trx'
           searchFolder: $(Common.TestResultsDirectory)
           mergeTestResults: true
-          testRunTitle: Linux $(buildPath) $(osVersion) amd64
+          testRunTitle: Linux $(dotnetVersion) $(osVersion) amd64
       - script: docker stop $(testRunner.container)
         displayName: Stop TestRunner Container
         condition: always()

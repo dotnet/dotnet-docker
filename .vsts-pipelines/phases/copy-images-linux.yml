@@ -7,7 +7,7 @@ parameters:
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
-    condition: or(succeeded(), eq(variables['startingPhase'], 'publish'), and(eq(variables['repo'], 'dotnet-samples'), succeeded('Build_Linux_amd64'), succeeded('Build_Linux_arm32v7'), succeeded('Build_NanoServerSac2016_amd64'), succeeded('Build_NanoServer1709_amd64'), succeeded('Build_NanoServer1803_amd64')))
+    condition: or(eq(variables['singlePhase'], 'publish'), and(eq(variables['singlePhase'], ''), or(succeeded(), and(eq(variables['repo'], 'dotnet-samples'), eq(variables['singlePhase'], ''), succeeded('Build_Linux_amd64'), succeeded('Build_Linux_arm32v7'), succeeded('Build_NanoServerSac2016_amd64'), succeeded('Build_NanoServer1709_amd64'), succeeded('Build_NanoServer1803_amd64')))))
     dependsOn:
       - Test_Linux_amd64
       - Test_Linux_arm32v7
@@ -25,10 +25,12 @@ phases:
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
+      repoVolume: copy-repo-$(Build.BuildId)
     steps:
-      - template: ../steps/docker-cleanup-linux.yml
-      - script: docker pull $(imageBuilder.image)
-        displayName: Pull Image Builder
-      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(Build.SourcesDirectory):/repo -w /repo $(imageBuilder.image) copyImages --manifest $(manifest) --architecture $(architecture) --path $(dotnetVersion)\*$(osVersion)\* --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
+      - template: ../steps/docker-init-linux.yml
+        parameters:
+          image: $(imageBuilder.image)
+          repoVolume: $(repoVolume)
+      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) copyImages --manifest $(manifest) --architecture $(architecture) --path $(dotnetVersion)\*$(osVersion)\* --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
         displayName: Copy Images
       - template: ../steps/docker-cleanup-linux.yml

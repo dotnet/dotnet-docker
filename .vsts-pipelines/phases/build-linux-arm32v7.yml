@@ -5,7 +5,7 @@ parameters:
   matrix: {}
 phases:
   - phase: Build_Linux_arm32v7
-    condition: and(succeeded(), eq(variables['startingPhase'], 'build'))
+    condition: or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build'))
     queue:
       name: DotNetCore-Infra
       demands:
@@ -14,15 +14,16 @@ phases:
       parallel: 100
       matrix: ${{ parameters.matrix }}
     variables:
-      docker.commonRunArgs: --rm -v repo-$(Build.BuildId):/repo -v /docker-certs:/docker-certs -w /repo -e DOCKER_CERT_PATH=/docker-certs -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://$(PIIP):2376
+      docker.commonRunArgs: --rm -v $(repoVolume):/repo -v /docker-certs:/docker-certs -w /repo -e DOCKER_CERT_PATH=/docker-certs -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://$(PIIP):2376
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
+      repoVolume: build-repo-$(Build.BuildId)
     steps:
-      - template: ../steps/docker-cleanup-linux.yml
-      - template: ../steps/docker-create-repo-volume-linux.yml
-      - script: docker pull $(imageBuilder.image)
-        displayName: Pull Image Builder
+      - template: ../steps/docker-init-linux.yml
+        parameters:
+          image: $(imageBuilder.image)
+          repoVolume: $(repoVolume)
       # The script task does not currently work (curl ssl issues), using CmdLine as workaround.
       - task: CmdLine@1
         displayName: Build Images

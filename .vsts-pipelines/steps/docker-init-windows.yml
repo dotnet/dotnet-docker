@@ -1,0 +1,27 @@
+parameters:
+  imageBuilderImage: ''
+
+steps:
+  ################################################################################
+  # Cleanup Docker Resources
+  ################################################################################
+  - template: docker-cleanup-windows.yml
+
+  ################################################################################
+  # Setup Image Builder (Optional)
+  ################################################################################
+  - ${{ if ne(parameters.imageBuilderImage, '') }}:
+    - powershell: $(Build.Repository.LocalPath)/scripts/Invoke-PullImage.ps1 $env:image
+      displayName: ${{ format('Pull Image {0}', parameters.imageBuilderImage) }}
+      env:
+        image: ${{ parameters.imageBuilderImage }}
+    - script: docker create --name setupImageBuilder_$(Build.BuildId) %image%
+      displayName: Create Setup Container
+      env:
+        image: ${{ parameters.imageBuilderImage }}
+    - script: docker cp setupImageBuilder_$(Build.BuildId):/image-builder $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder
+      displayName: Copy Image Builder
+    - script: docker rm -f setupImageBuilder_$(Build.BuildId)
+      displayName: Cleanup Setup Container
+      condition: always()
+      continueOnError: true
