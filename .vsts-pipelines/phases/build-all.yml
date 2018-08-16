@@ -5,6 +5,18 @@ parameters:
   manifest: manifest.json
   repo: null
   matrixLinuxAmd64:
+    3_0_Alpine:
+      dotnetVersion: 3.0
+      osVersion: alpine
+    3_0_Bionic:
+      dotnetVersion: 3.0
+      osVersion: bionic
+    3_0_Buster:
+      dotnetVersion: 3.0
+      osVersion: buster
+    3_0_Stretch:
+      dotnetVersion: 3.0
+      osVersion: stretch
     2_1_Alpine:
       dotnetVersion: 2.1
       osVersion: alpine
@@ -27,6 +39,15 @@ parameters:
       dotnetVersion: 1.
       osVersion: jessie
   matrixLinuxArm32v7:
+    3_0_Bionic:
+      dotnetVersion: 3.0
+      osVersion: bionic
+    3_0_Buster:
+      dotnetVersion: 3.0
+      osVersion: buster
+    3_0_Stretch:
+      dotnetVersion: 3.0
+      osVersion: stretch
     2_1_Bionic:
       dotnetVersion: 2.1
       osVersion: bionic
@@ -37,6 +58,9 @@ parameters:
       dotnetVersion: 2.1
       osVersion: stretch
   matrixWindowsSac2016Amd64:
+    3_0:
+      dotnetVersion: 3.0
+      osVersion: nanoserver-sac2016
     2_1:
       dotnetVersion: 2.1
       osVersion: nanoserver-sac2016
@@ -47,6 +71,9 @@ parameters:
       dotnetVersion: 1.
       osVersion: nanoserver-sac2016
   matrixWindows1709Amd64:
+    3_0:
+      dotnetVersion: 3.0
+      osVersion: nanoserver-1709
     2_1:
       dotnetVersion: 2.1
       osVersion: nanoserver-1709
@@ -54,6 +81,9 @@ parameters:
       dotnetVersion: 2.0
       osVersion: nanoserver-1709
   matrixWindows1803Amd64:
+    3_0:
+      dotnetVersion: 3.0
+      osVersion: nanoserver-1803
     2_1:
       dotnetVersion: 2.1
       osVersion: nanoserver-1803
