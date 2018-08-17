@@ -18,6 +18,7 @@ phases:
       name: DotNetCore-Infra
       demands: ${{ parameters.demands }}
       parallel: 100
+      timeoutInMinutes: 90
       matrix: ${{ parameters.matrix }}
     variables:
       manifest: ${{ parameters.manifest }}

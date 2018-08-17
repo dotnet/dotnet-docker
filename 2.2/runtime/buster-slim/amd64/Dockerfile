@@ -1,4 +1,4 @@
-FROM microsoft/dotnet-nightly:2.1-runtime-deps-buster-slim
+FROM microsoft/dotnet-nightly:2.2-runtime-deps-buster-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

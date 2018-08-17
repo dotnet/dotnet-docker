@@ -1,4 +1,4 @@
-FROM microsoft/dotnet-nightly:2.1-runtime-deps-alpine3.8
+FROM microsoft/dotnet-nightly:2.2-runtime-deps-alpine3.8
 
 # Install .NET Core
 ENV DOTNET_VERSION 2.2.0-preview-26815-03

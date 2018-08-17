@@ -12,6 +12,7 @@ phases:
         - agent.os -equals linux
         - DockerArch -equals arm32v7
       parallel: 100
+      timeoutInMinutes: 90
       matrix: ${{ parameters.matrix }}
     variables:
       docker.commonRunArgs: --rm -v $(repoVolume):/repo -v /docker-certs:/docker-certs -w /repo -e DOCKER_CERT_PATH=/docker-certs -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://$(PIIP):2376
