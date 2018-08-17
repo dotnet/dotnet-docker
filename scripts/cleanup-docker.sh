@@ -6,4 +6,5 @@ set -e
 set -u
 
 docker stop $(docker ps -q) || true
-docker system prune -a -f --volumes
+docker system prune -a -f
+docker volume rm $(docker volume ls -q) || true

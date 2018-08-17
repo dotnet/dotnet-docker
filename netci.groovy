@@ -31,7 +31,7 @@ platformList.each { platform ->
                     batchFile("powershell -NoProfile -Command .\\scripts\\Invoke-CleanupDocker.ps1")
                     try {
                         versionFilters.each { versionFilter ->
-                            batchFile("powershell -NoProfile -Command .\\build-and-test.ps1 -VersionFilter \"${versionFilter}\"* -OSFilter \"${containerOS}\"")
+                            batchFile("powershell -NoProfile -Command .\\build-and-test.ps1 -VersionFilter \"${versionFilter}*\" -OSFilter \"${containerOS}\"")
                         }
                     }
                     finally {
@@ -44,7 +44,7 @@ platformList.each { platform ->
                         shell("docker build --rm -t testrunner -f ./tests/Dockerfile.linux.testrunner .")
 
                         versionFilters.each { versionFilter ->
-                            shell("docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner pwsh -File build-and-test.ps1 -VersionFilter \"${versionFilter}\"* -CleanupDocker")
+                            shell("docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner pwsh -File build-and-test.ps1 -VersionFilter \"${versionFilter}*\"")
                         }
                     }
                     finally {
