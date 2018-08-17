@@ -5,5 +5,5 @@ set -e
 # Stop script if unbound variable found (use ${var:-} if intentional)
 set -u
 
-docker stop $(docker ps -a -q)
+docker stop $(docker ps -q) || true
 docker system prune -a -f --volumes
