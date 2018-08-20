@@ -1,3 +1,4 @@
+--Testing CI
 This repository contains `Dockerfile` definitions for Docker images that include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
 
 See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
