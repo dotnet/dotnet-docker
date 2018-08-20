@@ -5,10 +5,10 @@ FROM microsoft/nanoserver:sac2016
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.1.400
+ENV DOTNET_SDK_VERSION 2.1.401
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = 'c76e80a33ec3c4227e8f5ed2b54c1023949df8aa0563aead69e45aa2173ee4bccbd0ae75c95fda2f22bc22c1bd2f14275400dfa99e6aab58cca30e3e107d438e'; `
+    $dotnet_sha512 = '7d017487c1a11ae4db862b1efa7ba9beb0eabcf5d2467bc4055aa2227a548663a596682ff4adba4688930b22472587f29b83bce9f689efc5e9f4e37f7edda000'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
