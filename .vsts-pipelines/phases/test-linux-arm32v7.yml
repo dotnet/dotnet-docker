@@ -12,6 +12,7 @@ phases:
         - agent.os -equals linux
         - DockerArch -equals arm32v7
       parallel: 100
+      timeoutInMinutes: 90
       matrix: ${{ parameters.matrix }}
     variables:
       docker.baseArtifactName: test_$(Build.BuildId)

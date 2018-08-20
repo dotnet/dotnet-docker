@@ -19,6 +19,7 @@ phases:
       demands:
         - agent.os -equals linux
       parallel: 100
+      timeoutInMinutes: 90
       matrix: ${{ parameters.matrix }}
     variables:
       architecture: ${{ parameters.architecture }}
@@ -31,6 +32,6 @@ phases:
         parameters:
           image: $(imageBuilder.image)
           repoVolume: $(repoVolume)
-      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) copyImages --manifest $(manifest) --architecture $(architecture) --path $(dotnetVersion)\*$(osVersion)\* --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
+      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) copyImages --manifest $(manifest) --architecture $(architecture) $(imageBuilderPaths) --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
         displayName: Copy Images
       - template: ../steps/docker-cleanup-linux.yml

@@ -1,10 +1,69 @@
 parameters:
-  imageBuilderLinuxImage: microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180712175314
-  imageBuilderWindowsImage: microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180712112709
+  imageBuilderLinuxImage: microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180723194508
+  imageBuilderWindowsImage: microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180723124501
   testRunnerLinuxImage: microsoft/dotnet-buildtools-prereqs:debian-stretch-docker-testrunner-63f2145-20184325094343
   manifest: manifest.json
   repo: null
-  matrixLinuxAmd64:
+  buildPublishMatrixLinuxAmd64:
+    3_0_Alpine:
+      imageBuilderPaths: --path 3.0*alpine*
+    3_0_Bionic:
+      imageBuilderPaths: --path 3.0*bionic*
+    3_0_Buster:
+      imageBuilderPaths: --path 3.0*buster*
+    3_0_Stretch:
+      imageBuilderPaths: --path 3.0*stretch*
+    2_1+2_Alpine:
+      imageBuilderPaths: --path 2.1*alpine* --path 2.2*alpine*
+    2_1+2_Bionic:
+      imageBuilderPaths: --path 2.1*bionic* --path 2.2*bionic*
+    2_1+2_Buster:
+      imageBuilderPaths: --path 2.1*buster* --path 2.2*buster*
+    2_1+2_Stretch:
+      imageBuilderPaths: --path 2.1*stretch* --path 2.2*stretch*
+    2_0_Jessie:
+      imageBuilderPaths: --path 2.0*jessie*
+    2_0_Stretch:
+      imageBuilderPaths: --path 2.0*stretch*
+    1_*_Jessie:
+      imageBuilderPaths: --path 1.*jessie*
+  buildPublishMatrixLinuxArm32v7:
+    3_0_Bionic:
+      imageBuilderPaths: --path 3.0*bionic*
+    3_0_Buster:
+      imageBuilderPaths: --path 3.0*buster*
+    3_0_Stretch:
+      imageBuilderPaths: --path 3.0*stretch*
+    2_1+2_Bionic:
+      imageBuilderPaths: --path 2.1*bionic* --path 2.2*bionic*
+    2_1+2_Buster:
+      imageBuilderPaths: --path 2.1*buster* --path 2.2*buster*
+    2_1+2_Stretch:
+      imageBuilderPaths: --path 2.1*stretch* --path 2.2*stretch*
+  buildPublishMatrixWindowsSac2016Amd64:
+    3_0:
+      imageBuilderPaths: --path 3.0*nanoserver-sac2016*
+    2_1+2:
+      imageBuilderPaths: --path 2.1*nanoserver-sac2016* --path 2.2*nanoserver-sac2016*
+    2_0:
+      imageBuilderPaths: --path 2.0*nanoserver-sac2016*
+    1_*:
+      imageBuilderPaths: --path 1.*nanoserver-sac2016*
+  buildPublishMatrixWindows1709Amd64:
+    3_0:
+      imageBuilderPaths: --path 3.0*nanoserver-1709*
+    2_1+2:
+      imageBuilderPaths: --path 2.1*nanoserver-1709* --path 2.2*nanoserver-1709*
+    2_0:
+      imageBuilderPaths: --path 2.0*nanoserver-1709*
+  buildPublishMatrixWindows1803Amd64:
+    3_0:
+      imageBuilderPaths: --path 3.0*nanoserver-1803*
+    2_1+2:
+      imageBuilderPaths: --path 2.1*nanoserver-1803* --path 2.2*nanoserver-1803*
+    2_0:
+      imageBuilderPaths: --path 2.0*nanoserver-1803*
+  testMatrixLinuxAmd64:
     3_0_Alpine:
       dotnetVersion: 3.0
       osVersion: alpine
@@ -16,6 +75,18 @@ parameters:
       osVersion: buster
     3_0_Stretch:
       dotnetVersion: 3.0
+      osVersion: stretch
+    2_2_Alpine:
+      dotnetVersion: 2.2
+      osVersion: alpine
+    2_2_Bionic:
+      dotnetVersion: 2.2
+      osVersion: bionic
+    2_2_Buster:
+      dotnetVersion: 2.2
+      osVersion: buster
+    2_2_Stretch:
+      dotnetVersion: 2.2
       osVersion: stretch
     2_1_Alpine:
       dotnetVersion: 2.1
@@ -38,7 +109,7 @@ parameters:
     1_*_Jessie:
       dotnetVersion: 1.
       osVersion: jessie
-  matrixLinuxArm32v7:
+  testMatrixLinuxArm32v7:
     3_0_Bionic:
       dotnetVersion: 3.0
       osVersion: bionic
@@ -47,6 +118,15 @@ parameters:
       osVersion: buster
     3_0_Stretch:
       dotnetVersion: 3.0
+      osVersion: stretch
+    2_2_Bionic:
+      dotnetVersion: 2.2
+      osVersion: bionic
+    2_2_Buster:
+      dotnetVersion: 2.2
+      osVersion: buster
+    2_2_Stretch:
+      dotnetVersion: 2.2
       osVersion: stretch
     2_1_Bionic:
       dotnetVersion: 2.1
@@ -57,9 +137,12 @@ parameters:
     2_1_Stretch:
       dotnetVersion: 2.1
       osVersion: stretch
-  matrixWindowsSac2016Amd64:
+  testMatrixWindowsSac2016Amd64:
     3_0:
       dotnetVersion: 3.0
+      osVersion: nanoserver-sac2016
+    2_2:
+      dotnetVersion: 2.2
       osVersion: nanoserver-sac2016
     2_1:
       dotnetVersion: 2.1
@@ -70,9 +153,12 @@ parameters:
     1_*:
       dotnetVersion: 1.
       osVersion: nanoserver-sac2016
-  matrixWindows1709Amd64:
+  testMatrixWindows1709Amd64:
     3_0:
       dotnetVersion: 3.0
+      osVersion: nanoserver-1709
+    2_2:
+      dotnetVersion: 2.2
       osVersion: nanoserver-1709
     2_1:
       dotnetVersion: 2.1
@@ -80,9 +166,12 @@ parameters:
     2_0:
       dotnetVersion: 2.0
       osVersion: nanoserver-1709
-  matrixWindows1803Amd64:
+  testMatrixWindows1803Amd64:
     3_0:
       dotnetVersion: 3.0
+      osVersion: nanoserver-1803
+    2_2:
+      dotnetVersion: 2.2
       osVersion: nanoserver-1803
     2_1:
       dotnetVersion: 2.1
@@ -90,6 +179,7 @@ parameters:
     2_0:
       dotnetVersion: 2.0
       osVersion: nanoserver-1803
+
 phases:
   ################################################################################
   # Build Images
@@ -99,13 +189,13 @@ phases:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
-      matrix: ${{ parameters.matrixLinuxAmd64 }}
+      matrix: ${{ parameters.buildPublishMatrixLinuxAmd64 }}
   - template: build-linux-arm32v7.yml
     parameters:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
-      matrix: ${{ parameters.matrixLinuxArm32v7 }}
+      matrix: ${{ parameters.buildPublishMatrixLinuxArm32v7 }}
   - template: build-windows-amd64.yml
     parameters:
       phase: Build_NanoServerSac2016_amd64
@@ -114,7 +204,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
-      matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
+      matrix: ${{ parameters.buildPublishMatrixWindowsSac2016Amd64 }}
   - template: build-windows-amd64.yml
     parameters:
       phase: Build_NanoServer1709_amd64
@@ -123,7 +213,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
-      matrix: ${{ parameters.matrixWindows1709Amd64 }}
+      matrix: ${{ parameters.buildPublishMatrixWindows1709Amd64 }}
   - template: build-windows-amd64.yml
     parameters:
       phase: Build_NanoServer1803_amd64
@@ -132,7 +222,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
-      matrix: ${{ parameters.matrixWindows1803Amd64 }}
+      matrix: ${{ parameters.buildPublishMatrixWindows1803Amd64 }}
 
   ################################################################################
   # Test Images
@@ -141,12 +231,12 @@ phases:
     parameters:
       testRunnerLinuxImage: ${{ parameters.testRunnerLinuxImage }}
       repo: ${{ parameters.repo }}
-      matrix: ${{ parameters.matrixLinuxAmd64 }}
+      matrix: ${{ parameters.testMatrixLinuxAmd64 }}
   - template: test-linux-arm32v7.yml
     parameters:
       testRunnerLinuxImage: ${{ parameters.testRunnerLinuxImage }}
       repo: ${{ parameters.repo }}
-      matrix: ${{ parameters.matrixLinuxArm32v7 }}
+      matrix: ${{ parameters.testMatrixLinuxArm32v7 }}
   - template: test-windows-amd64.yml
     parameters:
       phase: Test_NanoServerSac2016_amd64
@@ -154,7 +244,7 @@ phases:
       dependsOn: Build_NanoServerSac2016_amd64
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
-      matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
+      matrix: ${{ parameters.testMatrixWindowsSac2016Amd64 }}
   - template: test-windows-amd64.yml
     parameters:
       phase: Test_NanoServer1709_amd64
@@ -162,7 +252,7 @@ phases:
       dependsOn: Build_NanoServer1709_amd64
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
-      matrix: ${{ parameters.matrixWindows1709Amd64 }}
+      matrix: ${{ parameters.testMatrixWindows1709Amd64 }}
   - template: test-windows-amd64.yml
     parameters:
       phase: Test_NanoServer1803_amd64
@@ -170,7 +260,7 @@ phases:
       dependsOn: Build_NanoServer1803_amd64
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
-      matrix: ${{ parameters.matrixWindows1803Amd64 }}
+      matrix: ${{ parameters.testMatrixWindows1803Amd64 }}
 
   ################################################################################
   # Publish Images
@@ -182,7 +272,7 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
       architecture: amd64
-      matrix: ${{ parameters.matrixLinuxAmd64 }}
+      matrix: ${{ parameters.buildPublishMatrixLinuxAmd64 }}
   - template: copy-images-linux.yml
     parameters:
       phase: Copy_Images_Linux_arm32v7
@@ -190,7 +280,7 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
       architecture: arm
-      matrix: ${{ parameters.matrixLinuxArm32v7 }}
+      matrix: ${{ parameters.buildPublishMatrixLinuxArm32v7 }}
   - template: copy-images-windows.yml
     parameters:
       phase: Copy_Images_NanoServerSac2016_amd64
@@ -199,7 +289,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
-      matrix: ${{ parameters.matrixWindowsSac2016Amd64 }}
+      matrix: ${{ parameters.buildPublishMatrixWindowsSac2016Amd64 }}
   - template: copy-images-windows.yml
     parameters:
       phase: Copy_Images_NanoServer1709_amd64
@@ -208,7 +298,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
-      matrix: ${{ parameters.matrixWindows1709Amd64 }}
+      matrix: ${{ parameters.buildPublishMatrixWindows1709Amd64 }}
   - template: copy-images-windows.yml
     parameters:
       phase: Copy_Images_NanoServer1803_amd64
@@ -217,7 +307,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
-      matrix: ${{ parameters.matrixWindows1803Amd64 }}
+      matrix: ${{ parameters.buildPublishMatrixWindows1803Amd64 }}
 
   - template: publish-finalize.yml
     parameters:
