@@ -9,16 +9,12 @@ parameters:
       imageBuilderPaths: --path 3.0*alpine*
     3_0_Bionic:
       imageBuilderPaths: --path 3.0*bionic*
-    3_0_Buster:
-      imageBuilderPaths: --path 3.0*buster*
     3_0_Stretch:
       imageBuilderPaths: --path 3.0*stretch*
     2_1+2_Alpine:
       imageBuilderPaths: --path 2.1*alpine* --path 2.2*alpine*
     2_1+2_Bionic:
       imageBuilderPaths: --path 2.1*bionic* --path 2.2*bionic*
-    2_1+2_Buster:
-      imageBuilderPaths: --path 2.1*buster* --path 2.2*buster*
     2_1+2_Stretch:
       imageBuilderPaths: --path 2.1*stretch* --path 2.2*stretch*
     2_0_Jessie:
@@ -30,14 +26,10 @@ parameters:
   buildPublishMatrixLinuxArm32v7:
     3_0_Bionic:
       imageBuilderPaths: --path 3.0*bionic*
-    3_0_Buster:
-      imageBuilderPaths: --path 3.0*buster*
     3_0_Stretch:
       imageBuilderPaths: --path 3.0*stretch*
     2_1+2_Bionic:
       imageBuilderPaths: --path 2.1*bionic* --path 2.2*bionic*
-    2_1+2_Buster:
-      imageBuilderPaths: --path 2.1*buster* --path 2.2*buster*
     2_1+2_Stretch:
       imageBuilderPaths: --path 2.1*stretch* --path 2.2*stretch*
   buildPublishMatrixWindowsSac2016Amd64:
@@ -70,9 +62,6 @@ parameters:
     3_0_Bionic:
       dotnetVersion: 3.0
       osVersion: bionic
-    3_0_Buster:
-      dotnetVersion: 3.0
-      osVersion: buster
     3_0_Stretch:
       dotnetVersion: 3.0
       osVersion: stretch
@@ -82,9 +71,6 @@ parameters:
     2_2_Bionic:
       dotnetVersion: 2.2
       osVersion: bionic
-    2_2_Buster:
-      dotnetVersion: 2.2
-      osVersion: buster
     2_2_Stretch:
       dotnetVersion: 2.2
       osVersion: stretch
@@ -94,9 +80,6 @@ parameters:
     2_1_Bionic:
       dotnetVersion: 2.1
       osVersion: bionic
-    2_1_Buster:
-      dotnetVersion: 2.1
-      osVersion: buster
     2_1_Stretch:
       dotnetVersion: 2.1
       osVersion: stretch
@@ -113,27 +96,18 @@ parameters:
     3_0_Bionic:
       dotnetVersion: 3.0
       osVersion: bionic
-    3_0_Buster:
-      dotnetVersion: 3.0
-      osVersion: buster
     3_0_Stretch:
       dotnetVersion: 3.0
       osVersion: stretch
     2_2_Bionic:
       dotnetVersion: 2.2
       osVersion: bionic
-    2_2_Buster:
-      dotnetVersion: 2.2
-      osVersion: buster
     2_2_Stretch:
       dotnetVersion: 2.2
       osVersion: stretch
     2_1_Bionic:
       dotnetVersion: 2.1
       osVersion: bionic
-    2_1_Buster:
-      dotnetVersion: 2.1
-      osVersion: buster
     2_1_Stretch:
       dotnetVersion: 2.1
       osVersion: stretch
