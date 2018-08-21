@@ -1,3 +1,5 @@
+## Complete set of Tags
+
 # Linux amd64 tags
 
 $(TagDoc:2.1.401-sdk-stretch)
@@ -15,11 +17,11 @@ $(TagDoc:2.1.3-runtime-buster-slim)
 $(TagDoc:2.1.3-runtime-alpine3.7)
 $(TagDoc:2.1.3-runtime-alpine3.8)
 $(TagDoc:2.1.3-runtime-bionic)
-$(TagDocList:2.1.3-runtime-deps-stretch-slim,2.1-runtime-deps-stretch-slim,2.1.3-runtime-deps,2.1-runtime-deps,runtime-deps)
-$(TagDocList:2.1.3-runtime-deps-buster-slim,2.1-runtime-deps-buster-slim)
-$(TagDocList:2.1.3-runtime-deps-alpine3.7,2.1-runtime-deps-alpine3.7)
-$(TagDocList:2.1.3-runtime-deps-alpine3.8,2.1-runtime-deps-alpine3.8,2.1.3-runtime-deps-alpine,2.1-runtime-deps-alpine)
-$(TagDocList:2.1.3-runtime-deps-bionic,2.1-runtime-deps-bionic)
+$(TagDocList:2.1.3-runtime-deps-stretch-slim|2.1-runtime-deps-stretch-slim|2.1.3-runtime-deps|2.1-runtime-deps|runtime-deps)
+$(TagDocList:2.1.3-runtime-deps-buster-slim|2.1-runtime-deps-buster-slim)
+$(TagDocList:2.1.3-runtime-deps-alpine3.7|2.1-runtime-deps-alpine3.7)
+$(TagDocList:2.1.3-runtime-deps-alpine3.8|2.1-runtime-deps-alpine3.8|2.1.3-runtime-deps-alpine|2.1-runtime-deps-alpine)
+$(TagDocList:2.1.3-runtime-deps-bionic|2.1-runtime-deps-bionic)
 $(TagDoc:2.0.9-sdk-2.1.202-stretch)
 $(TagDoc:2.0.9-sdk-2.1.202-jessie)
 $(TagDoc:2.0.9-runtime-stretch)
@@ -45,10 +47,10 @@ $(TagDoc:2.2.0-preview1-runtime-stretch-slim)
 $(TagDoc:2.2.0-preview1-runtime-buster-slim)
 $(TagDoc:2.2.0-preview1-runtime-alpine3.8)
 $(TagDoc:2.2.0-preview1-runtime-bionic)
-$(TagDocList:2.2.0-preview1-runtime-deps-stretch-slim,2.2-runtime-deps-stretch-slim,2.2.0-preview1-runtime-deps,2.2-runtime-deps)
-$(TagDocList:2.2.0-preview1-runtime-deps-buster-slim,2.2-runtime-deps-buster-slim)
-$(TagDocList:2.2.0-preview1-runtime-deps-alpine3.8,2.2-runtime-deps-alpine3.8,2.2.0-preview1-runtime-deps-alpine,2.2-runtime-deps-alpine)
-$(TagDocList:2.2.0-preview1-runtime-deps-bionic,2.2-runtime-deps-bionic)
+$(TagDocList:2.2.0-preview1-runtime-deps-stretch-slim|2.2-runtime-deps-stretch-slim|2.2.0-preview1-runtime-deps|2.2-runtime-deps)
+$(TagDocList:2.2.0-preview1-runtime-deps-buster-slim|2.2-runtime-deps-buster-slim)
+$(TagDocList:2.2.0-preview1-runtime-deps-alpine3.8|2.2-runtime-deps-alpine3.8|2.2.0-preview1-runtime-deps-alpine|2.2-runtime-deps-alpine)
+$(TagDocList:2.2.0-preview1-runtime-deps-bionic|2.2-runtime-deps-bionic)
 
 **.NET Core 3.0 Alpha 1 tags**
 
@@ -143,9 +145,9 @@ $(TagDoc:2.1.3-aspnetcore-runtime-bionic-arm32v7)
 $(TagDoc:2.1.3-runtime-stretch-slim-arm32v7)
 $(TagDoc:2.1.3-runtime-buster-slim-arm32v7)
 $(TagDoc:2.1.3-runtime-bionic-arm32v7)
-$(TagDocList:2.1.3-runtime-deps-stretch-slim-arm32v7,2.1-runtime-deps-stretch-slim-arm32v7,2.1.3-runtime-deps,2.1-runtime-deps,runtime-deps)
-$(TagDocList:2.1.3-runtime-deps-buster-slim-arm32v7,2.1-runtime-deps-buster-slim-arm32v7)
-$(TagDocList:2.1.3-runtime-deps-bionic-arm32v7,2.1-runtime-deps-bionic-arm32v7)
+$(TagDocList:2.1.3-runtime-deps-stretch-slim-arm32v7|2.1-runtime-deps-stretch-slim-arm32v7|2.1.3-runtime-deps|2.1-runtime-deps|runtime-deps)
+$(TagDocList:2.1.3-runtime-deps-buster-slim-arm32v7|2.1-runtime-deps-buster-slim-arm32v7)
+$(TagDocList:2.1.3-runtime-deps-bionic-arm32v7|2.1-runtime-deps-bionic-arm32v7)
 
 **.NET Core 2.2 Preview 1 tags**
 
@@ -158,9 +160,9 @@ $(TagDoc:2.2.0-preview1-aspnetcore-runtime-bionic-arm32v7)
 $(TagDoc:2.2.0-preview1-runtime-stretch-slim-arm32v7)
 $(TagDoc:2.2.0-preview1-runtime-buster-slim-arm32v7)
 $(TagDoc:2.2.0-preview1-runtime-bionic-arm32v7)
-$(TagDocList:2.2.0-preview1-runtime-deps-stretch-slim-arm32v7,2.2-runtime-deps-stretch-slim-arm32v7,2.2.0-preview1-runtime-deps,2.2-runtime-deps)
-$(TagDocList:2.2.0-preview1-runtime-deps-buster-slim-arm32v7,2.2-runtime-deps-buster-slim-arm32v7)
-$(TagDocList:2.2.0-preview1-runtime-deps-bionic-arm32v7,2.2-runtime-deps-bionic-arm32v7)
+$(TagDocList:2.2.0-preview1-runtime-deps-stretch-slim-arm32v7|2.2-runtime-deps-stretch-slim-arm32v7|2.2.0-preview1-runtime-deps|2.2-runtime-deps)
+$(TagDocList:2.2.0-preview1-runtime-deps-buster-slim-arm32v7|2.2-runtime-deps-buster-slim-arm32v7)
+$(TagDocList:2.2.0-preview1-runtime-deps-bionic-arm32v7|2.2-runtime-deps-bionic-arm32v7)
 
 **.NET Core 3.0 Alpha 1 tags**
 
@@ -177,3 +179,4 @@ $(TagDoc:3.0.0-alpha1-runtime-deps-stretch-slim-arm32v7)
 $(TagDoc:3.0.0-alpha1-runtime-deps-buster-slim-arm32v7)
 $(TagDoc:3.0.0-alpha1-runtime-deps-bionic-arm32v7)
 
+For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
