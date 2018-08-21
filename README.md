@@ -71,7 +71,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 **.NET Core 2.2 & 3.0 Preview tags**
 
-See the [full set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
+See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
 # Windows Server, version 1803 amd64 tags
 
@@ -83,7 +83,7 @@ See the [full set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/
 
 **.NET Core 2.2 & 3.0 Preview tags**
 
-See the [full set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
+See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
 # Windows Server, version 1709 amd64 tags
 
@@ -95,7 +95,7 @@ See the [full set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/
 
 **.NET Core 2.2 & 3.0 Preview tags**
 
-See the [full set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
+See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
 # Windows Server 2016 amd64 tags
 
@@ -110,7 +110,7 @@ See the [full set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/
 
 **.NET Core 2.2 & 3.0 Preview tags**
 
-See the [full set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
+See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
 # Linux arm32 tags
 
@@ -129,7 +129,7 @@ See the [full set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/
 
 **.NET Core 2.2 & 3.0 Preview tags**
 
-See the [full set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
+See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
 

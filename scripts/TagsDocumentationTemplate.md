@@ -35,7 +35,7 @@ $(TagDoc:1.0.12-runtime-deps-jessie)
 
 **.NET Core 2.2 & 3.0 Preview tags**
 
-See the [full set of tags]($(System:SourceUrl)/TAGS.md).
+See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
 # Windows Server, version 1803 amd64 tags
 
@@ -47,7 +47,7 @@ $(TagDoc:2.0.9-runtime-nanoserver-1803)
 
 **.NET Core 2.2 & 3.0 Preview tags**
 
-See the [full set of tags]($(System:SourceUrl)/TAGS.md).
+See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
 # Windows Server, version 1709 amd64 tags
 
@@ -59,7 +59,7 @@ $(TagDoc:2.0.9-runtime-nanoserver-1709)
 
 **.NET Core 2.2 & 3.0 Preview tags**
 
-See the [full set of tags]($(System:SourceUrl)/TAGS.md).
+See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
 # Windows Server 2016 amd64 tags
 
@@ -74,7 +74,7 @@ $(TagDoc:1.0.12-runtime-nanoserver-sac2016)
 
 **.NET Core 2.2 & 3.0 Preview tags**
 
-See the [full set of tags]($(System:SourceUrl)/TAGS.md).
+See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
 # Linux arm32 tags
 
@@ -93,7 +93,7 @@ $(TagDocList:2.1.3-runtime-deps-bionic-arm32v7|2.1-runtime-deps-bionic-arm32v7)
 
 **.NET Core 2.2 & 3.0 Preview tags**
 
-See the [full set of tags]($(System:SourceUrl)/TAGS.md).
+See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
 
