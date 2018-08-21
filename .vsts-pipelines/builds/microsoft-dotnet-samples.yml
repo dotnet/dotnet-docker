@@ -1,11 +1,4 @@
-trigger:
-  branches:
-    include:
-      - master
-  paths:
-    include:
-      - samples/*
-      - manifest.samples.json
+trigger: none
 phases:
   - template: ../phases/build-all.yml
     parameters:
