@@ -321,6 +321,8 @@
           "sharedTags": {
             "2.1.3-runtime-deps": {},
             "2.1-runtime-deps": {},
+            "2.2.0-preview1-runtime-deps": {},
+            "2.2-runtime-deps": {},
             "runtime-deps": {},
             "2-runtime-deps": {
               "isUndocumented": true
@@ -332,7 +334,9 @@
               "os": "linux",
               "tags": {
                 "2.1.3-runtime-deps-stretch-slim": {},
-                "2.1-runtime-deps-stretch-slim": {}
+                "2.1-runtime-deps-stretch-slim": {},
+                "2.2.0-preview1-runtime-deps-stretch-slim": {},
+                "2.2-runtime-deps-stretch-slim": {}
               }
             },
             {
@@ -341,7 +345,9 @@
               "os": "linux",
               "tags": {
                 "2.1.3-runtime-deps-stretch-slim-arm32v7": {},
-                "2.1-runtime-deps-stretch-slim-arm32v7": {}
+                "2.1-runtime-deps-stretch-slim-arm32v7": {},
+                "2.2.0-preview1-runtime-deps-stretch-slim-arm32v7": {},
+                "2.2-runtime-deps-stretch-slim-arm32v7": {}
               },
               "variant": "v7"
             }
@@ -588,7 +594,9 @@
               "os": "linux",
               "tags": {
                 "2.1.3-runtime-deps-bionic": {},
-                "2.1-runtime-deps-bionic": {}
+                "2.1-runtime-deps-bionic": {},
+                "2.2.0-preview1-runtime-deps-bionic": {},
+                "2.2-runtime-deps-bionic": {}
               }
             }
           ]
@@ -637,7 +645,9 @@
               "os": "linux",
               "tags": {
                 "2.1.3-runtime-deps-bionic-arm32v7": {},
-                "2.1-runtime-deps-bionic-arm32v7": {}
+                "2.1-runtime-deps-bionic-arm32v7": {},
+                "2.2.0-preview1-runtime-deps-bionic-arm32v7": {},
+                "2.2-runtime-deps-bionic-arm32v7": {}
               },
               "variant": "v7"
             }
@@ -679,6 +689,298 @@
               "tags": {
                 "2.1.401-sdk-bionic-arm32v7": {},
                 "2.1-sdk-bionic-arm32v7": {}
+              },
+              "variant": "v7"
+            }
+          ]
+        },
+        {
+          "sharedTags": {
+            "2.2.0-preview1-runtime": {},
+            "2.2-runtime": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "2.2/runtime/stretch-slim/amd64",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-runtime-stretch-slim": {},
+                "2.2-runtime-stretch-slim": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "2.2/runtime/stretch-slim/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-runtime-stretch-slim-arm32v7": {},
+                "2.2-runtime-stretch-slim-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "dockerfile": "2.2/runtime/nanoserver-sac2016/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-sac2016",
+              "tags": {
+                "2.2.0-preview1-runtime-nanoserver-sac2016": {},
+                "2.2-runtime-nanoserver-sac2016": {}
+              }
+            },
+            {
+              "dockerfile": "2.2/runtime/nanoserver-1709/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1709",
+              "tags": {
+                "2.2.0-preview1-runtime-nanoserver-1709": {},
+                "2.2-runtime-nanoserver-1709": {}
+              }
+            },
+            {
+              "dockerfile": "2.2/runtime/nanoserver-1803/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1803",
+              "tags": {
+                "2.2.0-preview1-runtime-nanoserver-1803": {},
+                "2.2-runtime-nanoserver-1803": {}
+              }
+            }
+          ]
+        },
+        {
+          "sharedTags": {
+            "2.2.0-preview1-aspnetcore-runtime": {},
+            "2.2-aspnetcore-runtime": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "2.2/aspnetcore-runtime/stretch-slim/amd64",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-aspnetcore-runtime-stretch-slim": {},
+                "2.2-aspnetcore-runtime-stretch-slim": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "2.2/aspnetcore-runtime/stretch-slim/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-aspnetcore-runtime-stretch-slim-arm32v7": {},
+                "2.2-aspnetcore-runtime-stretch-slim-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "dockerfile": "2.2/aspnetcore-runtime/nanoserver-sac2016/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-sac2016",
+              "tags": {
+                "2.2.0-preview1-aspnetcore-runtime-nanoserver-sac2016": {},
+                "2.2-aspnetcore-runtime-nanoserver-sac2016": {}
+              }
+            },
+            {
+              "dockerfile": "2.2/aspnetcore-runtime/nanoserver-1709/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1709",
+              "tags": {
+                "2.2.0-preview1-aspnetcore-runtime-nanoserver-1709": {},
+                "2.2-aspnetcore-runtime-nanoserver-1709": {}
+              }
+            },
+            {
+              "dockerfile": "2.2/aspnetcore-runtime/nanoserver-1803/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1803",
+              "tags": {
+                "2.2.0-preview1-aspnetcore-runtime-nanoserver-1803": {},
+                "2.2-aspnetcore-runtime-nanoserver-1803": {}
+              }
+            }
+          ]
+        },
+        {
+          "sharedTags": {
+            "2.2.100-preview1-sdk": {},
+            "2.2-sdk": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "2.2/sdk/stretch/amd64",
+              "os": "linux",
+              "tags": {
+                "2.2.100-preview1-sdk-stretch": {},
+                "2.2-sdk-stretch": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "2.2/sdk/stretch/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.2.100-preview1-sdk-stretch-arm32v7": {},
+                "2.2-sdk-stretch-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "dockerfile": "2.2/sdk/nanoserver-sac2016/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-sac2016",
+              "tags": {
+                "2.2.100-preview1-sdk-nanoserver-sac2016": {},
+                "2.2-sdk-nanoserver-sac2016": {}
+              }
+            },
+            {
+              "dockerfile": "2.2/sdk/nanoserver-1709/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1709",
+              "tags": {
+                "2.2.100-preview1-sdk-nanoserver-1709": {},
+                "2.2-sdk-nanoserver-1709": {}
+              }
+            },
+            {
+              "dockerfile": "2.2/sdk/nanoserver-1803/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1803",
+              "tags": {
+                "2.2.100-preview1-sdk-nanoserver-1803": {},
+                "2.2-sdk-nanoserver-1803": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.2/runtime-deps/alpine3.8/amd64",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-runtime-deps-alpine3.8": {},
+                "2.2-runtime-deps-alpine3.8": {},
+                "2.2.0-preview1-runtime-deps-alpine": {},
+                "2.2-runtime-deps-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.2/runtime/alpine3.8/amd64",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-runtime-alpine3.8": {},
+                "2.2-runtime-alpine3.8": {},
+                "2.2.0-preview1-runtime-alpine": {},
+                "2.2-runtime-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.2/aspnetcore-runtime/alpine3.8/amd64",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-aspnetcore-runtime-alpine3.8": {},
+                "2.2-aspnetcore-runtime-alpine3.8": {},
+                "2.2.0-preview1-aspnetcore-runtime-alpine": {},
+                "2.2-aspnetcore-runtime-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.2/sdk/alpine3.8/amd64",
+              "os": "linux",
+              "tags": {
+                "2.2.100-preview1-sdk-alpine3.8": {},
+                "2.2-sdk-alpine3.8": {},
+                "2.2.100-preview1-sdk-alpine": {},
+                "2.2-sdk-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.2/aspnetcore-runtime/bionic/amd64",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-aspnetcore-runtime-bionic": {},
+                "2.2-aspnetcore-runtime-bionic": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.2/runtime/bionic/amd64",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-runtime-bionic": {},
+                "2.2-runtime-bionic": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.2/sdk/bionic/amd64",
+              "os": "linux",
+              "tags": {
+                "2.2.100-preview1-sdk-bionic": {},
+                "2.2-sdk-bionic": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm",
+              "dockerfile": "2.2/aspnetcore-runtime/bionic/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-aspnetcore-runtime-bionic-arm32v7": {},
+                "2.2-aspnetcore-runtime-bionic-arm32v7": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm",
+              "dockerfile": "2.2/runtime/bionic/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.2.0-preview1-runtime-bionic-arm32v7": {},
+                "2.2-runtime-bionic-arm32v7": {}
+              },
+              "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm",
+              "dockerfile": "2.2/sdk/bionic/arm32v7",
+              "os": "linux",
+              "tags": {
+                "2.2.100-preview1-sdk-bionic-arm32v7": {},
+                "2.2-sdk-bionic-arm32v7": {}
               },
               "variant": "v7"
             }

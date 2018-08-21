@@ -1,11 +1,8 @@
 trigger:
+  batch: true
   branches:
     include:
       - nightly
-  paths:
-    exclude:
-      - samples/*
-      - manifest.samples.json
 phases:
   - template: ../phases/build-all.yml
     parameters:

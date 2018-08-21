@@ -1,33 +1,41 @@
-trigger:
-  branches:
-    include:
-      - master
-  paths:
-    include:
-      - samples/*
-      - manifest.samples.json
+trigger: none
 phases:
   - template: ../phases/build-all.yml
     parameters:
       manifest: manifest.samples.json
       repo: dotnet-samples
-      matrixLinuxAmd64:
-        Build:
+      buildPublishMatrixLinuxAmd64:
+        Samples:
+          imageBuilderPaths: --path *
+      buildPublishMatrixLinuxArm32v7:
+        Samples:
+          imageBuilderPaths: --path *
+      buildPublishMatrixWindowsSac2016Amd64:
+        Samples:
+          imageBuilderPaths: --path *nanoserver-sac2016*
+      buildPublishMatrixWindows1709Amd64:
+        Samples:
+          imageBuilderPaths: --path *nanoserver-1709*
+      buildPublishMatrixWindows1803Amd64:
+        Samples:
+          imageBuilderPaths: --path *nanoserver-1803*
+      testMatrixLinuxAmd64:
+        Samples:
           dotnetVersion: ''
           osVersion: ''
-      matrixLinuxArm32v7:
-        Build:
+      testMatrixLinuxArm32v7:
+        Samples:
           dotnetVersion: ''
           osVersion: ''
-      matrixWindowsSac2016Amd64:
-        Build:
+      testMatrixWindowsSac2016Amd64:
+        Samples:
           dotnetVersion: ''
           osVersion: nanoserver-sac2016
-      matrixWindows1709Amd64:
-        Build:
+      testMatrixWindows1709Amd64:
+        Samples:
           dotnetVersion: ''
           osVersion: nanoserver-1709
-      matrixWindows1803Amd64:
-        Build:
+      testMatrixWindows1803Amd64:
+        Samples:
           dotnetVersion: ''
           osVersion: nanoserver-1803
