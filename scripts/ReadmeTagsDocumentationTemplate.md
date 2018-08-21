@@ -3,22 +3,18 @@
 # Linux amd64 tags
 
 $(TagDoc:2.1.401-sdk-stretch)
-$(TagDoc:2.1.401-sdk-buster)
 $(TagDoc:2.1.401-sdk-alpine3.7)
 $(TagDoc:2.1.401-sdk-alpine3.8)
 $(TagDoc:2.1.401-sdk-bionic)
 $(TagDoc:2.1.3-aspnetcore-runtime-stretch-slim)
-$(TagDoc:2.1.3-aspnetcore-runtime-buster-slim)
 $(TagDoc:2.1.3-aspnetcore-runtime-alpine3.7)
 $(TagDoc:2.1.3-aspnetcore-runtime-alpine3.8)
 $(TagDoc:2.1.3-aspnetcore-runtime-bionic)
 $(TagDoc:2.1.3-runtime-stretch-slim)
-$(TagDoc:2.1.3-runtime-buster-slim)
 $(TagDoc:2.1.3-runtime-alpine3.7)
 $(TagDoc:2.1.3-runtime-alpine3.8)
 $(TagDoc:2.1.3-runtime-bionic)
 $(TagDocList:2.1.3-runtime-deps-stretch-slim|2.1-runtime-deps-stretch-slim|2.1.3-runtime-deps|2.1-runtime-deps|runtime-deps)
-$(TagDocList:2.1.3-runtime-deps-buster-slim|2.1-runtime-deps-buster-slim)
 $(TagDocList:2.1.3-runtime-deps-alpine3.7|2.1-runtime-deps-alpine3.7)
 $(TagDocList:2.1.3-runtime-deps-alpine3.8|2.1-runtime-deps-alpine3.8|2.1.3-runtime-deps-alpine|2.1-runtime-deps-alpine)
 $(TagDocList:2.1.3-runtime-deps-bionic|2.1-runtime-deps-bionic)
@@ -79,16 +75,12 @@ See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 # Linux arm32 tags
 
 $(TagDoc:2.1.401-sdk-stretch-arm32v7)
-$(TagDoc:2.1.401-sdk-buster-arm32v7)
 $(TagDoc:2.1.401-sdk-bionic-arm32v7)
 $(TagDoc:2.1.3-aspnetcore-runtime-stretch-slim-arm32v7)
-$(TagDoc:2.1.3-aspnetcore-runtime-buster-slim-arm32v7)
 $(TagDoc:2.1.3-aspnetcore-runtime-bionic-arm32v7)
 $(TagDoc:2.1.3-runtime-stretch-slim-arm32v7)
-$(TagDoc:2.1.3-runtime-buster-slim-arm32v7)
 $(TagDoc:2.1.3-runtime-bionic-arm32v7)
 $(TagDocList:2.1.3-runtime-deps-stretch-slim-arm32v7|2.1-runtime-deps-stretch-slim-arm32v7|2.1.3-runtime-deps|2.1-runtime-deps|runtime-deps)
-$(TagDocList:2.1.3-runtime-deps-buster-slim-arm32v7|2.1-runtime-deps-buster-slim-arm32v7)
 $(TagDocList:2.1.3-runtime-deps-bionic-arm32v7|2.1-runtime-deps-bionic-arm32v7)
 
 **.NET Core 2.2 & 3.0 Preview tags**
