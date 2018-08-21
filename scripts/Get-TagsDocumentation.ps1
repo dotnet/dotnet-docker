@@ -2,8 +2,8 @@
 param(
     [string]$Branch,
     [string]$Manifest='manifest.json',
-    [string]$ReadMeTemplate='./scripts/TagsDocumentationTemplate.md',
-    [string]$TagsTemplate='./scripts/FullTagsDocumentationTemplate.md',
+    [string]$ReadMeTemplate='./scripts/ReadmeTagsDocumentationTemplate.md',
+    [string]$TagsTemplate='./scripts/TagsDocumentationTemplate.md',
     [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180821134221'
 )
 
@@ -54,5 +54,5 @@ function GenerateDoc {
 GenerateDoc $ReadMeTemplate -SkipValidation
 
 if ($TagsTemplate) {
-    GenerateDoc ./scripts/CompleteTagsDocumentationTemplate.md TAGS.md
+    GenerateDoc $TagsTemplate TAGS.md
 }
