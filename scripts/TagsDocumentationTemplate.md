@@ -1,4 +1,4 @@
-## Complete set of Tags
+## Tags
 
 # Linux amd64 tags
 
