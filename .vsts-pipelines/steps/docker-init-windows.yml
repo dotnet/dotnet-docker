@@ -19,6 +19,8 @@ steps:
       displayName: Create Setup Container
       env:
         image: ${{ parameters.imageBuilderImage }}
+    - script: rmdir /q /s $(Build.BinariesDirectory)\Microsoft.DotNet.ImageBuilder
+      displayName: Cleanup Image Builder
     - script: docker cp setupImageBuilder_$(Build.BuildId):/image-builder $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder
       displayName: Copy Image Builder
     - script: docker rm -f setupImageBuilder_$(Build.BuildId)
