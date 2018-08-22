@@ -10,29 +10,46 @@ platformList.each { platform ->
     def machineLabel = (hostOS == 'Windows_2016') ? 'latest-docker' : 'latest-or-auto-docker'
 
     if (containerOS == 'NanoServer-1803') {
-        versionList = ['2.0', '2.1']
+        versionList = ['2.0', '2.1-2.2']
     }
     else if (containerOS == 'NanoServer-1709') {
-        versionList = ['2.0', '2.1']
+        versionList = ['2.0', '2.1-2.2']
     }
     else if (containerOS == 'NanoServer-sac2016') {
-        versionList = ['1.', '2.0', '2.1']
+        versionList = ['1.', '2.0', '2.1-2.2']
     }
     else {
-        versionList = ['1.', '2.0', '2.1']
+        versionList = ['1.', '2.0', '2.1-2.2']
     }
 
     versionList.each { version ->
         def newJobName = Utilities.getFullJobName(project, "${containerOS}_${version}", isPR)
-        def versionFilter = "${version}*"
-
+        def versionFilters = version.tokenize( '-' )
         def newJob = job(newJobName) {
             steps {
                 if (hostOS == 'Windows_2016') {
-                    batchFile("powershell -NoProfile -Command .\\build-and-test.ps1 -VersionFilter \"${versionFilter}\" -OSFilter \"${containerOS}\" -CleanupDocker")
+                    batchFile("powershell -NoProfile -Command .\\scripts\\Invoke-CleanupDocker.ps1")
+                    try {
+                        versionFilters.each { versionFilter ->
+                            batchFile("powershell -NoProfile -Command .\\build-and-test.ps1 -VersionFilter \"${versionFilter}*\" -OSFilter \"${containerOS}\"")
+                        }
+                    }
+                    finally {
+                        batchFile("powershell -NoProfile -Command .\\scripts\\Invoke-CleanupDocker.ps1")
+                    }
                 }
                 else {
-                    shell("docker build --rm -t testrunner -f ./tests/Dockerfile.linux.testrunner . && docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner pwsh -File build-and-test.ps1 -VersionFilter \"${versionFilter}\" -CleanupDocker")
+                    shell("./scripts/cleanup-docker.sh")
+                    try {
+                        shell("docker build --rm -t testrunner -f ./tests/Dockerfile.linux.testrunner .")
+
+                        versionFilters.each { versionFilter ->
+                            shell("docker run -v /var/run/docker.sock:/var/run/docker.sock testrunner pwsh -File build-and-test.ps1 -VersionFilter \"${versionFilter}*\"")
+                        }
+                    }
+                    finally {
+                        shell("./scripts/cleanup-docker.sh")
+                    }
                 }
             }
         }

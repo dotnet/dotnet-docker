@@ -11,6 +11,7 @@ phases:
       demands:
         - agent.os -equals linux
       parallel: 100
+      timeoutInMinutes: 90
       matrix: ${{ parameters.matrix }}
     variables:
       imageBuilder.image: ${{ parameters.imageBuilderImage }}
@@ -27,5 +28,5 @@ phases:
         displayName: Build Images
         inputs:
           filename: docker
-          arguments: run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) build --manifest $(manifest) --path $(dotnetVersion)*$(osVersion)* --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --skip-test --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
+          arguments: run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) build --manifest $(manifest) $(imageBuilderPaths) --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --skip-test --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
       - template: ../steps/docker-cleanup-linux.yml

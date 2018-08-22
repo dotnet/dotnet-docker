@@ -1,5 +1,5 @@
 steps:
-  - script: docker system prune -a -f --volumes
+  - script: $(Build.Repository.LocalPath)/scripts/cleanup-docker.sh
     displayName: Cleanup Docker
     condition: always()
     continueOnError: true

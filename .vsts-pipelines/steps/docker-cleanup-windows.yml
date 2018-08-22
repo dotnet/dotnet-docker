@@ -1,11 +1,5 @@
 steps:
-  - script: docker system prune -f --volumes
-    displayName: Cleanup Dangling Docker Artifacts and All Volumes
-    condition: always()
-    continueOnError: true
-  - powershell: |
-      docker ps -a -q | %{docker rm -f $_}
-      docker images | where {-Not ($_.StartsWith("microsoft/nanoserver ") -Or $_.StartsWith("microsoft/windowsservercore ") -Or $_.StartsWith("REPOSITORY "))} | %{$_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[2]} | select-object -unique | %{docker rmi -f $_}
+  - powershell: $(Build.Repository.LocalPath)/scripts/Invoke-CleanupDocker.ps1
     displayName: Cleanup Docker Images
     condition: always()
     continueOnError: true

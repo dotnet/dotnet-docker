@@ -11,6 +11,7 @@ phases:
       demands:
         - agent.os -equals linux
       parallel: 100
+      timeoutInMinutes: 90
       matrix: ${{ parameters.matrix }}
     variables:
       repo: ${{ parameters.repo }}
