@@ -4,57 +4,141 @@ parameters:
   testRunnerLinuxImage: microsoft/dotnet-buildtools-prereqs:debian-stretch-docker-testrunner-63f2145-20184325094343
   manifest: manifest.json
   repo: null
-  buildPublishMatrixLinuxAmd64:
-    3_0_Alpine:
-      imageBuilderPaths: --path 3.0*alpine*
-    3_0_Bionic:
-      imageBuilderPaths: --path 3.0*bionic*
-    3_0_Stretch:
-      imageBuilderPaths: --path 3.0*stretch*
-    2_1+2_Alpine:
-      imageBuilderPaths: --path 2.1*alpine* --path 2.2*alpine*
-    2_1+2_Bionic:
-      imageBuilderPaths: --path 2.1*bionic* --path 2.2*bionic*
-    2_1+2_Stretch:
-      imageBuilderPaths: --path 2.1*stretch* --path 2.2*stretch*
-    2_0_Jessie:
-      imageBuilderPaths: --path 2.0*jessie*
-    2_0_Stretch:
-      imageBuilderPaths: --path 2.0*stretch*
-    1_*_Jessie:
-      imageBuilderPaths: --path 1.*jessie*
-  buildPublishMatrixLinuxArm32v7:
-    3_0_Bionic:
-      imageBuilderPaths: --path 3.0*bionic*
-    3_0_Stretch:
-      imageBuilderPaths: --path 3.0*stretch*
-    2_1+2_Bionic:
-      imageBuilderPaths: --path 2.1*bionic* --path 2.2*bionic*
-    2_1+2_Stretch:
-      imageBuilderPaths: --path 2.1*stretch* --path 2.2*stretch*
-  buildPublishMatrixWindowsSac2016Amd64:
-    3_0:
-      imageBuilderPaths: --path 3.0*nanoserver-sac2016*
-    2_1+2:
-      imageBuilderPaths: --path 2.1*nanoserver-sac2016* --path 2.2*nanoserver-sac2016*
-    2_0:
-      imageBuilderPaths: --path 2.0*nanoserver-sac2016*
-    1_*:
-      imageBuilderPaths: --path 1.*nanoserver-sac2016*
-  buildPublishMatrixWindows1709Amd64:
-    3_0:
-      imageBuilderPaths: --path 3.0*nanoserver-1709*
-    2_1+2:
-      imageBuilderPaths: --path 2.1*nanoserver-1709* --path 2.2*nanoserver-1709*
-    2_0:
-      imageBuilderPaths: --path 2.0*nanoserver-1709*
-  buildPublishMatrixWindows1803Amd64:
-    3_0:
-      imageBuilderPaths: --path 3.0*nanoserver-1803*
-    2_1+2:
-      imageBuilderPaths: --path 2.1*nanoserver-1803* --path 2.2*nanoserver-1803*
-    2_0:
-      imageBuilderPaths: --path 2.0*nanoserver-1803*
+  buildMatrixLinuxArm32v7:
+    2.1-runtime-deps-stretch-slim-graph:
+      imageBuilderPaths: --path 2.1/runtime-deps/stretch-slim/arm32v7 --path 2.1/runtime/stretch-slim/arm32v7 --path 2.1/aspnetcore-runtime/stretch-slim/arm32v7 --path 2.2/runtime/stretch-slim/arm32v7 --path 2.2/aspnetcore-runtime/stretch-slim/arm32v7
+    2.1-sdk-stretch:
+      imageBuilderPaths: --path 2.1/sdk/stretch/arm32v7
+    2.1-runtime-deps-bionic-graph:
+      imageBuilderPaths: --path 2.1/runtime-deps/bionic/arm32v7 --path 2.1/aspnetcore-runtime/bionic/arm32v7 --path 2.1/runtime/bionic/arm32v7 --path 2.2/aspnetcore-runtime/bionic/arm32v7 --path 2.2/runtime/bionic/arm32v7
+    2.1-sdk-bionic:
+      imageBuilderPaths: --path 2.1/sdk/bionic/arm32v7
+    2.2-sdk-stretch:
+      imageBuilderPaths: --path 2.2/sdk/stretch/arm32v7
+    2.2-sdk-bionic:
+      imageBuilderPaths: --path 2.2/sdk/bionic/arm32v7
+    3.0-runtime-deps-stretch-slim-graph:
+      imageBuilderPaths: --path 3.0/runtime-deps/stretch-slim/arm32v7 --path 3.0/runtime/stretch-slim/arm32v7 --path 3.0/aspnetcore-runtime/stretch-slim/arm32v7
+    3.0-sdk-stretch:
+      imageBuilderPaths: --path 3.0/sdk/stretch/arm32v7
+    3.0-runtime-deps-bionic-graph:
+      imageBuilderPaths: --path 3.0/runtime-deps/bionic/arm32v7 --path 3.0/aspnetcore-runtime/bionic/arm32v7 --path 3.0/runtime/bionic/arm32v7
+    3.0-sdk-bionic:
+      imageBuilderPaths: --path 3.0/sdk/bionic/arm32v7
+  buildMatrixLinuxAmd64:
+    1.0-runtime-deps-jessie-graph:
+      imageBuilderPaths: --path 1.0/runtime-deps/jessie/amd64 --path 1.0/runtime/jessie/amd64 --path 1.1/runtime/jessie/amd64
+    1.1-sdk-jessie:
+      imageBuilderPaths: --path 1.1/sdk/jessie/amd64
+    2.0-runtime-deps-stretch-graph:
+      imageBuilderPaths: --path 2.0/runtime-deps/stretch/amd64 --path 2.0/runtime/stretch/amd64
+    2.0-sdk-stretch:
+      imageBuilderPaths: --path 2.0/sdk/stretch/amd64
+    2.0-runtime-deps-jessie-graph:
+      imageBuilderPaths: --path 2.0/runtime-deps/jessie/amd64 --path 2.0/runtime/jessie/amd64
+    2.0-sdk-jessie:
+      imageBuilderPaths: --path 2.0/sdk/jessie/amd64
+    2.1-runtime-deps-stretch-slim-graph:
+      imageBuilderPaths: --path 2.1/runtime-deps/stretch-slim/amd64 --path 2.1/runtime/stretch-slim/amd64 --path 2.1/aspnetcore-runtime/stretch-slim/amd64 --path 2.2/runtime/stretch-slim/amd64 --path 2.2/aspnetcore-runtime/stretch-slim/amd64
+    2.1-sdk-stretch:
+      imageBuilderPaths: --path 2.1/sdk/stretch/amd64
+    2.1-runtime-deps-alpine3.7-graph:
+      imageBuilderPaths: --path 2.1/runtime-deps/alpine3.7/amd64 --path 2.1/runtime/alpine3.7/amd64 --path 2.1/aspnetcore-runtime/alpine3.7/amd64 --path 2.1/sdk/alpine3.7/amd64
+    2.1-runtime-deps-alpine3.8-graph:
+      imageBuilderPaths: --path 2.1/runtime-deps/alpine3.8/amd64 --path 2.1/runtime/alpine3.8/amd64 --path 2.1/aspnetcore-runtime/alpine3.8/amd64 --path 2.1/sdk/alpine3.8/amd64 --path 2.2/runtime/alpine3.8/amd64 --path 2.2/aspnetcore-runtime/alpine3.8/amd64 --path 2.2/sdk/alpine3.8/amd64
+    2.1-runtime-deps-bionic-graph:
+      imageBuilderPaths: --path 2.1/runtime-deps/bionic/amd64 --path 2.1/aspnetcore-runtime/bionic/amd64 --path 2.1/runtime/bionic/amd64 --path 2.2/aspnetcore-runtime/bionic/amd64 --path 2.2/runtime/bionic/amd64
+    2.1-sdk-bionic:
+      imageBuilderPaths: --path 2.1/sdk/bionic/amd64
+    2.2-sdk-stretch:
+      imageBuilderPaths: --path 2.2/sdk/stretch/amd64
+    2.2-sdk-bionic:
+      imageBuilderPaths: --path 2.2/sdk/bionic/amd64
+    3.0-runtime-deps-stretch-slim-graph:
+      imageBuilderPaths: --path 3.0/runtime-deps/stretch-slim/amd64 --path 3.0/runtime/stretch-slim/amd64 --path 3.0/aspnetcore-runtime/stretch-slim/amd64
+    3.0-sdk-stretch:
+      imageBuilderPaths: --path 3.0/sdk/stretch/amd64
+    3.0-runtime-deps-alpine3.8-graph:
+      imageBuilderPaths: --path 3.0/runtime-deps/alpine3.8/amd64 --path 3.0/runtime/alpine3.8/amd64 --path 3.0/aspnetcore-runtime/alpine3.8/amd64 --path 3.0/sdk/alpine3.8/amd64
+    3.0-runtime-deps-bionic-graph:
+      imageBuilderPaths: --path 3.0/runtime-deps/bionic/amd64 --path 3.0/aspnetcore-runtime/bionic/amd64 --path 3.0/runtime/bionic/amd64
+    3.0-sdk-bionic:
+      imageBuilderPaths: --path 3.0/sdk/bionic/amd64
+  buildMatrixNanoserverSac2016Amd64:
+    1.0-runtime:
+      imageBuilderPaths: --path 1.0/runtime/nanoserver-sac2016/amd64
+    1.1-runtime:
+      imageBuilderPaths: --path 1.1/runtime/nanoserver-sac2016/amd64
+    1.1-sdk:
+      imageBuilderPaths: --path 1.1/sdk/nanoserver-sac2016/amd64
+    2.0-runtime:
+      imageBuilderPaths: --path 2.0/runtime/nanoserver-sac2016/amd64
+    2.0-sdk:
+      imageBuilderPaths: --path 2.0/sdk/nanoserver-sac2016/amd64
+    2.1-runtime:
+      imageBuilderPaths: --path 2.1/runtime/nanoserver-sac2016/amd64
+    2.1-aspnetcore-runtime:
+      imageBuilderPaths: --path 2.1/aspnetcore-runtime/nanoserver-sac2016/amd64
+    2.1-sdk:
+      imageBuilderPaths: --path 2.1/sdk/nanoserver-sac2016/amd64
+    2.2-runtime:
+      imageBuilderPaths: --path 2.2/runtime/nanoserver-sac2016/amd64
+    2.2-aspnetcore-runtime:
+      imageBuilderPaths: --path 2.2/aspnetcore-runtime/nanoserver-sac2016/amd64
+    2.2-sdk:
+      imageBuilderPaths: --path 2.2/sdk/nanoserver-sac2016/amd64
+    3.0-runtime:
+      imageBuilderPaths: --path 3.0/runtime/nanoserver-sac2016/amd64
+    3.0-aspnetcore-runtime:
+      imageBuilderPaths: --path 3.0/aspnetcore-runtime/nanoserver-sac2016/amd64
+    3.0-sdk:
+      imageBuilderPaths: --path 3.0/sdk/nanoserver-sac2016/amd64
+  buildMatrixNanoserver1803Amd64:
+    2.0-runtime:
+      imageBuilderPaths: --path 2.0/runtime/nanoserver-1803/amd64
+    2.0-sdk:
+      imageBuilderPaths: --path 2.0/sdk/nanoserver-1803/amd64
+    2.1-runtime:
+      imageBuilderPaths: --path 2.1/runtime/nanoserver-1803/amd64
+    2.1-aspnetcore-runtime:
+      imageBuilderPaths: --path 2.1/aspnetcore-runtime/nanoserver-1803/amd64
+    2.1-sdk:
+      imageBuilderPaths: --path 2.1/sdk/nanoserver-1803/amd64
+    2.2-runtime:
+      imageBuilderPaths: --path 2.2/runtime/nanoserver-1803/amd64
+    2.2-aspnetcore-runtime:
+      imageBuilderPaths: --path 2.2/aspnetcore-runtime/nanoserver-1803/amd64
+    2.2-sdk:
+      imageBuilderPaths: --path 2.2/sdk/nanoserver-1803/amd64
+    3.0-runtime:
+      imageBuilderPaths: --path 3.0/runtime/nanoserver-1803/amd64
+    3.0-aspnetcore-runtime:
+      imageBuilderPaths: --path 3.0/aspnetcore-runtime/nanoserver-1803/amd64
+    3.0-sdk:
+      imageBuilderPaths: --path 3.0/sdk/nanoserver-1803/amd64
+  buildMatrixNanoserver1709Amd64:
+    2.0-runtime:
+      imageBuilderPaths: --path 2.0/runtime/nanoserver-1709/amd64
+    2.0-sdk:
+      imageBuilderPaths: --path 2.0/sdk/nanoserver-1709/amd64
+    2.1-runtime:
+      imageBuilderPaths: --path 2.1/runtime/nanoserver-1709/amd64
+    2.1-aspnetcore-runtime:
+      imageBuilderPaths: --path 2.1/aspnetcore-runtime/nanoserver-1709/amd64
+    2.1-sdk:
+      imageBuilderPaths: --path 2.1/sdk/nanoserver-1709/amd64
+    2.2-runtime:
+      imageBuilderPaths: --path 2.2/runtime/nanoserver-1709/amd64
+    2.2-aspnetcore-runtime:
+      imageBuilderPaths: --path 2.2/aspnetcore-runtime/nanoserver-1709/amd64
+    2.2-sdk:
+      imageBuilderPaths: --path 2.2/sdk/nanoserver-1709/amd64
+    3.0-runtime:
+      imageBuilderPaths: --path 3.0/runtime/nanoserver-1709/amd64
+    3.0-aspnetcore-runtime:
+      imageBuilderPaths: --path 3.0/aspnetcore-runtime/nanoserver-1709/amd64
+    3.0-sdk:
+      imageBuilderPaths: --path 3.0/sdk/nanoserver-1709/amd64
   testMatrixLinuxAmd64:
     3_0_Alpine:
       dotnetVersion: 3.0
@@ -163,13 +247,13 @@ phases:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
-      matrix: ${{ parameters.buildPublishMatrixLinuxAmd64 }}
+      matrix: ${{ parameters.buildMatrixLinuxAmd64 }}
   - template: build-linux-arm32v7.yml
     parameters:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
-      matrix: ${{ parameters.buildPublishMatrixLinuxArm32v7 }}
+      matrix: ${{ parameters.buildMatrixLinuxArm32v7 }}
   - template: build-windows-amd64.yml
     parameters:
       phase: Build_NanoServerSac2016_amd64
@@ -178,7 +262,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
-      matrix: ${{ parameters.buildPublishMatrixWindowsSac2016Amd64 }}
+      matrix: ${{ parameters.buildMatrixNanoserverSac2016Amd64 }}
   - template: build-windows-amd64.yml
     parameters:
       phase: Build_NanoServer1709_amd64
@@ -187,7 +271,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
-      matrix: ${{ parameters.buildPublishMatrixWindows1709Amd64 }}
+      matrix: ${{ parameters.buildMatrixNanoserver1709Amd64 }}
   - template: build-windows-amd64.yml
     parameters:
       phase: Build_NanoServer1803_amd64
@@ -196,7 +280,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
-      matrix: ${{ parameters.buildPublishMatrixWindows1803Amd64 }}
+      matrix: ${{ parameters.buildMatrixNanoserver1803Amd64 }}
 
   ################################################################################
   # Test Images
@@ -246,7 +330,7 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
       architecture: amd64
-      matrix: ${{ parameters.buildPublishMatrixLinuxAmd64 }}
+      matrix: ${{ parameters.buildMatrixLinuxAmd64 }}
   - template: copy-images-linux.yml
     parameters:
       phase: Copy_Images_Linux_arm32v7
@@ -254,7 +338,7 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
       architecture: arm
-      matrix: ${{ parameters.buildPublishMatrixLinuxArm32v7 }}
+      matrix: ${{ parameters.buildMatrixLinuxArm32v7 }}
   - template: copy-images-windows.yml
     parameters:
       phase: Copy_Images_NanoServerSac2016_amd64
@@ -263,7 +347,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
-      matrix: ${{ parameters.buildPublishMatrixWindowsSac2016Amd64 }}
+      matrix: ${{ parameters.buildMatrixNanoserverSac2016Amd64 }}
   - template: copy-images-windows.yml
     parameters:
       phase: Copy_Images_NanoServer1709_amd64
@@ -272,7 +356,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
-      matrix: ${{ parameters.buildPublishMatrixWindows1709Amd64 }}
+      matrix: ${{ parameters.buildMatrixNanoserver1709Amd64 }}
   - template: copy-images-windows.yml
     parameters:
       phase: Copy_Images_NanoServer1803_amd64
@@ -281,7 +365,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
-      matrix: ${{ parameters.buildPublishMatrixWindows1803Amd64 }}
+      matrix: ${{ parameters.buildMatrixNanoserver1803Amd64 }}
 
   - template: publish-finalize.yml
     parameters:
