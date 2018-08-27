@@ -24,7 +24,6 @@ function Check {
     }
 }
 
-$IsRunningOnUnix = $PSVersionTable.contains("Platform") -and $PSVersionTable.Platform -eq "Unix"
 $DockerOS = docker version -f "{{ .Server.Os }}"
 $ImageName = "dotnetapp"
 $TestImageName = "dotnetapp:test"
