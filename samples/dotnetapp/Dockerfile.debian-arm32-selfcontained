@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM microsoft/dotnet:2.1-sdk-stretch-arm32v7 AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -13,7 +13,7 @@ COPY dotnetapp/. ./dotnetapp/
 COPY utils/. ./utils/
 WORKDIR /app/dotnetapp
 # add IL Linker package
-RUN dotnet add package ILLink.Tasks -v 0.1.5-preview-1461378 -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
+RUN dotnet add package ILLink.Tasks -v 0.1.5-preview-1841731 -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
 RUN dotnet publish -c Release -r linux-arm -o out /p:ShowLinkerSizeComparison=true
 
 
@@ -24,7 +24,7 @@ COPY tests/. .
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 
-FROM microsoft/dotnet:2.1-runtime-deps-stretch-arm32v7 AS runtime
+FROM microsoft/dotnet:2.1-runtime-deps-stretch-slim-arm32v7 AS runtime
 WORKDIR /app
 COPY --from=build /app/dotnetapp/out ./
 ENTRYPOINT ["./dotnetapp"]
