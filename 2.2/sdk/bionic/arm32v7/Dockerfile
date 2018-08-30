@@ -34,7 +34,7 @@ ENV ASPNETCORE_URLS=http://+:80 \
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
-    # Skip extraction of XML docs - generally not useful within an image/container - helps perfomance
+    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
