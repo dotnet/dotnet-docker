@@ -11,7 +11,7 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
 ENV DOTNET_SDK_VERSION 2.2.100-preview2-009404
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='2a3bca3ff3f86442e53f4c8f974fb7d270d281e482283f903aeebd4dd451130e5f88a8fc8ab110bc6a83a421003a68739e08540597820b33958491aed3390f0f' \
+    && dotnet_sha512='8c41c9ead676e8b1056868eae3464099d2f238a2a2f8bd7ccefb097bfa3758c18a0047d0de48389d53a662e2799391d8761fdaad288049ce0e61f0fc709ddf03' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \
