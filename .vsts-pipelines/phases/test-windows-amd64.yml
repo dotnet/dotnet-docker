@@ -34,5 +34,6 @@ phases:
           testRunner: vSTest
           testResultsFiles: 'tests/**/*.trx'
           mergeTestResults: true
+          publishRunAttachments: true
           testRunTitle: Windows $(dotnetVersion) $(osVersion) amd64
       - template: ../steps/docker-cleanup-windows.yml
