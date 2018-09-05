@@ -22,9 +22,9 @@ phases:
         parameters:
           image: $(imageBuilder.image)
           repoVolume: $(repoVolume)
-      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) generateBuildMatrix --type build
+      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) generateBuildMatrix --manifest $(manifest) --type build
         name: buildMatrix
-      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) generateBuildMatrix --type test
+      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) generateBuildMatrix --manifest $(manifest) --type test
         name: testMatrix
       - template: ../steps/docker-cleanup-linux.yml
 
