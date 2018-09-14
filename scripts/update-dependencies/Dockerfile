@@ -13,7 +13,7 @@ RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tl
 
 
 # build image
-FROM microsoft/dotnet:2.0-sdk-nanoserver-1709 AS build-env
+FROM microsoft/dotnet:2.1-sdk-nanoserver-1709 AS build-env
 WORKDIR /update-dependencies
 
 # copy csproj and restore as distinct layers
@@ -27,7 +27,7 @@ RUN dotnet publish -c Release -o out --no-restore
 
 
 # runtime image
-FROM microsoft/dotnet:2.0-runtime-nanoserver-1709
+FROM microsoft/dotnet:2.1-runtime-nanoserver-1709
 
 # install git
 COPY --from=installer-env ["git", "C:\\Program Files\\git"]
