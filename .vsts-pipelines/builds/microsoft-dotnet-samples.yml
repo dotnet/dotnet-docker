@@ -4,38 +4,3 @@ phases:
     parameters:
       manifest: manifest.samples.json
       repo: dotnet-samples
-      buildPublishMatrixLinuxAmd64:
-        Samples:
-          imageBuilderPaths: --path *
-      buildPublishMatrixLinuxArm32v7:
-        Samples:
-          imageBuilderPaths: --path *
-      buildPublishMatrixWindowsSac2016Amd64:
-        Samples:
-          imageBuilderPaths: --path *nanoserver-sac2016*
-      buildPublishMatrixWindows1709Amd64:
-        Samples:
-          imageBuilderPaths: --path *nanoserver-1709*
-      buildPublishMatrixWindows1803Amd64:
-        Samples:
-          imageBuilderPaths: --path *nanoserver-1803*
-      testMatrixLinuxAmd64:
-        Samples:
-          dotnetVersion: ''
-          osVersion: ''
-      testMatrixLinuxArm32v7:
-        Samples:
-          dotnetVersion: ''
-          osVersion: ''
-      testMatrixWindowsSac2016Amd64:
-        Samples:
-          dotnetVersion: ''
-          osVersion: nanoserver-sac2016
-      testMatrixWindows1709Amd64:
-        Samples:
-          dotnetVersion: ''
-          osVersion: nanoserver-1709
-      testMatrixWindows1803Amd64:
-        Samples:
-          dotnetVersion: ''
-          osVersion: nanoserver-1803

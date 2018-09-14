@@ -5,7 +5,9 @@ parameters:
 phases:
   - phase: Test_Linux_arm32v7
     condition: and(ne(variables['repo'], 'dotnet-samples'), or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'test')))
-    dependsOn: Build_Linux_arm32v7
+    dependsOn:
+      - Build_Linux_arm32v7
+      - GenerateMatrices
     queue:
       name: DotNetCore-Infra
       demands:
@@ -53,6 +55,7 @@ phases:
           testResultsFiles: '**/*.trx'
           searchFolder: $(Common.TestResultsDirectory)
           mergeTestResults: true
+          publishRunAttachments: true
           testRunTitle: Linux $(dotnetVersion) $(osVersion) arm32v7
       - script: docker stop $(testRunner.container)
         displayName: Stop TestRunner Container

@@ -6,6 +6,7 @@ parameters:
 phases:
   - phase: Build_Linux_amd64
     condition: or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build'))
+    dependsOn: GenerateMatrices
     queue:
       name: DotNet-Build
       demands:
