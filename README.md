@@ -63,6 +63,16 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
+# Windows Server 2019 amd64 tags
+
+- [`2.1.403-sdk-nanoserver-sac2019`, `2.1-sdk-nanoserver-sac2019`, `2.1.403-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-sac2019/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-sac2019/amd64/Dockerfile)
+- [`2.1.5-aspnetcore-runtime-nanoserver-sac2019`, `2.1-aspnetcore-runtime-nanoserver-sac2019`, `2.1.5-aspnetcore-runtime`, `2.1-aspnetcore-runtime`, `aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-sac2019/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-sac2019/amd64/Dockerfile)
+- [`2.1.5-runtime-nanoserver-sac2019`, `2.1-runtime-nanoserver-sac2019`, `2.1.5-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/nanoserver-sac2019/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-sac2019/amd64/Dockerfile)
+
+**.NET Core 2.2 & 3.0 Preview tags**
+
+See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
+
 # Windows Server, version 1803 amd64 tags
 
 - [`2.1.403-sdk-nanoserver-1803`, `2.1-sdk-nanoserver-1803`, `2.1.403-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1803/amd64/Dockerfile)
