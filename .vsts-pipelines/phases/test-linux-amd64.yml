@@ -5,7 +5,9 @@ parameters:
 phases:
   - phase: Test_Linux_amd64
     condition: and(ne(variables['repo'], 'dotnet-samples'), or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'test')))
-    dependsOn: Build_Linux_amd64
+    dependsOn:
+      - Build_Linux_amd64
+      - GenerateMatrices
     queue:
       name: DotNet-Build
       demands:
@@ -50,6 +52,7 @@ phases:
           testResultsFiles: '**/*.trx'
           searchFolder: $(Common.TestResultsDirectory)
           mergeTestResults: true
+          publishRunAttachments: true
           testRunTitle: Linux $(dotnetVersion) $(osVersion) amd64
       - script: docker stop $(testRunner.container)
         displayName: Stop TestRunner Container
