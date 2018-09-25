@@ -1,10 +1,10 @@
 FROM microsoft/dotnet-nightly:2.2-runtime-deps-alpine3.8
 
 # Install .NET Core
-ENV DOTNET_VERSION 2.2.0-preview3-26919-03
+ENV DOTNET_VERSION 2.2.0-preview3-26924-02
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='665c70d4fee55e5ba135878b8d37d5cda73ebb735785fa427f1ed011bbac402c99014c471454b4ecc1747f95ff6c24eeb2b652fdd5b1827dc297abc07cc6bb95' \
+    && dotnet_sha512='d24605abcd69437d4f3f6f3c5b084dfd473f7962d5c6bca016d6e36b73f1e975e8e3c1d10a382229b775fb68db5986f027ade101890439c3147718c821cc3095' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \
