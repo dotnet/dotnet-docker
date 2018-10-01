@@ -46,12 +46,6 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 - [`2.1.4-runtime-deps-stretch-slim`, `2.1-runtime-deps-stretch-slim`, `2.1.4-runtime-deps`, `2.1-runtime-deps`, `runtime-deps` (*2.1/runtime-deps/stretch-slim/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
 - [`2.1.4-runtime-deps-alpine3.7`, `2.1-runtime-deps-alpine3.7`, `2.1.4-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*2.1/runtime-deps/alpine3.7/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine3.7/amd64/Dockerfile)
 - [`2.1.4-runtime-deps-bionic`, `2.1-runtime-deps-bionic` (*2.1/runtime-deps/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/amd64/Dockerfile)
-- [`2.0.9-sdk-2.1.202-stretch`, `2.0-sdk-stretch`, `2.0.9-sdk-2.1.202`, `2.0-sdk` (*2.0/sdk/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/stretch/amd64/Dockerfile)
-- [`2.0.9-sdk-2.1.202-jessie`, `2.0-sdk-jessie` (*2.0/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/jessie/amd64/Dockerfile)
-- [`2.0.9-runtime-stretch`, `2.0-runtime-stretch`, `2.0.9-runtime`, `2.0-runtime` (*2.0/runtime/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/stretch/amd64/Dockerfile)
-- [`2.0.9-runtime-jessie`, `2.0-runtime-jessie` (*2.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/jessie/amd64/Dockerfile)
-- [`2.0.9-runtime-deps-stretch`, `2.0-runtime-deps-stretch`, `2.0.9-runtime-deps`, `2.0-runtime-deps` (*2.0/runtime-deps/stretch/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/stretch/amd64/Dockerfile)
-- [`2.0.9-runtime-deps-jessie`, `2.0-runtime-deps-jessie` (*2.0/runtime-deps/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime-deps/jessie/amd64/Dockerfile)
 - [`1.1.9-sdk-1.1.10-jessie`, `1.1-sdk-jessie`, `1.1.9-sdk-1.1.10`, `1.1-sdk` (*1.1/sdk/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/jessie/amd64/Dockerfile)
 - [`1.1.9-runtime-jessie`, `1.1-runtime-jessie`, `1.1.9-runtime`, `1.1-runtime` (*1.1/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/jessie/amd64/Dockerfile)
 - [`1.0.12-runtime-jessie`, `1.0-runtime-jessie`, `1.0.12-runtime`, `1.0-runtime` (*1.0/runtime/jessie/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/jessie/amd64/Dockerfile)
@@ -66,8 +60,6 @@ See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/mast
 - [`2.1.402-sdk-nanoserver-1803`, `2.1-sdk-nanoserver-1803`, `2.1.402-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1803/amd64/Dockerfile)
 - [`2.1.4-aspnetcore-runtime-nanoserver-1803`, `2.1-aspnetcore-runtime-nanoserver-1803`, `2.1.4-aspnetcore-runtime`, `2.1-aspnetcore-runtime`, `aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile)
 - [`2.1.4-runtime-nanoserver-1803`, `2.1-runtime-nanoserver-1803`, `2.1.4-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1803/amd64/Dockerfile)
-- [`2.0.9-sdk-2.1.202-nanoserver-1803`, `2.0-sdk-nanoserver-1803`, `2.0.9-sdk-2.1.202`, `2.0-sdk` (*2.0/sdk/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-1803/amd64/Dockerfile)
-- [`2.0.9-runtime-nanoserver-1803`, `2.0-runtime-nanoserver-1803`, `2.0.9-runtime`, `2.0-runtime` (*2.0/runtime/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-1803/amd64/Dockerfile)
 
 **.NET Core 2.2 Preview tags**
 
@@ -78,8 +70,6 @@ See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/mast
 - [`2.1.402-sdk-nanoserver-1709`, `2.1-sdk-nanoserver-1709`, `2.1.402-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1709/amd64/Dockerfile)
 - [`2.1.4-aspnetcore-runtime-nanoserver-1709`, `2.1-aspnetcore-runtime-nanoserver-1709`, `2.1.4-aspnetcore-runtime`, `2.1-aspnetcore-runtime`, `aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile)
 - [`2.1.4-runtime-nanoserver-1709`, `2.1-runtime-nanoserver-1709`, `2.1.4-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1709/amd64/Dockerfile)
-- [`2.0.9-sdk-2.1.202-nanoserver-1709`, `2.0-sdk-nanoserver-1709`, `2.0.9-sdk-2.1.202`, `2.0-sdk` (*2.0/sdk/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-1709/amd64/Dockerfile)
-- [`2.0.9-runtime-nanoserver-1709`, `2.0-runtime-nanoserver-1709`, `2.0.9-runtime`, `2.0-runtime` (*2.0/runtime/nanoserver-1709/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-1709/amd64/Dockerfile)
 
 **.NET Core 2.2 Preview tags**
 
@@ -90,8 +80,6 @@ See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/mast
 - [`2.1.402-sdk-nanoserver-sac2016`, `2.1-sdk-nanoserver-sac2016`, `2.1.402-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
 - [`2.1.4-aspnetcore-runtime-nanoserver-sac2016`, `2.1-aspnetcore-runtime-nanoserver-sac2016`, `2.1.4-aspnetcore-runtime`, `2.1-aspnetcore-runtime`, `aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`2.1.4-runtime-nanoserver-sac2016`, `2.1-runtime-nanoserver-sac2016`, `2.1.4-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.0.9-sdk-2.1.202-nanoserver-sac2016`, `2.0-sdk-nanoserver-sac2016`, `2.0.9-sdk-2.1.202`, `2.0-sdk` (*2.0/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.0.9-runtime-nanoserver-sac2016`, `2.0-runtime-nanoserver-sac2016`, `2.0.9-runtime`, `2.0-runtime` (*2.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`1.1.9-sdk-1.1.10-nanoserver-sac2016`, `1.1-sdk-nanoserver-sac2016`, `1.1.9-sdk-1.1.10`, `1.1-sdk` (*1.1/sdk/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
 - [`1.1.9-runtime-nanoserver-sac2016`, `1.1-runtime-nanoserver-sac2016`, `1.1.9-runtime`, `1.1-runtime` (*1.1/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`1.0.12-runtime-nanoserver-sac2016`, `1.0-runtime-nanoserver-sac2016`, `1.0.12-runtime`, `1.0-runtime` (*1.0/runtime/nanoserver-sac2016/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/nanoserver-sac2016/amd64/Dockerfile)

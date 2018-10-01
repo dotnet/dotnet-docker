@@ -31,8 +31,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             new ImageData { DotNetVersion = "1.0", OsVariant = OS.Jessie, SdkVersion = "1.1" },
             new ImageData { DotNetVersion = "1.1", OsVariant = OS.Jessie, RuntimeDepsVersion = "1.0" },
-            new ImageData { DotNetVersion = "2.0", OsVariant = OS.Stretch },
-            new ImageData { DotNetVersion = "2.0", OsVariant = OS.Jessie },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine37 },
@@ -58,9 +56,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             new ImageData { DotNetVersion = "1.0", OsVariant = OS.NanoServerSac2016, SdkVersion = "1.1" },
             new ImageData { DotNetVersion = "1.1", OsVariant = OS.NanoServerSac2016 },
-            new ImageData { DotNetVersion = "2.0", OsVariant = OS.NanoServerSac2016 },
-            new ImageData { DotNetVersion = "2.0", OsVariant = OS.NanoServer1709 },
-            new ImageData { DotNetVersion = "2.0", OsVariant = OS.NanoServer1803 },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1709 },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1803 },
