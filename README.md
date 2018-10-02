@@ -58,6 +58,16 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/master/TAGS.md).
 
+# Windows Server, version 1809 amd64 tags
+
+- [`2.1.500-sdk-nanoserver-1809`, `2.1-sdk-nanoserver-1809`, `2.1.500-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.6-aspnetcore-runtime-nanoserver-1809`, `2.1-aspnetcore-runtime-nanoserver-1809`, `2.1.6-aspnetcore-runtime`, `2.1-aspnetcore-runtime`, `aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.6-runtime-nanoserver-1809`, `2.1-runtime-nanoserver-1809`, `2.1.6-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1809/amd64/Dockerfile)
+
+**.NET Core 2.2 Preview tags**
+
+See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/master/TAGS.md).
+
 # Windows Server, version 1803 amd64 tags
 
 - [`2.1.500-sdk-nanoserver-1803`, `2.1-sdk-nanoserver-1803`, `2.1.500-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1803/amd64/Dockerfile)
