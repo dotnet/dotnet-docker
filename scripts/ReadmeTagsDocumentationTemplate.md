@@ -23,6 +23,16 @@ $(TagDoc:1.0.12-runtime-deps-jessie)
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
+# Windows Server 2019 amd64 tags
+
+$(TagDoc:2.1.403-sdk-nanoserver-sac2019)
+$(TagDoc:2.1.5-aspnetcore-runtime-nanoserver-sac2019)
+$(TagDoc:2.1.5-runtime-nanoserver-sac2019)
+
+**.NET Core 2.2 Preview tags**
+
+See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
+
 # Windows Server, version 1803 amd64 tags
 
 $(TagDoc:2.1.403-sdk-nanoserver-1803)
