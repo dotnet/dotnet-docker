@@ -8,7 +8,7 @@ parameters:
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
-    condition: or(eq(variables['singlePhase'], 'publish'), and(eq(variables['singlePhase'], ''), or(succeeded(), and(eq(variables['repo'], 'dotnet-samples'), eq(variables['singlePhase'], ''), succeeded('Build_Linux_amd64'), succeeded('Build_Linux_arm32v7'), succeeded('Build_NanoServerSac2016_amd64'), succeeded('Build_NanoServer1709_amd64'), succeeded('Build_NanoServer1803_amd64')))))
+    condition: or(eq(variables['singlePhase'], 'publish'), and(eq(variables['singlePhase'], ''), or(succeeded(), and(eq(variables['repo'], 'dotnet-samples'), eq(variables['singlePhase'], ''), succeeded('Build_Linux_amd64'), succeeded('Build_Linux_arm32v7'), succeeded('Build_NanoServerSac2016_amd64'), succeeded('Build_NanoServer1709_amd64'), succeeded('Build_NanoServer1803_amd64'), succeeded('Build_NanoServer1809_amd64')))))
     dependsOn:
       - GenerateMatrices
       - Test_Linux_amd64
@@ -16,6 +16,7 @@ phases:
       - Test_NanoServerSac2016_amd64
       - Test_NanoServer1709_amd64
       - Test_NanoServer1803_amd64
+      - Test_NanoServer1809_amd64
     queue:
       name: DotNetCore-Infra
       demands: ${{ parameters.demands }}

@@ -3,20 +3,20 @@ import jobs.generation.Utilities
 def project = GithubProject
 def branch = GithubBranchName
 def isPR = true
-def platformList = ['Ubuntu16.04:Linux', 'Windows_2016:NanoServer-sac2016', 'Windows_2016:NanoServer-1709', 'Windows_2016:NanoServer-1803']
+def platformList = [
+        'Ubuntu16.04:Linux',
+        'Windows_2016:NanoServer-sac2016',
+        'Windows_2016:NanoServer-1709',
+        'Windows_2016:NanoServer-1803'
+        //'Windows_2016:NanoServer-1809'
+    ]
 
 platformList.each { platform ->
     def(hostOS, containerOS) = platform.tokenize(':')
     def machineLabel = (hostOS == 'Windows_2016') ? 'latest-docker' : 'latest-or-auto-docker'
 
-    if (containerOS == 'NanoServer-1803') {
-        versionList = ['2.1-2.2']
-    }
-    else if (containerOS == 'NanoServer-1709') {
-        versionList = ['2.1-2.2']
-    }
-    else if (containerOS == 'NanoServer-sac2016') {
-        versionList = ['1.', '2.1-2.2']
+    if (containerOS == 'NanoServer-1709' || containerOS == 'NanoServer-1803' || containerOS == 'NanoServer-1809') {
+        versionList = ['2.1-2.2', '3.0']
     }
     else {
         versionList = ['1.', '2.1-2.2']
@@ -59,7 +59,10 @@ platformList.each { platform ->
         }
         else if (containerOS == 'NanoServer-1803') {
             newJob.with {label('windows.10.amd64.serverrs4.open')}
-        }    
+        }
+        else if (containerOS == 'NanoServer-1809') {
+            newJob.with {label('windows.10.amd64.serverrs5.open')}
+        }      
         else {
             Utilities.setMachineAffinity(newJob, hostOS, machineLabel)
         }
