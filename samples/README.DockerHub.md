@@ -36,8 +36,8 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 # Windows Server 2019 amd64 tags
 
-- [`dotnetapp-nanoserver-sac2019`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-- [`aspnetapp-nanoserver-sac2019`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+- [`dotnetapp-nanoserver-1809`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+- [`aspnetapp-nanoserver-1809`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
 # Windows Server, version 1803 amd64 tags
 
