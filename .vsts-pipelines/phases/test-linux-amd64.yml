@@ -1,7 +1,3 @@
-parameters:
-  testRunnerLinuxImage: null
-  repo: null
-  matrix: {}
 phases:
   - phase: Test_Linux_amd64
     condition: and(ne(variables['repo'], 'dotnet-samples'), or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'test')))
@@ -10,31 +6,22 @@ phases:
       - GenerateMatrices
     queue:
       name: DotNet-Build
-      demands:
-        - agent.os -equals linux
+      demands: agent.os -equals linux
       parallel: 100
-      timeoutInMinutes: 90
-      matrix: ${{ parameters.matrix }}
+      matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixLinuxAmd64'] ]
     variables:
-      repo: ${{ parameters.repo }}
-      repoVolume: test-repo-$(Build.BuildId)
-      testrunner.image: ${{ parameters.testRunnerLinuxImage }}
       testRunner.container: testrunner-$(Build.BuildId)
     steps:
       - template: ../steps/docker-init-linux.yml
         parameters:
-          image: $(testrunner.image)
-          repoVolume: $(repoVolume)
+          setupImageBuilder: false
+          setupTestRunner: true
       - script: docker run -t -d  -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo -e RUNNING_TESTS_IN_CONTAINER=true --name $(testRunner.container) $(testrunner.image)
         displayName: Start Test Runner Container
       - script: docker exec $(testRunner.container) docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
         displayName: Docker login
-      # The script task does not currently work (curl ssl issues), using CmdLine as workaround.
-      - task: CmdLine@1
+      - script: docker exec $(testRunner.container) pwsh -File ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion)* -OSFilter $(osVersion)* -ArchitectureFilter amd64 -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
         displayName: Test Images
-        inputs:
-          filename: docker
-          arguments: exec $(testRunner.container) pwsh -File ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion)* -OSFilter $(osVersion)* -ArchitectureFilter amd64 -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
       - script: docker exec $(testRunner.container) docker logout
         displayName: Docker logout
         condition: always()

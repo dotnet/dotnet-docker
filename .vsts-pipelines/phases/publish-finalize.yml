@@ -1,6 +1,3 @@
-parameters:
-  imageBuilderImage: null
-  manifest: null
 phases:
   - phase: Publish_Finalize
     condition: and(succeeded('Copy_Images_Linux_amd64'), succeeded('Copy_Images_Linux_arm32v7'), succeeded('Copy_Images_NanoServerSac2016_amd64'), succeeded('Copy_Images_NanoServer1709_amd64'), succeeded('Copy_Images_NanoServer1803_amd64'), succeeded('Copy_Images_NanoServer1809_amd64'))
@@ -13,21 +10,13 @@ phases:
       - Copy_Images_NanoServer1809_amd64
     queue:
       name: DotNet-Build
-      demands:
-        - agent.os -equals linux
+      demands: agent.os -equals linux
     variables:
-      docker.commonRunArgs: --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image)
       imageBuilder.commonCmdArgs: --manifest $(manifest) --username $(dockerRegistry.userName) --password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs)
-      imageBuilder.image: ${{ parameters.imageBuilderImage }}
-      manifest: ${{ parameters.manifest }}
-      repoVolume: publish-repo-$(Build.BuildId)
     steps:
       - template: ../steps/docker-init-linux.yml
-        parameters:
-          image: $(imageBuilder.image)
-          repoVolume: $(repoVolume)
-      - script: docker run $(docker.commonRunArgs) publishManifest $(imageBuilder.commonCmdArgs)
+      - script: $(runImageBuilderCmd) publishManifest $(imageBuilder.commonCmdArgs)
         displayName: Publish Manifest
-      - script: docker run $(docker.commonRunArgs) updateReadme $(imageBuilder.commonCmdArgs)
+      - script: $(runImageBuilderCmd) updateReadme $(imageBuilder.commonCmdArgs)
         displayName: Update Readme
       - template: ../steps/docker-cleanup-linux.yml
