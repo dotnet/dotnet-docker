@@ -12,11 +12,11 @@ phases:
       parallel: 100
       matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixLinuxArm32v7'] ]
     variables:
-      testRunner.container: testrunner-$(Build.BuildId)
+      testRunner.container: testrunner-$(System.JobId)
     steps:
       - template: ../steps/docker-init-linux.yml
         parameters:
-          setupArm: true
+          setupRemoteDocker: true
           setupImageBuilder: false
           setupTestRunner: true
       - script: docker run -t -d -v $(repoVolume):/repo -w /repo $(dockerArmRunArgs) -e RUNNING_TESTS_IN_CONTAINER=true --name $(testRunner.container) $(testrunner.image)
@@ -50,4 +50,4 @@ phases:
         continueOnError: true
       - template: ../steps/docker-cleanup-linux.yml
         parameters:
-          armCleanupImage: $(testrunner.image)
+          remoteDockerCleanupImage: $(testrunner.image)

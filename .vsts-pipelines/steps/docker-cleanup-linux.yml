@@ -1,21 +1,24 @@
 parameters:
-  armCleanupImage: null
+  remoteDockerCleanupImage: null
 steps:
   ################################################################################
-  # Cleanup Arm Env (Optional)
+  # Cleanup Remote Docker
   ################################################################################
-  - ${{ if ne(parameters.armCleanupImage, 'null') }}:
-    - script: docker run --rm $(dockerArmRunArgs) --entrypoint docker $armCleanupImage system prune -a -f --volumes
+  - ${{ if ne(parameters.remoteDockerCleanupImage, 'null') }}:
+    - script: docker run --rm $(dockerArmRunArgs) --entrypoint docker $remoteDockerCleanupImage system prune -a -f --volumes
       displayName: Cleanup ARM Docker
       condition: always()
       continueOnError: true
       env:
-        armCleanupImage: ${{ parameters.armCleanupImage }}
+        remoteDockerCleanupImage: ${{ parameters.remoteDockerCleanupImage }}
+    # Don't stop any running containers as multiple build agents are used on a single host machine for remote docker scenarios
+    - script: docker system prune -a -f --volumes
 
   ################################################################################
-  # Cleanup Docker Resources
+  # Cleanup Local Docker
   ################################################################################
-  - script: $(Build.Repository.LocalPath)/scripts/cleanup-docker.sh
-    displayName: Cleanup Docker
-    condition: always()
-    continueOnError: true
+  - ${{ if eq(parameters.remoteDockerCleanupImage, 'null') }}:
+    - script: $(Build.Repository.LocalPath)/scripts/cleanup-docker.sh
+      displayName: Cleanup Docker
+      condition: always()
+      continueOnError: true
