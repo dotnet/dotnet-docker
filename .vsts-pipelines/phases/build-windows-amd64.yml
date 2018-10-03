@@ -1,8 +1,5 @@
 parameters:
   phase: null
-  imageBuilderImage: null
-  manifest: null
-  repo: null
   osVersion: null
   demands: []
   matrix: {}
@@ -14,16 +11,11 @@ phases:
       name: DotNetCore-Infra
       demands: ${{ parameters.demands }}
       parallel: 100
-      timeoutInMinutes: 90
       matrix: ${{ parameters.matrix }}
     variables:
-      manifest: ${{ parameters.manifest }}
-      repo: ${{ parameters.repo }}
       osVersion: ${{ parameters.osVersion }}
     steps:
       - template: ../steps/docker-init-windows.yml
-        parameters:
-          imageBuilderImage: ${{ parameters.imageBuilderImage }}
-      - script: $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder/Microsoft.DotNet.ImageBuilder.exe build --manifest $(manifest) --os-version $(osVersion) --skip-test $(imageBuilderPaths) --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
+      - script: $(runImageBuilderCmd) build --manifest $(manifest) --os-version $(osVersion) --skip-test $(imageBuilderPaths) --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
         displayName: Build Images
       - template: ../steps/docker-cleanup-windows.yml

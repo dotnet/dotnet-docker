@@ -1,6 +1,6 @@
 trigger: none
+variables:
+  manifest: manifest.samples.json
+  repo: dotnet-samples
 phases:
   - template: ../phases/build-all.yml
-    parameters:
-      manifest: manifest.samples.json
-      repo: dotnet-samples
