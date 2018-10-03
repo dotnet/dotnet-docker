@@ -1,6 +1,5 @@
 parameters:
   phase: null
-  repo: null
   dependsOn: null
   demands: []
   matrix: {}
@@ -12,12 +11,11 @@ phases:
       name: DotNetCore-Infra
       demands: ${{ parameters.demands }}
       parallel: 100
-      timeoutInMinutes: 90
       matrix: ${{ parameters.matrix }}
-    variables:
-      repo: ${{ parameters.repo }}
     steps:
       - template: ../steps/docker-init-windows.yml
+        parameters:
+          setupImageBuilder: false
       - script: docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
         displayName: Docker login
       - powershell: ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion)* -OSFilter $(osVersion) -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
