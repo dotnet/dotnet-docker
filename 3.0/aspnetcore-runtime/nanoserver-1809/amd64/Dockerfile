@@ -1,15 +1,15 @@
 # escape=`
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:ltsc2019 AS installer-env
+FROM mcr.microsoft.com/windows/servercore:1809 AS installer-env
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-ENV ASPNETCORE_VERSION 2.1.5
+ENV ASPNETCORE_VERSION 3.0.0-alpha1-10062
 
 RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$Env:ASPNETCORE_VERSION/aspnetcore-runtime-$Env:ASPNETCORE_VERSION-win-x64.zip; `
-    $aspnetcore_sha512 = '98224c8646b7eab234b97f52735905bb0219ea2290490e408ff469459ea82116068854e7b9c5869bccef780b4ceac17477f34f23e06a0a6bedca445a3866d73e'; `
+    $aspnetcore_sha512 = '656b06fba35348af3b43724fe33d63b33b07e1f53374f679a0c96091736550f9683c1466f7aac67f0fef61bd039d4a36ea11997bd4fde236532bc813c870d53c'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -20,7 +20,7 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.blob.core.window
 
 
 # Runtime image
-FROM mcr.microsoft.com/windows/nanoserver:sac2019
+FROM mcr.microsoft.com/windows/nanoserver:1809
 
 # Note: Runtime image's SHELL is the CMD shell (different than the installer image).
 

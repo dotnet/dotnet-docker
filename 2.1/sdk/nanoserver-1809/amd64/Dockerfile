@@ -1,15 +1,15 @@
 # escape=`
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:ltsc2019 AS installer-env
+FROM mcr.microsoft.com/windows/servercore:1809 AS installer-env
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core SDK
-ENV DOTNET_SDK_VERSION 3.0.100-alpha1-009452
+ENV DOTNET_SDK_VERSION 2.1.403
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = '487d9c884fb94e3f594affb02a7acaec652ff517d0bd2298f99df5cb53e42915b38d45839f84189a29588bef1209a9b6fbf1a756e9063ee2720a36332354637e'; `
+    $dotnet_sha512 = '52bb1117f170587eaceec1f78cdc41a41d4272154b5535bf61c86bfb75287323cac248434b05eabe4bc7716facabdb0f6475015cbb63f38d91af662618a06720'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -20,7 +20,7 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
 
 
 # SDK image
-FROM mcr.microsoft.com/windows/nanoserver:sac2019
+FROM mcr.microsoft.com/windows/nanoserver:1809
 
 COPY --from=installer-env ["dotnet", "C:\\Program Files\\dotnet"]
 

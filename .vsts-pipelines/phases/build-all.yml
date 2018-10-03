@@ -39,10 +39,10 @@ phases:
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1803Amd64'] ]
   - template: build-windows-amd64.yml
     parameters:
-      phase: Build_NanoServerSac2019_amd64
-      osVersion: nanoserver-sac2019
+      phase: Build_NanoServer1809_amd64
+      osVersion: nanoserver-1809
       demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
-      matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserverSac2019Amd64'] ]
+      matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1809Amd64'] ]
 
   ################################################################################
   # Test Images
@@ -75,12 +75,12 @@ phases:
       matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1803Amd64'] ]
   - template: test-windows-amd64.yml
     parameters:
-      phase: Test_NanoServerSac2019_amd64
+      phase: Test_NanoServer1809_amd64
       dependsOn:
-        - Build_NanoServerSac2019_amd64
+        - Build_NanoServer1809_amd64
         - GenerateMatrices
       demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
-      matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserverSac2019Amd64'] ]
+      matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1809Amd64'] ]
 
   ################################################################################
   # Publish Images
@@ -115,9 +115,9 @@ phases:
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1803Amd64'] ]
   - template: copy-images-windows.yml
     parameters:
-      phase: Copy_Images_NanoServerSac2019_amd64
-      osVersion: nanoserver-sac2019
+      phase: Copy_Images_NanoServer1809_amd64
+      osVersion: nanoserver-1809
       demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
-      matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserverSac2019Amd64'] ]
+      matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1809Amd64'] ]
 
   - template: publish-finalize.yml
