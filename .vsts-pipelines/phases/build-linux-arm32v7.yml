@@ -12,9 +12,9 @@ phases:
     steps:
       - template: ../steps/docker-init-linux.yml
         parameters:
-          setupArm: true
+          setupRemoteDocker: true
       - script: $(runImageBuilderCmd) build --manifest $(manifest) $(imageBuilderPaths) --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --skip-test --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
         displayName: Build Images
       - template: ../steps/docker-cleanup-linux.yml
         parameters:
-          armCleanupImage: $(imageBuilder.image)
+          remoteDockerCleanupImage: $(imageBuilder.image)

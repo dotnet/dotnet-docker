@@ -15,14 +15,14 @@ steps:
       displayName: Define imageBuilder.image Variable
     - powershell: $(Build.Repository.LocalPath)/scripts/Invoke-PullImage.ps1 '$(imageBuilder.image)'
       displayName: Pull Image Builder
-    - script: docker create --name setupImageBuilder_$(Build.BuildId) $(imageBuilder.image)
+    - script: docker create --name setupImageBuilder_$(System.JobId) $(imageBuilder.image)
       displayName: Create Setup Container
     - script: rmdir /q /s $(Build.BinariesDirectory)\Microsoft.DotNet.ImageBuilder
       displayName: Cleanup Image Builder
       continueOnError: true
-    - script: docker cp setupImageBuilder_$(Build.BuildId):/image-builder $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder
+    - script: docker cp setupImageBuilder_$(System.JobId):/image-builder $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder
       displayName: Copy Image Builder
-    - script: docker rm -f setupImageBuilder_$(Build.BuildId)
+    - script: docker rm -f setupImageBuilder_$(System.JobId)
       displayName: Cleanup Setup Container
       condition: always()
       continueOnError: true

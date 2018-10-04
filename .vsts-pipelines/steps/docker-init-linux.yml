@@ -1,5 +1,5 @@
 parameters:
-  setupArm: false
+  setupRemoteDocker: false
   setupImageBuilder: true
   setupTestRunner: false
 
@@ -22,10 +22,10 @@ steps:
     displayName: Checkout Source
 
   ################################################################################
-  # Setup Arm Env (Optional)
+  # Setup Remote Docker (Optional)
   ################################################################################
   - ${{ if eq(parameters.setupArm, 'true') }}:
-    - script: echo "##vso[task.setvariable variable=dockerArmRunArgs] -v /docker-certs:/docker-certs -e DOCKER_CERT_PATH=/docker-certs -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://$(PIIP):2376"
+    - script: echo "##vso[task.setvariable variable=dockerArmRunArgs] -v $(DOCKER_CERTS_PATH):/docker-certs -e DOCKER_CERT_PATH=/docker-certs -e DOCKER_TLS_VERIFY=1 -e DOCKER_HOST=tcp://$(DOCKER_HOST_IP):2376"
       displayName: Define dockerArmRunArgs Variable
 
   ################################################################################
