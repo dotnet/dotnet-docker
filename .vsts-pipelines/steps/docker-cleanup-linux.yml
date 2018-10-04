@@ -3,7 +3,7 @@ parameters:
   remoteDockerCleanupImage: null
 steps:
   ################################################################################
-  # Cleanup Remote Docker
+  # Cleanup for remote Docker usage
   ################################################################################
   - ${{ if ne(parameters.remoteDockerCleanupImage, 'null') }}:
     - script: docker run --rm $(dockerArmRunArgs) --entrypoint docker $remoteDockerCleanupImage system prune -a -f --volumes
@@ -18,7 +18,7 @@ steps:
       displayName: Cleanup Local Docker
 
   ################################################################################
-  # Cleanup Local Docker
+  # Cleanup for non-remote Docker usage
   ################################################################################
   - ${{ if and( eq(parameters.remoteDockerCleanup, 'false'), eq(parameters.remoteDockerCleanupImage, 'null') ) }}:
     - script: $(Build.Repository.LocalPath)/scripts/cleanup-docker.sh
