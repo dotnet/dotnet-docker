@@ -33,7 +33,7 @@ else {
 }
 
 if (!(Test-Path $DotnetInstallScript)) {
-    $DOTNET_INSTALL_SCRIPT_URL = "https://raw.githubusercontent.com/dotnet/cli/release/2.0.0/scripts/obtain/$DotnetInstallScript"
+    $DOTNET_INSTALL_SCRIPT_URL = "https://raw.githubusercontent.com/dotnet/cli/release/2.1/scripts/obtain/$DotnetInstallScript"
     Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript
 }
 
