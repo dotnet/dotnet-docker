@@ -121,7 +121,7 @@ docker build --pull -t aspnetapp .
 Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
-docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v ${HOME}/.microsoft/UserSecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
+docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser.
@@ -144,6 +144,12 @@ dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p crypticpasswor
 
 > Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
 
+Configure application secrets, for the certificate:
+
+```console
+dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "crypticpassword"
+```
+
 Build a container image:
 
 ```console
@@ -153,7 +159,7 @@ docker build --pull -t aspnetapp .
 Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
-docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -e ASPNETCORE_Kestrel__Certificates__Development__Password="crypticpassword" -v ${HOME}/.microsoft/UserSecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
+docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -e ASPNETCORE_Kestrel__Certificates__Development__Password="crypticpassword" -v ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser.
