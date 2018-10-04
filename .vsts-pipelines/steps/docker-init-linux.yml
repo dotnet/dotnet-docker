@@ -8,6 +8,8 @@ steps:
   # Cleanup Docker Resources
   ################################################################################
   - template: docker-cleanup-linux.yml
+    parameters:
+      remoteDockerCleanup: ${{ parameters.setupRemoteDocker }}
 
   ################################################################################
   # Setup Repo Volume
