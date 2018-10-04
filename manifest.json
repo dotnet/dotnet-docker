@@ -257,6 +257,15 @@
                 "2.1.5-runtime-nanoserver-1803": {},
                 "2.1-runtime-nanoserver-1803": {}
               }
+            },
+            {
+              "dockerfile": "2.1/runtime/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "2.1.5-runtime-nanoserver-1809": {},
+                "2.1-runtime-nanoserver-1809": {}
+              }
             }
           ]
         },
@@ -313,6 +322,15 @@
               "tags": {
                 "2.1.5-aspnetcore-runtime-nanoserver-1803": {},
                 "2.1-aspnetcore-runtime-nanoserver-1803": {}
+              }
+            },
+            {
+              "dockerfile": "2.1/aspnetcore-runtime/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "2.1.5-aspnetcore-runtime-nanoserver-1809": {},
+                "2.1-aspnetcore-runtime-nanoserver-1809": {}
               }
             }
           ]
@@ -374,6 +392,15 @@
               "tags": {
                 "2.1.403-sdk-nanoserver-1803": {},
                 "2.1-sdk-nanoserver-1803": {}
+              }
+            },
+            {
+              "dockerfile": "2.1/sdk/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "2.1.403-sdk-nanoserver-1809": {},
+                "2.1-sdk-nanoserver-1809": {}
               }
             }
           ]
@@ -643,6 +670,15 @@
                 "2.2.0-preview3-runtime-nanoserver-1803": {},
                 "2.2-runtime-nanoserver-1803": {}
               }
+            },
+            {
+              "dockerfile": "2.2/runtime/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "2.2.0-preview3-runtime-nanoserver-1809": {},
+                "2.2-runtime-nanoserver-1809": {}
+              }
             }
           ]
         },
@@ -696,6 +732,15 @@
                 "2.2.0-preview3-aspnetcore-runtime-nanoserver-1803": {},
                 "2.2-aspnetcore-runtime-nanoserver-1803": {}
               }
+            },
+            {
+              "dockerfile": "2.2/aspnetcore-runtime/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "2.2.0-preview3-aspnetcore-runtime-nanoserver-1809": {},
+                "2.2-aspnetcore-runtime-nanoserver-1809": {}
+              }
             }
           ]
         },
@@ -748,6 +793,15 @@
               "tags": {
                 "2.2.100-preview3-sdk-nanoserver-1803": {},
                 "2.2-sdk-nanoserver-1803": {}
+              }
+            },
+            {
+              "dockerfile": "2.2/sdk/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "2.2.100-preview3-sdk-nanoserver-1809": {},
+                "2.2-sdk-nanoserver-1809": {}
               }
             }
           ]
@@ -947,6 +1001,15 @@
                 "3.0.0-alpha1-runtime-nanoserver-1803": {},
                 "3.0-runtime-nanoserver-1803": {}
               }
+            },
+            {
+              "dockerfile": "3.0/runtime/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "3.0.0-alpha1-runtime-nanoserver-1809": {},
+                "3.0-runtime-nanoserver-1809": {}
+              }
             }
           ]
         },
@@ -1000,6 +1063,15 @@
                 "3.0.0-alpha1-aspnetcore-runtime-nanoserver-1803": {},
                 "3.0-aspnetcore-runtime-nanoserver-1803": {}
               }
+            },
+            {
+              "dockerfile": "3.0/aspnetcore-runtime/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "3.0.0-alpha1-aspnetcore-runtime-nanoserver-1809": {},
+                "3.0-aspnetcore-runtime-nanoserver-1809": {}
+              }
             }
           ]
         },
@@ -1052,6 +1124,15 @@
               "tags": {
                 "3.0.100-alpha1-sdk-nanoserver-1803": {},
                 "3.0-sdk-nanoserver-1803": {}
+              }
+            },
+            {
+              "dockerfile": "3.0/sdk/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "3.0.100-alpha1-sdk-nanoserver-1809": {},
+                "3.0-sdk-nanoserver-1809": {}
               }
             }
           ]

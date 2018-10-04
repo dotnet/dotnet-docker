@@ -53,6 +53,24 @@
 - [`3.0.0-alpha1-runtime-deps-alpine3.8`, `3.0-runtime-deps-alpine3.8`, `3.0.0-alpha1-runtime-deps-alpine`, `3.0-runtime-deps-alpine` (*3.0/runtime-deps/alpine3.8/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/alpine3.8/amd64/Dockerfile)
 - [`3.0.0-alpha1-runtime-deps-bionic`, `3.0-runtime-deps-bionic` (*3.0/runtime-deps/bionic/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/bionic/amd64/Dockerfile)
 
+# Windows Server, version 1809 amd64 tags
+
+- [`2.1.403-sdk-nanoserver-1809`, `2.1-sdk-nanoserver-1809`, `2.1.403-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.5-aspnetcore-runtime-nanoserver-1809`, `2.1-aspnetcore-runtime-nanoserver-1809`, `2.1.5-aspnetcore-runtime`, `2.1-aspnetcore-runtime`, `aspnetcore-runtime` (*2.1/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.5-runtime-nanoserver-1809`, `2.1-runtime-nanoserver-1809`, `2.1.5-runtime`, `2.1-runtime`, `runtime` (*2.1/runtime/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1809/amd64/Dockerfile)
+
+**.NET Core 2.2 Preview 3 tags**
+
+- [`2.2.100-preview3-sdk-nanoserver-1809`, `2.2-sdk-nanoserver-1809`, `2.2.100-preview3-sdk`, `2.2-sdk` (*2.2/sdk/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.2.0-preview3-aspnetcore-runtime-nanoserver-1809`, `2.2-aspnetcore-runtime-nanoserver-1809`, `2.2.0-preview3-aspnetcore-runtime`, `2.2-aspnetcore-runtime` (*2.2/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.2.0-preview3-runtime-nanoserver-1809`, `2.2-runtime-nanoserver-1809`, `2.2.0-preview3-runtime`, `2.2-runtime` (*2.2/runtime/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1809/amd64/Dockerfile)
+
+**.NET Core 3.0 Alpha 1 tags**
+
+- [`3.0.100-alpha1-sdk-nanoserver-1809`, `3.0-sdk-nanoserver-1809`, `3.0.100-alpha1-sdk`, `3.0-sdk` (*3.0/sdk/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`3.0.0-alpha1-aspnetcore-runtime-nanoserver-1809`, `3.0-aspnetcore-runtime-nanoserver-1809`, `3.0.0-alpha1-aspnetcore-runtime`, `3.0-aspnetcore-runtime` (*3.0/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
+- [`3.0.0-alpha1-runtime-nanoserver-1809`, `3.0-runtime-nanoserver-1809`, `3.0.0-alpha1-runtime`, `3.0-runtime` (*3.0/runtime/nanoserver-1809/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime/nanoserver-1809/amd64/Dockerfile)
+
 # Windows Server, version 1803 amd64 tags
 
 - [`2.1.403-sdk-nanoserver-1803`, `2.1-sdk-nanoserver-1803`, `2.1.403-sdk`, `2.1-sdk`, `sdk`, `latest` (*2.1/sdk/nanoserver-1803/amd64/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1803/amd64/Dockerfile)

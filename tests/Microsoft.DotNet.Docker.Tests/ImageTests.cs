@@ -71,21 +71,27 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1709 },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1803 },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1809 },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServerSac2016, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1709, IsWeb = true },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1803, IsWeb = true },
+            new ImageData { DotNetVersion = "2.1", OsVariant = OS.NanoServer1809, IsWeb = true },
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServer1709 },
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServer1803 },
+            new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServer1809 },
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServerSac2016, IsWeb = true },
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServer1709, IsWeb = true },
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServer1803, IsWeb = true },
+            new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServer1809, IsWeb = true },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1709 },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1803 },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1809 },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServerSac2016, IsWeb = true },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1709, IsWeb = true },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1803, IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1809, IsWeb = true },
         };
 
         private readonly DockerHelper _dockerHelper;
@@ -241,8 +247,9 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string frameworkDepAppId = GetIdentifier(imageData.DotNetVersion, "framework-dependent-app");
             bool isRunAsContainerAdministrator = 
-                String.Equals("nanoserver-1709", imageData.OsVariant, StringComparison.OrdinalIgnoreCase)
-                || String.Equals("nanoserver-1803", imageData.OsVariant, StringComparison.OrdinalIgnoreCase);
+                String.Equals(OS.NanoServer1709, imageData.OsVariant, StringComparison.OrdinalIgnoreCase)
+                || String.Equals(OS.NanoServer1803, imageData.OsVariant, StringComparison.OrdinalIgnoreCase)
+                || String.Equals(OS.NanoServer1809, imageData.OsVariant, StringComparison.OrdinalIgnoreCase);
             string publishCmd = GetPublishArgs(imageData);
 
             try
