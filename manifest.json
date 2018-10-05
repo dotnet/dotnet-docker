@@ -165,6 +165,42 @@
           ]
         },
         {
+          "platforms": [
+            {
+              "dockerfile": "1.1/runtime-deps/stretch/amd64",
+              "os": "linux",
+              "tags": {
+                "1.1.10-runtime-deps-stretch": {},
+                "1.1-runtime-deps-stretch": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "1.1/runtime/stretch/amd64",
+              "os": "linux",
+              "tags": {
+                "1.1.10-runtime-stretch": {},
+                "1.1-runtime-stretch": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "1.1/sdk/stretch/amd64",
+              "os": "linux",
+              "tags": {
+                "1.1.10-sdk-1.1.11-stretch": {},
+                "1.1-sdk-stretch": {}
+              }
+            }
+          ]
+        },
+        {
           "sharedTags": {
             "2.1.5-runtime-deps": {},
             "2.1-runtime-deps": {},
