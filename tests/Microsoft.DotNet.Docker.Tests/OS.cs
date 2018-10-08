@@ -15,6 +15,5 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string NanoServerSac2016 = "nanoserver-sac2016";
         public const string NanoServer1709 = "nanoserver-1709";
         public const string NanoServer1803 = "nanoserver-1803";
-        public const string NanoServer1809 = "nanoserver-1809";
     }
 }
