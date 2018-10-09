@@ -15,7 +15,7 @@
       "images": [
         {
           "sharedTags": {
-            "1.0.12-runtime-deps": {},
+            "1.0.13-runtime-deps": {},
             "1.0-runtime-deps": {},
             "1-runtime-deps": {
               "isUndocumented": true
@@ -29,7 +29,7 @@
               "dockerfile": "1.0/runtime-deps/jessie/amd64",
               "os": "linux",
               "tags": {
-                "1.0.12-runtime-deps-jessie": {},
+                "1.0.13-runtime-deps-jessie": {},
                 "1.0-runtime-deps-jessie": {},
                 "1.0-core-deps": {
                   "isUndocumented": true
@@ -46,7 +46,7 @@
         },
         {
           "sharedTags": {
-            "1.0.12-runtime": {},
+            "1.0.13-runtime": {},
             "1.0-runtime": {}
           },
           "platforms": [
@@ -54,7 +54,7 @@
               "dockerfile": "1.0/runtime/jessie/amd64",
               "os": "linux",
               "tags": {
-                "1.0.12-runtime-jessie": {},
+                "1.0.13-runtime-jessie": {},
                 "1.0-runtime-jessie": {},
                 "1.0-core": {
                   "isUndocumented": true
@@ -66,7 +66,7 @@
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
               "tags": {
-                "1.0.12-runtime-nanoserver-sac2016": {},
+                "1.0.13-runtime-nanoserver-sac2016": {},
                 "1.0-runtime-nanoserver-sac2016": {},
                 "1.0-runtime-nanoserver": {
                   "isUndocumented": true
@@ -77,7 +77,7 @@
         },
         {
           "sharedTags": {
-            "1.1.9-runtime": {},
+            "1.1.10-runtime": {},
             "1.1-runtime": {},
             "1-runtime": {
               "isUndocumented": true
@@ -88,7 +88,7 @@
               "dockerfile": "1.1/runtime/jessie/amd64",
               "os": "linux",
               "tags": {
-                "1.1.9-runtime-jessie": {},
+                "1.1.10-runtime-jessie": {},
                 "1.1-runtime-jessie": {},
                 "1-core": {
                   "isUndocumented": true
@@ -103,7 +103,7 @@
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
               "tags": {
-                "1.1.9-runtime-nanoserver-sac2016": {},
+                "1.1.10-runtime-nanoserver-sac2016": {},
                 "1.1-runtime-nanoserver-sac2016": {},
                 "1.1-runtime-nanoserver": {
                   "isUndocumented": true
@@ -120,7 +120,7 @@
         },
         {
           "sharedTags": {
-            "1.1.9-sdk-1.1.10": {},
+            "1.1.10-sdk-1.1.11": {},
             "1.1-sdk": {},
             "1-sdk": {
               "isUndocumented": true
@@ -134,7 +134,7 @@
               "dockerfile": "1.1/sdk/jessie/amd64",
               "os": "linux",
               "tags": {
-                "1.1.9-sdk-1.1.10-jessie": {},
+                "1.1.10-sdk-1.1.11-jessie": {},
                 "1.1-sdk-jessie": {}
               }
             },
@@ -143,7 +143,7 @@
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
               "tags": {
-                "1.1.9-sdk-1.1.10-nanoserver-sac2016": {},
+                "1.1.10-sdk-1.1.11-nanoserver-sac2016": {},
                 "1.1-sdk-nanoserver-sac2016": {},
                 "1.1-sdk-nanoserver": {
                   "isUndocumented": true
@@ -160,6 +160,42 @@
                 "1.0-sdk-nanoserver": {
                   "isUndocumented": true
                 }
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "1.1/runtime-deps/stretch/amd64",
+              "os": "linux",
+              "tags": {
+                "1.1.10-runtime-deps-stretch": {},
+                "1.1-runtime-deps-stretch": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "1.1/runtime/stretch/amd64",
+              "os": "linux",
+              "tags": {
+                "1.1.10-runtime-stretch": {},
+                "1.1-runtime-stretch": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "1.1/sdk/stretch/amd64",
+              "os": "linux",
+              "tags": {
+                "1.1.10-sdk-1.1.11-stretch": {},
+                "1.1-sdk-stretch": {}
               }
             }
           ]
