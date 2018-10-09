@@ -31,7 +31,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             new ImageData { DotNetVersion = "1.0", OsVariant = OS.Jessie, SdkVersion = "1.1" },
             new ImageData { DotNetVersion = "1.1", OsVariant = OS.Jessie, RuntimeDepsVersion = "1.0" },
-            new ImageData { DotNetVersion = "1.1", OsVariant = OS.Stretch },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Bionic },
             new ImageData { DotNetVersion = "2.1", OsVariant = OS.Alpine37 },
@@ -143,7 +142,7 @@ namespace Microsoft.DotNet.Docker.Tests
             // dotnet new, restore, build a new app using the sdk image
             List<string> buildArgs = new List<string>();
             buildArgs.Add($"netcoreapp_version={imageData.DotNetVersion}");
-            AddOptionalRestoreArgs(imageData, buildArgs);
+            AddOptionalRestoreArgs(buildArgs);
 
             if (!imageData.SdkVersion.StartsWith("1."))
             {
@@ -266,7 +265,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 // Build a self-contained app
                 List<string> buildArgs = new List<string>();
                 buildArgs.Add($"rid={rid}");
-                AddOptionalRestoreArgs(imageData, buildArgs);
+                AddOptionalRestoreArgs(buildArgs);
 
                 _dockerHelper.Build(
                     dockerfile: "Dockerfile.linux.testapp.selfcontained",
@@ -350,22 +349,11 @@ namespace Microsoft.DotNet.Docker.Tests
             return isWeb ? "web" : "console";
         }
 
-        private static void AddOptionalRestoreArgs(ImageData imageData, List<string> buildArgs)
+        private static void AddOptionalRestoreArgs(List<string> buildArgs)
         {
-            string optionalRestoreArgs = string.Empty;
             if (s_isNightlyRepo)
             {
-                optionalRestoreArgs = "-s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json -s https://api.nuget.org/v3/index.json";
-            }
-
-            if (imageData.DotNetVersion == "1.1")
-            {
-                optionalRestoreArgs += " /p:RuntimeFrameworkVersion=1.1.*";
-            }
-
-            if (optionalRestoreArgs != string.Empty)
-            {
-                buildArgs.Add($"optional_restore_args=\"{optionalRestoreArgs.Trim()}\"");
+                buildArgs.Add("optional_restore_args=\"-s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json -s https://api.nuget.org/v3/index.json\"");
             }
         }
 
@@ -446,7 +434,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             else if (imageData.DotNetVersion.StartsWith("1."))
             {
-                rid = imageData.OsVariant == OS.Jessie ? "debian.8-x64" : "debian.9-x64";;
+                rid = "debian.8-x64";
             }
             else
             {
