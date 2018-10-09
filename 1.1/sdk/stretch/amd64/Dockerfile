@@ -1,4 +1,4 @@
-FROM buildpack-deps:jessie-scm
+FROM buildpack-deps:stretch-scm
 
 # Install .NET CLI dependencies
 RUN apt-get update \
@@ -7,9 +7,9 @@ RUN apt-get update \
         libcurl3 \
         libgcc1 \
         libgssapi-krb5-2 \
-        libicu52 \
+        libicu57 \
         liblttng-ust0 \
-        libssl1.0.0 \
+        libssl1.0.2 \
         libstdc++6 \
         libunwind8 \
         libuuid1 \
@@ -18,7 +18,7 @@ RUN apt-get update \
 
 # Install .NET Core SDK
 ENV DOTNET_SDK_VERSION 1.1.11
-ENV DOTNET_SDK_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-dev-debian-x64.$DOTNET_SDK_VERSION.tar.gz
+ENV DOTNET_SDK_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-dev-debian.9-x64.$DOTNET_SDK_VERSION.tar.gz
 
 RUN curl -SL $DOTNET_SDK_DOWNLOAD_URL --output dotnet.tar.gz \
     && mkdir -p /usr/share/dotnet \
