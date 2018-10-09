@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.1-runtime-deps-stretch
+FROM microsoft/dotnet-nightly:1.1-runtime-deps-stretch
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
