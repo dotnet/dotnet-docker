@@ -352,14 +352,20 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static void AddOptionalRestoreArgs(ImageData imageData, List<string> buildArgs)
         {
+            string optionalRestoreArgs = string.Empty;
             if (s_isNightlyRepo)
             {
-                buildArgs.Add("optional_restore_args=\"-s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json -s https://api.nuget.org/v3/index.json\"");
+                optionalRestoreArgs = "-s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json -s https://api.nuget.org/v3/index.json";
             }
 
             if (imageData.DotNetVersion == "1.1")
             {
-                buildArgs.Add("/p:RuntimeFrameworkVersion=1.1.*");
+                optionalRestoreArgs += " /p:RuntimeFrameworkVersion=1.1.*";
+            }
+
+            if (optionalRestoreArgs != string.Empty)
+            {
+                buildArgs.Add($"optional_restore_args=\"{optionalRestoreArgs.Trim()}\"");
             }
         }
 
