@@ -1,4 +1,4 @@
-FROM microsoft/dotnet-nightly:1.0-runtime-deps-jessie
+FROM microsoft/dotnet-nightly:1.1-runtime-deps-stretch
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -7,7 +7,7 @@ RUN apt-get update \
 
 # Install .NET Core
 ENV DOTNET_VERSION 1.1.10
-ENV DOTNET_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-debian-x64.$DOTNET_VERSION.tar.gz
+ENV DOTNET_DOWNLOAD_URL https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-debian.9-x64.$DOTNET_VERSION.tar.gz
 
 RUN curl -SL $DOTNET_DOWNLOAD_URL --output dotnet.tar.gz \
     && mkdir -p /usr/share/dotnet \

@@ -14,10 +14,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.2.100-preview3-009423
+ENV DOTNET_SDK_VERSION 2.2.100-preview3-009428
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
-    && dotnet_sha512='a379fcb84755a7abb0bb83e66df6241428394bf608e4e740ebd5cd56bb9fedbb89b481c582add6f4326bb1bbab0c10d529bd08b88d67abd97298afa59cbdb897' \
+    && dotnet_sha512='0da982e71425ca6934a3484f1a47a0209a5154392b705985b5b127e020ef47a6462026fe547b3fc72bf54f7643407cdabf86bededca9c636825e26736a160d34' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
@@ -25,7 +25,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     # Add NuGet cache (ARM SDK doesn't include it)
     && curl -SL --output /usr/share/dotnet/sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma \
-    && lzma_sha512='bb151ecc04f72634a27e30cf859e32a25b3b9f55da7abd573617d1d5d2e439555f1e3ae07b16f4cb504118f723d3fcc912701e74401caaec91ee8645f35194a5' \
+    && lzma_sha512='b057f55e6eacddb44e4bb5ea91d0262f68faf04eecfa8ba58826d01131716c0ae3a150dce26731c1ba12ad7da4bfba8224a10bc2a707e55fd921e059305ecec6' \
     && echo "$lzma_sha512 /usr/share/dotnet/sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma" | sha512sum -c -
 
 # Configure Kestrel web server to bind to port 80 when present
