@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.8
 
 RUN apk add --no-cache \
     ca-certificates \
@@ -12,7 +12,6 @@ RUN apk add --no-cache \
     tzdata \
     userspace-rcu \
     zlib \
-    && apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
     lttng-ust
 
 # Configure Kestrel web server to bind to port 80 when present
