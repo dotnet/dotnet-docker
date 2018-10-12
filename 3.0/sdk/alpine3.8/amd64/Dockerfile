@@ -21,7 +21,11 @@ RUN wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DO
 # Enable correct mode for dotnet watch (only mode supported in a container)
 ENV DOTNET_USE_POLLING_FILE_WATCHER=true \ 
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip
+    NUGET_XMLDOC_MODE=skip \
+    # Set dotnet sdk home path
+    DOTNET_CLI_HOME=/var/cache \
+    # Append dotnet global tools path to PATH
+    PATH=${PATH}:/var/cache/.dotnet/tools
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
 RUN dotnet help

@@ -1,0 +1,9 @@
+ARG base_image
+FROM $base_image
+
+# Switch to cmd shell to have consistency since this Dockerfile is used across multiple
+# sdk versions which have different shells (due to nanoserver base image).
+SHELL ["cmd", "/S", "/C"]
+
+# install dotnetsay global tool
+RUN dotnet tool install -g dotnetsay

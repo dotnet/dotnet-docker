@@ -1,0 +1,5 @@
+ARG base_image
+FROM $base_image
+
+# install dotnetsay global tool
+RUN dotnet tool install -g dotnetsay

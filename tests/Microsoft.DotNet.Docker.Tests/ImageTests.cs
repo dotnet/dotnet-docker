@@ -162,6 +162,25 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
+        [Theory]
+        [MemberData(nameof(GetVerifyImagesData))]
+        public void VerifyGlobalToolsImages(ImageData imageData)
+        {
+            string globalToolsSdkImage = GetIdentifier(imageData.DotNetVersion, "globaltools-sdk");
+            try
+            {
+                //TODO : Filter the ImagesData to list only 2.2 and above versions.
+                if (!imageData.HasNoSdk && (imageData.DotNetVersion == "2.2") && !imageData.IsWeb)
+                {
+                    CreateGlobalToolsImageWithSdkImage(imageData, globalToolsSdkImage);
+                    VerifySdkImage_GlobalTools(imageData, globalToolsSdkImage);
+                }
+            }
+            finally
+            {
+                _dockerHelper.DeleteImage(globalToolsSdkImage);
+            }
+        }
         private void CreateTestAppWithSdkImage(ImageData imageData, string appSdkImage)
         {
             // dotnet new, restore, build a new app using the sdk image
@@ -203,6 +222,31 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 _dockerHelper.DeleteContainer(appSdkImage);
             }
+        }
+        private void VerifySdkImage_GlobalTools(ImageData imageData, string globalToolsSdkImage)
+        {
+            try
+            {
+                // dotnet run the dotnetsay tool using the globaltools image
+                _dockerHelper.Run(
+                    image: globalToolsSdkImage,
+                    command: "dotnetsay",
+                    detach: imageData.IsWeb,
+                    containerName: globalToolsSdkImage);
+            }
+            finally
+            {
+                _dockerHelper.DeleteContainer(globalToolsSdkImage);
+            }
+
+        }
+        private void CreateGlobalToolsImageWithSdkImage(ImageData imageData, string globalToolsSdkImage)
+        {
+            _dockerHelper.Build(
+                  dockerfile: $"Dockerfile.{DockerHelper.DockerOS.ToLower()}.globaltools",
+                  tag: globalToolsSdkImage,
+                  fromImage: GetDotNetImage(DotNetImageType.SDK, imageData),
+                  buildArgs: null);
         }
 
         private void VerifySdkImage_PackageCache(ImageData imageData)

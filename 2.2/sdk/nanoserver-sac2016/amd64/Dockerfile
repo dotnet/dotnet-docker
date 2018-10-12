@@ -28,7 +28,7 @@ ENV ASPNETCORE_URLS=http://+:80 `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip `
     # Set dotnet sdk home path
-    DOTNET_CLI_HOME=C:/Users/Public
+    DOTNET_CLI_HOME=C:\Users\Public
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
 RUN dotnet help

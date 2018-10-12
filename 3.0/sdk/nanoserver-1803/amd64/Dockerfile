@@ -36,7 +36,9 @@ ENV ASPNETCORE_URLS=http://+:80 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip
+    NUGET_XMLDOC_MODE=skip `
+    # Set dotnet sdk home path
+    DOTNET_CLI_HOME=C:\Users\Public
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
 RUN dotnet help
