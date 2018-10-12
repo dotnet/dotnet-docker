@@ -7,31 +7,41 @@ phases:
       name: DotNet-Build
       demands: agent.os -equals linux
     steps:
-      - template: ../steps/docker-init-linux.yml
+      - template: ../steps/init-docker-linux.yml
       - script: $(runImageBuilderCmd) generateBuildMatrix --manifest $(manifest) --type build
         name: buildMatrix
       - script: $(runImageBuilderCmd) generateBuildMatrix --manifest $(manifest) --type test
         name: testMatrix
-      - template: ../steps/docker-cleanup-linux.yml
+      - template: ../steps/cleanup-docker-linux.yml
 
   ################################################################################
   # Build Images
   ################################################################################
-  - template: build-linux-amd64.yml
-  - template: build-linux-arm32v7.yml
-  - template: build-windows-amd64.yml
+  - template: build-images-linux-client.yml
+    parameters:
+      phase: Build_Linux_amd64
+      matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxAmd64'] ]
+  - template: build-images-linux-client.yml
+    parameters:
+      phase: Build_Linux_arm32v7
+      matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxArm32v7'] ]
+      useRemoteDockerServer: true
+      dockerServerDemands:
+        - RemoteDockerServerOS -equals linux
+        - RemoteDockerServerArch -equals arm32v7
+  - template: build-images-windows-client.yml
     parameters:
       phase: Build_NanoServerSac2016_amd64
       osVersion: nanoserver-sac2016
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserverSac2016Amd64'] ]
-  - template: build-windows-amd64.yml
+  - template: build-images-windows-client.yml
     parameters:
       phase: Build_NanoServer1709_amd64
       osVersion: nanoserver-1709
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1709Amd64'] ]
-  - template: build-windows-amd64.yml
+  - template: build-images-windows-client.yml
     parameters:
       phase: Build_NanoServer1803_amd64
       osVersion: nanoserver-1803
@@ -41,30 +51,39 @@ phases:
   ################################################################################
   # Test Images
   ################################################################################
-  - template: test-linux-amd64.yml
-  - template: test-linux-arm32v7.yml
-  - template: test-windows-amd64.yml
+  - template: test-images-linux-client.yml
+    parameters:
+      phase: Test_Linux_amd64
+      buildDependencies: Build_Linux_amd64
+      matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixLinuxAmd64'] ]
+      architecture: amd64
+  - template: test-images-linux-client.yml
+    parameters:
+      phase: Test_Linux_arm32v7
+      buildDependencies: Build_Linux_arm32v7
+      matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixLinuxArm32v7'] ]
+      useRemoteDockerServer: true
+      dockerServerDemands:
+        - RemoteDockerServerOS -equals linux
+        - RemoteDockerServerArch -equals arm32v7
+      architecture: arm
+      optionalTestArgs: -DisableHttpVerification
+  - template: test-images-windows-client.yml
     parameters:
       phase: Test_NanoServerSac2016_amd64
-      dependsOn:
-        - Build_NanoServerSac2016_amd64
-        - GenerateMatrices
+      buildDependencies: Build_NanoServerSac2016_amd64
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
       matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserverSac2016Amd64'] ]
-  - template: test-windows-amd64.yml
+  - template: test-images-windows-client.yml
     parameters:
       phase: Test_NanoServer1709_amd64
-      dependsOn:
-        - Build_NanoServer1709_amd64
-        - GenerateMatrices
+      buildDependencies: Build_NanoServer1709_amd64
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
       matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1709Amd64'] ]
-  - template: test-windows-amd64.yml
+  - template: test-images-windows-client.yml
     parameters:
       phase: Test_NanoServer1803_amd64
-      dependsOn:
-        - Build_NanoServer1803_amd64
-        - GenerateMatrices
+      buildDependencies: Build_NanoServer1803_amd64
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
       matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1803Amd64'] ]
 

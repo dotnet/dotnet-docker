@@ -13,9 +13,9 @@ phases:
     variables:
       imageBuilder.commonCmdArgs: --manifest $(manifest) --username $(dockerRegistry.userName) --password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs)
     steps:
-      - template: ../steps/docker-init-linux.yml
+      - template: ../steps/init-docker-linux.yml
       - script: $(runImageBuilderCmd) publishManifest $(imageBuilder.commonCmdArgs)
         displayName: Publish Manifest
       - script: $(runImageBuilderCmd) updateReadme $(imageBuilder.commonCmdArgs)
         displayName: Update Readme
-      - template: ../steps/docker-cleanup-linux.yml
+      - template: ../steps/cleanup-docker-linux.yml

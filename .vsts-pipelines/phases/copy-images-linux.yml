@@ -20,7 +20,7 @@ phases:
     variables:
       architecture: ${{ parameters.architecture }}
     steps:
-      - template: ../steps/docker-init-linux.yml
+      - template: ../steps/init-docker-linux.yml
       - script: $(runImageBuilderCmd) copyImages --manifest $(manifest) --architecture $(architecture) $(imageBuilderPaths) --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
         displayName: Copy Images
-      - template: ../steps/docker-cleanup-linux.yml
+      - template: ../steps/cleanup-docker-linux.yml

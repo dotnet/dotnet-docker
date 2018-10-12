@@ -5,7 +5,7 @@ parameters:
   matrix: {}
 phases:
   - phase: ${{ parameters.phase }}
-    condition: or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build'))
+    condition: or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'build'))
     dependsOn: GenerateMatrices
     queue:
       name: DotNetCore-Infra
@@ -15,7 +15,7 @@ phases:
     variables:
       osVersion: ${{ parameters.osVersion }}
     steps:
-      - template: ../steps/docker-init-windows.yml
+      - template: ../steps/init-docker-windows.yml
       - script: $(runImageBuilderCmd) build --manifest $(manifest) --os-version $(osVersion) --skip-test $(imageBuilderPaths) --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix) --push --server $(acr.server) --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
         displayName: Build Images
-      - template: ../steps/docker-cleanup-windows.yml
+      - template: ../steps/cleanup-docker-windows.yml
