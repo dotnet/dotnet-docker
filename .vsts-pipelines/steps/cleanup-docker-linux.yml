@@ -1,0 +1,27 @@
+parameters:
+  cleanupRemoteDockerServer: false
+  excludeRunningContainers: false
+
+steps:
+  ################################################################################
+  # Cleanup remote Docker server
+  ################################################################################
+  - ${{ if eq(parameters.cleanupRemoteDockerServer, 'true') }}:
+    - script: docker run --rm $(dockerArmRunArgs) --entrypoint docker $(dockerClientImage) system prune -a -f --volumes
+      displayName: Cleanup Remote Docker Server
+      condition: always()
+      continueOnError: true
+
+  ################################################################################
+  # Cleanup local Docker server
+  ################################################################################
+  - ${{ if and(eq(parameters.excludeRunningContainers, 'false'), eq(parameters.cleanupRemoteDockerServer, 'false')) }}:
+    # Multiple build agents are running on a single host machine for remote Docker server scenarios.  Don't stop running containers.
+    - script: docker stop $(docker ps -q) || true
+      displayName: Stop Running Containers
+      condition: always()
+      continueOnError: true
+  - script: docker system prune -a -f --volumes
+    displayName: Cleanup Local Docker Server
+    condition: always()
+    continueOnError: true

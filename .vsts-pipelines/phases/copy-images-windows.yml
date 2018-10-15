@@ -21,7 +21,7 @@ phases:
     variables:
       osVersion: ${{ parameters.osVersion }}
     steps:
-      - template: ../steps/docker-init-windows.yml
+      - template: ../steps/init-docker-windows.yml
       - script: $(runImageBuilderCmd) copyImages --manifest $(manifest) --os-version $(osVersion) $(imageBuilderPaths) --source-server $(acr.server) --source-username $(acr.userName) --source-password $(BotAccount-dotnet-docker-acr-bot-password) --destination-username $(dockerRegistry.userName) --destination-password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs) $(acr.server)/$(repo)-$(stagingRepo.suffix)
         displayName: Copy Images
-      - template: ../steps/docker-cleanup-windows.yml
+      - template: ../steps/cleanup-docker-windows.yml
