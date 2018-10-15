@@ -679,6 +679,16 @@
                 "2.2.0-preview3-runtime-nanoserver-1803": {},
                 "2.2-runtime-nanoserver-1803": {}
               }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "2.2/runtime/nanoserver-1809/arm32",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "2.2.0-preview3-runtime-nanoserver-1809-arm32": {},
+                "2.2-runtime-nanoserver-1809-arm32": {}
+              }
             }
           ]
         },
@@ -982,6 +992,16 @@
               "tags": {
                 "3.0.0-alpha1-runtime-nanoserver-1803": {},
                 "3.0-runtime-nanoserver-1803": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "3.0/runtime/nanoserver-1809/arm32",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "3.0.0-alpha1-runtime-nanoserver-1809-arm32": {},
+                "3.0-runtime-nanoserver-1809-arm32": {}
               }
             }
           ]

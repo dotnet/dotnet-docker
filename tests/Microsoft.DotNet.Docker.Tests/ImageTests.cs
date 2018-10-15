@@ -78,12 +78,14 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServer1709 },
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServer1803 },
+            new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServer1809, Architecture = "arm" },
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServerSac2016, IsWeb = true },
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServer1709, IsWeb = true },
             new ImageData { DotNetVersion = "2.2", OsVariant = OS.NanoServer1803, IsWeb = true },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1709 },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1803 },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1809, Architecture = "arm" },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServerSac2016, IsWeb = true },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1709, IsWeb = true },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1803, IsWeb = true },
@@ -126,9 +128,9 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetVerifyImagesData))]
         public async Task VerifyImages(ImageData imageData)
         {
-            if (imageData.DotNetVersion == "3.0")
+            if (imageData.DotNetVersion == "3.0" || (imageData.IsArm && imageData.OS == OS.NanoServer1809))
             {
-                _outputHelper.WriteLine("E2E experience for 3.0 is still coming online (e.g. 3.0 templates don't exist yet).  Test automation is blocked at this point.");
+                _outputHelper.WriteLine("E2E experience for 3.0 is still coming online.  Test automation is blocked at this point.");
                 return;
             }
 
