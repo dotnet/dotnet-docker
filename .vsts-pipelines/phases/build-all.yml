@@ -67,7 +67,6 @@ phases:
         - RemoteDockerServerOS -equals linux
         - RemoteDockerServerArch -equals arm32v7
       architecture: arm
-      optionalTestArgs: -DisableHttpVerification
   - template: test-images-windows-client.yml
     parameters:
       phase: Test_NanoServerSac2016_amd64

@@ -5,7 +5,6 @@ parameters:
   dockerServerDemands: []
   useRemoteDockerServer: false
   architecture: null
-  optionalTestArgs: ''
 phases:
   - phase: ${{ parameters.phase }}
     condition: and(ne(variables['repo'], 'dotnet-samples'), or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'test')))
@@ -25,7 +24,10 @@ phases:
     variables:
       testRunner.container: testrunner-$(Build.BuildId)-$(System.JobId)
       architecture: ${{ parameters.architecture }}
-      optionalTestArgs: ${{ parameters.optionalTestArgs }}
+      ${{ if eq(parameters.useRemoteDockerServer, 'false') }}:
+        optionalTestArgs: ''
+      ${{ if eq(parameters.useRemoteDockerServer, 'true') }}:
+        optionalTestArgs: -DisableHttpVerification
     steps:
       - template: ../steps/init-docker-linux.yml
         parameters:
