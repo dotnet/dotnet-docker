@@ -16,7 +16,6 @@ jobs:
       name: DotNet-Build
       demands: agent.os -equals linux
     strategy:
-      maxParallel: 100
       matrix: ${{ parameters.matrix }}
     workspace:
       clean: all

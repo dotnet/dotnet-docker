@@ -14,7 +14,6 @@ jobs:
       name: DotNetCore-Infra
       demands: ${{ parameters.demands }}
     strategy:
-      maxParallel: 100
       matrix: ${{ parameters.matrix }}
     workspace:
       clean: all

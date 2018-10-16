@@ -20,7 +20,6 @@ jobs:
         - agent.os -equals linux
         - ${{ parameters.dockerServerDemands }}
     strategy:
-      maxParallel: 100
       matrix: ${{ parameters.matrix }}
     workspace:
       clean: all
