@@ -6,7 +6,14 @@ parameters:
   matrix: {}
 jobs:
   - job: ${{ parameters.name }}
-    condition: and(ne(variables['repo'], 'dotnet-samples'), or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'test')))
+    condition: "
+      and(
+        ne(variables['repo'], 'dotnet-samples'),
+        or(
+          and(
+            succeeded(),
+            eq(variables['singlePhase'], '')),
+          eq(variables['singlePhase'], 'test')))"
     dependsOn:
       - GenerateMatrices
       - ${{ parameters.buildDependencies }}
@@ -23,7 +30,11 @@ jobs:
           setupImageBuilder: false
       - script: docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
         displayName: Docker login
-      - powershell: ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion)* -OSFilter $(osVersion) -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
+      - powershell: >
+          ./tests/run-tests.ps1
+          -VersionFilter $(dotnetVersion)*
+          -OSFilter $(osVersion)
+          -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
         displayName: Test Images
       - script: docker logout
         displayName: Docker logout

@@ -16,7 +16,7 @@ steps:
   # Cleanup local Docker server
   ################################################################################
   - ${{ if and(eq(parameters.excludeRunningContainers, 'false'), eq(parameters.cleanupRemoteDockerServer, 'false')) }}:
-    # Multiple build agents are running on a single host machine for remote Docker server scenarios.  Don't stop running containers.
+    # Multiple build agents run on a single host machine for remote Docker server scenarios.  Don't stop running containers.
     - script: docker stop $(docker ps -q) || true
       displayName: Stop Running Containers
       condition: always()
