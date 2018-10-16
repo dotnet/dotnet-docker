@@ -1,11 +1,13 @@
-phases:
+jobs:
   ################################################################################
   # Initialization - Generate the VSTS build matrix
   ################################################################################
-  - phase: GenerateMatrices
-    queue:
+  - job: GenerateMatrices
+    pool:
       name: DotNet-Build
       demands: agent.os -equals linux
+    workspace:
+      clean: all
     steps:
       - template: ../steps/init-docker-linux.yml
       - script: $(runImageBuilderCmd) generateBuildMatrix --manifest $(manifest) --type build
@@ -19,11 +21,11 @@ phases:
   ################################################################################
   - template: build-images-linux-client.yml
     parameters:
-      phase: Build_Linux_amd64
+      name: Build_Linux_amd64
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxAmd64'] ]
   - template: build-images-linux-client.yml
     parameters:
-      phase: Build_Linux_arm32v7
+      name: Build_Linux_arm32v7
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxArm32v7'] ]
       useRemoteDockerServer: true
       dockerServerDemands:
@@ -31,19 +33,19 @@ phases:
         - RemoteDockerServerArch -equals arm32v7
   - template: build-images-windows-client.yml
     parameters:
-      phase: Build_NanoServerSac2016_amd64
+      name: Build_NanoServerSac2016_amd64
       osVersion: nanoserver-sac2016
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserverSac2016Amd64'] ]
   - template: build-images-windows-client.yml
     parameters:
-      phase: Build_NanoServer1709_amd64
+      name: Build_NanoServer1709_amd64
       osVersion: nanoserver-1709
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1709Amd64'] ]
   - template: build-images-windows-client.yml
     parameters:
-      phase: Build_NanoServer1803_amd64
+      name: Build_NanoServer1803_amd64
       osVersion: nanoserver-1803
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1803Amd64'] ]
@@ -53,13 +55,13 @@ phases:
   ################################################################################
   - template: test-images-linux-client.yml
     parameters:
-      phase: Test_Linux_amd64
+      name: Test_Linux_amd64
       buildDependencies: Build_Linux_amd64
       matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixLinuxAmd64'] ]
       architecture: amd64
   - template: test-images-linux-client.yml
     parameters:
-      phase: Test_Linux_arm32v7
+      name: Test_Linux_arm32v7
       buildDependencies: Build_Linux_arm32v7
       matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixLinuxArm32v7'] ]
       useRemoteDockerServer: true
@@ -69,19 +71,19 @@ phases:
       architecture: arm
   - template: test-images-windows-client.yml
     parameters:
-      phase: Test_NanoServerSac2016_amd64
+      name: Test_NanoServerSac2016_amd64
       buildDependencies: Build_NanoServerSac2016_amd64
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
       matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserverSac2016Amd64'] ]
   - template: test-images-windows-client.yml
     parameters:
-      phase: Test_NanoServer1709_amd64
+      name: Test_NanoServer1709_amd64
       buildDependencies: Build_NanoServer1709_amd64
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
       matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1709Amd64'] ]
   - template: test-images-windows-client.yml
     parameters:
-      phase: Test_NanoServer1803_amd64
+      name: Test_NanoServer1803_amd64
       buildDependencies: Build_NanoServer1803_amd64
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
       matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1803Amd64'] ]
@@ -91,29 +93,29 @@ phases:
   ################################################################################
   - template: copy-images-linux.yml
     parameters:
-      phase: Copy_Images_Linux_amd64
+      name: Copy_Images_Linux_amd64
       architecture: amd64
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxAmd64'] ]
   - template: copy-images-linux.yml
     parameters:
-      phase: Copy_Images_Linux_arm32v7
+      name: Copy_Images_Linux_arm32v7
       architecture: arm
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxArm32v7'] ]
   - template: copy-images-windows.yml
     parameters:
-      phase: Copy_Images_NanoServerSac2016_amd64
+      name: Copy_Images_NanoServerSac2016_amd64
       osVersion: nanoserver-sac2016
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserverSac2016Amd64'] ]
   - template: copy-images-windows.yml
     parameters:
-      phase: Copy_Images_NanoServer1709_amd64
+      name: Copy_Images_NanoServer1709_amd64
       osVersion: nanoserver-1709
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1709Amd64'] ]
   - template: copy-images-windows.yml
     parameters:
-      phase: Copy_Images_NanoServer1803_amd64
+      name: Copy_Images_NanoServer1803_amd64
       osVersion: nanoserver-1803
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
       matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1803Amd64'] ]

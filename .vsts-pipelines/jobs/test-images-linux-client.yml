@@ -1,17 +1,17 @@
 parameters:
-  phase: null
+  name: null
   buildDependencies: []
   matrix: {}
   dockerServerDemands: []
   useRemoteDockerServer: false
   architecture: null
-phases:
-  - phase: ${{ parameters.phase }}
+jobs:
+  - job: ${{ parameters.name }}
     condition: and(ne(variables['repo'], 'dotnet-samples'), or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'test')))
     dependsOn:
       - GenerateMatrices
       - ${{ parameters.buildDependencies }}
-    queue:
+    pool:
       ${{ if eq(parameters.useRemoteDockerServer, 'false') }}:
         name: DotNet-Build
       ${{ if eq(parameters.useRemoteDockerServer, 'true') }}:
@@ -19,8 +19,11 @@ phases:
       demands:
         - agent.os -equals linux
         - ${{ parameters.dockerServerDemands }}
-      parallel: 100
+    strategy:
+      maxParallel: 100
       matrix: ${{ parameters.matrix }}
+    workspace:
+      clean: all
     variables:
       testRunner.container: testrunner-$(Build.BuildId)-$(System.JobId)
       architecture: ${{ parameters.architecture }}
