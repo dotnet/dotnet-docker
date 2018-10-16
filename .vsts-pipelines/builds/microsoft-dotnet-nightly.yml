@@ -6,5 +6,5 @@ trigger:
 variables:
   manifest: manifest.json
   repo: dotnet-nightly
-phases:
-  - template: ../phases/build-all.yml
+jobs:
+  - template: ../jobs/build-all.yml

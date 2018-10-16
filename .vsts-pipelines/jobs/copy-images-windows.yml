@@ -1,10 +1,10 @@
 parameters:
-  phase: null
+  name: null
   osVersion: null
   demands: []
   matrix: {}
-phases:
-  - phase: ${{ parameters.phase }}
+jobs:
+  - job: ${{ parameters.name }}
     condition: or(eq(variables['singlePhase'], 'publish'), and(eq(variables['singlePhase'], ''), or(succeeded(), and(eq(variables['repo'], 'dotnet-samples'), eq(variables['singlePhase'], ''), succeeded('Build_Linux_amd64'), succeeded('Build_Linux_arm32v7'), succeeded('Build_NanoServerSac2016_amd64'), succeeded('Build_NanoServer1709_amd64'), succeeded('Build_NanoServer1803_amd64')))))
     dependsOn:
       - GenerateMatrices
@@ -13,11 +13,13 @@ phases:
       - Test_NanoServerSac2016_amd64
       - Test_NanoServer1709_amd64
       - Test_NanoServer1803_amd64
-    queue:
+    pool:
       name: DotNetCore-Infra
       demands: ${{ parameters.demands }}
-      parallel: 100
+    strategy:
       matrix: ${{ parameters.matrix }}
+    workspace:
+      clean: all
     variables:
       osVersion: ${{ parameters.osVersion }}
     steps:

@@ -1,17 +1,19 @@
 parameters:
-  phase: null
+  name: null
   osVersion: null
   demands: []
   matrix: {}
-phases:
-  - phase: ${{ parameters.phase }}
+jobs:
+  - job: ${{ parameters.name }}
     condition: or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'build'))
     dependsOn: GenerateMatrices
-    queue:
+    pool:
       name: DotNetCore-Infra
       demands: ${{ parameters.demands }}
-      parallel: 100
+    strategy:
       matrix: ${{ parameters.matrix }}
+    workspace:
+      clean: all
     variables:
       osVersion: ${{ parameters.osVersion }}
     steps:

@@ -1,13 +1,13 @@
 parameters:
-  phase: null
+  name: null
   matrix: {}
   dockerServerDemands: []
   useRemoteDockerServer: false
-phases:
-  - phase: ${{ parameters.phase }}
+jobs:
+  - job: ${{ parameters.name }}
     condition: or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'build'))
     dependsOn: GenerateMatrices
-    queue:
+    pool:
       ${{ if eq(parameters.useRemoteDockerServer, 'false') }}:
         name: DotNet-Build
       ${{ if eq(parameters.useRemoteDockerServer, 'true') }}:
@@ -15,8 +15,10 @@ phases:
       demands:
         - agent.os -equals linux
         - ${{ parameters.dockerServerDemands }}
-      parallel: 100
+    strategy:
       matrix: ${{ parameters.matrix }}
+    workspace:
+      clean: all
     steps:
       - template: ../steps/init-docker-linux.yml
         parameters:

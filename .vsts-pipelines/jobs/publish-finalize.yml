@@ -1,5 +1,5 @@
-phases:
-  - phase: Publish_Finalize
+jobs:
+  - job: Publish_Finalize
     condition: and(succeeded('Copy_Images_Linux_amd64'), succeeded('Copy_Images_Linux_arm32v7'), succeeded('Copy_Images_NanoServerSac2016_amd64'), succeeded('Copy_Images_NanoServer1709_amd64'), succeeded('Copy_Images_NanoServer1803_amd64'))
     dependsOn:
       - Copy_Images_Linux_amd64
@@ -7,9 +7,11 @@ phases:
       - Copy_Images_NanoServerSac2016_amd64
       - Copy_Images_NanoServer1709_amd64
       - Copy_Images_NanoServer1803_amd64
-    queue:
+    pool:
       name: DotNet-Build
       demands: agent.os -equals linux
+    workspace:
+      clean: all
     variables:
       imageBuilder.commonCmdArgs: --manifest $(manifest) --username $(dockerRegistry.userName) --password $(BotAccount-dotnet-dockerhub-bot-password) $(imageBuilder.queueArgs) $(imageBuilder.publishQueueArgs)
     steps:

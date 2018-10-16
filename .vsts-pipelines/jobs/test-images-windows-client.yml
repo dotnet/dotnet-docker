@@ -1,20 +1,22 @@
 parameters:
-  phase: null
+  name: null
   buildDependencies: []
   dependsOn: null
   demands: []
   matrix: {}
-phases:
-  - phase: ${{ parameters.phase }}
+jobs:
+  - job: ${{ parameters.name }}
     condition: and(ne(variables['repo'], 'dotnet-samples'), or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'test')))
     dependsOn:
       - GenerateMatrices
       - ${{ parameters.buildDependencies }}
-    queue:
+    pool:
       name: DotNetCore-Infra
       demands: ${{ parameters.demands }}
-      parallel: 100
+    strategy:
       matrix: ${{ parameters.matrix }}
+    workspace:
+      clean: all
     steps:
       - template: ../steps/init-docker-windows.yml
         parameters:
