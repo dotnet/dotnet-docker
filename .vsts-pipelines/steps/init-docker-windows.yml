@@ -5,30 +5,30 @@ steps:
   ################################################################################
   # Cleanup Docker Resources
   ################################################################################
-  - template: cleanup-docker-windows.yml
+- template: cleanup-docker-windows.yml
 
   ################################################################################
   # Setup Image Builder (Optional)
   ################################################################################
-  - ${{ if eq(parameters.setupImageBuilder, 'true') }}:
-    - script: >
-        echo "##vso[task.setvariable variable=imageBuilder.image]
-        microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180904151412
-      displayName: Define imageBuilder.image Variable
-    - powershell: $(Build.Repository.LocalPath)/scripts/Invoke-PullImage.ps1 $(imageBuilder.image)
-      displayName: Pull Image Builder
-    - script: docker create --name setupImageBuilder-$(Build.BuildId)-$(System.JobId) $(imageBuilder.image)
-      displayName: Create Setup Container
-    - script: >
-        docker cp
-        setupImageBuilder-$(Build.BuildId)-$(System.JobId):/image-builder
-        $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder
-      displayName: Copy Image Builder
-    - script: docker rm -f setupImageBuilder-$(Build.BuildId)-$(System.JobId)
-      displayName: Cleanup Setup Container
-      condition: always()
-      continueOnError: true
-    - script: >
-        echo "##vso[task.setvariable variable=runImageBuilderCmd]
-        $(Build.BinariesDirectory)\Microsoft.DotNet.ImageBuilder\Microsoft.DotNet.ImageBuilder.exe
-      displayName: Define runImageBuilderCmd Variable
+- ${{ if eq(parameters.setupImageBuilder, 'true') }}:
+  - script: >
+      echo "##vso[task.setvariable variable=imageBuilder.image]
+      microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20180904151412
+    displayName: Define imageBuilder.image Variable
+  - powershell: $(Build.Repository.LocalPath)/scripts/Invoke-PullImage.ps1 $(imageBuilder.image)
+    displayName: Pull Image Builder
+  - script: docker create --name setupImageBuilder-$(Build.BuildId)-$(System.JobId) $(imageBuilder.image)
+    displayName: Create Setup Container
+  - script: >
+      docker cp
+      setupImageBuilder-$(Build.BuildId)-$(System.JobId):/image-builder
+      $(Build.BinariesDirectory)/Microsoft.DotNet.ImageBuilder
+    displayName: Copy Image Builder
+  - script: docker rm -f setupImageBuilder-$(Build.BuildId)-$(System.JobId)
+    displayName: Cleanup Setup Container
+    condition: always()
+    continueOnError: true
+  - script: >
+      echo "##vso[task.setvariable variable=runImageBuilderCmd]
+      $(Build.BinariesDirectory)\Microsoft.DotNet.ImageBuilder\Microsoft.DotNet.ImageBuilder.exe
+    displayName: Define runImageBuilderCmd Variable
