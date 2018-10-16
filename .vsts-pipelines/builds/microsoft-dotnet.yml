@@ -3,4 +3,4 @@ variables:
   manifest: manifest.json
   repo: dotnet
 jobs:
-- template: ../jobs/build-all.yml
+- template: ../jobs/build-test-publish-repo.yml

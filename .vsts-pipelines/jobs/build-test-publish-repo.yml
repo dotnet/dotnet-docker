@@ -3,7 +3,7 @@ jobs:
   # Initialization - Generate the VSTS build matrix
   ################################################################################
 - job: GenerateMatrices
-  pool:
+  pool: # linuxAmd64Pool
     name: DotNet-Build
     demands: agent.os -equals linux
   workspace:
@@ -19,36 +19,57 @@ jobs:
   ################################################################################
   # Build Images
   ################################################################################
-- template: build-images-linux-client.yml
+- template: build-images.yml
   parameters:
     name: Build_Linux_amd64
+    pool: # linuxAmd64Pool
+      name: DotNet-Build
+      demands:
+      - agent.os -equals linux
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxAmd64'] ]
-- template: build-images-linux-client.yml
+    dockerClientOS: linux
+- template: build-images.yml
   parameters:
     name: Build_Linux_arm32v7
+    pool: # linuxArm32v7Pool
+      name: DotNetCore-Infra
+      demands:
+      - agent.os -equals linux
+      - RemoteDockerServerOS -equals linux
+      - RemoteDockerServerArch -equals arm32v7
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxArm32v7'] ]
+    dockerClientOS: linux
     useRemoteDockerServer: true
-    dockerServerDemands:
-    - RemoteDockerServerOS -equals linux
-    - RemoteDockerServerArch -equals arm32v7
-- template: build-images-windows-client.yml
+- template: build-images.yml
   parameters:
     name: Build_NanoServerSac2016_amd64
-    osVersion: nanoserver-sac2016
-    demands: VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
+    pool: # windowsLtsc2016Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserverSac2016Amd64'] ]
-- template: build-images-windows-client.yml
+    osVersion: nanoserver-sac2016
+    dockerClientOS: windows
+- template: build-images.yml
   parameters:
     name: Build_NanoServer1709_amd64
-    osVersion: nanoserver-1709
-    demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
+    pool: # windows1709Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1709Amd64'] ]
-- template: build-images-windows-client.yml
+    osVersion: nanoserver-1709
+    dockerClientOS: windows
+- template: build-images.yml
   parameters:
     name: Build_NanoServer1803_amd64
-    osVersion: nanoserver-1803
-    demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
+    pool: # windows1803Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1803Amd64'] ]
+    osVersion: nanoserver-1803
+    dockerClientOS: windows
 
   ################################################################################
   # Test Images
@@ -57,67 +78,115 @@ jobs:
   parameters:
     name: Test_Linux_amd64
     buildDependencies: Build_Linux_amd64
+    pool: # linuxAmd64Pool
+      name: DotNet-Build
+      demands:
+      - agent.os -equals linux
     matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixLinuxAmd64'] ]
     architecture: amd64
 - template: test-images-linux-client.yml
   parameters:
     name: Test_Linux_arm32v7
     buildDependencies: Build_Linux_arm32v7
+    pool: # linuxArm32v7Pool
+      name: DotNetCore-Infra
+      demands:
+      - agent.os -equals linux
+      - RemoteDockerServerOS -equals linux
+      - RemoteDockerServerArch -equals arm32v7
     matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixLinuxArm32v7'] ]
-    useRemoteDockerServer: true
-    dockerServerDemands:
-    - RemoteDockerServerOS -equals linux
-    - RemoteDockerServerArch -equals arm32v7
     architecture: arm
+    useRemoteDockerServer: true
 - template: test-images-windows-client.yml
   parameters:
     name: Test_NanoServerSac2016_amd64
     buildDependencies: Build_NanoServerSac2016_amd64
-    demands: VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
+    pool: # windowsLtsc2016Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
     matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserverSac2016Amd64'] ]
 - template: test-images-windows-client.yml
   parameters:
     name: Test_NanoServer1709_amd64
     buildDependencies: Build_NanoServer1709_amd64
-    demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
+    pool: # windows1709Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
     matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1709Amd64'] ]
 - template: test-images-windows-client.yml
   parameters:
     name: Test_NanoServer1803_amd64
     buildDependencies: Build_NanoServer1803_amd64
-    demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
+    pool: # windows1803Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
     matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1803Amd64'] ]
 
   ################################################################################
   # Publish Images
   ################################################################################
-- template: copy-images-linux.yml
+- template: copy-images.yml
   parameters:
     name: Copy_Images_Linux_amd64
-    architecture: amd64
+    pool: # linuxAmd64Pool
+      name: DotNet-Build
+      demands:
+      - agent.os -equals linux
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxAmd64'] ]
-- template: copy-images-linux.yml
+    architecture: amd64
+    dockerClientOS: linux
+- template: copy-images.yml
   parameters:
     name: Copy_Images_Linux_arm32v7
-    architecture: arm
+    pool: # linuxArm32v7Pool
+      name: DotNetCore-Infra
+      demands:
+      - agent.os -equals linux
+      - RemoteDockerServerOS -equals linux
+      - RemoteDockerServerArch -equals arm32v7
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxArm32v7'] ]
-- template: copy-images-windows.yml
+    architecture: arm
+    dockerClientOS: linux
+- template: copy-images.yml
   parameters:
     name: Copy_Images_NanoServerSac2016_amd64
-    osVersion: nanoserver-sac2016
-    demands: VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
+    pool: # windowsLtsc2016Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserverSac2016Amd64'] ]
-- template: copy-images-windows.yml
+    osVersion: nanoserver-sac2016
+    architecture: amd64
+    dockerClientOS: windows
+- template: copy-images.yml
   parameters:
     name: Copy_Images_NanoServer1709_amd64
-    osVersion: nanoserver-1709
-    demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
+    pool: # windows1709Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1709Amd64'] ]
-- template: copy-images-windows.yml
+    osVersion: nanoserver-1709
+    architecture: amd64
+    dockerClientOS: windows
+- template: copy-images.yml
   parameters:
     name: Copy_Images_NanoServer1803_amd64
-    osVersion: nanoserver-1803
-    demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
+    pool: # windows1803Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1803Amd64'] ]
+    osVersion: nanoserver-1803
+    architecture: amd64
+    dockerClientOS: windows
 
 - template: publish-finalize.yml
+  parameters:
+    pool: # linuxAmd64Pool
+      name: DotNet-Build
+      demands:
+      - agent.os -equals linux

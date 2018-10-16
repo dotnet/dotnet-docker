@@ -1,3 +1,5 @@
+parameters:
+  pool: {}
 jobs:
 - job: Publish_Finalize
   condition: "
@@ -13,9 +15,7 @@ jobs:
   - Copy_Images_NanoServerSac2016_amd64
   - Copy_Images_NanoServer1709_amd64
   - Copy_Images_NanoServer1803_amd64
-  pool:
-    name: DotNet-Build
-    demands: agent.os -equals linux
+  pool: ${{ parameters.pool }}
   workspace:
     clean: all
   variables:
