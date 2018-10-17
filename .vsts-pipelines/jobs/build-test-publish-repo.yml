@@ -141,12 +141,10 @@ jobs:
 - template: copy-images.yml
   parameters:
     name: Copy_Images_Linux_arm32v7
-    pool: # linuxArm32v7Pool
-      name: DotNetCore-Infra
+    pool: # linuxAmd64Pool - arm images can be copied with amd64 machines which will be much faster.
+      name: DotNet-Build
       demands:
       - agent.os -equals linux
-      - RemoteDockerServerOS -equals linux
-      - RemoteDockerServerArch -equals arm32v7
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxArm32v7'] ]
     architecture: arm
     dockerClientOS: linux
