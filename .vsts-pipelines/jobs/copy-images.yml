@@ -1,7 +1,10 @@
 parameters:
   name: null
-  architecture: null
+  pool: {}
   matrix: {}
+  osVersion: "'*'"
+  architecture: null
+  dockerClientOS: null
 jobs:
 - job: ${{ parameters.name }}
   condition: "
@@ -26,21 +29,21 @@ jobs:
   - Test_NanoServerSac2016_amd64
   - Test_NanoServer1709_amd64
   - Test_NanoServer1803_amd64
-  pool:
-    name: DotNet-Build
-    demands: agent.os -equals linux
+  pool: ${{ parameters.pool }}
   strategy:
     matrix: ${{ parameters.matrix }}
   workspace:
     clean: all
   variables:
+    osVersion: ${{ parameters.osVersion }}
     architecture: ${{ parameters.architecture }}
   steps:
-  - template: ../steps/init-docker-linux.yml
+  - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
   - script: >
       $(runImageBuilderCmd) copyImages
       --manifest $(manifest)
       $(imageBuilderPaths)
+      --os-version $(osVersion)
       --architecture $(architecture)
       --source-server $(acr.server)
       --source-username $(acr.userName)
@@ -51,4 +54,4 @@ jobs:
       $(imageBuilder.publishQueueArgs)
       $(acr.server)/$(repo)-$(stagingRepo.suffix)
     displayName: Copy Images
-  - template: ../steps/cleanup-docker-linux.yml
+  - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}

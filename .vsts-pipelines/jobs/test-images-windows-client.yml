@@ -1,8 +1,7 @@
 parameters:
   name: null
   buildDependencies: []
-  dependsOn: null
-  demands: []
+  pool: {}
   matrix: {}
 jobs:
 - job: ${{ parameters.name }}
@@ -17,9 +16,7 @@ jobs:
   dependsOn:
     - GenerateMatrices
     - ${{ parameters.buildDependencies }}
-  pool:
-    name: DotNetCore-Infra
-    demands: ${{ parameters.demands }}
+  pool: ${{ parameters.pool }}
   strategy:
     matrix: ${{ parameters.matrix }}
   workspace:

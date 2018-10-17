@@ -1,15 +1,15 @@
 parameters:
   name: null
-  osVersion: null
-  demands: []
+  pool: {}
   matrix: {}
+  osVersion: "'*'"
+  dockerClientOS: null
+  useRemoteDockerServer: false
 jobs:
 - job: ${{ parameters.name }}
   condition: or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'build'))
   dependsOn: GenerateMatrices
-  pool:
-    name: DotNetCore-Infra
-    demands: ${{ parameters.demands }}
+  pool: ${{ parameters.pool }}
   strategy:
     matrix: ${{ parameters.matrix }}
   workspace:
@@ -17,7 +17,9 @@ jobs:
   variables:
     osVersion: ${{ parameters.osVersion }}
   steps:
-  - template: ../steps/init-docker-windows.yml
+  - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
+    parameters:
+      setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
   - script: >
       $(runImageBuilderCmd) build
       --manifest $(manifest)
@@ -31,4 +33,6 @@ jobs:
       --password $(BotAccount-dotnet-docker-acr-bot-password)
       $(imageBuilder.queueArgs)
     displayName: Build Images
-  - template: ../steps/cleanup-docker-windows.yml
+  - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
+    parameters:
+      cleanupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}

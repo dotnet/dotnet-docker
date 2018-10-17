@@ -1,10 +1,10 @@
 parameters:
   name: null
   buildDependencies: []
+  pool: {}
   matrix: {}
-  dockerServerDemands: []
-  useRemoteDockerServer: false
   architecture: null
+  useRemoteDockerServer: false
 jobs:
 - job: ${{ parameters.name }}
   condition: "
@@ -18,14 +18,7 @@ jobs:
   dependsOn:
   - GenerateMatrices
   - ${{ parameters.buildDependencies }}
-  pool:
-    ${{ if eq(parameters.useRemoteDockerServer, 'false') }}:
-      name: DotNet-Build
-    ${{ if eq(parameters.useRemoteDockerServer, 'true') }}:
-      name: DotNetCore-Infra
-    demands:
-    - agent.os -equals linux
-    - ${{ parameters.dockerServerDemands }}
+  pool: ${{ parameters.pool }}
   strategy:
     matrix: ${{ parameters.matrix }}
   workspace:
