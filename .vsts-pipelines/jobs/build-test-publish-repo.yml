@@ -30,7 +30,7 @@ jobs:
     dockerClientOS: linux
 - template: build-images.yml
   parameters:
-    phase: Build_Linux_arm64v8
+    name: Build_Linux_arm64v8
     pool: # linuxArm64v8Pool
       name: DotNetCore-Infra
       demands:
@@ -98,7 +98,7 @@ jobs:
     architecture: amd64
 - template: test-images-linux-client.yml
   parameters:
-    phase: Test_Linux_arm64v8
+    name: Test_Linux_arm64v8
     buildDependencies: Build_Linux_arm64v8
     pool: # linuxArm64v8Pool
       name: DotNetCore-Infra
@@ -106,7 +106,7 @@ jobs:
       - agent.os -equals linux
       - RemoteDockerServerOS -equals linux
       - RemoteDockerServerArch -equals arm64v8
-    matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.testMatrixLinuxArm64v8'] ]
+    matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixLinuxArm64v8'] ]
     architecture: arm64
     useRemoteDockerServer: true
 - template: test-images-linux-client.yml
@@ -165,8 +165,8 @@ jobs:
     dockerClientOS: linux
 - template: copy-images.yml
   parameters:
-    phase: Copy_Images_Linux_arm64v8
-    pool: # linuxAmd64Pool - arm images can be copied with amd64 machines which will be much faster.
+    name: Copy_Images_Linux_arm64v8
+    pool: # linuxAmd64Pool - arm images can be copied with amd64 machines which are more plentiful.
       name: DotNet-Build
       demands:
       - agent.os -equals linux
