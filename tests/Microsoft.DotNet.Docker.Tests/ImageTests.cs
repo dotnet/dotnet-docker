@@ -61,13 +61,14 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm" },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm64" },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm64" },
-            new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, IsWeb = true },
-            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, IsWeb = true },
-            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Alpine38, IsWeb = true },
-            new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm", IsWeb = true },
-            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm", IsWeb = true },
-            new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm64", IsWeb = true },
-            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm64", IsWeb = true },
+            // 3.0 ASP.NET Core isn't fully supported yet
+            // new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, IsWeb = true },
+            // new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, IsWeb = true },
+            // new ImageData { DotNetVersion = "3.0", OsVariant = OS.Alpine38, IsWeb = true },
+            // new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm", IsWeb = true },
+            // new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm", IsWeb = true },
+            // new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm64", IsWeb = true },
+            // new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm64", IsWeb = true },
         };
         private static readonly ImageData[] s_windowsTestData =
         {
@@ -88,9 +89,10 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServerSac2016 },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1709 },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1803 },
-            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServerSac2016, IsWeb = true },
-            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1709, IsWeb = true },
-            new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1803, IsWeb = true },
+            // 3.0 ASP.NET Core isn't fully supported yet
+            // new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServerSac2016, IsWeb = true },
+            // new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1709, IsWeb = true },
+            // new ImageData { DotNetVersion = "3.0", OsVariant = OS.NanoServer1803, IsWeb = true },
         };
 
         private readonly DockerHelper _dockerHelper;
@@ -130,12 +132,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetVerifyImagesData))]
         public async Task VerifyImages(ImageData imageData)
         {
-            if (imageData.DotNetVersion == "3.0")
-            {
-                _outputHelper.WriteLine("E2E experience for 3.0 is still coming online (e.g. 3.0 templates don't exist yet).  Test automation is blocked at this point.");
-                return;
-            }
-
             string appSdkImage = GetIdentifier(imageData.DotNetVersion, "app-sdk");
 
             try
