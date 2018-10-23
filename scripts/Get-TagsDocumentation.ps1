@@ -4,7 +4,7 @@ param(
     [string]$Manifest='manifest.json',
     [string]$ReadMeTemplate='./scripts/ReadmeTagsDocumentationTemplate.md',
     [string]$TagsTemplate='./scripts/TagsDocumentationTemplate.md',
-    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20180821134221'
+    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20181022195013'
 )
 
 $ErrorActionPreference = 'Stop'
