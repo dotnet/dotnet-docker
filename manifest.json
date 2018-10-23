@@ -1086,6 +1086,16 @@
               "variant": "v7"
             },
             {
+              "architecture": "arm64",
+              "dockerfile": "3.0/sdk/stretch/arm64v8",
+              "os": "linux",
+              "tags": {
+                "3.0.100-preview1-sdk-stretch-arm64v8": {},
+                "3.0-sdk-stretch-arm64v8": {}
+              },
+              "variant": "v8"
+            },
+            {
               "dockerfile": "3.0/sdk/nanoserver-sac2016/amd64",
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
@@ -1297,6 +1307,20 @@
               "tags": {
                 "3.0.0-preview1-runtime-bionic-arm64v8": {},
                 "3.0-runtime-bionic-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.0/sdk/bionic/arm64v8",
+              "os": "linux",
+              "tags": {
+                "3.0.100-preview1-sdk-bionic-arm64v8": {},
+                "3.0-sdk-bionic-arm64v8": {}
               },
               "variant": "v8"
             }
