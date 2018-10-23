@@ -59,11 +59,15 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.Alpine38 },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm" },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm" },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm64" },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm64" },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, IsWeb = true },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, IsWeb = true },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.Alpine38, IsWeb = true },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm", IsWeb = true },
             new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm", IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.StretchSlim, SdkOsVariant = OS.Stretch, Architecture = "arm64", IsWeb = true },
+            new ImageData { DotNetVersion = "3.0", OsVariant = OS.Bionic, Architecture = "arm64", IsWeb = true },
         };
         private static readonly ImageData[] s_windowsTestData =
         {

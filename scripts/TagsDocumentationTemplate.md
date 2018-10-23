@@ -113,6 +113,15 @@ $(TagDoc:3.0.100-alpha1-sdk-nanoserver-sac2016)
 $(TagDoc:3.0.0-alpha1-aspnetcore-runtime-nanoserver-sac2016)
 $(TagDoc:3.0.0-alpha1-runtime-nanoserver-sac2016)
 
+# Linux arm64 tags
+
+**.NET Core 3.0 Alpha 1 tags**
+
+$(TagDoc:3.0.0-alpha1-runtime-stretch-slim-arm64v8)
+$(TagDoc:3.0.0-alpha1-runtime-bionic-arm64v8)
+$(TagDoc:3.0.0-alpha1-runtime-deps-stretch-slim-arm64v8)
+$(TagDoc:3.0.0-alpha1-runtime-deps-bionic-arm64v8)
+
 # Linux arm32 tags
 
 $(TagDoc:2.1.403-sdk-stretch-arm32v7)
