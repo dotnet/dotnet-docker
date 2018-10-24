@@ -117,6 +117,8 @@ $(TagDoc:3.0.0-preview1-runtime-nanoserver-sac2016)
 
 **.NET Core 3.0 Preview tags**
 
+$(TagDoc:3.0.100-preview1-sdk-stretch-arm64v8)
+$(TagDoc:3.0.100-preview1-sdk-bionic-arm64v8)
 $(TagDoc:3.0.0-preview1-runtime-stretch-slim-arm64v8)
 $(TagDoc:3.0.0-preview1-runtime-bionic-arm64v8)
 $(TagDoc:3.0.0-preview1-runtime-deps-stretch-slim-arm64v8)

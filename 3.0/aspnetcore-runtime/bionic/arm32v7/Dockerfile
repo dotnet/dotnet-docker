@@ -15,4 +15,3 @@ RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/
     && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet \
     && rm aspnetcore.tar.gz \
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
-

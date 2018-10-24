@@ -117,6 +117,8 @@
 
 **.NET Core 3.0 Preview tags**
 
+- [`3.0.100-preview1-sdk-stretch-arm64v8`, `3.0-sdk-stretch-arm64v8`, `3.0.100-preview1-sdk`, `3.0-sdk` (*3.0/sdk/stretch/arm64v8/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/arm64v8/Dockerfile)
+- [`3.0.100-preview1-sdk-bionic-arm64v8`, `3.0-sdk-bionic-arm64v8` (*3.0/sdk/bionic/arm64v8/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/arm64v8/Dockerfile)
 - [`3.0.0-preview1-runtime-stretch-slim-arm64v8`, `3.0-runtime-stretch-slim-arm64v8`, `3.0.0-preview1-runtime`, `3.0-runtime` (*3.0/runtime/stretch-slim/arm64v8/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime/stretch-slim/arm64v8/Dockerfile)
 - [`3.0.0-preview1-runtime-bionic-arm64v8`, `3.0-runtime-bionic-arm64v8` (*3.0/runtime/bionic/arm64v8/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime/bionic/arm64v8/Dockerfile)
 - [`3.0.0-preview1-runtime-deps-stretch-slim-arm64v8`, `3.0-runtime-deps-stretch-slim-arm64v8`, `3.0.0-preview1-runtime-deps`, `3.0-runtime-deps` (*3.0/runtime-deps/stretch-slim/arm64v8/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/stretch-slim/arm64v8/Dockerfile)
