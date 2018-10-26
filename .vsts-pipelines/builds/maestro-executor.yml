@@ -1,0 +1,13 @@
+trigger: none
+jobs:
+- job: MaestroExecutor
+  pool:
+    name: DotNetCore-Infra
+    demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
+  steps:
+  - powershell: >
+      scripts/Invoke-MaestroExecutor.ps1
+      -ScriptFileName "$(ScriptFileName)"
+      -Arguments "$(Arguments)"
+      -Secrets @{"DotNetMaestroBotGitHubToken"="$(BotAccount-dotnet-maestro-bot-PAT)"}
+    displayName: Invoke Script
