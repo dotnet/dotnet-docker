@@ -202,11 +202,21 @@
         },
         {
           "sharedTags": {
-            "2.1.6-runtime-deps": {},
-            "2.1-runtime-deps": {},
-            "2.2.0-preview3-runtime-deps": {},
-            "2.2-runtime-deps": {},
-            "runtime-deps": {},
+            "2.1.6-runtime-deps": {
+              "documentationGroup": "2.1"
+            },
+            "2.1-runtime-deps": {
+              "documentationGroup": "2.1"
+            },
+            "2.2.0-preview3-runtime-deps": {
+              "documentationGroup": "2.2"
+            },
+            "2.2-runtime-deps": {
+              "documentationGroup": "2.2"
+            },
+            "runtime-deps": {
+              "documentationGroup": "2.1"
+            },
             "2-runtime-deps": {
               "isUndocumented": true
             }
@@ -216,10 +226,18 @@
               "dockerfile": "2.1/runtime-deps/stretch-slim/amd64",
               "os": "linux",
               "tags": {
-                "2.1.6-runtime-deps-stretch-slim": {},
-                "2.1-runtime-deps-stretch-slim": {},
-                "2.2.0-preview3-runtime-deps-stretch-slim": {},
-                "2.2-runtime-deps-stretch-slim": {}
+                "2.1.6-runtime-deps-stretch-slim": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-runtime-deps-stretch-slim": {
+                  "documentationGroup": "2.1"
+                },
+                "2.2.0-preview3-runtime-deps-stretch-slim": {
+                  "documentationGroup": "2.2"
+                },
+                "2.2-runtime-deps-stretch-slim": {
+                  "documentationGroup": "2.2"
+                }
               }
             },
             {
@@ -227,10 +245,18 @@
               "dockerfile": "2.1/runtime-deps/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.6-runtime-deps-stretch-slim-arm32v7": {},
-                "2.1-runtime-deps-stretch-slim-arm32v7": {},
-                "2.2.0-preview3-runtime-deps-stretch-slim-arm32v7": {},
-                "2.2-runtime-deps-stretch-slim-arm32v7": {}
+                "2.1.6-runtime-deps-stretch-slim-arm32v7": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-runtime-deps-stretch-slim-arm32v7": {
+                  "documentationGroup": "2.1"
+                },
+                "2.2.0-preview3-runtime-deps-stretch-slim-arm32v7": {
+                  "documentationGroup": "2.2"
+                },
+                "2.2-runtime-deps-stretch-slim-arm32v7": {
+                  "documentationGroup": "2.2"
+                }
               },
               "variant": "v7"
             }
@@ -468,14 +494,30 @@
               "dockerfile": "2.1/runtime-deps/alpine3.8/amd64",
               "os": "linux",
               "tags": {
-                "2.1.6-runtime-deps-alpine3.8": {},
-                "2.1-runtime-deps-alpine3.8": {},
-                "2.2.0-preview3-runtime-deps-alpine3.8": {},
-                "2.2-runtime-deps-alpine3.8": {},
-                "2.1.6-runtime-deps-alpine": {},
-                "2.1-runtime-deps-alpine": {},
-                "2.2.0-preview3-runtime-deps-alpine": {},
-                "2.2-runtime-deps-alpine": {}
+                "2.1.6-runtime-deps-alpine3.8": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-runtime-deps-alpine3.8": {
+                  "documentationGroup": "2.1"
+                },
+                "2.2.0-preview3-runtime-deps-alpine3.8": {
+                  "documentationGroup": "2.2"
+                },
+                "2.2-runtime-deps-alpine3.8": {
+                  "documentationGroup": "2.2"
+                },
+                "2.1.6-runtime-deps-alpine": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-runtime-deps-alpine": {
+                  "documentationGroup": "2.1"
+                },
+                "2.2.0-preview3-runtime-deps-alpine": {
+                  "documentationGroup": "2.2"
+                },
+                "2.2-runtime-deps-alpine": {
+                  "documentationGroup": "2.2"
+                }
               }
             }
           ]
@@ -528,10 +570,18 @@
               "dockerfile": "2.1/runtime-deps/bionic/amd64",
               "os": "linux",
               "tags": {
-                "2.1.6-runtime-deps-bionic": {},
-                "2.1-runtime-deps-bionic": {},
-                "2.2.0-preview3-runtime-deps-bionic": {},
-                "2.2-runtime-deps-bionic": {}
+                "2.1.6-runtime-deps-bionic": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-runtime-deps-bionic": {
+                  "documentationGroup": "2.1"
+                },
+                "2.2.0-preview3-runtime-deps-bionic": {
+                  "documentationGroup": "2.2"
+                },
+                "2.2-runtime-deps-bionic": {
+                  "documentationGroup": "2.2"
+                }
               }
             }
           ]
@@ -579,10 +629,18 @@
               "dockerfile": "2.1/runtime-deps/bionic/arm32v7",
               "os": "linux",
               "tags": {
-                "2.1.6-runtime-deps-bionic-arm32v7": {},
-                "2.1-runtime-deps-bionic-arm32v7": {},
-                "2.2.0-preview3-runtime-deps-bionic-arm32v7": {},
-                "2.2-runtime-deps-bionic-arm32v7": {}
+                "2.1.6-runtime-deps-bionic-arm32v7": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-runtime-deps-bionic-arm32v7": {
+                  "documentationGroup": "2.1"
+                },
+                "2.2.0-preview3-runtime-deps-bionic-arm32v7": {
+                  "documentationGroup": "2.2"
+                },
+                "2.2-runtime-deps-bionic-arm32v7": {
+                  "documentationGroup": "2.2"
+                }
               },
               "variant": "v7"
             }
