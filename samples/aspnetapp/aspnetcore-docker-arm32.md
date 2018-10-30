@@ -10,7 +10,7 @@ See [.NET Core and Docker for ARM64](dotnet-docker-arm64.md) if you are interest
 
 ## Try a pre-built ASP.NET Core Docker Image
 
-You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile.preview).
+You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile).
 
 Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
