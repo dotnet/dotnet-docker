@@ -25,6 +25,8 @@ namespace Dotnet.Docker
         {
             _tagVersion = version;
 
+            // Derive the Docker tag version from the product build version.
+            // Example: Product build version 2.2.0-rtm-35586 => Docker tag version 2.2.0.
             int firstDashIndex = version.IndexOf('-');
             if (firstDashIndex != -1)
             {
