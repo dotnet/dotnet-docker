@@ -206,7 +206,7 @@
               "documentationGroup": "2.2"
             },
             "runtime-deps": {
-              "documentationGroup": "2.1"
+              "documentationGroup": "2.2"
             },
             "2-runtime-deps": {
               "isUndocumented": true
@@ -256,11 +256,7 @@
         {
           "sharedTags": {
             "2.1.6-runtime": {},
-            "2.1-runtime": {},
-            "runtime": {},
-            "2-runtime": {
-              "isUndocumented": true
-            }
+            "2.1-runtime": {}
           },
           "platforms": [
             {
@@ -316,11 +312,7 @@
         {
           "sharedTags": {
             "2.1.6-aspnetcore-runtime": {},
-            "2.1-aspnetcore-runtime": {},
-            "aspnetcore-runtime": {},
-            "2-aspnetcore-runtime": {
-              "isUndocumented": true
-            }
+            "2.1-aspnetcore-runtime": {}
           },
           "platforms": [
             {
@@ -373,12 +365,7 @@
         {
           "sharedTags": {
             "2.1.500-sdk": {},
-            "2.1-sdk": {},
-            "sdk": {},
-            "latest": {},
-            "2-sdk": {
-              "isUndocumented": true
-            }
+            "2.1-sdk": {}
           },
           "platforms": [
             {
@@ -682,7 +669,11 @@
         {
           "sharedTags": {
             "2.2.0-preview3-runtime": {},
-            "2.2-runtime": {}
+            "2.2-runtime": {},
+            "runtime": {},
+            "2-runtime": {
+              "isUndocumented": true
+            }
           },
           "platforms": [
             {
@@ -735,7 +726,11 @@
         {
           "sharedTags": {
             "2.2.0-preview3-aspnetcore-runtime": {},
-            "2.2-aspnetcore-runtime": {}
+            "2.2-aspnetcore-runtime": {},
+            "aspnetcore-runtime": {},
+            "2-aspnetcore-runtime": {
+              "isUndocumented": true
+            }
           },
           "platforms": [
             {
@@ -788,7 +783,12 @@
         {
           "sharedTags": {
             "2.2.100-preview3-sdk": {},
-            "2.2-sdk": {}
+            "2.2-sdk": {},
+            "sdk": {},
+            "latest": {},
+            "2-sdk": {
+              "isUndocumented": true
+            }
           },
           "platforms": [
             {
