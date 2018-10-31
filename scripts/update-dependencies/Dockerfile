@@ -11,6 +11,12 @@ RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tl
     Expand-Archive git.zip -DestinationPath git; `
     Remove-Item -Force git.zip
 
+# retrieve PowerShell
+RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; `
+    Invoke-WebRequest -UseBasicParsing -outfile powershell.zip https://github.com/PowerShell/PowerShell/releases/download/v6.1.0/PowerShell-6.1.0-win-x64.zip; `
+    Expand-Archive powershell.zip -DestinationPath PowerShell; `
+    Remove-Item -Force powershell.zip
+
 
 # build image
 FROM microsoft/dotnet:2.1-sdk-nanoserver-1709 AS build-env
@@ -31,8 +37,12 @@ FROM microsoft/dotnet:2.1-runtime-nanoserver-1709
 
 # install git
 COPY --from=installer-env ["git", "C:\\Program Files\\git"]
-USER ContainerAdministrator 
-RUN setx /M PATH "%PATH%;C:\Program Files\git\cmd"
+
+# install PowerShell
+COPY --from=installer-env ["PowerShell", "C:\\Program Files\\PowerShell"]
+
+USER ContainerAdministrator
+RUN setx /M PATH "%PATH%;C:\Program Files\git\cmd;C:\\Program Files\\PowerShell"
 USER ContainerUser
 
 # copy update-dependencies

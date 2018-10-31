@@ -4,6 +4,7 @@
 using Microsoft.DotNet.VersionTools.Dependencies;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -37,8 +38,16 @@ namespace Dotnet.Docker
         {
             Trace.TraceInformation($"InvokeGetTagsDocumentationScript");
 
-            Process process = Process.Start("powershell", Path.Combine(_repoRoot, "scripts", "Get-TagsDocumentation.ps1"));
-            process.WaitForExit();
+            try
+            {
+                Process process = Process.Start("pwsh", Path.Combine(_repoRoot, "scripts", "Get-TagsDocumentation.ps1"));
+                process.WaitForExit();
+            }
+            catch (Win32Exception)
+            {
+                Process process = Process.Start("powershell", Path.Combine(_repoRoot, "scripts", "Get-TagsDocumentation.ps1"));
+                process.WaitForExit();
+            }
         }
     }
 }
