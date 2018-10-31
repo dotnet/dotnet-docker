@@ -62,7 +62,7 @@ namespace Dotnet.Docker
         {
             string runtimeVersion = buildInfos.GetBuildVersion(RuntimeBuildInfoName);
             string dockerfileVersion = runtimeVersion.Substring(0, runtimeVersion.LastIndexOf('.'));
-            IEnumerable<IDependencyUpdater> updaters = GetUpdaters(dockerfileVersion);
+            IEnumerable<IDependencyUpdater> updaters = GetUpdaters(dockerfileVersion, buildInfos);
 
             return DependencyUpdateUtils.Update(updaters, buildInfos);
         }
@@ -136,7 +136,8 @@ namespace Dotnet.Docker
             return buildInfos.First(bi => bi.SimpleName == name).SimpleVersion;
         }
 
-        private static IEnumerable<IDependencyUpdater> GetUpdaters(string dockerfileVersion)
+        private static IEnumerable<IDependencyUpdater> GetUpdaters(
+            string dockerfileVersion, IEnumerable<IDependencyInfo> buildInfos)
         {
             string[] dockerfiles = Directory.GetFiles(
                 Path.Combine(RepoRoot, dockerfileVersion),
@@ -151,7 +152,12 @@ namespace Dotnet.Docker
                 .Concat(dockerfiles.Select(path => CreateDockerfileEnvUpdater(path, "ASPNETCORE_VERSION", AspNetCoreBuildInfoName)))
                 .Concat(dockerfiles.Select(path => CreateDockerfileEnvUpdater(path, "DOTNET_VERSION", RuntimeBuildInfoName)))
                 .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateProductShaUpdater(path)))
-                .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateLzmaShaUpdater(path)));
+                .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateLzmaShaUpdater(path)))
+                .Concat(new IDependencyUpdater[] {
+                    new ManifestUpdater("Sdk", buildInfos.GetBuildVersion(SdkBuildInfoName), RepoRoot),
+                    new ManifestUpdater("Runtime", buildInfos.GetBuildVersion(RuntimeBuildInfoName), RepoRoot),
+                    new ReadMeUpdater(RepoRoot)
+                });
         }
 
         private static IDependencyUpdater CreateDockerfileEnvUpdater(string path, string envName, string buildInfoName)
