@@ -48,7 +48,7 @@ namespace Dotnet.Docker
             string versionVariableName = $"{version.Substring(0, version.LastIndexOf('.'))}-{imageVariantName}Version";
             Trace.TraceInformation($"Updating {versionVariableName} to {_tagVersion}");
 
-            Path = System.IO.Path.Combine(repoRoot, "Manifest.json");
+            Path = System.IO.Path.Combine(repoRoot, "manifest.json");
             Regex = new Regex($"\"{versionVariableName}\": \"(?<{TagVersionValueGroupName}>[\\d]+.[\\d]+.[\\d]+(-[\\S]+)?)\"");
             VersionGroupName = TagVersionValueGroupName;
         }

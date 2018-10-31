@@ -1,0 +1,16 @@
+trigger: none
+jobs:
+- job: UpdateDependencies
+  pool: Hosted Ubuntu 1604
+  steps:
+  - script: docker build -t update-dependencies -f ./scripts/update-dependencies/Dockerfile --pull .
+    displayName: Build Update Dependencies Tool
+  - script: >
+      docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies
+      --user dotnet-maestro-bot
+      --email dotnet-maestro-bot@microsoft.com
+      --password $(BotAccount-dotnet-maestro-bot-PAT)
+      $(buildInfoUrl)
+    displayName: Run Update Dependencies
+  - script: docker system prune -a -f --volumes
+    displayName: Cleanup Docker
