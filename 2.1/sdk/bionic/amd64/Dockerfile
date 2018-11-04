@@ -11,6 +11,8 @@ RUN apt-get update \
         libssl1.0.0 \
         libstdc++6 \
         zlib1g \
+# Add sudo for build agents that run as non-root users with sudo privileges
+        sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core SDK
