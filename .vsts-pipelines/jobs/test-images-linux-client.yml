@@ -21,8 +21,6 @@ jobs:
   pool: ${{ parameters.pool }}
   strategy:
     matrix: ${{ parameters.matrix }}
-  workspace:
-    clean: all
   variables:
     testRunner.container: testrunner-$(Build.BuildId)-$(System.JobId)
     architecture: ${{ parameters.architecture }}

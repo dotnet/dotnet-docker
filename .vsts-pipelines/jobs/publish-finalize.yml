@@ -18,8 +18,6 @@ jobs:
   - Copy_Images_NanoServer1709_amd64
   - Copy_Images_NanoServer1803_amd64
   pool: ${{ parameters.pool }}
-  workspace:
-    clean: all
   variables:
     imageBuilder.commonCmdArgs: >
       --manifest $(manifest)

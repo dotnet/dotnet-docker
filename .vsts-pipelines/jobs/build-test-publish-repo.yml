@@ -6,8 +6,6 @@ jobs:
   pool: # linuxAmd64Pool
     name: DotNet-Build
     demands: agent.os -equals linux
-  workspace:
-    clean: all
   steps:
   - template: ../steps/init-docker-linux.yml
   - script: $(runImageBuilderCmd) generateBuildMatrix --manifest $(manifest) --type build
