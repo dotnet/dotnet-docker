@@ -12,8 +12,6 @@ jobs:
   pool: ${{ parameters.pool }}
   strategy:
     matrix: ${{ parameters.matrix }}
-  workspace:
-    clean: all
   variables:
     osVersion: ${{ parameters.osVersion }}
   steps:

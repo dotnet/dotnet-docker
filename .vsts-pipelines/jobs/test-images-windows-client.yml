@@ -19,8 +19,6 @@ jobs:
   pool: ${{ parameters.pool }}
   strategy:
     matrix: ${{ parameters.matrix }}
-  workspace:
-    clean: all
   steps:
   - template: ../steps/init-docker-windows.yml
     parameters:
