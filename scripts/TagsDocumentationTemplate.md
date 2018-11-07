@@ -107,6 +107,8 @@ $(TagDoc:3.0-runtime-nanoserver-sac2016)
 
 $(TagDoc:3.0-sdk-stretch-arm64v8)
 $(TagDoc:3.0-sdk-bionic-arm64v8)
+$(TagDoc:3.0-aspnetcore-runtime-stretch-slim-arm64v8)
+$(TagDoc:3.0-aspnetcore-runtime-bionic-arm64v8)
 $(TagDoc:3.0-runtime-stretch-slim-arm64v8)
 $(TagDoc:3.0-runtime-bionic-arm64v8)
 $(TagDoc:3.0-runtime-deps-stretch-slim-arm64v8)

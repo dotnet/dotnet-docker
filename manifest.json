@@ -1093,6 +1093,16 @@
               "variant": "v7"
             },
             {
+              "architecture": "arm64",
+              "dockerfile": "3.0/aspnetcore-runtime/stretch-slim/arm64v8",
+              "os": "linux",
+              "tags": {
+                "$(3.0-RuntimeVersion)-aspnetcore-runtime-stretch-slim-arm64v8": {},
+                "3.0-aspnetcore-runtime-stretch-slim-arm64v8": {}
+              },
+              "variant": "v8"
+            },
+            {
               "dockerfile": "3.0/aspnetcore-runtime/nanoserver-sac2016/amd64",
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
@@ -1367,6 +1377,20 @@
               "tags": {
                 "$(3.0-RuntimeVersion)-runtime-bionic-arm64v8": {},
                 "3.0-runtime-bionic-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.0/aspnetcore-runtime/bionic/arm64v8",
+              "os": "linux",
+              "tags": {
+                "$(3.0-RuntimeVersion)-aspnetcore-runtime-bionic-arm64v8": {},
+                "3.0-aspnetcore-runtime-bionic-arm64v8": {}
               },
               "variant": "v8"
             }
