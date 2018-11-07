@@ -132,8 +132,21 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             if (imageData.DotNetVersion == "3.0")
             {
-                _outputHelper.WriteLine("E2E experience for 3.0 is still coming online (e.g. 3.0 templates don't exist yet).  Test automation is blocked at this point.");
-                return;
+                if (imageData.IsWeb)
+                {
+                    _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/sdk/issues/2652");
+                    return;
+                }
+                if (!DockerHelper.IsLinuxContainerModeEnabled)
+                {
+                    _outputHelper.WriteLine("Tests are blocked on https://github.com/aspnet/Templating/pull/823");
+                    return;
+                }
+                if (imageData.IsArm)
+                {
+                    _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/cli/issues/10291");
+                    return;
+                }
             }
 
             string appSdkImage = GetIdentifier(imageData.DotNetVersion, "app-sdk");
@@ -230,7 +243,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void VerifySdkImage_PackageCache(ImageData imageData)
         {
-            string verifyCacheCommand;
+            string verifyCacheCommand = null;
             if (imageData.DotNetVersion.StartsWith("1."))
             {
                 if (DockerHelper.IsLinuxContainerModeEnabled)
@@ -242,7 +255,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Users\\ContainerAdministrator\\.nuget\\packages\"";
                 }
             }
-            else
+            else if (imageData.DotNetVersion.StartsWith("2."))
             {
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
@@ -253,12 +266,15 @@ namespace Microsoft.DotNet.Docker.Tests
                     verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\"";
                 }
             }
+            // else imageData.DotNetVersion >= 3.0 doesn't include the NuGetFallbackFolder
 
-            // Simple check to verify the NuGet package cache was created
-            _dockerHelper.Run(
-                image: GetDotNetImage(DotNetImageType.SDK, imageData),
-                command: verifyCacheCommand,
-                containerName: GetIdentifier(imageData.DotNetVersion, "PackageCache"));
+            if (verifyCacheCommand != null) {
+                // Simple check to verify the NuGet package cache was created
+                _dockerHelper.Run(
+                    image: GetDotNetImage(DotNetImageType.SDK, imageData),
+                    command: verifyCacheCommand,
+                    containerName: GetIdentifier(imageData.DotNetVersion, "PackageCache"));
+            }
         }
 
         private async Task VerifyRuntimeImage_FrameworkDependentApp(ImageData imageData, string appSdkImage)
