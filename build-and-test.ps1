@@ -37,7 +37,7 @@ try {
     if ($activeOS -eq "linux") {
         # On Linux, ImageBuilder is run within a container.  The local repo is copied into a Docker volume
         # in order to support running with a remote Docker server.
-        ./scripts/Invoke-PullImage $linuxImageBuilder
+        ./scripts/Invoke-WithRetry { docker pull $linuxImageBuilder }
         $repoVolume = "repo-$(Get-Date -Format yyyyMMddhhmmss)"
         Exec "docker create -v ${repoVolume}:/repo --name $imageBuilderContainerName $linuxImageBuilder"
         Exec "docker cp ${PSScriptRoot}/. ${imageBuilderContainerName}:/repo"
@@ -49,7 +49,7 @@ try {
         $imageBuilderFolder = [System.IO.Path]::Combine($PSScriptRoot, ".Microsoft.DotNet.ImageBuilder")
         $imageBuilderCmd = [System.IO.Path]::Combine($imageBuilderFolder, "image-builder", "Microsoft.DotNet.ImageBuilder.exe")
         if (-not (Test-Path -Path "$imageBuilderCmd" -PathType Leaf)) {
-            ./scripts/Invoke-PullImage $windowsImageBuilder
+            ./scripts/Invoke-WithRetry { docker pull $windowsImageBuilder }
             Exec "docker create --name $imageBuilderContainerName $windowsImageBuilder"
             New-Item -Path "$imageBuilderFolder" -ItemType Directory -Force
             Exec "docker cp ${imageBuilderContainerName}:/image-builder $imageBuilderFolder"
