@@ -19,6 +19,5 @@ RUN echo '<?xml version="1.0" encoding="utf-8"?>' >> NuGet.config \
     && echo '  </packageSources>' >> NuGet.config \
     && echo '</configuration>' >> NuGet.config \
     && echo '' >> NuGet.config
-RUN cat NuGet.config
 RUN dotnet restore $optional_restore_args
 RUN dotnet build
