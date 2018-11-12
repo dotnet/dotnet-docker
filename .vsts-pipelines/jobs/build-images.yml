@@ -24,6 +24,7 @@ jobs:
       $(imageBuilderPaths)
       --os-version $(osVersion)
       --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix)
+      --retry
       --push
       --server $(acr.server)
       --username $(acr.userName)
