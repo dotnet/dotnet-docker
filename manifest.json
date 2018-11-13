@@ -545,7 +545,8 @@
               "tags": {
                 "2.1.6-aspnetcore-runtime-bionic-arm32v7": {},
                 "2.1-aspnetcore-runtime-bionic-arm32v7": {}
-              }
+              },
+              "variant": "v7"
             }
           ]
         },
@@ -837,7 +838,8 @@
               "tags": {
                 "2.2.0-preview3-aspnetcore-runtime-bionic-arm32v7": {},
                 "2.2-aspnetcore-runtime-bionic-arm32v7": {}
-              }
+              },
+              "variant": "v7"
             }
           ]
         },
