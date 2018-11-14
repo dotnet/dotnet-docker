@@ -731,6 +731,16 @@
                 "$(2.2-RuntimeVersion)-runtime-nanoserver-1803": {},
                 "2.2-runtime-nanoserver-1803": {}
               }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "2.2/runtime/nanoserver-1809/arm32",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(2.2-RuntimeVersion)-runtime-nanoserver-1809-arm32": {},
+                "2.2-runtime-nanoserver-1809-arm32": {}
+              }
             }
           ]
         },
@@ -787,6 +797,16 @@
               "tags": {
                 "$(2.2-RuntimeVersion)-aspnetcore-runtime-nanoserver-1803": {},
                 "2.2-aspnetcore-runtime-nanoserver-1803": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "2.2/aspnetcore-runtime/nanoserver-1809/arm32",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(2.2-RuntimeVersion)-aspnetcore-runtime-nanoserver-1809-arm32": {},
+                "2.2-aspnetcore-runtime-nanoserver-1809-arm32": {}
               }
             }
           ]
@@ -1065,6 +1085,16 @@
                 "$(3.0-RuntimeVersion)-runtime-nanoserver-1803": {},
                 "3.0-runtime-nanoserver-1803": {}
               }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "3.0/runtime/nanoserver-1809/arm32",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(3.0-RuntimeVersion)-runtime-nanoserver-1809-arm32": {},
+                "3.0-runtime-nanoserver-1809-arm32": {}
+              }
             }
           ]
         },
@@ -1127,6 +1157,16 @@
               "tags": {
                 "$(3.0-RuntimeVersion)-aspnetcore-runtime-nanoserver-1803": {},
                 "3.0-aspnetcore-runtime-nanoserver-1803": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "3.0/aspnetcore-runtime/nanoserver-1809/arm32",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(3.0-RuntimeVersion)-aspnetcore-runtime-nanoserver-1809-arm32": {},
+                "3.0-aspnetcore-runtime-nanoserver-1809-arm32": {}
               }
             }
           ]
