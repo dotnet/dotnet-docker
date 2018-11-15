@@ -53,6 +53,15 @@
 - [`3.0.0-preview-runtime-deps-alpine3.8`, `3.0-runtime-deps-alpine3.8`, `3.0.0-preview-runtime-deps-alpine`, `3.0-runtime-deps-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/alpine3.8/amd64/Dockerfile)
 - [`3.0.0-preview-runtime-deps-bionic`, `3.0-runtime-deps-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/bionic/amd64/Dockerfile)
 
+# Windows Server, version 1809 amd64 tags
+
+- [`2.2.100-sdk-nanoserver-1809`, `2.2-sdk-nanoserver-1809`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.2.0-aspnetcore-runtime-nanoserver-1809`, `2.2-aspnetcore-runtime-nanoserver-1809`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.2.0-runtime-nanoserver-1809`, `2.2-runtime-nanoserver-1809`, `2.2.0-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.500-sdk-nanoserver-1809`, `2.1-sdk-nanoserver-1809`, `2.1.500-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.6-aspnetcore-runtime-nanoserver-1809`, `2.1-aspnetcore-runtime-nanoserver-1809`, `2.1.6-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.6-runtime-nanoserver-1809`, `2.1-runtime-nanoserver-1809`, `2.1.6-runtime`, `2.1-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1809/amd64/Dockerfile)
+
 # Windows Server, version 1803 amd64 tags
 
 - [`2.2.100-sdk-nanoserver-1803`, `2.2-sdk-nanoserver-1803`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1803/amd64/Dockerfile)

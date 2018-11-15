@@ -71,6 +71,15 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
+# Windows Server, version 1809 amd64 tags
+
+- [`2.2.100-sdk-nanoserver-1809`, `2.2-sdk-nanoserver-1809`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.2.0-aspnetcore-runtime-nanoserver-1809`, `2.2-aspnetcore-runtime-nanoserver-1809`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.2.0-runtime-nanoserver-1809`, `2.2-runtime-nanoserver-1809`, `2.2.0-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.500-sdk-nanoserver-1809`, `2.1-sdk-nanoserver-1809`, `2.1.500-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.6-aspnetcore-runtime-nanoserver-1809`, `2.1-aspnetcore-runtime-nanoserver-1809`, `2.1.6-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.6-runtime-nanoserver-1809`, `2.1-runtime-nanoserver-1809`, `2.1.6-runtime`, `2.1-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1809/amd64/Dockerfile)
+
 # Windows Server, version 1803 amd64 tags
 
 - [`2.2.100-sdk-nanoserver-1803`, `2.2-sdk-nanoserver-1803`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1803/amd64/Dockerfile)
@@ -187,8 +196,8 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ### ARM32 / Raspberry Pi
 
-* [.NET Core ARM32 Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-arm32.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.basic-preview) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
-* [ASP.NET Core ARM32 Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile.preview) builds and runs an ASP.NET Core application with Debian on ARM32 (works on Raspberry Pi).
+* [.NET Core ARM32 Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-arm32.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
+* [ASP.NET Core ARM32 Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) builds and runs an ASP.NET Core application with Debian on ARM32 (works on Raspberry Pi).
 
 ## Image variants
 

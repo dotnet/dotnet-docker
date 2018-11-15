@@ -82,6 +82,16 @@ jobs:
     dockerClientOS: windows
 - template: build-images.yml
   parameters:
+    name: Build_NanoServer1809_amd64
+    pool: # windows1809Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS5
+    matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1809Amd64'] ]
+    osVersion: nanoserver-1809
+    dockerClientOS: windows
+- template: build-images.yml
+  parameters:
     name: Build_NanoServer1809_arm32
     pool: # nanoServer1809Arm32Pool
       name: DotNetCore-Infra
@@ -159,6 +169,15 @@ jobs:
       demands:
       - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
     matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1803Amd64'] ]
+- template: test-images-windows-client.yml
+  parameters:
+    name: Test_NanoServer1809_amd64
+    buildDependencies: Build_NanoServer1809_amd64
+    pool: # windows1809Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS5
+    matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1809Amd64'] ]
 - template: test-images-linux-client.yml
   parameters:
     name: Test_NanoServer1809_arm32
@@ -241,11 +260,22 @@ jobs:
     dockerClientOS: windows
 - template: copy-images.yml
   parameters:
+    name: Copy_Images_NanoServer1809_amd64
+    pool: # windows1809Amd64
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS5
+    matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1809Amd64'] ]
+    osVersion: nanoserver-1809
+    architecture: amd64
+    dockerClientOS: windows
+- template: copy-images.yml
+  parameters:
     name: Copy_Images_NanoServer1809_arm32
     pool: # windows1809Amd64Pool - arm images can be copied with amd64 machines which will be much faster.
       name: DotNetCore-Infra
       demands:
-      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
+      - VSTS_OS -equals Windows_Server_2016_Data_Center_RS5
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1809Arm32'] ]
     osVersion: nanoserver-1809
     architecture: arm

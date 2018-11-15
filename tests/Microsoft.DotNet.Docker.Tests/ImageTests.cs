@@ -76,16 +76,20 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V2_1, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.NanoServer1709,     Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.NanoServer1803,     Arch = Arch.Amd64 },
+            new ImageData { Version = V2_1, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64,  IsWeb = true },
             new ImageData { Version = V2_1, OS = OS.NanoServer1709,     Arch = Arch.Amd64,  IsWeb = true },
             new ImageData { Version = V2_1, OS = OS.NanoServer1803,     Arch = Arch.Amd64,  IsWeb = true },
+            new ImageData { Version = V2_1, OS = OS.NanoServer1809,     Arch = Arch.Amd64,  IsWeb = true },
             new ImageData { Version = V2_2, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64 },
             new ImageData { Version = V2_2, OS = OS.NanoServer1709,     Arch = Arch.Amd64 },
             new ImageData { Version = V2_2, OS = OS.NanoServer1803,     Arch = Arch.Amd64 },
+            new ImageData { Version = V2_2, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
             new ImageData { Version = V2_2, OS = OS.NanoServer1809,     Arch = Arch.Arm },
             new ImageData { Version = V2_2, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64,  IsWeb = true },
             new ImageData { Version = V2_2, OS = OS.NanoServer1709,     Arch = Arch.Amd64,  IsWeb = true },
             new ImageData { Version = V2_2, OS = OS.NanoServer1803,     Arch = Arch.Amd64,  IsWeb = true },
+            new ImageData { Version = V2_2, OS = OS.NanoServer1809,     Arch = Arch.Amd64,  IsWeb = true },
             new ImageData { Version = V2_2, OS = OS.NanoServer1809,     Arch = Arch.Arm,    IsWeb = true },
             new ImageData { Version = V3_0, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64 },
             new ImageData { Version = V3_0, OS = OS.NanoServer1709,     Arch = Arch.Amd64 },
@@ -94,6 +98,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V3_0, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64,  IsWeb = true },
             new ImageData { Version = V3_0, OS = OS.NanoServer1709,     Arch = Arch.Amd64,  IsWeb = true },
             new ImageData { Version = V3_0, OS = OS.NanoServer1803,     Arch = Arch.Amd64,  IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1809,     Arch = Arch.Arm,    IsWeb = true },
         };
 
         private readonly DockerHelper _dockerHelper;
@@ -293,7 +298,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private async Task VerifyRuntimeImage_FrameworkDependentApp(ImageData imageData, string appSdkImage)
         {
             string frameworkDepAppId = GetIdentifier(imageData, "framework-dependent-app");
-            bool isRunAsContainerAdministrator = imageData.OS == OS.NanoServer1709 || imageData.OS == OS.NanoServer1803;
+            bool isRunAsContainerAdministrator = !DockerHelper.IsLinuxContainerModeEnabled && imageData.OS != OS.NanoServerSac2016;
             string publishCmd = GetPublishArgs(imageData);
 
             try
