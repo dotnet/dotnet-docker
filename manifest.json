@@ -1158,16 +1158,6 @@
                 "$(3.0-RuntimeVersion)-aspnetcore-runtime-nanoserver-1803": {},
                 "3.0-aspnetcore-runtime-nanoserver-1803": {}
               }
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "3.0/aspnetcore-runtime/nanoserver-1809/arm32",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(3.0-RuntimeVersion)-aspnetcore-runtime-nanoserver-1809-arm32": {},
-                "3.0-aspnetcore-runtime-nanoserver-1809-arm32": {}
-              }
             }
           ]
         },
