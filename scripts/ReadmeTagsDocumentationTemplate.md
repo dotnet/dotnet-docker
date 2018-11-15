@@ -103,5 +103,14 @@ $(TagDoc:2.1-runtime-deps-bionic-arm32v7)
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
+# Windows arm32 tags
+
+$(TagDoc:2.2-aspnetcore-runtime-nanoserver-1809-arm32)
+$(TagDoc:2.2-runtime-nanoserver-1809-arm32)
+
+**.NET Core 3.0 Preview tags**
+
+See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
+
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
 

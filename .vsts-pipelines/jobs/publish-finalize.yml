@@ -9,7 +9,8 @@ jobs:
       succeeded('Copy_Images_Linux_arm32v7'),
       succeeded('Copy_Images_NanoServerSac2016_amd64'),
       succeeded('Copy_Images_NanoServer1709_amd64'),
-      succeeded('Copy_Images_NanoServer1803_amd64'))"
+      succeeded('Copy_Images_NanoServer1803_amd64'),
+      succeeded('Copy_Images_NanoServer1809_arm32'))"
   dependsOn:
   - Copy_Images_Linux_amd64
   - Copy_Images_Linux_arm64v8
@@ -17,6 +18,7 @@ jobs:
   - Copy_Images_NanoServerSac2016_amd64
   - Copy_Images_NanoServer1709_amd64
   - Copy_Images_NanoServer1803_amd64
+  - Copy_Images_NanoServer1809_arm32
   pool: ${{ parameters.pool }}
   variables:
     imageBuilder.commonCmdArgs: >

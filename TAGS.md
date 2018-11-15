@@ -144,4 +144,13 @@
 - [`3.0.0-preview-runtime-deps-stretch-slim-arm32v7`, `3.0-runtime-deps-stretch-slim-arm32v7`, `3.0.0-preview-runtime-deps`, `3.0-runtime-deps` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/stretch-slim/arm32v7/Dockerfile)
 - [`3.0.0-preview-runtime-deps-bionic-arm32v7`, `3.0-runtime-deps-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/bionic/arm32v7/Dockerfile)
 
+# Windows arm32 tags
+
+- [`2.2.0-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1809/arm32/Dockerfile)
+- [`2.2.0-runtime-nanoserver-1809-arm32`, `2.2-runtime-nanoserver-1809-arm32`, `2.2.0-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1809/arm32/Dockerfile)
+
+**.NET Core 3.0 Preview tags**
+
+- [`3.0.0-preview-runtime-nanoserver-1809-arm32`, `3.0-runtime-nanoserver-1809-arm32`, `3.0.0-preview-runtime`, `3.0-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime/nanoserver-1809/arm32/Dockerfile)
+
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
