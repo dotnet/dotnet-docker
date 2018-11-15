@@ -16,8 +16,14 @@ steps:
   # Cleanup remote Docker server
   ################################################################################
   - ${{ if eq(parameters.cleanupRemoteDockerServer, 'true') }}:
-    - script: docker run --rm $(dockerArmRunArgs) --entrypoint docker $(dockerClientImage) system prune -a -f --volumes
-      displayName: Cleanup Remote Docker Server
+    - script: docker run --rm $(dockerArmRunArgs) --entrypoint docker $(dockerClientImage) system prune -f --volumes
+      displayName: Cleanup Remote Docker Server (basic)
+      condition: always()
+      continueOnError: true
+    - script: >
+        docker run --rm $(dockerArmRunArgs) --entrypoint /bin/bash $(dockerClientImage) -c
+        'docker rmi -f $(docker images --format "{{.Repository}}:{{.Tag}}" | grep -v -e ^arm32v7/ -e ^arm64v8/ -e ^mcr\\.microsoft\\.com/windows)'
+      displayName: Cleanup Remote Docker Server (images)
       condition: always()
       continueOnError: true
 
