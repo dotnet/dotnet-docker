@@ -76,15 +76,19 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V2_1, OS = OS.NanoServerSac2016 },
             new ImageData { Version = V2_1, OS = OS.NanoServer1709 },
             new ImageData { Version = V2_1, OS = OS.NanoServer1803 },
+            new ImageData { Version = V2_1, OS = OS.NanoServer1809 },
             new ImageData { Version = V2_1, OS = OS.NanoServerSac2016,    IsWeb = true },
             new ImageData { Version = V2_1, OS = OS.NanoServer1709,       IsWeb = true },
             new ImageData { Version = V2_1, OS = OS.NanoServer1803,       IsWeb = true },
+            new ImageData { Version = V2_1, OS = OS.NanoServer1809,       IsWeb = true },
             new ImageData { Version = V2_2, OS = OS.NanoServerSac2016 },
             new ImageData { Version = V2_2, OS = OS.NanoServer1709 },
             new ImageData { Version = V2_2, OS = OS.NanoServer1803 },
+            new ImageData { Version = V2_2, OS = OS.NanoServer1809 },
             new ImageData { Version = V2_2, OS = OS.NanoServerSac2016,    IsWeb = true },
             new ImageData { Version = V2_2, OS = OS.NanoServer1709,       IsWeb = true },
             new ImageData { Version = V2_2, OS = OS.NanoServer1803,       IsWeb = true },
+            new ImageData { Version = V2_2, OS = OS.NanoServer1809,       IsWeb = true },
             new ImageData { Version = V3_0, OS = OS.NanoServerSac2016 },
             new ImageData { Version = V3_0, OS = OS.NanoServer1709 },
             new ImageData { Version = V3_0, OS = OS.NanoServer1803 },
@@ -285,7 +289,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private async Task VerifyRuntimeImage_FrameworkDependentApp(ImageData imageData, string appSdkImage)
         {
             string frameworkDepAppId = GetIdentifier(imageData, "framework-dependent-app");
-            bool isRunAsContainerAdministrator = imageData.OS == OS.NanoServer1709 || imageData.OS == OS.NanoServer1803;
+            bool isRunAsContainerAdministrator = !DockerHelper.IsLinuxContainerModeEnabled && imageData.OS != OS.NanoServerSac2016;
             string publishCmd = GetPublishArgs(imageData);
 
             try

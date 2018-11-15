@@ -1,6 +1,5 @@
 # This Dockerfile uses nightly preview builds for .NET Core
-# It will be updated to .NET Core 2.2 shortly
-FROM microsoft/dotnet-nightly:2.1-sdk AS build
+FROM microsoft/dotnet-nightly:2.2-sdk AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -24,7 +23,7 @@ COPY tests/. .
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 
-FROM microsoft/dotnet-nightly:2.1-runtime AS runtime
+FROM microsoft/dotnet-nightly:2.2-runtime AS runtime
 WORKDIR /app
 COPY --from=build /app/dotnetapp/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
