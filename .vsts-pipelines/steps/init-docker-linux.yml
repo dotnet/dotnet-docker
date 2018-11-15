@@ -9,7 +9,7 @@ steps:
   ################################################################################
 - template: cleanup-docker-linux.yml
   parameters:
-    excludeRunningContainers: ${{ parameters.setupRemoteDockerServer }}
+    runOnlyBasicCleanup: ${{ parameters.setupRemoteDockerServer }}
 
   ################################################################################
   # Setup Repo Volume
