@@ -153,8 +153,9 @@ $(TagDoc:3.0-runtime-bionic-arm32v7)
 $(TagDoc:3.0-runtime-deps-stretch-slim-arm32v7)
 $(TagDoc:3.0-runtime-deps-bionic-arm32v7)
 
-# Windows arm32 tags
+# Windows Server, version 1809 arm32 tags
 
+$(TagDoc:2.2-sdk-nanoserver-1809-arm32)
 $(TagDoc:2.2-aspnetcore-runtime-nanoserver-1809-arm32)
 $(TagDoc:2.2-runtime-nanoserver-1809-arm32)
 

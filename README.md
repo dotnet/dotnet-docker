@@ -148,8 +148,9 @@ See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nigh
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
-# Windows arm32 tags
+# Windows Server, version 1809 arm32 tags
 
+- [`2.2.0-sdk-nanoserver-1809-arm32`, `2.2-sdk-nanoserver-1809-arm32`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/arm32/Dockerfile)
 - [`2.2.0-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1809/arm32/Dockerfile)
 - [`2.2.0-runtime-nanoserver-1809-arm32`, `2.2-runtime-nanoserver-1809-arm32`, `2.2.0-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1809/arm32/Dockerfile)
 
