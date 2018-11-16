@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/windows/nanoserver:1809_arm
 # Install .NET Core SDK
 ENV DOTNET_SDK_VERSION 2.2.100
 
-RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-arm.zip `
+RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/%DOTNET_SDK_VERSION%/dotnet-sdk-%DOTNET_SDK_VERSION%-win-arm.zip `
     && mkdir -p "%ProgramFiles%\dotnet" `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
     && del dotnet.zip
