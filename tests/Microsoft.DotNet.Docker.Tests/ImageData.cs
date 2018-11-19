@@ -10,34 +10,97 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public class ImageData
     {
-        private string runtimeDepsVersion;
-        private string sdkOsVariant;
-        private string sdkVersion;
+        private Version _runtimeDepsVersion;
+        private Version _sdkVersion;
 
-        public string Architecture { get; set; } = "amd64";
-        public string DotNetVersion { get; set; }
-        public bool HasNoSdk { get; set; }
+        public Arch Arch { get; set; }
+        public Version Version { get; set; }
+        public string VersionString { get => Version.ToString(2); }
+        public bool HasNoSdk { get => SdkVersion != Version; }
         public bool IsWeb { get; set; }
-        public bool IsAlpine { get => OsVariant.StartsWith("alpine"); }
-        public bool IsArm { get => String.Equals("arm", Architecture, StringComparison.OrdinalIgnoreCase); }
-        public string OsVariant { get; set; }
+        public bool IsArm { get => Arch == Arch.Arm || Arch == Arch.Arm64; }
+        public string OS { get; set; }
 
-        public string RuntimeDepsVersion
+        public string Rid
         {
-            get { return runtimeDepsVersion ?? DotNetVersion; }
-            set { runtimeDepsVersion = value; }
+            get {
+                string rid;
+
+                if (Arch == Arch.Arm)
+                {
+                    rid = "linux-arm";
+                }
+                else if (Arch == Arch.Arm64)
+                {
+                    rid = "linux-arm64";
+                }
+                else if (OS.StartsWith("alpine"))
+                {
+                    rid = "linux-musl-x64";
+                }
+                else if (Version.Major == 1)
+                {
+                    rid = OS == Tests.OS.Jessie ? "debian.8-x64" : "debian.9-x64";;
+                }
+                else
+                {
+                    rid = "linux-x64";
+                }
+
+                return rid;
+            }
         }
 
-        public string SdkOsVariant
+        public Version RuntimeDepsVersion
         {
-            get { return sdkOsVariant ?? (HasNoSdk ? "" : OsVariant); }
-            set { sdkOsVariant = value; }
+            get { return _runtimeDepsVersion ?? Version; }
+            set { _runtimeDepsVersion = value; }
         }
+
+        public string SdkOS { get => OS == Tests.OS.StretchSlim ? Tests.OS.Stretch : OS; }
         
-        public string SdkVersion
+        public Version SdkVersion
         {
-            get { return sdkVersion ?? DotNetVersion; }
-            set { sdkVersion = value; }
+            get { return _sdkVersion ?? Version; }
+            set { _sdkVersion = value; }
+        }
+
+        public string GetTag(DotNetImageType imageType)
+        {
+            Version imageVersion;
+            string os;
+            string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
+
+            switch (imageType)
+            {
+                case DotNetImageType.Runtime:
+                case DotNetImageType.AspNetCore_Runtime:
+                    imageVersion = Version;
+                    os = OS;
+                    break;
+                case DotNetImageType.Runtime_Deps:
+                    imageVersion = RuntimeDepsVersion;
+                    os = OS;
+                    break;
+                case DotNetImageType.SDK:
+                    imageVersion = SdkVersion;
+                    os = SdkOS;
+                    break;
+                default:
+                    throw new NotSupportedException($"Unsupported image type '{variantName}'");
+            }
+
+            string arch = string.Empty;
+            if (Arch == Arch.Arm)
+            {
+                arch = $"-arm32v7";
+            }
+            else if (Arch == Arch.Arm64)
+            {
+                arch = $"-arm64v8";
+            }
+
+            return $"{imageVersion.ToString(2)}-{variantName}-{os}{arch}";
         }
 
         public override string ToString()

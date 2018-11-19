@@ -1,19 +1,6 @@
-# escape=`
-
-# installer image
-FROM microsoft/windowsservercore:1709 AS installer-env
-
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
-
-# retrieve git
-RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; `
-    Invoke-WebRequest -UseBasicParsing -outfile git.zip https://github.com/git-for-windows/git/releases/download/v2.16.1.windows.1/MinGit-2.16.1-64-bit.zip; `
-    Expand-Archive git.zip -DestinationPath git; `
-    Remove-Item -Force git.zip
-
-
 # build image
-FROM microsoft/dotnet:2.1-sdk-nanoserver-1709 AS build-env
+FROM microsoft/dotnet:2.1-sdk-stretch AS build-env
+
 WORKDIR /update-dependencies
 
 # copy csproj and restore as distinct layers
@@ -27,13 +14,35 @@ RUN dotnet publish -c Release -o out --no-restore
 
 
 # runtime image
-FROM microsoft/dotnet:2.1-runtime-nanoserver-1709
+FROM microsoft/dotnet:2.1-runtime-stretch-slim
 
 # install git
-COPY --from=installer-env ["git", "C:\\Program Files\\git"]
-USER ContainerAdministrator 
-RUN setx /M PATH "%PATH%;C:\Program Files\git\cmd"
-USER ContainerUser
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        git \
+    && rm -rf /var/lib/apt/lists/*
+
+# install Docker
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        apt-transport-https \
+        gnupg2 \
+        software-properties-common \
+    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
+    && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        docker-ce=17.12.0~ce-0~debian \
+    && rm -rf /var/lib/apt/lists/*
+
+# install PowerShell
+RUN apt-get update \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main" > /etc/apt/sources.list.d/microsoft.list' \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        powershell=6.1.0-1.debian.9 \
+    && rm -rf /var/lib/apt/lists/*
 
 # copy update-dependencies
 WORKDIR /update-dependencies

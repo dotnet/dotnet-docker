@@ -4,7 +4,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Xunit.Abstractions;

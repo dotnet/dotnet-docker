@@ -24,3 +24,6 @@ artifacts/
 # User-specific files
 *.suo
 *.user
+
+# ImageBuilder directory
+.Microsoft.DotNet.ImageBuilder

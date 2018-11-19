@@ -2,5 +2,5 @@ trigger: none
 variables:
   manifest: manifest.json
   repo: dotnet
-phases:
-  - template: ../phases/build-all.yml
+jobs:
+- template: ../jobs/build-test-publish-repo.yml

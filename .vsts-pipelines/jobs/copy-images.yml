@@ -1,0 +1,57 @@
+parameters:
+  name: null
+  pool: {}
+  matrix: {}
+  osVersion: "'*'"
+  architecture: null
+  dockerClientOS: null
+jobs:
+- job: ${{ parameters.name }}
+  condition: "
+    or(
+      eq(variables['singlePhase'], 'publish'),
+      and(
+        eq(variables['singlePhase'], ''),
+        or(
+          succeeded(),
+          and(
+            eq(variables['repo'], 'dotnet-samples'),
+            eq(variables['singlePhase'], ''),
+            succeeded('Build_Linux_amd64'),
+            succeeded('Build_Linux_arm32v7'),
+            succeeded('Build_NanoServerSac2016_amd64'),
+            succeeded('Build_NanoServer1709_amd64'),
+            succeeded('Build_NanoServer1803_amd64'),
+            succeeded('Build_NanoServer1809_amd64')))))"
+  dependsOn:
+  - GenerateMatrices
+  - Test_Linux_amd64
+  - Test_Linux_arm32v7
+  - Test_NanoServerSac2016_amd64
+  - Test_NanoServer1709_amd64
+  - Test_NanoServer1803_amd64
+  - Test_NanoServer1809_amd64
+  pool: ${{ parameters.pool }}
+  strategy:
+    matrix: ${{ parameters.matrix }}
+  variables:
+    osVersion: ${{ parameters.osVersion }}
+    architecture: ${{ parameters.architecture }}
+  steps:
+  - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
+  - script: >
+      $(runImageBuilderCmd) copyImages
+      --manifest $(manifest)
+      $(imageBuilderPaths)
+      --os-version $(osVersion)
+      --architecture $(architecture)
+      --source-server $(acr.server)
+      --source-username $(acr.userName)
+      --source-password $(BotAccount-dotnet-docker-acr-bot-password)
+      --destination-username $(dockerRegistry.userName)
+      --destination-password $(BotAccount-dotnet-dockerhub-bot-password)
+      $(imageBuilder.queueArgs)
+      $(imageBuilder.publishQueueArgs)
+      $(acr.server)/$(repo)-$(stagingRepo.suffix)
+    displayName: Copy Images
+  - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}

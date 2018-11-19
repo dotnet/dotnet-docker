@@ -1,0 +1,50 @@
+parameters:
+  name: null
+  buildDependencies: []
+  pool: {}
+  matrix: {}
+jobs:
+- job: ${{ parameters.name }}
+  condition: "
+    and(
+      ne(variables['repo'], 'dotnet-samples'),
+      or(
+        and(
+          succeeded(),
+          eq(variables['singlePhase'], '')),
+        eq(variables['singlePhase'], 'test')))"
+  dependsOn:
+    - GenerateMatrices
+    - ${{ parameters.buildDependencies }}
+  pool: ${{ parameters.pool }}
+  strategy:
+    matrix: ${{ parameters.matrix }}
+  steps:
+  - template: ../steps/init-docker-windows.yml
+    parameters:
+      setupImageBuilder: false
+  - powershell: >
+      ./scripts/Invoke-WithRetry.ps1 
+      "docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)"
+    displayName: Docker login
+  - powershell: >
+      ./tests/run-tests.ps1
+      -VersionFilter $(dotnetVersion)*
+      -OSFilter $(osVersion)
+      -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
+    displayName: Test Images
+  - script: docker logout
+    displayName: Docker logout
+    condition: always()
+    continueOnError: true
+  - task: PublishTestResults@2
+    displayName: Publish Test Results
+    condition: always()
+    continueOnError: true
+    inputs:
+      testRunner: vSTest
+      testResultsFiles: 'tests/**/*.trx'
+      mergeTestResults: true
+      publishRunAttachments: true
+      testRunTitle: Windows $(dotnetVersion) $(osVersion) amd64
+  - template: ../steps/cleanup-docker-windows.yml
