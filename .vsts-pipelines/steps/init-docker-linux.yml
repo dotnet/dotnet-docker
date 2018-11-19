@@ -19,8 +19,12 @@ steps:
 - script: $(Build.Repository.LocalPath)/scripts/pull-image.sh buildpack-deps:stretch-scm
   displayName: Pull Image buildpack-deps:stretch-scm
 - script: >
-    docker run --rm -v $(repoVolume):/repo buildpack-deps:stretch-scm
-    git clone https://github.com/dotnet/dotnet-docker.git /repo
+    (docker run --rm -v $(repoVolume):/repo buildpack-deps:stretch-scm
+    git clone https://github.com/dotnet/dotnet-docker.git /repo)
+    || (sleep 30 && docker run --rm -v $(repoVolume):/repo buildpack-deps:stretch-scm
+    git clone https://github.com/dotnet/dotnet-docker.git /repo)
+    || (sleep 30 && docker run --rm -v $(repoVolume):/repo buildpack-deps:stretch-scm
+    git clone https://github.com/dotnet/dotnet-docker.git /repo)
   displayName: Clone Repo
 - script: docker run --rm -v $(repoVolume):/repo -w /repo buildpack-deps:stretch-scm git checkout $(Build.SourceVersion)
   displayName: Checkout Source
