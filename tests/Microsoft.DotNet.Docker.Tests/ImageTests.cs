@@ -139,7 +139,12 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetVerifyImagesData))]
         public async Task VerifyImages(ImageData imageData)
         {
-            if (imageData.Version == V3_0)
+            if (!DockerHelper.IsLinuxContainerModeEnabled && imageData.IsArm)
+            {
+                _outputHelper.WriteLine("Tests are blocked as Windows Arm32 E2E experience is not yet complete.");
+                return;
+            }
+            else if (imageData.Version == V3_0)
             {
                 if (imageData.IsWeb)
                 {
@@ -148,12 +153,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
                 if (!DockerHelper.IsLinuxContainerModeEnabled)
                 {
-                    if (imageData.IsArm)
-                    {
-                        _outputHelper.WriteLine("Tests are blocked as Windows Arm32 E2E experience is not yet complete.");
-                        return;
-                    }
-
                     _outputHelper.WriteLine("Tests are blocked on https://github.com/aspnet/Templating/pull/823");
                     return;
                 }
