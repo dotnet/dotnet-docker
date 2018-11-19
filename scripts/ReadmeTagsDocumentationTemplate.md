@@ -116,8 +116,9 @@ $(TagDoc:2.1-runtime-deps-bionic-arm32v7)
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
-# Windows arm32 tags
+# Windows Server, version 1809 arm32 tags
 
+$(TagDoc:2.2-sdk-nanoserver-1809-arm32)
 $(TagDoc:2.2-aspnetcore-runtime-nanoserver-1809-arm32)
 $(TagDoc:2.2-runtime-nanoserver-1809-arm32)
 
