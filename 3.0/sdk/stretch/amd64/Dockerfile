@@ -18,7 +18,6 @@ ENV DOTNET_SDK_VERSION 3.0.100-preview-009734
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
     && dotnet_sha512='31c4b459e10a6998bb2b408f5f0f1e5e5b40060b093753e7647f877c3ce9dd9915eb94488d7ed3808acb7c103995e8a6158f8c297d263032a516db253131dca0' \
-    && sha512sum dotnet.tar.gz \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
