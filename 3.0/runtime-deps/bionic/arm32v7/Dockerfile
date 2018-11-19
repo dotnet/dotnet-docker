@@ -10,7 +10,7 @@ RUN apt-get update \
         libgssapi-krb5-2 \
         libicu60 \
         liblttng-ust0 \
-        libssl1.0.0 \
+        libssl1.1 \
         libstdc++6 \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
