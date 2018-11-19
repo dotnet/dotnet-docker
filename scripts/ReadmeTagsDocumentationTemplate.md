@@ -48,42 +48,7 @@ $(TagDoc:2.1-runtime-nanoserver-1809)
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
-# Windows Server, version 1803 amd64 tags
-
-$(TagDoc:2.2-sdk-nanoserver-1803)
-$(TagDoc:2.2-aspnetcore-runtime-nanoserver-1803)
-$(TagDoc:2.2-runtime-nanoserver-1803)
-$(TagDoc:2.1-sdk-nanoserver-1803)
-$(TagDoc:2.1-aspnetcore-runtime-nanoserver-1803)
-$(TagDoc:2.1-runtime-nanoserver-1803)
-
-**.NET Core 3.0 Preview tags**
-
-See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
-
-# Windows Server, version 1709 amd64 tags
-
-$(TagDoc:2.2-sdk-nanoserver-1709)
-$(TagDoc:2.2-aspnetcore-runtime-nanoserver-1709)
-$(TagDoc:2.2-runtime-nanoserver-1709)
-$(TagDoc:2.1-sdk-nanoserver-1709)
-$(TagDoc:2.1-aspnetcore-runtime-nanoserver-1709)
-$(TagDoc:2.1-runtime-nanoserver-1709)
-
-**.NET Core 3.0 Preview tags**
-
-See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
-
-# Windows Server 2016 amd64 tags
-
-$(TagDoc:2.2-sdk-nanoserver-sac2016)
-$(TagDoc:2.2-aspnetcore-runtime-nanoserver-sac2016)
-$(TagDoc:2.2-runtime-nanoserver-sac2016)
-$(TagDoc:2.1-sdk-nanoserver-sac2016)
-$(TagDoc:2.1-aspnetcore-runtime-nanoserver-sac2016)
-$(TagDoc:2.1-runtime-nanoserver-sac2016)
-
-**.NET Core 1.0, 1.1 and 3.0 Preview tags**
+# Windows Server 2016, version 1709, and version 1803 amd64 tags
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
