@@ -6,9 +6,10 @@ See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for image
 
 The following tags are the latest stable versions of the most commonly used images. The complete set of tags is listed further down.
 
-- [`2.1-sdk`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
-- [`2.1-aspnetcore-runtime`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
-- [`2.1-runtime`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/amd64/Dockerfile)
+- [`2.2-sdk`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile)
+- [`2.2-aspnetcore-runtime`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
+- [`2.2-runtime`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/stretch-slim/amd64/Dockerfile)
+- [`2.2-runtime-deps`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
 
 The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together. See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
@@ -84,42 +85,7 @@ See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nigh
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
-# Windows Server, version 1803 amd64 tags
-
-- [`2.2.100-sdk-nanoserver-1803`, `2.2-sdk-nanoserver-1803`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1803/amd64/Dockerfile)
-- [`2.2.0-aspnetcore-runtime-nanoserver-1803`, `2.2-aspnetcore-runtime-nanoserver-1803`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile)
-- [`2.2.0-runtime-nanoserver-1803`, `2.2-runtime-nanoserver-1803`, `2.2.0-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1803/amd64/Dockerfile)
-- [`2.1.500-sdk-nanoserver-1803`, `2.1-sdk-nanoserver-1803`, `2.1.500-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1803/amd64/Dockerfile)
-- [`2.1.6-aspnetcore-runtime-nanoserver-1803`, `2.1-aspnetcore-runtime-nanoserver-1803`, `2.1.6-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile)
-- [`2.1.6-runtime-nanoserver-1803`, `2.1-runtime-nanoserver-1803`, `2.1.6-runtime`, `2.1-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1803/amd64/Dockerfile)
-
-**.NET Core 3.0 Preview tags**
-
-See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
-
-# Windows Server, version 1709 amd64 tags
-
-- [`2.2.100-sdk-nanoserver-1709`, `2.2-sdk-nanoserver-1709`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1709/amd64/Dockerfile)
-- [`2.2.0-aspnetcore-runtime-nanoserver-1709`, `2.2-aspnetcore-runtime-nanoserver-1709`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile)
-- [`2.2.0-runtime-nanoserver-1709`, `2.2-runtime-nanoserver-1709`, `2.2.0-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1709/amd64/Dockerfile)
-- [`2.1.500-sdk-nanoserver-1709`, `2.1-sdk-nanoserver-1709`, `2.1.500-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1709/amd64/Dockerfile)
-- [`2.1.6-aspnetcore-runtime-nanoserver-1709`, `2.1-aspnetcore-runtime-nanoserver-1709`, `2.1.6-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile)
-- [`2.1.6-runtime-nanoserver-1709`, `2.1-runtime-nanoserver-1709`, `2.1.6-runtime`, `2.1-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1709/amd64/Dockerfile)
-
-**.NET Core 3.0 Preview tags**
-
-See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
-
-# Windows Server 2016 amd64 tags
-
-- [`2.2.100-sdk-nanoserver-sac2016`, `2.2-sdk-nanoserver-sac2016`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.2.0-aspnetcore-runtime-nanoserver-sac2016`, `2.2-aspnetcore-runtime-nanoserver-sac2016`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.2.0-runtime-nanoserver-sac2016`, `2.2-runtime-nanoserver-sac2016`, `2.2.0-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.1.500-sdk-nanoserver-sac2016`, `2.1-sdk-nanoserver-sac2016`, `2.1.500-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.1.6-aspnetcore-runtime-nanoserver-sac2016`, `2.1-aspnetcore-runtime-nanoserver-sac2016`, `2.1.6-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.1.6-runtime-nanoserver-sac2016`, `2.1-runtime-nanoserver-sac2016`, `2.1.6-runtime`, `2.1-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
-
-**.NET Core 1.0, 1.1 and 3.0 Preview tags**
+# Windows Server 2016, version 1709, and version 1803 amd64 tags
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
