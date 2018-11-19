@@ -1,10 +1,10 @@
 FROM microsoft/dotnet-nightly:3.0-runtime-deps-alpine3.8
 
 # Install .NET Core
-ENV DOTNET_VERSION 3.0.0-preview-27106-02
+ENV DOTNET_VERSION 3.0.0-preview-27117-01
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='90ec30438a28b3b9f805f9238bcef14551dcc2485d01a37a54e7d04fd567aa232e09a1ee683f877d2799950a9a62ee97f1fa862d48cf1094e994fbb3571b7db8' \
+    && dotnet_sha512='689ba1fcb0d812d4fddd5ab9b9a8be94df108c3a58a309003986ad6befb48e74db71099ca3a2dc62b58703f284c57e01014071c757073ec6c72adcce067db2cd' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \

@@ -141,22 +141,22 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             if (!DockerHelper.IsLinuxContainerModeEnabled && imageData.IsArm)
             {
-                _outputHelper.WriteLine("Tests are blocked as Windows Arm32 E2E experience is not yet complete.");
+                _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/corefx/issues/33563");
                 return;
             }
             else if (imageData.Version == V3_0)
             {
                 if (imageData.IsWeb)
                 {
-                    _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/sdk/issues/2652");
+                    _outputHelper.WriteLine("Tests are blocked on https://github.com/aspnet/Templating/pull/823");
                     return;
                 }
                 if (!DockerHelper.IsLinuxContainerModeEnabled)
                 {
-                    _outputHelper.WriteLine("Tests are blocked on https://github.com/aspnet/Templating/pull/823");
+                    _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/sdk/issues/2652");
                     return;
                 }
-                else if (imageData.OS == OS.StretchSlim)
+                if (imageData.OS == OS.StretchSlim)
                 {
                     _outputHelper.WriteLine("Intermittent compile failure");
                     return;
