@@ -1,0 +1,36 @@
+parameters:
+  name: null
+  pool: {}
+  matrix: {}
+  osVersion: "'*'"
+  dockerClientOS: null
+  useRemoteDockerServer: false
+jobs:
+- job: ${{ parameters.name }}
+  condition: or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'build'))
+  dependsOn: GenerateMatrices
+  pool: ${{ parameters.pool }}
+  strategy:
+    matrix: ${{ parameters.matrix }}
+  variables:
+    osVersion: ${{ parameters.osVersion }}
+  steps:
+  - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
+    parameters:
+      setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
+  - script: >
+      $(runImageBuilderCmd) build
+      --manifest $(manifest)
+      $(imageBuilderPaths)
+      --os-version $(osVersion)
+      --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix)
+      --retry
+      --push
+      --server $(acr.server)
+      --username $(acr.userName)
+      --password $(BotAccount-dotnet-docker-acr-bot-password)
+      $(imageBuilder.queueArgs)
+    displayName: Build Images
+  - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
+    parameters:
+      cleanupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}

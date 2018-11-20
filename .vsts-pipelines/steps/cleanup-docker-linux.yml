@@ -1,0 +1,49 @@
+parameters:
+  cleanupRemoteDockerServer: false
+  runOnlyBasicCleanup: false
+
+steps:
+################################################################################
+# Cleanup local Docker server (basic)
+################################################################################
+- script: docker system prune -f
+  displayName: Cleanup Docker (basic)
+  condition: always()
+  continueOnError: true
+
+- ${{ if eq(parameters.runOnlyBasicCleanup, 'false') }}:
+  ################################################################################
+  # Cleanup remote Docker server
+  ################################################################################
+  - ${{ if eq(parameters.cleanupRemoteDockerServer, 'true') }}:
+    - script: docker run --rm $(dockerArmRunArgs) --entrypoint docker $(dockerClientImage) system prune -f --volumes
+      displayName: Cleanup Remote Docker Server (basic)
+      condition: always()
+      continueOnError: true
+    - script: >
+        docker run --rm $(dockerArmRunArgs) --entrypoint /bin/bash $(dockerClientImage) -c
+        'docker rmi -f $(docker images --format "{{.Repository}}:{{.Tag}}" | grep -v -e ^arm32v7/ -e ^arm64v8/ -e ^mcr\\.microsoft\\.com/windows)'
+      displayName: Cleanup Remote Docker Server (images)
+      condition: always()
+      continueOnError: true
+
+  ################################################################################
+  # Cleanup local Docker server (advanced)
+  ################################################################################
+  - ${{ if eq(parameters.cleanupRemoteDockerServer, 'false') }}:
+    - script: docker stop $(docker ps -q) || true
+      displayName: Stop Running Containers
+      condition: always()
+      continueOnError: true
+    - script: docker system prune -a -f --volumes
+      displayName: Cleanup Docker (advanced)
+      condition: always()
+      continueOnError: true
+
+  - ${{ if eq(parameters.cleanupRemoteDockerServer, 'true') }}:
+    # Multiple build agents run on a single host machine for remote Docker server scenarios.
+    # Don't delete Docker assets that may be used by other build agents.
+    - script: docker volume rm -f $(repoVolume)
+      displayName: Cleanup Repo Docker Volume
+      condition: always()
+      continueOnError: true

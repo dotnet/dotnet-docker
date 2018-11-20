@@ -1,0 +1,15 @@
+steps:
+  ################################################################################
+  # Cleanup Docker Resources
+  ################################################################################
+- powershell: $(Build.Repository.LocalPath)/scripts/Invoke-CleanupDocker.ps1
+  displayName: Cleanup Docker Images
+  condition: always()
+  continueOnError: true
+- powershell: |
+    if (Test-Path $(Build.BinariesDirectory)\.Microsoft.DotNet.ImageBuilder) {
+      Remove-Item $(Build.BinariesDirectory)\.Microsoft.DotNet.ImageBuilder -Force -Recurse;
+    }
+  displayName: Cleanup Image Builder
+  condition: always()
+  continueOnError: true
