@@ -28,7 +28,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
     && lzma_sha512='329b72d6576a200e2bf75297102806d33c691f38489c3b2b83fe354509cbc19bf9509a219b2b0a5e3a3a193326ef8a8f836ee11cd1df196e75b4b3738e783b15' \
     && echo "$lzma_sha512 /usr/share/dotnet/sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma" | sha512sum -c -
 
-# Configure Kestrel web server to bind to port 80 when present
+# Configure web servers to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80 \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \
