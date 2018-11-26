@@ -1,10 +1,10 @@
 FROM microsoft/dotnet-nightly:3.0-runtime-deps-alpine3.8
 
 # Install ASP.NET Core
-ENV ASPNETCORE_VERSION 3.0.0-alpha1-10663
+ENV ASPNETCORE_VERSION 3.0.0-preview-18572-0018
 
 RUN wget -O aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-musl-x64.tar.gz \
-    && aspnetcore_sha512='aa296d10f4b1f1042eff8949c3c2f325fff46d1cd34dc1c06d1d56cf966a569db73266e3bd9baaebaf594951f2eeea00d2a05711ce85f98a5877c5aa63f3c5a1' \
+    && aspnetcore_sha512='a3711f5306330e7d553e75ad825eb209fb27d53176c8011bad2106d22b049a73d21bc33f21afcceafc9a77878c2e483dbcee33d51d8d6d8606eda57e873c72dc' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet \
