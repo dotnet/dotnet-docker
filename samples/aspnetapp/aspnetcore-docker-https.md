@@ -1,6 +1,6 @@
 # Hosting ASP.NET Core Images with Docker over HTTPS
 
-ASP.NET Core 2.1 uses [HTTPS by default](https://docs.microsoft.com/aspnet/core/security/enforcing-ssl). [HTTPS](https://en.wikipedia.org/wiki/HTTPS) relies on [certificates](https://en.wikipedia.org/wiki/Public_key_certificate) for trust, identity, and encryption.
+ASP.NET Core 2.1 and newer uses [HTTPS by default](https://docs.microsoft.com/aspnet/core/security/enforcing-ssl). [HTTPS](https://en.wikipedia.org/wiki/HTTPS) relies on [certificates](https://en.wikipedia.org/wiki/Public_key_certificate) for trust, identity, and encryption.
 
 This document explains how to run pre-built container images with HTTPS.
 
@@ -22,7 +22,7 @@ The instructions volume mount certificates into containers. You can add certific
 
 Use the following instructions, for your operating system configuration.
 
-You need the [.NET Core 2.1 SDK](https://www.microsoft.com/net/download) for some of the instructions.
+You need the [.NET Core 2.1 SDK or newer](https://www.microsoft.com/net/download) for some of the instructions.
 
 ### Windows using Linux containers
 
