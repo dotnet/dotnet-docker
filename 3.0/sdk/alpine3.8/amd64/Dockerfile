@@ -23,5 +23,5 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip
 
-# Trigger first run experience by running arbitrary cmd to populate local package cache
+# Trigger first run experience by running arbitrary cmd
 RUN dotnet help
