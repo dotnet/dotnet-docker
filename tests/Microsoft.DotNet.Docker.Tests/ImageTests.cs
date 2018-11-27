@@ -148,7 +148,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 if (imageData.IsWeb)
                 {
-                    _outputHelper.WriteLine("Tests are blocked on https://github.com/aspnet/Templating/pull/823");
+                    _outputHelper.WriteLine("Tests are blocked on https://github.com/aspnet/websdk/issues/429");
                     return;
                 }
                 if (!DockerHelper.IsLinuxContainerModeEnabled)
@@ -159,11 +159,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 if (imageData.OS == OS.StretchSlim)
                 {
                     _outputHelper.WriteLine("Intermittent compile failure");
-                    return;
-                }
-                if (imageData.IsArm)
-                {
-                    _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/cli/issues/10291");
                     return;
                 }
             }
