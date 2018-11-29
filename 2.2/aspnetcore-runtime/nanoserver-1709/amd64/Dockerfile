@@ -1,7 +1,7 @@
 # escape=`
 
 # Installer image
-FROM microsoft/windowsservercore:1709 AS installer-env
+FROM mcr.microsoft.com/windows/servercore:1709 AS installer-env
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
@@ -19,7 +19,7 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.blob.core.window
     Remove-Item -Force aspnetcore.zip
 
 # Runtime image
-FROM microsoft/nanoserver:1709
+FROM mcr.microsoft.com/windows/nanoserver:1709
 
 # Note: Runtime image's SHELL is the CMD shell (different than the installer image).
 
