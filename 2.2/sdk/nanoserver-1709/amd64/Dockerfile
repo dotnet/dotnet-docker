@@ -1,7 +1,7 @@
 # escape=`
 
 # Installer image
-FROM microsoft/windowsservercore:1709 AS installer-env
+FROM mcr.microsoft.com/windows/servercore:1709 AS installer-env
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
@@ -20,7 +20,7 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
 
 
 # SDK image
-FROM microsoft/nanoserver:1709
+FROM mcr.microsoft.com/windows/nanoserver:1709
 
 COPY --from=installer-env ["dotnet", "C:\\Program Files\\dotnet"]
 
