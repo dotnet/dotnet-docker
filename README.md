@@ -72,23 +72,6 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
-# Windows Server, version 1809 amd64 tags
-
-- [`2.2.100-sdk-nanoserver-1809`, `2.2-sdk-nanoserver-1809`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
-- [`2.2.0-aspnetcore-runtime-nanoserver-1809`, `2.2-aspnetcore-runtime-nanoserver-1809`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
-- [`2.2.0-runtime-nanoserver-1809`, `2.2-runtime-nanoserver-1809`, `2.2.0-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1809/amd64/Dockerfile)
-- [`2.1.501-preview-sdk-nanoserver-1809`, `2.1-sdk-nanoserver-1809`, `2.1.501-preview-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
-- [`2.1.7-aspnetcore-runtime-nanoserver-1809`, `2.1-aspnetcore-runtime-nanoserver-1809`, `2.1.7-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
-- [`2.1.7-runtime-nanoserver-1809`, `2.1-runtime-nanoserver-1809`, `2.1.7-runtime`, `2.1-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1809/amd64/Dockerfile)
-
-**.NET Core 3.0 Preview tags**
-
-See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
-
-# Windows Server 2016, version 1709, and version 1803 amd64 tags
-
-See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
-
 # Linux arm64 tags
 
 **.NET Core 3.0 Preview tags**
@@ -115,6 +98,23 @@ See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nigh
 - [`2.1.7-runtime-deps-bionic-arm32v7`, `2.1-runtime-deps-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/arm32v7/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
+
+See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
+
+# Windows Server, version 1809 amd64 tags
+
+- [`2.2.100-sdk-nanoserver-1809`, `2.2-sdk-nanoserver-1809`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.2.0-aspnetcore-runtime-nanoserver-1809`, `2.2-aspnetcore-runtime-nanoserver-1809`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.2.0-runtime-nanoserver-1809`, `2.2-runtime-nanoserver-1809`, `2.2.0-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.501-preview-sdk-nanoserver-1809`, `2.1-sdk-nanoserver-1809`, `2.1.501-preview-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.7-aspnetcore-runtime-nanoserver-1809`, `2.1-aspnetcore-runtime-nanoserver-1809`, `2.1.7-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.7-runtime-nanoserver-1809`, `2.1-runtime-nanoserver-1809`, `2.1.7-runtime`, `2.1-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1809/amd64/Dockerfile)
+
+**.NET Core 3.0 Preview tags**
+
+See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
+
+# Windows Server 2016, version 1709, and version 1803 amd64 tags
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
