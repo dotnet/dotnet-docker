@@ -144,23 +144,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/corefx/issues/33563");
                 return;
             }
-            else if (imageData.Version == V3_0)
+            else if (imageData.Version == V3_0 && imageData.OS == OS.StretchSlim)
             {
-                if (imageData.IsWeb)
-                {
-                    _outputHelper.WriteLine("Tests are blocked on https://github.com/aspnet/websdk/issues/429");
-                    return;
-                }
-                if (!DockerHelper.IsLinuxContainerModeEnabled)
-                {
-                    _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/sdk/issues/2652");
-                    return;
-                }
-                if (imageData.OS == OS.StretchSlim)
-                {
-                    _outputHelper.WriteLine("Intermittent compile failure");
-                    return;
-                }
+                _outputHelper.WriteLine("Intermittent compile failure");
+                return;
             }
 
             string appSdkImage = GetIdentifier(imageData, "app-sdk");
