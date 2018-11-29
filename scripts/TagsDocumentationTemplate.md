@@ -53,6 +53,49 @@ $(TagDoc:3.0-runtime-deps-stretch-slim)
 $(TagDoc:3.0-runtime-deps-alpine3.8)
 $(TagDoc:3.0-runtime-deps-bionic)
 
+# Linux arm64 tags
+
+**.NET Core 3.0 Preview tags**
+
+$(TagDoc:3.0-sdk-stretch-arm64v8)
+$(TagDoc:3.0-sdk-bionic-arm64v8)
+$(TagDoc:3.0-aspnetcore-runtime-stretch-slim-arm64v8)
+$(TagDoc:3.0-aspnetcore-runtime-bionic-arm64v8)
+$(TagDoc:3.0-runtime-stretch-slim-arm64v8)
+$(TagDoc:3.0-runtime-bionic-arm64v8)
+$(TagDoc:3.0-runtime-deps-stretch-slim-arm64v8)
+$(TagDoc:3.0-runtime-deps-bionic-arm64v8)
+
+# Linux arm32 tags
+
+$(TagDoc:2.2-sdk-stretch-arm32v7)
+$(TagDoc:2.2-sdk-bionic-arm32v7)
+$(TagDoc:2.2-aspnetcore-runtime-stretch-slim-arm32v7)
+$(TagDoc:2.2-aspnetcore-runtime-bionic-arm32v7)
+$(TagDoc:2.2-runtime-stretch-slim-arm32v7)
+$(TagDoc:2.2-runtime-bionic-arm32v7)
+$(TagDoc:2.2-runtime-deps-stretch-slim-arm32v7)
+$(TagDoc:2.2-runtime-deps-bionic-arm32v7)
+$(TagDoc:2.1-sdk-stretch-arm32v7)
+$(TagDoc:2.1-sdk-bionic-arm32v7)
+$(TagDoc:2.1-aspnetcore-runtime-stretch-slim-arm32v7)
+$(TagDoc:2.1-aspnetcore-runtime-bionic-arm32v7)
+$(TagDoc:2.1-runtime-stretch-slim-arm32v7)
+$(TagDoc:2.1-runtime-bionic-arm32v7)
+$(TagDoc:2.1-runtime-deps-stretch-slim-arm32v7)
+$(TagDoc:2.1-runtime-deps-bionic-arm32v7)
+
+**.NET Core 3.0 Preview tags**
+
+$(TagDoc:3.0-sdk-stretch-arm32v7)
+$(TagDoc:3.0-sdk-bionic-arm32v7)
+$(TagDoc:3.0-aspnetcore-runtime-stretch-slim-arm32v7)
+$(TagDoc:3.0-aspnetcore-runtime-bionic-arm32v7)
+$(TagDoc:3.0-runtime-stretch-slim-arm32v7)
+$(TagDoc:3.0-runtime-bionic-arm32v7)
+$(TagDoc:3.0-runtime-deps-stretch-slim-arm32v7)
+$(TagDoc:3.0-runtime-deps-bionic-arm32v7)
+
 # Windows Server, version 1809 amd64 tags
 
 $(TagDoc:2.2-sdk-nanoserver-1809)
@@ -115,49 +158,6 @@ $(TagDoc:1.0-runtime-nanoserver-sac2016)
 $(TagDoc:3.0-sdk-nanoserver-sac2016)
 $(TagDoc:3.0-aspnetcore-runtime-nanoserver-sac2016)
 $(TagDoc:3.0-runtime-nanoserver-sac2016)
-
-# Linux arm64 tags
-
-**.NET Core 3.0 Preview tags**
-
-$(TagDoc:3.0-sdk-stretch-arm64v8)
-$(TagDoc:3.0-sdk-bionic-arm64v8)
-$(TagDoc:3.0-aspnetcore-runtime-stretch-slim-arm64v8)
-$(TagDoc:3.0-aspnetcore-runtime-bionic-arm64v8)
-$(TagDoc:3.0-runtime-stretch-slim-arm64v8)
-$(TagDoc:3.0-runtime-bionic-arm64v8)
-$(TagDoc:3.0-runtime-deps-stretch-slim-arm64v8)
-$(TagDoc:3.0-runtime-deps-bionic-arm64v8)
-
-# Linux arm32 tags
-
-$(TagDoc:2.2-sdk-stretch-arm32v7)
-$(TagDoc:2.2-sdk-bionic-arm32v7)
-$(TagDoc:2.2-aspnetcore-runtime-stretch-slim-arm32v7)
-$(TagDoc:2.2-aspnetcore-runtime-bionic-arm32v7)
-$(TagDoc:2.2-runtime-stretch-slim-arm32v7)
-$(TagDoc:2.2-runtime-bionic-arm32v7)
-$(TagDoc:2.2-runtime-deps-stretch-slim-arm32v7)
-$(TagDoc:2.2-runtime-deps-bionic-arm32v7)
-$(TagDoc:2.1-sdk-stretch-arm32v7)
-$(TagDoc:2.1-sdk-bionic-arm32v7)
-$(TagDoc:2.1-aspnetcore-runtime-stretch-slim-arm32v7)
-$(TagDoc:2.1-aspnetcore-runtime-bionic-arm32v7)
-$(TagDoc:2.1-runtime-stretch-slim-arm32v7)
-$(TagDoc:2.1-runtime-bionic-arm32v7)
-$(TagDoc:2.1-runtime-deps-stretch-slim-arm32v7)
-$(TagDoc:2.1-runtime-deps-bionic-arm32v7)
-
-**.NET Core 3.0 Preview tags**
-
-$(TagDoc:3.0-sdk-stretch-arm32v7)
-$(TagDoc:3.0-sdk-bionic-arm32v7)
-$(TagDoc:3.0-aspnetcore-runtime-stretch-slim-arm32v7)
-$(TagDoc:3.0-aspnetcore-runtime-bionic-arm32v7)
-$(TagDoc:3.0-runtime-stretch-slim-arm32v7)
-$(TagDoc:3.0-runtime-bionic-arm32v7)
-$(TagDoc:3.0-runtime-deps-stretch-slim-arm32v7)
-$(TagDoc:3.0-runtime-deps-bionic-arm32v7)
 
 # Windows Server, version 1809 arm32 tags
 
