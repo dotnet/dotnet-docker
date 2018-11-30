@@ -52,6 +52,20 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V2_2, OS = OS.Alpine38,     Arch = Arch.Amd64,    IsWeb = true },
             new ImageData { Version = V2_2, OS = OS.StretchSlim,  Arch = Arch.Amd64,    IsWeb = true },
             new ImageData { Version = V2_2, OS = OS.Bionic,       Arch = Arch.Amd64,    IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.StretchSlim,  Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.Alpine38,     Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.StretchSlim,  Arch = Arch.Arm },
+            new ImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Arm },
+            new ImageData { Version = V3_0, OS = OS.StretchSlim,  Arch = Arch.Arm64 },
+            new ImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Arm64 },
+            new ImageData { Version = V3_0, OS = OS.StretchSlim,  Arch = Arch.Amd64,    IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Amd64,    IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.Alpine38,     Arch = Arch.Amd64,    IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.StretchSlim,  Arch = Arch.Arm,      IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Arm,      IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.StretchSlim,  Arch = Arch.Arm64,    IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Arm64,    IsWeb = true },
         };
         private static readonly ImageData[] s_windowsTestData =
         {
@@ -73,6 +87,14 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V2_2, OS = OS.NanoServer1709,     Arch = Arch.Amd64,  IsWeb = true },
             new ImageData { Version = V2_2, OS = OS.NanoServer1803,     Arch = Arch.Amd64,  IsWeb = true },
             new ImageData { Version = V2_2, OS = OS.NanoServer1809,     Arch = Arch.Amd64,  IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1709,     Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1803,     Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64,  IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1709,     Arch = Arch.Amd64,  IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1803,     Arch = Arch.Amd64,  IsWeb = true },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64,  IsWeb = true },
         };
 
         private readonly DockerHelper _dockerHelper;
@@ -111,6 +133,17 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetVerifyImagesData))]
         public async Task VerifyImages(ImageData imageData)
         {
+            if (!DockerHelper.IsLinuxContainerModeEnabled && imageData.IsArm)
+            {
+                _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/corefx/issues/33563");
+                return;
+            }
+            else if (imageData.Version == V3_0 && imageData.OS == OS.StretchSlim)
+            {
+                _outputHelper.WriteLine("Intermittent compile failure");
+                return;
+            }
+
             string appSdkImage = GetIdentifier(imageData, "app-sdk");
 
             try

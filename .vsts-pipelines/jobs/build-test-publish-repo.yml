@@ -28,6 +28,18 @@ jobs:
     dockerClientOS: linux
 - template: build-images.yml
   parameters:
+    name: Build_Linux_arm64v8
+    pool: # linuxArm64v8Pool
+      name: DotNetCore-Infra
+      demands:
+      - agent.os -equals linux
+      - RemoteDockerServerOS -equals linux
+      - RemoteDockerServerArch -equals arm64v8
+    matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxArm64v8'] ]
+    useRemoteDockerServer: true
+    dockerClientOS: linux
+- template: build-images.yml
+  parameters:
     name: Build_Linux_arm32v7
     pool: # linuxArm32v7Pool
       name: DotNetCore-Infra
@@ -94,6 +106,19 @@ jobs:
     architecture: amd64
 - template: test-images-linux-client.yml
   parameters:
+    name: Test_Linux_arm64v8
+    buildDependencies: Build_Linux_arm64v8
+    pool: # linuxArm64v8Pool
+      name: DotNetCore-Infra
+      demands:
+      - agent.os -equals linux
+      - RemoteDockerServerOS -equals linux
+      - RemoteDockerServerArch -equals arm64v8
+    matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixLinuxArm64v8'] ]
+    architecture: arm64
+    useRemoteDockerServer: true
+- template: test-images-linux-client.yml
+  parameters:
     name: Test_Linux_arm32v7
     buildDependencies: Build_Linux_arm32v7
     pool: # linuxArm32v7Pool
@@ -154,6 +179,16 @@ jobs:
       - agent.os -equals linux
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxAmd64'] ]
     architecture: amd64
+    dockerClientOS: linux
+- template: copy-images.yml
+  parameters:
+    name: Copy_Images_Linux_arm64v8
+    pool: # linuxAmd64Pool - arm images can be copied with amd64 machines which are more plentiful.
+      name: DotNet-Build
+      demands:
+      - agent.os -equals linux
+    matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixLinuxArm64v8'] ]
+    architecture: arm64
     dockerClientOS: linux
 - template: copy-images.yml
   parameters:
