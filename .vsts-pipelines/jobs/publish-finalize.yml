@@ -5,6 +5,7 @@ jobs:
   condition: "
     and(
       succeeded('Copy_Images_Linux_amd64'),
+      succeeded('Copy_Images_Linux_arm64v8'),
       succeeded('Copy_Images_Linux_arm32v7'),
       succeeded('Copy_Images_NanoServerSac2016_amd64'),
       succeeded('Copy_Images_NanoServer1709_amd64'),
@@ -12,6 +13,7 @@ jobs:
       succeeded('Copy_Images_NanoServer1809_amd64'))"
   dependsOn:
   - Copy_Images_Linux_amd64
+  - Copy_Images_Linux_arm64v8
   - Copy_Images_Linux_arm32v7
   - Copy_Images_NanoServerSac2016_amd64
   - Copy_Images_NanoServer1709_amd64

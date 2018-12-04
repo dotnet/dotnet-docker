@@ -34,4 +34,6 @@ USER ContainerUser
 # Configure web servers to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80 `
     # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true `
+    # Deprecated, use `DOTNET_RUNNING_IN_CONTAINER` instead - https://github.com/dotnet/dotnet-docker/issues/677
     DOTNET_RUNNING_IN_CONTAINERS=true

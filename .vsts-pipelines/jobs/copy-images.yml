@@ -18,6 +18,7 @@ jobs:
             eq(variables['repo'], 'dotnet-samples'),
             eq(variables['singlePhase'], ''),
             succeeded('Build_Linux_amd64'),
+            succeeded('Build_Linux_arm64v8'),
             succeeded('Build_Linux_arm32v7'),
             succeeded('Build_NanoServerSac2016_amd64'),
             succeeded('Build_NanoServer1709_amd64'),
@@ -26,6 +27,7 @@ jobs:
   dependsOn:
   - GenerateMatrices
   - Test_Linux_amd64
+  - Test_Linux_arm64v8
   - Test_Linux_arm32v7
   - Test_NanoServerSac2016_amd64
   - Test_NanoServer1709_amd64

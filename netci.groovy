@@ -16,13 +16,13 @@ platformList.each { platform ->
     def machineLabel = (hostOS == 'Windows_2016') ? 'latest-docker' : 'latest-or-auto-docker'
 
     if (containerOS == 'NanoServer-1709' || containerOS == 'NanoServer-1803' || containerOS == 'NanoServer-1809') {
-        versionList = ['2.1', '2.2']
+        versionList = ['2.1', '2.2', '3.0']
     }
     else if (containerOS == 'NanoServer-sac2016') {
-        versionList = ['1.', '2.1', '2.2']
+        versionList = ['1.', '2.1', '2.2', '3.0']
     }
     else {
-        versionList = ['1.', '2.1-2.2']
+        versionList = ['1.', '2.1-2.2', '3.0']
     }
 
     versionList.each { version ->
