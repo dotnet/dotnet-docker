@@ -74,8 +74,8 @@ docker run --rm -it dotnetapp:alpine Hello .NET Core from Alpine
 
 You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/). You would switch to the following tags:
 
-* SDK: 2.1-sdk-bionic
-* Runtime:-2.1-runtime-bionic
+* SDK: 2.2-sdk-bionic
+* Runtime:-2.2-runtime-bionic
 
 ## Build and run the sample for Linux ARM32 with Docker
 
@@ -102,7 +102,7 @@ You can push the image to a container registry so that you can pull and run it o
 
 ## Build and run the sample locally
 
-You can build and run the sample locally with the [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core) using the following instructions. The instructions assume that you are in the root of the repository.
+You can build and run the sample locally with the [.NET Core 2.2 SDK](https://www.microsoft.com/net/download/core) using the following instructions. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples

@@ -66,7 +66,7 @@ Multiple variations of this sample have been provided, as follows. Some of these
 
 ## Deploying with HTTPS
 
-ASP.NET Core 2.1 uses [HTTPS by default](https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl). You can [configure ASP.NET Core to use HTTPS with Docker](aspnetcore-docker-https.md).
+ASP.NET Core 2.1 and newer uses [HTTPS by default](https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl). You can [configure ASP.NET Core to use HTTPS with Docker](aspnetcore-docker-https.md).
 
 ## Build and run the sample for Alpine X64 with Docker
 
@@ -85,8 +85,8 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/). You would switch to the following tags:
 
-* SDK: 2.1-sdk-bionic
-* Runtime:-2.1-aspnetcore-runtime-bionic
+* SDK: 2.2-sdk-bionic
+* Runtime:-2.2-aspnetcore-runtime-bionic
 
 ## Build and run the sample for Linux ARM32 with Docker
 
@@ -108,7 +108,7 @@ We recommend that you do not use `--rm` in production. It cleans up container re
 
 ## Build and run the sample locally
 
-You can build and run the sample locally with the [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core) using the following commands. The commands assume that you are in the root of the repository.
+You can build and run the sample locally with the [.NET Core 2.2 SDK](https://www.microsoft.com/net/download/core) using the following commands. The commands assume that you are in the root of the repository.
 
 ```console
 cd samples
