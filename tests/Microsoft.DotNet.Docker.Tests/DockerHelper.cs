@@ -22,9 +22,14 @@ namespace Microsoft.DotNet.Docker.Tests
             OutputHelper = outputHelper;
         }
 
-        public void Build(string dockerfile, string tag, string fromImage, params string[] buildArgs)
+        public void Build(
+            string tag,
+            string dockerfile = null,
+            string contextDir = ".",
+            string target = null,
+            params string[] buildArgs)
         {
-            string buildArgsOption = $"--build-arg base_image={fromImage}";
+            string buildArgsOption = string.Empty;
             if (buildArgs != null)
             {
                 foreach (string arg in buildArgs)
@@ -33,7 +38,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
             }
 
-            ExecuteWithLogging($"build -t {tag} {buildArgsOption} -f {dockerfile} .");
+            string targetArg = target == null ? string.Empty : $" --target {target}";
+            string dockerfileArg = dockerfile == null ? string.Empty : $" -f {dockerfile}";
+
+            ExecuteWithLogging($"build -t {tag}{targetArg}{buildArgsOption}{dockerfileArg} {contextDir}");
         }
 
         public static bool ContainerExists(string name)
@@ -41,11 +49,20 @@ namespace Microsoft.DotNet.Docker.Tests
             return ResourceExists("container", $"-f \"name={name}\"");
         }
 
-        public void DeleteContainer(string container)
+        public void CP(string src, string dest)
+        {
+            ExecuteWithLogging($"cp {src} {dest}");
+        }
+
+        public void DeleteContainer(string container, bool captureLogs = false)
         {
             if (ContainerExists(container))
             {
-                ExecuteWithLogging($"logs {container}", ignoreErrors: true);
+                if (captureLogs)
+                {
+                    ExecuteWithLogging($"logs {container}", ignoreErrors: true);
+                }
+
                 ExecuteWithLogging($"container rm -f {container}");
             }
         }
@@ -55,14 +72,6 @@ namespace Microsoft.DotNet.Docker.Tests
             if (ImageExists(tag))
             {
                 ExecuteWithLogging($"image rm -f {tag}");
-            }
-        }
-
-        public void DeleteVolume(string name)
-        {
-            if (VolumeExists(name))
-            {
-                ExecuteWithLogging($"volume rm -f {name}");
             }
         }
 
@@ -132,8 +141,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private string ExecuteWithLogging(string args, bool ignoreErrors = false, bool autoRetry = false)
         {
-            OutputHelper.WriteLine($"Executing : docker {args}");
-            return Execute(args, outputHelper: OutputHelper, ignoreErrors: ignoreErrors, autoRetry: autoRetry);
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            OutputHelper.WriteLine($"Executing: docker {args}");
+            string result = Execute(args, outputHelper: OutputHelper, ignoreErrors: ignoreErrors, autoRetry: autoRetry);
+
+            stopwatch.Stop();
+            OutputHelper.WriteLine($"Execution Elapsed Time: {stopwatch.Elapsed}");
+
+            return result;
         }
 
         private static (Process Process, string StdOut, string StdErr) ExecuteWithRetry(
@@ -202,28 +219,26 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static bool ResourceExists(string type, string filterArg)
         {
-            string output = Execute($"{type} ls -q {filterArg}", true);
+            string output = Execute($"{type} ls -a -q {filterArg}", true);
             return output != "";
         }
 
         public void Run(
             string image,
-            string command,
-            string containerName,
-            string volumeName = null,
-            string portPublishArgs = "-p 80",
+            string name,
+            string command = null,
+            string workdir = null,
+            string publishArgs = " -p 80",
             bool detach = false,
-            bool runAsContainerAdministrator = false)
+            bool runAsContainerAdministrator = false,
+            bool skipAutoCleanup = false)
         {
-            string volumeArg = volumeName == null ? string.Empty : $" -v {volumeName}:{ContainerWorkDir}";
+            string cleanupArg = skipAutoCleanup ? string.Empty : " --rm";
+            string commandArg = command == null ? string.Empty : $" {command}";
+            string detachArg = detach ? " -d -t" : string.Empty;
             string userArg = runAsContainerAdministrator ? " -u ContainerAdministrator" : string.Empty;
-            string detachArg = detach ? " -d  -t " : string.Empty;
-            ExecuteWithLogging($"run --rm --name {containerName}{volumeArg}{userArg}{detachArg} {portPublishArgs} {image} {command}");
-        }
-
-        public static bool VolumeExists(string name)
-        {
-            return ResourceExists("volume", $"-f \"name={name}\"");
+            string workdirArg = workdir == null ? string.Empty : $" -w {workdir}";
+            ExecuteWithLogging($"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg}{publishArgs} {image}{commandArg}");
         }
     }
 }
