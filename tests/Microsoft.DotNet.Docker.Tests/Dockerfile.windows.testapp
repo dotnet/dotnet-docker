@@ -7,7 +7,7 @@ SHELL ["cmd", "/S", "/C"]
 
 ARG netcoreapp_version
 ARG optional_new_args=" "
-ARG optional_package_sources="."
+ARG optional_package_sources=" "
 ARG optional_restore_args=" "
 ARG template_name
 
