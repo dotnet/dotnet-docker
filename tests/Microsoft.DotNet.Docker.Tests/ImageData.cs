@@ -67,10 +67,7 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _sdkVersion = value; }
         }
 
-        public string GetIdentifier( string type)
-        {
-            return $"{VersionString}-{type}-{DateTime.Now.ToFileTime()}";
-        }
+        public string GetIdentifier(string type) => return $"{VersionString}-{type}-{DateTime.Now.ToFileTime()}";
 
         public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
         {
@@ -117,7 +114,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string arch = string.Empty;
             if (Arch == Arch.Arm)
             {
-                arch = DockerHelper.IsLinuxContainerModeEnabled ? $"-arm32v7" : "-arm";
+                arch = DockerHelper.IsLinuxContainerModeEnabled ? $"-arm32v7" : "-arm32";
             }
             else if (Arch == Arch.Arm64)
             {

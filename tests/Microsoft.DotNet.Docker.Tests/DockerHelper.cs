@@ -25,8 +25,8 @@ namespace Microsoft.DotNet.Docker.Tests
         public void Build(
             string tag,
             string dockerfile = null,
-            string contextDir = ".",
             string target = null,
+            string contextDir = ".",
             params string[] buildArgs)
         {
             string buildArgsOption = string.Empty;
@@ -44,15 +44,9 @@ namespace Microsoft.DotNet.Docker.Tests
             ExecuteWithLogging($"build -t {tag}{targetArg}{buildArgsOption}{dockerfileArg} {contextDir}");
         }
 
-        public static bool ContainerExists(string name)
-        {
-            return ResourceExists("container", $"-f \"name={name}\"");
-        }
+        public static bool ContainerExists(string name) => return ResourceExists("container", $"-f \"name={name}\"");
 
-        public void CP(string src, string dest)
-        {
-            ExecuteWithLogging($"cp {src} {dest}");
-        }
+        public void CP(string src, string dest) => ExecuteWithLogging($"cp {src} {dest}");
 
         public void DeleteContainer(string container, bool captureLogs = false)
         {
@@ -185,21 +179,14 @@ namespace Microsoft.DotNet.Docker.Tests
             return result;
         }
 
-        private static string GetDockerOS()
-        {
-            return Execute("version -f \"{{ .Server.Os }}\"");
-        }
+        private static string GetDockerOS() => return Execute("version -f \"{{ .Server.Os }}\"");
 
-        public string GetContainerAddress(string container)
-        {
+        public string GetContainerAddress(string container) =>
             return ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + container);
-        }
 
-        public string GetContainerHostPort(string container, int containerPort = 80)
-        {
+        public string GetContainerHostPort(string container, int containerPort = 80) =>
             return ExecuteWithLogging(
                 $"inspect -f \"{{{{(index (index .NetworkSettings.Ports \\\"{containerPort}/tcp\\\") 0).HostPort}}}}\" {container}");
-        }
 
         public string GetContainerWorkPath(string relativePath)
         {
@@ -207,15 +194,9 @@ namespace Microsoft.DotNet.Docker.Tests
             return $"{ContainerWorkDir}{separator}{relativePath}";
         }
 
-        public static bool ImageExists(string tag)
-        {
-            return ResourceExists("image", tag);
-        }
+        public static bool ImageExists(string tag) => return ResourceExists("image", tag);
 
-        public void Pull(string image)
-        {
-            ExecuteWithLogging($"pull {image}", autoRetry: true);
-        }
+        public void Pull(string image) => ExecuteWithLogging($"pull {image}", autoRetry: true);
 
         private static bool ResourceExists(string type, string filterArg)
         {
