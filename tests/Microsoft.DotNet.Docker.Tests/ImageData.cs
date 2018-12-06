@@ -19,7 +19,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public Arch Arch { get; set; }
         public Version Version { get; set; }
         public string VersionString => Version.ToString(2);
-        public bool HasNoSdk => SdkVersion != Version;
+        public bool HasSdk => SdkVersion == Version;
         public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
         public string OS { get; set; }
 

@@ -45,7 +45,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             try
             {
-                if (!_imageData.HasNoSdk)
+                if (_imageData.HasSdk)
                 {
                     // Use `sdk` image to build and run test app
                     string buildTag = BuildTestAppImage("build", appDir);
@@ -133,7 +133,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     workdir: "/app",
                     skipAutoCleanup: true);
 
-                _dockerHelper.CP($"{containerName}:/app", appDir);
+                _dockerHelper.Copy($"{containerName}:/app", appDir);
 
                 ApplyProjectCustomizations(_imageData, Path.Combine(appDir, "app.csproj"));
 

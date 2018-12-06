@@ -98,7 +98,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string verifyCacheCommand = null;
             if (imageData.Version.Major == 1)
             {
-                if (imageData.HasNoSdk)
+                if (!imageData.HasSdk)
                 {
                     _outputHelper.WriteLine("No version specific SDK image exists to verify.");
                 }
