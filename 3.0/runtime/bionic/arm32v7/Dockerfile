@@ -1,4 +1,5 @@
-FROM microsoft/dotnet-nightly:3.0-runtime-deps-bionic-arm32v7
+ARG REPO=microsoft/dotnet
+FROM $REPO:3.0-runtime-deps-bionic-arm32v7
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
