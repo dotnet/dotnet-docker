@@ -190,6 +190,8 @@ namespace Microsoft.DotNet.Docker.Tests
         private async Task VerifyHttpResponseFromContainer(string containerName)
         {
             var retries = 30;
+
+            // Can't use localhost when running inside containers or Windows.
             var url = !Config.IsRunningInContainer && DockerHelper.IsLinuxContainerModeEnabled
                 ? $"http://localhost:{_dockerHelper.GetContainerHostPort(containerName)}"
                 : $"http://{_dockerHelper.GetContainerAddress(containerName)}";
