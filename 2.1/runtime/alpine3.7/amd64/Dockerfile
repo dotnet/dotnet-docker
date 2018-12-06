@@ -1,4 +1,5 @@
-FROM microsoft/dotnet-nightly:2.1-runtime-deps-alpine3.7
+ARG REPO=microsoft/dotnet
+FROM $REPO:2.1-runtime-deps-alpine3.7
 
 # Install .NET Core
 ENV DOTNET_VERSION 2.1.7-servicing-27120-02

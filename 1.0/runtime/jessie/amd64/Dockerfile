@@ -1,4 +1,5 @@
-FROM microsoft/dotnet-nightly:1.0-runtime-deps-jessie
+ARG REPO=microsoft/dotnet
+FROM $REPO:1.0-runtime-deps-jessie
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
