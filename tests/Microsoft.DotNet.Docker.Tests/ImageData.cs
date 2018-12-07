@@ -3,22 +3,24 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Xunit;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
     public class ImageData
     {
+        private List<string> _pulledImages = new List<string>();
         private Version _runtimeDepsVersion;
         private Version _sdkVersion;
 
         public Arch Arch { get; set; }
         public Version Version { get; set; }
-        public string VersionString { get => Version.ToString(2); }
-        public bool HasNoSdk { get => SdkVersion != Version; }
-        public bool IsWeb { get; set; }
-        public bool IsArm { get => Arch == Arch.Arm || Arch == Arch.Arm64; }
+        public string VersionString => Version.ToString(2);
+        public bool HasSdk => SdkVersion == Version;
+        public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
         public string OS { get; set; }
 
         public string Rid
@@ -57,7 +59,7 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _runtimeDepsVersion = value; }
         }
 
-        public string SdkOS { get => OS == Tests.OS.StretchSlim ? Tests.OS.Stretch : OS; }
+        public string SdkOS => OS == Tests.OS.StretchSlim ? Tests.OS.Stretch : OS;
         
         public Version SdkVersion
         {
@@ -65,7 +67,26 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _sdkVersion = value; }
         }
 
-        public string GetTag(DotNetImageType imageType)
+        public string GetIdentifier(string type) => $"{VersionString}-{type}-{DateTime.Now.ToFileTime()}";
+
+        public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
+        {
+            string imageName = GetImageName(imageType);
+
+            if (!Config.IsLocalRun && !_pulledImages.Contains(imageName))
+            {
+                dockerHelper.Pull(imageName);
+                _pulledImages.Add(imageName);
+            }
+            else
+            {
+                Assert.True(DockerHelper.ImageExists(imageName), $"`{imageName}` could not be found on disk.");
+            }
+
+            return imageName;
+        }
+
+        private string GetImageName(DotNetImageType imageType)
         {
             Version imageVersion;
             string os;
@@ -93,14 +114,14 @@ namespace Microsoft.DotNet.Docker.Tests
             string arch = string.Empty;
             if (Arch == Arch.Arm)
             {
-                arch = $"-arm32v7";
+                arch = DockerHelper.IsLinuxContainerModeEnabled ? $"-arm32v7" : "-arm32";
             }
             else if (Arch == Arch.Arm64)
             {
                 arch = $"-arm64v8";
             }
 
-            return $"{imageVersion.ToString(2)}-{variantName}-{os}{arch}";
+            return $"{Config.RepoName}:{imageVersion.ToString(2)}-{variantName}-{os}{arch}";
         }
 
         public override string ToString()
