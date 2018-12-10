@@ -27,6 +27,8 @@ jobs:
       ./scripts/Invoke-WithRetry.ps1 
       "docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)"
     displayName: Docker login
+  - powershell: Get-ChildItem -Path tests -r | Where {$_.Extension -match "trx"} | Remove-Item
+    displayName: Cleanup Old Test Results
   - powershell: >
       ./tests/run-tests.ps1
       -VersionFilter $(dotnetVersion)*
