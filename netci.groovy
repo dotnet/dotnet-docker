@@ -7,15 +7,15 @@ def platformList = [
         'Ubuntu16.04:Linux',
         'Windows_2016:NanoServer-sac2016',
         'Windows_2016:NanoServer-1709',
-        'Windows_2016:NanoServer-1803'
-        //'Windows_2016:NanoServer-1809'
+        'Windows_2016:NanoServer-1803',
+        'Windows_2016:NanoServer-1809'
     ]
 
 platformList.each { platform ->
     def(hostOS, containerOS) = platform.tokenize(':')
     def machineLabel = (hostOS == 'Windows_2016') ? 'latest-docker' : 'latest-or-auto-docker'
 
-    if (containerOS == 'NanoServer-1803' || containerOS == 'NanoServer-1709' || containerOS == 'NanoServer-1809') {
+    if (containerOS == 'NanoServer-1709' || containerOS == 'NanoServer-1803' || containerOS == 'NanoServer-1809') {
         versionList = ['2.1', '2.2', '3.0']
     }
     else if (containerOS == 'NanoServer-sac2016') {
