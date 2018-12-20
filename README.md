@@ -160,7 +160,7 @@ The `microsoft/dotnet` images come in different flavors, each designed for a spe
 
 This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
 
-It contains the .NET Core SDK which is comprised of two parts:
+It contains the .NET Core SDK which is comprised of three parts:
 
 1. .NET Core CLI
 1. .NET Core
