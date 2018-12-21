@@ -1,6 +1,6 @@
-## Complete set of Tags
+# Complete set of Tags
 
-# Linux amd64 tags
+## Linux amd64 tags
 
 - [`2.2.100-sdk-stretch`, `2.2-sdk-stretch`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/amd64/Dockerfile)
 - [`2.2.100-sdk-alpine3.8`, `2.2-sdk-alpine3.8`, `2.2.100-sdk-alpine`, `2.2-sdk-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.8/amd64/Dockerfile)
@@ -49,7 +49,7 @@
 - [`3.0.0-preview-runtime-deps-alpine3.8`, `3.0-runtime-deps-alpine3.8`, `3.0.0-preview-runtime-deps-alpine`, `3.0-runtime-deps-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.8/amd64/Dockerfile)
 - [`3.0.0-preview-runtime-deps-bionic`, `3.0-runtime-deps-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/amd64/Dockerfile)
 
-# Linux arm64 tags
+## Linux arm64 tags
 
 **.NET Core 3.0 Preview tags**
 
@@ -62,7 +62,7 @@
 - [`3.0.0-preview-runtime-deps-stretch-slim-arm64v8`, `3.0-runtime-deps-stretch-slim-arm64v8`, `3.0.0-preview-runtime-deps`, `3.0-runtime-deps` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/stretch-slim/arm64v8/Dockerfile)
 - [`3.0.0-preview-runtime-deps-bionic-arm64v8`, `3.0-runtime-deps-bionic-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/arm64v8/Dockerfile)
 
-# Linux arm32 tags
+## Linux arm32 tags
 
 - [`2.2.100-sdk-stretch-arm32v7`, `2.2-sdk-stretch-arm32v7`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/arm32v7/Dockerfile)
 - [`2.2.100-sdk-bionic-arm32v7`, `2.2-sdk-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/bionic/arm32v7/Dockerfile)
@@ -92,7 +92,7 @@
 - [`3.0.0-preview-runtime-deps-stretch-slim-arm32v7`, `3.0-runtime-deps-stretch-slim-arm32v7`, `3.0.0-preview-runtime-deps`, `3.0-runtime-deps` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/stretch-slim/arm32v7/Dockerfile)
 - [`3.0.0-preview-runtime-deps-bionic-arm32v7`, `3.0-runtime-deps-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/arm32v7/Dockerfile)
 
-# Windows Server, version 1809 amd64 tags
+## Windows Server, version 1809 amd64 tags
 
 - [`2.2.100-sdk-nanoserver-1809`, `2.2-sdk-nanoserver-1809`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
 - [`2.2.0-aspnetcore-runtime-nanoserver-1809`, `2.2-aspnetcore-runtime-nanoserver-1809`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
@@ -107,7 +107,7 @@
 - [`3.0.0-preview-aspnetcore-runtime-nanoserver-1809`, `3.0-aspnetcore-runtime-nanoserver-1809`, `3.0.0-preview-aspnetcore-runtime`, `3.0-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
 - [`3.0.0-preview-runtime-nanoserver-1809`, `3.0-runtime-nanoserver-1809`, `3.0.0-preview-runtime`, `3.0-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1809/amd64/Dockerfile)
 
-# Windows Server, version 1803 amd64 tags
+## Windows Server, version 1803 amd64 tags
 
 - [`2.2.100-sdk-nanoserver-1803`, `2.2-sdk-nanoserver-1803`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1803/amd64/Dockerfile)
 - [`2.2.0-aspnetcore-runtime-nanoserver-1803`, `2.2-aspnetcore-runtime-nanoserver-1803`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile)
@@ -122,7 +122,7 @@
 - [`3.0.0-preview-aspnetcore-runtime-nanoserver-1803`, `3.0-aspnetcore-runtime-nanoserver-1803`, `3.0.0-preview-aspnetcore-runtime`, `3.0-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile)
 - [`3.0.0-preview-runtime-nanoserver-1803`, `3.0-runtime-nanoserver-1803`, `3.0.0-preview-runtime`, `3.0-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1803/amd64/Dockerfile)
 
-# Windows Server, version 1709 amd64 tags
+## Windows Server, version 1709 amd64 tags
 
 - [`2.2.100-sdk-nanoserver-1709`, `2.2-sdk-nanoserver-1709`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1709/amd64/Dockerfile)
 - [`2.2.0-aspnetcore-runtime-nanoserver-1709`, `2.2-aspnetcore-runtime-nanoserver-1709`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile)
@@ -137,7 +137,7 @@
 - [`3.0.0-preview-aspnetcore-runtime-nanoserver-1709`, `3.0-aspnetcore-runtime-nanoserver-1709`, `3.0.0-preview-aspnetcore-runtime`, `3.0-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile)
 - [`3.0.0-preview-runtime-nanoserver-1709`, `3.0-runtime-nanoserver-1709`, `3.0.0-preview-runtime`, `3.0-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1709/amd64/Dockerfile)
 
-# Windows Server 2016 amd64 tags
+## Windows Server 2016 amd64 tags
 
 - [`2.2.100-sdk-nanoserver-sac2016`, `2.2-sdk-nanoserver-sac2016`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-sac2016/amd64/Dockerfile)
 - [`2.2.0-aspnetcore-runtime-nanoserver-sac2016`, `2.2-aspnetcore-runtime-nanoserver-sac2016`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile)
