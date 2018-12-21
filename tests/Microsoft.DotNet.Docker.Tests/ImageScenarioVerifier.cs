@@ -141,10 +141,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     Path.Combine(_testArtifactsDir, $"Dockerfile.{DockerHelper.DockerOS.ToLower()}"),
                     Path.Combine(appDir, "Dockerfile"));
 
+                string nuGetConfigFileName = "NuGet.config";
                 if (Config.IsNightlyRepo)
                 {
-                    File.Copy(Path.Combine(_testArtifactsDir, "NuGet.config.nightly"), Path.Combine(appDir, "NuGet.config"));
+                    nuGetConfigFileName += ".nightly";
                 }
+
+                File.Copy(Path.Combine(_testArtifactsDir, nuGetConfigFileName), Path.Combine(appDir, "NuGet.config"));
             }
             catch (Exception)
             {
