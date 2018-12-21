@@ -1,6 +1,6 @@
-## Tags
+# Tags
 
-# Linux amd64 tags
+## Linux amd64 tags
 
 $(TagDoc:2.2-sdk-stretch)
 $(TagDoc:2.2-sdk-alpine3.8)
@@ -27,17 +27,17 @@ $(TagDoc:2.1-runtime-deps-stretch-slim)
 $(TagDoc:2.1-runtime-deps-alpine3.7)
 $(TagDoc:2.1-runtime-deps-bionic)
 
-**.NET Core 1.0, 1.1 and 3.0 Preview tags**
+### .NET Core 1.0, 1.1 and 3.0 Preview tags
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
-# Linux arm64 tags
+## Linux arm64 tags
 
-**.NET Core 3.0 Preview tags**
+### .NET Core 3.0 Preview tags
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
-# Linux arm32 tags
+## Linux arm32 tags
 
 $(TagDoc:2.2-sdk-stretch-arm32v7)
 $(TagDoc:2.2-sdk-bionic-arm32v7)
@@ -56,11 +56,11 @@ $(TagDoc:2.1-runtime-bionic-arm32v7)
 $(TagDoc:2.1-runtime-deps-stretch-slim-arm32v7)
 $(TagDoc:2.1-runtime-deps-bionic-arm32v7)
 
-**.NET Core 3.0 Preview tags**
+### .NET Core 3.0 Preview tags
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
-# Windows Server, version 1809 amd64 tags
+## Windows Server, version 1809 amd64 tags
 
 $(TagDoc:2.2-sdk-nanoserver-1809)
 $(TagDoc:2.2-aspnetcore-runtime-nanoserver-1809)
@@ -69,11 +69,11 @@ $(TagDoc:2.1-sdk-nanoserver-1809)
 $(TagDoc:2.1-aspnetcore-runtime-nanoserver-1809)
 $(TagDoc:2.1-runtime-nanoserver-1809)
 
-**.NET Core 3.0 Preview tags**
+### .NET Core 3.0 Preview tags
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
-# Windows Server 2016, version 1709, and version 1803 amd64 tags
+## Windows Server 2016, version 1709, and version 1803 amd64 tags
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
