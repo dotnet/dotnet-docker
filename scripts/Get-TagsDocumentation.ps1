@@ -1,25 +1,11 @@
 #!/usr/bin/env pwsh
 param(
     [string]$Branch,
-    [string]$Manifest='manifest.json',
-    [string]$ReadMeTemplate='./scripts/ReadmeTagsDocumentationTemplate.md',
-    [string]$TagsTemplate='./scripts/TagsDocumentationTemplate.md',
     [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20181221161902'
 )
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Path "$PSScriptRoot" -Parent
-
-if (!$Branch) {
-    $manifestJson = Get-Content ${repoRoot}/${Manifest} | ConvertFrom-Json
-    $dockerHubRepo = $manifestJson.Repos[0].Name.Split('/')[1]
-    if ($dockerHubRepo -eq "dotnet") {
-        $Branch = "master"
-    }
-    else {
-        $Branch = "nightly"
-    }
-}
 
 function Log {
     param ([string] $Message)
@@ -38,7 +24,7 @@ function Exec {
 }
 
 function GenerateDoc {
-    param ([string] $Template, [string] $ReadmePath, [switch] $SkipValidation)
+    param ([string] $Template, [string] $ReadmePath, [string] $Manifest, [string] $Branch, [switch] $SkipValidation)
 
     if ($Template) {
         $templateOption = "--template $Template"
@@ -72,10 +58,19 @@ function GenerateDoc {
     }
 }
 
+if (!$Branch) {
+    $manifestJson = Get-Content ${repoRoot}/manifest.json | ConvertFrom-Json
+    $dockerHubRepo = $manifestJson.Repos[0].Name.Split('/')[1]
+    if ($dockerHubRepo -eq "dotnet") {
+        $Branch = "master"
+    }
+    else {
+        $Branch = "nightly"
+    }
+}
+
 Exec "docker pull $ImageBuilderImageName"
 
-GenerateDoc $ReadMeTemplate README.md -SkipValidation
-
-if ($TagsTemplate) {
-    GenerateDoc $TagsTemplate TAGS.md
-}
+GenerateDoc './scripts/ReadmeTagsDocumentationTemplate.md' README.md './manifest.json' $Branch -SkipValidation
+GenerateDoc './scripts/TagsDocumentationTemplate.md' TAGS.md './manifest.json' $Branch
+GenerateDoc './scripts/SamplesReadmeTagsDocumentationTemplate.md' ./samples/README.DockerHub.md './manifest.samples.json' 'master'
