@@ -27,13 +27,13 @@ $(TagDoc:2.1-runtime-deps-stretch-slim)
 $(TagDoc:2.1-runtime-deps-alpine3.7)
 $(TagDoc:2.1-runtime-deps-bionic)
 
-### .NET Core 1.0, 1.1 and 3.0 Preview tags
+**.NET Core 1.0, 1.1 and 3.0 Preview tags**
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
 ## Linux arm64 tags
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
@@ -56,7 +56,7 @@ $(TagDoc:2.1-runtime-bionic-arm32v7)
 $(TagDoc:2.1-runtime-deps-stretch-slim-arm32v7)
 $(TagDoc:2.1-runtime-deps-bionic-arm32v7)
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
@@ -69,7 +69,7 @@ $(TagDoc:2.1-sdk-nanoserver-1809)
 $(TagDoc:2.1-aspnetcore-runtime-nanoserver-1809)
 $(TagDoc:2.1-runtime-nanoserver-1809)
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 

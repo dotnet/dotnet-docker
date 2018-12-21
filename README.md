@@ -60,13 +60,13 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 - [`2.1.6-runtime-deps-alpine3.7`, `2.1-runtime-deps-alpine3.7`, `2.1.6-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine3.7/amd64/Dockerfile)
 - [`2.1.6-runtime-deps-bionic`, `2.1-runtime-deps-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/amd64/Dockerfile)
 
-### .NET Core 1.0, 1.1 and 3.0 Preview tags
+**.NET Core 1.0, 1.1 and 3.0 Preview tags**
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/master/TAGS.md).
 
 ## Linux arm64 tags
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/master/TAGS.md).
 
@@ -89,7 +89,7 @@ See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/mast
 - [`2.1.6-runtime-deps-stretch-slim-arm32v7`, `2.1-runtime-deps-stretch-slim-arm32v7`, `2.1.6-runtime-deps`, `2.1-runtime-deps` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile)
 - [`2.1.6-runtime-deps-bionic-arm32v7`, `2.1-runtime-deps-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/arm32v7/Dockerfile)
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/master/TAGS.md).
 
@@ -102,7 +102,7 @@ See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/mast
 - [`2.1.6-aspnetcore-runtime-nanoserver-1809`, `2.1-aspnetcore-runtime-nanoserver-1809`, `2.1.6-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
 - [`2.1.6-runtime-nanoserver-1809`, `2.1-runtime-nanoserver-1809`, `2.1.6-runtime`, `2.1-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1809/amd64/Dockerfile)
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/master/TAGS.md).
 

@@ -34,7 +34,7 @@ $(TagDoc:1.1-runtime-deps-stretch)
 $(TagDoc:1.0-runtime-jessie)
 $(TagDoc:1.0-runtime-deps-jessie)
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 $(TagDoc:3.0-sdk-stretch)
 $(TagDoc:3.0-sdk-alpine3.8)
@@ -51,7 +51,7 @@ $(TagDoc:3.0-runtime-deps-bionic)
 
 ## Linux arm64 tags
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 $(TagDoc:3.0-sdk-stretch-arm64v8)
 $(TagDoc:3.0-sdk-bionic-arm64v8)
@@ -81,7 +81,7 @@ $(TagDoc:2.1-runtime-bionic-arm32v7)
 $(TagDoc:2.1-runtime-deps-stretch-slim-arm32v7)
 $(TagDoc:2.1-runtime-deps-bionic-arm32v7)
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 $(TagDoc:3.0-sdk-stretch-arm32v7)
 $(TagDoc:3.0-sdk-bionic-arm32v7)
@@ -101,7 +101,7 @@ $(TagDoc:2.1-sdk-nanoserver-1809)
 $(TagDoc:2.1-aspnetcore-runtime-nanoserver-1809)
 $(TagDoc:2.1-runtime-nanoserver-1809)
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 $(TagDoc:3.0-sdk-nanoserver-1809)
 $(TagDoc:3.0-aspnetcore-runtime-nanoserver-1809)
@@ -116,7 +116,7 @@ $(TagDoc:2.1-sdk-nanoserver-1803)
 $(TagDoc:2.1-aspnetcore-runtime-nanoserver-1803)
 $(TagDoc:2.1-runtime-nanoserver-1803)
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 $(TagDoc:3.0-sdk-nanoserver-1803)
 $(TagDoc:3.0-aspnetcore-runtime-nanoserver-1803)
@@ -131,7 +131,7 @@ $(TagDoc:2.1-sdk-nanoserver-1709)
 $(TagDoc:2.1-aspnetcore-runtime-nanoserver-1709)
 $(TagDoc:2.1-runtime-nanoserver-1709)
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 $(TagDoc:3.0-sdk-nanoserver-1709)
 $(TagDoc:3.0-aspnetcore-runtime-nanoserver-1709)
@@ -149,7 +149,7 @@ $(TagDoc:1.1-sdk-nanoserver-sac2016)
 $(TagDoc:1.1-runtime-nanoserver-sac2016)
 $(TagDoc:1.0-runtime-nanoserver-sac2016)
 
-### .NET Core 3.0 Preview tags
+**.NET Core 3.0 Preview tags**
 
 $(TagDoc:3.0-sdk-nanoserver-sac2016)
 $(TagDoc:3.0-aspnetcore-runtime-nanoserver-sac2016)
