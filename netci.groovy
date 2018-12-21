@@ -7,8 +7,8 @@ def platformList = [
         'Ubuntu16.04:Linux',
         'Windows_2016:NanoServer-sac2016',
         'Windows_2016:NanoServer-1709',
-        'Windows_2016:NanoServer-1803'
-        //'Windows_2016:NanoServer-1809'
+        'Windows_2016:NanoServer-1803',
+        'Windows_2016:NanoServer-1809'
     ]
 
 platformList.each { platform ->

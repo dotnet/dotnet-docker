@@ -1,0 +1,25 @@
+ARG sdk_image
+ARG runtime_image
+
+FROM $sdk_image as build
+
+EXPOSE 80
+
+WORKDIR app
+COPY NuGet.config .
+COPY *.csproj .
+RUN dotnet restore
+
+COPY . .
+RUN dotnet build
+
+
+FROM build as publish_fx_dependent
+RUN dotnet publish -c Release -o out
+
+
+FROM $runtime_image AS fx_dependent_app
+EXPOSE 80
+WORKDIR /app
+COPY --from=publish_fx_dependent /app/out ./
+ENTRYPOINT ["dotnet", "app.dll"]
