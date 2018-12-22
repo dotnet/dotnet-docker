@@ -15,7 +15,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
 
-### Container sample: Run a simple application
+## Container sample: Run a simple application
 
 Type the following command to run a sample console application:
 
@@ -23,7 +23,7 @@ Type the following command to run a sample console application:
 docker run --rm microsoft/dotnet-samples
 ```
 
-### Container sample: Run a web application
+## Container sample: Run a web application
 
 Type the following command to run a sample web application:
 
@@ -35,9 +35,9 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/aspnetcore-docker-https.md) to use HTTPS with this image.
 
-## Tags
+# Tags
 
-# Linux amd64 tags
+## Linux amd64 tags
 
 - [`2.2.100-sdk-stretch`, `2.2-sdk-stretch`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile)
 - [`2.2.100-sdk-alpine3.8`, `2.2-sdk-alpine3.8`, `2.2.100-sdk-alpine`, `2.2-sdk-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/alpine3.8/amd64/Dockerfile)
@@ -72,13 +72,13 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
-# Linux arm64 tags
+## Linux arm64 tags
 
 **.NET Core 3.0 Preview tags**
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
-# Linux arm32 tags
+## Linux arm32 tags
 
 - [`2.2.100-sdk-stretch-arm32v7`, `2.2-sdk-stretch-arm32v7`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/arm32v7/Dockerfile)
 - [`2.2.100-sdk-bionic-arm32v7`, `2.2-sdk-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/bionic/arm32v7/Dockerfile)
@@ -101,7 +101,7 @@ See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nigh
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
-# Windows Server, version 1809 amd64 tags
+## Windows Server, version 1809 amd64 tags
 
 - [`2.2.100-sdk-nanoserver-1809`, `2.2-sdk-nanoserver-1809`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
 - [`2.2.0-aspnetcore-runtime-nanoserver-1809`, `2.2-aspnetcore-runtime-nanoserver-1809`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
@@ -114,11 +114,11 @@ See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nigh
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
-# Windows Server 2016, version 1709, and version 1803 amd64 tags
+## Windows Server 2016, version 1709, and version 1803 amd64 tags
 
 See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
 
-# Windows Server, version 1809 arm32 tags
+## Windows Server, version 1809 arm32 tags
 
 - [`2.2.0-sdk-nanoserver-1809-arm32`, `2.2-sdk-nanoserver-1809-arm32`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/arm32/Dockerfile)
 - [`2.2.0-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1809/arm32/Dockerfile)
@@ -130,7 +130,7 @@ See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nigh
 
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
 
-## What is .NET Core?
+# What is .NET Core?
 
 [.NET Core](https://docs.microsoft.com/dotnet/core/) is a general purpose development platform maintained by Microsoft and the .NET community on [GitHub](https://github.com/dotnet/core). It is cross-platform, supporting Windows, macOS and Linux, and can be used in device, cloud, and embedded/IoT scenarios.
 
@@ -146,35 +146,35 @@ You are invited to [contribute new features](https://github.com/dotnet/core/blob
 
 ![logo](https://avatars0.githubusercontent.com/u/9141961?v=3&amp;s=100)
 
-## .NET Core Docker Samples
+# .NET Core Docker Samples
 
 The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together. See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-### Building .NET Core Apps with Docker
+## Building .NET Core Apps with Docker
 
 * [.NET Core Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
 * [ASP.NET Core Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
 
-### Develop .NET Core Apps in a Container
+## Develop .NET Core Apps in a Container
 
 * [Develop .NET Core Applications](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-dev-in-container.md) - This sample shows how to develop, build and test .NET Core applications with Docker without the need to install the .NET Core SDK.
 * [Develop ASP.NET Core Applications](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/aspnet-docker-dev-in-container.md) - This sample shows how to develop and test ASP.NET Core applications with Docker without the need to install the .NET Core SDK.
 
-### Optimizing Container Size
+## Optimizing Container Size
 
 * [.NET Core Alpine Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.alpine-x64) builds, tests, and runs an application using Alpine.
 * [.NET Core self-contained Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-selfcontained.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.debian-x64-selfcontained) builds and runs an application as a self-contained application.
 
-### ARM32 / Raspberry Pi
+## ARM32 / Raspberry Pi
 
 * [.NET Core ARM32 Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-arm32.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
 * [ASP.NET Core ARM32 Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) builds and runs an ASP.NET Core application with Debian on ARM32 (works on Raspberry Pi).
 
-## Image variants
+# Image variants
 
 The `microsoft/dotnet-nightly` images come in different flavors, each designed for a specific use case.
 
-### `microsoft/dotnet-nightly:<version>-sdk`
+## `microsoft/dotnet-nightly:<version>-sdk`
 
 This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
 
@@ -186,29 +186,29 @@ It contains the .NET Core SDK which is comprised of two parts:
 
 Use this image for your development process (developing, building and testing applications).
 
-### `microsoft/dotnet-nightly:<version>-aspnetcore-runtime`
+## `microsoft/dotnet-nightly:<version>-aspnetcore-runtime`
 
 This image contains the ASP.NET Core and .NET Core runtimes and libraries and is optimized for running ASP.NET Core apps in production.
 
-### `microsoft/dotnet-nightly:<version>-runtime`
+## `microsoft/dotnet-nightly:<version>-runtime`
 
 This image contains the .NET Core runtimes and libraries and is optimized for running .NET Core apps in production.
 
-### `microsoft/dotnet-nightly:<version>-runtime-deps`
+## `microsoft/dotnet-nightly:<version>-runtime-deps`
 
 This image contains the native dependencies needed by .NET Core. It does not include .NET Core. It is for [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
 
-## Issues
+# Issues
 
 If you have any problems with or questions about this image, please contact us through a [GitHub issue](https://github.com/dotnet/dotnet-docker/issues).
 
-## Licenses
+# Licenses
 
 * [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
 * [Windows Nano Server license](https://hub.docker.com/r/microsoft/nanoserver/) (only applies to Windows containers)
 * [Pricing and licensing for Windows Server 2016](https://www.microsoft.com/en-us/cloud-platform/windows-server-pricing)
 
-## Related Repos
+# Related Repos
 
 .NET Core Docker Hub repos:
 

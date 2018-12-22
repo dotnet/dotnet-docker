@@ -9,7 +9,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
 
-### Container sample: Run a simple application
+## Container sample: Run a simple application
 
 Type the following command to run a sample console application:
 
@@ -17,7 +17,7 @@ Type the following command to run a sample console application:
 docker run --rm microsoft/dotnet-samples
 ```
 
-### Container sample: Run a web application
+## Container sample: Run a web application
 
 Type the following command to run a sample web application:
 
@@ -29,35 +29,37 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/aspnetcore-docker-https.md) to use HTTPS with this image.
 
-# Linux amd64 tags
+# Tags
 
-- [`dotnetapp-stretch`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-- [`aspnetapp-stretch`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+## Linux amd64 tags
 
-# Windows Server, version 1809 amd64 tags
+- [`dotnetapp-stretch`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+- [`aspnetapp-stretch`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-- [`dotnetapp-nanoserver-1809`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-- [`aspnetapp-nanoserver-1809`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+## Linux arm32 tags
 
-# Windows Server, version 1803 amd64 tags
+- [`dotnetapp-stretch-arm32v7`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+- [`aspnetapp-stretch-arm32v7`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-- [`dotnetapp-nanoserver-1803`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-- [`aspnetapp-nanoserver-1803`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+## Windows Server, version 1809 amd64 tags
 
-# Windows Server, version 1709 amd64 tags
+- [`dotnetapp-nanoserver-1809`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+- [`aspnetapp-nanoserver-1809`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-- [`dotnetapp-nanoserver-1709`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-- [`aspnetapp-nanoserver-1709`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+## Windows Server, version 1803 amd64 tags
 
-# Windows Server 2016 amd64 tags
+- [`dotnetapp-nanoserver-1803`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+- [`aspnetapp-nanoserver-1803`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-- [`dotnetapp-nanoserver-sac2016`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-- [`aspnetapp-nanoserver-sac2016`, `aspnetapp` (*samples/aspnetapp/Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+## Windows Server, version 1709 amd64 tags
 
-# Linux arm32 tags
+- [`dotnetapp-nanoserver-1709`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+- [`aspnetapp-nanoserver-1709`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-- [`dotnetapp-stretch-arm32v7`, `dotnetapp`, `latest` (*samples/dotnetapp/Dockerfile.debian-arm32*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.debian-arm32)
-- [`aspnetapp-stretch-arm32v7`, `aspnetapp` (*samples/aspnetapp/Dockerfile.debian-arm32*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile.debian-arm32)
+## Windows Server 2016 amd64 tags
+
+- [`dotnetapp-nanoserver-sac2016`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+- [`aspnetapp-nanoserver-sac2016`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
 # .NET Core Docker Samples
 
@@ -65,7 +67,7 @@ This repo contains samples that demonstrate various .NET Core Docker configurati
 
 You can see the source for these samples at [dotnet/dotnet-docker/samples](https://github.com/dotnet/dotnet-docker/tree/master/samples/README.md) on GitHub. They can be updated by creating a pull request.
 
-## What is .NET Core?
+# What is .NET Core?
 
 [.NET Core](https://docs.microsoft.com/dotnet/core/) is a general purpose development platform maintained by Microsoft and the .NET community on [GitHub](https://github.com/dotnet/core). It is cross-platform, supporting Windows, macOS and Linux, and can be used in device, cloud, and embedded/IoT scenarios.
 
@@ -81,28 +83,28 @@ You are invited to [contribute new features](https://github.com/dotnet/core/blob
 
 ![logo](https://avatars0.githubusercontent.com/u/9141961?v=3&amp;s=100)
 
-## Image variants
+# Image variants
 
 The `microsoft/dotnet-sample` images come in multiple flavors.
 
-### `microsoft/dotnet-samples:dotnetapp`
+## `microsoft/dotnet-samples:dotnetapp`
 
 This image demonstrates the minimal use of the [.NET Core Runtime image](https://hub.docker.com/r/microsoft/dotnet).
 
-### `microsoft/dotnet-samples:aspnetapp`
+## `microsoft/dotnet-samples:aspnetapp`
 
 This image demonstrates an ASP.NET Core web application using the [ASP.NET Core Runtime image](https://hub.docker.com/r/microsoft/dotnet).
 
-## Issues
+# Issues
 
 If you have any problems with or questions about this image, please contact us through a [GitHub issue](https://github.com/dotnet/dotnet-docker/issues).
 
-## Licenses
+# Licenses
 
 - [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
 - [Windows Nano Server license](https://hub.docker.com/r/microsoft/nanoserver/) (only applies to Windows containers)
 
-## Related Repos
+# Related Repos
 
 See the following related repos for other application types:
 

@@ -1,6 +1,6 @@
-## Tags
+# Tags
 
-# Linux amd64 tags
+## Linux amd64 tags
 
 $(TagDoc:2.2-sdk-stretch)
 $(TagDoc:2.2-sdk-alpine3.8)
@@ -35,13 +35,13 @@ $(TagDoc:2.1-runtime-deps-bionic)
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
-# Linux arm64 tags
+## Linux arm64 tags
 
 **.NET Core 3.0 Preview tags**
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
-# Linux arm32 tags
+## Linux arm32 tags
 
 $(TagDoc:2.2-sdk-stretch-arm32v7)
 $(TagDoc:2.2-sdk-bionic-arm32v7)
@@ -64,7 +64,7 @@ $(TagDoc:2.1-runtime-deps-bionic-arm32v7)
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
-# Windows Server, version 1809 amd64 tags
+## Windows Server, version 1809 amd64 tags
 
 $(TagDoc:2.2-sdk-nanoserver-1809)
 $(TagDoc:2.2-aspnetcore-runtime-nanoserver-1809)
@@ -77,11 +77,11 @@ $(TagDoc:2.1-runtime-nanoserver-1809)
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
-# Windows Server 2016, version 1709, and version 1803 amd64 tags
+## Windows Server 2016, version 1709, and version 1803 amd64 tags
 
 See the [complete set of tags]($(System:SourceUrl)/TAGS.md).
 
-# Windows Server, version 1809 arm32 tags
+## Windows Server, version 1809 arm32 tags
 
 $(TagDoc:2.2-sdk-nanoserver-1809-arm32)
 $(TagDoc:2.2-aspnetcore-runtime-nanoserver-1809-arm32)
