@@ -1,4 +1,5 @@
-FROM microsoft/dotnet-nightly:2.1-runtime-deps-bionic
+ARG REPO=microsoft/dotnet
+FROM $REPO:2.1-runtime-deps-bionic
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
