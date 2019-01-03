@@ -53,6 +53,9 @@
           },
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "1.0/runtime/jessie/amd64",
               "os": "linux",
               "tags": {
@@ -87,6 +90,9 @@
           },
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "1.1/runtime/jessie/amd64",
               "os": "linux",
               "tags": {
@@ -181,6 +187,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "1.1/runtime/stretch/amd64",
               "os": "linux",
               "tags": {
@@ -271,6 +280,9 @@
           },
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.1/runtime/stretch-slim/amd64",
               "os": "linux",
               "tags": {
@@ -280,6 +292,9 @@
             },
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.1/runtime/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
@@ -336,6 +351,9 @@
           },
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.1/aspnetcore-runtime/stretch-slim/amd64",
               "os": "linux",
               "tags": {
@@ -345,6 +363,9 @@
             },
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.1/aspnetcore-runtime/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
@@ -473,6 +494,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.1/runtime/alpine3.7/amd64",
               "os": "linux",
               "tags": {
@@ -487,6 +511,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.1/aspnetcore-runtime/alpine3.7/amd64",
               "os": "linux",
               "tags": {
@@ -501,6 +528,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.1/sdk/alpine3.7/amd64",
               "os": "linux",
               "tags": {
@@ -537,6 +567,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.1/aspnetcore-runtime/bionic/amd64",
               "os": "linux",
               "tags": {
@@ -549,6 +582,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.1/runtime/bionic/amd64",
               "os": "linux",
               "tags": {
@@ -598,6 +634,9 @@
           "platforms": [
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.1/aspnetcore-runtime/bionic/arm32v7",
               "os": "linux",
               "tags": {
@@ -612,6 +651,9 @@
           "platforms": [
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.1/runtime/bionic/arm32v7",
               "os": "linux",
               "tags": {
@@ -647,6 +689,9 @@
           },
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.2/runtime/stretch-slim/amd64",
               "os": "linux",
               "tags": {
@@ -656,6 +701,9 @@
             },
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.2/runtime/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
@@ -713,6 +761,9 @@
           },
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.2/aspnetcore-runtime/stretch-slim/amd64",
               "os": "linux",
               "tags": {
@@ -722,6 +773,9 @@
             },
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.2/aspnetcore-runtime/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
@@ -852,6 +906,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.2/runtime/alpine3.8/amd64",
               "os": "linux",
               "tags": {
@@ -866,6 +923,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.2/aspnetcore-runtime/alpine3.8/amd64",
               "os": "linux",
               "tags": {
@@ -880,6 +940,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.2/sdk/alpine3.8/amd64",
               "os": "linux",
               "tags": {
@@ -894,6 +957,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.2/aspnetcore-runtime/bionic/amd64",
               "os": "linux",
               "tags": {
@@ -906,6 +972,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.2/runtime/bionic/amd64",
               "os": "linux",
               "tags": {
@@ -931,6 +1000,9 @@
           "platforms": [
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.2/aspnetcore-runtime/bionic/arm32v7",
               "os": "linux",
               "tags": {
@@ -945,6 +1017,9 @@
           "platforms": [
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "2.2/runtime/bionic/arm32v7",
               "os": "linux",
               "tags": {
@@ -1012,6 +1087,9 @@
           },
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/runtime/stretch-slim/amd64",
               "os": "linux",
               "tags": {
@@ -1021,6 +1099,9 @@
             },
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/runtime/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
@@ -1031,6 +1112,9 @@
             },
             {
               "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/runtime/stretch-slim/arm64v8",
               "os": "linux",
               "tags": {
@@ -1084,6 +1168,9 @@
           },
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/aspnetcore-runtime/stretch-slim/amd64",
               "os": "linux",
               "tags": {
@@ -1093,6 +1180,9 @@
             },
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/aspnetcore-runtime/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
@@ -1103,6 +1193,9 @@
             },
             {
               "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/aspnetcore-runtime/stretch-slim/arm64v8",
               "os": "linux",
               "tags": {
@@ -1238,6 +1331,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/runtime/alpine3.8/amd64",
               "os": "linux",
               "tags": {
@@ -1252,6 +1348,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/aspnetcore-runtime/alpine3.8/amd64",
               "os": "linux",
               "tags": {
@@ -1266,6 +1365,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/sdk/alpine3.8/amd64",
               "os": "linux",
               "tags": {
@@ -1292,6 +1394,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/aspnetcore-runtime/bionic/amd64",
               "os": "linux",
               "tags": {
@@ -1304,6 +1409,9 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/runtime/bionic/amd64",
               "os": "linux",
               "tags": {
@@ -1343,6 +1451,9 @@
           "platforms": [
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/aspnetcore-runtime/bionic/arm32v7",
               "os": "linux",
               "tags": {
@@ -1357,6 +1468,9 @@
           "platforms": [
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/runtime/bionic/arm32v7",
               "os": "linux",
               "tags": {
@@ -1399,6 +1513,9 @@
           "platforms": [
             {
               "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/runtime/bionic/arm64v8",
               "os": "linux",
               "tags": {
@@ -1413,6 +1530,9 @@
           "platforms": [
             {
               "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(System:Repo)"
+              },
               "dockerfile": "3.0/aspnetcore-runtime/bionic/arm64v8",
               "os": "linux",
               "tags": {

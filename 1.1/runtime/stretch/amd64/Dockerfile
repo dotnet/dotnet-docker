@@ -1,4 +1,5 @@
-FROM microsoft/dotnet:1.1-runtime-deps-stretch
+ARG REPO=microsoft/dotnet
+FROM $REPO:1.1-runtime-deps-stretch
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
