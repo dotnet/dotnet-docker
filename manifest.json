@@ -4,9 +4,9 @@
     "1.1-RuntimeVersion": "1.1.10",
     "1.1-SdkVersion": "1.1.11",
     "2.1-RuntimeVersion": "2.1.7",
-    "2.1-SdkVersion": "2.1.501-preview",
-    "2.2-RuntimeVersion": "2.2.0",
-    "2.2-SdkVersion": "2.2.100",
+    "2.1-SdkVersion": "2.1.503",
+    "2.2-RuntimeVersion": "2.2.1",
+    "2.2-SdkVersion": "2.2.102",
     "3.0-RuntimeVersion": "3.0.0-preview",
     "3.0-SdkVersion": "3.0.100-preview"
   },

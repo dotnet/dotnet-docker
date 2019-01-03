@@ -34,7 +34,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public async Task Execute()
         {
-            if (!DockerHelper.IsLinuxContainerModeEnabled && _imageData.IsArm)
+            if (!DockerHelper.IsLinuxContainerModeEnabled && _imageData.IsArm && _imageData.Version.Major == 3)
             {
                 _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/corefx/issues/33563");
                 return;
