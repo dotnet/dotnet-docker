@@ -10,9 +10,7 @@ RUN apk add --no-cache \
     libssl1.0 \
     libstdc++ \
     tzdata \
-    userspace-rcu \
-    zlib \
-    lttng-ust
+    zlib
 
 # Configure web servers to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80 \
