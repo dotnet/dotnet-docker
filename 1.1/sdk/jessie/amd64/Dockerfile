@@ -8,7 +8,6 @@ RUN apt-get update \
         libgcc1 \
         libgssapi-krb5-2 \
         libicu52 \
-        liblttng-ust0 \
         libssl1.0.0 \
         libstdc++6 \
         libunwind8 \
