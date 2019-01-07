@@ -7,11 +7,17 @@ parameters:
   useRemoteDockerServer: false
 jobs:
 - job: ${{ parameters.name }}
-  condition: or(and(succeeded(), eq(variables['singlePhase'], '')), eq(variables['singlePhase'], 'build'))
+  condition: "
+    and(
+      succeeded(),
+      ${{ parameters.matrix }},
+      or(
+        eq(variables['singlePhase'], ''),
+        eq(variables['singlePhase'], 'build')))"
   dependsOn: GenerateMatrices
   pool: ${{ parameters.pool }}
   strategy:
-    matrix: ${{ parameters.matrix }}
+    matrix: $[ ${{ parameters.matrix }} ]
   variables:
     osVersion: ${{ parameters.osVersion }}
   steps:
