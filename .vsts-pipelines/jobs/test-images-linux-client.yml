@@ -10,6 +10,7 @@ jobs:
   condition: "
     and(
       ne(variables['repo'], 'dotnet-samples'),
+      ${{ parameters.matrix }},
       or(
         and(
           succeeded(),
@@ -20,7 +21,7 @@ jobs:
   - ${{ parameters.buildDependencies }}
   pool: ${{ parameters.pool }}
   strategy:
-    matrix: ${{ parameters.matrix }}
+    matrix: $[ ${{ parameters.matrix }} ]
   variables:
     testRunner.container: testrunner-$(Build.BuildId)-$(System.JobId)
     architecture: ${{ parameters.architecture }}

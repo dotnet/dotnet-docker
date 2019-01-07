@@ -8,6 +8,7 @@ jobs:
   condition: "
     and(
       ne(variables['repo'], 'dotnet-samples'),
+      ${{ parameters.matrix }},
       or(
         and(
           succeeded(),
@@ -18,7 +19,7 @@ jobs:
     - ${{ parameters.buildDependencies }}
   pool: ${{ parameters.pool }}
   strategy:
-    matrix: ${{ parameters.matrix }}
+    matrix: $[ ${{ parameters.matrix }} ]
   steps:
   - template: ../steps/init-docker-windows.yml
     parameters:
