@@ -18,6 +18,7 @@ jobs:
   pool: ${{ parameters.pool }}
   strategy:
     matrix: $[ ${{ parameters.matrix }} ]
+  timeoutInMinutes: 90
   variables:
     osVersion: ${{ parameters.osVersion }}
   steps:
