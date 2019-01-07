@@ -155,4 +155,10 @@
 - [`3.0.0-preview-aspnetcore-runtime-nanoserver-sac2016`, `3.0-aspnetcore-runtime-nanoserver-sac2016`, `3.0.0-preview-aspnetcore-runtime`, `3.0-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`3.0.0-preview-runtime-nanoserver-sac2016`, `3.0-runtime-nanoserver-sac2016`, `3.0.0-preview-runtime`, `3.0-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
 
+## Windows Server, version 1809 arm32 tags
+
+- [`2.2.0-sdk-nanoserver-1809-arm32`, `2.2-sdk-nanoserver-1809-arm32`, `2.2.100-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/arm32/Dockerfile)
+- [`2.2.0-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2.0-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/nanoserver-1809/arm32/Dockerfile)
+- [`2.2.0-runtime-nanoserver-1809-arm32`, `2.2-runtime-nanoserver-1809-arm32`, `2.2.0-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/nanoserver-1809/arm32/Dockerfile)
+
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).

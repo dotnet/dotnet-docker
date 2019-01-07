@@ -90,6 +90,18 @@ jobs:
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1809Amd64'] ]
     osVersion: nanoserver-1809
     dockerClientOS: windows
+- template: build-images.yml
+  parameters:
+    name: Build_NanoServer1809_arm32
+    pool: # nanoServer1809Arm32Pool
+      name: DotNetCore-Infra
+      demands:
+      - agent.os -equals linux
+      - RemoteDockerServerOS -equals nanoserver-1809
+      - RemoteDockerServerArch -equals arm32
+    matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1809Arm32'] ]
+    dockerClientOS: linux
+    useRemoteDockerServer: true
 
   ################################################################################
   # Test Images
@@ -166,6 +178,19 @@ jobs:
       demands:
       - VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
     matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1809Amd64'] ]
+- template: test-images-linux-client.yml
+  parameters:
+    name: Test_NanoServer1809_arm32
+    buildDependencies: Build_NanoServer1809_arm32
+    pool: # nanoServer1809Arm32Pool
+      name: DotNetCore-Infra
+      demands:
+      - agent.os -equals linux
+      - RemoteDockerServerOS -equals nanoserver-1809
+      - RemoteDockerServerArch -equals arm32
+    matrix: $[ dependencies.GenerateMatrices.outputs['testMatrix.testMatrixNanoserver1809Arm32'] ]
+    architecture: arm
+    useRemoteDockerServer: true
 
   ################################################################################
   # Publish Images
@@ -243,6 +268,17 @@ jobs:
     matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1809Amd64'] ]
     osVersion: nanoserver-1809
     architecture: amd64
+    dockerClientOS: windows
+- template: copy-images.yml
+  parameters:
+    name: Copy_Images_NanoServer1809_arm32
+    pool: # windows1809Amd64Pool - arm images can be copied with amd64 machines which will be much faster.
+      name: DotNetCore-Infra
+      demands:
+      - VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
+    matrix: $[ dependencies.GenerateMatrices.outputs['buildMatrix.buildMatrixNanoserver1809Arm32'] ]
+    osVersion: nanoserver-1809
+    architecture: arm
     dockerClientOS: windows
 
 - template: publish-finalize.yml

@@ -23,7 +23,8 @@ jobs:
             succeeded('Build_NanoServerSac2016_amd64'),
             succeeded('Build_NanoServer1709_amd64'),
             succeeded('Build_NanoServer1803_amd64'),
-            succeeded('Build_NanoServer1809_amd64')))))"
+            succeeded('Build_NanoServer1809_amd64'),
+            succeeded('Build_NanoServer1809_arm32')))))"
   dependsOn:
   - GenerateMatrices
   - Test_Linux_amd64
@@ -33,6 +34,7 @@ jobs:
   - Test_NanoServer1709_amd64
   - Test_NanoServer1803_amd64
   - Test_NanoServer1809_amd64
+  - Test_NanoServer1809_arm32
   pool: ${{ parameters.pool }}
   strategy:
     matrix: ${{ parameters.matrix }}
