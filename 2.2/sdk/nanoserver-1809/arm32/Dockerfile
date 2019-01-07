@@ -8,7 +8,9 @@ ENV DOTNET_SDK_VERSION 2.2.100
 RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/%DOTNET_SDK_VERSION%/dotnet-sdk-%DOTNET_SDK_VERSION%-win-arm.zip `
     && mkdir -p "%ProgramFiles%\dotnet" `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
-    && del dotnet.zip
+    && del dotnet.zip `
+    # Add NuGet cache (ARM SDK doesn't include it)
+    && curl -SL --output "%ProgramFiles%\dotnet\sdk\%DOTNET_SDK_VERSION%\nuGetPackagesArchive.lzma" https://dotnetcli.blob.core.windows.net/dotnet/Sdk/%DOTNET_SDK_VERSION%/nuGetPackagesArchive.lzma
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator 
