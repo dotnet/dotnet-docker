@@ -61,6 +61,11 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 - [`dotnetapp-nanoserver-sac2016`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 - [`aspnetapp-nanoserver-sac2016`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
+## Windows Server, version 1809 amd32 tags
+
+- [`dotnetapp-nanoserver-1809-arm32`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+- [`aspnetapp-nanoserver-1809-arm32`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+
 # .NET Core Docker Samples
 
 This repo contains samples that demonstrate various .NET Core Docker configurations.
