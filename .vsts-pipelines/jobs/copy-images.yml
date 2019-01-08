@@ -20,7 +20,6 @@ jobs:
               eq(variables['repo'], 'dotnet-samples'),
               eq(variables['singlePhase'], ''),
               succeeded('Build_Linux_amd64'),
-              succeeded('Build_Linux_arm64v8'),
               succeeded('Build_Linux_arm32v7'),
               succeeded('Build_NanoServerSac2016_amd64'),
               succeeded('Build_NanoServer1709_amd64'),
