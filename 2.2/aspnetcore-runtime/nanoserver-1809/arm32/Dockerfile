@@ -3,7 +3,7 @@
 FROM mcr.microsoft.com/windows/nanoserver:1809_arm
 
 # Install ASP.NET Core Runtime
-ENV ASPNETCORE_VERSION 2.2.0
+ENV ASPNETCORE_VERSION 2.2.1
 
 RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/%ASPNETCORE_VERSION%/aspnetcore-runtime-%ASPNETCORE_VERSION%-win-arm.zip `
     && mkdir -p "%ProgramFiles%\dotnet" `
