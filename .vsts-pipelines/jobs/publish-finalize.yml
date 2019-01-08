@@ -5,7 +5,10 @@ jobs:
   condition: "
     and(
       succeeded('Copy_Images_Linux_amd64'),
-      succeeded('Copy_Images_Linux_arm64v8'),
+      or(
+        succeeded('Copy_Images_Linux_arm64v8'),
+        eq(variables['repo'], 'dotnet-samples')
+      ),
       succeeded('Copy_Images_Linux_arm32v7'),
       succeeded('Copy_Images_NanoServerSac2016_amd64'),
       succeeded('Copy_Images_NanoServer1709_amd64'),
