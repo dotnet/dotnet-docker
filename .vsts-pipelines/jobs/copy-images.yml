@@ -8,22 +8,25 @@ parameters:
 jobs:
 - job: ${{ parameters.name }}
   condition: "
-    or(
-      eq(variables['singlePhase'], 'publish'),
-      and(
-        eq(variables['singlePhase'], ''),
-        or(
-          succeeded(),
-          and(
-            eq(variables['repo'], 'dotnet-samples'),
-            eq(variables['singlePhase'], ''),
-            succeeded('Build_Linux_amd64'),
-            succeeded('Build_Linux_arm64v8'),
-            succeeded('Build_Linux_arm32v7'),
-            succeeded('Build_NanoServerSac2016_amd64'),
-            succeeded('Build_NanoServer1709_amd64'),
-            succeeded('Build_NanoServer1803_amd64'),
-            succeeded('Build_NanoServer1809_amd64')))))"
+    and(
+      ${{ parameters.matrix }},
+      or(
+        eq(variables['singlePhase'], 'publish'),
+        and(
+          eq(variables['singlePhase'], ''),
+          or(
+            succeeded(),
+            and(
+              eq(variables['repo'], 'dotnet-samples'),
+              eq(variables['singlePhase'], ''),
+              succeeded('Build_Linux_amd64'),
+              succeeded('Build_Linux_arm64v8'),
+              succeeded('Build_Linux_arm32v7'),
+              succeeded('Build_NanoServerSac2016_amd64'),
+              succeeded('Build_NanoServer1709_amd64'),
+              succeeded('Build_NanoServer1803_amd64'),
+              succeeded('Build_NanoServer1809_amd64'),
+              succeeded('Build_NanoServer1809_arm32'))))))"
   dependsOn:
   - GenerateMatrices
   - Test_Linux_amd64
@@ -33,9 +36,10 @@ jobs:
   - Test_NanoServer1709_amd64
   - Test_NanoServer1803_amd64
   - Test_NanoServer1809_amd64
+  - Test_NanoServer1809_arm32
   pool: ${{ parameters.pool }}
   strategy:
-    matrix: ${{ parameters.matrix }}
+    matrix: $[ ${{ parameters.matrix }} ]
   variables:
     osVersion: ${{ parameters.osVersion }}
     architecture: ${{ parameters.architecture }}
