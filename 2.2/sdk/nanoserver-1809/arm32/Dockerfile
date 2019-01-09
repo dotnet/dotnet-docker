@@ -10,6 +10,14 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
     && del dotnet.zip
 
+# Install artifacts credential provider
+ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.8
+
+RUN curl -SL --output microsoft.nuget.credentialprovider.zip https://github.com/Microsoft/artifacts-credprovider/releases/download/%NUGET_CREDENTIAL_PROVIDER_VERSION%/Microsoft.NuGet.CredentialProvider.zip `
+    && mkdir -p "%USERPROFILE%\.nuget" `
+    && tar -zxf microsoft.nuget.credentialprovider.zip -C "%USERPROFILE%\.nuget" `
+    && del microsoft.nuget.credentialprovider.zip
+
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator 
 RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
