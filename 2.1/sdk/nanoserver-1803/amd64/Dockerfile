@@ -37,7 +37,7 @@ FROM mcr.microsoft.com/windows/nanoserver:1803
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
 
-COPY --from=installer-env ["credentialprovider", "C:\\Users\\ContainerUser\\.nuget"]
+COPY --from=installer-env ["credentialprovider\\plugins\\netcore", "C:\\Users\\Public\\credentialprovider\\plugins\\netcore"]
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator 
@@ -51,7 +51,9 @@ ENV ASPNETCORE_URLS=http://+:80 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip
+    NUGET_XMLDOC_MODE=skip `
+    # Setting environment variable for credential provider
+    NUGET_PLUGIN_PATHS="C:\Users\Public\credentialprovider\plugins\netcore\CredentialProvider.Microsoft\CredentialProvider.Microsoft.dll"
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
 RUN dotnet help

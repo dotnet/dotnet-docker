@@ -14,8 +14,8 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
 ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.8
 
 RUN curl -SL --output microsoft.nuget.credentialprovider.zip https://github.com/Microsoft/artifacts-credprovider/releases/download/%NUGET_CREDENTIAL_PROVIDER_VERSION%/Microsoft.NuGet.CredentialProvider.zip `
-    && mkdir -p "%USERPROFILE%\.nuget" `
-    && tar -zxf microsoft.nuget.credentialprovider.zip -C "%USERPROFILE%\.nuget" `
+    && mkdir -p "C:\Users\Public\credentialprovider" `
+    && tar -C "C:\Users\Public\credentialprovider" -xzf microsoft.nuget.credentialprovider.zip plugins/netcore `
     && del microsoft.nuget.credentialprovider.zip
 
 # In order to set system PATH, ContainerAdministrator must be used
@@ -30,7 +30,9 @@ ENV ASPNETCORE_URLS=http://+:80 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip
+    NUGET_XMLDOC_MODE=skip `
+    # Setting environment variable for credential provider
+    NUGET_PLUGIN_PATHS="C:\Users\Public\credentialprovider\plugins\netcore\CredentialProvider.Microsoft\CredentialProvider.Microsoft.dll"
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
 RUN dotnet help

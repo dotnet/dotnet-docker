@@ -34,8 +34,8 @@ ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.8
 RUN curl -SL --output microsoft.nuget.credentialprovider.tar.gz https://github.com/Microsoft/artifacts-credprovider/releases/download/$NUGET_CREDENTIAL_PROVIDER_VERSION/Microsoft.NuGet.CredentialProvider.tar.gz \
     && credprovider_sha512='3c4c10d7aa5f9ca005b455fb380c2bd549432df5f4352eb58d1325de5c14db7f0d59fad6eef1c1f7a076804c32fd255ee84a1ac1d790f5a83adc537b74eee7c0' \
     && echo "$credprovider_sha512  microsoft.nuget.credentialprovider.tar.gz" | sha512sum -c - \
-    && mkdir -p $HOME/.nuget \
-    && tar -C $HOME/.nuget -xzf microsoft.nuget.credentialprovider.tar.gz plugins/netcore \
+    && mkdir -p /usr/share/credentialprovider \
+    && tar -C /usr/share/credentialprovider -xzf microsoft.nuget.credentialprovider.tar.gz plugins/netcore \
     && rm microsoft.nuget.credentialprovider.tar.gz
 
 # Configure web servers to bind to port 80 when present
@@ -45,7 +45,9 @@ ENV ASPNETCORE_URLS=http://+:80 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip
+    NUGET_XMLDOC_MODE=skip \
+    # Nuget Credential provider path
+    NUGET_PLUGIN_PATHS=/usr/share/credentialprovider/plugins/netcore/CredentialProvider.Microsoft/CredentialProvider.Microsoft.dll
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
 RUN dotnet help
