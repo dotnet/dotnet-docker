@@ -18,6 +18,7 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
     Expand-Archive dotnet.zip -DestinationPath dotnet; `
     Remove-Item -Force dotnet.zip
 
+
 # SDK image
 FROM mcr.microsoft.com/windows/nanoserver:1809
 

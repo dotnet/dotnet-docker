@@ -30,11 +30,11 @@ RUN wget -O microsoft.nuget.credentialprovider.tar.gz https://github.com/Microso
     && rm microsoft.nuget.credentialprovider.tar.gz
 
 # Enable correct mode for dotnet watch (only mode supported in a container)
-ENV DOTNET_USE_POLLING_FILE_WATCHER=true \ 
-    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip \
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Nuget Credential provider path
-    NUGET_PLUGIN_PATHS=/usr/share/credentialprovider/plugins/netcore/CredentialProvider.Microsoft/CredentialProvider.Microsoft.dll
+    NUGET_PLUGIN_PATHS=/usr/share/credentialprovider/plugins/netcore/CredentialProvider.Microsoft/CredentialProvider.Microsoft.dll \
+    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
+    NUGET_XMLDOC_MODE=skip
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
 RUN dotnet help

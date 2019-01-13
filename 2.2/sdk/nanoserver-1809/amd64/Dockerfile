@@ -32,6 +32,7 @@ RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tl
     Expand-Archive microsoft.nuget.credentialprovider.zip -DestinationPath credentialprovider; `
     Remove-Item -Force microsoft.nuget.credentialprovider.zip
 
+
 # SDK image
 FROM mcr.microsoft.com/windows/nanoserver:1809
 
@@ -50,10 +51,10 @@ ENV ASPNETCORE_URLS=http://+:80 `
     DOTNET_RUNNING_IN_CONTAINER=true `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
-    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip `
     # Setting environment variable for credential provider
-    NUGET_PLUGIN_PATHS="C:\Users\Public\credentialprovider\plugins\netcore\CredentialProvider.Microsoft\CredentialProvider.Microsoft.dll"
+    NUGET_PLUGIN_PATHS="C:\Users\Public\credentialprovider\plugins\netcore\CredentialProvider.Microsoft\CredentialProvider.Microsoft.dll" `
+    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
+    NUGET_XMLDOC_MODE=skip
 
 # Trigger first run experience by running arbitrary cmd to populate local package cache
 RUN dotnet help
