@@ -170,7 +170,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
-                    verifyCredProviderCommand = $"test -f {linuxFilePath} && test $NUGET_PLUGIN_PATHS = {linuxFilePath}";
+                    verifyCredProviderCommand = $"/bin/bash -c \"test -f $NUGET_PLUGIN_PATHS && test $NUGET_PLUGIN_PATHS = {linuxFilePath}\"";
                 }
                 else
                 {
