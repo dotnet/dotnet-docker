@@ -2,9 +2,9 @@
 
 ## Linux amd64 tags
 
-- [`2.2.102-sdk-stretch`, `2.2-sdk-stretch`, `2.2.102-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/amd64/Dockerfile)
-- [`2.2.102-sdk-alpine3.8`, `2.2-sdk-alpine3.8`, `2.2.102-sdk-alpine`, `2.2-sdk-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.8/amd64/Dockerfile)
-- [`2.2.102-sdk-bionic`, `2.2-sdk-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/bionic/amd64/Dockerfile)
+- [`2.2.103-sdk-stretch`, `2.2-sdk-stretch`, `2.2.103-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/amd64/Dockerfile)
+- [`2.2.103-sdk-alpine3.8`, `2.2-sdk-alpine3.8`, `2.2.103-sdk-alpine`, `2.2-sdk-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.8/amd64/Dockerfile)
+- [`2.2.103-sdk-bionic`, `2.2-sdk-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/bionic/amd64/Dockerfile)
 - [`2.2.1-aspnetcore-runtime-stretch-slim`, `2.2-aspnetcore-runtime-stretch-slim`, `2.2.1-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
 - [`2.2.1-aspnetcore-runtime-alpine3.8`, `2.2-aspnetcore-runtime-alpine3.8`, `2.2.1-aspnetcore-runtime-alpine`, `2.2-aspnetcore-runtime-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/alpine3.8/amd64/Dockerfile)
 - [`2.2.1-aspnetcore-runtime-bionic`, `2.2-aspnetcore-runtime-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/bionic/amd64/Dockerfile)
@@ -64,8 +64,8 @@
 
 ## Linux arm32 tags
 
-- [`2.2.102-sdk-stretch-arm32v7`, `2.2-sdk-stretch-arm32v7`, `2.2.102-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/arm32v7/Dockerfile)
-- [`2.2.102-sdk-bionic-arm32v7`, `2.2-sdk-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/bionic/arm32v7/Dockerfile)
+- [`2.2.103-sdk-stretch-arm32v7`, `2.2-sdk-stretch-arm32v7`, `2.2.103-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/arm32v7/Dockerfile)
+- [`2.2.103-sdk-bionic-arm32v7`, `2.2-sdk-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/bionic/arm32v7/Dockerfile)
 - [`2.2.1-aspnetcore-runtime-stretch-slim-arm32v7`, `2.2-aspnetcore-runtime-stretch-slim-arm32v7`, `2.2.1-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/stretch-slim/arm32v7/Dockerfile)
 - [`2.2.1-aspnetcore-runtime-bionic-arm32v7`, `2.2-aspnetcore-runtime-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/bionic/arm32v7/Dockerfile)
 - [`2.2.1-runtime-stretch-slim-arm32v7`, `2.2-runtime-stretch-slim-arm32v7`, `2.2.1-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/stretch-slim/arm32v7/Dockerfile)
@@ -94,7 +94,7 @@
 
 ## Windows Server, version 1809 amd64 tags
 
-- [`2.2.102-sdk-nanoserver-1809`, `2.2-sdk-nanoserver-1809`, `2.2.102-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.2.103-sdk-nanoserver-1809`, `2.2-sdk-nanoserver-1809`, `2.2.103-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
 - [`2.2.1-aspnetcore-runtime-nanoserver-1809`, `2.2-aspnetcore-runtime-nanoserver-1809`, `2.2.1-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
 - [`2.2.1-runtime-nanoserver-1809`, `2.2-runtime-nanoserver-1809`, `2.2.1-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/nanoserver-1809/amd64/Dockerfile)
 - [`2.1.503-sdk-nanoserver-1809`, `2.1-sdk-nanoserver-1809`, `2.1.503-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
@@ -109,7 +109,7 @@
 
 ## Windows Server, version 1803 amd64 tags
 
-- [`2.2.102-sdk-nanoserver-1803`, `2.2-sdk-nanoserver-1803`, `2.2.102-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1803/amd64/Dockerfile)
+- [`2.2.103-sdk-nanoserver-1803`, `2.2-sdk-nanoserver-1803`, `2.2.103-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1803/amd64/Dockerfile)
 - [`2.2.1-aspnetcore-runtime-nanoserver-1803`, `2.2-aspnetcore-runtime-nanoserver-1803`, `2.2.1-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/nanoserver-1803/amd64/Dockerfile)
 - [`2.2.1-runtime-nanoserver-1803`, `2.2-runtime-nanoserver-1803`, `2.2.1-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/nanoserver-1803/amd64/Dockerfile)
 - [`2.1.503-sdk-nanoserver-1803`, `2.1-sdk-nanoserver-1803`, `2.1.503-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1803/amd64/Dockerfile)
@@ -124,7 +124,7 @@
 
 ## Windows Server, version 1709 amd64 tags
 
-- [`2.2.102-sdk-nanoserver-1709`, `2.2-sdk-nanoserver-1709`, `2.2.102-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1709/amd64/Dockerfile)
+- [`2.2.103-sdk-nanoserver-1709`, `2.2-sdk-nanoserver-1709`, `2.2.103-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1709/amd64/Dockerfile)
 - [`2.2.1-aspnetcore-runtime-nanoserver-1709`, `2.2-aspnetcore-runtime-nanoserver-1709`, `2.2.1-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/nanoserver-1709/amd64/Dockerfile)
 - [`2.2.1-runtime-nanoserver-1709`, `2.2-runtime-nanoserver-1709`, `2.2.1-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/nanoserver-1709/amd64/Dockerfile)
 - [`2.1.503-sdk-nanoserver-1709`, `2.1-sdk-nanoserver-1709`, `2.1.503-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1709/amd64/Dockerfile)
@@ -139,7 +139,7 @@
 
 ## Windows Server 2016 amd64 tags
 
-- [`2.2.102-sdk-nanoserver-sac2016`, `2.2-sdk-nanoserver-sac2016`, `2.2.102-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.2.103-sdk-nanoserver-sac2016`, `2.2-sdk-nanoserver-sac2016`, `2.2.103-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-sac2016/amd64/Dockerfile)
 - [`2.2.1-aspnetcore-runtime-nanoserver-sac2016`, `2.2-aspnetcore-runtime-nanoserver-sac2016`, `2.2.1-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`2.2.1-runtime-nanoserver-sac2016`, `2.2-runtime-nanoserver-sac2016`, `2.2.1-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`2.1.503-sdk-nanoserver-sac2016`, `2.1-sdk-nanoserver-sac2016`, `2.1.503-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
@@ -157,7 +157,7 @@
 
 ## Windows Server, version 1809 arm32 tags
 
-- [`2.2.1-sdk-nanoserver-1809-arm32`, `2.2-sdk-nanoserver-1809-arm32`, `2.2.102-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/arm32/Dockerfile)
+- [`2.2.1-sdk-nanoserver-1809-arm32`, `2.2-sdk-nanoserver-1809-arm32`, `2.2.103-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/arm32/Dockerfile)
 - [`2.2.1-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2.1-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnetcore-runtime/nanoserver-1809/arm32/Dockerfile)
 - [`2.2.1-runtime-nanoserver-1809-arm32`, `2.2-runtime-nanoserver-1809-arm32`, `2.2.1-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/nanoserver-1809/arm32/Dockerfile)
 
