@@ -19,11 +19,11 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
     Remove-Item -Force dotnet.zip
 
 # Install artifacts credential provider
-ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.8
+ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.11
 
 RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; `
-    Invoke-WebRequest -OutFile microsoft.nuget.credentialprovider.zip https://github.com/Microsoft/artifacts-credprovider/releases/download/$Env:NUGET_CREDENTIAL_PROVIDER_VERSION/Microsoft.NuGet.CredentialProvider.zip; `
-    $credprovider_sha512 = '853e2b0b348742520e87ea557e6c1f38306fed3544d87dc10ec2823942caaea4d41b2c3912b8c4802e7211a38707706d5e6fdd3806ebf4b42e939960c0ca5d35'; `
+    Invoke-WebRequest -OutFile microsoft.nuget.credentialprovider.zip https://github.com/Microsoft/artifacts-credprovider/releases/download/$Env:NUGET_CREDENTIAL_PROVIDER_VERSION/Microsoft.Netcore2.NuGet.CredentialProvider.zip; `
+    $credprovider_sha512 = '9733d659253415e6ed88e5b728591a1f7596baa6a500ffc390c844be224916c57a91f57d2fbf2e6395cc793b6390d72bc9d73b28810f9c8d2868c0cabec932c3'; `
     if ((Get-FileHash microsoft.nuget.credentialprovider.zip -Algorithm sha512).Hash -ne $credprovider_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED FOR CREDENTIAL PROVIDER!'; `
         exit 1; `
@@ -38,7 +38,7 @@ FROM mcr.microsoft.com/windows/nanoserver:1803
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
 
-COPY --from=installer-env ["credentialprovider\\plugins\\netcore", "C:\\Users\\Public\\credentialprovider\\plugins\\netcore"]
+COPY --from=installer-env ["credentialprovider", "C:\\Users\\Public\\credentialprovider"]
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator 
