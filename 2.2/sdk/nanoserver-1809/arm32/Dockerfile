@@ -29,7 +29,7 @@ ENV ASPNETCORE_URLS=http://+:80 `
     DOTNET_RUNNING_IN_CONTAINER=true `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
-    # Setting environment variable for credential provider
+    # NuGet Credential provider path
     NUGET_PLUGIN_PATHS="C:\Users\Public\credentialprovider\plugins\netcore\CredentialProvider.Microsoft\CredentialProvider.Microsoft.dll" `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip
