@@ -18,7 +18,7 @@ FROM build as publish_fx_dependent
 RUN dotnet publish -c Release -o out `
     # Checks if nuget in dotnet restore has populated the credential provider cache
     && dir %localappdata%\\nuget\\plugins-cache | findstr CredentialProvider.Microsoft.dll `
-    && dotnet $Env:NUGET_PLUGIN_PATHS -h
+    && dotnet %NUGET_PLUGIN_PATHS% -h
 
 
 FROM $runtime_image AS fx_dependent_app

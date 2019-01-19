@@ -30,7 +30,8 @@ FROM build as publish_self_contained
 ARG rid
 RUN dotnet restore -r $rid \
     # Checks if nuget in dotnet restore has populated the credential provider cache
-    && ls $HOME/.local/share/NuGet/plugins-cache | grep --quiet CredentialProvider.Microsoft.dll
+    && ls $HOME/.local/share/NuGet/plugins-cache | grep --quiet CredentialProvider.Microsoft.dll \
+    && dotnet $NUGET_PLUGIN_PATHS -h
 RUN dotnet publish -r $rid -c Release -o out
 
 
