@@ -15,7 +15,7 @@ RUN dotnet build
 
 
 FROM build as publish_fx_dependent
-RUN dotnet publish -c Release -o out `
+RUN dotnet publish -c Release -o out
 
 
 FROM $runtime_image AS fx_dependent_app
