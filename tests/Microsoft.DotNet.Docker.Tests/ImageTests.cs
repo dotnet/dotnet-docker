@@ -160,7 +160,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifySdkImage_NugetCredentialProviderScenario(ImageData imageData)
+        public void VerifySdkImage_NugetCredentialProviderIsPresent(ImageData imageData)
         {
             const string linuxFilePath = "/usr/share/credentialprovider/plugins/netcore/CredentialProvider.Microsoft/CredentialProvider.Microsoft.dll";
             const string windowsFilePath = "C:\\Users\\Public\\credentialprovider\\plugins\\netcore\\CredentialProvider.Microsoft\\CredentialProvider.Microsoft.dll";
@@ -188,7 +188,38 @@ namespace Microsoft.DotNet.Docker.Tests
                 _dockerHelper.Run(
                     image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
                     command: verifyCredProviderCommand,
-                    name: imageData.GetIdentifier("NugetCredentialProvider"));
+                    name: imageData.GetIdentifier("NugetCredentialProviderPresent"));
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifySdkImage_CredentialProviderRuns(ImageData imageData)
+        {
+            string verifyCredProviderCommand = null;
+            if (imageData.Version.Major == 2)
+            {
+                if (DockerHelper.IsLinuxContainerModeEnabled)
+                {
+                    verifyCredProviderCommand = $"sh -c \"dotnet $NUGET_PLUGIN_PATHS -h\"";
+                }
+                else
+                {
+                    verifyCredProviderCommand = $"CMD /S /C dotnet %NUGET_PLUGIN_PATHS% -h";
+                }
+            }
+            else
+            {
+                _outputHelper.WriteLine("Nuget Credential provider v2 is not supported in 1.* or 3.* images. Skipping test.");
+                return;
+            }
+            if (verifyCredProviderCommand != null)
+            {
+                // Simple check to verify the NuGet credential provider was installed
+                _dockerHelper.Run(
+                    image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
+                    command: verifyCredProviderCommand,
+                    name: imageData.GetIdentifier("NugetCredentialProviderRuns"));
             }
         }
     }
