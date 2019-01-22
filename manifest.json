@@ -990,7 +990,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(2.2-RuntimeVersion)-sdk-nanoserver-1809-arm32": {},
+                "$(2.2-SdkVersion)-sdk-nanoserver-1809-arm32": {},
                 "2.2-sdk-nanoserver-1809-arm32": {}
               }
             }
@@ -1431,7 +1431,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(3.0-RuntimeVersion)-sdk-nanoserver-1809-arm32": {},
+                "$(3.0-SdkVersion)-sdk-nanoserver-1809-arm32": {},
                 "3.0-sdk-nanoserver-1809-arm32": {}
               }
             }
