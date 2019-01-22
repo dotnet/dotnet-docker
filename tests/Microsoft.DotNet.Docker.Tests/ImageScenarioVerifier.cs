@@ -97,7 +97,7 @@ namespace Microsoft.DotNet.Docker.Tests
             List<string> buildArgs = new List<string>();
             buildArgs.Add($"sdk_image={_imageData.GetImage(DotNetImageType.SDK, _dockerHelper)}");
 
-            DotNetImageType runtimeImageType = _isWeb ? DotNetImageType.AspNetCore_Runtime : DotNetImageType.Runtime;
+            DotNetImageType runtimeImageType = _isWeb ? DotNetImageType.Aspnet : DotNetImageType.Runtime;
             buildArgs.Add($"runtime_image={_imageData.GetImage(runtimeImageType, _dockerHelper)}");
 
             if (DockerHelper.IsLinuxContainerModeEnabled)

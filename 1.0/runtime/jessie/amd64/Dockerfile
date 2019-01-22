@@ -1,5 +1,5 @@
-ARG REPO=microsoft/dotnet
-FROM $REPO:1.0-runtime-deps-jessie
+ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+FROM $REPO:1.0-jessie
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

@@ -1,7 +1,7 @@
 {
   "repos": [
     {
-      "name": "microsoft/dotnet-samples",
+      "name": "mcr.microsoft.com/dotnet/core/dotnet-samples",
       "readmePath": "samples/README.DockerHub.md",
       "images": [
         {
