@@ -23,12 +23,7 @@ function Exec {
     }
 }
 
-function GenerateDoc {
-    param ([string] $Template, [string] $Repo, [string] $ReadmePath, [string] $Manifest, [string] $Branch, [switch] $SkipValidation)
-
-    if ($SkipValidation) {
-        $skipValidationOption = "--skip-validation"
-    }
+function GenerateDoc {param ([string] $Template, [string] $Repo, [string] $ReadmePath, [string] $Manifest, [string] $Branch)
 
     $imageBuilderContainerName = "imagebuilder-$(Get-Date -Format yyyyMMddhhmmss)"
     $createCmd = "docker create" `
@@ -66,10 +61,8 @@ if (!$Branch) {
     }
 }
 
-Exec "docker pull $ImageBuilderImageName"
-
-GenerateDoc runtime-deps-tags.md mcr.microsoft.com/dotnet/$coreRepoName/runtime-deps README.runtime-deps.md manifest.json $Branch
-GenerateDoc runtime-tags.md mcr.microsoft.com/dotnet/$coreRepoName/runtime README.runtime.md manifest.json $Branch
-GenerateDoc aspnet-tags.md mcr.microsoft.com/dotnet/$coreRepoName/aspnet README.aspnet.md manifest.json $Branch
-GenerateDoc sdk-tags.md mcr.microsoft.com/dotnet/$coreRepoName/sdk README.sdk.md manifest.json $Branch
-GenerateDoc samples-tags.md mcr.microsoft.com/dotnet/core/samples ./samples/README.DockerHub.md manifest.samples.json master
+GenerateDoc runtime-deps-tags.md dotnet/$coreRepoName/runtime-deps README.runtime-deps.md manifest.json $Branch
+GenerateDoc runtime-tags.md dotnet/$coreRepoName/runtime README.runtime.md manifest.json $Branch
+GenerateDoc aspnet-tags.md dotnet/$coreRepoName/aspnet README.aspnet.md manifest.json $Branch
+GenerateDoc sdk-tags.md dotnet/$coreRepoName/sdk README.sdk.md manifest.json $Branch
+GenerateDoc samples-tags.md dotnet/core/samples ./samples/README.DockerHub.md manifest.samples.json master
