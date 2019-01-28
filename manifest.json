@@ -1,4 +1,5 @@
 {
+  "readmePath": "README.md",
   "registry": "mcr.microsoft.com",
   "variables": {
     "1.0-RuntimeVersion": "1.0.13",

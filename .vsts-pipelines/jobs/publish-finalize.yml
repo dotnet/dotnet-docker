@@ -11,14 +11,21 @@ jobs:
       --manifest $(manifest)
       --registry-override $(acr.server)
       --repo-prefix $(publishRepoPrefix)
-      --username $(acr.userName)
-      --password $(BotAccount-dotnet-docker-acr-bot-password)
       $(imageBuilder.queueArgs)
   steps:
   - template: ../steps/init-docker-linux.yml
-  - script: $(runImageBuilderCmd) publishManifest $(imageBuilder.commonCmdArgs)
+  - script: >
+      $(runImageBuilderCmd) publishManifest
+      $(imageBuilder.commonCmdArgs)
+      --username $(acr.userName)
+      --password $(BotAccount-dotnet-docker-acr-bot-password)
     displayName: Publish Manifest
-  # TODO: Add support for pushing readmes to MCR
-  # - script: $(runImageBuilderCmd) updateReadme $(imageBuilder.commonCmdArgs)
-  #   displayName: Update Readme
+  # TODO:  Blocked on bot account
+  # - script: >
+  #     $(runImageBuilderCmd) publishMcrReadmes
+  #     $(imageBuilder.commonCmdArgs)
+  #     $(dotnetBuildBot-userName)
+  #     $(dotnetBuildBot-email)
+  #     $(AccessToken-dotnet-build-bot-public-repo)
+  #   displayName: Publish Readme
   - template: ../steps/cleanup-docker-linux.yml
