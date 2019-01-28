@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 param(
     [string]$Branch,
-    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20190122231638'
+    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20190127023150'
 )
 
 $ErrorActionPreference = 'Stop'
