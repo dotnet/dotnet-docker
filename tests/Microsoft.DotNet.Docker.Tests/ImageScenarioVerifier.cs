@@ -34,12 +34,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public async Task Execute()
         {
-            if (!DockerHelper.IsLinuxContainerModeEnabled && _imageData.IsArm)
-            {
-                _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/corefx/issues/33563");
-                return;
-            }
-
             string appDir = CreateTestAppWithSdkImage(_isWeb ? "web" : "console");
             List<string> tags = new List<string>();
 

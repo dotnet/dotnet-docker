@@ -161,4 +161,10 @@ $(TagDoc:2.2-sdk-nanoserver-1809-arm32)
 $(TagDoc:2.2-aspnetcore-runtime-nanoserver-1809-arm32)
 $(TagDoc:2.2-runtime-nanoserver-1809-arm32)
 
+**.NET Core 3.0 Preview tags**
+
+$(TagDoc:3.0-sdk-nanoserver-1809-arm32)
+$(TagDoc:3.0-aspnetcore-runtime-nanoserver-1809-arm32)
+$(TagDoc:3.0-runtime-nanoserver-1809-arm32)
+
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).

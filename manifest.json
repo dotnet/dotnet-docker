@@ -7,8 +7,8 @@
     "2.1-SdkVersion": "2.1.503",
     "2.2-RuntimeVersion": "2.2.1",
     "2.2-SdkVersion": "2.2.103",
-    "3.0-RuntimeVersion": "3.0.0-preview",
-    "3.0-SdkVersion": "3.0.100-preview"
+    "3.0-RuntimeVersion": "3.0.0-preview2",
+    "3.0-SdkVersion": "3.0.100-preview2"
   },
   "repos": [
     {
@@ -1188,6 +1188,16 @@
                 "$(3.0-RuntimeVersion)-runtime-nanoserver-1809": {},
                 "3.0-runtime-nanoserver-1809": {}
               }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "3.0/runtime/nanoserver-1809/arm32",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(3.0-RuntimeVersion)-runtime-nanoserver-1809-arm32": {},
+                "3.0-runtime-nanoserver-1809-arm32": {}
+              }
             }
           ]
         },
@@ -1269,6 +1279,16 @@
                 "$(3.0-RuntimeVersion)-aspnetcore-runtime-nanoserver-1809": {},
                 "3.0-aspnetcore-runtime-nanoserver-1809": {}
               }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "3.0/aspnetcore-runtime/nanoserver-1809/arm32",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(3.0-RuntimeVersion)-aspnetcore-runtime-nanoserver-1809-arm32": {},
+                "3.0-aspnetcore-runtime-nanoserver-1809-arm32": {}
+              }
             }
           ]
         },
@@ -1340,6 +1360,16 @@
               "tags": {
                 "$(3.0-SdkVersion)-sdk-nanoserver-1809": {},
                 "3.0-sdk-nanoserver-1809": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "3.0/sdk/nanoserver-1809/arm32",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(3.0-SdkVersion)-sdk-nanoserver-1809-arm32": {},
+                "3.0-sdk-nanoserver-1809-arm32": {}
               }
             }
           ]
