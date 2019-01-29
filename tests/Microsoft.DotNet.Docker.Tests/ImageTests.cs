@@ -55,6 +55,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V3_0, OS = OS.NanoServer1709,     Arch = Arch.Amd64 },
             new ImageData { Version = V3_0, OS = OS.NanoServer1803,     Arch = Arch.Amd64 },
             new ImageData { Version = V3_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1809,     Arch = Arch.Arm },
         };
 
         private readonly DockerHelper _dockerHelper;
