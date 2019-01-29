@@ -16,16 +16,16 @@ jobs:
   - template: ../steps/init-docker-linux.yml
   - script: >
       $(runImageBuilderCmd) publishManifest
-      $(imageBuilder.commonCmdArgs)
       --username $(acr.userName)
       --password $(BotAccount-dotnet-docker-acr-bot-password)
+      $(imageBuilder.commonCmdArgs)
     displayName: Publish Manifest
   # TODO:  Blocked on bot account
   # - script: >
   #     $(runImageBuilderCmd) publishMcrReadmes
-  #     $(imageBuilder.commonCmdArgs)
   #     $(dotnetBuildBot-userName)
   #     $(dotnetBuildBot-email)
   #     $(AccessToken-dotnet-build-bot-public-repo)
+  #     $(imageBuilder.commonCmdArgs)
   #   displayName: Publish Readme
   - template: ../steps/cleanup-docker-linux.yml
