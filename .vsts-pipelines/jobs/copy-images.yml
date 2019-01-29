@@ -40,7 +40,7 @@ jobs:
   - script: >
       $(runImageBuilderCmd) copyAcrImages
       --manifest $(manifest)
-      --path '$(dotnetVersion)/*/$(osVariant)/*'
+      --path '$(dotnetVersion)/*/$(osVariant)*/*'
       --os-type $(osType)
       --os-version '$(osVersion)'
       --architecture $(architecture)
