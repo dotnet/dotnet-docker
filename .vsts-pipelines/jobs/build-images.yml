@@ -29,10 +29,10 @@ jobs:
       --manifest $(manifest)
       $(imageBuilderPaths)
       --os-version $(osVersion)
-      --repo-override microsoft/$(repo)=$(acr.server)/$(repo)-$(stagingRepo.suffix)
+      --registry-override $(acr.server)
+      --repo-prefix $(stagingRepoPrefix)
       --retry
       --push
-      --server $(acr.server)
       --username $(acr.userName)
       --password $(BotAccount-dotnet-docker-acr-bot-password)
       $(imageBuilder.queueArgs)

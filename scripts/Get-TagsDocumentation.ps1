@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 param(
     [string]$Branch,
-    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20181221161902'
+    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20190128213805'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -23,16 +23,7 @@ function Exec {
     }
 }
 
-function GenerateDoc {
-    param ([string] $Template, [string] $ReadmePath, [string] $Manifest, [string] $Branch, [switch] $SkipValidation)
-
-    if ($Template) {
-        $templateOption = "--template $Template"
-    }
-
-    if ($SkipValidation) {
-        $skipValidationOption = "--skip-validation"
-    }
+function GenerateDoc {param ([string] $Template, [string] $Repo, [string] $ReadmePath, [string] $Manifest, [string] $Branch)
 
     $imageBuilderContainerName = "imagebuilder-$(Get-Date -Format yyyyMMddhhmmss)"
     $createCmd = "docker create" `
@@ -43,8 +34,8 @@ function GenerateDoc {
             + " generateTagsReadme" `
             + " --update-readme" `
             + " --manifest $Manifest" `
-            + " --readme-path $ReadmePath" `
-            + " $templateOption" `
+            + " --repo $Repo" `
+            + " --template ./scripts/documentation-templates/$Template" `
             + " $skipValidationOption" `
             + " https://github.com/dotnet/dotnet-docker/blob/${Branch}"
     Exec $createCmd
@@ -60,17 +51,18 @@ function GenerateDoc {
 
 if (!$Branch) {
     $manifestJson = Get-Content ${repoRoot}/manifest.json | ConvertFrom-Json
-    $dockerHubRepo = $manifestJson.Repos[0].Name.Split('/')[1]
-    if ($dockerHubRepo -eq "dotnet") {
-        $Branch = "master"
+    if ($manifestJson.Repos[0].Name.Contains("nightly")) {
+        $Branch = "nightly"
+        $coreRepoName = "core-nightly"
     }
     else {
-        $Branch = "nightly"
+        $Branch = "master"
+        $coreRepoName = "core"
     }
 }
 
-Exec "docker pull $ImageBuilderImageName"
-
-GenerateDoc './scripts/ReadmeTagsDocumentationTemplate.md' README.md './manifest.json' $Branch -SkipValidation
-GenerateDoc './scripts/TagsDocumentationTemplate.md' TAGS.md './manifest.json' $Branch
-GenerateDoc './scripts/SamplesReadmeTagsDocumentationTemplate.md' ./samples/README.DockerHub.md './manifest.samples.json' 'master'
+GenerateDoc runtime-deps-tags.md dotnet/$coreRepoName/runtime-deps README.runtime-deps.md manifest.json $Branch
+GenerateDoc runtime-tags.md dotnet/$coreRepoName/runtime README.runtime.md manifest.json $Branch
+GenerateDoc aspnet-tags.md dotnet/$coreRepoName/aspnet README.aspnet.md manifest.json $Branch
+GenerateDoc sdk-tags.md dotnet/$coreRepoName/sdk README.sdk.md manifest.json $Branch
+GenerateDoc samples-tags.md dotnet/core/samples ./samples/README.DockerHub.md manifest.samples.json master

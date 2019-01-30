@@ -1,6 +1,5 @@
 trigger: none
 variables:
   manifest: manifest.samples.json
-  repo: dotnet-samples
 jobs:
 - template: ../jobs/build-test-publish-repo.yml

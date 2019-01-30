@@ -33,8 +33,9 @@ jobs:
   - powershell: >
       ./tests/run-tests.ps1
       -VersionFilter $(dotnetVersion)*
-      -OSFilter $(osVersion)
-      -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
+      -OSFilter $(osVariant)
+      -Registry $(acr.server)
+      -RepoPrefix $(stagingRepoPrefix)
     displayName: Test Images
   - script: docker logout
     displayName: Docker logout
@@ -49,5 +50,5 @@ jobs:
       testResultsFiles: 'tests/**/*.trx'
       mergeTestResults: true
       publishRunAttachments: true
-      testRunTitle: Windows $(dotnetVersion) $(osVersion) amd64
+      testRunTitle: Windows $(dotnetVersion) $(osVariant) amd64
   - template: ../steps/cleanup-docker-windows.yml

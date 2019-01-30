@@ -1,15 +1,15 @@
-This repository contains `Dockerfile` definitions for Docker images that include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
+The images from this repository include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
 
 See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
 
 # Latest Version of Common Tags
 
-The following tags are the latest stable versions of the most commonly used images. The complete set of tags is listed further down.
+The following tags are the latest stable versions of the most commonly used images. The complete set of tags are listed in the related repos.
 
-- [`2.2-sdk`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile)
-- [`2.2-aspnetcore-runtime`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
-- [`2.2-runtime`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/stretch-slim/amd64/Dockerfile)
-- [`2.2-runtime-deps`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
+- [`mcr.microsoft.com/dotnet/core-nightly/sdk:2.2`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile)
+- [`mcr.microsoft.com/dotnet/core-nightly/aspnet:2.2`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
+- [`mcr.microsoft.com/dotnet/core-nightly/runtime:2.2`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/stretch-slim/amd64/Dockerfile)
+- [`mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.2`](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
 
 The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together. See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
@@ -35,100 +35,33 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/aspnetcore-docker-https.md) to use HTTPS with this image.
 
-# Tags
+# Image variants
 
-## Linux amd64 tags
+The .NET Core images come in different flavors, each designed for a specific use case.
 
-- [`2.2.103-sdk-stretch`, `2.2-sdk-stretch`, `2.2.103-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile)
-- [`2.2.103-sdk-alpine3.8`, `2.2-sdk-alpine3.8`, `2.2.103-sdk-alpine`, `2.2-sdk-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/alpine3.8/amd64/Dockerfile)
-- [`2.2.103-sdk-bionic`, `2.2-sdk-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/bionic/amd64/Dockerfile)
-- [`2.2.1-aspnetcore-runtime-stretch-slim`, `2.2-aspnetcore-runtime-stretch-slim`, `2.2.1-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
-- [`2.2.1-aspnetcore-runtime-alpine3.8`, `2.2-aspnetcore-runtime-alpine3.8`, `2.2.1-aspnetcore-runtime-alpine`, `2.2-aspnetcore-runtime-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/alpine3.8/amd64/Dockerfile)
-- [`2.2.1-aspnetcore-runtime-bionic`, `2.2-aspnetcore-runtime-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/bionic/amd64/Dockerfile)
-- [`2.2.1-runtime-stretch-slim`, `2.2-runtime-stretch-slim`, `2.2.1-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/stretch-slim/amd64/Dockerfile)
-- [`2.2.1-runtime-alpine3.8`, `2.2-runtime-alpine3.8`, `2.2.1-runtime-alpine`, `2.2-runtime-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/alpine3.8/amd64/Dockerfile)
-- [`2.2.1-runtime-bionic`, `2.2-runtime-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/bionic/amd64/Dockerfile)
-- [`2.2.1-runtime-deps-stretch-slim`, `2.2-runtime-deps-stretch-slim`, `2.2.1-runtime-deps`, `2.2-runtime-deps`, `runtime-deps` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
-- [`2.2.1-runtime-deps-alpine3.8`, `2.2-runtime-deps-alpine3.8`, `2.2.1-runtime-deps-alpine`, `2.2-runtime-deps-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/alpine3.8/amd64/Dockerfile)
-- [`2.2.1-runtime-deps-bionic`, `2.2-runtime-deps-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/amd64/Dockerfile)
-- [`2.1.503-sdk-stretch`, `2.1-sdk-stretch`, `2.1.503-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
-- [`2.1.503-sdk-alpine3.7`, `2.1-sdk-alpine3.7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.7/amd64/Dockerfile)
-- [`2.1.503-sdk-alpine3.8`, `2.1-sdk-alpine3.8`, `2.1.503-sdk-alpine`, `2.1-sdk-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.8/amd64/Dockerfile)
-- [`2.1.503-sdk-bionic`, `2.1-sdk-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/amd64/Dockerfile)
-- [`2.1.7-aspnetcore-runtime-stretch-slim`, `2.1-aspnetcore-runtime-stretch-slim`, `2.1.7-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
-- [`2.1.7-aspnetcore-runtime-alpine3.7`, `2.1-aspnetcore-runtime-alpine3.7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/alpine3.7/amd64/Dockerfile)
-- [`2.1.7-aspnetcore-runtime-alpine3.8`, `2.1-aspnetcore-runtime-alpine3.8`, `2.1.7-aspnetcore-runtime-alpine`, `2.1-aspnetcore-runtime-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/alpine3.8/amd64/Dockerfile)
-- [`2.1.7-aspnetcore-runtime-bionic`, `2.1-aspnetcore-runtime-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/bionic/amd64/Dockerfile)
-- [`2.1.7-runtime-stretch-slim`, `2.1-runtime-stretch-slim`, `2.1.7-runtime`, `2.1-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/amd64/Dockerfile)
-- [`2.1.7-runtime-alpine3.7`, `2.1-runtime-alpine3.7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/alpine3.7/amd64/Dockerfile)
-- [`2.1.7-runtime-alpine3.8`, `2.1-runtime-alpine3.8`, `2.1.7-runtime-alpine`, `2.1-runtime-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/alpine3.8/amd64/Dockerfile)
-- [`2.1.7-runtime-bionic`, `2.1-runtime-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/bionic/amd64/Dockerfile)
-- [`2.1.7-runtime-deps-stretch-slim`, `2.1-runtime-deps-stretch-slim`, `2.1.7-runtime-deps`, `2.1-runtime-deps` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
-- [`2.1.7-runtime-deps-alpine3.7`, `2.1-runtime-deps-alpine3.7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/alpine3.7/amd64/Dockerfile)
-- [`2.1.7-runtime-deps-alpine3.8`, `2.1-runtime-deps-alpine3.8`, `2.1.7-runtime-deps-alpine`, `2.1-runtime-deps-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/alpine3.8/amd64/Dockerfile)
-- [`2.1.7-runtime-deps-bionic`, `2.1-runtime-deps-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/amd64/Dockerfile)
+## [mcr.microsoft.com/dotnet/core-nightly/sdk](https://hub.docker.com/r/microsoft/dotnet/core-nightly/sdk/)
 
-**.NET Core 1.0, 1.1 and 3.0 Preview tags**
+These images contain the .NET Core SDK which is comprised of three parts:
 
-See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
+1. .NET Core CLI
+1. .NET Core
+1. ASP.NET Core
 
-## Linux arm64 tags
+Use this image for your development process (developing, building and testing applications).
 
-**.NET Core 3.0 Preview tags**
+If you are unsure about what your needs are, you probably want to use these. They are designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
 
-See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
+## [mcr.microsoft.com/dotnet/core-nightly/aspnet](https://hub.docker.com/r/microsoft/dotnet/core-nightly/aspnet/)
 
-## Linux arm32 tags
+These images contain the ASP.NET Core and .NET Core runtimes and libraries and is optimized for running ASP.NET Core apps in production.
 
-- [`2.2.103-sdk-stretch-arm32v7`, `2.2-sdk-stretch-arm32v7`, `2.2.103-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/arm32v7/Dockerfile)
-- [`2.2.103-sdk-bionic-arm32v7`, `2.2-sdk-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/bionic/arm32v7/Dockerfile)
-- [`2.2.1-aspnetcore-runtime-stretch-slim-arm32v7`, `2.2-aspnetcore-runtime-stretch-slim-arm32v7`, `2.2.1-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/stretch-slim/arm32v7/Dockerfile)
-- [`2.2.1-aspnetcore-runtime-bionic-arm32v7`, `2.2-aspnetcore-runtime-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/bionic/arm32v7/Dockerfile)
-- [`2.2.1-runtime-stretch-slim-arm32v7`, `2.2-runtime-stretch-slim-arm32v7`, `2.2.1-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/stretch-slim/arm32v7/Dockerfile)
-- [`2.2.1-runtime-bionic-arm32v7`, `2.2-runtime-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/bionic/arm32v7/Dockerfile)
-- [`2.2.1-runtime-deps-stretch-slim-arm32v7`, `2.2-runtime-deps-stretch-slim-arm32v7`, `2.2.1-runtime-deps`, `2.2-runtime-deps`, `runtime-deps` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile)
-- [`2.2.1-runtime-deps-bionic-arm32v7`, `2.2-runtime-deps-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/arm32v7/Dockerfile)
-- [`2.1.503-sdk-stretch-arm32v7`, `2.1-sdk-stretch-arm32v7`, `2.1.503-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/arm32v7/Dockerfile)
-- [`2.1.503-sdk-bionic-arm32v7`, `2.1-sdk-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/arm32v7/Dockerfile)
-- [`2.1.7-aspnetcore-runtime-stretch-slim-arm32v7`, `2.1-aspnetcore-runtime-stretch-slim-arm32v7`, `2.1.7-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/stretch-slim/arm32v7/Dockerfile)
-- [`2.1.7-aspnetcore-runtime-bionic-arm32v7`, `2.1-aspnetcore-runtime-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/bionic/arm32v7/Dockerfile)
-- [`2.1.7-runtime-stretch-slim-arm32v7`, `2.1-runtime-stretch-slim-arm32v7`, `2.1.7-runtime`, `2.1-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/arm32v7/Dockerfile)
-- [`2.1.7-runtime-bionic-arm32v7`, `2.1-runtime-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/bionic/arm32v7/Dockerfile)
-- [`2.1.7-runtime-deps-stretch-slim-arm32v7`, `2.1-runtime-deps-stretch-slim-arm32v7`, `2.1.7-runtime-deps`, `2.1-runtime-deps` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile)
-- [`2.1.7-runtime-deps-bionic-arm32v7`, `2.1-runtime-deps-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/arm32v7/Dockerfile)
+## [mcr.microsoft.com/dotnet/core-nightly/runtime](https://hub.docker.com/r/microsoft/dotnet/core-nightly/runtime/)
 
-**.NET Core 3.0 Preview tags**
+These images contain the .NET Core runtimes and libraries and is optimized for running .NET Core apps in production.
 
-See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
+## [mcr.microsoft.com/dotnet/core-nightly/runtime-deps](https://hub.docker.com/r/microsoft/dotnet/core-nightly/runtime-deps/)
 
-## Windows Server, version 1809 amd64 tags
-
-- [`2.2.103-sdk-nanoserver-1809`, `2.2-sdk-nanoserver-1809`, `2.2.103-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
-- [`2.2.1-aspnetcore-runtime-nanoserver-1809`, `2.2-aspnetcore-runtime-nanoserver-1809`, `2.2.1-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
-- [`2.2.1-runtime-nanoserver-1809`, `2.2-runtime-nanoserver-1809`, `2.2.1-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1809/amd64/Dockerfile)
-- [`2.1.503-sdk-nanoserver-1809`, `2.1-sdk-nanoserver-1809`, `2.1.503-sdk`, `2.1-sdk` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
-- [`2.1.7-aspnetcore-runtime-nanoserver-1809`, `2.1-aspnetcore-runtime-nanoserver-1809`, `2.1.7-aspnetcore-runtime`, `2.1-aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/nanoserver-1809/amd64/Dockerfile)
-- [`2.1.7-runtime-nanoserver-1809`, `2.1-runtime-nanoserver-1809`, `2.1.7-runtime`, `2.1-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/nanoserver-1809/amd64/Dockerfile)
-
-**.NET Core 3.0 Preview tags**
-
-See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
-
-## Windows Server 2016, version 1709, and version 1803 amd64 tags
-
-See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
-
-## Windows Server, version 1809 arm32 tags
-
-- [`2.2.103-sdk-nanoserver-1809-arm32`, `2.2-sdk-nanoserver-1809-arm32`, `2.2.103-sdk`, `2.2-sdk`, `sdk`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/arm32/Dockerfile)
-- [`2.2.1-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2-aspnetcore-runtime-nanoserver-1809-arm32`, `2.2.1-aspnetcore-runtime`, `2.2-aspnetcore-runtime`, `aspnetcore-runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/nanoserver-1809/arm32/Dockerfile)
-- [`2.2.1-runtime-nanoserver-1809-arm32`, `2.2-runtime-nanoserver-1809-arm32`, `2.2.1-runtime`, `2.2-runtime`, `runtime` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1809/arm32/Dockerfile)
-
-**.NET Core 3.0 Preview tags**
-
-See the [complete set of tags](https://github.com/dotnet/dotnet-docker/blob/nightly/TAGS.md).
-
-For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
+These images contain the native dependencies needed by .NET Core. It does not include .NET Core. It is for [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
 
 # What is .NET Core?
 
@@ -170,34 +103,6 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 * [.NET Core ARM32 Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-arm32.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
 * [ASP.NET Core ARM32 Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) builds and runs an ASP.NET Core application with Debian on ARM32 (works on Raspberry Pi).
 
-# Image variants
-
-The `microsoft/dotnet-nightly` images come in different flavors, each designed for a specific use case.
-
-## `microsoft/dotnet-nightly:<version>-sdk`
-
-This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
-
-It contains the .NET Core SDK which is comprised of three parts:
-
-1. .NET Core CLI
-1. .NET Core
-1. ASP.NET Core
-
-Use this image for your development process (developing, building and testing applications).
-
-## `microsoft/dotnet-nightly:<version>-aspnetcore-runtime`
-
-This image contains the ASP.NET Core and .NET Core runtimes and libraries and is optimized for running ASP.NET Core apps in production.
-
-## `microsoft/dotnet-nightly:<version>-runtime`
-
-This image contains the .NET Core runtimes and libraries and is optimized for running .NET Core apps in production.
-
-## `microsoft/dotnet-nightly:<version>-runtime-deps`
-
-This image contains the native dependencies needed by .NET Core. It does not include .NET Core. It is for [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
-
 # Issues
 
 If you have any problems with or questions about this image, please contact us through a [GitHub issue](https://github.com/dotnet/dotnet-docker/issues).
@@ -206,15 +111,17 @@ If you have any problems with or questions about this image, please contact us t
 
 * [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
 * [Windows Nano Server license](https://hub.docker.com/r/microsoft/nanoserver/) (only applies to Windows containers)
-* [Pricing and licensing for Windows Server 2016](https://www.microsoft.com/en-us/cloud-platform/windows-server-pricing)
+* [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/en-us/cloud-platform/windows-server-pricing)
 
 # Related Repos
 
 .NET Core Docker Hub repos:
 
-* [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core images.
-* [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/) for .NET Core images.
-* [microsoft/dotnet-samples](https://hub.docker.com/r/microsoft/dotnet-samples/) for .NET Core sample images.
+* [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for .NET Core images.
+* [mcr.microsoft.com/dotnet/core-nightly/sdk](https://hub.docker.com/r/microsoft/dotnet/core-nightly/sdk/) for .NET Core SDK preview images.
+* [mcr.microsoft.com/dotnet/core-nightly/aspnet](https://hub.docker.com/r/microsoft/dotnet/core-nightly/aspnet/) for ASP.NET Core preview images.
+* [mcr.microsoft.com/dotnet/core-nightly/runtime](https://hub.docker.com/r/microsoft/dotnet/core-nightly/runtime/) for .NET Core runtime preview images.
+* [mcr.microsoft.com/dotnet/core-nightly/runtime-deps](https://hub.docker.com/r/microsoft/dotnet/core-nightly/runtime-deps/) for .NET Core preview images that contain the native dependencies.
 
 .NET Framework Docker Hub repos:
 
