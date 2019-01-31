@@ -4,7 +4,10 @@ See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for image
 
 # Featured Tags
 
-* `mcr.microsoft.com/dotnet/core-nightly/sdk:2.2` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch-slim/amd64/Dockerfile)
+* [`2.2` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile) - Current
+  * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.2`
+* [`2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile) - LTS
+  * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.1`
 
 # About This Image
 
@@ -19,8 +22,6 @@ Use this image for your development process (developing, building and testing ap
 # How to Use the Image
 
 The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together. See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
-
-Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
 
 # Related Repos
 

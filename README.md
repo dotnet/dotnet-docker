@@ -2,12 +2,38 @@ The images from the dotnet/core-nightly repositories include last-known-good (LK
 
 See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
 
-# Featured Tags
+# TODO: Which option do you like?  Should featured tags even be included?  I think so...
+# Featured Tags - Option 1
+
+* `2.2` - Current
+  * sdk [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile)
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.2`
+  * aspnet [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/stretch-slim/amd64/Dockerfile)
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:2.2`
+  * runtime [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/stretch-slim/amd64/Dockerfile)
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:2.2`
+  * runtime-deps [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.2`
+* `2.1` - LTS
+  * sdk [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.1`
+  * aspnet [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/stretch-slim/amd64/Dockerfile)
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:2.1`
+  * runtime [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/amd64/Dockerfile)
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:2.1`
+  * runtime-deps [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.1`
+
+# Featured Tags - Option 2
 
 * [`mcr.microsoft.com/dotnet/core-nightly/sdk:2.2` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile)
 * [`mcr.microsoft.com/dotnet/core-nightly/aspnet:2.2` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
 * [`mcr.microsoft.com/dotnet/core-nightly/runtime:2.2` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/stretch-slim/amd64/Dockerfile)
 * [`mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.2` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
+* [`mcr.microsoft.com/dotnet/core-nightly/sdk:2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
+* [`mcr.microsoft.com/dotnet/core-nightly/aspnet:2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
+* [`mcr.microsoft.com/dotnet/core-nightly/runtime:2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/amd64/Dockerfile)
+* [`mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
 
 # Featured Repos
 
@@ -30,11 +56,11 @@ You are invited to [contribute new features](https://github.com/dotnet/core/blob
 
 > https://docs.microsoft.com/dotnet/core/
 
+Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
+
 # How to Use the Images
 
 The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together. See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
-
-Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
 
 ## Container sample: Run a simple application
 
