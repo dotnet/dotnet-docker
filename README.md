@@ -8,36 +8,36 @@ See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for image
 
   **Featured tags**
 
-  * `2.2` - Current
+  * `2.2` (Current)
     * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.2`
-  * `2.1` - LTS
+  * `2.1` (LTS)
     * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.1`
 
 * [dotnet/core-nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-nightly-aspnet/): ASP.NET Core Runtime (Preview)
 
   **Featured tags**
 
-  * `2.2` - Current
+  * `2.2` (Current)
     * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:2.2`
-  * `2.1` - LTS
+  * `2.1` (LTS)
     * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:2.1`
 
 * [dotnet/core-nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime/): .NET Core Runtime (Preview)
 
   **Featured tags**
 
-  * `2.2` - Current
+  * `2.2` (Current)
     * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:2.2`
-  * `2.1` - LTS
+  * `2.1` (LTS)
     * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:2.1`
 
 * [dotnet/core-nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime-deps/): .NET Core Runtime Dependencies (Preview)
 
   **Featured tags**
 
-  * `2.2` - Current
+  * `2.2` (Current)
     * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.2`
-  * `2.1` - LTS
+  * `2.1` (LTS)
     * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.1`
 
 
