@@ -4,9 +4,9 @@ See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for image
 
 # Featured Tags
 
-* [`2.2` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile) - Current
+* `2.2` - Current
   * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.2`
-* [`2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile) - LTS
+* `2.1` - LTS
   * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.1`
 
 # About This Image

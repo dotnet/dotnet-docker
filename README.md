@@ -2,45 +2,44 @@ The images from the dotnet/core-nightly repositories include last-known-good (LK
 
 See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
 
-# TODO: Which option do you like?  Should featured tags even be included?  I think so...
-# Featured Tags - Option 1
-
-* `2.2` - Current
-  * sdk [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile)
-    * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.2`
-  * aspnet [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/stretch-slim/amd64/Dockerfile)
-    * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:2.2`
-  * runtime [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/stretch-slim/amd64/Dockerfile)
-    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:2.2`
-  * runtime-deps [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
-    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.2`
-* `2.1` - LTS
-  * sdk [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
-    * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.1`
-  * aspnet [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/stretch-slim/amd64/Dockerfile)
-    * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:2.1`
-  * runtime [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/amd64/Dockerfile)
-    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:2.1`
-  * runtime-deps [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
-    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.1`
-
-# Featured Tags - Option 2
-
-* [`mcr.microsoft.com/dotnet/core-nightly/sdk:2.2` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile)
-* [`mcr.microsoft.com/dotnet/core-nightly/aspnet:2.2` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
-* [`mcr.microsoft.com/dotnet/core-nightly/runtime:2.2` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/stretch-slim/amd64/Dockerfile)
-* [`mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.2` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
-* [`mcr.microsoft.com/dotnet/core-nightly/sdk:2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
-* [`mcr.microsoft.com/dotnet/core-nightly/aspnet:2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnetcore-runtime/stretch-slim/amd64/Dockerfile)
-* [`mcr.microsoft.com/dotnet/core-nightly/runtime:2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/amd64/Dockerfile)
-* [`mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
-
 # Featured Repos
 
 * [dotnet/core-nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-core-nightly-sdk/): .NET Core SDK (Preview)
+
+  **Featured tags**
+
+  * `2.2` - Current
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.2`
+  * `2.1` - LTS
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:2.1`
+
 * [dotnet/core-nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-nightly-aspnet/): ASP.NET Core Runtime (Preview)
+
+  **Featured tags**
+
+  * `2.2` - Current
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:2.2`
+  * `2.1` - LTS
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:2.1`
+
 * [dotnet/core-nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime/): .NET Core Runtime (Preview)
+
+  **Featured tags**
+
+  * `2.2` - Current
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:2.2`
+  * `2.1` - LTS
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:2.1`
+
 * [dotnet/core-nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime-deps/): .NET Core Runtime Dependencies (Preview)
+
+  **Featured tags**
+
+  * `2.2` - Current
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.2`
+  * `2.1` - LTS
+    * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.1`
+
 
 # About .NET Core
 
