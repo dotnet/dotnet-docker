@@ -10,12 +10,11 @@ jobs:
     imageBuilder.commonCmdArgs: >
       --manifest $(manifest)
       --registry-override $(acr.server)
-      --repo-prefix $(publishRepoPrefix)
       $(imageBuilder.queueArgs)
   steps:
   - template: ../steps/init-docker-linux.yml
   - script: >
-      $(runImageBuilderCmd) publishManifest
+      $(runImageBuilderCmd) --repo-prefix $(publishRepoPrefix) publishManifest
       --username $(acr.userName)
       --password $(BotAccount-dotnet-docker-acr-bot-password)
       $(imageBuilder.commonCmdArgs)
