@@ -14,7 +14,8 @@ jobs:
   steps:
   - template: ../steps/init-docker-linux.yml
   - script: >
-      $(runImageBuilderCmd) --repo-prefix $(publishRepoPrefix) publishManifest
+      $(runImageBuilderCmd) publishManifest
+      --repo-prefix $(publishRepoPrefix)
       --username $(acr.userName)
       --password $(BotAccount-dotnet-docker-acr-bot-password)
       $(imageBuilder.commonCmdArgs)
