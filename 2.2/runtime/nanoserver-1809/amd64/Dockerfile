@@ -1,7 +1,7 @@
 # escape=`
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:1809 AS installer-env
+FROM mcr.microsoft.com/windows/servercore:1809 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
@@ -22,7 +22,7 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
 # Runtime image
 FROM mcr.microsoft.com/windows/nanoserver:1809
 
-COPY --from=installer-env ["dotnet", "C:\\Program Files\\dotnet"]
+COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator 

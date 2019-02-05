@@ -1,7 +1,7 @@
 # escape=`
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:1709 AS installer-env
+FROM mcr.microsoft.com/windows/servercore:1709 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
@@ -23,7 +23,7 @@ FROM mcr.microsoft.com/windows/nanoserver:1709
 
 # Note: Runtime image's SHELL is the CMD shell (different than the installer image).
 
-COPY --from=installer-env ["dotnet", "C:\\Program Files\\dotnet"]
+COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
