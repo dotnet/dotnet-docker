@@ -1,4 +1,4 @@
-# Supported Tags
+# Full Tag Listing
 
 ## Linux amd64 tags
 
@@ -66,10 +66,6 @@ $(TagDoc:3.0-nanoserver-1709)
 
 $(TagDoc:2.2-nanoserver-sac2016)
 $(TagDoc:2.1-nanoserver-sac2016)
-
-**.NET Core 3.0 Preview tags**
-
-$(TagDoc:3.0-nanoserver-sac2016)
 
 ## Windows Server, version 1809 arm32 tags
 

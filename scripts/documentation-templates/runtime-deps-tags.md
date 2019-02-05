@@ -1,4 +1,4 @@
-# Supported Tags
+# Full Tag Listing
 
 ## Linux amd64 tags
 

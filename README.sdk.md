@@ -125,10 +125,6 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 - [`2.1.503-nanoserver-sac2016`, `2.1-nanoserver-sac2016`, `2.1.503`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
 - [`1.1.11-nanoserver-sac2016`, `1.1-nanoserver-sac2016`, `1.1.11`, `1.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
 
-**.NET Core 3.0 Preview tags**
-
-- [`3.0.100-preview-nanoserver-sac2016`, `3.0-nanoserver-sac2016`, `3.0.100-preview`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/nanoserver-sac2016/amd64/Dockerfile)
-
 ## Windows Server, version 1809 arm32 tags
 
 - [`2.2.103-nanoserver-1809-arm32`, `2.2-nanoserver-1809-arm32`, `2.2.103`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/arm32/Dockerfile)

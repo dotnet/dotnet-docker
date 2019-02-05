@@ -123,10 +123,6 @@ docker run --rm microsoft/dotnet-samples
 - [`1.1.10-nanoserver-sac2016`, `1.1-nanoserver-sac2016`, `1.1.10`, `1.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`1.0.13-nanoserver-sac2016`, `1.0-nanoserver-sac2016`, `1.0.13`, `1.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
 
-**.NET Core 3.0 Preview tags**
-
-- [`3.0.0-preview-nanoserver-sac2016`, `3.0-nanoserver-sac2016`, `3.0.0-preview`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
-
 ## Windows Server, version 1809 arm32 tags
 
 - [`2.2.1-nanoserver-1809-arm32`, `2.2-nanoserver-1809-arm32`, `2.2.1`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/runtime/nanoserver-1809/arm32/Dockerfile)

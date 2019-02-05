@@ -19,7 +19,7 @@ platformList.each { platform ->
         versionList = ['2.1', '2.2', '3.0']
     }
     else if (containerOS == 'NanoServer-sac2016') {
-        versionList = ['1.', '2.1', '2.2', '3.0']
+        versionList = ['1.', '2.1', '2.2']
     }
     else {
         versionList = ['1.', '2.1-2.2', '3.0']
