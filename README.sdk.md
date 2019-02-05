@@ -70,7 +70,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 **.NET Core 3.0 Preview tags**
 
 - [`3.0.100-preview-stretch`, `3.0-stretch`, `3.0.100-preview`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/amd64/Dockerfile)
-- [`3.0.100-preview-alpine3.8`, `3.0-alpine3.8`, `3.0.100-preview-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.8/amd64/Dockerfile)
+- [`3.0.100-preview-alpine3.9`, `3.0-alpine3.9`, `3.0.100-preview-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.9/amd64/Dockerfile)
 - [`3.0.100-preview-bionic`, `3.0-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/amd64/Dockerfile)
 
 ## Linux arm64 tags
