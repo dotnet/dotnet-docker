@@ -62,13 +62,13 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 - [`2.2.1-bionic`, `2.2-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/bionic/amd64/Dockerfile)
 - [`2.1.7-stretch-slim`, `2.1-stretch-slim`, `2.1.7`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/stretch-slim/amd64/Dockerfile)
 - [`2.1.7-alpine3.7`, `2.1-alpine3.7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/alpine3.7/amd64/Dockerfile)
-- [`2.1.7-alpine3.8`, `2.1-alpine3.8`, `2.1.7-alpine`, `2.1-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/alpine3.8/amd64/Dockerfile)
+- [`2.1.7-alpine3.9`, `2.1-alpine3.9`, `2.1.7-alpine`, `2.1-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/alpine3.9/amd64/Dockerfile)
 - [`2.1.7-bionic`, `2.1-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/bionic/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
 - [`3.0.0-preview-stretch-slim`, `3.0-stretch-slim`, `3.0.0-preview`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/aspnet/stretch-slim/amd64/Dockerfile)
-- [`3.0.0-preview-alpine3.8`, `3.0-alpine3.8`, `3.0.0-preview-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/aspnet/alpine3.8/amd64/Dockerfile)
+- [`3.0.0-preview-alpine3.9`, `3.0-alpine3.9`, `3.0.0-preview-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/aspnet/alpine3.9/amd64/Dockerfile)
 - [`3.0.0-preview-bionic`, `3.0-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/aspnet/bionic/amd64/Dockerfile)
 
 ## Linux arm64 tags

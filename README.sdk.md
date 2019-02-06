@@ -62,7 +62,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 - [`2.2.103-bionic`, `2.2-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/bionic/amd64/Dockerfile)
 - [`2.1.503-stretch`, `2.1-stretch`, `2.1.503`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile)
 - [`2.1.503-alpine3.7`, `2.1-alpine3.7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.7/amd64/Dockerfile)
-- [`2.1.503-alpine3.8`, `2.1-alpine3.8`, `2.1.503-alpine`, `2.1-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.8/amd64/Dockerfile)
+- [`2.1.503-alpine3.9`, `2.1-alpine3.9`, `2.1.503-alpine`, `2.1-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.9/amd64/Dockerfile)
 - [`2.1.503-bionic`, `2.1-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/amd64/Dockerfile)
 - [`1.1.11-stretch`, `1.1-stretch` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/stretch/amd64/Dockerfile)
 - [`1.1.11-jessie`, `1.1-jessie`, `1.1.11`, `1.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/jessie/amd64/Dockerfile)
@@ -70,7 +70,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 **.NET Core 3.0 Preview tags**
 
 - [`3.0.100-preview-stretch`, `3.0-stretch`, `3.0.100-preview`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/amd64/Dockerfile)
-- [`3.0.100-preview-alpine3.8`, `3.0-alpine3.8`, `3.0.100-preview-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.8/amd64/Dockerfile)
+- [`3.0.100-preview-alpine3.9`, `3.0-alpine3.9`, `3.0.100-preview-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.9/amd64/Dockerfile)
 - [`3.0.100-preview-bionic`, `3.0-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/amd64/Dockerfile)
 
 ## Linux arm64 tags

@@ -7,13 +7,13 @@ $(TagDoc:2.2-alpine3.8)
 $(TagDoc:2.2-bionic)
 $(TagDoc:2.1-stretch-slim)
 $(TagDoc:2.1-alpine3.7)
-$(TagDoc:2.1-alpine3.8)
+$(TagDoc:2.1-alpine3.9)
 $(TagDoc:2.1-bionic)
 
 **.NET Core 3.0 Preview tags**
 
 $(TagDoc:3.0-stretch-slim)
-$(TagDoc:3.0-alpine3.8)
+$(TagDoc:3.0-alpine3.9)
 $(TagDoc:3.0-bionic)
 
 ## Linux arm64 tags
