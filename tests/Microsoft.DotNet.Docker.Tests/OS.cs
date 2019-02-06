@@ -8,6 +8,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         public const string Alpine37 = "alpine3.7";
         public const string Alpine38 = "alpine3.8";
+        public const string Alpine39 = "alpine3.9";
         public const string Bionic = "bionic";
         public const string Jessie = "jessie";
         public const string Stretch = "stretch";
