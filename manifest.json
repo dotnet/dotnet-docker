@@ -1052,7 +1052,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/stretch-slim/amd64",
               "os": "linux",
@@ -1064,7 +1064,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/stretch-slim/arm32v7",
               "os": "linux",
@@ -1077,7 +1077,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/stretch-slim/arm64v8",
               "os": "linux",
@@ -1088,6 +1088,9 @@
               "variant": "v8"
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "3.0/aspnet/nanoserver-1709/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1709",
@@ -1097,6 +1100,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "3.0/aspnet/nanoserver-1803/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1803",
@@ -1106,6 +1112,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "3.0/aspnet/nanoserver-1809/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1809",
@@ -1116,6 +1125,9 @@
             },
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "3.0/aspnet/nanoserver-1809/arm32",
               "os": "windows",
               "osVersion": "nanoserver-1809",
@@ -1130,7 +1142,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/alpine3.9/amd64",
               "os": "linux",
@@ -1147,7 +1159,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/bionic/amd64",
               "os": "linux",
@@ -1163,7 +1175,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/bionic/arm32v7",
               "os": "linux",
@@ -1180,7 +1192,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/bionic/arm64v8",
               "os": "linux",
