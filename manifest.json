@@ -1,12 +1,12 @@
 {
   "variables": {
-    "1.0-RuntimeVersion": "1.0.13",
-    "1.1-RuntimeVersion": "1.1.10",
-    "1.1-SdkVersion": "1.1.11",
-    "2.1-RuntimeVersion": "2.1.7",
-    "2.1-SdkVersion": "2.1.503",
-    "2.2-RuntimeVersion": "2.2.1",
-    "2.2-SdkVersion": "2.2.103",
+    "1.0-RuntimeVersion": "1.0.14",
+    "1.1-RuntimeVersion": "1.1.11",
+    "1.1-SdkVersion": "1.1.12",
+    "2.1-RuntimeVersion": "2.1.8",
+    "2.1-SdkVersion": "2.1.504",
+    "2.2-RuntimeVersion": "2.2.2",
+    "2.2-SdkVersion": "2.2.104",
     "3.0-RuntimeVersion": "3.0.0-preview2",
     "3.0-SdkVersion": "3.0.100-preview2"
   },
