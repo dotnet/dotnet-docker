@@ -202,13 +202,13 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
-		            addPackageCommand = $"sh -c \"dotnet new console --force --framework netcoreapp{imageData.Version}\"";
+                    addPackageCommand = $"sh -c \"dotnet new console --force --framework netcoreapp{imageData.Version}\"";
 
                     verifyCredProviderRestore = $"sh -c \"dotnet add package newtonsoft.json --no-restore && dotnet restore --no-cache && ls $HOME/.local/share/NuGet/plugins-cache | grep --quiet CredentialProvider.Microsoft.dll\"";
                 }
                 else
                 {
-		            addPackageCommand = $"CMD /S /C dotnet new console --force --framework netcoreapp{imageData.Version}";
+                    addPackageCommand = $"CMD /S /C dotnet new console --force --framework netcoreapp{imageData.Version}";
 
                     verifyCredProviderRestore = $"CMD /S /C dotnet add package newtonsoft.json --no-restore && dotnet restore --no-cache && dir %localappdata%\\nuget\\plugins-cache | findstr CredentialProvider.Microsoft.dll";
                 }
