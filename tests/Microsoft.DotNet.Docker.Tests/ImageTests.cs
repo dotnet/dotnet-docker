@@ -191,5 +191,51 @@ namespace Microsoft.DotNet.Docker.Tests
                     name: imageData.GetIdentifier("NugetCredentialProviderPresent"));
             }
         }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifySdkImage_NugetCredentialProviderRuns(ImageData imageData)
+        {
+            string verifyCredProviderRestore = null;
+            string addPackageCommand = null;
+            if (imageData.Version.Major == 2)
+            {
+                if (DockerHelper.IsLinuxContainerModeEnabled)
+                {
+		            addPackageCommand = $"sh -c \"dotnet new console --force --framework netcoreapp{imageData.Version}\"";
+
+                    verifyCredProviderRestore = $"sh -c \"dotnet add package newtonsoft.json --no-restore && dotnet restore --no-cache && ls $HOME/.local/share/NuGet/plugins-cache | grep --quiet CredentialProvider.Microsoft.dll\"";
+                }
+                else
+                {
+		            addPackageCommand = $"CMD /S /C dotnet new console --force --framework netcoreapp{imageData.Version}";
+
+                    verifyCredProviderRestore = $"CMD /S /C dotnet add package newtonsoft.json --no-restore && dotnet restore --no-cache && dir %localappdata%\\nuget\\plugins-cache | findstr CredentialProvider.Microsoft.dll";
+                }
+
+                if (addPackageCommand != null) {
+                    _dockerHelper.Run(
+                                image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
+                                command: addPackageCommand,
+                                name: imageData.GetIdentifier("NugetCredentialProviderRuns"),
+                        workdir: "/test",
+                        publishArgs: " -v demo1:/test");
+                }
+
+                if (verifyCredProviderRestore != null) {
+                    _dockerHelper.Run(
+                                image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
+                                command: verifyCredProviderRestore,
+                                name: imageData.GetIdentifier("NugetCredentialProviderRuns"),
+                        workdir: "/test",
+                        publishArgs: " -v demo1:/test");
+                }
+            }
+            else
+            {
+                _outputHelper.WriteLine("Nuget Credential provider v2 is not supported in 1.* or 3.* images. Skipping test.");
+                return;
+            }
+        }
     }
 }
