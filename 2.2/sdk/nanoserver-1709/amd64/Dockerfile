@@ -37,7 +37,7 @@ FROM mcr.microsoft.com/windows/nanoserver:1709
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
 
-COPY --from=installer ["credentialprovider", "C:\\Users\\Public\\credentialprovider"]
+COPY --from=installer ["/credentialprovider", "/Users/Public/credentialprovider"]
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator 
