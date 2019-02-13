@@ -1,6 +1,6 @@
 # escape=`
 
-FROM mcr.microsoft.com/windows/nanoserver:1809_arm
+FROM mcr.microsoft.com/windows/nanoserver:1809-arm
 
 # Install .NET Core
 ENV DOTNET_VERSION 3.0.0-preview-27324-5
