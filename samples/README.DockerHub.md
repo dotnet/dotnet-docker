@@ -114,5 +114,5 @@ If you have any problems with or questions about this image, please contact us t
 See the following related repos for other application types:
 
 - [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/) for .NET Core images.
-- [microsoft/aspnet](https://hub.docker.com/r/microsoft/aspnet/) for ASP.NET Web Forms and MVC images.
+- [dotnet/framework/aspnet](https://hub.docker.com/_/microsoft-dotnet-framework-aspnet) for ASP.NET Web Forms and MVC images.
 - [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images (for web applications, see microsoft/aspnet).
