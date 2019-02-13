@@ -14,6 +14,8 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public class ImageScenarioVerifier
     {
+        public static string GetDotnetNewCmd(string appType, string netCoreAppVersion) => $"dotnet new {appType} --framework netcoreapp{netCoreAppVersion}";
+
         private readonly DockerHelper _dockerHelper;
         private readonly ImageData _imageData;
         private readonly bool _isWeb;
@@ -123,13 +125,12 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string appDir = Path.Combine(Directory.GetCurrentDirectory(), $"{appType}App{DateTime.Now.ToFileTime()}");
             string containerName = _imageData.GetIdentifier($"create-{appType}");
-
             try
             {
                 _dockerHelper.Run(
                     image: _imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
                     name: containerName,
-                    command: $"dotnet new {appType} --framework netcoreapp{_imageData.Version}",
+                    command: GetDotnetNewCmd(appType, _imageData.VersionString),
                     workdir: "/app",
                     skipAutoCleanup: true);
 

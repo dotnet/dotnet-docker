@@ -197,15 +197,15 @@ namespace Microsoft.DotNet.Docker.Tests
                 _outputHelper.WriteLine("Nuget Credential provider v2 is not supported in 1.* or 3.* images. Skipping test.");
                 return;
             }
-
+            string dotnetNewCmd = ImageScenarioVerifier.GetDotnetNewCmd("console", imageData.VersionString);
             string verifyCredProviderRestore;
             if (DockerHelper.IsLinuxContainerModeEnabled)
             {
-                verifyCredProviderRestore = $"sh -c \"dotnet new console --force --framework netcoreapp{imageData.Version} && dotnet add package newtonsoft.json --no-restore && dotnet restore --no-cache && ls $HOME/.local/share/NuGet/plugins-cache | grep -q CredentialProvider.Microsoft.dll\"";
+                verifyCredProviderRestore = $"sh -c \"{dotnetNewCmd} && dotnet add package newtonsoft.json --no-restore && dotnet restore --no-cache && ls $HOME/.local/share/NuGet/plugins-cache | grep -q CredentialProvider.Microsoft.dll\"";
             }
             else
             {
-                verifyCredProviderRestore = $"CMD /S /C \"dotnet new console --force --framework netcoreapp{imageData.Version} && dotnet add package newtonsoft.json --no-restore && dotnet restore --no-cache && dir %localappdata%\\nuget\\plugins-cache | findstr CredentialProvider.Microsoft.dll\"";
+                verifyCredProviderRestore = $"CMD /S /C \"{dotnetNewCmd} && dotnet add package newtonsoft.json --no-restore && dotnet restore --no-cache && dir %localappdata%\\nuget\\plugins-cache | findstr CredentialProvider.Microsoft.dll\"";
             }
 
             _dockerHelper.Run(
