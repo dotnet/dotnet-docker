@@ -1,6 +1,6 @@
 # escape=`
 
-FROM mcr.microsoft.com/windows/nanoserver:1809_arm
+FROM mcr.microsoft.com/windows/nanoserver:1809-arm
 
 # Install ASP.NET Core Runtime
 ENV ASPNETCORE_VERSION 2.2.2
