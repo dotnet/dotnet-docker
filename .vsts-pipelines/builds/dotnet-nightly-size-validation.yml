@@ -5,7 +5,7 @@ jobs:
   steps:
   - template: ../steps/cleanup-docker-linux.yml
   - powershell: ./tests/performance/Validate-ImageSize.ps1
-    displayName: Run Perf Tests
+    displayName: Run Image Size Tests
   - template: ../steps/cleanup-docker-linux.yml
 - job: WindowsPerfTests
   pool: # windows1809Amd64
@@ -15,5 +15,5 @@ jobs:
   steps:
   - template: ../steps/cleanup-docker-windows.yml
   - powershell: ./tests/performance/Validate-ImageSize.ps1
-    displayName: Run Perf Tests
+    displayName: Run Image Size Tests
   - template: ../steps/cleanup-docker-windows.yml
