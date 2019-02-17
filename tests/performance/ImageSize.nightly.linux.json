@@ -7,7 +7,7 @@
     "2.1/runtime-deps/alpine3.8/amd64": 13571739,
     "2.1/runtime-deps/bionic/amd64": 132215006,
     "3.0/runtime-deps/stretch-slim/amd64": 94261994,
-    "3.0/runtime-deps/alpine3.8/amd64": 12576448,
+    "3.0/runtime-deps/alpine3.9/amd64": 10847963,
     "3.0/runtime-deps/bionic/amd64": 127579194
   },
   "dotnet/core-nightly/runtime": {
@@ -22,7 +22,7 @@
     "2.2/runtime/alpine3.8/amd64": 88116701,
     "2.2/runtime/bionic/amd64": 212591104,
     "3.0/runtime/stretch-slim/amd64": 182111132,
-    "3.0/runtime/alpine3.8/amd64": 88360781,
+    "3.0/runtime/alpine3.9/amd64": 86632296,
     "3.0/runtime/bionic/amd64": 209256897
   },
   "dotnet/core-nightly/aspnet": {
@@ -34,7 +34,7 @@
     "2.2/aspnet/alpine3.8/amd64": 167440367,
     "2.2/aspnet/bionic/amd64": 292169017,
     "3.0/aspnet/stretch-slim/amd64": 199172782,
-    "3.0/aspnet/alpine3.8/amd64": 105385528,
+    "3.0/aspnet/alpine3.9/amd64": 103657043,
     "3.0/aspnet/bionic/amd64": 226318547
   },
   "dotnet/core-nightly/sdk": {
@@ -48,7 +48,7 @@
     "2.2/sdk/alpine3.8/amd64": 1470111357,
     "2.2/sdk/bionic/amd64": 1708503951,
     "3.0/sdk/stretch/amd64": 615355010,
-    "3.0/sdk/alpine3.8/amd64": 354672664,
+    "3.0/sdk/alpine3.9/amd64": 352959186,
     "3.0/sdk/bionic/amd64": 592619900
   }
 }

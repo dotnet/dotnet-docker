@@ -23,8 +23,8 @@ function Exec {
     }
 }
 
-$windowsImageBuilder = 'microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20190209204624'
-$linuxImageBuilder = 'microsoft/dotnet-buildtools-prereqs:image-builder-debian-20190210044705'
+$windowsImageBuilder = 'microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20190215204829'
+$linuxImageBuilder = 'microsoft/dotnet-buildtools-prereqs:image-builder-debian-20190216044810'
 $imageBuilderContainerName = "ImageBuilder-$(Get-Date -Format yyyyMMddhhmmss)"
 
 pushd $PSScriptRoot/../
@@ -43,11 +43,16 @@ try {
     else {
         # On Windows, ImageBuilder is run locally due to limitations with running Docker client within a container.
         $imageBuilderFolder = ".Microsoft.DotNet.ImageBuilder"
-        $imageBuilderCmd = [System.IO.Path]::Combine($imageBuilderFolder, "image-builder", "Microsoft.DotNet.ImageBuilder.exe")
+        $imageBuilderCmd = [System.IO.Path]::Combine($imageBuilderFolder, "Microsoft.DotNet.ImageBuilder.exe")
         if (-not (Test-Path -Path "$imageBuilderCmd" -PathType Leaf)) {
             ./scripts/Invoke-WithRetry "docker pull $windowsImageBuilder"
             Exec "docker create --name $imageBuilderContainerName $windowsImageBuilder"
-            New-Item -Path "$imageBuilderFolder" -ItemType Directory -Force
+
+            if (Test-Path -Path $imageBuilderFolder)
+            {
+                Remove-Item -Recurse -Force -Path $imageBuilderFolder
+            }
+
             Exec "docker cp ${imageBuilderContainerName}:/image-builder $imageBuilderFolder"
             Exec "docker container rm -f $imageBuilderContainerName"
         }
