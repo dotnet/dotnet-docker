@@ -1,7 +1,36 @@
 #!/usr/bin/env pwsh
+
+<#
+.SYNOPSIS
+Executes ImageBuilder with the specified args.
+
+.PARAMETER ImageBuilderArgs
+The args to pass to ImageBuilder.
+
+.PARAMETER ReuseImageBuilderImage
+Indicates that a previously built ImageBuilder image is presumed to exist locally and that 
+it should be used for this execution of the script.  This allows some optimization when
+multiple calls are being made to this script that don't require a fresh image (i.e. the
+repo contents in the image don't need to be or should not be updated with each call to
+this script).
+
+.PARAMETER OnCommandExecuted
+A ScriptBlock that will be invoked after the ImageBuilder command has been executed.
+This allows the caller to execute extra logic in the context of the ImageBuilder while
+its container is still running.
+The ScriptBlock is passed the following argument values:
+    1. Container name
+#>
 [cmdletbinding()]
 param(
-    [string]$ImageBuilderArgs
+    [string]
+    $ImageBuilderArgs,
+
+    [switch]
+    $ReuseImageBuilderImage,
+
+    [scriptblock]
+    $OnCommandExecuted
 )
 
 Set-StrictMode -Version Latest
@@ -25,20 +54,21 @@ function Exec {
 
 $windowsImageBuilder = 'microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20190215204829'
 $linuxImageBuilder = 'microsoft/dotnet-buildtools-prereqs:image-builder-debian-20190216044810'
+
 $imageBuilderContainerName = "ImageBuilder-$(Get-Date -Format yyyyMMddhhmmss)"
 
 pushd $PSScriptRoot/../
 try {
     $activeOS = docker version -f "{{ .Server.Os }}"
     if ($activeOS -eq "linux") {
-        # On Linux, ImageBuilder is run within a container.  The local repo is copied into a Docker volume
-        # in order to support running with a remote Docker server.
-        ./scripts/Invoke-WithRetry "docker pull $linuxImageBuilder"
-        $repoVolume = "repo-$(Get-Date -Format yyyyMMddhhmmss)"
-        Exec "docker create -v ${repoVolume}:/repo --name $imageBuilderContainerName $linuxImageBuilder"
-        Exec "docker cp . ${imageBuilderContainerName}:/repo"
-        Exec "docker container rm -f $imageBuilderContainerName"
-        $imageBuilderCmd = "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v ${repoVolume}:/repo -w /repo $linuxImageBuilder"
+        # On Linux, ImageBuilder is run within a container.
+        $imageBuilderImageName = "microsoft-dotnet-imagebuilder-copyrepo"
+        if ($ReuseImageBuilderImage -ne $True) {
+            ./scripts/Invoke-WithRetry "docker pull $linuxImageBuilder"
+            Exec "docker build -t $imageBuilderImageName --build-arg IMAGE=$linuxImageBuilder -f .\scripts\Dockerfile.ImageBuilder ."
+        }
+        
+        $imageBuilderCmd = "docker run --name $imageBuilderContainerName -v /var/run/docker.sock:/var/run/docker.sock $imageBuilderImageName"
     }
     else {
         # On Windows, ImageBuilder is run locally due to limitations with running Docker client within a container.
@@ -54,16 +84,18 @@ try {
             }
 
             Exec "docker cp ${imageBuilderContainerName}:/image-builder $imageBuilderFolder"
-            Exec "docker container rm -f $imageBuilderContainerName"
         }
     }
 
     Exec "$imageBuilderCmd $ImageBuilderArgs"
 
-    if ($activeOS -eq "linux") {
-        Exec "docker volume rm -f $repoVolume"
+    if ($OnCommandExecuted) {
+        Invoke-Command $OnCommandExecuted -ArgumentList $imageBuilderContainerName
     }
 }
 finally {
+    
+    Exec "docker container rm -f $imageBuilderContainerName"
+    
     popd
 }
