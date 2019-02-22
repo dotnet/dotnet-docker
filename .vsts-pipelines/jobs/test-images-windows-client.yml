@@ -24,10 +24,11 @@ jobs:
   - template: ../steps/init-docker-windows.yml
     parameters:
       setupImageBuilder: false
-  - powershell: >
-      ./scripts/Invoke-WithRetry.ps1 
-      "docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)"
+  - task: CmdLine@1
     displayName: Docker login
+    inputs:
+      filename: docker
+      arguments: login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
   - powershell: Get-ChildItem -Path tests -r | Where {$_.Extension -match "trx"} | Remove-Item
     displayName: Cleanup Old Test Results
   - powershell: >
@@ -37,7 +38,7 @@ jobs:
       -Registry $(acr.server)
       -RepoPrefix $(stagingRepoPrefix)
     displayName: Test Images
-  - script: docker logout
+  - script: docker logout $(acr.server)
     displayName: Docker logout
     condition: always()
     continueOnError: true

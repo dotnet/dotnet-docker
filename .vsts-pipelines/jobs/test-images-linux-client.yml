@@ -57,7 +57,7 @@ jobs:
       -RepoPrefix $(stagingRepoPrefix)
       $(optionalTestArgs)
     displayName: Test Images
-  - script: docker exec $(testRunner.container) docker logout
+  - script: docker exec $(testRunner.container) docker logout $(acr.server)
     displayName: Docker logout
     condition: always()
     continueOnError: true
