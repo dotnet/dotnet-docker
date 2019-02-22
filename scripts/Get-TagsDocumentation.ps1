@@ -22,7 +22,15 @@ function Exec {
     }
 }
 
-function GenerateDoc {param ([string] $Template, [string] $Repo, [string] $ReadmePath, [string] $Manifest, [string] $Branch, [switch] $ReuseImageBuilderImage)
+function GenerateDoc {
+    param (
+        [string] $Template,
+        [string] $Repo,
+        [string] $ReadmePath,
+        [string] $Manifest,
+        [string] $Branch,
+        [switch] $ReuseImageBuilderImage
+    )
 
     $onTagsGenerated = {
         param($ContainerName)
@@ -37,7 +45,10 @@ function GenerateDoc {param ([string] $Template, [string] $Repo, [string] $Readm
         + " $skipValidationOption" `
         + " https://github.com/dotnet/dotnet-docker/blob/${Branch}"
 
-    & "$PSScriptRoot/Invoke-ImageBuilder.ps1" -ImageBuilderArgs $imageBuilderArgs -ReuseImageBuilderImage:$ReuseImageBuilderImage -OnCommandExecuted $onTagsGenerated
+    & "$PSScriptRoot/Invoke-ImageBuilder.ps1" `
+        -ImageBuilderArgs $imageBuilderArgs `
+        -ReuseImageBuilderImage:$ReuseImageBuilderImage `
+        -OnCommandExecuted $onTagsGenerated
 }
 
 if (!$Branch) {

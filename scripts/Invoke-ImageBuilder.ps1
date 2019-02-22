@@ -62,10 +62,10 @@ try {
     $activeOS = docker version -f "{{ .Server.Os }}"
     if ($activeOS -eq "linux") {
         # On Linux, ImageBuilder is run within a container.
-        $imageBuilderImageName = "microsoft-dotnet-imagebuilder-copyrepo"
+        $imageBuilderImageName = "microsoft-dotnet-imagebuilder-withrepo"
         if ($ReuseImageBuilderImage -ne $True) {
             ./scripts/Invoke-WithRetry "docker pull $linuxImageBuilder"
-            Exec "docker build -t $imageBuilderImageName --build-arg IMAGE=$linuxImageBuilder -f ./scripts/Dockerfile.ImageBuilder ."
+            Exec "docker build -t $imageBuilderImageName --build-arg IMAGE=$linuxImageBuilder -f ./scripts/Dockerfile.WithRepo ."
         }
         
         $imageBuilderCmd = "docker run --name $imageBuilderContainerName -v /var/run/docker.sock:/var/run/docker.sock $imageBuilderImageName"
@@ -94,7 +94,6 @@ try {
     }
 }
 finally {
-    
     Exec "docker container rm -f $imageBuilderContainerName"
     
     popd
