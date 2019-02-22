@@ -65,7 +65,7 @@ try {
         $imageBuilderImageName = "microsoft-dotnet-imagebuilder-copyrepo"
         if ($ReuseImageBuilderImage -ne $True) {
             ./scripts/Invoke-WithRetry "docker pull $linuxImageBuilder"
-            Exec "docker build -t $imageBuilderImageName --build-arg IMAGE=$linuxImageBuilder -f .\scripts\Dockerfile.ImageBuilder ."
+            Exec "docker build -t $imageBuilderImageName --build-arg IMAGE=$linuxImageBuilder -f ./scripts/Dockerfile.ImageBuilder ."
         }
         
         $imageBuilderCmd = "docker run --name $imageBuilderContainerName -v /var/run/docker.sock:/var/run/docker.sock $imageBuilderImageName"
