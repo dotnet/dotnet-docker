@@ -21,13 +21,7 @@
         {
           "sharedTags": {
             "$(1.0-RuntimeVersion)": {},
-            "1.0": {},
-            "1": {
-              "isUndocumented": true
-            },
-            "1.1": {
-              "isUndocumented": true
-            }
+            "1.0": {}
           },
           "platforms": [
             {
@@ -35,16 +29,7 @@
               "os": "linux",
               "tags": {
                 "$(1.0-RuntimeVersion)-jessie": {},
-                "1.0-jessie": {},
-                "1.0-core-deps": {
-                  "isUndocumented": true
-                },
-                "1-core-deps": {
-                  "isUndocumented": true
-                },
-                "core-deps": {
-                  "isUndocumented": true
-                }
+                "1.0-jessie": {}
               }
             }
           ]
@@ -77,9 +62,6 @@
             },
             "latest": {
               "documentationGroup": "2.2"
-            },
-            "2": {
-              "isUndocumented": true
             }
           },
           "platforms": [
@@ -308,10 +290,7 @@
               "os": "linux",
               "tags": {
                 "$(1.0-RuntimeVersion)-jessie": {},
-                "1.0-jessie": {},
-                "1.0-core": {
-                  "isUndocumented": true
-                }
+                "1.0-jessie": {}
               }
             },
             {
@@ -320,10 +299,7 @@
               "osVersion": "nanoserver-sac2016",
               "tags": {
                 "$(1.0-RuntimeVersion)-nanoserver-sac2016": {},
-                "1.0-nanoserver-sac2016": {},
-                "1.0-nanoserver": {
-                  "isUndocumented": true
-                }
+                "1.0-nanoserver-sac2016": {}
               }
             }
           ]
@@ -331,10 +307,7 @@
         {
           "sharedTags": {
             "$(1.1-RuntimeVersion)": {},
-            "1.1": {},
-            "1": {
-              "isUndocumented": true
-            }
+            "1.1": {}
           },
           "platforms": [
             {
@@ -345,13 +318,7 @@
               "os": "linux",
               "tags": {
                 "$(1.1-RuntimeVersion)-jessie": {},
-                "1.1-jessie": {},
-                "1-core": {
-                  "isUndocumented": true
-                },
-                "core": {
-                  "isUndocumented": true
-                }
+                "1.1-jessie": {}
               }
             },
             {
@@ -360,16 +327,7 @@
               "osVersion": "nanoserver-sac2016",
               "tags": {
                 "$(1.1-RuntimeVersion)-nanoserver-sac2016": {},
-                "1.1-nanoserver-sac2016": {},
-                "1.1-nanoserver": {
-                  "isUndocumented": true
-                },
-                "1-nanoserver": {
-                  "isUndocumented": true
-                },
-                "runtime-nanoserver": {
-                  "isUndocumented": true
-                }
+                "1.1-nanoserver-sac2016": {}
               }
             }
           ]
@@ -425,10 +383,7 @@
               "osVersion": "nanoserver-sac2016",
               "tags": {
                 "$(2.1-RuntimeVersion)-nanoserver-sac2016": {},
-                "2.1-nanoserver-sac2016": {},
-                "2-nanoserver": {
-                  "isUndocumented": true
-                }
+                "2.1-nanoserver-sac2016": {}
               }
             },
             {
@@ -513,10 +468,7 @@
           "sharedTags": {
             "$(2.2-RuntimeVersion)": {},
             "2.2": {},
-            "latest": {},
-            "2": {
-              "isUndocumented": true
-            }
+            "latest": {}
           },
           "platforms": [
             {
@@ -925,10 +877,7 @@
           "sharedTags": {
             "$(2.2-RuntimeVersion)": {},
             "2.2": {},
-            "latest": {},
-            "2": {
-              "isUndocumented": true
-            }
+            "latest": {}
           },
           "platforms": [
             {
@@ -1219,13 +1168,7 @@
         {
           "sharedTags": {
             "$(1.1-RuntimeVersion)-$(1.1-SdkVersion)": {},
-            "1.1": {},
-            "1": {
-              "isUndocumented": true
-            },
-            "1.0": {
-              "isUndocumented": true
-            }
+            "1.1": {}
           },
           "platforms": [
             {
@@ -1242,22 +1185,7 @@
               "osVersion": "nanoserver-sac2016",
               "tags": {
                 "$(1.1-RuntimeVersion)-$(1.1-SdkVersion)-nanoserver-sac2016": {},
-                "1.1-nanoserver-sac2016": {},
-                "1.1-nanoserver": {
-                  "isUndocumented": true
-                },
-                "1-nanoserver": {
-                  "isUndocumented": true
-                },
-                "nanoserver": {
-                  "isUndocumented": true
-                },
-                "nanoserver": {
-                  "isUndocumented": true
-                },
-                "1.0-nanoserver": {
-                  "isUndocumented": true
-                }
+                "1.1-nanoserver-sac2016": {}
               }
             }
           ]
@@ -1304,10 +1232,7 @@
               "osVersion": "nanoserver-sac2016",
               "tags": {
                 "$(2.1-SdkVersion)-nanoserver-sac2016": {},
-                "2.1-nanoserver-sac2016": {},
-                "2-nanoserver": {
-                  "isUndocumented": true
-                }
+                "2.1-nanoserver-sac2016": {}
               }
             },
             {
@@ -1386,10 +1311,7 @@
           "sharedTags": {
             "$(2.2-SdkVersion)": {},
             "2.2": {},
-            "latest": {},
-            "2": {
-              "isUndocumented": true
-            }
+            "latest": {}
           },
           "platforms": [
             {
