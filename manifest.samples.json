@@ -1,7 +1,8 @@
 {
+  "registry": "mcr.microsoft.com",
   "repos": [
     {
-      "name": "microsoft/dotnet-samples",
+      "name": "dotnet/core/samples",
       "readmePath": "samples/README.DockerHub.md",
       "images": [
         {
