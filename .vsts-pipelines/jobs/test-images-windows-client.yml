@@ -24,19 +24,18 @@ jobs:
   - template: ../steps/init-docker-windows.yml
     parameters:
       setupImageBuilder: false
-  - powershell: >
-      ./scripts/Invoke-WithRetry.ps1 
-      "docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)"
+  - script: docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
     displayName: Docker login
   - powershell: Get-ChildItem -Path tests -r | Where {$_.Extension -match "trx"} | Remove-Item
     displayName: Cleanup Old Test Results
   - powershell: >
       ./tests/run-tests.ps1
       -VersionFilter $(dotnetVersion)*
-      -OSFilter $(osVersion)
-      -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
+      -OSFilter $(osVariant)
+      -Registry $(acr.server)
+      -RepoPrefix $(stagingRepoPrefix)
     displayName: Test Images
-  - script: docker logout
+  - script: docker logout $(acr.server)
     displayName: Docker logout
     condition: always()
     continueOnError: true
@@ -49,5 +48,5 @@ jobs:
       testResultsFiles: 'tests/**/*.trx'
       mergeTestResults: true
       publishRunAttachments: true
-      testRunTitle: Windows $(dotnetVersion) $(osVersion) amd64
+      testRunTitle: Windows $(dotnetVersion) $(osVariant) amd64
   - template: ../steps/cleanup-docker-windows.yml

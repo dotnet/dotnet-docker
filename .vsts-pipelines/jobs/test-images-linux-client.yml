@@ -3,7 +3,6 @@ parameters:
   buildDependencies: []
   pool: {}
   matrix: {}
-  architecture: null
   useRemoteDockerServer: false
 jobs:
 - job: ${{ parameters.name }}
@@ -24,7 +23,6 @@ jobs:
     matrix: $[ ${{ parameters.matrix }} ]
   variables:
     testRunner.container: testrunner-$(Build.BuildId)-$(System.JobId)
-    architecture: ${{ parameters.architecture }}
     ${{ if eq(parameters.useRemoteDockerServer, 'false') }}:
       optionalTestArgs: ''
     ${{ if eq(parameters.useRemoteDockerServer, 'true') }}:
@@ -53,12 +51,13 @@ jobs:
       docker exec $(testRunner.container) pwsh
       -File ./tests/run-tests.ps1
       -VersionFilter $(dotnetVersion)*
-      -OSFilter $(osVersion)*
+      -OSFilter $(osVariant)*
       -ArchitectureFilter $(architecture)
-      -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix)
+      -Registry $(acr.server)
+      -RepoPrefix $(stagingRepoPrefix)
       $(optionalTestArgs)
     displayName: Test Images
-  - script: docker exec $(testRunner.container) docker logout
+  - script: docker exec $(testRunner.container) docker logout $(acr.server)
     displayName: Docker logout
     condition: always()
     continueOnError: true
@@ -79,7 +78,7 @@ jobs:
       searchFolder: $(Common.TestResultsDirectory)
       mergeTestResults: true
       publishRunAttachments: true
-      testRunTitle: Linux $(dotnetVersion) $(osVersion) $(architecture)
+      testRunTitle: Linux $(dotnetVersion) $(osVariant) $(architecture)
   - script: docker stop $(testRunner.container)
     displayName: Stop TestRunner Container
     condition: always()

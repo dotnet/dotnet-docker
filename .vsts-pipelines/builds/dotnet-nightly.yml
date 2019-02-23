@@ -1,6 +1,9 @@
-trigger: none
+trigger:
+  batch: true
+  branches:
+    include:
+    - nightly
 variables:
   manifest: manifest.json
-  repo: dotnet
 jobs:
 - template: ../jobs/build-test-publish-repo.yml
