@@ -766,7 +766,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "2.1/aspnetcore-runtime/stretch-slim/amd64",
+              "dockerfile": "2.1/aspnet/stretch-slim/amd64",
               "os": "linux",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim": {},
@@ -778,7 +778,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "2.1/aspnetcore-runtime/stretch-slim/arm32v7",
+              "dockerfile": "2.1/aspnet/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim-arm32v7": {},
@@ -787,7 +787,7 @@
               "variant": "v7"
             },
             {
-              "dockerfile": "2.1/aspnetcore-runtime/nanoserver-sac2016/amd64",
+              "dockerfile": "2.1/aspnet/nanoserver-sac2016/amd64",
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
               "tags": {
@@ -796,7 +796,7 @@
               }
             },
             {
-              "dockerfile": "2.1/aspnetcore-runtime/nanoserver-1709/amd64",
+              "dockerfile": "2.1/aspnet/nanoserver-1709/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1709",
               "tags": {
@@ -805,7 +805,7 @@
               }
             },
             {
-              "dockerfile": "2.1/aspnetcore-runtime/nanoserver-1803/amd64",
+              "dockerfile": "2.1/aspnet/nanoserver-1803/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1803",
               "tags": {
@@ -814,7 +814,7 @@
               }
             },
             {
-              "dockerfile": "2.1/aspnetcore-runtime/nanoserver-1809/amd64",
+              "dockerfile": "2.1/aspnet/nanoserver-1809/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -830,7 +830,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "2.1/aspnetcore-runtime/alpine3.7/amd64",
+              "dockerfile": "2.1/aspnet/alpine3.7/amd64",
               "os": "linux",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.7": {},
@@ -847,7 +847,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "2.1/aspnetcore-runtime/bionic/amd64",
+              "dockerfile": "2.1/aspnet/bionic/amd64",
               "os": "linux",
               "tags": {
                 "$(2.1-RuntimeVersion)-bionic": {},
@@ -863,7 +863,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "2.1/aspnetcore-runtime/bionic/arm32v7",
+              "dockerfile": "2.1/aspnet/bionic/arm32v7",
               "os": "linux",
               "tags": {
                 "$(2.1-RuntimeVersion)-bionic-arm32v7": {},
@@ -884,7 +884,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "2.2/aspnetcore-runtime/stretch-slim/amd64",
+              "dockerfile": "2.2/aspnet/stretch-slim/amd64",
               "os": "linux",
               "tags": {
                 "$(2.2-RuntimeVersion)-stretch-slim": {},
@@ -896,7 +896,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "2.2/aspnetcore-runtime/stretch-slim/arm32v7",
+              "dockerfile": "2.2/aspnet/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
                 "$(2.2-RuntimeVersion)-stretch-slim-arm32v7": {},
@@ -905,7 +905,7 @@
               "variant": "v7"
             },
             {
-              "dockerfile": "2.2/aspnetcore-runtime/nanoserver-sac2016/amd64",
+              "dockerfile": "2.2/aspnet/nanoserver-sac2016/amd64",
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
               "tags": {
@@ -914,7 +914,7 @@
               }
             },
             {
-              "dockerfile": "2.2/aspnetcore-runtime/nanoserver-1709/amd64",
+              "dockerfile": "2.2/aspnet/nanoserver-1709/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1709",
               "tags": {
@@ -923,7 +923,7 @@
               }
             },
             {
-              "dockerfile": "2.2/aspnetcore-runtime/nanoserver-1803/amd64",
+              "dockerfile": "2.2/aspnet/nanoserver-1803/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1803",
               "tags": {
@@ -932,7 +932,7 @@
               }
             },
             {
-              "dockerfile": "2.2/aspnetcore-runtime/nanoserver-1809/amd64",
+              "dockerfile": "2.2/aspnet/nanoserver-1809/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -942,7 +942,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "2.2/aspnetcore-runtime/nanoserver-1809/arm32",
+              "dockerfile": "2.2/aspnet/nanoserver-1809/arm32",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -958,7 +958,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "2.2/aspnetcore-runtime/alpine3.8/amd64",
+              "dockerfile": "2.2/aspnet/alpine3.8/amd64",
               "os": "linux",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.8": {},
@@ -975,7 +975,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "2.2/aspnetcore-runtime/bionic/amd64",
+              "dockerfile": "2.2/aspnet/bionic/amd64",
               "os": "linux",
               "tags": {
                 "$(2.2-RuntimeVersion)-bionic": {},
@@ -991,7 +991,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "2.2/aspnetcore-runtime/bionic/arm32v7",
+              "dockerfile": "2.2/aspnet/bionic/arm32v7",
               "os": "linux",
               "tags": {
                 "$(2.2-RuntimeVersion)-bionic-arm32v7": {},
@@ -1011,7 +1011,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "3.0/aspnetcore-runtime/stretch-slim/amd64",
+              "dockerfile": "3.0/aspnet/stretch-slim/amd64",
               "os": "linux",
               "tags": {
                 "$(3.0-RuntimeVersion)-stretch-slim": {},
@@ -1023,7 +1023,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "3.0/aspnetcore-runtime/stretch-slim/arm32v7",
+              "dockerfile": "3.0/aspnet/stretch-slim/arm32v7",
               "os": "linux",
               "tags": {
                 "$(3.0-RuntimeVersion)-stretch-slim-arm32v7": {},
@@ -1036,7 +1036,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "3.0/aspnetcore-runtime/stretch-slim/arm64v8",
+              "dockerfile": "3.0/aspnet/stretch-slim/arm64v8",
               "os": "linux",
               "tags": {
                 "$(3.0-RuntimeVersion)-stretch-slim-arm64v8": {},
@@ -1045,7 +1045,7 @@
               "variant": "v8"
             },
             {
-              "dockerfile": "3.0/aspnetcore-runtime/nanoserver-sac2016/amd64",
+              "dockerfile": "3.0/aspnet/nanoserver-sac2016/amd64",
               "os": "windows",
               "osVersion": "nanoserver-sac2016",
               "tags": {
@@ -1054,7 +1054,7 @@
               }
             },
             {
-              "dockerfile": "3.0/aspnetcore-runtime/nanoserver-1709/amd64",
+              "dockerfile": "3.0/aspnet/nanoserver-1709/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1709",
               "tags": {
@@ -1063,7 +1063,7 @@
               }
             },
             {
-              "dockerfile": "3.0/aspnetcore-runtime/nanoserver-1803/amd64",
+              "dockerfile": "3.0/aspnet/nanoserver-1803/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1803",
               "tags": {
@@ -1072,7 +1072,7 @@
               }
             },
             {
-              "dockerfile": "3.0/aspnetcore-runtime/nanoserver-1809/amd64",
+              "dockerfile": "3.0/aspnet/nanoserver-1809/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -1082,7 +1082,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "3.0/aspnetcore-runtime/nanoserver-1809/arm32",
+              "dockerfile": "3.0/aspnet/nanoserver-1809/arm32",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -1098,7 +1098,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "3.0/aspnetcore-runtime/alpine3.8/amd64",
+              "dockerfile": "3.0/aspnet/alpine3.8/amd64",
               "os": "linux",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.8": {},
@@ -1115,7 +1115,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "3.0/aspnetcore-runtime/bionic/amd64",
+              "dockerfile": "3.0/aspnet/bionic/amd64",
               "os": "linux",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic": {},
@@ -1131,7 +1131,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "3.0/aspnetcore-runtime/bionic/arm32v7",
+              "dockerfile": "3.0/aspnet/bionic/arm32v7",
               "os": "linux",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic-arm32v7": {},
@@ -1148,7 +1148,7 @@
               "buildArgs": {
                 "REPO": "$(System:Repo)"
               },
-              "dockerfile": "3.0/aspnetcore-runtime/bionic/arm64v8",
+              "dockerfile": "3.0/aspnet/bionic/arm64v8",
               "os": "linux",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic-arm64v8": {},
