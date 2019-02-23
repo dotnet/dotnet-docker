@@ -1,5 +1,5 @@
-ARG REPO=microsoft/dotnet
-FROM $REPO:3.0-runtime-deps-alpine3.8
+ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+FROM $REPO:3.0-alpine3.8
 
 # Install .NET Core
 ENV DOTNET_VERSION 3.0.0-preview-27324-5

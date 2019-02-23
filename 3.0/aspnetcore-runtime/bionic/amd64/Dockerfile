@@ -1,5 +1,5 @@
-ARG REPO=microsoft/dotnet
-FROM $REPO:3.0-runtime-deps-bionic
+ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+FROM $REPO:3.0-bionic
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

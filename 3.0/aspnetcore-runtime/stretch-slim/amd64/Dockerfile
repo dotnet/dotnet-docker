@@ -1,5 +1,5 @@
-ARG REPO=microsoft/dotnet
-FROM $REPO:3.0-runtime-deps-stretch-slim
+ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+FROM $REPO:3.0-stretch-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
