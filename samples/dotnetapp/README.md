@@ -8,12 +8,12 @@ This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker
 
 ## Try a pre-built .NET Core Docker Image
 
-You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile).
+You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/), based on this [sample](Dockerfile).
 
 Type the following [Docker](https://www.docker.com/products/docker) command:
 
 ```console
-docker run --rm microsoft/dotnet-samples
+docker run --rm mcr.microsoft.com/dotnet/core/samples
 ```
 
 ## Getting the sample
@@ -139,17 +139,16 @@ Docs and More Information:
 * [dotnet/core](https://github.com/dotnet/core) for starting with .NET Core on GitHub.
 * [dotnet/announcements](https://github.com/dotnet/announcements/issues) for .NET announcements.
 
-## Related Repositories
+## Related Docker Hub Repositories
 
-.NET Core Docker Hub repos:
+.NET Core:
 
-* [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core images.
-* [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/) for .NET Core images.
-* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/) for .NET Core preview images.
-* [microsoft/dotnet-samples](https://hub.docker.com/r/microsoft/dotnet-samples/) for .NET Core sample images.
+* [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
+* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
+* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
 
-.NET Framework Docker Hub repos:
+.NET Framework:
 
-* [dotnet/framework/aspnet](https://hub.docker.com/_/microsoft-dotnet-framework-aspnet) for ASP.NET Web Forms and MVC images.
-* [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images.
-* [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework and ASP.NET sample images.
+* [dotnet/framework/aspnet](https://hub.docker.com/_/microsoft-dotnet-framework-aspnet): ASP.NET Web Forms and MVC
+* [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/): .NET Framework
+* [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/): .NET Framework and ASP.NET Samples

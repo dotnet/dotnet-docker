@@ -12,12 +12,12 @@ See [.NET Core and Docker for ARM64](dotnet-docker-arm64.md) if you are interest
 
 ## Try a pre-built .NET Core Docker Image
 
-You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile).
+You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/), based on this [sample](Dockerfile).
 
 Type the following [Docker](https://www.docker.com/products/docker) command:
 
 ```console
-docker run --rm microsoft/dotnet-samples
+docker run --rm mcr.microsoft.com/dotnet/core/samples
 ```
 
 ## Building .NET Core Samples with Docker

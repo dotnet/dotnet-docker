@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.2-sdk-stretch-arm32v7 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch-arm32v7 AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -24,7 +24,7 @@ COPY tests/. .
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 
-FROM microsoft/dotnet:2.2-runtime-deps-stretch-slim-arm32v7 AS runtime
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:2.2-stretch-slim-arm32v7 AS runtime
 WORKDIR /app
 COPY --from=build /app/dotnetapp/out ./
 ENTRYPOINT ["./dotnetapp"]

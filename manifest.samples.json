@@ -3,7 +3,7 @@
   "repos": [
     {
       "name": "dotnet/core/samples",
-      "readmePath": "samples/README.DockerHub.md",
+      "readmePath": "README.samples.md",
       "images": [
         {
           "sharedTags": {
