@@ -79,7 +79,7 @@ try {
         if (-not (Test-Path -Path "$imageBuilderCmd" -PathType Leaf)) {
             ./scripts/Invoke-WithRetry "docker pull $windowsImageBuilder"
             Exec "docker create --name $imageBuilderContainerName $windowsImageBuilder"
-            containerCreated = $true
+            $containerCreated = $true
             if (Test-Path -Path $imageBuilderFolder)
             {
                 Remove-Item -Recurse -Force -Path $imageBuilderFolder
