@@ -2,40 +2,29 @@ parameters:
   pool: {}
 jobs:
 - job: Publish_Finalize
-  condition: "
-    and(
-      succeeded('Copy_Images_Linux_amd64'),
-      or(
-        succeeded('Copy_Images_Linux_arm64v8'),
-        eq(variables['repo'], 'dotnet-samples')
-      ),
-      succeeded('Copy_Images_Linux_arm32v7'),
-      succeeded('Copy_Images_NanoServerSac2016_amd64'),
-      succeeded('Copy_Images_NanoServer1709_amd64'),
-      succeeded('Copy_Images_NanoServer1803_amd64'),
-      succeeded('Copy_Images_NanoServer1809_amd64'),
-      succeeded('Copy_Images_NanoServer1809_arm32'))"
+  condition: succeeded('Copy_Images')
   dependsOn:
-  - Copy_Images_Linux_amd64
-  - Copy_Images_Linux_arm64v8
-  - Copy_Images_Linux_arm32v7
-  - Copy_Images_NanoServerSac2016_amd64
-  - Copy_Images_NanoServer1709_amd64
-  - Copy_Images_NanoServer1803_amd64
-  - Copy_Images_NanoServer1809_amd64
-  - Copy_Images_NanoServer1809_arm32
+  - Copy_Images
   pool: ${{ parameters.pool }}
   variables:
     imageBuilder.commonCmdArgs: >
       --manifest $(manifest)
-      --username $(dockerRegistry.userName)
-      --password $(BotAccount-dotnet-dockerhub-bot-password)
+      --registry-override $(acr.server)
       $(imageBuilder.queueArgs)
-      $(imageBuilder.publishQueueArgs)
   steps:
   - template: ../steps/init-docker-linux.yml
-  - script: $(runImageBuilderCmd) publishManifest $(imageBuilder.commonCmdArgs)
+  - script: >
+      $(runImageBuilderCmd) publishManifest
+      --repo-prefix $(publishRepoPrefix)
+      --username $(acr.userName)
+      --password $(BotAccount-dotnet-docker-acr-bot-password)
+      $(imageBuilder.commonCmdArgs)
     displayName: Publish Manifest
-  - script: $(runImageBuilderCmd) updateReadme $(imageBuilder.commonCmdArgs)
-    displayName: Update Readme
+  - script: >
+      $(runImageBuilderCmd) publishMcrReadmes
+      $(dotnetBot-userName)
+      $(dotnetBot-email)
+      $(dotnet-bot-user-repo-adminrepohook-pat)
+      $(imageBuilder.commonCmdArgs)
+    displayName: Publish Readme
   - template: ../steps/cleanup-docker-linux.yml

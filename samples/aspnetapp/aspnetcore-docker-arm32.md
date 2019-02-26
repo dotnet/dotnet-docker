@@ -10,12 +10,12 @@ See [.NET Core and Docker for ARM64](dotnet-docker-arm64.md) if you are interest
 
 ## Try a pre-built ASP.NET Core Docker Image
 
-You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile).
+You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/), based on this [sample](Dockerfile).
 
 Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
 ```console
-docker run --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
+docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser and/or to the IP address (example: http://192.168.1.18:8000) of your ARM32 device on your network.

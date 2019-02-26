@@ -1,7 +1,6 @@
 #!/usr/bin/env pwsh
 param(
-    [string]$Branch,
-    [string]$ImageBuilderImageName='microsoft/dotnet-buildtools-prereqs:image-builder-debian-20181221161902'
+    [string]$Branch
 )
 
 $ErrorActionPreference = 'Stop'
@@ -24,53 +23,48 @@ function Exec {
 }
 
 function GenerateDoc {
-    param ([string] $Template, [string] $ReadmePath, [string] $Manifest, [string] $Branch, [switch] $SkipValidation)
+    param (
+        [string] $Template,
+        [string] $Repo,
+        [string] $ReadmePath,
+        [string] $Manifest,
+        [string] $Branch,
+        [switch] $ReuseImageBuilderImage
+    )
 
-    if ($Template) {
-        $templateOption = "--template $Template"
+    $onTagsGenerated = {
+        param($ContainerName)
+        Exec "docker cp ${ContainerName}:/repo/$ReadmePath $repoRoot/$ReadmePath"
     }
 
-    if ($SkipValidation) {
-        $skipValidationOption = "--skip-validation"
-    }
+    $imageBuilderArgs = "generateTagsReadme" `
+        + " --update-readme" `
+        + " --manifest $Manifest" `
+        + " --repo $Repo" `
+        + " --template ./scripts/documentation-templates/$Template" `
+        + " $skipValidationOption" `
+        + " https://github.com/dotnet/dotnet-docker/blob/${Branch}"
 
-    $imageBuilderContainerName = "imagebuilder-$(Get-Date -Format yyyyMMddhhmmss)"
-    $createCmd = "docker create" `
-        + " -v /var/run/docker.sock:/var/run/docker.sock" `
-        + " -w /repo" `
-        + " --name $imageBuilderContainerName" `
-        + " $ImageBuilderImageName" `
-            + " generateTagsReadme" `
-            + " --update-readme" `
-            + " --manifest $Manifest" `
-            + " --readme-path $ReadmePath" `
-            + " $templateOption" `
-            + " $skipValidationOption" `
-            + " https://github.com/dotnet/dotnet-docker/blob/${Branch}"
-    Exec $createCmd
-    try {
-        Exec "docker cp $repoRoot/. ${imageBuilderContainerName}:/repo/"
-        Exec "docker start -a $imageBuilderContainerName"
-        Exec "docker cp ${imageBuilderContainerName}:/repo/$ReadmePath $repoRoot/$ReadmePath"
-    }
-    finally {
-        Exec "docker rm -f $imageBuilderContainerName"
-    }
+    & "$PSScriptRoot/Invoke-ImageBuilder.ps1" `
+        -ImageBuilderArgs $imageBuilderArgs `
+        -ReuseImageBuilderImage:$ReuseImageBuilderImage `
+        -OnCommandExecuted $onTagsGenerated
 }
 
 if (!$Branch) {
     $manifestJson = Get-Content ${repoRoot}/manifest.json | ConvertFrom-Json
-    $dockerHubRepo = $manifestJson.Repos[0].Name.Split('/')[1]
-    if ($dockerHubRepo -eq "dotnet") {
-        $Branch = "master"
+    if ($manifestJson.Repos[0].Name.Contains("nightly")) {
+        $Branch = "nightly"
+        $coreRepoName = "core-nightly"
     }
     else {
-        $Branch = "nightly"
+        $Branch = "master"
+        $coreRepoName = "core"
     }
 }
 
-Exec "docker pull $ImageBuilderImageName"
-
-GenerateDoc './scripts/ReadmeTagsDocumentationTemplate.md' README.md './manifest.json' $Branch -SkipValidation
-GenerateDoc './scripts/TagsDocumentationTemplate.md' TAGS.md './manifest.json' $Branch
-GenerateDoc './scripts/SamplesReadmeTagsDocumentationTemplate.md' ./samples/README.DockerHub.md './manifest.samples.json' 'master'
+GenerateDoc runtime-deps-tags.md dotnet/$coreRepoName/runtime-deps README.runtime-deps.md manifest.json $Branch
+GenerateDoc runtime-tags.md dotnet/$coreRepoName/runtime README.runtime.md manifest.json $Branch -ReuseImageBuilderImage
+GenerateDoc aspnet-tags.md dotnet/$coreRepoName/aspnet README.aspnet.md manifest.json $Branch -ReuseImageBuilderImage
+GenerateDoc sdk-tags.md dotnet/$coreRepoName/sdk README.sdk.md manifest.json $Branch -ReuseImageBuilderImage
+GenerateDoc samples-tags.md dotnet/core/samples README.samples.md manifest.samples.json master -ReuseImageBuilderImage

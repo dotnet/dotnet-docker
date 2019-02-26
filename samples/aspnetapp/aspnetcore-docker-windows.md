@@ -4,12 +4,12 @@ ASP.NET Core applications are supported with [Windows containers](https://docs.m
 
 ## Try a pre-built ASP.NET Core Docker Image
 
-You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](Dockerfile).
+You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/), based on this [sample](Dockerfile).
 
 Type the following command to run a sample with [Docker](https://store.docker.com/editions/community/docker-ce-desktop-windows):
 
 ```console
-docker run --name aspnetcore_sample --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
+docker run --name aspnetcore_sample --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser. In some scenarios, and with earlier versions of Windows, you need to access the container via IP address. See the following section for instructions on how to do that.

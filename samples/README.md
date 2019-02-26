@@ -6,22 +6,22 @@ The samples exercise various levels of functionality. The [.NET Core Docker samp
 
 ## Try a pre-built .NET Core Docker Image
 
-You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on the [.NET Core console sample](dotnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/), based on the [.NET Core console sample](dotnetapp/README.md).
 
 Type the following [Docker](https://www.docker.com/products/docker) command:
 
 ```console
-docker run --rm microsoft/dotnet-samples
+docker run --rm mcr.microsoft.com/dotnet/core/samples
 ```
 
 ## Try a pre-built ASP.NET Core Docker Image
 
-You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on this [sample](aspnetapp/Dockerfile).
+You can quickly run a container with a pre-built [sample ASP.NET Core Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/), based on this [sample](aspnetapp/Dockerfile).
 
 Type the following command to run a sample with [Docker](https://www.docker.com/products/docker):
 
 ```console
-docker run --name aspnetcore_sample --rm -it -p 8000:80 microsoft/dotnet-samples:aspnetapp
+docker run --name aspnetcore_sample --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser. On Windows, you may need to navigate to the container via IP address. See [ASP.NET Core apps in Windows Containers](aspnetapp/aspnetcore-docker-windows.md) for instructions on determining the IP address, using the value of `--name` that you used in `docker run`.
@@ -76,17 +76,16 @@ Docs and More Information:
 * [dotnet/core](https://github.com/dotnet/core) for starting with .NET Core on GitHub.
 * [dotnet/announcements](https://github.com/dotnet/announcements/issues) for .NET announcements.
 
-## Related Repositories
+## Related Docker Hub Repositories
 
-.NET Core Docker Hub repos:
+.NET Core:
 
-* [microsoft/aspnetcore](https://hub.docker.com/r/microsoft/aspnetcore/) for ASP.NET Core images.
-* [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/) for .NET Core images.
-* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/) for .NET Core preview images.
-* [microsoft/dotnet-samples](https://hub.docker.com/r/microsoft/dotnet-samples/) for .NET Core sample images.
+* [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
+* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
+* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
 
-.NET Framework Docker Hub repos:
+.NET Framework:
 
-* [dotnet/framework/aspnet](https://hub.docker.com/_/microsoft-dotnet-framework-aspnet) for ASP.NET Web Forms and MVC images.
-* [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/) for .NET Framework images.
-* [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/) for .NET Framework and ASP.NET sample images.
+* [dotnet/framework/aspnet](https://hub.docker.com/_/microsoft-dotnet-framework-aspnet): ASP.NET Web Forms and MVC
+* [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/): .NET Framework
+* [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/): .NET Framework and ASP.NET Samples

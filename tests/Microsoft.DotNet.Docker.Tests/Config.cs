@@ -10,19 +10,28 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public static class Config
     {
-        public static string RepoName { get; } = Environment.GetEnvironmentVariable("REPO") ?? GetManifestRepoName();
         public static bool IsHttpVerificationDisabled { get; } =
             Environment.GetEnvironmentVariable("DISABLE_HTTP_VERIFICATION") != null;
         public static bool IsLocalRun { get; } = Environment.GetEnvironmentVariable("LOCAL_RUN") != null;
-        public static bool IsNightlyRepo { get; } = RepoName.Contains("nightly");
+        public static bool IsNightlyRepo { get; } = GetIsNightlyRepo();
         public static bool IsRunningInContainer { get; } =
             Environment.GetEnvironmentVariable("RUNNING_TESTS_IN_CONTAINER") != null;
+        public static string RepoPrefix { get; } = Environment.GetEnvironmentVariable("REPO_PREFIX") ?? string.Empty;
+        public static string Registry { get; } = Environment.GetEnvironmentVariable("REGISTRY") ?? GetManifestRegistry();
 
-        private static string GetManifestRepoName()
+        private static string GetManifestRegistry()
         {
             string manifestJson = File.ReadAllText("manifest.json");
             JObject manifest = JObject.Parse(manifestJson);
-            return (string)manifest["repos"][0]["name"];
+            return (string)manifest["registry"];
+        }
+
+        private static bool GetIsNightlyRepo()
+        {
+            string manifestJson = File.ReadAllText("manifest.json");
+            JObject manifest = JObject.Parse(manifestJson);
+            string repo = (string)manifest["repos"][0]["name"];
+            return repo.Contains("-nightly");
         }
     }
 }

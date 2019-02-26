@@ -1,12 +1,8 @@
 parameters:
-  name: null
   pool: {}
   matrix: {}
-  osVersion: "'*'"
-  architecture: null
-  dockerClientOS: null
 jobs:
-- job: ${{ parameters.name }}
+- job: Copy_Images
   condition: "
     and(
       ${{ parameters.matrix }},
@@ -39,24 +35,22 @@ jobs:
   pool: ${{ parameters.pool }}
   strategy:
     matrix: $[ ${{ parameters.matrix }} ]
-  variables:
-    osVersion: ${{ parameters.osVersion }}
-    architecture: ${{ parameters.architecture }}
   steps:
-  - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
+  - template: ../steps/init-docker-linux.yml
   - script: >
-      $(runImageBuilderCmd) copyImages
+      $(runImageBuilderCmd) copyAcrImages
       --manifest $(manifest)
-      $(imageBuilderPaths)
-      --os-version $(osVersion)
+      --path '$(dotnetVersion)/*/$(osVariant)*/*'
+      --os-type $(osType)
+      --os-version '$(osVersion)'
       --architecture $(architecture)
-      --source-server $(acr.server)
-      --source-username $(acr.userName)
-      --source-password $(BotAccount-dotnet-docker-acr-bot-password)
-      --destination-username $(dockerRegistry.userName)
-      --destination-password $(BotAccount-dotnet-dockerhub-bot-password)
+      --registry-override $(acr.server)
+      --repo-prefix $(publishRepoPrefix)
       $(imageBuilder.queueArgs)
-      $(imageBuilder.publishQueueArgs)
-      $(acr.server)/$(repo)-$(stagingRepo.suffix)
+      $(stagingRepoPrefix)
+      $(acr.servicePrincipalName)
+      $(app-dotnetdockerbuild-client-secret)
+      $(acr.servicePrincipalTenant)
+      $(acr.subscription)
     displayName: Copy Images
-  - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
+  - template: ../steps/cleanup-docker-linux.yml

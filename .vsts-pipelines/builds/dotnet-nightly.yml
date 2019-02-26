@@ -1,0 +1,9 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - nightly
+variables:
+  manifest: manifest.json
+jobs:
+- template: ../jobs/build-test-publish-repo.yml

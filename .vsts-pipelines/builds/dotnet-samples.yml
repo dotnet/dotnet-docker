@@ -1,0 +1,5 @@
+trigger: none
+variables:
+  manifest: manifest.samples.json
+jobs:
+- template: ../jobs/build-test-publish-repo.yml
