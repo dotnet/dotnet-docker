@@ -1,4 +1,5 @@
 trigger: none
+pr: none
 variables:
   manifest: manifest.samples.json
 jobs:
