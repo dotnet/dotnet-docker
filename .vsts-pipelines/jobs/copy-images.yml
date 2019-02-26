@@ -13,7 +13,7 @@ jobs:
           or(
             succeeded(),
             and(
-              eq(variables['repo'], 'dotnet-samples'),
+              contains(variables['manifest'], 'samples'),
               eq(variables['singlePhase'], ''),
               succeeded('Build_Linux_amd64'),
               succeeded('Build_Linux_arm32v7'),
