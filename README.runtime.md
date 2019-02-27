@@ -21,12 +21,12 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ## Container sample: Run a simple application
 
-You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on the [.NET Core console sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/), based on the [.NET Core console sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/README.md).
 
 Type the following command to run a sample console application:
 
 ```console
-docker run --rm microsoft/dotnet-samples
+docker run --rm mcr.microsoft.com/dotnet/core/samples
 ```
 
 # Related Repos
@@ -40,8 +40,8 @@ docker run --rm microsoft/dotnet-samples
 
 .NET Core:
 
-* [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/): .NET Core
-* [microsoft/dotnet-samples](https://hub.docker.com/r/microsoft/dotnet/): .NET Core Samples
+* [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
+* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
 
 .NET Framework:
 

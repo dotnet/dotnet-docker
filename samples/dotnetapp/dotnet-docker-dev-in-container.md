@@ -36,19 +36,19 @@ The instructions assume that you are in the root of the repository. You can use 
 ### Windows using Linux containers
 
 ```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet:2.2-sdk dotnet watch run
+docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/dotnetapp mcr.microsoft.com/dotnet/core/sdk:2.2 dotnet watch run
 ```
 
 ### Linux or macOS using Linux containers
 
 ```console
-docker run --rm -it -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/dotnetapp microsoft/dotnet:2.2-sdk dotnet watch run
+docker run --rm -it -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/dotnetapp mcr.microsoft.com/dotnet/core/sdk:2.2 dotnet watch run
 ```
 
 ### Windows using Windows containers
 
 ```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\dotnetapp microsoft/dotnet:2.2-sdk dotnet watch run
+docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\dotnetapp mcr.microsoft.com/dotnet/core/sdk:2.2 dotnet watch run
 ```
 
 ## Test your application in a container while you develop
@@ -60,19 +60,19 @@ The instructions assume that you are in the root of the repository. You can use 
 ### Windows using Linux containers
 
 ```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/tests microsoft/dotnet:2.2-sdk dotnet watch test
+docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:2.2 dotnet watch test
 ```
 
 ### Linux or macOS using Linux containers
 
 ```console
-docker run --rm -it -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/tests microsoft/dotnet:2.2-sdk dotnet watch test
+docker run --rm -it -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:2.2 dotnet watch test
 ```
 
 ### Windows using Windows containers
 
 ```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\tests microsoft/dotnet:2.2-sdk dotnet watch test
+docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\tests mcr.microsoft.com/dotnet/core/sdk:2.2 dotnet watch test
 ```
 
 The commands above log test results to the console. You can additionally log results as a TRX file by appending `--logger:trx` to the previous test commands, specifically `dotnet watch test --logger:trx`. TRX logging is also demonstrated in [Running .NET Core Unit Tests with Docker](dotnet-docker-unit-testing.md).
@@ -86,19 +86,19 @@ The instructions assume that you are in the root of the repository. You can use 
 ### Windows using Linux containers
 
 ```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.2-sdk dotnet publish -c Release -o out
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app -w /app/dotnetapp mcr.microsoft.com/dotnet/core/sdk:2.2 dotnet publish -c Release -o out
 ```
 
 ### Linux or macOS using Linux containers
 
 ```console
-docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app/dotnetapp microsoft/dotnet:2.2-sdk dotnet publish -c Release -o out
+docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app/dotnetapp mcr.microsoft.com/dotnet/core/sdk:2.2 dotnet publish -c Release -o out
 ```
 
 ### Windows using Windows containers
 
 ```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app -w c:\app\dotnetapp microsoft/dotnet:2.2-sdk dotnet publish -c Release -o out
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app -w c:\app\dotnetapp mcr.microsoft.com/dotnet/core/sdk:2.2 dotnet publish -c Release -o out
 ```
 
 ## More Samples

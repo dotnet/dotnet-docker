@@ -32,8 +32,8 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 .NET Core:
 
-* [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/): .NET Core
-* [microsoft/dotnet-samples](https://hub.docker.com/r/microsoft/dotnet/): .NET Core Samples
+* [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
+* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
 
 .NET Framework:
 
