@@ -48,7 +48,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}");
                 }
 
-                // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnetcore-runtime` image
+                // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnet` image
                 string fxDepTag = BuildTestAppImage("fx_dependent_app", appDir);
                 tags.Add(fxDepTag);
                 bool runAsAdmin = _isWeb && !DockerHelper.IsLinuxContainerModeEnabled && _imageData.OS != OS.NanoServerSac2016;

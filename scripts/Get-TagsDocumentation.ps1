@@ -67,4 +67,4 @@ GenerateDoc runtime-deps-tags.md dotnet/$coreRepoName/runtime-deps README.runtim
 GenerateDoc runtime-tags.md dotnet/$coreRepoName/runtime README.runtime.md manifest.json $Branch -ReuseImageBuilderImage
 GenerateDoc aspnet-tags.md dotnet/$coreRepoName/aspnet README.aspnet.md manifest.json $Branch -ReuseImageBuilderImage
 GenerateDoc sdk-tags.md dotnet/$coreRepoName/sdk README.sdk.md manifest.json $Branch -ReuseImageBuilderImage
-GenerateDoc samples-tags.md dotnet/core/samples ./samples/README.DockerHub.md manifest.samples.json master -ReuseImageBuilderImage
+GenerateDoc samples-tags.md dotnet/core/samples README.samples.md manifest.samples.json master -ReuseImageBuilderImage

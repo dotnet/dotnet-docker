@@ -8,7 +8,7 @@ jobs:
 - job: ${{ parameters.name }}
   condition: "
     and(
-      ne(variables['repo'], 'dotnet-samples'),
+      not(contains(variables['manifest'], 'samples')),
       ${{ parameters.matrix }},
       or(
         and(
