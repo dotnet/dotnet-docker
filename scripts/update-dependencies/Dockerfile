@@ -1,5 +1,5 @@
 # build image
-FROM microsoft/dotnet:2.1-sdk-stretch AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build-env
 
 WORKDIR /update-dependencies
 
@@ -14,7 +14,7 @@ RUN dotnet publish -c Release -o out --no-restore
 
 
 # runtime image
-FROM microsoft/dotnet:2.1-runtime-stretch-slim
+FROM mcr.microsoft.com/dotnet/core/runtime:2.1-stretch-slim
 
 # install git
 RUN apt-get update \
