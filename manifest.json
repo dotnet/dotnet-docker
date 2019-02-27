@@ -112,41 +112,9 @@
               "os": "linux",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "dockerfile": "2.1/runtime-deps/alpine3.8/amd64",
-              "os": "linux",
-              "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.8": {
-                  "documentationGroup": "2.1"
-                },
-                "2.1-alpine3.8": {
-                  "documentationGroup": "2.1"
-                },
-                "$(2.2-RuntimeVersion)-alpine3.8": {
-                  "documentationGroup": "2.2"
-                },
-                "2.2-alpine3.8": {
-                  "documentationGroup": "2.2"
-                },
-                "$(2.1-RuntimeVersion)-alpine": {
-                  "documentationGroup": "2.1"
-                },
-                "2.1-alpine": {
-                  "documentationGroup": "2.1"
-                },
-                "$(2.2-RuntimeVersion)-alpine": {
-                  "documentationGroup": "2.2"
-                },
-                "2.2-alpine": {
-                  "documentationGroup": "2.2"
-                }
+                "2.1-alpine3.7": {},
+                "$(2.1-RuntimeVersion)-alpine": {},
+                "2.1-alpine": {}
               }
             }
           ]
@@ -194,6 +162,20 @@
                 }
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.2/runtime-deps/alpine3.8/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.2-RuntimeVersion)-alpine3.8": {},
+                "2.2-alpine3.8": {},
+                "$(2.2-RuntimeVersion)-alpine": {},
+                "2.2-alpine": {}
+              }
             }
           ]
         },
@@ -445,22 +427,7 @@
               "os": "linux",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "2.1/runtime/alpine3.8/amd64",
-              "os": "linux",
-              "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.8": {},
-                "2.1-alpine3.8": {},
+                "2.1-alpine3.7": {},
                 "$(2.1-RuntimeVersion)-alpine": {},
                 "2.1-alpine": {}
               }
@@ -862,22 +829,7 @@
               "os": "linux",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "2.1/aspnet/alpine3.8/amd64",
-              "os": "linux",
-              "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.8": {},
-                "2.1-alpine3.8": {},
+                "2.1-alpine3.7": {},
                 "$(2.1-RuntimeVersion)-alpine": {},
                 "2.1-alpine": {}
               }
@@ -1322,22 +1274,7 @@
               "os": "linux",
               "tags": {
                 "$(2.1-SdkVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "2.1/sdk/alpine3.8/amd64",
-              "os": "linux",
-              "tags": {
-                "$(2.1-SdkVersion)-alpine3.8": {},
-                "2.1-alpine3.8": {},
+                "2.1-alpine3.7": {},
                 "$(2.1-SdkVersion)-alpine": {},
                 "2.1-alpine": {}
               }

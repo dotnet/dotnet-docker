@@ -12,6 +12,7 @@ RUN apk add --no-cache \
     tzdata \
     userspace-rcu \
     zlib \
+    && apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
     lttng-ust
 
 # Configure web servers to bind to port 80 when present
