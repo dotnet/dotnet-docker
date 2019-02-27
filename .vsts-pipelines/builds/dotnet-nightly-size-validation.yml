@@ -1,4 +1,5 @@
 trigger: none
+pr: none
 jobs:
 - job: LinuxPerfTests
   pool: Hosted Ubuntu 1604
