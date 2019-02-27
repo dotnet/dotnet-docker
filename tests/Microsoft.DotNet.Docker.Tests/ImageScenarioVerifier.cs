@@ -142,6 +142,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
 
                 File.Copy(Path.Combine(_testArtifactsDir, nuGetConfigFileName), Path.Combine(appDir, "NuGet.config"));
+                File.Copy(Path.Combine(_testArtifactsDir, ".dockerignore"), Path.Combine(appDir, ".dockerignore"));
             }
             catch (Exception)
             {
