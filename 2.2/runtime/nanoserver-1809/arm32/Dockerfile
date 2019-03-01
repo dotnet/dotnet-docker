@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/windows/nanoserver:1809-arm
 ENV DOTNET_VERSION 2.2.2
 
 RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Runtime/%DOTNET_VERSION%/dotnet-runtime-%DOTNET_VERSION%-win-arm.zip `
-    && mkdir -p "%ProgramFiles%\dotnet" `
+    && mkdir "%ProgramFiles%\dotnet" `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
     && del dotnet.zip
 
