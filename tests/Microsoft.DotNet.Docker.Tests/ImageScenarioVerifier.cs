@@ -14,8 +14,6 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public class ImageScenarioVerifier
     {
-        public static string GetDotnetNewCmd(string appType, string netCoreAppVersion) => $"dotnet new {appType} --framework netcoreapp{netCoreAppVersion}";
-
         private readonly DockerHelper _dockerHelper;
         private readonly ImageData _imageData;
         private readonly bool _isWeb;
@@ -76,6 +74,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 Directory.Delete(appDir, true);
             }
         }
+
+        public static string GetDotnetNewCmd(string appType, string netCoreAppVersion) =>
+            $"dotnet new {appType} --framework netcoreapp{netCoreAppVersion}";
 
         private static void ApplyProjectCustomizations(ImageData _imageData, string projectFilePath)
         {
