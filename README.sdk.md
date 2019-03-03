@@ -95,6 +95,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 - [`2.2.104-nanoserver-1809`, `2.2-nanoserver-1809`, `2.2.104`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
 - [`2.1.504-nanoserver-1809`, `2.1-nanoserver-1809`, `2.1.504`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`1.1.12-nanoserver-1809`, `1.1-nanoserver-1809`, `1.1.12`, `1.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/nanoserver-1809/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -117,12 +118,6 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 **.NET Core 3.0 Preview tags**
 
 - [`3.0.100-preview-nanoserver-1709`, `3.0-nanoserver-1709`, `3.0.100-preview`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/nanoserver-1709/amd64/Dockerfile)
-
-## Windows Server 2016 amd64 tags
-
-- [`2.2.104-nanoserver-sac2016`, `2.2-nanoserver-sac2016`, `2.2.104`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.1.504-nanoserver-sac2016`, `2.1-nanoserver-sac2016`, `2.1.504`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
-- [`1.1.12-nanoserver-sac2016`, `1.1-nanoserver-sac2016`, `1.1.12`, `1.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/1.1/sdk/nanoserver-sac2016/amd64/Dockerfile)
 
 ## Windows Server, version 1809 arm32 tags
 
