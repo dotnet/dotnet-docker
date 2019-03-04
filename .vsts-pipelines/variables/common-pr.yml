@@ -1,0 +1,2 @@
+variables:
+- template: docker-images.yml

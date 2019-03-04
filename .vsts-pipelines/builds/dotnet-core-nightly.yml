@@ -4,8 +4,9 @@ trigger:
     include:
     - nightly
 pr: none
+
 variables:
-- template: ../variables/common.yml
+- template: ../variables/common-official.yml
 - name: manifest
   value: manifest.json
 jobs:

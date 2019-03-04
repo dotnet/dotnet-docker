@@ -2,15 +2,17 @@ parameters:
   setupRemoteDockerServer: false
   setupImageBuilder: true
   setupTestRunner: false
+  cleanupDocker: true
 
 steps:
   ################################################################################
   # Cleanup Docker Resources
   ################################################################################
-- template: cleanup-docker-linux.yml
-  parameters:
-    cleanupRemoteDockerServer: ${{ parameters.setupRemoteDockerServer }}
-    initCleanup: true
+- ${{ if eq(parameters.cleanupDocker, 'true') }}:
+  - template: cleanup-docker-linux.yml
+    parameters:
+      cleanupRemoteDockerServer: ${{ parameters.setupRemoteDockerServer }}
+      initCleanup: true
 
   ################################################################################
   # Setup Remote Docker Server (Optional)

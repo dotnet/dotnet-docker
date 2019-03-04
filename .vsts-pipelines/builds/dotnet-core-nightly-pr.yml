@@ -1,0 +1,14 @@
+pr:
+- nightly
+trigger: none
+
+variables:
+- template: ../variables/common-pr.yml
+- name: manifest
+  value: manifest.json
+jobs:
+- template: ../jobs/build-test-publish-repo.yml
+  parameters:
+    isPullRequestBuild: true
+    buildMatrixType: platformVersionedOs
+    customBuildLegGrouping: pr-build
