@@ -1,5 +1,8 @@
 trigger: none
 pr: none
+variables:
+- group: DotNet-Docker-Common
+- group: DotNet-Docker-Secrets
 jobs:
 - job: LinuxPerfTests
   pool: Hosted Ubuntu 1604
