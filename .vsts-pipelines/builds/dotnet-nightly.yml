@@ -3,6 +3,7 @@ trigger:
   branches:
     include:
     - nightly
+pr: none
 variables:
   manifest: manifest.json
 jobs:
