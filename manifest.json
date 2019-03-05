@@ -14,7 +14,7 @@
   },
   "repos": [
     {
-      "id" : "runtime-deps",
+      "id": "runtime-deps",
       "name": "dotnet/core/runtime-deps",
       "readmePath": "README.runtime-deps.md",
       "images": [
@@ -115,6 +115,28 @@
                 "2.1-alpine3.7": {},
                 "$(2.1-RuntimeVersion)-alpine": {},
                 "2.1-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime-deps/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.1-RuntimeVersion)-alpine3.9": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-alpine3.9": {
+                  "documentationGroup": "2.1"
+                },
+                "$(2.2-RuntimeVersion)-alpine3.9": {
+                  "documentationGroup": "2.2"
+                },
+                "2.2-alpine3.9": {
+                  "documentationGroup": "2.2"
+                }
               }
             }
           ]
@@ -271,10 +293,8 @@
         }
       ]
     },
-
-
     {
-      "id" : "runtime",
+      "id": "runtime",
       "name": "dotnet/core/runtime",
       "readmePath": "README.runtime.md",
       "images": [
@@ -431,6 +451,21 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
+              "dockerfile": "2.1/runtime/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.1-RuntimeVersion)-alpine3.9": {},
+                "2.1-alpine3.9": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
               "dockerfile": "2.1/runtime/bionic/amd64",
               "os": "linux",
               "tags": {
@@ -540,6 +575,21 @@
                 "2.2-alpine3.8": {},
                 "$(2.2-RuntimeVersion)-alpine": {},
                 "2.2-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.2/runtime/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.2-RuntimeVersion)-alpine3.9": {},
+                "2.2-alpine3.9": {}
               }
             }
           ]
@@ -726,10 +776,8 @@
         }
       ]
     },
-
-
     {
-      "id" : "aspnet",
+      "id": "aspnet",
       "name": "dotnet/core/aspnet",
       "readmePath": "README.aspnet.md",
       "images": [
@@ -805,6 +853,21 @@
                 "2.1-alpine3.7": {},
                 "$(2.1-RuntimeVersion)-alpine": {},
                 "2.1-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/aspnet/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.1-RuntimeVersion)-alpine3.9": {},
+                "2.1-alpine3.9": {}
               }
             }
           ]
@@ -924,6 +987,21 @@
                 "2.2-alpine3.8": {},
                 "$(2.2-RuntimeVersion)-alpine": {},
                 "2.2-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.2/aspnet/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.2-RuntimeVersion)-alpine3.9": {},
+                "2.2-alpine3.9": {}
               }
             }
           ]
@@ -1122,10 +1200,8 @@
         }
       ]
     },
-
-
     {
-      "id" : "sdk",
+      "id": "sdk",
       "name": "dotnet/core/sdk",
       "readmePath": "README.sdk.md",
       "images": [
@@ -1239,6 +1315,21 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/sdk/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.1-SdkVersion)-alpine3.9": {},
+                "2.1-alpine3.9": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
               "dockerfile": "2.1/sdk/bionic/amd64",
               "os": "linux",
               "tags": {
@@ -1339,6 +1430,21 @@
                 "2.2-alpine3.8": {},
                 "$(2.2-SdkVersion)-alpine": {},
                 "2.2-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.2/sdk/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.2-SdkVersion)-alpine3.9": {},
+                "2.2-alpine3.9": {}
               }
             }
           ]
