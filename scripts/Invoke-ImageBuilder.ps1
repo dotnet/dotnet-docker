@@ -52,24 +52,32 @@ function Exec {
     }
 }
 
-$windowsImageBuilder = 'mcr.microsoft.com/dotnet-buildtools/image-builder:nanoserver-20190305134632'
-$linuxImageBuilder = 'mcr.microsoft.com/dotnet-buildtools/image-builder:debian-20190305214722'
-
 $imageBuilderContainerName = "ImageBuilder-$(Get-Date -Format yyyyMMddhhmmss)"
 $containerCreated = $false
 
 pushd $PSScriptRoot/../
 try {
+    $imageNames = & ./scripts/Get-ImageNames.ps1
+
+    # If we need to execute the OnCommandExcecuted callback, defer the removal of the container until the end of the script.
+    $deferContainerRemoval = ($null -ne $OnCommandExecuted)
+
     $activeOS = docker version -f "{{ .Server.Os }}"
     if ($activeOS -eq "linux") {
         # On Linux, ImageBuilder is run within a container.
         $imageBuilderImageName = "microsoft-dotnet-imagebuilder-withrepo"
         if ($ReuseImageBuilderImage -ne $True) {
-            ./scripts/Invoke-WithRetry "docker pull $linuxImageBuilder"
-            Exec "docker build -t $imageBuilderImageName --build-arg IMAGE=$linuxImageBuilder -f ./scripts/Dockerfile.WithRepo ."
+            ./scripts/Invoke-WithRetry "docker pull $($imageNames.imagebuilder.linux)"
+            Exec ("docker build -t $imageBuilderImageName --build-arg "`
+                + "IMAGE=$($imageNames.imagebuilder.linux) -f ./scripts/Dockerfile.WithRepo .")
         }
-        
-        $imageBuilderCmd = "docker run --name $imageBuilderContainerName -v /var/run/docker.sock:/var/run/docker.sock $imageBuilderImageName"
+
+        $dockerRunOptions = "--name $imageBuilderContainerName -v /var/run/docker.sock:/var/run/docker.sock"
+        if (-not $deferContainerRemoval) {
+            $dockerRunOptions += " --rm"
+        }
+
+        $imageBuilderCmd = "docker run $dockerRunOptions $imageBuilderImageName"
         $containerCreated = $true
     }
     else {
@@ -77,8 +85,8 @@ try {
         $imageBuilderFolder = ".Microsoft.DotNet.ImageBuilder"
         $imageBuilderCmd = [System.IO.Path]::Combine($imageBuilderFolder, "Microsoft.DotNet.ImageBuilder.exe")
         if (-not (Test-Path -Path "$imageBuilderCmd" -PathType Leaf)) {
-            ./scripts/Invoke-WithRetry "docker pull $windowsImageBuilder"
-            Exec "docker create --name $imageBuilderContainerName $windowsImageBuilder"
+            ./scripts/Invoke-WithRetry "docker pull $($imageNames.imagebuilder.windows)"
+            Exec "docker create --name $imageBuilderContainerName $($imageNames.imagebuilder.windows)"
             $containerCreated = $true
             if (Test-Path -Path $imageBuilderFolder)
             {
@@ -96,7 +104,7 @@ try {
     }
 }
 finally {
-    if ($containerCreated) {
+    if ($deferContainerRemoval -and $containerCreated) {
         Exec "docker container rm -f $imageBuilderContainerName"
     }
     
