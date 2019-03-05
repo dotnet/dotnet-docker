@@ -52,8 +52,8 @@ function Exec {
     }
 }
 
-$windowsImageBuilder = 'mcr.microsoft.com/dotnet-buildtools/image-builder:nanoserver-20190301113613'
-$linuxImageBuilder = 'mcr.microsoft.com/dotnet-buildtools/image-builder:debian-20190301193659'
+$windowsImageBuilder = 'mcr.microsoft.com/dotnet-buildtools/image-builder:nanoserver-20190305134632'
+$linuxImageBuilder = 'mcr.microsoft.com/dotnet-buildtools/image-builder:debian-20190305214722'
 
 $imageBuilderContainerName = "ImageBuilder-$(Get-Date -Format yyyyMMddhhmmss)"
 $containerCreated = $false

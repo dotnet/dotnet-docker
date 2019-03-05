@@ -2,7 +2,6 @@ parameters:
   name: null
   pool: {}
   matrix: {}
-  osVersion: "'*'"
   dockerClientOS: null
   useRemoteDockerServer: false
 jobs:
@@ -28,7 +27,9 @@ jobs:
       $(runImageBuilderCmd) build
       --manifest $(manifest)
       $(imageBuilderPaths)
-      --os-version $(osVersion)
+      --os-type $(osType)
+      --os-version "$(osVersion)"
+      --architecture $(architecture)
       --registry-override $(acr.server)
       --repo-prefix $(stagingRepoPrefix)
       --retry
