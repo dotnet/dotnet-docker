@@ -38,9 +38,9 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ## Linux amd64 tags
 
-- [`2.2.2-stretch-slim`, `2.2-stretch-slim`, `2.2.2`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
-- [`2.2.2-alpine3.8`, `2.2-alpine3.8`, `2.2.2-alpine`, `2.2-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime-deps/alpine3.8/amd64/Dockerfile)
-- [`2.2.2-bionic`, `2.2-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/amd64/Dockerfile)
+- [`2.2.3-stretch-slim`, `2.2-stretch-slim`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
+- [`2.2.3-alpine3.8`, `2.2-alpine3.8`, `2.2.3-alpine`, `2.2-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime-deps/alpine3.8/amd64/Dockerfile)
+- [`2.2.3-bionic`, `2.2-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/amd64/Dockerfile)
 - [`2.1.8-stretch-slim`, `2.1-stretch-slim`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/amd64/Dockerfile)
 - [`2.1.8-alpine3.7`, `2.1-alpine3.7`, `2.1.8-alpine`, `2.1-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine3.7/amd64/Dockerfile)
 - [`2.1.8-bionic`, `2.1-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/amd64/Dockerfile)
@@ -62,8 +62,8 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ## Linux arm32 tags
 
-- [`2.2.2-stretch-slim-arm32v7`, `2.2-stretch-slim-arm32v7`, `2.2.2`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile)
-- [`2.2.2-bionic-arm32v7`, `2.2-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/arm32v7/Dockerfile)
+- [`2.2.3-stretch-slim-arm32v7`, `2.2-stretch-slim-arm32v7`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile)
+- [`2.2.3-bionic-arm32v7`, `2.2-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/arm32v7/Dockerfile)
 - [`2.1.8-stretch-slim-arm32v7`, `2.1-stretch-slim-arm32v7`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile)
 - [`2.1.8-bionic-arm32v7`, `2.1-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/arm32v7/Dockerfile)
 
