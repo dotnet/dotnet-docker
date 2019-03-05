@@ -53,9 +53,9 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 - [`2.2.3-stretch-slim`, `2.2-stretch-slim`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/stretch-slim/amd64/Dockerfile)
 - [`2.2.3-alpine3.8`, `2.2-alpine3.8`, `2.2.3-alpine`, `2.2-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/alpine3.8/amd64/Dockerfile)
 - [`2.2.3-bionic`, `2.2-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/bionic/amd64/Dockerfile)
-- [`2.1.8-stretch-slim`, `2.1-stretch-slim`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/stretch-slim/amd64/Dockerfile)
-- [`2.1.8-alpine3.7`, `2.1-alpine3.7`, `2.1.8-alpine`, `2.1-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/alpine3.7/amd64/Dockerfile)
-- [`2.1.8-bionic`, `2.1-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/bionic/amd64/Dockerfile)
+- [`2.1.9-stretch-slim`, `2.1-stretch-slim`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/stretch-slim/amd64/Dockerfile)
+- [`2.1.9-alpine3.7`, `2.1-alpine3.7`, `2.1.9-alpine`, `2.1-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/alpine3.7/amd64/Dockerfile)
+- [`2.1.9-bionic`, `2.1-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/bionic/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -74,8 +74,8 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 - [`2.2.3-stretch-slim-arm32v7`, `2.2-stretch-slim-arm32v7`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/stretch-slim/arm32v7/Dockerfile)
 - [`2.2.3-bionic-arm32v7`, `2.2-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/bionic/arm32v7/Dockerfile)
-- [`2.1.8-stretch-slim-arm32v7`, `2.1-stretch-slim-arm32v7`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/stretch-slim/arm32v7/Dockerfile)
-- [`2.1.8-bionic-arm32v7`, `2.1-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/bionic/arm32v7/Dockerfile)
+- [`2.1.9-stretch-slim-arm32v7`, `2.1-stretch-slim-arm32v7`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/stretch-slim/arm32v7/Dockerfile)
+- [`2.1.9-bionic-arm32v7`, `2.1-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/bionic/arm32v7/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -85,7 +85,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 ## Windows Server, version 1809 amd64 tags
 
 - [`2.2.3-nanoserver-1809`, `2.2-nanoserver-1809`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/nanoserver-1809/amd64/Dockerfile)
-- [`2.1.8-nanoserver-1809`, `2.1-nanoserver-1809`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.9-nanoserver-1809`, `2.1-nanoserver-1809`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/nanoserver-1809/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -94,7 +94,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 ## Windows Server, version 1803 amd64 tags
 
 - [`2.2.3-nanoserver-1803`, `2.2-nanoserver-1803`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/nanoserver-1803/amd64/Dockerfile)
-- [`2.1.8-nanoserver-1803`, `2.1-nanoserver-1803`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/nanoserver-1803/amd64/Dockerfile)
+- [`2.1.9-nanoserver-1803`, `2.1-nanoserver-1803`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/nanoserver-1803/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -103,7 +103,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 ## Windows Server, version 1709 amd64 tags
 
 - [`2.2.3-nanoserver-1709`, `2.2-nanoserver-1709`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/nanoserver-1709/amd64/Dockerfile)
-- [`2.1.8-nanoserver-1709`, `2.1-nanoserver-1709`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/nanoserver-1709/amd64/Dockerfile)
+- [`2.1.9-nanoserver-1709`, `2.1-nanoserver-1709`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/nanoserver-1709/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -112,7 +112,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 ## Windows Server 2016 amd64 tags
 
 - [`2.2.3-nanoserver-sac2016`, `2.2-nanoserver-sac2016`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.1.8-nanoserver-sac2016`, `2.1-nanoserver-sac2016`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.1.9-nanoserver-sac2016`, `2.1-nanoserver-sac2016`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/nanoserver-sac2016/amd64/Dockerfile)
 
 ## Windows Server, version 1809 arm32 tags
 

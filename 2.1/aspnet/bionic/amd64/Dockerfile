@@ -7,10 +7,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core
-ENV ASPNETCORE_VERSION 2.1.8
+ENV ASPNETCORE_VERSION 2.1.9
 
 RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-x64.tar.gz \
-    && aspnetcore_sha512='0cea73c8bf2b125566b17ee3a8b6282e82427f542a712086c33d0321831f2fc6835b7e5da8eb101a5c43c643526b074942fe687446983774bd2b2e25fe101237' \
+    && aspnetcore_sha512='a42056360f359d9d8fa87d4faa1eab2e48525236a89bb5099ca3f81abe678d1c815f8784c4da8d9d7eaec8f3abc29a25e295296a5cea0a6be4511f9eb0ac5a75' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet \

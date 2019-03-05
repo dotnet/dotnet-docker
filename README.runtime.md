@@ -49,9 +49,9 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 - [`2.2.3-stretch-slim`, `2.2-stretch-slim`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/stretch-slim/amd64/Dockerfile)
 - [`2.2.3-alpine3.8`, `2.2-alpine3.8`, `2.2.3-alpine`, `2.2-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/alpine3.8/amd64/Dockerfile)
 - [`2.2.3-bionic`, `2.2-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/bionic/amd64/Dockerfile)
-- [`2.1.8-stretch-slim`, `2.1-stretch-slim`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/stretch-slim/amd64/Dockerfile)
-- [`2.1.8-alpine3.7`, `2.1-alpine3.7`, `2.1.8-alpine`, `2.1-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/alpine3.7/amd64/Dockerfile)
-- [`2.1.8-bionic`, `2.1-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/bionic/amd64/Dockerfile)
+- [`2.1.9-stretch-slim`, `2.1-stretch-slim`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/stretch-slim/amd64/Dockerfile)
+- [`2.1.9-alpine3.7`, `2.1-alpine3.7`, `2.1.9-alpine`, `2.1-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/alpine3.7/amd64/Dockerfile)
+- [`2.1.9-bionic`, `2.1-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/bionic/amd64/Dockerfile)
 - [`1.1.11-stretch`, `1.1-stretch` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/stretch/amd64/Dockerfile)
 - [`1.1.11-jessie`, `1.1-jessie`, `1.1.11`, `1.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/jessie/amd64/Dockerfile)
 - [`1.0.14-jessie`, `1.0-jessie`, `1.0.14`, `1.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/jessie/amd64/Dockerfile)
@@ -73,8 +73,8 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 
 - [`2.2.3-stretch-slim-arm32v7`, `2.2-stretch-slim-arm32v7`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/stretch-slim/arm32v7/Dockerfile)
 - [`2.2.3-bionic-arm32v7`, `2.2-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/bionic/arm32v7/Dockerfile)
-- [`2.1.8-stretch-slim-arm32v7`, `2.1-stretch-slim-arm32v7`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/stretch-slim/arm32v7/Dockerfile)
-- [`2.1.8-bionic-arm32v7`, `2.1-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/bionic/arm32v7/Dockerfile)
+- [`2.1.9-stretch-slim-arm32v7`, `2.1-stretch-slim-arm32v7`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/stretch-slim/arm32v7/Dockerfile)
+- [`2.1.9-bionic-arm32v7`, `2.1-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/bionic/arm32v7/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -84,7 +84,7 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 ## Windows Server, version 1809 amd64 tags
 
 - [`2.2.3-nanoserver-1809`, `2.2-nanoserver-1809`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/nanoserver-1809/amd64/Dockerfile)
-- [`2.1.8-nanoserver-1809`, `2.1-nanoserver-1809`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.9-nanoserver-1809`, `2.1-nanoserver-1809`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1809/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -93,7 +93,7 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 ## Windows Server, version 1803 amd64 tags
 
 - [`2.2.3-nanoserver-1803`, `2.2-nanoserver-1803`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/nanoserver-1803/amd64/Dockerfile)
-- [`2.1.8-nanoserver-1803`, `2.1-nanoserver-1803`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1803/amd64/Dockerfile)
+- [`2.1.9-nanoserver-1803`, `2.1-nanoserver-1803`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1803/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -102,7 +102,7 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 ## Windows Server, version 1709 amd64 tags
 
 - [`2.2.3-nanoserver-1709`, `2.2-nanoserver-1709`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/nanoserver-1709/amd64/Dockerfile)
-- [`2.1.8-nanoserver-1709`, `2.1-nanoserver-1709`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1709/amd64/Dockerfile)
+- [`2.1.9-nanoserver-1709`, `2.1-nanoserver-1709`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1709/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -111,7 +111,7 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 ## Windows Server 2016 amd64 tags
 
 - [`2.2.3-nanoserver-sac2016`, `2.2-nanoserver-sac2016`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.1.8-nanoserver-sac2016`, `2.1-nanoserver-sac2016`, `2.1.8`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
+- [`2.1.9-nanoserver-sac2016`, `2.1-nanoserver-sac2016`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`1.1.11-nanoserver-sac2016`, `1.1-nanoserver-sac2016`, `1.1.11`, `1.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver-sac2016/amd64/Dockerfile)
 - [`1.0.14-nanoserver-sac2016`, `1.0-nanoserver-sac2016`, `1.0.14`, `1.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/nanoserver-sac2016/amd64/Dockerfile)
 
