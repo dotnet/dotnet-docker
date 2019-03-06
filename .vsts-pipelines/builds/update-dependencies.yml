@@ -1,5 +1,9 @@
 trigger: none
 pr: none
+variables:
+- group: DotNet-Docker-Common
+- group: DotNet-Docker-Secrets
+
 jobs:
 - job: UpdateDependencies
   pool: Hosted Ubuntu 1604
@@ -11,7 +15,7 @@ jobs:
       --user dotnet-maestro-bot
       --email dotnet-maestro-bot@microsoft.com
       --password $(BotAccount-dotnet-maestro-bot-PAT)
-      $(buildInfoUrl)
+      --build-info $(buildInfoUrl)
     displayName: Run Update Dependencies
   - script: docker system prune -a -f --volumes
     displayName: Cleanup Docker
