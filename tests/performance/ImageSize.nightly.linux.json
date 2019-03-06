@@ -1,0 +1,54 @@
+{
+  "dotnet/core-nightly/runtime-deps": {
+    "1.0/runtime-deps/jessie/amd64": 166698733,
+    "1.1/runtime-deps/stretch/amd64": 152979799,
+    "2.1/runtime-deps/stretch-slim/amd64": 99052362,
+    "2.1/runtime-deps/alpine3.7/amd64": 13352003,
+    "2.1/runtime-deps/alpine3.8/amd64": 13571739,
+    "2.1/runtime-deps/bionic/amd64": 132215006,
+    "3.0/runtime-deps/stretch-slim/amd64": 94261994,
+    "3.0/runtime-deps/alpine3.9/amd64": 10847963,
+    "3.0/runtime-deps/bionic/amd64": 127579194
+  },
+  "dotnet/core-nightly/runtime": {
+    "1.0/runtime/jessie/amd64": 250590653,
+    "1.1/runtime/jessie/amd64": 251448792,
+    "1.1/runtime/stretch/amd64": 239772302,
+    "2.1/runtime/stretch-slim/amd64": 180258057,
+    "2.1/runtime/alpine3.7/amd64": 87969792,
+    "2.1/runtime/alpine3.8/amd64": 87854021,
+    "2.1/runtime/bionic/amd64": 212327288,
+    "2.2/runtime/stretch-slim/amd64": 180521873,
+    "2.2/runtime/alpine3.8/amd64": 88116701,
+    "2.2/runtime/bionic/amd64": 212591104,
+    "3.0/runtime/stretch-slim/amd64": 182111132,
+    "3.0/runtime/alpine3.9/amd64": 86632296,
+    "3.0/runtime/bionic/amd64": 209256897
+  },
+  "dotnet/core-nightly/aspnet": {
+    "2.1/aspnet/stretch-slim/amd64": 253015005,
+    "2.1/aspnet/alpine3.7/amd64": 160704585,
+    "2.1/aspnet/alpine3.8/amd64": 160588814,
+    "2.1/aspnet/bionic/amd64": 285084236,
+    "2.2/aspnet/stretch-slim/amd64": 260099786,
+    "2.2/aspnet/alpine3.8/amd64": 167440367,
+    "2.2/aspnet/bionic/amd64": 292169017,
+    "3.0/aspnet/stretch-slim/amd64": 199172782,
+    "3.0/aspnet/alpine3.9/amd64": 103657043,
+    "3.0/aspnet/bionic/amd64": 226318547
+  },
+  "dotnet/core-nightly/sdk": {
+    "1.1/sdk/jessie/amd64": 969385565,
+    "1.1/sdk/stretch/amd64": 909378822,
+    "2.1/sdk/stretch/amd64": 1728622878,
+    "2.1/sdk/alpine3.7/amd64": 1467018965,
+    "2.1/sdk/alpine3.8/amd64": 1467676692,
+    "2.1/sdk/bionic/amd64": 1705835924,
+    "2.2/sdk/stretch/amd64": 1731290437,
+    "2.2/sdk/alpine3.8/amd64": 1470111357,
+    "2.2/sdk/bionic/amd64": 1708503951,
+    "3.0/sdk/stretch/amd64": 615355010,
+    "3.0/sdk/alpine3.9/amd64": 352959186,
+    "3.0/sdk/bionic/amd64": 592619900
+  }
+}

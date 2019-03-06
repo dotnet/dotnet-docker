@@ -8,7 +8,7 @@ jobs:
 - job: ${{ parameters.name }}
   condition: "
     and(
-      ne(variables['repo'], 'dotnet-samples'),
+      not(contains(variables['manifest'], 'samples')),
       ${{ parameters.matrix }},
       or(
         and(
@@ -57,7 +57,7 @@ jobs:
       -RepoPrefix $(stagingRepoPrefix)
       $(optionalTestArgs)
     displayName: Test Images
-  - script: docker exec $(testRunner.container) docker logout
+  - script: docker exec $(testRunner.container) docker logout $(acr.server)
     displayName: Docker logout
     condition: always()
     continueOnError: true

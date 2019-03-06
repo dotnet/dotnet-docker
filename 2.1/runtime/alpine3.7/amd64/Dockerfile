@@ -2,12 +2,12 @@ ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
 FROM $REPO:2.1-alpine3.7
 
 # Install .NET Core
-ENV DOTNET_VERSION 2.1.7
+ENV DOTNET_VERSION 2.1.9
 
 RUN apk add --no-cache --virtual .build-deps \
         openssl \
     && wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='e362a0497fcd524ea1d2fa512bf439e54ca487660a3f3e3e1b5b78b98efb4c5bfe0c4a092501adcc02ade2436ae656b9effcce738da5f49a8333ab3d058a5ad7' \
+    && dotnet_sha512='34ba7b9cd17b44b76bfabde207671ec97f0f1bdc0177f11809af454e399e5d4f8ef5817abb4ad7e7330c6febcded70e6791c3f7e780773100c26656709bcf59b' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \

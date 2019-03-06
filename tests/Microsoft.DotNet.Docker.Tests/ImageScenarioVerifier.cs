@@ -34,12 +34,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public async Task Execute()
         {
-            if (!DockerHelper.IsLinuxContainerModeEnabled && _imageData.IsArm && _imageData.Version.Major == 3)
-            {
-                _outputHelper.WriteLine("Tests are blocked on https://github.com/dotnet/corefx/issues/33563");
-                return;
-            }
-
             string appDir = CreateTestAppWithSdkImage(_isWeb ? "web" : "console");
             List<string> tags = new List<string>();
 
@@ -54,7 +48,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}");
                 }
 
-                // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnetcore-runtime` image
+                // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnet` image
                 string fxDepTag = BuildTestAppImage("fx_dependent_app", appDir);
                 tags.Add(fxDepTag);
                 bool runAsAdmin = _isWeb && !DockerHelper.IsLinuxContainerModeEnabled && _imageData.OS != OS.NanoServerSac2016;
@@ -150,6 +144,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
 
                 File.Copy(Path.Combine(_testArtifactsDir, nuGetConfigFileName), Path.Combine(appDir, "NuGet.config"));
+                File.Copy(Path.Combine(_testArtifactsDir, ".dockerignore"), Path.Combine(appDir, ".dockerignore"));
             }
             catch (Exception)
             {
