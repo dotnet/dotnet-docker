@@ -28,7 +28,7 @@ ENTRYPOINT ["dotnet", "app.dll"]
 
 FROM build as publish_self_contained
 ARG rid
-RUN dotnet restore -r $rid
+RUN dotnet restore -r $rid /v:d
 RUN dotnet publish -r $rid -c Release -o out
 
 
