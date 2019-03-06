@@ -13,14 +13,14 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
 # Install PowerShell global tool
 ENV POWERSHELL_VERSION 6.2.0-rc.1
 
-RUN curl -SL --output PowerShell.Windows.$POWERSHELL_VERSION.nupkg 'https://go.microsoft.com/fwlink/?linkid=2081065' `
+RUN curl -SL --output "PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg" 'https://go.microsoft.com/fwlink/?linkid=2081065' `
     && mkdir "%ProgramFiles%\powershell" `
-    && "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version $POWERSHELL_VERSION PowerShell.Windows `
-    && del PowerShell.Windows.$POWERSHELL_VERSION.nupkg
+    && "%ProgramFiles%\dotnet\dotnet" tool install -g --add-source . --version "$ENV:POWERSHELL_VERSION" PowerShell.Windows `
+    && del "PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg"
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
-RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet;%ProgramFiles%\powershell"
+RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
 USER ContainerUser
 
 # Configure web servers to bind to port 80 when present

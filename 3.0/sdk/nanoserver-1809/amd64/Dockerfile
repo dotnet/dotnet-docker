@@ -21,15 +21,15 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
 # Install PowerShell global tool
 ENV POWERSHELL_VERSION 6.2.0-rc.1
 
-RUN Invoke-WebRequest -OutFile PowerShell.Windows.$POWERSHELL_VERSION.nupkg 'https://go.microsoft.com/fwlink/?linkid=2081065'; `
+RUN Invoke-WebRequest -OutFile "PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg" 'https://go.microsoft.com/fwlink/?linkid=2081065'; `
     $powershell_sha512 = '404b81c7d1cdd79556db560eaf1ab46c80d7d0d006e91a1fa3eccd00032a0415b63c6c3c2a6f386881b9de7b62ca4dc46f11ab3d941690564578961b947716ce'; `
-    if ((Get-FileHash PowerShell.Windows.$POWERSHELL_VERSION.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
+    if ((Get-FileHash "PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg" -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
     }; `
     `
-    \dotnet\dotnet tool install --add-source . --tool-path '\powershell' --version $POWERSHELL_VERSION PowerShell.Windows; `
-    Remove-Item -Force PowerShell.Windows.$POWERSHELL_VERSION.nupkg
+    \dotnet\dotnet tool install -g --add-source . --version "$ENV:POWERSHELL_VERSION" PowerShell.Windows; `
+    Remove-Item -Force "PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg"
 
 # SDK image
 FROM mcr.microsoft.com/windows/nanoserver:1809
@@ -40,7 +40,7 @@ COPY --from=installer ["/powershell", "/Program Files/powershell"]
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
-RUN setx /M PATH "%PATH%;C:\Program Files\dotnet;C:\Program Files\powershell"
+RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"
 USER ContainerUser
 
 # Configure web servers to bind to port 80 when present
