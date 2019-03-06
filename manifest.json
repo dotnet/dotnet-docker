@@ -9,8 +9,8 @@
     "2.1-SdkVersion": "2.1.504",
     "2.2-RuntimeVersion": "2.2.2",
     "2.2-SdkVersion": "2.2.104",
-    "3.0-RuntimeVersion": "3.0.0-preview2",
-    "3.0-SdkVersion": "3.0.100-preview2"
+    "3.0-RuntimeVersion": "3.0.0-preview3",
+    "3.0-SdkVersion": "3.0.100-preview3"
   },
   "repos": [
     {
@@ -218,11 +218,11 @@
         {
           "platforms": [
             {
-              "dockerfile": "3.0/runtime-deps/alpine3.8/amd64",
+              "dockerfile": "3.0/runtime-deps/alpine3.9/amd64",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-alpine3.8": {},
-                "3.0-alpine3.8": {},
+                "$(3.0-RuntimeVersion)-alpine3.9": {},
+                "3.0-alpine3.9": {},
                 "$(3.0-RuntimeVersion)-alpine": {},
                 "3.0-alpine": {}
               }
@@ -638,15 +638,6 @@
               "variant": "v8"
             },
             {
-              "dockerfile": "3.0/runtime/nanoserver-sac2016/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-sac2016",
-              "tags": {
-                "$(3.0-RuntimeVersion)-nanoserver-sac2016": {},
-                "3.0-nanoserver-sac2016": {}
-              }
-            },
-            {
               "dockerfile": "3.0/runtime/nanoserver-1709/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1709",
@@ -691,11 +682,11 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "3.0/runtime/alpine3.8/amd64",
+              "dockerfile": "3.0/runtime/alpine3.9/amd64",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-alpine3.8": {},
-                "3.0-alpine3.8": {},
+                "$(3.0-RuntimeVersion)-alpine3.9": {},
+                "3.0-alpine3.9": {},
                 "$(3.0-RuntimeVersion)-alpine": {},
                 "3.0-alpine": {}
               }
@@ -1013,7 +1004,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/stretch-slim/amd64",
               "os": "linux",
@@ -1025,7 +1016,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/stretch-slim/arm32v7",
               "os": "linux",
@@ -1038,7 +1029,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/stretch-slim/arm64v8",
               "os": "linux",
@@ -1049,15 +1040,9 @@
               "variant": "v8"
             },
             {
-              "dockerfile": "3.0/aspnet/nanoserver-sac2016/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-sac2016",
-              "tags": {
-                "$(3.0-RuntimeVersion)-nanoserver-sac2016": {},
-                "3.0-nanoserver-sac2016": {}
-              }
-            },
-            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "3.0/aspnet/nanoserver-1709/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1709",
@@ -1067,6 +1052,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "3.0/aspnet/nanoserver-1803/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1803",
@@ -1076,6 +1064,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "3.0/aspnet/nanoserver-1809/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1809",
@@ -1086,6 +1077,9 @@
             },
             {
               "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "3.0/aspnet/nanoserver-1809/arm32",
               "os": "windows",
               "osVersion": "nanoserver-1809",
@@ -1100,13 +1094,13 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "3.0/aspnet/alpine3.8/amd64",
+              "dockerfile": "3.0/aspnet/alpine3.9/amd64",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-alpine3.8": {},
-                "3.0-alpine3.8": {},
+                "$(3.0-RuntimeVersion)-alpine3.9": {},
+                "3.0-alpine3.9": {},
                 "$(3.0-RuntimeVersion)-alpine": {},
                 "3.0-alpine": {}
               }
@@ -1117,7 +1111,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/bionic/amd64",
               "os": "linux",
@@ -1133,7 +1127,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/bionic/arm32v7",
               "os": "linux",
@@ -1150,7 +1144,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "3.0/aspnet/bionic/arm64v8",
               "os": "linux",
@@ -1464,15 +1458,6 @@
               "variant": "v8"
             },
             {
-              "dockerfile": "3.0/sdk/nanoserver-sac2016/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-sac2016",
-              "tags": {
-                "$(3.0-SdkVersion)-nanoserver-sac2016": {},
-                "3.0-nanoserver-sac2016": {}
-              }
-            },
-            {
               "dockerfile": "3.0/sdk/nanoserver-1709/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1709",
@@ -1517,11 +1502,11 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "3.0/sdk/alpine3.8/amd64",
+              "dockerfile": "3.0/sdk/alpine3.9/amd64",
               "os": "linux",
               "tags": {
-                "$(3.0-SdkVersion)-alpine3.8": {},
-                "3.0-alpine3.8": {},
+                "$(3.0-SdkVersion)-alpine3.9": {},
+                "3.0-alpine3.9": {},
                 "$(3.0-SdkVersion)-alpine": {},
                 "3.0-alpine": {}
               }

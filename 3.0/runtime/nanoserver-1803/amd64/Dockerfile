@@ -1,15 +1,15 @@
 # escape=`
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:1803 AS installer-env
+FROM mcr.microsoft.com/windows/servercore:1803 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core Runtime
-ENV DOTNET_VERSION 3.0.0-preview-27324-5
+ENV DOTNET_VERSION 3.0.0-preview3-27503-5
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:DOTNET_VERSION-win-x64.zip; `
-    $dotnet_sha512 = '463500279a57aa36306026df78853981c9224d365dc48f4785359dca3b9b535553f18bf8f423493fbd1c84776afbab4fcc095c17b82eda1de0b452882cabe547'; `
+    $dotnet_sha512 = '46901bcc7aaba924af20e4187a2c9fd88c6ce246b6540278be686bed3f622bcb64f1b9a7e82c3352de6989988aaf1510551550ef86133ead35646454212f40e7'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -22,7 +22,7 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
 # Runtime image
 FROM mcr.microsoft.com/windows/nanoserver:1803
 
-COPY --from=installer-env ["dotnet", "C:\\Program Files\\dotnet"]
+COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator 

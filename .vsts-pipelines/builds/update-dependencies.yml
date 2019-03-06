@@ -1,4 +1,5 @@
 trigger: none
+pr: none
 jobs:
 - job: UpdateDependencies
   pool: Hosted Ubuntu 1604

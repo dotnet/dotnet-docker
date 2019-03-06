@@ -52,10 +52,11 @@ function Exec {
     }
 }
 
-$windowsImageBuilder = 'microsoft/dotnet-buildtools-prereqs:image-builder-nanoserver-20190215204829'
-$linuxImageBuilder = 'microsoft/dotnet-buildtools-prereqs:image-builder-debian-20190216044810'
+$windowsImageBuilder = 'mcr.microsoft.com/dotnet-buildtools/image-builder:nanoserver-20190301113613'
+$linuxImageBuilder = 'mcr.microsoft.com/dotnet-buildtools/image-builder:debian-20190301193659'
 
 $imageBuilderContainerName = "ImageBuilder-$(Get-Date -Format yyyyMMddhhmmss)"
+$containerCreated = $false
 
 pushd $PSScriptRoot/../
 try {
@@ -69,6 +70,7 @@ try {
         }
         
         $imageBuilderCmd = "docker run --name $imageBuilderContainerName -v /var/run/docker.sock:/var/run/docker.sock $imageBuilderImageName"
+        $containerCreated = $true
     }
     else {
         # On Windows, ImageBuilder is run locally due to limitations with running Docker client within a container.
@@ -77,7 +79,7 @@ try {
         if (-not (Test-Path -Path "$imageBuilderCmd" -PathType Leaf)) {
             ./scripts/Invoke-WithRetry "docker pull $windowsImageBuilder"
             Exec "docker create --name $imageBuilderContainerName $windowsImageBuilder"
-
+            $containerCreated = $true
             if (Test-Path -Path $imageBuilderFolder)
             {
                 Remove-Item -Recurse -Force -Path $imageBuilderFolder
@@ -94,7 +96,9 @@ try {
     }
 }
 finally {
-    Exec "docker container rm -f $imageBuilderContainerName"
+    if ($containerCreated) {
+        Exec "docker container rm -f $imageBuilderContainerName"
+    }
     
     popd
 }
