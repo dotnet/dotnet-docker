@@ -11,7 +11,7 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
     && del dotnet.zip
 
 # In order to set system PATH, ContainerAdministrator must be used
-USER ContainerAdministrator 
+USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
 USER ContainerUser
 
