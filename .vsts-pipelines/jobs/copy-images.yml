@@ -40,9 +40,9 @@ jobs:
   - script: >
       $(runImageBuilderCmd) copyAcrImages
       --manifest $(manifest)
-      --path '$(dotnetVersion)/*/$(osVariant)*/*'
+      $(imageBuilderPaths)
       --os-type $(osType)
-      --os-version '$(osVersion)'
+      --os-version "$(osVersion)"
       --architecture $(architecture)
       --registry-override $(acr.server)
       --repo-prefix $(publishRepoPrefix)
