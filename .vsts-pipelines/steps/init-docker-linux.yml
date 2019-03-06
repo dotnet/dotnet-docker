@@ -47,7 +47,7 @@ steps:
 - ${{ if eq(parameters.setupImageBuilder, 'true') }}:
   - script: >
       echo "##vso[task.setvariable variable=imageBuilder.image]
-      mcr.microsoft.com/dotnet-buildtools/image-builder:debian-20190301193659"
+      mcr.microsoft.com/dotnet-buildtools/image-builder:debian-20190305214722"
     displayName: Define imageBuilder.image Variable
   - script: $(Build.Repository.LocalPath)/scripts/pull-image.sh $(imageBuilder.image)
     displayName: Pull Image Builder
