@@ -55,12 +55,12 @@ function Exec {
 $imageBuilderContainerName = "ImageBuilder-$(Get-Date -Format yyyyMMddhhmmss)"
 $containerCreated = $false
 
+# If we need to execute the OnCommandExcecuted callback, defer the removal of the container until the end of the script.
+$deferContainerRemoval = ($null -ne $OnCommandExecuted)
+
 pushd $PSScriptRoot/../
 try {
     $imageNames = & ./scripts/Get-ImageNames.ps1
-
-    # If we need to execute the OnCommandExcecuted callback, defer the removal of the container until the end of the script.
-    $deferContainerRemoval = ($null -ne $OnCommandExecuted)
 
     $activeOS = docker version -f "{{ .Server.Os }}"
     if ($activeOS -eq "linux") {
@@ -68,7 +68,7 @@ try {
         $imageBuilderImageName = "microsoft-dotnet-imagebuilder-withrepo"
         if ($ReuseImageBuilderImage -ne $True) {
             ./scripts/Invoke-WithRetry "docker pull $($imageNames.imagebuilder.linux)"
-            Exec ("docker build -t $imageBuilderImageName --build-arg "`
+            Exec ("docker build -t $imageBuilderImageName --build-arg " `
                 + "IMAGE=$($imageNames.imagebuilder.linux) -f ./scripts/Dockerfile.WithRepo .")
         }
 

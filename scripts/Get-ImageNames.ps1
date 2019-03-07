@@ -15,7 +15,7 @@ $imageNames = @{}
 foreach ($file in $files) {
     $imageName = (Get-Content $($file.FullName)).Trim()
 
-    Write-Output "##vso[task.setvariable variable=imageNames.$($file.BaseName)]$imageName"
+    Write-Host "##vso[task.setvariable variable=imageNames.$($file.BaseName)]$imageName"
 
     $current = $imageNames
     # Split the file name into parts with '.' as the separator
