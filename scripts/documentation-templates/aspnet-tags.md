@@ -61,11 +61,6 @@ $(TagDoc:2.1-nanoserver-1709)
 
 $(TagDoc:3.0-nanoserver-1709)
 
-## Windows Server 2016 amd64 tags
-
-$(TagDoc:2.2-nanoserver-sac2016)
-$(TagDoc:2.1-nanoserver-sac2016)
-
 ## Windows Server, version 1809 arm32 tags
 
 $(TagDoc:2.2-nanoserver-1809-arm32)

@@ -61,7 +61,7 @@ Multiple variations of this sample have been provided, as follows. Some of these
 
 * [Multi-arch sample](Dockerfile)
 * [Multi-arch sample, using a preview version of .NET Core](Dockerfile.preview)
-* [Nanoserver 2016 SAC sample](Dockerfile.nanoserver-sac2016)
+* [Nanoserver 1809 sample](Dockerfile.nanoserver-1809)
 * [Alpine sample](Dockerfile.alpine-x64)
 
 ## Deploying with HTTPS

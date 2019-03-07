@@ -109,11 +109,6 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 - [`3.0.0-preview3-nanoserver-1709`, `3.0-nanoserver-1709`, `3.0.0-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/aspnet/nanoserver-1709/amd64/Dockerfile)
 
-## Windows Server 2016 amd64 tags
-
-- [`2.2.3-nanoserver-sac2016`, `2.2-nanoserver-sac2016`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/nanoserver-sac2016/amd64/Dockerfile)
-- [`2.1.9-nanoserver-sac2016`, `2.1-nanoserver-sac2016`, `2.1.9`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/nanoserver-sac2016/amd64/Dockerfile)
-
 ## Windows Server, version 1809 arm32 tags
 
 - [`2.2.3-nanoserver-1809-arm32`, `2.2-nanoserver-1809-arm32`, `2.2.3`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/nanoserver-1809/arm32/Dockerfile)

@@ -24,8 +24,8 @@ COPY tests/. .
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 
-# Uses the sac2016 release; 1709, 1803 and 1809 are other choices
-FROM mcr.microsoft.com/windows/nanoserver:sac2016 AS runtime
+# Uses the 1809 release; 1709 and 1803 are other choices
+FROM mcr.microsoft.com/windows/nanoserver:1809 AS runtime
 WORKDIR /app
 COPY --from=build /app/dotnetapp/out ./
 ENTRYPOINT ["dotnetapp"]
