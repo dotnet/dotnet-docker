@@ -28,7 +28,7 @@ RUN Invoke-WebRequest -OutFile "PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg
         exit 1; `
     }; `
     `
-    \dotnet\dotnet tool install -g --add-source . --version "$ENV:POWERSHELL_VERSION" PowerShell.Windows; `
+    \dotnet\dotnet tool install --add-source . --tool-path '\powershell' --version "$ENV:POWERSHELL_VERSION" PowerShell.Windows; `
     Remove-Item -Force "PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg"
 
 # SDK image
@@ -40,7 +40,7 @@ COPY --from=installer ["/powershell", "/Program Files/powershell"]
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
-RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"
+RUN setx /M PATH "%PATH%;C:\Program Files\dotnet;C:\Program Files\powershell"
 USER ContainerUser
 
 # Configure web servers to bind to port 80 when present
