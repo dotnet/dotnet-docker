@@ -85,7 +85,9 @@ namespace Microsoft.DotNet.Docker.Tests
             if (!ignoreErrors && result.Process.ExitCode != 0)
             {
                 ProcessStartInfo startInfo = result.Process.StartInfo;
-                string msg = $"Failed to execute {startInfo.FileName} {startInfo.Arguments}{Environment.NewLine}{result.StdErr}";
+                string msg = $"Failed to execute {startInfo.FileName} {startInfo.Arguments}" +
+                    $"{Environment.NewLine}Exit code: {result.Process.ExitCode}" +
+                    $"{Environment.NewLine}Standard Error: {result.StdErr}";
                 throw new InvalidOperationException(msg);
             }
 
