@@ -55,9 +55,6 @@ function Exec {
 $imageBuilderContainerName = "ImageBuilder-$(Get-Date -Format yyyyMMddhhmmss)"
 $containerCreated = $false
 
-# If we need to execute the OnCommandExcecuted callback, defer the removal of the container until the end of the script.
-$deferContainerRemoval = ($null -ne $OnCommandExecuted)
-
 pushd $PSScriptRoot/../
 try {
     $imageNames = & ./scripts/Get-ImageNames.ps1
@@ -72,12 +69,7 @@ try {
                 + "IMAGE=$($imageNames.imagebuilder.linux) -f ./scripts/Dockerfile.WithRepo .")
         }
 
-        $dockerRunOptions = "--name $imageBuilderContainerName -v /var/run/docker.sock:/var/run/docker.sock"
-        if (-not $deferContainerRemoval) {
-            $dockerRunOptions += " --rm"
-        }
-
-        $imageBuilderCmd = "docker run $dockerRunOptions $imageBuilderImageName"
+        $imageBuilderCmd = "docker run --name $imageBuilderContainerName -v /var/run/docker.sock:/var/run/docker.sock $imageBuilderImageName"
         $containerCreated = $true
     }
     else {
@@ -104,7 +96,7 @@ try {
     }
 }
 finally {
-    if ($deferContainerRemoval -and $containerCreated) {
+    if ($containerCreated) {
         Exec "docker container rm -f $imageBuilderContainerName"
     }
     
