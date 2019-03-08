@@ -1,0 +1,1 @@
+mcr.microsoft.com/dotnet-buildtools/image-builder:nanoserver-20190305134632
