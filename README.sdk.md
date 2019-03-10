@@ -70,16 +70,16 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.100-preview3-stretch`, `3.0-stretch`, `3.0.100-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/amd64/Dockerfile)
-- [`3.0.100-preview3-alpine3.9`, `3.0-alpine3.9`, `3.0.100-preview3-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.9/amd64/Dockerfile)
-- [`3.0.100-preview3-bionic`, `3.0-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/amd64/Dockerfile)
+- [`3.0.100-preview4-stretch`, `3.0-stretch`, `3.0.100-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/amd64/Dockerfile)
+- [`3.0.100-preview4-alpine3.9`, `3.0-alpine3.9`, `3.0.100-preview4-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.9/amd64/Dockerfile)
+- [`3.0.100-preview4-bionic`, `3.0-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/amd64/Dockerfile)
 
 ## Linux arm64 tags
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.100-preview3-stretch-arm64v8`, `3.0-stretch-arm64v8`, `3.0.100-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/arm64v8/Dockerfile)
-- [`3.0.100-preview3-bionic-arm64v8`, `3.0-bionic-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/arm64v8/Dockerfile)
+- [`3.0.100-preview4-stretch-arm64v8`, `3.0-stretch-arm64v8`, `3.0.100-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/arm64v8/Dockerfile)
+- [`3.0.100-preview4-bionic-arm64v8`, `3.0-bionic-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/arm64v8/Dockerfile)
 
 ## Linux arm32 tags
 
@@ -90,8 +90,8 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.100-preview3-stretch-arm32v7`, `3.0-stretch-arm32v7`, `3.0.100-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/arm32v7/Dockerfile)
-- [`3.0.100-preview3-bionic-arm32v7`, `3.0-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/arm32v7/Dockerfile)
+- [`3.0.100-preview4-stretch-arm32v7`, `3.0-stretch-arm32v7`, `3.0.100-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/arm32v7/Dockerfile)
+- [`3.0.100-preview4-bionic-arm32v7`, `3.0-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/arm32v7/Dockerfile)
 
 ## Windows Server, version 1809 amd64 tags
 
@@ -101,7 +101,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.100-preview3-nanoserver-1809`, `3.0-nanoserver-1809`, `3.0.100-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`3.0.100-preview4-nanoserver-1809`, `3.0-nanoserver-1809`, `3.0.100-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server, version 1803 amd64 tags
 
@@ -110,7 +110,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.100-preview3-nanoserver-1803`, `3.0-nanoserver-1803`, `3.0.100-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/nanoserver-1803/amd64/Dockerfile)
+- [`3.0.100-preview4-nanoserver-1803`, `3.0-nanoserver-1803`, `3.0.100-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/nanoserver-1803/amd64/Dockerfile)
 
 ## Windows Server, version 1709 amd64 tags
 
@@ -119,7 +119,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.100-preview3-nanoserver-1709`, `3.0-nanoserver-1709`, `3.0.100-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/nanoserver-1709/amd64/Dockerfile)
+- [`3.0.100-preview4-nanoserver-1709`, `3.0-nanoserver-1709`, `3.0.100-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/nanoserver-1709/amd64/Dockerfile)
 
 ## Windows Server, version 1809 arm32 tags
 
@@ -127,7 +127,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.100-preview3-nanoserver-1809-arm32`, `3.0-nanoserver-1809-arm32`, `3.0.100-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/nanoserver-1809/arm32/Dockerfile)
+- [`3.0.100-preview4-nanoserver-1809-arm32`, `3.0-nanoserver-1809-arm32`, `3.0.100-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/nanoserver-1809/arm32/Dockerfile)
 
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
 
