@@ -60,7 +60,6 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
 * [Multi-arch sample](Dockerfile)
-* [Multi-arch sample, using a preview version of .NET Core](Dockerfile.preview)
 * [Nanoserver 2016 SAC sample](Dockerfile.nanoserver-sac2016)
 * [Alpine sample](Dockerfile.alpine-x64)
 
