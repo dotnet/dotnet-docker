@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/windows/servercore:1809 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 1.1.12
+ENV DOTNET_SDK_VERSION 1.1.13
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-dev-win-x64.$Env:DOTNET_SDK_VERSION.zip; `
     Expand-Archive dotnet.zip -DestinationPath dotnet; `
