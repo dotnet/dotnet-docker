@@ -49,7 +49,6 @@ You can mount a volume while running the image in order to save the test results
 Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
 * [Multi-arch sample with build and unit testing](Dockerfile)
-* [Multi-arch sample with build and unit testing, using a preview version of .NET Core](Dockerfile.preview)
 * [Alpine x64 sample, with build and unit testing](Dockerfile.alpine-x64)
 * [Alpine x64 sample, with Globalization enabled](Dockerfile.alpine-x64-globalization)
 * [Alpine x64 self-contained sample, with build and unit testing](Dockerfile.alpine-x64-selfcontained)
