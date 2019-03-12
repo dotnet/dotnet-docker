@@ -36,7 +36,6 @@ jobs:
   - script: >
       docker run -t -d
       -v /var/run/docker.sock:/var/run/docker.sock
-      -v $(repoVolume):/repo
       -w /repo $(dockerArmRunArgs)
       -e RUNNING_TESTS_IN_CONTAINER=true 
       --name $(testRunner.container)

@@ -3,15 +3,15 @@
 FROM mcr.microsoft.com/windows/nanoserver:1809-arm
 
 # Install ASP.NET Core Runtime
-ENV ASPNETCORE_VERSION 2.2.2
+ENV ASPNETCORE_VERSION 2.2.3
 
 RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/%ASPNETCORE_VERSION%/aspnetcore-runtime-%ASPNETCORE_VERSION%-win-arm.zip `
-    && mkdir -p "%ProgramFiles%\dotnet" `
+    && mkdir "%ProgramFiles%\dotnet" `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
     && del dotnet.zip
 
 # In order to set system PATH, ContainerAdministrator must be used
-USER ContainerAdministrator 
+USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
 USER ContainerUser
 

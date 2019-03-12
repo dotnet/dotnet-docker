@@ -1,6 +1,9 @@
 trigger: none
 pr: none
 variables:
-  manifest: manifest.json
+- group: DotNet-Docker-Common
+- group: DotNet-Docker-Secrets
+- name: manifest
+  value: manifest.json
 jobs:
 - template: ../jobs/build-test-publish-repo.yml

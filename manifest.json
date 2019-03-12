@@ -2,19 +2,19 @@
   "readmePath": "README.md",
   "registry": "mcr.microsoft.com",
   "variables": {
-    "1.0-RuntimeVersion": "1.0.14",
-    "1.1-RuntimeVersion": "1.1.11",
-    "1.1-SdkVersion": "1.1.12",
-    "2.1-RuntimeVersion": "2.1.8",
-    "2.1-SdkVersion": "2.1.504",
-    "2.2-RuntimeVersion": "2.2.2",
-    "2.2-SdkVersion": "2.2.104",
+    "1.0-RuntimeVersion": "1.0.15",
+    "1.1-RuntimeVersion": "1.1.12",
+    "1.1-SdkVersion": "1.1.13",
+    "2.1-RuntimeVersion": "2.1.9",
+    "2.1-SdkVersion": "2.1.505",
+    "2.2-RuntimeVersion": "2.2.3",
+    "2.2-SdkVersion": "2.2.105",
     "3.0-RuntimeVersion": "3.0.0-preview3",
     "3.0-SdkVersion": "3.0.100-preview3"
   },
   "repos": [
     {
-      "id" : "runtime-deps",
+      "id": "runtime-deps",
       "name": "dotnet/core/runtime-deps",
       "readmePath": "README.runtime-deps.md",
       "images": [
@@ -115,6 +115,28 @@
                 "2.1-alpine3.7": {},
                 "$(2.1-RuntimeVersion)-alpine": {},
                 "2.1-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime-deps/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.1-RuntimeVersion)-alpine3.9": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-alpine3.9": {
+                  "documentationGroup": "2.1"
+                },
+                "$(2.2-RuntimeVersion)-alpine3.9": {
+                  "documentationGroup": "2.2"
+                },
+                "2.2-alpine3.9": {
+                  "documentationGroup": "2.2"
+                }
               }
             }
           ]
@@ -271,10 +293,8 @@
         }
       ]
     },
-
-
     {
-      "id" : "runtime",
+      "id": "runtime",
       "name": "dotnet/core/runtime",
       "readmePath": "README.runtime.md",
       "images": [
@@ -296,12 +316,12 @@
               }
             },
             {
-              "dockerfile": "1.0/runtime/nanoserver-sac2016/amd64",
+              "dockerfile": "1.0/runtime/nanoserver-1809/amd64",
               "os": "windows",
-              "osVersion": "nanoserver-sac2016",
+              "osVersion": "nanoserver-1809",
               "tags": {
-                "$(1.0-RuntimeVersion)-nanoserver-sac2016": {},
-                "1.0-nanoserver-sac2016": {}
+                "$(1.0-RuntimeVersion)-nanoserver-1809": {},
+                "1.0-nanoserver-1809": {}
               }
             }
           ]
@@ -324,12 +344,12 @@
               }
             },
             {
-              "dockerfile": "1.1/runtime/nanoserver-sac2016/amd64",
+              "dockerfile": "1.1/runtime/nanoserver-1809/amd64",
               "os": "windows",
-              "osVersion": "nanoserver-sac2016",
+              "osVersion": "nanoserver-1809",
               "tags": {
-                "$(1.1-RuntimeVersion)-nanoserver-sac2016": {},
-                "1.1-nanoserver-sac2016": {}
+                "$(1.1-RuntimeVersion)-nanoserver-1809": {},
+                "1.1-nanoserver-1809": {}
               }
             }
           ]
@@ -380,15 +400,6 @@
               "variant": "v7"
             },
             {
-              "dockerfile": "2.1/runtime/nanoserver-sac2016/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-sac2016",
-              "tags": {
-                "$(2.1-RuntimeVersion)-nanoserver-sac2016": {},
-                "2.1-nanoserver-sac2016": {}
-              }
-            },
-            {
               "dockerfile": "2.1/runtime/nanoserver-1709/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1709",
@@ -430,6 +441,21 @@
                 "2.1-alpine3.7": {},
                 "$(2.1-RuntimeVersion)-alpine": {},
                 "2.1-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/runtime/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.1-RuntimeVersion)-alpine3.9": {},
+                "2.1-alpine3.9": {}
               }
             }
           ]
@@ -498,15 +524,6 @@
               "variant": "v7"
             },
             {
-              "dockerfile": "2.2/runtime/nanoserver-sac2016/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-sac2016",
-              "tags": {
-                "$(2.2-RuntimeVersion)-nanoserver-sac2016": {},
-                "2.2-nanoserver-sac2016": {}
-              }
-            },
-            {
               "dockerfile": "2.2/runtime/nanoserver-1709/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1709",
@@ -558,6 +575,21 @@
                 "2.2-alpine3.8": {},
                 "$(2.2-RuntimeVersion)-alpine": {},
                 "2.2-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.2/runtime/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.2-RuntimeVersion)-alpine3.9": {},
+                "2.2-alpine3.9": {}
               }
             }
           ]
@@ -744,10 +776,8 @@
         }
       ]
     },
-
-
     {
-      "id" : "aspnet",
+      "id": "aspnet",
       "name": "dotnet/core/aspnet",
       "readmePath": "README.aspnet.md",
       "images": [
@@ -780,15 +810,6 @@
                 "2.1-stretch-slim-arm32v7": {}
               },
               "variant": "v7"
-            },
-            {
-              "dockerfile": "2.1/aspnet/nanoserver-sac2016/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-sac2016",
-              "tags": {
-                "$(2.1-RuntimeVersion)-nanoserver-sac2016": {},
-                "2.1-nanoserver-sac2016": {}
-              }
             },
             {
               "dockerfile": "2.1/aspnet/nanoserver-1709/amd64",
@@ -832,6 +853,21 @@
                 "2.1-alpine3.7": {},
                 "$(2.1-RuntimeVersion)-alpine": {},
                 "2.1-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/aspnet/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.1-RuntimeVersion)-alpine3.9": {},
+                "2.1-alpine3.9": {}
               }
             }
           ]
@@ -900,15 +936,6 @@
               "variant": "v7"
             },
             {
-              "dockerfile": "2.2/aspnet/nanoserver-sac2016/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-sac2016",
-              "tags": {
-                "$(2.2-RuntimeVersion)-nanoserver-sac2016": {},
-                "2.2-nanoserver-sac2016": {}
-              }
-            },
-            {
               "dockerfile": "2.2/aspnet/nanoserver-1709/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1709",
@@ -960,6 +987,21 @@
                 "2.2-alpine3.8": {},
                 "$(2.2-RuntimeVersion)-alpine": {},
                 "2.2-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.2/aspnet/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.2-RuntimeVersion)-alpine3.9": {},
+                "2.2-alpine3.9": {}
               }
             }
           ]
@@ -1158,10 +1200,8 @@
         }
       ]
     },
-
-
     {
-      "id" : "sdk",
+      "id": "sdk",
       "name": "dotnet/core/sdk",
       "readmePath": "README.sdk.md",
       "images": [
@@ -1180,12 +1220,12 @@
               }
             },
             {
-              "dockerfile": "1.1/sdk/nanoserver-sac2016/amd64",
+              "dockerfile": "1.1/sdk/nanoserver-1809/amd64",
               "os": "windows",
-              "osVersion": "nanoserver-sac2016",
+              "osVersion": "nanoserver-1809",
               "tags": {
-                "$(1.1-SdkVersion)-nanoserver-sac2016": {},
-                "1.1-nanoserver-sac2016": {}
+                "$(1.1-SdkVersion)-nanoserver-1809": {},
+                "1.1-nanoserver-1809": {}
               }
             }
           ]
@@ -1225,15 +1265,6 @@
                 "2.1-stretch-arm32v7": {}
               },
               "variant": "v7"
-            },
-            {
-              "dockerfile": "2.1/sdk/nanoserver-sac2016/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-sac2016",
-              "tags": {
-                "$(2.1-SdkVersion)-nanoserver-sac2016": {},
-                "2.1-nanoserver-sac2016": {}
-              }
             },
             {
               "dockerfile": "2.1/sdk/nanoserver-1709/amd64",
@@ -1277,6 +1308,21 @@
                 "2.1-alpine3.7": {},
                 "$(2.1-SdkVersion)-alpine": {},
                 "2.1-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/sdk/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.1-SdkVersion)-alpine3.9": {},
+                "2.1-alpine3.9": {}
               }
             }
           ]
@@ -1333,15 +1379,6 @@
               "variant": "v7"
             },
             {
-              "dockerfile": "2.2/sdk/nanoserver-sac2016/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-sac2016",
-              "tags": {
-                "$(2.2-SdkVersion)-nanoserver-sac2016": {},
-                "2.2-nanoserver-sac2016": {}
-              }
-            },
-            {
               "dockerfile": "2.2/sdk/nanoserver-1709/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1709",
@@ -1393,6 +1430,21 @@
                 "2.2-alpine3.8": {},
                 "$(2.2-SdkVersion)-alpine": {},
                 "2.2-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.2/sdk/alpine3.9/amd64",
+              "os": "linux",
+              "tags": {
+                "$(2.2-SdkVersion)-alpine3.9": {},
+                "2.2-alpine3.9": {}
               }
             }
           ]

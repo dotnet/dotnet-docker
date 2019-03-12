@@ -2,6 +2,8 @@
 
 You can deploy ASP.NET Core applications to Azure Container Instances (ACI) with Docker. ACI is a great option for application testing and can also be used for production deployment (not covered here). These instructions are based on the [ASP.NET Core Docker Sample](README.md).
 
+These instructions only work for linux based images.  ACI does not currently support Nano Server images based on Windows Server versions 1709, 1803, or 1809.
+
 ## Build Application
 
 Build the application per the [ASP.NET Core Docker Sample](README.md) instructions. The following is a summarized version of those instructions. The instructions assume that you are in the root of the repository.
@@ -11,16 +13,6 @@ cd samples
 cd aspnetapp
 docker build --pull -t aspnetapp -f Dockerfile .
 ```
-
-For Windows containers, you will need to build with a [Dockerfile](Dockerfile.nanoserver-sac2016) that uses a Windows Server 2016 image. Use the following instructions for Windows containers:
-
-```console
-cd samples
-cd aspnetapp
-docker build --pull -t aspnetapp -f Dockerfile.nanoserver-sac2016 .
-```
-
-Windows server, version 1709 and later versions are not yet supported in ACI.
 
 ## Create ACR Registry
 

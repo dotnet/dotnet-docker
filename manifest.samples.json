@@ -12,7 +12,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "dockerfile": "samples/dotnetapp",
               "os": "linux",
               "tags": {
                 "dotnetapp-stretch": {}
@@ -20,7 +20,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "dockerfile": "samples/dotnetapp",
               "os": "linux",
               "tags": {
                 "dotnetapp-stretch-arm32v7": {}
@@ -28,15 +28,7 @@
               "variant": "v7"
             },
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile",
-              "os": "windows",
-              "osVersion": "nanoserver-sac2016",
-              "tags": {
-                "dotnetapp-nanoserver-sac2016": {}
-              }
-            },
-            {
-              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "dockerfile": "samples/dotnetapp",
               "os": "windows",
               "osVersion": "nanoserver-1709",
               "tags": {
@@ -44,7 +36,7 @@
               }
             },
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "dockerfile": "samples/dotnetapp",
               "os": "windows",
               "osVersion": "nanoserver-1803",
               "tags": {
@@ -52,7 +44,7 @@
               }
             },
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "dockerfile": "samples/dotnetapp",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -61,7 +53,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile",
+              "dockerfile": "samples/dotnetapp",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -76,7 +68,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "dockerfile": "samples/aspnetapp",
               "os": "linux",
               "tags": {
                 "aspnetapp-stretch": {}
@@ -84,7 +76,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "dockerfile": "samples/aspnetapp",
               "os": "linux",
               "tags": {
                 "aspnetapp-stretch-arm32v7": {}
@@ -92,15 +84,7 @@
               "variant": "v7"
             },
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile",
-              "os": "windows",
-              "osVersion": "nanoserver-sac2016",
-              "tags": {
-                "aspnetapp-nanoserver-sac2016": {}
-              }
-            },
-            {
-              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "dockerfile": "samples/aspnetapp",
               "os": "windows",
               "osVersion": "nanoserver-1709",
               "tags": {
@@ -108,7 +92,7 @@
               }
             },
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "dockerfile": "samples/aspnetapp",
               "os": "windows",
               "osVersion": "nanoserver-1803",
               "tags": {
@@ -116,7 +100,7 @@
               }
             },
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "dockerfile": "samples/aspnetapp",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -125,7 +109,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile",
+              "dockerfile": "samples/aspnetapp",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {

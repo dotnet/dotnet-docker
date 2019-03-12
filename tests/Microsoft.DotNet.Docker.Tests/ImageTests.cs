@@ -23,11 +23,13 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V2_1, OS = OS.StretchSlim,  Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.Bionic,       Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.Alpine37,     Arch = Arch.Amd64 },
+            new ImageData { Version = V2_1, OS = OS.Alpine39,     Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.StretchSlim,  Arch = Arch.Arm },
             new ImageData { Version = V2_1, OS = OS.Bionic,       Arch = Arch.Arm },
             new ImageData { Version = V2_2, OS = OS.StretchSlim,  Arch = Arch.Amd64 },
             new ImageData { Version = V2_2, OS = OS.Bionic,       Arch = Arch.Amd64 },
             new ImageData { Version = V2_2, OS = OS.Alpine38,     Arch = Arch.Amd64 },
+            new ImageData { Version = V2_2, OS = OS.Alpine39,     Arch = Arch.Amd64 },
             new ImageData { Version = V2_2, OS = OS.StretchSlim,  Arch = Arch.Arm },
             new ImageData { Version = V2_2, OS = OS.Bionic,       Arch = Arch.Arm },
             new ImageData { Version = V3_0, OS = OS.StretchSlim,  Arch = Arch.Amd64 },
@@ -40,21 +42,19 @@ namespace Microsoft.DotNet.Docker.Tests
         };
         private static readonly ImageData[] s_windowsTestData =
         {
-            new ImageData { Version = V1_0, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64,  SdkVersion = V1_1 },
-            new ImageData { Version = V1_1, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64 },
-            new ImageData { Version = V2_1, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64 },
-            new ImageData { Version = V2_1, OS = OS.NanoServer1709,     Arch = Arch.Amd64 },
-            new ImageData { Version = V2_1, OS = OS.NanoServer1803,     Arch = Arch.Amd64 },
-            new ImageData { Version = V2_1, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
-            new ImageData { Version = V2_2, OS = OS.NanoServerSac2016,  Arch = Arch.Amd64 },
-            new ImageData { Version = V2_2, OS = OS.NanoServer1709,     Arch = Arch.Amd64 },
-            new ImageData { Version = V2_2, OS = OS.NanoServer1803,     Arch = Arch.Amd64 },
-            new ImageData { Version = V2_2, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
-            new ImageData { Version = V2_2, OS = OS.NanoServer1809,     Arch = Arch.Arm },
-            new ImageData { Version = V3_0, OS = OS.NanoServer1709,     Arch = Arch.Amd64 },
-            new ImageData { Version = V3_0, OS = OS.NanoServer1803,     Arch = Arch.Amd64 },
-            new ImageData { Version = V3_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
-            new ImageData { Version = V3_0, OS = OS.NanoServer1809,     Arch = Arch.Arm },
+            new ImageData { Version = V1_0, OS = OS.NanoServer1809, Arch = Arch.Amd64,  SdkVersion = V1_1 },
+            new ImageData { Version = V1_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
+            new ImageData { Version = V2_1, OS = OS.NanoServer1709, Arch = Arch.Amd64 },
+            new ImageData { Version = V2_1, OS = OS.NanoServer1803, Arch = Arch.Amd64 },
+            new ImageData { Version = V2_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
+            new ImageData { Version = V2_2, OS = OS.NanoServer1709, Arch = Arch.Amd64 },
+            new ImageData { Version = V2_2, OS = OS.NanoServer1803, Arch = Arch.Amd64 },
+            new ImageData { Version = V2_2, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
+            new ImageData { Version = V2_2, OS = OS.NanoServer1809, Arch = Arch.Arm },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1709, Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1803, Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.NanoServer1809, Arch = Arch.Arm },
         };
 
         private readonly DockerHelper _dockerHelper;
@@ -106,7 +106,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
                 else
                 {
-                    verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Users\\ContainerAdministrator\\.nuget\\packages\"";
+                    verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Users\\ContainerUser\\.nuget\\packages\"";
                 }
             }
             else if (imageData.Version.Major == 2)

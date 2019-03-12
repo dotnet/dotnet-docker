@@ -1,15 +1,15 @@
 # escape=`
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:1809 AS installer-env
+FROM mcr.microsoft.com/windows/servercore:1809 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-ENV ASPNETCORE_VERSION 2.1.8
+ENV ASPNETCORE_VERSION 2.1.9
 
 RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$Env:ASPNETCORE_VERSION/aspnetcore-runtime-$Env:ASPNETCORE_VERSION-win-x64.zip; `
-    $aspnetcore_sha512 = 'b9911481b839c0fd119bcc82c60af32599125be1f4cfd72001f7bf24a21e8986f45930b9fe0d77e07127d78b9b4046f0dc6b3d11f1b238f867e2f42808be0fd9'; `
+    $aspnetcore_sha512 = '9885c15250529c92a95f951ad498e6448b229fef0ba40fdf8e3aab3a24d25611851d245c698783b0901d46b227e175fa30f17f6021560e34ccce3014912f3bbf'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -24,7 +24,7 @@ FROM mcr.microsoft.com/windows/nanoserver:1809
 
 # Note: Runtime image's SHELL is the CMD shell (different than the installer image).
 
-COPY --from=installer-env ["dotnet", "C:\\Program Files\\dotnet"]
+COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator

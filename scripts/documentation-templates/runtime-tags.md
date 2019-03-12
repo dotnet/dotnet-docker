@@ -3,9 +3,11 @@
 ## Linux amd64 tags
 
 $(TagDoc:2.2-stretch-slim)
+$(TagDoc:2.2-alpine3.9)
 $(TagDoc:2.2-alpine3.8)
 $(TagDoc:2.2-bionic)
 $(TagDoc:2.1-stretch-slim)
+$(TagDoc:2.1-alpine3.9)
 $(TagDoc:2.1-alpine3.7)
 $(TagDoc:2.1-bionic)
 $(TagDoc:1.1-stretch)
@@ -41,6 +43,8 @@ $(TagDoc:3.0-bionic-arm32v7)
 
 $(TagDoc:2.2-nanoserver-1809)
 $(TagDoc:2.1-nanoserver-1809)
+$(TagDoc:1.1-nanoserver-1809)
+$(TagDoc:1.0-nanoserver-1809)
 
 **.NET Core 3.0 Preview tags**
 
@@ -63,13 +67,6 @@ $(TagDoc:2.1-nanoserver-1709)
 **.NET Core 3.0 Preview tags**
 
 $(TagDoc:3.0-nanoserver-1709)
-
-## Windows Server 2016 amd64 tags
-
-$(TagDoc:2.2-nanoserver-sac2016)
-$(TagDoc:2.1-nanoserver-sac2016)
-$(TagDoc:1.1-nanoserver-sac2016)
-$(TagDoc:1.0-nanoserver-sac2016)
 
 ## Windows Server, version 1809 arm32 tags
 

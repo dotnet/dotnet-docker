@@ -3,15 +3,15 @@
 FROM mcr.microsoft.com/windows/nanoserver:1809-arm
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.2.104
+ENV DOTNET_SDK_VERSION 2.2.105
 
 RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/%DOTNET_SDK_VERSION%/dotnet-sdk-%DOTNET_SDK_VERSION%-win-arm.zip `
-    && mkdir -p "%ProgramFiles%\dotnet" `
+    && mkdir "%ProgramFiles%\dotnet" `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
     && del dotnet.zip
 
 # In order to set system PATH, ContainerAdministrator must be used
-USER ContainerAdministrator 
+USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
 USER ContainerUser
 
