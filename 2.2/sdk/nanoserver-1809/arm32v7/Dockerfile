@@ -1,9 +1,9 @@
 # escape=`
 
-FROM mcr.microsoft.com/windows/nanoserver:1809-arm
+FROM mcr.microsoft.com/windows/nanoserver:1809-arm32v7
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 3.0.100-preview3-010431
+ENV DOTNET_SDK_VERSION 2.2.105
 
 RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/%DOTNET_SDK_VERSION%/dotnet-sdk-%DOTNET_SDK_VERSION%-win-arm.zip `
     && mkdir "%ProgramFiles%\dotnet" `

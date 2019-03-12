@@ -27,6 +27,6 @@ $(TagDoc:aspnetapp-nanoserver-1709)
 
 ## Windows Server, version 1809 amd32 tags
 
-$(TagDoc:dotnetapp-nanoserver-1809-arm32)
-$(TagDoc:aspnetapp-nanoserver-1809-arm32)
+$(TagDoc:dotnetapp-nanoserver-1809-arm32v7)
+$(TagDoc:aspnetapp-nanoserver-1809-arm32v7)
 

@@ -57,7 +57,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "dotnetapp-nanoserver-1809-arm32": {}
+                "dotnetapp-nanoserver-1809-arm32v7": {}
               }
             }
           ]
@@ -113,7 +113,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "aspnetapp-nanoserver-1809-arm32": {}
+                "aspnetapp-nanoserver-1809-arm32v7": {}
               }
             }
           ]

@@ -116,11 +116,11 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ## Windows Server, version 1809 arm32 tags
 
-- [`2.2.105-nanoserver-1809-arm32`, `2.2-nanoserver-1809-arm32`, `2.2.105`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/arm32/Dockerfile)
+- [`2.2.105-nanoserver-1809-arm32v7`, `2.2-nanoserver-1809-arm32v7`, `2.2.105`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/arm32v7/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.100-preview3-nanoserver-1809-arm32`, `3.0-nanoserver-1809-arm32`, `3.0.100-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/nanoserver-1809/arm32/Dockerfile)
+- [`3.0.100-preview3-nanoserver-1809-arm32v7`, `3.0-nanoserver-1809-arm32v7`, `3.0.100-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/nanoserver-1809/arm32v7/Dockerfile)
 
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
 
