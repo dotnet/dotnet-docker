@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/core/runtime
-FROM $REPO:3.0-nanoserver-1809-arm32
+FROM $REPO:3.0-nanoserver-1809-arm32v7
 
 # Install ASP.NET Core Runtime
 ENV ASPNETCORE_VERSION 3.0.0-preview3-19153-02

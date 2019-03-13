@@ -65,11 +65,11 @@ $(TagDoc:3.0-nanoserver-1709)
 
 ## Windows Server, version 1809 arm32 tags
 
-$(TagDoc:2.2-nanoserver-1809-arm32)
+$(TagDoc:2.2-nanoserver-1809-arm32v7)
 
 **.NET Core 3.0 Preview tags**
 
-$(TagDoc:3.0-nanoserver-1809-arm32)
+$(TagDoc:3.0-nanoserver-1809-arm32v7)
 
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
 

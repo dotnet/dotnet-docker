@@ -552,12 +552,18 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "2.2/runtime/nanoserver-1809/arm32",
+              "dockerfile": "2.2/runtime/nanoserver-1809/arm32v7",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(2.2-RuntimeVersion)-nanoserver-1809-arm32": {},
-                "2.2-nanoserver-1809-arm32": {}
+                "$(2.2-RuntimeVersion)-nanoserver-1809-arm32v7": {},
+                "2.2-nanoserver-1809-arm32v7": {},
+                "$(2.2-RuntimeVersion)-nanoserver-1809-arm32": {
+                  "isUndocumented": true
+                },
+                "2.2-nanoserver-1809-arm32": {
+                  "isUndocumented": true
+                }
               }
             }
           ]
@@ -698,12 +704,12 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "3.0/runtime/nanoserver-1809/arm32",
+              "dockerfile": "3.0/runtime/nanoserver-1809/arm32v7",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(3.0-RuntimeVersion)-nanoserver-1809-arm32": {},
-                "3.0-nanoserver-1809-arm32": {}
+                "$(3.0-RuntimeVersion)-nanoserver-1809-arm32v7": {},
+                "3.0-nanoserver-1809-arm32v7": {}
               }
             }
           ]
@@ -964,12 +970,18 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "2.2/aspnet/nanoserver-1809/arm32",
+              "dockerfile": "2.2/aspnet/nanoserver-1809/arm32v7",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(2.2-RuntimeVersion)-nanoserver-1809-arm32": {},
-                "2.2-nanoserver-1809-arm32": {}
+                "$(2.2-RuntimeVersion)-nanoserver-1809-arm32v7": {},
+                "2.2-nanoserver-1809-arm32v7": {},
+                "$(2.2-RuntimeVersion)-nanoserver-1809-arm32": {
+                  "isUndocumented": true
+                },
+                "2.2-nanoserver-1809-arm32": {
+                  "isUndocumented": true
+                }
               }
             }
           ]
@@ -1122,12 +1134,12 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "3.0/aspnet/nanoserver-1809/arm32",
+              "dockerfile": "3.0/aspnet/nanoserver-1809/arm32v7",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(3.0-RuntimeVersion)-nanoserver-1809-arm32": {},
-                "3.0-nanoserver-1809-arm32": {}
+                "$(3.0-RuntimeVersion)-nanoserver-1809-arm32v7": {},
+                "3.0-nanoserver-1809-arm32v7": {}
               }
             }
           ]
@@ -1407,12 +1419,18 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "2.2/sdk/nanoserver-1809/arm32",
+              "dockerfile": "2.2/sdk/nanoserver-1809/arm32v7",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(2.2-SdkVersion)-nanoserver-1809-arm32": {},
-                "2.2-nanoserver-1809-arm32": {}
+                "$(2.2-SdkVersion)-nanoserver-1809-arm32v7": {},
+                "2.2-nanoserver-1809-arm32v7": {},
+                "$(2.2-SdkVersion)-nanoserver-1809-arm32": {
+                  "isUndocumented": true
+                },
+                "2.2-nanoserver-1809-arm32": {
+                  "isUndocumented": true
+                }
               }
             }
           ]
@@ -1538,12 +1556,12 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "3.0/sdk/nanoserver-1809/arm32",
+              "dockerfile": "3.0/sdk/nanoserver-1809/arm32v7",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(3.0-SdkVersion)-nanoserver-1809-arm32": {},
-                "3.0-nanoserver-1809-arm32": {}
+                "$(3.0-SdkVersion)-nanoserver-1809-arm32v7": {},
+                "3.0-nanoserver-1809-arm32v7": {}
               }
             }
           ]
