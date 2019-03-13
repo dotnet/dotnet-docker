@@ -115,11 +115,11 @@ namespace Microsoft.DotNet.Docker.Tests
             string arch = string.Empty;
             if (Arch == Arch.Arm)
             {
-                arch = DockerHelper.IsLinuxContainerModeEnabled ? $"-arm32v7" : "-arm32";
+                arch = "-arm32v7";
             }
             else if (Arch == Arch.Arm64)
             {
-                arch = $"-arm64v8";
+                arch = "-arm64v8";
             }
 
             return $"{Config.Registry}/{Config.RepoPrefix}dotnet/core{repoSuffix}/{variantName}:{imageVersion.ToString(2)}-{os}{arch}";
