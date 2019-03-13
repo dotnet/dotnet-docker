@@ -1,6 +1,6 @@
 # escape=`
 
-FROM mcr.microsoft.com/windows/nanoserver:1809-arm
+FROM mcr.microsoft.com/windows/nanoserver:1809-arm32v7
 
 # Install .NET Core SDK
 ENV DOTNET_SDK_VERSION 3.0.100-preview4-010670
