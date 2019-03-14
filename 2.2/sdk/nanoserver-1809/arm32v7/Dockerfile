@@ -1,0 +1,38 @@
+# escape=`
+
+FROM mcr.microsoft.com/windows/nanoserver:1809-arm32v7
+
+# Install .NET Core SDK
+ENV DOTNET_SDK_VERSION 2.2.105
+
+RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/%DOTNET_SDK_VERSION%/dotnet-sdk-%DOTNET_SDK_VERSION%-win-arm.zip `
+    && mkdir "%ProgramFiles%\dotnet" `
+    && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
+    && del dotnet.zip
+
+# Install artifacts credential provider
+ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.15
+
+RUN curl -SL --output microsoft.nuget.credentialprovider.zip https://azureartifactassets.blob.core.windows.net/credentialprovider/releases/download/%NUGET_CREDENTIAL_PROVIDER_VERSION%/Microsoft.NetCore2.NuGet.CredentialProvider.zip `
+    && mkdir "C:\Users\Public\credentialprovider" `
+    && tar -C "C:\Users\Public\credentialprovider" -xzf microsoft.nuget.credentialprovider.zip `
+    && del microsoft.nuget.credentialprovider.zip
+
+# In order to set system PATH, ContainerAdministrator must be used
+USER ContainerAdministrator
+RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
+USER ContainerUser
+
+# Configure web servers to bind to port 80 when present
+ENV ASPNETCORE_URLS=http://+:80 `
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true `
+    # Enable correct mode for dotnet watch (only mode supported in a container)
+    DOTNET_USE_POLLING_FILE_WATCHER=true `
+    # NuGet Credential provider path
+    NUGET_PLUGIN_PATHS="C:\Users\Public\credentialprovider\plugins\netcore\CredentialProvider.Microsoft\CredentialProvider.Microsoft.dll" `
+    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
+    NUGET_XMLDOC_MODE=skip
+
+# Trigger first run experience by running arbitrary cmd to populate local package cache
+RUN dotnet help

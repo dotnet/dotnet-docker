@@ -51,7 +51,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnet` image
                 string fxDepTag = BuildTestAppImage("fx_dependent_app", appDir);
                 tags.Add(fxDepTag);
-                bool runAsAdmin = _isWeb && !DockerHelper.IsLinuxContainerModeEnabled && _imageData.OS != OS.NanoServerSac2016;
+                bool runAsAdmin = _isWeb && !DockerHelper.IsLinuxContainerModeEnabled;
                 await RunTestAppImage(fxDepTag, runAsAdmin: runAsAdmin);
 
                 if (DockerHelper.IsLinuxContainerModeEnabled)
