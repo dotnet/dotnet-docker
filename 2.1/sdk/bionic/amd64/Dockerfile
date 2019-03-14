@@ -25,10 +25,10 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 
 # Install artifacts credential provider
-ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.11
+ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.15
 
 RUN curl -SL --output microsoft.nuget.credentialprovider.tar.gz https://azureartifactassets.blob.core.windows.net/credentialprovider/releases/download/$NUGET_CREDENTIAL_PROVIDER_VERSION/Microsoft.NetCore2.NuGet.CredentialProvider.tar.gz \
-    && credprovider_sha512='a23477b13d5156118eec6241b327ab9f2f1083dba5c647958c5200ea701222b61c28cc3d4ac7b3306f613455f93599227ec263c9ce0cd7abc33e3266f5db10a7' \
+    && credprovider_sha512='2257340f30e29449bbccd235ba7fafcecd646ec46da4a7a50373afdce4d025823d2e7251a314b90df6afcd430af4464b468dd6ca2b9dec6ecc83be061e77bd3d' \
     && echo "$credprovider_sha512  microsoft.nuget.credentialprovider.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/credentialprovider \
     && tar -C /usr/share/credentialprovider -xzf microsoft.nuget.credentialprovider.tar.gz \

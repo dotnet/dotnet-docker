@@ -11,7 +11,7 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
     && del dotnet.zip
 
 # Install artifacts credential provider
-ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.11
+ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.15
 
 RUN curl -SL --output microsoft.nuget.credentialprovider.zip https://azureartifactassets.blob.core.windows.net/credentialprovider/releases/download/%NUGET_CREDENTIAL_PROVIDER_VERSION%/Microsoft.NetCore2.NuGet.CredentialProvider.zip `
     && mkdir "C:\Users\Public\credentialprovider" `

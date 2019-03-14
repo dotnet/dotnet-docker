@@ -18,10 +18,10 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
     Remove-Item -Force dotnet.zip
 
 # Install artifacts credential provider
-ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.11
+ENV NUGET_CREDENTIAL_PROVIDER_VERSION 0.1.15
 
 RUN Invoke-WebRequest -OutFile microsoft.nuget.credentialprovider.zip https://azureartifactassets.blob.core.windows.net/credentialprovider/releases/download/$Env:NUGET_CREDENTIAL_PROVIDER_VERSION/Microsoft.NetCore2.NuGet.CredentialProvider.zip; `
-    $credprovider_sha512 = '9733d659253415e6ed88e5b728591a1f7596baa6a500ffc390c844be224916c57a91f57d2fbf2e6395cc793b6390d72bc9d73b28810f9c8d2868c0cabec932c3'; `
+    $credprovider_sha512 = 'dc5cc9cb83bddc2d2d2b535f477a5a91df806e9e5c4db547c395ccc76c669709441c200b83512928792d3ba2711cfb7c754490795b05070f45c08b6eb0ed8586'; `
     if ((Get-FileHash microsoft.nuget.credentialprovider.zip -Algorithm sha512).Hash -ne $credprovider_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED FOR CREDENTIAL PROVIDER!'; `
         exit 1; `
