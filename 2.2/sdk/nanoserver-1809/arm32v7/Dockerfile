@@ -13,7 +13,7 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
 # Install PowerShell global tool
 ENV POWERSHELL_VERSION 6.2.0-rc.1
 
-RUN curl -SL --output "PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg" 'https://go.microsoft.com/fwlink/?linkid=2081065' `
+RUN curl -SL --output "PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg" "https://pwshtool.blob.core.windows.net/v6-2-0-rc-1/PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg" `
     && mkdir "%ProgramFiles%\powershell" `
     && "%ProgramFiles%\dotnet\dotnet" tool install --tool-path "%ProgramFiles%\powershell" --add-source . --version %POWERSHELL_VERSION% PowerShell.Windows `
     && del "PowerShell.Windows.%POWERSHELL_VERSION%.nupkg"
