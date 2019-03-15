@@ -11,14 +11,14 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
     && del dotnet.zip
 
 # The global tool package PowerShell.Windows only supports win10-x64, win-arm, win-x64 runtimes.
-RUN curl -SL --output "PowerShell.Windows.%POWERSHELL_VERSION%.nupkg" "https://pwshtool.blob.core.windows.net/v6-2-0-rc-1/PowerShell.Windows.%POWERSHELL_VERSION%.nupkg" `
+RUN curl -SL --output PowerShell.Windows.%POWERSHELL_VERSION%.nupkg https://pwshtool.blob.core.windows.net/v6-2-0-rc-1/PowerShell.Windows.%POWERSHELL_VERSION%.nupkg `
     && mkdir "%ProgramFiles%\powershell" `
     && "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %POWERSHELL_VERSION% PowerShell.Windows `
-    && del "PowerShell.Windows.%POWERSHELL_VERSION%.nupkg"
+    && del PowerShell.Windows.%POWERSHELL_VERSION%.nupkg
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
-RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
+RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet;%ProgramFiles%\powershell"
 USER ContainerUser
 
 # Configure web servers to bind to port 80 when present
