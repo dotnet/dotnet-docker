@@ -2,9 +2,6 @@ parameters:
   setupImageBuilder:  true
 
 steps:
-- powershell: $(Build.Repository.LocalPath)/scripts/Get-ImageNames.ps1
-  displayName: Set Image Name variables
-
   ################################################################################
   # Cleanup Docker Resources
   ################################################################################

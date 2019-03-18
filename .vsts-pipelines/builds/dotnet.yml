@@ -1,8 +1,7 @@
 trigger: none
 pr: none
 variables:
-- group: DotNet-Docker-Common
-- group: DotNet-Docker-Secrets
+- template: ../variables/common.yml
 - name: manifest
   value: manifest.json
 jobs:
