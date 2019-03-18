@@ -4,9 +4,6 @@ parameters:
   setupTestRunner: false
 
 steps:
-- script: $(Build.Repository.LocalPath)/scripts/set-imagename-variables.sh
-  displayName: Set Image Name variables
-
   ################################################################################
   # Cleanup Docker Resources
   ################################################################################

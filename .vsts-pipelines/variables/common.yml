@@ -1,0 +1,4 @@
+variables:
+- template: docker-images.yml
+- group: DotNet-Docker-Common
+- group: DotNet-Docker-Secrets
