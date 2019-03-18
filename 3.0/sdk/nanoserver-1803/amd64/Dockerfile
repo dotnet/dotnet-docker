@@ -22,7 +22,7 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
 ENV POWERSHELL_VERSION 6.2.0-rc.1
 
 # The global tool package PowerShell.Windows only supports win10-x64, win-arm, win-x64 runtimes.
-RUN Invoke-WebRequest -OutFile PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/v6-2-0-rc-1/PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg; `
+RUN Invoke-WebRequest -OutFile PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/$ENV:POWERSHELL_VERSION/PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg; `
     $powershell_sha512 = '404b81c7d1cdd79556db560eaf1ab46c80d7d0d006e91a1fa3eccd00032a0415b63c6c3c2a6f386881b9de7b62ca4dc46f11ab3d941690564578961b947716ce'; `
     if ((Get-FileHash PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `

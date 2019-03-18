@@ -39,7 +39,7 @@ RUN dotnet help
 ENV POWERSHELL_VERSION 6.2.0-rc.1
 
 # The global tool package PowerShell.Linux only supports linux-x64, linux-musl-x64, unix, linux, linux-arm64, osx runtimes.
-RUN curl -SL --output PowerShell.Linux.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/v6-2-0-rc-1/PowerShell.Linux.$POWERSHELL_VERSION.nupkg \
+RUN curl -SL --output PowerShell.Linux.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/$POWERSHELL_VERSION/PowerShell.Linux.$POWERSHELL_VERSION.nupkg \
     && powershell_sha512='0bb710ed0ffba267c6d82253abae5427a771861d6b50c3574dfe77d746f8d78d309397abbd1ff300d5b6b70a9d794943836822158d7de6095b61df3fba490c08' \
     && echo "$powershell_sha512  PowerShell.Linux.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
