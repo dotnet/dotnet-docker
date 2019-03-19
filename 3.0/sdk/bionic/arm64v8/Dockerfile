@@ -47,4 +47,10 @@ RUN curl -SL --output PowerShell.Linux.$POWERSHELL_VERSION.nupkg https://pwshtoo
     && rm PowerShell.Linux.$POWERSHELL_VERSION.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
-    && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm
+    && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm \
+    # Remove unnecessary runtimes
+    && rm -fr /usr/share/powershell/.store/powershell.linux/$POWERSHELL_VERSION/powershell.linux/$POWERSHELL_VERSION/tools/netcoreapp2.1/any/runtimes/linux-arm \
+    && rm -fr /usr/share/powershell/.store/powershell.linux/$POWERSHELL_VERSION/powershell.linux/$POWERSHELL_VERSION/tools/netcoreapp2.1/any/runtimes/linux-musl-x64 \
+    && rm -fr /usr/share/powershell/.store/powershell.linux/$POWERSHELL_VERSION/powershell.linux/$POWERSHELL_VERSION/tools/netcoreapp2.1/any/runtimes/linux-x64 \
+    && rm -fr /usr/share/powershell/.store/powershell.linux/$POWERSHELL_VERSION/powershell.linux/$POWERSHELL_VERSION/tools/netcoreapp2.1/any/runtimes/osx
+

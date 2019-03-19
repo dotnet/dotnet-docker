@@ -30,7 +30,9 @@ RUN Invoke-WebRequest -OutFile PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg 
     }; `
     `
     \dotnet\dotnet tool install --add-source . --tool-path \powershell --version $ENV:POWERSHELL_VERSION PowerShell.Windows; `
-    Remove-Item -Force PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg
+    Remove-Item -Force PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg; `
+    Remove-Item -Path \powershell\.store\powershell.windows\$ENV:POWERSHELL_VERSION\powershell.windows\$ENV:POWERSHELL_VERSION\tools\netcoreapp2.1\any\runtimes\win-arm -Recurse -Force; `
+    Remove-Item -Path \powershell\.store\powershell.windows\$ENV:POWERSHELL_VERSION\powershell.windows\$ENV:POWERSHELL_VERSION\powershell.windows.$ENV:POWERSHELL_VERSION.nupkg -Force
 
 # SDK image
 FROM mcr.microsoft.com/windows/nanoserver:1809

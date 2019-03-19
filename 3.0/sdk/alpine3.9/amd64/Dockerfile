@@ -28,11 +28,11 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=true \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 6.2.0-rc.1
+ENV POWERSHELL_VERSION 6.2.0-rc.5
 
 # The global tool package PowerShell.Linux only supports linux-x64, linux-musl-x64, unix, linux, linux-arm64, osx runtimes.
 RUN wget -O PowerShell.Linux.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.$POWERSHELL_VERSION.nupkg \
-    && powershell_sha512='0bb710ed0ffba267c6d82253abae5427a771861d6b50c3574dfe77d746f8d78d309397abbd1ff300d5b6b70a9d794943836822158d7de6095b61df3fba490c08' \
+    && powershell_sha512='6ac43ce637f5b098fda79f621a7f1ccbb5288422a40a8603a55ee5b2dbddad704fac12b2fb6f8729432769a0077e0caad8c2bb0cba9ce5f49eda077d7b91be9f' \
     && echo "$powershell_sha512  PowerShell.Linux.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux \
@@ -40,5 +40,10 @@ RUN wget -O PowerShell.Linux.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.cor
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm \
+    # Remove unnecessary runtimes
+    && rm -fr /usr/share/powershell/.store/powershell.linux/$POWERSHELL_VERSION/powershell.linux/$POWERSHELL_VERSION/tools/netcoreapp2.1/any/runtimes/linux-arm \
+    && rm -fr /usr/share/powershell/.store/powershell.linux/$POWERSHELL_VERSION/powershell.linux/$POWERSHELL_VERSION/tools/netcoreapp2.1/any/runtimes/linux-arm64 \
+    && rm -fr /usr/share/powershell/.store/powershell.linux/$POWERSHELL_VERSION/powershell.linux/$POWERSHELL_VERSION/tools/netcoreapp2.1/any/runtimes/linux-x64 \
+    && rm -fr /usr/share/powershell/.store/powershell.linux/$POWERSHELL_VERSION/powershell.linux/$POWERSHELL_VERSION/tools/netcoreapp2.1/any/runtimes/osx \
     # Add ncurses-terminfo-base to resolve psreadline dependency
     && apk add --no-cache ncurses-terminfo-base
