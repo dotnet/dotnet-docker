@@ -15,8 +15,7 @@ RUN curl -SL --output PowerShell.Windows.%POWERSHELL_VERSION%.nupkg https://pwsh
     && mkdir "%ProgramFiles%\powershell" `
     && "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %POWERSHELL_VERSION% PowerShell.Windows `
     && del PowerShell.Windows.%POWERSHELL_VERSION%.nupkg `
-    && del "%ProgramFiles%\powershell\.store\powershell.windows\%POWERSHELL_VERSION%\powershell.windows\%POWERSHELL_VERSION%\powershell.windows.%POWERSHELL_VERSION%.nupkg" `
-    && rmdir /S /Q "%ProgramFiles%\powershell\.store\powershell.windows\%POWERSHELL_VERSION%\powershell.windows\%POWERSHELL_VERSION%\tools\netcoreapp2.1\any\runtimes\win-x64"
+    && del "%ProgramFiles%\powershell\.store\powershell.windows\%POWERSHELL_VERSION%\powershell.windows\%POWERSHELL_VERSION%\powershell.windows.%POWERSHELL_VERSION%.nupkg"
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
