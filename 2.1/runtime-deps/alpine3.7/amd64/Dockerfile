@@ -9,11 +9,10 @@ RUN apk add --no-cache \
         libintl \
         libssl1.0 \
         libstdc++ \
+        lttng-ust \
         tzdata \
         userspace-rcu \
-        zlib \
-    && apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
-        lttng-ust
+        zlib
 
 # Configure web servers to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80 \
