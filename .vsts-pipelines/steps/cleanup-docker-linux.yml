@@ -3,14 +3,6 @@ parameters:
   runOnlyBasicCleanup: false
 
 steps:
-################################################################################
-# Cleanup local Docker server (basic)
-################################################################################
-- script: docker system prune -f
-  displayName: Cleanup Docker (basic)
-  condition: always()
-  continueOnError: true
-
 - ${{ if eq(parameters.runOnlyBasicCleanup, 'false') }}:
   ################################################################################
   # Cleanup remote Docker server
@@ -39,3 +31,16 @@ steps:
       displayName: Cleanup Docker (advanced)
       condition: always()
       continueOnError: true
+
+################################################################################
+# Cleanup local Docker server (basic)
+################################################################################
+- script: docker rmi -f $(imageNames.imageBuilder.withrepo) 2> /dev/null
+  displayName: Cleanup Image Builder
+  condition: always()
+  continueOnError: true
+
+- script: docker rmi -f $(imageNames.testRunner.withrepo) 2> /dev/null
+  displayName: Cleanup Test Runner
+  condition: always()
+  continueOnError: true

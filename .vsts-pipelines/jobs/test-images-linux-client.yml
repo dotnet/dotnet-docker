@@ -39,7 +39,7 @@ jobs:
       -w /repo $(dockerArmRunArgs)
       -e RUNNING_TESTS_IN_CONTAINER=true 
       --name $(testRunner.container)
-      $(testrunner.image)
+      $(imageNames.testRunner.withrepo)
     displayName: Start Test Runner Container
   - script: >
       docker exec $(testRunner.container) pwsh
