@@ -44,3 +44,4 @@ steps:
   displayName: Cleanup Test Runner
   condition: always()
   continueOnError: true
+  
