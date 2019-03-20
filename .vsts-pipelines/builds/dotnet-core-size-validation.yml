@@ -10,7 +10,7 @@ jobs:
   - template: ../steps/cleanup-docker-linux.yml
 - job: WindowsPerfTests
   pool: # windows1809Amd64
-    name: DotNetCore-Infra
+    name: DotNetCore-Docker
     demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
   steps:
   - template: ../steps/cleanup-docker-windows.yml
