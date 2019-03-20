@@ -2,7 +2,7 @@
 
 This [sample](Dockerfile) demonstrates how to use .NET Core and Docker together. It builds multiple projects and executes unit tests in a container. The sample works with both Linux and Windows containers and can also be used without Docker.
 
-The sample builds the application in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/r/microsoft/dotnet/). It builds and [tests](dotnet-docker-unit-testing.md) the application and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/r/microsoft/dotnet/). It uses Docker [multi-stage build](https://github.com/dotnet/announcements/issues/18) and [multi-arch tags](https://github.com/dotnet/announcements/issues/14).
+The sample builds the application in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). It builds and [tests](dotnet-docker-unit-testing.md) the application and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). It uses Docker [multi-stage build](https://github.com/dotnet/announcements/issues/18) and [multi-arch tags](https://github.com/dotnet/announcements/issues/14).
 
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
@@ -71,10 +71,7 @@ docker run --rm -it dotnetapp:alpine Hello .NET Core from Alpine
 
 ## Build and run the sample for Ubuntu 18.04 with Docker
 
-You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [microsoft/dotnet](https://hub.docker.com/r/microsoft/dotnet/). You would switch to the following tags:
-
-* SDK: 2.2-sdk-bionic
-* Runtime:-2.2-runtime-bionic
+You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and [dotnet/core/runtime](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You would switch to use the `2.2-bionic` tag for both the build and runtime phases.
 
 ## Build and run the sample for Linux ARM32 with Docker
 
@@ -148,6 +145,5 @@ Docs and More Information:
 
 .NET Framework:
 
-* [dotnet/framework/aspnet](https://hub.docker.com/_/microsoft-dotnet-framework-aspnet): ASP.NET Web Forms and MVC
-* [microsoft/dotnet-framework](https://hub.docker.com/r/microsoft/dotnet-framework/): .NET Framework
-* [microsoft/dotnet-framework-samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/): .NET Framework and ASP.NET Samples
+* [dotnet/framework](https://hub.docker.com/_/microsoft-dotnet-framework/): .NET Framework, ASP.NET and WCF
+* [dotnet/framework/samples](https://hub.docker.com/_/microsoft-dotnet-framework-samples/): .NET Framework, ASP.NET and WCF Samples

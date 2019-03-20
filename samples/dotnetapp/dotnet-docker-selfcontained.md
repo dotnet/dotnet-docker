@@ -1,6 +1,6 @@
 # Build .NET Core Self-Contained Applications with Docker
 
-You can build .NET Core self-contained apps with Docker. Self-contained apps are a great option if you do not want to take a dependence on the .NET Runtime, either as a global install or the [.NET Core Runtime Image](https://hub.docker.com/r/microsoft/dotnet/). These instructions are based on the [.NET Core Docker Sample](README.md).
+You can build .NET Core self-contained apps with Docker. Self-contained apps are a great option if you do not want to take a dependence on the .NET Runtime, either as a global install or the [.NET Core Runtime Image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). These instructions are based on the [.NET Core Docker Sample](README.md).
 
 Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
 
@@ -28,7 +28,7 @@ The various "self-contained" Dockerfiles add the linker package to the sample pr
 
 ## Building the Sample for Windows Nano Server with Docker
 
-You can build and run the [sample](Dockerfile.nanoserver-x64-selfcontained) in a [Nano Server container](https://hub.docker.com/r/microsoft/nanoserver/) using the following commands. The instructions assume that you are in the root of the repository.
+You can build and run the [sample](Dockerfile.nanoserver-x64-selfcontained) in a [Nano Server container](https://hub.docker.com/_/microsoft-windows-nanoserver/) using the following commands. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
