@@ -3,6 +3,8 @@ pr: none
 jobs:
 - job: LinuxPerfTests
   pool: Hosted Ubuntu 1604
+  workspace:
+    clean: all
   steps:
   - template: ../steps/cleanup-docker-linux.yml
   - powershell: ./tests/performance/Validate-ImageSize.ps1
@@ -12,6 +14,8 @@ jobs:
   pool: # windows1809Amd64
     name: DotNetCore-Docker
     demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
+  workspace:
+    clean: all
   steps:
   - template: ../steps/cleanup-docker-windows.yml
   - powershell: ./tests/performance/Validate-ImageSize.ps1
