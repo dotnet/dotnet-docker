@@ -9,7 +9,8 @@ steps:
   ################################################################################
 - template: cleanup-docker-linux.yml
   parameters:
-    runOnlyBasicCleanup: ${{ parameters.setupRemoteDockerServer }}
+    cleanupRemoteDockerServer: ${{ parameters.setupRemoteDockerServer }}
+    initCleanup: true
 
   ################################################################################
   # Setup Remote Docker Server (Optional)
