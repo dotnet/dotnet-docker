@@ -20,14 +20,18 @@ jobs:
   variables:
     osVersion: ${{ parameters.osVersion }}
   steps:
-  - ${{ if and(contains(variables.manifest, 'samples'), eq(parameters.name, 'Build_Linux_arm32v7')) }}:
-    - script: >
-        job="$(Agent.JobName)" &&
-        sampleFolder=$(echo "$job" | grep -o -E "aspnetapp|dotnetapp") &&
-        dockerfilePath="samples/$sampleFolder/Dockerfile" &&
-        sed 's/:2.2 AS/:2.2-stretch-slim-arm32v7 AS/g' $dockerfilePath > Dockerfile.tmp &&
-        mv Dockerfile.tmp $dockerfilePath
-      displayName: Update Sample Dockerfile
+  - script: >
+      job="$(Agent.JobName)" &&
+      sampleFolder=$(echo "$job" | grep -o -E "aspnetapp|dotnetapp") &&
+      dockerfilePath="samples/$sampleFolder/Dockerfile" &&
+      sed 's/:2.2 AS/:2.2-stretch-slim-arm32v7 AS/g' $dockerfilePath > Dockerfile.tmp &&
+      mv Dockerfile.tmp $dockerfilePath
+    displayName: Update Sample Dockerfile
+    condition: "
+      and(
+        succeeded(),
+        contains(variables.manifest, 'samples'),
+        eq(parameters.name, 'Build_Linux_arm32v7'))"
   - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
     parameters:
       setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
