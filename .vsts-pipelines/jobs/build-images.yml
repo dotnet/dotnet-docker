@@ -20,12 +20,12 @@ jobs:
   variables:
     osVersion: ${{ parameters.osVersion }}
   steps:
-  - ${{ if eq(parameters.name, 'Build_Linux_arm32v7') }}:
+  - ${{ if and(contains(variables.manifest, 'samples'), eq(parameters.name, 'Build_Linux_arm32v7')) }}:
     - script: >
         job="$(Agent.JobName)" &&
         sampleFolder=$(echo "$job" | grep -o -E "aspnetapp|dotnetapp") &&
         dockerfilePath="samples/$sampleFolder/Dockerfile" &&
-        sed 's/:2.2 AS/:2.2-bionic-arm32v7 AS/g' $dockerfilePath > Dockerfile.tmp &&
+        sed 's/:2.2 AS/:2.2-stretch-slim-arm32v7 AS/g' $dockerfilePath > Dockerfile.tmp &&
         mv Dockerfile.tmp $dockerfilePath
       displayName: Update Sample Dockerfile
   - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
