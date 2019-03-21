@@ -2,7 +2,7 @@
 param(
     [switch]$UpdateBaselines,
     [switch]$UseLocalImages,
-    [string]$ImageBuilderCustomArgs
+    [string]$ImageBuilderCustomArgs = "--architecture '*'"
 )
 
 Set-StrictMode -Version Latest
