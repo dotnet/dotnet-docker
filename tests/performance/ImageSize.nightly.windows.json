@@ -36,9 +36,9 @@
     "2.2/sdk/nanoserver-1803/amd64": 1771364308,
     "2.2/sdk/nanoserver-1809/amd64": 1653665204,
     "2.2/sdk/nanoserver-1809/arm32v7": 373223933,
-    "3.0/sdk/nanoserver-1709/amd64": 672018338,
-    "3.0/sdk/nanoserver-1803/amd64": 696480822,
+    "3.0/sdk/nanoserver-1709/amd64": 717998875,
+    "3.0/sdk/nanoserver-1803/amd64": 740948382,
     "3.0/sdk/nanoserver-1809/amd64": 601285113,
-    "3.0/sdk/nanoserver-1809/arm32v7": 495008825
+    "3.0/sdk/nanoserver-1809/arm32v7": 537430874
   }
 }
