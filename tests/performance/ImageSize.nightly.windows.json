@@ -34,11 +34,11 @@
     "2.1/sdk/nanoserver-1809/amd64": 1746472592,
     "2.2/sdk/nanoserver-1709/amd64": 1747050471,
     "2.2/sdk/nanoserver-1803/amd64": 1771364308,
-    "2.2/sdk/nanoserver-1809/amd64": 1749550836,
-    "2.2/sdk/nanoserver-1809/arm32": 373223933,
-    "3.0/sdk/nanoserver-1709/amd64": 672018338,
-    "3.0/sdk/nanoserver-1803/amd64": 696480822,
-    "3.0/sdk/nanoserver-1809/amd64": 673437831,
-    "3.0/sdk/nanoserver-1809/arm32": 495008825
+    "2.2/sdk/nanoserver-1809/amd64": 1653665204,
+    "2.2/sdk/nanoserver-1809/arm32v7": 373223933,
+    "3.0/sdk/nanoserver-1709/amd64": 717998875,
+    "3.0/sdk/nanoserver-1803/amd64": 740948382,
+    "3.0/sdk/nanoserver-1809/amd64": 601285113,
+    "3.0/sdk/nanoserver-1809/arm32v7": 537430874
   }
 }
