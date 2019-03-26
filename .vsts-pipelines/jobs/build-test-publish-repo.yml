@@ -12,29 +12,17 @@ jobs:
     name: Hosted Ubuntu 1604
   steps:
   - template: ../steps/init-docker-linux.yml
-  - script: >
-      $(runImageBuilderCmd) generateBuildMatrix
-      --manifest $(manifest)
-      --type ${{ parameters.buildMatrixType }}
-      --os-type '*'
-      --architecture '*'
-      $(imageBuilder.generateMatrixQueueArgs)
+  - template: ../steps/generate-matrix.yml
+    parameters:
+      matrixType: ${{ parameters.buildMatrixType }}
     name: buildMatrix
-  - script: >
-      $(runImageBuilderCmd) generateBuildMatrix
-      --manifest $(manifest)
-      --type ${{ parameters.testMatrixType }}
-      --os-type '*'
-      --architecture '*'
-      $(imageBuilder.generateMatrixQueueArgs)
+  - template: ../steps/generate-matrix.yml
+    parameters:
+      matrixType: ${{ parameters.testMatrixType }}
     name: testMatrix
-  - script: >
-      $(runImageBuilderCmd) generateBuildMatrix
-      --manifest $(manifest)
-      --type ${{ parameters.publishMatrixType }}
-      --os-type '*'
-      --architecture '*'
-      $(imageBuilder.generateMatrixQueueArgs)
+  - template: ../steps/generate-matrix.yml
+    parameters:
+      matrixType: ${{ parameters.publishMatrixType }}
     name: publishMatrix
   - template: ../steps/cleanup-docker-linux.yml
 
