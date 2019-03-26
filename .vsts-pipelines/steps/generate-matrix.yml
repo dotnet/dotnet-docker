@@ -1,5 +1,6 @@
 parameters:
   matrixType: null
+  name: null
 
 steps:
   - script: >
@@ -10,4 +11,4 @@ steps:
       --architecture '*'
       $(imageBuilder.generateMatrixQueueArgs)
     displayName: Generate ${{ parameters.matrixType }} Matrix
-    name: ${{ parameters.matrixType }}
+    name: ${{ parameters.name }}
