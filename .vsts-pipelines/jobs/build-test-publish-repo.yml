@@ -175,7 +175,7 @@ jobs:
   parameters:
     pool: # linuxAmd64Pool
       name: Hosted Ubuntu 1604
-    matrix: dependencies.GenerateMatrices.outputs['${{ format('publishMatrix.{0}', parameters.publishMatrixType) }}']
+    matrix: dependencies.GenerateMatrices.outputs['${{ format('publishMatrix.{0}Matrix', parameters.publishMatrixType) }}']
 
 - template: publish-finalize.yml
   parameters:
