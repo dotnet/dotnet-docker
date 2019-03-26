@@ -9,4 +9,5 @@ steps:
       --os-type '*'
       --architecture '*'
       $(imageBuilder.generateMatrixQueueArgs)
-    name: Generate ${{ parameters.matrixType }} Matrix
+    displayName: Generate ${{ parameters.matrixType }} Matrix
+    name: ${{ parameters.matrixType }}
