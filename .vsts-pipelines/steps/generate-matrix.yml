@@ -1,0 +1,14 @@
+parameters:
+  matrixType: null
+  name: null
+
+steps:
+  - script: >
+      $(runImageBuilderCmd) generateBuildMatrix
+      --manifest $(manifest)
+      --type ${{ parameters.matrixType }}
+      --os-type '*'
+      --architecture '*'
+      $(imageBuilder.generateMatrixQueueArgs)
+    displayName: Generate ${{ parameters.matrixType }} Matrix
+    name: ${{ parameters.name }}
