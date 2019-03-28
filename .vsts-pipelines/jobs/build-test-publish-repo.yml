@@ -62,14 +62,6 @@ jobs:
     useRemoteDockerServer: true
 - template: build-images.yml
   parameters:
-    name: Build_NanoServer1709_amd64
-    pool: # windows1709Amd64Pool
-      name: DotNetCore-Docker
-      demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
-    matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixNanoserver1709Amd64', parameters.buildMatrixType) }}']
-    dockerClientOS: windows
-- template: build-images.yml
-  parameters:
     name: Build_NanoServer1803_amd64
     pool: # windows1803Amd64Pool
       name: DotNetCore-Docker
@@ -131,14 +123,6 @@ jobs:
       - RemoteDockerServerArch -equals aarch64
     matrix: dependencies.GenerateMatrices.outputs['${{ format('testMatrix.{0}MatrixLinuxArm32v7', parameters.testMatrixType) }}']
     useRemoteDockerServer: true
-- template: test-images-windows-client.yml
-  parameters:
-    name: Test_NanoServer1709_amd64
-    buildDependencies: Build_NanoServer1709_amd64
-    pool: # windows1709Amd64Pool
-      name: DotNetCore-Docker
-      demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
-    matrix: dependencies.GenerateMatrices.outputs['${{ format('testMatrix.{0}MatrixNanoserver1709Amd64', parameters.testMatrixType) }}']
 - template: test-images-windows-client.yml
   parameters:
     name: Test_NanoServer1803_amd64

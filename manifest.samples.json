@@ -30,14 +30,6 @@
             {
               "dockerfile": "samples/dotnetapp",
               "os": "windows",
-              "osVersion": "nanoserver-1709",
-              "tags": {
-                "dotnetapp-nanoserver-1709": {}
-              }
-            },
-            {
-              "dockerfile": "samples/dotnetapp",
-              "os": "windows",
               "osVersion": "nanoserver-1803",
               "tags": {
                 "dotnetapp-nanoserver-1803": {}
@@ -82,14 +74,6 @@
                 "aspnetapp-stretch-arm32v7": {}
               },
               "variant": "v7"
-            },
-            {
-              "dockerfile": "samples/aspnetapp",
-              "os": "windows",
-              "osVersion": "nanoserver-1709",
-              "tags": {
-                "aspnetapp-nanoserver-1709": {}
-              }
             },
             {
               "dockerfile": "samples/aspnetapp",
