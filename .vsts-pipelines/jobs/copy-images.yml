@@ -17,7 +17,6 @@ jobs:
               eq(variables['singlePhase'], ''),
               succeeded('Build_Linux_amd64'),
               succeeded('Build_Linux_arm32v7'),
-              succeeded('Build_NanoServer1709_amd64'),
               succeeded('Build_NanoServer1803_amd64'),
               succeeded('Build_NanoServer1809_amd64'),
               succeeded('Build_NanoServer1809_arm32'))))))"
@@ -26,7 +25,6 @@ jobs:
   - Test_Linux_amd64
   - Test_Linux_arm64v8
   - Test_Linux_arm32v7
-  - Test_NanoServer1709_amd64
   - Test_NanoServer1803_amd64
   - Test_NanoServer1809_amd64
   - Test_NanoServer1809_arm32
