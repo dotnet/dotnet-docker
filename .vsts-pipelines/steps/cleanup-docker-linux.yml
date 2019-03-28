@@ -1,46 +1,44 @@
 parameters:
   cleanupRemoteDockerServer: false
-  runOnlyBasicCleanup: false
+  initCleanup: false
 
 steps:
-- ${{ if eq(parameters.runOnlyBasicCleanup, 'false') }}:
   ################################################################################
   # Cleanup remote Docker server
+  # When using remote Docker server (ARM scenarios), multiple agents are running
+  # on a single physical machine therefore don't cleanup local Docker artifacts
+  # via `docker prune` that other agents may be using.  Only delete Docker artifacts
+  # owned by this build.
   ################################################################################
-  - ${{ if eq(parameters.cleanupRemoteDockerServer, 'true') }}:
-    - script: docker run --rm $(dockerArmRunArgs) --entrypoint docker $(dockerClientImage) system prune -f --volumes
-      displayName: Cleanup Remote Docker Server (basic)
-      condition: always()
-      continueOnError: true
-    - script: >
-        docker run --rm $(dockerArmRunArgs) --entrypoint /bin/bash $(dockerClientImage) -c
-        'docker rmi -f $(docker images --format "{{.Repository}}:{{.Tag}}" | grep -v -e ^arm32v7/ -e ^arm64v8/ -e ^mcr\\.microsoft\\.com/windows)'
-      displayName: Cleanup Remote Docker Server (images)
-      condition: always()
-      continueOnError: true
+- ${{ if and(eq(parameters.cleanupRemoteDockerServer, 'true'), eq(parameters.initCleanup, 'false')) }}:
+  - script: docker run --rm $(dockerArmRunArgs) --entrypoint docker $(dockerClientImage) system prune -f --volumes
+    displayName: Cleanup Remote Docker Server (basic)
+    condition: always()
+    continueOnError: true
+  - script: >
+      docker run --rm $(dockerArmRunArgs) --entrypoint /bin/bash $(dockerClientImage) -c
+      'docker rmi -f $(docker images --format "{{.Repository}}:{{.Tag}}" | grep -v -e ^arm32v7/ -e ^arm64v8/ -e ^mcr\\.microsoft\\.com/windows)'
+    displayName: Cleanup Remote Docker Server (images)
+    condition: always()
+    continueOnError: true
+  - script: docker rmi -f $(imageNames.imageBuilder.withrepo) 2> /dev/null
+    displayName: Cleanup Image Builder
+    condition: always()
+    continueOnError: true
+  - script: docker rmi -f $(imageNames.testRunner.withrepo) 2> /dev/null
+    displayName: Cleanup Test Runner
+    condition: always()
+    continueOnError: true
 
   ################################################################################
-  # Cleanup local Docker server (advanced)
+  # Cleanup local Docker server
   ################################################################################
-  - ${{ if eq(parameters.cleanupRemoteDockerServer, 'false') }}:
-    - script: docker stop $(docker ps -q) || true
-      displayName: Stop Running Containers
-      condition: always()
-      continueOnError: true
-    - script: docker system prune -a -f --volumes
-      displayName: Cleanup Docker (advanced)
-      condition: always()
-      continueOnError: true
-
-################################################################################
-# Cleanup local Docker server (basic)
-################################################################################
-- script: docker rmi -f $(imageNames.imageBuilder.withrepo) 2> /dev/null
-  displayName: Cleanup Image Builder
-  condition: always()
-  continueOnError: true
-
-- script: docker rmi -f $(imageNames.testRunner.withrepo) 2> /dev/null
-  displayName: Cleanup Test Runner
-  condition: always()
-  continueOnError: true
+- ${{ if eq(parameters.cleanupRemoteDockerServer, 'false') }}:
+  - script: docker stop $(docker ps -q) || true
+    displayName: Stop Running Containers
+    condition: always()
+    continueOnError: true
+  - script: docker system prune -a -f --volumes
+    displayName: Cleanup Docker
+    condition: always()
+    continueOnError: true
