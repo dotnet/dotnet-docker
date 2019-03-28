@@ -19,19 +19,19 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
     Remove-Item -Force dotnet.zip
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 6.2.0-rc.1
+ENV POWERSHELL_VERSION 6.2.0
 
-# The global tool package PowerShell.Windows only supports win10-x64, win-arm, win-x64 runtimes.
-RUN Invoke-WebRequest -OutFile PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg; `
-    $powershell_sha512 = '404b81c7d1cdd79556db560eaf1ab46c80d7d0d006e91a1fa3eccd00032a0415b63c6c3c2a6f386881b9de7b62ca4dc46f11ab3d941690564578961b947716ce'; `
-    if ((Get-FileHash PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
+# The global tool package PowerShell.Windows.x64 only supports win10-x64, win-x64 runtimes.
+RUN Invoke-WebRequest -OutFile PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg; `
+    $powershell_sha512 = 'bdd76bc99548c36506da4312ebf3acb99a8d778c644a8278f7f80533dbd89bd7858b57b487c23ebd85778841da12a557891b532960c1018e1621a8e9d12a3f8a'; `
+    if ((Get-FileHash PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
     }; `
     `
-    \dotnet\dotnet tool install --add-source . --tool-path \powershell --version $ENV:POWERSHELL_VERSION PowerShell.Windows; `
-    Remove-Item -Force PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg; `
-    Remove-Item -Path \powershell\.store\powershell.windows\$ENV:POWERSHELL_VERSION\powershell.windows\$ENV:POWERSHELL_VERSION\powershell.windows.$ENV:POWERSHELL_VERSION.nupkg -Force
+    \dotnet\dotnet tool install --add-source . --tool-path \powershell --version $ENV:POWERSHELL_VERSION PowerShell.Windows.x64; `
+    Remove-Item -Force PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg; `
+    Remove-Item -Path \powershell\.store\powershell.windows.x64\$ENV:POWERSHELL_VERSION\powershell.windows.x64\$ENV:POWERSHELL_VERSION\powershell.windows.x64.$ENV:POWERSHELL_VERSION.nupkg -Force
 
 # SDK image
 FROM mcr.microsoft.com/windows/nanoserver:1803

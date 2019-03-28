@@ -36,15 +36,15 @@ ENV ASPNETCORE_URLS=http://+:80 \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 6.2.0-rc.1
+ENV POWERSHELL_VERSION 6.2.0
 
-# The global tool package PowerShell.Linux only supports linux-x64, linux-musl-x64, unix, linux, linux-arm64, osx runtimes.
-RUN curl -SL --output PowerShell.Linux.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.$POWERSHELL_VERSION.nupkg \
-    && powershell_sha512='0bb710ed0ffba267c6d82253abae5427a771861d6b50c3574dfe77d746f8d78d309397abbd1ff300d5b6b70a9d794943836822158d7de6095b61df3fba490c08' \
-    && echo "$powershell_sha512  PowerShell.Linux.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
+# The global tool package PowerShell.Linux.arm64 only supports unix, linux, linux-arm64 runtimes.
+RUN curl -SL --output PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg \
+    && powershell_sha512='0912d51be4b0a436d6a64be24430581013d023366d36c2e94be65301c44c671c80cb798c084d76109fcd2b128b6d0025dec03d1c0e764392fb85e39ca532d54f' \
+    && echo "$powershell_sha512  PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
-    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux \
-    && rm PowerShell.Linux.$POWERSHELL_VERSION.nupkg \
+    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.arm64 \
+    && rm PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm

@@ -28,15 +28,15 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=true \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 6.2.0-rc.1
+ENV POWERSHELL_VERSION 6.2.0
 
-# The global tool package PowerShell.Linux only supports linux-x64, linux-musl-x64, unix, linux, linux-arm64, osx runtimes.
-RUN wget -O PowerShell.Linux.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.$POWERSHELL_VERSION.nupkg \
-    && powershell_sha512='0bb710ed0ffba267c6d82253abae5427a771861d6b50c3574dfe77d746f8d78d309397abbd1ff300d5b6b70a9d794943836822158d7de6095b61df3fba490c08' \
-    && echo "$powershell_sha512  PowerShell.Linux.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
+# The global tool package PowerShell.Linux.Alpine only supports linux-musl-x64, unix, linux runtimes.
+RUN wget -O PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
+    && powershell_sha512='56c823a266c81d71d10dad4dc3a6967486ba54ad3165205bdf573da7d036b0f8205a2573917599e4593ca2a3309a1298ecd6f45cefd6aa678f00405c55c9c6bc' \
+    && echo "$powershell_sha512  PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
-    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux \
-    && rm PowerShell.Linux.$POWERSHELL_VERSION.nupkg \
+    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.Alpine \
+    && rm PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm \

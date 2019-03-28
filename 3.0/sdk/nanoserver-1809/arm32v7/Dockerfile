@@ -10,12 +10,12 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
     && del dotnet.zip
 
-# The global tool package PowerShell.Windows only supports win10-x64, win-arm, win-x64 runtimes.
-RUN curl -SL --output PowerShell.Windows.%POWERSHELL_VERSION%.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.$ENV:POWERSHELL_VERSION.nupkg `
+# The global tool package PowerShell.Windows.arm32 only supports win-arm runtimes.
+RUN curl -SL --output PowerShell.Windows.arm32.%POWERSHELL_VERSION%.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.arm32.$ENV:POWERSHELL_VERSION.nupkg `
     && mkdir "%ProgramFiles%\powershell" `
-    && "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %POWERSHELL_VERSION% PowerShell.Windows `
-    && del PowerShell.Windows.%POWERSHELL_VERSION%.nupkg `
-    && del "%ProgramFiles%\powershell\.store\powershell.windows\%POWERSHELL_VERSION%\powershell.windows\%POWERSHELL_VERSION%\powershell.windows.%POWERSHELL_VERSION%.nupkg"
+    && "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %POWERSHELL_VERSION% PowerShell.Windows.arm32 `
+    && del PowerShell.Windows.arm32.%POWERSHELL_VERSION%.nupkg `
+    && del "%ProgramFiles%\powershell\.store\powershell.windows.arm32.\%POWERSHELL_VERSION%\powershell.windows.arm32\%POWERSHELL_VERSION%\powershell.windows.arm32.%POWERSHELL_VERSION%.nupkg"
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
