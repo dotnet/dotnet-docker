@@ -38,7 +38,6 @@ RUN dotnet help
 # Install PowerShell global tool
 ENV POWERSHELL_VERSION 6.2.0
 
-# The global tool package PowerShell.Linux.arm32 only supports linux-musl-x64, unix, linux, linux-arm runtimes.
 RUN curl -SL --output PowerShell.Linux.arm32.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.arm32.$POWERSHELL_VERSION.nupkg \
     && powershell_sha512='9737fe2f807db067cf040b0d87dc5d0104e76d78be45aaba266ac3aecb1e286077a935d720b4c6f7660b6f23ffc681e9edbe27048a8dcb0164eb129214afd1eb' \
     && echo "$powershell_sha512  PowerShell.Linux.arm32.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \

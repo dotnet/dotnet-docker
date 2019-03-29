@@ -10,7 +10,9 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
     && del dotnet.zip
 
-# The global tool package PowerShell.Windows.arm32 only supports win-arm runtimes.
+# Install PowerShell global tool
+ENV POWERSHELL_VERSION 6.2.0
+
 RUN curl -SL --output PowerShell.Windows.arm32.%POWERSHELL_VERSION%.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.arm32.$ENV:POWERSHELL_VERSION.nupkg `
     && mkdir "%ProgramFiles%\powershell" `
     && "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %POWERSHELL_VERSION% PowerShell.Windows.arm32 `

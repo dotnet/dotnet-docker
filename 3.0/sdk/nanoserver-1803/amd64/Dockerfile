@@ -21,7 +21,6 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
 # Install PowerShell global tool
 ENV POWERSHELL_VERSION 6.2.0
 
-# The global tool package PowerShell.Windows.x64 only supports win10-x64, win-x64 runtimes.
 RUN Invoke-WebRequest -OutFile PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg; `
     $powershell_sha512 = 'bdd76bc99548c36506da4312ebf3acb99a8d778c644a8278f7f80533dbd89bd7858b57b487c23ebd85778841da12a557891b532960c1018e1621a8e9d12a3f8a'; `
     if ((Get-FileHash PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `

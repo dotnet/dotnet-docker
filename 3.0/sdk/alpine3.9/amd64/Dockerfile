@@ -30,7 +30,6 @@ RUN dotnet help
 # Install PowerShell global tool
 ENV POWERSHELL_VERSION 6.2.0
 
-# The global tool package PowerShell.Linux.Alpine only supports linux-musl-x64, unix, linux runtimes.
 RUN wget -O PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
     && powershell_sha512='56c823a266c81d71d10dad4dc3a6967486ba54ad3165205bdf573da7d036b0f8205a2573917599e4593ca2a3309a1298ecd6f45cefd6aa678f00405c55c9c6bc' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
