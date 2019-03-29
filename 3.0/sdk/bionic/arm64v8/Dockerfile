@@ -34,3 +34,16 @@ ENV ASPNETCORE_URLS=http://+:80 \
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
+
+# Install PowerShell global tool
+ENV POWERSHELL_VERSION 6.2.0
+
+RUN curl -SL --output PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg \
+    && powershell_sha512='0912d51be4b0a436d6a64be24430581013d023366d36c2e94be65301c44c671c80cb798c084d76109fcd2b128b6d0025dec03d1c0e764392fb85e39ca532d54f' \
+    && echo "$powershell_sha512  PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
+    && mkdir -p /usr/share/powershell \
+    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.arm64 \
+    && rm PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg \
+    && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
+    # To reduce image size, remove the copy nupkg that nuget keeps.
+    && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm

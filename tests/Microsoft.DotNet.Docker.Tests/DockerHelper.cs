@@ -206,7 +206,7 @@ namespace Microsoft.DotNet.Docker.Tests
             return output != "";
         }
 
-        public void Run(
+        public string Run(
             string image,
             string name,
             string command = null,
@@ -221,7 +221,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string detachArg = detach ? " -d -t" : string.Empty;
             string userArg = runAsContainerAdministrator ? " -u ContainerAdministrator" : string.Empty;
             string workdirArg = workdir == null ? string.Empty : $" -w {workdir}";
-            ExecuteWithLogging($"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg}{publishArgs} {image}{commandArg}");
+            return ExecuteWithLogging($"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg}{publishArgs} {image}{commandArg}");
         }
     }
 }
