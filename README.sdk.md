@@ -49,14 +49,14 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ## Linux amd64 tags
 
-- [`2.2.105-stretch`, `2.2-stretch`, `2.2.105`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/amd64/Dockerfile)
-- [`2.2.105-alpine3.9`, `2.2-alpine3.9` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.9/amd64/Dockerfile)
-- [`2.2.105-alpine3.8`, `2.2-alpine3.8`, `2.2.105-alpine`, `2.2-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.8/amd64/Dockerfile)
-- [`2.2.105-bionic`, `2.2-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/bionic/amd64/Dockerfile)
-- [`2.1.505-stretch`, `2.1-stretch`, `2.1.505`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/amd64/Dockerfile)
-- [`2.1.505-alpine3.9`, `2.1-alpine3.9` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.9/amd64/Dockerfile)
-- [`2.1.505-alpine3.7`, `2.1-alpine3.7`, `2.1.505-alpine`, `2.1-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.7/amd64/Dockerfile)
-- [`2.1.505-bionic`, `2.1-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/amd64/Dockerfile)
+- [`2.2.202-stretch`, `2.2-stretch`, `2.2.202`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/amd64/Dockerfile)
+- [`2.2.202-alpine3.9`, `2.2-alpine3.9` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.9/amd64/Dockerfile)
+- [`2.2.202-alpine3.8`, `2.2-alpine3.8`, `2.2.202-alpine`, `2.2-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.8/amd64/Dockerfile)
+- [`2.2.202-bionic`, `2.2-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/bionic/amd64/Dockerfile)
+- [`2.1.602-stretch`, `2.1-stretch`, `2.1.602`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/amd64/Dockerfile)
+- [`2.1.602-alpine3.9`, `2.1-alpine3.9` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.9/amd64/Dockerfile)
+- [`2.1.602-alpine3.7`, `2.1-alpine3.7`, `2.1.602-alpine`, `2.1-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.7/amd64/Dockerfile)
+- [`2.1.602-bionic`, `2.1-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/amd64/Dockerfile)
 - [`1.1.13-stretch`, `1.1-stretch` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/stretch/amd64/Dockerfile)
 - [`1.1.13-jessie`, `1.1-jessie`, `1.1.13`, `1.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/jessie/amd64/Dockerfile)
 
@@ -75,10 +75,10 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ## Linux arm32 tags
 
-- [`2.2.105-stretch-arm32v7`, `2.2-stretch-arm32v7`, `2.2.105`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/arm32v7/Dockerfile)
-- [`2.2.105-bionic-arm32v7`, `2.2-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/bionic/arm32v7/Dockerfile)
-- [`2.1.505-stretch-arm32v7`, `2.1-stretch-arm32v7`, `2.1.505`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/arm32v7/Dockerfile)
-- [`2.1.505-bionic-arm32v7`, `2.1-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/arm32v7/Dockerfile)
+- [`2.2.202-stretch-arm32v7`, `2.2-stretch-arm32v7`, `2.2.202`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/arm32v7/Dockerfile)
+- [`2.2.202-bionic-arm32v7`, `2.2-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/bionic/arm32v7/Dockerfile)
+- [`2.1.602-stretch-arm32v7`, `2.1-stretch-arm32v7`, `2.1.602`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/arm32v7/Dockerfile)
+- [`2.1.602-bionic-arm32v7`, `2.1-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/arm32v7/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -87,8 +87,8 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ## Windows Server, version 1809 amd64 tags
 
-- [`2.2.105-nanoserver-1809`, `2.2-nanoserver-1809`, `2.2.105`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
-- [`2.1.505-nanoserver-1809`, `2.1-nanoserver-1809`, `2.1.505`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.2.202-nanoserver-1809`, `2.2-nanoserver-1809`, `2.2.202`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/amd64/Dockerfile)
+- [`2.1.602-nanoserver-1809`, `2.1-nanoserver-1809`, `2.1.602`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
 - [`1.1.13-nanoserver-1809`, `1.1-nanoserver-1809`, `1.1.13`, `1.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/1.1/sdk/nanoserver-1809/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
@@ -97,8 +97,8 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ## Windows Server, version 1803 amd64 tags
 
-- [`2.2.105-nanoserver-1803`, `2.2-nanoserver-1803`, `2.2.105`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1803/amd64/Dockerfile)
-- [`2.1.505-nanoserver-1803`, `2.1-nanoserver-1803`, `2.1.505`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1803/amd64/Dockerfile)
+- [`2.2.202-nanoserver-1803`, `2.2-nanoserver-1803`, `2.2.202`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1803/amd64/Dockerfile)
+- [`2.1.602-nanoserver-1803`, `2.1-nanoserver-1803`, `2.1.602`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1803/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -106,8 +106,8 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ## Windows Server, version 1709 amd64 tags
 
-- [`2.2.105-nanoserver-1709`, `2.2-nanoserver-1709`, `2.2.105`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1709/amd64/Dockerfile)
-- [`2.1.505-nanoserver-1709`, `2.1-nanoserver-1709`, `2.1.505`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1709/amd64/Dockerfile)
+- [`2.2.202-nanoserver-1709`, `2.2-nanoserver-1709`, `2.2.202`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1709/amd64/Dockerfile)
+- [`2.1.602-nanoserver-1709`, `2.1-nanoserver-1709`, `2.1.602`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1709/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
@@ -115,7 +115,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ## Windows Server, version 1809 arm32 tags
 
-- [`2.2.105-nanoserver-1809-arm32v7`, `2.2-nanoserver-1809-arm32v7`, `2.2.105`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/arm32v7/Dockerfile)
+- [`2.2.202-nanoserver-1809-arm32v7`, `2.2-nanoserver-1809-arm32v7`, `2.2.202`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/arm32v7/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
