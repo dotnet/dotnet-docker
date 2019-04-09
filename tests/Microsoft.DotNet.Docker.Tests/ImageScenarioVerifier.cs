@@ -57,9 +57,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
                     // Use `sdk` image to publish self contained app and run with `runtime-deps` image
-                    // string selfContainedTag = BuildTestAppImage("self_contained_app", appDir, customBuildArgs: $"rid={_imageData.Rid}");
-                    // tags.Add(selfContainedTag);
-                    // await RunTestAppImage(selfContainedTag, runAsAdmin: runAsAdmin);
+                    string selfContainedTag = BuildTestAppImage("self_contained_app", appDir, customBuildArgs: $"rid={_imageData.Rid}");
+                    tags.Add(selfContainedTag);
+                    await RunTestAppImage(selfContainedTag, runAsAdmin: runAsAdmin);
                 }
             }
             finally
