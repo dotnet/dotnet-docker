@@ -1,19 +1,18 @@
 FROM alpine:3.8
 
 RUN apk add --no-cache \
-    ca-certificates \
-    \
-    # .NET Core dependencies
-    krb5-libs \
-    libgcc \
-    libintl \
-    libssl1.0 \
-    libstdc++ \
-    tzdata \
-    userspace-rcu \
-    zlib \
-    && apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
-    lttng-ust
+        ca-certificates \
+        \
+        # .NET Core dependencies
+        krb5-libs \
+        libgcc \
+        libintl \
+        libssl1.0 \
+        libstdc++ \
+        lttng-ust \
+        tzdata \
+        userspace-rcu \
+        zlib
 
 # Configure web servers to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80 \
