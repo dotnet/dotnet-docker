@@ -197,15 +197,7 @@ Build a container image:
 docker build --pull -t aspnetapp .
 ```
 
-Run the container image with ASP.NET Core configured for HTTPS. Select the correct syntax, depending on the Windows Server version.
-
-#### Windows Server 2016
-
-```console
-docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v %APPDATA%\microsoft\UserSecrets\:C:\Users\ContainerAdministrator\AppData\Roaming\microsoft\UserSecrets -v %USERPROFILE%\.aspnet\https:C:\Users\ContainerAdministrator\AppData\Roaming\ASP.NET\Https aspnetapp
-```
-
-#### Windows Server 2016, version 1709 or higher
+Run the container image with ASP.NET Core configured for HTTPS.
 
 ```console
 docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v %APPDATA%\microsoft\UserSecrets\:C:\Users\ContainerUser\AppData\Roaming\microsoft\UserSecrets -v %USERPROFILE%\.aspnet\https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https aspnetapp

@@ -5,7 +5,6 @@ def branch = GithubBranchName
 def isPR = true
 def platformList = [
         'Ubuntu16.04:Linux',
-        'Windows_2016:NanoServer-1709',
         'Windows_2016:NanoServer-1803',
         'Windows_2016:NanoServer-1809'
     ]
@@ -14,7 +13,7 @@ platformList.each { platform ->
     def(hostOS, containerOS) = platform.tokenize(':')
     def machineLabel = (hostOS == 'Windows_2016') ? 'latest-docker' : 'latest-or-auto-docker'
 
-    if (containerOS == 'NanoServer-1709' || containerOS == 'NanoServer-1803') {
+    if (containerOS == 'NanoServer-1803') {
         versionList = ['2.1', '2.2', '3.0']
     }
     else if (containerOS == 'NanoServer-1809') {
@@ -56,10 +55,7 @@ platformList.each { platform ->
             }
         }
 
-        if (containerOS == 'NanoServer-1709') {
-            newJob.with {label('windows.10.amd64.serverrs3.open')}
-        }
-        else if (containerOS == 'NanoServer-1803') {
+        if (containerOS == 'NanoServer-1803') {
             newJob.with {label('windows.10.amd64.serverrs4.open')}
         }
         else if (containerOS == 'NanoServer-1809') {
