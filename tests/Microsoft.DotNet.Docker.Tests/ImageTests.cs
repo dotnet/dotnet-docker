@@ -86,7 +86,7 @@ namespace Microsoft.DotNet.Docker.Tests
             return filter != null ? $"^{Regex.Escape(filter).Replace(@"\*", ".*").Replace(@"\?", ".")}$" : null;
         }
 
-        //[Theory]
+        [Theory]
         [MemberData(nameof(GetImageData))]
         public void VerifySdkImage_PackageCache(ImageData imageData)
         {
@@ -132,7 +132,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        //[Theory]
+        [Theory]
         [MemberData(nameof(GetImageData))]
         public void VerifySDKImage_PowerShellScenario(ImageData imageData)
         {
@@ -161,7 +161,7 @@ namespace Microsoft.DotNet.Docker.Tests
             await verifier.Execute();
         }
 
-        //[Theory]
+        [Theory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAspNetCoreRuntimeImage_AppScenario(ImageData imageData)
         {

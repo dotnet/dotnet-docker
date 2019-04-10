@@ -21,7 +21,7 @@ jobs:
   variables:
     osVersion: ${{ parameters.osVersion }}
     ${{ if eq(parameters.isPullRequestBuild, 'false') }}:
-      imageBuilderBuildArgs:
+      imageBuilderBuildArgs: >
         --registry-override $(acr.server)
         --repo-prefix $(stagingRepoPrefix)
         --push
