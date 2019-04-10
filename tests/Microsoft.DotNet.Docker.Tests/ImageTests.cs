@@ -142,15 +142,14 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            // A basic test which executes an arbitrary command to validate PS is functional
             string output = _dockerHelper.Run(
                 image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
                 name: imageData.GetIdentifier($"pwsh"),
-                command: $"pwsh -c get-date -Format 'yyyy:MM:dd'"
+                command: $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value"
             );
 
-            string expected = DateTime.Now.ToString("yyyy:MM:dd");
-
-            Assert.Equal(output, expected);
+            Assert.Equal(output, bool.TrueString, ignoreCase: true);
         }
 
         [Theory]
