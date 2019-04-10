@@ -2,7 +2,6 @@ parameters:
   isPullRequestBuild: false
 steps:
 - powershell: |
-    $optionalTestArgs=""
     if ("${{ parameters.isPullRequestBuild }}" -eq "false") {
       $optionalTestArgs="-Registry $env:ACR_SERVER -RepoPrefix $env:STAGINGREPOPREFIX"
     } else {
@@ -10,7 +9,7 @@ steps:
     }
     echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
   displayName: Set Test Variables
-- ${{ if eq(parameters.cleanupDocker, 'true') }}:
+- ${{ if eq(parameters.isPullRequestBuild, 'false') }}:
   - template: init-docker-windows.yml
     parameters:
       setupImageBuilder: false
@@ -40,5 +39,5 @@ steps:
     mergeTestResults: true
     publishRunAttachments: true
     testRunTitle: Windows $(dotnetVersion) $(osVariant) amd64
-- ${{ if eq(parameters.cleanupDocker, 'true') }}:
+- ${{ if eq(parameters.isPullRequestBuild, 'false') }}:
   - template: cleanup-docker-windows.yml

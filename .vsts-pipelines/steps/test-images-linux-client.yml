@@ -1,6 +1,5 @@
 parameters:
   useRemoteDockerServer: false
-  cleanupDocker: true
   isPullRequestBuild: false
 steps:
 - script: |
@@ -22,7 +21,7 @@ steps:
     setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
     setupImageBuilder: false
     setupTestRunner: true
-    cleanupDocker: ${{ parameters.cleanupDocker }}
+    cleanupDocker: ${{ not(parameters.isPullRequestBuild) }}
 - script: >
     docker run -t -d
     -v /var/run/docker.sock:/var/run/docker.sock
@@ -72,7 +71,7 @@ steps:
   displayName: Stop TestRunner Container
   condition: always()
   continueOnError: true
-- ${{ if eq(parameters.cleanupDocker, 'true') }}:
+- ${{ if eq(parameters.isPullRequestBuild, 'false') }}:
   - template: cleanup-docker-linux.yml
     parameters:
       cleanupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
