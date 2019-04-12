@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/core/runtime
 FROM $REPO:3.0-nanoserver-1809-arm32v7
 
 # Install ASP.NET Core Runtime
-ENV ASPNETCORE_VERSION 3.0.0-preview4-19172-03
+ENV ASPNETCORE_VERSION 3.0.0-preview4-19210-17
 
 RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/%ASPNETCORE_VERSION%/aspnetcore-runtime-%ASPNETCORE_VERSION%-win-arm.zip `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" ./shared/Microsoft.AspNetCore.App `

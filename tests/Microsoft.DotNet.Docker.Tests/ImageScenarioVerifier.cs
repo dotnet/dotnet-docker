@@ -131,8 +131,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 ApplyProjectCustomizations(_imageData, Path.Combine(appDir, "app.csproj"));
 
+                string sourceDockerfileName = $"Dockerfile.{DockerHelper.DockerOS.ToLower()}";
+                if (!DockerHelper.IsLinuxContainerModeEnabled && _imageData.Arch == Arch.Arm)
+                {
+                    sourceDockerfileName += $".{Enum.GetName(typeof(Arch), _imageData.Arch).ToLowerInvariant()}";
+                }
+
                 File.Copy(
-                    Path.Combine(_testArtifactsDir, $"Dockerfile.{DockerHelper.DockerOS.ToLower()}"),
+                    Path.Combine(_testArtifactsDir, sourceDockerfileName),
                     Path.Combine(appDir, "Dockerfile"));
 
                 string nuGetConfigFileName = "NuGet.config";
