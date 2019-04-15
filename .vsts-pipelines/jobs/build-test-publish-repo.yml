@@ -3,7 +3,6 @@ parameters:
   testMatrixType: platformVersionedOs
   publishMatrixType: dependencyGraph
   customBuildLegGrouping: ""
-  isPullRequestBuild: false
 
 jobs:
   ################################################################################
@@ -19,7 +18,7 @@ jobs:
       matrixType: ${{ parameters.buildMatrixType }}
       name: buildMatrix
       customBuildLegGrouping: ${{ parameters.customBuildLegGrouping }}
-  - ${{ if eq(parameters.isPullRequestBuild, 'false') }}:  
+  - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
     - template: ../steps/generate-matrix.yml
       parameters:
         matrixType: ${{ parameters.testMatrixType }}
@@ -42,7 +41,6 @@ jobs:
       name: Hosted Ubuntu 1604
     matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixLinuxAmd64', parameters.buildMatrixType) }}']
     dockerClientOS: linux
-    isPullRequestBuild: ${{ parameters.isPullRequestBuild }}
 - template: build-images.yml
   parameters:
     name: Build_NanoServer1803_amd64
@@ -51,7 +49,6 @@ jobs:
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
     matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixNanoserver1803Amd64', parameters.buildMatrixType) }}']
     dockerClientOS: windows
-    isPullRequestBuild: ${{ parameters.isPullRequestBuild }}
 - template: build-images.yml
   parameters:
     name: Build_NanoServer1809_amd64
@@ -60,8 +57,7 @@ jobs:
       demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
     matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixNanoserver1809Amd64', parameters.buildMatrixType) }}']
     dockerClientOS: windows
-    isPullRequestBuild: ${{ parameters.isPullRequestBuild }}
-- ${{ if eq(parameters.isPullRequestBuild, 'false') }}:
+- ${{ if ne(variables['System.TeamProject'], 'internal') }}:
   - template: build-images.yml
     parameters:
       name: Build_Linux_arm64v8
@@ -74,7 +70,6 @@ jobs:
       matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixLinuxArm64v8', parameters.buildMatrixType) }}']
       useRemoteDockerServer: true
       dockerClientOS: linux
-      isPullRequestBuild: ${{ parameters.isPullRequestBuild }}
   - template: build-images.yml
     parameters:
       name: Build_Linux_arm32v7
@@ -87,7 +82,6 @@ jobs:
       matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixLinuxArm32v7', parameters.buildMatrixType) }}']
       useRemoteDockerServer: true
       dockerClientOS: linux
-      isPullRequestBuild: ${{ parameters.isPullRequestBuild }}
   - template: build-images.yml
     parameters:
       name: Build_NanoServer1809_arm32
@@ -100,9 +94,8 @@ jobs:
       matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixNanoserver1809Arm32', parameters.buildMatrixType) }}']
       dockerClientOS: linux
       useRemoteDockerServer: true
-      isPullRequestBuild: ${{ parameters.isPullRequestBuild }}
 
-- ${{ if eq(parameters.isPullRequestBuild, 'false') }}:
+- ${{ if ne(variables['System.TeamProject'], 'internal') }}:
     ################################################################################
     # Test Images
     ################################################################################

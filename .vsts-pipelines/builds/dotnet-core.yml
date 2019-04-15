@@ -1,7 +1,7 @@
 trigger: none
 pr: none
 variables:
-- template: ../variables/common-official.yml
+- template: ../variables/common.yml
 - name: manifest
   value: manifest.json
 jobs:

@@ -4,7 +4,7 @@ parameters:
   matrix: {}
   dockerClientOS: null
   useRemoteDockerServer: false,
-  isPullRequestBuild: false
+
 jobs:
 - job: ${{ parameters.name }}
   condition: "
@@ -20,7 +20,7 @@ jobs:
     matrix: $[ ${{ parameters.matrix }} ]
   variables:
     osVersion: ${{ parameters.osVersion }}
-    ${{ if eq(parameters.isPullRequestBuild, 'false') }}:
+    ${{ if ne(variables['System.TeamProject'], 'internal') }}:
       imageBuilderBuildArgs: >
         --registry-override $(acr.server)
         --repo-prefix $(stagingRepoPrefix)
@@ -28,7 +28,7 @@ jobs:
         --username $(acr.userName)
         --password $(BotAccount-dotnet-docker-acr-bot-password)
         $(imageBuilder.queueArgs)
-    ${{ if eq(parameters.isPullRequestBuild, 'true') }}:
+    ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       imageBuilderBuildArgs: $(imageBuilder.queueArgs)
   steps:
   # This script is necessary to workaround there not being a matching architecture when pulling images
@@ -64,10 +64,8 @@ jobs:
       --retry
       $(imageBuilderBuildArgs)
     displayName: Build Images
-  - ${{ if eq(parameters.isPullRequestBuild, 'true') }}:
+  - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
-      parameters:
-        isPullRequestBuild: true
   - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
     parameters:
       cleanupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
