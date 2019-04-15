@@ -9,7 +9,7 @@ steps:
     if [ "${{ parameters.useRemoteDockerServer }}" == "true" ]; then
       optionalTestArgs="-DisableHttpVerification"
     fi
-    if [ "${{ eq(variables['System.TeamProject'], 'internal') }}" == "False" ]; then
+    if [ "${{ eq(variables['System.TeamProject'], 'public') }}" == "False" ]; then
       optionalTestArgs="$optionalTestArgs -Registry $(acr.server) -RepoPrefix $(stagingRepoPrefix)"
     else
       optionalTestArgs="$optionalTestArgs -IsLocalRun"
@@ -21,7 +21,7 @@ steps:
     setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
     setupImageBuilder: false
     setupTestRunner: true
-    cleanupDocker: ${{ ne(variables['System.TeamProject'], 'internal') }}
+    cleanupDocker: ${{ ne(variables['System.TeamProject'], 'public') }}
 - script: >
     docker run -t -d
     -v /var/run/docker.sock:/var/run/docker.sock
@@ -30,7 +30,7 @@ steps:
     --name $(testRunner.container)
     $(imageNames.testRunner.withrepo)
   displayName: Start Test Runner Container
-- ${{ if ne(variables['System.TeamProject'], 'internal') }}:
+- ${{ if ne(variables['System.TeamProject'], 'public') }}:
   - script: >
       docker exec $(testRunner.container) pwsh
       -File ./scripts/Invoke-WithRetry.ps1
@@ -44,7 +44,7 @@ steps:
     -ArchitectureFilter $(architecture)
     $(optionalTestArgs)
   displayName: Test Images
-- ${{ if ne(variables['System.TeamProject'], 'internal') }}:
+- ${{ if ne(variables['System.TeamProject'], 'public') }}:
   - script: docker exec $(testRunner.container) docker logout $(acr.server)
     displayName: Docker logout
     condition: always()
@@ -71,7 +71,7 @@ steps:
   displayName: Stop TestRunner Container
   condition: always()
   continueOnError: true
-- ${{ if ne(variables['System.TeamProject'], 'internal') }}:
+- ${{ if ne(variables['System.TeamProject'], 'public') }}:
   - template: cleanup-docker-linux.yml
     parameters:
       cleanupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}

@@ -13,6 +13,6 @@ variables:
 jobs:
 - template: ../jobs/build-test-publish-repo.yml
   parameters:
-    ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+    ${{ if eq(variables['System.TeamProject'], 'public') }}:
       buildMatrixType: platformVersionedOs
       customBuildLegGrouping: pr-build
