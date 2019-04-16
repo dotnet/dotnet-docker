@@ -7,11 +7,11 @@ steps:
     }
     echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
   displayName: Set Test Variables
-- ${{ if ne(variables['System.TeamProject'], 'public') }}:
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - template: init-docker-windows.yml
     parameters:
       setupImageBuilder: false
-- ${{ if ne(variables['System.TeamProject'], 'public') }}:
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - script: docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
     displayName: Docker login
 - powershell: Get-ChildItem -Path tests -r | Where {$_.Extension -match "trx"} | Remove-Item
@@ -22,7 +22,7 @@ steps:
     -OSFilter $(osVariant)
     $(optionalTestArgs)
   displayName: Test Images
-- ${{ if ne(variables['System.TeamProject'], 'public') }}:
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - script: docker logout $(acr.server)
     displayName: Docker logout
     condition: always()
@@ -37,5 +37,5 @@ steps:
     mergeTestResults: true
     publishRunAttachments: true
     testRunTitle: Windows $(dotnetVersion) $(osVariant) amd64
-- ${{ if ne(variables['System.TeamProject'], 'public') }}:
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - template: cleanup-docker-windows.yml

@@ -18,7 +18,7 @@ jobs:
       matrixType: ${{ parameters.buildMatrixType }}
       name: buildMatrix
       customBuildLegGrouping: ${{ parameters.customBuildLegGrouping }}
-  - ${{ if ne(variables['System.TeamProject'], 'public') }}:
+  - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     - template: ../steps/generate-matrix.yml
       parameters:
         matrixType: ${{ parameters.testMatrixType }}
@@ -47,7 +47,7 @@ jobs:
     pool: # windows1803Amd64Pool
       ${{ if eq(variables['System.TeamProject'], 'public') }}:
         name: DotNetCore-Docker-Public
-      ${{ if ne(variables['System.TeamProject'], 'public') }}:
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
         name: DotNetCore-Docker
       demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
     matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixNanoserver1803Amd64', parameters.buildMatrixType) }}']
@@ -58,20 +58,17 @@ jobs:
     pool: # windows1809Amd64
       ${{ if eq(variables['System.TeamProject'], 'public') }}:
         name: DotNetCore-Docker-Public
-      ${{ if ne(variables['System.TeamProject'], 'public') }}:
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
         name: DotNetCore-Docker
       demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
     matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixNanoserver1809Amd64', parameters.buildMatrixType) }}']
     dockerClientOS: windows
-- ${{ if ne(variables['System.TeamProject'], 'public') }}:
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - template: build-images.yml
     parameters:
       name: Build_Linux_arm64v8
       pool: # linuxArm64v8Pool
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
-        ${{ if ne(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker
+        name: DotNetCore-Docker
         demands:
         - agent.os -equals linux
         - RemoteDockerServerOS -equals linux
@@ -83,10 +80,7 @@ jobs:
     parameters:
       name: Build_Linux_arm32v7
       pool: # linuxArm32v7Pool
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
-        ${{ if ne(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker
+        name: DotNetCore-Docker
         demands:
         - agent.os -equals linux
         - RemoteDockerServerOS -equals linux
@@ -98,10 +92,7 @@ jobs:
     parameters:
       name: Build_NanoServer1809_arm32
       pool: # nanoServer1809Arm32Pool
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
-        ${{ if ne(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker
+        name: DotNetCore-Docker
         demands:
         - agent.os -equals linux
         - RemoteDockerServerOS -equals nanoserver-1809
@@ -110,7 +101,7 @@ jobs:
       dockerClientOS: linux
       useRemoteDockerServer: true
 
-- ${{ if ne(variables['System.TeamProject'], 'public') }}:
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     ################################################################################
     # Test Images
     ################################################################################
@@ -126,10 +117,7 @@ jobs:
       name: Test_Linux_arm64v8
       buildDependencies: Build_Linux_arm64v8
       pool: # linuxArm64v8Pool
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
-        ${{ if ne(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker
+        name: DotNetCore-Docker
         demands:
         - agent.os -equals linux
         - RemoteDockerServerOS -equals linux
@@ -141,10 +129,7 @@ jobs:
       name: Test_Linux_arm32v7
       buildDependencies: Build_Linux_arm32v7
       pool: # linuxArm32v7Pool
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
-        ${{ if ne(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker
+        name: DotNetCore-Docker
         demands:
         - agent.os -equals linux
         - RemoteDockerServerOS -equals linux
@@ -156,10 +141,7 @@ jobs:
       name: Test_NanoServer1803_amd64
       buildDependencies: Build_NanoServer1803_amd64
       pool: # windows1803Amd64Pool
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
-        ${{ if ne(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker
+        name: DotNetCore-Docker
         demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
       matrix: dependencies.GenerateMatrices.outputs['${{ format('testMatrix.{0}MatrixNanoserver1803Amd64', parameters.testMatrixType) }}']
   - template: test-images-windows-client.yml
@@ -167,10 +149,7 @@ jobs:
       name: Test_NanoServer1809_amd64
       buildDependencies: Build_NanoServer1809_amd64
       pool: # windows1809Amd64
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
-        ${{ if ne(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker
+        name: DotNetCore-Docker
         demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
       matrix: dependencies.GenerateMatrices.outputs['${{ format('testMatrix.{0}MatrixNanoserver1809Amd64', parameters.testMatrixType) }}']
   - template: test-images-linux-client.yml
@@ -178,10 +157,7 @@ jobs:
       name: Test_NanoServer1809_arm32
       buildDependencies: Build_NanoServer1809_arm32
       pool: # nanoServer1809Arm32Pool
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
-        ${{ if ne(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker
+        name: DotNetCore-Docker
         demands:
         - agent.os -equals linux
         - RemoteDockerServerOS -equals nanoserver-1809
