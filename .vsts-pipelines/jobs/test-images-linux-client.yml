@@ -21,67 +21,9 @@ jobs:
   pool: ${{ parameters.pool }}
   strategy:
     matrix: $[ ${{ parameters.matrix }} ]
-  variables:
-    testRunner.container: testrunner-$(Build.BuildId)-$(System.JobId)
-    ${{ if eq(parameters.useRemoteDockerServer, 'false') }}:
-      optionalTestArgs: ''
-    ${{ if eq(parameters.useRemoteDockerServer, 'true') }}:
-      optionalTestArgs: -DisableHttpVerification
   steps:
-  - template: ../steps/init-docker-linux.yml
+  - template: ../steps/test-images-linux-client.yml
     parameters:
-      setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
+      useRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
       setupImageBuilder: false
       setupTestRunner: true
-  - script: >
-      docker run -t -d
-      -v /var/run/docker.sock:/var/run/docker.sock
-      -w /repo $(dockerArmRunArgs)
-      -e RUNNING_TESTS_IN_CONTAINER=true 
-      --name $(testRunner.container)
-      $(imageNames.testRunner.withrepo)
-    displayName: Start Test Runner Container
-  - script: >
-      docker exec $(testRunner.container) pwsh
-      -File ./scripts/Invoke-WithRetry.ps1
-      "docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)"
-    displayName: Docker login
-  - script: >
-      docker exec $(testRunner.container) pwsh
-      -File ./tests/run-tests.ps1
-      -VersionFilter $(dotnetVersion)*
-      -OSFilter $(osVariant)*
-      -ArchitectureFilter $(architecture)
-      -Registry $(acr.server)
-      -RepoPrefix $(stagingRepoPrefix)
-      $(optionalTestArgs)
-    displayName: Test Images
-  - script: docker exec $(testRunner.container) docker logout $(acr.server)
-    displayName: Docker logout
-    condition: always()
-    continueOnError: true
-  - script: >
-      docker cp
-      $(testRunner.container):/repo/tests/Microsoft.DotNet.Docker.Tests/TestResults/
-      $(Common.TestResultsDirectory)/.
-    displayName: Copy Test Results
-    condition: always()
-    continueOnError: true
-  - task: PublishTestResults@2
-    displayName: Publish Test Results
-    condition: always()
-    continueOnError: true
-    inputs:
-      testRunner: vSTest
-      testResultsFiles: '**/*.trx'
-      searchFolder: $(Common.TestResultsDirectory)
-      mergeTestResults: true
-      publishRunAttachments: true
-      testRunTitle: Linux $(dotnetVersion) $(osVariant) $(architecture)
-  - script: docker stop $(testRunner.container)
-    displayName: Stop TestRunner Container
-    condition: always()
-    continueOnError: true
-  - template: ../steps/cleanup-docker-linux.yml
-    parameters:
-      cleanupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
