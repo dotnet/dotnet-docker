@@ -313,7 +313,15 @@
               "tags": {
                 "$(1.0-RuntimeVersion)-jessie": {},
                 "1.0-jessie": {}
-              }
+              },
+              "customBuildLegGrouping": [
+                {
+                  "name": "pr-build",
+                  "dependencies": [
+                    "$(Repo:sdk):1.1-jessie"
+                  ]
+                }
+              ]
             },
             {
               "dockerfile": "1.0/runtime/nanoserver-1809/amd64",
@@ -322,7 +330,15 @@
               "tags": {
                 "$(1.0-RuntimeVersion)-nanoserver-1809": {},
                 "1.0-nanoserver-1809": {}
-              }
+              },
+              "customBuildLegGrouping": [
+                {
+                  "name": "pr-build",
+                  "dependencies": [
+                    "$(Repo:sdk):1.1-nanoserver-1809"
+                  ]
+                }
+              ]
             }
           ]
         },

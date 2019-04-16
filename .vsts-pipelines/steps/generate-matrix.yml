@@ -1,6 +1,7 @@
 parameters:
   matrixType: null
   name: null
+  customBuildLegGrouping: ""
 
 steps:
   - script: >
@@ -9,6 +10,7 @@ steps:
       --type ${{ parameters.matrixType }}
       --os-type '*'
       --architecture '*'
+      --customBuildLegGrouping "${{ parameters.customBuildLegGrouping }}"
       $(imageBuilder.generateMatrixQueueArgs)
     displayName: Generate ${{ parameters.matrixType }} Matrix
     name: ${{ parameters.name }}

@@ -3,10 +3,16 @@ trigger:
   branches:
     include:
     - nightly
-pr: none
+pr:
+- nightly
+
 variables:
 - template: ../variables/common.yml
 - name: manifest
   value: manifest.json
 jobs:
 - template: ../jobs/build-test-publish-repo.yml
+  parameters:
+    ${{ if eq(variables['System.TeamProject'], 'public') }}:
+      buildMatrixType: platformVersionedOs
+      customBuildLegGrouping: pr-build
