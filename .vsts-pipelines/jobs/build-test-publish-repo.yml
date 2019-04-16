@@ -23,12 +23,10 @@ jobs:
       parameters:
         matrixType: ${{ parameters.testMatrixType }}
         name: testMatrix
-        customBuildLegGrouping: ${{ parameters.customBuildLegGrouping }}
     - template: ../steps/generate-matrix.yml
       parameters:
         matrixType: ${{ parameters.publishMatrixType }}
         name: publishMatrix
-        customBuildLegGrouping: ${{ parameters.customBuildLegGrouping }}
     - template: ../steps/cleanup-docker-linux.yml
 
   ################################################################################
