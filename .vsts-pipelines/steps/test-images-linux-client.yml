@@ -1,0 +1,77 @@
+parameters:
+  useRemoteDockerServer: false
+
+steps:
+- script: |
+    echo "##vso[task.setvariable variable=testRunner.container]testrunner-$(Build.BuildId)-$(System.JobId)"
+
+    optionalTestArgs=""
+    if [ "${{ parameters.useRemoteDockerServer }}" == "true" ]; then
+      optionalTestArgs="-DisableHttpVerification"
+    fi
+    if [ "${{ eq(variables['System.TeamProject'], 'public') }}" == "False" ]; then
+      optionalTestArgs="$optionalTestArgs -Registry $(acr.server) -RepoPrefix $(stagingRepoPrefix)"
+    else
+      optionalTestArgs="$optionalTestArgs -IsLocalRun"
+    fi
+    echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
+  displayName: Set Test Variables
+- template: init-docker-linux.yml
+  parameters:
+    setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
+    setupImageBuilder: false
+    setupTestRunner: true
+    cleanupDocker: ${{ eq(variables['System.TeamProject'], 'internal') }}
+- script: >
+    docker run -t -d
+    -v /var/run/docker.sock:/var/run/docker.sock
+    -w /repo $(dockerArmRunArgs)
+    -e RUNNING_TESTS_IN_CONTAINER=true 
+    --name $(testRunner.container)
+    $(imageNames.testRunner.withrepo)
+  displayName: Start Test Runner Container
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+  - script: >
+      docker exec $(testRunner.container) pwsh
+      -File ./scripts/Invoke-WithRetry.ps1
+      "docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)"
+    displayName: Docker login
+- script: >
+    docker exec $(testRunner.container) pwsh
+    -File ./tests/run-tests.ps1
+    -VersionFilter $(dotnetVersion)*
+    -OSFilter $(osVariant)*
+    -ArchitectureFilter $(architecture)
+    $(optionalTestArgs)
+  displayName: Test Images
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+  - script: docker exec $(testRunner.container) docker logout $(acr.server)
+    displayName: Docker logout
+    condition: always()
+    continueOnError: true
+- script: >
+    docker cp
+    $(testRunner.container):/repo/tests/Microsoft.DotNet.Docker.Tests/TestResults/
+    $(Common.TestResultsDirectory)/.
+  displayName: Copy Test Results
+  condition: always()
+  continueOnError: true
+- task: PublishTestResults@2
+  displayName: Publish Test Results
+  condition: always()
+  continueOnError: true
+  inputs:
+    testRunner: vSTest
+    testResultsFiles: '**/*.trx'
+    searchFolder: $(Common.TestResultsDirectory)
+    mergeTestResults: true
+    publishRunAttachments: true
+    testRunTitle: Linux $(dotnetVersion) $(osVariant) $(architecture)
+- script: docker stop $(testRunner.container)
+  displayName: Stop TestRunner Container
+  condition: always()
+  continueOnError: true
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+  - template: cleanup-docker-linux.yml
+    parameters:
+      cleanupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
