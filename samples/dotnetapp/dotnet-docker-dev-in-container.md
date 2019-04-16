@@ -20,12 +20,12 @@ You can also [download the repository as a zip](https://github.com/dotnet/dotnet
 
 This approach relies on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to mount source into the container (without using a Dockerfile). You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
 
-To avoid conflicts between container usage and your local environment, you need to use a different set of `obj` and `bin` folders for each environment.
+To avoid conflicts between container usage and your local environment, you need to use a different set of `obj` and `bin` folders for your container environment.
 
  Make this change with the following steps:
 
  1. Delete your existing obj and bin folders manually or use `dotnet clean`.
- 2. Add a [Directory.Build.props](Directory.Build.props) file to your project to use a different set of `obj` and `bin` folders for your local and container environments.
+ 2. Add a [Directory.Build.props](Directory.Build.props) file to your project to use a different set of `obj` and `bin` folders for your container environment.
 
 ## Run your application in a container while you Develop
 
