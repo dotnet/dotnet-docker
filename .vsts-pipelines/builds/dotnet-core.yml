@@ -1,6 +1,6 @@
 trigger: none
 pr:
-- nightly
+- master
 
 variables:
 - template: ../variables/common.yml
