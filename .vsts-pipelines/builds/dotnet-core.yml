@@ -1,8 +1,14 @@
 trigger: none
-pr: none
+pr:
+- master
+
 variables:
 - template: ../variables/common.yml
 - name: manifest
   value: manifest.json
 jobs:
 - template: ../jobs/build-test-publish-repo.yml
+  parameters:
+    ${{ if eq(variables['System.TeamProject'], 'public') }}:
+      buildMatrixType: platformVersionedOs
+      customBuildLegGrouping: pr-build
