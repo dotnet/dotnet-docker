@@ -3,7 +3,7 @@ parameters:
   pool: {}
   matrix: {}
   dockerClientOS: null
-  useRemoteDockerServer: false,
+  useRemoteDockerServer: false
 
 jobs:
 - job: ${{ parameters.name }}
