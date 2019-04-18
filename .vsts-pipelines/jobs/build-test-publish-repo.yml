@@ -41,6 +41,36 @@ jobs:
     dockerClientOS: linux
 - template: build-images.yml
   parameters:
+    name: Build_Linux_arm64v8
+    pool: # linuxArm64v8Pool
+      ${{ if eq(variables['System.TeamProject'], 'public') }}:
+        name: DotNetCore-Docker-Public
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+        name: DotNetCore-Docker
+      demands:
+      - agent.os -equals linux
+      - RemoteDockerServerOS -equals linux
+      - RemoteDockerServerArch -equals aarch64
+    matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixLinuxArm64v8', parameters.buildMatrixType) }}']
+    useRemoteDockerServer: true
+    dockerClientOS: linux
+- template: build-images.yml
+  parameters:
+    name: Build_Linux_arm32v7
+    pool: # linuxArm32v7Pool
+      ${{ if eq(variables['System.TeamProject'], 'public') }}:
+        name: DotNetCore-Docker-Public
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+        name: DotNetCore-Docker
+      demands:
+      - agent.os -equals linux
+      - RemoteDockerServerOS -equals linux
+      - RemoteDockerServerArch -equals aarch64
+    matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixLinuxArm32v7', parameters.buildMatrixType) }}']
+    useRemoteDockerServer: true
+    dockerClientOS: linux
+- template: build-images.yml
+  parameters:
     name: Build_NanoServer1803_amd64
     pool: # windows1803Amd64Pool
       ${{ if eq(variables['System.TeamProject'], 'public') }}:
@@ -61,43 +91,21 @@ jobs:
       demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
     matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixNanoserver1809Amd64', parameters.buildMatrixType) }}']
     dockerClientOS: windows
-- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-  - template: build-images.yml
-    parameters:
-      name: Build_Linux_arm64v8
-      pool: # linuxArm64v8Pool
+- template: build-images.yml
+  parameters:
+    name: Build_NanoServer1809_arm32
+    pool: # nanoServer1809Arm32Pool
+      ${{ if eq(variables['System.TeamProject'], 'public') }}:
+        name: DotNetCore-Docker-Public
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
         name: DotNetCore-Docker
-        demands:
-        - agent.os -equals linux
-        - RemoteDockerServerOS -equals linux
-        - RemoteDockerServerArch -equals aarch64
-      matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixLinuxArm64v8', parameters.buildMatrixType) }}']
-      useRemoteDockerServer: true
-      dockerClientOS: linux
-  - template: build-images.yml
-    parameters:
-      name: Build_Linux_arm32v7
-      pool: # linuxArm32v7Pool
-        name: DotNetCore-Docker
-        demands:
-        - agent.os -equals linux
-        - RemoteDockerServerOS -equals linux
-        - RemoteDockerServerArch -equals aarch64
-      matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixLinuxArm32v7', parameters.buildMatrixType) }}']
-      useRemoteDockerServer: true
-      dockerClientOS: linux
-  - template: build-images.yml
-    parameters:
-      name: Build_NanoServer1809_arm32
-      pool: # nanoServer1809Arm32Pool
-        name: DotNetCore-Docker
-        demands:
-        - agent.os -equals linux
-        - RemoteDockerServerOS -equals nanoserver-1809
-        - RemoteDockerServerArch -equals arm32
-      matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixNanoserver1809Arm32', parameters.buildMatrixType) }}']
-      dockerClientOS: linux
-      useRemoteDockerServer: true
+      demands:
+      - agent.os -equals linux
+      - RemoteDockerServerOS -equals nanoserver-1809
+      - RemoteDockerServerArch -equals arm32
+    matrix: dependencies.GenerateMatrices.outputs['${{ format('buildMatrix.{0}MatrixNanoserver1809Arm32', parameters.buildMatrixType) }}']
+    dockerClientOS: linux
+    useRemoteDockerServer: true
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     ################################################################################
