@@ -59,16 +59,16 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.0-preview3-stretch-slim`, `3.0-stretch-slim`, `3.0.0-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/stretch-slim/amd64/Dockerfile)
-- [`3.0.0-preview3-alpine3.9`, `3.0-alpine3.9`, `3.0.0-preview3-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/alpine3.9/amd64/Dockerfile)
-- [`3.0.0-preview3-bionic`, `3.0-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/amd64/Dockerfile)
+- [`3.0.0-preview4-stretch-slim`, `3.0-stretch-slim`, `3.0.0-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/stretch-slim/amd64/Dockerfile)
+- [`3.0.0-preview4-alpine3.9`, `3.0-alpine3.9`, `3.0.0-preview4-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/alpine3.9/amd64/Dockerfile)
+- [`3.0.0-preview4-bionic`, `3.0-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/amd64/Dockerfile)
 
 ## Linux arm64 tags
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.0-preview3-stretch-slim-arm64v8`, `3.0-stretch-slim-arm64v8`, `3.0.0-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/stretch-slim/arm64v8/Dockerfile)
-- [`3.0.0-preview3-bionic-arm64v8`, `3.0-bionic-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/arm64v8/Dockerfile)
+- [`3.0.0-preview4-stretch-slim-arm64v8`, `3.0-stretch-slim-arm64v8`, `3.0.0-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/stretch-slim/arm64v8/Dockerfile)
+- [`3.0.0-preview4-bionic-arm64v8`, `3.0-bionic-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/arm64v8/Dockerfile)
 
 ## Linux arm32 tags
 
@@ -79,8 +79,8 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.0-preview3-stretch-slim-arm32v7`, `3.0-stretch-slim-arm32v7`, `3.0.0-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/stretch-slim/arm32v7/Dockerfile)
-- [`3.0.0-preview3-bionic-arm32v7`, `3.0-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/arm32v7/Dockerfile)
+- [`3.0.0-preview4-stretch-slim-arm32v7`, `3.0-stretch-slim-arm32v7`, `3.0.0-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/stretch-slim/arm32v7/Dockerfile)
+- [`3.0.0-preview4-bionic-arm32v7`, `3.0-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/arm32v7/Dockerfile)
 
 ## Windows Server, version 1809 amd64 tags
 
@@ -91,7 +91,7 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.0-preview3-nanoserver-1809`, `3.0-nanoserver-1809`, `3.0.0-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1809/amd64/Dockerfile)
+- [`3.0.0-preview4-nanoserver-1809`, `3.0-nanoserver-1809`, `3.0.0-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server, version 1803 amd64 tags
 
@@ -100,7 +100,7 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.0-preview3-nanoserver-1803`, `3.0-nanoserver-1803`, `3.0.0-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1803/amd64/Dockerfile)
+- [`3.0.0-preview4-nanoserver-1803`, `3.0-nanoserver-1803`, `3.0.0-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1803/amd64/Dockerfile)
 
 ## Windows Server, version 1809 arm32 tags
 
@@ -108,7 +108,7 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.0-preview3-nanoserver-1809-arm32v7`, `3.0-nanoserver-1809-arm32v7`, `3.0.0-preview3`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1809/arm32v7/Dockerfile)
+- [`3.0.0-preview4-nanoserver-1809-arm32v7`, `3.0-nanoserver-1809-arm32v7`, `3.0.0-preview4`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1809/arm32v7/Dockerfile)
 
 For more information about these images and their history, please see [the relevant Dockerfile](https://github.com/dotnet/dotnet-docker/search?utf8=%E2%9C%93&q=FROM&type=Code). These images are updated via [pull requests to the `dotnet/dotnet-docker` GitHub repo](https://github.com/dotnet/dotnet-docker/pulls).
 

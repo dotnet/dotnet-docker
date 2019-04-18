@@ -9,8 +9,8 @@
     "2.1-SdkVersion": "2.1.603",
     "2.2-RuntimeVersion": "2.2.4",
     "2.2-SdkVersion": "2.2.203",
-    "3.0-RuntimeVersion": "3.0.0-preview3",
-    "3.0-SdkVersion": "3.0.100-preview3"
+    "3.0-RuntimeVersion": "3.0.0-preview4",
+    "3.0-SdkVersion": "3.0.100-preview4"
   },
   "repos": [
     {
