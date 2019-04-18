@@ -1,18 +1,18 @@
 FROM alpine:3.9
 
 RUN apk add --no-cache \
-    ca-certificates \
-    \
-    # .NET Core dependencies
-    krb5-libs \
-    libgcc \
-    libintl \
-    libssl1.1 \
-    libstdc++ \
-    tzdata \
-    userspace-rcu \
-    zlib \
-    lttng-ust
+        ca-certificates \
+        \
+        # .NET Core dependencies
+        krb5-libs \
+        libgcc \
+        libintl \
+        libssl1.1 \
+        libstdc++ \
+        lttng-ust \
+        tzdata \
+        userspace-rcu \
+        zlib
 
 # Configure web servers to bind to port 80 when present
 ENV ASPNETCORE_URLS=http://+:80 \
