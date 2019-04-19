@@ -755,7 +755,15 @@
                 "3.0-alpine3.9-arm64v8": {},
                 "$(3.0-RuntimeVersion)-alpine-arm64v8": {},
                 "3.0-alpine-arm64v8": {}
-              }
+              },
+              "customBuildLegGrouping": [
+                {
+                  "name": "pr-build",
+                  "dependencies": [
+                    "$(Repo:sdk):3.0-stretch-arm64v8"
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -1165,23 +1173,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "3.0/aspnet/alpine3.9/arm64v8",
-              "os": "linux",
-              "tags": {
-                "$(3.0-RuntimeVersion)-alpine3.9-arm64v8": {},
-                "3.0-alpine3.9-arm64v8": {},
-                "$(3.0-RuntimeVersion)-alpine-arm64v8": {},
-                "3.0-alpine-arm64v8": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
               "dockerfile": "3.0/aspnet/bionic/amd64",
               "os": "linux",
               "tags": {
@@ -1567,23 +1558,6 @@
                 "3.0-alpine3.9": {},
                 "$(3.0-SdkVersion)-alpine": {},
                 "3.0-alpine": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "3.0/sdk/alpine3.9/arm64v8",
-              "os": "linux",
-              "tags": {
-                "$(3.0-SdkVersion)-alpine3.9-arm64v8": {},
-                "3.0-alpine3.9-arm64v8": {},
-                "$(3.0-SdkVersion)-alpine-arm64v8": {},
-                "3.0-alpine-arm64v8": {}
               }
             }
           ]
