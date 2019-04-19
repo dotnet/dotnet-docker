@@ -131,8 +131,17 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 ApplyProjectCustomizations(_imageData, Path.Combine(appDir, "app.csproj"));
 
+                string sourceDockerfileName = $"Dockerfile.{DockerHelper.DockerOS.ToLower()}";
+
+                // TODO: Remove Windows arm workaround once underlying Windows/Docker issue is resolved
+                // https://github.com/dotnet/dotnet-docker/issues/1054
+                if (!DockerHelper.IsLinuxContainerModeEnabled && _imageData.Arch == Arch.Arm)
+                {
+                    sourceDockerfileName += $".{Enum.GetName(typeof(Arch), _imageData.Arch).ToLowerInvariant()}";
+                }
+
                 File.Copy(
-                    Path.Combine(_testArtifactsDir, $"Dockerfile.{DockerHelper.DockerOS.ToLower()}"),
+                    Path.Combine(_testArtifactsDir, sourceDockerfileName),
                     Path.Combine(appDir, "Dockerfile"));
 
                 string nuGetConfigFileName = "NuGet.config";
