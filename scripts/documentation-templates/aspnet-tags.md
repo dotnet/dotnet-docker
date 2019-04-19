@@ -22,6 +22,7 @@ $(TagDoc:3.0-bionic)
 **.NET Core 3.0 Preview tags**
 
 $(TagDoc:3.0-stretch-slim-arm64v8)
+$(TagDoc:3.0-alpine3.9-arm64v8)
 $(TagDoc:3.0-bionic-arm64v8)
 
 ## Linux arm32 tags
