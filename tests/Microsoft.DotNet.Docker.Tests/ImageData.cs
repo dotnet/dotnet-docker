@@ -14,6 +14,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private List<string> _pulledImages = new List<string>();
         private Version _runtimeDepsVersion;
+        private string _sdkOS;
         private Version _sdkVersion;
 
         public Arch Arch { get; set; }
@@ -59,8 +60,12 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _runtimeDepsVersion = value; }
         }
 
-        public string SdkOS => OS == Tests.OS.StretchSlim ? Tests.OS.Stretch : OS;
-        
+        public string SdkOS
+        {
+            get => _sdkOS ?? (OS == Tests.OS.StretchSlim ? Tests.OS.Stretch : OS);
+            set { _sdkOS = value; }
+        }
+
         public Version SdkVersion
         {
             get { return _sdkVersion ?? Version; }
