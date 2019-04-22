@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/core/runtime
-FROM $REPO:3.0-stretch-slim-arm64v8
+FROM $REPO:3.0-buster-slim-arm64v8
 
 # Install ASP.NET Core
 ENV ASPNETCORE_VERSION 3.0.0-preview5-19218-09

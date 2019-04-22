@@ -1,4 +1,4 @@
-FROM arm32v7/buildpack-deps:stretch-scm
+FROM arm32v7/buildpack-deps:buster-scm
 
 # Install .NET CLI dependencies
 RUN apt-get update \
@@ -6,7 +6,7 @@ RUN apt-get update \
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
-        libicu57 \
+        libicu63 \
         libssl1.1 \
         libstdc++6 \
         zlib1g \
