@@ -12,6 +12,8 @@ stages:
 - stage: Build
   condition: or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build'))
   jobs:
+  - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+    displayName: Component Detection
   - template: ../jobs/generate-matrix.yml
     parameters:
       matrixType: ${{ parameters.buildMatrixType }}
