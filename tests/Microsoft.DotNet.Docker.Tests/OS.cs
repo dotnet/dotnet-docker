@@ -12,6 +12,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string Bionic = "bionic";
         public const string Buster = "buster";
         public const string BusterSlim = "buster-slim";
+        public const string Disco = "disco";
         public const string Jessie = "jessie";
         public const string Stretch = "stretch";
         public const string StretchSlim = "stretch-slim";
