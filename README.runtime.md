@@ -76,6 +76,7 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 **.NET Core 3.0 Preview tags**
 
 - [`3.0.0-preview5-buster-slim-arm64v8`, `3.0-buster-slim-arm64v8`, `3.0.0-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime/buster-slim/arm64v8/Dockerfile)
+- [`3.0.0-preview5-alpine3.9-arm64v8`, `3.0-alpine3.9-arm64v8`, `3.0.0-preview5-alpine-arm64v8`, `3.0-alpine-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime/alpine3.9/arm64v8/Dockerfile)
 - [`3.0.0-preview5-disco-arm64v8`, `3.0-disco-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime/disco/arm64v8/Dockerfile)
 - [`3.0.0-preview5-bionic-arm64v8`, `3.0-bionic-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime/bionic/arm64v8/Dockerfile)
 

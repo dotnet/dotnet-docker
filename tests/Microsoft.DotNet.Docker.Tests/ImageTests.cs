@@ -42,6 +42,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V3_0, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
             new ImageData { Version = V3_0, OS = OS.Disco,        Arch = Arch.Arm64 },
             new ImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Arm64 },
+            new ImageData { Version = V3_0, OS = OS.Alpine39,     Arch = Arch.Arm64,    SdkOS = OS.Buster },
         };
         private static readonly ImageData[] s_windowsTestData =
         {
@@ -170,6 +171,12 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.Version.Major == 1)
             {
                 _outputHelper.WriteLine("1.* ASP.NET Core images reside in https://github.com/aspnet/aspnet-docker, skip testing");
+                return;
+            }
+            if (imageData.Arch == Arch.Arm64 && imageData.OS.StartsWith(OS.AlpinePrefix))
+            {
+                _outputHelper.WriteLine(
+                    "musl_arm64 ASP.NET Core builds don't exist yet (https://github.com/dotnet/dotnet-docker/issues/360)");
                 return;
             }
 
