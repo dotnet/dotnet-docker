@@ -32,12 +32,12 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V2_2, OS = OS.Alpine39,     Arch = Arch.Amd64 },
             new ImageData { Version = V2_2, OS = OS.StretchSlim,  Arch = Arch.Arm },
             new ImageData { Version = V2_2, OS = OS.Bionic,       Arch = Arch.Arm },
-            new ImageData { Version = V3_0, OS = OS.StretchSlim,  Arch = Arch.Amd64 },
+            new ImageData { Version = V3_0, OS = OS.BusterSlim,   Arch = Arch.Amd64 },
             new ImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Amd64 },
             new ImageData { Version = V3_0, OS = OS.Alpine39,     Arch = Arch.Amd64 },
-            new ImageData { Version = V3_0, OS = OS.StretchSlim,  Arch = Arch.Arm },
+            new ImageData { Version = V3_0, OS = OS.BusterSlim,   Arch = Arch.Arm },
             new ImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Arm },
-            new ImageData { Version = V3_0, OS = OS.StretchSlim,  Arch = Arch.Arm64 },
+            new ImageData { Version = V3_0, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
             new ImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Arm64 },
         };
         private static readonly ImageData[] s_windowsTestData =

@@ -59,7 +59,7 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _runtimeDepsVersion = value; }
         }
 
-        public string SdkOS => OS == Tests.OS.StretchSlim ? Tests.OS.Stretch : OS;
+        public string SdkOS => OS.TrimEnd(Tests.OS.SlimSuffix);
         
         public Version SdkVersion
         {

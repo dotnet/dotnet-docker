@@ -69,7 +69,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.100-preview5-stretch`, `3.0-stretch`, `3.0.100-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/amd64/Dockerfile)
+- [`3.0.100-preview5-buster`, `3.0-buster`, `3.0.100-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/buster/amd64/Dockerfile)
 - [`3.0.100-preview5-alpine3.9`, `3.0-alpine3.9`, `3.0.100-preview5-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.9/amd64/Dockerfile)
 - [`3.0.100-preview5-bionic`, `3.0-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/amd64/Dockerfile)
 
@@ -77,7 +77,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.100-preview5-stretch-arm64v8`, `3.0-stretch-arm64v8`, `3.0.100-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/arm64v8/Dockerfile)
+- [`3.0.100-preview5-buster-arm64v8`, `3.0-buster-arm64v8`, `3.0.100-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/buster/arm64v8/Dockerfile)
 - [`3.0.100-preview5-bionic-arm64v8`, `3.0-bionic-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/arm64v8/Dockerfile)
 
 ## Linux arm32 tags
@@ -89,7 +89,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.100-preview5-stretch-arm32v7`, `3.0-stretch-arm32v7`, `3.0.100-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/stretch/arm32v7/Dockerfile)
+- [`3.0.100-preview5-buster-arm32v7`, `3.0-buster-arm32v7`, `3.0.100-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/buster/arm32v7/Dockerfile)
 - [`3.0.100-preview5-bionic-arm32v7`, `3.0-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/arm32v7/Dockerfile)
 
 ## Windows Server, version 1809 amd64 tags
