@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/core/runtime
 FROM $REPO:3.0-disco
 
-# Install .NET Core
+# Install ASP.NET Core
 ENV ASPNETCORE_VERSION 3.0.0-preview5-19218-09
 
 RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-x64.tar.gz \
