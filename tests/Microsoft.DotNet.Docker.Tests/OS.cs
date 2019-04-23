@@ -19,6 +19,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string NanoServer1803 = "nanoserver-1803";
         public const string NanoServer1809 = "nanoserver-1809";
 
+        public const string AlpinePrefix = "alpine";
         public const string SlimSuffix = "-slim";
     }
 }

@@ -14,7 +14,7 @@
   },
   "repos": [
     {
-      "id" : "runtime-deps",
+      "id": "runtime-deps",
       "name": "dotnet/core-nightly/runtime-deps",
       "readmePath": "README.runtime-deps.md",
       "images": [
@@ -262,6 +262,22 @@
         {
           "platforms": [
             {
+              "architecture": "arm64",
+              "dockerfile": "3.0/runtime-deps/alpine3.9/arm64v8",
+              "os": "linux",
+              "tags": {
+                "$(3.0-RuntimeVersion)-alpine3.9-arm64v8": {},
+                "3.0-alpine3.9-arm64v8": {},
+                "$(3.0-RuntimeVersion)-alpine-arm64v8": {},
+                "3.0-alpine-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
               "dockerfile": "3.0/runtime-deps/disco/amd64",
               "os": "linux",
               "tags": {
@@ -341,10 +357,8 @@
         }
       ]
     },
-
-
     {
-      "id" : "runtime",
+      "id": "runtime",
       "name": "dotnet/core-nightly/runtime",
       "readmePath": "README.runtime.md",
       "images": [
@@ -773,6 +787,33 @@
         {
           "platforms": [
             {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.0/runtime/alpine3.9/arm64v8",
+              "os": "linux",
+              "tags": {
+                "$(3.0-RuntimeVersion)-alpine3.9-arm64v8": {},
+                "3.0-alpine3.9-arm64v8": {},
+                "$(3.0-RuntimeVersion)-alpine-arm64v8": {},
+                "3.0-alpine-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGrouping": [
+                {
+                  "name": "pr-build",
+                  "dependencies": [
+                    "$(Repo:sdk):3.0-buster-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
@@ -870,10 +911,8 @@
         }
       ]
     },
-
-
     {
-      "id" : "aspnet",
+      "id": "aspnet",
       "name": "dotnet/core-nightly/aspnet",
       "readmePath": "README.aspnet.md",
       "images": [
@@ -1321,10 +1360,8 @@
         }
       ]
     },
-
-
     {
-      "id" : "sdk",
+      "id": "sdk",
       "name": "dotnet/core-nightly/sdk",
       "readmePath": "README.sdk.md",
       "images": [
