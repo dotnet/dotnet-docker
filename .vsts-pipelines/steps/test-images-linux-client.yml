@@ -67,8 +67,8 @@ steps:
     mergeTestResults: true
     publishRunAttachments: true
     testRunTitle: Linux $(dotnetVersion) $(osVariant) $(architecture)
-- script: docker stop $(testRunner.container)
-  displayName: Stop TestRunner Container
+- script: docker rm -f $(testRunner.container)
+  displayName: Cleanup TestRunner Container
   condition: always()
   continueOnError: true
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
