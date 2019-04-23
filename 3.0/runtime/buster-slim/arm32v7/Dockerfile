@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
-FROM $REPO:3.0-stretch-slim-arm32v7
+FROM $REPO:3.0-buster-slim-arm32v7
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

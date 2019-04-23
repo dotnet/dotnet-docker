@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
-FROM $REPO:3.0-stretch-slim
+FROM $REPO:3.0-buster-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

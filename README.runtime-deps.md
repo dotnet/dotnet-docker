@@ -57,7 +57,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.0-preview5-stretch-slim`, `3.0-stretch-slim`, `3.0.0-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/stretch-slim/amd64/Dockerfile)
+- [`3.0.0-preview5-buster-slim`, `3.0-buster-slim`, `3.0.0-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/buster-slim/amd64/Dockerfile)
 - [`3.0.0-preview5-alpine3.9`, `3.0-alpine3.9`, `3.0.0-preview5-alpine`, `3.0-alpine` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/alpine3.9/amd64/Dockerfile)
 - [`3.0.0-preview5-disco`, `3.0-disco` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/disco/amd64/Dockerfile)
 - [`3.0.0-preview5-bionic`, `3.0-bionic` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/bionic/amd64/Dockerfile)
@@ -66,7 +66,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.0-preview5-stretch-slim-arm64v8`, `3.0-stretch-slim-arm64v8`, `3.0.0-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/stretch-slim/arm64v8/Dockerfile)
+- [`3.0.0-preview5-buster-slim-arm64v8`, `3.0-buster-slim-arm64v8`, `3.0.0-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/buster-slim/arm64v8/Dockerfile)
 - [`3.0.0-preview5-disco-arm64v8`, `3.0-disco-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/disco/arm64v8/Dockerfile)
 - [`3.0.0-preview5-bionic-arm64v8`, `3.0-bionic-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/bionic/arm64v8/Dockerfile)
 
@@ -79,7 +79,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 **.NET Core 3.0 Preview tags**
 
-- [`3.0.0-preview5-stretch-slim-arm32v7`, `3.0-stretch-slim-arm32v7`, `3.0.0-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/stretch-slim/arm32v7/Dockerfile)
+- [`3.0.0-preview5-buster-slim-arm32v7`, `3.0-buster-slim-arm32v7`, `3.0.0-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/buster-slim/arm32v7/Dockerfile)
 - [`3.0.0-preview5-disco-arm32v7`, `3.0-disco-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/disco/arm32v7/Dockerfile)
 - [`3.0.0-preview5-bionic-arm32v7`, `3.0-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/bionic/arm32v7/Dockerfile)
 

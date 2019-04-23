@@ -216,30 +216,30 @@
           },
           "platforms": [
             {
-              "dockerfile": "3.0/runtime-deps/stretch-slim/amd64",
+              "dockerfile": "3.0/runtime-deps/buster-slim/amd64",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-stretch-slim": {},
-                "3.0-stretch-slim": {}
+                "$(3.0-RuntimeVersion)-buster-slim": {},
+                "3.0-buster-slim": {}
               }
             },
             {
               "architecture": "arm",
-              "dockerfile": "3.0/runtime-deps/stretch-slim/arm32v7",
+              "dockerfile": "3.0/runtime-deps/buster-slim/arm32v7",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-stretch-slim-arm32v7": {},
-                "3.0-stretch-slim-arm32v7": {}
+                "$(3.0-RuntimeVersion)-buster-slim-arm32v7": {},
+                "3.0-buster-slim-arm32v7": {}
               },
               "variant": "v7"
             },
             {
               "architecture": "arm64",
-              "dockerfile": "3.0/runtime-deps/stretch-slim/arm64v8",
+              "dockerfile": "3.0/runtime-deps/buster-slim/arm64v8",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-stretch-slim-arm64v8": {},
-                "3.0-stretch-slim-arm64v8": {}
+                "$(3.0-RuntimeVersion)-buster-slim-arm64v8": {},
+                "3.0-buster-slim-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -690,11 +690,11 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "3.0/runtime/stretch-slim/amd64",
+              "dockerfile": "3.0/runtime/buster-slim/amd64",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-stretch-slim": {},
-                "3.0-stretch-slim": {}
+                "$(3.0-RuntimeVersion)-buster-slim": {},
+                "3.0-buster-slim": {}
               }
             },
             {
@@ -702,11 +702,11 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "3.0/runtime/stretch-slim/arm32v7",
+              "dockerfile": "3.0/runtime/buster-slim/arm32v7",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-stretch-slim-arm32v7": {},
-                "3.0-stretch-slim-arm32v7": {}
+                "$(3.0-RuntimeVersion)-buster-slim-arm32v7": {},
+                "3.0-buster-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -715,11 +715,11 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "3.0/runtime/stretch-slim/arm64v8",
+              "dockerfile": "3.0/runtime/buster-slim/arm64v8",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-stretch-slim-arm64v8": {},
-                "3.0-stretch-slim-arm64v8": {}
+                "$(3.0-RuntimeVersion)-buster-slim-arm64v8": {},
+                "3.0-buster-slim-arm64v8": {}
               },
               "variant": "v8"
             },
@@ -1132,11 +1132,11 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "3.0/aspnet/stretch-slim/amd64",
+              "dockerfile": "3.0/aspnet/buster-slim/amd64",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-stretch-slim": {},
-                "3.0-stretch-slim": {}
+                "$(3.0-RuntimeVersion)-buster-slim": {},
+                "3.0-buster-slim": {}
               }
             },
             {
@@ -1144,11 +1144,11 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "3.0/aspnet/stretch-slim/arm32v7",
+              "dockerfile": "3.0/aspnet/buster-slim/arm32v7",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-stretch-slim-arm32v7": {},
-                "3.0-stretch-slim-arm32v7": {}
+                "$(3.0-RuntimeVersion)-buster-slim-arm32v7": {},
+                "3.0-buster-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -1157,11 +1157,11 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "3.0/aspnet/stretch-slim/arm64v8",
+              "dockerfile": "3.0/aspnet/buster-slim/arm64v8",
               "os": "linux",
               "tags": {
-                "$(3.0-RuntimeVersion)-stretch-slim-arm64v8": {},
-                "3.0-stretch-slim-arm64v8": {}
+                "$(3.0-RuntimeVersion)-buster-slim-arm64v8": {},
+                "3.0-buster-slim-arm64v8": {}
               },
               "variant": "v8"
             },
@@ -1593,30 +1593,30 @@
           },
           "platforms": [
             {
-              "dockerfile": "3.0/sdk/stretch/amd64",
+              "dockerfile": "3.0/sdk/buster/amd64",
               "os": "linux",
               "tags": {
-                "$(3.0-SdkVersion)-stretch": {},
-                "3.0-stretch": {}
+                "$(3.0-SdkVersion)-buster": {},
+                "3.0-buster": {}
               }
             },
             {
               "architecture": "arm",
-              "dockerfile": "3.0/sdk/stretch/arm32v7",
+              "dockerfile": "3.0/sdk/buster/arm32v7",
               "os": "linux",
               "tags": {
-                "$(3.0-SdkVersion)-stretch-arm32v7": {},
-                "3.0-stretch-arm32v7": {}
+                "$(3.0-SdkVersion)-buster-arm32v7": {},
+                "3.0-buster-arm32v7": {}
               },
               "variant": "v7"
             },
             {
               "architecture": "arm64",
-              "dockerfile": "3.0/sdk/stretch/arm64v8",
+              "dockerfile": "3.0/sdk/buster/arm64v8",
               "os": "linux",
               "tags": {
-                "$(3.0-SdkVersion)-stretch-arm64v8": {},
-                "3.0-stretch-arm64v8": {}
+                "$(3.0-SdkVersion)-buster-arm64v8": {},
+                "3.0-buster-arm64v8": {}
               },
               "variant": "v8"
             },
