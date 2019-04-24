@@ -1,7 +1,7 @@
 trigger: none
 pr: none
 variables:
-- template: ../variables/common.yml
+- group: DotNet-Maestro
 
 jobs:
 - job: UpdateDependencies
