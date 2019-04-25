@@ -3,31 +3,8 @@ parameters:
   matrix: {}
 jobs:
 - job: Copy_Images
-  condition: "
-    and(
-      ${{ parameters.matrix }},
-      or(
-        eq(variables['singlePhase'], 'publish'),
-        and(
-          eq(variables['singlePhase'], ''),
-          or(
-            succeeded(),
-            and(
-              contains(variables['manifest'], 'samples'),
-              eq(variables['singlePhase'], ''),
-              succeeded('Build_Linux_amd64'),
-              succeeded('Build_Linux_arm32v7'),
-              succeeded('Build_NanoServer1803_amd64'),
-              succeeded('Build_NanoServer1809_amd64'),
-              succeeded('Build_NanoServer1809_arm32'))))))"
-  dependsOn:
-  - GenerateMatrices
-  - Test_Linux_amd64
-  - Test_Linux_arm64v8
-  - Test_Linux_arm32v7
-  - Test_NanoServer1803_amd64
-  - Test_NanoServer1809_amd64
-  - Test_NanoServer1809_arm32
+  condition: and(succeeded(), ${{ parameters.matrix }})
+  dependsOn: GeneratePublishMatrix
   pool: ${{ parameters.pool }}
   strategy:
     matrix: $[ ${{ parameters.matrix }} ]

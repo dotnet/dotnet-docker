@@ -7,14 +7,8 @@ parameters:
 
 jobs:
 - job: ${{ parameters.name }}
-  condition: "
-    and(
-      succeeded(),
-      ${{ parameters.matrix }},
-      or(
-        eq(variables['singlePhase'], ''),
-        eq(variables['singlePhase'], 'build')))"
-  dependsOn: GenerateMatrices
+  condition: and(succeeded(), ${{ parameters.matrix }})
+  dependsOn: GenerateBuildMatrix
   pool: ${{ parameters.pool }}
   strategy:
     matrix: $[ ${{ parameters.matrix }} ]
