@@ -28,4 +28,6 @@ jobs:
       $(dotnet-bot-user-repo-adminrepohook-pat)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Readme
+  - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+    displayName: Component Detection
   - template: ../steps/cleanup-docker-linux.yml
