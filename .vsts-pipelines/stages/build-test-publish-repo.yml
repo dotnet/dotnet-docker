@@ -1,0 +1,198 @@
+parameters:
+  buildMatrixType: platformDependencyGraph
+  testMatrixType: platformVersionedOs
+  publishMatrixType: dependencyGraph
+  customBuildLegGrouping: ""
+
+stages:
+
+################################################################################
+# Build Images
+################################################################################
+- stage: Build
+  condition: or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build'))
+  jobs:
+  - template: ../jobs/generate-matrix.yml
+    parameters:
+      matrixType: ${{ parameters.buildMatrixType }}
+      name: GenerateBuildMatrix
+      customBuildLegGrouping: ${{ parameters.customBuildLegGrouping }}
+
+  - template: ../jobs/build-images.yml
+    parameters:
+      name: Build_Linux_amd64
+      pool: # linuxAmd64Pool
+        name: Hosted Ubuntu 1604
+      matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixLinuxAmd64', parameters.buildMatrixType) }}']
+      dockerClientOS: linux
+  - template: ../jobs/build-images.yml
+    parameters:
+      name: Build_Linux_arm64v8
+      pool: # linuxArm64v8Pool
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: DotNetCore-Docker-Public
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: DotNetCore-Docker
+        demands:
+        - agent.os -equals linux
+        - RemoteDockerServerOS -equals linux
+        - RemoteDockerServerArch -equals aarch64
+      matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixLinuxArm64v8', parameters.buildMatrixType) }}']
+      useRemoteDockerServer: true
+      dockerClientOS: linux
+  - template: ../jobs/build-images.yml
+    parameters:
+      name: Build_Linux_arm32v7
+      pool: # linuxArm32v7Pool
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: DotNetCore-Docker-Public
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: DotNetCore-Docker
+        demands:
+        - agent.os -equals linux
+        - RemoteDockerServerOS -equals linux
+        - RemoteDockerServerArch -equals aarch64
+      matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixLinuxArm32v7', parameters.buildMatrixType) }}']
+      useRemoteDockerServer: true
+      dockerClientOS: linux
+  - template: ../jobs/build-images.yml
+    parameters:
+      name: Build_NanoServer1803_amd64
+      pool: # windows1803Amd64Pool
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: DotNetCore-Docker-Public
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: DotNetCore-Docker
+        demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
+      matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1803Amd64', parameters.buildMatrixType) }}']
+      dockerClientOS: windows
+  - template: ../jobs/build-images.yml
+    parameters:
+      name: Build_NanoServer1809_amd64
+      pool: # windows1809Amd64
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: DotNetCore-Docker-Public
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: DotNetCore-Docker
+        demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
+      matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1809Amd64', parameters.buildMatrixType) }}']
+      dockerClientOS: windows
+  - template: ../jobs/build-images.yml
+    parameters:
+      name: Build_NanoServer1809_arm32
+      pool: # nanoServer1809Arm32Pool
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: DotNetCore-Docker-Public
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: DotNetCore-Docker
+        demands:
+        - agent.os -equals linux
+        - RemoteDockerServerOS -equals nanoserver-1809
+        - RemoteDockerServerArch -equals arm32
+      matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1809Arm32', parameters.buildMatrixType) }}']
+      dockerClientOS: linux
+      useRemoteDockerServer: true
+
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+  ################################################################################
+  # Test Images
+  ################################################################################
+  - stage: Test
+    dependsOn: Build
+    condition: "
+      and(
+        not(contains(variables['manifest'], 'samples')),
+        or(
+          and(
+            succeeded(),
+            eq(variables['singlePhase'], '')),
+          eq(variables['singlePhase'], 'test')))"
+    jobs:
+    - template: ../jobs/generate-matrix.yml
+      parameters:
+        matrixType: ${{ parameters.testMatrixType }}
+        name: GenerateTestMatrix
+
+    - template: ../jobs/test-images-linux-client.yml
+      parameters:
+        name: Test_Linux_amd64
+        pool: # linuxAmd64Pool
+          name: Hosted Ubuntu 1604
+        matrix: dependencies.GenerateTestMatrix.outputs['${{ format('matrix.{0}MatrixLinuxAmd64', parameters.testMatrixType) }}']
+    - template: ../jobs/test-images-linux-client.yml
+      parameters:
+        name: Test_Linux_arm64v8
+        pool: # linuxArm64v8Pool
+          name: DotNetCore-Docker
+          demands:
+          - agent.os -equals linux
+          - RemoteDockerServerOS -equals linux
+          - RemoteDockerServerArch -equals aarch64
+        matrix: dependencies.GenerateTestMatrix.outputs['${{ format('matrix.{0}MatrixLinuxArm64v8', parameters.testMatrixType) }}']
+        useRemoteDockerServer: true
+    - template: ../jobs/test-images-linux-client.yml
+      parameters:
+        name: Test_Linux_arm32v7
+        pool: # linuxArm32v7Pool
+          name: DotNetCore-Docker
+          demands:
+          - agent.os -equals linux
+          - RemoteDockerServerOS -equals linux
+          - RemoteDockerServerArch -equals aarch64
+        matrix: dependencies.GenerateTestMatrix.outputs['${{ format('matrix.{0}MatrixLinuxArm32v7', parameters.testMatrixType) }}']
+        useRemoteDockerServer: true
+    - template: ../jobs/test-images-windows-client.yml
+      parameters:
+        name: Test_NanoServer1803_amd64
+        pool: # windows1803Amd64Pool
+          name: DotNetCore-Docker
+          demands: VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
+        matrix: dependencies.GenerateTestMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1803Amd64', parameters.testMatrixType) }}']
+    - template: ../jobs/test-images-windows-client.yml
+      parameters:
+        name: Test_NanoServer1809_amd64
+        pool: # windows1809Amd64
+          name: DotNetCore-Docker
+          demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
+        matrix: dependencies.GenerateTestMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1809Amd64', parameters.testMatrixType) }}']
+    - template: ../jobs/test-images-linux-client.yml
+      parameters:
+        name: Test_NanoServer1809_arm32
+        pool: # nanoServer1809Arm32Pool
+          name: DotNetCore-Docker
+          demands:
+          - agent.os -equals linux
+          - RemoteDockerServerOS -equals nanoserver-1809
+          - RemoteDockerServerArch -equals arm32
+        matrix: dependencies.GenerateTestMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1809Arm32', parameters.testMatrixType) }}']
+        useRemoteDockerServer: true
+
+  ################################################################################
+  # Publish Images
+  ################################################################################
+  - stage: Publish
+    dependsOn: Test
+    condition: "
+      or(
+        and(
+          eq(variables['singlePhase'], ''),
+          or(
+            succeeded(),
+            and(
+              contains(variables['manifest'], 'samples'),
+              succeeded('Build')))),
+        eq(variables['singlePhase'], 'publish'))"
+    jobs:
+    - template: ../jobs/generate-matrix.yml
+      parameters:
+        matrixType: ${{ parameters.publishMatrixType }}
+        name: GeneratePublishMatrix
+    - template: ../jobs/copy-images.yml
+      parameters:
+        pool: # linuxAmd64Pool
+          name: Hosted Ubuntu 1604
+        matrix: dependencies.GeneratePublishMatrix.outputs['${{ format('matrix.{0}Matrix', parameters.publishMatrixType) }}']
+    - template: ../jobs/publish-finalize.yml
+      parameters:
+        pool: # linuxAmd64Pool
+          name: Hosted Ubuntu 1604

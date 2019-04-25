@@ -3,7 +3,12 @@ parameters:
   name: null
   customBuildLegGrouping: ""
 
-steps:
+jobs:
+- job: ${{ parameters.name }}
+  pool: # linuxAmd64Pool
+    name: Hosted Ubuntu 1604
+  steps:
+  - template: ../steps/init-docker-linux.yml
   - script: >
       $(runImageBuilderCmd) generateBuildMatrix
       --manifest $(manifest)
@@ -11,6 +16,7 @@ steps:
       --os-type '*'
       --architecture '*'
       --customBuildLegGrouping "${{ parameters.customBuildLegGrouping }}"
-      $(imageBuilder.generateMatrixQueueArgs)
+      $(imageBuilder.pathArgs)
     displayName: Generate ${{ parameters.matrixType }} Matrix
-    name: ${{ parameters.name }}
+    name: matrix
+  - template: ../steps/cleanup-docker-linux.yml

@@ -4,5 +4,5 @@ variables:
 - template: ../variables/common.yml
 - name: manifest
   value: manifest.samples.json
-jobs:
-- template: ../jobs/build-test-publish-repo.yml
+stages:
+- template: ../stages/build-test-publish-repo.yml

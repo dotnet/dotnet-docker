@@ -1,22 +1,11 @@
 parameters:
   name: null
-  buildDependencies: []
   pool: {}
   matrix: {}
 jobs:
 - job: ${{ parameters.name }}
-  condition: "
-    and(
-      not(contains(variables['manifest'], 'samples')),
-      ${{ parameters.matrix }},
-      or(
-        and(
-          succeeded(),
-          eq(variables['singlePhase'], '')),
-        eq(variables['singlePhase'], 'test')))"
-  dependsOn:
-    - GenerateMatrices
-    - ${{ parameters.buildDependencies }}
+  condition: and(succeeded(), ${{ parameters.matrix }})
+  dependsOn: GenerateTestMatrix
   pool: ${{ parameters.pool }}
   strategy:
     matrix: $[ ${{ parameters.matrix }} ]
