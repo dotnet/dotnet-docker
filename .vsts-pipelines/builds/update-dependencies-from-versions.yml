@@ -1,7 +1,7 @@
 trigger: none
 pr: none
 variables:
-- template: ../variables/common.yml
+- group: DotNet-Maestro
 
 jobs:
 - job: UpdateDependencies
@@ -16,5 +16,3 @@ jobs:
       --password $(BotAccount-dotnet-maestro-bot-PAT)
       --build-info $(buildInfoUrl)
     displayName: Run Update Dependencies
-  - script: docker system prune -a -f --volumes
-    displayName: Cleanup Docker
