@@ -7,17 +7,13 @@ parameters:
 
 jobs:
 - job: ${{ parameters.name }}
-  condition: "
-    and(
-      succeeded(),
-      ${{ parameters.matrix }},
-      or(
-        eq(variables['singlePhase'], ''),
-        eq(variables['singlePhase'], 'build')))"
-  dependsOn: GenerateMatrices
+  condition: and(succeeded(), ${{ parameters.matrix }})
+  dependsOn: GenerateBuildMatrix
   pool: ${{ parameters.pool }}
   strategy:
     matrix: $[ ${{ parameters.matrix }} ]
+  ${{ if and(eq(variables['System.TeamProject'], 'public'), eq(parameters.useRemoteDockerServer, 'true')) }}:
+    timeoutInMinutes: 120
   variables:
     osVersion: ${{ parameters.osVersion }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
@@ -66,6 +62,8 @@ jobs:
     displayName: Build Images
   - ${{ if eq(variables['System.TeamProject'], 'public') }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
+      parameters:
+        useRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
   - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
     parameters:
       cleanupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
