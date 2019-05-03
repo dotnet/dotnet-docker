@@ -14,6 +14,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private List<string> _pulledImages = new List<string>();
         private Version _runtimeDepsVersion;
+        private string _sdkOS;
         private Version _sdkVersion;
 
         public Arch Arch { get; set; }
@@ -34,9 +35,16 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
                 else if (Arch == Arch.Arm64)
                 {
-                    rid = "linux-arm64";
+                    if (OS.StartsWith(Tests.OS.AlpinePrefix))
+                    {
+                        rid = "linux-musl-arm64";
+                    }
+                    else
+                    {
+                        rid = "linux-arm64";
+                    }
                 }
-                else if (OS.StartsWith("alpine"))
+                else if (OS.StartsWith(Tests.OS.AlpinePrefix))
                 {
                     rid = "linux-musl-x64";
                 }
@@ -59,8 +67,12 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _runtimeDepsVersion = value; }
         }
 
-        public string SdkOS => OS == Tests.OS.StretchSlim ? Tests.OS.Stretch : OS;
-        
+        public string SdkOS
+        {
+            get => _sdkOS ?? OS.TrimEnd(Tests.OS.SlimSuffix);
+            set { _sdkOS = value; }
+        }
+
         public Version SdkVersion
         {
             get { return _sdkVersion ?? Version; }
