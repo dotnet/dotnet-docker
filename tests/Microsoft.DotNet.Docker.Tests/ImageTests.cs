@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xunit;
@@ -194,21 +196,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            const string linuxFilePath =
-                "/usr/share/credentialprovider/plugins/netcore/CredentialProvider.Microsoft/CredentialProvider.Microsoft.dll";
-            const string windowsFilePath =
-                "C:\\Users\\Public\\credentialprovider\\plugins\\netcore\\CredentialProvider.Microsoft\\CredentialProvider.Microsoft.dll";
-            
+            string credProviderFilePath = GetCredentialProviderLocation();
             string verifyCredProviderCommand;
             if (DockerHelper.IsLinuxContainerModeEnabled)
             {
                 verifyCredProviderCommand =
-                    $"sh -c \"test -f $NUGET_PLUGIN_PATHS && test $NUGET_PLUGIN_PATHS = {linuxFilePath}\"";
+                    $"sh -c \"test -f $NUGET_PLUGIN_PATHS && test $NUGET_PLUGIN_PATHS = {credProviderFilePath}\"";
             }
             else
             {
                 verifyCredProviderCommand =
-                    $"CMD /S /C IF NOT EXIST %NUGET_PLUGIN_PATHS% ( exit 1 ) ELSE ( IF %NUGET_PLUGIN_PATHS% NEQ {windowsFilePath} ( exit 1 ) ELSE ( exit 0 ) )";
+                    $"CMD /S /C IF NOT EXIST %NUGET_PLUGIN_PATHS% ( exit 1 ) ELSE ( IF %NUGET_PLUGIN_PATHS% NEQ {credProviderFilePath} ( exit 1 ) ELSE ( exit 0 ) )";
             }
 
             // Simple check to verify the NuGet credential provider was installed
@@ -231,16 +229,23 @@ namespace Microsoft.DotNet.Docker.Tests
             string dotnetNewCmd = ImageScenarioVerifier.GetDotnetNewCmd("console", imageData.VersionString);
             string dotnetAddRestoreCmds =
                 $"{dotnetNewCmd} && dotnet add package newtonsoft.json --no-restore && dotnet restore --no-cache";
+
+            var credProviderFilePath = GetCredentialProviderLocation();
+            var pluginsCacheFolder = ComputeHashForCredentialProviderPath(credProviderFilePath);
+
+            // Verifying if nuget.org was called to fetch the package
+            var cacheFileName = ComputeHashForCredentialProviderPath("https://api.nuget.org/v3/index.json");
+
             string verifyCredProviderRestore;
             if (DockerHelper.IsLinuxContainerModeEnabled)
             {
                 verifyCredProviderRestore =
-                    $"sh -c \"{dotnetAddRestoreCmds} && ls $HOME/.local/share/NuGet/plugins-cache | grep -q CredentialProvider.Microsoft.dll\"";
+                    $"sh -c \"{dotnetAddRestoreCmds} && ls $HOME/.local/share/NuGet/plugins-cache/{pluginsCacheFolder} | grep -q {cacheFileName}\"";
             }
             else
             {
                 verifyCredProviderRestore =
-                    $"CMD /S /C \"{dotnetAddRestoreCmds} && dir %localappdata%\\nuget\\plugins-cache | findstr CredentialProvider.Microsoft.dll\"";
+                    $"CMD /S /C \"{dotnetAddRestoreCmds} && dir %localappdata%\\nuget\\plugins-cache\\{pluginsCacheFolder} | findstr {cacheFileName}\"";
             }
 
             _dockerHelper.Run(
@@ -248,6 +253,25 @@ namespace Microsoft.DotNet.Docker.Tests
                 command: verifyCredProviderRestore,
                 name: imageData.GetIdentifier("NugetCredentialProviderRuns"),
                 workdir: "/testapp");
+        }
+
+        private static string GetCredentialProviderLocation(){
+            if (DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                return "/usr/share/credentialprovider/plugins/netcore/CredentialProvider.Microsoft/CredentialProvider.Microsoft.dll";
+            }
+            return "C:\\Users\\Public\\credentialprovider\\plugins\\netcore\\CredentialProvider.Microsoft\\CredentialProvider.Microsoft.dll";
+        }
+
+        private static string ComputeHashForCredentialProviderPath(string value)
+        {
+            byte[] hash;
+            using (var sha = SHA1.Create())
+            {
+                hash = sha.ComputeHash(Encoding.UTF8.GetBytes(value));
+            }
+            const string hex = "0123456789abcdef";
+            return hash.Aggregate(string.Empty, (result, ch) => "" + hex[ch / 0x10] + hex[ch % 0x10] + result);
         }
     }
 }
