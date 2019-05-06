@@ -1,8 +1,7 @@
 parameters:
   pool: {}
 jobs:
-- job: Publish_Finalize
-  dependsOn: Copy_Images
+- job: Publish
   pool: ${{ parameters.pool }}
   variables:
     imageBuilder.commonCmdArgs: >
@@ -11,6 +10,20 @@ jobs:
       $(imageBuilder.queueArgs)
   steps:
   - template: ../steps/init-docker-linux.yml
+  - script: >
+      $(runImageBuilderCmd) copyAcrImages
+      $(stagingRepoPrefix)
+      $(acr.servicePrincipalName)
+      $(app-dotnetdockerbuild-client-secret)
+      $(acr.servicePrincipalTenant)
+      $(acr.subscription)
+      $(acr.resourceGroup)
+      --os-type '*'
+      --architecture '*'
+      --repo-prefix $(publishRepoPrefix)
+      $(imageBuilder.pathArgs)
+      $(imageBuilder.commonCmdArgs)
+    displayName: Copy Images
   - script: >
       $(runImageBuilderCmd) publishManifest
       --repo-prefix $(publishRepoPrefix)
