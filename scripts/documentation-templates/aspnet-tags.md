@@ -13,15 +13,17 @@ $(TagDoc:2.1-bionic)
 
 **.NET Core 3.0 Preview tags**
 
-$(TagDoc:3.0-stretch-slim)
+$(TagDoc:3.0-buster-slim)
 $(TagDoc:3.0-alpine3.9)
+$(TagDoc:3.0-disco)
 $(TagDoc:3.0-bionic)
 
 ## Linux arm64 tags
 
 **.NET Core 3.0 Preview tags**
 
-$(TagDoc:3.0-stretch-slim-arm64v8)
+$(TagDoc:3.0-buster-slim-arm64v8)
+$(TagDoc:3.0-disco-arm64v8)
 $(TagDoc:3.0-bionic-arm64v8)
 
 ## Linux arm32 tags
@@ -33,7 +35,8 @@ $(TagDoc:2.1-bionic-arm32v7)
 
 **.NET Core 3.0 Preview tags**
 
-$(TagDoc:3.0-stretch-slim-arm32v7)
+$(TagDoc:3.0-buster-slim-arm32v7)
+$(TagDoc:3.0-disco-arm32v7)
 $(TagDoc:3.0-bionic-arm32v7)
 
 ## Windows Server, version 1809 amd64 tags
