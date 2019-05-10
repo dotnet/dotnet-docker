@@ -1,7 +1,6 @@
 parameters:
   buildMatrixType: platformDependencyGraph
   testMatrixType: platformVersionedOs
-  publishMatrixType: dependencyGraph
   customBuildLegGrouping: ""
 
 stages:
@@ -183,16 +182,7 @@ stages:
               succeeded('Build')))),
         eq(variables['singlePhase'], 'publish'))"
     jobs:
-    - template: ../jobs/generate-matrix.yml
-      parameters:
-        matrixType: ${{ parameters.publishMatrixType }}
-        name: GeneratePublishMatrix
-    - template: ../jobs/copy-images.yml
-      parameters:
-        pool: # linuxAmd64Pool
-          name: Hosted Ubuntu 1604
-        matrix: dependencies.GeneratePublishMatrix.outputs['${{ format('matrix.{0}Matrix', parameters.publishMatrixType) }}']
-    - template: ../jobs/publish-finalize.yml
+    - template: ../jobs/publish.yml
       parameters:
         pool: # linuxAmd64Pool
           name: Hosted Ubuntu 1604
