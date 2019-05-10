@@ -14,10 +14,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.2.203
+ENV DOTNET_SDK_VERSION 2.2.204
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
-    && dotnet_sha512='b08a0e72315d7658a76c8e3900d787e7678072e2fbdea148499bd34d942bfd2665b4ecc95bfab7adf33613cd78064bbabf6759e227508a683a63f902a4f08703' \
+    && dotnet_sha512='c3d52801c3b65bee33cdcbde2206da54ebcff918d4ac9277ae8b9975c58f8a81f341e5fb1fff7489d809118fefce1506c2af657d83d90c1d1bed23fdb4a8736d' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
@@ -25,7 +25,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     # Add NuGet cache (ARM SDK doesn't include it)
     && curl -SL --output /usr/share/dotnet/sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma \
-    && lzma_sha512='1ec7cc1bb724acb279c658a0f296ee2e4b2bd9febd150021c2900caf6918395a4c232d16866f8f73b090ac2b9f970f011b2338bf7984428589dd6864b5d0454a' \
+    && lzma_sha512='9638213b501515e9b492c823523bf1bf6b81589bea5dd0d4d9f882576207e642e5d26b35c256be9503ea2a6b1a4df07db63860caa61af45a1b4f72fcd02d34d6' \
     && echo "$lzma_sha512 /usr/share/dotnet/sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma" | sha512sum -c -
 
 # Configure web servers to bind to port 80 when present
