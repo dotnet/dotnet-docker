@@ -9,7 +9,7 @@ stages:
 # Build Images
 ################################################################################
 - stage: Build
-  condition: or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build'))
+  condition: and(succeeded(), or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build')))
   jobs:
   - template: ../jobs/generate-matrix.yml
     parameters:
