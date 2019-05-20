@@ -620,9 +620,6 @@
               "tags": {
                 "$(2.2-RuntimeVersion)-nanoserver-1809-arm32v7": {},
                 "2.2-nanoserver-1809-arm32v7": {},
-                "$(2.2-RuntimeVersion)-nanoserver-1809-arm32": {
-                  "isUndocumented": true
-                },
                 "2.2-nanoserver-1809-arm32": {
                   "isUndocumented": true
                 }
@@ -1087,9 +1084,6 @@
               "tags": {
                 "$(2.2-RuntimeVersion)-nanoserver-1809-arm32v7": {},
                 "2.2-nanoserver-1809-arm32v7": {},
-                "$(2.2-RuntimeVersion)-nanoserver-1809-arm32": {
-                  "isUndocumented": true
-                },
                 "2.2-nanoserver-1809-arm32": {
                   "isUndocumented": true
                 }
@@ -1555,9 +1549,6 @@
               "tags": {
                 "$(2.2-SdkVersion)-nanoserver-1809-arm32v7": {},
                 "2.2-nanoserver-1809-arm32v7": {},
-                "$(2.2-SdkVersion)-nanoserver-1809-arm32": {
-                  "isUndocumented": true
-                },
                 "2.2-nanoserver-1809-arm32": {
                   "isUndocumented": true
                 }
