@@ -90,8 +90,8 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 ## Windows Server, version 1903 amd64 tags
 
-- [`2.2.204-nanoserver-1903`, `2.2-nanoserver-1903`, `2.2.204`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1903/amd64/Dockerfile)
-- [`2.1.604-nanoserver-1903`, `2.1-nanoserver-1903`, `2.1.604`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1903/amd64/Dockerfile)
+- [`2.2.300-nanoserver-1903`, `2.2-nanoserver-1903`, `2.2.300`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1903/amd64/Dockerfile)
+- [`2.1.700-nanoserver-1903`, `2.1-nanoserver-1903`, `2.1.700`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1903/amd64/Dockerfile)
 
 **.NET Core 3.0 Preview tags**
 
