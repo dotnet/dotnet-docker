@@ -95,7 +95,10 @@ stages:
     parameters:
       name: Build_NanoServer1903_amd64
       pool: # windows1903Amd64
-        name: DotNetCore-Docker
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: DotNetCore-Docker-Public
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: DotNetCore-Docker
         demands: VSTS_OS -equals Windows_Server_2019_Data_Center_1903
       matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1903Amd64', parameters.buildMatrixType) }}']
       dockerClientOS: windows
