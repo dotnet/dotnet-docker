@@ -88,6 +88,15 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 - [`3.0.100-preview5-disco-arm32v7`, `3.0-disco-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/disco/arm32v7/Dockerfile)
 - [`3.0.100-preview5-bionic-arm32v7`, `3.0-bionic-arm32v7` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/bionic/arm32v7/Dockerfile)
 
+## Windows Server, version 1903 amd64 tags
+
+- [`2.2.300-nanoserver-1903`, `2.2-nanoserver-1903`, `2.2.300`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1903/amd64/Dockerfile)
+- [`2.1.700-nanoserver-1903`, `2.1-nanoserver-1903`, `2.1.700`, `2.1` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1903/amd64/Dockerfile)
+
+**.NET Core 3.0 Preview tags**
+
+- [`3.0.100-preview5-nanoserver-1903`, `3.0-nanoserver-1903`, `3.0.100-preview5`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/nanoserver-1903/amd64/Dockerfile)
+
 ## Windows Server, version 1809 amd64 tags
 
 - [`2.2.300-nanoserver-1809`, `2.2-nanoserver-1809`, `2.2.300`, `2.2`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1809/amd64/Dockerfile)

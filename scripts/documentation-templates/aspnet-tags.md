@@ -39,6 +39,15 @@ $(TagDoc:3.0-buster-slim-arm32v7)
 $(TagDoc:3.0-disco-arm32v7)
 $(TagDoc:3.0-bionic-arm32v7)
 
+## Windows Server, version 1903 amd64 tags
+
+$(TagDoc:2.2-nanoserver-1903)
+$(TagDoc:2.1-nanoserver-1903)
+
+**.NET Core 3.0 Preview tags**
+
+$(TagDoc:3.0-nanoserver-1903)
+
 ## Windows Server, version 1809 amd64 tags
 
 $(TagDoc:2.2-nanoserver-1809)

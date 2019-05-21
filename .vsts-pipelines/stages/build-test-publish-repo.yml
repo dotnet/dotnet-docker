@@ -91,6 +91,14 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1809Arm32', parameters.buildMatrixType) }}']
       dockerClientOS: linux
       useRemoteDockerServer: true
+  - template: ../jobs/build-images.yml
+    parameters:
+      name: Build_NanoServer1903_amd64
+      pool: # windows1903Amd64
+        name: DotNetCore-Docker
+        demands: VSTS_OS -equals Windows_Server_2019_Data_Center_1903
+      matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1903Amd64', parameters.buildMatrixType) }}']
+      dockerClientOS: windows
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   ################################################################################
@@ -165,6 +173,14 @@ stages:
           - RemoteDockerServerArch -equals arm32
         matrix: dependencies.GenerateTestMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1809Arm32', parameters.testMatrixType) }}']
         useRemoteDockerServer: true
+    - template: ../jobs/test-images-windows-client.yml
+      parameters:
+        name: Test_NanoServer1903_amd64
+        buildDependencies: Build_NanoServer1903_amd64
+        pool: # windows1903Amd64
+          name: DotNetCore-Docker
+          demands: VSTS_OS -equals Windows_Server_2019_Data_Center_1903
+        matrix: dependencies.GenerateTestMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1903Amd64', parameters.testMatrixType) }}']
 
   ################################################################################
   # Publish Images
