@@ -67,6 +67,11 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 - [`dotnetapp-stretch-arm32v7`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 - [`aspnetapp-stretch-arm32v7`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
+## Windows Server, version 1903 amd64 tags
+
+- [`dotnetapp-nanoserver-1903`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+- [`aspnetapp-nanoserver-1903`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+
 ## Windows Server, version 1809 amd64 tags
 
 - [`dotnetapp-nanoserver-1809`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
@@ -77,7 +82,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 - [`dotnetapp-nanoserver-1803`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 - [`aspnetapp-nanoserver-1803`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-## Windows Server, version 1809 amd32 tags
+## Windows Server, version 1809 arm32 tags
 
 - [`dotnetapp-nanoserver-1809-arm32v7`, `dotnetapp`, `latest` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 - [`aspnetapp-nanoserver-1809-arm32v7`, `aspnetapp` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
