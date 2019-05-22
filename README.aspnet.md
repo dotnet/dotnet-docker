@@ -77,6 +77,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 **.NET Core 3.0 Preview tags**
 
 - [`3.0.0-preview6-buster-slim-arm64v8`, `3.0-buster-slim-arm64v8`, `3.0.0-preview6`, `3.0` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/aspnet/buster-slim/arm64v8/Dockerfile)
+- [`3.0.0-preview6-alpine3.9-arm64v8`, `3.0-alpine3.9-arm64v8`, `3.0.0-preview6-alpine-arm64v8`, `3.0-alpine-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/aspnet/alpine3.9/arm64v8/Dockerfile)
 - [`3.0.0-preview6-disco-arm64v8`, `3.0-disco-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/aspnet/disco/arm64v8/Dockerfile)
 - [`3.0.0-preview6-bionic-arm64v8`, `3.0-bionic-arm64v8` (*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/aspnet/bionic/arm64v8/Dockerfile)
 
