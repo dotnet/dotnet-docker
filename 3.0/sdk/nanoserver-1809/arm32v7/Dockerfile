@@ -11,7 +11,7 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
     && del dotnet.zip
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 6.2.0
+ENV POWERSHELL_VERSION 6.2.1
 
 RUN curl -SL --output PowerShell.Windows.arm32.%POWERSHELL_VERSION%.nupkg https://pwshtool.blob.core.windows.net/tool/%POWERSHELL_VERSION%/PowerShell.Windows.arm32.%POWERSHELL_VERSION%.nupkg `
     && mkdir "%ProgramFiles%\powershell" `

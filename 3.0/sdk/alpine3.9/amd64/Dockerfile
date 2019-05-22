@@ -28,10 +28,10 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=true \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 6.2.0
+ENV POWERSHELL_VERSION 6.2.1
 
 RUN wget -O PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
-    && powershell_sha512='56c823a266c81d71d10dad4dc3a6967486ba54ad3165205bdf573da7d036b0f8205a2573917599e4593ca2a3309a1298ecd6f45cefd6aa678f00405c55c9c6bc' \
+    && powershell_sha512='0cbed2f335a5b3fee907c4c4c67521bf96b753a61bb842975793644ed9f69f2b82d459fd3778086e980aa681a0d44d2523ee429c288e7cc0c0623cb200c3fa3a' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.Alpine \
