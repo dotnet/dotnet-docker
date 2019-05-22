@@ -6,9 +6,9 @@
     "1.1-RuntimeVersion": "1.1.13",
     "1.1-SdkVersion": "1.1.14",
     "2.1-RuntimeVersion": "2.1.11",
-    "2.1-SdkVersion": "2.1.604",
+    "2.1-SdkVersion": "2.1.700",
     "2.2-RuntimeVersion": "2.2.5",
-    "2.2-SdkVersion": "2.2.204",
+    "2.2-SdkVersion": "2.2.300",
     "3.0-RuntimeVersion": "3.0.0-preview5",
     "3.0-SdkVersion": "3.0.100-preview5"
   },
@@ -496,6 +496,15 @@
                 "$(2.1-RuntimeVersion)-nanoserver-1809": {},
                 "2.1-nanoserver-1809": {}
               }
+            },
+            {
+              "dockerfile": "2.1/runtime/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(2.1-RuntimeVersion)-nanoserver-1903": {},
+                "2.1-nanoserver-1903": {}
+              }
             }
           ]
         },
@@ -623,6 +632,15 @@
                 "2.2-nanoserver-1809-arm32": {
                   "isUndocumented": true
                 }
+              }
+            },
+            {
+              "dockerfile": "2.2/runtime/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(2.2-RuntimeVersion)-nanoserver-1903": {},
+                "2.2-nanoserver-1903": {}
               }
             }
           ]
@@ -760,6 +778,15 @@
               "tags": {
                 "$(3.0-RuntimeVersion)-nanoserver-1809-arm32v7": {},
                 "3.0-nanoserver-1809-arm32v7": {}
+              }
+            },
+            {
+              "dockerfile": "3.0/runtime/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(3.0-RuntimeVersion)-nanoserver-1903": {},
+                "3.0-nanoserver-1903": {}
               }
             }
           ]
@@ -960,6 +987,15 @@
                 "$(2.1-RuntimeVersion)-nanoserver-1809": {},
                 "2.1-nanoserver-1809": {}
               }
+            },
+            {
+              "dockerfile": "2.1/aspnet/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(2.1-RuntimeVersion)-nanoserver-1903": {},
+                "2.1-nanoserver-1903": {}
+              }
             }
           ]
         },
@@ -1087,6 +1123,15 @@
                 "2.2-nanoserver-1809-arm32": {
                   "isUndocumented": true
                 }
+              }
+            },
+            {
+              "dockerfile": "2.2/aspnet/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(2.2-RuntimeVersion)-nanoserver-1903": {},
+                "2.2-nanoserver-1903": {}
               }
             }
           ]
@@ -1233,6 +1278,18 @@
               "tags": {
                 "$(3.0-RuntimeVersion)-nanoserver-1809-arm32v7": {},
                 "3.0-nanoserver-1809-arm32v7": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.0/aspnet/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(3.0-RuntimeVersion)-nanoserver-1903": {},
+                "3.0-nanoserver-1903": {}
               }
             }
           ]
@@ -1437,6 +1494,15 @@
                 "$(2.1-SdkVersion)-nanoserver-1809": {},
                 "2.1-nanoserver-1809": {}
               }
+            },
+            {
+              "dockerfile": "2.1/sdk/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(2.1-SdkVersion)-nanoserver-1903": {},
+                "2.1-nanoserver-1903": {}
+              }
             }
           ]
         },
@@ -1552,6 +1618,15 @@
                 "2.2-nanoserver-1809-arm32": {
                   "isUndocumented": true
                 }
+              }
+            },
+            {
+              "dockerfile": "2.2/sdk/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(2.2-SdkVersion)-nanoserver-1903": {},
+                "2.2-nanoserver-1903": {}
               }
             }
           ]
@@ -1674,6 +1749,15 @@
               "tags": {
                 "$(3.0-SdkVersion)-nanoserver-1809-arm32v7": {},
                 "3.0-nanoserver-1809-arm32v7": {}
+              }
+            },
+            {
+              "dockerfile": "3.0/sdk/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(3.0-SdkVersion)-nanoserver-1903": {},
+                "3.0-nanoserver-1903": {}
               }
             }
           ]

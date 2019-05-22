@@ -12,7 +12,7 @@ WORKDIR /app/aspnetapp
 RUN dotnet publish -c Release -o out
 
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-nanoserver-1809 AS runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-nanoserver-1903 AS runtime
 WORKDIR /app
 COPY --from=build /app/aspnetapp/out ./
 ENTRYPOINT ["dotnet", "aspnetapp.dll"]
