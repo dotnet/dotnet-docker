@@ -2,8 +2,10 @@
   "registry": "mcr.microsoft.com",
   "repos": [
     {
+      "id": "samples",
       "name": "dotnet/core/samples",
       "readmePath": "README.samples.md",
+      "mcrTagsMetadataTemplatePath": "scripts/mcr-tags-metadata-templates/samples-tags.yml",
       "images": [
         {
           "sharedTags": {
@@ -14,6 +16,7 @@
             {
               "dockerfile": "samples/dotnetapp",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "dotnetapp-stretch": {}
               }
@@ -22,6 +25,7 @@
               "architecture": "arm",
               "dockerfile": "samples/dotnetapp",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "dotnetapp-stretch-arm32v7": {}
               },
@@ -70,6 +74,7 @@
             {
               "dockerfile": "samples/aspnetapp",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "aspnetapp-stretch": {}
               }
@@ -78,6 +83,7 @@
               "architecture": "arm",
               "dockerfile": "samples/aspnetapp",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "aspnetapp-stretch-arm32v7": {}
               },

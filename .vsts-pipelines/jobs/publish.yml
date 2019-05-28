@@ -8,6 +8,10 @@ jobs:
       --manifest $(manifest)
       --registry-override $(acr.server)
       $(imageBuilder.queueArgs)
+    ${{ if eq(variables['Build.SourceBranchName'], 'nightly') }}:
+      sourceUrl: https://github.com/dotnet/dotnet-docker/blob/nightly
+    ${{ if ne(variables['Build.SourceBranchName'], 'nightly') }}:
+      sourceUrl: https://github.com/dotnet/dotnet-docker/blob/master
   steps:
   - template: ../steps/init-docker-linux.yml
   - script: >
@@ -35,11 +39,12 @@ jobs:
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Manifest
   - script: >
-      $(runImageBuilderCmd) publishMcrReadmes
+      $(runImageBuilderCmd) publishMcrDocs
       $(dotnetBot-userName)
       $(dotnetBot-email)
       $(dotnet-bot-user-repo-adminrepohook-pat)
       $(imageBuilder.commonCmdArgs)
+      $(sourceUrl)
     displayName: Publish Readme
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
     displayName: Component Detection
