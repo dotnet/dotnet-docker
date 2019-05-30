@@ -36,10 +36,10 @@ ENV ASPNETCORE_URLS=http://+:80 \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 6.2.1
+ENV POWERSHELL_VERSION 7.0.0-preview.1
 
 RUN curl -SL --output PowerShell.Linux.x64.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.x64.$POWERSHELL_VERSION.nupkg \
-    && powershell_sha512='306a481559a027f85d875f5be8eecb8459dfda6c4672a5d8ea8c3f8c124569ddc9f2bde71cc5d55ef61de40c1a4fe30eddf39345b3dba32923f2a3441002df37' \
+    && powershell_sha512='5f11bd5fb48082f100f646c2aa4f9341bbf0ecb63b5979b95b1cd77755e659be0bfc9d90c0cfceb838830f391224c0db850d353960ad35b30d081d76279ce819' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.x64 \
