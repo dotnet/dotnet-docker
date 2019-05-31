@@ -38,10 +38,13 @@ steps:
       --build-arg IMAGE=$(imageNames.imageBuilder.linux)
       -f ./scripts/Dockerfile.WithRepo .
     displayName: Build Image for Image Builder
+  - script: echo "##vso[task.setvariable variable=imageBuilderArtifactsPath]/artifacts"
+    displayName: Define Image Builder Artifacts Path Variable
   - script: >
       echo "##vso[task.setvariable variable=runImageBuilderCmd]
       docker run --rm
       -v /var/run/docker.sock:/var/run/docker.sock
+      -v $(Build.ArtifactStagingDirectory):$(imageBuilderArtifactsPath)
       -w /repo
       $(dockerArmRunArgs)
       $(imageNames.imageBuilder.withrepo)"
