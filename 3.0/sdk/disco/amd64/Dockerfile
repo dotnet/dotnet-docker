@@ -47,3 +47,9 @@ RUN curl -SL --output PowerShell.Linux.x64.$POWERSHELL_VERSION.nupkg https://pws
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm
+
+COPY . /app
+WORKDIR /app
+
+EXPOSE 5001
+ENTRYPOINT ["dotnet", "WebApplication.dll"]
