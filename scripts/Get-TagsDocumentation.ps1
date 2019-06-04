@@ -24,7 +24,6 @@ function Exec {
 
 function GenerateDoc {
     param (
-        [string] $Template,
         [string] $Repo,
         [string] $ReadmePath,
         [string] $Manifest,
@@ -38,11 +37,8 @@ function GenerateDoc {
     }
 
     $imageBuilderArgs = "generateTagsReadme" `
-        + " --update-readme" `
         + " --manifest $Manifest" `
         + " --repo $Repo" `
-        + " --template ./scripts/documentation-templates/$Template" `
-        + " $skipValidationOption" `
         + " https://github.com/dotnet/dotnet-docker/blob/${Branch}"
 
     & "$PSScriptRoot/Invoke-ImageBuilder.ps1" `
@@ -63,8 +59,8 @@ if (!$Branch) {
     }
 }
 
-GenerateDoc runtime-deps-tags.md dotnet/$coreRepoName/runtime-deps README.runtime-deps.md manifest.json $Branch
-GenerateDoc runtime-tags.md dotnet/$coreRepoName/runtime README.runtime.md manifest.json $Branch -ReuseImageBuilderImage
-GenerateDoc aspnet-tags.md dotnet/$coreRepoName/aspnet README.aspnet.md manifest.json $Branch -ReuseImageBuilderImage
-GenerateDoc sdk-tags.md dotnet/$coreRepoName/sdk README.sdk.md manifest.json $Branch -ReuseImageBuilderImage
-GenerateDoc samples-tags.md dotnet/core/samples README.samples.md manifest.samples.json master -ReuseImageBuilderImage
+GenerateDoc dotnet/$coreRepoName/runtime-deps README.runtime-deps.md manifest.json $Branch
+GenerateDoc dotnet/$coreRepoName/runtime README.runtime.md manifest.json $Branch -ReuseImageBuilderImage
+GenerateDoc dotnet/$coreRepoName/aspnet README.aspnet.md manifest.json $Branch -ReuseImageBuilderImage
+GenerateDoc dotnet/$coreRepoName/sdk README.sdk.md manifest.json $Branch -ReuseImageBuilderImage
+GenerateDoc dotnet/core/samples README.samples.md manifest.samples.json master -ReuseImageBuilderImage

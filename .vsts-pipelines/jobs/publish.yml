@@ -8,6 +8,11 @@ jobs:
       --manifest $(manifest)
       --registry-override $(acr.server)
       $(imageBuilder.queueArgs)
+    # publicSourceBranch is not necessarily the working branch, it is the branch referenced in the readme Dockerfile source links
+    ${{ if contains(variables['Build.SourceBranchName'], 'nightly') }}:
+      publicSourceBranch: nightly
+    ${{ if not(contains(variables['Build.SourceBranchName'], 'nightly')) }}:
+      publicSourceBranch: master
   steps:
   - template: ../steps/init-docker-linux.yml
   - script: >
@@ -35,10 +40,11 @@ jobs:
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Manifest
   - script: >
-      $(runImageBuilderCmd) publishMcrReadmes
+      $(runImageBuilderCmd) publishMcrDocs
       $(dotnetBot-userName)
       $(dotnetBot-email)
       $(dotnet-bot-user-repo-adminrepohook-pat)
+      $(publicGitRepoUri)/blob/$(publicSourceBranch)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Readme
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0

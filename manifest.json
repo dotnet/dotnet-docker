@@ -17,6 +17,7 @@
       "id": "runtime-deps",
       "name": "dotnet/core/runtime-deps",
       "readmePath": "README.runtime-deps.md",
+      "mcrTagsMetadataTemplatePath": "scripts/mcr-tags-metadata-templates/runtime-deps-tags.yml",
       "images": [
         {
           "sharedTags": {
@@ -27,6 +28,7 @@
             {
               "dockerfile": "1.0/runtime-deps/jessie/amd64",
               "os": "linux",
+              "osVersion": "jessie",
               "tags": {
                 "$(1.0-RuntimeVersion)-jessie": {},
                 "1.0-jessie": {}
@@ -39,6 +41,7 @@
             {
               "dockerfile": "1.1/runtime-deps/stretch/amd64",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(1.1-RuntimeVersion)-stretch": {},
                 "1.1-stretch": {}
@@ -68,6 +71,7 @@
             {
               "dockerfile": "2.1/runtime-deps/stretch-slim/amd64",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim": {
                   "documentationGroup": "2.1"
@@ -87,6 +91,7 @@
               "architecture": "arm",
               "dockerfile": "2.1/runtime-deps/stretch-slim/arm32v7",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim-arm32v7": {
                   "documentationGroup": "2.1"
@@ -110,6 +115,7 @@
             {
               "dockerfile": "2.1/runtime-deps/alpine3.7/amd64",
               "os": "linux",
+              "osVersion": "alpine3.7",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.7": {},
                 "2.1-alpine3.7": {},
@@ -124,6 +130,7 @@
             {
               "dockerfile": "2.1/runtime-deps/alpine3.9/amd64",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.9": {
                   "documentationGroup": "2.1"
@@ -146,6 +153,7 @@
             {
               "dockerfile": "2.1/runtime-deps/bionic/amd64",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.1-RuntimeVersion)-bionic": {
                   "documentationGroup": "2.1"
@@ -169,6 +177,7 @@
               "architecture": "arm",
               "dockerfile": "2.1/runtime-deps/bionic/arm32v7",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.1-RuntimeVersion)-bionic-arm32v7": {
                   "documentationGroup": "2.1"
@@ -192,6 +201,7 @@
             {
               "dockerfile": "2.2/runtime-deps/alpine3.8/amd64",
               "os": "linux",
+              "osVersion": "alpine3.8",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.8": {},
                 "2.2-alpine3.8": {},
@@ -210,6 +220,7 @@
             {
               "dockerfile": "3.0/runtime-deps/buster-slim/amd64",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-RuntimeVersion)-buster-slim": {},
                 "3.0-buster-slim": {}
@@ -219,6 +230,7 @@
               "architecture": "arm",
               "dockerfile": "3.0/runtime-deps/buster-slim/arm32v7",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-RuntimeVersion)-buster-slim-arm32v7": {},
                 "3.0-buster-slim-arm32v7": {}
@@ -229,6 +241,7 @@
               "architecture": "arm64",
               "dockerfile": "3.0/runtime-deps/buster-slim/arm64v8",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-RuntimeVersion)-buster-slim-arm64v8": {},
                 "3.0-buster-slim-arm64v8": {}
@@ -242,6 +255,7 @@
             {
               "dockerfile": "3.0/runtime-deps/alpine3.9/amd64",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9": {},
                 "3.0-alpine3.9": {},
@@ -257,6 +271,7 @@
               "architecture": "arm64",
               "dockerfile": "3.0/runtime-deps/alpine3.9/arm64v8",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9-arm64v8": {},
                 "3.0-alpine3.9-arm64v8": {},
@@ -272,6 +287,7 @@
             {
               "dockerfile": "3.0/runtime-deps/disco/amd64",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-RuntimeVersion)-disco": {},
                 "3.0-disco": {}
@@ -285,6 +301,7 @@
               "architecture": "arm",
               "dockerfile": "3.0/runtime-deps/disco/arm32v7",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-RuntimeVersion)-disco-arm32v7": {},
                 "3.0-disco-arm32v7": {}
@@ -299,6 +316,7 @@
               "architecture": "arm64",
               "dockerfile": "3.0/runtime-deps/disco/arm64v8",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-RuntimeVersion)-disco-arm64v8": {},
                 "3.0-disco-arm64v8": {}
@@ -312,6 +330,7 @@
             {
               "dockerfile": "3.0/runtime-deps/bionic/amd64",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic": {},
                 "3.0-bionic": {}
@@ -325,6 +344,7 @@
               "architecture": "arm",
               "dockerfile": "3.0/runtime-deps/bionic/arm32v7",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic-arm32v7": {},
                 "3.0-bionic-arm32v7": {}
@@ -339,6 +359,7 @@
               "architecture": "arm64",
               "dockerfile": "3.0/runtime-deps/bionic/arm64v8",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic-arm64v8": {},
                 "3.0-bionic-arm64v8": {}
@@ -353,6 +374,7 @@
       "id": "runtime",
       "name": "dotnet/core/runtime",
       "readmePath": "README.runtime.md",
+      "mcrTagsMetadataTemplatePath": "scripts/mcr-tags-metadata-templates/runtime-tags.yml",
       "images": [
         {
           "sharedTags": {
@@ -366,6 +388,7 @@
               },
               "dockerfile": "1.0/runtime/jessie/amd64",
               "os": "linux",
+              "osVersion": "jessie",
               "tags": {
                 "$(1.0-RuntimeVersion)-jessie": {},
                 "1.0-jessie": {}
@@ -410,6 +433,7 @@
               },
               "dockerfile": "1.1/runtime/jessie/amd64",
               "os": "linux",
+              "osVersion": "jessie",
               "tags": {
                 "$(1.1-RuntimeVersion)-jessie": {},
                 "1.1-jessie": {}
@@ -434,6 +458,7 @@
               },
               "dockerfile": "1.1/runtime/stretch/amd64",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(1.1-RuntimeVersion)-stretch": {},
                 "1.1-stretch": {}
@@ -453,6 +478,7 @@
               },
               "dockerfile": "2.1/runtime/stretch-slim/amd64",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim": {},
                 "2.1-stretch-slim": {}
@@ -465,6 +491,7 @@
               },
               "dockerfile": "2.1/runtime/stretch-slim/arm32v7",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim-arm32v7": {},
                 "2.1-stretch-slim-arm32v7": {}
@@ -508,6 +535,7 @@
               },
               "dockerfile": "2.1/runtime/alpine3.7/amd64",
               "os": "linux",
+              "osVersion": "alpine3.7",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.7": {},
                 "2.1-alpine3.7": {},
@@ -525,6 +553,7 @@
               },
               "dockerfile": "2.1/runtime/alpine3.9/amd64",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.9": {},
                 "2.1-alpine3.9": {}
@@ -540,6 +569,7 @@
               },
               "dockerfile": "2.1/runtime/bionic/amd64",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.1-RuntimeVersion)-bionic": {},
                 "2.1-bionic": {}
@@ -556,6 +586,7 @@
               },
               "dockerfile": "2.1/runtime/bionic/arm32v7",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.1-RuntimeVersion)-bionic-arm32v7": {},
                 "2.1-bionic-arm32v7": {}
@@ -577,6 +608,7 @@
               },
               "dockerfile": "2.2/runtime/stretch-slim/amd64",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.2-RuntimeVersion)-stretch-slim": {},
                 "2.2-stretch-slim": {}
@@ -589,6 +621,7 @@
               },
               "dockerfile": "2.2/runtime/stretch-slim/arm32v7",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.2-RuntimeVersion)-stretch-slim-arm32v7": {},
                 "2.2-stretch-slim-arm32v7": {}
@@ -648,6 +681,7 @@
               },
               "dockerfile": "2.2/runtime/alpine3.8/amd64",
               "os": "linux",
+              "osVersion": "alpine3.8",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.8": {},
                 "2.2-alpine3.8": {},
@@ -665,6 +699,7 @@
               },
               "dockerfile": "2.2/runtime/alpine3.9/amd64",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.9": {},
                 "2.2-alpine3.9": {}
@@ -680,6 +715,7 @@
               },
               "dockerfile": "2.2/runtime/bionic/amd64",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.2-RuntimeVersion)-bionic": {},
                 "2.2-bionic": {}
@@ -696,6 +732,7 @@
               },
               "dockerfile": "2.2/runtime/bionic/arm32v7",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.2-RuntimeVersion)-bionic-arm32v7": {},
                 "2.2-bionic-arm32v7": {}
@@ -716,6 +753,7 @@
               },
               "dockerfile": "3.0/runtime/buster-slim/amd64",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-RuntimeVersion)-buster-slim": {},
                 "3.0-buster-slim": {}
@@ -728,6 +766,7 @@
               },
               "dockerfile": "3.0/runtime/buster-slim/arm32v7",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-RuntimeVersion)-buster-slim-arm32v7": {},
                 "3.0-buster-slim-arm32v7": {}
@@ -741,6 +780,7 @@
               },
               "dockerfile": "3.0/runtime/buster-slim/arm64v8",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-RuntimeVersion)-buster-slim-arm64v8": {},
                 "3.0-buster-slim-arm64v8": {}
@@ -794,6 +834,7 @@
               },
               "dockerfile": "3.0/runtime/alpine3.9/amd64",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9": {},
                 "3.0-alpine3.9": {},
@@ -812,6 +853,7 @@
               },
               "dockerfile": "3.0/runtime/alpine3.9/arm64v8",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9-arm64v8": {},
                 "3.0-alpine3.9-arm64v8": {},
@@ -838,6 +880,7 @@
               },
               "dockerfile": "3.0/runtime/disco/amd64",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-RuntimeVersion)-disco": {},
                 "3.0-disco": {}
@@ -854,6 +897,7 @@
               },
               "dockerfile": "3.0/runtime/disco/arm32v7",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-RuntimeVersion)-disco-arm32v7": {},
                 "3.0-disco-arm32v7": {}
@@ -871,6 +915,7 @@
               },
               "dockerfile": "3.0/runtime/disco/arm64v8",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-RuntimeVersion)-disco-arm64v8": {},
                 "3.0-disco-arm64v8": {}
@@ -887,6 +932,7 @@
               },
               "dockerfile": "3.0/runtime/bionic/amd64",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic": {},
                 "3.0-bionic": {}
@@ -903,6 +949,7 @@
               },
               "dockerfile": "3.0/runtime/bionic/arm32v7",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic-arm32v7": {},
                 "3.0-bionic-arm32v7": {}
@@ -920,6 +967,7 @@
               },
               "dockerfile": "3.0/runtime/bionic/arm64v8",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic-arm64v8": {},
                 "3.0-bionic-arm64v8": {}
@@ -934,6 +982,7 @@
       "id": "aspnet",
       "name": "dotnet/core/aspnet",
       "readmePath": "README.aspnet.md",
+      "mcrTagsMetadataTemplatePath": "scripts/mcr-tags-metadata-templates/aspnet-tags.yml",
       "images": [
         {
           "sharedTags": {
@@ -947,6 +996,7 @@
               },
               "dockerfile": "2.1/aspnet/stretch-slim/amd64",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim": {},
                 "2.1-stretch-slim": {}
@@ -959,6 +1009,7 @@
               },
               "dockerfile": "2.1/aspnet/stretch-slim/arm32v7",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim-arm32v7": {},
                 "2.1-stretch-slim-arm32v7": {}
@@ -1002,6 +1053,7 @@
               },
               "dockerfile": "2.1/aspnet/alpine3.7/amd64",
               "os": "linux",
+              "osVersion": "alpine3.7",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.7": {},
                 "2.1-alpine3.7": {},
@@ -1019,6 +1071,7 @@
               },
               "dockerfile": "2.1/aspnet/alpine3.9/amd64",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.9": {},
                 "2.1-alpine3.9": {}
@@ -1034,6 +1087,7 @@
               },
               "dockerfile": "2.1/aspnet/bionic/amd64",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.1-RuntimeVersion)-bionic": {},
                 "2.1-bionic": {}
@@ -1050,6 +1104,7 @@
               },
               "dockerfile": "2.1/aspnet/bionic/arm32v7",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.1-RuntimeVersion)-bionic-arm32v7": {},
                 "2.1-bionic-arm32v7": {}
@@ -1071,6 +1126,7 @@
               },
               "dockerfile": "2.2/aspnet/stretch-slim/amd64",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.2-RuntimeVersion)-stretch-slim": {},
                 "2.2-stretch-slim": {}
@@ -1083,6 +1139,7 @@
               },
               "dockerfile": "2.2/aspnet/stretch-slim/arm32v7",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.2-RuntimeVersion)-stretch-slim-arm32v7": {},
                 "2.2-stretch-slim-arm32v7": {}
@@ -1142,6 +1199,7 @@
               },
               "dockerfile": "2.2/aspnet/alpine3.8/amd64",
               "os": "linux",
+              "osVersion": "alpine3.8",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.8": {},
                 "2.2-alpine3.8": {},
@@ -1159,6 +1217,7 @@
               },
               "dockerfile": "2.2/aspnet/alpine3.9/amd64",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.9": {},
                 "2.2-alpine3.9": {}
@@ -1174,6 +1233,7 @@
               },
               "dockerfile": "2.2/aspnet/bionic/amd64",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.2-RuntimeVersion)-bionic": {},
                 "2.2-bionic": {}
@@ -1190,6 +1250,7 @@
               },
               "dockerfile": "2.2/aspnet/bionic/arm32v7",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.2-RuntimeVersion)-bionic-arm32v7": {},
                 "2.2-bionic-arm32v7": {}
@@ -1210,6 +1271,7 @@
               },
               "dockerfile": "3.0/aspnet/buster-slim/amd64",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-RuntimeVersion)-buster-slim": {},
                 "3.0-buster-slim": {}
@@ -1222,6 +1284,7 @@
               },
               "dockerfile": "3.0/aspnet/buster-slim/arm32v7",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-RuntimeVersion)-buster-slim-arm32v7": {},
                 "3.0-buster-slim-arm32v7": {}
@@ -1235,6 +1298,7 @@
               },
               "dockerfile": "3.0/aspnet/buster-slim/arm64v8",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-RuntimeVersion)-buster-slim-arm64v8": {},
                 "3.0-buster-slim-arm64v8": {}
@@ -1300,6 +1364,7 @@
               },
               "dockerfile": "3.0/aspnet/alpine3.9/amd64",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9": {},
                 "3.0-alpine3.9": {},
@@ -1317,6 +1382,7 @@
               },
               "dockerfile": "3.0/aspnet/disco/amd64",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-RuntimeVersion)-disco": {},
                 "3.0-disco": {}
@@ -1333,6 +1399,7 @@
               },
               "dockerfile": "3.0/aspnet/disco/arm32v7",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-RuntimeVersion)-disco-arm32v7": {},
                 "3.0-disco-arm32v7": {}
@@ -1350,6 +1417,7 @@
               },
               "dockerfile": "3.0/aspnet/disco/arm64v8",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-RuntimeVersion)-disco-arm64v8": {},
                 "3.0-disco-arm64v8": {}
@@ -1366,6 +1434,7 @@
               },
               "dockerfile": "3.0/aspnet/bionic/amd64",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic": {},
                 "3.0-bionic": {}
@@ -1382,6 +1451,7 @@
               },
               "dockerfile": "3.0/aspnet/bionic/arm32v7",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic-arm32v7": {},
                 "3.0-bionic-arm32v7": {}
@@ -1399,6 +1469,7 @@
               },
               "dockerfile": "3.0/aspnet/bionic/arm64v8",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic-arm64v8": {},
                 "3.0-bionic-arm64v8": {}
@@ -1413,6 +1484,7 @@
       "id": "sdk",
       "name": "dotnet/core/sdk",
       "readmePath": "README.sdk.md",
+      "mcrTagsMetadataTemplatePath": "scripts/mcr-tags-metadata-templates/sdk-tags.yml",
       "images": [
         {
           "sharedTags": {
@@ -1423,6 +1495,7 @@
             {
               "dockerfile": "1.1/sdk/jessie/amd64",
               "os": "linux",
+              "osVersion": "jessie",
               "tags": {
                 "$(1.1-SdkVersion)-jessie": {},
                 "1.1-jessie": {}
@@ -1444,6 +1517,7 @@
             {
               "dockerfile": "1.1/sdk/stretch/amd64",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(1.1-SdkVersion)-stretch": {},
                 "1.1-stretch": {}
@@ -1460,6 +1534,7 @@
             {
               "dockerfile": "2.1/sdk/stretch/amd64",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.1-SdkVersion)-stretch": {},
                 "2.1-stretch": {}
@@ -1469,6 +1544,7 @@
               "architecture": "arm",
               "dockerfile": "2.1/sdk/stretch/arm32v7",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.1-SdkVersion)-stretch-arm32v7": {},
                 "2.1-stretch-arm32v7": {}
@@ -1512,6 +1588,7 @@
               },
               "dockerfile": "2.1/sdk/alpine3.7/amd64",
               "os": "linux",
+              "osVersion": "alpine3.7",
               "tags": {
                 "$(2.1-SdkVersion)-alpine3.7": {},
                 "2.1-alpine3.7": {},
@@ -1529,6 +1606,7 @@
               },
               "dockerfile": "2.1/sdk/alpine3.9/amd64",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(2.1-SdkVersion)-alpine3.9": {},
                 "2.1-alpine3.9": {}
@@ -1541,6 +1619,7 @@
             {
               "dockerfile": "2.1/sdk/bionic/amd64",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.1-SdkVersion)-bionic": {},
                 "2.1-bionic": {}
@@ -1554,6 +1633,7 @@
               "architecture": "arm",
               "dockerfile": "2.1/sdk/bionic/arm32v7",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.1-SdkVersion)-bionic-arm32v7": {},
                 "2.1-bionic-arm32v7": {}
@@ -1572,6 +1652,7 @@
             {
               "dockerfile": "2.2/sdk/stretch/amd64",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.2-SdkVersion)-stretch": {},
                 "2.2-stretch": {}
@@ -1581,6 +1662,7 @@
               "architecture": "arm",
               "dockerfile": "2.2/sdk/stretch/arm32v7",
               "os": "linux",
+              "osVersion": "stretch",
               "tags": {
                 "$(2.2-SdkVersion)-stretch-arm32v7": {},
                 "2.2-stretch-arm32v7": {}
@@ -1640,6 +1722,7 @@
               },
               "dockerfile": "2.2/sdk/alpine3.8/amd64",
               "os": "linux",
+              "osVersion": "alpine3.8",
               "tags": {
                 "$(2.2-SdkVersion)-alpine3.8": {},
                 "2.2-alpine3.8": {},
@@ -1657,6 +1740,7 @@
               },
               "dockerfile": "2.2/sdk/alpine3.9/amd64",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(2.2-SdkVersion)-alpine3.9": {},
                 "2.2-alpine3.9": {}
@@ -1669,6 +1753,7 @@
             {
               "dockerfile": "2.2/sdk/bionic/amd64",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.2-SdkVersion)-bionic": {},
                 "2.2-bionic": {}
@@ -1682,6 +1767,7 @@
               "architecture": "arm",
               "dockerfile": "2.2/sdk/bionic/arm32v7",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(2.2-SdkVersion)-bionic-arm32v7": {},
                 "2.2-bionic-arm32v7": {}
@@ -1699,6 +1785,7 @@
             {
               "dockerfile": "3.0/sdk/buster/amd64",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-SdkVersion)-buster": {},
                 "3.0-buster": {}
@@ -1708,6 +1795,7 @@
               "architecture": "arm",
               "dockerfile": "3.0/sdk/buster/arm32v7",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-SdkVersion)-buster-arm32v7": {},
                 "3.0-buster-arm32v7": {}
@@ -1718,6 +1806,7 @@
               "architecture": "arm64",
               "dockerfile": "3.0/sdk/buster/arm64v8",
               "os": "linux",
+              "osVersion": "buster",
               "tags": {
                 "$(3.0-SdkVersion)-buster-arm64v8": {},
                 "3.0-buster-arm64v8": {}
@@ -1771,6 +1860,7 @@
               },
               "dockerfile": "3.0/sdk/alpine3.9/amd64",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-SdkVersion)-alpine3.9": {},
                 "3.0-alpine3.9": {},
@@ -1785,6 +1875,7 @@
             {
               "dockerfile": "3.0/sdk/disco/amd64",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-SdkVersion)-disco": {},
                 "3.0-disco": {}
@@ -1798,6 +1889,7 @@
               "architecture": "arm",
               "dockerfile": "3.0/sdk/disco/arm32v7",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-SdkVersion)-disco-arm32v7": {},
                 "3.0-disco-arm32v7": {}
@@ -1812,6 +1904,7 @@
               "architecture": "arm64",
               "dockerfile": "3.0/sdk/disco/arm64v8",
               "os": "linux",
+              "osVersion": "disco",
               "tags": {
                 "$(3.0-SdkVersion)-disco-arm64v8": {},
                 "3.0-disco-arm64v8": {}
@@ -1825,6 +1918,7 @@
             {
               "dockerfile": "3.0/sdk/bionic/amd64",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-SdkVersion)-bionic": {},
                 "3.0-bionic": {}
@@ -1838,6 +1932,7 @@
               "architecture": "arm",
               "dockerfile": "3.0/sdk/bionic/arm32v7",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-SdkVersion)-bionic-arm32v7": {},
                 "3.0-bionic-arm32v7": {}
@@ -1852,6 +1947,7 @@
               "architecture": "arm64",
               "dockerfile": "3.0/sdk/bionic/arm64v8",
               "os": "linux",
+              "osVersion": "bionic",
               "tags": {
                 "$(3.0-SdkVersion)-bionic-arm64v8": {},
                 "3.0-bionic-arm64v8": {}
