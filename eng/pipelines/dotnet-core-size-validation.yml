@@ -1,15 +1,17 @@
 trigger: none
 pr: none
+variables:
+- template: variables/common.yml
 jobs:
 - job: LinuxPerfTests
   pool: Hosted Ubuntu 1604
   workspace:
     clean: all
   steps:
-  - template: ../steps/cleanup-docker-linux.yml
+  - template: ../common/templates/steps/cleanup-docker-linux.yml
   - powershell: ./tests/performance/Validate-ImageSize.ps1
     displayName: Run Image Size Tests
-  - template: ../steps/cleanup-docker-linux.yml
+  - template: ../common/templates/steps/cleanup-docker-linux.yml
 - job: WindowsPerfTests
   pool: # windows1809Amd64
     name: DotNetCore-Docker
@@ -17,7 +19,7 @@ jobs:
   workspace:
     clean: all
   steps:
-  - template: ../steps/cleanup-docker-windows.yml
+  - template: ../common/templates/steps/cleanup-docker-windows.yml
   - powershell: ./tests/performance/Validate-ImageSize.ps1
     displayName: Run Image Size Tests
-  - template: ../steps/cleanup-docker-windows.yml
+  - template: ../common/templates/steps/cleanup-docker-windows.yml

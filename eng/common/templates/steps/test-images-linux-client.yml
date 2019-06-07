@@ -33,7 +33,7 @@ steps:
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - script: >
       docker exec $(testRunner.container) pwsh
-      -File ./scripts/Invoke-WithRetry.ps1
+      -File $(engCommonRelativePath)/Invoke-WithRetry.ps1
       "docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)"
     displayName: Docker login
 - script: >
