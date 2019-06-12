@@ -176,12 +176,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 _outputHelper.WriteLine("1.* ASP.NET Core images reside in https://github.com/aspnet/aspnet-docker, skip testing");
                 return;
             }
-            if (imageData.Arch == Arch.Arm64 && imageData.OS.StartsWith(OS.AlpinePrefix))
-            {
-                _outputHelper.WriteLine(
-                    "musl_arm64 ASP.NET Core builds don't exist yet (https://github.com/dotnet/dotnet-docker/issues/360)");
-                return;
-            }
 
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, _dockerHelper, _outputHelper, isWeb: true);
             await verifier.Execute();

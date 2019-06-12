@@ -1377,6 +1377,33 @@
         {
           "platforms": [
             {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.0/aspnet/alpine3.9/arm64v8",
+              "os": "linux",
+              "tags": {
+                "$(3.0-RuntimeVersion)-alpine3.9-arm64v8": {},
+                "3.0-alpine3.9-arm64v8": {},
+                "$(3.0-RuntimeVersion)-alpine-arm64v8": {},
+                "3.0-alpine-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGrouping": [
+                {
+                  "name": "pr-build",
+                  "dependencies": [
+                    "$(Repo:sdk):3.0-buster-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
