@@ -17,6 +17,8 @@ $(McrTagsYmlTagGroup:3.0-bionic)
     customSubTableTitle: .NET Core 3.0 Preview Tags
 $(McrTagsYmlTagGroup:3.0-buster-slim-arm64v8)
     customSubTableTitle: .NET Core 3.0 Preview Tags
+$(McrTagsYmlTagGroup:3.0-alpine3.9-arm64v8)
+    customSubTableTitle: .NET Core 3.0 Preview Tags
 $(McrTagsYmlTagGroup:3.0-disco-arm64v8)
     customSubTableTitle: .NET Core 3.0 Preview Tags
 $(McrTagsYmlTagGroup:3.0-bionic-arm64v8)

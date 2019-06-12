@@ -28,3 +28,5 @@ steps:
       echo "##vso[task.setvariable variable=runImageBuilderCmd]
       $(Build.BinariesDirectory)\.Microsoft.DotNet.ImageBuilder\Microsoft.DotNet.ImageBuilder.exe
     displayName: Define runImageBuilderCmd Variable
+  - script: echo "##vso[task.setvariable variable=imageBuilderArtifactsPath]$(Build.ArtifactStagingDirectory)
+    displayName: Define Image Builder Artifacts Path Variable

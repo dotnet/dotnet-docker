@@ -57,9 +57,15 @@ jobs:
       --os-type $(osType)
       --os-version "$(osVersion)"
       --architecture $(architecture)
+      --image-info-output-path "$(imageBuilderArtifactsPath)/$(legName)-image-info.json"
       --retry
       $(imageBuilderBuildArgs)
     displayName: Build Images
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: $(legName)-image-info
+      targetPath: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
+    displayName: Publish Image Info File Artifact
   - ${{ if eq(variables['System.TeamProject'], 'public') }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
       parameters:

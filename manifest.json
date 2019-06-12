@@ -9,8 +9,8 @@
     "2.1-SdkVersion": "2.1.700",
     "2.2-RuntimeVersion": "2.2.5",
     "2.2-SdkVersion": "2.2.300",
-    "3.0-RuntimeVersion": "3.0.0-preview5",
-    "3.0-SdkVersion": "3.0.100-preview5"
+    "3.0-RuntimeVersion": "3.0.0-preview6",
+    "3.0-SdkVersion": "3.0.100-preview6"
   },
   "repos": [
     {
@@ -1383,6 +1383,7 @@
               },
               "dockerfile": "3.0/aspnet/alpine3.9/arm64v8",
               "os": "linux",
+              "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9-arm64v8": {},
                 "3.0-alpine3.9-arm64v8": {},

@@ -47,6 +47,28 @@ jobs:
       $(publicGitRepoUri)/blob/$(publicSourceBranch)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Readme
+  - task: DownloadPipelineArtifact@1
+    inputs:
+      buildType: specific
+      project: $(System.TeamProject)
+      pipline: $(System.DefinitionId)
+      buildVersionToDownload: specific
+      buildId: $(sourceBuildId)
+      targetPath: $(Build.ArtifactStagingDirectory)
+    displayName: Download Pipline Artifacts
+    condition: and(succeeded(), eq(variables['publishRepoPrefix'], 'public/'))
+  - script: >
+      $(runImageBuilderCmd) publishImageInfo
+      $(dotnetBot-userName)
+      $(dotnetBot-email)
+      $(dotnet-bot-user-repo-adminrepohook-pat)
+      $(imageBuilderArtifactsPath)
+      --git-owner dotnet
+      --git-repo versions
+      --git-branch master
+      --git-path build-info/docker/image-info.json
+    displayName: Publish Image Info
+    condition: and(succeeded(), eq(variables['publishRepoPrefix'], 'public/'))
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
     displayName: Component Detection
   - template: ../steps/cleanup-docker-linux.yml
