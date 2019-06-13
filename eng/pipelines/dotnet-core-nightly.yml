@@ -11,8 +11,8 @@ variables:
 - name: manifest
   value: manifest.json
 stages:
-- template: $(engCommonPath)/templates/stages/build-test-publish-repo.yml
+- template: ../common/templates/stages/build-test-publish-repo.yml
   parameters:
     ${{ if eq(variables['System.TeamProject'], 'public') }}:
       buildMatrixType: platformVersionedOs
-      customBuildLegGrouping: pr-
+      customBuildLegGrouping: pr-build

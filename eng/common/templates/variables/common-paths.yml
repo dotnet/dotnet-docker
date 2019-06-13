@@ -1,4 +1,4 @@
 variables:
   engCommonRelativePath: eng/common
   engCommonPath: $(Build.Repository.LocalPath)/$(engCommonRelativePath)
-  templatesPath: $(engCommonPath)/templates
+  engPath: $(Build.Repository.LocalPath)/eng

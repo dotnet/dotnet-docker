@@ -4,7 +4,7 @@ parameters:
   matrix: {}
   dockerClientOS: null
   useRemoteDockerServer: false
-  buildJobTimeout: 120
+  buildJobTimeout: 60
 
 jobs:
 - job: ${{ parameters.name }}
