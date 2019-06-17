@@ -1,0 +1,8 @@
+trigger: none
+pr: none
+variables:
+- template: variables/common.yml
+- name: manifest
+  value: manifest.samples.json
+stages:
+- template: ../common/templates/stages/build-test-publish-repo.yml

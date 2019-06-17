@@ -55,10 +55,10 @@ function Exec {
 $imageBuilderContainerName = "ImageBuilder-$(Get-Date -Format yyyyMMddhhmmss)"
 $containerCreated = $false
 
-pushd $PSScriptRoot/../
+pushd $PSScriptRoot/../../
 try {
     # Load common image names
-    Get-Content ./.vsts-pipelines/variables/docker-images.yml |
+    Get-Content ./eng/common/templates/variables/docker-images.yml |
     Where-Object { $_.Trim() -notlike 'variables:' } |
     ForEach-Object { 
         $parts = $_.Split(':', 2)
@@ -70,9 +70,9 @@ try {
         # On Linux, ImageBuilder is run within a container.
         $imageBuilderImageName = "microsoft-dotnet-imagebuilder-withrepo"
         if ($ReuseImageBuilderImage -ne $True) {
-            ./scripts/Invoke-WithRetry "docker pull ${imageNames.imagebuilder.linux}"
+            ./eng/common/Invoke-WithRetry.ps1 "docker pull ${imageNames.imagebuilder.linux}"
             Exec ("docker build -t $imageBuilderImageName --build-arg " `
-                + "IMAGE=${imageNames.imagebuilder.linux} -f ./scripts/Dockerfile.WithRepo .")
+                + "IMAGE=${imageNames.imagebuilder.linux} -f eng/common/Dockerfile.WithRepo .")
         }
 
         $imageBuilderCmd = "docker run --name $imageBuilderContainerName -v /var/run/docker.sock:/var/run/docker.sock $imageBuilderImageName"
@@ -83,7 +83,7 @@ try {
         $imageBuilderFolder = ".Microsoft.DotNet.ImageBuilder"
         $imageBuilderCmd = [System.IO.Path]::Combine($imageBuilderFolder, "Microsoft.DotNet.ImageBuilder.exe")
         if (-not (Test-Path -Path "$imageBuilderCmd" -PathType Leaf)) {
-            ./scripts/Invoke-WithRetry "docker pull ${imageNames.imagebuilder.windows}"
+            ./eng/common/Invoke-WithRetry.ps1 "docker pull ${imageNames.imagebuilder.windows}"
             Exec "docker create --name $imageBuilderContainerName ${imageNames.imagebuilder.windows}"
             $containerCreated = $true
             if (Test-Path -Path $imageBuilderFolder)

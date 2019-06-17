@@ -1,7 +1,6 @@
 variables:
 - template: docker-images.yml
-- name: publicGitRepoUri
-  value: https://github.com/dotnet/dotnet-docker
+- template: common-paths.yml
 - name: stagingRepoPrefix
   value: build-staging/$(sourceBuildId)/
 - name: skipComponentGovernanceDetection
