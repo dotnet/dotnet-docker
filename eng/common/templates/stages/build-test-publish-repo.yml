@@ -4,8 +4,8 @@ parameters:
   customBuildLegGrouping: ""
   linuxAmdBuildJobTimeout: 60
   linuxArmBuildJobTimeout: 60
-  windowsAmdJobTimeout: 60
-  windowsArmJobTimeout: 60
+  windowsAmdBuildJobTimeout: 60
+  windowsArmBuildJobTimeout: 60
 
 stages:
 
