@@ -17,7 +17,7 @@
       "id": "runtime-deps",
       "name": "dotnet/core/runtime-deps",
       "readmePath": "README.runtime-deps.md",
-      "mcrTagsMetadataTemplatePath": "scripts/mcr-tags-metadata-templates/runtime-deps-tags.yml",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-deps-tags.yml",
       "images": [
         {
           "sharedTags": {
@@ -374,7 +374,7 @@
       "id": "runtime",
       "name": "dotnet/core/runtime",
       "readmePath": "README.runtime.md",
-      "mcrTagsMetadataTemplatePath": "scripts/mcr-tags-metadata-templates/runtime-tags.yml",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-tags.yml",
       "images": [
         {
           "sharedTags": {
@@ -982,7 +982,7 @@
       "id": "aspnet",
       "name": "dotnet/core/aspnet",
       "readmePath": "README.aspnet.md",
-      "mcrTagsMetadataTemplatePath": "scripts/mcr-tags-metadata-templates/aspnet-tags.yml",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/aspnet-tags.yml",
       "images": [
         {
           "sharedTags": {
@@ -1512,7 +1512,7 @@
       "id": "sdk",
       "name": "dotnet/core/sdk",
       "readmePath": "README.sdk.md",
-      "mcrTagsMetadataTemplatePath": "scripts/mcr-tags-metadata-templates/sdk-tags.yml",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/sdk-tags.yml",
       "images": [
         {
           "sharedTags": {
