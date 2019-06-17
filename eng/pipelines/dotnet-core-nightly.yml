@@ -1,14 +1,19 @@
-trigger: none
+trigger:
+  batch: true
+  branches:
+    include:
+    - nightly
 pr:
-- master
+- nightly
 
 variables:
-- template: ../variables/common.yml
+- template: variables/common.yml
 - name: manifest
   value: manifest.json
 stages:
-- template: ../stages/build-test-publish-repo.yml
+- template: ../common/templates/stages/build-test-publish-repo.yml
   parameters:
     ${{ if eq(variables['System.TeamProject'], 'public') }}:
       buildMatrixType: platformVersionedOs
       customBuildLegGrouping: pr-build
+      windowsArmBuildJobTimeout: 120

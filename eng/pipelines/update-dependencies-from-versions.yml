@@ -2,12 +2,12 @@ trigger: none
 pr: none
 variables:
 - group: DotNet-Maestro
-
+- template: variables/common.yml
 jobs:
 - job: UpdateDependencies
   pool: Hosted Ubuntu 1604
   steps:
-  - script: docker build -t update-dependencies -f ./scripts/update-dependencies/Dockerfile --pull .
+  - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
     displayName: Build Update Dependencies Tool
   - script: >
       docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies

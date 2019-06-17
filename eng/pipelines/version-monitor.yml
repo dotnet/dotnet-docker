@@ -1,14 +1,14 @@
 trigger: none
 pr: none
 variables:
-- template: ../variables/common.yml
+- template: variables/common.yml
 jobs:
 - job: VersionMonitor
   pool: Hosted Ubuntu 1604
   workspace:
     clean: all
   steps:
-  - template: ../steps/init-docker-linux.yml
+  - template: ../common/templates/steps/init-docker-linux.yml
   - script: >
       $(runImageBuilderCmd) updateVersions
       $(dotnetBot-userName)
@@ -18,4 +18,4 @@ jobs:
       --git-owner dotnet
       --architecture '*'
     displayName: Update Docker Image Version Info
-  - template: ../steps/cleanup-docker-linux.yml
+  - template: ../common/templates/steps/cleanup-docker-linux.yml

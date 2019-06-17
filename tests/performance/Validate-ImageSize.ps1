@@ -24,7 +24,7 @@ try {
         $validateImageSizeArgs += " --pull"
     }
 
-    ./scripts/Invoke-ImageBuilder.ps1 "validateImageSize $validateImageSizeArgs"
+    ./eng/common/Invoke-ImageBuilder.ps1 "validateImageSize $validateImageSizeArgs"
 }
 finally {
     popd

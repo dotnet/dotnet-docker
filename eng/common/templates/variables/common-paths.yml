@@ -1,0 +1,4 @@
+variables:
+  engCommonRelativePath: eng/common
+  engCommonPath: $(Build.Repository.LocalPath)/$(engCommonRelativePath)
+  engPath: $(Build.Repository.LocalPath)/eng

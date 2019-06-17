@@ -4,12 +4,12 @@ FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build-env
 WORKDIR /update-dependencies
 
 # copy csproj and restore as distinct layers
-COPY scripts/update-dependencies/*.csproj ./
-COPY scripts/update-dependencies/NuGet.config ./
+COPY eng/update-dependencies/*.csproj ./
+COPY eng/update-dependencies/NuGet.config ./
 RUN dotnet restore
 
 # copy everything else and build
-COPY scripts/update-dependencies/. ./
+COPY eng/update-dependencies/. ./
 RUN dotnet publish -c Release -o out --no-restore
 
 

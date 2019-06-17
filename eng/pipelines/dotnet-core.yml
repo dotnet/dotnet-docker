@@ -1,17 +1,13 @@
-trigger:
-  batch: true
-  branches:
-    include:
-    - nightly
+trigger: none
 pr:
-- nightly
+- master
 
 variables:
-- template: ../variables/common.yml
+- template: variables/common.yml
 - name: manifest
   value: manifest.json
 stages:
-- template: ../stages/build-test-publish-repo.yml
+- template: ../common/templates/stages/build-test-publish-repo.yml
   parameters:
     ${{ if eq(variables['System.TeamProject'], 'public') }}:
       buildMatrixType: platformVersionedOs

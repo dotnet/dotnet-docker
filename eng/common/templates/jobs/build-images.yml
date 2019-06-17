@@ -4,6 +4,7 @@ parameters:
   matrix: {}
   dockerClientOS: null
   useRemoteDockerServer: false
+  buildJobTimeout: 60
 
 jobs:
 - job: ${{ parameters.name }}
@@ -12,8 +13,7 @@ jobs:
   pool: ${{ parameters.pool }}
   strategy:
     matrix: $[ ${{ parameters.matrix }} ]
-  ${{ if and(eq(variables['System.TeamProject'], 'public'), eq(parameters.useRemoteDockerServer, 'true')) }}:
-    timeoutInMinutes: 120
+  timeoutInMinutes: ${{ parameters.buildJobTimeout }}
   variables:
     osVersion: ${{ parameters.osVersion }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
