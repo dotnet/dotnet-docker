@@ -10,6 +10,9 @@ variables:
 - template: variables/common.yml
 - name: manifest
   value: manifest.json
+- ${{ if eq(variables['System.TeamProject'], 'public') }}:
+  - name: windowsArmBuildJobTimeout
+    value: 120
 stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
   parameters:
