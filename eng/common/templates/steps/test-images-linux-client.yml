@@ -40,7 +40,7 @@ steps:
     docker exec $(testRunner.container) pwsh
     -File ./tests/run-tests.ps1
     -VersionFilter $(dotnetVersion)
-    -OSFilter $(osVariant)
+    -OSFilter $(osVariant)*
     -ArchitectureFilter $(architecture)
     $(optionalTestArgs)
   displayName: Test Images
