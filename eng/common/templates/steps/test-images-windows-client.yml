@@ -17,7 +17,7 @@ steps:
   displayName: Cleanup Old Test Results
 - powershell: >
     ./tests/run-tests.ps1
-    -VersionFilter $(dotnetVersion)*
+    -VersionFilter $(dotnetVersion)
     -OSFilter $(osVariant)
     $(optionalTestArgs)
   displayName: Test Images
