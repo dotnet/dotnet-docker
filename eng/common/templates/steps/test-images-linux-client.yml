@@ -39,7 +39,7 @@ steps:
 - script: >
     docker exec $(testRunner.container) pwsh
     -File ./tests/run-tests.ps1
-    -VersionFilter $(dotnetVersion)*
+    -VersionFilter $(dotnetVersion)
     -OSFilter $(osVariant)*
     -ArchitectureFilter $(architecture)
     $(optionalTestArgs)
