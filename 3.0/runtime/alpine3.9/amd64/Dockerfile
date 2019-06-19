@@ -2,10 +2,10 @@ ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
 FROM $REPO:3.0-alpine3.9
 
 # Install .NET Core
-ENV DOTNET_VERSION 3.0.0-preview7-27818-14
+ENV DOTNET_VERSION 3.0.0-preview7-27819-02
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='48ae4e23a2ce687dc51b149d65106b3de71d9b40dcfe68bfc2043fa3f5906a1c86d92db3065d3b17a2c0edff338246f37dd53d82fdea45be2622559411cd9f5c' \
+    && dotnet_sha512='12fab46a599215da5260de970571fb609fce700fd96339148f51c40d2ea314536308de336179a043e712a3315a1da4d7304e8dabca2a7a299700d8463d60f5d5' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \
