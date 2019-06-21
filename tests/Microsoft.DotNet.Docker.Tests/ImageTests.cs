@@ -17,9 +17,6 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private static readonly ImageData[] s_linuxTestData =
         {
-            new ImageData { Version = V1_0, OS = OS.Jessie,       Arch = Arch.Amd64,    SdkVersion = V1_1 },
-            new ImageData { Version = V1_1, OS = OS.Jessie,       Arch = Arch.Amd64,    RuntimeDepsVersion = V1_0 },
-            new ImageData { Version = V1_1, OS = OS.Stretch,      Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.StretchSlim,  Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.Bionic,       Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.Alpine37,     Arch = Arch.Amd64 },
@@ -46,8 +43,6 @@ namespace Microsoft.DotNet.Docker.Tests
         };
         private static readonly ImageData[] s_windowsTestData =
         {
-            new ImageData { Version = V1_0, OS = OS.NanoServer1809, Arch = Arch.Amd64,  SdkVersion = V1_1 },
-            new ImageData { Version = V1_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.NanoServer1803, Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
@@ -98,22 +93,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VerifySdkImage_PackageCache(ImageData imageData)
         {
             string verifyCacheCommand = null;
-            if (imageData.Version.Major == 1)
-            {
-                if (!imageData.HasSdk)
-                {
-                    _outputHelper.WriteLine("No version specific SDK image exists to verify.");
-                }
-                else if (DockerHelper.IsLinuxContainerModeEnabled)
-                {
-                    verifyCacheCommand = "test -d /root/.nuget/packages";
-                }
-                else
-                {
-                    verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Users\\ContainerUser\\.nuget\\packages\"";
-                }
-            }
-            else if (imageData.Version.Major == 2)
+            if (imageData.Version.Major == 2)
             {
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
@@ -171,12 +151,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAspNetCoreRuntimeImage_AppScenario(ImageData imageData)
         {
-            if (imageData.Version.Major == 1)
-            {
-                _outputHelper.WriteLine("1.* ASP.NET Core images reside in https://github.com/aspnet/aspnet-docker, skip testing");
-                return;
-            }
-
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, _dockerHelper, _outputHelper, isWeb: true);
             await verifier.Execute();
         }

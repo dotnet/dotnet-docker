@@ -7,9 +7,6 @@ $(McrTagsYmlTagGroup:2.1-stretch-slim)
 $(McrTagsYmlTagGroup:2.1-alpine3.9)
 $(McrTagsYmlTagGroup:2.1-alpine3.7)
 $(McrTagsYmlTagGroup:2.1-bionic)
-$(McrTagsYmlTagGroup:1.1-stretch)
-$(McrTagsYmlTagGroup:1.1-jessie)
-$(McrTagsYmlTagGroup:1.0-jessie)
 $(McrTagsYmlTagGroup:3.0-buster-slim)
     customSubTableTitle: .NET Core 3.0 Preview Tags
 $(McrTagsYmlTagGroup:3.0-alpine3.9)
@@ -42,8 +39,6 @@ $(McrTagsYmlTagGroup:3.0-nanoserver-1903)
     customSubTableTitle: .NET Core 3.0 Preview tags
 $(McrTagsYmlTagGroup:2.2-nanoserver-1809)
 $(McrTagsYmlTagGroup:2.1-nanoserver-1809)
-$(McrTagsYmlTagGroup:1.1-nanoserver-1809)
-$(McrTagsYmlTagGroup:1.0-nanoserver-1809)
 $(McrTagsYmlTagGroup:3.0-nanoserver-1809)
     customSubTableTitle: .NET Core 3.0 Preview tags
 $(McrTagsYmlTagGroup:2.2-nanoserver-1803)
