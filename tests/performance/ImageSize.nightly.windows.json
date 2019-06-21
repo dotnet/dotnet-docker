@@ -1,7 +1,5 @@
 {
   "dotnet/core-nightly/runtime": {
-    "1.0/runtime/nanoserver-1809/amd64": 319845138,
-    "1.1/runtime/nanoserver-1809/amd64": 322443751,
     "2.1/runtime/nanoserver-1803/amd64": 432478820,
     "2.1/runtime/nanoserver-1809/amd64": 314376218,
     "2.2/runtime/nanoserver-1803/amd64": 432583516,
@@ -22,7 +20,6 @@
     "3.0/aspnet/nanoserver-1809/arm32v7": 273271505
   },
   "dotnet/core-nightly/sdk": {
-    "1.1/sdk/nanoserver-1809/amd64": 1607915435,
     "2.1/sdk/nanoserver-1803/amd64": 1768406279,
     "2.1/sdk/nanoserver-1809/amd64": 1651068899,
     "2.2/sdk/nanoserver-1803/amd64": 1771364308,
