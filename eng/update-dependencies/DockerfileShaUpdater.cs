@@ -23,24 +23,21 @@ namespace Dotnet.Docker
         private const string EnvNameGroupName = "envName";
         private const string ValueGroupName = "value";
 
-        private static readonly string s_envVersionPattern =
+        private static readonly string s_versionPattern =
             $"ENV (?<{EnvNameGroupName}>(DOTNET|ASPNETCORE)_[\\S]*VERSION) (?<{ValueGroupName}>[\\S]*)";
-        private static readonly string s_envShaPattern = $"ENV DOTNET_[\\S]*DOWNLOAD_SHA (?<{ValueGroupName}>[\\S]*)";
-        private static readonly string s_envDownloadUrlPattern = $"ENV (DOTNET_[\\S]*DOWNLOAD_URL) (?<{ValueGroupName}>[\\S]*)";
-        private static readonly string s_inlineUrlPatternFormat =
+        private static readonly string s_urlPatternFormat =
             $"(?<{ValueGroupName}>https://dotnetcli.blob.core.windows.net/[^;\\s]*{{0}})";
-        private static readonly string s_inlineProductUrlPattern = string.Format(s_inlineUrlPatternFormat, string.Empty);
-        private static readonly string s_inlineLzmaUrlPattern = string.Format(s_inlineUrlPatternFormat, "lzma");
-        private static readonly string s_varShaPatternFormat = $"[ \\$]({{0}})sha512( )*=( )*'(?<{ValueGroupName}>[^'\\s]*)'";
-        private static readonly string s_varProductShaPattern = string.Format(s_varShaPatternFormat, "dotnet_|aspnetcore_");
-        private static readonly string s_varLzmaShaPattern = string.Format(s_varShaPatternFormat, "lzma_");
+        private static readonly string s_productUrlPattern = string.Format(s_urlPatternFormat, string.Empty);
+        private static readonly string s_lzmaUrlPattern = string.Format(s_urlPatternFormat, "lzma");
+        private static readonly string s_shaPatternFormat = $"[ \\$]({{0}})sha512( )*=( )*'(?<{ValueGroupName}>[^'\\s]*)'";
+        private static readonly string s_productShaPattern = string.Format(s_shaPatternFormat, "dotnet_|aspnetcore_");
+        private static readonly string s_lzmaShaPattern = string.Format(s_shaPatternFormat, "lzma_");
 
-        private static readonly Regex s_productDownloadUrlRegex =
-            new Regex($"({s_envDownloadUrlPattern})|{s_inlineProductUrlPattern}");
-        private static readonly Regex s_lzmaDownloadUrlRegex = new Regex(s_inlineLzmaUrlPattern);
-        private static readonly Regex s_productShaRegex = new Regex($"({s_envShaPattern})|({s_varProductShaPattern})");
-        private static readonly Regex s_lzmaShaRegex = new Regex(s_varLzmaShaPattern);
-        private static readonly Regex s_versionRegex = new Regex(s_envVersionPattern);
+        private static readonly Regex s_productDownloadUrlRegex = new Regex(s_productUrlPattern);
+        private static readonly Regex s_lzmaDownloadUrlRegex = new Regex(s_lzmaUrlPattern);
+        private static readonly Regex s_productShaRegex = new Regex(s_productShaPattern);
+        private static readonly Regex s_lzmaShaRegex = new Regex(s_lzmaShaPattern);
+        private static readonly Regex s_versionRegex = new Regex(s_versionPattern);
 
         private static readonly Dictionary<string, string> s_shaCache = new Dictionary<string, string>();
 

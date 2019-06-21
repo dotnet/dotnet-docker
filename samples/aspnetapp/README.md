@@ -65,7 +65,7 @@ Multiple variations of this sample have been provided, as follows. Some of these
 
 ## Deploying with HTTPS
 
-ASP.NET Core 2.1 and newer uses [HTTPS by default](https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl). You can [configure ASP.NET Core to use HTTPS with Docker](aspnetcore-docker-https.md).
+ASP.NET Core uses [HTTPS by default](https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl). You can [configure ASP.NET Core to use HTTPS with Docker](aspnetcore-docker-https.md).
 
 ## Build and run the sample for Alpine X64 with Docker
 
