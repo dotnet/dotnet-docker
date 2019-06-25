@@ -8,10 +8,10 @@ FROM mcr.microsoft.com/windows/servercore:1903 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-ENV ASPNETCORE_VERSION 3.0.0-preview7.19323.3
+ENV ASPNETCORE_VERSION 3.0.0-preview7.19324.5
 
 RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$Env:ASPNETCORE_VERSION/aspnetcore-runtime-$Env:ASPNETCORE_VERSION-win-x64.zip; `
-    $aspnetcore_sha512 = '537074d6b2c7fa7982e16df0e7544265e9671a92d6342af5961ab60fbdb908350fa3cb72d30cf6f6beb46e796c5356129d7f4c2a2de5bdd4699c1f32877430a9'; `
+    $aspnetcore_sha512 = '7b4737923b2a06d492d3ad9d88eca20e85513c0cc00a45cdabb6deab3fd26f55d16b674164bcf337c66db088e7b178b8128b8268f072f37692d6d5fbde49b212'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
