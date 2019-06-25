@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -72,7 +73,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
         {
-            string imageName = GetImageName(imageType);
+            string imageName = GetImageName(imageType, dockerHelper);
 
             if (!Config.IsLocalRun && !_pulledImages.Contains(imageName))
             {
@@ -87,7 +88,7 @@ namespace Microsoft.DotNet.Docker.Tests
             return imageName;
         }
 
-        private string GetImageName(DotNetImageType imageType)
+        private string GetImageName(DotNetImageType imageType, DockerHelper dockerHelper)
         {
             string repoSuffix = Config.IsNightlyRepo ? "-nightly" : string.Empty;
             string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
@@ -123,7 +124,30 @@ namespace Microsoft.DotNet.Docker.Tests
                 arch = "-arm64v8";
             }
 
-            return $"{Config.Registry}/{Config.RepoPrefix}dotnet/core{repoSuffix}/{variantName}:{imageVersion.ToString(2)}-{os}{arch}";
+            string tag = $"{imageVersion.ToString(2)}-{os}{arch}";
+            string repo = $"dotnet/core{repoSuffix}/{variantName}";
+
+            bool imageExistsInStaging = true;
+            if (dockerHelper.ImageInfoRepos != null)
+            {
+                JObject repoInfo = (JObject)dockerHelper.ImageInfoRepos
+                    .FirstOrDefault(imageInfoRepo => imageInfoRepo["repo"].ToString() == repo);
+
+                if (repoInfo["images"] != null)
+                {
+                    imageExistsInStaging = repoInfo["images"]
+                        .Cast<JProperty>()
+                        .Any(imageInfo => imageInfo.Value["simpleTags"].Any(imageTag => imageTag.ToString() == tag));
+                }
+                else
+                {
+                    imageExistsInStaging = false;
+                }
+            }
+
+            string registry = imageExistsInStaging ? $"{Config.Registry}/{Config.RepoPrefix}" : "mcr.microsoft.com/";
+
+            return $"{registry}{repo}:{tag}";
         }
 
         public override string ToString()

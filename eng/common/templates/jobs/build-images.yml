@@ -17,13 +17,7 @@ jobs:
   variables:
     osVersion: ${{ parameters.osVersion }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-      imageBuilderBuildArgs: >
-        --registry-override $(acr.server)
-        --repo-prefix $(stagingRepoPrefix)
-        --push
-        --username $(acr.userName)
-        --password $(BotAccount-dotnet-docker-acr-bot-password)
-        $(imageBuilder.queueArgs)
+      imageBuilderBuildArgs: --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --push --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
     ${{ if eq(variables['System.TeamProject'], 'public') }}:
       imageBuilderBuildArgs: $(imageBuilder.queueArgs)
   steps:
@@ -51,11 +45,11 @@ jobs:
     parameters:
       setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
   - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-    - script: >
-        echo "##vso[task.setvariable variable=imageBuilderBuildArgs]
-        --image-info-output-path $(artifactsPath)/$(legName)-image-info.json
-        $(imageBuilderBuildArgs)"
-      displayName: Set Image Builder Args
+    - script: echo "##vso[task.setvariable variable=imageBuilderImageInfoArg]--image-info-output-path $(artifactsPath)/$(legName)-image-info.json"
+      displayName: Set Image Info Arg for Image Builder
+  - ${{ if eq(variables['System.TeamProject'], 'public') }}:
+    - script: echo "##vso[task.setvariable variable=imageBuilderImageInfoArg]"
+      displayName: Set Image Info Arg for Image Builder
   - script: >
       $(runImageBuilderCmd) build
       --manifest $(manifest)
@@ -65,6 +59,7 @@ jobs:
       --architecture $(architecture)
       --retry
       $(imageBuilderBuildArgs)
+      $(imageBuilderImageInfoArg)
     displayName: Build Images
   - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     - publish: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
