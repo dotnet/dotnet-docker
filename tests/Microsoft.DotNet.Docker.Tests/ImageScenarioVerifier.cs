@@ -69,21 +69,6 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private static void ApplyProjectCustomizations(ImageData _imageData, string projectFilePath)
-        {
-            if (_imageData.Version == V1_1)
-            {
-                string projectFile = File.ReadAllText(projectFilePath);
-                string runtimeFrameworkVersionProperty = @"
-  <PropertyGroup>
-    <RuntimeFrameworkVersion>1.1.*</RuntimeFrameworkVersion>
-  </PropertyGroup>
-</Project>";
-                projectFile = projectFile.Replace("</Project>", runtimeFrameworkVersionProperty);
-                File.WriteAllText(projectFilePath, projectFile);
-            }
-        }
-
         private string BuildTestAppImage(string stageTarget, string contextDir, params string[] customBuildArgs)
         {
             string tag = _imageData.GetIdentifier(stageTarget);
@@ -128,8 +113,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     skipAutoCleanup: true);
 
                 _dockerHelper.Copy($"{containerName}:/app", appDir);
-
-                ApplyProjectCustomizations(_imageData, Path.Combine(appDir, "app.csproj"));
 
                 string sourceDockerfileName = $"Dockerfile.{DockerHelper.DockerOS.ToLower()}";
 

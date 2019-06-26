@@ -2,9 +2,6 @@
   "readmePath": "README.md",
   "registry": "mcr.microsoft.com",
   "variables": {
-    "1.0-RuntimeVersion": "1.0.16",
-    "1.1-RuntimeVersion": "1.1.13",
-    "1.1-SdkVersion": "1.1.14",
     "2.1-RuntimeVersion": "2.1.11",
     "2.1-SdkVersion": "2.1.700",
     "2.2-RuntimeVersion": "2.2.5",
@@ -19,36 +16,6 @@
       "readmePath": "README.runtime-deps.md",
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-deps-tags.yml",
       "images": [
-        {
-          "sharedTags": {
-            "$(1.0-RuntimeVersion)": {},
-            "1.0": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "1.0/runtime-deps/jessie/amd64",
-              "os": "linux",
-              "osVersion": "jessie",
-              "tags": {
-                "$(1.0-RuntimeVersion)-jessie": {},
-                "1.0-jessie": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "dockerfile": "1.1/runtime-deps/stretch/amd64",
-              "os": "linux",
-              "osVersion": "stretch",
-              "tags": {
-                "$(1.1-RuntimeVersion)-stretch": {},
-                "1.1-stretch": {}
-              }
-            }
-          ]
-        },
         {
           "sharedTags": {
             "$(2.1-RuntimeVersion)": {
@@ -376,96 +343,6 @@
       "readmePath": "README.runtime.md",
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-tags.yml",
       "images": [
-        {
-          "sharedTags": {
-            "$(1.0-RuntimeVersion)": {},
-            "1.0": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "1.0/runtime/jessie/amd64",
-              "os": "linux",
-              "osVersion": "jessie",
-              "tags": {
-                "$(1.0-RuntimeVersion)-jessie": {},
-                "1.0-jessie": {}
-              },
-              "customBuildLegGrouping": [
-                {
-                  "name": "pr-build",
-                  "dependencies": [
-                    "$(Repo:sdk):1.1-jessie"
-                  ]
-                }
-              ]
-            },
-            {
-              "dockerfile": "1.0/runtime/nanoserver-1809/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(1.0-RuntimeVersion)-nanoserver-1809": {},
-                "1.0-nanoserver-1809": {}
-              },
-              "customBuildLegGrouping": [
-                {
-                  "name": "pr-build",
-                  "dependencies": [
-                    "$(Repo:sdk):1.1-nanoserver-1809"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "sharedTags": {
-            "$(1.1-RuntimeVersion)": {},
-            "1.1": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "1.1/runtime/jessie/amd64",
-              "os": "linux",
-              "osVersion": "jessie",
-              "tags": {
-                "$(1.1-RuntimeVersion)-jessie": {},
-                "1.1-jessie": {}
-              }
-            },
-            {
-              "dockerfile": "1.1/runtime/nanoserver-1809/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(1.1-RuntimeVersion)-nanoserver-1809": {},
-                "1.1-nanoserver-1809": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "1.1/runtime/stretch/amd64",
-              "os": "linux",
-              "osVersion": "stretch",
-              "tags": {
-                "$(1.1-RuntimeVersion)-stretch": {},
-                "1.1-stretch": {}
-              }
-            }
-          ]
-        },
         {
           "sharedTags": {
             "$(2.1-RuntimeVersion)": {},
@@ -1514,45 +1391,6 @@
       "readmePath": "README.sdk.md",
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/sdk-tags.yml",
       "images": [
-        {
-          "sharedTags": {
-            "$(1.1-SdkVersion)": {},
-            "1.1": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "1.1/sdk/jessie/amd64",
-              "os": "linux",
-              "osVersion": "jessie",
-              "tags": {
-                "$(1.1-SdkVersion)-jessie": {},
-                "1.1-jessie": {}
-              }
-            },
-            {
-              "dockerfile": "1.1/sdk/nanoserver-1809/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(1.1-SdkVersion)-nanoserver-1809": {},
-                "1.1-nanoserver-1809": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "dockerfile": "1.1/sdk/stretch/amd64",
-              "os": "linux",
-              "osVersion": "stretch",
-              "tags": {
-                "$(1.1-SdkVersion)-stretch": {},
-                "1.1-stretch": {}
-              }
-            }
-          ]
-        },
         {
           "sharedTags": {
             "$(2.1-SdkVersion)": {},

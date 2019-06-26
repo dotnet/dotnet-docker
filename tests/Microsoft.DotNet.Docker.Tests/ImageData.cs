@@ -15,12 +15,11 @@ namespace Microsoft.DotNet.Docker.Tests
         private List<string> _pulledImages = new List<string>();
         private Version _runtimeDepsVersion;
         private string _sdkOS;
-        private Version _sdkVersion;
 
         public Arch Arch { get; set; }
         public Version Version { get; set; }
         public string VersionString => Version.ToString(2);
-        public bool HasSdk => SdkVersion == Version;
+        public bool HasSdk => _sdkOS != null;
         public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
         public string OS { get; set; }
 
@@ -48,10 +47,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 {
                     rid = "linux-musl-x64";
                 }
-                else if (Version.Major == 1)
-                {
-                    rid = OS == Tests.OS.Jessie ? "debian.8-x64" : "debian.9-x64";;
-                }
                 else
                 {
                     rid = "linux-x64";
@@ -71,12 +66,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             get => _sdkOS ?? OS.TrimEnd(Tests.OS.SlimSuffix);
             set { _sdkOS = value; }
-        }
-
-        public Version SdkVersion
-        {
-            get { return _sdkVersion ?? Version; }
-            set { _sdkVersion = value; }
         }
 
         public string GetIdentifier(string type) => $"{VersionString}-{type}-{DateTime.Now.ToFileTime()}";
@@ -117,7 +106,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     os = OS;
                     break;
                 case DotNetImageType.SDK:
-                    imageVersion = SdkVersion;
+                    imageVersion = Version;
                     os = SdkOS;
                     break;
                 default:

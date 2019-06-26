@@ -54,9 +54,6 @@ Tags | Dockerfile | OS Version
 2.1.11-alpine3.9, 2.1-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 2.1.11-alpine3.7, 2.1-alpine3.7, 2.1.11-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/alpine3.7/amd64/Dockerfile) | Alpine 3.7
 2.1.11-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/bionic/amd64/Dockerfile) | Ubuntu 18.04
-1.1.13-stretch, 1.1-stretch | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/stretch/amd64/Dockerfile) | Debian 9
-1.1.13-jessie, 1.1-jessie, 1.1.13, 1.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/jessie/amd64/Dockerfile) | Debian 8
-1.0.16-jessie, 1.0-jessie, 1.0.16, 1.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/jessie/amd64/Dockerfile) | Debian 8
 
 ##### .NET Core 3.0 Preview Tags
 Tags | Dockerfile | OS Version
@@ -106,8 +103,6 @@ Tag | Dockerfile
 ---------| ---------------
 2.2.5-nanoserver-1809, 2.2-nanoserver-1809, 2.2.5, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/nanoserver-1809/amd64/Dockerfile)
 2.1.11-nanoserver-1809, 2.1-nanoserver-1809, 2.1.11, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/nanoserver-1809/amd64/Dockerfile)
-1.1.13-nanoserver-1809, 1.1-nanoserver-1809, 1.1.13, 1.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/1.1/runtime/nanoserver-1809/amd64/Dockerfile)
-1.0.16-nanoserver-1809, 1.0-nanoserver-1809, 1.0.16, 1.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/1.0/runtime/nanoserver-1809/amd64/Dockerfile)
 
 ##### .NET Core 3.0 Preview tags
 Tag | Dockerfile
