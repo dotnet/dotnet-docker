@@ -19,7 +19,7 @@ These are the guiding principles for the content, tagging and production of the 
         1. Support standalone execution and multi-stage builds
         1. Support running within a side car image (e.g. utilizing --net option)
 
-1. Components installed within the images are required to have the same or longer support lifecycle as [.NET Core](https://dotnet.microsoft.com/platform/support/policy/dotnet-core).  For example if a component is included with an LTSC release of .NET, then that component version will need to be supported for the life of the LTSC release.  Components are expected to be patched as appropriate.
+1. Components installed within the images are required to have the same or longer support lifecycle as [.NET Core](https://dotnet.microsoft.com/platform/support/policy/dotnet-core).  For example, if a component is included with an LTSC release of .NET, then that component version will need to be supported for the life of the LTSC release.  Components are expected to be patched as appropriate.
 
 1. Breaking changes are not allowed within a release.  This includes changes such as adding/removing components, adding/removing ENVs, and major/minor version changes to included components.
 
