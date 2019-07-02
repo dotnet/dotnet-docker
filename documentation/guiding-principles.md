@@ -69,7 +69,7 @@ The .NET Core image tags strive to align with the tagging practices utilized by 
 
 ## Engineering
 
-1. Images will be included as part of the .NET Core release process.  This means the Docker images will be release at the same time as the core product.
+1. Images will be included as part of the .NET Core release process.  This means the Docker images will be released at the same time as the core product.
 
 1. Images will get rebuilt within hours of base image changes. For example suppose a particular version of Alpine is patched.  The .NET Core images based on this version of Alpine will get rebuilt based on this new base image within hours of its release.
 
