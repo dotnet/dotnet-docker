@@ -6,7 +6,7 @@ These are the guiding principles for the content, tagging and production of the 
 
 1. Images are intended to satisfy the common usage scenarios.  They are not intended to satisfy every possible usage scenario.  As a result of this, decisions will be made (e.g. components excluded, configurations made, etc.) in order to keep the image size manageable.
 
-    It is expected there will be scenarios in which customers will need to created derived images that add the required components/settings. A few examples include:
+    It is expected there will be scenarios in which customers will need to create derived images that add the required components/settings. A few examples include:
 
     1. Alpine images have the .NET Core Invariant Mode enabled ([details](https://github.com/dotnet/dotnet-docker/issues/371)).
     1. System.Drawing.Common native dependencies are not included.
