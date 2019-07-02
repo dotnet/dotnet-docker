@@ -11,7 +11,7 @@ These are the guiding principles for the content, tagging and production of the 
     1. Alpine images have the .NET Core Invariant Mode enabled ([details](https://github.com/dotnet/dotnet-docker/issues/371)).
     1. System.Drawing.Common native dependencies are not included.
 
-    It is expected that component authors package/author their bits which make more easily consumable without including them within the .NET Core images.  Examples include:
+    It is expected that component authors package/author their bits which make them more easily consumable without including them within the .NET Core images.  Examples include:
 
     1. xcopy installs
     1. Package as a .NET Core global tool
