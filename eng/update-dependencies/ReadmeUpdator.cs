@@ -39,7 +39,7 @@ namespace Dotnet.Docker
             Trace.TraceInformation($"InvokeGetTagsDocumentationScript");
 
             // Support both execution within Windows 10, Nano Server and Linux environments.
-            string scriptPath = Path.Combine(_repoRoot, "eng", "common", "Get-TagsDocumentation.ps1");
+            string scriptPath = Path.Combine(_repoRoot, "eng", "Get-TagsDocumentation.ps1");
             try
             {
                 Process process = Process.Start("pwsh", scriptPath);
