@@ -57,14 +57,14 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-2.2.5-stretch-slim, 2.2-stretch-slim, 2.2.5, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/stretch-slim/amd64/Dockerfile) | Debian 9
-2.2.5-alpine3.9, 2.2-alpine3.9, 2.2.5-alpine, 2.2-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/alpine3.9/amd64/Dockerfile) | Alpine 3.9
-2.2.5-alpine3.8, 2.2-alpine3.8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/alpine3.8/amd64/Dockerfile) | Alpine 3.8
-2.2.5-bionic, 2.2-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/bionic/amd64/Dockerfile) | Ubuntu 18.04
-2.1.11-stretch-slim, 2.1-stretch-slim, 2.1.11, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/stretch-slim/amd64/Dockerfile) | Debian 9
-2.1.11-alpine3.9, 2.1-alpine3.9, 2.1.11-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/alpine3.9/amd64/Dockerfile) | Alpine 3.9
-2.1.11-alpine3.7, 2.1-alpine3.7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/alpine3.7/amd64/Dockerfile) | Alpine 3.7
-2.1.11-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/bionic/amd64/Dockerfile) | Ubuntu 18.04
+2.2.6-stretch-slim, 2.2-stretch-slim, 2.2.6, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/stretch-slim/amd64/Dockerfile) | Debian 9
+2.2.6-alpine3.9, 2.2-alpine3.9, 2.2.6-alpine, 2.2-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/alpine3.9/amd64/Dockerfile) | Alpine 3.9
+2.2.6-alpine3.8, 2.2-alpine3.8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/alpine3.8/amd64/Dockerfile) | Alpine 3.8
+2.2.6-bionic, 2.2-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/bionic/amd64/Dockerfile) | Ubuntu 18.04
+2.1.12-stretch-slim, 2.1-stretch-slim, 2.1.12, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/stretch-slim/amd64/Dockerfile) | Debian 9
+2.1.12-alpine3.9, 2.1-alpine3.9, 2.1.12-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/alpine3.9/amd64/Dockerfile) | Alpine 3.9
+2.1.12-alpine3.7, 2.1-alpine3.7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/alpine3.7/amd64/Dockerfile) | Alpine 3.7
+2.1.12-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ##### .NET Core 3.0 Preview Tags
 Tags | Dockerfile | OS Version
@@ -86,10 +86,10 @@ Tags | Dockerfile | OS Version
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-2.2.5-stretch-slim-arm32v7, 2.2-stretch-slim-arm32v7, 2.2.5, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/stretch-slim/arm32v7/Dockerfile) | Debian 9
-2.2.5-bionic-arm32v7, 2.2-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
-2.1.11-stretch-slim-arm32v7, 2.1-stretch-slim-arm32v7, 2.1.11, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/stretch-slim/arm32v7/Dockerfile) | Debian 9
-2.1.11-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+2.2.6-stretch-slim-arm32v7, 2.2-stretch-slim-arm32v7, 2.2.6, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/stretch-slim/arm32v7/Dockerfile) | Debian 9
+2.2.6-bionic-arm32v7, 2.2-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+2.1.12-stretch-slim-arm32v7, 2.1-stretch-slim-arm32v7, 2.1.12, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/stretch-slim/arm32v7/Dockerfile) | Debian 9
+2.1.12-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 ##### .NET Core 3.0 Preview Tags
 Tags | Dockerfile | OS Version
@@ -101,8 +101,8 @@ Tags | Dockerfile | OS Version
 ## Windows Server, version 1903 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-2.2.5-nanoserver-1903, 2.2-nanoserver-1903, 2.2.5, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/nanoserver-1903/amd64/Dockerfile)
-2.1.11-nanoserver-1903, 2.1-nanoserver-1903, 2.1.11, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/nanoserver-1903/amd64/Dockerfile)
+2.2.6-nanoserver-1903, 2.2-nanoserver-1903, 2.2.6, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/nanoserver-1903/amd64/Dockerfile)
+2.1.12-nanoserver-1903, 2.1-nanoserver-1903, 2.1.12, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/nanoserver-1903/amd64/Dockerfile)
 
 ##### .NET Core 3.0 Preview tags
 Tag | Dockerfile
@@ -112,8 +112,8 @@ Tag | Dockerfile
 ## Windows Server 2019 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-2.2.5-nanoserver-1809, 2.2-nanoserver-1809, 2.2.5, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/nanoserver-1809/amd64/Dockerfile)
-2.1.11-nanoserver-1809, 2.1-nanoserver-1809, 2.1.11, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/nanoserver-1809/amd64/Dockerfile)
+2.2.6-nanoserver-1809, 2.2-nanoserver-1809, 2.2.6, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/nanoserver-1809/amd64/Dockerfile)
+2.1.12-nanoserver-1809, 2.1-nanoserver-1809, 2.1.12, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/nanoserver-1809/amd64/Dockerfile)
 
 ##### .NET Core 3.0 Preview tags
 Tag | Dockerfile
@@ -123,7 +123,7 @@ Tag | Dockerfile
 ## Windows Server 2019 arm32 Tags
 Tag | Dockerfile
 ---------| ---------------
-2.2.5-nanoserver-1809-arm32v7, 2.2-nanoserver-1809-arm32v7, 2.2.5, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/nanoserver-1809/arm32v7/Dockerfile)
+2.2.6-nanoserver-1809-arm32v7, 2.2-nanoserver-1809-arm32v7, 2.2.6, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/nanoserver-1809/arm32v7/Dockerfile)
 
 ##### .NET Core 3.0 Preview tags
 Tag | Dockerfile
@@ -133,8 +133,8 @@ Tag | Dockerfile
 ## Windows Server, version 1803 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-2.2.5-nanoserver-1803, 2.2-nanoserver-1803, 2.2.5, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/nanoserver-1803/amd64/Dockerfile)
-2.1.11-nanoserver-1803, 2.1-nanoserver-1803, 2.1.11, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/nanoserver-1803/amd64/Dockerfile)
+2.2.6-nanoserver-1803, 2.2-nanoserver-1803, 2.2.6, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/aspnet/nanoserver-1803/amd64/Dockerfile)
+2.1.12-nanoserver-1803, 2.1-nanoserver-1803, 2.1.12, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/nanoserver-1803/amd64/Dockerfile)
 
 ##### .NET Core 3.0 Preview tags
 Tag | Dockerfile
