@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/windows/servercore:1803 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core Runtime
-ENV DOTNET_VERSION 2.1.11
+ENV DOTNET_VERSION 2.1.12
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:DOTNET_VERSION-win-x64.zip; `
     $dotnet_sha512 = 'b5118c4a3532daba32aeab686ec3f21779ad28cfb994446ac02aa1902faddb8b67d383d2b516d4b02538a653e03bd97c4b817c4ffde6b156ed6bcb8d2e7dfffb'; `

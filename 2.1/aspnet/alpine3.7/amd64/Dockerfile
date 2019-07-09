@@ -2,7 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
 FROM $REPO:2.1-alpine3.7
 
 # Install ASP.NET Core
-ENV ASPNETCORE_VERSION 2.1.11
+ENV ASPNETCORE_VERSION 2.1.12
 
 RUN apk add --no-cache --virtual .build-deps \
         openssl \

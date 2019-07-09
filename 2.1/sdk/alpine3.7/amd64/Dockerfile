@@ -9,7 +9,7 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     LANG=en_US.UTF-8
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.1.700
+ENV DOTNET_SDK_VERSION 2.1.701
 
 RUN apk add --no-cache --virtual .build-deps \
         openssl \
