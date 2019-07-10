@@ -51,7 +51,7 @@ jobs:
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
       artifactName: image-info
-    condition: and(succeeded(), eq(variables['publishRepoPrefix'], 'public/'))
+      requiresPublicRepoPrefix: true
   - script: >
       $(runImageBuilderCmd) publishImageInfo
       $(dotnetBot-userName)
