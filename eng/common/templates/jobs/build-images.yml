@@ -50,6 +50,12 @@ jobs:
   - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
     parameters:
       setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
+  - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+    - script: >
+        echo "##vso[task.setvariable variable=imageBuilderBuildArgs]
+        --image-info-output-path $(artifactsPath)/$(legName)-image-info.json
+        $(imageBuilderBuildArgs)"
+      displayName: Set Image Builder Args
   - script: >
       $(runImageBuilderCmd) build
       --manifest $(manifest)
@@ -57,15 +63,13 @@ jobs:
       --os-type $(osType)
       --os-version "$(osVersion)"
       --architecture $(architecture)
-      --image-info-output-path "$(imageBuilderArtifactsPath)/$(legName)-image-info.json"
       --retry
       $(imageBuilderBuildArgs)
     displayName: Build Images
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: $(legName)-image-info
-      targetPath: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
-    displayName: Publish Image Info File Artifact
+  - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+    - publish: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
+      artifact: $(legName)-image-info
+      displayName: Publish Image Info File Artifact
   - ${{ if eq(variables['System.TeamProject'], 'public') }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
       parameters:
