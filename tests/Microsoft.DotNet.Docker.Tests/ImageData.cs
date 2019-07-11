@@ -26,6 +26,23 @@ namespace Microsoft.DotNet.Docker.Tests
         public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
         public string OS { get; set; }
 
+        private static Lazy<JArray> ImageInfoData;
+
+        static ImageData()
+        {
+            ImageInfoData = new Lazy<JArray>(() =>
+            {
+                string imageInfoPath = Environment.GetEnvironmentVariable("IMAGE_INFO_PATH");
+                if (!String.IsNullOrEmpty(imageInfoPath))
+                {
+                    string imageInfoContents = File.ReadAllText(imageInfoPath);
+                    return JsonConvert.DeserializeObject<JArray>(imageInfoContents);
+                }
+
+                return null;
+            });
+        }
+
         public string Rid
         {
             get {
@@ -71,18 +88,6 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _sdkOS = value; }
         }
 
-        private static JArray GetImageInfoRepos()
-        {
-            string imageInfoPath = Environment.GetEnvironmentVariable("IMAGE_INFO_PATH");
-            if (!String.IsNullOrEmpty(imageInfoPath))
-            {
-                string imageInfoContents = File.ReadAllText(imageInfoPath);
-                return JsonConvert.DeserializeObject<JArray>(imageInfoContents);
-            }
-
-            return null;
-        }
-
         public string GetIdentifier(string type) => $"{VersionString}-{type}-{DateTime.Now.ToFileTime()}";
 
         public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
@@ -117,14 +122,12 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             bool imageExistsInStaging = true;
 
-            JArray imageInfoRepos = ImageData.GetImageInfoRepos();
-
             // In the case of running this in a local development environment, there would likely be no image info file
             // provided. In that case, the assumption is that the images exist in the staging location.
 
-            if (imageInfoRepos != null)
+            if (ImageData.ImageInfoData.Value != null)
             {
-                JObject repoInfo = (JObject)imageInfoRepos
+                JObject repoInfo = (JObject)ImageData.ImageInfoData.Value
                     .FirstOrDefault(imageInfoRepo => imageInfoRepo["repo"].ToString() == repo);
 
                 if (repoInfo["images"] != null)
