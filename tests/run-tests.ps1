@@ -12,7 +12,8 @@ param(
     [string]$Registry,
     [string]$RepoPrefix,
     [switch]$DisableHttpVerification,
-    [switch]$IsLocalRun
+    [switch]$IsLocalRun,
+    [string]$ImageInfoPath
 )
 
 Set-StrictMode -Version Latest
@@ -67,6 +68,7 @@ Try {
     $env:IMAGE_VERSION_FILTER = $VersionFilter
     $env:REGISTRY = $Registry
     $env:REPO_PREFIX = $RepoPrefix
+    $env:IMAGE_INFO_PATH = $ImageInfoPath
 
     $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
     $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1

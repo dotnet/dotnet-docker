@@ -4,8 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -22,6 +25,23 @@ namespace Microsoft.DotNet.Docker.Tests
         public bool HasSdk => _sdkOS != null;
         public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
         public string OS { get; set; }
+
+        private static Lazy<JArray> ImageInfoData;
+
+        static ImageData()
+        {
+            ImageInfoData = new Lazy<JArray>(() =>
+            {
+                string imageInfoPath = Environment.GetEnvironmentVariable("IMAGE_INFO_PATH");
+                if (!String.IsNullOrEmpty(imageInfoPath))
+                {
+                    string imageInfoContents = File.ReadAllText(imageInfoPath);
+                    return JsonConvert.DeserializeObject<JArray>(imageInfoContents);
+                }
+
+                return null;
+            });
+        }
 
         public string Rid
         {
@@ -72,7 +92,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
         {
-            string imageName = GetImageName(imageType);
+            string imageName = GetImageName(imageType, dockerHelper);
 
             if (!Config.IsLocalRun && !_pulledImages.Contains(imageName))
             {
@@ -87,11 +107,46 @@ namespace Microsoft.DotNet.Docker.Tests
             return imageName;
         }
 
-        private string GetImageName(DotNetImageType imageType)
+        private string GetImageName(DotNetImageType imageType, DockerHelper dockerHelper)
         {
             string repoSuffix = Config.IsNightlyRepo ? "-nightly" : string.Empty;
             string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
+            string tag = GetTagName(imageType, variantName);
+            string repo = $"dotnet/core{repoSuffix}/{variantName}";
+            string registry = GetRegistryName(repo, tag);
 
+            return $"{registry}{repo}:{tag}";
+        }
+
+        private static string GetRegistryName(string repo, string tag)
+        {
+            bool imageExistsInStaging = true;
+
+            // In the case of running this in a local development environment, there would likely be no image info file
+            // provided. In that case, the assumption is that the images exist in the staging location.
+
+            if (ImageData.ImageInfoData.Value != null)
+            {
+                JObject repoInfo = (JObject)ImageData.ImageInfoData.Value
+                    .FirstOrDefault(imageInfoRepo => imageInfoRepo["repo"].ToString() == repo);
+
+                if (repoInfo["images"] != null)
+                {
+                    imageExistsInStaging = repoInfo["images"]
+                        .Cast<JProperty>()
+                        .Any(imageInfo => imageInfo.Value["simpleTags"].Any(imageTag => imageTag.ToString() == tag));
+                }
+                else
+                {
+                    imageExistsInStaging = false;
+                }
+            }
+
+            return imageExistsInStaging ? $"{Config.Registry}/{Config.RepoPrefix}" : "mcr.microsoft.com/";
+        }
+
+        private string GetTagName(DotNetImageType imageType, string variantName)
+        {
             Version imageVersion;
             string os;
             switch (imageType)
@@ -123,7 +178,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 arch = "-arm64v8";
             }
 
-            return $"{Config.Registry}/{Config.RepoPrefix}dotnet/core{repoSuffix}/{variantName}:{imageVersion.ToString(2)}-{os}{arch}";
+            return $"{imageVersion.ToString(2)}-{os}{arch}";
         }
 
         public override string ToString()
