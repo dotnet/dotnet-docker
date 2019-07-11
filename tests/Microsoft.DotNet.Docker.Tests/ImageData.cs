@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
@@ -69,6 +71,18 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _sdkOS = value; }
         }
 
+        private static JArray GetImageInfoRepos()
+        {
+            string imageInfoPath = Environment.GetEnvironmentVariable("IMAGE_INFO_PATH");
+            if (!String.IsNullOrEmpty(imageInfoPath))
+            {
+                string imageInfoContents = File.ReadAllText(imageInfoPath);
+                return JsonConvert.DeserializeObject<JArray>(imageInfoContents);
+            }
+
+            return null;
+        }
+
         public string GetIdentifier(string type) => $"{VersionString}-{type}-{DateTime.Now.ToFileTime()}";
 
         public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
@@ -92,7 +106,44 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string repoSuffix = Config.IsNightlyRepo ? "-nightly" : string.Empty;
             string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
+            string tag = GetTagName(imageType, variantName);
+            string repo = $"dotnet/core{repoSuffix}/{variantName}";
+            string registry = GetRegistryName(repo, tag);
 
+            return $"{registry}{repo}:{tag}";
+        }
+
+        private static string GetRegistryName(string repo, string tag)
+        {
+            bool imageExistsInStaging = true;
+
+            JArray imageInfoRepos = ImageData.GetImageInfoRepos();
+
+            // In the case of running this in a local development environment, there would likely be no image info file
+            // provided. In that case, the assumption is that the images exist in the staging location.
+
+            if (imageInfoRepos != null)
+            {
+                JObject repoInfo = (JObject)imageInfoRepos
+                    .FirstOrDefault(imageInfoRepo => imageInfoRepo["repo"].ToString() == repo);
+
+                if (repoInfo["images"] != null)
+                {
+                    imageExistsInStaging = repoInfo["images"]
+                        .Cast<JProperty>()
+                        .Any(imageInfo => imageInfo.Value["simpleTags"].Any(imageTag => imageTag.ToString() == tag));
+                }
+                else
+                {
+                    imageExistsInStaging = false;
+                }
+            }
+
+            return imageExistsInStaging ? $"{Config.Registry}/{Config.RepoPrefix}" : "mcr.microsoft.com/";
+        }
+
+        private string GetTagName(DotNetImageType imageType, string variantName)
+        {
             Version imageVersion;
             string os;
             switch (imageType)
@@ -124,30 +175,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 arch = "-arm64v8";
             }
 
-            string tag = $"{imageVersion.ToString(2)}-{os}{arch}";
-            string repo = $"dotnet/core{repoSuffix}/{variantName}";
-
-            bool imageExistsInStaging = true;
-            if (dockerHelper.ImageInfoRepos != null)
-            {
-                JObject repoInfo = (JObject)dockerHelper.ImageInfoRepos
-                    .FirstOrDefault(imageInfoRepo => imageInfoRepo["repo"].ToString() == repo);
-
-                if (repoInfo["images"] != null)
-                {
-                    imageExistsInStaging = repoInfo["images"]
-                        .Cast<JProperty>()
-                        .Any(imageInfo => imageInfo.Value["simpleTags"].Any(imageTag => imageTag.ToString() == tag));
-                }
-                else
-                {
-                    imageExistsInStaging = false;
-                }
-            }
-
-            string registry = imageExistsInStaging ? $"{Config.Registry}/{Config.RepoPrefix}" : "mcr.microsoft.com/";
-
-            return $"{registry}{repo}:{tag}";
+            return $"{imageVersion.ToString(2)}-{os}{arch}";
         }
 
         public override string ToString()

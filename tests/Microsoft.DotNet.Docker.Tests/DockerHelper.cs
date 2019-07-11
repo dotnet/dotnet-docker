@@ -4,11 +4,8 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Text;
 using System.Threading;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -19,20 +16,11 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string ContainerWorkDir => IsLinuxContainerModeEnabled ? "/sandbox" : "c:\\sandbox";
         public static bool IsLinuxContainerModeEnabled => string.Equals(DockerOS, "linux", StringComparison.OrdinalIgnoreCase);
 
-        public JArray ImageInfoRepos { get; }
-
         private ITestOutputHelper OutputHelper { get; set; }
 
         public DockerHelper(ITestOutputHelper outputHelper)
         {
             OutputHelper = outputHelper;
-
-            string imageInfoPath = Environment.GetEnvironmentVariable("IMAGE_INFO_PATH");
-            if (!String.IsNullOrEmpty(imageInfoPath))
-            {
-                string imageInfoContents = File.ReadAllText(imageInfoPath);
-                ImageInfoRepos = JsonConvert.DeserializeObject<JArray>(imageInfoContents);
-            }
         }
 
         public void Build(
