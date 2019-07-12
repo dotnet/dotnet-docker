@@ -30,6 +30,6 @@ The .NET Core image tags strive to align with the tagging practices utilized by 
 
 * `<Major.Minor Version>` - The `Major.Minor` number of the .NET Core version included in the image.  The tag is updated to always reference the most recent patch that is currently available for the `Major.Minor` release.
 
-* `<OS>` - The name of the OS release and variant the image is based.  The image the tag references is updated whenever a new OS patch is released.  The OS release name does support pinning to specific OS patches.  If OS patch pinning is required then the image digest should be used (e.g. `mcr.microsoft.com/dotnet/core/runtime@sha256:fff4cfe761fde9f3b72377e350eda7cd82caf0c1ec6be281b92d8614860fa449`).
+* `<OS>` - The name of the OS release and variant the image is based upon.  The image the tag references is updated whenever a new OS patch is released.  The OS release name does support pinning to specific OS patches.  If OS patch pinning is required then the image digest should be used (e.g. `mcr.microsoft.com/dotnet/core/runtime@sha256:fff4cfe761fde9f3b72377e350eda7cd82caf0c1ec6be281b92d8614860fa449`).
 
 * `<Architecture>` - The architecture the image is based on.  `amd64` is the implied default if no architecture is specified.
