@@ -12,7 +12,7 @@ Each distribution has a unique approach to releasing, schedule and end-of life (
 
 - Alpine — support tip and retain support for one quarter (3 months) after a new version is released.
 - Debian — support one Debian version per .NET Core version, whichever Debian version is the latest when a given .NET Core version ships. This is also the default Linux image used for a given multi-arch tag.
-- Ubuntu — support one Ubuntu version per .NET Core version, whichever Ubuntu version is the latest LTS version when a given .NET Core version ships.  In addition, as it gets closer to new Ubuntu LTS versions, support will be added for non-LTS Ubuntu versions a means of validating the new LTS versions.
+- Ubuntu — support one Ubuntu version per .NET Core version, whichever Ubuntu version is the latest LTS version when a given .NET Core version ships.  In addition, as it gets closer to new Ubuntu LTS versions, support will be added for non-LTS Ubuntu versions as a means of validating the new LTS versions.
 
 ### Windows
 
