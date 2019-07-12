@@ -1,28 +1,58 @@
 # Image Tagging Guidelines
 
-This document describes the tagging practices used within the .NET Core Docker repositories.
+This document describes the tagging practices used on the official .NET Core Docker images.
 
 The .NET Core image tags strive to align with the tagging practices utilized by the [Official Images on Docker Hub](https://hub.docker.com/search?q=&type=image&image_filter=official).
 
 ## Simple Tags
 
-1. `<Major.Minor.Patch Version>-<OS>-<Architecture>` - e.g. `2.2.5-alpine3.9`, `2.1.11-stretch-slim-arm32v7`, `3.0.0-nanoserver-1809`, `5.0.0-preview1-disco-arm64`
+1. `<Major.Minor.Patch Version>-<OS>-<Architecture>`
 
-1. `<Major.Minor Version>-<OS>-<Architecture>` - e.g. `2.2-alpine3.9`, `2.1-stretch-slim-arm32v7`, `3.0-nanoserver-1809`
+    **Examples**
+
+    * `2.1.11-stretch-slim-arm32v7`
+    * `2.2.5-alpine3.9`
+    * `3.0.0-nanoserver-1809`
+    * `3.1.0-preview1-disco-arm64v8`
+
+1. `<Major.Minor Version>-<OS>-<Architecture>`
+
+    **Examples**
+
+    * `2.1-stretch-slim-arm32v7`
+    * `2.2-alpine3.9`
+    * `3.0-nanoserver-1809`
+    * `3.1-disco-arm64v8`
 
 ## Shared Tags
 
-1. `<Major.Minor.Patch Version>` - e.g `2.1.11`, `3.0.0`, `5.0.0-preview1`
-1. `<Major.Minor Version>` - e.g `2.1`, `3.0`
+1. `<Major.Minor.Patch Version>`
+
+    **Examples**
+
+    * `2.1.11`
+    * `2.2.5`
+    * `3.0.0`
+    * `3.1.0-preview1`
+
+1. `<Major.Minor Version>`
+
+    **Examples**
+
+    * `2.1`
+    * `2.2`
+    * `3.0`
+    * `3.1`
+
 1. `latest` - Will always refer to the most recent non-prerelease `<Major.Minor.Patch Version>` image.
 
-    All shared tags [support multiple platforms](https://blog.docker.com/2017/09/docker-official-images-now-multi-platform/) and have the following characteristics:
+All shared tags [support multiple platforms](https://blog.docker.com/2017/09/docker-official-images-now-multi-platform/) have the following characteristics:
 
-    1. Include entries for all supported architectures.
+1. Include entries for all supported architectures.
 
-    1. Include Linux entries based on Debian.
+1. Include Linux entries based on Debian.
 
-    1. Include Windows entries for each supported version.
+1. Include Windows entries for each supported version.
 
 ## Tag Parts
 
