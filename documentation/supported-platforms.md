@@ -4,7 +4,7 @@ This document describes the platfrom matrix supported by the .NET Core Docker re
 
 ## Operating Systems
 
-.NET Core tries to [support a broad set of operating systems and versions](https://github.com/dotnet/core/blob/master/os-lifecycle-policy.md). With containers, it’s too expensive and confusing to support the full matrix of options. In practice, images are produced for select set of distros.
+.NET Core tries to [support a broad set of operating systems and versions](https://github.com/dotnet/core/blob/master/os-lifecycle-policy.md). With containers, it’s too expensive and confusing to support the full matrix of options. In practice, images are produced for a select set of distros.
 
 ### Linux
 
