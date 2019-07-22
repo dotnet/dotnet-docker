@@ -9,10 +9,10 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     LANG=en_US.UTF-8
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 3.0.100-preview6-012264
+ENV DOTNET_SDK_VERSION 3.0.100-preview7-012821
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='c130bf9cf4e05071200762686590da138b9cde32bdf209c8d659a6ac250554ab0d190f6b5327e618bcd85c1f35192ba197940fe5de01b8498185cfeee6bc84f4' \
+    && dotnet_sha512='adf7a5a734f68db7612bc6bcd2e5290d0acf66bf69e3026df97b6dcca28efd1c2cd80d307436559fe9f516054347c5fd5acbc33ddd1feba110f10dc3e1826ceb' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \
@@ -28,10 +28,10 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=true \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 6.2.1
+ENV POWERSHELL_VERSION 7.0.0-preview.2
 
 RUN wget -O PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
-    && powershell_sha512='0cbed2f335a5b3fee907c4c4c67521bf96b753a61bb842975793644ed9f69f2b82d459fd3778086e980aa681a0d44d2523ee429c288e7cc0c0623cb200c3fa3a' \
+    && powershell_sha512='94e5c5465912ce028b9a48e2706feed488a8ece17670c0b0cac814c8bb4e87369d26443ee9e57bf45386fbd834de80b4c75e503b9241a22a34f2e52a4e537e59' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.Alpine \

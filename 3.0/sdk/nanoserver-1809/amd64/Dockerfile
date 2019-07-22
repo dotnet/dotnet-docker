@@ -6,10 +6,10 @@ FROM mcr.microsoft.com/windows/servercore:1809 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core SDK
-ENV DOTNET_SDK_VERSION 3.0.100-preview6-012264
+ENV DOTNET_SDK_VERSION 3.0.100-preview7-012821
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = '57c32e489ae204e02b07f048b25a6260be9aac3ce545d4ec7bca1491b88a4f7fc0308845b430c30a51960b1aa35fd30666f30334acd6b058db464fd63ff66dfb'; `
+    $dotnet_sha512 = '9a67e58677481bc497519d8939320fe1085c3c7cf606d790594a4d0e7f4ee38d72e250d25f45f118e6811613510edfa3e53e578ba05e62a23c79074d3af7b381'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -19,10 +19,10 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
     Remove-Item -Force dotnet.zip
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 6.2.1
+ENV POWERSHELL_VERSION 7.0.0-preview.2
 
 RUN Invoke-WebRequest -OutFile PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg; `
-    $powershell_sha512 = '418ab0d438d1a96afcd2502576530d7fbdedea9076871f72f225d8af6c8b124c8106bc94dbc8c56cf74e10cad89144ba525b6c09b3b700182ac9c5df9190eb33'; `
+    $powershell_sha512 = '54eacb7db655c8de5f824a64376958514524ed1ad420f04faa54b90ace824b90e5709b362cbc229dec5d5f02b58a903edcf4424544786faa9d9cb0dfb52f69d4'; `
     if ((Get-FileHash PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `

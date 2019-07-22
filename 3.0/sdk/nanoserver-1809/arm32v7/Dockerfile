@@ -3,7 +3,7 @@
 FROM mcr.microsoft.com/windows/nanoserver:1809-arm32v7
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 3.0.100-preview6-012264
+ENV DOTNET_SDK_VERSION 3.0.100-preview7-012821
 
 RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/%DOTNET_SDK_VERSION%/dotnet-sdk-%DOTNET_SDK_VERSION%-win-arm.zip `
     && mkdir "%ProgramFiles%\dotnet" `
@@ -11,7 +11,7 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
     && del dotnet.zip
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 6.2.1
+ENV POWERSHELL_VERSION 7.0.0-preview.2
 
 RUN curl -SL --output PowerShell.Windows.arm32.%POWERSHELL_VERSION%.nupkg https://pwshtool.blob.core.windows.net/tool/%POWERSHELL_VERSION%/PowerShell.Windows.arm32.%POWERSHELL_VERSION%.nupkg `
     && mkdir "%ProgramFiles%\powershell" `
