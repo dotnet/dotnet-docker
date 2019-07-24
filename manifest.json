@@ -3,9 +3,9 @@
   "registry": "mcr.microsoft.com",
   "variables": {
     "2.1-RuntimeVersion": "2.1.12",
-    "2.1-SdkVersion": "2.1.701",
+    "2.1-SdkVersion": "2.1.801",
     "2.2-RuntimeVersion": "2.2.6",
-    "2.2-SdkVersion": "2.2.301",
+    "2.2-SdkVersion": "2.2.401",
     "3.0-RuntimeVersion": "3.0.0-preview7",
     "3.0-SdkVersion": "3.0.100-preview7"
   },
@@ -531,9 +531,6 @@
               "tags": {
                 "$(2.2-RuntimeVersion)-nanoserver-1809-arm32v7": {},
                 "2.2-nanoserver-1809-arm32v7": {},
-                "$(2.2-RuntimeVersion)-nanoserver-1809-arm32": {
-                  "isUndocumented": true
-                },
                 "2.2-nanoserver-1809-arm32": {
                   "isUndocumented": true
                 }
@@ -1049,9 +1046,6 @@
               "tags": {
                 "$(2.2-RuntimeVersion)-nanoserver-1809-arm32v7": {},
                 "2.2-nanoserver-1809-arm32v7": {},
-                "$(2.2-RuntimeVersion)-nanoserver-1809-arm32": {
-                  "isUndocumented": true
-                },
                 "2.2-nanoserver-1809-arm32": {
                   "isUndocumented": true
                 }
@@ -1561,9 +1555,6 @@
               "tags": {
                 "$(2.2-SdkVersion)-nanoserver-1809-arm32v7": {},
                 "2.2-nanoserver-1809-arm32v7": {},
-                "$(2.2-SdkVersion)-nanoserver-1809-arm32": {
-                  "isUndocumented": true
-                },
                 "2.2-nanoserver-1809-arm32": {
                   "isUndocumented": true
                 }
