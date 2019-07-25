@@ -11,11 +11,11 @@ COPY *.csproj .
 RUN dotnet restore
 
 COPY . .
-RUN dotnet build
+RUN dotnet build --no-restore
 
 
 FROM build as publish_fx_dependent
-RUN dotnet publish -c Release -o out
+RUN dotnet publish --no-restore -c Release -o out
 
 
 FROM $runtime_image AS fx_dependent_app
