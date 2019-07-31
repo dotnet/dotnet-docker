@@ -7,10 +7,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core
-ENV DOTNET_VERSION 3.0.0-preview8-28379-12
+ENV DOTNET_VERSION 3.0.0-preview8-28380-08
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-arm64.tar.gz \
-    && dotnet_sha512='7b7c3a7bf6a1dbc2055048dd922c5d2cf0c033640a9ba8f7e1e34a75c4cf838109f43d4009ff7ff3a1c4a5d14e50ef77e874dc9a8880b79f89450014d85648e3' \
+    && dotnet_sha512='b8b603242e69e7e008bbe4be2a2eaf6bb15c1fd80e028516fbcb669b8c5d894273a56c7ebb7a9d36989287fae94db7e686edb8f2d3be435a14d14450e75fc7a1' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
