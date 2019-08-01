@@ -4,3 +4,5 @@
 **/.vscode
 **/.vs
 .dotnet
+.git
+.Microsoft.DotNet.ImageBuilder
