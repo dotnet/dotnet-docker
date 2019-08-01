@@ -212,17 +212,17 @@ namespace Microsoft.DotNet.Docker.Tests
             string name,
             string command = null,
             string workdir = null,
-            string publishArgs = " -p 80",
+            string optionalRunArgs = null,
             bool detach = false,
             bool runAsContainerAdministrator = false,
             bool skipAutoCleanup = false)
         {
             string cleanupArg = skipAutoCleanup ? string.Empty : " --rm";
-            string commandArg = command == null ? string.Empty : $" {command}";
             string detachArg = detach ? " -d -t" : string.Empty;
             string userArg = runAsContainerAdministrator ? " -u ContainerAdministrator" : string.Empty;
             string workdirArg = workdir == null ? string.Empty : $" -w {workdir}";
-            return ExecuteWithLogging($"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg}{publishArgs} {image}{commandArg}");
+            return ExecuteWithLogging(
+                $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg} {optionalRunArgs} {image} {command}");
         }
     }
 }
