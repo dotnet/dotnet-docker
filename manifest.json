@@ -103,16 +103,39 @@
                 "2.1-alpine3.9": {
                   "documentationGroup": "2.1"
                 },
+                "$(2.2-RuntimeVersion)-alpine3.9": {
+                  "documentationGroup": "2.2"
+                },
+                "2.2-alpine3.9": {
+                  "documentationGroup": "2.2"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime-deps/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(2.1-RuntimeVersion)-alpine3.10": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-alpine3.10": {
+                  "documentationGroup": "2.1"
+                },
                 "$(2.1-RuntimeVersion)-alpine": {
                   "documentationGroup": "2.1"
                 },
                 "2.1-alpine": {
                   "documentationGroup": "2.1"
                 },
-                "$(2.2-RuntimeVersion)-alpine3.9": {
+                "$(2.2-RuntimeVersion)-alpine3.10": {
                   "documentationGroup": "2.2"
                 },
-                "2.2-alpine3.9": {
+                "2.2-alpine3.10": {
                   "documentationGroup": "2.2"
                 },
                 "$(2.2-RuntimeVersion)-alpine": {
@@ -233,9 +256,7 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9": {},
-                "3.0-alpine3.9": {},
-                "$(3.0-RuntimeVersion)-alpine": {},
-                "3.0-alpine": {}
+                "3.0-alpine3.9": {}
               }
             }
           ]
@@ -249,7 +270,37 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9-arm64v8": {},
-                "3.0-alpine3.9-arm64v8": {},
+                "3.0-alpine3.9-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "3.0/runtime-deps/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.0-RuntimeVersion)-alpine3.10": {},
+                "3.0-alpine3.10": {},
+                "$(3.0-RuntimeVersion)-alpine": {},
+                "3.0-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.0/runtime-deps/alpine3.10/arm64v8",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.0-RuntimeVersion)-alpine3.10-arm64v8": {},
+                "3.0-alpine3.10-arm64v8": {},
                 "$(3.0-RuntimeVersion)-alpine-arm64v8": {},
                 "3.0-alpine-arm64v8": {}
               },
@@ -439,7 +490,23 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.9": {},
-                "2.1-alpine3.9": {},
+                "2.1-alpine3.9": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/runtime/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(2.1-RuntimeVersion)-alpine3.10": {},
+                "2.1-alpine3.10": {},
                 "$(2.1-RuntimeVersion)-alpine": {},
                 "2.1-alpine": {}
               }
@@ -582,7 +649,23 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.9": {},
-                "2.2-alpine3.9": {},
+                "2.2-alpine3.9": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.2/runtime/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(2.2-RuntimeVersion)-alpine3.10": {},
+                "2.2-alpine3.10": {},
                 "$(2.2-RuntimeVersion)-alpine": {},
                 "2.2-alpine": {}
               }
@@ -719,9 +802,7 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9": {},
-                "3.0-alpine3.9": {},
-                "$(3.0-RuntimeVersion)-alpine": {},
-                "3.0-alpine": {}
+                "3.0-alpine3.9": {}
               }
             }
           ]
@@ -738,7 +819,51 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9-arm64v8": {},
-                "3.0-alpine3.9-arm64v8": {},
+                "3.0-alpine3.9-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGrouping": [
+                {
+                  "name": "pr-build",
+                  "dependencies": [
+                    "$(Repo:sdk):3.0-buster-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.0/runtime/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.0-RuntimeVersion)-alpine3.10": {},
+                "3.0-alpine3.10": {},
+                "$(3.0-RuntimeVersion)-alpine": {},
+                "3.0-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.0/runtime/alpine3.10/arm64v8",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.0-RuntimeVersion)-alpine3.10-arm64v8": {},
+                "3.0-alpine3.10-arm64v8": {},
                 "$(3.0-RuntimeVersion)-alpine-arm64v8": {},
                 "3.0-alpine-arm64v8": {}
               },
@@ -954,7 +1079,23 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.9": {},
-                "2.1-alpine3.9": {},
+                "2.1-alpine3.9": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/aspnet/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(2.1-RuntimeVersion)-alpine3.10": {},
+                "2.1-alpine3.10": {},
                 "$(2.1-RuntimeVersion)-alpine": {},
                 "2.1-alpine": {}
               }
@@ -1097,7 +1238,23 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.9": {},
-                "2.2-alpine3.9": {},
+                "2.2-alpine3.9": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.2/aspnet/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(2.2-RuntimeVersion)-alpine3.10": {},
+                "2.2-alpine3.10": {},
                 "$(2.2-RuntimeVersion)-alpine": {},
                 "2.2-alpine": {}
               }
@@ -1246,9 +1403,7 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9": {},
-                "3.0-alpine3.9": {},
-                "$(3.0-RuntimeVersion)-alpine": {},
-                "3.0-alpine": {}
+                "3.0-alpine3.9": {}
               }
             }
           ]
@@ -1265,7 +1420,51 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-RuntimeVersion)-alpine3.9-arm64v8": {},
-                "3.0-alpine3.9-arm64v8": {},
+                "3.0-alpine3.9-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGrouping": [
+                {
+                  "name": "pr-build",
+                  "dependencies": [
+                    "$(Repo:sdk):3.0-buster-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.0/aspnet/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.0-RuntimeVersion)-alpine3.10": {},
+                "3.0-alpine3.10": {},
+                "$(3.0-RuntimeVersion)-alpine": {},
+                "3.0-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.0/aspnet/alpine3.10/arm64v8",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.0-RuntimeVersion)-alpine3.10-arm64v8": {},
+                "3.0-alpine3.10-arm64v8": {},
                 "$(3.0-RuntimeVersion)-alpine-arm64v8": {},
                 "3.0-alpine-arm64v8": {}
               },
@@ -1475,7 +1674,23 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.1-SdkVersion)-alpine3.9": {},
-                "2.1-alpine3.9": {},
+                "2.1-alpine3.9": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/sdk/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(2.1-SdkVersion)-alpine3.10": {},
+                "2.1-alpine3.10": {},
                 "$(2.1-SdkVersion)-alpine": {},
                 "2.1-alpine": {}
               }
@@ -1606,7 +1821,23 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.2-SdkVersion)-alpine3.9": {},
-                "2.2-alpine3.9": {},
+                "2.2-alpine3.9": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.2/sdk/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(2.2-SdkVersion)-alpine3.10": {},
+                "2.2-alpine3.10": {},
                 "$(2.2-SdkVersion)-alpine": {},
                 "2.2-alpine": {}
               }
@@ -1728,7 +1959,23 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(3.0-SdkVersion)-alpine3.9": {},
-                "3.0-alpine3.9": {},
+                "3.0-alpine3.9": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.0/sdk/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.0-SdkVersion)-alpine3.10": {},
+                "3.0-alpine3.10": {},
                 "$(3.0-SdkVersion)-alpine": {},
                 "3.0-alpine": {}
               }
