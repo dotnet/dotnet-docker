@@ -3,6 +3,8 @@ variables:
 - template: common-paths.yml
 - name: stagingRepoPrefix
   value: build-staging/$(sourceBuildId)/
+- name: publishReadme
+  value: true
 - name: skipComponentGovernanceDetection
   value: true
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
