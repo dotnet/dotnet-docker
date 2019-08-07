@@ -5,6 +5,16 @@ parameters:
   cleanupDocker: true
 
 steps:
+- script: echo "##vso[task.setvariable variable=artifactsPath]/artifacts"
+  displayName: Define Artifacts Path Variable
+
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+  - script: echo '##vso[task.setvariable variable=imageBuilderImageInfoArg]--image-info-output-path $(artifactsPath)/$(legName)-image-info.json'
+    displayName: Set Image Info Arg for Image Builder
+- ${{ if eq(variables['System.TeamProject'], 'public') }}:
+  - script: echo '##vso[task.setvariable variable=imageBuilderImageInfoArg]'
+    displayName: Set Image Info Arg for Image Builder
+
   ################################################################################
   # Cleanup Docker Resources
   ################################################################################
@@ -38,13 +48,11 @@ steps:
       --build-arg IMAGE=$(imageNames.imageBuilder.linux)
       -f $(engCommonPath)/Dockerfile.WithRepo .
     displayName: Build Image for Image Builder
-  - script: echo "##vso[task.setvariable variable=imageBuilderArtifactsPath]/artifacts"
-    displayName: Define Image Builder Artifacts Path Variable
   - script: >
       echo "##vso[task.setvariable variable=runImageBuilderCmd]
       docker run --rm
       -v /var/run/docker.sock:/var/run/docker.sock
-      -v $(Build.ArtifactStagingDirectory):$(imageBuilderArtifactsPath)
+      -v $(Build.ArtifactStagingDirectory):$(artifactsPath)
       -w /repo
       $(dockerArmRunArgs)
       $(imageNames.imageBuilder.withrepo)"

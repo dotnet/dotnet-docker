@@ -164,10 +164,19 @@ stages:
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   ################################################################################
+  # Post-Build
+  ################################################################################
+  - stage: Post_Build
+    dependsOn: Build
+    condition: and(succeeded(), or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build')))
+    jobs:
+    - template: ../jobs/post-build.yml
+
+  ################################################################################
   # Test Images
   ################################################################################
   - stage: Test
-    dependsOn: Build
+    dependsOn: Post_Build
     condition: "
       and(
         not(contains(variables['manifest'], 'samples')),

@@ -1,0 +1,17 @@
+jobs:
+- job: Build
+  pool: # linuxAmd64Pool
+    name: Hosted Ubuntu 1604
+  steps:
+  - template: ../steps/init-docker-linux.yml
+  - template: ../steps/download-build-artifact.yml
+    parameters:
+      targetPath: $(Build.ArtifactStagingDirectory)
+  - script: >
+      $(runImageBuilderCmd) mergeImageInfo
+      $(artifactsPath)
+      $(artifactsPath)/image-info.json
+    displayName: Merge Image Info Files
+  - publish: $(Build.ArtifactStagingDirectory)/image-info.json
+    artifact: image-info
+    displayName: Publish Image Info File Artifact

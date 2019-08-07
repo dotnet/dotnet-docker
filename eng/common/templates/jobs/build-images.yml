@@ -17,13 +17,7 @@ jobs:
   variables:
     osVersion: ${{ parameters.osVersion }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-      imageBuilderBuildArgs: >
-        --registry-override $(acr.server)
-        --repo-prefix $(stagingRepoPrefix)
-        --push
-        --username $(acr.userName)
-        --password $(BotAccount-dotnet-docker-acr-bot-password)
-        $(imageBuilder.queueArgs)
+      imageBuilderBuildArgs: --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --push --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
     ${{ if eq(variables['System.TeamProject'], 'public') }}:
       imageBuilderBuildArgs: $(imageBuilder.queueArgs)
   steps:
@@ -57,15 +51,14 @@ jobs:
       --os-type $(osType)
       --os-version "$(osVersion)"
       --architecture $(architecture)
-      --image-info-output-path "$(imageBuilderArtifactsPath)/$(legName)-image-info.json"
       --retry
       $(imageBuilderBuildArgs)
+      $(imageBuilderImageInfoArg)
     displayName: Build Images
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: $(legName)-image-info
-      targetPath: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
-    displayName: Publish Image Info File Artifact
+  - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+    - publish: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
+      artifact: $(legName)-image-info
+      displayName: Publish Image Info File Artifact
   - ${{ if eq(variables['System.TeamProject'], 'public') }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
       parameters:

@@ -1,0 +1,18 @@
+parameters:
+  targetPath: ""
+  artifactName: ""
+  requiresPublicRepoPrefix: false
+
+steps:
+- task: DownloadPipelineArtifact@1
+  inputs:
+    buildType: specific
+    project: $(System.TeamProject)
+    pipline: $(System.DefinitionId)
+    buildVersionToDownload: specific
+    buildId: $(sourceBuildId)
+    targetPath: ${{ parameters.targetPath }}
+    artifactName: ${{ parameters.artifactName }}
+  displayName: Download Build Artifact(s)
+  ${{ if eq(parameters.requiresPublicRepoPrefix, true) }}:
+    condition: and(succeeded(), eq(variables['publishRepoPrefix'], 'public/'))

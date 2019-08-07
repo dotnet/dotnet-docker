@@ -1,24 +1,31 @@
 steps:
-- powershell: |
-    if ("${{ eq(variables['System.TeamProject'], 'public') }}" -eq "False") {
-      $optionalTestArgs="-Registry $env:ACR_SERVER -RepoPrefix $env:STAGINGREPOPREFIX"
-    } else {
-      $optionalTestArgs="-IsLocalRun"
-    }
-    echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
-  displayName: Set Test Variables
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - template: init-docker-windows.yml
     parameters:
       setupImageBuilder: false
   - script: docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
     displayName: Docker login
+- powershell: |
+    if ("${{ eq(variables['System.TeamProject'], 'public') }}" -eq "False") {
+      $optionalTestArgs="-Registry $env:ACR_SERVER -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
+    } else {
+      $optionalTestArgs="-IsLocalRun"
+    }
+    if ($env:REPOTESTARGS) {
+      $optionalTestArgs += " $env:REPOTESTARGS"
+    }
+    echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
+  displayName: Set Test Variables
 - powershell: Get-ChildItem -Path tests -r | Where {$_.Extension -match "trx"} | Remove-Item
   displayName: Cleanup Old Test Results
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+  - template: ../steps/download-build-artifact.yml
+    parameters:
+      targetPath: $(Build.ArtifactStagingDirectory)
 - powershell: >
     ./tests/run-tests.ps1
-    -VersionFilter $(dotnetVersion)
-    -OSFilter $(osVariant)
+    -VersionFilter '$(dotnetVersion)'
+    -OSFilter '$(osVariant)'
     $(optionalTestArgs)
   displayName: Test Images
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
@@ -35,6 +42,6 @@ steps:
     testResultsFiles: 'tests/**/*.trx'
     mergeTestResults: true
     publishRunAttachments: true
-    testRunTitle: Windows $(dotnetVersion) $(osVariant) amd64
+    testRunTitle: $(dotnetVersion) $(osVariant) amd64
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - template: cleanup-docker-windows.yml
