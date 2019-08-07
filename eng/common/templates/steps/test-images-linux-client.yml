@@ -70,7 +70,7 @@ steps:
     searchFolder: $(Common.TestResultsDirectory)
     mergeTestResults: true
     publishRunAttachments: true
-    testRunTitle: Linux $(dotnetVersion) $(osVariant) $(architecture)
+    testRunTitle: $(dotnetVersion) $(osVariant) $(architecture)
 - script: docker rm -f $(testRunner.container)
   displayName: Cleanup TestRunner Container
   condition: always()
