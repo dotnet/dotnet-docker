@@ -15,6 +15,10 @@ jobs:
       publicSourceBranch: master
   steps:
   - template: ../steps/init-docker-linux.yml
+  - template: ../steps/download-build-artifact.yml
+    parameters:
+      targetPath: $(Build.ArtifactStagingDirectory)
+      artifactName: image-info
   - script: >
       $(runImageBuilderCmd) copyAcrImages
       $(stagingRepoPrefix)
@@ -26,6 +30,7 @@ jobs:
       --os-type '*'
       --architecture '*'
       --repo-prefix $(publishRepoPrefix)
+      --image-info $(artifactsPath)/image-info.json
       $(imageBuilder.pathArgs)
       $(imageBuilder.commonCmdArgs)
     displayName: Copy Images
@@ -47,11 +52,7 @@ jobs:
       $(publicGitRepoUri)/blob/$(publicSourceBranch)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Readme
-  - template: ../steps/download-build-artifact.yml
-    parameters:
-      targetPath: $(Build.ArtifactStagingDirectory)
-      artifactName: image-info
-      requiresPublicRepoPrefix: true
+    condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
   - script: >
       $(runImageBuilderCmd) publishImageInfo
       $(dotnetBot-userName)
