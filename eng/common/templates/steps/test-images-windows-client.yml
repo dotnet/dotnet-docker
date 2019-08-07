@@ -11,6 +11,9 @@ steps:
     } else {
       $optionalTestArgs="-IsLocalRun"
     }
+    if ($env:REPOTESTARGS) {
+      $optionalTestArgs += " $env:REPOTESTARGS"
+    }
     echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
   displayName: Set Test Variables
 - powershell: Get-ChildItem -Path tests -r | Where {$_.Extension -match "trx"} | Remove-Item
@@ -39,6 +42,6 @@ steps:
     testResultsFiles: 'tests/**/*.trx'
     mergeTestResults: true
     publishRunAttachments: true
-    testRunTitle: Windows $(dotnetVersion) $(osVariant) amd64
+    testRunTitle: $(dotnetVersion) $(osVariant) amd64
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - template: cleanup-docker-windows.yml
