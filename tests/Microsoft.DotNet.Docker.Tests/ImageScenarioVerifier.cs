@@ -39,7 +39,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             try
             {
-                if (_imageData.HasSdk)
+                if (!_imageData.HasCustomSdk)
                 {
                     // Use `sdk` image to build and run test app
                     string buildTag = BuildTestAppImage("build", appDir);
