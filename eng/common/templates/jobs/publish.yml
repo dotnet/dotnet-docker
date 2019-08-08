@@ -74,7 +74,7 @@ jobs:
       --git-owner dotnet
       --git-repo versions
       --git-branch master
-      --git-path build-info/docker/image-info.$(Build.Repository.Name)-$(Build.SourceBranchName).json
+      --git-path build-info/docker/image-info.$(Build.Repository.Name)-$(publicSourceBranch).json
     displayName: Publish Image Info
     condition: and(succeeded(), eq(variables['publishRepoPrefix'], 'public/'))
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
