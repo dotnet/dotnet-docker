@@ -56,11 +56,19 @@ Try {
     if ([string]::IsNullOrWhiteSpace($ArchitectureFilter)) {
         $ArchitectureFilter = "amd64"
     }
+
     if ($DisableHttpVerification) {
         $env:DISABLE_HTTP_VERIFICATION = 1
     }
+    else {
+        $env:DISABLE_HTTP_VERIFICATION = $null
+    }
+
     if ($IsLocalRun) {
         $env:LOCAL_RUN = 1
+    }
+    else {
+        $env:LOCAL_RUN = $null
     }
 
     $env:IMAGE_ARCH_FILTER = $ArchitectureFilter

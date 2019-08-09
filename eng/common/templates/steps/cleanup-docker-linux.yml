@@ -11,12 +11,12 @@ steps:
   # owned by this build.
   ################################################################################
 - ${{ if and(eq(parameters.cleanupRemoteDockerServer, 'true'), eq(parameters.initCleanup, 'false')) }}:
-  - script: docker run --rm $(dockerArmRunArgs) --entrypoint docker $(dockerClientImage) system prune -f --volumes
+  - script: docker run --rm $(dockerArmRunOptions) --entrypoint docker $(dockerClientImage) system prune -f --volumes
     displayName: Cleanup Remote Docker Server (basic)
     condition: always()
     continueOnError: true
   - script: >
-      docker run --rm $(dockerArmRunArgs) --entrypoint /bin/bash $(dockerClientImage) -c
+      docker run --rm $(dockerArmRunOptions) --entrypoint /bin/bash $(dockerClientImage) -c
       'docker rmi -f $(docker images --format "{{.Repository}}:{{.Tag}}" | grep -v -e ^arm32v7/ -e ^arm64v8/ -e ^mcr\\.microsoft\\.com/windows)'
     displayName: Cleanup Remote Docker Server (images)
     condition: always()

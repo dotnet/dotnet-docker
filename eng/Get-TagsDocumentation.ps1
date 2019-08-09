@@ -17,10 +17,16 @@ if (!$Branch) {
         $coreRepoName = "core"
     }
 }
+
 $gitRepo = "https://github.com/dotnet/dotnet-docker"
 
-& $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 dotnet/$coreRepoName/runtime-deps README.runtime-deps.md manifest.json $Branch $gitRepo
-& $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 dotnet/$coreRepoName/runtime README.runtime.md manifest.json $Branch $gitRepo -ReuseImageBuilderImage
-& $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 dotnet/$coreRepoName/aspnet README.aspnet.md manifest.json $Branch $gitRepo -ReuseImageBuilderImage
-& $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 dotnet/$coreRepoName/sdk README.sdk.md manifest.json $Branch $gitRepo -ReuseImageBuilderImage
-& $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 dotnet/core/samples README.samples.md manifest.samples.json master $gitRepo -ReuseImageBuilderImage
+& $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 `
+    dotnet/$coreRepoName/runtime-deps README.runtime-deps.md manifest.json $gitRepo $Branch
+& $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 `
+    dotnet/$coreRepoName/runtime README.runtime.md manifest.json $gitRepo $Branch -ReuseImageBuilderImage
+& $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 `
+    dotnet/$coreRepoName/aspnet README.aspnet.md manifest.json $gitRepo $Branch -ReuseImageBuilderImage
+& $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 `
+    dotnet/$coreRepoName/sdk README.sdk.md manifest.json $gitRepo $Branch -ReuseImageBuilderImage
+& $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 `
+    dotnet/core/samples README.samples.md manifest.samples.json $gitRepo -ReuseImageBuilderImage

@@ -3,8 +3,8 @@ param (
     [string] $Repo,
     [string] $ReadmePath,
     [string] $Manifest,
-    [string] $Branch,
     [string] $GitRepo,
+    [string] $Branch = "master",
     [switch] $ReuseImageBuilderImage
 )
 

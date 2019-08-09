@@ -20,6 +20,7 @@ jobs:
       imageBuilderBuildArgs: --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --push --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
     ${{ if eq(variables['System.TeamProject'], 'public') }}:
       imageBuilderBuildArgs: $(imageBuilder.queueArgs)
+    imageBuilderDockerRunExtraOptions: $(build.imageBuilderDockerRunExtraOptions)
   steps:
   # This script is necessary to workaround there not being a matching architecture when pulling images
   # on an aarch64 machine. By using the multi-arch tag for the images referenced in the sample
