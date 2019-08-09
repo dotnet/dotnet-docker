@@ -58,11 +58,13 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 2.2.401-stretch, 2.2-stretch, 2.2.401, 2.2, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/stretch/amd64/Dockerfile) | Debian 9
-2.2.401-alpine3.9, 2.2-alpine3.9, 2.2.401-alpine, 2.2-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
+2.2.401-alpine3.10, 2.2-alpine3.10, 2.2.401-alpine, 2.2-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+2.2.401-alpine3.9, 2.2-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 2.2.401-alpine3.8, 2.2-alpine3.8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/alpine3.8/amd64/Dockerfile) | Alpine 3.8
 2.2.401-bionic, 2.2-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.2/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 2.1.801-stretch, 2.1-stretch, 2.1.801, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile) | Debian 9
-2.1.801-alpine3.9, 2.1-alpine3.9, 2.1.801-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
+2.1.801-alpine3.10, 2.1-alpine3.10, 2.1.801-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+2.1.801-alpine3.9, 2.1-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 2.1.801-alpine3.7, 2.1-alpine3.7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.7/amd64/Dockerfile) | Alpine 3.7
 2.1.801-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
@@ -70,7 +72,8 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.0.100-preview8-buster, 3.0-buster, 3.0.100-preview8, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/buster/amd64/Dockerfile) | Debian 10
-3.0.100-preview8-alpine3.9, 3.0-alpine3.9, 3.0.100-preview8-alpine, 3.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
+3.0.100-preview8-alpine3.10, 3.0-alpine3.10, 3.0.100-preview8-alpine, 3.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+3.0.100-preview8-alpine3.9, 3.0-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 3.0.100-preview8-disco, 3.0-disco | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/disco/amd64/Dockerfile) | Ubuntu 19.04
 3.0.100-preview8-bionic, 3.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
