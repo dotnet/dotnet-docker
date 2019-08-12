@@ -58,19 +58,19 @@ Tags | Dockerfile | OS Version
 ##### .NET Core 3.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-3.0.0-preview7-buster-slim, 3.0-buster-slim, 3.0.0-preview7, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/buster-slim/amd64/Dockerfile) | Debian 10
-3.0.0-preview7-alpine3.9, 3.0-alpine3.9, 3.0.0-preview7-alpine, 3.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/alpine3.9/amd64/Dockerfile) | Alpine 3.9
-3.0.0-preview7-disco, 3.0-disco | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/disco/amd64/Dockerfile) | Ubuntu 19.04
-3.0.0-preview7-bionic, 3.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/amd64/Dockerfile) | Ubuntu 18.04
+3.0.0-preview8-buster-slim, 3.0-buster-slim, 3.0.0-preview8, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/buster-slim/amd64/Dockerfile) | Debian 10
+3.0.0-preview8-alpine3.9, 3.0-alpine3.9, 3.0.0-preview8-alpine, 3.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/alpine3.9/amd64/Dockerfile) | Alpine 3.9
+3.0.0-preview8-disco, 3.0-disco | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/disco/amd64/Dockerfile) | Ubuntu 19.04
+3.0.0-preview8-bionic, 3.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm64 Tags
 ##### .NET Core 3.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-3.0.0-preview7-buster-slim-arm64v8, 3.0-buster-slim-arm64v8, 3.0.0-preview7, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/buster-slim/arm64v8/Dockerfile) | Debian 10
-3.0.0-preview7-alpine3.9-arm64v8, 3.0-alpine3.9-arm64v8, 3.0.0-preview7-alpine-arm64v8, 3.0-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/alpine3.9/arm64v8/Dockerfile) | Alpine 3.9
-3.0.0-preview7-disco-arm64v8, 3.0-disco-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/disco/arm64v8/Dockerfile) | Ubuntu 19.04
-3.0.0-preview7-bionic-arm64v8, 3.0-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
+3.0.0-preview8-buster-slim-arm64v8, 3.0-buster-slim-arm64v8, 3.0.0-preview8, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/buster-slim/arm64v8/Dockerfile) | Debian 10
+3.0.0-preview8-alpine3.9-arm64v8, 3.0-alpine3.9-arm64v8, 3.0.0-preview8-alpine-arm64v8, 3.0-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/alpine3.9/arm64v8/Dockerfile) | Alpine 3.9
+3.0.0-preview8-disco-arm64v8, 3.0-disco-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/disco/arm64v8/Dockerfile) | Ubuntu 19.04
+3.0.0-preview8-bionic-arm64v8, 3.0-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -83,9 +83,9 @@ Tags | Dockerfile | OS Version
 ##### .NET Core 3.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-3.0.0-preview7-buster-slim-arm32v7, 3.0-buster-slim-arm32v7, 3.0.0-preview7, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/buster-slim/arm32v7/Dockerfile) | Debian 10
-3.0.0-preview7-disco-arm32v7, 3.0-disco-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/disco/arm32v7/Dockerfile) | Ubuntu 19.04
-3.0.0-preview7-bionic-arm32v7, 3.0-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+3.0.0-preview8-buster-slim-arm32v7, 3.0-buster-slim-arm32v7, 3.0.0-preview8, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/buster-slim/arm32v7/Dockerfile) | Debian 10
+3.0.0-preview8-disco-arm32v7, 3.0-disco-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/disco/arm32v7/Dockerfile) | Ubuntu 19.04
+3.0.0-preview8-bionic-arm32v7, 3.0-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 ## Windows Server, version 1903 amd64 Tags
 Tag | Dockerfile
@@ -96,7 +96,7 @@ Tag | Dockerfile
 ##### .NET Core 3.0 Preview tags
 Tag | Dockerfile
 ---------| ---------------
-3.0.0-preview7-nanoserver-1903, 3.0-nanoserver-1903, 3.0.0-preview7, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1903/amd64/Dockerfile)
+3.0.0-preview8-nanoserver-1903, 3.0-nanoserver-1903, 3.0.0-preview8, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1903/amd64/Dockerfile)
 
 ## Windows Server 2019 amd64 Tags
 Tag | Dockerfile
@@ -107,7 +107,7 @@ Tag | Dockerfile
 ##### .NET Core 3.0 Preview tags
 Tag | Dockerfile
 ---------| ---------------
-3.0.0-preview7-nanoserver-1809, 3.0-nanoserver-1809, 3.0.0-preview7, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1809/amd64/Dockerfile)
+3.0.0-preview8-nanoserver-1809, 3.0-nanoserver-1809, 3.0.0-preview8, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server 2019 arm32 Tags
 Tag | Dockerfile
@@ -117,7 +117,7 @@ Tag | Dockerfile
 ##### .NET Core 3.0 Preview tags
 Tag | Dockerfile
 ---------| ---------------
-3.0.0-preview7-nanoserver-1809-arm32v7, 3.0-nanoserver-1809-arm32v7, 3.0.0-preview7, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1809/arm32v7/Dockerfile)
+3.0.0-preview8-nanoserver-1809-arm32v7, 3.0-nanoserver-1809-arm32v7, 3.0.0-preview8, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1809/arm32v7/Dockerfile)
 
 ## Windows Server, version 1803 amd64 Tags
 Tag | Dockerfile
@@ -128,7 +128,7 @@ Tag | Dockerfile
 ##### .NET Core 3.0 Preview tags
 Tag | Dockerfile
 ---------| ---------------
-3.0.0-preview7-nanoserver-1803, 3.0-nanoserver-1803, 3.0.0-preview7, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1803/amd64/Dockerfile)
+3.0.0-preview8-nanoserver-1803, 3.0-nanoserver-1803, 3.0.0-preview8, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/nanoserver-1803/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/core/runtime at https://mcr.microsoft.com/v2/dotnet/core/runtime/tags/list.
 
