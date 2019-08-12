@@ -4,7 +4,7 @@ param(
     [string]$VersionFilter = "*",
     [string]$OSFilter = "*",
     [string]$ArchitectureFilter = "amd64",
-    [string]$ImageBuilderCustomArgs,
+    [string]$OptionalImageBuilderArgs,
     [switch]$SkipTesting = $false
 )
 
@@ -12,5 +12,5 @@ param(
     -VersionFilter $VersionFilter `
     -OSFilter $OSFilter `
     -ArchitectureFilter $ArchitectureFilter `
-    -ImageBuilderCustomArgs $ImageBuilderCustomArgs `
+    -OptionalImageBuilderArgs $OptionalImageBuilderArgs `
     -SkipTesting:$SkipTesting
