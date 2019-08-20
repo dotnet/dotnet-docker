@@ -13,10 +13,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 3.0.100-preview9-013948
+ENV DOTNET_SDK_VERSION 3.0.100-preview9-013959
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
-    && dotnet_sha512='6400c821166363f031acb1765324c23e0a61cc9ad8b75f94750ce5064cca9f27c5c2f432db04164307aa8350558ff1e2287fb50c10319d84ee20c6c50d1f1741' \
+    && dotnet_sha512='68ab388a6a25b02be9332104c46345c1b27bcfe8ea0a98f3b638cb61b1395aa70eea5e0528bc71a934856056dccee01b28bd5f7c9822f12fd2c1462b1431d60f' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
