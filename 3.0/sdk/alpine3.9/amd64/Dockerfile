@@ -28,7 +28,8 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=true \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 7.0.0-preview.3
+ENV POWERSHELL_VERSION=7.0.0-preview.3 \
+    POWERSHELL_DISTRIBUTION_CHANNEL=DOTNETSDK-Alpine-3.9
 
 RUN wget -O PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
     && powershell_sha512='f42acb9a200c56b0fa5c94ee4f9fb09711fe43bab4764dba71ae912797eb6d42e442bc1a6e83a54679004138bf8f44596b0a075b30e4a91f53fb5939ffcb0153' \
