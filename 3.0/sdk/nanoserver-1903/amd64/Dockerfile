@@ -23,7 +23,7 @@ ENV POWERSHELL_VERSION=7.0.0-preview.3 `
     POWERSHELL_DISTRIBUTION_CHANNEL=DOTNETSDK-NanoServer-1903
 
 RUN Invoke-WebRequest -OutFile PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg; `
-    $powershell_sha512 = '1141b7b1ce1eb70e7f89120a8f5f4f5f1133aa4cd21a1a8f9cc724acfeec62a08a28cf5cd4de324c8515450da4b127b092ea49bd94fe6a4b921a8f1ec82aad05  '; `
+    $powershell_sha512 = '1141b7b1ce1eb70e7f89120a8f5f4f5f1133aa4cd21a1a8f9cc724acfeec62a08a28cf5cd4de324c8515450da4b127b092ea49bd94fe6a4b921a8f1ec82aad05'; `
     if ((Get-FileHash PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
