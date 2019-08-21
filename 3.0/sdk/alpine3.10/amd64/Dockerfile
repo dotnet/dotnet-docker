@@ -29,7 +29,7 @@ RUN dotnet help
 
 # Install PowerShell global tool
 ENV POWERSHELL_VERSION=7.0.0-previewa.3 \
-    POWERSHELL_DISTRIBUTION_CHANNEL=DOTNETSDK-Alpine-3.10
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Alpine-3.10
 
 RUN wget -O PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
     && powershell_sha512='9dc84593409b1a0248ed86c61b2130567ecdef282034e37eb51a2fb756dc601ace994aa94b5a20ab6a3c57fcbd32b764b79e3d809cb47167e89392f0b7686236' \

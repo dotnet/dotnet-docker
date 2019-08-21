@@ -37,7 +37,7 @@ RUN dotnet help
 
 # Install PowerShell global tool
 ENV POWERSHELL_VERSION=7.0.0-preview.3 \
-    POWERSHELL_DISTRIBUTION_CHANNEL=DOTNETSDK-Debian-10-arm64
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Debian-10-arm64
 
 RUN curl -SL --output PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg \
     && powershell_sha512='89652b4eef9a546c6b74c18a4ff3088a66e111cc6c865911ba6f3844baf082deb71812a4a96175409c8968999cb25b8b2d590c5514892ddd2dbcf9d968ff78e8' \
