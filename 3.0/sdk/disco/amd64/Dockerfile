@@ -37,7 +37,7 @@ RUN dotnet help
 
 # Install PowerShell global tool
 ENV POWERSHELL_VERSION=7.0.0-preview.3 \
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Ubuntu-19.04
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Ubuntu-19.04
 
 RUN curl -SL --output PowerShell.Linux.x64.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.x64.$POWERSHELL_VERSION.nupkg \
     && powershell_sha512='b91cdbeef44c3b3c72aaeafa07a2a8e0ea995ed882c5a7887a00e6f50b120d89585fd33378fa050896e810d1be0c7a39ed7472397ff55b0cae37aa950f2161f9' \
