@@ -68,8 +68,7 @@ Try {
     $env:IMAGE_VERSION_FILTER = $VersionFilter
     $env:REGISTRY = $Registry
     $env:REPO_PREFIX = $RepoPrefix
-    # Disable use of image info file for testing until it's ready to be rolled out to master
-    #$env:IMAGE_INFO_PATH = $ImageInfoPath
+    $env:IMAGE_INFO_PATH = $ImageInfoPath
     $env:IMAGE_INFO_PATH = ""
 
     $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1

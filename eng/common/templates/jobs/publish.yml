@@ -63,6 +63,18 @@ jobs:
       --git-repo versions
       --git-branch master
       --git-path build-info/docker/image-info.json
+    displayName: Publish Image Info (legacy)
+    condition: and(succeeded(), eq(variables['publishRepoPrefix'], 'public/'))
+  - script: >
+      $(runImageBuilderCmd) publishImageInfo
+      $(dotnetBot-userName)
+      $(dotnetBot-email)
+      $(dotnet-bot-user-repo-adminrepohook-pat)
+      $(artifactsPath)/image-info.json
+      --git-owner dotnet
+      --git-repo versions
+      --git-branch master
+      --git-path build-info/docker/image-info.$(Build.Repository.Name)-$(publicSourceBranch).json
     displayName: Publish Image Info
     condition: and(succeeded(), eq(variables['publishRepoPrefix'], 'public/'))
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0

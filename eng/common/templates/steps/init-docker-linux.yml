@@ -29,12 +29,12 @@ steps:
   ################################################################################
 - ${{ if eq(parameters.setupRemoteDockerServer, 'true') }}:
   - script: >
-      echo "##vso[task.setvariable variable=dockerArmRunArgs]
+      echo "##vso[task.setvariable variable=dockerArmRunOptions]
       -v $(DOCKER_CERT_PATH):/docker-certs
       -e DOCKER_CERT_PATH=/docker-certs
       -e DOCKER_TLS_VERIFY=1
       -e DOCKER_HOST=tcp://$(DOCKER_HOST_IP):2376"
-    displayName: Define dockerArmRunArgs Variable
+    displayName: Define dockerArmRunOptions Variable
 
   ################################################################################
   # Setup Image Builder (Optional)
@@ -54,7 +54,8 @@ steps:
       -v /var/run/docker.sock:/var/run/docker.sock
       -v $(Build.ArtifactStagingDirectory):$(artifactsPath)
       -w /repo
-      $(dockerArmRunArgs)
+      $(dockerArmRunOptions)
+      $(imageBuilderDockerRunExtraOptions)
       $(imageNames.imageBuilder.withrepo)"
     displayName: Define runImageBuilderCmd Variable
   - ${{ if eq(parameters.setupRemoteDockerServer, 'true') }}:
