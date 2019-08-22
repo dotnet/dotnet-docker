@@ -69,7 +69,6 @@ Try {
     $env:REGISTRY = $Registry
     $env:REPO_PREFIX = $RepoPrefix
     $env:IMAGE_INFO_PATH = $ImageInfoPath
-    $env:IMAGE_INFO_PATH = ""
 
     $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
     $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
