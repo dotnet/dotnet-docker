@@ -41,10 +41,10 @@ if (!(Test-Path $DotnetInstallScript)) {
 
 if ($IsRunningOnUnix) {
     & chmod +x $DotnetInstallDir/$DotnetInstallScript
-    & $DotnetInstallDir/$DotnetInstallScript --channel "2.1" --version "latest" --architecture x64 --install-dir $DotnetInstallDir
+    & $DotnetInstallDir/$DotnetInstallScript --channel "release/3.0.1xx" --version "3.0.100-preview7-012821" --architecture x64 --install-dir $DotnetInstallDir
 }
 else {
-    & $DotnetInstallDir/$DotnetInstallScript -Channel "2.1" -Version "latest" -Architecture x64 -InstallDir $DotnetInstallDir
+    & $DotnetInstallDir/$DotnetInstallScript -Channel "release/3.0.1xx" -Version "3.0.100-preview7-012821" -Architecture x64 -InstallDir $DotnetInstallDir
 }
 
 if ($LASTEXITCODE -ne 0) { throw "Failed to install the .NET Core SDK" }
@@ -56,11 +56,19 @@ Try {
     if ([string]::IsNullOrWhiteSpace($ArchitectureFilter)) {
         $ArchitectureFilter = "amd64"
     }
+
     if ($DisableHttpVerification) {
         $env:DISABLE_HTTP_VERIFICATION = 1
     }
+    else {
+        $env:DISABLE_HTTP_VERIFICATION = $null
+    }
+
     if ($IsLocalRun) {
         $env:LOCAL_RUN = 1
+    }
+    else {
+        $env:LOCAL_RUN = $null
     }
 
     $env:IMAGE_ARCH_FILTER = $ArchitectureFilter
