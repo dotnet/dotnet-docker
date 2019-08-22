@@ -3,6 +3,7 @@ parameters:
   pool: {}
   matrix: {}
   useRemoteDockerServer: false
+  testJobTimeout: 60
 jobs:
 - job: ${{ parameters.name }}
   condition: and(succeeded(), ${{ parameters.matrix }})
@@ -10,6 +11,7 @@ jobs:
   pool: ${{ parameters.pool }}
   strategy:
     matrix: $[ ${{ parameters.matrix }} ]
+  timeoutInMinutes: ${{ parameters.testJobTimeout }}
   steps:
   - template: ../steps/test-images-linux-client.yml
     parameters:

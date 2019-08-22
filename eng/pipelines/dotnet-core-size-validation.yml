@@ -1,7 +1,16 @@
 trigger: none
 pr: none
+
+schedules:
+- cron: "0 5 * * 1"
+  displayName: Weekly build
+  branches:
+    include:
+    - nightly
+
 variables:
 - template: variables/common.yml
+
 jobs:
 - job: LinuxPerfTests
   pool: Hosted Ubuntu 1604
@@ -13,9 +22,9 @@ jobs:
     displayName: Run Image Size Tests
   - template: ../common/templates/steps/cleanup-docker-linux.yml
 - job: WindowsPerfTests
-  pool: # windows1809Amd64
+  pool: # windows1903Amd64
     name: DotNetCore-Docker
-    demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
+    demands: VSTS_OS -equals Windows_Server_2019_Data_Center_1903
   workspace:
     clean: all
   steps:
