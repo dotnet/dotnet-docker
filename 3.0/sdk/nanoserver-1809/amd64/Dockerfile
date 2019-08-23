@@ -19,10 +19,11 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
     Remove-Item -Force dotnet.zip
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 7.0.0-preview.2
+ENV POWERSHELL_VERSION=7.0.0-preview.3 `
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1809
 
 RUN Invoke-WebRequest -OutFile PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg; `
-    $powershell_sha512 = '54eacb7db655c8de5f824a64376958514524ed1ad420f04faa54b90ace824b90e5709b362cbc229dec5d5f02b58a903edcf4424544786faa9d9cb0dfb52f69d4'; `
+    $powershell_sha512 = '1141b7b1ce1eb70e7f89120a8f5f4f5f1133aa4cd21a1a8f9cc724acfeec62a08a28cf5cd4de324c8515450da4b127b092ea49bd94fe6a4b921a8f1ec82aad05'; `
     if ((Get-FileHash PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
