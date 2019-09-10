@@ -2,10 +2,10 @@
   "readmePath": "README.md",
   "registry": "mcr.microsoft.com",
   "variables": {
-    "2.1-RuntimeVersion": "2.1.12",
-    "2.1-SdkVersion": "2.1.801",
-    "2.2-RuntimeVersion": "2.2.6",
-    "2.2-SdkVersion": "2.2.401",
+    "2.1-RuntimeVersion": "2.1.13",
+    "2.1-SdkVersion": "2.1.802",
+    "2.2-RuntimeVersion": "2.2.7",
+    "2.2-SdkVersion": "2.2.402",
     "3.0-RuntimeVersion": "3.0.0-preview9",
     "3.0-SdkVersion": "3.0.100-preview9"
   },
@@ -85,9 +85,7 @@
               "osVersion": "alpine3.7",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {},
-                "$(2.1-RuntimeVersion)-alpine": {},
-                "2.1-alpine": {}
+                "2.1-alpine3.7": {}
               }
             }
           ]
@@ -105,10 +103,22 @@
                 "2.1-alpine3.9": {
                   "documentationGroup": "2.1"
                 },
+                "$(2.1-RuntimeVersion)-alpine": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-alpine": {
+                  "documentationGroup": "2.1"
+                },
                 "$(2.2-RuntimeVersion)-alpine3.9": {
                   "documentationGroup": "2.2"
                 },
                 "2.2-alpine3.9": {
+                  "documentationGroup": "2.2"
+                },
+                "$(2.2-RuntimeVersion)-alpine": {
+                  "documentationGroup": "2.2"
+                },
+                "2.2-alpine": {
                   "documentationGroup": "2.2"
                 }
               }
@@ -171,9 +181,7 @@
               "osVersion": "alpine3.8",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.8": {},
-                "2.2-alpine3.8": {},
-                "$(2.2-RuntimeVersion)-alpine": {},
-                "2.2-alpine": {}
+                "2.2-alpine3.8": {}
               }
             }
           ]
@@ -415,9 +423,7 @@
               "osVersion": "alpine3.7",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {},
-                "$(2.1-RuntimeVersion)-alpine": {},
-                "2.1-alpine": {}
+                "2.1-alpine3.7": {}
               }
             }
           ]
@@ -433,7 +439,9 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.9": {},
-                "2.1-alpine3.9": {}
+                "2.1-alpine3.9": {},
+                "$(2.1-RuntimeVersion)-alpine": {},
+                "2.1-alpine": {}
               }
             }
           ]
@@ -558,9 +566,7 @@
               "osVersion": "alpine3.8",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.8": {},
-                "2.2-alpine3.8": {},
-                "$(2.2-RuntimeVersion)-alpine": {},
-                "2.2-alpine": {}
+                "2.2-alpine3.8": {}
               }
             }
           ]
@@ -576,7 +582,9 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.9": {},
-                "2.2-alpine3.9": {}
+                "2.2-alpine3.9": {},
+                "$(2.2-RuntimeVersion)-alpine": {},
+                "2.2-alpine": {}
               }
             }
           ]
@@ -930,9 +938,7 @@
               "osVersion": "alpine3.7",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {},
-                "$(2.1-RuntimeVersion)-alpine": {},
-                "2.1-alpine": {}
+                "2.1-alpine3.7": {}
               }
             }
           ]
@@ -948,7 +954,9 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.1-RuntimeVersion)-alpine3.9": {},
-                "2.1-alpine3.9": {}
+                "2.1-alpine3.9": {},
+                "$(2.1-RuntimeVersion)-alpine": {},
+                "2.1-alpine": {}
               }
             }
           ]
@@ -1451,9 +1459,7 @@
               "osVersion": "alpine3.7",
               "tags": {
                 "$(2.1-SdkVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {},
-                "$(2.1-SdkVersion)-alpine": {},
-                "2.1-alpine": {}
+                "2.1-alpine3.7": {}
               }
             }
           ]
@@ -1469,7 +1475,9 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.1-SdkVersion)-alpine3.9": {},
-                "2.1-alpine3.9": {}
+                "2.1-alpine3.9": {},
+                "$(2.1-SdkVersion)-alpine": {},
+                "2.1-alpine": {}
               }
             }
           ]
@@ -1582,9 +1590,7 @@
               "osVersion": "alpine3.8",
               "tags": {
                 "$(2.2-SdkVersion)-alpine3.8": {},
-                "2.2-alpine3.8": {},
-                "$(2.2-SdkVersion)-alpine": {},
-                "2.2-alpine": {}
+                "2.2-alpine3.8": {}
               }
             }
           ]
@@ -1600,7 +1606,9 @@
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.2-SdkVersion)-alpine3.9": {},
-                "2.2-alpine3.9": {}
+                "2.2-alpine3.9": {},
+                "$(2.2-SdkVersion)-alpine": {},
+                "2.2-alpine": {}
               }
             }
           ]
