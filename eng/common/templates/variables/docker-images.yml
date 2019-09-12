@@ -1,6 +1,6 @@
 variables:
-  imageNames.imageBuilder.linux: mcr.microsoft.com/dotnet-buildtools/image-builder:debian-20190827133048
-  imageNames.imageBuilder.windows: mcr.microsoft.com/dotnet-buildtools/image-builder:nanoserver-20190827133048
+  imageNames.imageBuilder.linux: mcr.microsoft.com/dotnet-buildtools/image-builder:debian-20190911202244
+  imageNames.imageBuilder.windows: mcr.microsoft.com/dotnet-buildtools/image-builder:nanoserver-20190911202244
   imageNames.imageBuilder.withrepo: imagebuilder-withrepo:$(Build.BuildId)-$(System.JobId)
   imageNames.testRunner: mcr.microsoft.com/dotnet-buildtools/prereqs:debian-stretch-slim-docker-testrunner-d61254f-20190807161111
   imageNames.testRunner.withrepo: testrunner-withrepo:$(Build.BuildId)-$(System.JobId)
