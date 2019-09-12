@@ -77,19 +77,6 @@
         {
           "platforms": [
             {
-              "dockerfile": "2.1/runtime-deps/alpine3.7/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.7",
-              "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
               "dockerfile": "2.1/runtime-deps/alpine3.9/amd64",
               "os": "linux",
               "osVersion": "alpine3.9",
@@ -167,19 +154,6 @@
                 }
               },
               "variant": "v7"
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "dockerfile": "2.2/runtime-deps/alpine3.8/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.8",
-              "tags": {
-                "$(2.2-RuntimeVersion)-alpine3.8": {},
-                "2.2-alpine3.8": {}
-              }
             }
           ]
         },
@@ -416,22 +390,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "2.1/runtime/alpine3.7/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.7",
-              "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
               "dockerfile": "2.1/runtime/alpine3.9/amd64",
               "os": "linux",
               "osVersion": "alpine3.9",
@@ -548,22 +506,6 @@
               "tags": {
                 "$(2.2-RuntimeVersion)-nanoserver-1903": {},
                 "2.2-nanoserver-1903": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "2.2/runtime/alpine3.8/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.8",
-              "tags": {
-                "$(2.2-RuntimeVersion)-alpine3.8": {},
-                "2.2-alpine3.8": {}
               }
             }
           ]
@@ -931,22 +873,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "2.1/aspnet/alpine3.7/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.7",
-              "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
               "dockerfile": "2.1/aspnet/alpine3.9/amd64",
               "os": "linux",
               "osVersion": "alpine3.9",
@@ -1073,30 +999,14 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "2.2/aspnet/alpine3.8/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.8",
-              "tags": {
-                "$(2.2-RuntimeVersion)-alpine3.8": {},
-                "2.2-alpine3.8": {},
-                "$(2.2-RuntimeVersion)-alpine": {},
-                "2.2-alpine": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
               "dockerfile": "2.2/aspnet/alpine3.9/amd64",
               "os": "linux",
               "osVersion": "alpine3.9",
               "tags": {
                 "$(2.2-RuntimeVersion)-alpine3.9": {},
-                "2.2-alpine3.9": {}
+                "2.2-alpine3.9": {},
+                "$(2.2-RuntimeVersion)-alpine": {},
+                "2.2-alpine": {}
               }
             }
           ]
@@ -1452,22 +1362,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "2.1/sdk/alpine3.7/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.7",
-              "tags": {
-                "$(2.1-SdkVersion)-alpine3.7": {},
-                "2.1-alpine3.7": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
               "dockerfile": "2.1/sdk/alpine3.9/amd64",
               "os": "linux",
               "osVersion": "alpine3.9",
@@ -1572,22 +1466,6 @@
               "tags": {
                 "$(2.2-SdkVersion)-nanoserver-1903": {},
                 "2.2-nanoserver-1903": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "2.2/sdk/alpine3.8/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.8",
-              "tags": {
-                "$(2.2-SdkVersion)-alpine3.8": {},
-                "2.2-alpine3.8": {}
               }
             }
           ]
