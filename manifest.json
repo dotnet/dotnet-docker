@@ -7,7 +7,9 @@
     "2.2-RuntimeVersion": "2.2.7",
     "2.2-SdkVersion": "2.2.402",
     "3.0-RuntimeVersion": "3.0.0",
-    "3.0-SdkVersion": "3.0.100"
+    "3.0-SdkVersion": "3.0.100",
+    "3.1-RuntimeVersion": "3.1.0-preview1",
+    "3.1-SdkVersion": "3.1.100-preview1"
   },
   "repos": [
     {
@@ -361,6 +363,120 @@
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic-arm64v8": {},
                 "3.0-bionic-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "sharedTags": {
+            "$(3.1-RuntimeVersion)": {},
+            "3.1": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "3.1/runtime-deps/buster-slim/amd64",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-RuntimeVersion)-buster-slim": {},
+                "3.1-buster-slim": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "3.1/runtime-deps/buster-slim/arm32v7",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-RuntimeVersion)-buster-slim-arm32v7": {},
+                "3.1-buster-slim-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.1/runtime-deps/buster-slim/arm64v8",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-RuntimeVersion)-buster-slim-arm64v8": {},
+                "3.1-buster-slim-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "3.1/runtime-deps/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.1-RuntimeVersion)-alpine3.10": {},
+                "3.1-alpine3.10": {},
+                "$(3.1-RuntimeVersion)-alpine": {},
+                "3.1-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.1/runtime-deps/alpine3.10/arm64v8",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.1-RuntimeVersion)-alpine3.10-arm64v8": {},
+                "3.1-alpine3.10-arm64v8": {},
+                "$(3.1-RuntimeVersion)-alpine-arm64v8": {},
+                "3.1-alpine-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "3.1/runtime-deps/disco/amd64",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-RuntimeVersion)-disco": {},
+                "3.1-disco": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm",
+              "dockerfile": "3.1/runtime-deps/disco/arm32v7",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-RuntimeVersion)-disco-arm32v7": {},
+                "3.1-disco-arm32v7": {}
+              },
+              "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.1/runtime-deps/disco/arm64v8",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-RuntimeVersion)-disco-arm64v8": {},
+                "3.1-disco-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -918,6 +1034,189 @@
               "tags": {
                 "$(3.0-RuntimeVersion)-bionic-arm64v8": {},
                 "3.0-bionic-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "sharedTags": {
+            "$(3.1-RuntimeVersion)": {},
+            "3.1": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/buster-slim/amd64",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-RuntimeVersion)-buster-slim": {},
+                "3.1-buster-slim": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/buster-slim/arm32v7",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-RuntimeVersion)-buster-slim-arm32v7": {},
+                "3.1-buster-slim-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/buster-slim/arm64v8",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-RuntimeVersion)-buster-slim-arm64v8": {},
+                "3.1-buster-slim-arm64v8": {}
+              },
+              "variant": "v8"
+            },
+            {
+              "dockerfile": "3.1/runtime/nanoserver-1803/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1803",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-1803": {},
+                "3.1-nanoserver-1803": {}
+              }
+            },
+            {
+              "dockerfile": "3.1/runtime/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-1809": {},
+                "3.1-nanoserver-1809": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "3.1/runtime/nanoserver-1809/arm32v7",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-1809-arm32v7": {},
+                "3.1-nanoserver-1809-arm32v7": {}
+              }
+            },
+            {
+              "dockerfile": "3.1/runtime/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-1903": {},
+                "3.1-nanoserver-1903": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.1-RuntimeVersion)-alpine3.10": {},
+                "3.1-alpine3.10": {},
+                "$(3.1-RuntimeVersion)-alpine": {},
+                "3.1-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/alpine3.10/arm64v8",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.1-RuntimeVersion)-alpine3.10-arm64v8": {},
+                "3.1-alpine3.10-arm64v8": {},
+                "$(3.1-RuntimeVersion)-alpine-arm64v8": {},
+                "3.1-alpine-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGrouping": [
+                {
+                  "name": "pr-build",
+                  "dependencies": [
+                    "$(Repo:sdk):3.1-buster-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/disco/amd64",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-RuntimeVersion)-disco": {},
+                "3.1-disco": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/disco/arm32v7",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-RuntimeVersion)-disco-arm32v7": {},
+                "3.1-disco-arm32v7": {}
+              },
+              "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/disco/arm64v8",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-RuntimeVersion)-disco-arm64v8": {},
+                "3.1-disco-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1491,6 +1790,201 @@
               "variant": "v8"
             }
           ]
+        },
+        {
+          "sharedTags": {
+            "$(3.1-RuntimeVersion)": {},
+            "3.1": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/buster-slim/amd64",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-RuntimeVersion)-buster-slim": {},
+                "3.1-buster-slim": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/buster-slim/arm32v7",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-RuntimeVersion)-buster-slim-arm32v7": {},
+                "3.1-buster-slim-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/buster-slim/arm64v8",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-RuntimeVersion)-buster-slim-arm64v8": {},
+                "3.1-buster-slim-arm64v8": {}
+              },
+              "variant": "v8"
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/nanoserver-1803/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1803",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-1803": {},
+                "3.1-nanoserver-1803": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-1809": {},
+                "3.1-nanoserver-1809": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/nanoserver-1809/arm32v7",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-1809-arm32v7": {},
+                "3.1-nanoserver-1809-arm32v7": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-1903": {},
+                "3.1-nanoserver-1903": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.1-RuntimeVersion)-alpine3.10": {},
+                "3.1-alpine3.10": {},
+                "$(3.1-RuntimeVersion)-alpine": {},
+                "3.1-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/alpine3.10/arm64v8",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.1-RuntimeVersion)-alpine3.10-arm64v8": {},
+                "3.1-alpine3.10-arm64v8": {},
+                "$(3.1-RuntimeVersion)-alpine-arm64v8": {},
+                "3.1-alpine-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGrouping": [
+                {
+                  "name": "pr-build",
+                  "dependencies": [
+                    "$(Repo:sdk):3.1-buster-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/disco/amd64",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-RuntimeVersion)-disco": {},
+                "3.1-disco": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/disco/arm32v7",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-RuntimeVersion)-disco-arm32v7": {},
+                "3.1-disco-arm32v7": {}
+              },
+              "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/disco/arm64v8",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-RuntimeVersion)-disco-arm64v8": {},
+                "3.1-disco-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
         }
       ]
     },
@@ -1939,6 +2433,143 @@
               "tags": {
                 "$(3.0-SdkVersion)-bionic-arm64v8": {},
                 "3.0-bionic-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "sharedTags": {
+            "$(3.1-SdkVersion)": {},
+            "3.1": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "3.1/sdk/buster/amd64",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-SdkVersion)-buster": {},
+                "3.1-buster": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "3.1/sdk/buster/arm32v7",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-SdkVersion)-buster-arm32v7": {},
+                "3.1-buster-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.1/sdk/buster/arm64v8",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(3.1-SdkVersion)-buster-arm64v8": {},
+                "3.1-buster-arm64v8": {}
+              },
+              "variant": "v8"
+            },
+            {
+              "dockerfile": "3.1/sdk/nanoserver-1803/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1803",
+              "tags": {
+                "$(3.1-SdkVersion)-nanoserver-1803": {},
+                "3.1-nanoserver-1803": {}
+              }
+            },
+            {
+              "dockerfile": "3.1/sdk/nanoserver-1809/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(3.1-SdkVersion)-nanoserver-1809": {},
+                "3.1-nanoserver-1809": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "3.1/sdk/nanoserver-1809/arm32v7",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(3.1-SdkVersion)-nanoserver-1809-arm32v7": {},
+                "3.1-nanoserver-1809-arm32v7": {}
+              }
+            },
+            {
+              "dockerfile": "3.1/sdk/nanoserver-1903/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {
+                "$(3.1-SdkVersion)-nanoserver-1903": {},
+                "3.1-nanoserver-1903": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/sdk/alpine3.10/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.10",
+              "tags": {
+                "$(3.1-SdkVersion)-alpine3.10": {},
+                "3.1-alpine3.10": {},
+                "$(3.1-SdkVersion)-alpine": {},
+                "3.1-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "3.1/sdk/disco/amd64",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-SdkVersion)-disco": {},
+                "3.1-disco": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm",
+              "dockerfile": "3.1/sdk/disco/arm32v7",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-SdkVersion)-disco-arm32v7": {},
+                "3.1-disco-arm32v7": {}
+              },
+              "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.1/sdk/disco/arm64v8",
+              "os": "linux",
+              "osVersion": "disco",
+              "tags": {
+                "$(3.1-SdkVersion)-disco-arm64v8": {},
+                "3.1-disco-arm64v8": {}
               },
               "variant": "v8"
             }
