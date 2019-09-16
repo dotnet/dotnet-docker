@@ -1,11 +1,9 @@
 $(McrTagsYmlRepo:runtime-deps)
 $(McrTagsYmlTagGroup:2.2-stretch-slim)
 $(McrTagsYmlTagGroup:2.2-alpine3.9)
-$(McrTagsYmlTagGroup:2.2-alpine3.8)
 $(McrTagsYmlTagGroup:2.2-bionic)
 $(McrTagsYmlTagGroup:2.1-stretch-slim)
 $(McrTagsYmlTagGroup:2.1-alpine3.9)
-$(McrTagsYmlTagGroup:2.1-alpine3.7)
 $(McrTagsYmlTagGroup:2.1-bionic)
 $(McrTagsYmlTagGroup:3.0-buster-slim)
     customSubTableTitle: .NET Core 3.0 Preview Tags
