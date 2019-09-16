@@ -10,6 +10,7 @@ RUN apk add --no-cache \
         libssl1.1 \
         libstdc++ \
         lttng-ust \
+        tzdata \
         userspace-rcu \
         zlib
 
