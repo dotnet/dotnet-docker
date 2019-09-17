@@ -2,7 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/core/runtime
 FROM $REPO:3.0-alpine3.9
 
 # Install ASP.NET Core
-ENV ASPNETCORE_VERSION 3.0.0-rc2.19464.5
+ENV ASPNETCORE_VERSION 3.0.0
 
 RUN wget -O aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-musl-x64.tar.gz \
     && aspnetcore_sha512='1fc5226c16cda21209bc6cacebc0e7388009c60b1da1b88cbaa9ceab0940c44dfd5e4740b7397759bfc29690312e95d625e6c58530955edfa7d9c7a90f343747' \
