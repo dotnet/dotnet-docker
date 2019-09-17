@@ -4,8 +4,8 @@ FROM $REPO:3.0-buster-slim-arm32v7
 # Install ASP.NET Core
 ENV ASPNETCORE_VERSION 3.0.0
 
-RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/3.0.0-rc2.19465.2/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-arm.tar.gz \
-    && aspnetcore_sha512='ed43ca5d6e10dbbba8d901e9d18dd5c7ceb5732719337cfe87bf8ad2e3eb703c4952833d8e1847891ffe2ef10a6aba83937c9a52cdea48fe1a7487e1abc263a0' \
+RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/3.0.0-rc2.19465.5/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-arm.tar.gz \
+    && aspnetcore_sha512='79a67a6430c15e715a14653cd54d40f9661e2b243d46b3895b0bc7835b4b642c960b3398430c6e56d850df0d8a2741878704506f3136c7289ad0b1e3354dc8d6' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
