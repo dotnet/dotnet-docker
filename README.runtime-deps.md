@@ -56,7 +56,6 @@ Tags | Dockerfile | OS Version
 3.0.0-rc1-bionic, 3.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm64 Tags
-##### .NET Core 3.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.0.0-rc1-buster-slim-arm64v8, 3.0-buster-slim-arm64v8, 3.0.0-rc1, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/arm64v8/Dockerfile) | Debian 10
