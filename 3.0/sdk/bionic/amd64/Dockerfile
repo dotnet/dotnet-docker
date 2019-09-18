@@ -16,7 +16,7 @@ RUN apt-get update \
 ENV DOTNET_SDK_VERSION 3.0.100
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
-    && dotnet_sha512='1a0d4958d9cb022222a78215525d1cdc067b25bc6c0f2a1cffacd5b39af4ea7f390679d29533fae4d57251f8ad52d9342569f7be9c0df50f1e9bc6b84c103160' \
+    && dotnet_sha512='766da31f9a0bcfbf0f12c91ea68354eb509ac2111879d55b656f19299c6ea1c005d31460dac7c2a4ef82b3edfea30232c82ba301fb52c0ff268d3e3a1b73d8f7' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
