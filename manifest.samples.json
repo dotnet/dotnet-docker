@@ -59,7 +59,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp",
+              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver-arm32",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -127,7 +127,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp",
+              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver-arm32",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {

@@ -1,0 +1,25 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
+
+# copy and publish app and libraries
+WORKDIR /app
+COPY dotnetapp/. ./dotnetapp/
+COPY utils/. ./utils/
+WORKDIR /app/dotnetapp
+
+# Trigger registry hive creation to workaround intermittent Windows arm Docker issue
+# https://github.com/dotnet/dotnet-docker/issues/1054
+USER ContainerAdministrator
+RUN dotnet publish -c Release -o out
+
+
+# test application -- see: dotnet-docker-unit-testing.md
+FROM build AS testrunner
+WORKDIR /app/tests
+COPY tests/. .
+ENTRYPOINT ["dotnet", "test", "--logger:trx"]
+
+
+FROM mcr.microsoft.com/dotnet/core/runtime:3.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/dotnetapp/out ./
+ENTRYPOINT ["dotnet", "dotnetapp.dll"]

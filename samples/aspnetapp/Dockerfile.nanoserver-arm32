@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
+
+WORKDIR /app/aspnetapp
+COPY aspnetapp/. ./
+
+# Trigger registry hive creation to workaround intermittent Windows arm Docker issue
+# https://github.com/dotnet/dotnet-docker/issues/1054
+USER ContainerAdministrator
+RUN dotnet publish -c Release -o out
+
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/aspnetapp/out ./
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]
