@@ -75,11 +75,11 @@ You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a 
 
 ## Build and run the sample for Linux ARM32 with Docker
 
-You can build and run the sample for ARM32 and Raspberry Pi with [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md) instructions.
+You can build and run the sample for ARM32 and Raspberry Pi with the [Use .NET Core and Docker on ARM32 and Raspberry Pi](dotnet-docker-arm32.md) instructions.
 
 ## Build and run the sample for Linux ARM64 with Docker
 
-* [.NET Core ARM64 Docker Status](dotnet-docker-arm64.md)
+You can build and run the sample for ARM64 with the [Use .NET Core and Docker on ARM64](dotnet-docker-arm64.md) instructions.
 
 ## Build .NET Core Self-Contained Applications with Docker
 
