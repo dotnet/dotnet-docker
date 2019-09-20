@@ -30,7 +30,7 @@ ENV ASPNETCORE_URLS= \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION=7.0.0-previewa.4 \
+ENV POWERSHELL_VERSION=7.0.0-preview.4 \
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Alpine-3.10
 
 RUN wget -O PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
