@@ -11,7 +11,8 @@ RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/
     && del dotnet.zip
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION 7.0.0-preview.2
+ENV POWERSHELL_VERSION=7.0.0-preview.4 `
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1809-arm32
 
 RUN curl -SL --output PowerShell.Windows.arm32.%POWERSHELL_VERSION%.nupkg https://pwshtool.blob.core.windows.net/tool/%POWERSHELL_VERSION%/PowerShell.Windows.arm32.%POWERSHELL_VERSION%.nupkg `
     && mkdir "%ProgramFiles%\powershell" `
