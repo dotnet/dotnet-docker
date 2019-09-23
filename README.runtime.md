@@ -4,8 +4,8 @@ See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for image
 
 # Featured Tags
 
-* `2.2` (Current)
-  * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:2.2`
+* `3.0` (Current)
+  * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:3.0`
 * `2.1` (LTS)
   * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:2.1`
 
