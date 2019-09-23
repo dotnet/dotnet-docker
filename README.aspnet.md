@@ -1,7 +1,7 @@
 # Featured Tags
 
-* `2.2` (Current)
-  * `docker pull mcr.microsoft.com/dotnet/core/aspnet:2.2`
+* `3.0` (Current)
+  * `docker pull mcr.microsoft.com/dotnet/core/aspnet:3.0`
 * `2.1` (LTS)
   * `docker pull mcr.microsoft.com/dotnet/core/aspnet:2.1`
 

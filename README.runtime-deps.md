@@ -1,7 +1,7 @@
 # Featured Tags
 
-* `2.2` (Current)
-  * `docker pull mcr.microsoft.com/dotnet/core/runtime-deps:2.2`
+* `3.0` (Current)
+  * `docker pull mcr.microsoft.com/dotnet/core/runtime-deps:3.0`
 * `2.1` (LTS)
   * `docker pull mcr.microsoft.com/dotnet/core/runtime-deps:2.1`
 
