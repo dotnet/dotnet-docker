@@ -11,7 +11,7 @@ Multiple variations of this sample have been provided, as follows. Some of these
 
 ## Assembly trimming
 
-The self-contained Dockerfiles make use of the .NET Core trimming tool that can reduce the size of applications by analyzing IL and trimming unused assemblies.  For a helloworld application, the linker reduces the size from ~68MB to ~28MB. The size wins may be more favorable or more moderate for larger applications.  To learn more about assembly trimming see the [.NET Core 3.0 Preview 6 blog](https://devblogs.microsoft.com/dotnet/announcing-net-core-3-0-preview-6/).
+The self-contained Dockerfiles make use of the .NET Core trimming tool that can reduce the size of applications by analyzing IL and trimming unused assemblies.  For a "Hello World" application, the linker reduces the size from ~68MB to ~28MB. The size wins may be more favorable or more moderate for larger applications.  To learn more about assembly trimming see the [.NET Core 3.0 Preview 6 blog](https://devblogs.microsoft.com/dotnet/announcing-net-core-3-0-preview-6/).
 
 ## Building the Sample for Windows Nano Server with Docker
 
