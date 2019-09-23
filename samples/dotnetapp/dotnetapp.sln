@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Dockerfile.alpine-x64-globalization = Dockerfile.alpine-x64-globalization
 		Dockerfile.basic = Dockerfile.basic
 		Dockerfile.debian-arm32-selfcontained = Dockerfile.debian-arm32-selfcontained
+		Dockerfile.debian-arm64-selfcontained = Dockerfile.debian-arm64-selfcontained
 		Dockerfile.debian-x64-selfcontained = Dockerfile.debian-x64-selfcontained
 		Dockerfile.nanoserver-x64-selfcontained = Dockerfile.nanoserver-x64-selfcontained
 		dotnet-docker-arm32.md = dotnet-docker-arm32.md

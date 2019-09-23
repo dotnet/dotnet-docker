@@ -16,20 +16,30 @@
             {
               "dockerfile": "samples/dotnetapp",
               "os": "linux",
-              "osVersion": "stretch",
+              "osVersion": "buster",
               "tags": {
-                "dotnetapp-stretch": {}
+                "dotnetapp-buster-slim": {}
               }
             },
             {
               "architecture": "arm",
               "dockerfile": "samples/dotnetapp",
               "os": "linux",
-              "osVersion": "stretch",
+              "osVersion": "buster",
               "tags": {
-                "dotnetapp-stretch-arm32v7": {}
+                "dotnetapp-buster-slim-arm32v7": {}
               },
               "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "samples/dotnetapp",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "dotnetapp-buster-slim-arm64v8": {}
+              },
+              "variant": "v8"
             },
             {
               "dockerfile": "samples/dotnetapp",
@@ -49,7 +59,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp",
+              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver-arm32",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -74,20 +84,30 @@
             {
               "dockerfile": "samples/aspnetapp",
               "os": "linux",
-              "osVersion": "stretch",
+              "osVersion": "buster",
               "tags": {
-                "aspnetapp-stretch": {}
+                "aspnetapp-buster-slim": {}
               }
             },
             {
               "architecture": "arm",
               "dockerfile": "samples/aspnetapp",
               "os": "linux",
-              "osVersion": "stretch",
+              "osVersion": "buster",
               "tags": {
-                "aspnetapp-stretch-arm32v7": {}
+                "aspnetapp-buster-slim-arm32v7": {}
               },
               "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "samples/aspnetapp",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "aspnetapp-buster-slim-arm64v8": {}
+              },
+              "variant": "v8"
             },
             {
               "dockerfile": "samples/aspnetapp",
@@ -107,7 +127,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp",
+              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver-arm32",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {

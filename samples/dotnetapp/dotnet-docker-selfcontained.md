@@ -9,22 +9,9 @@ Multiple variations of this sample have been provided, as follows. Some of these
 * [Debian x64 self-contained sample, with build and unit testing](Dockerfile.debian-x64-selfcontained)
 * [Debian ARM32 self-contained sample, with build and unit testing](Dockerfile.debian-arm32-selfcontained)
 
-## Context on the IL Linker
+## Assembly trimming
 
-The .NET team has built an [IL linker](https://github.com/dotnet/core/blob/master/samples/linker-instructions.md
-) to reduce the size of .NET Core applications. It is built on top of the excellent and battle-tested [mono linker](https://github.com/mono/linker). The Xamarin tools also use this linker.
-
-In trivial cases, the linker can reduce the size of applications by 50%. The size wins may be more favorable or more moderate for larger applications. The linker removes code in your application and dependent libraries that are not reached by any code paths. It is effectively an application-specific dead code analysis.
-
-## Add a Reference to the IL Linker
-
-You first need to add a reference to the [linker package](https://dotnet.myget.org/feed/dotnet-core/package/nuget/Illink.Tasks) to take advantage of IL linking, using the following instructions.
-
-```console
-dotnet add package ILLink.Tasks -v 0.1.5-preview-1461378 -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
-```
-
-The various "self-contained" Dockerfiles add the linker package to the sample project, as demonstrated in the following examples.
+The self-contained Dockerfiles make use of the .NET Core trimming tool that can reduce the size of applications by analyzing IL and trimming unused assemblies.  For a "Hello World" application, the linker reduces the size from ~68MB to ~28MB. The size wins may be more favorable or more moderate for larger applications.  To learn more about assembly trimming see the [.NET Core 3.0 Preview 6 blog](https://devblogs.microsoft.com/dotnet/announcing-net-core-3-0-preview-6/).
 
 ## Building the Sample for Windows Nano Server with Docker
 
@@ -60,7 +47,11 @@ docker run --rm dotnetapp:alpine-x64-selfcontained
 
 ## Build and run the sample for Linux ARM32 with Docker
 
-You can build and run the sample for ARM32 and Raspberry Pi with [Build .NET Core Applications for Raspberry Pi with Docker](dotnet-docker-arm32.md) instructions. To create a self-contained application with those instructions, you need to use the [Dockerfile.debian-arm32-selfcontained](Dockerfile.debian-arm32-selfcontained) Dockerfile.
+You can build and run the sample for ARM32 and Raspberry Pi with the [Use .NET Core and Docker on ARM32 and Raspberry Pi](dotnet-docker-arm32.md) instructions. To create a self-contained application with those instructions, you need to use the [Dockerfile.debian-arm32-selfcontained](Dockerfile.debian-arm32-selfcontained) Dockerfile.
+
+## Build and run the sample for Linux ARM64 with Docker
+
+You can build and run the sample for ARM64 with the [Use .NET Core and Docker on ARM64](dotnet-docker-arm64.md) instructions.
 
 ## More Samples
 

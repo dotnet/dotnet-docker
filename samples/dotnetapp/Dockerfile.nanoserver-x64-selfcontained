@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -12,9 +12,7 @@ WORKDIR /app/
 COPY dotnetapp/. ./dotnetapp/
 COPY utils/. ./utils/
 WORKDIR /app/dotnetapp
-# add IL Linker package
-RUN dotnet add package ILLink.Tasks -v 0.1.5-preview-1841731 -s https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
-RUN dotnet publish -c Release -r win-x64 -o out /p:ShowLinkerSizeComparison=true
+RUN dotnet publish -c Release -r win-x64 -o out --self-contained true /p:PublishTrimmed=true
 
 
 # test application -- see: dotnet-docker-unit-testing.md

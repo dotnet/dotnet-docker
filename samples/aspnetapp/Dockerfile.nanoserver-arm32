@@ -1,14 +1,11 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
-WORKDIR /app
 
-# copy csproj and restore as distinct layers
-COPY *.sln .
-COPY aspnetapp/*.csproj ./aspnetapp/
-RUN dotnet restore
-
-# copy everything else and build app
-COPY aspnetapp/. ./aspnetapp/
 WORKDIR /app/aspnetapp
+COPY aspnetapp/. ./
+
+# Trigger registry hive creation to workaround intermittent Windows arm Docker issue
+# https://github.com/dotnet/dotnet-docker/issues/1054
+USER ContainerAdministrator
 RUN dotnet publish -c Release -o out
 
 

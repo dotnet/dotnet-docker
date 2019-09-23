@@ -6,7 +6,7 @@ You can use ASP.NET Core and Docker together on [ARM32](https://en.wikipedia.org
 
 See [Use .NET Core on Linux ARM32 with Docker](../dotnetapp/dotnet-docker-arm32.md) for .NET Core console apps.
 
-See [.NET Core and Docker for ARM64](../dotnetapp/dotnet-docker-arm64.md) if you are interested in [ARM64](https://en.wikipedia.org/wiki/ARM64) usage.
+See [Use ASP.NET Core on Linux ARM64 with Docker](aspnetcore-docker-arm64.md) for ARM64 ASP.NET Core apps.
 
 ## Try a pre-built ASP.NET Core Docker Image
 
