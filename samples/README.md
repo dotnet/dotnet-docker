@@ -56,12 +56,13 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](aspnetapp/aspnetcore-do
 
 ## ARM32 / Raspberry Pi
 
-* [.NET Core ARM32 Docker Sample](dotnetapp/dotnet-docker-arm32.md) - This [sample](dotnetapp/Dockerfile.debian-arm32) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
-* [ASP.NET Core ARM32 Docker Sample](aspnetapp/README.md) - This [sample](aspnetapp/Dockerfile.debian-arm32) builds and runs an ASP.NET Core application with Debian on ARM32 (works on Raspberry Pi).
+* [.NET Core ARM32 Docker Sample](dotnetapp/dotnet-docker-arm32.md) - This [sample](dotnetapp/Dockerfile.debian-arm32-selfcontained) builds and runs an application with Debian on ARM32 (works on Raspberry Pi).
+* [ASP.NET Core ARM32 Docker Sample](aspnetapp/aspnetcore-docker-arm32.md) - This [sample](aspnetapp/Dockerfile) builds and runs an ASP.NET Core application with Debian on ARM32 (works on Raspberry Pi).
 
 ## ARM64
 
-* [.NET Core ARM64 Docker Status](dotnetapp/dotnet-docker-arm64.md)
+* [.NET Core ARM64 Docker Sample](dotnetapp/dotnet-docker-arm64.md) - This [sample](dotnetapp/Dockerfile.debian-arm32-selfcontained) builds and runs an application with Debian on ARM64.
+* [ASP.NET Core ARM64 Docker Sample](aspnetapp/aspnetcore-docker-arm64.md) - This [sample](aspnetapp/Dockerfile) builds and runs an ASP.NET Core application with Debian on ARM64.
 
 ## .NET Core Resources
 
