@@ -29,9 +29,6 @@
             },
             "2.2": {
               "documentationGroup": "2.2"
-            },
-            "latest": {
-              "documentationGroup": "2.2"
             }
           },
           "platforms": [
@@ -189,7 +186,8 @@
         {
           "sharedTags": {
             "$(3.0-RuntimeVersion)": {},
-            "3.0": {}
+            "3.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -483,8 +481,7 @@
         {
           "sharedTags": {
             "$(2.2-RuntimeVersion)": {},
-            "2.2": {},
-            "latest": {}
+            "2.2": {}
           },
           "platforms": [
             {
@@ -626,7 +623,8 @@
         {
           "sharedTags": {
             "$(3.0-RuntimeVersion)": {},
-            "3.0": {}
+            "3.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -998,8 +996,7 @@
         {
           "sharedTags": {
             "$(2.2-RuntimeVersion)": {},
-            "2.2": {},
-            "latest": {}
+            "2.2": {}
           },
           "platforms": [
             {
@@ -1141,7 +1138,8 @@
         {
           "sharedTags": {
             "$(3.0-RuntimeVersion)": {},
-            "3.0": {}
+            "3.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -1513,8 +1511,7 @@
         {
           "sharedTags": {
             "$(2.2-SdkVersion)": {},
-            "2.2": {},
-            "latest": {}
+            "2.2": {}
           },
           "platforms": [
             {
@@ -1644,7 +1641,8 @@
         {
           "sharedTags": {
             "$(3.0-SdkVersion)": {},
-            "3.0": {}
+            "3.0": {},
+            "latest": {}
           },
           "platforms": [
             {
