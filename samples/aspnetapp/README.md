@@ -86,7 +86,11 @@ You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a 
 
 ## Build and run the sample for Linux ARM32 with Docker
 
-You can build and run the sample for ARM32 and Raspberry Pi with [Build ASP.NET Core Applications for Raspberry Pi with Docker](aspnetcore-docker-arm32.md) instructions.
+You can build and run the sample for ARM32 with the [Use ASP.NET Core on Linux ARM32 with Docker](aspnetcore-docker-arm32.md) instructions.
+
+## Build and run the sample for Linux ARM64 with Docker
+
+You can build and run the sample for ARM64 with the [Use ASP.NET Core on Linux ARM64 with Docker](aspnetcore-docker-arm64.md) instructions.
 
 ## Develop ASP.NET Core Applications in a container
 

@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.dockerignore = .dockerignore
 		aspnet-docker-dev-in-container.md = aspnet-docker-dev-in-container.md
 		aspnetcore-docker-arm32.md = aspnetcore-docker-arm32.md
+		aspnetcore-docker-arm64.md = aspnetcore-docker-arm64.md
 		deploy-container-to-aci.md = deploy-container-to-aci.md
 		Directory.Build.props = Directory.Build.props
 		Dockerfile = Dockerfile
