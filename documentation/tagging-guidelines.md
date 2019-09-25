@@ -46,7 +46,7 @@ The .NET Core image tags strive to align with the tagging practices utilized by 
 
 1. `latest` - Will always refer to the most recent non-prerelease `<Major.Minor.Patch Version>` image.
 
-All shared tags [support multiple platforms](https://blog.docker.com/2017/09/docker-official-images-now-multi-platform/) have the following characteristics:
+All shared tags [support multiple platforms](https://blog.docker.com/2017/09/docker-official-images-now-multi-platform/) and have the following characteristics:
 
 1. Include entries for all supported architectures.
 
