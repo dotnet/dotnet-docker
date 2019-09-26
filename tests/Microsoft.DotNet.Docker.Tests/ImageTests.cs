@@ -135,6 +135,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string output = _dockerHelper.Run(
                 image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
                 name: imageData.GetIdentifier($"pwsh"),
+                optionalRunArgs: "-u 12345:12345", // force test to run as non-root user inside container
                 command: $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value"
             );
 
