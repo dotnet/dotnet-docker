@@ -43,12 +43,12 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V3_0, OS = OS.Alpine39,     Arch = Arch.Arm64,    SdkOS = OS.Buster },
             new ImageData { Version = V3_0, OS = OS.Alpine310,    Arch = Arch.Arm64,    SdkOS = OS.Buster },
             new ImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Amd64 },
-            new ImageData { Version = V3_1, OS = OS.Disco,        Arch = Arch.Amd64 },
+            new ImageData { Version = V3_1, OS = OS.Bionic,        Arch = Arch.Amd64 },
             new ImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Amd64 },
             new ImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Arm },
-            new ImageData { Version = V3_1, OS = OS.Disco,        Arch = Arch.Arm },
+            new ImageData { Version = V3_1, OS = OS.Bionic,        Arch = Arch.Arm },
             new ImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
-            new ImageData { Version = V3_1, OS = OS.Disco,        Arch = Arch.Arm64 },
+            new ImageData { Version = V3_1, OS = OS.Bionic,        Arch = Arch.Arm64 },
             new ImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Arm64,    SdkOS = OS.Buster },
         };
         private static readonly ImageData[] s_windowsTestData =
@@ -157,12 +157,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyRuntimeImage_AppScenario(ImageData imageData)
         {
-            if (imageData.Version.ToString() == "3.1")
-            {
-                _outputHelper.WriteLine("3.1 app creation is blocked due to https://github.com/dotnet/cli/issues/12706.");
-                return;
-            }
-
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, _dockerHelper, _outputHelper);
             await verifier.Execute();
         }

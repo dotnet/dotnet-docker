@@ -6,10 +6,10 @@ FROM mcr.microsoft.com/windows/servercore:1803 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core SDK
-ENV DOTNET_SDK_VERSION 3.1.100-preview1-014065
+ENV DOTNET_SDK_VERSION 3.1.100-preview1-014070
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = '0a605b7ea78da6a9f141e3bc341f23fa3f99f4d2160074dddf78f0dbeee1183f951165f4b7d0221d3c40b3d9da7d344c055ef68b9035ec01705a2cb8b08bbeff'; `
+    $dotnet_sha512 = '4772d185a6e9bb2b7e4b884662afb849de5733be2024de2ea0b85b373fd45b325c58cd1291bfe9b676c16b17d87d4b11d1dc6d7ae8714e40cca74632b0461892'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -19,11 +19,11 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
     Remove-Item -Force dotnet.zip
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION=7.0.0-preview.3 `
+ENV POWERSHELL_VERSION=7.0.0-preview.4 `
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1803
 
 RUN Invoke-WebRequest -OutFile PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg; `
-    $powershell_sha512 = '1141b7b1ce1eb70e7f89120a8f5f4f5f1133aa4cd21a1a8f9cc724acfeec62a08a28cf5cd4de324c8515450da4b127b092ea49bd94fe6a4b921a8f1ec82aad05'; `
+    $powershell_sha512 = '1f0a57a210f2934fba68f710600c0b24a98dc0e2b291883b2f7cbb9801f59c831e0428267febe5b37b1fdb74af15a069ab28a95ab3d1760b6cf7026e9492b7d4'; `
     if ((Get-FileHash PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -45,10 +45,8 @@ USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet;C:\Program Files\powershell"
 USER ContainerUser
 
-# Configure web servers to bind to port 80 when present
-ENV ASPNETCORE_URLS=http://+:80 `
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true `
+# Enable detection of running in a container
+ENV DOTNET_RUNNING_IN_CONTAINER=true `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
