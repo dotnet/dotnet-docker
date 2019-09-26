@@ -147,7 +147,33 @@ namespace Microsoft.DotNet.Docker.Tests
             string output = _dockerHelper.Run(
                 image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
                 name: imageData.GetIdentifier($"pwsh"),
-                optionalRunArgs: "-u 12345:12345", // force test to run as non-root user inside container
+                command: $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value"
+            );
+
+            Assert.Equal(output, bool.TrueString, ignoreCase: true);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifySDKImage_PowerShellScenario_NonRoot_Executable(ImageData imageData)
+        {
+            if (imageData.Version.Major < 3)
+            {
+                _outputHelper.WriteLine("PowerShell does not exist in pre-3.0 images, skip testing");
+                return;
+            }
+
+            var optRunArgs = "-u 12345:12345"; // force test to run as non-root (linux) user inside container
+            if (imageData.OS.Contains("nanoserver", StringComparison.OrdinalIgnoreCase))
+            {
+                optRunArgs = "-u ContainerUser"; // non-admin user on windows
+            }
+
+            // A basic test which executes an arbitrary command to validate PS is functional
+            string output = _dockerHelper.Run(
+                image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
+                name: imageData.GetIdentifier($"pwsh"),
+                optionalRunArgs: optRunArgs,
                 command: $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value"
             );
 
