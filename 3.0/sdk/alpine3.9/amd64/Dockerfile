@@ -40,6 +40,7 @@ RUN wget -O PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg https://pwshtool.b
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.Alpine \
     && rm PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
+	&& chmod 755 /usr/share/powershell/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm \
     # Add ncurses-terminfo-base to resolve psreadline dependency
