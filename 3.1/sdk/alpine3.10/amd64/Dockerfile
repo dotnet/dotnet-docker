@@ -39,6 +39,7 @@ RUN wget -O PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg https://pwshtool.b
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.Alpine \
     && rm PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
+    && chmod 755 /usr/share/powershell/pwsh \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm \
