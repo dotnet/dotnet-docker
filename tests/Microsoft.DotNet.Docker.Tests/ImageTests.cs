@@ -38,6 +38,14 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V3_0, OS = OS.Disco,        Arch = Arch.Arm64 },
             new ImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Arm64 },
             new ImageData { Version = V3_0, OS = OS.Alpine39,     Arch = Arch.Arm64,    SdkOS = OS.Buster },
+            new ImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Amd64 },
+            new ImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Amd64 },
+            new ImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Amd64 },
+            new ImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Arm },
+            new ImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Arm },
+            new ImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
+            new ImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Arm64 },
+            new ImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Arm64,    SdkOS = OS.Buster },
         };
         private static readonly ImageData[] s_windowsTestData =
         {
@@ -52,6 +60,10 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V3_0, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
             new ImageData { Version = V3_0, OS = OS.NanoServer1809, Arch = Arch.Arm },
             new ImageData { Version = V3_0, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
+            new ImageData { Version = V3_1, OS = OS.NanoServer1803, Arch = Arch.Amd64 },
+            new ImageData { Version = V3_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
+            new ImageData { Version = V3_1, OS = OS.NanoServer1809, Arch = Arch.Arm },
+            new ImageData { Version = V3_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
         };
 
         private readonly DockerHelper _dockerHelper;
