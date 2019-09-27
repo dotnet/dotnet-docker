@@ -153,7 +153,7 @@ namespace Microsoft.DotNet.Docker.Tests
             VerifySDKImage_PowerShell_Execute(imageData, optRunArgs);
         }
 
-        private void VerifySDKImage_PowerShell_Execute(ImageData imageData, string optionalArgs)
+        private void VerifySDKImage_PowerShellScenario_Execute(ImageData imageData, string optionalArgs)
         {
             if (imageData.Version.Major < 3)
             {
