@@ -135,14 +135,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifySDKImage_PowerShellScenario_Installed(ImageData imageData)
+        public void VerifySDKImage_PowerShellScenario_DefaultUser(ImageData imageData)
         {
-            VerifySDKImage_PowerShell_Execute(imageData, null);
+            VerifySDKImage_PowerShellScenario_Execute(imageData, null);
         }
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifySDKImage_PowerShellScenario_Executable_As_AlternativeUser(ImageData imageData)
+        public void VerifySDKImage_PowerShellScenario_NonDefaultUser(ImageData imageData)
         {
             var optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
             if (imageData.OS.Contains("nanoserver", StringComparison.OrdinalIgnoreCase))
@@ -150,7 +150,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 optRunArgs = "-u ContainerAdministrator "; // windows containers test as Admin, default execution is as ContainerUser
             }
 
-            VerifySDKImage_PowerShell_Execute(imageData, optRunArgs);
+            VerifySDKImage_PowerShellScenario_Execute(imageData, optRunArgs);
         }
 
         private void VerifySDKImage_PowerShellScenario_Execute(ImageData imageData, string optionalArgs)
