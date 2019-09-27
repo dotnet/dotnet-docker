@@ -12,7 +12,7 @@ param(
     [string]$Registry,
     [string]$RepoPrefix,
     [switch]$DisableHttpVerification,
-    [switch]$IsLocalRun,
+    [switch]$IsLocalRun = $true,
     [string]$ImageInfoPath
 )
 
