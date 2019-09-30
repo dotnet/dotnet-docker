@@ -92,7 +92,7 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.1.0-preview1-buster-slim-arm64v8, 3.1-buster-slim-arm64v8, 3.1.0-preview1, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/buster-slim/arm64v8/Dockerfile) | Debian 10
 3.1.0-preview1-alpine3.10-arm64v8, 3.1-alpine3.10-arm64v8, 3.1.0-preview1-alpine-arm64v8, 3.1-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/alpine3.10/arm64v8/Dockerfile) | Alpine 3.10
-3.1.0-preview1-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/bionic/arm64v8/Dockerfile) | Ubuntu 19.04
+3.1.0-preview1-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
