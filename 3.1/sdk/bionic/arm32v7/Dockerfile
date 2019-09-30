@@ -13,10 +13,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 3.1.100-preview1-014070
+ENV DOTNET_SDK_VERSION 3.1.100-preview1-014077
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
-    && dotnet_sha512='90fde5d3e9381bb9e5b2ba1ff41121ba594e65c681e1624cd4781fdbecd99fc0759aadfa5a07031de9a929a8894c1d86ab7b78aa6ac7df0ad8946eb87fd277b5' \
+    && dotnet_sha512='4990a62b01cc3ddf8261f570d41d692ce8a65154aa642814ca7f8cf3569896bcd039bb1b83db2b1aac7ce35a4e841828e925b70e805c16407cc8adb7e11d84ed' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
@@ -44,5 +44,6 @@ RUN curl -SL --output PowerShell.Linux.arm32.$POWERSHELL_VERSION.nupkg https://p
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.arm32 \
     && rm PowerShell.Linux.arm32.$POWERSHELL_VERSION.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
+    && chmod 755 /usr/share/powershell/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm
