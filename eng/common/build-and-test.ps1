@@ -9,7 +9,7 @@ param(
     [string]$OptionalTestArgs,
     [switch]$SkipTesting = $false,
     [switch]$ExcludeArchitecture = $false,
-	[switch]$IsLocalRun = $true
+    [switch]$IsLocalRun = $true
 )
 
 Set-StrictMode -Version Latest

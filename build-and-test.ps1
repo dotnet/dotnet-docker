@@ -6,7 +6,7 @@ param(
     [string]$ArchitectureFilter = "amd64",
     [string]$OptionalImageBuilderArgs,
     [switch]$SkipTesting = $false,
-	[switch]$IsLocalRun = $true
+    [switch]$IsLocalRun = $true
 )
 
 & ./eng/common/build-and-test.ps1 `
@@ -15,4 +15,4 @@ param(
     -ArchitectureFilter $ArchitectureFilter `
     -OptionalImageBuilderArgs $OptionalImageBuilderArgs `
     -SkipTesting:$SkipTesting `
-	-IsLocalRun:$IsLocalRun
+    -IsLocalRun:$IsLocalRun
