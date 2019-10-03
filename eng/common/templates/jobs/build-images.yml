@@ -5,6 +5,7 @@ parameters:
   dockerClientOS: null
   useRemoteDockerServer: false
   buildJobTimeout: 60
+  customInitSteps: []
 
 jobs:
 - job: ${{ parameters.name }}
@@ -45,6 +46,7 @@ jobs:
   - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
     parameters:
       setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
+  - ${{ parameters.customInitSteps }}
   - script: >
       $(runImageBuilderCmd) build
       --manifest $(manifest)
