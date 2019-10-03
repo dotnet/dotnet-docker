@@ -2,6 +2,7 @@ parameters:
   buildMatrixType: platformDependencyGraph
   testMatrixType: platformVersionedOs
   customBuildLegGrouping: ""
+  customBuildInitSteps: []
   
   linuxAmdBuildJobTimeout: 60
   linuxArmBuildJobTimeout: 60
@@ -35,6 +36,7 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixLinuxAmd64', parameters.buildMatrixType) }}']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Build_Linux_arm64v8
@@ -51,6 +53,7 @@ stages:
       useRemoteDockerServer: true
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Build_Linux_arm32v7
@@ -67,6 +70,7 @@ stages:
       useRemoteDockerServer: true
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Build_NanoServer1803_amd64
@@ -79,6 +83,7 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1803Amd64', parameters.buildMatrixType) }}']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Build_NanoServer1809_amd64
@@ -91,6 +96,7 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1809Amd64', parameters.buildMatrixType) }}']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Build_NanoServer1809_arm32
@@ -107,6 +113,7 @@ stages:
       dockerClientOS: linux
       useRemoteDockerServer: true
       buildJobTimeout: ${{ parameters.windowsArmBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Build_NanoServer1903_amd64
@@ -119,6 +126,7 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1903Amd64', parameters.buildMatrixType) }}']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Build_WindowsServerCoreLtsc2016_amd64
@@ -131,6 +139,7 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixWindowsservercoreLtsc2016Amd64', parameters.buildMatrixType) }}']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Build_WindowsServerCore1803_amd64
@@ -143,6 +152,7 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixWindowsservercore1803Amd64', parameters.buildMatrixType) }}']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Build_WindowsServerCoreLtsc2019_amd64
@@ -155,6 +165,7 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixWindowsservercoreLtsc2019Amd64', parameters.buildMatrixType) }}']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Build_WindowsServerCore1903_amd64
@@ -167,6 +178,7 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixWindowsservercore1903Amd64', parameters.buildMatrixType) }}']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   ################################################################################
