@@ -52,11 +52,9 @@ Tags | Dockerfile | OS Version
 3.0.0-bionic, 3.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime/bionic/amd64/Dockerfile) | Ubuntu 18.04
 2.2.7-stretch-slim, 2.2-stretch-slim, 2.2.7, 2.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/stretch-slim/amd64/Dockerfile) | Debian 9
 2.2.7-alpine3.9, 2.2-alpine3.9, 2.2.7-alpine, 2.2-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/alpine3.9/amd64/Dockerfile) | Alpine 3.9
-2.2.7-alpine3.8, 2.2-alpine3.8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/alpine3.8/amd64/Dockerfile) | Alpine 3.8
 2.2.7-bionic, 2.2-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/runtime/bionic/amd64/Dockerfile) | Ubuntu 18.04
 2.1.13-stretch-slim, 2.1-stretch-slim, 2.1.13, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/stretch-slim/amd64/Dockerfile) | Debian 9
 2.1.13-alpine3.9, 2.1-alpine3.9, 2.1.13-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/alpine3.9/amd64/Dockerfile) | Alpine 3.9
-2.1.13-alpine3.7, 2.1-alpine3.7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/alpine3.7/amd64/Dockerfile) | Alpine 3.7
 2.1.13-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm64 Tags

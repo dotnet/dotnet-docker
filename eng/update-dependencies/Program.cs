@@ -60,9 +60,10 @@ namespace Dotnet.Docker
 
         private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)
         {
-            string productVersion = buildInfos.GetBuildVersion(RuntimeBuildInfoName) ??
+            string buildVersion = buildInfos.GetBuildVersion(RuntimeBuildInfoName) ??
                 buildInfos.GetBuildVersion(SdkBuildInfoName) ??
                 buildInfos.GetBuildVersion(AspNetCoreBuildInfoName);
+            string productVersion = buildVersion.Split('-')[0];
             string dockerfileVersion = productVersion.Substring(0, productVersion.LastIndexOf('.'));
             IEnumerable<IDependencyUpdater> updaters = GetUpdaters(dockerfileVersion, buildInfos);
 

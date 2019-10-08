@@ -3,7 +3,6 @@
   <packageSources>
     <clear />
     <add key="dotnet-core" value="https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json" />
-    <add key="dotnet-core-3.0-rc2" value="https://pkgs.dev.azure.com/dnceng/public/_packaging/3.0.100-rc2-014265/nuget/v3/index.json" />
     <add key="aspnetcore" value="https://dotnetfeed.blob.core.windows.net/aspnet-aspnetcore/index.json" />
     <add key="api.nuget.org" value="https://api.nuget.org/v3/index.json" />
   </packageSources>
