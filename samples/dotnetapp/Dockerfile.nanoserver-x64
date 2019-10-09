@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/microsoft-dotnet-core
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -12,10 +12,10 @@ USER ContainerAdministrator
 
 # copy and publish app and libraries
 COPY *.cs .
-RUN dotnet publish -c release -o /app -r win-arm --self-contained false
+RUN dotnet publish -c release -o /app -r win-x64 --self-contained false
 
 # final stage, which will result in generated image
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-arm32v7
+FROM mcr.microsoft.com/dotnet/core/runtime:3.0-nanoserver
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnetapp"]

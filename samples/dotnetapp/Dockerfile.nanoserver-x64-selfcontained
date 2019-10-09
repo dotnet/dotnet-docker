@@ -1,29 +1,27 @@
+# https://hub.docker.com/_/microsoft-dotnet-core
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-WORKDIR /app
+WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY dotnetapp/*.csproj ./dotnetapp/
-COPY utils/*.csproj ./utils/
-WORKDIR /app/dotnetapp
+COPY *.csproj .
 RUN dotnet restore
 
-# copy and build app and libraries
-WORKDIR /app/
-COPY dotnetapp/. ./dotnetapp/
-COPY utils/. ./utils/
-WORKDIR /app/dotnetapp
-RUN dotnet publish -c Release -r win-x64 -o out --self-contained true /p:PublishTrimmed=true
+# Trigger registry hive creation to workaround intermittent Windows arm Docker issue
+# https://github.com/dotnet/dotnet-docker/issues/1054
+USER ContainerAdministrator
 
+# copy and publish app and libraries
+COPY *.cs .
+RUN dotnet publish -c release -o /app -r win-x64 --self-contained true
 
-# test application -- see: dotnet-docker-unit-testing.md
-FROM build AS testrunner
-WORKDIR /app/tests
-COPY tests/. .
-ENTRYPOINT ["dotnet", "test", "--logger:trx"]
-
+# final stage, which will result in generated image
+FROM mcr.microsoft.com/dotnet/core/runtime:3.0-nanoserver
+WORKDIR /app
+COPY --from=build /app .
+ENTRYPOINT ["dotnetapp"]
 
 # Uses the 1909 release; 1809, and 1903 are other choices
 FROM mcr.microsoft.com/windows/nanoserver:1909 AS runtime
 WORKDIR /app
-COPY --from=build /app/dotnetapp/out ./
+COPY --from=build /app .
 ENTRYPOINT ["dotnetapp"]
