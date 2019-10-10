@@ -4,6 +4,10 @@ The samples show various ways to use .NET Core and Docker together. You can use 
 
 The samples exercise various levels of functionality. The [.NET Core Docker sample](dotnetapp/README.md) includes the most functionality, including build, unit testing, and pushing images to a container registry. The [ASP.NET Core Docker sample](aspnetapp/README.md) includes instructions for testing images with [Azure Container Instances](https://azure.microsoft.com/services/container-instances/). The samples include detailed instructions for use with and without Docker.
 
+## Sample Snippets
+
+In addition to fully operational sample projects, [code snippets](snippets/) are also provided for demonstrating more specific scenarios.
+
 ## Try a pre-built .NET Core Docker Image
 
 You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/), based on the [.NET Core console sample](dotnetapp/README.md).
