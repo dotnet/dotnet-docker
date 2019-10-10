@@ -1,10 +1,8 @@
 # .NET Core Docker Sample
 
-This [sample](Dockerfile) demonstrates how to use .NET Core and Docker together. It builds multiple projects and executes unit tests in a container. The sample works with both Linux and Windows containers and can also be used without Docker.
+This [sample](Dockerfile) demonstrates how to use .NET Core and Docker together. The sample can be used with Linux and Windows containers, and for x64, ARM32 and ARM64 architectures. It requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or a later version of the [Docker client](https://www.docker.com/products/docker).
 
-The sample builds the application in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). It builds and [tests](dotnet-docker-unit-testing.md) the application and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). It uses Docker [multi-stage build](https://github.com/dotnet/announcements/issues/18) and [multi-arch tags](https://github.com/dotnet/announcements/issues/14).
-
-This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
+The sample builds the application in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). It builds the application and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/).
 
 ## Try a pre-built .NET Core Docker Image
 
@@ -16,19 +14,9 @@ Type the following [Docker](https://www.docker.com/products/docker) command:
 docker run --rm mcr.microsoft.com/dotnet/core/samples
 ```
 
-## Getting the sample
-
-The easiest way to get the sample is by cloning the samples repository with [git](https://git-scm.com/downloads), using the following instructions.
-
-```console
-git clone https://github.com/dotnet/dotnet-docker/
-```
-
-You can also [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/master.zip).
-
 ## Build and run the sample with Docker
 
-You can build and run the sample in Docker using the following commands. The instructions assume that you are in the root of the repository.
+You can build and run the sample in Docker, by cloning the repo and using the following commands. The instructions assume that you are in the root of the repository.
 
 ```console
 cd samples
@@ -37,89 +25,112 @@ docker build --pull -t dotnetapp .
 docker run --rm dotnetapp Hello .NET Core from Docker
 ```
 
-The commands above run unit tests as part `docker build`. You can also [run .NET unit tests as part of `docker run`](dotnet-docker-unit-testing.md). The following instructions provide you with the simplest way of doing that.
+## Scenarios
+
+There are many ways in which .NET Core can be used with Docker. The following Dockerfiles demonstrate a variety of scenarios, which might match your needs or give you a sense of further tweaks that are needed.
+
+* [Any OS or architecture](Dockerfile)
+* [Alpine ARM64](Dockerfile.alpine-arm64)
+* [Alpine x64](Dockerfile.alpine-x64)
+* [Alpine x64 self-contained](Dockerfile.alpine-x64-selfcontained)
+* [Debian ARM32](Dockerfile.debian-arm32)
+* [Debian ARM64](Dockerfile.debian-arm64)
+* [Debian x64](Dockerfile.debian-x64)
+* [Debian x64 self-contained](Dockerfile.debian-x64-selfcontained)
+* [Ubuntu ARM32](Dockerfile.Ubuntu-arm32)
+* [Ubuntu ARM64](Dockerfile.Ubuntu-arm64)
+* [Ubuntu x64](Dockerfile.Ubuntu-x64)
+* [Ubuntu x64 self-contained](Dockerfile.debian-x64-selfcontained)
+* [Nano Server ARM32](Dockerfile.nanoserver-arm32)
+* [Nano Server x64](Dockerfile.nanoserver-x64)
+* [Nano Server x64 self-contained](Dockerfile.nanoserver-x64-selfcontained)
+
+Note: The Docker client checks for and uses a `Dockerfile` file, by default. If one is not found, it is an error. You can also specify an alternate file with th `-f` argument, for example `-f Dockerfile.alpine-x64`. You need to use the `-f` argument to specify the alternately named Dockerfiles listed above.
+
+## Build a .NET Core Alpine image
+
+The following instructions show how to build an image that is based on x64 [Alpine](https://hub.docker.com/_/alpine/):
 
 ```console
-docker build --target testrunner -t dotnetapp:test .
-docker run --rm -it dotnetapp:test
+docker build --pull -t dotnetapp -f Dockerfile.alpine-x64 .
+docker run --rm -it dotnetapp Hello .NET Core from Alpine
 ```
 
-You can mount a volume while running the image in order to save the test results to your local disk. The instructions to do that are provided in [Running Unit Tests with Docker](dotnet-docker-unit-testing.md)
-
-Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
-
-* [Multi-arch sample with build and unit testing](Dockerfile)
-* [Alpine x64 sample, with build and unit testing](Dockerfile.alpine-x64)
-* [Alpine x64 sample, with Globalization enabled](Dockerfile.alpine-x64-globalization)
-* [Alpine x64 self-contained sample, with build and unit testing](Dockerfile.alpine-x64-selfcontained)
-* [Nano Server x64 self-contained sample, with build and unit testing](Dockerfile.nanoserver-x64-selfcontained)
-* [Debian x64 self-contained sample, with build and unit testing](Dockerfile.debian-x64-selfcontained)
-* [Debian ARM32 self-contained sample, with build and unit testing](Dockerfile.debian-arm32-selfcontained)
-
-## Build and run the sample for Alpine with Docker
-
-You can build and run the sample with [Alpine](https://hub.docker.com/_/alpine/) using the following commands. The instructions assume that you are in the root of the repository.
+If you want to target ARM64, you can use the [Dockerfile.alpine-arm64](Dockerfile.alpine-arm64) file instead:
 
 ```console
-cd samples
-cd dotnetapp
-docker build --pull -t dotnetapp:alpine -f Dockerfile.alpine-x64 .
-docker run --rm -it dotnetapp:alpine Hello .NET Core from Alpine
+docker build --pull -t dotnetapp -f Dockerfile.alpine-arm64 .
 ```
 
-[Globalization is disabled](https://github.com/dotnet/announcements/issues/20) by default with Alpine images in order to produce smaller images. You can re-enable globalization if your application relies on it. [Dockerfile.alpine-x64-globalization](Dockerfile.alpine-x64-globalization) enables globalization for Alpine images, but produces larger images.
+[Globalization is disabled](https://github.com/dotnet/announcements/issues/20) by default with Alpine images in order to produce smaller images. You can re-enable globalization if your application relies on it (instructions are in the Dockerfile), however the resulting image will be larger.
 
-## Build and run the sample for Ubuntu 18.04 with Docker
+## Build a .NET Core Debian image
 
-You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and [dotnet/core/runtime](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You would switch to use the `3.1-bionic` tag for both the build and runtime phases.
-
-## Build and run the sample for Linux ARM32 with Docker
-
-You can build and run the sample for ARM32 and Raspberry Pi with the [Use .NET Core and Docker on ARM32 and Raspberry Pi](dotnet-docker-arm32.md) instructions.
-
-## Build and run the sample for Linux ARM64 with Docker
-
-You can build and run the sample for ARM64 with the [Use .NET Core and Docker on ARM64](dotnet-docker-arm64.md) instructions.
-
-## Build .NET Core Self-Contained Applications with Docker
-
-You can build [Build .NET Core Self-Contained Applications with Docker](dotnet-docker-selfcontained.md).
-
-## Develop .NET Core Applications in a container
-
-You can develop applications without a .NET Core installation on your machine with the [Develop .NET Core applications in a container](dotnet-docker-dev-in-container.md) instructions. These instructions are also useful if your development and production environments do not match.
-
-## Run Docker Image on Another Device
-
-You can push the image to a container registry so that you can pull and run it on another device. Straightforward instructions are provided for pushing to both Azure Container Registry and DockerHub.
-
-* [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
-* [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
-
-## Build and run the sample locally
-
-You can build and run the sample locally with the [.NET Core 3.1 SDK](https://www.microsoft.com/net/download/core) using the following instructions. The instructions assume that you are in the root of the repository.
+The following instructions show how to build an image that is based on x64 [Debian](https://hub.docker.com/_/debian/):
 
 ```console
-cd samples
-cd dotnetapp
-dotnet run Hello .NET Core
+docker build --pull -t dotnetapp -f Dockerfile.debian-x64 .
+docker run --rm -it dotnetapp Hello .NET Core from Debian
 ```
 
-You can produce an application that is ready to deploy to production using the following command.
+If you want to target ARM64, you can use the [Dockerfile.debian-arm64](Dockerfile.debin-arm64) file instead:
 
 ```console
-dotnet publish -c Release -o out
+docker build --pull -t dotnetapp -f Dockerfile.debian-arm64 .
 ```
 
-You can run the published application using the following command:
+If you want to target ARM32, you can use the [Dockerfile.debian-arm32](Dockerfile.debin-arm32) file,with the following command instead:
 
 ```console
-cd out
-dotnet dotnetapp.dll
+docker build --pull -t dotnetapp -f Dockerfile.debian-arm32 .
 ```
 
-Note: The `-c Release` argument builds the application in release mode (the default is debug mode). See the [dotnet publish reference](https://docs.microsoft.com/dotnet/core/tools/dotnet-publish) for more information on commandline parameters.
+## Build a .NET Core Ubuntu image
+
+The following instructions show how to build an image that is based on x64 [Ubuntu](https://hub.docker.com/_/ubuntu/):
+
+```console
+docker build --pull -t dotnetapp -f Dockerfile.ubuntu-x64 .
+docker run --rm -it dotnetapp Hello .NET Core from Ubuntu
+```
+
+If you want to target ARM64, you can use the [Dockerfile.ubuntu-arm64](Dockerfile.ubuntu-arm64) file instead:
+
+```console
+docker build --pull -t dotnetapp -f Dockerfile.ubuntu-arm64 .
+```
+
+If you want to target ARM32, you can instead use the [Dockerfile.ubuntu-arm32](Dockerfile.ubuntu-arm32) file,with the following command:
+
+```console
+docker build --pull -t dotnetapp -f Dockerfile.ubuntu-arm32 .
+```
+
+## Build a self-contained image
+
+The instructions above result in building [framework dependent apps](https://docs.microsoft.com/dotnet/core/deploying/) that are based on a .NET runtime image. You can also build [self-contained apps](https://docs.microsoft.com/en-us/dotnet/core/deploying/) and base them directly on an operating system image. The following instructions show how to do that with x64, however, the Dockerfiles can be updated to work for ARM processors as well.
+
+
+The following instructions show how to build self-contained app that based on an x64 [Alpine](https://hub.docker.com/_/alpine/)-based image:
+
+```console
+docker build --pull -t dotnetapp -f Dockerfile.alpine-x64-selcontained .
+docker run --rm -it dotnetapp Hello .NET Core from Alpine
+```
+
+The following instructions show how to build self-contained app that based on an x64 [Debian](https://hub.docker.com/_/debian/)-based image:
+
+```console
+docker build --pull -t dotnetapp -f Dockerfile.ubuntu-x64-selcontained .
+docker run --rm -it dotnetapp Hello .NET Core from Debian
+```
+
+The following instructions show how to build self-contained app that based on an x64 [Ubuntu](https://hub.docker.com/_/ubuntu/)-based image:
+
+```console
+docker build --pull -t dotnetapp -f Dockerfile.ubuntu-x64-selcontained .
+docker run --rm -it dotnetapp Hello .NET Core from Ubuntu
+```
 
 ## .NET Resources
 
@@ -127,23 +138,3 @@ More Samples
 
 * [.NET Core Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)
-
-Docs and More Information:
-
-* [.NET Docs](https://docs.microsoft.com/dotnet/)
-* [ASP.NET Docs](https://docs.microsoft.com/aspnet/)
-* [dotnet/core](https://github.com/dotnet/core) for starting with .NET Core on GitHub.
-* [dotnet/announcements](https://github.com/dotnet/announcements/issues) for .NET announcements.
-
-## Related Docker Hub Repositories
-
-.NET Core:
-
-* [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
-* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
-* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
-
-.NET Framework:
-
-* [dotnet/framework](https://hub.docker.com/_/microsoft-dotnet-framework/): .NET Framework, ASP.NET and WCF
-* [dotnet/framework/samples](https://hub.docker.com/_/microsoft-dotnet-framework-samples/): .NET Framework, ASP.NET and WCF Samples
