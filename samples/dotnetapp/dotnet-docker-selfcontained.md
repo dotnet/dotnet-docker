@@ -1,59 +1,89 @@
 # Build .NET Core Self-Contained Applications with Docker
 
-You can build .NET Core self-contained apps with Docker. Self-contained apps are a great option if you do not want to take a dependence on the .NET Runtime, either as a global install or the [.NET Core Runtime Image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). These instructions are based on the [.NET Core Docker Sample](README.md).
+You can build .NET Core [self-contained apps](https://docs.microsoft.com/dotnet/core/deploying/) with Docker. Self-contained apps are a great option if you do not want to take a dependence on an [.NET Core Runtime image layer](https://hub.docker.com/_/microsoft-dotnet-core-runtime/).
 
-Multiple variations of this sample have been provided, as follows. Some of these example Dockerfiles are demonstrated later. Specify an alternate Dockerfile via the `-f` argument.
+The Dockerfiles used in this document make use of the assembly linker and crossgen assembly compiler in the .NET Core SDK. The linker reduces the size of your application, and crossgen compiles your application to native code to improve startup. Using crossgen increases the size of your application, so we recommend not using it is size is reduction is your highest priority. Crossgen is currently not supported on Alpine.
 
-* [Alpine x64 self-contained sample, with build and unit testing](Dockerfile.alpine-x64-selfcontained)
-* [Nano Server x64 self-contained sample, with build and unit testing](Dockerfile.nanoserver-x64-selfcontained)
-* [Debian x64 self-contained sample, with build and unit testing](Dockerfile.debian-x64-selfcontained)
-* [Debian ARM32 self-contained sample, with build and unit testing](Dockerfile.debian-arm32-selfcontained)
+## Build an Alpine image
 
-## Assembly trimming
-
-The self-contained Dockerfiles make use of the .NET Core trimming tool that can reduce the size of applications by analyzing IL and trimming unused assemblies.  For a "Hello World" application, the linker reduces the size from ~68MB to ~28MB. The size wins may be more favorable or more moderate for larger applications.  To learn more about assembly trimming see the [.NET Core 3.0 Preview 6 blog](https://devblogs.microsoft.com/dotnet/announcing-net-core-3-0-preview-6/).
-
-## Building the Sample for Windows Nano Server with Docker
-
-You can build and run the [sample](Dockerfile.nanoserver-x64-selfcontained) in a [Nano Server container](https://hub.docker.com/_/microsoft-windows-nanoserver/) using the following commands. The instructions assume that you are in the root of the repository.
+The following instructions show how to build self-contained app that based on an x64 [Alpine](https://hub.docker.com/_/alpine/)-based image:
 
 ```console
-cd samples
-cd dotnetapp
-docker build --pull -t dotnetapp:nanoserver-selfcontained -f Dockerfile.nanoserver-x64-selfcontained .
+docker build --pull -t dotnetapp -f Dockerfile.alpine-x64-selfcontained .
+docker run --rm -it dotnetapp Hello .NET Core from Alpine
 ```
 
-You can test the image with the following instructions.
+## Build a Debian image
+
+The following instructions show how to build self-contained app that based on an x64 [Debian](https://hub.docker.com/_/debian/)-based image:
 
 ```console
-docker run --rm dotnetapp:nanoserver-selfcontained
+docker build --pull -t dotnetapp -f Dockerfile.debian-x64-selfcontained .
+docker run --rm -it dotnetapp Hello .NET Core from Debian
 ```
 
-## Building the Sample for Linux X64 with Docker
+## Build an Ubuntu image
 
-You can build and run the [sample](Dockerfile.selfcontained-linux-x64) in a [Debian container](https://hub.docker.com/r/library/debian/) using the following commands. The instructions assume that you are in the root of the repository.
+The following instructions show how to build self-contained app that based on an x64 [Ubuntu](https://hub.docker.com/_/ubuntu/)-based image:
 
 ```console
-cd samples
-cd dotnetapp
-docker build --pull -t dotnetapp:alpine-x64-selfcontained -f Dockerfile.alpine-x64-selfcontained .
+docker build --pull -t dotnetapp -f Dockerfile.ubuntu-x64-selfcontained .
+docker run --rm -it dotnetapp Hello .NET Core from Ubuntu
 ```
 
-You can test the image with the following instructions.
+## Building a Windows Nano Server Image
+
+The following instructions show how to build self-contained app that based on an x64 [Nano Server](https://hub.docker.com/_/microsoft-windows-nanoserver/)-based image:
 
 ```console
-docker run --rm dotnetapp:alpine-x64-selfcontained
+docker build --pull -t dotnetapp -f Dockerfile.nanoserver-x64-selfcontained .
+docker run --rm dotnetapp
 ```
 
-## Build and run the sample for Linux ARM32 with Docker
+Note: The Nano Server dockerfile targets the latest version of Nano Server. It can be modified to target an earlier Nano Server version.
 
-You can build and run the sample for ARM32 and Raspberry Pi with the [Use .NET Core and Docker on ARM32 and Raspberry Pi](dotnet-docker-arm32.md) instructions. To create a self-contained application with those instructions, you need to use the [Dockerfile.debian-arm32-selfcontained](Dockerfile.debian-arm32-selfcontained) Dockerfile.
+## Targeting ARM Processors
 
-## Build and run the sample for Linux ARM64 with Docker
+You can update the example Dockerfiles to work for [ARM processors](dotnet-docker-arm64.md). There are two parts that need to be changed:
 
-You can build and run the sample for ARM64 with the [Use .NET Core and Docker on ARM64](dotnet-docker-arm64.md) instructions.
+ * Runtime (RID) targeting
+ * Base image to pull
 
-## More Samples
+Let's look at the key lines from  [Dockerfile.debian-x64-selfcontained](Dockerfile.debian-x64-selfcontained) that need to be changed to support ARM64 instead of x64.
+
+These two lines:
+
+```Dockerfile
+RUN dotnet publish -c release -o /app -r linux-x64 --self-contained true /p:PublishTrimmed=true /p:PublishReadyToRun=true
+```
+
+```Dockerfile
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.0-buster-slim
+```
+
+Need to be changed to:
+
+```Dockerfile
+RUN dotnet publish -c release -o /app -r linux-arm64 --self-contained true /p:PublishTrimmed=true /p:PublishReadyToRun=true
+```
+
+```Dockerfile
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.0-buster-slim-arm64v8
+```
+
+If you instead want to target ARM32, then you need these are the correct two lines:
+
+```Dockerfile
+RUN dotnet publish -c release -o /app -r linux-arm --self-contained true /p:PublishTrimmed=true /p:PublishReadyToRun=true
+```
+
+```Dockerfile
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.0-buster-slim-arm32v7
+```
+
+The same pattern can be applied to Ubuntu and Alpine, although .NET Core is only supported on 64-bit ARM processors for Alpine.
+
+## Resources
 
 * [.NET Core Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)
