@@ -7,6 +7,7 @@ namespace Microsoft.DotNet.Docker.Tests
     public class OS
     {
         public const string Alpine39 = "alpine3.9";
+        public const string Alpine310 = "alpine3.10";
         public const string Bionic = "bionic";
         public const string Buster = "buster";
         public const string BusterSlim = "buster-slim";
