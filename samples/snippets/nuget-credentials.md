@@ -60,7 +60,7 @@ secret
 
 ### ARG Instruction
 
-The [`ARG` instruction](https://docs.docker.com/engine/reference/builder/#arg) provides a way to pass in values that the Dockerfile can consume at build time. The important thing to realize about `ARG` values is that they can be exposed in the `docker history` by the layer that consumes them.
+The [`ARG` instruction](https://docs.docker.com/engine/reference/builder/#arg) provides a way to pass in values that the Dockerfile can consume at build time. The important thing to realize about the `ARG` instruction is that `ARG` values are embedded into the resulting image.  An easy way to visualize this is to view the image layers with the `docker history` command.
 
 #### Example
 

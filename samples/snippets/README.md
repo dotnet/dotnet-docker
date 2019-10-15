@@ -8,4 +8,6 @@ This folder contains documentation of example scenarios relevant to consumers of
 
 ## Community
 
-Community members can feel free to submit their own documentation for scenarios that are relevant to the rest of the community.
+You are invited to contribute new snippets, large or small; we are always thrilled to receive pull requests, and do our best to process them as fast as we can.
+
+Before you start to code, please read the [.NET Core contribution guidelines](https://github.com/dotnet/coreclr/blob/master/CONTRIBUTING.md).
