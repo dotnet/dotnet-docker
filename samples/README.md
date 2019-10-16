@@ -4,10 +4,6 @@ The samples show various ways to use .NET Core and Docker together. You can use 
 
 The samples exercise various levels of functionality. The [.NET Core Docker sample](dotnetapp/README.md) includes the most functionality, including build, unit testing, and pushing images to a container registry. The [ASP.NET Core Docker sample](aspnetapp/README.md) includes instructions for testing images with [Azure Container Instances](https://azure.microsoft.com/services/container-instances/). The samples include detailed instructions for use with and without Docker.
 
-## Sample Snippets
-
-In addition to fully operational sample projects, [code snippets](snippets/) are also provided for demonstrating more specific scenarios.
-
 ## Try a pre-built .NET Core Docker Image
 
 You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/), based on the [.NET Core console sample](dotnetapp/README.md).
@@ -67,6 +63,13 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](aspnetapp/aspnetcore-do
 
 * [.NET Core ARM64 Docker Sample](dotnetapp/dotnet-docker-arm64.md) - This [sample](dotnetapp/Dockerfile.debian-arm32-selfcontained) builds and runs an application with Debian on ARM64.
 * [ASP.NET Core ARM64 Docker Sample](aspnetapp/aspnetcore-docker-arm64.md) - This [sample](aspnetapp/Dockerfile) builds and runs an ASP.NET Core application with Debian on ARM64.
+
+## Sample Snippets
+
+In addition to fully operational sample projects, [code snippets](snippets/) are also provided for demonstrating more specific scenarios.
+
+* [Protecting Secrets when Building Docker Images](nuget-credentials.md)
+* [Best Practices for Managing NuGet Credentials in Docker Scenarios](snippets/nuget-credentials.md)
 
 ## .NET Core Resources
 
