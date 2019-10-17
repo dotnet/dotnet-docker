@@ -23,7 +23,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp",
+              "dockerfile": "samples/dotnetapp/Dockerfile.linux-arm32",
               "os": "linux",
               "osVersion": "buster",
               "tags": {
@@ -91,7 +91,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp",
+              "dockerfile": "samples/aspnetapp/Dockerfile.linux-arm32",
               "os": "linux",
               "osVersion": "buster",
               "tags": {
