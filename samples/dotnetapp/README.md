@@ -1,6 +1,6 @@
 # .NET Core Docker Sample
 
-This [sample](Dockerfile) demonstrates how to use .NET Core and Docker together. The sample can be used with Linux and Windows containers, and for x64, ARM32 and ARM64 architectures. It requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or a later version of the [Docker client](https://www.docker.com/products/docker).
+This sample demonstrates how to use .NET Core and Docker together. It can be used with Linux and Windows containers, and for x64, ARM32 and ARM64 architectures. It requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or a later version of the [Docker client](https://www.docker.com/products/docker).
 
 The sample builds the application in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). It builds the application and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/).
 
@@ -39,6 +39,8 @@ There are many ways in which .NET Core can be used with Docker.
 * [Developing in a container](dotnet-docker-dev-in-container.md)
 * [Unit testing in a container](dotnet-docker-unit-testing.md)
 * [Containerizing your build](dotnet-docker-containerizing-build.md)
+* [Pushing images to Docker Hub](push-image-to-dockerhub.md)
+* [Pushing images to ACR](push-image-to-acr.md)
 * [Building ASP.NET Core images](../aspnetapp/README.md)
 
 ## Resources

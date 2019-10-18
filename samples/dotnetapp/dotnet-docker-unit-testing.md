@@ -2,8 +2,6 @@
 
 The testing scenario showcases the value of Docker since testing is more valuable when the test environment has high fidelity with target environments. Imagine you support your application on multiple operating systems or operating system versions. You can test your application in each of them within Docker. It is easy to do and incredibly valuable.
 
-This document is focused on unit testing as part of container image building. For unit testing as part of development, see [Develop .NET Core Applications in a Container](dotnet-docker-dev-in-container.md).
-
 These instructions are based on the [.NET Core Docker Sample](README.md).
 
 ## Try a pre-built Unit Testing Script
