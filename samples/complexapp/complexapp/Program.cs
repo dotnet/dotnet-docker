@@ -1,4 +1,7 @@
 ﻿using System;
+using libbar;
+using libfoo;
+using static System.Console;
 
 namespace complexapp
 {
@@ -6,7 +9,11 @@ namespace complexapp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var initialString = StringLibrary.GetString();
+            var reversedString = StringUtils.ReverseString(initialString);
+
+            WriteLine($"string: {initialString}");
+            WriteLine($"reversed: {reversedString}");
         }
     }
 }

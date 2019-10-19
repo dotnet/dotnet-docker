@@ -1,8 +1,41 @@
 # Running .NET Core Unit Tests with Docker
 
-The testing scenario showcases the value of Docker since testing is more valuable when the test environment has high fidelity with target environments. Imagine you support your application on multiple operating systems or operating system versions. You can test your application in each of them within Docker. It is easy to do and incredibly valuable.
+Unit testing is a good use case for Docker if your goal is to match testing and production environments. For example, you may be developing on Windows and running applications in production on Linux. You can use containers to test on Linux on your desktop machine. There are a few ways to accomplish this, which are demonstrated in this document.
 
-These instructions are based on the [.NET Core Docker Sample](README.md).
+This document uses the [tests](complexapp/tests) that are part of [complexapp](complexapp). The instructions assume that you are in the [complexapp](complexapp) directory.
+
+## Running tests using the .NET Core SDK container image
+
+The easiest approach is to run unit tests within a .NET Core SDK container. using the following pattern:
+
+```console
+C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test
+Test run for /app/tests/bin/Debug/netcoreapp3.0/tests.dll(.NETCoreApp,Version=v3.0)
+Microsoft (R) Test Execution Command Line Tool Version 16.1.1
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Starting test execution, please wait...
+
+Test Run Successful.
+Total tests: 2
+     Passed: 2
+ Total time: 1.9393 Seconds
+ ```
+
+
+
+On Windows using Linux containers:
+```console
+C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test
+```
+
+On Windows using Windows containers:
+```console
+C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:\app -w \app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test
+```
+
+
+
 
 ## Try a pre-built Unit Testing Script
 
