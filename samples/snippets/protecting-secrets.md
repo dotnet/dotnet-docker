@@ -12,69 +12,51 @@ The concept of Docker layers is much too complex of a topic to discuss here so p
 
 ### Example: Exposing Secret Data
 
-This example shows a file being added in one layer and then being removed in a subsequent layer. The resulting container layer does not contain the file but, as is shown, the file is still accessible from the image's layers.
+This example shows a file with secrets being copied into the image and then being deleted in a subsequent layer. The resulting container layer does not contain the file but, as is shown, the file is still accessible from the image's layers.
 
 ```
 # Dockerfile
-FROM debian
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0
 
-RUN echo secret > secret.txt
-RUN rm secret.txt
+COPY ./secret.txt .
+COPY ./project ./project
+
+RUN dotnet build project/MyProject.csproj -v quiet -p:SecretFile=secret.txt && \
+    rm secret.txt
 ```
 
 ```
 $ docker build -t example .
-Sending build context to Docker daemon  2.048kB
-Step 1/3 : FROM debian
- ---> c2c03a296d23
-Step 2/3 : RUN echo secret > secret.txt
- ---> Running in daf7a288cd7a
-Removing intermediate container daf7a288cd7a
- ---> 7476f82445c5
-Step 3/3 : RUN rm secret.txt
- ---> Running in c08a7ec9bf36
-Removing intermediate container c08a7ec9bf36
- ---> f04de0f9bc5e
-Successfully built f04de0f9bc5e
+Sending build context to Docker daemon  5.632kB
+Step 1/4 : FROM mcr.microsoft.com/dotnet/core/sdk:3.0
+ ---> 4422e7fb740c
+Step 2/4 : COPY ./secret.txt .
+ ---> 36ae62f1ce14
+Step 3/4 : COPY ./project ./project
+ ---> 93b67f722b75
+Step 4/4 : RUN dotnet build project/MyProject.csproj -v quiet -p:SecretFile=secret.txt &&     rm secret.txt
+ ---> Running in c8b157f236fb
+Microsoft (R) Build Engine version 16.3.0+0f4c62fea for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.79
+Removing intermediate container c8b157f236fb
+ ---> 3a8436f9b702
+Successfully built 3a8436f9b702
 Successfully tagged example:latest
 
 $ docker run --rm example cat secret.txt
 cat: secret.txt: No such file or directory
 
-$ docker run --rm 7476f82445c5 cat secret.txt
-secret
+$ docker run --rm 36ae62f1ce14 cat secret.txt
+my_secret
 ```
 
-#### Example: Hiding Secret Data
-
-This example shows a file with a secret being added and then removed in one layer. In Docker, the result of the file system changes are not written to a layer until the entire `RUN` operation has been executed. In this example, the file has been added and then removed in one shell command; therefore, the resulting layer doesn't contain the secret file.
-
-```
-# Dockerfile
-FROM debian
-
-RUN echo secret > secret.txt \
-    && rm secret.txt
-```
-
-```
-$ docker build -t example .
-Sending build context to Docker daemon  2.048kB
-Step 1/2 : FROM debian
- ---> c2c03a296d23
-Step 2/2 : RUN echo secret > secret.txt     && rm secret.txt
- ---> Running in debb237b22bc
-Removing intermediate container debb237b22bc
- ---> 0d78fad0dde3
-Successfully built 0d78fad0dde3
-Successfully tagged example:latest
-
-$ docker run --rm example cat secret.txt
-cat: secret.txt: No such file or directory
-
-$ docker run --rm 0d78fad0dde3 cat secret.txt
-cat: secret.txt: No such file or directory
-```
+A better way to handle this would be to use a [multi-stage build](#multi-stage-builds) or [BuildKit secrets](#buildkit-secrets).
 
 ## ARG Instruction
 
@@ -82,36 +64,48 @@ The [`ARG` instruction](https://docs.docker.com/engine/reference/builder/#arg) p
 
 ### Example
 
-In this example, an `ARG` is passed a secret value and then used by a `RUN` command. The fact that the secret is stored in a file is irrelevant; all that matters is that the `MYSECRET` environment variable is referenced in the `RUN` command. Because it is referenced, the value shows up in `docker history`.
+In this example, an `ARG` is passed a secret value and then used by a `RUN` command. By referencing the environment variable in a `RUN` command, the value shows up in `docker history`.
 
 ```
 # Dockerfile
-FROM debian
-ARG MY_SECRET
-RUN echo $MY_SECRET > secret.txt
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0
+ARG SECRET
+COPY ./project ./project
+RUN dotnet build project/MyProject.csproj -v quiet -p:Secret=$SECRET
 ```
 
 ```
-$ docker build . --build-arg MY_SECRET=foo -t example
-Sending build context to Docker daemon  2.048kB
-Step 1/3 : FROM debian
- ---> c2c03a296d23
-Step 2/3 : ARG MY_SECRET
- ---> Running in 45a50c5a1702
-Removing intermediate container 45a50c5a1702
- ---> df8f31db64e6
-Step 3/3 : RUN echo $MY_SECRET > secret.txt
- ---> Running in f30be4520a41
-Removing intermediate container f30be4520a41
- ---> f855f82a2430
-Successfully built f855f82a2430
+$ docker build --build-arg SECRET=my_secret -t example .
+Sending build context to Docker daemon  4.608kB
+Step 1/4 : FROM mcr.microsoft.com/dotnet/core/sdk:3.0
+ ---> 4422e7fb740c
+Step 2/4 : ARG SECRET
+ ---> Running in 3f38aad10f98
+Removing intermediate container 3f38aad10f98
+ ---> f1710c190d3c
+Step 3/4 : COPY ./project ./project
+ ---> 9d4107a0b039
+Step 4/4 : RUN dotnet build project/MyProject.csproj -v quiet -p:Secret=$MY_SECRET
+ ---> Running in 16fdf6b65126
+Microsoft (R) Build Engine version 16.3.0+0f4c62fea for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.73
+Removing intermediate container 16fdf6b65126
+ ---> 502fe90746d3
+Successfully built 502fe90746d3
 Successfully tagged example:latest
 
 $ docker history --format "{{ .CreatedBy }}" example --no-trunc
-|1 MY_SECRET=foo /bin/sh -c echo $MY_SECRET > secret.txt
-/bin/sh -c #(nop)  ARG MY_SECRET
-/bin/sh -c #(nop)  CMD ["bash"]
-/bin/sh -c #(nop) ADD file:770e381defc5e4a0ba5df52265a96494b9f5d94309234cb3f7bc6b00e1d18f9a in /
+|1 SECRET=my_secret /bin/sh -c dotnet build project/MyProject.csproj -v quiet -p:Secret=$MY_SECRET
+/bin/sh -c #(nop) COPY dir:8eb964fe209560f768f5bb33dc5e599255dd02b8cb6fcf2ed5ed1f0eaf1c3545 in ./project
+/bin/sh -c #(nop)  ARG SECRET
+...
 ```
 
 ## Multi-Stage Builds
@@ -122,67 +116,65 @@ Multi-stage builds are a great way to avoid exposing secrets in the final image 
 
 ### Example
 
-This example shows how the use of multi-stage builds can prevent data from being leaked in the resulting image. The final stage copies in the `bar.txt` file from the base stage but does not copy the `foo.txt` file. Because of that, the resulting image doesn't contain the `foo.txt` file. Also, even though the secret value is passed in the `--build-arg` for the `docker build` command, the `docker history` of the resulting image doesn't expose that value; it only shows the layers of the final stage none of which make use the `MY_SECRET` `ARG`.
+This example shows how the use of multi-stage builds can prevent data from being leaked in the resulting image. The final stage copies in the built app files from the base stage but does not make use of the `SECRET` argument. Because of that, the resulting image doesn't expose the secret when running `docker history`. While the resulting image that would get published is safe from exposing the secret, the intermediate layer that exists locally on the Docker host _does_ expose the value of the `SECRET` argument.
 
 ```
 # Dockerfile
-FROM debian as base
-
-ARG MY_SECRET
-
-RUN echo $MY_SECRET > foo.txt
-RUN echo bar > bar.txt
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS base
+ARG SECRET
+COPY ./project ./project
+RUN dotnet build project/MyProject.csproj -v quiet -p:Secret=$SECRET -o app
 
 
-FROM debian as final
+FROM mcr.microsoft.com/dotnet/core/runtime:3.0
 
-COPY --from=base bar.txt .
+COPY --from=base ./app ./app
 ```
 
 ```
-$ docker build . -t example --build-arg MY_SECRET=foo
-Sending build context to Docker daemon  2.048kB
-Step 1/6 : FROM debian as base
- ---> c2c03a296d23
-Step 2/6 : ARG MY_SECRET
- ---> Running in 5613369a10be
-Removing intermediate container 5613369a10be
- ---> 634974d9d046
-Step 3/6 : RUN echo $MY_SECRET > foo.txt
- ---> Running in 81cee1021639
-Removing intermediate container 81cee1021639
- ---> 46837435cff7
-Step 4/6 : RUN echo bar > bar.txt
- ---> Running in c8373ea3bb63
-Removing intermediate container c8373ea3bb63
- ---> 49ea3cb6d9d9
-Step 5/6 : FROM debian as final
- ---> c2c03a296d23
-Step 6/6 : COPY --from=base bar.txt .
- ---> 76381cfb99f0
-Successfully built 76381cfb99f0
+$ docker build -t example --build-arg SECRET=mysecret .
+Sending build context to Docker daemon  4.608kB
+Step 1/6 : FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS base
+ ---> 4422e7fb740c
+Step 2/6 : ARG SECRET
+ ---> Running in 8777b4e42fd6
+Removing intermediate container 8777b4e42fd6
+ ---> 512c17ac56e3
+Step 3/6 : COPY ./project ./project
+ ---> 051dbccd6a4f
+Step 4/6 : RUN dotnet build project/MyProject.csproj -v quiet -p:Secret=$SECRET -o app
+ ---> Running in 2cf986e25979
+Microsoft (R) Build Engine version 16.3.0+0f4c62fea for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.75
+Removing intermediate container 2cf986e25979
+ ---> 027eb010bf53
+Step 5/6 : FROM mcr.microsoft.com/dotnet/core/runtime:3.0
+ ---> f5ad033cd99e
+Step 6/6 : COPY --from=base ./app ./app
+ ---> c81a374d5d72
+Successfully built c81a374d5d72
 Successfully tagged example:latest
 
-$ docker run --rm example ls bar.txt
-bar.txt
-
-$ docker run --rm example ls foo.txt
-ls: cannot access 'foo.txt': No such file or directory
-
 $ docker history --format "{{ .CreatedBy }}" example --no-trunc
-/bin/sh -c #(nop) COPY file:fcd11fceabc5279bf6c4356a288665bdd0a19391f4214976c3687e9ba5cb548a in .
-/bin/sh -c #(nop)  CMD ["bash"]
-/bin/sh -c #(nop) ADD file:770e381defc5e4a0ba5df52265a96494b9f5d94309234cb3f7bc6b00e1d18f9a in /
+/bin/sh -c #(nop) COPY dir:9bcc897e44e896170d95b122f55bd7e8becc3ef59cf497b9177b595ff713733c in ./app
+...
 
-$ docker history --format "{{ .CreatedBy }}" 46837435cff7 --no-trunc
-|1 MY_SECRET=foo /bin/sh -c echo $MY_SECRET > foo.txt
-/bin/sh -c #(nop)  ARG MY_SECRET
-/bin/sh -c #(nop)  CMD ["bash"]
-/bin/sh -c #(nop) ADD file:770e381defc5e4a0ba5df52265a96494b9f5d94309234cb3f7bc6b00e1d18f9a in /
+$ docker history --format "{{ .CreatedBy }}" 027eb010bf53 --no-trunc
+|1 SECRET=mysecret /bin/sh -c dotnet build project/MyProject.csproj -v quiet -p:Secret=$SECRET -o app
+/bin/sh -c #(nop) COPY dir:8eb964fe209560f768f5bb33dc5e599255dd02b8cb6fcf2ed5ed1f0eaf1c3545 in ./project
+/bin/sh -c #(nop)  ARG SECRET
+...
 ```
 
 ## BuildKit Secrets
-For scenarios where you have secrets already stored on disk on the Docker host machine, such as a private RSA key, you can make use of a [feature](https://docs.docker.com/develop/develop-images/build_enhancements/#new-docker-build-secret-information) in Docker's BuildKit for passing files securely in a `docker build` command. This feature is currently only supported for building Linux containers. It avoids storing secrets in any of the built Docker layers, including when using multi-stage builds. But, of course, the file does exist on the Docker host machine and needs to be properly secured to prevent any unauthorized access.
+For scenarios where you have secrets already stored on disk on the Docker host machine, such as a private RSA key, you can make use of a [feature](https://docs.docker.com/develop/develop-images/build_enhancements/#new-docker-build-secret-information) in Docker's [BuildKit](https://github.com/moby/buildkit) implementation for passing files securely in a `docker build` command. This feature is currently only supported for building Linux containers. It avoids storing secrets in any of the built Docker layers, including when using multi-stage builds. But, of course, the file does exist on the Docker host machine and needs to be properly secured to prevent any unauthorized access.
 
 The feature is used by specifying a special type of mount, named `secret`, on a `RUN` instruction. This is configured to reference a secret by ID that corresponds to the secret that is specified in the `docker build` command. During the context of the `RUN` instruction the secret file is mounted and made available. When the `RUN` instruction finishes, the contents of the secret file are cleared. This is done before the layer is written which means the secret is not exposed in the intermediate layer.
 
@@ -201,7 +193,7 @@ RUN --mount=type=secret,id=id_rsa,dst=~/.ssh/id_rsa \
 When building this Dockerfile, BuildKit must be enabled and the `--secret` option is used to provide the path to the `id_rsa` file:
 
 ```
-DOCKER_BUILDKIT=1 docker build . --secret id=id_rsa,src=~/.ssh/id_rsa -t example --progress=plain
+DOCKER_BUILDKIT=1 docker build --secret id=id_rsa,src=~/.ssh/id_rsa -t example --progress=plain .
 ```
 
 ## Cleaning the Build Results
@@ -213,5 +205,3 @@ As mentioned previously, the act of building Docker images can leave secret data
   Note that an image consists of intermediate layers, each having their own image ID. You need to delete all of them in order to completely delete all layers associated with the image. You can find the image IDs of an image's intermediate layers by running `docker history <IMAGE ID> --format "{{ .ID }}"`. See the [documentation](https://docs.docker.com/engine/reference/commandline/rmi/).
 * Remove all unused data: `docker system prune -a -f`
   This is a heavy-handed way to delete all unused data in your Docker environment, including containers, networks, and images. See the [documentation](https://docs.docker.com/engine/reference/commandline/system_prune/).
-  
-
