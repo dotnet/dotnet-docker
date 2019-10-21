@@ -1,6 +1,6 @@
 # Protecting Secrets when Building Docker Images
 
-Protecting secrets (passwords, tokens, etc.) is vital when building Docker images. You do not want to be in a situation where a consumer of your image has access to data they should not have. But there are many cases where your Dockerfile requires access to data like credentials in order to execute. Providing your Dockerfile with access to the secret data it requires can cause it to be exposed if you're not careful. You must be familiar with how Docker images are built so that you can protect that data appropriately.
+Protecting secrets (passwords, tokens, etc.) is vital when building Docker images. You do not want to be in a situation where a consumer of your image has access to data they should not have. But there are many cases where your Dockerfile requires access to data like credentials. Providing your Dockerfile with access to the secret data it requires can cause it to be exposed in the resulting image if you're not careful. You must be familiar with how Docker images are built so that you can protect that data appropriately.
 
 There are two aspects to be aware of when it comes to protecting secrets:
 1. Exposing secrets in an image that is published to a registry. This is the most obvious scenario. You don't want consumers of your image to have access to data they should not have.
