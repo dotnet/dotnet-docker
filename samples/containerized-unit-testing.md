@@ -1,6 +1,6 @@
 # Running .NET Core Unit Tests with Docker
 
-You can use Docker to run your unit tests in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). This is useful if your development and production environments don't match, like Windows and Linux, respectively and for example. There are a few ways to run unit tests in containers, which are demonstrated in this document.
+You can use Docker to run your unit tests in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). This is useful if your development and production environments don't match, like, for example, Windows and Linux, respectively. There are a few ways to run unit tests in containers, which are demonstrated in this document.
 
 [Containerized build](containerized-build.md) is a similar scenario and relies on similar patterns.
 
@@ -8,7 +8,7 @@ This document uses the [tests](complexapp/tests) that are part of [complexapp](c
 
 ## Running tests using the .NET Core SDK container image
 
-The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following pattern:
+The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following `docker run` pattern:
 
 ```console
 C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test
@@ -24,7 +24,7 @@ Total tests: 2
  Total time: 1.9393 Seconds
  ```
 
-In this example, the tests (and any other required code) are [volume mounted](https://docs.docker.com/engine/admin/volumes/volumes/) into the countainer, and `dotnet test` is run from the `tests` directory (`-w` sets the working directory). You can read the test results from the console or from logs, which you can write with the `--logger:trx` flag.
+In this example, the tests (and any other required code) are [volume mounted](https://docs.docker.com/engine/admin/volumes/volumes/) into the countainer, and `dotnet test` is run from the `tests` directory (`-w` sets the working directory). You can read the test results from the console or from logs, which you can write to disk with the `--logger:trx` flag.
 
 The following instructions demonstrate this scenario in various configurations, with logging enabled.
 
@@ -45,7 +45,7 @@ MacBook-Pro:complexapp rich$ docker run --rm -v $(pwd):/app -w /app/tests mcr.mi
 
 ## Test your application in a container while you develop
 
-You can test your application in a container with every local code change. This approach is useful if you have your IDE and a command prompt open at the same time, with the latter showing the console output for `dotnet watch test`. 
+You can test your application in a container with every local code change. This approach is useful if you have your IDE and a command prompt open at the same time, with the latter showing the console output for `dotnet watch test`.
 
 The following instructions demonstrates this scenario with various configurations.
 
