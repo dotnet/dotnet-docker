@@ -1,10 +1,14 @@
 # Containerizing your build
 
-You can use Docker to run your build in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). This approach enables you to build code without installing .NET Core on your machine.
+You can use Docker to run your build in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). This is useful to either avoid the need to install .NET Core on the build machine or ensure that your environment is correctly configured (dev, staging, or production).
+
+The instructions assume that you have cloned the repository locally, as demonstrated by the examples.
+
+## Requirements
+
+This scenario relies on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument) to make source available within the container (to build it). You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
 
 `dotnet publish` (and `build`) produces native executables for applications. If you use a Linux container, you will build a Linux executable that will not run on Windows or macOS. You can use a runtime argument (`-r`) to specify the type of assets that you want to publish. The following examples assume you want assets that match your host operating system, and use runtime arguments to ensure that.
-
-The instructions assume that you have cloned the repository to a specific directory, as demonstrated by the examples.
 
 ## Windows using Linux containers
 
