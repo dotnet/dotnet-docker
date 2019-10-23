@@ -4,7 +4,6 @@ These snippets contain tips and tricks, best practices, samples of commonly used
 
 ## Snippets
 
-* [Protecting Secrets when Building Docker Images](nuget-credentials.md)
 * [Best Practices for Managing NuGet Credentials in Docker Scenarios](nuget-credentials.md)
 
 ## Community

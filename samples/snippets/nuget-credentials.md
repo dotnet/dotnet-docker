@@ -1,14 +1,16 @@
 # Best Practices for Managing NuGet Credentials in Docker Scenarios
 
-There are often cases when your Dockerfile needs to build a .NET project that make use of a NuGet package located in a private feed. How do you properly provide your Docker build access to that private feed in a secure manner? The snippets below provide recommended approaches you can take.
+There are often cases when your Dockerfile needs to build a .NET project that make use of a NuGet package located in a private feed. How do you properly provide your Docker build access to that private feed in a secure manner? The options below provide recommended approaches you can take.
 
-As a prerequisite, be sure to read the [documentation](protecting-secrets.md) on how to protect secrets when using Docker. It's important to understand those concepts before proceeding.
+There are two aspects to be aware of when it comes to protecting credentials:
+1. _Exposing credentials in an image that is published to a registry._ This is the most obvious scenario. You don't want consumers of your image to have access to data they should not have. The options listed below demonstrate how to prevent this from happening.
+2. _Exposing secrets locally on the Docker host machine._ This isn't necessarily an issue; it depends on your build processes. Just be aware that while your published image may not be exposing sensitive data, there can be sensitive data stored on the Docker host machine that you may want to clean up depending on how the machine is managed in your build workflow. For example, when using Azure DevOps pipelines with a hosted agent, there's no need to clean up data because the virtual machine of the build agent is automatically deleted at the end of the build. But if you manage your own agent, you're in charge of cleaning any leftover state should it be necessary.
 
 ## Best Practice: Use a multi-stage build to protect nuget.config passed by build context
 
 By using multi-stage builds, you can use the build context to pass a set of files to the Docker build that are used just for building the application and avoid having all of those files end up in the final image. If your `nuget.config` file contains credentials and is already stored on the Docker host machine, then you may want to consider passing it via the build context for the Docker build (also see [Passing secrets by file with Docker BuildKit](#best-practice-passing-secrets-by-file-with-docker-buildkit) for a related pattern). *Be careful when storing credentials on disk. Make sure that the machine and file are properly secured.*
 
-Even though using a multi-stage build is a good technique to help avoid exposing credentials in the final image, it should be known that the intermediate layers produced by the build can still expose those secrets locally on the Docker host machine. Read [Protecting Secrets when Building Docker Images](protecting-secrets.md) for more info.
+Even though using a multi-stage build is a good technique to help avoid exposing credentials in the final image, it should be known that the intermediate layers produced by the build can still expose those secrets locally on the Docker host machine.
 
 Here's an example `nuget.config` file containing the credentials:
 ```
@@ -61,7 +63,7 @@ $ docker build .
 
 If you do not store your credentials in the nuget.config file and instead retrieve them in some manner through a build process, you can use this environment variable with multi-stage build pattern. This pattern involves using the [`ARG` instruction](https://docs.docker.com/engine/reference/builder/#arg) to pass in the NuGet feed credentials to a `docker build` command. Care must be taken here to ensure that the `ARG` instructions are only used for intermediate stages and never the final stage to avoid the leaking the credentials in the final image.
 
-Even though using a multi-stage build is a good technique to help avoid exposing credentials in the final image, it should be known that the intermediate layers produced by the build can still expose those secrets locally on the Docker host machine. Read [Protecting Secrets when Building Docker Images](protecting-secrets.md) for more info.
+Even though using a multi-stage build is a good technique to help avoid exposing credentials in the final image, it should be known that the intermediate layers produced by the build can still expose those secrets locally on the Docker host machine.
 
 For this pattern, we're going to rely on a `nuget.config` file that makes use of NuGet's support for [environment variables](https://docs.microsoft.com/en-us/nuget/reference/nuget-config-file#using-environment-variables):
 
@@ -124,7 +126,7 @@ NuGet has support for [custom credential providers](https://docs.microsoft.com/e
 
 If you're using Azure Artifacts for your private NuGet feeds, this scenario is for you since it provides a compatible experience between interactive developer machines and automated scenarios like Docker image builds. This allows you to use the same `nuget.config` file in either scenario. In this pattern, we'll use the environment variables and multi-stage build along with Credential Provider to pass the credentials for a private NuGet feed.
 
-Even though using a multi-stage build is a good technique to help avoid exposing credentials in the final image, it should be known that the intermediate layers produced by the build can still expose those secrets locally on the Docker host machine. Read [Protecting Secrets when Building Docker Images](protecting-secrets.md) for more info.
+Even though using a multi-stage build is a good technique to help avoid exposing credentials in the final image, it should be known that the intermediate layers produced by the build can still expose those secrets locally on the Docker host machine.
 
 The `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable is a well-known variable that is meant to be an extension of the `nuget.config` file, allowing both to be used together where `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` simply supplies the access token. The `nuget.config` file used here does not define any `packageSourceCredentials` element for `customfeed`:
 
@@ -218,3 +220,7 @@ This Dockerfile would be built using this command:
 ```
 $ DOCKER_BUILDKIT=1 docker build --secret id=nugetconfig,src=nuget.config .
 ```
+
+## Other Options
+
+There are a number of techniques that can be used to protect secrets in a Docker build. Doing a web search yields a good quantity of material out there. The options listed above are considered to be simple and straightforward but depending on your environment and tolerance for complexity, you may want to consider other options. You're encouraged to do your research and find an option that works best for you.

@@ -68,7 +68,6 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](aspnetapp/aspnetcore-do
 
 In addition to fully operational sample projects, [code snippets](snippets/) are also provided for demonstrating more specific scenarios.
 
-* [Protecting Secrets when Building Docker Images](snippets/protecting-secrets.md)
 * [Best Practices for Managing NuGet Credentials in Docker Scenarios](snippets/nuget-credentials.md)
 
 ## .NET Core Resources
