@@ -23,7 +23,7 @@ ENV POWERSHELL_VERSION=7.0.0-preview.5 `
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1809
 
 RUN Invoke-WebRequest -OutFile PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg; `
-    $powershell_sha512 = '54eacb7db655c8de5f824a64376958514524ed1ad420f04faa54b90ace824b90e5709b362cbc229dec5d5f02b58a903edcf4424544786faa9d9cb0dfb52f69d4'; `
+    $powershell_sha512 = '1f197c2fc4c26345768dc62782e585e003b6ffe21b065ac7487e151e467e1fd8325209697b94459ed07b22b00a3e75ad7417144230b6ce6aed02b4b9ffc583dc'; `
     if ((Get-FileHash PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
