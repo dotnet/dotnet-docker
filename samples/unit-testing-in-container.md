@@ -8,7 +8,7 @@ This document uses the [tests](complexapp/tests) that are part of [complexapp](c
 
 ## Running tests using the .NET Core SDK container image
 
-The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following `docker run` pattern:
+The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following pattern, with `docker run` and volume mounting:
 
 ```console
 C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test
@@ -24,47 +24,78 @@ Total tests: 2
  Total time: 1.9393 Seconds
  ```
 
-In this example, the tests (and any other required code) are [volume mounted](https://docs.docker.com/engine/admin/volumes/volumes/) into the countainer, and `dotnet test` is run from the `tests` directory (`-w` sets the working directory). You can read the test results from the console or from logs, which you can write to disk with the `--logger:trx` flag.
+In this example, the tests (and any other required code) are [volume mounted](https://docs.docker.com/engine/admin/volumes/volumes/) into the countainer, and `dotnet test` is run from the `tests` directory (`-w` sets the working directory). Test results can be read from the console or from logs, which can be written to disk with the `--logger:trx` flag.
+
+You should find a `.trx` file in the TestResults folder. You can open this file in Visual Studio to see the results of the test run, as you can see in the following image. You can open in Visual Studio (File -> Open -> File) or double-click on the TRX file (if you have Visual Studio installed). There are other TRX file viewers available as well that you can search for.
+
+![Visual Studio Test Results](https://user-images.githubusercontent.com/2608468/35361940-2f5ab914-0118-11e8-9c40-4f252f4568f0.png)
 
 The following instructions demonstrate this scenario in various configurations, with logging enabled.
 
-On Windows using Linux containers:
+### Linux or macOS
+
+```console
+MacBook-Pro:complexapp rich$ docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test --logger:trx
+```
+
+### Windows using Linux containers
+
 ```console
 C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test --logger:trx
 ```
 
-On Windows using Windows containers:
+### Windows using Windows containers
+
 ```console
 C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:\app -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test --logger:trx
-```
-
-on macOS or Linux:
-```console
-MacBook-Pro:complexapp rich$ docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test --logger:trx
 ```
 
 ## Test your application in a container while you develop
 
 You can test your application in a container with every local code change. This approach is useful if you have your IDE and a command prompt open at the same time, with the latter showing the console output for `dotnet watch test`.
 
+This approach uses a similar pattern, with the .NET Core SDK container image, `docker run`, volume mounting and a file watcher:
+
+```console
+rich@MacBook-Pro complexapp % docker run --rm -it -v ~/git/dotnet-docker/samples/complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch test
+watch : Polling file watcher is enabled
+watch : Started
+Test run for /app/tests/bin/Debug/netcoreapp3.0/tests.dll(.NETCoreApp,Version=v3.0)
+Microsoft (R) Test Execution Command Line Tool Version 16.3.0
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Starting test execution, please wait...
+
+A total of 1 test files matched the specified pattern.
+                                                                                
+Test Run Successful.
+Total tests: 2
+     Passed: 2
+ Total time: 1.5602 Seconds
+watch : Exited
+watch : Waiting for a file to change before restarting dotnet...
+```
+
+You can test this working by simply editing [UnitTest1.cs](complexapp/tests/UnitTest1.cs), such as changing the input or expected strings. You should a test failure within a few seconds.
+
 The following instructions demonstrates this scenario with various configurations.
+
+### Linux or macOS
+
+```console
+docker run --rm -it -v ~/git/dotnet-docker/samples/complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch test
+```
 
 ### Windows using Linux containers
 
 ```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch test
-```
-
-### Linux or macOS using Linux containers
-
-```console
-docker run --rm -it -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch test
+docker run --rm -it -v c:\git\dotnet-docker\samples\complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch test
 ```
 
 ### Windows using Windows containers
 
 ```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch test
+docker run --rm -it -v c:\git\dotnet-docker\samples\complexapp:c:\app\ -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch test
 ```
 
 The commands above log test results to the console. You can additionally log results as a TRX file by appending `--logger:trx` to the previous test commands, specifically `dotnet watch test --logger:trx`. TRX logging is also demonstrated in [Running .NET Core Unit Tests with Docker](dotnet-docker-unit-testing.md).
@@ -72,7 +103,7 @@ The commands above log test results to the console. You can additionally log res
 
 ## Running tests as an opt-in docker stage
 
-It is possible to run tests as the `ENTRYPOINT` to an opt-in build stage. If you run tests as part of `docker build`, your build may fail, and you may not want that.
+It is possible to run tests as the `ENTRYPOINT` to an opt-in build stage. If you run tests as part of `docker build` (covered later in this document), your build may fail, and you may not want that.
 
 The [Dockerfile](complexapp/Dockerfile) includes a `test` stage that demonstates this pattern.
 
@@ -83,7 +114,7 @@ WORKDIR /source/tests
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 ```
 
-By default, if you build this Dockerfile, you will get a working app in a container, and no tests will be run. The `test` stage costs very little by being present if you don't specfically target it. In this case, the `ENTRYPOINT` that is added by the `test` stage is overwritten by the final `ENTRYPOINT` in the Dockerfile.
+By default, if you build this Dockerfile, you will get a working app in a container, and no tests will be run. The `test` stage costs very little by being present if you don't specifically target it. In the default case, the `ENTRYPOINT` that is added by the `test` stage is overwritten by the final `ENTRYPOINT` in the Dockerfile.
 
 You can try that using the following commands:
 
@@ -97,8 +128,8 @@ The primary win of using an opt-in stage is that it enables testing using the sa
 The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled: 
 
 ```console
-MacBook-Pro:complexapp rich$ docker build --pull --target test -t complexapp .
-MacBook-Pro:complexapp rich$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp
+MacBook-Pro:complexapp rich$ docker build --pull --target test -t complexapp-test .
+MacBook-Pro:complexapp rich$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp-test
 Test run for /source/tests/bin/Debug/netcoreapp3.0/tests.dll(.NETCoreApp,Version=v3.0)
 Microsoft (R) Test Execution Command Line Tool Version 16.3.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
@@ -118,20 +149,25 @@ _643bdbd70901_2019-10-21_23_19_34.trx
 
 The following instructions demonstrate this scenario in various configurations, with logging enabled.
 
-On Windows using Linux containers:
+### Linux or macOS
+
 ```console
-C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test --logger:trx
+MacBook-Pro:complexapp rich$ docker build --pull --target test -t complexapp-test .
+MacBook-Pro:complexapp rich$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp-test
 ```
 
-On Windows using Windows containers:
+### Windows using Linux containers
+
 ```console
-C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:\app -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test --logger:trx
+C:\git\dotnet-docker\samples\complexapp>docker build --pull --target test -t complexapp-test .
+C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%/TestResults:/source/tests/TestResults complexapp-test
 ```
 
-on macOS or Linux:
+### Windows using Windows containers
+
 ```console
-MacBook-Pro:complexapp rich$ docker build --pull --target test -t complexapp .
-MacBook-Pro:complexapp rich$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp
+C:\git\dotnet-docker\samples\complexapp>docker build --pull --target test -t complexapp-test .
+C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%/TestResults:c:\source\tests\TestResults complexapp-test
 ```
 
 ## Running tests as part of docker build
@@ -184,7 +220,7 @@ string: The quick brown fox jumps over the lazy dog
 reversed: god yzal eht revo spmuj xof nworb kciuq ehT
 ```
 
-Even though the container was built and ran, it is still possible to get the logs from inside the intermediate container image. That's the `bd74b084d8e8` context listed in the console output. Using that information, we can boot up the container image and copy the log files from it, using the following pattern.
+Even though the container image was built, it is still possible to get the logs from inside the intermediate container image. The intermediate stage container image is listed as `bd74b084d8e8` in the console output. Using that information, we can boot up the container image and copy the log files from it, using the following pattern.
 
 ```console
 MacBook-Pro:complexapp rich$ docker images | grep bd74b084d8e8
@@ -201,13 +237,6 @@ _f2fc51236957_2019-10-21_23_45_47.trx
 ```
 
 If the tests fail, it is not possible to copy the logs from the intermediate container layer, since such a layer won't exist. This limitation, and the difficulty of copying files out of intermediate layers, demonstrates the weakness of this approach.
-
-## Reading the Results
-
-You should find a `.trx` file in the TestResults folder. You can open this file in Visual Studio to see the results of the test run, as you can see in the following image. You can open in Visual Studio (File -> Open -> File) or double-click on the TRX file (if you have Visual Studio installed). There are other TRX file viewers available as well that you can search for.
-
-![Visual Studio Test Results](https://user-images.githubusercontent.com/2608468/35361940-2f5ab914-0118-11e8-9c40-4f252f4568f0.png)
-
 
 ## More Samples
 

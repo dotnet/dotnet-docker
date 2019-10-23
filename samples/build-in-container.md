@@ -10,22 +10,23 @@ This scenario relies on [volume mounting](https://docs.docker.com/engine/admin/v
 
 `dotnet publish` (and `build`) produces native executables for applications. If you use a Linux container, you will build a Linux executable that will not run on Windows or macOS. You can use a runtime argument (`-r`) to specify the type of assets that you want to publish. The following examples assume you want assets that match your host operating system, and use runtime arguments to ensure that.
 
-## Windows using Linux containers
 
-```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet publish -c release -o out -r win-x64 --self-contained false
-```
-
-## Linux using Linux containers
+## Linux
 
 ```console
 docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet publish -c release -o out
 ```
 
-## macOS using Linux containers
+## macOS
 
 ```console
 docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet publish -c release -o out -r osx-x64 --self-contained false
+```
+
+## Windows using Linux containers
+
+```console
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet publish -c release -o out -r win-x64 --self-contained false
 ```
 
 ## Windows using Windows containers
