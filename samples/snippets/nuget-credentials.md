@@ -3,6 +3,7 @@
 There are often cases when your Dockerfile needs to build a .NET project that make use of a NuGet package located in a private feed. How do you properly provide your Docker build access to that private feed in a secure manner? The options below provide recommended approaches you can take.
 
 There are two aspects to be aware of when it comes to protecting credentials:
+
 1. _Exposing credentials in an image that is published to a registry._ This is the most obvious scenario. You don't want consumers of your image to have access to data they should not have. The options listed below demonstrate how to prevent this from happening.
 2. _Exposing secrets locally on the Docker host machine._ This isn't necessarily an issue; it depends on your build processes. Just be aware that while your published image may not be exposing sensitive data, there can be sensitive data stored on the Docker host machine that you may want to clean up depending on how the machine is managed in your build workflow. For example, when using Azure DevOps pipelines with a hosted agent, there's no need to clean up data because the virtual machine of the build agent is automatically deleted at the end of the build. But if you manage your own agent, you're in charge of cleaning any leftover state should it be necessary.
 
@@ -13,7 +14,8 @@ By using multi-stage builds, you can use the build context to pass a set of file
 Even though using a multi-stage build is a good technique to help avoid exposing credentials in the final image, it should be known that the intermediate layers produced by the build can still expose those secrets locally on the Docker host machine.
 
 Here's an example `nuget.config` file containing the credentials:
-```
+
+```XML
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <packageSources>
@@ -32,7 +34,7 @@ Here's an example `nuget.config` file containing the credentials:
 
 In the Dockerfile, the `nuget.config` file is copied via the build context and stored in the file system only for the `build` stage. In the `runtime` stage, only the binaries of the application are copied, not the `nuget.config` file so the credentials are not exposed in the final image.
 
-```
+```Dockerfile
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 
 WORKDIR /app
@@ -55,8 +57,8 @@ ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 
 This Dockerfile would be built using this command:
 
-```
-$ docker build .
+```bash
+docker build .
 ```
 
 ## Best Practice: Using environment variables in nuget.config
@@ -67,7 +69,7 @@ Even though using a multi-stage build is a good technique to help avoid exposing
 
 For this pattern, we're going to rely on a `nuget.config` file that makes use of NuGet's support for [environment variables](https://docs.microsoft.com/en-us/nuget/reference/nuget-config-file#using-environment-variables):
 
-```
+```XML
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <packageSources>
@@ -88,7 +90,7 @@ When making use of the `ARG` instruction, the name of the argument is made avail
 
 In the Dockerfile below, there are two stages: build and runtime. The build stage is responsible for building the application project. It defines two `ARG` values which match the names of the environment variables used in the the `nuget.config` file. But the build stage is not the final stage of the Dockerfile so the `--build-arg` values that are passed to the `docker build` command do not get exposed in the resulting image. All the final stage is really doing is copying the built output of the application from the build stage since that's all that's needed to run the application.
 
-```
+```Dockerfile
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 
 ARG Nuget_CustomFeedUserName
@@ -114,8 +116,8 @@ ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 
 This Dockerfile would be built using this command:
 
-```
-$ docker build --build-arg Nuget_CustomFeedUserName=<username> --build-arg Nuget_CustomFeedPassword=<password> .
+```bash
+docker build --build-arg Nuget_CustomFeedUserName=<username> --build-arg Nuget_CustomFeedPassword=<password> .
 ```
 
 Passing the username and password values to the `docker build` command in this manner can be useful in automated scenarios when those values are stored as environment variables on the Docker host machine or can be retrieved from an external secrets storage location and passed to the `docker build` command.
@@ -130,7 +132,7 @@ Even though using a multi-stage build is a good technique to help avoid exposing
 
 The `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable is a well-known variable that is meant to be an extension of the `nuget.config` file, allowing both to be used together where `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` simply supplies the access token. The `nuget.config` file used here does not define any `packageSourceCredentials` element for `customfeed`:
 
-```
+```XML
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <packageSources>
@@ -142,7 +144,7 @@ The `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable is a well-known var
 
 Instead, the credentials for `customfeed` are defined in the Dockerfile by making use of an `ARG` for the access token:
 
-```
+```Dockerfile
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /app
 
@@ -172,8 +174,8 @@ _Note that a script is called to install the Credential Provider. When `dotnet r
 
 This Dockerfile would be built using this command:
 
-```
-$ docker build --build-arg FEED_ACCESSTOKEN=<access_token> .
+```bash
+docker build --build-arg FEED_ACCESSTOKEN=<access_token> .
 ```
 
 Passing the access token to the `docker build` command in this manner can be useful in automated scenarios when that value is stored as an environment variable on the Docker host machine or can be retrieved from an external secrets storage location and passed to the `docker build` command.
@@ -184,7 +186,7 @@ Docker's [BuildKit](https://github.com/moby/buildkit) integration provides some 
 
 Let's use the following sample `nuget.config` file which is stored on the Docker host machine:
 
-```
+```XML
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <packageSources>
@@ -203,7 +205,7 @@ Let's use the following sample `nuget.config` file which is stored on the Docker
 
 The Dockerfile references the `nugetconfig` secret with the `--mount=type=secret` syntax and access it at its default path of `/run/secrets/nugetconfig`:
 
-```
+```Dockerfile
 # syntax = docker/dockerfile:1.0-experimental
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
@@ -213,12 +215,22 @@ WORKDIR /app
 COPY *.csproj .
 RUN --mount=type=secret,id=nugetconfig \
     dotnet restore --configfile /run/secrets/nugetconfig
+
+# Copy and publish app and libraries
+COPY . .
+RUN dotnet publish -c Release -o out --no-restore
+
+
+FROM mcr.microsoft.com/dotnet/core/runtime:3.0 AS runtime
+WORKDIR /app/
+COPY --from=build /app/out ./
+ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```
 
 This Dockerfile would be built using this command:
 
-```
-$ DOCKER_BUILDKIT=1 docker build --secret id=nugetconfig,src=nuget.config .
+```bash
+DOCKER_BUILDKIT=1 docker build --secret id=nugetconfig,src=nuget.config .
 ```
 
 ## Other Options
