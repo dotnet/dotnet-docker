@@ -30,11 +30,11 @@ ENV ASPNETCORE_URLS= \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION=7.0.0-preview.4 \
+ENV POWERSHELL_VERSION=7.0.0-preview.5 \
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Alpine-3.10
 
 RUN wget -O PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
-    && powershell_sha512='25dc93d87e4a0ae94fd161ff3b2d26b0e0eb5ae69a913500f7816debd705d1b84fcebb147b8a02d5fc53cf2718ec3d65dc0f2b73e0e4b917599b6562cf140c39' \
+    && powershell_sha512='5d5dc58d5744a9012696058074c1e72471a7f45489564fdf3fbfb5a89a61f8832f026aa7a0742a542d7dc5c125ba6baef00b74c3e75338b9eae056bf0e9b4ee4' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.Alpine \
