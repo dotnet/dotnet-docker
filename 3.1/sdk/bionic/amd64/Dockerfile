@@ -34,11 +34,11 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION=7.0.0-preview.4 \
+ENV POWERSHELL_VERSION=7.0.0-preview.5 \
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Ubuntu-18.04
 
 RUN curl -SL --output PowerShell.Linux.x64.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.x64.$POWERSHELL_VERSION.nupkg \
-    && powershell_sha512='0fb0167e13560371bffec38a4a87bf39377fa1a5cc39b3a078ddec8803212bede73e5821861036ba5c345bd55c74703134c9b55c49385f87dae9e2de9239f5d9' \
+    && powershell_sha512='04b1f1597b7a0eb71c789a4435d9c0547399c127d17b7e530d7cf6fe731e7e1a29189a2d58859212e34d031d04fc8ae705090cfb306c451f63578683a7ddd9fa' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.x64 \
