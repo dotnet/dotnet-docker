@@ -4,7 +4,7 @@ These snippets contain tips and tricks, best practices, samples of commonly used
 
 ## Snippets
 
-* [Best Practices for Managing NuGet Credentials in Docker Scenarios](nuget-credentials.md)
+* [Managing NuGet Credentials in Docker Scenarios](nuget-credentials.md)
 
 ## Community
 
