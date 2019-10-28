@@ -64,6 +64,12 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](aspnetapp/aspnetcore-do
 * [.NET Core ARM64 Docker Sample](dotnetapp/dotnet-docker-arm64.md) - This [sample](dotnetapp/Dockerfile.debian-arm32-selfcontained) builds and runs an application with Debian on ARM64.
 * [ASP.NET Core ARM64 Docker Sample](aspnetapp/aspnetcore-docker-arm64.md) - This [sample](aspnetapp/Dockerfile) builds and runs an ASP.NET Core application with Debian on ARM64.
 
+## Sample Snippets
+
+In addition to fully operational sample projects, [code snippets](snippets/) are also provided for demonstrating more specific scenarios.
+
+* [Managing NuGet Credentials in Docker Scenarios](snippets/nuget-credentials.md)
+
 ## .NET Core Resources
 
 More Samples
