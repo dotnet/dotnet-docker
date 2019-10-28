@@ -70,6 +70,7 @@ In addition to fully operational sample projects, [code snippets](snippets/) are
 
 * [Managing NuGet Credentials in Docker Scenarios](snippets/nuget-credentials.md)
 * [Installing .NET Core in a Dockerfile](installing-dotnet.md)
+* [Using the System.Drawing.Common Package in a Docker Container](using-system-drawing-common.md)
 
 ## .NET Core Resources
 
