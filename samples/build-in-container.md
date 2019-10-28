@@ -10,7 +10,6 @@ This scenario relies on [volume mounting](https://docs.docker.com/engine/admin/v
 
 `dotnet publish` (and `build`) produces native executables for applications. If you use a Linux container, you will build a Linux executable that will not run on Windows or macOS. You can use a runtime argument (`-r`) to specify the type of assets that you want to publish. The following examples assume you want assets that match your host operating system, and use runtime arguments to ensure that.
 
-
 ## Linux
 
 ```console

@@ -1,10 +1,6 @@
 # .NET Core Docker Samples
 
-The samples show various ways to use .NET Core and Docker together. You can use the samples as the basis of your own Docker images or just to learn.
-
-## Samples
-
-The samples demonstrate how to use Docker for development, testing and production.
+These samples demonstrate how to use .NET Core and Docker together, for development,testing and production. You can use the samples as the basis of your own Docker images or just to learn.
 
 * [Build a .NET Core Docker image](dotnetapp/README.md)
 * [Build an ASP.NET Core Docker image](aspnetapp/README.md)
@@ -30,7 +26,7 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 The following command will run an ASP.NET Core console app in a container that you can access from `http://localhost:8000` in your web browser.
 
 ```console
-docker run --name aspnetcore_sample --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
+docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
 ```
 
 ## Docker Repositories
