@@ -51,14 +51,17 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.0.100-buster, 3.0-buster, 3.0.100, 3.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/buster/amd64/Dockerfile) | Debian 10
-3.0.100-alpine3.9, 3.0-alpine3.9, 3.0.100-alpine, 3.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
+3.0.100-alpine3.10, 3.0-alpine3.10, 3.0.100-alpine, 3.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+3.0.100-alpine3.9, 3.0-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 3.0.100-disco, 3.0-disco | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/disco/amd64/Dockerfile) | Ubuntu 19.04
 3.0.100-bionic, 3.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 2.2.402-stretch, 2.2-stretch, 2.2.402, 2.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/amd64/Dockerfile) | Debian 9
-2.2.402-alpine3.9, 2.2-alpine3.9, 2.2.402-alpine, 2.2-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
+2.2.402-alpine3.10, 2.2-alpine3.10, 2.2.402-alpine, 2.2-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+2.2.402-alpine3.9, 2.2-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 2.2.402-bionic, 2.2-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 2.1.802-stretch, 2.1-stretch, 2.1.802, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/amd64/Dockerfile) | Debian 9
-2.1.802-alpine3.9, 2.1-alpine3.9, 2.1.802-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
+2.1.802-alpine3.10, 2.1-alpine3.10, 2.1.802-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+2.1.802-alpine3.9, 2.1-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 2.1.802-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ##### .NET Core 3.1 Preview Tags
