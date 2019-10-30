@@ -15,8 +15,6 @@ These samples demonstrate how to use .NET Core and Docker together, for developm
 
 ## Try a pre-built .NET Core Docker Image
 
-You can quickly run a container with a pre-built [.NET Core Docker sample image](https://hub.docker.com/_/microsoft-dotnet-core-samples/).
-
 The following command will run a .NET Core console app in a container:
 
 ```console
