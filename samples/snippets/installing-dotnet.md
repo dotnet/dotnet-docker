@@ -1,6 +1,6 @@
 # Installing .NET Core in a Dockerfile
 
-There can be times where you need .NET Core installed on a base image than is unavailable amongst the set of official [.NET Core Docker images](https://hub.docker.com/_/microsoft-dotnet-core), such as a different Linux distro version or a Windows Server Core image. In that case, you'll need to author your own Dockerfile which installs .NET Core. The snippets below describe how to do this.
+There can be times where you need .NET Core installed on a base image that is unavailable amongst the set of official [.NET Core Docker images](https://hub.docker.com/_/microsoft-dotnet-core), such as a different Linux distro version or a Windows Server Core image. In that case, you'll need to author your own Dockerfile which installs .NET Core. The snippets below describe how to do this.
 
 There are two scenarios you should consider depending on how your Docker image is to be consumed: [general platform images](#general-platform-images) and [custom application images](#custom-application-images). But before getting to that, let's first consider whether you actually need to go down this road.
 
@@ -16,7 +16,7 @@ In some cases, you can workaround dependencies by publishing your .NET Core appl
 
 If you're building an image for a custom application that is not to be intended to be publicly consumed as a platform for other applications, you can get by with a simpler Dockerfile implementation compared to [general platform images](#general-platform-images) if you choose. Because the image is only intended for your own organization's purposes, the need for transparency in the Dockerfile is lessened. Convenience can trump clarity in this case.
 
-For custom application images, it is recommended that you install .NET Core by [package manager](#installing-from-a-linux-package-manager)(Linux only) or [dotnet-install script](#installing-from-dotnet-install-script) (Linux/Windows).
+For custom application images, it is recommended that you install .NET Core by [package manager](#installing-from-a-linux-package-manager) (Linux only) or [dotnet-install script](#installing-from-dotnet-install-script) (Linux/Windows).
 
 ## General Platform Images
 
