@@ -16,7 +16,7 @@ In some cases, you can workaround dependencies by publishing your .NET Core appl
 
 If you're building an image for a custom application that is not to be intended to be publicly consumed as a platform for other applications, you can get by with a simpler Dockerfile implementation compared to [general platform images](#general-platform-images) if you choose. Because the image is only intended for your own organization's purposes, the need for transparency in the Dockerfile is lessened. Convenience can trump clarity in this case.
 
-For custom application images, it is recommended that you install .NET Core by [package manager](#installing-from-a-linux-package-manager)(Linux only) or [dotnet-install script](#installing-from-dotnet-install-script) (Linux/Windows).
+For custom application images, it is recommended that you install .NET Core by [package manager](#installing-from-a-linux-package-manager) (Linux only) or [dotnet-install script](#installing-from-dotnet-install-script) (Linux/Windows).
 
 ## General Platform Images
 
