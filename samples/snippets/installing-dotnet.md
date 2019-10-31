@@ -1,12 +1,34 @@
 # Installing .NET Core in a Dockerfile
 
-There can be times where you need .NET Core installed on a base image than is unavailable amongst the set of official .NET Core Docker images, such as a boutique Linux distro for example. In that case, you'll need to author your own Dockerfile which installs .NET Core. The snippets below describe how to do this.
+There can be times where you need .NET Core installed on a base image than is unavailable amongst the set of official [.NET Core Docker images](https://hub.docker.com/_/microsoft-dotnet-core), such as a different Linux distro version or a Windows Server Core image. In that case, you'll need to author your own Dockerfile which installs .NET Core. The snippets below describe how to do this.
 
-There are two scenarios you should consider depending on how your Docker image is to be consumed: [general platform images](#general-platform-images) and [custom application images](#custom-application-images).
+There are two scenarios you should consider depending on how your Docker image is to be consumed: [general platform images](#general-platform-images) and [custom application images](#custom-application-images). But before getting to that, let's first consider whether you actually need to go down this road.
+
+## Determine whether a different base image is needed
+
+Before doing all the work of authoring and maintaining a Dockerfile that installs .NET Core, it's worthwhile to stop and thoroughly analyze whether you actually do need a different base image than those provided as part of the set of official [.NET Core Docker images](https://hub.docker.com/_/microsoft-dotnet-core).
+
+If there's a platform that you require that is available in its own Docker image, ask yourself whether it would be better to use that image and add .NET Core to it or would it be better to use the .NET Core image as the base and add the platform to it. An example scenario is using .NET Core with MySQL; determine whether you would prefer to start with the MySQL image and install .NET Core onto it or start with the .NET Core image and install MySQL onto it.
+
+In some cases, you can workaround dependencies by publishing your .NET Core application as a [self-contained app](https://docs.microsoft.com/en-us/dotnet/core/deploying) in which case all of your app's dependencies are packaged with the app. This reduces the dependencies that need to be installed separately on the base image. For example, a Windows app may require dependencies that only exist in Windows Server Core but only .NET Core images on Nano Server are available. In that case, the app could be deployed as a self-contained app and operate just fine in the Nano Server image. Example Dockerfiles that demonstrate publishing a self-contained app are available in the samples for [Linux](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.debian-x64-selfcontained) and [Windows](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.nanoserver-x64-selfcontained).
+
+## Custom Application Images
+
+If you're building an image for a custom application that is not to be intended to be publicly consumed as a platform for other applications, you can get by with a simpler Dockerfile implementation compared to [general platform images](#general-platform-images) if you choose. Because the image is only intended for your own organization's purposes, the need for transparency in the Dockerfile is lessened. Convenience can trump clarity in this case.
+
+For custom application images, it is recommended that you install .NET Core by [package manager](#installing-from-a-linux-package-manager)(Linux only) or [dotnet-install script](#installing-from-dotnet-install-script) (Linux/Windows).
 
 ## General Platform Images
 
-If you're building an image for a platform that is intended to be publicly consumed, you should strongly consider following the Docker [guidelines](https://github.com/docker-library/official-images) for official images. Those guidelines will inject a high level of quality in your images and instill trust and confidence by those consuming it. One of the guidelines is on [clarity](https://github.com/docker-library/official-images#clarity). In the spirit of clarity, the Dockerfiles for the official .NET Docker images do not use a general purpose script for installing .NET Core. Rather, they explicity provide each step of the installation process and reference the exact URL of the binary archive.
+If you're building an image for a platform that is intended to be publicly consumed, you should strongly consider following the Docker [guidelines](https://github.com/docker-library/official-images) for official images. Those guidelines will inject a high level of quality in your images and instill trust and confidence by those consuming it. One of the guidelines is on [clarity](https://github.com/docker-library/official-images#clarity) which can be accomplished by installing .NET Core by [binary archive](#installing-from-a-binary-archive) (Linux/Windows) or [package manager](#installing-from-a-linux-package-manager) (Linux only), the two recommended approaches for general platform images.
+
+## Installing from a Binary Archive
+
+When authoring your Dockerfiles, you can look to the official [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) as a template for the install steps. There are several variations depending on the .NET Core version, OS type, and architecture being used.
+
+In addition to installing .NET Core, you'll also need to ensure the the [prerequisites](https://github.com/dotnet/core/blob/master/Documentation/prereqs.md) are installed. The [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) also demonstrate how that can be done.
+
+In the spirit of [clarity](https://github.com/docker-library/official-images#clarity), the Dockerfiles for the official .NET Docker images do not use a general purpose script for installing .NET Core. Rather, they explicity provide each step of the installation process and reference the exact URL of the binary archive.
 
 Example:
 
@@ -23,19 +45,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 ```
 
-This provides full transparency to consumers of the image in regard to where the content is coming from and whether it can be trusted; it's not hiding somewhere buried within a script. It also ensures repeatability, another [guideline](https://github.com/docker-library/official-images#repeatability) of official Docker images.
-
-For general platform images, it is recommended that you install .NET Core by [binary archive](#installing-from-a-binary-archive) (Linux/Windows) or [package manager](#installing-from-a-linux-package-manager) (Linux only).
-
-## Custom Application Images
-
-If you're building an image for a custom application that is not to be intended to be publicly consumed as a platform for other applications, you can get by with a simpler Dockerfile implementation compared to [general platform images](#general-platform-images) if you choose. Because the image is only intended for your own organization's purposes, the need for transparency in the Dockerfile is lessened. Convenience can trump clarity in this case.
-
-For custom application images, it is recommended that you install .NET Core by [package manager](#installing-from-a-linux-package-manager)(Linux only) or [dotnet-install script](#installing-from-dotnet-install-script) (Linux/Windows).
-
-## Installing from a Binary Archive
-
-When authoring your Dockerfiles, you can look to the official [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) as a template for the install steps. There are several variations depending on the .NET Core version, OS type, and architecture being used.
+This provides full transparency to consumers of the image in regard to where the content is coming from and whether it can be trusted; it's not hiding somewhere buried within a script. It also ensures [repeatability](https://github.com/docker-library/official-images#repeatability), another guideline of official Docker images.
 
 ### Servicing Maintenance
 
@@ -44,7 +54,7 @@ By having the version of .NET Core you're installing explicitly defined in the D
 * Version environment variable that is referenced in the download URL (e.g. `ENV DOTNET_VERSION 3.0.0`)
 * SHA value (e.g. `dotnet_sha512='0cabf85877eb3ee0415e6f8de9390c95ec90fa8f5a0fdb104f1163924fd52d89932a51c2e07b5c13a6b9802d5b6962676042a586ec8aff4f2a641d33c6c84dec'`)
 
-You can track these values by making use of the information contained in the `releases.json` of the relevant release. For example, the `[releases.json](https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/3.0/releases.json)` for 3.0 contains all the metadata for the 3.0 releases including download links of the binary archives as well as their hash values. The release information is described on the main [release notes](https://github.com/dotnet/core/blob/master/release-notes/README.md) page.
+You can track these values by making use of the information contained in the `releases.json` of the relevant release. For example, the [`releases.json`](https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/3.0/releases.json) for 3.0 contains all the metadata for the 3.0 releases including download links of the binary archives as well as their hash values. The release information is described on the main [release notes](https://github.com/dotnet/core/blob/master/release-notes/README.md) page.
 
 ## Installing from a Linux Package Manager
 
@@ -76,9 +86,11 @@ RUN apt-get update \
 
 ## Installing from dotnet-install script
 
-A set of [installation scripts](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET Core on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive and package manager). They fill a gap on systems where the desired .NET Core release is not available through a package manager. And they can also simplify the maintenance of Dockerfiles by not needing to specify explicit version paths to binary archives.
+A set of [installation scripts](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET Core on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive and package manager). They fill a gap on systems where the desired .NET Core release is not available through a package manager. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 3.0.1, the latest of a release channel such as the latest 3.0 patch, etc.
 
-Example:
+In addition to installing .NET Core, you'll also need to ensure the the [prerequisites](https://github.com/dotnet/core/blob/master/Documentation/prereqs.md) are installed. The [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) also demonstrate how that can be done.
+
+Example (Linux):
 
 ```Dockerfile
 FROM ubuntu:disco
@@ -100,4 +112,24 @@ RUN apt-get update \
 
 RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin -Channel 3.0 -Runtime dotnet -InstallDir /usr/share/dotnet \
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+```
+
+Example (Windows):
+
+```Dockerfile
+# escape=`
+
+FROM mcr.microsoft.com/windows/servercore:1903
+RUN powershell -Command `
+        $ProgressPreference = 'SilentlyContinue'; `
+        Invoke-WebRequest `
+            -UseBasicParsing `
+            -Uri https://dot.net/v1/dotnet-install.ps1 `
+            -OutFile dotnet-install.ps1; `
+        ./dotnet-install.ps1 `
+            -InstallDir '/Program Files/dotnet' `
+            -Channel 3.0 `
+            -Runtime dotnet; `
+        Remove-Item -Force dotnet-install.ps1 `
+    && setx /M PATH "%PATH%;C:\Program Files\dotnet"
 ```
