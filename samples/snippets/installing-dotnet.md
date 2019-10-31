@@ -26,7 +26,7 @@ If you're building an image for a platform that is intended to be publicly consu
 
 When authoring your Dockerfiles, you can look to the official [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) as a template for the install steps. There are several variations depending on the .NET Core version, OS type, and architecture being used.
 
-In addition to installing .NET Core, you'll also need to ensure the the [prerequisites](https://github.com/dotnet/core/blob/master/Documentation/prereqs.md) are installed. The [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) also demonstrate how that can be done.
+In addition to installing .NET Core, you'll also need to ensure that the [prerequisites](https://github.com/dotnet/core/blob/master/Documentation/prereqs.md) are installed. The [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) also demonstrate how that can be done.
 
 In the spirit of [clarity](https://github.com/docker-library/official-images#clarity), the Dockerfiles for the official .NET Docker images do not use a general purpose script for installing .NET Core. Rather, they explicity provide each step of the installation process and reference the exact URL of the binary archive.
 
@@ -58,7 +58,7 @@ You can track these values by making use of the information contained in the `re
 
 ## Installing from a Linux Package Manager
 
-For Linux, you may prefer to use your Linux distro's package manager to install .NET Core rather than directly from a binary archive. Each .NET Core release provides [release notes](https://github.com/dotnet/core/tree/master/release-notes) that contains details on how to install from the various distro package managers. Using a package manager allows for easier maintenance since you only have to reference the major/minor version of the release and you'll get servicing releases "for free". (This is true as long as you are mindful of Docker's caching functionality. You may need to build with the `--no-cache` option to force the build to re-execute the commands that install .NET Core in order to get an updated servicing release.)
+For Linux, you may prefer to use your Linux distro's package manager to install .NET Core rather than directly from a binary archive. Each .NET Core release provides on how to install .NET Core from the various distro package managers. To locate the instructions, visit the [.NET Core download page](https://dotnet.microsoft.com/download/dotnet-core), select the desired version, click the `Package Manager Instructions: x64` link, and then select the desired distro. As an example, you can find the package manager instructions for .NET Core 3.0 [here](https://dotnet.microsoft.com/download/linux-package-manager/rhel7/sdk-3.0.100). Using a package manager allows for easier maintenance since you only have to reference the major/minor version of the release and you'll get servicing releases "for free". (This is true as long as you are mindful of Docker's caching functionality. You may need to build with the `--no-cache` option to force the build to re-execute the commands that install .NET Core in order to get an updated servicing release. Alternatively, you can specify the full version (major/minor/build) and increment that with each service release.)
 
 Example:
 
@@ -86,9 +86,9 @@ RUN apt-get update \
 
 ## Installing from dotnet-install script
 
-A set of [installation scripts](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET Core on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive and package manager). They fill a gap on systems where the desired .NET Core release is not available through a package manager. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 3.0.1, the latest of a release channel such as the latest 3.0 patch, etc.
+A set of [installation scripts](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET Core on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive link and package manager). They fill a gap on systems where the desired .NET Core release is not available through a package manager and you don't want to deal with the cost of maintaining a direct link to a binary package. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 3.0.1, the latest of a release channel such as the latest 3.0 patch, etc.
 
-In addition to installing .NET Core, you'll also need to ensure the the [prerequisites](https://github.com/dotnet/core/blob/master/Documentation/prereqs.md) are installed. The [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) also demonstrate how that can be done.
+In addition to installing .NET Core, you'll also need to ensure that the [prerequisites](https://github.com/dotnet/core/blob/master/Documentation/prereqs.md) are installed. The [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) also demonstrate how that can be done.
 
 Example (Linux):
 
