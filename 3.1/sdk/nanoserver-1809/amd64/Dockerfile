@@ -6,10 +6,10 @@ FROM mcr.microsoft.com/windows/servercore:1809 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core SDK
-ENV DOTNET_SDK_VERSION 3.1.100-preview1-014459
+ENV DOTNET_SDK_VERSION 3.1.100-preview2-014569
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = 'c2b2e5f856aeda280ce2d3dcf20d62530bb6e15b48762a35ffa6803701d68777c5841dbb9bc7cbab6f9806687223971e63be6d6bf88cd13f45a6cef3c38d41dd'; `
+    $dotnet_sha512 = 'dda707c3c7f3c02e6a33e96e4db0f1bc65fe25f27f402092f6cec1a69a41de688a199fbc229a0991ab1dc498a0fa05988856efcbfabdf81487e33875794a27a0'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
