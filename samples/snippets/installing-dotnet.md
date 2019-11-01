@@ -12,19 +12,23 @@ If there's a platform that you require that is available in its own Docker image
 
 In some cases, you can workaround dependencies by publishing your .NET Core application as a [self-contained app](https://docs.microsoft.com/en-us/dotnet/core/deploying) in which case all of your app's dependencies are packaged with the app. This reduces the dependencies that need to be installed separately on the base image. For example, a Windows app may require dependencies that only exist in Windows Server Core but only .NET Core images on Nano Server are available. In that case, the app could be deployed as a self-contained app and operate just fine using the [windows/servercore](https://hub.docker.com/_/microsoft-windows-servercore) image as the base image. Example Dockerfiles that demonstrate publishing a self-contained app are available in the samples for [Linux](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.debian-x64-selfcontained) and [Windows](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.nanoserver-x64-selfcontained).
 
-## General Platform Images
+## Image Purposes
+
+### General Platform Images
 
 If you're building an image for a platform that is intended to be publicly consumed, you should strongly consider following the Docker [guidelines](https://github.com/docker-library/official-images) for official images. Those guidelines will inject a high level of quality in your images and instill trust and confidence by those consuming it. One of the guidelines is on [clarity](https://github.com/docker-library/official-images#clarity) which states that a Dockerfile should be easy to understand/read and avoid the use of scripts that obscure the steps that are taken to produce the image.
 
 For general platform images, it is recommended that you install .NET Core by [binary archive](#installing-from-a-binary-archive) (Linux/Windows) or [package manager](#installing-from-a-linux-package-manager) (Linux only). Both of those options can be used in a way that conforms to the Docker guidelines for official images.
 
-## Custom Application Images
+### Custom Application Images
 
 If you're building an image for a custom application that is not to be intended to be publicly consumed as a platform for other applications, you can get by with a simpler Dockerfile implementation compared to [general platform images](#general-platform-images) if you choose. Because the image is only intended for your own organization's purposes, the need for transparency in the Dockerfile is lessened. Convenience can trump clarity in this case.
 
 For custom application images, it is recommended that you install .NET Core by [package manager](#installing-from-a-linux-package-manager) (Linux only) or [dotnet-install script](#installing-from-dotnet-install-script) (Linux/Windows).
 
-## Installing from a Binary Archive
+## Ways to Install .NET Core
+
+### Installing from a Binary Archive
 
 When authoring your Dockerfiles, you can look to the official [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) as a template for the install steps. There are several variations depending on the .NET Core version, OS type, and architecture being used.
 
@@ -69,7 +73,7 @@ RUN powershell -Command `
 
 This provides full transparency to consumers of the image in regard to where the content is coming from and whether it can be trusted; it's not hiding somewhere buried within a script. It also ensures [repeatability](https://github.com/docker-library/official-images#repeatability), another guideline of official Docker images.
 
-### Servicing Maintenance
+#### Servicing Maintenance
 
 By having the version of .NET Core you're installing explicitly defined in the Dockerfile, as should be done for clarity reasons, it means the Dockerfile must be regularly maintained to account for servicing releases of .NET Core. There are two parts of the install steps that will need to updated in order to reference a new release:
 
@@ -78,7 +82,7 @@ By having the version of .NET Core you're installing explicitly defined in the D
 
 You can track these values by making use of the information contained in the `releases.json` of the relevant release. For example, the [`releases.json`](https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/3.0/releases.json) for 3.0 contains all the metadata for the 3.0 releases including download links of the binary archives as well as their hash values. The release information is described on the main [release notes](https://github.com/dotnet/core/blob/master/release-notes/README.md) page.
 
-## Installing from a Linux Package Manager
+### Installing from a Linux Package Manager
 
 For Linux, you may prefer to use your Linux distro's package manager to install .NET Core rather than directly from a binary archive. Each .NET Core release provides instructions on how to install .NET Core from the various distro package managers. To locate the instructions, visit the [.NET Core download page](https://dotnet.microsoft.com/download/dotnet-core), select the desired version, click the `Package Manager Instructions: x64` link, and then select the desired distro. As an example, you can find the package manager instructions for .NET Core 3.0 [here](https://dotnet.microsoft.com/download/linux-package-manager/rhel7/sdk-3.0.100).
 
@@ -110,7 +114,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 ```
 
-## Installing from dotnet-install script
+### Installing from dotnet-install script
 
 A set of [installation scripts](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET Core on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive link and package manager). They fill a gap on systems where the desired .NET Core release is not available through a package manager and you don't want to deal with the cost of maintaining a direct link to a binary package. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 3.0.1, the latest of a release channel such as the latest 3.0 patch, etc.
 
