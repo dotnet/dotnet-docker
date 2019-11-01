@@ -20,7 +20,7 @@ stages:
 # Build Images
 ################################################################################
 - stage: Build
-  condition: and(succeeded(), or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build')))
+  condition: and(succeeded(), contains(variables['stages'], 'build'))
   jobs:
   - template: ../jobs/generate-matrix.yml
     parameters:
@@ -186,7 +186,7 @@ stages:
   ################################################################################
   - stage: Post_Build
     dependsOn: Build
-    condition: and(succeeded(), or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build')))
+    condition: and(succeeded(), contains(variables['stages'], 'build'))
     jobs:
     - template: ../jobs/post-build.yml
 
@@ -197,12 +197,12 @@ stages:
     dependsOn: Post_Build
     condition: "
       and(
-        not(contains(variables['manifest'], 'samples')),
+        contains(variables['stages'], 'test'),
         or(
           and(
             succeeded(),
-            eq(variables['singlePhase'], '')),
-          eq(variables['singlePhase'], 'test')))"
+            contains(variables['stages'], 'build')),
+          not(contains(variables['stages'], 'build'))))"
     jobs:
     - template: ../jobs/generate-matrix.yml
       parameters:
@@ -320,15 +320,32 @@ stages:
   - stage: Publish
     dependsOn: Test
     condition: "
-      or(
-        and(
-          eq(variables['singlePhase'], ''),
+      and(
+        contains(variables['stages'], 'publish'),
+        or(
           or(
-            succeeded(),
             and(
-              contains(variables['manifest'], 'samples'),
-              succeeded('Build')))),
-        eq(variables['singlePhase'], 'publish'))"
+              and(
+                contains(variables['stages'], 'build'),
+                succeeded('Post_Build')),
+              and(
+                contains(variables['stages'], 'test'),
+                succeeded('Test'))),
+            or(
+              and(
+                not(contains(variables['stages'], 'build')),
+                and(
+                  contains(variables['stages'], 'test'),
+                  succeeded('Test'))),
+              and(
+                not(contains(variables['stages'], 'test')),
+                and(
+                  contains(variables['stages'], 'build'),
+                  succeeded('Post_Build'))))),
+          not(
+            or(
+              contains(variables['stages'], 'build'),
+              contains(variables['stages'], 'test')))))"
     jobs:
     - template: ../jobs/publish.yml
       parameters:
