@@ -26,6 +26,7 @@ namespace Dotnet.Docker
             _tagVersion = version;
 
             // Derive the Docker tag version from the product build version.
+            // This logic needs to handle multiple formats of the pre-release label until all products align on a single format.
             // Example: Product build version 2.2.0-rtm-35586 => Docker tag version 2.2.0.
             int firstDashIndex = version.IndexOf('-');
             if (firstDashIndex != -1)
@@ -34,6 +35,13 @@ namespace Dotnet.Docker
                 if (secondDashIndex != -1)
                 {
                     _tagVersion = version.Substring(0, secondDashIndex);
+                }
+                else {
+                    int prereleaseLabelDotIndex = version.IndexOf('.', firstDashIndex + 1);
+                    if (prereleaseLabelDotIndex != -1)
+                    {
+                        _tagVersion = version.Substring(0, prereleaseLabelDotIndex);
+                    }
                 }
 
                 foreach (string excludedMoniker in ExcludedMonikers)
@@ -45,7 +53,9 @@ namespace Dotnet.Docker
                 }
             }
 
-            string versionVariableName = $"{version.Substring(0, version.LastIndexOf('.'))}-{imageVariantName}Version";
+            string productVersion = version.Split('-')[0];
+            string dockerfileVersion = productVersion.Substring(0, productVersion.LastIndexOf('.'));
+            string versionVariableName = $"{dockerfileVersion}-{imageVariantName}Version";
             Trace.TraceInformation($"Updating {versionVariableName} to {_tagVersion}");
 
             Path = System.IO.Path.Combine(repoRoot, "manifest.json");
