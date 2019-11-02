@@ -155,9 +155,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void VerifySDKImage_PowerShellScenario_Execute(ImageData imageData, string optionalArgs)
         {
-            if (imageData.Version.Major < 3)
+            if (imageData.Version < V3_1)
             {
-                _outputHelper.WriteLine("PowerShell does not exist in pre-3.0 images, skip testing");
+                _outputHelper.WriteLine("PowerShell does not exist in pre-3.1 images, skip testing");
                 return;
             }
 
