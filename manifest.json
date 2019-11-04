@@ -8,8 +8,8 @@
     "2.2-SdkVersion": "2.2.402",
     "3.0-RuntimeVersion": "3.0.0",
     "3.0-SdkVersion": "3.0.100",
-    "3.1-RuntimeVersion": "3.1.0-preview2",
-    "3.1-SdkVersion": "3.1.100-preview2"
+    "3.1-RuntimeVersion": "3.1.0-preview3",
+    "3.1-SdkVersion": "3.1.100-preview3"
   },
   "repos": [
     {
