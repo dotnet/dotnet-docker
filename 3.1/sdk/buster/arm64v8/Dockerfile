@@ -13,10 +13,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 3.1.100-preview1-014459
+ENV DOTNET_SDK_VERSION 3.1.100-preview2-014569
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm64.tar.gz \
-    && dotnet_sha512='17e801fa10b86fe03b91777b0e10a21ecd9573442048221eb74997d89ba52722fdde3a616b9c6b481a08183e2959e05f11188c39665f7ab014cbe274acdc6275' \
+    && dotnet_sha512='60a96b96271f77b57ebd30b48f46e6f2130c25dac678fd3f8599278368f941a3792c429a2ae0307f8c9ed2a690a4d7244fc2080d556deb66d633918d8d298b4f' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
@@ -34,15 +34,16 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION=7.0.0-preview.4 \
+ENV POWERSHELL_VERSION=7.0.0-preview.5 \
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Debian-10-arm64
 
 RUN curl -SL --output PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg \
-    && powershell_sha512='9884f0aa4c281b3c58262c4219fab261506d77b2350733825e51ed2a33bca24b76f25707e3a57086b3c8a79fd6a388184f00039b1e56745a49fe840d3acc37fb' \
+    && powershell_sha512='d146464dcdadf641dcbff538c950ff7edefa0fc398488c4ffac3187eb8db78a68101e461b3d9e0419773a668df693dc223c273cfb64fb5572ddaf744594942c1' \
     && echo "$powershell_sha512  PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.arm64 \
     && rm PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
+    && chmod 755 /usr/share/powershell/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm

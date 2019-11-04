@@ -9,10 +9,10 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     LANG=en_US.UTF-8
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 3.1.100-preview1-014459
+ENV DOTNET_SDK_VERSION 3.1.100-preview2-014569
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='3652122944cba774130af8f878ab06a5b16a7bbe034156e14442b0b43a4344d087e8e19f69cf64cb8a3d4f9d3a3c07109746f39c4cd52fd74660b6119edc8517' \
+    && dotnet_sha512='a83a19d7e72982d72fa9e6e52815552945d37d863e78a9b79055164b86a1ad91fb4fe62ce1c41d8ca79955c580c9972231d847d68e5577505b40a41a46037d50' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \
@@ -30,15 +30,16 @@ ENV ASPNETCORE_URLS= \
 RUN dotnet help
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION=7.0.0-preview.4 \
+ENV POWERSHELL_VERSION=7.0.0-preview.5 \
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Alpine-3.10
 
 RUN wget -O PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$POWERSHELL_VERSION/PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
-    && powershell_sha512='25dc93d87e4a0ae94fd161ff3b2d26b0e0eb5ae69a913500f7816debd705d1b84fcebb147b8a02d5fc53cf2718ec3d65dc0f2b73e0e4b917599b6562cf140c39' \
+    && powershell_sha512='5d5dc58d5744a9012696058074c1e72471a7f45489564fdf3fbfb5a89a61f8832f026aa7a0742a542d7dc5c125ba6baef00b74c3e75338b9eae056bf0e9b4ee4' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.Alpine \
     && rm PowerShell.Linux.Alpine.$POWERSHELL_VERSION.nupkg \
+    && chmod 755 /usr/share/powershell/pwsh \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm \

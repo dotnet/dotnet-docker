@@ -135,7 +135,31 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifySDKImage_PowerShellScenario(ImageData imageData)
+        public void VerifySDKImage_PowerShellScenario_DefaultUser(ImageData imageData)
+        {
+            VerifySDKImage_PowerShellScenario_Execute(imageData, null);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifySDKImage_PowerShellScenario_NonDefaultUser(ImageData imageData)
+        {
+            if (imageData.Version < V3_1)
+            {
+                _outputHelper.WriteLine("PowerShell for non-default user does not exist in pre-3.1 images, skip testing");
+                return;
+            }
+
+            var optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
+            if (imageData.OS.Contains("nanoserver", StringComparison.OrdinalIgnoreCase))
+            {
+                optRunArgs = "-u ContainerAdministrator "; // windows containers test as Admin, default execution is as ContainerUser
+            }
+
+            VerifySDKImage_PowerShellScenario_Execute(imageData, optRunArgs);
+        }
+
+        private void VerifySDKImage_PowerShellScenario_Execute(ImageData imageData, string optionalArgs)
         {
             if (imageData.Version.Major < 3)
             {
@@ -147,6 +171,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string output = _dockerHelper.Run(
                 image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
                 name: imageData.GetIdentifier($"pwsh"),
+                optionalRunArgs: optionalArgs,
                 command: $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value"
             );
 
