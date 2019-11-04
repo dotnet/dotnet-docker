@@ -27,7 +27,10 @@ namespace Dotnet.Docker
 
             // Derive the Docker tag version from the product build version.
             // This logic needs to handle multiple formats of the pre-release label until all products align on a single format.
-            // Example: Product build version 2.2.0-rtm-35586 => Docker tag version 2.2.0.
+            // Examples: Product build version  => Docker tag version 
+            // 2.2.0-rtm-35586 => 2.2.0
+            // 3.1.100-preview2-014589 => 3.1.100-preview2
+            // 3.1.0-preview3.19530.9 => 3.1.0-preview3
             int firstDashIndex = version.IndexOf('-');
             if (firstDashIndex != -1)
             {
