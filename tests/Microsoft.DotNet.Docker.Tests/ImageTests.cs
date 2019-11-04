@@ -144,6 +144,11 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifySDKImage_PowerShellScenario_NonDefaultUser(ImageData imageData)
         {
+            if (imageData.Version < V3_1)
+            {
+                _outputHelper.WriteLine("PowerShell for non-default user does not exist in pre-3.1 images, skip testing");
+            }
+
             var optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
             if (imageData.OS.Contains("nanoserver", StringComparison.OrdinalIgnoreCase))
             {
@@ -155,9 +160,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void VerifySDKImage_PowerShellScenario_Execute(ImageData imageData, string optionalArgs)
         {
-            if (imageData.Version < V3_1)
+            if (imageData.Version.Major < 3)
             {
-                _outputHelper.WriteLine("PowerShell does not exist in pre-3.1 images, skip testing");
+                _outputHelper.WriteLine("PowerShell does not exist in pre-3.0 images, skip testing");
                 return;
             }
 
