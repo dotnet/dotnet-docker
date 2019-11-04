@@ -5,6 +5,7 @@ These snippets contain tips and tricks, best practices, samples of commonly used
 ## Snippets
 
 * [Managing NuGet Credentials in Docker Scenarios](nuget-credentials.md)
+* [Installing .NET Core in a Dockerfile](installing-dotnet.md)
 
 ## Community
 
