@@ -72,6 +72,8 @@ Invoke-WebRequest -OutFile Dockerfile.runtime -Uri https://raw.githubusercontent
 docker build -f Dockerfile.runtime -t servercore/runtime:3.0 .
 ```
 
+Also see [Installing .NET Core in a Dockerfile](installing-dotnet.md) for more options of installing .NET Core.
+
 Example application Dockerfile that references the custom runtime image:
 
 ```Dockerfile
