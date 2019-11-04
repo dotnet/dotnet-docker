@@ -147,6 +147,7 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.Version < V3_1)
             {
                 _outputHelper.WriteLine("PowerShell for non-default user does not exist in pre-3.1 images, skip testing");
+                return;
             }
 
             var optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
