@@ -36,7 +36,7 @@ You have two deployment options available: you can choose to use a [framework-de
 
 ### Self-contained deployment
 
-A self-contained deployment is particularly handy in this scenario where there's a dependency on the System.Drawing.Common package. This is because there's no need to use a base image that has .NET Core installed. By deploying your app and all of its .NET Core dependencies, you can select the particular Windows base image that meets your need. In this example, since  Server Core has the required files and Nano Server does not, you can simply select a Server Core image to use as your base image.
+A self-contained deployment is particularly handy in this scenario where there's a dependency on the System.Drawing.Common package. This is because there's no need to use a base image that has .NET Core installed. By deploying your app and all of its .NET Core dependencies, you can select the particular Windows base image that meets your need. In this example, since Server Core has the required files and Nano Server does not, you can simply select a Server Core image to use as your base image.
 
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-nanoserver-1903 AS build
@@ -62,7 +62,7 @@ ENTRYPOINT ["dotnetapp"]
 
 ### Framework-dependent deployment
 
-For a framework-dependent deployment, you're relying on .NET Core being installed in the base image you'll be referencing. Because there are no official .NET Core images based on [Server Core](https://hub.docker.com/_/microsoft-windows-servercore) or [Windows](https://hub.docker.com/_/microsoft-windows), you'll need to author a Dockerfile that installs .NET Core yourself. Note that [Server Core](https://hub.docker.com/_/microsoft-windows-servercore) and [Windows](https://hub.docker.com/_/microsoft-windows) images are substantially larger than [Nano Server](https://hub.docker.com/_/microsoft-windows-nanoserver) images.
+For a framework-dependent deployment, you're relying on .NET Core being installed in the base image you'll be referencing. Because there are no official .NET Core images based on [Server Core](https://hub.docker.com/_/microsoft-windows-servercore) or [Windows](https://hub.docker.com/_/microsoft-windows), you'll need to author a Dockerfile that installs .NET Core yourself.
 
 Follow the instructions for [Installing .NET Core in a Dockerfile](installing-dotnet.md) in order to create a custom image based on [Server Core](https://hub.docker.com/_/microsoft-windows-servercore) or [Windows](https://hub.docker.com/_/microsoft-windows) that has .NET Core installed. For this example, let's say that you've tagged your image as `servercore/runtime:3.0`. You can then construct your application's Dockerfile to reference that tag as the base image:
 
