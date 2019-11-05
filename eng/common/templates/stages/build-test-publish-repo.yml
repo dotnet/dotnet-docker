@@ -129,6 +129,19 @@ stages:
       customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
+      name: Build_NanoServer1909_amd64
+      pool: # windows1909Amd64
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: DotNetCore-Docker-Public
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: DotNetCore-Docker
+        demands: VSTS_OS -equals Windows-ServerDatacenter-1909
+      matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1909Amd64', parameters.buildMatrixType) }}']
+      dockerClientOS: windows
+      buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+  - template: ../jobs/build-images.yml
+    parameters:
       name: Build_WindowsServerCoreLtsc2016_amd64
       pool: # windows1607Amd64Pool
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
@@ -176,6 +189,19 @@ stages:
           name: DotNetCore-Docker
         demands: VSTS_OS -equals Windows_Server_2019_Data_Center_1903
       matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixWindowsservercore1903Amd64', parameters.buildMatrixType) }}']
+      dockerClientOS: windows
+      buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+  - template: ../jobs/build-images.yml
+    parameters:
+      name: Build_WindowsServerCore1909_amd64
+      pool: # windows1909Amd64
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: DotNetCore-Docker-Public
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: DotNetCore-Docker
+        demands: VSTS_OS -equals Windows-ServerDatacenter-1909
+      matrix: dependencies.GenerateBuildMatrix.outputs['${{ format('matrix.{0}MatrixWindowsservercore1909Amd64', parameters.buildMatrixType) }}']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
@@ -279,6 +305,15 @@ stages:
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
+        name: Test_NanoServer1909_amd64
+        buildDependencies: Build_NanoServer1909_amd64
+        pool: # windows1909Amd64
+          name: DotNetCore-Docker
+          demands: VSTS_OS -equals Windows-ServerDatacenter-1909
+        matrix: dependencies.GenerateTestMatrix.outputs['${{ format('matrix.{0}MatrixNanoserver1909Amd64', parameters.testMatrixType) }}']
+        testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+    - template: ../jobs/test-images-windows-client.yml
+      parameters:
         name: Test_WindowsServerCoreLtsc2016_amd64
         buildDependencies: Build_WindowsServerCoreLtsc2016_amd64
         pool: # windows1607Amd64Pool
@@ -312,6 +347,15 @@ stages:
           name: DotNetCore-Docker
           demands: VSTS_OS -equals Windows_Server_2019_Data_Center_1903
         matrix: dependencies.GenerateTestMatrix.outputs['${{ format('matrix.{0}MatrixWindowsservercore1903Amd64', parameters.testMatrixType) }}']
+        testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+    - template: ../jobs/test-images-windows-client.yml
+      parameters:
+        name: Test_WindowsServerCore1909_amd64
+        buildDependencies: Build_WindowsServerCore1909_amd64
+        pool: # windows1909Amd64
+          name: DotNetCore-Docker
+          demands: VSTS_OS -equals Windows-ServerDatacenter-1909
+        matrix: dependencies.GenerateTestMatrix.outputs['${{ format('matrix.{0}MatrixWindowsservercore1909Amd64', parameters.testMatrixType) }}']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
 
   ################################################################################
