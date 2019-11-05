@@ -19,7 +19,8 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.blob.core.windows.ne
     Remove-Item -Force dotnet.zip
 
 # Install PowerShell global tool
-ENV POWERSHELL_VERSION=7.0.0-preview.4
+ENV POWERSHELL_VERSION=7.0.0-preview.4 `
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1803
 
 RUN Invoke-WebRequest -OutFile PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg https://pwshtool.blob.core.windows.net/tool/$ENV:POWERSHELL_VERSION/PowerShell.Windows.x64.$ENV:POWERSHELL_VERSION.nupkg; `
     $powershell_sha512 = '1f0a57a210f2934fba68f710600c0b24a98dc0e2b291883b2f7cbb9801f59c831e0428267febe5b37b1fdb74af15a069ab28a95ab3d1760b6cf7026e9492b7d4'; `
@@ -49,9 +50,7 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip `
-    # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1803
+    NUGET_XMLDOC_MODE=skip
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
