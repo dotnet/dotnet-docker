@@ -6,6 +6,7 @@ These snippets contain tips and tricks, best practices, samples of commonly used
 
 * [Managing NuGet Credentials in Docker Scenarios](nuget-credentials.md)
 * [Installing .NET Core in a Dockerfile](installing-dotnet.md)
+* [Using the System.Drawing.Common Package in a Docker Container](using-system-drawing-common.md)
 
 ## Community
 
