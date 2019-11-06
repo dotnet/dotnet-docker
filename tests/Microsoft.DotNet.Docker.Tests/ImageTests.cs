@@ -119,7 +119,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 VerifyEnvironmentVariableExists("POWERSHELL_DISTRIBUTION_CHANNEL", DotNetImageType.SDK, imageData);
             }
 
-            if (imageData.OS.StartsWith(Tests.OS.AlpinePrefix))
+            if (imageData.SdkOS.StartsWith(Tests.OS.AlpinePrefix))
             {
                 VerifyEnvironmentVariable("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false", DotNetImageType.SDK, imageData);
                 VerifyEnvironmentVariable("LC_ALL", "en_US.UTF-8", DotNetImageType.SDK, imageData);
@@ -287,7 +287,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 name: imageData.GetIdentifier($"env"),
                 command: getEnvCommand);
 
-            if (!DockerHelper.IsLinuxContainerModeEnabled && string.Equals(value, "%{envName}%", StringComparison.Ordinal))
+            if (!DockerHelper.IsLinuxContainerModeEnabled && string.Equals(value, $"%{envName}%", StringComparison.Ordinal))
             {
                 value = string.Empty;
             }
