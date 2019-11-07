@@ -546,6 +546,15 @@
                 "$(2.1-RuntimeVersion)-nanoserver-1903": {},
                 "2.1-nanoserver-1903": {}
               }
+            },
+            {
+              "dockerfile": "2.1/runtime/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(2.1-RuntimeVersion)-nanoserver-1909": {},
+                "2.1-nanoserver-1909": {}
+              }
             }
           ]
         },
@@ -687,6 +696,15 @@
               "tags": {
                 "$(2.2-RuntimeVersion)-nanoserver-1903": {},
                 "2.2-nanoserver-1903": {}
+              }
+            },
+            {
+              "dockerfile": "2.2/runtime/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(2.2-RuntimeVersion)-nanoserver-1909": {},
+                "2.2-nanoserver-1909": {}
               }
             }
           ]
@@ -841,6 +859,15 @@
               "tags": {
                 "$(3.0-RuntimeVersion)-nanoserver-1903": {},
                 "3.0-nanoserver-1903": {}
+              }
+            },
+            {
+              "dockerfile": "3.0/runtime/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(3.0-RuntimeVersion)-nanoserver-1909": {},
+                "3.0-nanoserver-1909": {}
               }
             }
           ]
@@ -1119,6 +1146,15 @@
                 "$(3.1-RuntimeVersion)-nanoserver-1903": {},
                 "3.1-nanoserver-1903": {}
               }
+            },
+            {
+              "dockerfile": "3.1/runtime/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-1909": {},
+                "3.1-nanoserver-1909": {}
+              }
             }
           ]
         },
@@ -1286,6 +1322,15 @@
                 "$(2.1-RuntimeVersion)-nanoserver-1903": {},
                 "2.1-nanoserver-1903": {}
               }
+            },
+            {
+              "dockerfile": "2.1/aspnet/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(2.1-RuntimeVersion)-nanoserver-1909": {},
+                "2.1-nanoserver-1909": {}
+              }
             }
           ]
         },
@@ -1427,6 +1472,15 @@
               "tags": {
                 "$(2.2-RuntimeVersion)-nanoserver-1903": {},
                 "2.2-nanoserver-1903": {}
+              }
+            },
+            {
+              "dockerfile": "2.2/aspnet/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(2.2-RuntimeVersion)-nanoserver-1909": {},
+                "2.2-nanoserver-1909": {}
               }
             }
           ]
@@ -1593,6 +1647,18 @@
               "tags": {
                 "$(3.0-RuntimeVersion)-nanoserver-1903": {},
                 "3.0-nanoserver-1903": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.0/aspnet/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(3.0-RuntimeVersion)-nanoserver-1909": {},
+                "3.0-nanoserver-1909": {}
               }
             }
           ]
@@ -1883,6 +1949,18 @@
                 "$(3.1-RuntimeVersion)-nanoserver-1903": {},
                 "3.1-nanoserver-1903": {}
               }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-1909": {},
+                "3.1-nanoserver-1909": {}
+              }
             }
           ]
         },
@@ -2044,6 +2122,15 @@
                 "$(2.1-SdkVersion)-nanoserver-1903": {},
                 "2.1-nanoserver-1903": {}
               }
+            },
+            {
+              "dockerfile": "2.1/sdk/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(2.1-SdkVersion)-nanoserver-1909": {},
+                "2.1-nanoserver-1909": {}
+              }
             }
           ]
         },
@@ -2173,6 +2260,15 @@
               "tags": {
                 "$(2.2-SdkVersion)-nanoserver-1903": {},
                 "2.2-nanoserver-1903": {}
+              }
+            },
+            {
+              "dockerfile": "2.2/sdk/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(2.2-SdkVersion)-nanoserver-1909": {},
+                "2.2-nanoserver-1909": {}
               }
             }
           ]
@@ -2312,6 +2408,15 @@
               "tags": {
                 "$(3.0-SdkVersion)-nanoserver-1903": {},
                 "3.0-nanoserver-1903": {}
+              }
+            },
+            {
+              "dockerfile": "3.0/sdk/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(3.0-SdkVersion)-nanoserver-1909": {},
+                "3.0-nanoserver-1909": {}
               }
             }
           ]
@@ -2508,6 +2613,15 @@
               "tags": {
                 "$(3.1-SdkVersion)-nanoserver-1903": {},
                 "3.1-nanoserver-1903": {}
+              }
+            },
+            {
+              "dockerfile": "3.1/sdk/nanoserver-1909/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {
+                "$(3.1-SdkVersion)-nanoserver-1909": {},
+                "3.1-nanoserver-1909": {}
               }
             }
           ]
