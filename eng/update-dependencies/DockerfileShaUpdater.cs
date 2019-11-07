@@ -26,7 +26,7 @@ namespace Dotnet.Docker
         private static readonly string s_versionPattern =
             $"ENV (?<{EnvNameGroupName}>(DOTNET|ASPNETCORE)_[\\S]*VERSION) (?<{ValueGroupName}>[\\S]*)";
         private static readonly string s_urlPatternFormat =
-            $"(?<{ValueGroupName}>https://dotnetcli.blob.core.windows.net/[^;\\s]*{{0}})";
+            $"(?<{ValueGroupName}>https://dotnetcli.azureedge.net/[^;\\s]*{{0}})";
         private static readonly string s_productUrlPattern = string.Format(s_urlPatternFormat, string.Empty);
         private static readonly string s_lzmaUrlPattern = string.Format(s_urlPatternFormat, "lzma");
         private static readonly string s_shaPatternFormat = $"[ \\$]({{0}})sha512( )*=( )*'(?<{ValueGroupName}>[^'\\s]*)'";
@@ -163,7 +163,7 @@ namespace Dotnet.Docker
         {
             string sha = null;
             string product = envName == "DOTNET_SDK_VERSION" ? "sdk" : "runtime";
-            string uri = $"https://dotnetcli.blob.core.windows.net/dotnet/checksums/{productVersion}-{product}-sha.txt";
+            string uri = $"https://dotnetcli.azureedge.net/dotnet/checksums/{productVersion}-{product}-sha.txt";
 
             Trace.TraceInformation($"Downloading '{uri}'.");
             using (HttpClient client = new HttpClient())
