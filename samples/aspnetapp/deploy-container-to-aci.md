@@ -2,7 +2,7 @@
 
 You can deploy ASP.NET Core applications to Azure Container Instances (ACI) with Docker. ACI is a great option for application testing and can also be used for production deployment (not covered here). These instructions are based on the [ASP.NET Core Docker Sample](README.md).
 
-These instructions only work for Linux-based images.  ACI currently supports Windows Server 2016 images based on Long-Term Servicing Channel (LTSC) versions. Windows Semi-Annual Channel (SAC) releases like Nano Server, version 1803, 1809, 1903, and 1909 are unsupported.
+These instructions only work for Linux-based images.  ACI currently supports Windows Server 2016 images based on Long-Term Servicing Channel (LTSC) versions and also the Windows Semi-Annual Channel (SAC) 1809 release. Other Windows SAC releases like 1803, 1903, and 1909 are unsupported.
 
 ## Build Application
 
