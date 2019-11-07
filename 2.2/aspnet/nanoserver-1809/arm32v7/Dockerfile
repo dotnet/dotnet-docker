@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/windows/nanoserver:1809-arm32v7
 # Install ASP.NET Core Runtime
 ENV ASPNETCORE_VERSION 2.2.7
 
-RUN curl -SL --output dotnet.zip https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/%ASPNETCORE_VERSION%/aspnetcore-runtime-%ASPNETCORE_VERSION%-win-arm.zip `
+RUN curl -SL --output dotnet.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/%ASPNETCORE_VERSION%/aspnetcore-runtime-%ASPNETCORE_VERSION%-win-arm.zip `
     && mkdir "%ProgramFiles%\dotnet" `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
     && del dotnet.zip
