@@ -166,7 +166,7 @@ namespace Dotnet.Docker
         {
             string sha = null;
             string product = envName == "DOTNET_SDK_VERSION" ? "sdk" : "runtime";
-            string uri = $"https://dotnetcli.azureedge.net/dotnet/checksums/{productVersion}-{product}-sha.txt";
+            string uri = $"https://dotnetcli.blob.core.windows.net/dotnet/checksums/{productVersion}-{product}-sha.txt";
 
             Trace.TraceInformation($"Downloading '{uri}'.");
             using (HttpClient client = new HttpClient())
