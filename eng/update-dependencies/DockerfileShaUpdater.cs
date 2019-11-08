@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Microsoft.DotNet.VersionTools.Dependencies;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Diagnostics;
@@ -22,6 +23,7 @@ namespace Dotnet.Docker
     {
         private const string EnvNameGroupName = "envName";
         private const string ValueGroupName = "value";
+        private const string ChecksumsHostName = "dotnetclichecksums.blob.core.windows.net";
 
         private static readonly string s_versionPattern =
             $"ENV (?<{EnvNameGroupName}>(DOTNET|ASPNETCORE)_[\\S]*VERSION) (?<{ValueGroupName}>[\\S]*)";
@@ -139,7 +141,10 @@ namespace Dotnet.Docker
         {
             string sha = null;
             string shaExt = envName.Contains("SDK") ? ".sha" : ".sha512";
-            string shaUrl = productDownloadUrl.Replace("dotnetcli", "dotnetclichecksums") + shaExt;
+
+            UriBuilder uriBuilder = new UriBuilder(productDownloadUrl);
+            uriBuilder.Host = ChecksumsHostName;
+            string shaUrl = uriBuilder.ToString() + shaExt;
 
             Trace.TraceInformation($"Downloading '{shaUrl}'.");
             using (HttpClient client = new HttpClient())
@@ -163,7 +168,7 @@ namespace Dotnet.Docker
         {
             string sha = null;
             string product = envName == "DOTNET_SDK_VERSION" ? "sdk" : "runtime";
-            string uri = $"https://dotnetcli.azureedge.net/dotnet/checksums/{productVersion}-{product}-sha.txt";
+            string uri = $"https://dotnetcli.blob.core.windows.net/dotnet/checksums/{productVersion}-{product}-sha.txt";
 
             Trace.TraceInformation($"Downloading '{uri}'.");
             using (HttpClient client = new HttpClient())
