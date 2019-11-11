@@ -106,25 +106,28 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifySdkImage_EnvironmentVariables(ImageData imageData)
         {
-            VerifyCommonEnvironmentVariables(DotNetImageType.SDK, imageData);
+            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
+            variables.AddRange(GetCommonEnvironmentVariables());
 
             string aspnetUrlsValue = imageData.Version.Major < 3 ? "http://+:80" : string.Empty;
-            VerifyEnvironmentVariable("ASPNETCORE_URLS", aspnetUrlsValue, DotNetImageType.SDK, imageData);
-            VerifyEnvironmentVariable("DOTNET_USE_POLLING_FILE_WATCHER", "true", DotNetImageType.SDK, imageData);
-            VerifyEnvironmentVariable("NUGET_XMLDOC_MODE", "skip", DotNetImageType.SDK, imageData);
+            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", aspnetUrlsValue));
+            variables.Add(new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"));
+            variables.Add(new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"));
 
             if (imageData.Version.Major >= 3
                 && (DockerHelper.IsLinuxContainerModeEnabled || imageData.Version >= new Version("3.1")))
             {
-                VerifyEnvironmentVariableExists("POWERSHELL_DISTRIBUTION_CHANNEL", DotNetImageType.SDK, imageData);
+                variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
             }
 
             if (imageData.SdkOS.StartsWith(Tests.OS.AlpinePrefix))
             {
-                VerifyEnvironmentVariable("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false", DotNetImageType.SDK, imageData);
-                VerifyEnvironmentVariable("LC_ALL", "en_US.UTF-8", DotNetImageType.SDK, imageData);
-                VerifyEnvironmentVariable("LANG", "en_US.UTF-8", DotNetImageType.SDK, imageData);
+                variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
+                variables.Add(new EnvironmentVariableInfo("LC_ALL", "en_US.UTF-8"));
+                variables.Add(new EnvironmentVariableInfo("LANG", "en_US.UTF-8"));
             }
+
+            EnvironmentVariableInfo.Verify(variables, DotNetImageType.SDK, imageData, _dockerHelper);
         }
 
         [Theory]
@@ -238,61 +241,23 @@ namespace Microsoft.DotNet.Docker.Tests
             VerifyCommonRuntimeEnvironmentVariables(DotNetImageType.Aspnet, imageData);
         }
 
-        private void VerifyCommonEnvironmentVariables(DotNetImageType imageType, ImageData imageData)
+        private IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
         {
-            VerifyEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER", "true", imageType, imageData);
+            yield return new EnvironmentVariableInfo("DOTNET_RUNNING_IN_CONTAINER", "true");
         }
 
         private void VerifyCommonRuntimeEnvironmentVariables(DotNetImageType imageType, ImageData imageData)
         {
-            VerifyCommonEnvironmentVariables(imageType, imageData);
-            VerifyEnvironmentVariable("ASPNETCORE_URLS", "http://+:80", imageType, imageData);
+            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
+            variables.AddRange(GetCommonEnvironmentVariables());
+            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:80"));
 
             if (imageData.OS.StartsWith(Tests.OS.AlpinePrefix))
             {
-                VerifyEnvironmentVariable("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true", imageType, imageData);
-            }
-        }
-
-        private void VerifyEnvironmentVariable(
-            string envName, string expectedEnvValue, DotNetImageType imageType, ImageData imageData)
-        {
-            string actualEnvValue = GetEnvironmentVariable(envName, imageType, imageData);
-
-            Assert.Equal(expectedEnvValue, actualEnvValue);
-        }
-
-        private void VerifyEnvironmentVariableExists(
-            string envName, DotNetImageType imageType, ImageData imageData)
-        {
-            string actualEnvValue = GetEnvironmentVariable(envName, imageType, imageData);
-
-            Assert.NotEmpty(actualEnvValue);
-        }
-
-        private string GetEnvironmentVariable(string envName, DotNetImageType imageType, ImageData imageData)
-        {
-            string getEnvCommand;
-            if (DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                getEnvCommand = $"/bin/sh -c \"echo ${envName}\"";
-            }
-            else
-            {
-                getEnvCommand = $"CMD /S /C \"echo %{envName}%\"";
+                variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
             }
 
-            string value = _dockerHelper.Run(
-                image: imageData.GetImage(imageType, _dockerHelper),
-                name: imageData.GetIdentifier($"env"),
-                command: getEnvCommand);
-
-            if (!DockerHelper.IsLinuxContainerModeEnabled && string.Equals(value, $"%{envName}%", StringComparison.Ordinal))
-            {
-                value = string.Empty;
-            }
-
-            return value;
+            EnvironmentVariableInfo.Verify(variables, imageType, imageData, _dockerHelper);
         }
     }
 }
