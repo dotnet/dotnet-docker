@@ -73,7 +73,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 delimiterEscape='^';
             }
 
-            string echoArgs = echoParts.Aggregate((working, next) => $"{working}{delimiterEscape}{delimeter}{next}");
+            string echoArgs = String.Join(delimiterEscape + delimiter, echoParts);
             string combinedValues = dockerHelper.Run(
                 image: imageData.GetImage(imageType, dockerHelper),
                 name: imageData.GetIdentifier($"env"),
