@@ -11,7 +11,6 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public class EnvironmentVariableInfo
     {
-        public string ActualValue { get; private set; }
         public bool AllowAnyValue { get; private set; }
         public string ExpectedValue { get; private set; }
         public string Name { get; private set; }
@@ -34,67 +33,55 @@ namespace Microsoft.DotNet.Docker.Tests
             ImageData imageData,
             DockerHelper dockerHelper)
         {
-            GetActualValues(variables, imageType, imageData, dockerHelper);
-
-            foreach (EnvironmentVariableInfo variable in variables)
-            {
-                if (variable.AllowAnyValue)
-                {
-                    Assert.NotEmpty(variable.ActualValue);
-                }
-                else
-                {
-                    Assert.Equal(variable.ExpectedValue, variable.ActualValue);
-                }
-            }
-        }
-
-        private static void GetActualValues(
-            IEnumerable<EnvironmentVariableInfo> variables,
-            DotNetImageType imageType,
-            ImageData imageData,
-            DockerHelper dockerHelper)
-        {
-            const char delimeter = '|';
-            
+            const char delimiter = '|';
             IEnumerable<string> echoParts;
             string invokeCommand;
             char delimiterEscape;
+
             if (DockerHelper.IsLinuxContainerModeEnabled)
             {
                 echoParts = variables.Select(envVar => $"${envVar.Name}");
                 invokeCommand = $"/bin/sh -c";
-                delimiterEscape='\\';
+                delimiterEscape = '\\';
             }
             else
             {
                 echoParts = variables.Select(envVar => $"%{envVar.Name}%");
                 invokeCommand = $"CMD /S /C";
-                delimiterEscape='^';
+                delimiterEscape = '^';
             }
 
-            string echoArgs = String.Join(delimiterEscape + delimiter, echoParts);
             string combinedValues = dockerHelper.Run(
                 image: imageData.GetImage(imageType, dockerHelper),
                 name: imageData.GetIdentifier($"env"),
-                command: $"{invokeCommand} \"echo {echoArgs}\"");
+                command: $"{invokeCommand} \"echo {String.Join($"{delimiterEscape}{delimiter}", echoParts)}\"");
 
-            string[] values = combinedValues.Split(delimeter);
+            string[] values = combinedValues.Split(delimiter);
             Assert.Equal(variables.Count(), values.Count());
 
-            for (int i = 0 ; i < values.Count(); i++)
+            for (int i = 0; i < values.Count(); i++)
             {
                 EnvironmentVariableInfo variable = variables.ElementAt(i);
 
+                string actualValue;
                 // Process unset variables in Windows
                 if (!DockerHelper.IsLinuxContainerModeEnabled
                     && string.Equals(values[i], $"%{variable.Name}%", StringComparison.Ordinal))
                 {
-                    variable.ActualValue = string.Empty;
+                    actualValue = string.Empty;
                 }
                 else
                 {
-                    variable.ActualValue = values[i];
+                    actualValue = values[i];
+                }
+
+                if (variable.AllowAnyValue)
+                {
+                    Assert.NotEmpty(values[i]);
+                }
+                else
+                {
+                    Assert.Equal(variable.ExpectedValue, values[i]);
                 }
             }
         }
