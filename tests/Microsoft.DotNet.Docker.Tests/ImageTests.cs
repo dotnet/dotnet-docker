@@ -127,7 +127,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("LANG", "en_US.UTF-8"));
             }
 
-            EnvironmentVariableInfo.Verify(variables, DotNetImageType.SDK, imageData, _dockerHelper);
+            EnvironmentVariableInfo.Validate(variables, DotNetImageType.SDK, imageData, _dockerHelper);
         }
 
         [Theory]
@@ -257,7 +257,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
             }
 
-            EnvironmentVariableInfo.Verify(variables, imageType, imageData, _dockerHelper);
+            EnvironmentVariableInfo.Validate(variables, imageType, imageData, _dockerHelper);
         }
     }
 }

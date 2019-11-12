@@ -27,7 +27,7 @@ namespace Microsoft.DotNet.Docker.Tests
             this.AllowAnyValue = allowAnyValue;
         }
 
-        public static void Verify(
+        public static void Validate(
             IEnumerable<EnvironmentVariableInfo> variables,
             DotNetImageType imageType,
             ImageData imageData,
@@ -77,11 +77,11 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 if (variable.AllowAnyValue)
                 {
-                    Assert.NotEmpty(values[i]);
+                    Assert.NotEmpty(actualValue);
                 }
                 else
                 {
-                    Assert.Equal(variable.ExpectedValue, values[i]);
+                    Assert.Equal(variable.ExpectedValue, actualValue);
                 }
             }
         }
