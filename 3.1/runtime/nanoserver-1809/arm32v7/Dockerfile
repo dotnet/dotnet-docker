@@ -14,8 +14,8 @@ RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
 USER ContainerUser
 
 # Install .NET Core
-RUN set dotnet_version=3.1.0-preview3.19553.2 `
-    && curl -SL --output dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/%dotnet_version%/dotnet-runtime-%dotnet_version%-win-arm.zip `
+RUN set "dotnet_version=3.1.0-preview3.19553.2" `
+    && call curl -SL --output dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/%dotnet_version%/dotnet-runtime-%dotnet_version%-win-arm.zip `
     && mkdir "%ProgramFiles%\dotnet" `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
     && del dotnet.zip

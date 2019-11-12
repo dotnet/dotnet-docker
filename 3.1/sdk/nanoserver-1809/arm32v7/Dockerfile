@@ -18,8 +18,8 @@ RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet;%ProgramFiles%\powershell"
 USER ContainerUser
 
 # Install .NET Core SDK
-RUN set dotnet_sdk_version=3.1.100-preview3-014645; `
-    curl -SL --output dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/%dotnet_sdk_version%/dotnet-sdk-%dotnet_sdk_version%-win-arm.zip `
+RUN set "dotnet_sdk_version=3.1.100-preview3-014645" `
+    && call curl -SL --output dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/%dotnet_sdk_version%/dotnet-sdk-%dotnet_sdk_version%-win-arm.zip `
     && mkdir "%ProgramFiles%\dotnet" `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
     && del dotnet.zip `
@@ -27,9 +27,9 @@ RUN set dotnet_sdk_version=3.1.100-preview3-014645; `
     && dotnet help
 
 # Install PowerShell global tool
-RUN set powershell_version=7.0.0-preview.5; `
-    curl -SL --output PowerShell.Windows.arm32.%powershell_version%.nupkg https://pwshtool.blob.core.windows.net/tool/%powershell_version%/PowerShell.Windows.arm32.%powershell_version%.nupkg `
+RUN set "powershell_version=7.0.0-preview.5" `
+    && call curl -SL --output PowerShell.Windows.arm32.%powershell_version%.nupkg https://pwshtool.blob.core.windows.net/tool/%powershell_version%/PowerShell.Windows.arm32.%powershell_version%.nupkg `
     && mkdir "%ProgramFiles%\powershell" `
-    && "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %powershell_version% PowerShell.Windows.arm32 `
-    && del PowerShell.Windows.arm32.%powershell_version%.nupkg `
-    && del "%ProgramFiles%\powershell\.store\powershell.windows.arm32.\%powershell_version%\powershell.windows.arm32\%powershell_version%\powershell.windows.arm32.%powershell_version%.nupkg"
+    && call "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %powershell_version% PowerShell.Windows.arm32 `
+    && call del PowerShell.Windows.arm32.%powershell_version%.nupkg `
+    && call del "%ProgramFiles%\powershell\.store\powershell.windows.arm32.\%powershell_version%\powershell.windows.arm32\%powershell_version%\powershell.windows.arm32.%powershell_version%.nupkg"
