@@ -104,6 +104,18 @@ Tags | Dockerfile | OS Version
 3.1.0-preview2-buster-slim-arm32v7, 3.1-buster-slim-arm32v7, 3.1.0-preview2, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/buster-slim/arm32v7/Dockerfile) | Debian 10
 3.1.0-preview2-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
+## Windows Server, version 1909 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+3.0.0-nanoserver-1909, 3.0-nanoserver-1909, 3.0.0, 3.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/aspnet/nanoserver-1909/amd64/Dockerfile)
+2.2.7-nanoserver-1909, 2.2-nanoserver-1909, 2.2.7, 2.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/nanoserver-1909/amd64/Dockerfile)
+2.1.13-nanoserver-1909, 2.1-nanoserver-1909, 2.1.13, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/nanoserver-1909/amd64/Dockerfile)
+
+##### .NET Core 3.1 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+3.1.0-preview2-nanoserver-1909, 3.1-nanoserver-1909, 3.1.0-preview2, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/nanoserver-1909/amd64/Dockerfile)
+
 ## Windows Server, version 1903 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
