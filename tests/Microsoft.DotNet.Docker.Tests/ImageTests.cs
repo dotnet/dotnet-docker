@@ -104,6 +104,34 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
+        public void VerifySdkImage_EnvironmentVariables(ImageData imageData)
+        {
+            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
+            variables.AddRange(GetCommonEnvironmentVariables());
+
+            string aspnetUrlsValue = imageData.Version.Major < 3 ? "http://+:80" : string.Empty;
+            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", aspnetUrlsValue));
+            variables.Add(new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"));
+            variables.Add(new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"));
+
+            if (imageData.Version.Major >= 3
+                && (DockerHelper.IsLinuxContainerModeEnabled || imageData.Version >= new Version("3.1")))
+            {
+                variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
+            }
+
+            if (imageData.SdkOS.StartsWith(Tests.OS.AlpinePrefix))
+            {
+                variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
+                variables.Add(new EnvironmentVariableInfo("LC_ALL", "en_US.UTF-8"));
+                variables.Add(new EnvironmentVariableInfo("LANG", "en_US.UTF-8"));
+            }
+
+            EnvironmentVariableInfo.Validate(variables, DotNetImageType.SDK, imageData, _dockerHelper);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
         public void VerifySdkImage_PackageCache(ImageData imageData)
         {
             string verifyCacheCommand = null;
@@ -153,7 +181,8 @@ namespace Microsoft.DotNet.Docker.Tests
             var optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
             if (imageData.OS.Contains("nanoserver", StringComparison.OrdinalIgnoreCase))
             {
-                optRunArgs = "-u ContainerAdministrator "; // windows containers test as Admin, default execution is as ContainerUser
+                // windows containers test as Admin, default execution is as ContainerUser
+                optRunArgs = "-u ContainerAdministrator ";
             }
 
             VerifySDKImage_PowerShellScenario_Execute(imageData, optRunArgs);
@@ -180,6 +209,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
+        public void VerifyRuntimeDepsImage_EnvironmentVariables(ImageData imageData)
+        {
+            if (DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                VerifyCommonRuntimeEnvironmentVariables(DotNetImageType.Runtime_Deps, imageData);
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
         public async Task VerifyRuntimeImage_AppScenario(ImageData imageData)
         {
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, _dockerHelper, _outputHelper);
@@ -188,10 +227,43 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public async Task VerifyAspNetCoreRuntimeImage_AppScenario(ImageData imageData)
+        public void VerifyRuntimeImage_EnvironmentVariables(ImageData imageData)
+        {
+            VerifyCommonRuntimeEnvironmentVariables(DotNetImageType.Runtime, imageData);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifyAspNetImage_AppScenario(ImageData imageData)
         {
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, _dockerHelper, _outputHelper, isWeb: true);
             await verifier.Execute();
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyAspNetImage_EnvironmentVariables(ImageData imageData)
+        {
+            VerifyCommonRuntimeEnvironmentVariables(DotNetImageType.Aspnet, imageData);
+        }
+
+        private IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
+        {
+            yield return new EnvironmentVariableInfo("DOTNET_RUNNING_IN_CONTAINER", "true");
+        }
+
+        private void VerifyCommonRuntimeEnvironmentVariables(DotNetImageType imageType, ImageData imageData)
+        {
+            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
+            variables.AddRange(GetCommonEnvironmentVariables());
+            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:80"));
+
+            if (imageData.OS.StartsWith(Tests.OS.AlpinePrefix))
+            {
+                variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
+            }
+
+            EnvironmentVariableInfo.Validate(variables, imageType, imageData, _dockerHelper);
         }
     }
 }
