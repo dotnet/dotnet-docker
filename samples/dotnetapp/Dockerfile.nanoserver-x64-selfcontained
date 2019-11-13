@@ -22,7 +22,7 @@ COPY tests/. .
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 
-# Uses the 1909 release; 1803, 1809, and 1903 are other choices
+# Uses the 1909 release; 1809, and 1903 are other choices
 FROM mcr.microsoft.com/windows/nanoserver:1909 AS runtime
 WORKDIR /app
 COPY --from=build /app/dotnetapp/out ./
