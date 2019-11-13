@@ -3,7 +3,7 @@
 FROM mcr.microsoft.com/windows/nanoserver:1809-arm32v7
 
 # Install .NET Core
-ENV DOTNET_VERSION 3.1.0-preview2.19525.6
+ENV DOTNET_VERSION 3.1.0-preview3.19553.2
 
 RUN curl -SL --output dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/%DOTNET_VERSION%/dotnet-runtime-%DOTNET_VERSION%-win-arm.zip `
     && mkdir "%ProgramFiles%\dotnet" `
