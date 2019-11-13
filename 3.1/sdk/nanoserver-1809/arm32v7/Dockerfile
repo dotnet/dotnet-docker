@@ -32,4 +32,4 @@ RUN set "powershell_version=7.0.0-preview.5" `
     && mkdir "%ProgramFiles%\powershell" `
     && call "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %powershell_version% PowerShell.Windows.arm32 `
     && call del PowerShell.Windows.arm32.%powershell_version%.nupkg `
-    && call del "%ProgramFiles%\powershell\.store\powershell.windows.arm32.\%powershell_version%\powershell.windows.arm32\%powershell_version%\powershell.windows.arm32.%powershell_version%.nupkg"
+    && call del "%ProgramFiles%\powershell\.store\powershell.windows.arm32\%powershell_version%\powershell.windows.arm32\%powershell_version%\powershell.windows.arm32.%powershell_version%.nupkg"
