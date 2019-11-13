@@ -36,6 +36,11 @@ $(McrTagsYmlTagGroup:3.1-buster-arm32v7)
     customSubTableTitle: .NET Core 3.1 Preview Tags
 $(McrTagsYmlTagGroup:3.1-bionic-arm32v7)
     customSubTableTitle: .NET Core 3.1 Preview Tags
+$(McrTagsYmlTagGroup:3.0-nanoserver-1909)
+$(McrTagsYmlTagGroup:2.2-nanoserver-1909)
+$(McrTagsYmlTagGroup:2.1-nanoserver-1909)
+$(McrTagsYmlTagGroup:3.1-nanoserver-1909)
+    customSubTableTitle: .NET Core 3.1 Preview Tags
 $(McrTagsYmlTagGroup:3.0-nanoserver-1903)
 $(McrTagsYmlTagGroup:2.2-nanoserver-1903)
 $(McrTagsYmlTagGroup:2.1-nanoserver-1903)
