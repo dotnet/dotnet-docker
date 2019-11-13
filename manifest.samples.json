@@ -44,14 +44,6 @@
             {
               "dockerfile": "samples/dotnetapp",
               "os": "windows",
-              "osVersion": "nanoserver-1803",
-              "tags": {
-                "dotnetapp-nanoserver-1803": {}
-              }
-            },
-            {
-              "dockerfile": "samples/dotnetapp",
-              "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
                 "dotnetapp-nanoserver-1809": {}
@@ -116,14 +108,6 @@
                 "aspnetapp-buster-slim-arm64v8": {}
               },
               "variant": "v8"
-            },
-            {
-              "dockerfile": "samples/aspnetapp",
-              "os": "windows",
-              "osVersion": "nanoserver-1803",
-              "tags": {
-                "aspnetapp-nanoserver-1803": {}
-              }
             },
             {
               "dockerfile": "samples/aspnetapp",

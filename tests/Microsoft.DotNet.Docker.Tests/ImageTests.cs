@@ -53,21 +53,17 @@ namespace Microsoft.DotNet.Docker.Tests
         };
         private static readonly ImageData[] s_windowsTestData =
         {
-            new ImageData { Version = V2_1, OS = OS.NanoServer1803, Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ImageData { Version = V2_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
-            new ImageData { Version = V2_2, OS = OS.NanoServer1803, Arch = Arch.Amd64 },
             new ImageData { Version = V2_2, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
             new ImageData { Version = V2_2, OS = OS.NanoServer1809, Arch = Arch.Arm },
             new ImageData { Version = V2_2, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ImageData { Version = V2_2, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
-            new ImageData { Version = V3_0, OS = OS.NanoServer1803, Arch = Arch.Amd64 },
             new ImageData { Version = V3_0, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
             new ImageData { Version = V3_0, OS = OS.NanoServer1809, Arch = Arch.Arm },
             new ImageData { Version = V3_0, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ImageData { Version = V3_0, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
-            new ImageData { Version = V3_1, OS = OS.NanoServer1803, Arch = Arch.Amd64 },
             new ImageData { Version = V3_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
             new ImageData { Version = V3_1, OS = OS.NanoServer1809, Arch = Arch.Arm },
             new ImageData { Version = V3_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },

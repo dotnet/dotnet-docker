@@ -148,18 +148,6 @@ Tag | Dockerfile
 ---------| ---------------
 3.1.100-preview3-nanoserver-1809-arm32v7, 3.1-nanoserver-1809-arm32v7, 3.1.100-preview3, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/nanoserver-1809/arm32v7/Dockerfile)
 
-## Windows Server, version 1803 amd64 Tags
-Tag | Dockerfile
----------| ---------------
-3.0.100-nanoserver-1803, 3.0-nanoserver-1803, 3.0.100, 3.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/nanoserver-1803/amd64/Dockerfile)
-2.2.402-nanoserver-1803, 2.2-nanoserver-1803, 2.2.402, 2.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/nanoserver-1803/amd64/Dockerfile)
-2.1.802-nanoserver-1803, 2.1-nanoserver-1803, 2.1.802, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1803/amd64/Dockerfile)
-
-##### .NET Core 3.1 Preview Tags
-Tag | Dockerfile
----------| ---------------
-3.1.100-preview3-nanoserver-1803, 3.1-nanoserver-1803, 3.1.100-preview3, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/nanoserver-1803/amd64/Dockerfile)
-
 You can retrieve a list of all available tags for dotnet/core/sdk at https://mcr.microsoft.com/v2/dotnet/core/sdk/tags/list.
 
 # Support
