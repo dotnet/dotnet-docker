@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Microsoft.DotNet.VersionTools.Dependencies;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Diagnostics;
@@ -20,13 +21,11 @@ namespace Dotnet.Docker
     /// </summary>
     public class DockerfileShaUpdater : FileRegexUpdater
     {
-        private const string EnvNameGroupName = "envName";
         private const string ValueGroupName = "value";
+        private const string ChecksumsHostName = "dotnetclichecksums.blob.core.windows.net";
 
-        private static readonly string s_versionPattern =
-            $"ENV (?<{EnvNameGroupName}>(DOTNET|ASPNETCORE)_[\\S]*VERSION) (?<{ValueGroupName}>[\\S]*)";
         private static readonly string s_urlPatternFormat =
-            $"(?<{ValueGroupName}>https://dotnetcli.blob.core.windows.net/[^;\\s]*{{0}})";
+            $"(?<{ValueGroupName}>https://dotnetcli.azureedge.net/[^;\\s]*{{0}})";
         private static readonly string s_productUrlPattern = string.Format(s_urlPatternFormat, string.Empty);
         private static readonly string s_lzmaUrlPattern = string.Format(s_urlPatternFormat, "lzma");
         private static readonly string s_shaPatternFormat = $"[ \\$]({{0}})sha512( )*=( )*'(?<{ValueGroupName}>[^'\\s]*)'";
@@ -37,7 +36,8 @@ namespace Dotnet.Docker
         private static readonly Regex s_lzmaDownloadUrlRegex = new Regex(s_lzmaUrlPattern);
         private static readonly Regex s_productShaRegex = new Regex(s_productShaPattern);
         private static readonly Regex s_lzmaShaRegex = new Regex(s_lzmaShaPattern);
-        private static readonly Regex s_versionRegex = new Regex(s_versionPattern);
+        private static readonly Regex s_versionRegex = VariableHelper.GetValueRegex(
+            VariableHelper.AspNetVersionName, VariableHelper.DotnetSdkVersionName, VariableHelper.DotnetVersionName);
 
         private static readonly Dictionary<string, string> s_shaCache = new Dictionary<string, string>();
 
@@ -71,15 +71,15 @@ namespace Dotnet.Docker
         {
             string sha = null;
 
-            if (TryGetDotNetVersion(dockerfile, out (string Version, string EnvName) versionInfo))
+            if (TryGetDotNetVersion(dockerfile, out (string Value, string Name) versionInfo))
             {
                 if (TryGetDotNetDownloadUrl(dockerfile, out string downloadUrl))
                 {
-                    downloadUrl = SubstituteEnvRef(downloadUrl, versionInfo.EnvName, versionInfo.Version);
+                    downloadUrl = SubstituteVariableValue(downloadUrl, versionInfo.Name, versionInfo.Value);
                     if (!s_shaCache.TryGetValue(downloadUrl, out sha))
                     {
-                        sha = await GetDotNetCliChecksumsShaAsync(downloadUrl, versionInfo.EnvName)
-                            ?? await GetDotNetReleaseChecksumsShaAsync(downloadUrl, versionInfo.EnvName, versionInfo.Version)
+                        sha = await GetDotNetCliChecksumsShaAsync(downloadUrl, versionInfo.Name)
+                            ?? await GetDotNetReleaseChecksumsShaAsync(downloadUrl, versionInfo.Name, versionInfo.Value)
                             ?? await ComputeChecksumShaAsync(downloadUrl);
 
                         if (sha != null)
@@ -139,7 +139,10 @@ namespace Dotnet.Docker
         {
             string sha = null;
             string shaExt = envName.Contains("SDK") ? ".sha" : ".sha512";
-            string shaUrl = productDownloadUrl.Replace("dotnetcli", "dotnetclichecksums") + shaExt;
+
+            UriBuilder uriBuilder = new UriBuilder(productDownloadUrl);
+            uriBuilder.Host = ChecksumsHostName;
+            string shaUrl = uriBuilder.ToString() + shaExt;
 
             Trace.TraceInformation($"Downloading '{shaUrl}'.");
             using (HttpClient client = new HttpClient())
@@ -201,18 +204,21 @@ namespace Dotnet.Docker
             return match.Success;
         }
 
-        private static bool TryGetDotNetVersion(string dockerfile, out (string Version, string EnvName) versionInfo)
+        private static bool TryGetDotNetVersion(string dockerfile, out (string Value, string Name) versionInfo)
         {
             Match match = s_versionRegex.Match(dockerfile);
-            versionInfo = match.Success ? (match.Groups[ValueGroupName].Value, match.Groups[EnvNameGroupName].Value) : (null, null);
+            versionInfo = match.Success
+                ? (match.Groups[VariableHelper.ValueGroupName].Value, match.Groups[VariableHelper.VariableGroupName].Value)
+                : (null, null);
             return match.Success;
         }
 
-        private static string SubstituteEnvRef(string value, string envName, string envValue)
+        private static string SubstituteVariableValue(string input, string name, string value)
         {
-            return value
-                .Replace($"${envName}", envValue)       // *nix ENV var reference format
-                .Replace($"$Env:{envName}", envValue);  // Windows ENV var reference format
+            return input
+                .Replace($"${name}", value)       // *nix and Windows PS variable reference format
+                .Replace($"$Env:{name}", value)   // Windows PS ENV variable reference format
+                .Replace($"%{name}%", value);     // Windows CMD variable reference format
         }
     }
 }
