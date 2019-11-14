@@ -9,7 +9,7 @@ RUN set "dotnet_sdk_version=3.1.100-preview3-014645" `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
     && del dotnet.zip `
     # Trigger first run experience by running arbitrary cmd to populate local package cache
-    && dotnet help
+    && "%ProgramFiles%\dotnet\dotnet" help
 
 # Install PowerShell global tool
 RUN set "powershell_version=7.0.0-preview.5" `
