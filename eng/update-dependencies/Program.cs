@@ -190,37 +190,40 @@ namespace Dotnet.Docker
             CreateManifestUpdater(manifestBasedUpdaters, "Runtime", buildInfos, RuntimeBuildInfoName);
             manifestBasedUpdaters.Add(new ReadMeUpdater(RepoRoot));
 
-            return CreateDockerfileEnvUpdaters(dockerfiles, buildInfos, "DOTNET_SDK_VERSION", SdkBuildInfoName)
-                .Concat(CreateDockerfileEnvUpdaters(dockerfiles, buildInfos, "ASPNETCORE_VERSION", AspNetCoreBuildInfoName))
-                .Concat(CreateDockerfileEnvUpdaters(dockerfiles, buildInfos, "DOTNET_VERSION", RuntimeBuildInfoName))
+            return CreateDockerfileVariableUpdaters(dockerfiles, buildInfos, VariableHelper.DotnetSdkVersionName, SdkBuildInfoName)
+                .Concat(CreateDockerfileVariableUpdaters(
+                    dockerfiles, buildInfos, VariableHelper.AspNetVersionName, AspNetCoreBuildInfoName))
+                .Concat(CreateDockerfileVariableUpdaters(
+                    dockerfiles, buildInfos, VariableHelper.DotnetVersionName, RuntimeBuildInfoName))
                 .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateProductShaUpdater(path)))
                 .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateLzmaShaUpdater(path)))
                 .Concat(manifestBasedUpdaters);
         }
 
-        private static IEnumerable<IDependencyUpdater> CreateDockerfileEnvUpdaters(
-            string[] dockerfilePaths, IEnumerable<IDependencyInfo> buildInfos, string envName, string buildInfoName)
+        private static IEnumerable<IDependencyUpdater> CreateDockerfileVariableUpdaters(
+            string[] dockerfilePaths, IEnumerable<IDependencyInfo> buildInfos, string variableName, string buildInfoName)
         {
-            return GetBuildVersion(buildInfos, buildInfoName) == null 
+            return GetBuildVersion(buildInfos, buildInfoName) == null
                 ? Enumerable.Empty<IDependencyUpdater>()
-                : dockerfilePaths.Select(path => CreateDockerfileEnvUpdater(path, envName, buildInfoName));
+                : dockerfilePaths.Select(path => CreateDockerfileVariableUpdater(path, variableName, buildInfoName));
         }
 
-        private static IDependencyUpdater CreateDockerfileEnvUpdater(string dockerfilePath, string envName, string buildInfoName)
-        {        
+        private static IDependencyUpdater CreateDockerfileVariableUpdater(
+            string dockerfilePath, string variableName, string buildInfoName)
+        {
             return new FileRegexReleaseUpdater()
             {
                 Path = dockerfilePath,
                 BuildInfoName = buildInfoName,
-                Regex = new Regex($"ENV {envName} (?<envValue>[^\r\n]*)"),
-                VersionGroupName = "envValue"
+                Regex = VariableHelper.GetValueRegex(variableName),
+                VersionGroupName = VariableHelper.ValueGroupName
             };
         }
 
         private static void CreateManifestUpdater(
             List<IDependencyUpdater> manifestUpdaters,
-            string imageVariantName, 
-            IEnumerable<IDependencyInfo> buildInfos, 
+            string imageVariantName,
+            IEnumerable<IDependencyInfo> buildInfos,
             string buildInfoName)
         {
             string version = GetBuildVersion(buildInfos, buildInfoName);
