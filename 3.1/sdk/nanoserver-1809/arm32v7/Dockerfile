@@ -2,23 +2,6 @@
 
 FROM mcr.microsoft.com/windows/nanoserver:1809-arm32v7
 
-# Install .NET Core SDK
-RUN set "dotnet_sdk_version=3.1.100-preview3-014645" `
-    && call curl -SL --output dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/%dotnet_sdk_version%/dotnet-sdk-%dotnet_sdk_version%-win-arm.zip `
-    && mkdir "%ProgramFiles%\dotnet" `
-    && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
-    && del dotnet.zip `
-    # Trigger first run experience by running arbitrary cmd to populate local package cache
-    && "%ProgramFiles%\dotnet\dotnet" help
-
-# Install PowerShell global tool
-RUN set "powershell_version=7.0.0-preview.5" `
-    && call curl -SL --output PowerShell.Windows.arm32.%powershell_version%.nupkg https://pwshtool.blob.core.windows.net/tool/%powershell_version%/PowerShell.Windows.arm32.%powershell_version%.nupkg `
-    && mkdir "%ProgramFiles%\powershell" `
-    && call "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %powershell_version% PowerShell.Windows.arm32 `
-    && call del PowerShell.Windows.arm32.%powershell_version%.nupkg `
-    && call del "%ProgramFiles%\powershell\.store\powershell.windows.arm32\%powershell_version%\powershell.windows.arm32\%powershell_version%\powershell.windows.arm32.%powershell_version%.nupkg"
-
 ENV `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
@@ -28,6 +11,21 @@ ENV `
     NUGET_XMLDOC_MODE=skip `
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1809-arm32
+
+# Install .NET Core SDK
+RUN set "dotnet_sdk_version=3.1.100-preview3-014645" `
+    && call curl -SL --output dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/%dotnet_sdk_version%/dotnet-sdk-%dotnet_sdk_version%-win-arm.zip `
+    && mkdir "%ProgramFiles%\dotnet" `
+    && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
+    && del dotnet.zip
+
+# Install PowerShell global tool
+RUN set "powershell_version=7.0.0-preview.5" `
+    && call curl -SL --output PowerShell.Windows.arm32.%powershell_version%.nupkg https://pwshtool.blob.core.windows.net/tool/%powershell_version%/PowerShell.Windows.arm32.%powershell_version%.nupkg `
+    && mkdir "%ProgramFiles%\powershell" `
+    && call "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %powershell_version% PowerShell.Windows.arm32 `
+    && call del PowerShell.Windows.arm32.%powershell_version%.nupkg `
+    && call del "%ProgramFiles%\powershell\.store\powershell.windows.arm32\%powershell_version%\powershell.windows.arm32\%powershell_version%\powershell.windows.arm32.%powershell_version%.nupkg"
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
