@@ -51,11 +51,6 @@ $(McrTagsYmlTagGroup:2.2-nanoserver-1809)
 $(McrTagsYmlTagGroup:2.1-nanoserver-1809)
 $(McrTagsYmlTagGroup:3.1-nanoserver-1809)
     customSubTableTitle: .NET Core 3.1 Preview Tags
-$(McrTagsYmlTagGroup:3.0-nanoserver-1803)
-$(McrTagsYmlTagGroup:2.2-nanoserver-1803)
-$(McrTagsYmlTagGroup:2.1-nanoserver-1803)
-$(McrTagsYmlTagGroup:3.1-nanoserver-1803)
-    customSubTableTitle: .NET Core 3.1 Preview Tags
 $(McrTagsYmlTagGroup:3.0-nanoserver-1809-arm32v7)
 $(McrTagsYmlTagGroup:2.2-nanoserver-1809-arm32v7)
 $(McrTagsYmlTagGroup:3.1-nanoserver-1809-arm32v7)
