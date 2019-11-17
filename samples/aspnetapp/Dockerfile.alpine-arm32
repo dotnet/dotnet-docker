@@ -10,10 +10,17 @@ RUN dotnet restore
 # copy everything else and build app
 COPY aspnetapp/. ./aspnetapp/
 WORKDIR /source/aspnetapp
-RUN dotnet publish -c release -o /app
+RUN dotnet publish -c release -o /app -r linux-musl-arm --self-contained false
 
 # final stage, which will result in generated image
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine-arm32v7
 WORKDIR /app
 COPY --from=build /app ./
 ENTRYPOINT ["./aspnetapp"]
+
+# See: https://github.com/dotnet/announcements/issues/20
+# Uncomment to enable globalization APIs (or delete)
+#ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT false
+#RUN apk add --no-cache icu-libs
+#ENV LC_ALL en_US.UTF-8
+#ENV LANG en_US.UTF-8
