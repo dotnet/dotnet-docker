@@ -7,8 +7,8 @@ These samples demonstrate how to use .NET Core and Docker together, for developm
 * [Build in a container](build-in-container.md)
 * [Unit test in a container](unit-testing-in-container.md)
 * [Develop .NET Core applications in a container](dotnetapp/dotnet-docker-dev-in-container.md)
-* [Host ASP.NET Core Images with Docker and HTTPS](aspnetapp/aspnetcore-docker-https.md)
 * [Develop ASP.NET Core Applications with Docker and HTTPS](aspnetapp/aspnetcore-docker-https-development.md)
+* [Host ASP.NET Core Images with Docker and HTTPS](aspnetapp/aspnetcore-docker-https.md)
 * [Push Docker Images to Azure Container Registry](dotnetapp/push-image-to-acr.md)
 * [Push Docker Images to DockerHub](dotnetapp/push-image-to-dockerhub.md)
 * [Deploy ASP.NET Core Applications to Azure Container Instances](aspnetapp/deploy-container-to-aci.md)
@@ -29,18 +29,7 @@ docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
 
 ## Docker Repositories
 
-.NET Core:
+You can find .NET container images at the following Docker repositories:
 
 * [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
-* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
-* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
-
-.NET Framework:
-
-* [dotnet/framework](https://hub.docker.com/_/microsoft-dotnet-framework/): .NET Framework, ASP.NET and WCF
-* [dotnet/framework/samples](https://hub.docker.com/_/microsoft-dotnet-framework-samples/): .NET Framework, ASP.NET and WCF Samples
-
-## .NET Core Resources
-
-* [.NET Docs](https://docs.microsoft.com/dotnet/)
-* [ASP.NET Docs](https://docs.microsoft.com/aspnet/)
+* [dotnet/framework](https://hub.docker.com/_/microsoft-dotnet-framework/): .NET Framework

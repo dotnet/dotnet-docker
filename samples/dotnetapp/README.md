@@ -1,87 +1,186 @@
 # .NET Core Docker Sample
 
-This sample demonstrates how to build container images for .NET Core console apps, for Linux and Windows containers, and for x64, ARM32 and ARM64 architectures. It requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or a later version of the [Docker client](https://www.docker.com/products/docker).
+This sample demonstrates how to build container images for .NET Core console apps, which are supported for Linux and Windows containers, and for x64, ARM32 and ARM64 architectures.
 
-The sample builds the application in a container based on the larger [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). It builds the application and then copies the final build result into a Docker image based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/).
+The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You can test the built image locally or deploy it to a container registry.
 
-## Try a pre-built .NET Core Docker Image
+The instructions assume that you have cloned this repo, have [Docker](https://www.docker.com/products/docker) installed, and have a command prompt open within the `samples/dotnetapp` directory within the repo.
 
-You can run a pre-built [.NET Core Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/) with the following command.
+If want to skip to the final result, you can try a pre-built version with the following command:
 
 ```console
 docker run --rm mcr.microsoft.com/dotnet/core/samples
 ```
 
-## Build and run container image
+## Build and run a container image
 
-You can build and run the [sample Dockerfile](Dockerfile) in Docker, by cloning the repo and using the following commands. The instructions assume that you are in the root of the repository. 
+You can to build a .NET Core-based container image using the following instructions:
 
 ```console
-cd samples
-cd dotnetapp
 docker build --pull -t dotnetapp .
 docker run --rm dotnetapp Hello .NET Core from Docker
 ```
 
-## Relying on tags that work everywhere
-
-The .NET Core team provides a set of version number tags, like the `3.1` tag` that you can use on multiple operating system and are supported on most processor types (x64, ARM64 and ARM32). If you don't see an operating system or processor type in the tag, you know it's a "multi-arch" tag that will work everywhere. These tags, when you pull them, will result in Debian images for Linux and Windows Nano Server on Windows (if you are using Windows containers). If you are happy with that behavior, they are the easiest tags to use and enable you to write Dockerfiles that can be built on multiple machines. However, the images produces may differ across environments (which may or may not be what you want).
-
-For example, the following command will work in all supported environments:
+You can use the `docker images` command to see a listing of your image, as you can see in the following example.
 
 ```console
-docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1 dotnet
+rich@thundera dotnetapp % docker images dotnetapp
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+dotnetapp           latest              baee380605f4        14 seconds ago      189MB
 ```
 
-## Targeting a specific  operating system
+The Docker build command used above uses the standard pattern to build images, so doesn't tell you much about what is actually happening. The logic is provided in the [Dockerfile](Dockerfile) file, which follows.
 
-If you want a specific operating system image all the time, you should use a specific tag to ensure you always get what you want. We publish images for Alpine, Debian, Ubuntu and Windows Nano Server. By default, operating system-specific tags will pull x64 images.
+```Dockerfile
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /source
 
-The following tags demonstrate the pattern used to describe each operating system (using .NET Core 3.1 as the example):
+# copy csproj and restore as distinct layers
+COPY *.csproj .
+RUN dotnet restore
 
-* `3.1-alpine` (Debian 3.10)
-* `3.1-bionic` (Ubuntu 18.04)
-* `3.1-buster` (Debian 10)
-* `3.1-nanoserver-1903` (Nano Server, version 1903)
-* `3.1-nanoserver-1809` (Nano Server, version 1809)
-* `3.1-nanoserver-1803` (Nano Server, version 1803)
+# copy and publish app and libraries
+COPY *.cs .
+RUN dotnet publish -c release -o /app
 
-For example, the following command will always pull an Alpine image and will only work on x64:
+# final stage, which will result in generated image
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1
+WORKDIR /app
+COPY --from=build /app .
+ENTRYPOINT ["./dotnetapp"]
+```
+
+This Dockerfile builds and publishes the .NET Core application and then copies the result to a rumtime-based image. It copies and restores the project file as the first step so that the results of those commands can be cached for subsequent builds since project file edits are less common than source code edits.
+
+## Build an image for Alpine, Debian or Ubuntu
+
+By default, .NET Core uses Debian base images for Linux containers. You will get a Debian-based image if you use a tag with only a version number, such as `3.1`, as opposed to a distro-specific tag like `3.1-alpine`.
+
+This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. Docker makes it easy to use alternate Dockfiles by using the `-f` argument.
+
+The following example demonstrates targeting distros explictly and also shows the size differences between the distros. Tags are added to the image name to differentiate the images.
 
 ```console
-docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1-alpine dotnet
+docker build --pull -t dotnetapp:debian -f Dockerfile.debian-x64 .
+docker build --pull -t dotnetapp:ubuntu -f Dockerfile.ubuntu-x64 .
+docker build --pull -t dotnetapp:alpine -f Dockerfile.alpine-x64 .
 ```
 
-## Targeting a specific processor type
+You can use `docker images` to see the images you've built:
 
-If you want a specific processor type all the time, you should use a specific tag to ensure you always get what you want. We publish tags for x64, ARM64 and ARM32.
+```console
+rich@thundera dotnetapp % docker images dotnetapp
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+dotnetapp           alpine              8933fb9821e8        8 seconds ago       87MB
+dotnetapp           ubuntu              373df08a06ec        25 seconds ago      187MB
+dotnetapp           debian              229dd121a96b        39 seconds ago      190MB
+dotnetapp           latest              303eabf97376        56 seconds ago      190MB
+```
 
-The following tags demonstrate the patter used to describe each processor, using the same operating systems listed above.
+You can run these images:
 
-### x64
+```console
+docker run dotnetapp
+docker run dotnetapp:debian
+docker run dotnetapp:ubuntu
+docker run dotnetapp:alpine
+```
 
-* `3.1-alpine` (Debian 3.10)
-* `3.1-bionic` (Ubuntu 18.04)
-* `3.1-buster` (Debian 10)
-* `3.1-nanoserver-1903` (Nano Server, version 1903)
-* `3.1-nanoserver-1809` (Nano Server, version 1809)
-* `3.1-nanoserver-1803` (Nano Server, version 1803)
+If you want to double check the distro of an application, you can do that by configuring a different entrypoint when you run the image, as you see in the following example.
 
-### ARM64
+```console
+rich@thundera ~ % docker run --entrypoint cat dotnetapp /etc/os-release    
+PRETTY_NAME="Debian GNU/Linux 10 (buster)"
+NAME="Debian GNU/Linux"
+VERSION_ID="10"
+VERSION="10 (buster)"
+VERSION_CODENAME=buster
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+rich@thundera ~ % docker run --entrypoint cat dotnetapp:alpine /etc/os-release
+NAME="Alpine Linux"
+ID=alpine
+VERSION_ID=3.10.3
+PRETTY_NAME="Alpine Linux v3.10"
+HOME_URL="https://alpinelinux.org/"
+BUG_REPORT_URL="https://bugs.alpinelinux.org/"
+```
 
-* `3.1-alpine-arm64v8` (Debian 3.10)
-* `3.1-bionic-arm64v8` (Ubuntu 18.04)
-* `3.1-buster-arm64v8` (Debian 10)
-* `3.1-nanoserver-1903-arm64v8` (Nano Server, version 1903)
-* `3.1-nanoserver-1809-arm64v8` (Nano Server, version 1809)
-* `3.1-nanoserver-1803-arm64v8` (Nano Server, version 1803)
+## Build a Linux image for ARM32 and ARM64
 
-### ARM32
+By default, distro-specific .NET Core images target x64. You need to use an architecture-specific tag if you want to target other architectures, specifically ARM32 and ARM64. Note that Alpine is only supported on ARM64 and x64, not ARM32.
 
-* `3.1-alpine-arm32v7` (Debian 3.10)
-* `3.1-bionic-arm32v7` (Ubuntu 18.04)
-* `3.1-buster-arm32v7` (Debian 10)
-* `3.1-nanoserver-1809-arm32v7` (Nano Server, version 1809)
+The following example demonstrates targeting architectures explictly, first for ARM32 and then ARM64.
+
+```console
+docker build --pull -t dotnetapp:debian-arm32 -f Dockerfile.debian-arm32 .
+docker build --pull -t dotnetapp:ubuntu-arm32 -f Dockerfile.ubuntu-arm32 .
+docker build --pull -t dotnetapp:debian-arm64 -f Dockerfile.debian-arm64 .
+docker build --pull -t dotnetapp:ubuntu-arm64 -f Dockerfile.ubuntu-arm64 .
+docker build --pull -t dotnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
+```
+
+You can use `docker images` to see a listing of the images you've built, as you can see in the following example.
+
+```console
+rich@thundera ~ % docker images dotnetapp | grep arm
+dotnetapp           ubuntu-arm64        3be8a7da7148        14 seconds ago      193MB
+dotnetapp           alpine-arm64        09a1d1bfd477        20 hours ago        99.5MB
+dotnetapp           debian-arm64        fa5efe51d9ef        20 hours ago        197MB
+dotnetapp           ubuntu-arm32        ea8ac73f8a72        20 hours ago        165MB
+dotnetapp           debian-arm32        4f6ade8318d4        20 hours ago        165MB
+```
+
+You can build ARM32 and ARM64 images on x64 machines, but you will not be able to run them. Docker relies on QEMU for this scenario, which isn't supported by .NET Core. You must test and run .NET Core imges on actual hardware for the given processor type.
+
+## Build a Linux image optimized for size
+
+You may want to build a .NET Core image that is optimized for size, by building a self-contained and assembly-trimmed application. This approach may be prefered if you are running a single .NET Core app on a machine. Otherwise, building images on the .NET Core runtime layer is recommended and likely preferred. The instruction examples demonstrated are for x64 only, but can be straightforwardly applied for the ARM architecture.
+
+There are a set of '-trim' Dockerfiles included with this sample that are opted into the following .NET Core SDK publish operations:
+
+* **Selfcontained** -- Publish the runtime with the application.
+* **PublishTrimmed** -- Trim assemblies, including in the .NET Core framework, to make the application smaller.
+* **PublishReadyToRun** -- Compile assemblies to Ready to Run format to make startup faster.
+
+The first two operations reduce size, which can decrease image pull times. The last operation improves startup performance, but increases size. You can experiment with these options if you want to see which combination of settings works best for you.
+
+The following instructions demonstrate how to build the `slim` Dockerfiles:
+
+```console
+docker build --pull -t dotnetapp:debian-trim -f Dockerfile.debian-x64-trim .
+docker build --pull -t dotnetapp:ubuntu-trim -f Dockerfile.ubuntu-x64-trim .
+docker build --pull -t dotnetapp:alpine-trim -f Dockerfile.alpine-x64-trim .
+```
+
+You can then compare sizes between using a shared layer and optimizing for size using the `docker images` command again. The command below uses `grep`. `findstr` on Windows works equally well.
+
+```console
+rich@thundera dotnetapp % docker images dotnetapp | grep alpine
+dotnetapp           alpine-trim      9d23e22d7229        About a minute ago   46.3MB
+dotnetapp           alpine              8933fb9821e8        About an hour ago    87MB
+rich@thundera dotnetapp % docker images dotnetapp | grep ubuntu
+dotnetapp           ubuntu-trim      fe292390c5fb        52 minutes ago      140MB
+dotnetapp           ubuntu              373df08a06ec        59 minutes ago      187MB
+rich@thundera dotnetapp % docker images dotnetapp | grep debian
+dotnetapp           debian-trim      41e834fe89e2        52 minutes ago      147MB
+dotnetapp           debian              229dd121a96b        59 minutes ago      190MB
+```
+
+Note: These sizes are all uncompressed, on-disk sizes. When you pull an image from a registry, it is compressed, such that the size will be significantly smaller.
+
+## Build an an image for Windows Nano Server
+
+You can also target Nano Server directly in the same as you can with Linux. The only difference is that Nano Server has a stronger coupling between the host Windows version and the guest container version. All supported versions will be demonstrated in the example below. You are enouraged only to use the version that applies to your environment.
+
+
+
+
+## Build an image optimized for startup performance
+
+You can opt any application into Ready to Run compilation by adding `/p:PublishReadToRun=true` as an argument to the publish command. The default `Dockerfile` that come with the sample don't do that because the application is too small to warrant it. .NET Core provides the majority of the startup benefit available since most of the code actually run in an application within the core framework, which itself is Ready to Run compiled.
 
 ## Resources
 

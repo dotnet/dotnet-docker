@@ -15,13 +15,8 @@ COPY *.cs .
 RUN dotnet publish -c release -o /app -r win-x64 --self-contained true
 
 # final stage, which will result in generated image
-FROM mcr.microsoft.com/dotnet/core/runtime:3.0-nanoserver
-WORKDIR /app
-COPY --from=build /app .
-ENTRYPOINT ["dotnetapp"]
-
-# Uses the 1909 release; 1809, and 1903 are other choices
-FROM mcr.microsoft.com/windows/nanoserver:1909 AS runtime
+# Uses the 1903 release; 1803 and 1809 are other choices
+FROM mcr.microsoft.com/windows/nanoserver:1903 AS runtime
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnetapp"]
