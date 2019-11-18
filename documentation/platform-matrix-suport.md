@@ -8,11 +8,13 @@ This document describes the platform matrix supported by the official .NET Core 
 
 ### Linux
 
-Each distribution has a unique approach to releasing, schedule and end-of life (EOL). This prohibits the definition of a one-size-fits-all policy. Instead, a policy is defined for each supported distro.
+Each distribution (distro) has a unique approach to releasing, schedule and end-of life (EOL). This prohibits the definition of a one-size-fits-all policy. Instead, a policy is defined for each supported distro.
 
 - Alpine — support tip and retain support for one quarter (3 months) after a new version is released.
-- Debian — support one Debian version per .NET Core version, whichever Debian version is the latest when a given .NET Core version ships. This is also the default Linux image used for a given shared/multi-arch tag.
-- Ubuntu — support one Ubuntu version per .NET Core version, whichever Ubuntu version is the latest LTS version when a given .NET Core version ships.  In addition, as it gets closer to new Ubuntu LTS versions, support will be added for non-LTS Ubuntu versions as a means of validating the new LTS versions.
+- Debian — support the latest *stable* version at the time a `major.minor` version of .NET Core is released.  Add support for each new *stable* version as it is released.  Debian images are included in the shared/multi-arch tags.
+- Ubuntu — support the latest *LTS* version at the time a `major.minor` version of .NET Core is released.  Add support for each new *LTS* version as it is released.
+
+Pre-release versions of the supported distros will be made available within the [nightly repositories](https://hub.docker.com/_/microsoft-dotnet-core-nightly) based on the availability of pre-release OS base images.
 
 ### Windows
 
