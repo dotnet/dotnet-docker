@@ -44,6 +44,6 @@ RUN curl -SL --output PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg https://p
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $POWERSHELL_VERSION PowerShell.Linux.arm64 \
     && rm PowerShell.Linux.arm64.$POWERSHELL_VERSION.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
-	&& chmod 755 /usr/share/powershell/pwsh \
+    && chmod 755 /usr/share/powershell/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm
