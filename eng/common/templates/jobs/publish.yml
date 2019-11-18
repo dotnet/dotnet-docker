@@ -49,7 +49,7 @@ jobs:
       $(dotnetBot-userName)
       $(dotnetBot-email)
       $(dotnet-bot-user-repo-adminrepohook-pat)
-      $(publicGitRepoUri)/blob/$(publicSourceBranch)
+      $(publicGitRepoUri)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Readme
     condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
