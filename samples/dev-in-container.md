@@ -78,7 +78,7 @@ The following instructions demonstrate this scenario in various configurations.
 ## Linux or macOS
 
 ```console
-docker run --rm -it -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch run
+docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run
 ```
 
 ## Windows using Linux containers
@@ -131,8 +131,6 @@ docker run --rm -it -p 8000:80 -v ~/git/dotnet-docker/samples/aspnetapp:/app/ -w
 ```console
 docker run --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:/app/ -w /app/aspnetapp -e ASPNETCORE_URLS=http://+:80 mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch run
 ```
-
-You can use CTRL-C to terminate `dotnet watch`. Navigate to the site at `http://localhost:8000` in your browser.
 
 You can use CTRL-C to terminate `dotnet watch`. Navigate to the site at `http://localhost:8000` in your browser.
 
