@@ -66,14 +66,20 @@ aspnetapp-buster-slim, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-dotnetapp-buster-slim-arm32v7, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) | Debian 10
-aspnetapp-buster-slim-arm32v7, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) | Debian 10
+dotnetapp-buster-slim-arm32v7, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.linux-arm32) | Debian 10
+aspnetapp-buster-slim-arm32v7, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile.linux-arm32) | Debian 10
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 dotnetapp-buster-slim-arm64v8, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) | Debian 10
 aspnetapp-buster-slim-arm64v8, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) | Debian 10
+
+## Windows Server, version 1909 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+dotnetapp-nanoserver-1909, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+aspnetapp-nanoserver-1909, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
 ## Windows Server, version 1903 amd64 Tags
 Tag | Dockerfile
@@ -92,12 +98,6 @@ Tag | Dockerfile
 ---------| ---------------
 dotnetapp-nanoserver-1809-arm32v7, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.nanoserver-arm32)
 aspnetapp-nanoserver-1809-arm32v7, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile.nanoserver-arm32)
-
-## Windows Server, version 1803 amd64 Tags
-Tag | Dockerfile
----------| ---------------
-dotnetapp-nanoserver-1803, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-aspnetapp-nanoserver-1803, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/core/samples at https://mcr.microsoft.com/v2/dotnet/core/samples/tags/list.
 

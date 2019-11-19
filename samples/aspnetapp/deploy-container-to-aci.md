@@ -2,7 +2,7 @@
 
 You can deploy ASP.NET Core applications to Azure Container Instances (ACI) with Docker. ACI is a great option for application testing and can also be used for production deployment (not covered here). These instructions are based on the [ASP.NET Core Docker Sample](README.md).
 
-These instructions only work for linux based images.  ACI currently supports Windows Server 2016 images based on Long-Term Servicing Channel (LTSC) versions. Windows Semi-Annual Channel (SAC) releases like Nano Server, version 1803, 1809 and 1903 are unsupported.
+These instructions work for both Linux and Windows based images.  Be aware that ACI does not support all versions of Windows images.  See [What Windows base OS images are supported](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-faq#what-windows-base-os-images-are-supported) for details.
 
 ## Build Application
 
@@ -57,21 +57,23 @@ During deployment, you'll need to enter your password. Type or copy/paste it in.
 az acr credential show -n richlander --query passwords[0].value --output tsv
 ```
 
-You can deploy Linux images with the following command:
+You can deploy images with the following command:
+
+### Linux
 
 ```console
-az container create --name aspnetapp --image richlander.azurecr.io/aspnetapp --resource-group richlander-containers --ip-address public
+az container create --os-type Linux --name aspnetapp --image richlander.azurecr.io/aspnetapp --resource-group richlander-containers --ip-address public
+```
+
+### Windows
+
+```console
+az container create --os-type Windows --name aspnetapp --image richlander.azurecr.io/aspnetapp --resource-group richlander-containers --ip-address public
 ```
 
 ## Running the Image
 
-The last step -- `az container show` -- will need to be repeated until `provisioningState` moves to `Succeeded`.
-
-```console
-az container show --name aspnetapp --resource-group richlander-containers
-```
-
-Once the `provisioningState` moves to `Succeeded`, collect the IP address from the `ip` field, as you can see in the following image, and then copy/paste the IP address into your browser. You should see the sample running.
+The previous step -- `az container create` -- will create and start the container.  Once completed, detailed status information will be displayed.  Verify the `provisioningState` is `Succeeded`, collect the IP address from the `ip` field, as you can see in the following image, and then copy/paste the IP address into your browser. You should see the sample running.
 
 ![az container show -- successfully provisioned app](https://user-images.githubusercontent.com/2608468/29669868-b492c4e8-8899-11e7-82cc-d3ae1262a080.png)
 
