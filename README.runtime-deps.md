@@ -1,9 +1,13 @@
+The images from this repository are for the next release of [.NET Core](https://github.com/dotnet/core).
+
+See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
+
 # Featured Tags
 
 * `3.0` (Current)
-  * `docker pull mcr.microsoft.com/dotnet/core/runtime-deps:3.0`
+  * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime-deps:3.0`
 * `2.1` (LTS)
-  * `docker pull mcr.microsoft.com/dotnet/core/runtime-deps:2.1`
+  * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime-deps:2.1`
 
 # About This Image
 
@@ -19,14 +23,17 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 # Related Repos
 
+.NET Core (Preview):
+
+* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
+* [dotnet/core-nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-core-nightly-sdk/): .NET Core SDK (Preview)
+* [dotnet/core-nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-nightly-aspnet/): ASP.NET Core Runtime (Preview)
+* [dotnet/core-nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime/): .NET Core Runtime (Preview)
+
 .NET Core:
 
 * [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
-* [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/): .NET Core SDK
-* [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/): ASP.NET Core Runtime
-* [dotnet/core/runtime](https://hub.docker.com/_/microsoft-dotnet-core-runtime/): .NET Core Runtime
 * [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
-* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
 
 .NET Framework:
 
