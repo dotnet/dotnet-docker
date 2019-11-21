@@ -44,11 +44,14 @@ namespace Microsoft.DotNet.Docker.Tests
             new ImageData { Version = V3_0, OS = OS.Alpine310,    Arch = Arch.Arm64,    SdkOS = OS.Buster },
             new ImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Amd64 },
             new ImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Amd64 },
+            new ImageData { Version = V3_1, OS = OS.Focal,        Arch = Arch.Amd64 },
             new ImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Amd64 },
             new ImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Arm },
             new ImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Arm },
+            new ImageData { Version = V3_1, OS = OS.Focal,        Arch = Arch.Arm },
             new ImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
             new ImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Arm64 },
+            new ImageData { Version = V3_1, OS = OS.Focal,        Arch = Arch.Arm64 },
             new ImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Arm64,    SdkOS = OS.Buster },
         };
         private static readonly ImageData[] s_windowsTestData =
