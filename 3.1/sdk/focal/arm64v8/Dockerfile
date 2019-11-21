@@ -8,7 +8,7 @@ ENV \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Debian-10-arm64
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Ubuntu-20.04-arm64
 
 # Install .NET CLI dependencies
 RUN apt-get update \
