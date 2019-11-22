@@ -107,7 +107,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifySDKImage_WorldWritableFilesCheck(ImageData imageData)
+        public void VerifyImage_InsecureFilesCheck(ImageData imageData)
         {
             if (imageData.Version < new Version("3.1") || !DockerHelper.IsLinuxContainerModeEnabled)
             {
@@ -116,15 +116,19 @@ namespace Microsoft.DotNet.Docker.Tests
 
             string worldWritableDirectoriesWithoutStickyBitCmd = @"find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \)";
             string worldWritableFilesCmd = "find / -xdev -type f -perm -o+w";
-            string command = $"/bin/sh -c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd}\"";
+            string noUserOrGroupFilesCmd = @"find / -xdev \( -nouser -o -nogroup \)";
+            string command = $"/bin/sh -c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd} && {noUserOrGroupFilesCmd}\"";
 
-            string output = _dockerHelper.Run(
-                image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
-                name: imageData.GetIdentifier($"WorldWritableFiles"),
-                command: command
-            );
-            
-            Assert.Empty(output);
+            foreach (DotNetImageType imageType in Enum.GetValues(typeof(DotNetImageType)))
+            {
+                string output = _dockerHelper.Run(
+                    image: imageData.GetImage(imageType, _dockerHelper),
+                    name: imageData.GetIdentifier($"InsecureFiles-{imageType}"),
+                    command: command
+                );
+
+                Assert.Empty(output);
+            }
         }
 
         [Theory]
