@@ -120,7 +120,7 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.OS.Contains("alpine"))
             {
                 // BusyBox in Alpine doesn't support the more convenient -nouser and -nogroup options for the find command
-                noUserOrGroupFilesCmd = @"find / -xdev -exec stat -c '%U %n' {} \+ | grep ^UNKNOWN";
+                noUserOrGroupFilesCmd = @"find / -xdev -exec stat -c %U-%n {} \+ | grep ^UNKNOWN";
             }
             else
             {
