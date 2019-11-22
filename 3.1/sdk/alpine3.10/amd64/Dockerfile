@@ -31,9 +31,9 @@ RUN dotnet_sdk_version=3.1.100 \
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.0.0-preview.5 \
+RUN powershell_version=7.0.0-preview.6 \
     && wget -O PowerShell.Linux.Alpine.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha512='5d5dc58d5744a9012696058074c1e72471a7f45489564fdf3fbfb5a89a61f8832f026aa7a0742a542d7dc5c125ba6baef00b74c3e75338b9eae056bf0e9b4ee4' \
+    && powershell_sha512='7807b7be0a034e2ae36236f056bebddbc2be553cca0e02ab83babf79b0c011bd9966f135c2e285c4de9f76b874785cd93ecfe09c01a0f3868dedcdad76eb6fc4' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
