@@ -107,6 +107,28 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
+        public void VerifySDKImage_WorldWritableFilesCheck(ImageData imageData)
+        {
+            if (imageData.Version < new Version("3.1") || !DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                return;
+            }
+
+            string worldWritableDirectoriesWithoutStickyBitCmd = @"find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \)";
+            string worldWritableFilesCmd = "find / -xdev -type f -perm -o+w";
+            string command = $"/bin/sh -c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd}\"";
+
+            string output = _dockerHelper.Run(
+                image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
+                name: imageData.GetIdentifier($"WorldWritableFiles"),
+                command: command
+            );
+            
+            Assert.Empty(output);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
         public void VerifySdkImage_EnvironmentVariables(ImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
