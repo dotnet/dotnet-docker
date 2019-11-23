@@ -109,7 +109,8 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyImage_InsecureFilesCheck(ImageData imageData)
         {
-            if (imageData.Version < new Version("3.1") || !DockerHelper.IsLinuxContainerModeEnabled)
+            if (imageData.Version < new Version("3.1") || !DockerHelper.IsLinuxContainerModeEnabled ||
+                (imageData.OS.Contains("alpine") && imageData.IsArm))
             {
                 return;
             }
@@ -120,7 +121,7 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.OS.Contains("alpine"))
             {
                 // BusyBox in Alpine doesn't support the more convenient -nouser and -nogroup options for the find command
-                noUserOrGroupFilesCmd = @"find / -xdev -exec stat -c %U-%n {} \+ | grep ^UNKNOWN";
+                noUserOrGroupFilesCmd = @"find / -xdev -exec stat -c %U-%n {} \+ | { grep ^UNKNOWN || true; }";
             }
             else
             {
