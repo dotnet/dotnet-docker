@@ -185,7 +185,7 @@
         {
           "platforms": [
             {
-              "dockerfile": "2.1/runtime-deps/amazonlinux/amd64",
+              "dockerfile": "2.1/runtime-deps/amazonlinux2/amd64",
               "os": "linux",
               "osVersion": "amazonlinux2",
               "tags": {
