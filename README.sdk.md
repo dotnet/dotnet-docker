@@ -55,14 +55,17 @@ Tags | Dockerfile | OS Version
 3.0.101-alpine3.9, 3.0-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 3.0.101-disco, 3.0-disco | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/disco/amd64/Dockerfile) | Ubuntu 19.04
 3.0.101-bionic, 3.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
+3.0.101-amazonlinux2, 3.0-amazonlinux2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/sdk/amazonlinux2/amd64/Dockerfile) | Amazon Linux 2
 2.2.207-stretch, 2.2-stretch, 2.2.207, 2.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/stretch/amd64/Dockerfile) | Debian 9
 2.2.207-alpine3.10, 2.2-alpine3.10, 2.2.207-alpine, 2.2-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
 2.2.207-alpine3.9, 2.2-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 2.2.207-bionic, 2.2-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
+2.2.207-amazonlinux2, 2.2-amazonlinux2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/sdk/amazonlinux2/amd64/Dockerfile) | Amazon Linux 2
 2.1.607-stretch, 2.1-stretch, 2.1.607, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/amd64/Dockerfile) | Debian 9
 2.1.607-alpine3.10, 2.1-alpine3.10, 2.1.607-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
 2.1.607-alpine3.9, 2.1-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 2.1.607-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
+2.1.607-amazonlinux2, 2.1-amazonlinux2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/amazonlinux2/amd64/Dockerfile) | Amazon Linux 2
 
 ##### .NET Core 3.1 Preview Tags
 Tags | Dockerfile | OS Version
@@ -70,6 +73,8 @@ Tags | Dockerfile | OS Version
 3.1.100-preview3-buster, 3.1-buster, 3.1.100-preview3, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/buster/amd64/Dockerfile) | Debian 10
 3.1.100-preview3-alpine3.10, 3.1-alpine3.10, 3.1.100-preview3-alpine, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
 3.1.100-preview3-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
+3.1.100-preview3-amazonlinux2, 3.1-amazonlinux2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/amazonlinux2/amd64/Dockerfile) | Ubuntu 18.04
+
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version

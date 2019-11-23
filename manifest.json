@@ -183,6 +183,29 @@
           ]
         },
         {
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime-deps/amazonlinux/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(2.1-RuntimeVersion)-amazonlinux2": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-amazonlinux2": {
+                  "documentationGroup": "2.1"
+                },
+                "$(2.2-RuntimeVersion)-amazonlinux2": {
+                  "documentationGroup": "2.2"
+                },
+                "2.2-amazonlinux2": {
+                  "documentationGroup": "2.2"
+                }
+              }
+            }
+          ]
+        },
+        {
           "sharedTags": {
             "$(3.0-RuntimeVersion)": {
               "documentationGroup": "3.0"
@@ -618,6 +641,22 @@
           ]
         },
         {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/runtime/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(2.1-RuntimeVersion)-amazonlinux2": {},
+                "2.1-amazonlinux2": {}
+              }
+            }
+          ]
+        },
+        {
           "sharedTags": {
             "$(2.2-RuntimeVersion)": {},
             "2.2": {}
@@ -756,6 +795,22 @@
                 "2.2-bionic-arm32v7": {}
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.2/runtime/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(2.2-RuntimeVersion)-amazonlinux2": {},
+                "2.2-amazonlinux2": {}
+              }
             }
           ]
         },
@@ -1038,6 +1093,22 @@
           ]
         },
         {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.0/runtime/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(3.0-RuntimeVersion)-amazonlinux2": {},
+                "3.0-amazonlinux2": {}
+              }
+            }
+          ]
+        },
+        {
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {},
             "3.1": {}
@@ -1219,6 +1290,22 @@
               "variant": "v8"
             }
           ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(3.1-RuntimeVersion)-amazonlinux2": {},
+                "3.1-amazonlinux2": {}
+              }
+            }
+          ]
         }
       ]
     },
@@ -1354,6 +1441,22 @@
                 "2.1-bionic-arm32v7": {}
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/aspnet/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(2.1-RuntimeVersion)-amazonlinux2": {},
+                "2.1-amazonlinux2": {}
+              }
             }
           ]
         },
@@ -1496,6 +1599,22 @@
                 "2.2-bionic-arm32v7": {}
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.2/aspnet/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(2.2-RuntimeVersion)-amazonlinux2": {},
+                "2.2-amazonlinux2": {}
+              }
             }
           ]
         },
@@ -1790,6 +1909,22 @@
           ]
         },
         {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.0/aspnet/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(3.0-RuntimeVersion)-amazonlinux2": {},
+                "3.0-amazonlinux2": {}
+              }
+            }
+          ]
+        },
+        {
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {},
             "3.1": {}
@@ -1983,6 +2118,21 @@
               "variant": "v8"
             }
           ]
+        },{
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/aspnet/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(3.1-RuntimeVersion)-amazonlinux2": {},
+                "3.1-amazonlinux2": {}
+              }
+            }
+          ]
         }
       ]
     },
@@ -2106,6 +2256,19 @@
                 "2.1-bionic-arm32v7": {}
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.1/sdk/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(2.1-SdkVersion)-amazonlinux2": {},
+                "2.1-amazonlinux2": {}
+              }
             }
           ]
         },
@@ -2236,6 +2399,19 @@
                 "2.2-bionic-arm32v7": {}
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "2.2/sdk/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(2.2-SdkVersion)-amazonlinux2": {},
+                "2.2-amazonlinux2": {}
+              }
             }
           ]
         },
@@ -2437,6 +2613,19 @@
           ]
         },
         {
+          "platforms": [
+            {
+              "dockerfile": "3.0/sdk/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(3.0-SdkVersion)-amazonlinux2": {},
+                "3.0-amazonlinux2": {}
+              }
+            }
+          ]
+        },
+        {
           "sharedTags": {
             "$(3.1-SdkVersion)": {},
             "3.1": {}
@@ -2570,6 +2759,19 @@
                 "3.1-bionic-arm64v8": {}
               },
               "variant": "v8"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "3.1/sdk/amazonlinux2/amd64",
+              "os": "linux",
+              "osVersion": "amazonlinux2",
+              "tags": {
+                "$(3.1-SdkVersion)-amazonlinux2": {},
+                "3.1-amazonlinux2": {}
+              }
             }
           ]
         }

@@ -55,14 +55,17 @@ Tags | Dockerfile | OS Version
 3.0.1-alpine3.9, 3.0-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/aspnet/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 3.0.1-disco, 3.0-disco | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/aspnet/disco/amd64/Dockerfile) | Ubuntu 19.04
 3.0.1-bionic, 3.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/aspnet/bionic/amd64/Dockerfile) | Ubuntu 18.04
+3.0.1-amazonlinux2, 3.0-amazonlinux2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/aspnet/amazonlinux2/amd64/Dockerfile) | Amazon Linux 2
 2.2.8-stretch-slim, 2.2-stretch-slim, 2.2.8, 2.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/stretch-slim/amd64/Dockerfile) | Debian 9
 2.2.8-alpine3.10, 2.2-alpine3.10, 2.2.8-alpine, 2.2-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/alpine3.10/amd64/Dockerfile) | Alpine 3.10
 2.2.8-alpine3.9, 2.2-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 2.2.8-bionic, 2.2-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/bionic/amd64/Dockerfile) | Ubuntu 18.04
+2.2.8-amazonlinux2, 2.2-amazonlinux2| [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.2/aspnet/amazonlinux2/amd64/Dockerfile) | Amazon Linux 2
 2.1.14-stretch-slim, 2.1-stretch-slim, 2.1.14, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/stretch-slim/amd64/Dockerfile) | Debian 9
 2.1.14-alpine3.10, 2.1-alpine3.10, 2.1.14-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/alpine3.10/amd64/Dockerfile) | Alpine 3.10
 2.1.14-alpine3.9, 2.1-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 2.1.14-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/bionic/amd64/Dockerfile) | Ubuntu 18.04
+2.1.14-amazonlinux2, 2.1-amazonlinux2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/amazonlinux2/amd64/Dockerfile) | Amazon Linux 2
 
 ##### .NET Core 3.1 Preview Tags
 Tags | Dockerfile | OS Version
