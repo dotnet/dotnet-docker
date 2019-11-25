@@ -7,6 +7,6 @@ RUN dotnet_version=3.1.0 \
     && dotnet_sha512='417858bb24e1ec7337c7b85dd2c16ba3b16182bb0839e7c67d46b4ba38d430dd95a58e5ec533586c0cd4b69fc0f82323297eb4c5fbd8c2e8a5f9a1d36a3658f9' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
-    && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \
+    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     && rm dotnet.tar.gz

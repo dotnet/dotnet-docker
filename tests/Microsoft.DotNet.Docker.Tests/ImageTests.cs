@@ -104,6 +104,43 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
+        public void VerifyImage_InsecureFilesCheck(ImageData imageData)
+        {
+            if (imageData.Version < new Version("3.1") || !DockerHelper.IsLinuxContainerModeEnabled ||
+                (imageData.OS.Contains("alpine") && imageData.IsArm))
+            {
+                return;
+            }
+
+            string worldWritableDirectoriesWithoutStickyBitCmd = @"find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \)";
+            string worldWritableFilesCmd = "find / -xdev -type f -perm -o+w";
+            string noUserOrGroupFilesCmd;
+            if (imageData.OS.Contains("alpine"))
+            {
+                // BusyBox in Alpine doesn't support the more convenient -nouser and -nogroup options for the find command
+                noUserOrGroupFilesCmd = @"find / -xdev -exec stat -c %U-%n {} \+ | { grep ^UNKNOWN || true; }";
+            }
+            else
+            {
+                noUserOrGroupFilesCmd = @"find / -xdev \( -nouser -o -nogroup \)";
+            }
+
+            string command = $"/bin/sh -c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd} && {noUserOrGroupFilesCmd}\"";
+
+            foreach (DotNetImageType imageType in Enum.GetValues(typeof(DotNetImageType)))
+            {
+                string output = _dockerHelper.Run(
+                    image: imageData.GetImage(imageType, _dockerHelper),
+                    name: imageData.GetIdentifier($"InsecureFiles-{imageType}"),
+                    command: command
+                );
+
+                Assert.Empty(output);
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
         public void VerifySdkImage_EnvironmentVariables(ImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
