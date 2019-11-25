@@ -24,6 +24,7 @@ RUN set "powershell_version=7.0.0-preview.6" `
     && call curl -SL --output PowerShell.Windows.arm32.%powershell_version%.nupkg https://pwshtool.blob.core.windows.net/tool/%powershell_version%/PowerShell.Windows.arm32.%powershell_version%.nupkg `
     && mkdir "%ProgramFiles%\powershell" `
     && call "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %powershell_version% PowerShell.Windows.arm32 `
+    && call rmdir "%TEMP%\NuGetScratch" /S /Q `
     && call del PowerShell.Windows.arm32.%powershell_version%.nupkg `
     && call del "%ProgramFiles%\powershell\.store\powershell.windows.arm32\%powershell_version%\powershell.windows.arm32\%powershell_version%\powershell.windows.arm32.%powershell_version%.nupkg"
 
