@@ -6,12 +6,12 @@ These samples demonstrate how to use .NET Core and Docker together, for developm
 * [Build an ASP.NET Core Docker image](aspnetapp/README.md)
 * [Build in a container](build-in-container.md)
 * [Unit test in a container](unit-testing-in-container.md)
-* [Develop .NET Core applications in a container](dotnetapp/dotnet-docker-dev-in-container.md)
-* [Develop ASP.NET Core Applications with Docker and HTTPS](aspnetapp/aspnetcore-docker-https-development.md)
-* [Host ASP.NET Core Images with Docker and HTTPS](aspnetapp/aspnetcore-docker-https.md)
-* [Push Docker Images to Azure Container Registry](dotnetapp/push-image-to-acr.md)
-* [Push Docker Images to DockerHub](dotnetapp/push-image-to-dockerhub.md)
-* [Deploy ASP.NET Core Applications to Azure Container Instances](aspnetapp/deploy-container-to-aci.md)
+* [Develop .NET Core applications in a container](dev-in-container.md)
+* [Develop ASP.NET Core Applications with Docker and HTTPS](aspnetcore-https-development.md)
+* [Host ASP.NET Core Images with Docker and HTTPS](aspnetcore-https.md)
+* [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
+* [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
+* [Deploy ASP.NET Core Applications to Azure Container Instances](deploy-container-to-aci.md)
 
 ## Try a pre-built .NET Core Docker Image
 

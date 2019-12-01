@@ -1,10 +1,12 @@
 # .NET Core Docker Sample
 
-This sample demonstrates how to build container images for .NET Core console apps, which are supported for Linux and Windows containers, and for x64, ARM32 and ARM64 architectures.
+This sample demonstrates how to build container images for .NET Core console apps. You can use this samples for Linux and Windows containers, and for x64, ARM32 and ARM64 architectures.
 
-The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You can test the built image locally or deploy it to a container registry.
+The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You can test the built image locally or deploy it to a [container registry](../push-image-to-acr.md).
 
 The instructions assume that you have cloned this repo, have [Docker](https://www.docker.com/products/docker) installed, and have a command prompt open within the `samples/dotnetapp` directory within the repo.
+
+## Try a pre-built version of the sample
 
 If want to skip to the final result, you can try a pre-built version with the following command:
 
@@ -24,12 +26,12 @@ docker run --rm dotnetapp Hello .NET Core from Docker
 You can use the `docker images` command to see a listing of your image, as you can see in the following example.
 
 ```console
-rich@thundera dotnetapp % docker images dotnetapp
+% docker images dotnetapp
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 dotnetapp           latest              baee380605f4        14 seconds ago      189MB
 ```
 
-The Docker build command used above uses the standard pattern to build images, so doesn't tell you much about what is actually happening. The logic is provided in the [Dockerfile](Dockerfile) file, which follows.
+The logic to build the image is described in the [Dockerfile](Dockerfile), which follows.
 
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
@@ -50,16 +52,7 @@ COPY --from=build /app .
 ENTRYPOINT ["./dotnetapp"]
 ```
 
-This Dockerfile builds and publishes the .NET Core application and then copies the result to a rumtime-based image. It copies and restores the project file as the first step so that the results of those commands can be cached for subsequent builds since project file edits are less common than source code edits.
-
-## Build an image optimized for startup performance
-
-You can opt any application into Ready to Run compilation by adding a `PublishReadToRun` property. This is what the `-trim` samples do (they are explained shortly). The default `Dockerfile` that come with the sample doesn't do that because the application is too small to warrant it. .NET Core provides the majority of the startup benefit available since most of the code actually run in an application within the core framework, which itself is Ready to Run compiled.
-
-You can add this property in two ways:
-
-- Add the property to your profile file, as: `<PublishReadyToRun>true</PublishReadyToRun>'
-- Add the property on the command line, as:  `/p:PublishReadToRun=true`
+This Dockerfile builds and publishes the .NET Core application and then copies the result into a rumtime-based image. It copies and restores the project file as the first step so that the results of those commands can be cached for subsequent builds since project file edits are less common than source code edits. Editing a `.cs` file, for example, does not invalidate the layer created by the project file, which makes subsequent docker builds much faster.
 
 ## Build an image for Alpine, Debian or Ubuntu
 
@@ -78,7 +71,7 @@ docker build --pull -t dotnetapp:alpine -f Dockerfile.alpine-x64 .
 You can use `docker images` to see the images you've built:
 
 ```console
-rich@thundera dotnetapp % docker images dotnetapp
+% docker images dotnetapp
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 dotnetapp           alpine              8933fb9821e8        8 seconds ago       87MB
 dotnetapp           ubuntu              373df08a06ec        25 seconds ago      187MB
@@ -86,7 +79,7 @@ dotnetapp           debian              229dd121a96b        39 seconds ago      
 dotnetapp           latest              303eabf97376        56 seconds ago      190MB
 ```
 
-You can run these images:
+You can run any of the images you've just built with the following commands:
 
 ```console
 docker run dotnetapp
@@ -98,7 +91,7 @@ docker run dotnetapp:alpine
 If you want to double check the distro of an application, you can do that by configuring a different entrypoint when you run the image, as you see in the following example.
 
 ```console
-rich@thundera ~ % docker run --entrypoint cat dotnetapp /etc/os-release    
+% docker run --entrypoint cat dotnetapp /etc/os-release    
 PRETTY_NAME="Debian GNU/Linux 10 (buster)"
 NAME="Debian GNU/Linux"
 VERSION_ID="10"
@@ -108,7 +101,8 @@ ID=debian
 HOME_URL="https://www.debian.org/"
 SUPPORT_URL="https://www.debian.org/support"
 BUG_REPORT_URL="https://bugs.debian.org/"
-rich@thundera ~ % docker run --entrypoint cat dotnetapp:alpine /etc/os-release
+
+% docker run --entrypoint cat dotnetapp:alpine /etc/os-release
 NAME="Alpine Linux"
 ID=alpine
 VERSION_ID=3.10.3
@@ -119,7 +113,7 @@ BUG_REPORT_URL="https://bugs.alpinelinux.org/"
 
 ## Build an image for Windows Nano Server
 
-You can also target Nano Server directly in the same as you can with Linux. The only difference is that Nano Server has a stronger coupling between the host Windows version and the guest container version. All supported versions will be demonstrated in the example below. You are enouraged only to use the version that applies to your environment.
+You can also target Nano Server directly in the same as you can with Linux. The important difference is that Nano Server has a stronger coupling between the host Windows version and the guest container version. All supported versions will be demonstrated in the example below. You are enouraged only to use the version that applies to your environment.
 
 This example will work on any supported version of Windows (Windows 10 RS2+).
 
@@ -143,9 +137,26 @@ Nano Server version-specific tags:
 * 3.1-nanoserver-1903
 * 3.1-nanoserver-1809
 
+For example, you would update the `FROM` statement to the following to target Nano Server, version 1909.
+
+```console
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1909
+```
+
+## Build an image optimized for startup performance
+
+You can improve startup performance by using [Ready to Run compilation](https://github.com/dotnet/runtime/blob/master/docs/design/coreclr/botr/readytorun-overview.md) for your application. You can do this by setting the `PublishReadyToRun` property, which will take affect when you publish an application. This is what the `-trim` samples do (they are explained shortly). 
+
+You can add this property in two ways:
+
+- Set the property to your profile file, as: `<PublishReadyToRun>true</PublishReadyToRun>'
+- Set the property on the command line, as:  `/p:PublishReadToRun=true`
+
+The default `Dockerfile` that come with the sample doesn't use Ready to Run compilation because the application is too small to warrant it. The majority of the startup benefit available comes from .NET Core libraries -- which are Ready to Run compiled -- since they make of the bulk of the IL code that is executed in an application.
+
 ## Build an image optimized for size
 
-You may want to build a .NET Core image that is optimized for size, by publishing an application that includes the .NET Core runtime (self-contained) and then is trimmed with the assembly-linker. These are the tools offered in the .NET Core SDK for producing the smallest images. This approach may be prefered if you are running a single .NET Core app on a machine. Otherwise, building images on the .NET Core runtime layer is recommended and likely preferred. 
+You may want to build a .NET Core image that is optimized for size. You can do this by publishing an application as [self-contained](https://docs.microsoft.com/dotnet/core/deploying/) (includes the .NET Core runtime) and then is trimmed with the assembly-linker. These are the tools offered in the .NET Core SDK for producing the smallest images. This approach may be prefered if you are running a single .NET Core app on a machine. Otherwise, building images on the .NET Core runtime layer is recommended for better performance characteristics (due to layer sharing). 
 
 The following instructions are for x64 only, but can be straightforwardly updated for use with ARM architectures.
 

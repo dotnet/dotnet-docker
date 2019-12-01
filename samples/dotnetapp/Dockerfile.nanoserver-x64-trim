@@ -15,7 +15,7 @@ COPY *.cs .
 RUN dotnet publish -c release -o /app -r win-x64 --self-contained true
 
 # final stage, which will result in generated image
-# Uses the 1910 release; 1903, 1803, and 1809 are other choices
+# Uses the 1910 release; 1903, and 1809 are other choices
 FROM mcr.microsoft.com/windows/nanoserver:1910 AS runtime
 WORKDIR /app
 COPY --from=build /app .
