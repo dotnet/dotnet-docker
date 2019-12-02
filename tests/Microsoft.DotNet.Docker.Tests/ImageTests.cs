@@ -3,36 +3,24 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class CommonImageTests
+    public abstract class ImageTests
     {
-        private readonly DockerHelper _dockerHelper;
-        private readonly ITestOutputHelper _outputHelper;
-
-        public CommonImageTests(ITestOutputHelper outputHelper)
+        protected ImageTests(ITestOutputHelper outputHelper)
         {
-            _dockerHelper = new DockerHelper(outputHelper);
-            _outputHelper = outputHelper;
+            DockerHelper = new DockerHelper(outputHelper);
+            OutputHelper = outputHelper;
         }
+        
+        protected DockerHelper DockerHelper { get; }
+        protected ITestOutputHelper OutputHelper { get; }
+        protected abstract DotNetImageType ImageType { get; }
 
-        public static IEnumerable<object[]> GetImageData()
-        {
-            return TestData.GetImageData()
-                // Filter the image data down to avoid duplicates caused by variations in their SDK OS.
-                .Distinct(new DefaultImageDataEqualityComparer())
-                .Select(imageData => new object[] { imageData });
-        }
-
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyInsecureFiles(ImageData imageData)
+        protected void VerifyInsecureFiles(ImageData imageData)
         {
             if (imageData.Version < new Version("3.1") ||
                 (imageData.OS.Contains("alpine") && imageData.IsArm))
@@ -55,16 +43,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
             string command = $"/bin/sh -c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd} && {noUserOrGroupFilesCmd}\"";
 
-            foreach (DotNetImageType imageType in Enum.GetValues(typeof(DotNetImageType)))
-            {
-                string output = _dockerHelper.Run(
-                    image: imageData.GetImage(imageType, _dockerHelper),
-                    name: imageData.GetIdentifier($"InsecureFiles-{imageType}"),
+            string output = DockerHelper.Run(
+                    image: imageData.GetImage(ImageType, DockerHelper),
+                    name: imageData.GetIdentifier($"InsecureFiles-{ImageType}"),
                     command: command
                 );
 
-                Assert.Empty(output);
-            }
+            Assert.Empty(output);
         }
     }
 }

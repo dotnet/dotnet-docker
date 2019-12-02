@@ -11,16 +11,14 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class SdkImageTests
+    public class SdkImageTests : ImageTests
     {
-        private readonly DockerHelper _dockerHelper;
-        private readonly ITestOutputHelper _outputHelper;
-
         public SdkImageTests(ITestOutputHelper outputHelper)
+            : base(outputHelper)
         {
-            _dockerHelper = new DockerHelper(outputHelper);
-            _outputHelper = outputHelper;
         }
+
+        protected override DotNetImageType ImageType => DotNetImageType.SDK;
 
         public static IEnumerable<object[]> GetImageData()
         {
@@ -28,6 +26,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 // Filter the image data down to the distinct SDK OSes
                 .Distinct(new SdkImageDataEqualityComparer())
                 .Select(imageData => new object[] { imageData });
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifySdkInsecureFiles(ImageData imageData)
+        {
+            base.VerifyInsecureFiles(imageData);
         }
 
         [Theory]
@@ -55,7 +60,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("LANG", "en_US.UTF-8"));
             }
 
-            EnvironmentVariableInfo.Validate(variables, DotNetImageType.SDK, imageData, _dockerHelper);
+            EnvironmentVariableInfo.Validate(variables, DotNetImageType.SDK, imageData, DockerHelper);
         }
 
         [Theory]
@@ -76,14 +81,14 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             else
             {
-                _outputHelper.WriteLine(".NET Core SDK images >= 3.0 don't include a package cache.");
+                OutputHelper.WriteLine(".NET Core SDK images >= 3.0 don't include a package cache.");
             }
 
             if (verifyCacheCommand != null)
             {
                 // Simple check to verify the NuGet package cache was created
-                _dockerHelper.Run(
-                    image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
+                DockerHelper.Run(
+                    image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
                     command: verifyCacheCommand,
                     name: imageData.GetIdentifier("PackageCache"));
             }
@@ -91,14 +96,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void PowerShellScenario_DefaultUser(ImageData imageData)
+        public void VerifyPowerShellScenario_DefaultUser(ImageData imageData)
         {
             PowerShellScenario_Execute(imageData, null);
         }
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void PowerShellScenario_NonDefaultUser(ImageData imageData)
+        public void VerifyPowerShellScenario_NonDefaultUser(ImageData imageData)
         {
             var optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
             if (imageData.OS.Contains("nanoserver", StringComparison.OrdinalIgnoreCase))
@@ -114,13 +119,13 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             if (imageData.Version.Major < 3)
             {
-                _outputHelper.WriteLine("PowerShell does not exist in pre-3.0 images, skip testing");
+                OutputHelper.WriteLine("PowerShell does not exist in pre-3.0 images, skip testing");
                 return;
             }
 
             // A basic test which executes an arbitrary command to validate PS is functional
-            string output = _dockerHelper.Run(
-                image: imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
+            string output = DockerHelper.Run(
+                image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
                 name: imageData.GetIdentifier($"pwsh"),
                 optionalRunArgs: optionalArgs,
                 command: $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value"

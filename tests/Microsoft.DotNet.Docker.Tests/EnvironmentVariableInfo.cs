@@ -86,19 +86,6 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static void VerifyCommonRuntimeEnvironmentVariables(DotNetImageType imageType, ImageData imageData, DockerHelper dockerHelper)
-        {
-            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
-            variables.AddRange(EnvironmentVariableInfo.GetCommonEnvironmentVariables());
-            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:80"));
-
-            if (imageData.OS.StartsWith(Tests.OS.AlpinePrefix))
-            {
-                variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
-            }
-
-            EnvironmentVariableInfo.Validate(variables, imageType, imageData, dockerHelper);
-        }
 
         public static IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
         {
