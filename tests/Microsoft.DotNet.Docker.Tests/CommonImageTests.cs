@@ -30,11 +30,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageData => new object[] { imageData });
         }
 
-        [Theory]
+        [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyImage_InsecureFilesCheck(ImageData imageData)
+        public void VerifyInsecureFiles(ImageData imageData)
         {
-            if (imageData.Version < new Version("3.1") || !DockerHelper.IsLinuxContainerModeEnabled ||
+            if (imageData.Version < new Version("3.1") ||
                 (imageData.OS.Contains("alpine") && imageData.IsArm))
             {
                 return;

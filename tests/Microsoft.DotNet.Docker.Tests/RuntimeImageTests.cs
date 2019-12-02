@@ -29,7 +29,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public async Task VerifyRuntimeImage_AppScenario(ImageData imageData)
+        public async Task VerifyAppScenario(ImageData imageData)
         {
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, _dockerHelper, _outputHelper);
             await verifier.Execute();
@@ -37,7 +37,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyRuntimeImage_EnvironmentVariables(ImageData imageData)
+        public void VerifyEnvironmentVariables(ImageData imageData)
         {
             EnvironmentVariableInfo.VerifyCommonRuntimeEnvironmentVariables(DotNetImageType.Runtime, imageData, _dockerHelper);
         }

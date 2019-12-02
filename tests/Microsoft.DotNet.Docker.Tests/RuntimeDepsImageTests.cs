@@ -2,10 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -29,14 +27,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageData => new object[] { imageData });
         }
 
-        [Theory]
+        [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyRuntimeDepsImage_EnvironmentVariables(ImageData imageData)
+        public void VerifyEnvironmentVariables(ImageData imageData)
         {
-            if (DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                EnvironmentVariableInfo.VerifyCommonRuntimeEnvironmentVariables(DotNetImageType.Runtime_Deps, imageData, _dockerHelper);
-            }
+            EnvironmentVariableInfo.VerifyCommonRuntimeEnvironmentVariables(DotNetImageType.Runtime_Deps, imageData, _dockerHelper);
         }
     }
 }

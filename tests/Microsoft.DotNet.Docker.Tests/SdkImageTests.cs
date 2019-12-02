@@ -32,7 +32,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifySdkImage_EnvironmentVariables(ImageData imageData)
+        public void VerifyEnvironmentVariables(ImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
             variables.AddRange(EnvironmentVariableInfo.GetCommonEnvironmentVariables());
@@ -60,7 +60,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifySdkImage_PackageCache(ImageData imageData)
+        public void VerifyPackageCache(ImageData imageData)
         {
             string verifyCacheCommand = null;
             if (imageData.Version.Major == 2)
@@ -91,14 +91,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifySDKImage_PowerShellScenario_DefaultUser(ImageData imageData)
+        public void PowerShellScenario_DefaultUser(ImageData imageData)
         {
-            VerifySDKImage_PowerShellScenario_Execute(imageData, null);
+            PowerShellScenario_Execute(imageData, null);
         }
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifySDKImage_PowerShellScenario_NonDefaultUser(ImageData imageData)
+        public void PowerShellScenario_NonDefaultUser(ImageData imageData)
         {
             var optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
             if (imageData.OS.Contains("nanoserver", StringComparison.OrdinalIgnoreCase))
@@ -107,10 +107,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 optRunArgs = "-u ContainerAdministrator ";
             }
 
-            VerifySDKImage_PowerShellScenario_Execute(imageData, optRunArgs);
+            PowerShellScenario_Execute(imageData, optRunArgs);
         }
 
-        private void VerifySDKImage_PowerShellScenario_Execute(ImageData imageData, string optionalArgs)
+        private void PowerShellScenario_Execute(ImageData imageData, string optionalArgs)
         {
             if (imageData.Version.Major < 3)
             {
