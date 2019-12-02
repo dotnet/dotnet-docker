@@ -24,15 +24,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyCommonRuntimeInsecureFiles(ImageData imageData)
+        public void VerifyInsecureFiles(ImageData imageData)
         {
-            base.VerifyInsecureFiles(imageData);
+            base.VerifyCommonInsecureFiles(imageData);
         }
 
-        protected void VerifyEnvironmentVariables(ImageData imageData)
+        protected void VerifyCommonEnvironmentVariables(ImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
-            variables.AddRange(EnvironmentVariableInfo.GetCommonEnvironmentVariables());
+            variables.AddRange(GetCommonEnvironmentVariables());
             variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:80"));
 
             if (imageData.OS.StartsWith(OS.AlpinePrefix))

@@ -85,11 +85,5 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
             }
         }
-
-
-        public static IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
-        {
-            yield return new EnvironmentVariableInfo("DOTNET_RUNNING_IN_CONTAINER", "true");
-        }
     }
 }

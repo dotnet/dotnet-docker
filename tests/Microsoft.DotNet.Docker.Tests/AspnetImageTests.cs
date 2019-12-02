@@ -27,9 +27,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyAspnetEnvironmentVariables(ImageData imageData)
+        public void VerifyEnvironmentVariables(ImageData imageData)
         {
-            base.VerifyEnvironmentVariables(imageData);
+            base.VerifyCommonEnvironmentVariables(imageData);
         }
     }
 }

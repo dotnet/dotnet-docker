@@ -30,9 +30,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifySdkInsecureFiles(ImageData imageData)
+        public void VerifyInsecureFiles(ImageData imageData)
         {
-            base.VerifyInsecureFiles(imageData);
+            base.VerifyCommonInsecureFiles(imageData);
         }
 
         [Theory]
@@ -40,7 +40,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VerifyEnvironmentVariables(ImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
-            variables.AddRange(EnvironmentVariableInfo.GetCommonEnvironmentVariables());
+            variables.AddRange(GetCommonEnvironmentVariables());
 
             string aspnetUrlsValue = imageData.Version.Major < 3 ? "http://+:80" : string.Empty;
             variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", aspnetUrlsValue));

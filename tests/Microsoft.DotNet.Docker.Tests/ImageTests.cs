@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -20,7 +21,7 @@ namespace Microsoft.DotNet.Docker.Tests
         protected ITestOutputHelper OutputHelper { get; }
         protected abstract DotNetImageType ImageType { get; }
 
-        protected void VerifyInsecureFiles(ImageData imageData)
+        protected void VerifyCommonInsecureFiles(ImageData imageData)
         {
             if (imageData.Version < new Version("3.1") ||
                 (imageData.OS.Contains("alpine") && imageData.IsArm))
@@ -50,6 +51,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 );
 
             Assert.Empty(output);
+        }
+
+        protected static IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
+        {
+            yield return new EnvironmentVariableInfo("DOTNET_RUNNING_IN_CONTAINER", "true");
         }
     }
 }
