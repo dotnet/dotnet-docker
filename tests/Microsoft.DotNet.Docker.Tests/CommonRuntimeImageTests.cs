@@ -18,7 +18,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static IEnumerable<object[]> GetImageData()
         {
-            return GetImageData()
+            return TestData.GetImageData()
                 .Select(imageData => new object[] { imageData });
         }
 
