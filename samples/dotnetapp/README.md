@@ -137,6 +137,8 @@ Nano Server version-specific tags:
 * 3.1-nanoserver-1903
 * 3.1-nanoserver-1809
 
+Note: ARM32 support is only offered by Nano Server, version 1809.
+
 For example, you would update the `FROM` statement to the following to target Nano Server, version 1909.
 
 ```console
@@ -152,21 +154,21 @@ You can add this property in two ways:
 - Set the property to your profile file, as: `<PublishReadyToRun>true</PublishReadyToRun>'
 - Set the property on the command line, as:  `/p:PublishReadToRun=true`
 
-The default `Dockerfile` that come with the sample doesn't use Ready to Run compilation because the application is too small to warrant it. The majority of the startup benefit available comes from .NET Core libraries -- which are Ready to Run compiled -- since they make of the bulk of the IL code that is executed in an application.
+The default `Dockerfile` that come with the sample doesn't use Ready to Run compilation because the application is too small to warrant it. The majority of the startup benefit available comes from .NET Core libraries -- which are Ready to Run compiled -- since they make up the bulk of the IL code that is executed in an application.
 
 ## Build an image optimized for size
 
-You may want to build a .NET Core image that is optimized for size. You can do this by publishing an application as [self-contained](https://docs.microsoft.com/dotnet/core/deploying/) (includes the .NET Core runtime) and then is trimmed with the assembly-linker. These are the tools offered in the .NET Core SDK for producing the smallest images. This approach may be prefered if you are running a single .NET Core app on a machine. Otherwise, building images on the .NET Core runtime layer is recommended for better performance characteristics (due to layer sharing). 
+You may want to build a .NET Core image that is optimized for size. You can do this by publishing an application as [self-contained](https://docs.microsoft.com/dotnet/core/deploying/) (includes the .NET Core runtime) and then is trimmed with the assembly-linker. This approach may be prefered if you are running a single .NET Core app on a machine. Otherwise, building images on the .NET Core runtime layer is recommended for better overall performance characteristics (due to layer sharing). 
 
-The following instructions are for x64 only, but can be straightforwardly updated for use with ARM architectures.
+The following instructions are for x64 only, but can be straightforwardly adapted for use with ARM architectures.
 
 There are a set of '-trim' Dockerfiles included with this sample that are opted into the following .NET Core SDK publish operations:
 
-* **Self-contained deployment** -- Publish the runtime with the application.
+* **Self-contained deployment** -- Publish .NET Core runtime(s) with the application.
 * **Assembly linking** -- Trim assemblies, including in the .NET Core framework, to make the application smaller.
-* **Ready to Run compilation** -- Compile assemblies to Ready to Run format to make startup faster.
+* **Ready to Run compilation** -- Compile assemblies to Ready to Run format to make startup faster. Compiled assemblies are larger, so will increase the size of your application.
 
-The first two operations reduce size, which can decrease image pull times. The last operation improves startup performance, but increases size. You can experiment with these options if you want to see which combination of settings works best for you.
+You are encouraged to experiment with these options if you want to see which combination of settings works best for you.
 
 The following instructions demonstrate how to build the `slim` Dockerfiles:
 
@@ -176,16 +178,24 @@ docker build --pull -t dotnetapp:ubuntu-trim -f Dockerfile.ubuntu-x64-trim .
 docker build --pull -t dotnetapp:alpine-trim -f Dockerfile.alpine-x64-trim .
 ```
 
+It is easy to run them all:
+
+```console
+docker run --rm dotnetapp:debian-trim
+docker run --rm dotnetapp:ubuntu-trim
+docker run --rm dotnetapp:alpine-trim
+```
+
 You can then compare sizes between using a shared layer and optimizing for size using the `docker images` command again. The command below uses `grep`. `findstr` on Windows works equally well.
 
 ```console
-rich@thundera dotnetapp % docker images dotnetapp | grep alpine
+% docker images dotnetapp | grep alpine
 dotnetapp           alpine-trim      9d23e22d7229        About a minute ago   46.3MB
 dotnetapp           alpine              8933fb9821e8        About an hour ago    87MB
-rich@thundera dotnetapp % docker images dotnetapp | grep ubuntu
+% docker images dotnetapp | grep ubuntu
 dotnetapp           ubuntu-trim      fe292390c5fb        52 minutes ago      140MB
 dotnetapp           ubuntu              373df08a06ec        59 minutes ago      187MB
-rich@thundera dotnetapp % docker images dotnetapp | grep debian
+% docker images dotnetapp | grep debian
 dotnetapp           debian-trim      41e834fe89e2        52 minutes ago      147MB
 dotnetapp           debian              229dd121a96b        59 minutes ago      190MB
 ```
@@ -201,11 +211,11 @@ docker images dotnetapp | findstr nanoserver
 
 ## Build an image for ARM32 and ARM64
 
-By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-nanoserver`. You need to use an architecture-specific tag if you want to target ARM. Note that Alpine is only supported on ARM64 and x64, not ARM32.
+By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-nanoserver`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET Core in only supported on Alpine on ARM64 and x64, and not ARM32.
 
-Note: Docker refers to ARM32 as `armhf` and ARM64 as `aarch64` in documentation and other places.
+Note: Docker documentation refers to ARM32 as `armhf` and ARM64 as `aarch64`.
 
-The following example demonstrates targeting architectures explictly on Liux, for ARM32 and ARM64.
+The following example demonstrates targeting architectures explictly on Linux, for ARM32 and ARM64.
 
 ```console
 docker build --pull -t dotnetapp:debian-arm32 -f Dockerfile.debian-arm32 .
@@ -218,7 +228,7 @@ docker build --pull -t dotnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
 You can use `docker images` to see a listing of the images you've built, as you can see in the following example.
 
 ```console
-rich@thundera ~ % docker images dotnetapp | grep arm
+% docker images dotnetapp | grep arm
 dotnetapp           ubuntu-arm64        3be8a7da7148        14 seconds ago      193MB
 dotnetapp           alpine-arm64        09a1d1bfd477        20 hours ago        99.5MB
 dotnetapp           debian-arm64        fa5efe51d9ef        20 hours ago        197MB

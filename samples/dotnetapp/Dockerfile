@@ -14,4 +14,4 @@ RUN dotnet publish -c release -o /app
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["./dotnetapp"]
+ENTRYPOINT ["dotnet","dotnetapp.dll"]
