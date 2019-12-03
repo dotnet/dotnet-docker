@@ -8,8 +8,7 @@ param(
     [string]$OptionalImageBuilderArgs,
     [string]$OptionalTestArgs,
     [switch]$SkipTesting = $false,
-    [switch]$ExcludeArchitecture = $false,
-    [switch]$IsLocalRun = $true
+    [switch]$ExcludeArchitecture = $false
 )
 
 Set-StrictMode -Version Latest
@@ -50,7 +49,7 @@ try {
                 $OptionalTestArgs += " -ArchitectureFilter $ArchitectureFilter"
             }
 
-            Exec "./tests/run-tests.ps1 -IsLocalRun:`$$IsLocalRun -VersionFilter $VersionFilter -OSFilter $OSFilter $OptionalTestArgs"
+            Exec "./tests/run-tests.ps1 -VersionFilter $VersionFilter -OSFilter $OSFilter $OptionalTestArgs"
         } else {
           Write-Warning "Test script file './tests/run-tests.ps1' not found."
         }
