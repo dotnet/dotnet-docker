@@ -1,8 +1,6 @@
 # Featured Tags
 
-* `3.1` (Current)
-  * `docker pull mcr.microsoft.com/dotnet/core/runtime-deps:3.1`
-* `3.1` (LTS)
+* `3.1` (LTS/Current)
   * `docker pull mcr.microsoft.com/dotnet/core/runtime-deps:3.1`
 
 # About This Image
