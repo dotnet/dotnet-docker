@@ -139,15 +139,15 @@ You can then compare sizes between using a shared layer and optimizing for size 
 
 ```console
 % docker images aspnetapp | grep alpine
-aspnetapp           alpine-trim         34135d057c0f        4 seconds ago       97.7MB
-aspnetapp           alpine              8567c3d23608        29 minutes ago      109MB
+aspnetapp           alpine-trim         34135d057c0f        2 hours ago         97.7MB
+aspnetapp           alpine              8567c3d23608        2 hours ago         109MB
 ```
 
 Same thing with Debian:
 
 ```console
 % docker images aspnetapp | grep debian
-aspnetapp           debian-trim         fd44f9d476ac        12 minutes ago      97.2MB
+aspnetapp           debian-trim         43c186e2fe71        About an hour ago   206MB
 
 % docker images aspnetapp | grep latest
 aspnetapp           latest              eaf9b1b09d69        41 minutes ago      212MB
