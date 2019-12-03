@@ -15,4 +15,4 @@ RUN dotnet publish -c release -o /app
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-nanoserver-1909 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
-ENTRYPOINT ["./aspnetapp"]
+ENTRYPOINT ["aspnetapp"]

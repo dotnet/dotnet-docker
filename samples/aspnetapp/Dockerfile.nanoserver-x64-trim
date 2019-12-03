@@ -17,4 +17,4 @@ RUN dotnet publish -c release -o /app -r win-x64 --self-contained true /p:Publis
 FROM mcr.microsoft.com/windows/nanoserver:1910 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
-ENTRYPOINT ["./aspnetapp"]
+ENTRYPOINT ["aspnetapp"]

@@ -68,7 +68,7 @@ docker build --pull -t dotnetapp:ubuntu -f Dockerfile.ubuntu-x64 .
 docker build --pull -t dotnetapp:alpine -f Dockerfile.alpine-x64 .
 ```
 
-You can use `docker images` to see the images you've built:
+You can use `docker images` to see the images you've built and to compare file sizes:
 
 ```console
 % docker images dotnetapp
@@ -145,6 +145,42 @@ For example, you would update the `FROM` statement to the following to target Na
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1909
 ```
 
+## Build an image for ARM32 and ARM64
+
+By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-nanoserver`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET Core in only supported on Alpine on ARM64 and x64, and not ARM32.
+
+Note: Docker documentation refers to ARM32 as `armhf` and ARM64 as `aarch64`.
+
+The following example demonstrates targeting architectures explictly on Linux, for ARM32 and ARM64.
+
+```console
+docker build --pull -t dotnetapp:debian-arm32 -f Dockerfile.debian-arm32 .
+docker build --pull -t dotnetapp:ubuntu-arm32 -f Dockerfile.ubuntu-arm32 .
+docker build --pull -t dotnetapp:debian-arm64 -f Dockerfile.debian-arm64 .
+docker build --pull -t dotnetapp:ubuntu-arm64 -f Dockerfile.ubuntu-arm64 .
+docker build --pull -t dotnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
+```
+
+You can use `docker images` to see a listing of the images you've built, as you can see in the following example.
+
+```console
+% docker images dotnetapp | grep arm
+dotnetapp           ubuntu-arm64        3be8a7da7148        14 seconds ago      193MB
+dotnetapp           alpine-arm64        09a1d1bfd477        20 hours ago        99.5MB
+dotnetapp           debian-arm64        fa5efe51d9ef        20 hours ago        197MB
+dotnetapp           ubuntu-arm32        ea8ac73f8a72        20 hours ago        165MB
+dotnetapp           debian-arm32        4f6ade8318d4        20 hours ago        165MB
+```
+
+You can build ARM32 and ARM64 images on x64 machines, but you will not be able to run them. Docker relies on QEMU for this scenario, which isn't supported by .NET Core. You must test and run .NET Core imges on actual hardware for the given processor type.
+
+You can do the same thing on Windows, as follows:
+
+```console
+docker build --pull -t dotnetapp:nanoserver-arm32 -f Dockerfile.nanoserver-arm32 .
+docker images dotnetapp | findstr arm
+```
+
 ## Build an image optimized for startup performance
 
 You can improve startup performance by using [Ready to Run compilation](https://github.com/dotnet/runtime/blob/master/docs/design/coreclr/botr/readytorun-overview.md) for your application. You can do this by setting the `PublishReadyToRun` property, which will take affect when you publish an application. This is what the `-trim` samples do (they are explained shortly). 
@@ -207,42 +243,6 @@ The same operations are supported for Nano Server, as follows:
 ```console
 docker build --pull -t dotnetapp:nanoserver-trim -f Dockerfile.nanoserver-x64-trim .
 docker images dotnetapp | findstr nanoserver
-```
-
-## Build an image for ARM32 and ARM64
-
-By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-nanoserver`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET Core in only supported on Alpine on ARM64 and x64, and not ARM32.
-
-Note: Docker documentation refers to ARM32 as `armhf` and ARM64 as `aarch64`.
-
-The following example demonstrates targeting architectures explictly on Linux, for ARM32 and ARM64.
-
-```console
-docker build --pull -t dotnetapp:debian-arm32 -f Dockerfile.debian-arm32 .
-docker build --pull -t dotnetapp:ubuntu-arm32 -f Dockerfile.ubuntu-arm32 .
-docker build --pull -t dotnetapp:debian-arm64 -f Dockerfile.debian-arm64 .
-docker build --pull -t dotnetapp:ubuntu-arm64 -f Dockerfile.ubuntu-arm64 .
-docker build --pull -t dotnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
-```
-
-You can use `docker images` to see a listing of the images you've built, as you can see in the following example.
-
-```console
-% docker images dotnetapp | grep arm
-dotnetapp           ubuntu-arm64        3be8a7da7148        14 seconds ago      193MB
-dotnetapp           alpine-arm64        09a1d1bfd477        20 hours ago        99.5MB
-dotnetapp           debian-arm64        fa5efe51d9ef        20 hours ago        197MB
-dotnetapp           ubuntu-arm32        ea8ac73f8a72        20 hours ago        165MB
-dotnetapp           debian-arm32        4f6ade8318d4        20 hours ago        165MB
-```
-
-You can build ARM32 and ARM64 images on x64 machines, but you will not be able to run them. Docker relies on QEMU for this scenario, which isn't supported by .NET Core. You must test and run .NET Core imges on actual hardware for the given processor type.
-
-You can do the same thing on Windows, as follows:
-
-```console
-docker build --pull -t dotnetapp:nanoserver-arm32 -f Dockerfile.nanoserver-arm32 .
-docker images dotnetapp | findstr arm
 ```
 
 ## Resources

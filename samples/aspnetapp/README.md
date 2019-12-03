@@ -1,8 +1,8 @@
 # ASP.NET Core Docker Sample
 
-This sample demonstrates how to build container images for ASP.NET Core web apps, which are supported for Linux and Windows containers, and for x64, ARM32 and ARM64 architectures.
+This sample demonstrates how to build container images for ASP.NET Core web apps. You can use this samples for Linux and Windows containers, and for x64, ARM32 and ARM64 architectures.
 
-The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You can test the built image locally or deploy it to a container registry.
+The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You can test the built image locally or deploy it to a [container registry](../push-image-to-acr.md).
 
 The instructions assume that you have cloned this repo, have [Docker](https://www.docker.com/products/docker) installed, and have a command prompt open within the `samples/aspnetapp` directory within the repo.
 
@@ -12,7 +12,7 @@ If want to skip to the final result, you can try a pre-built version with the fo
 docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
 ```
 
-Note: Earlier Windows versions need to use a different pattern that is described at the end of the document.
+Note: Earlier Windows versions need to use a different pattern that is described later in this document.
 
 ## Build and run the sample with Docker
 
@@ -26,7 +26,7 @@ docker run --rm -it -p 8000:80 aspnetapp
 You should see the following console output as the application starts.
 
 ```console
-C:\git\dotnet-docker\samples\aspnetapp>docker run --rm -it -p 8000:80 aspnetapp
+> docker run --rm -it -p 8000:80 aspnetapp
 Hosting environment: Production
 Content root path: /app
 Now listening on: http://[::]:80
@@ -39,20 +39,11 @@ Note: Earlier Windows versions need to use a different pattern that is described
 
 > Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline parameters. In some cases, you might see an error because the host port you select is already in use. Choose a different port in that case.
 
-## Build an image optimized for startup performance
-
-You can opt any application into Ready to Run compilation by adding a `PublishReadToRun` property. This is what the `-trim` samples do (they are explained shortly). The default `Dockerfile` that come with the sample doesn't do that because the application is too small to warrant it. .NET Core provides the majority of the startup benefit available since most of the code actually run in an application within the core framework, which itself is Ready to Run compiled.
-
-You can add this property in two ways:
-
-- Add the property to your profile file, as: `<PublishReadyToRun>true</PublishReadyToRun>'
-- Add the property on the command line, as:  `/p:PublishReadToRun=true`
-
 ## Build an image for Alpine, Debian or Ubuntu
 
 By default, .NET Core uses Debian base images for Linux containers. You will get a Debian-based image if you use a tag with only a version number, such as `3.1`, as opposed to a distro-specific tag like `3.1-alpine`.
 
-This sample includes Dockerfile examples that explicitly target Alpine and Nano Server. Docker makes it easy to use alternate Dockfiles by using the `-f` argument. The [.NET Core Docker Sample](../dotnetapp/README.md) demonstrates targeting a larger set of distros.
+This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. Docker makes it easy to use alternate Dockfiles by using the `-f` argument. The [.NET Core Docker Sample](../dotnetapp/README.md) demonstrates targeting a larger set of distros.
 
 The following example demonstrates targeting distros explictly and also shows the size differences between the distros. Tags are added to the image name to differentiate the images.
 
@@ -64,13 +55,65 @@ docker images aspnetapp
 docker run --rm -it -p 8000:80 aspnetapp:alpine
 ```
 
-On Windows:
+You can use `docker images` to see the images you've built and to compare file sizes:
+
+```console
+rich@thundera aspnetapp % docker images aspnetapp
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+aspnetapp           alpine              8567c3d23608        34 seconds ago      109MB
+aspnetapp           latest              eaf9b1b09d69        9 minutes ago       212MB
+```
+
+You can do the same on Windows to target Nano Server:
 
 ```console
 docker build --pull -t aspnetapp:nanoserver -f Dockerfile.nanoserver-x64 .
 docker images aspnetapp
 docker run --rm -it -p 8000:80 aspnetapp:nanoserver
 ```
+
+## Build an image for ARM32 and ARM64
+
+By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-nanoserver`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET Core in only supported on Alpine on ARM64 and x64, and not ARM32.
+
+Note: Docker documentation refers to ARM32 as `armhf` and ARM64 as `aarch64`.
+
+The following example demonstrates targeting architectures explictly on Linux, for ARM32 and ARM64.
+
+```console
+docker build --pull -t aspnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
+docker build --pull -t aspnetapp:debian-arm32 -f Dockerfile.debian-arm32 .
+docker build --pull -t aspnetapp:debian-arm64 -f Dockerfile.debian-arm64 .
+```
+
+You can use `docker images` to see a listing of the images you've built, as you can see in the following example.
+
+```console
+% docker images aspnetapp | grep arm
+aspnetapp           debian-arm64        8bf21dd704cf        14 seconds ago       223MB
+aspnetapp           debian-arm32        29a8bfa90a03        About a minute ago   190MB
+aspnetapp           alpine-arm64        8ec6bf841319        2 minutes ago        125MB
+```
+
+You can build ARM32 and ARM64 images on x64 machines, but you will not be able to run them. Docker relies on QEMU for this scenario, which isn't supported by .NET Core. You must test and run .NET Core imges on actual hardware for the given processor type.
+
+You can do the same thing on Windows, as follows:
+
+```console
+docker build --pull -t aspnetapp:nanoserver-arm32 -f Dockerfile.nanoserver-arm32 .
+docker images aspnetapp | findstr arm
+```
+
+## Build an image optimized for startup performance
+
+You can improve startup performance by using [Ready to Run compilation](https://github.com/dotnet/runtime/blob/master/docs/design/coreclr/botr/readytorun-overview.md) for your application. You can do this by setting the `PublishReadyToRun` property, which will take affect when you publish an application. This is what the `-trim` samples do (they are explained shortly). 
+
+You can add this property in two ways:
+
+- Set the property to your profile file, as: `<PublishReadyToRun>true</PublishReadyToRun>'
+- Set the property on the command line, as:  `/p:PublishReadToRun=true`
+
+The default `Dockerfile` that come with the sample doesn't use Ready to Run compilation because the application is too small to warrant it. The majority of the startup benefit available comes from .NET Core libraries -- which are Ready to Run compiled -- since they make up the bulk of the IL code that is executed in an application.
 
 ## Build an image optimized for size
 
@@ -89,18 +132,27 @@ The first two operations reduce size, which can decrease image pull times. The l
 The following instructions demonstrate how to build the `slim` Dockerfiles:
 
 ```console
+docker build --pull -t aspnetapp:debian-trim -f Dockerfile.debian-x64-trim .
 docker build --pull -t aspnetapp:alpine-trim -f Dockerfile.alpine-x64-trim .
 ```
 
 You can then compare sizes between using a shared layer and optimizing for size using the `docker images` command again. The command below uses `grep`. `findstr` on Windows works equally well.
 
 ```console
-rich@thundera aspnetapp % docker images aspnetapp | grep alpine
-aspnetapp           alpine-trim      9d23e22d7229        About a minute ago   46.3MB
-aspnetapp           alpine           8933fb9821e8        About an hour ago    87MB
+% docker images aspnetapp | grep alpine
+aspnetapp           alpine-trim         34135d057c0f        4 seconds ago       97.7MB
+aspnetapp           alpine              8567c3d23608        29 minutes ago      109MB
 ```
 
-TODO: Update these sizes (they are copied from the other sample).
+Same thing with Debian:
+
+```console
+% docker images aspnetapp | grep debian
+aspnetapp           debian-trim         fd44f9d476ac        12 minutes ago      97.2MB
+
+% docker images aspnetapp | grep latest
+aspnetapp           latest              eaf9b1b09d69        41 minutes ago      212MB
+```
 
 Note: These sizes are all uncompressed, on-disk sizes. When you pull an image from a registry, it is compressed, such that the size will be significantly smaller.
 
@@ -109,29 +161,6 @@ The same operations are supported for Nano Server, as follows:
 ```console
 docker build --pull -t aspnetapp:nanoserver-trim -f Dockerfile.nanoserver-x64-trim .
 docker images aspnetapp | findstr nanoserver
-```
-
-## Build an image for ARM32 and ARM64
-
-By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-nanoserver`. You need to use an architecture-specific tag if you want to target ARM. Note that Alpine is only supported on ARM64 and x64, not ARM32.
-
-Note: Docker refers to ARM32 as `armhf` and ARM64 as `aarch64` in documentation and other places.
-
-The following example demonstrates targeting architectures explictly on Liux, for ARM32 and ARM64.
-
-```console
-docker build --pull -t aspnetapp:alpine-arm32 -f Dockerfile.alpine-arm32 .
-docker build --pull -t aspnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
-docker images aspnetapp | grep arm
-```
-
-You can build ARM32 and ARM64 images on x64 machines, but you will not be able to run them. Docker relies on QEMU for this scenario, which isn't supported by .NET Core. You must test and run .NET Core imges on actual hardware for the given processor type.
-
-You can do the same thing on Windows, as follows:
-
-```console
-docker build --pull -t aspnetapp:nanoserver-arm32 -f Dockerfile.nanoserver-arm32 .
-docker images aspnetapp | findstr arm
 ```
 
 ## View ASP.NET Core apps via IP address
