@@ -16,7 +16,7 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 
 ## Build and run a container image
 
-You can to build a .NET Core-based container image using the following instructions:
+You can build and run a .NET Core-based container image using the following instructions:
 
 ```console
 docker build --pull -t dotnetapp .

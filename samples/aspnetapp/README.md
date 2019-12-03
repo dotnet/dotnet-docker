@@ -16,7 +16,7 @@ Note: Earlier Windows versions need to use a different pattern that is described
 
 ## Build and run the sample with Docker
 
-You can to build a .NET Core-based container image using the following instructions:
+You can build and run a .NET Core-based container image using the following instructions:
 
 ```console
 docker build --pull -t aspnetapp .
@@ -51,14 +51,13 @@ On Linux:
 
 ```console
 docker build --pull -t aspnetapp:alpine -f Dockerfile.alpine-x64 .
-docker images aspnetapp
 docker run --rm -it -p 8000:80 aspnetapp:alpine
 ```
 
 You can use `docker images` to see the images you've built and to compare file sizes:
 
 ```console
-rich@thundera aspnetapp % docker images aspnetapp
+% docker images aspnetapp
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 aspnetapp           alpine              8567c3d23608        34 seconds ago      109MB
 aspnetapp           latest              eaf9b1b09d69        9 minutes ago       212MB
