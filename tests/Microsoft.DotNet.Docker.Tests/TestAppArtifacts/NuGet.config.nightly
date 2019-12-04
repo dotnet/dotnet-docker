@@ -4,7 +4,6 @@
     <clear />
     <add key="dotnet-core" value="https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json" />
     <add key="aspnetcore" value="https://dotnetfeed.blob.core.windows.net/aspnet-aspnetcore/index.json" />
-    <add key="3.1-rtm" value="https://dotnetfeed.blob.core.windows.net/dotnet-core-3-1-rtm-014727/index.json" />
     <add key="api.nuget.org" value="https://api.nuget.org/v3/index.json" />
   </packageSources>
 </configuration>
