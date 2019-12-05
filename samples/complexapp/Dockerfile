@@ -15,23 +15,26 @@ COPY complexapp/ complexapp/
 COPY libfoo/ libfoo/
 COPY libbar/ libbar/
 COPY tests/ tests/
-RUN dotnet build
+WORKDIR /source/complexapp
+RUN dotnet build -c release --no-restore
 
 # test app
 FROM build AS test
 WORKDIR /source/tests
-
-# Uncomment out next 'RUN' line if you want to run tests as part of docker build
-# and for test failure to cascade to build failure
-# otherwise, you can build and run 'test' stage using the test ENTRYPOINT
-#RUN dotnet test --logger:trx
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
+# Uncomment out next `FROM` and 'RUN' lines if you want to run tests as
+# part of docker build and for test failure to cascade to build failure
+# otherwise, you can build and run 'test' stage using the test stage ENTRYPOINT
+# FROM test
+# RUN dotnet test --logger:trx
+
 FROM build AS publish
-RUN dotnet publish -c release -o /app
+WORKDIR /source/complexapp
+RUN dotnet publish -c release --no-build -o /app
 
 # final stage, which will result in generated image
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["./complexapp"]
+ENTRYPOINT ["dotnet","complexapp.dll"]

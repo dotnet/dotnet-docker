@@ -11,8 +11,8 @@ This document uses the [tests](complexapp/tests) that are part of [complexapp](c
 The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following pattern, with `docker run` and volume mounting:
 
 ```console
-C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test
-Test run for /app/tests/bin/Debug/netcoreapp3.0/tests.dll(.NETCoreApp,Version=v3.0)
+C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test
+Test run for /app/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.0)
 Microsoft (R) Test Execution Command Line Tool Version 16.1.1
 Copyright (c) Microsoft Corporation.  All rights reserved.
 
@@ -35,19 +35,19 @@ The following instructions demonstrate this scenario in various configurations, 
 ### Linux or macOS
 
 ```console
-MacBook-Pro:complexapp rich$ docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test --logger:trx
+MacBook-Pro:complexapp rich$ docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
 ```
 
 ### Windows using Linux containers
 
 ```console
-C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test --logger:trx
+C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
 ```
 
 ### Windows using Windows containers
 
 ```console
-C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:\app -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet test --logger:trx
+C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:\app -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
 ```
 
 ## Test your application in a container while you develop
@@ -57,10 +57,10 @@ You can test your application in a container with every local code change. This 
 This approach uses a similar pattern, with the .NET Core SDK container image, `docker run`, volume mounting and a file watcher:
 
 ```console
-rich@MacBook-Pro complexapp % docker run --rm -it -v ~/git/dotnet-docker/samples/complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch test
+rich@MacBook-Pro complexapp % docker run --rm -it -v ~/git/dotnet-docker/samples/complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch test
 watch : Polling file watcher is enabled
 watch : Started
-Test run for /app/tests/bin/Debug/netcoreapp3.0/tests.dll(.NETCoreApp,Version=v3.0)
+Test run for /app/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.0)
 Microsoft (R) Test Execution Command Line Tool Version 16.3.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
 
@@ -83,19 +83,19 @@ The following instructions demonstrates this scenario with various configuration
 ### Linux or macOS
 
 ```console
-docker run --rm -it -v ~/git/dotnet-docker/samples/complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch test
+docker run --rm -it -v ~/git/dotnet-docker/samples/complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch test
 ```
 
 ### Windows using Linux containers
 
 ```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch test
+docker run --rm -it -v c:\git\dotnet-docker\samples\complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch test
 ```
 
 ### Windows using Windows containers
 
 ```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\complexapp:c:\app\ -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch test
+docker run --rm -it -v c:\git\dotnet-docker\samples\complexapp:c:\app\ -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch test
 ```
 
 The commands above log test results to the console. You can additionally log results as a TRX file by appending `--logger:trx` to the previous test commands, specifically `dotnet watch test --logger:trx`. TRX logging is also demonstrated in [Running .NET Core Unit Tests with Docker](dotnet-docker-unit-testing.md).
@@ -130,7 +130,7 @@ The following example demonstrates targeting the `test` stage with the `--target
 ```console
 MacBook-Pro:complexapp rich$ docker build --pull --target test -t complexapp-test .
 MacBook-Pro:complexapp rich$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp-test
-Test run for /source/tests/bin/Debug/netcoreapp3.0/tests.dll(.NETCoreApp,Version=v3.0)
+Test run for /source/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.0)
 Microsoft (R) Test Execution Command Line Tool Version 16.3.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
 
@@ -192,14 +192,14 @@ The following example demonstrates building the Dockerfile with the `RUN dotnet 
 ```console
 MacBook-Pro:complexapp rich$ docker build --pull -t complexapp .
 Sending build context to Docker daemon  5.004MB
-Step 1/22 : FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
+Step 1/22 : FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 3.0: Pulling from dotnet/core/sdk
 Digest: sha256:66f93fea229f812f496441baf0877dd97d9e0c7fb2af209a1b055bcf4bb3919c
-Status: Image is up to date for mcr.microsoft.com/dotnet/core/sdk:3.0
+Status: Image is up to date for mcr.microsoft.com/dotnet/core/sdk:3.1
 <snip>
 Step 16/22 : RUN dotnet test --logger:trx
  ---> Running in f2fc51236957
-Test run for /source/tests/bin/Debug/netcoreapp3.0/tests.dll(.NETCoreApp,Version=v3.0)
+Test run for /source/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.0)
 Microsoft (R) Test Execution Command Line Tool Version 16.3.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
 
