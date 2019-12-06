@@ -65,10 +65,10 @@ Try {
     }
 
     if ($PullImages) {
-        $env:LOCAL_RUN = $null
+        $env:PULL_IMAGES = 1
     }
     else {
-        $env:LOCAL_RUN = 1
+        $env:PULL_IMAGES = $null
     }
 
     $env:IMAGE_ARCH_FILTER = $ArchitectureFilter
