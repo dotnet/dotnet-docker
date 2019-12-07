@@ -78,7 +78,7 @@ Total tests: 2
 
 The test runner saves a log of the tests that can be read and processed. By default, this file is saved within the image, but can be saved to the host file system via volume mounting. See [Running .NET Core Unit Tests with Docker](../unit-testing-in-container.md) for more information on how to adopt that pattern.
 
-For example, the following pattern (here, using Linux containers on Windows) will caputre the test results into a test results directory.
+For example, the following pattern (here, using Linux containers on Windows) will capture the test results into a test results directory.
 
 ```console
 mkdir TestResults
@@ -91,7 +91,7 @@ docker run --rm -v %cd%/TestResults:/source/tests/TestResults complexapp-test
 You can also run unit tests as part of `docker build`, without using stages. This can work well if your goal is to simply fail building an image if tests fail. It isn't possible to volume mount as part of the build command, which prevents you from saving the log file to the host machine. If you want to adopt this pattern, then you need to uncomment out the following line:
 
 ```console
-#RUN dotnet test --logger:trx
+#RUN dotnet test
 ```
 
 You can then build using the normal pattern, as follows:
@@ -102,7 +102,7 @@ docker build --pull -t complexapp .
 
 You will see that tests are run while building the image.
 
-You may consider leaving the `ENTRYPOINT` line as-is (not commenting it out). It will enable you to re-run tests in the way demonstrated above, to enable you to save test logs to the host.
+You may consider leaving the `ENTRYPOINT` line as-is (not commenting it out). It will enable you to re-run tests in the way demonstrated above, to enable you to save test logs to the host (in case your tests fail).
 
 ## Resources
 

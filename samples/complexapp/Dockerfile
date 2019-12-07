@@ -4,7 +4,6 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.sln .
-COPY *.props .
 COPY complexapp/*.csproj complexapp/
 COPY libfoo/*.csproj libfoo/
 COPY libbar/*.csproj libbar/
@@ -28,7 +27,7 @@ ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 # part of docker build and for test failure to cascade to build failure
 # otherwise, you can build and run 'test' stage using the test stage ENTRYPOINT
 # FROM test
-# RUN dotnet test --logger:trx
+# RUN dotnet test
 
 FROM build AS publish
 WORKDIR /source/complexapp

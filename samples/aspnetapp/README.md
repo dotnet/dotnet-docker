@@ -1,6 +1,6 @@
 # ASP.NET Core Docker Sample
 
-This sample demonstrates how to build container images for ASP.NET Core web apps. You can use this samples for Linux and Windows containers, and for x64, ARM32 and ARM64 architectures.
+This sample demonstrates how to build container images for ASP.NET Core web apps. You can use this samples for Linux and Windows containers, for x64, ARM32 and ARM64 architectures.
 
 The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You can test the built image locally or deploy it to a [container registry](../push-image-to-acr.md).
 
@@ -12,7 +12,7 @@ If want to skip to the final result, you can try a pre-built version with the fo
 docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
 ```
 
-Note: Earlier Windows versions need to use a different pattern that is described later in this document.
+Note: This pattern works on Windows, macOS and Linux. Earlier Windows versions need to use a different set of commands that are described later in this document.
 
 ## Build and run the sample with Docker
 
@@ -35,9 +35,22 @@ Application started. Press Ctrl+C to shut down.
 
 After the application starts, navigate to `http://localhost:8000` in your web browser. 
 
-Note: Earlier Windows versions need to use a different pattern that is described at the end of the document.
+Note: Earlier Windows versions need to use a different set of commands that are described at the end of the document.
 
-> Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline parameters. In some cases, you might see an error because the host port you select is already in use. Choose a different port in that case.
+Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline parameters. In some cases, you might see an error because the host port you select is already in use. Choose a different port in that case.
+
+## Build an image for Windows Nano Server
+
+The following example demonstrates targeting Windows Nano Server (x64) explicity:
+
+```console
+docker build --pull -t aspnetapp:nanoserver -f Dockerfile.nanoserver-x64 .
+docker run --rm -it -p 8000:80 aspnetapp:nanoserver
+```
+
+You can view in the app in your browser in the same way as demonstrated earlier.
+
+
 
 ## Build an image for Alpine, Debian or Ubuntu
 
@@ -54,6 +67,8 @@ docker build --pull -t aspnetapp:alpine -f Dockerfile.alpine-x64 .
 docker run --rm -it -p 8000:80 aspnetapp:alpine
 ```
 
+You can view in the app in your browser in the same way as demonstrated earlier.
+
 You can use `docker images` to see the images you've built and to compare file sizes:
 
 ```console
@@ -61,14 +76,6 @@ You can use `docker images` to see the images you've built and to compare file s
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 aspnetapp           alpine              8567c3d23608        34 seconds ago      109MB
 aspnetapp           latest              eaf9b1b09d69        9 minutes ago       212MB
-```
-
-You can do the same on Windows to target Nano Server:
-
-```console
-docker build --pull -t aspnetapp:nanoserver -f Dockerfile.nanoserver-x64 .
-docker images aspnetapp
-docker run --rm -it -p 8000:80 aspnetapp:nanoserver
 ```
 
 ## Build an image for ARM32 and ARM64

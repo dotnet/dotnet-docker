@@ -12,7 +12,7 @@ USER ContainerAdministrator
 
 # copy and publish app and libraries
 COPY *.cs .
-RUN dotnet publish -c release -o /app -r win-x64 --self-contained false
+RUN dotnet publish -c release -o /app --no-restore -r win-x64 --self-contained false
 
 # final stage, which will result in generated image
 # Uses the 1909 release; Other choices: 1903, 1809 

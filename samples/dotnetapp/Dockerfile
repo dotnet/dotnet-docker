@@ -8,7 +8,7 @@ RUN dotnet restore
 
 # copy and publish app and libraries
 COPY *.cs .
-RUN dotnet publish -c release -o /app
+RUN dotnet publish -c release -o /app --no-restore
 
 # final stage, which will result in generated image
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1
