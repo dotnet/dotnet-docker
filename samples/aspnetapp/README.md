@@ -6,7 +6,9 @@ The sample builds an application in a [.NET Core SDK container](https://hub.dock
 
 The instructions assume that you have cloned this repo, have [Docker](https://www.docker.com/products/docker) installed, and have a command prompt open within the `samples/aspnetapp` directory within the repo.
 
-If want to skip to the final result, you can try a pre-built version with the following command and access in your web browser at `http://localhost:8000`.
+## Try a pre-built version of the sample
+
+If want to skip ahead, you can try a pre-built version with the following command and access in your web browser at `http://localhost:8000`.
 
 ```console
 docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
@@ -14,7 +16,7 @@ docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
 
 Note: This pattern works on Windows, macOS and Linux. Earlier Windows versions need to use a different set of commands that are described later in this document.
 
-## Build and run the sample with Docker
+## Build an ASP.NET Core image
 
 You can build and run a .NET Core-based container image using the following instructions:
 
@@ -41,7 +43,7 @@ Note: The `-p` argument maps port 8000 on your local machine to port 80 in the c
 
 ## Build an image for Windows Nano Server
 
-The following example demonstrates targeting Windows Nano Server (x64) explicity:
+The following example demonstrates targeting Windows Nano Server (x64) explicity (you must be have Windows containers enabled):
 
 ```console
 docker build --pull -t aspnetapp:nanoserver -f Dockerfile.nanoserver-x64 .
@@ -50,13 +52,20 @@ docker run --rm -it -p 8000:80 aspnetapp:nanoserver
 
 You can view in the app in your browser in the same way as demonstrated earlier.
 
+You can use `docker images` to see the images you've built:
 
+```console
+> docker images aspnetapp
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+aspnetapp           latest              b2f0ecb7bdf9        About an hour ago   353MB
+aspnetapp           nanoserver          d4b7586827f2        About an hour ago   353MB
+```
 
 ## Build an image for Alpine, Debian or Ubuntu
 
-By default, .NET Core uses Debian base images for Linux containers. You will get a Debian-based image if you use a tag with only a version number, such as `3.1`, as opposed to a distro-specific tag like `3.1-alpine`.
+.NET Core tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `3.1`, as opposed to a distro-specific tag like `3.1-alpine`.
 
-This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. Docker makes it easy to use alternate Dockfiles by using the `-f` argument. The [.NET Core Docker Sample](../dotnetapp/README.md) demonstrates targeting a larger set of distros.
+This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. The [.NET Core Docker Sample](../dotnetapp/README.md) demonstrates targeting a larger set of distros.
 
 The following example demonstrates targeting distros explictly and also shows the size differences between the distros. Tags are added to the image name to differentiate the images.
 
@@ -69,20 +78,32 @@ docker run --rm -it -p 8000:80 aspnetapp:alpine
 
 You can view in the app in your browser in the same way as demonstrated earlier.
 
+You can also build for Debian and Ubuntu:
+
+```console
+docker build --pull -t aspnetapp:debian -f Dockerfile.debian-x64 .
+docker build --pull -t aspnetapp:ubuntu -f Dockerfile.ubuntu-x64 .
+```
+
 You can use `docker images` to see the images you've built and to compare file sizes:
 
 ```console
 % docker images aspnetapp
+rich@thundera aspnetapp % docker images aspnetapp
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-aspnetapp           alpine              8567c3d23608        34 seconds ago      109MB
-aspnetapp           latest              eaf9b1b09d69        9 minutes ago       212MB
+aspnetapp           ubuntu              0f5bc72e4caf        14 seconds ago      209MB
+aspnetapp           debian              f70387d4d802        35 seconds ago      212MB
+aspnetapp           alpine              6da2c287c42c        10 hours ago        109MB
+aspnetapp           latest              8c5d1952e3b7        10 hours ago        212MB
 ```
+
+You can run these images in the same way as is done above, with Alpine.
 
 ## Build an image for ARM32 and ARM64
 
 By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-nanoserver`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET Core in only supported on Alpine on ARM64 and x64, and not ARM32.
 
-Note: Docker documentation refers to ARM32 as `armhf` and ARM64 as `aarch64`.
+Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
 
 The following example demonstrates targeting architectures explictly on Linux, for ARM32 and ARM64.
 
@@ -103,7 +124,7 @@ aspnetapp           alpine-arm64        8ec6bf841319        2 minutes ago       
 
 You can build ARM32 and ARM64 images on x64 machines, but you will not be able to run them. Docker relies on QEMU for this scenario, which isn't supported by .NET Core. You must test and run .NET Core imges on actual hardware for the given processor type.
 
-You can do the same thing on Windows, as follows:
+You can do the same thing with Windows Nano Server, as follows:
 
 ```console
 docker build --pull -t aspnetapp:nanoserver-arm32 -f Dockerfile.nanoserver-arm32 .
@@ -114,12 +135,12 @@ docker images aspnetapp | findstr arm
 
 You can improve startup performance by using [Ready to Run compilation](https://github.com/dotnet/runtime/blob/master/docs/design/coreclr/botr/readytorun-overview.md) for your application. You can do this by setting the `PublishReadyToRun` property, which will take affect when you publish an application. This is what the `-trim` samples do (they are explained shortly). 
 
-You can add this property in two ways:
+You can add the `PublishReadyToRun` property in two ways:
 
-- Set the property to your profile file, as: `<PublishReadyToRun>true</PublishReadyToRun>'
-- Set the property on the command line, as:  `/p:PublishReadToRun=true`
+- Set it in your project file, as: `<PublishReadyToRun>true</PublishReadyToRun>`
+- Set it on the command line, as:  `/p:PublishReadToRun=true`
 
-The default `Dockerfile` that come with the sample doesn't use Ready to Run compilation because the application is too small to warrant it. The majority of the startup benefit available comes from .NET Core libraries -- which are Ready to Run compiled -- since they make up the bulk of the IL code that is executed in an application.
+The default `Dockerfile` that come with the sample doesn't use R2R compilation because the application is too small to warrant it. The bulk of the IL code that is executed in this sample application is within the .NET Core libraries, which are already R2R compiled.
 
 ## Build an image optimized for size
 
@@ -131,9 +152,9 @@ There are a set of '-trim' Dockerfiles included with this sample that are opted 
 
 * **Self-contained deployment** -- Publish the runtime with the application.
 * **Assembly linking** -- Trim assemblies, including in the .NET Core framework, to make the application smaller.
-* **Ready to Run compilation** -- Compile assemblies to Ready to Run format to make startup faster.
+* **Ready to Run (R2R) compilation** -- Compile assemblies to R2R format to make startup faster. R2R Compiled assemblies are larger. The benefit of R2R compilation for your application may be outweighed by the size increase, so please do test your application with and without R2R.
 
-The first two operations reduce size, which can decrease image pull times. The last operation improves startup performance, but increases size. You can experiment with these options if you want to see which combination of settings works best for you.
+You are encouraged to experiment with these options if you want to see which combination of settings works best for you.
 
 The following instructions demonstrate how to build the `slim` Dockerfiles:
 
@@ -162,7 +183,7 @@ aspnetapp           latest              eaf9b1b09d69        41 minutes ago      
 
 Note: These sizes are all uncompressed, on-disk sizes. When you pull an image from a registry, it is compressed, such that the size will be significantly smaller.
 
-The same operations are supported for Nano Server, as follows:
+You can do the same thing with Windows Nano Server, as follows:
 
 ```console
 docker build --pull -t aspnetapp:nanoserver-trim -f Dockerfile.nanoserver-x64-trim .
