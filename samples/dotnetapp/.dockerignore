@@ -5,7 +5,6 @@
 
 # files
 Dockerfile*
-Directory.Build.props
 **/*.trx
 **/*.md
 **/*.ps1

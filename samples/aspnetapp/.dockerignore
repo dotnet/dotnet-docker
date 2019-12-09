@@ -5,5 +5,4 @@
 
 # files
 Dockerfile*
-**/*.trx
 **/*.md
