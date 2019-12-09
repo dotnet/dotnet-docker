@@ -44,7 +44,10 @@ The .NET Core image tags strive to align with the tagging practices utilized by 
     * `3.0`
     * `3.1`
 
-1. `latest` - Will always refer to the most recent non-prerelease `<Major.Minor.Patch Version>` image.
+1. `latest`
+
+    * dotnet/core - `latest` will reference the most recent non-prerelease `<Major.Minor.Patch Version>` image.
+    * dotnet/core-nightly - `latest` will reference the most recent `<Major.Minor.Patch Version>` image.  This implies `latest` will at times reference prerelease versions.  In the event when there are multiple active prerelease versions (e.g. 3.1 preview 3 and 5.0 preview 1), `latest` will reference the lower prerelease version (e.g. 3.1 preview 3) until the point when the lower version (e.g. 3.1) is released.  Once this happens, `latest` will reference the higher version (e.g. 5.0 preview 1).
 
 All shared tags [support multiple platforms](https://blog.docker.com/2017/09/docker-official-images-now-multi-platform/) and have the following characteristics:
 
