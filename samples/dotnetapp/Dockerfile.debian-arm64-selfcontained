@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -22,7 +22,7 @@ COPY tests/. .
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 
-FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.0-buster-slim-arm64v8 AS runtime
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim-arm64v8 AS runtime
 WORKDIR /app
 COPY --from=build /app/dotnetapp/out ./
 ENTRYPOINT ["./dotnetapp"]
