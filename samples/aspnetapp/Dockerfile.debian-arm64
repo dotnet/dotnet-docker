@@ -5,15 +5,15 @@ WORKDIR /source
 # copy csproj and restore as distinct layers
 COPY *.sln .
 COPY aspnetapp/*.csproj ./aspnetapp/
-RUN dotnet restore -r linux-arm64
+RUN dotnet restore
 
 # copy everything else and build app
 COPY aspnetapp/. ./aspnetapp/
 WORKDIR /source/aspnetapp
-RUN dotnet publish -c release -o /app -r linux-arm64 --self-contained false
+RUN dotnet publish -c release -o /app
 
 # final stage, which will result in generated image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim-arm64v8
 WORKDIR /app
 COPY --from=build /app ./
-ENTRYPOINT ["./aspnetapp"]
+ENTRYPOINT ["dotnet","aspnetapp.dll"]

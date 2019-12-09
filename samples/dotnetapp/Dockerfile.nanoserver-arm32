@@ -12,11 +12,11 @@ USER ContainerAdministrator
 
 # copy and publish app and libraries
 COPY *.cs .
-RUN dotnet publish -c release -o /app --no-restore -r win-arm --self-contained false
+RUN dotnet publish -c release -o /app --no-restore
 
 # final stage, which will result in generated image
 # Uses the 1809 release
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1809-arm32v7
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnetapp"]
+ENTRYPOINT ["dotnet","dotnetapp.dll"]

@@ -3,14 +3,15 @@
 # Copyright (c) .NET Foundation and contributors. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
 param(
-  [parameter(Mandatory=$true)]  [System.IO.FileInfo]$path
+  [parameter(Mandatory=$true)]  [System.IO.FileInfo]$path,
+  [parameter(Mandatory=$false)] [bool]$runapp
 )
 
 
-$Time = [System.Diagnostics.Stopwatch]::StartNew()
+$time = [System.Diagnostics.Stopwatch]::StartNew()
 
 function PrintElapsedTime {
-    Log $([string]::Format("Elapsed time: {0}.{1}",$Time.Elapsed.Seconds,$Time.Elapsed.Milliseconds))
+    Log $([string]::Format("Elapsed time: {0}.{1}",$time.Elapsed.Seconds,$time.Elapsed.Milliseconds))
 }
 
 function Log {
@@ -26,37 +27,55 @@ function Check {
     }
 }
 
-$DockerOS = docker version -f "{{ .Server.Os }}"
-$Nano = "nanoserver"
+$dockeros = docker version -f "{{ .Server.Os }}"
+$dockerarch = (docker version -f "{{ .Server.Arch }}")
+$nano = "nanoserver"
+$totalCount = 0
+$buildCount = 0
+$runCount = 0
 
-if ($DockerOS -eq "linux") {
-    Log "Environment: Linux containers"
-}
-else {
-    Log "Environment: Windows containers"
-}
+Log "Environment: $dockeros containers"
+Log "Chip: $dockerarch"
 
-
-
-Foreach ($File in Get-ChildItem $path Dockerfile*) 
+Foreach ($file in Get-ChildItem $path Dockerfile*) 
 {
-
-    if ($DockerOS -eq "linux" -And $File.Name.Contains($nano)) {
+    $totalCount++
+    if ($file.Name -eq "Dockerfile") {}
+    elseif ($dockeros -eq "windows" -and ($file.Name.Contains($nano))) {}
+    elseif ($dockeros -eq "linux" -and $file.Name.Contains($nano)) {
         Continue
     }
-    else if ($DockerOS -eq "windows" -And $File.Name.Contains($nano)) {
-    }
-    else if ($File.Name -eq "Dockerfile") {    
-    }
-    else
+
+    $testimage = "testbuildimage"
+
+    Log "Building $file"
+    docker build --pull -t $testimage -f $file $path
+    Check "Build image for $file"
+    $buildCount++
+
+    if ($runapp)
     {
-        Continue
+        if ($file.Name -eq "Dockerfile" -or
+            ($dockerarch -eq "amd64" -And $file.Name.Contains("x64")) -or
+            ($dockerarch -eq "arm64" -And $file.Name.Contains("arm64")) -or
+            ($dockerarch -eq "arm32" -And $file.Name.Contains("arm32"))
+        )
+        {
+            docker run --rm -it $testimage "Hello from $file"
+            $runCount++
+        }
+
+        Check "Run image for $file"
     }
+    docker rmi $testimage
+}
 
-    Log "Building $File"
-    docker build --pull -t TestBuildImage -f $File .
-    docker rmi TestBuildImage
+Log "$totalCount Dockerfiles discovered"
+Log "$buildCount images built"
 
+if ($runapp)
+{
+    Log "$runCount images run"
 }
 
 PrintElapsedTime
