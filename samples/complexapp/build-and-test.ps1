@@ -25,9 +25,10 @@ function Check {
 }
 
 $DockerOS = docker version -f "{{ .Server.Os }}"
-$ImageName = "dotnetapp"
-$TestImageName = "dotnetapp:test"
+$ImageName = "complexapp"
+$TestImageName = "complexapp:test"
 $Dockerfile = "Dockerfile"
+$TestStage = "test"
 
 PrintElapsedTime
 Log "Build application image"
@@ -36,7 +37,7 @@ PrintElapsedTime
 Check "docker build (application)"
 
 Log "Build test runner image"
-docker build --pull --target testrunner -t $TestImageName -f $Dockerfile .
+docker build --target $TestStage -t $TestImageName -f $Dockerfile .
 PrintElapsedTime
 Check "docker build (test runner)"
 
@@ -49,7 +50,7 @@ Log "Check if $TestResults directory exists: $TestResultsDirExists"
 if (!$TestResultsDirExists) {
     Log "Create $TestResults folder"
     mkdir $TestResultsDir
-    gci . TestResults -ad
+    Get-ChildItem . TestResults -ad
 }
 Log $TestResultsDir
 
@@ -66,7 +67,7 @@ else {
 
 PrintElapsedTime
 
-$testfiles = gci $TestResultsDir *.trx | Sort-Object -Property LastWriteTime | select -last 1
+$testfiles = Get-ChildItem $TestResultsDir *.trx | Sort-Object -Property LastWriteTime | Select-Object -last 1
 
 Log "Docker image built: $ImageName"
 Log "Test log file:"
