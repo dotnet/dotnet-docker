@@ -10,28 +10,56 @@ This scenario relies on [volume mounting](https://docs.docker.com/engine/admin/v
 
 `dotnet publish` (and `build`) produces native executables for applications. If you use a Linux container, you will build a Linux executable that will not run on Windows or macOS. You can use a runtime argument (`-r`) to specify the type of assets that you want to publish. The following examples assume you want assets that match your host operating system, and use runtime arguments to ensure that.
 
+## Pull SDK image
+
+It is recommended to pull the SDK image before running the appropriate command. This ensures that you get the latest patch version of the SDK. Use the following command:
+
+```console
+docker pull mcr.microsoft.com/dotnet/core/sdk:3.1
+```
+
+The step isn't necessary if you have never pulled the SDK image before.
+
 ## Linux
 
 ```console
-docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet publish -c release -o out
+docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c release -o out
+```
+
+You can see the built binaries with the following command:
+
+```console
+rich@thundera dotnetapp % ls out
+dotnetapp			dotnetapp.pdb
+dotnetapp.deps.json		dotnetapp.runtimeconfig.json
+dotnetapp.dll
 ```
 
 ## macOS
 
 ```console
-docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet publish -c release -o out -r osx-x64 --self-contained false
+docker run --rm -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c release -o out -r osx-x64 --self-contained false
+```
+
+You can see the built binaries with the following command:
+
+```console
+rich@thundera dotnetapp % ls out
+dotnetapp			dotnetapp.pdb
+dotnetapp.deps.json		dotnetapp.runtimeconfig.json
+dotnetapp.dll
 ```
 
 ## Windows using Linux containers
 
 ```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet publish -c release -o out -r win-x64 --self-contained false
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c release -o out -r win-x64 --self-contained false
 ```
 
 ## Windows using Windows containers
 
 ```console
-docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app -w c:\app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet publish -c Release -o out
+docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app -w c:\app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c Release -o out
 ```
 
 ## Building to a separate location
@@ -39,7 +67,16 @@ docker run --rm -v c:\git\dotnet-docker\samples\dotnetapp:c:\app -w c:\app mcr.m
 You may want the build output to be written to a separate location than the source directory. That's easy to do with a second volume mount. The following example demonstrates doing that on macOS.
 
 ```console
-docker run --rm -v ~/dotnetapp:/out -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet publish -c release -o /out -r osx-x64 --self-contained false
+docker run --rm -v ~/dotnetapp:/out -v ~/git/dotnet-docker/samples/dotnetapp:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c release -o /out -r osx-x64 --self-contained false
+```
+
+You can see the built binaries with the following command:
+
+```console
+> ls ~/dotnetapp
+dotnetapp			    dotnetapp.pdb
+dotnetapp.deps.json		dotnetapp.runtimeconfig.json
+dotnetapp.dll
 ```
 
 ## Resources
