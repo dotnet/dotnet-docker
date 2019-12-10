@@ -1,7 +1,7 @@
 jobs:
 - job: Build
   pool: # linuxAmd64Pool
-    name: Hosted Ubuntu 1604
+    name: DotNetCore-Linux
   steps:
   - template: ../steps/init-docker-linux.yml
   - template: ../steps/download-build-artifact.yml
