@@ -6,7 +6,7 @@ parameters:
 jobs:
 - job: ${{ parameters.name }}
   pool: # linuxAmd64Pool
-    name: DotNetCore-Linux
+    name: Hosted Ubuntu 1604
   steps:
   - template: ../steps/init-docker-linux.yml
   - script: >

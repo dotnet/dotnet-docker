@@ -32,7 +32,7 @@ stages:
     parameters:
       name: Build_Linux_amd64
       pool: # linuxAmd64Pool
-        name: DotNetCore-Linux
+        name: Hosted Ubuntu 1604
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxAmd64']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
@@ -174,7 +174,7 @@ stages:
       parameters:
         name: Test_Linux_amd64
         pool: # linuxAmd64Pool
-          name: DotNetCore-Linux
+          name: Hosted Ubuntu 1604
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxAmd64']
         testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
     - template: ../jobs/test-images-linux-client.yml
@@ -285,4 +285,4 @@ stages:
     - template: ../jobs/publish.yml
       parameters:
         pool: # linuxAmd64Pool
-          name: DotNetCore-Linux
+          name: Hosted Ubuntu 1604
