@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -22,7 +22,7 @@ COPY tests/. .
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 
-FROM mcr.microsoft.com/dotnet/core/runtime:3.0-alpine AS runtime
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-alpine AS runtime
 
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT false
 RUN apk add --no-cache icu-libs

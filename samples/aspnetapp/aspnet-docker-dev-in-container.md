@@ -31,7 +31,7 @@ The instructions assume that you are in the root of the repository. You can use 
 ### Windows using Linux containers
 
 ```console
-docker run --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:/app/ -w /app/aspnetapp -e ASPNETCORE_URLS=http://+:80 mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch run
+docker run --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:/app/ -w /app/aspnetapp -e ASPNETCORE_URLS=http://+:80 mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run
 ```
 
 You can use CTRL-C to terminate `dotnet watch`. Navigate to the site at `http://localhost:8000` in your browser.
@@ -39,7 +39,7 @@ You can use CTRL-C to terminate `dotnet watch`. Navigate to the site at `http://
 ### macOS or Linux using Linux containers
 
 ```console
-docker run --rm -it -p 8000:80 -v ~/git/dotnet-docker/samples/aspnetapp:/app/ -w /app/aspnetapp -e ASPNETCORE_URLS=http://+:80 mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch run
+docker run --rm -it -p 8000:80 -v ~/git/dotnet-docker/samples/aspnetapp:/app/ -w /app/aspnetapp -e ASPNETCORE_URLS=http://+:80 mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run
 ```
 
 You can use CTRL-C to terminate `dotnet watch`. Navigate to the site at `http://localhost:8000` in your browser.
@@ -47,7 +47,7 @@ You can use CTRL-C to terminate `dotnet watch`. Navigate to the site at `http://
 ### Windows using Windows containers
 
 ```console
-docker run --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ -w \app\aspnetapp -e ASPNETCORE_URLS=http://+:80 --name aspnetappsample mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch run
+docker run --rm -it -p 8000:80 -v c:\git\dotnet-docker\samples\aspnetapp:c:\app\ -w \app\aspnetapp -e ASPNETCORE_URLS=http://+:80 --name aspnetappsample mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run
 ```
 
 You can use CTRL-C to terminate `dotnet watch`.
