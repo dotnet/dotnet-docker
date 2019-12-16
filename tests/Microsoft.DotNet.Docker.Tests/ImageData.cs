@@ -16,7 +16,6 @@ namespace Microsoft.DotNet.Docker.Tests
     public class ImageData
     {
         private List<string> _pulledImages = new List<string>();
-        private Version _runtimeDepsVersion;
         private string _sdkOS;
 
         public Arch Arch { get; set; }
@@ -74,12 +73,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 return rid;
             }
-        }
-
-        public Version RuntimeDepsVersion
-        {
-            get { return _runtimeDepsVersion ?? Version; }
-            set { _runtimeDepsVersion = value; }
         }
 
         public string SdkOS
@@ -153,11 +146,8 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 case DotNetImageType.Runtime:
                 case DotNetImageType.Aspnet:
-                    imageVersion = Version;
-                    os = OS;
-                    break;
                 case DotNetImageType.Runtime_Deps:
-                    imageVersion = RuntimeDepsVersion;
+                    imageVersion = Version;
                     os = OS;
                     break;
                 case DotNetImageType.SDK:
