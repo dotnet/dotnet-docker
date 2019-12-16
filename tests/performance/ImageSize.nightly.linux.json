@@ -86,7 +86,7 @@
     "3.0/sdk/stretch/amd64": 648298293,
     "3.0/sdk/stretch/arm32v7": 609617777,
     "3.0/sdk/stretch/arm64v8": 667334243,
-    "3.0/sdk/alpine3.9/amd64": 382038072,
+    "3.0/sdk/alpine3.9/amd64": 406837834,
     "3.0/sdk/bionic/amd64": 622412878,
     "3.0/sdk/bionic/arm32v7": 580725112,
     "3.0/sdk/bionic/arm64v8": 641689415,
