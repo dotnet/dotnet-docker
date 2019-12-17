@@ -87,7 +87,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string imageName = GetImageName(imageType, dockerHelper);
 
-            if (!Config.IsLocalRun && !_pulledImages.Contains(imageName))
+            if (Config.PullImages && !_pulledImages.Contains(imageName))
             {
                 dockerHelper.Pull(imageName);
                 _pulledImages.Add(imageName);
