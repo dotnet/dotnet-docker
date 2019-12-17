@@ -49,7 +49,6 @@ namespace Dotnet.Docker
                         await CreatePullRequestAsync();
                     }
                 }
-                await CreatePullRequestAsync();
             }
             catch (Exception e)
             {
@@ -214,14 +213,7 @@ namespace Dotnet.Docker
                 Repository.Clone($"https://github.com/{gitHubAuth.User}/{Options.GitHubProject}", tempRepoPath, cloneOptions);
 
                 // Remove all existing directories and files from the temp repo
-                foreach (string file in Directory.GetFiles(tempRepoPath))
-                {
-                    File.Delete(file);
-                }
-                foreach (DirectoryInfo dir in new DirectoryInfo(tempRepoPath).GetDirectories().Where(dir => dir.Name != ".git"))
-                {
-                    Directory.Delete(dir.FullName, true);
-                }
+                ClearRepoContents(tempRepoPath);
 
                 // Copy contents of local repo changes to temp repo
                 DirectoryCopy(".", tempRepoPath);
@@ -257,19 +249,36 @@ namespace Dotnet.Docker
             finally
             {
                 // Cleanup temp repo
-                if (Directory.Exists(tempRepoPath))
+                DeleteRepoDirectory(tempRepoPath);
+            }
+        }
+
+        private static void DeleteRepoDirectory(string repoPath)
+        {
+            if (Directory.Exists(repoPath))
+            {
+                IEnumerable<string> gitFiles = Directory.GetFiles(
+                    Path.Combine(repoPath, ".git"), "*", SearchOption.AllDirectories);
+
+                // Ensure all files in .git folder are writable
+                foreach (string file in gitFiles)
                 {
-                    IEnumerable<string> gitFiles = Directory.GetFiles(
-                        Path.Combine(tempRepoPath, ".git"), "*", SearchOption.AllDirectories);
-
-                    // Ensure all files in .git folder are writable
-                    foreach (string file in gitFiles)
-                    {
-                        File.SetAttributes(file, FileAttributes.Normal);
-                    }
-
-                    Directory.Delete(tempRepoPath, true);
+                    File.SetAttributes(file, FileAttributes.Normal);
                 }
+
+                Directory.Delete(repoPath, true);
+            }
+        }
+
+        private static void ClearRepoContents(string repoPath)
+        {
+            foreach (string file in Directory.GetFiles(repoPath))
+            {
+                File.Delete(file);
+            }
+            foreach (DirectoryInfo dir in new DirectoryInfo(repoPath).GetDirectories().Where(dir => dir.Name != ".git"))
+            {
+                Directory.Delete(dir.FullName, true);
             }
         }
 
