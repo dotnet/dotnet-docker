@@ -1,5 +1,5 @@
 {
-  "readmePath": "xREADME.md",
+  "readmePath": "xzfREADME.md",
   "registry": "mcr.microsoft.com",
   "variables": {
     "2.1-RuntimeVersion": "2.1.14",
