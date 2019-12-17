@@ -16,9 +16,7 @@ steps:
       optionalTestArgs="-DisableHttpVerification"
     fi
     if [ "${{ eq(variables['System.TeamProject'], 'public') }}" == "False" ]; then
-      optionalTestArgs="$optionalTestArgs -Registry $(acr.server) -RepoPrefix $(stagingRepoPrefix) -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
-    else
-      optionalTestArgs="$optionalTestArgs -IsLocalRun"
+      optionalTestArgs="$optionalTestArgs -PullImages -Registry $(acr.server) -RepoPrefix $(stagingRepoPrefix) -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
     fi
     echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
   displayName: Set Test Variables

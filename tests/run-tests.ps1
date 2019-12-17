@@ -12,7 +12,7 @@ param(
     [string]$Registry,
     [string]$RepoPrefix,
     [switch]$DisableHttpVerification,
-    [switch]$IsLocalRun,
+    [switch]$PullImages,
     [string]$ImageInfoPath
 )
 
@@ -64,11 +64,11 @@ Try {
         $env:DISABLE_HTTP_VERIFICATION = $null
     }
 
-    if ($IsLocalRun) {
-        $env:LOCAL_RUN = 1
+    if ($PullImages) {
+        $env:PULL_IMAGES = 1
     }
     else {
-        $env:LOCAL_RUN = $null
+        $env:PULL_IMAGES = $null
     }
 
     $env:IMAGE_ARCH_FILTER = $ArchitectureFilter
