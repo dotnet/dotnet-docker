@@ -66,6 +66,15 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
         };
+        
+        private static readonly SampleImageData[] s_linuxSampleTestData =
+        {
+            new SampleImageData { OS = OS.BusterSlim,  Arch = Arch.Amd64 },
+        };
+
+        private static readonly SampleImageData[] s_WindowsSampleTestData =
+        {
+        };
 
         public static IEnumerable<ProductImageData> GetImageData()
         {
@@ -75,6 +84,14 @@ namespace Microsoft.DotNet.Docker.Tests
                 .FilterImagesByOs()
                 .Cast<ProductImageData>();
         }
+        
+        public static IEnumerable<SampleImageData> GetSampleImageData()
+        {
+            return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxSampleTestData : s_WindowsSampleTestData)
+                .FilterImagesByArch()
+                .FilterImagesByOs()
+                .Cast<SampleImageData>();
+        }
 
         private static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<ProductImageData> imageData)
         {
@@ -82,6 +99,22 @@ namespace Microsoft.DotNet.Docker.Tests
             return imageData
                 .Where(imageData => versionFilterPattern == null
                     || Regex.IsMatch(imageData.VersionString, versionFilterPattern, RegexOptions.IgnoreCase));
+        }
+
+        private static IEnumerable<ImageData> FilterImagesByArch(this IEnumerable<ImageData> imageData)
+        {
+            string archFilterPattern = GetFilterRegexPattern("IMAGE_ARCH_FILTER");
+            return imageData
+                .Where(imageData => archFilterPattern == null
+                    || Regex.IsMatch(Enum.GetName(typeof(Arch), imageData.Arch), archFilterPattern, RegexOptions.IgnoreCase));
+        }
+
+        private static IEnumerable<ImageData> FilterImagesByOs(this IEnumerable<ImageData> imageData)
+        {
+            string osFilterPattern = GetFilterRegexPattern("IMAGE_OS_FILTER");
+            return imageData
+                .Where(imageData => osFilterPattern == null
+                    || Regex.IsMatch(imageData.OS, osFilterPattern, RegexOptions.IgnoreCase));
         }
 
         private static IEnumerable<ImageData> FilterImagesByArch(this IEnumerable<ImageData> imageData)

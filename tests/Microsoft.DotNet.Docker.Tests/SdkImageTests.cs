@@ -19,8 +19,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         }
 
-        protected override DotNetImageType ImageType => DotNetImageType.SDK;
-
         public static IEnumerable<object[]> GetImageData()
         {
             return TestData.GetImageData()
@@ -33,7 +31,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyInsecureFiles(ProductImageData imageData)
         {
-            base.VerifyCommonInsecureFiles(imageData);
+            base.VerifyCommonInsecureFiles(imageData, DotNetImageType.SDK);
         }
 
         [Theory]

@@ -11,6 +11,8 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public abstract class CommonRuntimeImageTests : ImageTests
     {
+        protected abstract DotNetImageType ImageType { get; }
+
         protected CommonRuntimeImageTests(ITestOutputHelper outputHelper)
             : base(outputHelper)
         {
