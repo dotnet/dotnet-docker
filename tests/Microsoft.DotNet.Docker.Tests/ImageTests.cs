@@ -19,9 +19,8 @@ namespace Microsoft.DotNet.Docker.Tests
         
         protected DockerHelper DockerHelper { get; }
         protected ITestOutputHelper OutputHelper { get; }
-        protected abstract DotNetImageType ImageType { get; }
 
-        protected void VerifyCommonInsecureFiles(ImageData imageData)
+        protected void VerifyCommonInsecureFiles(ProductImageData imageData, DotNetImageType imageType)
         {
             if (imageData.Version < new Version("3.1") ||
                 (imageData.OS.Contains("alpine") && imageData.IsArm))
@@ -45,8 +44,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string command = $"/bin/sh -c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd} && {noUserOrGroupFilesCmd}\"";
 
             string output = DockerHelper.Run(
-                    image: imageData.GetImage(ImageType, DockerHelper),
-                    name: imageData.GetIdentifier($"InsecureFiles-{ImageType}"),
+                    image: imageData.GetImage(imageType, DockerHelper),
+                    name: imageData.GetIdentifier($"InsecureFiles-{imageType}"),
                     command: command
                 );
 

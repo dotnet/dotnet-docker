@@ -18,7 +18,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyEnvironmentVariables(ImageData imageData)
+        [Trait("Category", "runtime-deps")]
+        public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
             base.VerifyCommonEnvironmentVariables(imageData);
         }

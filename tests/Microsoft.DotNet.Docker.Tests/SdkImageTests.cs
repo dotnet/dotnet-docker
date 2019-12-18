@@ -18,8 +18,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         }
 
-        protected override DotNetImageType ImageType => DotNetImageType.SDK;
-
         public static IEnumerable<object[]> GetImageData()
         {
             return TestData.GetImageData()
@@ -30,14 +28,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyInsecureFiles(ImageData imageData)
+        [Trait("Category", "sdk")]
+        public void VerifyInsecureFiles(ProductImageData imageData)
         {
-            base.VerifyCommonInsecureFiles(imageData);
+            base.VerifyCommonInsecureFiles(imageData, DotNetImageType.SDK);
         }
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyEnvironmentVariables(ImageData imageData)
+        [Trait("Category", "sdk")]
+        public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
             variables.AddRange(GetCommonEnvironmentVariables());
@@ -65,7 +65,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyPackageCache(ImageData imageData)
+        [Trait("Category", "sdk")]
+        public void VerifyPackageCache(ProductImageData imageData)
         {
             string verifyCacheCommand = null;
             if (imageData.Version.Major == 2)
@@ -96,14 +97,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyPowerShellScenario_DefaultUser(ImageData imageData)
+        [Trait("Category", "sdk")]
+        public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
         {
             PowerShellScenario_Execute(imageData, null);
         }
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyPowerShellScenario_NonDefaultUser(ImageData imageData)
+        [Trait("Category", "sdk")]
+        public void VerifyPowerShellScenario_NonDefaultUser(ProductImageData imageData)
         {
             var optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
             if (imageData.OS.Contains("nanoserver", StringComparison.OrdinalIgnoreCase))
@@ -115,7 +118,7 @@ namespace Microsoft.DotNet.Docker.Tests
             PowerShellScenario_Execute(imageData, optRunArgs);
         }
 
-        private void PowerShellScenario_Execute(ImageData imageData, string optionalArgs)
+        private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
         {
             if (imageData.Version.Major < 3)
             {
@@ -134,9 +137,9 @@ namespace Microsoft.DotNet.Docker.Tests
             Assert.Equal(output, bool.TrueString, ignoreCase: true);
         }
 
-        private class SdkImageDataEqualityComparer : IEqualityComparer<ImageData>
+        private class SdkImageDataEqualityComparer : IEqualityComparer<ProductImageData>
         {
-            public bool Equals([AllowNull] ImageData x, [AllowNull] ImageData y)
+            public bool Equals([AllowNull] ProductImageData x, [AllowNull] ProductImageData y)
             {
                 if (x is null && y is null)
                 {
@@ -158,7 +161,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     x.Arch == y.Arch;
             }
 
-            public int GetHashCode([DisallowNull] ImageData obj)
+            public int GetHashCode([DisallowNull] ProductImageData obj)
             {
                 return $"{obj.VersionString}-{obj.SdkOS}-{obj.Arch}".GetHashCode();
             }

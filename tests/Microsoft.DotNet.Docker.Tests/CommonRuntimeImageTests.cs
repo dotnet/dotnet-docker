@@ -11,6 +11,8 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public abstract class CommonRuntimeImageTests : ImageTests
     {
+        protected abstract DotNetImageType ImageType { get; }
+
         protected CommonRuntimeImageTests(ITestOutputHelper outputHelper)
             : base(outputHelper)
         {
@@ -24,12 +26,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyInsecureFiles(ImageData imageData)
+        [Trait("Category", "runtime")]
+        [Trait("Category", "runtime-deps")]
+        [Trait("Category", "aspnet")]
+        public void VerifyInsecureFiles(ProductImageData imageData)
         {
-            base.VerifyCommonInsecureFiles(imageData);
+            base.VerifyCommonInsecureFiles(imageData, ImageType);
         }
 
-        protected void VerifyCommonEnvironmentVariables(ImageData imageData)
+        protected void VerifyCommonEnvironmentVariables(ProductImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
             variables.AddRange(GetCommonEnvironmentVariables());

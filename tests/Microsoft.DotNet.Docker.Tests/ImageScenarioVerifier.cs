@@ -15,13 +15,13 @@ namespace Microsoft.DotNet.Docker.Tests
     public class ImageScenarioVerifier
     {
         private readonly DockerHelper _dockerHelper;
-        private readonly ImageData _imageData;
+        private readonly ProductImageData _imageData;
         private readonly bool _isWeb;
         private readonly ITestOutputHelper _outputHelper;
         private readonly string _testArtifactsDir = Path.Combine(Directory.GetCurrentDirectory(), "TestAppArtifacts");
 
         public ImageScenarioVerifier(
-            ImageData imageData,
+            ProductImageData imageData,
             DockerHelper dockerHelper,
             ITestOutputHelper outputHelper,
             bool isWeb = false)
@@ -169,7 +169,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 if (_isWeb && !Config.IsHttpVerificationDisabled)
                 {
-                    await VerifyHttpResponseFromContainer(containerName);
+                    await VerifyHttpResponseFromContainerAsync(containerName, _dockerHelper, _outputHelper);
                 }
             }
             finally
@@ -178,14 +178,14 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private async Task VerifyHttpResponseFromContainer(string containerName)
+        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
         {
             var retries = 30;
 
             // Can't use localhost when running inside containers or Windows.
             var url = !Config.IsRunningInContainer && DockerHelper.IsLinuxContainerModeEnabled
-                ? $"http://localhost:{_dockerHelper.GetContainerHostPort(containerName)}"
-                : $"http://{_dockerHelper.GetContainerAddress(containerName)}";
+                ? $"http://localhost:{dockerHelper.GetContainerHostPort(containerName)}"
+                : $"http://{dockerHelper.GetContainerAddress(containerName)}";
 
             using (HttpClient client = new HttpClient())
             {
@@ -198,7 +198,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         using (HttpResponseMessage result = await client.GetAsync(url))
                         {
-                            _outputHelper.WriteLine($"HTTP {result.StatusCode}\n{(await result.Content.ReadAsStringAsync())}");
+                            outputHelper.WriteLine($"HTTP {result.StatusCode}\n{(await result.Content.ReadAsStringAsync())}");
                             result.EnsureSuccessStatusCode();
                         }
 
@@ -206,7 +206,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     }
                     catch (Exception ex)
                     {
-                        _outputHelper.WriteLine($"Request to {url} failed - retrying: {ex.ToString()}");
+                        outputHelper.WriteLine($"Request to {url} failed - retrying: {ex.ToString()}");
                     }
                 }
             }
