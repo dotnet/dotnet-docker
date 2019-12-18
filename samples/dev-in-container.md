@@ -1,27 +1,29 @@
 # Develop .NET Core applications in a container
 
-You can use containers to establish a .NET Core development environment with only Docker and an editor. The environment can be made to match your local machine, production or both. If you support multiple operating systems, then this approach might become an important part of your development process.
+You can use containers to establish a .NET Core development environment with only Docker and an editor. The environment can be made to match your local machine, production or both.
 
-This pattern enables you to rerun your application in a container with every local code change. This scenario works for both console applications and websites. The syntax differs for Windows and Linux containers.
+The following example demonstrates using `dotnet watch run` in a .NET Core SDK container. This command reruns the application with every local code change. This scenario works for both console applications and websites. The syntax differs for Windows and Linux containers.
 
 ## Requirements
 
-This approach relies on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument in the following commands) to mount source into the container (without using a Dockerfile). You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
+The instructions assume that you have cloned the repository locally.
 
-To avoid conflicts between container usage and your local environment, you need to use a different set of `obj` and `bin` folders for your container environment. The easiest way to do that is to copy this [Directory.Build.props](Directory.Build.props) to your project, like with the following:
+You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
+
+To avoid conflicts between container usage and your local environment, you need to use a different set of `obj` and `bin` folders for your container environment. The easiest way to do that is to copy a custom [Directory.Build.props](Directory.Build.props) into the directory you are using, either via copying from this repo or downloading with the following command:
 
 ```console
 curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-docker/master/samples/dotnetapp/Directory.Build.props
 ```
 
-The instructions assume that you have cloned the repository to a specific directory, as demonstrated by the examples.
-
 ## Console app
 
-The following example demonstrates using `dotnet watch run` with a console app in a .NET Core SDK container using the following pattern, with `docker run` and volume mounting. It launches the application in the [dotnetapp](dotnetapp) directory.
+The following example demonstrates using `dotnet watch run` with a console app in a .NET Core SDK container. This initial example is demonstrated on macOS and the the following 
+
+The instructions assume you are in the `samples/dotnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax).
 
 ```console
-rich@MacBook-Pro samples % docker run --rm -it -v ~/git/dotnet-docker/samples/dotnetapp:/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch run
+% docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run
 watch : Polling file watcher is enabled
 watch : Started
 
@@ -65,15 +67,13 @@ watch : Started
           .....
   
 Environment:
-.NET Core 3.0.0
+.NET Core 3.1.0
 Linux 4.9.184-linuxkit #1 SMP Tue Jul 2 22:58:16 UTC 2019
-watch : Exited
-watch : Waiting for a file to change before restarting dotnet...
 ```
 
 You can test this working by simply editing [Program.cs](dotnetapp/Program.cs). If you make an observable change, you will see it. If you make a syntax error, you will see compiler errors.
 
-The following instructions demonstrate this scenario in various configurations.
+The following instructions demonstrate this scenario in various environments.
 
 ## Linux or macOS
 
@@ -84,18 +84,20 @@ docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.
 ## Windows using Linux containers
 
 ```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch run
+docker run --rm -it -v %cd%:/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run
 ```
 
 ## Windows using Windows containers
 
 ```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\dotnetapp:c:\app\ -w \app mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch run
+docker run --rm -it -v %cd%:c:\app\ -w \app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run
 ```
 
 ## ASP.NET Core App
 
-The following example demonstrates using `dotnet watch run` with a console app in a .NET Core SDK container using the following pattern, with `docker run` and volume mounting. It launches the application in the [aspnetapp](aspnetapp) directory.
+The following example demonstrates using `dotnet watch run` with a console app in a .NET Core SDK container on macOS. 
+
+The instructions assume you are in the `samples/aspnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax).
 
 ```console
 rich@thundera samples % docker run --rm -it -p 8000:80 -v ~/git/dotnet-docker/samples/aspnetapp:/app/ -w /app/aspnetapp -e ASPNETCORE_URLS=http://+:80 mcr.microsoft.com/dotnet/core/sdk:3.0 dotnet watch run

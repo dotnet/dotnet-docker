@@ -4,10 +4,18 @@ These samples demonstrate how to use .NET Core and Docker together, for developm
 
 * [Build a .NET Core Docker image](dotnetapp/README.md)
 * [Build an ASP.NET Core Docker image](aspnetapp/README.md)
+* [Build and test a multi-project solution](complexapp/README.md)
+
+## Development Guidance
+
+* [Selecting .NET Core container images](selecting-images.md)
 * [Build in a container](build-in-container.md)
 * [Unit test in a container](unit-testing-in-container.md)
 * [Develop .NET Core applications in a container](dev-in-container.md)
 * [Develop ASP.NET Core Applications with Docker and HTTPS](aspnetcore-https-development.md)
+
+## Hosting guidance 
+
 * [Host ASP.NET Core Images with Docker and HTTPS](aspnetcore-https.md)
 * [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
 * [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
