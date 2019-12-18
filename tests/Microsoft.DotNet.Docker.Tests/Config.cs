@@ -12,7 +12,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         public static bool IsHttpVerificationDisabled { get; } =
             Environment.GetEnvironmentVariable("DISABLE_HTTP_VERIFICATION") != null;
-        public static bool IsLocalRun { get; } = Environment.GetEnvironmentVariable("LOCAL_RUN") != null;
+        public static bool PullImages { get; } = Environment.GetEnvironmentVariable("PULL_IMAGES") != null;
         public static bool IsNightlyRepo { get; } = GetIsNightlyRepo();
         public static bool IsRunningInContainer { get; } =
             Environment.GetEnvironmentVariable("RUNNING_TESTS_IN_CONTAINER") != null;
