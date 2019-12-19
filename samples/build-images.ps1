@@ -3,7 +3,7 @@
 # Copyright (c) .NET Foundation and contributors. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
 param(
-  [parameter(Mandatory=$true)]  [System.IO.FileInfo]$path,
+  [parameter(Mandatory=$true)]  [System.IO.DirectoryInfo]$path,
   [parameter(Mandatory=$false)] [bool]$runapp
 )
 

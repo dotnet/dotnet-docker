@@ -35,19 +35,19 @@ The following instructions demonstrate this scenario in various configurations, 
 ### Linux or macOS
 
 ```console
-MacBook-Pro:complexapp rich$ docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
+docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
 ```
 
 ### Windows using Linux containers
 
 ```console
-C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
+docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
 ```
 
 ### Windows using Windows containers
 
 ```console
-C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:\app -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
+docker run --rm -v %cd%:\app -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
 ```
 
 ## Test your application in a container while you develop

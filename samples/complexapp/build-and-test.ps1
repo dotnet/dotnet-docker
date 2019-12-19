@@ -5,6 +5,10 @@
 
 # If this script fails, it is probably because docker drive sharing isn't enabled
 
+param(
+    [System.IO.DirectoryInfo]$path
+)
+
 $Time = [System.Diagnostics.Stopwatch]::StartNew()
 
 function PrintElapsedTime {
@@ -27,17 +31,21 @@ function Check {
 $DockerOS = docker version -f "{{ .Server.Os }}"
 $ImageName = "complexapp"
 $TestImageName = "complexapp:test"
-$Dockerfile = "Dockerfile"
 $TestStage = "test"
+
+if (!$path)
+{
+    $path = "."
+}
 
 PrintElapsedTime
 Log "Build application image"
-docker build --pull -t $ImageName -f $Dockerfile .
+docker build --pull -t $ImageName $path
 PrintElapsedTime
 Check "docker build (application)"
 
 Log "Build test runner image"
-docker build --target $TestStage -t $TestImageName -f $Dockerfile .
+docker build --target $TestStage -t $TestImageName $path
 PrintElapsedTime
 Check "docker build (test runner)"
 
