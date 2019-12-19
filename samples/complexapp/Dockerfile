@@ -7,19 +7,18 @@ COPY *.sln .
 COPY complexapp/*.csproj complexapp/
 COPY libfoo/*.csproj libfoo/
 COPY libbar/*.csproj libbar/
-COPY tests/*.csproj tests/
-RUN dotnet restore
+RUN dotnet restore complexapp/complexapp.csproj
 
 # copy and build app and libraries
 COPY complexapp/ complexapp/
 COPY libfoo/ libfoo/
 COPY libbar/ libbar/
-COPY tests/ tests/
 WORKDIR /source/complexapp
 RUN dotnet build -c release --no-restore
 
 # test app
 FROM build AS test
+COPY tests/ /source/tests/
 WORKDIR /source/tests
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
