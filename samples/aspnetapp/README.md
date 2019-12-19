@@ -43,6 +43,10 @@ Note: The `-p` argument maps port 8000 on your local machine to port 80 in the c
 
 You can also view the ASP.NET Core site running in the container on another machine. This is particularly useful if you are wanting to view an application running on an ARM device like a Raspberry Pi on your network. In that scenario, you might view the site at a local IP address such as `http://192.168.1.18:8000`.
 
+In production, you will typically start your container with `docker run -d`. This argument starts the container as a service, without any console interaction. You then interact with it through other Docker commands or APIs exposed by the containerized application.
+
+We recommend that you do not use `--rm` in production. It cleans up container resources, preventing you from collecting logs that may have been captured in a container that has either stopped or crashed.
+
 ## Build an image for Windows Nano Server
 
 The following example demonstrates targeting Windows Nano Server (x64) explicity (you must be have Windows containers enabled):
