@@ -192,7 +192,7 @@ docker build --pull -t aspnetapp:nanoserver-trim -f Dockerfile.nanoserver-x64-tr
 docker images aspnetapp | findstr nanoserver
 ```
 
-### Viewing the Site
+## Viewing site, externally 
 
 After the application starts, visit the site one of two ways:
 
