@@ -41,6 +41,8 @@ Note: Earlier Windows versions need to use a different set of commands that are 
 
 Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline parameters. In some cases, you might see an error because the host port you select is already in use. Choose a different port in that case.
 
+You can also view the ASP.NET Core site running in the container on another machine. This is particularly useful if you are wanting to view an application running on an ARM device like a Raspberry Pi on your network. In that scenario, you might view the site at a local IP address such as `http://192.168.1.18:8000`.
+
 ## Build an image for Windows Nano Server
 
 The following example demonstrates targeting Windows Nano Server (x64) explicity (you must be have Windows containers enabled):
@@ -192,17 +194,7 @@ docker build --pull -t aspnetapp:nanoserver-trim -f Dockerfile.nanoserver-x64-tr
 docker images aspnetapp | findstr nanoserver
 ```
 
-## Viewing site, externally 
-
-After the application starts, visit the site one of two ways:
-
-* From the web browser on the ARM32 device at `http://localhost:8000`
-* From the web browser on another device on the same network on the ARM32 device IP on port 8000, similar to: `http://192.168.1.18:8000`
-
-You must set the `ASPNETCORE_URLS` environment variable manually ([example usage](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile#L19)) if you build the sample locally (without Docker) and want to navigate to the site from another machine.
-
-
-## View ASP.NET Core apps via IP address
+## Windows-specific: View containers via IP address
 
 On older versions of Windows, the only way to navigate to a container-hosted website is via an IP address, not `localhost`. The following instructions describe a pattern for working around this issue.
 

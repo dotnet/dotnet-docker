@@ -1,4 +1,4 @@
-# Develop .NET Core applications in a container
+# Run applications in as .NET Core SDK container
 
 You can use containers to establish a .NET Core development environment with only Docker and an editor. The environment can be made to match your local machine, production or both.
 
@@ -101,16 +101,7 @@ The instructions assume you are in the `samples/aspnetapp/aspnetapp` directory (
 
 ```console
 % docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
-warn: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[60]
-      Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
-info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
-      User profile is available. Using '/root/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
-info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[58]
-      Creating key {fdbea65c-4c8f-49a2-bc17-7bc2e37f7478} with creation date 2019-12-19 00:44:47Z, activation date 2019-12-19 00:44:47Z, and expiration date 2020-03-18 00:44:47Z.
-warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]
-      No XML encryptor configured. Key {fdbea65c-4c8f-49a2-bc17-7bc2e37f7478} may be persisted to storage in unencrypted form.
-info: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[39]
-      Writing data to file '/root/.aspnet/DataProtection-Keys/key-fdbea65c-4c8f-49a2-bc17-7bc2e37f7478.xml'.
+
 info: Microsoft.Hosting.Lifetime[0]
       Now listening on: http://[::]:80
 info: Microsoft.Hosting.Lifetime[0]

@@ -1,4 +1,4 @@
-# Containerizing your build
+# Build in a .NET Core SDK container
 
 You can use Docker to run your build in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). This is useful to either avoid the need to install .NET Core on the build machine or ensure that your environment is correctly configured (dev, staging, or production).
 
