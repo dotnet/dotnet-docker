@@ -2,7 +2,7 @@
 
 You can use containers to establish a .NET Core development environment with only Docker and an editor. The environment can be made to match your local machine, production or both.
 
-The following examples demonstrate using `dotnet run` in a .NET Core SDK container. It builds an application from source and then launches it, listening on a configured port. You have to re-launch the container every time you want to observe source code changes.
+The following examples demonstrate using `dotnet run` in a .NET Core SDK container. It builds an application from source and then launches it. You have to re-launch the container every time you want to observe source code changes.
 
 Alternatively, you can use `dotnet watch run`. This command reruns the application with every local code change, within a running container.
 
@@ -15,7 +15,7 @@ You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-
 Container scenarios that use volume mounting can produce conflicts between the `bin` and `obj` directories in local and container environments.  To avoid that, you need to use a different set of `obj` and `bin` folders for your container environment. The easiest way to do that is to copy a custom [Directory.Build.props](Directory.Build.props) into the directory you are using (like the `dotnetapp` directory in the following example), either via copying from this repo or downloading with the following command:
 
 ```console
-curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-docker/master/samples/dotnetapp/Directory.Build.props
+curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-docker/master/samples/Directory.Build.props
 ```
 
 ## Console app

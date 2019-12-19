@@ -1,10 +1,26 @@
 # Running .NET Core Unit Tests with Docker
 
-You can use Docker to run your unit tests in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). This is useful if your development and production environments don't match, like, for example, Windows and Linux, respectively. There are a few ways to run unit tests in containers, which are demonstrated in this document.
+You can use Docker to run your unit tests in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). This is useful if your development and production environments don't match, like, for example, Windows and Linux, respectively. There are a multiple ways to run unit tests in containers, which are demonstrated in this document.
 
 [Building in an SDK container](build-in-sdk-container.md) is a similar scenario and relies on similar patterns.
 
 This document uses the [tests](complexapp/tests) that are part of [complexapp](complexapp). The instructions assume that you are in the [complexapp](complexapp) directory.
+
+The following examples demonstrate using `dotnet test` in a .NET Core SDK container. It builds tests and dependent projects from source and then tests them. You have to re-launch the container every time you want to test source code changes.
+
+Alternatively, you can use `dotnet watch test`. This command reruns the application with every local code change, within a running container.
+
+## Requirements
+
+The instructions assume that you have cloned the [repository](https://github.com/dotnet/dotnet-docker) locally.
+
+You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
+
+Container scenarios that use volume mounting can produce conflicts between the `bin` and `obj` directories in local and container environments.  To avoid that, you need to use a different set of `obj` and `bin` folders for your container environment. The easiest way to do that is to copy a custom [Directory.Build.props](Directory.Build.props) into the directory you are using (like the `complexapp` directory in the following example), either via copying from this repo or downloading with the following command:
+
+```console
+curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-docker/master/samples/Directory.Build.props
+```
 
 ## Running tests using the .NET Core SDK container image
 
@@ -50,66 +66,16 @@ docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1
 docker run --rm -v %cd%:\app -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
 ```
 
-## Test your application in a container while you develop
-
-You can test your application in a container with every local code change. This approach is useful if you have your IDE and a command prompt open at the same time, with the latter showing the console output for `dotnet watch test`.
-
-This approach uses a similar pattern, with the .NET Core SDK container image, `docker run`, volume mounting and a file watcher:
-
-```console
-% docker run --rm -it -v ~/git/dotnet-docker/samples/complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch test
-watch : Polling file watcher is enabled
-watch : Started
-Test run for /app/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.0)
-Microsoft (R) Test Execution Command Line Tool Version 16.3.0
-Copyright (c) Microsoft Corporation.  All rights reserved.
-
-Starting test execution, please wait...
-
-A total of 1 test files matched the specified pattern.
-                                                                                
-Test Run Successful.
-Total tests: 2
-     Passed: 2
- Total time: 1.5602 Seconds
-watch : Exited
-watch : Waiting for a file to change before restarting dotnet...
-```
-
-You can test this working by simply editing [UnitTest1.cs](complexapp/tests/UnitTest1.cs), such as changing the input or expected strings. You should a test failure within a few seconds.
-
-The following instructions demonstrates this scenario with various configurations.
-
-### Linux or macOS
-
-```console
-docker run --rm -it -v ~/git/dotnet-docker/samples/complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch test
-```
-
-### Windows using Linux containers
-
-```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch test
-```
-
-### Windows using Windows containers
-
-```console
-docker run --rm -it -v c:\git\dotnet-docker\samples\complexapp:c:\app\ -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch test
-```
-
-The commands above log test results to the console. You can additionally log results as a TRX file by appending `--logger:trx` to the previous test commands, specifically `dotnet watch test --logger:trx`. TRX logging is also demonstrated in [Running .NET Core Unit Tests with Docker](dotnet-docker-unit-testing.md).
-
-
 ## Running tests as an opt-in docker stage
 
 It is possible to run tests as the `ENTRYPOINT` to an opt-in build stage. If you run tests as part of `docker build` (covered later in this document), your build may fail, and you may not want that.
 
-The [Dockerfile](complexapp/Dockerfile) includes a `test` stage that demonstates this pattern.
+The [Dockerfile](complexapp/Dockerfile) includes a `test` stage that demonstrates this pattern.
 
 ```Dockerfile
 # test app
 FROM build AS test
+COPY tests/ /source/tests/
 WORKDIR /source/tests
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 ```
