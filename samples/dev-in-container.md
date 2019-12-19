@@ -2,7 +2,9 @@
 
 You can use containers to establish a .NET Core development environment with only Docker and an editor. The environment can be made to match your local machine, production or both.
 
-The following examples demonstrate using `dotnet watch run` in a .NET Core SDK container. This command reruns the application with every local code change. It supports both console applications and websites. The syntax differs for Windows and Linux containers.
+The following examples demonstrate using `dotnet run` in a .NET Core SDK container. It builds an application from source and then launches it, listening on a configured port. You have to re-launch the container every time you want to observe source code changes.
+
+Alternatively, you can use `dotnet watch run`. This command reruns the application with every local code change, within a running container.
 
 ## Requirements
 
@@ -23,9 +25,7 @@ The following example demonstrates using `dotnet watch run` with a console app i
 The instructions assume you are in the `samples/dotnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax).
 
 ```console
-% docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run
-watch : Polling file watcher is enabled
-watch : Started
+% docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run
 
       Hello from .NET Core!
       __________________
@@ -78,19 +78,19 @@ The following instructions demonstrate this scenario in various environments.
 ## Linux or macOS
 
 ```console
-docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run
+docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run
 ```
 
 ## Windows using Linux containers
 
 ```console
-docker run --rm -it -v %cd%:/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run
+docker run --rm -it -v %cd%:/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run
 ```
 
 ## Windows using Windows containers
 
 ```console
-docker run --rm -it -v %cd%:c:\app\ -w \app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run
+docker run --rm -it -v %cd%:c:\app\ -w \app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run
 ```
 
 ## ASP.NET Core App
@@ -100,21 +100,25 @@ The following example demonstrates using `dotnet watch run` with an ASP.NET Core
 The instructions assume you are in the `samples/aspnetapp/aspnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax).
 
 ```console
-% docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run --no-launch-profile
-watch : Polling file watcher is enabled
-watch : Started
+% docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
 warn: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[60]
       Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
+info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
+      User profile is available. Using '/root/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[58]
+      Creating key {fdbea65c-4c8f-49a2-bc17-7bc2e37f7478} with creation date 2019-12-19 00:44:47Z, activation date 2019-12-19 00:44:47Z, and expiration date 2020-03-18 00:44:47Z.
 warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]
-      No XML encryptor configured. Key {d6c0ae93-2f64-481c-908e-b163dd5c0163} may be persisted to storage in unencrypted form.
+      No XML encryptor configured. Key {fdbea65c-4c8f-49a2-bc17-7bc2e37f7478} may be persisted to storage in unencrypted form.
+info: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[39]
+      Writing data to file '/root/.aspnet/DataProtection-Keys/key-fdbea65c-4c8f-49a2-bc17-7bc2e37f7478.xml'.
 info: Microsoft.Hosting.Lifetime[0]
       Now listening on: http://[::]:80
 info: Microsoft.Hosting.Lifetime[0]
       Application started. Press Ctrl+C to shut down.
 info: Microsoft.Hosting.Lifetime[0]
-      Hosting environment: Production
+      Hosting environment: Development
 info: Microsoft.Hosting.Lifetime[0]
-      Content root path: /app/aspnetapp
+      Content root path: /app
 ```
 
 You can test this working by editing one of the [source files](aspnetapp/aspnetapp). If you make an observable change, you will see it. If you make a syntax error, you will see compiler errors.
@@ -126,13 +130,13 @@ The following instructions demonstrate this scenario in various environments.
 ### Linux or macOS
 
 ```console
-docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run --no-launch-profile
+docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
 ```
 
 ### Windows using Linux containers
 
 ```console
-docker run --rm -it -p 8000:80 -v %cd%:/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run --no-launch-profile
+docker run --rm -it -p 8000:80 -v %cd%:/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
 ```
 
 You can use CTRL-C to terminate `dotnet watch`. Navigate to the site at `http://localhost:8000` in your browser.
@@ -140,7 +144,7 @@ You can use CTRL-C to terminate `dotnet watch`. Navigate to the site at `http://
 ### Windows using Windows containers
 
 ```console
-docker run --rm -it -p 8000:80 -v %cd%:C:\app\ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run --no-launch-profile
+docker run --rm -it -p 8000:80 -v %cd%:C:\app\ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
 ```
 
 You can use CTRL-C to terminate `dotnet watch`.
@@ -149,10 +153,10 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 ### Using a launch profile to configure ASP.NET Core
 
-The examples above use environment variables to configure ASP.NET Core. You can instead configure ASP.NET Core with a launchSettings.json file. The [launchSettings.json file](aspnetapp/aspnetapp/Properties/launchSettings.json) in this app has been updated with a `container` profile that can be used instead of specifying environment variables with the docker CLI. You can see this profile used in the following example. 
+The examples above use environment variables to configure ASP.NET Core. You can instead [configure ASP.NET Core with a launchSettings.json file](https://docs.microsoft.com/aspnet/core/fundamentals/environments). The [launchSettings.json file](aspnetapp/aspnetapp/Properties/launchSettings.json) in this app has been updated with a `container` profile that can be used instead of specifying environment variables with the docker CLI. You can see this profile used in the following example. 
 
 ```console
-rich@thundera aspnetapp % docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch run --launch-profile container
+rich@thundera aspnetapp % docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
 ```
 
 The following JSON segment shows the `container` profile that was added to enable the previous command.

@@ -122,8 +122,6 @@ aspnetapp           debian-arm32        29a8bfa90a03        About a minute ago  
 aspnetapp           alpine-arm64        8ec6bf841319        2 minutes ago        125MB
 ```
 
-You can build ARM32 and ARM64 images on x64 machines, but you will not be able to run them. Docker relies on QEMU for this scenario, which isn't supported by .NET Core. You must test and run .NET Core imges on actual hardware for the given processor type.
-
 You can do the same thing with Windows Nano Server, as follows:
 
 ```console
@@ -131,7 +129,11 @@ docker build --pull -t aspnetapp:nanoserver-arm32 -f Dockerfile.nanoserver-arm32
 docker images aspnetapp | findstr arm
 ```
 
-## Build an image optimized for startup performance
+You can build ARM32 and ARM64 images on x64 machines. This may be preferred to take advantage of higher performance and virtualized environments. You can also build the, on ARM hardware. 
+
+You won't be able to run .NET Core ARM64 images on x64 machines. Docker relies on QEMU to run ARM64 images on X64, but it isn't supported by .NET Core. You must test and run .NET Core imges on actual hardware for the given processor type.
+
+## Optimizing for startup performance
 
 You can improve startup performance by using [Ready to Run compilation](https://github.com/dotnet/runtime/blob/master/docs/design/coreclr/botr/readytorun-overview.md) for your application. You can do this by setting the `PublishReadyToRun` property, which will take affect when you publish an application. This is what the `-trim` samples do (they are explained shortly). 
 
@@ -142,7 +144,7 @@ You can add the `PublishReadyToRun` property in two ways:
 
 The default `Dockerfile` that come with the sample doesn't use R2R compilation because the application is too small to warrant it. The bulk of the IL code that is executed in this sample application is within the .NET Core libraries, which are already R2R compiled.
 
-## Build an image optimized for size
+## Optimizing for size
 
 You may want to build an ASP.NET Core image that is optimized for size, by publishing an application that includes the ASP.NET Core runtime (self-contained) and then is trimmed with the assembly-linker. These are the tools offered in the .NET Core SDK for producing the smallest images. This approach may be prefered if you are running a single .NET Core app on a machine. Otherwise, building images on the ASP.NET Core runtime layer is recommended and likely preferred. 
 
@@ -189,6 +191,16 @@ You can do the same thing with Windows Nano Server, as follows:
 docker build --pull -t aspnetapp:nanoserver-trim -f Dockerfile.nanoserver-x64-trim .
 docker images aspnetapp | findstr nanoserver
 ```
+
+### Viewing the Site
+
+After the application starts, visit the site one of two ways:
+
+* From the web browser on the ARM32 device at `http://localhost:8000`
+* From the web browser on another device on the same network on the ARM32 device IP on port 8000, similar to: `http://192.168.1.18:8000`
+
+You must set the `ASPNETCORE_URLS` environment variable manually ([example usage](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile#L19)) if you build the sample locally (without Docker) and want to navigate to the site from another machine.
+
 
 ## View ASP.NET Core apps via IP address
 
