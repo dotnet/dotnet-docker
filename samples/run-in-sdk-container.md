@@ -4,7 +4,7 @@ You can use containers to establish a .NET Core development environment with onl
 
 The following examples demonstrate using `dotnet run` in a .NET Core SDK container. It builds an application from source and then launches it. You have to re-launch the container every time you want to observe source code changes.
 
-Alternatively, you can use `dotnet watch run`. This command reruns the application with every local code change, within a running container.
+Alternatively, you can use `dotnet watch run`. This command reruns the application within a running container, with every local code change.
 
 ## Requirements
 
@@ -20,7 +20,7 @@ curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-do
 
 ## Console app
 
-The following example demonstrates using `dotnet watch run` with a console app in a .NET Core SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow. 
+The following example demonstrates using `dotnet watch run` with a console app in a .NET Core SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
 
 The instructions assume you are in the `samples/dotnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax).
 

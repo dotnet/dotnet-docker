@@ -1,4 +1,4 @@
-# Running .NET Core Unit Tests with Docker
+# Running Tests with Docker
 
 You can use Docker to run your unit tests in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). This is useful if your development and production environments don't match, like, for example, Windows and Linux, respectively. There are a multiple ways to run unit tests in containers, which are demonstrated in this document.
 
@@ -8,7 +8,7 @@ This document uses the [tests](complexapp/tests) that are part of [complexapp](c
 
 The following examples demonstrate using `dotnet test` in a .NET Core SDK container. It builds tests and dependent projects from source and then tests them. You have to re-launch the container every time you want to test source code changes.
 
-Alternatively, you can use `dotnet watch test`. This command reruns the application with every local code change, within a running container.
+Alternatively, you can use `dotnet watch test`. This command reruns tests within a running container, with every local code change.
 
 ## Requirements
 
@@ -24,20 +24,22 @@ curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-do
 
 ## Running tests using the .NET Core SDK container image
 
-The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following pattern, with `docker run` and volume mounting:
+The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following pattern, with `docker run` and volume mounting.  This initial example is demonstrated on Windows. Instructions for all OSes follow.
 
 ```console
-> docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test
-Test run for /app/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.0)
-Microsoft (R) Test Execution Command Line Tool Version 16.1.1
+>docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test
+Test run for /app/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.1)
+Microsoft (R) Test Execution Command Line Tool Version 16.3.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
 
 Starting test execution, please wait...
 
+A total of 1 test files matched the specified pattern.
+
 Test Run Successful.
 Total tests: 2
      Passed: 2
- Total time: 1.9393 Seconds
+ Total time: 1.5825 Seconds
  ```
 
 In this example, the tests (and any other required code) are [volume mounted](https://docs.docker.com/engine/admin/volumes/volumes/) into the countainer, and `dotnet test` is run from the `tests` directory (`-w` sets the working directory). Test results can be read from the console or from logs, which can be written to disk with the `--logger:trx` flag.
@@ -63,7 +65,7 @@ docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1
 ### Windows using Windows containers
 
 ```console
-docker run --rm -v %cd%:\app -w \app\tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
+docker run --rm -v %cd%:C:\app -w C:\app\tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
 ```
 
 ## Running tests as an opt-in docker stage
@@ -91,7 +93,7 @@ docker run --rm complexapp
 
 The primary win of using an opt-in stage is that it enables testing using the same environment as the build and allows volume mounting (which isn't possible with `docker build`) to collect test logs.
 
-The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled: 
+The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled:
 
 ```console
 MacBook-Pro:complexapp rich$ docker build --pull --target test -t complexapp-test .

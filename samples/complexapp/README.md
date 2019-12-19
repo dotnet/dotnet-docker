@@ -60,7 +60,7 @@ docker run --rm complexapp:test
 You can see this in action in the following example:
 
 ```console
-% docker run --rm complexapp:test            
+% docker run --rm complexapp:test
 Test run for /source/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.1)
 Microsoft (R) Test Execution Command Line Tool Version 16.3.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
