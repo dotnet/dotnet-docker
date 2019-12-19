@@ -84,16 +84,16 @@ dotnetapp           latest              303eabf97376        56 seconds ago      
 You can run any of the images you've just built with the following commands:
 
 ```console
-docker --rm run dotnetapp
-docker --rm run dotnetapp:debian
-docker --rm run dotnetapp:ubuntu
-docker --rm run dotnetapp:alpine
+docker run --rm dotnetapp
+docker run --rm dotnetapp:debian
+docker run --rm dotnetapp:ubuntu
+docker run --rm dotnetapp:alpine
 ```
 
 If you want to double check the distro of an application, you can do that by configuring a different entrypoint when you run the image, as you see in the following example.
 
 ```console
-% docker run --entrypoint cat dotnetapp /etc/os-release    
+% docker run --rm --entrypoint cat dotnetapp /etc/os-release    
 PRETTY_NAME="Debian GNU/Linux 10 (buster)"
 NAME="Debian GNU/Linux"
 VERSION_ID="10"
@@ -104,7 +104,7 @@ HOME_URL="https://www.debian.org/"
 SUPPORT_URL="https://www.debian.org/support"
 BUG_REPORT_URL="https://bugs.debian.org/"
 
-% docker run --entrypoint cat dotnetapp:alpine /etc/os-release
+% docker run --rm --entrypoint cat dotnetapp:alpine /etc/os-release
 NAME="Alpine Linux"
 ID=alpine
 VERSION_ID=3.10.3
