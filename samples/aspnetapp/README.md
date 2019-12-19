@@ -82,7 +82,7 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 ## Build and run the sample for Ubuntu 18.04 with Docker
 
-You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/). You would switch to use the `2.2-bionic` tag for both the build and runtime phases.
+You can also build for [Ubuntu 18.04](https://hub.docker.com/_/ubuntu/), with a `bionic` tag. The `bionic` tags are documented at [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/). You would switch to use the `3.1-bionic` tag for both the build and runtime phases.
 
 ## Build and run the sample for Linux ARM32 with Docker
 
@@ -108,7 +108,7 @@ We recommend that you do not use `--rm` in production. It cleans up container re
 
 ## Build and run the sample locally
 
-You can build and run the sample locally with the [.NET Core 2.2 SDK](https://www.microsoft.com/net/download/core) using the following commands. The commands assume that you are in the root of the repository.
+You can build and run the sample locally with the [.NET Core SDK](https://www.microsoft.com/net/download/core) using the following commands. The commands assume that you are in the root of the repository.
 
 ```console
 cd samples
