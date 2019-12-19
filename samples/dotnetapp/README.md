@@ -84,10 +84,10 @@ dotnetapp           latest              303eabf97376        56 seconds ago      
 You can run any of the images you've just built with the following commands:
 
 ```console
-docker run dotnetapp
-docker run dotnetapp:debian
-docker run dotnetapp:ubuntu
-docker run dotnetapp:alpine
+docker --rm run dotnetapp
+docker --rm run dotnetapp:debian
+docker --rm run dotnetapp:ubuntu
+docker --rm run dotnetapp:alpine
 ```
 
 If you want to double check the distro of an application, you can do that by configuring a different entrypoint when you run the image, as you see in the following example.
