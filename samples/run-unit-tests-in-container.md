@@ -2,7 +2,7 @@
 
 You can use Docker to run your unit tests in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). This is useful if your development and production environments don't match, like, for example, Windows and Linux, respectively. There are a few ways to run unit tests in containers, which are demonstrated in this document.
 
-[Building in a container](build-in-container.md) is a similar scenario and relies on similar patterns.
+[Building in an SDK container](build-in-sdk-container.md) is a similar scenario and relies on similar patterns.
 
 This document uses the [tests](complexapp/tests) that are part of [complexapp](complexapp). The instructions assume that you are in the [complexapp](complexapp) directory.
 
@@ -11,7 +11,7 @@ This document uses the [tests](complexapp/tests) that are part of [complexapp](c
 The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following pattern, with `docker run` and volume mounting:
 
 ```console
-C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test
+> docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test
 Test run for /app/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.0)
 Microsoft (R) Test Execution Command Line Tool Version 16.1.1
 Copyright (c) Microsoft Corporation.  All rights reserved.
@@ -57,7 +57,7 @@ You can test your application in a container with every local code change. This 
 This approach uses a similar pattern, with the .NET Core SDK container image, `docker run`, volume mounting and a file watcher:
 
 ```console
-rich@MacBook-Pro complexapp % docker run --rm -it -v ~/git/dotnet-docker/samples/complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch test
+% docker run --rm -it -v ~/git/dotnet-docker/samples/complexapp:/app/ -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet watch test
 watch : Polling file watcher is enabled
 watch : Started
 Test run for /app/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.0)

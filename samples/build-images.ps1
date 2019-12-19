@@ -28,7 +28,7 @@ function Check {
 }
 
 $dockeros = docker version -f "{{ .Server.Os }}"
-$dockerarch = (docker version -f "{{ .Server.Arch }}")
+$dockerarch = docker version -f "{{ .Server.Arch }}"
 $nano = "nanoserver"
 $totalCount = 0
 $buildCount = 0
@@ -41,10 +41,9 @@ Foreach ($file in Get-ChildItem $path Dockerfile*)
 {
     $totalCount++
     if ($file.Name -eq "Dockerfile") {}
-    elseif ($dockeros -eq "windows" -and ($file.Name.Contains($nano))) {}
-    elseif ($dockeros -eq "linux" -and $file.Name.Contains($nano)) {
-        Continue
-    }
+    elseif ($dockeros -eq "windows" -and $file.Name.Contains($nano)) {}
+    elseif ($dockeros -eq "linux" -and $file.Name.Contains($nano)) {Continue}
+    elseif ($dockeros -eq "windows") {Continue}
 
     $testimage = "testbuildimage"
 
