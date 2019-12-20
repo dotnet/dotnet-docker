@@ -14,7 +14,7 @@ param(
     [switch]$DisableHttpVerification,
     [switch]$PullImages,
     [string]$ImageInfoPath,
-    [ValidateSet('runtime', "runtime-deps", 'aspnet', 'sdk')]
+    [ValidateSet('runtime', "runtime-deps", 'aspnet', 'sdk', 'sample')]
     [string[]]$TestCategories = @('runtime', "runtime-deps", 'aspnet', 'sdk')
 )
 

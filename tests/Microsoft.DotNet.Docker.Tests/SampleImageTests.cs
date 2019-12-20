@@ -4,17 +4,24 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class SampleImageTests : ImageTests
+    [Trait("Category", "sample")]
+    public class SampleImageTests
     {
         public SampleImageTests(ITestOutputHelper outputHelper)
-            : base(outputHelper)
         {
+            OutputHelper = outputHelper;
+            DockerHelper = new DockerHelper(outputHelper);
         }
+
+        protected DockerHelper DockerHelper { get; }
+
+        protected ITestOutputHelper OutputHelper { get; }
 
         public static IEnumerable<object[]> GetImageData()
         {
@@ -30,6 +37,32 @@ namespace Microsoft.DotNet.Docker.Tests
             string containerName = imageData.GetIdentifier("sample-dotnetapp");
             string output = DockerHelper.Run(image, containerName);
             Assert.StartsWith("Hello from .NET Core!", output);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifyAspnetSampleImage(SampleImageData imageData)
+        {
+            string image = imageData.GetImage(SampleImageType.Aspnet, DockerHelper);
+            string containerName = imageData.GetIdentifier("sample-aspnetapp");
+
+            try
+            {
+                DockerHelper.Run(
+                    image: image,
+                    name: containerName,
+                    detach: true,
+                    optionalRunArgs: "-p 80");
+
+                if (!Config.IsHttpVerificationDisabled)
+                {
+                    await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(containerName, DockerHelper, OutputHelper);
+                }
+            }
+            finally
+            {
+                DockerHelper.DeleteContainer(containerName);
+            }
         }
     }
 }
