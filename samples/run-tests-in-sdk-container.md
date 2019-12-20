@@ -4,7 +4,7 @@ You can use Docker to run your unit tests in an isolated environment using the [
 
 [Building in an SDK container](build-in-sdk-container.md) is a similar scenario and relies on similar patterns. [Building and testing multiple projects with Docker](https://github.com/dotnet/dotnet-docker/blob/samples/samples/complexapp/README.md) sample offers additional test patterns that you may want to adopt.
 
-This document uses the [tests](complexapp/tests) that are part of [complexapp](complexapp). The instructions assume that you are in the [complexapp](complexapp) directory. 
+This document uses the [tests](complexapp/tests) that are part of [complexapp](complexapp). The instructions assume that you are in the [complexapp](complexapp) directory.
 
 The following examples demonstrate using `dotnet test` in a .NET Core SDK container. It builds tests and dependent projects from source and then tests them. You have to re-launch the container every time you want to test source code changes.
 

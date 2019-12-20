@@ -95,7 +95,7 @@ docker run --rm -it -v %cd%:c:\app\ -w \app mcr.microsoft.com/dotnet/core/sdk:3.
 
 ## ASP.NET Core App
 
-The following example demonstrates using `dotnet watch run` with an ASP.NET Core app in a .NET Core SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow. 
+The following example demonstrates using `dotnet watch run` with an ASP.NET Core app in a .NET Core SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
 
 The instructions assume you are in the `samples/aspnetapp/aspnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax).
 
@@ -144,10 +144,10 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 ### Using a launch profile to configure ASP.NET Core
 
-The examples above use environment variables to configure ASP.NET Core. You can instead [configure ASP.NET Core with a launchSettings.json file](https://docs.microsoft.com/aspnet/core/fundamentals/environments). The [launchSettings.json file](aspnetapp/aspnetapp/Properties/launchSettings.json) in this app has been updated with a `container` profile that can be used instead of specifying environment variables with the docker CLI. You can see this profile used in the following example. 
+The examples above use environment variables to configure ASP.NET Core. You can instead [configure ASP.NET Core with a launchSettings.json file](https://docs.microsoft.com/aspnet/core/fundamentals/environments). The [launchSettings.json file](aspnetapp/aspnetapp/Properties/launchSettings.json) in this app has been updated with a `container` profile that can be used instead of specifying environment variables with the docker CLI. You can see this profile used in the following example.
 
 ```console
-rich@thundera aspnetapp % docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
+% docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
 ```
 
 The following JSON segment shows the `container` profile that was added to enable the previous command.
