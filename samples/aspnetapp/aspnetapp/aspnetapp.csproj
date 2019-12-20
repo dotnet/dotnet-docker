@@ -1,39 +1,7 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>31051026529000467138</UserSecretsId>
-  </PropertyGroup>
-
-  <ItemGroup>
-  </ItemGroup>
-
-</Project>
-=======
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-  </PropertyGroup>
-
-
-  <ItemGroup>
-  </ItemGroup>
-
-</Project>
->>>>>>> Rename files
-=======
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-
-  <ItemGroup>
-  </ItemGroup>
-
 </Project>
->>>>>>> Update aspnetapp dockerfiles
