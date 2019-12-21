@@ -8,7 +8,7 @@ The instructions assume that you have cloned this repo, have [Docker](https://ww
 
 ## Try a pre-built version of the sample
 
-If want to skip ahead, you can try a pre-built version with the following command and access in your web browser at `http://localhost:8000`.
+If want to skip ahead, you can try a pre-built version with the following command and access it in your web browser at `http://localhost:8000`.
 
 ```console
 docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
