@@ -152,7 +152,7 @@ The default `Dockerfile` that comes with the sample doesn't use R2R compilation 
 
 ## Optimizing for size
 
-You may want to build an ASP.NET Core image that is optimized for size, by publishing an application that includes the ASP.NET Core runtime (self-contained) and then is trimmed with the assembly-linker. These are the tools offered in the .NET Core SDK for producing the smallest images. This approach may be prefered if you are running a single .NET Core app on a machine. Otherwise, building images on the ASP.NET Core runtime layer is recommended and likely preferred. 
+You may want to build an ASP.NET Core image that is optimized for size by publishing an application that includes the ASP.NET Core runtime (self-contained) and then is trimmed with the assembly-linker. These are the tools offered in the .NET Core SDK for producing the smallest images. This approach may be preferred if you are running a single .NET Core app on a machine. Otherwise, building images on the ASP.NET Core runtime layer is recommended and likely preferred. 
 
 The following instructions are for x64 only, but can be straightforwardly updated for use with ARM architectures.
 
