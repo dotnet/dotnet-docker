@@ -141,7 +141,7 @@ You won't be able to run .NET Core ARM64 images on x64 machines. Docker relies o
 
 ## Optimizing for startup performance
 
-You can improve startup performance by using [Ready to Run compilation](https://github.com/dotnet/runtime/blob/master/docs/design/coreclr/botr/readytorun-overview.md) for your application. You can do this by setting the `PublishReadyToRun` property, which will take affect when you publish an application. This is what the `-trim` samples do (they are explained shortly). 
+You can improve startup performance by using [Ready to Run (R2R) compilation](https://github.com/dotnet/runtime/blob/master/docs/design/coreclr/botr/readytorun-overview.md) for your application. You can do this by setting the `PublishReadyToRun` property, which will take effect when you publish an application. This is what the `-trim` samples do (they are explained shortly). 
 
 You can add the `PublishReadyToRun` property in two ways:
 
