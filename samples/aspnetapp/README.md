@@ -25,7 +25,7 @@ docker build --pull -t aspnetapp .
 docker run --rm -it -p 8000:80 aspnetapp
 ```
 
-You should see the following console output as the application starts.
+You should see the following console output as the application starts:
 
 ```console
 > docker run --rm -it -p 8000:80 aspnetapp
