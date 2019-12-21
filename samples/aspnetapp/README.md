@@ -148,7 +148,7 @@ You can add the `PublishReadyToRun` property in two ways:
 - Set it in your project file, as: `<PublishReadyToRun>true</PublishReadyToRun>`
 - Set it on the command line, as:  `/p:PublishReadyToRun=true`
 
-The default `Dockerfile` that come with the sample doesn't use R2R compilation because the application is too small to warrant it. The bulk of the IL code that is executed in this sample application is within the .NET Core libraries, which are already R2R compiled.
+The default `Dockerfile` that comes with the sample doesn't use R2R compilation because the application is too small to warrant it. The bulk of the IL code that is executed in this sample application is within the .NET Core libraries, which are already R2R-compiled.
 
 ## Optimizing for size
 
