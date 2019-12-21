@@ -14,7 +14,6 @@ RUN dotnet publish -c release -o /app --no-restore
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-alpine
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet","dotnetapp.dll"]
 
 # See: https://github.com/dotnet/announcements/issues/20
 # Uncomment to enable globalization APIs (or delete)
@@ -22,3 +21,5 @@ ENTRYPOINT ["dotnet","dotnetapp.dll"]
 #RUN apk add --no-cache icu-libs
 #ENV LC_ALL en_US.UTF-8
 #ENV LANG en_US.UTF-8
+
+ENTRYPOINT ["dotnet", "dotnetapp.dll"]

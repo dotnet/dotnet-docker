@@ -35,4 +35,4 @@ RUN dotnet publish -c release --no-build -o /app
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet","complexapp.dll"]
+ENTRYPOINT ["dotnet", "complexapp.dll"]

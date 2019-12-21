@@ -16,4 +16,4 @@ RUN dotnet publish -c release -o /app
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim-arm64v8
 WORKDIR /app
 COPY --from=build /app ./
-ENTRYPOINT ["dotnet","aspnetapp.dll"]
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]
