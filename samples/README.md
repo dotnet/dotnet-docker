@@ -1,6 +1,6 @@
 # .NET Core Docker Samples
 
-These samples demonstrate how to use .NET Core and Docker together, for development,testing and production. You can use the samples as the basis of your own Docker images or just to learn.
+These samples demonstrate how to use .NET Core and Docker together, for development, testing and production. You can use the samples as the basis of your own Docker images or just to learn.
 
 * [Build a .NET Core Docker image](dotnetapp/README.md)
 * [Build an ASP.NET Core Docker image](aspnetapp/README.md)
@@ -18,7 +18,7 @@ These samples demonstrate how to use .NET Core and Docker together, for developm
 
 * [Host ASP.NET Core Images with Docker and HTTPS](host-aspnetcore-https.md)
 * [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
-* [Push Docker Images to DockerHub](push-image-to-dockerhub.md)
+* [Push Docker Images to Docker Hub](push-image-to-dockerhub.md)
 * [Deploy ASP.NET Core Applications to Azure Container Instances](deploy-container-to-aci.md)
 
 ## Try a pre-built .NET Core Docker Image

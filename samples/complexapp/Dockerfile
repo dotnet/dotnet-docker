@@ -22,8 +22,8 @@ WORKDIR /source/tests
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 # Uncomment out next `FROM` and 'RUN' lines if you want to run tests as
-# part of docker build and for test failure to cascade to build failure
-# otherwise, you can build and run 'test' stage using the test stage ENTRYPOINT
+# part of docker build and for test failure to cascade to build failure.
+# Otherwise, you can build and run 'test' stage using the test stage ENTRYPOINT.
 # FROM test
 # RUN dotnet test --logger:trx
 

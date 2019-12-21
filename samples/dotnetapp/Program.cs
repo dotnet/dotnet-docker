@@ -7,7 +7,7 @@ public static class Program
     public static void Main(string[] args) 
     {
           var defaultMessage = "Hello from .NET Core!";
-          var message = args is object && args.Length > 0 ? string.Join(' ',args): defaultMessage ;
+          var message = args is object && args.Length > 0 ? string.Join(' ', args): defaultMessage;
 
           WriteLine();
           WriteLine($"      {message}{GetBot()}");

@@ -10,7 +10,7 @@ Alternatively, you can use `dotnet watch run`. This command reruns the applicati
 
 The instructions assume that you have cloned the [repository](https://github.com/dotnet/dotnet-docker) locally.
 
-You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
+You may need to enable [shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
 
 Container scenarios that use volume mounting can produce conflicts between the `bin` and `obj` directories in local and container environments.  To avoid that, you need to use a different set of `obj` and `bin` folders for your container environment. The easiest way to do that is to copy a custom [Directory.Build.props](Directory.Build.props) into the directory you are using (like the `dotnetapp` directory in the following example), either via copying from this repo or downloading with the following command:
 
@@ -114,9 +114,9 @@ info: Microsoft.Hosting.Lifetime[0]
 
 You can test this working by editing one of the [source files](aspnetapp/aspnetapp). If you make an observable change, you will see it. If you make a syntax error, you will see compiler errors.
 
-Note: This example (and the ones the instructions that follow) configure ASP.NET Core via environment variables and disable using a launch profile (none of the launch profiles are compatible with this scenario). Instructions are provided later in this document that add and use a new launch profile, which removes the need for specifying environment variables with the Docker CLI.
+Note: This example (and those in the instructions that follow) configure ASP.NET Core via environment variables and disable the use of a launch profile (none of the launch profiles are compatible with this scenario). Instructions are provided later in this document that add and use a new launch profile, which removes the need for specifying environment variables with the Docker CLI.
 
-The following instructions demonstrate this scenario in various environments. 
+The following instructions demonstrate this scenario in various environments:
 
 ### Linux or macOS
 
@@ -144,7 +144,7 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 ### Using a launch profile to configure ASP.NET Core
 
-The examples above use environment variables to configure ASP.NET Core. You can instead [configure ASP.NET Core with a launchSettings.json file](https://docs.microsoft.com/aspnet/core/fundamentals/environments). The [launchSettings.json file](aspnetapp/aspnetapp/Properties/launchSettings.json) in this app has been updated with a `container` profile that can be used instead of specifying environment variables with the docker CLI. You can see this profile used in the following example.
+The examples above use environment variables to configure ASP.NET Core. You can instead [configure ASP.NET Core with a launchSettings.json file](https://docs.microsoft.com/aspnet/core/fundamentals/environments). The [launchSettings.json file](aspnetapp/aspnetapp/Properties/launchSettings.json) in this app has been updated with a `container` profile that can be used instead of specifying environment variables with the docker CLI. You can see this profile used in the following example:
 
 ```console
 % docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container

@@ -1,6 +1,6 @@
 # Running Tests with Docker
 
-You can use Docker to run your unit tests in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). This is useful if your development and production environments don't match, like, for example, Windows and Linux, respectively. There are a multiple ways to run unit tests in containers, which are demonstrated in this document.
+You can use Docker to run your unit tests in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/). This is useful if your development and production environments don't match, like, for example, Windows and Linux, respectively. There are multiple ways to run unit tests in containers, which are demonstrated in this document.
 
 [Building in an SDK container](build-in-sdk-container.md) is a similar scenario and relies on similar patterns. [Building and testing multiple projects with Docker](https://github.com/dotnet/dotnet-docker/blob/samples/samples/complexapp/README.md) sample offers additional test patterns that you may want to adopt.
 
@@ -14,7 +14,7 @@ Alternatively, you can use `dotnet watch test`. This command reruns tests within
 
 The instructions assume that you have cloned the [repository](https://github.com/dotnet/dotnet-docker) locally.
 
-You may need to [Enable shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
+You may need to enable [shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
 
 Container scenarios that use volume mounting can produce conflicts between the `bin` and `obj` directories in local and container environments.  To avoid that, you need to use a different set of `obj` and `bin` folders for your container environment. The easiest way to do that is to copy a custom [Directory.Build.props](Directory.Build.props) into the directory you are using (like the `complexapp` directory in the following example), either via copying from this repo or downloading with the following command:
 

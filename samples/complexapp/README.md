@@ -16,7 +16,7 @@ The most common way to build images is using following pattern:
 docker build -t tag .
 ```
 
-The most important aspect of that `docker` command is the `.` at the end. It represents the path to the build context, where docker will look for assets that are referenced in the Dockerfile and for a `Dockerfile` (if not explicitly specified). The build context is packaged up and then sent to the docker daemon (the server), which performs the image build. It is required that all referenced assets are available within the build context, otherwise, they will not be available while the image is being built, which would produce an error.
+The most important aspect of that `docker` command is the `.` at the end. It represents the path to the build context, where Docker will look for assets that are referenced in the Dockerfile and for a `Dockerfile` (if not explicitly specified with the `-f` option). The build context is packaged up and then sent to the Docker daemon (the server), which performs the image build. It is required that all referenced assets are available within the build context, otherwise, they will not be available while the image is being built, which would produce an error.
 
 In the case of an application with multiple project dependencies, it may be intuitive to place the Dockerfile beside the project file for the application project, and to assign the build context to that same location. This will not work because project dependencies will not exist within the build context.
 
@@ -55,7 +55,7 @@ You can adopt this model by using the following Dockerfile pattern (the logging 
 RUN dotnet test --logger:trx
 ```
 
-This approach is included in the [Dockerfile](Dockerfile), but is commented out (because it isn't recommended as a default workflow). You can uncomment out the following lines it if you want to try it.
+This approach is included in the [Dockerfile](Dockerfile), but is commented out (because it isn't recommended as a default workflow). You can uncomment the following lines if you want to try it.
 
 ```Dockerfile
 # FROM test
@@ -103,7 +103,7 @@ Successfully tagged complexapp:latest
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 
-Afrer building the container image, it is still possible to get the logs from the intermediate container image in which the tests were run. The intermediate stage container image is listed as `6deeeacdaaf2` in the console output. Using that information, we can boot up the container image and copy the log files from it, using the following pattern.
+After building the container image, it is still possible to get the logs from the intermediate container image in which the tests were run. The intermediate stage container image is listed as `6deeeacdaaf2` in the console output. Using that information, we can boot up the container image and copy the log files from it, using the following pattern:
 
 ```console
 C:\git\dotnet-docker\samples\complexapp>docker images | findstr 6deeeacdaaf2

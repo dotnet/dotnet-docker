@@ -20,7 +20,7 @@ The repos above are commonly used on the command line and in Dockerfiles. There 
 
 ## Tags that work everywhere
 
-Each repo exposes a set of tags you can use. There are a set of version number tags, like `3.1`, that you can use on multiple operating system and are supported on most processor types (x64, ARM64 and ARM32). If you don't see an operating system or processor type in the tag, you know it's a "multi-arch" tag that will work everywhere. 
+Each repo exposes a set of tags you can use. There are a set of version number tags, like `3.1`, that you can use on multiple operating systems and are supported on most processor types (x64, ARM64 and ARM32). If you don't see an operating system or processor type in the tag, you know it's a "multi-arch" tag that will work everywhere. 
 
 When you pull these tags, you will get a Debian image for Linux and Windows Nano Server images on Windows (if you are using Windows containers). If you are happy with that behavior, then these are the easiest tags to use and enable you to write Dockerfiles that can be built on multiple machines. However, the images you produce may differ across environments (which may or may not be what you want).
 
