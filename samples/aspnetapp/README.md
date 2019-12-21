@@ -137,7 +137,7 @@ docker images aspnetapp | findstr arm
 
 You can build ARM32 and ARM64 images on x64 machines. This may be preferred to take advantage of higher performance and virtualized environments. You can also build the, on ARM hardware. 
 
-You won't be able to run .NET Core ARM64 images on x64 machines. Docker relies on QEMU to run ARM64 images on X64, but it isn't supported by .NET Core. You must test and run .NET Core imges on actual hardware for the given processor type.
+You won't be able to run .NET Core ARM64 images on x64 machines. Docker relies on QEMU to run ARM64 images on X64, but it isn't supported by .NET Core. You must test and run .NET Core images on actual hardware for the given processor type.
 
 ## Optimizing for startup performance
 
