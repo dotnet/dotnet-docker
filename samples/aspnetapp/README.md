@@ -1,6 +1,6 @@
 # ASP.NET Core Docker Sample
 
-This sample demonstrates how to build container images for ASP.NET Core web apps. You can use this samples for Linux and Windows containers, for x64, ARM32 and ARM64 architectures.
+This sample demonstrates how to build container images for ASP.NET Core web apps. You can use these samples for Linux and Windows containers, for x64, ARM32 and ARM64 architectures.
 
 The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You can test the built image locally or deploy it to a [container registry](../push-image-to-acr.md).
 
