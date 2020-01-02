@@ -11,12 +11,15 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
+    [Trait("Category", "sdk")]
     public class SdkImageTests : ImageTests
     {
         public SdkImageTests(ITestOutputHelper outputHelper)
             : base(outputHelper)
         {
         }
+
+        protected override DotNetImageType ImageType => DotNetImageType.SDK;
 
         public static IEnumerable<object[]> GetImageData()
         {
@@ -28,15 +31,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        [Trait("Category", "sdk")]
         public void VerifyInsecureFiles(ProductImageData imageData)
         {
-            base.VerifyCommonInsecureFiles(imageData, DotNetImageType.SDK);
+            base.VerifyCommonInsecureFiles(imageData);
         }
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        [Trait("Category", "sdk")]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
@@ -65,7 +66,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        [Trait("Category", "sdk")]
         public void VerifyPackageCache(ProductImageData imageData)
         {
             string verifyCacheCommand = null;
@@ -97,7 +97,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        [Trait("Category", "sdk")]
         public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
         {
             PowerShellScenario_Execute(imageData, null);
@@ -105,7 +104,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        [Trait("Category", "sdk")]
         public void VerifyPowerShellScenario_NonDefaultUser(ProductImageData imageData)
         {
             var optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user

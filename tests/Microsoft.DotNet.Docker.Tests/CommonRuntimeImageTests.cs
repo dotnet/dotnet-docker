@@ -4,15 +4,12 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
     public abstract class CommonRuntimeImageTests : ImageTests
     {
-        protected abstract DotNetImageType ImageType { get; }
-
         protected CommonRuntimeImageTests(ITestOutputHelper outputHelper)
             : base(outputHelper)
         {
@@ -22,16 +19,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             return TestData.GetImageData()
                 .Select(imageData => new object[] { imageData });
-        }
-
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        [Trait("Category", "runtime")]
-        [Trait("Category", "runtime-deps")]
-        [Trait("Category", "aspnet")]
-        public void VerifyInsecureFiles(ProductImageData imageData)
-        {
-            base.VerifyCommonInsecureFiles(imageData, ImageType);
         }
 
         protected void VerifyCommonEnvironmentVariables(ProductImageData imageData)

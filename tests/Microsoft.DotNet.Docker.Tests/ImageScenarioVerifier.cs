@@ -178,7 +178,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
+        private static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
         {
             var retries = 30;
 

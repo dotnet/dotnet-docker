@@ -7,6 +7,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
+    [Trait("Category", "runtime-deps")]
     public class RuntimeDepsImageTests : CommonRuntimeImageTests
     {
         public RuntimeDepsImageTests(ITestOutputHelper outputHelper)
@@ -18,10 +19,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        [Trait("Category", "runtime-deps")]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
             base.VerifyCommonEnvironmentVariables(imageData);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyInsecureFiles(ProductImageData imageData)
+        {
+            base.VerifyCommonInsecureFiles(imageData);
         }
     }
 }
