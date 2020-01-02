@@ -9,9 +9,6 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    [Trait("Category", "runtime-deps")]
-    [Trait("Category", "runtime")]
-    [Trait("Category", "aspnet")]
     public abstract class CommonRuntimeImageTests : ImageTests
     {
         protected CommonRuntimeImageTests(ITestOutputHelper outputHelper)
