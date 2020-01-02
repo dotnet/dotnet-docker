@@ -18,6 +18,9 @@ steps:
     if [ "${{ eq(variables['System.TeamProject'], 'public') }}" == "False" ]; then
       optionalTestArgs="$optionalTestArgs -PullImages -Registry $(acr.server) -RepoPrefix $(stagingRepoPrefix) -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
     fi
+    if [ "$REPOTESTARGS" != "" ]; then
+      optionalTestArgs="$optionalTestArgs $REPOTESTARGS"
+    fi
     echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
   displayName: Set Test Variables
 - script: >
