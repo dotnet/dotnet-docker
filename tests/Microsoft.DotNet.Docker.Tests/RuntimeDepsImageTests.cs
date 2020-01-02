@@ -23,12 +23,5 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             base.VerifyCommonEnvironmentVariables(imageData);
         }
-
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyInsecureFiles(ProductImageData imageData)
-        {
-            base.VerifyCommonInsecureFiles(imageData);
-        }
     }
 }
