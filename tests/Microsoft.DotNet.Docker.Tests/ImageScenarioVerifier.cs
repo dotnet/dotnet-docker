@@ -15,13 +15,13 @@ namespace Microsoft.DotNet.Docker.Tests
     public class ImageScenarioVerifier
     {
         private readonly DockerHelper _dockerHelper;
-        private readonly ImageData _imageData;
+        private readonly ProductImageData _imageData;
         private readonly bool _isWeb;
         private readonly ITestOutputHelper _outputHelper;
         private readonly string _testArtifactsDir = Path.Combine(Directory.GetCurrentDirectory(), "TestAppArtifacts");
 
         public ImageScenarioVerifier(
-            ImageData imageData,
+            ProductImageData imageData,
             DockerHelper dockerHelper,
             ITestOutputHelper outputHelper,
             bool isWeb = false)
@@ -169,7 +169,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 if (_isWeb && !Config.IsHttpVerificationDisabled)
                 {
-                    await VerifyHttpResponseFromContainer(containerName);
+                    await VerifyHttpResponseFromContainerAsync(containerName);
                 }
             }
             finally
@@ -178,7 +178,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private async Task VerifyHttpResponseFromContainer(string containerName)
+        private async Task VerifyHttpResponseFromContainerAsync(string containerName)
         {
             var retries = 30;
 

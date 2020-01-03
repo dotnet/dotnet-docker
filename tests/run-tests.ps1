@@ -13,8 +13,26 @@ param(
     [string]$RepoPrefix,
     [switch]$DisableHttpVerification,
     [switch]$PullImages,
-    [string]$ImageInfoPath
+    [string]$ImageInfoPath,
+    [ValidateSet('runtime', "runtime-deps", 'aspnet', 'sdk')]
+    [string[]]$TestCategories = @('runtime', "runtime-deps", 'aspnet', 'sdk')
 )
+
+function Log {
+    param ([string] $Message)
+
+    Write-Output $Message
+}
+
+function Exec {
+    param ([string] $Cmd)
+
+    Log "Executing: '$Cmd'"
+    Invoke-Expression $Cmd
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed: '$Cmd'"
+    }
+}
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
@@ -35,16 +53,16 @@ else {
 }
 
 if (!(Test-Path $DotnetInstallScript)) {
-    $DOTNET_INSTALL_SCRIPT_URL = "https://raw.githubusercontent.com/dotnet/cli/release/2.1/scripts/obtain/$DotnetInstallScript"
+    $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
     Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript
 }
 
 if ($IsRunningOnUnix) {
     & chmod +x $DotnetInstallDir/$DotnetInstallScript
-    & $DotnetInstallDir/$DotnetInstallScript --channel "release/3.0.1xx" --version "3.0.100-preview7-012821" --architecture x64 --install-dir $DotnetInstallDir
+    & $DotnetInstallDir/$DotnetInstallScript --channel "3.1" --version "latest" --architecture x64 --install-dir $DotnetInstallDir
 }
 else {
-    & $DotnetInstallDir/$DotnetInstallScript -Channel "release/3.0.1xx" -Version "3.0.100-preview7-012821" -Architecture x64 -InstallDir $DotnetInstallDir
+    & $DotnetInstallDir/$DotnetInstallScript -Channel "3.1" -Version "latest" -Architecture x64 -InstallDir $DotnetInstallDir
 }
 
 if ($LASTEXITCODE -ne 0) { throw "Failed to install the .NET Core SDK" }
@@ -82,9 +100,23 @@ Try {
     $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
     $env:DOTNET_MULTILEVEL_LOOKUP = '0'
 
-    & $DotnetInstallDir/dotnet test --logger:trx
+    $testFilter = ""
+    if ($TestCategories) {
+        # Construct an expression that filters the test to each of the
+        # selected TestCategories (using an OR operator between each category).
+        # See https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests
+        $TestCategories | foreach {
+            if ($testFilter) {
+                $testFilter += "|"
+            }
 
-    if ($LASTEXITCODE -ne 0) { throw "Tests Failed" }
+            $testFilter += "Category=$_"
+        }
+
+        $testFilter = "--filter `"$testFilter`""
+    }
+
+    Exec "$DotnetInstallDir/dotnet test $testFilter --logger:trx"
 }
 Finally {
     Pop-Location

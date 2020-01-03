@@ -8,6 +8,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
+    [Trait("Category", "aspnet")]
     public class AspnetImageTests : CommonRuntimeImageTests
     {
         public AspnetImageTests(ITestOutputHelper outputHelper)
@@ -19,7 +20,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public async Task VerifyAppScenario(ImageData imageData)
+        public async Task VerifyAppScenario(ProductImageData imageData)
         {
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper, isWeb: true);
             await verifier.Execute();
@@ -27,7 +28,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyEnvironmentVariables(ImageData imageData)
+        public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
             base.VerifyCommonEnvironmentVariables(imageData);
         }
