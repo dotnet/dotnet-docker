@@ -13,15 +13,11 @@ using Xunit;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class ImageData
+    public abstract class ImageData
     {
         private List<string> _pulledImages = new List<string>();
-        private string _sdkOS;
 
         public Arch Arch { get; set; }
-        public Version Version { get; set; }
-        public string VersionString => Version.ToString(2);
-        public bool HasCustomSdk => _sdkOS != null;
         public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
         public string OS { get; set; }
 
@@ -75,18 +71,10 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public string SdkOS
+        public virtual string GetIdentifier(string type) => $"{type}-{DateTime.Now.ToFileTime()}";
+
+        protected void PullImageIfNecessary(string imageName, DockerHelper dockerHelper)
         {
-            get => _sdkOS ?? OS.TrimEnd(Tests.OS.SlimSuffix);
-            set { _sdkOS = value; }
-        }
-
-        public string GetIdentifier(string type) => $"{VersionString}-{type}-{DateTime.Now.ToFileTime()}";
-
-        public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
-        {
-            string imageName = GetImageName(imageType, dockerHelper);
-
             if (Config.PullImages && !_pulledImages.Contains(imageName))
             {
                 dockerHelper.Pull(imageName);
@@ -96,19 +84,30 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 Assert.True(DockerHelper.ImageExists(imageName), $"`{imageName}` could not be found on disk.");
             }
-
-            return imageName;
         }
 
-        private string GetImageName(DotNetImageType imageType, DockerHelper dockerHelper)
+        protected string GetImageName(string tag, string variantName)
         {
             string repoSuffix = Config.IsNightlyRepo ? "-nightly" : string.Empty;
-            string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
-            string tag = GetTagName(imageType, variantName);
             string repo = $"dotnet/core{repoSuffix}/{variantName}";
             string registry = GetRegistryName(repo, tag);
 
             return $"{registry}{repo}:{tag}";
+        }
+
+        protected string GetTagName(string tagPrefix, string os)
+        {
+            string arch = string.Empty;
+            if (Arch == Arch.Arm)
+            {
+                arch = "-arm32v7";
+            }
+            else if (Arch == Arch.Arm64)
+            {
+                arch = "-arm64v8";
+            }
+
+            return $"{tagPrefix}-{os}{arch}";
         }
 
         private static string GetRegistryName(string repo, string tag)
@@ -136,39 +135,6 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             return imageExistsInStaging ? $"{Config.Registry}/{Config.RepoPrefix}" : "mcr.microsoft.com/";
-        }
-
-        private string GetTagName(DotNetImageType imageType, string variantName)
-        {
-            Version imageVersion;
-            string os;
-            switch (imageType)
-            {
-                case DotNetImageType.Runtime:
-                case DotNetImageType.Aspnet:
-                case DotNetImageType.Runtime_Deps:
-                    imageVersion = Version;
-                    os = OS;
-                    break;
-                case DotNetImageType.SDK:
-                    imageVersion = Version;
-                    os = SdkOS;
-                    break;
-                default:
-                    throw new NotSupportedException($"Unsupported image type '{variantName}'");
-            }
-
-            string arch = string.Empty;
-            if (Arch == Arch.Arm)
-            {
-                arch = "-arm32v7";
-            }
-            else if (Arch == Arch.Arm64)
-            {
-                arch = "-arm64v8";
-            }
-
-            return $"{imageVersion.ToString(2)}-{os}{arch}";
         }
 
         public override string ToString()
