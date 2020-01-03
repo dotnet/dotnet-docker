@@ -21,7 +21,7 @@ namespace Microsoft.DotNet.Docker.Tests
         protected ITestOutputHelper OutputHelper { get; }
         protected abstract DotNetImageType ImageType { get; }
 
-        protected void VerifyCommonInsecureFiles(ImageData imageData)
+        protected void VerifyCommonInsecureFiles(ProductImageData imageData)
         {
             if (imageData.Version < new Version("3.1") ||
                 (imageData.OS.Contains("alpine") && imageData.IsArm))

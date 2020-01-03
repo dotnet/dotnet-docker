@@ -22,14 +22,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageData => new object[] { imageData });
         }
 
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyInsecureFiles(ImageData imageData)
-        {
-            base.VerifyCommonInsecureFiles(imageData);
-        }
-
-        protected void VerifyCommonEnvironmentVariables(ImageData imageData)
+        protected void VerifyCommonEnvironmentVariables(ProductImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
             variables.AddRange(GetCommonEnvironmentVariables());
@@ -41,6 +34,13 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             EnvironmentVariableInfo.Validate(variables, ImageType, imageData, DockerHelper);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyInsecureFiles(ProductImageData imageData)
+        {
+            base.VerifyCommonInsecureFiles(imageData);
         }
     }
 }
