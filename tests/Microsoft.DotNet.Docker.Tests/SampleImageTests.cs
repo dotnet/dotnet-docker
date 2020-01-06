@@ -31,7 +31,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyConsoleSampleImage(SampleImageData imageData)
+        public void VerifyDotnetSample(SampleImageData imageData)
         {
             string image = imageData.GetImage(SampleImageType.Console, DockerHelper);
             string containerName = imageData.GetIdentifier("sample-dotnetapp");
@@ -41,7 +41,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
-        public async Task VerifyAspnetSampleImage(SampleImageData imageData)
+        public async Task VerifyAspnetSample(SampleImageData imageData)
         {
             string image = imageData.GetImage(SampleImageType.Aspnet, DockerHelper);
             string containerName = imageData.GetIdentifier("sample-aspnetapp");

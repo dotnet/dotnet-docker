@@ -9,9 +9,9 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public abstract class ImageTests
+    public abstract class ProductImageTests
     {
-        protected ImageTests(ITestOutputHelper outputHelper)
+        protected ProductImageTests(ITestOutputHelper outputHelper)
         {
             DockerHelper = new DockerHelper(outputHelper);
             OutputHelper = outputHelper;
