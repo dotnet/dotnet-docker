@@ -6,7 +6,7 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public enum SampleImageType
     {
-        Console,
-        Aspnet
+        Dotnetapp,
+        Aspnetapp
     }
 }

@@ -33,7 +33,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyDotnetSample(SampleImageData imageData)
         {
-            string image = imageData.GetImage(SampleImageType.Console, DockerHelper);
+            string image = imageData.GetImage(SampleImageType.Dotnetapp, DockerHelper);
             string containerName = imageData.GetIdentifier("sample-dotnetapp");
             string output = DockerHelper.Run(image, containerName);
             Assert.StartsWith("Hello from .NET Core!", output);
@@ -43,7 +43,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAspnetSample(SampleImageData imageData)
         {
-            string image = imageData.GetImage(SampleImageType.Aspnet, DockerHelper);
+            string image = imageData.GetImage(SampleImageType.Aspnetapp, DockerHelper);
             string containerName = imageData.GetIdentifier("sample-aspnetapp");
 
             try

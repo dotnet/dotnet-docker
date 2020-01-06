@@ -13,10 +13,10 @@ namespace Microsoft.DotNet.Docker.Tests
             string tagPrefix;
             switch (imageType)
             {
-                case SampleImageType.Console:
+                case SampleImageType.Dotnetapp:
                     tagPrefix = "dotnetapp";
                     break;
-                case SampleImageType.Aspnet:
+                case SampleImageType.Aspnetapp:
                     tagPrefix = "aspnetapp";
                     break;
                 default:
