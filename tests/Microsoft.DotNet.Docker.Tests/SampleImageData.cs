@@ -10,18 +10,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         public string GetImage(SampleImageType imageType, DockerHelper dockerHelper)
         {
-            string tagPrefix;
-            switch (imageType)
-            {
-                case SampleImageType.Dotnetapp:
-                    tagPrefix = "dotnetapp";
-                    break;
-                case SampleImageType.Aspnetapp:
-                    tagPrefix = "aspnetapp";
-                    break;
-                default:
-                    throw new NotSupportedException($"Unsupported image type '{imageType}'");
-            }
+            string tagPrefix = Enum.GetName(typeof(SampleImageType), imageType).ToLowerInvariant();
 
             string tag = GetTagName(tagPrefix, OS);
             string imageName = GetImageName(tag, "samples");
