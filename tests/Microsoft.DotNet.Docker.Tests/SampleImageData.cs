@@ -11,7 +11,6 @@ namespace Microsoft.DotNet.Docker.Tests
         public string GetImage(SampleImageType imageType, DockerHelper dockerHelper)
         {
             string tagPrefix = Enum.GetName(typeof(SampleImageType), imageType).ToLowerInvariant();
-
             string tag = GetTagName(tagPrefix, OS);
             string imageName = GetImageName(tag, "samples");
 
