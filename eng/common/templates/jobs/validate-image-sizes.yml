@@ -1,0 +1,22 @@
+jobs:
+- job: LinuxPerfTests
+  pool: Hosted Ubuntu 1604
+  workspace:
+    clean: all
+  steps:
+  - template: ../steps/validate-image-sizes.yml
+    parameters:
+      dockerClientOS: linux
+- job: WindowsPerfTests
+  pool: # windows1909Amd64
+    ${{ if eq(variables['System.TeamProject'], 'public') }}:
+      name: DotNetCore-Docker-Public
+    ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+      name: DotNetCore-Docker
+    demands: VSTS_OS -equals Windows-ServerDatacenter-1909
+  workspace:
+    clean: all
+  steps:
+  - template: ../steps/validate-image-sizes.yml
+    parameters:
+      dockerClientOS: windows
