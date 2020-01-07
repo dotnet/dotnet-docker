@@ -14,8 +14,6 @@ If want to skip ahead, you can try a pre-built version with the following comman
 docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
 ```
 
-Note: This pattern works on Windows, macOS and Linux. Earlier Windows versions need to use a different set of commands that are described later in this document.
-
 ## Build an ASP.NET Core image
 
 You can build and run a .NET Core-based container image using the following instructions:
@@ -36,8 +34,6 @@ Application started. Press Ctrl+C to shut down.
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser. 
-
-Note: Earlier Windows versions need to use a different set of commands that are described at the end of the document.
 
 Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline parameters. In some cases, you might see an error because the host port you select is already in use. Choose a different port in that case.
 
@@ -95,7 +91,6 @@ You can use `docker images` to see the images you've built and to compare file s
 
 ```console
 % docker images aspnetapp
-rich@thundera aspnetapp % docker images aspnetapp
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 aspnetapp           ubuntu              0f5bc72e4caf        14 seconds ago      209MB
 aspnetapp           debian              f70387d4d802        35 seconds ago      212MB
@@ -133,6 +128,13 @@ You can do the same thing with Windows Nano Server, as follows:
 ```console
 docker build --pull -t aspnetapp:nanoserver-arm32 -f Dockerfile.nanoserver-arm32 .
 docker images aspnetapp | findstr arm
+```
+
+You can use `docker images` to see a listing of the images you've built, as you can see in the following example.
+
+```console
+docker images aspnetapp | findstr arm
+
 ```
 
 You can build ARM32 and ARM64 images on x64 machines. This may be preferred to take advantage of higher performance and virtualized environments. You can also build the, on ARM hardware. 
@@ -196,51 +198,6 @@ You can do the same thing with Windows Nano Server, as follows:
 ```console
 docker build --pull -t aspnetapp:nanoserver-trim -f Dockerfile.nanoserver-x64-trim .
 docker images aspnetapp | findstr nanoserver
-```
-
-## Windows-specific: View containers via IP address
-
-On older versions of Windows, the only way to navigate to a container-hosted website is via an IP address, not `localhost`. The following instructions describe a pattern for working around this issue.
-
-Run the application using the `--name` argument:
-
-```console
-docker build --pull -t aspnetapp .
-docker run --rm -it -p 8000:80 --name aspnetcore_sample aspnetapp
-```
-
-In another command prompt, you need to run the following command:
-
-```console
-docker exec aspnetcore_sample ipconfig
-```
-
-You should see something like:
-
-```console
-C:\git\dotnet-docker\samples\aspnetapp>docker exec aspnetcore_sample ipconfig
-
-Windows IP Configuration
-
-
-Ethernet adapter Ethernet:
-
-   Connection-specific DNS Suffix  . : contoso.com
-   Link-local IPv6 Address . . . . . : fe80::1967:6598:124:cfa3%4
-   IPv4 Address. . . . . . . . . . . : 172.29.245.43
-   Subnet Mask . . . . . . . . . . . : 255.255.240.0
-   Default Gateway . . . . . . . . . : 172.29.240.1
-```
-
-Navigate to the IP address you see, which would be `172.29.245.43` in the example above. 
-
-Note: [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec/) supports identifying containers with name or hash. The container name is used in the preceding instructions. `docker exec` runs a new command (as opposed to the [entrypoint](https://docs.docker.com/engine/reference/builder/#entrypoint)) in a running container.
-
-Alternative, `docker inspect` can  be used for the same purpose, as demonstrated in the following example.
-
-```console
-C:\git\dotnet-docker\samples\aspnetapp>docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" aspnetcore_sample
-172.29.245.43
 ```
 
 ## Resources
