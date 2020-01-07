@@ -15,8 +15,8 @@ param(
     [switch]$TestOnly,
     [Parameter(ParameterSetName = "Test")]
     [Parameter(ParameterSetName = "BuildAndTest")]
-    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "image-size")]
-    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "image-size")
+    [ValidateSet('runtime', "runtime-deps", 'aspnet', 'sdk', 'sample', "image-size")]
+    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "sample", "image-size")
 )
 
 if ($PSCmdlet.ParameterSetName -eq 'BuildAndTest') {
