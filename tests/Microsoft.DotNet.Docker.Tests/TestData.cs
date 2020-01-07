@@ -66,6 +66,21 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
         };
+        
+        private static readonly SampleImageData[] s_linuxSampleTestData =
+        {
+            new SampleImageData { OS = OS.BusterSlim,  Arch = Arch.Amd64 },
+            new SampleImageData { OS = OS.BusterSlim,  Arch = Arch.Arm },
+            new SampleImageData { OS = OS.BusterSlim,  Arch = Arch.Arm64 },
+        };
+
+        private static readonly SampleImageData[] s_windowsSampleTestData =
+        {
+            new SampleImageData { OS = OS.NanoServer1809,  Arch = Arch.Amd64 },
+            new SampleImageData { OS = OS.NanoServer1809,  Arch = Arch.Arm },
+            new SampleImageData { OS = OS.NanoServer1903,  Arch = Arch.Amd64 },
+            new SampleImageData { OS = OS.NanoServer1909,  Arch = Arch.Amd64 },
+        };
 
         public static IEnumerable<ProductImageData> GetImageData()
         {
@@ -74,6 +89,14 @@ namespace Microsoft.DotNet.Docker.Tests
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<ProductImageData>();
+        }
+        
+        public static IEnumerable<SampleImageData> GetSampleImageData()
+        {
+            return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxSampleTestData : s_windowsSampleTestData)
+                .FilterImagesByArch()
+                .FilterImagesByOs()
+                .Cast<SampleImageData>();
         }
 
         private static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<ProductImageData> imageData)
