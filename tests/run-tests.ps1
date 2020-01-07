@@ -14,8 +14,8 @@ param(
     [switch]$DisableHttpVerification,
     [switch]$PullImages,
     [string]$ImageInfoPath,
-    [ValidateSet('runtime', "runtime-deps", 'aspnet', 'sdk', 'sample', "image-size")]
-    [string[]]$TestCategories = @('runtime', "runtime-deps", 'aspnet', 'sdk')
+    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "sample", "image-size")]
+    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk")
 )
 
 function Log {
