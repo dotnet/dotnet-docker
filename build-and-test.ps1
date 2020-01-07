@@ -10,9 +10,9 @@ param(
     [Parameter(ParameterSetName = "BuildAndTest")]
     [string]$OptionalImageBuilderArgs,
     [Parameter(ParameterSetName = "Build")]
-    [switch]$Build,
+    [switch]$BuildOnly,
     [Parameter(ParameterSetName = "Test")]
-    [switch]$Test,
+    [switch]$TestOnly,
     [Parameter(ParameterSetName = "Test")]
     [Parameter(ParameterSetName = "BuildAndTest")]
     [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "image-size")]
@@ -20,19 +20,23 @@ param(
 )
 
 if ($PSCmdlet.ParameterSetName -eq 'BuildAndTest') {
-    $Build = $true
-    $Test = $true
+    $build = $true
+    $test = $true
+}
+else {
+    $build = $BuildOnly
+    $test = $TestOnly
 }
 
-if ($Build) {
+if ($build) {
     & ./eng/common/build-and-test.ps1 `
         -VersionFilter $VersionFilter `
         -OSFilter $OSFilter `
         -ArchitectureFilter $ArchitectureFilter `
         -OptionalImageBuilderArgs $OptionalImageBuilderArgs `
-        -SkipTesting:$Test
+        -SkipTesting
 }
-if ($Test) {
+if ($test) {
     & ./tests/run-tests.ps1 `
         -VersionFilter $VersionFilter `
         -OSFilter $OSFilter `
