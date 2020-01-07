@@ -127,19 +127,18 @@ You can do the same thing with Windows Nano Server, as follows:
 
 ```console
 docker build --pull -t aspnetapp:nanoserver-arm32 -f Dockerfile.nanoserver-arm32 .
-docker images aspnetapp | findstr arm
 ```
 
-You can use `docker images` to see a listing of the images you've built, as you can see in the following example.
+And then use `docker images` to see the Nano Server image you've just built.
 
 ```console
 >docker images aspnetapp | findstr arm
 aspnetapp           nanoserver-arm32    8cad7f0499ca        23 seconds ago      283MB
 ```
 
-You can build ARM32 and ARM64 images on x64 machines. This may be preferred to take advantage of higher performance and virtualized environments. You can also build the, on ARM hardware.
+You can build ARM32 and ARM64 images on ARM or x64 machines. It may be preferred to build on x64 to take advantage of higher performance, and the ability to take advantage of CI/CD services.
 
-You won't be able to run .NET Core ARM64 images on x64 machines. Docker relies on QEMU to run ARM64 images on X64, but it isn't supported by .NET Core. You must test and run .NET Core images on actual hardware for the given processor type.
+You won't be able to run .NET Core ARM64 images on x64 machines. Docker relies on QEMU to run ARM64 images on X64, but [QEMU isn't supported by .NET Core](https://github.com/dotnet/coreclr/issues/12972). You must test and run .NET Core images on actual hardware for the given processor type.
 
 ## Optimizing for startup performance
 
