@@ -1,4 +1,4 @@
-# .NET Core Docker Samples
+# .NET Core Docker samples
 
 The following samples and guidance demonstrate how to use .NET Core and Docker for development, testing and production. You can use the samples as the basis of your own Docker images or just to learn.
 
@@ -23,7 +23,7 @@ The following samples and guidance demonstrate how to use .NET Core and Docker f
 * [Push Docker Images to Docker Hub](push-image-to-dockerhub.md)
 * [Deploy ASP.NET Core Applications to Azure Container Instances](deploy-container-to-aci.md)
 
-## Sample Snippets	
+## Sample snippets	
 
 In addition to fully operational sample projects, [code snippets](snippets/) are also provided for demonstrating more specific scenarios.	
 
@@ -31,7 +31,7 @@ In addition to fully operational sample projects, [code snippets](snippets/) are
 * [Installing .NET Core in a Dockerfile](installing-dotnet.md)	
 * [Using the System.Drawing.Common Package in a Docker Container](using-system-drawing-common.md)
 
-## Trying pre-built images
+## Try pre-built images
 
 The following commands will run a .NET Core console app in a container:
 
