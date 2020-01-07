@@ -12,7 +12,7 @@ using Xunit.Abstractions;
 namespace Microsoft.DotNet.Docker.Tests
 {
     [Trait("Category", "sdk")]
-    public class SdkImageTests : ImageTests
+    public class SdkImageTests : ProductImageTests
     {
         public SdkImageTests(ITestOutputHelper outputHelper)
             : base(outputHelper)

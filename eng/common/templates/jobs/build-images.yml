@@ -23,6 +23,26 @@ jobs:
       imageBuilderBuildArgs: $(imageBuilder.queueArgs)
     imageBuilderDockerRunExtraOptions: $(build.imageBuilderDockerRunExtraOptions)
   steps:
+  # This script is necessary to workaround there not being a matching architecture when pulling images
+  # on an aarch64 machine. By using the multi-arch tag for the images referenced in the sample
+  # Dockerfiles, the Docker CLI attempts to find a matching arch and can't find one. The workaround is
+  # to manually update the Dockerfiles to refer to the architecture-specific images. The long-term
+  # solution is to use the --platform option in Docker CLI when generally available.
+  # See https://github.com/moby/moby/pull/37350
+  - script: >
+      job="$(Agent.JobName)" &&
+      sampleFolder=$(echo "$job" | grep -o -E "aspnetapp|dotnetapp") &&
+      dockerfilePath="samples/$sampleFolder/Dockerfile" &&
+      sed 's/:2.2 AS build/:2.2-stretch-arm32v7 AS build/g' $dockerfilePath > Dockerfile.tmp &&
+      mv Dockerfile.tmp $dockerfilePath &&
+      sed 's/:2.2 AS runtime/:2.2-stretch-slim-arm32v7 AS runtime/g' $dockerfilePath > Dockerfile.tmp &&
+      mv Dockerfile.tmp $dockerfilePath
+    displayName: Update Sample Dockerfile
+    condition: "
+      and(
+        succeeded(),
+        contains(variables['manifest'], 'samples'),
+        eq('${{ parameters.name }}', 'Build_Linux_arm32v7'))"
   - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
     parameters:
       setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
