@@ -59,6 +59,7 @@ Tags | Dockerfile | OS Version
 2.1.14-alpine3.11, 2.1-alpine3.11, 2.1.14-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 2.1.14-alpine3.10, 2.1-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/alpine3.10/amd64/Dockerfile) | Alpine 3.10
 2.1.14-alpine3.9, 2.1-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/alpine3.9/amd64/Dockerfile) | Alpine 3.9
+2.1.14-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/focal/amd64/Dockerfile) | Ubuntu 20.04
 2.1.14-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm64 Tags
@@ -86,6 +87,7 @@ Tags | Dockerfile | OS Version
 3.0.1-disco-arm32v7, 3.0-disco-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime/disco/arm32v7/Dockerfile) | Ubuntu 19.04
 3.0.1-bionic-arm32v7, 3.0-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 2.1.14-stretch-slim-arm32v7, 2.1-stretch-slim-arm32v7, 2.1.14, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/stretch-slim/arm32v7/Dockerfile) | Debian 9
+2.1.14-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 2.1.14-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 ## Windows Server, version 1909 amd64 Tags
