@@ -3,8 +3,8 @@
 # Copyright (c) .NET Foundation and contributors. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
 param(
-  [parameter(Mandatory=$true)]  [System.IO.DirectoryInfo]$path,
-  [parameter(Mandatory=$false)] [bool]$runapp
+  [parameter(Mandatory=$true)]  [System.IO.DirectoryInfo]$Path,
+  [parameter(Mandatory=$false)] [bool]$RunApp
 )
 
 
@@ -37,7 +37,7 @@ $runCount = 0
 Log "Environment: $dockeros containers"
 Log "Chip: $dockerarch"
 
-Foreach ($file in Get-ChildItem $path Dockerfile*) 
+Foreach ($file in Get-ChildItem $Path Dockerfile*) 
 {
     $totalCount++
     if ($file.Name -eq "Dockerfile") {}
@@ -48,11 +48,11 @@ Foreach ($file in Get-ChildItem $path Dockerfile*)
     $testimage = "testbuildimage"
 
     Log "Building $file"
-    docker build --pull -t $testimage -f $file $path
+    docker build --pull -t $testimage -f $file $Path
     Check "Build image for $file"
     $buildCount++
 
-    if ($runapp)
+    if ($RunApp)
     {
         if ($file.Name -eq "Dockerfile" -or
             ($dockerarch -eq "amd64" -And $file.Name.Contains("x64")) -or
@@ -60,11 +60,10 @@ Foreach ($file in Get-ChildItem $path Dockerfile*)
             ($dockerarch -eq "arm32" -And $file.Name.Contains("arm32"))
         )
         {
-            docker run --rm -it $testimage "Hello from $file"
+            docker run --rm $testimage "Hello from $file"
+            Check "Run image for $file"
             $runCount++
         }
-
-        Check "Run image for $file"
     }
     docker rmi $testimage
 }
@@ -72,7 +71,7 @@ Foreach ($file in Get-ChildItem $path Dockerfile*)
 Log "$totalCount Dockerfiles discovered"
 Log "$buildCount images built"
 
-if ($runapp)
+if ($RunApp)
 {
     Log "$runCount images run"
 }
