@@ -129,7 +129,7 @@ You can do the same thing with Windows Nano Server, as follows:
 docker build --pull -t aspnetapp:nanoserver-arm32 -f Dockerfile.nanoserver-arm32 .
 ```
 
-And then use `docker images` to see the Nano Server image you've just built.
+And `docker images` will show you the Nano Server image you've just built.
 
 ```console
 >docker images aspnetapp | findstr arm
@@ -196,7 +196,13 @@ You can do the same thing with Windows Nano Server, as follows:
 
 ```console
 docker build --pull -t aspnetapp:nanoserver-trim -f Dockerfile.nanoserver-x64-trim .
-docker images aspnetapp | findstr nanoserver
+```
+
+And `docker images` will show you the Nano Server image you've just built.
+
+```console
+> docker images aspnetapp | findstr nanoserver
+aspnetapp           nanoserver-trim     199a470a2257        20 seconds ago      341MB
 ```
 
 ## Resources
