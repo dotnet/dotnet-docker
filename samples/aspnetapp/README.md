@@ -161,7 +161,7 @@ There are a set of '-trim' Dockerfiles included with this sample that are opted 
 
 * **Self-contained deployment** -- Publish the runtime with the application.
 * **Assembly linking** -- Trim assemblies, including in the .NET Core framework, to make the application smaller.
-* **Ready to Run (R2R) compilation** -- Compile assemblies to R2R format to make startup faster. R2R Compiled assemblies are larger. The benefit of R2R compilation for your application may be outweighed by the size increase, so please do test your application with and without R2R.
+* **Ready to Run (R2R) compilation** -- Compile assemblies to R2R format to make startup faster. R2R-compiled assemblies are larger. The benefit of R2R compilation for your application may be outweighed by the size increase, so please do test your application with and without R2R.
 
 You are encouraged to experiment with these options if you want to see which combination of settings works best for you.
 
