@@ -13,8 +13,8 @@ WORKDIR /source/aspnetapp
 RUN dotnet publish -c release -o /app --no-restore
 
 # final stage, which will result in generated image
-# Uses the 1909 release; 1903, and 1809 are other choices
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-nanoserver-1909 AS runtime
+# Uses the 1809 release (only Nano Server version that supports ARM32)
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-nanoserver-1809-arm32v7 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
 ENTRYPOINT ["aspnetapp"]

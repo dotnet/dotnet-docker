@@ -133,11 +133,11 @@ docker images aspnetapp | findstr arm
 You can use `docker images` to see a listing of the images you've built, as you can see in the following example.
 
 ```console
-docker images aspnetapp | findstr arm
-
+>docker images aspnetapp | findstr arm
+aspnetapp           nanoserver-arm32    8cad7f0499ca        23 seconds ago      283MB
 ```
 
-You can build ARM32 and ARM64 images on x64 machines. This may be preferred to take advantage of higher performance and virtualized environments. You can also build the, on ARM hardware. 
+You can build ARM32 and ARM64 images on x64 machines. This may be preferred to take advantage of higher performance and virtualized environments. You can also build the, on ARM hardware.
 
 You won't be able to run .NET Core ARM64 images on x64 machines. Docker relies on QEMU to run ARM64 images on X64, but it isn't supported by .NET Core. You must test and run .NET Core images on actual hardware for the given processor type.
 
