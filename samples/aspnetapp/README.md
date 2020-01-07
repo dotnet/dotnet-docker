@@ -65,7 +65,7 @@ aspnetapp           nanoserver          d4b7586827f2        About an hour ago   
 
 ## Build an image for Alpine, Debian or Ubuntu
 
-.NET Core tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `3.1`, as opposed to a distro-specific tag like `3.1-alpine`.
+.NET Core multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `3.1`, as opposed to a distro-specific tag like `3.1-alpine`.
 
 This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. The [.NET Core Docker Sample](../dotnetapp/README.md) demonstrates targeting a larger set of distros.
 
