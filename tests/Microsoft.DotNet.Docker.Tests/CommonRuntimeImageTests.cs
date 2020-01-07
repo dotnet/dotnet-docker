@@ -9,7 +9,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public abstract class CommonRuntimeImageTests : ImageTests
+    public abstract class CommonRuntimeImageTests : ProductImageTests
     {
         protected CommonRuntimeImageTests(ITestOutputHelper outputHelper)
             : base(outputHelper)
