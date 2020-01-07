@@ -8,7 +8,7 @@
     DefaultParameterSetName = 'Validate'
 )]
 param(
-    [switch]$UseLocalImages,
+    [switch]$PullImages,
     [string]$ImageBuilderCustomArgs = "--architecture '*'",
     [Parameter(ParameterSetName = 'Validate')]
     [switch]$BaselineIntegrityOnly,
@@ -32,7 +32,7 @@ try {
     $baselinePath = "./tests/performance/ImageSize$branch.$activeOS.json"
     $commandArgs = "$baselinePath $ImageBuilderCustomArgs"
 
-    if (!$UseLocalImages) {
+    if ($PullImages) {
         $commandArgs += " --pull"
     }
 

@@ -117,6 +117,8 @@ Try {
     }
 
     Exec "$DotnetInstallDir/dotnet test $testFilter --logger:trx"
+
+    & ../performance/Validate-ImageSize.ps1 -PullImages:$PullImages -BaselineIntegrityOnly
 }
 Finally {
     Pop-Location
