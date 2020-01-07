@@ -45,7 +45,7 @@ We recommend that you do not use `--rm` in production. It cleans up container re
 
 ## Build an image for Windows Nano Server
 
-The following example demonstrates targeting Windows Nano Server (x64) explicitly (you must have Windows containers enabled):
+The following example demonstrates targeting Windows Nano Server (x64) explicitly (you must have [Windows containers enabled](https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers)):
 
 ```console
 docker build --pull -t aspnetapp:nanoserver -f Dockerfile.nanoserver-x64 .
