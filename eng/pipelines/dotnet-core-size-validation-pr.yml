@@ -1,12 +1,6 @@
 trigger: none
-pr: none
-
-schedules:
-- cron: "0 5 * * 1"
-  displayName: Weekly build
-  branches:
-    include:
-    - nightly
+pr:
+- nightly
 
 variables:
 - template: variables/common.yml
