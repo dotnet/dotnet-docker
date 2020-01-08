@@ -24,6 +24,7 @@ $ErrorActionPreference = 'Stop'
 pushd $PSScriptRoot/../../
 try {
     $manifestJson = Get-Content ./manifest.json | ConvertFrom-Json
+    $branch = ""
     if ($manifestJson.Repos[0].Name.Contains("nightly")) {
         $branch = ".nightly"
     }
@@ -31,6 +32,11 @@ try {
     $activeOS = docker version -f "{{ .Server.Os }}"
     $baselinePath = "./tests/performance/ImageSize$branch.$activeOS.json"
     $commandArgs = "$baselinePath $ImageBuilderCustomArgs"
+
+    if (!(Test-Path $baselinePath)) {
+        Write-Warning "Baseline file '$baselinePath' does not exist. Skipping image size validation."
+        return
+    }
 
     if ($PullImages) {
         $commandArgs += " --pull"
