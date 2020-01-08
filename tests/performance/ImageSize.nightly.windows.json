@@ -2,31 +2,40 @@
   "dotnet/core-nightly/runtime": {
     "2.1/runtime/nanoserver-1809/amd64": 314376218,
     "2.1/runtime/nanoserver-1903/amd64": 326367498,
-    "2.2/runtime/nanoserver-1809/amd64": 313972378,
-    "2.2/runtime/nanoserver-1809/arm32v7": 219678727,
-    "2.2/runtime/nanoserver-1903/amd64": 325878938,
+    "2.1/runtime/nanoserver-1909/amd64": 327609836,
     "3.0/runtime/nanoserver-1809/amd64": 314396733,
     "3.0/runtime/nanoserver-1809/arm32v7": 251208420,
-    "3.0/runtime/nanoserver-1903/amd64": 326158520
+    "3.0/runtime/nanoserver-1903/amd64": 326158520,
+    "3.0/runtime/nanoserver-1909/amd64": 328033307,
+    "3.1/runtime/nanoserver-1809/amd64": 321408734,
+    "3.1/runtime/nanoserver-1809/arm32v7": 256353134,
+    "3.1/runtime/nanoserver-1903/amd64": 326438075,
+    "3.1/runtime/nanoserver-1909/amd64": 328083762
   },
   "dotnet/core-nightly/aspnet": {
     "2.1/aspnet/nanoserver-1809/amd64": 387919601,
     "2.1/aspnet/nanoserver-1903/amd64": 399947583,
-    "2.2/aspnet/nanoserver-1809/amd64": 394959231,
-    "2.2/aspnet/nanoserver-1809/arm32v7": 304649664,
-    "2.2/aspnet/nanoserver-1903/amd64": 407083283,
+    "2.1/aspnet/nanoserver-1909/amd64": 401265767,
     "3.0/aspnet/nanoserver-1809/amd64": 333363540,
     "3.0/aspnet/nanoserver-1809/arm32v7": 273271505,
-    "3.0/aspnet/nanoserver-1903/amd64": 343065693
+    "3.0/aspnet/nanoserver-1903/amd64": 343065693,
+    "3.0/aspnet/nanoserver-1909/amd64": 347630536,
+    "3.1/aspnet/nanoserver-1809/amd64": 341072949,
+    "3.1/aspnet/nanoserver-1809/arm32v7": 278558953,
+    "3.1/aspnet/nanoserver-1903/amd64": 346102290,
+    "3.1/aspnet/nanoserver-1909/amd64": 347747977
   },
   "dotnet/core-nightly/sdk": {
     "2.1/sdk/nanoserver-1809/amd64": 1651068899,
     "2.1/sdk/nanoserver-1903/amd64": 1666573518,
-    "2.2/sdk/nanoserver-1809/amd64": 1653665204,
-    "2.2/sdk/nanoserver-1809/arm32v7": 373223933,
-    "2.2/sdk/nanoserver-1903/amd64": 1668761634,
+    "2.1/sdk/nanoserver-1909/amd64": 1672306130,
     "3.0/sdk/nanoserver-1809/amd64": 735404318,
     "3.0/sdk/nanoserver-1809/arm32v7": 587411605,
-    "3.0/sdk/nanoserver-1903/amd64": 741169117
+    "3.0/sdk/nanoserver-1903/amd64": 741169117,
+    "3.0/sdk/nanoserver-1909/amd64": 736454347,
+    "3.1/sdk/nanoserver-1809/amd64": 730951559,
+    "3.1/sdk/nanoserver-1809/arm32v7": 559712172,
+    "3.1/sdk/nanoserver-1903/amd64": 735894844,
+    "3.1/sdk/nanoserver-1909/amd64": 737661435
   }
 }
