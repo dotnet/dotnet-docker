@@ -1,0 +1,10 @@
+parameters:
+  dockerClientOS: null
+  
+steps:
+  - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
+  - powershell: >
+      ./tests/performance/Validate-ImageSize.ps1
+      -BaselineIntegrityOnly:$${{ eq(variables['System.TeamProject'], 'public') }}
+    displayName: Run Image Size Tests
+  - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
