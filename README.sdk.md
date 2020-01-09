@@ -56,13 +56,11 @@ Tags | Dockerfile | OS Version
 3.0.101-buster, 3.0-buster, 3.0.101, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/buster/amd64/Dockerfile) | Debian 10
 3.0.101-alpine3.11, 3.0-alpine3.11, 3.0.101-alpine, 3.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 3.0.101-alpine3.10, 3.0-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
-3.0.101-alpine3.9, 3.0-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 3.0.101-disco, 3.0-disco | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/disco/amd64/Dockerfile) | Ubuntu 19.04
 3.0.101-bionic, 3.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 2.1.607-stretch, 2.1-stretch, 2.1.607, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/amd64/Dockerfile) | Debian 9
 2.1.607-alpine3.11, 2.1-alpine3.11, 2.1.607-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 2.1.607-alpine3.10, 2.1-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
-2.1.607-alpine3.9, 2.1-alpine3.9 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/alpine3.9/amd64/Dockerfile) | Alpine 3.9
 2.1.607-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/focal/amd64/Dockerfile) | Ubuntu 20.04
 2.1.607-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
