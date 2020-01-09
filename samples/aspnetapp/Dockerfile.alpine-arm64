@@ -12,7 +12,7 @@ COPY aspnetapp/. ./aspnetapp/
 WORKDIR /source/aspnetapp
 RUN dotnet publish -c release -o /app --no-restore
 
-# final stage, which will result in generated image
+# final stage/image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine-arm64v8
 WORKDIR /app
 COPY --from=build /app ./
