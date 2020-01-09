@@ -15,20 +15,20 @@ COPY libbar/ libbar/
 WORKDIR /source/complexapp
 RUN dotnet build -c release --no-restore
 
-# test app
+# test app via optional entrypoint
+# target entrypoint with docker build --target test
 FROM build AS test
-COPY tests/ /source/tests/
 WORKDIR /source/tests
+COPY tests/ .
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
-# Uncomment out next `FROM` and 'RUN' lines if you want to run tests as
-# part of docker build and for test failure to cascade to build failure.
-# Otherwise, you can build and run 'test' stage using the test stage ENTRYPOINT.
-# FROM test
-# RUN dotnet test --logger:trx
+# Comment out test stage if you don't want to run tests as part of docker build
+# Note: test failure will cause docker build to fail.
+FROM test
+RUN dotnet restore 
+RUN dotnet test --no-restore --logger:trx
 
 FROM build AS publish
-WORKDIR /source/complexapp
 RUN dotnet publish -c release --no-build -o /app
 
 # final stage, which will result in generated image

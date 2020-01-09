@@ -30,8 +30,8 @@ You can see the built binaries with the following command:
 
 ```console
 % ls out
-dotnetapp			    dotnetapp.pdb
-dotnetapp.deps.json		dotnetapp.runtimeconfig.json
+dotnetapp               dotnetapp.pdb
+dotnetapp.deps.json	    dotnetapp.runtimeconfig.json
 dotnetapp.dll
 ```
 
