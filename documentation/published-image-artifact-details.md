@@ -398,17 +398,15 @@ The [SDK image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) includes th
 Note: The SDK image is based on [`buildpack-deps`](https://hub.docker.com/_/buildpack-deps), which includes components that we distribute but not use (like Python).
 
 ```console
-$ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find . | grep LICENSE
-./usr/lib/python2.7/LICENSE.txt
-./usr/share/doc/git/contrib/persistent-https/LICENSE
-./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/LICENSE.txt
+$ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find ./usr/share/dotnet ./usr/share/powershell | grep LICENSE
 ./usr/share/dotnet/sdk/3.1.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/LICENSE.TXT
 ./usr/share/dotnet/LICENSE.txt
-$ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find . | grep -i third | grep dotnet
+./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/LICENSE.txt
+$ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find ./usr/share/dotnet | grep -i third
 ./usr/share/dotnet/sdk/3.1.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
 ./usr/share/dotnet/ThirdPartyNotices.txt
 ./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.0/THIRD-PARTY-NOTICES.txt
-$ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find . | grep -i third | grep powershell
+$ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find ./usr/share/dotnet ./usr/share/powershell | grep -i third
 ./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/ThirdPartyNotices.txt
 ```
 
