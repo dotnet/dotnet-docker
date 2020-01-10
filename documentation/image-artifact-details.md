@@ -85,14 +85,6 @@ See /usr/share/common-licenses/GPL-2, or
 of the GNU General Public License.
 ```
 
-You can retrieve the source code for any of these packages, as demonstrated below:
-
-```console
-$ docker run --rm debian:buster-slim dpkg -s apt | grep -i version
-Version: 1.8.2
-$ docker run --rm debian:buster-slim apt-get source -qq --print-uris apt=1.8.2
-```
-
 #### Ubuntu
 
 Licensing information is present in Ubuntu images, as is demonstrated below.
