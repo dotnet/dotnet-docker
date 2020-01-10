@@ -85,6 +85,14 @@ See /usr/share/common-licenses/GPL-2, or
 of the GNU General Public License.
 ```
 
+You can retrieve the source code for any of these packages, as demonstrated below:
+
+```console
+$ docker run --rm debian:buster-slim dpkg -s apt | grep -i version
+Version: 1.8.2
+$ docker run --rm debian:buster-slim apt-get source -qq --print-uris apt=1.8.2
+```
+
 #### Ubuntu
 
 Licensing information is present in Ubuntu images, as is demonstrated below.
@@ -142,7 +150,7 @@ of the GNU General Public License.
   * inspected from the image on-disk after it is pulled
   * installed packages, creation date, architecture, environment variables, detected licenses, etc.
 
-An abbreviated copy the ["extended information" for the Debian repo](https://github.com/docker-library/repo-info/tree/master/repos/debian) is included below to give you an idea of the details included.
+An abbreviated copy the ["extended information" for the Debian repo](https://github.com/docker-library/repo-info/tree/master/repos/debian) for the `debian:buster-slim` image is included below.
 
 #### `debian:buster-slim` [remote](https://github.com/docker-library/repo-info/tree/master/repos/debian/remote)
 
@@ -408,4 +416,19 @@ $ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find ./usr/share/
 ./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.0/THIRD-PARTY-NOTICES.txt
 $ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find ./usr/share/dotnet ./usr/share/powershell | grep -i third
 ./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/ThirdPartyNotices.txt
+```
+
+Python also provides third party notice files, via `buildpack-deps`. You will see those if you use the following (unfiltered) pattern:
+
+```console
+% docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1 find . | grep -i third
+./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/ThirdPartyNotices.txt
+./usr/share/dotnet/ThirdPartyNotices.txt
+./usr/share/dotnet/sdk/3.1.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
+./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.0/THIRD-PARTY-NOTICES.txt
+./usr/lib/python2.7/dist-packages/mercurial/thirdparty
+./usr/lib/python2.7/dist-packages/mercurial/thirdparty/cbor
+./usr/lib/python2.7/dist-packages/mercurial/thirdparty/cbor/__init__.py
+./usr/lib/python2.7/dist-packages/mercurial/thirdparty/cbor/cbor2
+...
 ```
