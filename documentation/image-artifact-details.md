@@ -1,4 +1,4 @@
-# Published Image Artifact Details
+# Image Artifact Details
 
 .NET Core container images contain multiple software components, each built from different source and with different licensing. It is important that users of these images can determine the license requirements of these images and have a link back to the source for pedigree purposes.
 
@@ -408,17 +408,4 @@ $ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find ./usr/share/
 ./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.0/THIRD-PARTY-NOTICES.txt
 $ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find ./usr/share/dotnet ./usr/share/powershell | grep -i third
 ./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/ThirdPartyNotices.txt
-```
-
-Python also provides third party notice files, via `buildpack-deps`. You will see those if you use the following (unfiltered) pattern:
-
-```console
-$ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find . | grep -i third
-./usr/lib/python2.7/dist-packages/mercurial/thirdparty
-./usr/lib/python2.7/dist-packages/mercurial/thirdparty/__init__.py
-./usr/lib/python2.7/dist-packages/mercurial/thirdparty/zope
-./usr/lib/python2.7/dist-packages/mercurial/thirdparty/zope/__init__.py
-./usr/lib/python2.7/dist-packages/mercurial/thirdparty/zope/interface
-./usr/lib/python2.7/dist-packages/mercurial/thirdparty/zope/interface/exceptions.py
-...
 ```
