@@ -14,7 +14,7 @@ USER ContainerAdministrator
 COPY *.cs .
 RUN dotnet publish -c release -o /app --no-restore
 
-# final stage, which will result in generated image
+# final stage/image
 # Uses the 1809 release
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1809-arm32v7
 WORKDIR /app

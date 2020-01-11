@@ -31,7 +31,7 @@ RUN dotnet test --no-restore --logger:trx
 FROM build AS publish
 RUN dotnet publish -c release --no-build -o /app
 
-# final stage, which will result in generated image
+# final stage/image
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1
 WORKDIR /app
 COPY --from=publish /app .

@@ -4,13 +4,13 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
-RUN dotnet restore
+RUN dotnet restore -r linux-musl-arm64
 
 # copy and publish app and libraries
 COPY *.cs .
-RUN dotnet publish -c release -o /app --no-restore
+RUN dotnet publish -c release -o /app --no-restore -r linux-musl-arm64
 
-# final stage, which will result in generated image
+# final stage/image
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-alpine-arm64v8
 WORKDIR /app
 COPY --from=build /app .
@@ -22,4 +22,4 @@ COPY --from=build /app .
 #ENV LC_ALL en_US.UTF-8
 #ENV LANG en_US.UTF-8
 
-ENTRYPOINT ["dotnet", "dotnetapp.dll"]
+ENTRYPOINT ["./dotnetapp"]
