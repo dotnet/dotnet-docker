@@ -1,4 +1,4 @@
-# Image Artifact Details
+# .NET Core Image Artifact Details
 
 .NET Core container images contain multiple software components, each built from different source and with different licensing. It is important that users of these images can determine the license requirements of these images and have a link back to the source for pedigree purposes.
 
@@ -12,7 +12,7 @@ This document describes the licensing and source pedigree of the following compo
 * Packages (from Linux package managers)
 * .NET Core and other components (acquired as .tar.gz/.zip files)
 
-## Base Images
+## Base Images used by .NET Core Images
 
 .NET Core images are provided for a set of Linux distros, delivered via [MCR](https://azure.microsoft.com/blog/microsoft-syndicates-container-catalog/) (and advertised on Docker Hub). The Linux distros are acquired from Docker Hub as part of building the .NET Core images. The following base images are delivered as a component of .NET Core images.
 
@@ -21,24 +21,24 @@ This document describes the licensing and source pedigree of the following compo
 * [ubuntu](https://hub.docker.com/_/ubuntu)
 * [buildpack-deps](https://hub.docker.com/_/buildpack-deps)
 
-.NET Core is dependent on those images, and the teams that build them, to satisfactorily describe the licensing and pedigree of these images.
+.NET Core is dependent on those images, and the individuals/organizations that build them, to satisfactorily describe the licensing and pedigree of these images.
 
-### Retrieving License Information From Base Images
+## Retrieving License Information From Base Images
 
 The copyright practices vary across the base images that .NET Core depends on. This is demonstrated via the following introspection technique, for each of the supported distros.
 
 Note: The output of the commands is intentionally cut-off for purposes of brevity. The output you see below is intended to demonstrate the pattern, and you can repeat it to view all current license information for the base image of your choosing.
 
-#### Alpine
+### alpine
 
-Licensing information is not present in Alpine images, as is demonstrated below.  The `-c` grep argument displays the number of copyrights found.
+Licensing information is not present in Alpine images, as is demonstrated below. The `-c` grep argument displays the number of copyrights found.
 
 ```console
 $ docker run --rm alpine:3.11 find . | grep -c copyright
 0
 ```
 
-#### Debian
+### debian
 
 Licensing information is present in Debian images, as is demonstrated below.
 
@@ -85,7 +85,7 @@ See /usr/share/common-licenses/GPL-2, or
 of the GNU General Public License.
 ```
 
-#### Ubuntu
+### ubuntu
 
 Licensing information is present in Ubuntu images, as is demonstrated below.
 
@@ -131,9 +131,13 @@ See /usr/share/common-licenses/GPL-2, or
 of the GNU General Public License.
 ```
 
-### Retrieving Base Image Pedigree Details
+### buildpack-deps
 
-.NET Core relies on the official Docker image repositories to provide detailed information about the images.  This information includes layer information, source code, license information, etc.  This information is stored in the [Official Images "Extended Information" repository](https://github.com/docker-library/repo-info) and is split into two types.
+.NET Core uses the Debian and Ubuntu variants of [`buildpack-deps`](https://hub.docker.com/_/buildpack-deps), enabling you to use the same patterns described above to retrieve the licensing information for these images.
+
+## Retrieving Base Image Pedigree Details
+
+.NET Core relies on the official Docker image repositories to provide detailed information about the images. This information includes layer information, source code, license information, etc. This information is stored in the [Official Images "Extended Information" repository](https://github.com/docker-library/repo-info) and is split into two types.
 
 * remote
   * gathered from the Docker Hub/Registry API
@@ -142,13 +146,9 @@ of the GNU General Public License.
   * inspected from the image on-disk after it is pulled
   * installed packages, creation date, architecture, environment variables, detected licenses, etc.
 
-An abbreviated copy the ["extended information" for the Debian repo](https://github.com/docker-library/repo-info/tree/master/repos/debian) for the `debian:buster-slim` image is included below.
+An abbreviated copy of the ["extended information" for the Debian repo](https://github.com/docker-library/repo-info/tree/master/repos/debian) for the `debian:buster-slim` image is included below, first the [remote](https://github.com/docker-library/repo-info/blob/master/repos/debian/remote/buster-slim.md) and then the [local](https://github.com/docker-library/repo-info/blob/master/repos/debian/local/buster-slim.md) information.
 
-#### `debian:buster-slim` [remote](https://github.com/docker-library/repo-info/tree/master/repos/debian/remote)
-
-***
-
-## `debian:buster-slim`
+### `debian:buster-slim` (remote)
 
 ```console
 $ docker pull debian@sha256:e4c1417236abc57971755ca2bfccd546cbca45b33daf66001a5addae4bf78517
@@ -164,7 +164,7 @@ $ docker pull debian@sha256:e4c1417236abc57971755ca2bfccd546cbca45b33daf66001a5a
   * linux; ppc64le
   * linux; s390x
 
-### `debian:buster-slim` - linux; amd64
+#### `debian:buster-slim` - linux; amd64
 
 ```console
 $ docker pull debian@sha256:0c679627b3a61b2e3ee902ec224b0505839bc2ad76d99530e5f0566e47ac8400
@@ -179,26 +179,22 @@ $ docker pull debian@sha256:0c679627b3a61b2e3ee902ec224b0505839bc2ad76d99530e5f0
 
 ```dockerfile
 # Sat, 28 Dec 2019 04:21:22 GMT
-ADD file:04caaf303199c81ff1a94e2e39d5096f9d02b73294b82758e5bc6e23aff94272 in / 
+ADD file:04caaf303199c81ff1a94e2e39d5096f9d02b73294b82758e5bc6e23aff94272 in /
 # Sat, 28 Dec 2019 04:21:23 GMT
 CMD ["bash"]
 ```
 
 * Layers:
-  * `sha256:8ec398bc03560e0fa56440e96da307cdf0b1ad153f459b52bca53ae7ddb8236d`  
+  * `sha256:8ec398bc03560e0fa56440e96da307cdf0b1ad153f459b52bca53ae7ddb8236d`
   * Last Modified: Sat, 28 Dec 2019 04:25:53 GMT  
   * Size: 27.1 MB (27092274 bytes)  
   * MIME: application/vnd.docker.image.rootfs.diff.tar.gzip
 
 ...
 
-#### `debian:buster-slim` [local](https://github.com/docker-library/repo-info/tree/master/repos/debian/local)
+### `debian:buster-slim` (local)
 
-***
-
-# `debian:buster-slim`
-
-## Docker Metadata
+#### Docker Metadata
 
 * Image ID: `sha256:e1af56d072b8d93fce4b566f4bf76311108dbbbe952b12a85418bd32c2fcdda7`
 * Created: `2019-12-28T04:21:23.037912523Z`
@@ -209,9 +205,9 @@ CMD ["bash"]
 * Environment:
   * `PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`
 
-## `dpkg` (`.deb`-based packages)
+#### `dpkg` (`.deb`-based packages)
 
-### `dpkg` source package: `acl=2.2.53-4`
+##### `dpkg` source package: `acl=2.2.53-4`
 
 Binary Packages:
 
@@ -240,7 +236,7 @@ Other potentially useful URLs:
 * https://sources.debian.net/src/acl/2.2.53-4/debian/copyright/ (for direct copyright/license information)
 * http://snapshot.debian.org/package/acl/2.2.53-4/ (for access to the source package after it no longer exists in the archive)
 
-### `dpkg` source package: `adduser=3.118`
+##### `dpkg` source package: `adduser=3.118`
 
 ...
 
@@ -273,7 +269,7 @@ ENV ASPNETCORE_URLS=http://+:80 \
     DOTNET_RUNNING_IN_CONTAINER=true
 ```
 
-The pattern for [Retrieving License Information From Base Images](###retrieving-license-information-from-base-images) can be repeated for packages that are added in .NET Core images (above and beyond the base image). The first package listed in the Dockerfile is `ca-certificates`, which will be used to demonstrate the pattern. The referenced Dockerfile is for an imagine in the [runtime-deps repo](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps), as you will see demonstrated in the example below.
+The pattern for [Retrieving License Information From Base Images](#retrieving-license-information-from-base-images) can be repeated for packages that are added in .NET Core images (above and beyond the base image). The first package listed in the Dockerfile is `ca-certificates`, which will be used to demonstrate the pattern. The referenced Dockerfile is for an image in the [runtime-deps repo](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps), as you will see demonstrated in the example below.
 
 There is no guarantee that the requested package is not present in the base image, but it typically will not be (hence why it is explicitly installed), as is demonstrated below.
 
