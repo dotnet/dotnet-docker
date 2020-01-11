@@ -4,11 +4,11 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
-RUN dotnet restore
+RUN dotnet restore -r linux-x64
 
 # copy and publish app and libraries
-COPY *.cs .
-RUN dotnet publish -c release -o /app --no-restore
+COPY . .
+RUN dotnet publish -c release -o /app -r linux-x64 --no-restore
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim

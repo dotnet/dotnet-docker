@@ -4,19 +4,19 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
-RUN dotnet restore
+RUN dotnet restore -r win-arm
 
 # Trigger registry hive creation to workaround intermittent Windows arm Docker issue
 # https://github.com/dotnet/dotnet-docker/issues/1054
 USER ContainerAdministrator
 
 # copy and publish app and libraries
-COPY *.cs .
-RUN dotnet publish -c release -o /app --no-restore
+COPY . .
+RUN dotnet publish -c release -o /app -r win-arm --no-restore
 
 # final stage/image
 # Uses the 1809 release
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1809-arm32v7
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet","dotnetapp.dll"]
+ENTRYPOINT ["dotnetapp"]

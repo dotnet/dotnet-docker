@@ -4,15 +4,15 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
-RUN dotnet restore
+RUN dotnet restore -r win-x64
 
 # Trigger registry hive creation to workaround intermittent Windows arm Docker issue
 # https://github.com/dotnet/dotnet-docker/issues/1054
 USER ContainerAdministrator
 
 # copy and publish app and libraries
-COPY *.cs .
-RUN dotnet publish -c release -o /app --no-restore
+COPY . .
+RUN dotnet publish -c release -o /app -r win-x64 --no-restore
 
 # final stage/image
 # Uses the 1909 release; Other choices: 1903, 1809 

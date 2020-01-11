@@ -7,7 +7,7 @@ COPY *.csproj .
 RUN dotnet restore
 
 # copy and publish app and libraries
-COPY *.cs .
+COPY . .
 RUN dotnet publish -c release -o /app --no-restore
 
 # final stage/image
