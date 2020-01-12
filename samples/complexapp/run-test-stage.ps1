@@ -38,8 +38,14 @@ if (!$path)
     $path = "."
 }
 
-Log "Build test stage"
-docker build --pull --target $TestStage -t $TestImageName $path
+PrintElapsedTime
+Log "Build application image"
+docker build --pull -t $ImageName $path
+PrintElapsedTime
+Check "docker build (application)"
+
+Log "Build test runner image"
+docker build --target $TestStage -t $TestImageName $path
 PrintElapsedTime
 Check "docker build (test runner)"
 
@@ -56,7 +62,7 @@ if (!$TestResultsDirExists) {
 }
 Log $TestResultsDir
 
-Log "Run test container with $TestImageName image"
+Log "Run test container with test runner image"
 
 if ($DockerOS -eq "linux") {
     Log "Environment: Linux containers"

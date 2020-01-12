@@ -45,21 +45,101 @@ There are two primary ways to test within the workflow of an application contain
 
 This is different than running tests within a [.NET Core SDK container](../run-tests-in-sdk-container.md), which establishes a generic environment (which also works well). The rest of this document is focused on running tests within the same container environment as the application.
 
-## Running tests while building an image
+## Running tests as an opt-in stage
 
-It is possible to run tests as part of `docker build`. This approach can make sense if you want `docker build` to fail if your tests fail. It is not generally recommended, as will be described later in this section.
+There are multiple approaches for testing with containers, such as the `ENTRYPOINT` of an opt-in stage (covered in this section) or as part of `docker build` (covered in the next section). The opt-in test stage approach covered in this section is the recommended approach because it is more flexible.
 
-You can adopt this model by using the following Dockerfile pattern (the logging argument is optional):
+The primary benefit of using an opt-in stage for testing is that it enables using the same environment as the build as an opt-in scenario and allows volume mounting (which isn't possible with `docker build`) to collect test logs.
+
+The [Dockerfile](complexapp/Dockerfile) includes a `test` stage that demonstrates running via its `ENTRYPOINT`, as follows.
 
 ```Dockerfile
-RUN dotnet test --logger:trx
+# test stage -- exposes optional entrypoint
+# target entrypoint with: docker build --target test
+FROM build AS test
+WORKDIR /source/tests
+COPY tests/ .
+ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 ```
 
-This approach is included in the [Dockerfile](Dockerfile), but is commented out (because it isn't recommended as a default workflow). You can uncomment the following lines if you want to try it.
+The presence of the `test` stage costs very little and doesn't significantly change the behavior of the build if you don't specifically target it. By default, the test stage `ENTRYPOINT` will not be used if you build this Dockerfile.  It will be overwritten by the final `ENTRYPOINT` in the [Dockerfile](complexapp/Dockerfile).
+
+The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled:
+
+```console
+C:\git\dotnet-docker\samples\complexapp> docker build --pull --target test -t complexapp-test .
+Sending build context to Docker daemon  12.81MB
+Step 1/15 : FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+3.1: Pulling from dotnet/core/sdk
+Successfully built f98c5453be3d
+Successfully tagged complexapp-test:latest
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+
+C:\git\dotnet-docker\samples\complexapp>mkdir TestResults
+
+C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%/TestResults:/source/tests/TestResults complexapp-test
+Test run for /source/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.1)
+Microsoft (R) Test Execution Command Line Tool Version 16.3.0
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Starting test execution, please wait...
+
+A total of 1 test files matched the specified pattern.
+Results File: /source/tests/TestResults/_fd11ea307347_2019-12-19_23_48_20.trx
+
+Test Run Successful.
+Total tests: 2
+     Passed: 2
+ Total time: 1.8321 Seconds
+
+C:\git\dotnet-docker\samples\complexapp>dir TestResults
+ Volume in drive C is Windows
+ Volume Serial Number is 384B-0B6E
+
+ Directory of C:\git\dotnet-docker\samples\complexapp\TestResults
+
+12/19/2019  03:48 PM    <DIR>          .
+12/19/2019  03:48 PM    <DIR>          ..
+12/19/2019  03:48 PM             3,635 _fd11ea307347_2019-12-19_23_48_20.trx
+```
+
+> The `run-test-stage.ps1` script implements the same workflow.
+
+The following instructions demonstrate this scenario in various configurations, with logging enabled.
+
+### Linux or macOS
+
+```console
+$ docker build --pull --target test -t complexapp-test .
+$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp-test
+```
+
+### Windows using Linux containers
+
+```console
+>docker build --pull --target test -t complexapp-test .
+>docker run --rm -v %cd%/TestResults:/source/tests/TestResults complexapp-test
+```
+
+### Windows using Windows containers
+
+```console
+>docker build --pull --target test -t complexapp-test .
+>docker run --rm -v %cd%/TestResults:c:\source\tests\TestResults complexapp-test
+```
+
+## Running tests while building an image
+
+It is possible to run tests as part of `docker build`. This approach can be useful if you want `docker build` to fail if your tests fail. It is not generally recommended, as will be described later in this section.
+
+This approach is included in the [Dockerfile](Dockerfile), as follows. While this approach is not recommended, it is left uncommented to make it easy to try, as a sample.
 
 ```Dockerfile
-# FROM test
-# RUN dotnet test --logger:trx
+# Comment out test stage if you don't want to run tests as part of docker build
+# Note: test failures will cascade to docker failure (docker build will fail).
+FROM test
+RUN dotnet restore
+RUN dotnet test --no-restore --logger:trx
 ```
 
 You can then run tests using the normal `docker build` pattern, as follows:
@@ -123,84 +203,6 @@ C:\git\dotnet-docker\samples\complexapp>dir TestResults
 ```
 
 There are two problems with this approach. It is cumbersome and if tests fail, it is not possible to copy the logs from the intermediate container layer, since that layer won't exist. This limitation, and the difficulty of copying files out of intermediate layers, demonstrates the weakness of this approach.
-
-## Running tests as an opt-in stage
-
-It is possible to run tests as the `ENTRYPOINT` to an opt-in build stage. The [Dockerfile](complexapp/Dockerfile) includes a `test` stage that demonstrates this pattern.
-
-```Dockerfile
-# test app
-FROM build AS test
-COPY tests/ /source/tests/
-WORKDIR /source/tests
-ENTRYPOINT ["dotnet", "test", "--logger:trx"]
-```
-
-If you build this Dockerfile, you will get a working app in a container, and no tests will be run. The `ENTRYPOINT` that is added by the `test` stage will be overwritten by the final `ENTRYPOINT` in the Dockerfile. The `test` stage costs very little by being present and doesn't singificantly change the behavior of the build if you don't specifically target it.
-
-The primary win of using an opt-in stage is that it enables testing using the same environment as the build as an opt-in scenario and allows volume mounting (which isn't possible with `docker build`) to collect test logs.
-
-The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled:
-
-```console
-C:\git\dotnet-docker\samples\complexapp> docker build --pull --target test -t complexapp-test .
-Sending build context to Docker daemon  12.81MB
-Step 1/15 : FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-3.1: Pulling from dotnet/core/sdk
-Successfully built f98c5453be3d
-Successfully tagged complexapp-test:latest
-SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
-
-C:\git\dotnet-docker\samples\complexapp>mkdir TestResults
-
-C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%/TestResults:/source/tests/TestResults complexapp-test
-Test run for /source/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.1)
-Microsoft (R) Test Execution Command Line Tool Version 16.3.0
-Copyright (c) Microsoft Corporation.  All rights reserved.
-
-Starting test execution, please wait...
-
-A total of 1 test files matched the specified pattern.
-Results File: /source/tests/TestResults/_fd11ea307347_2019-12-19_23_48_20.trx
-
-Test Run Successful.
-Total tests: 2
-     Passed: 2
- Total time: 1.8321 Seconds
-
-C:\git\dotnet-docker\samples\complexapp>dir TestResults
- Volume in drive C is Windows
- Volume Serial Number is 384B-0B6E
-
- Directory of C:\git\dotnet-docker\samples\complexapp\TestResults
-
-12/19/2019  03:48 PM    <DIR>          .
-12/19/2019  03:48 PM    <DIR>          ..
-12/19/2019  03:48 PM             3,635 _fd11ea307347_2019-12-19_23_48_20.trx
-```
-
-The following instructions demonstrate this scenario in various configurations, with logging enabled.
-
-### Linux or macOS
-
-```console
-$ docker build --pull --target test -t complexapp-test .
-$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp-test
-```
-
-### Windows using Linux containers
-
-```console
->docker build --pull --target test -t complexapp-test .
->docker run --rm -v %cd%/TestResults:/source/tests/TestResults complexapp-test
-```
-
-### Windows using Windows containers
-
-```console
->docker build --pull --target test -t complexapp-test .
->docker run --rm -v %cd%/TestResults:c:\source\tests\TestResults complexapp-test
-```
 
 ## Resources
 
