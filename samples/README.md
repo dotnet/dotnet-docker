@@ -16,14 +16,14 @@ The following samples and guidance demonstrate how to use .NET Core and Docker f
 * [Run applications in an SDK container](run-in-sdk-container.md)
 * [Run ASP.NET Core Applications in development with Docker and HTTPS](run-aspnetcore-https-development.md)
 
-## Hosting guidance 
+## Hosting guidance
 
 * [Host ASP.NET Core Images with Docker and HTTPS](host-aspnetcore-https.md)
 * [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
 * [Push Docker Images to Docker Hub](push-image-to-dockerhub.md)
 * [Deploy ASP.NET Core Applications to Azure Container Instances](deploy-container-to-aci.md)
 
-## Sample snippets	
+## Sample snippets
 
 In addition to fully operational sample projects, [code snippets](snippets/) are also provided for demonstrating more specific scenarios.	
 
