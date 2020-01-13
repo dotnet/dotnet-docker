@@ -31,7 +31,7 @@ Note: The output of the commands is intentionally cut-off for purposes of brevit
 
 ### alpine
 
-Licensing information is not present in Alpine images. Licenses are included as part of the Alpine documentation which is not part default Alpine experience. Alpine discusses this in their [package license documentation](https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#license).
+Licensing information is not present in Alpine images. Licenses are included as part of the Alpine documentation which is not part of the default Alpine experience. Alpine discusses this in their [package license documentation](https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#license).
 
 > Because we want to save space and don't like to have licenses all over our system we have decided to include the license in the doc subpackage.
 
