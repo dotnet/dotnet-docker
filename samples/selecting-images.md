@@ -20,7 +20,7 @@ The repos above are commonly used on the command line and in Dockerfiles. There 
 
 ## Tags that work everywhere
 
-Each repo exposes a set of tags you can use. There are a set of version number tags, like `3.1`, that you can use on multiple operating systems and are supported on most processor types (x64, ARM64 and ARM32). If you don't see an operating system or processor type in the tag, you know it's a "multi-arch" tag that will work everywhere. 
+Each repo exposes a set of tags you can use. There are a set of version number tags, like `3.1`, that you can use on multiple operating systems and are supported on most processor types (x64, ARM64 and ARM32). If you don't see an operating system or processor type in the tag, you know it's a "multi-arch" tag that will work everywhere.
 
 When you pull these tags, you will get a Debian image for Linux and Windows Nano Server images on Windows (if you are using Windows containers). If you are happy with that behavior, then these are the easiest tags to use and enable you to write Dockerfiles that can be built on multiple machines. However, the images you produce may differ across environments (which may or may not be what you want).
 
@@ -50,12 +50,11 @@ The following tags demonstrate the pattern used to describe each operating syste
 * `3.1-nanoserver-1909` (Nano Server, version 1909)
 * `3.1-nanoserver-1903` (Nano Server, version 1903)
 * `3.1-nanoserver-1809` (Nano Server, version 1809)
-* `3.1-nanoserver-1803` (Nano Server, version 1803)
 
 For example, the following command will pull an x64 Alpine image:
 
 ```console
-docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1-alpine dotnet
+docker pull mcr.microsoft.com/dotnet/core/runtime:3.1-alpine
 ```
 
 ## Targeting a specific processor type
@@ -72,7 +71,6 @@ The following tags demonstrate the pattern used to describe each processor, usin
 * `3.1-nanoserver-1909`
 * `3.1-nanoserver-1903`
 * `3.1-nanoserver-1809`
-* `3.1-nanoserver-1803`
 
 ### ARM64
 
