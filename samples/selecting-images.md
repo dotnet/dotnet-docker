@@ -2,7 +2,7 @@
 
 There are many .NET Core images that are available that you can use. Some are very general and others are intended to satisfy more specific needs. Together, they satisfy a wide variety of scenarios.
 
-You can use the referenced images and tags with the docker CLI, for example with `docker pull` or `docker run`, or as part of a FROM statement within a Dockerfile.
+You can use the referenced images and tags with the docker CLI, for example with `docker pull`, `docker run`, or as part of a FROM statement within a Dockerfile.
 
 ## Repos
 
@@ -20,7 +20,7 @@ The repos above are commonly used on the command line and in Dockerfiles. There 
 
 ## Tags that work everywhere
 
-Each repo exposes a set of tags you can use. There are a set of version number tags, like `3.1`, that you can use on multiple operating systems and are supported on most processor types (x64, ARM64 and ARM32). If you don't see an operating system or processor type in the tag, you know it's a "multi-arch" tag that will work everywhere.
+Each repo exposes a set of tags you can use. There are a set of version number tags, like `3.1`, that you can use on multiple operating systems and are supported on most processor types (x64, ARM64 and ARM32). If you don't see an operating system or processor type in the tag, you know it's a [multi-platform](https://www.docker.com/blog/docker-official-images-now-multi-platform/) tag that will work everywhere.
 
 When you pull these tags, you will get a Debian image for Linux and Windows Nano Server images on Windows (if you are using Windows containers). If you are happy with that behavior, then these are the easiest tags to use and enable you to write Dockerfiles that can be built on multiple machines. However, the images you produce may differ across environments (which may or may not be what you want).
 
@@ -40,16 +40,19 @@ This will work on all operating systems and on all supported chips, but building
 
 ## Targeting a specific operating system
 
-If you want a specific operating system image, you should use a specific operating system tag. We publish images for Alpine, Debian, Ubuntu and Windows Nano Server. By default, operating system-specific tags will pull x64 images.
+If you want a specific operating system image, you should use a specific operating system tag. We publish images for Alpine, Debian, Ubuntu and Windows Nano Server.
 
 The following tags demonstrate the pattern used to describe each operating system (using .NET Core 3.1 as the example):
 
 * `3.1-alpine` (Alpine 3.10)
 * `3.1-bionic` (Ubuntu 18.04)
 * `3.1-buster` (Debian 10)
+* `3.1-buster-slim` (Debian 10)
 * `3.1-nanoserver-1909` (Nano Server, version 1909)
 * `3.1-nanoserver-1903` (Nano Server, version 1903)
 * `3.1-nanoserver-1809` (Nano Server, version 1809)
+
+> Note: Both `buster` and `buster-slim` tags are used, for .NET Core Debian images. The `buster` base image is used for SDK images and `buster-slim` is used by runtime-related images.
 
 For example, the following command will pull an x64 Alpine image:
 
@@ -59,7 +62,7 @@ docker pull mcr.microsoft.com/dotnet/core/runtime:3.1-alpine
 
 ## Targeting a specific processor type
 
-If you want an image of a specific processor type, you should use a specific processor architecture tag. We publish tags for x64, ARM64 and ARM32.
+If you want an image of a specific processor type, you should use a specific processor architecture tag. We publish tags for x64, ARM64 and ARM32. Tags without an architecture suffix are for x64 images.
 
 The following tags demonstrate the pattern used to describe each processor, using the same operating systems listed above.
 
@@ -68,6 +71,7 @@ The following tags demonstrate the pattern used to describe each processor, usin
 * `3.1-alpine`
 * `3.1-bionic`
 * `3.1-buster`
+* `3.1-buster-slim`
 * `3.1-nanoserver-1909`
 * `3.1-nanoserver-1903`
 * `3.1-nanoserver-1809`
@@ -77,10 +81,12 @@ The following tags demonstrate the pattern used to describe each processor, usin
 * `3.1-alpine-arm64v8`
 * `3.1-bionic-arm64v8`
 * `3.1-buster-arm64v8`
+* `3.1-buster-slim-arm64v8`
 
 ### ARM32
 
 * `3.1-alpine-arm32v7`
 * `3.1-bionic-arm32v7`
 * `3.1-buster-arm32v7`
+* `3.1-buster-slim-arm32v7`
 * `3.1-nanoserver-1809-arm32v7`
