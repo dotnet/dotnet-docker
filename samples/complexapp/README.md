@@ -45,6 +45,8 @@ There are two primary ways to test within the workflow of an application contain
 
 This is different than running tests within a [.NET Core SDK container](../run-tests-in-sdk-container.md), which establishes a generic environment (which also works well). The rest of this document is focused on running tests within the same container environment as the application.
 
+> Note: See [Establishing docker environment](establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
+
 ## Running tests as an opt-in stage
 
 There are multiple approaches for testing with containers, such as the `ENTRYPOINT` of an opt-in stage (covered in this section) or as part of `docker build` (covered in the next section). The opt-in test stage approach covered in this section is the recommended approach because it is more flexible.

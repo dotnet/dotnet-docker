@@ -43,6 +43,8 @@ In production, you will typically start your container with `docker run -d`. Thi
 
 We recommend that you do not use `--rm` in production. It cleans up container resources, preventing you from collecting logs that may have been captured in a container that has either stopped or crashed.
 
+> Note: See [Establishing docker environment](establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
+
 ## Build an image for Windows Nano Server
 
 The following example demonstrates targeting Windows Nano Server (x64) explicitly (you must have [Windows containers enabled](https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers)):

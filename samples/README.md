@@ -26,10 +26,10 @@ The following samples and guidance demonstrate how to use .NET Core and Docker f
 
 ## Sample snippets
 
-In addition to fully operational sample projects, [code snippets](snippets/) are also provided for demonstrating more specific scenarios.	
+In addition to fully operational sample projects, [code snippets](snippets/) are also provided for demonstrating more specific scenarios.
 
-* [Managing NuGet Credentials in Docker Scenarios](snippets/nuget-credentials.md)	
-* [Installing .NET Core in a Dockerfile](installing-dotnet.md)	
+* [Managing NuGet Credentials in Docker Scenarios](snippets/nuget-credentials.md)
+* [Installing .NET Core in a Dockerfile](installing-dotnet.md)
 * [Using the System.Drawing.Common Package in a Docker Container](using-system-drawing-common.md)
 
 ## Try pre-built images
