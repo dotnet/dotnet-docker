@@ -267,6 +267,23 @@ Other potentially useful URLs:
 
 ...
 
+### Pedigree Details for Base Images used by .NET Core Images
+
+The following list provides the pedigree detail links for the .NET Core base images.
+
+* [alpine](https://hub.docker.com/_/alpine)
+  * [local](https://github.com/docker-library/repo-info/blob/master/repos/alpine/local/)
+  * [remote](https://github.com/docker-library/repo-info/blob/master/repos/alpine/remote/)
+* [debian](https://hub.docker.com/_/debian)
+  * [local](https://github.com/docker-library/repo-info/blob/master/repos/debian/local/)
+  * [remote](https://github.com/docker-library/repo-info/blob/master/repos/debian/remote/)
+* [ubuntu](https://hub.docker.com/_/ubuntu)
+  * [local](https://github.com/docker-library/repo-info/blob/master/repos/ubuntu/local/)
+  * [remote](https://github.com/docker-library/repo-info/blob/master/repos/ubuntu/remote/)
+* [buildpack-deps](https://hub.docker.com/_/buildpack-deps)
+  * [local](https://github.com/docker-library/repo-info/blob/master/repos/buildpack-deps/local/)
+  * [remote](https://github.com/docker-library/repo-info/blob/master/repos/buildpack-deps/remote/)
+
 ## Packages
 
 .NET Core images install a set of packages (from the associated package manager for the distro).
