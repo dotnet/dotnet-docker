@@ -87,7 +87,7 @@ $ docker run --rm debian:buster-slim find . | grep copyright
 You can then print any of these copyright files, as demonstrated below:
 
 ```console
-> docker run --rm debian:buster-slim cat ./usr/share/doc/apt/copyright
+$ docker run --rm debian:buster-slim cat ./usr/share/doc/apt/copyright
 Apt is copyright 1997, 1998, 1999 Jason Gunthorpe and others.
 Apt is currently developed by APT Development Team <deity@lists.debian.org>.
 
@@ -117,7 +117,7 @@ of the GNU General Public License.
 Licensing information is present in Ubuntu images, as is demonstrated below.
 
 ```console
-> docker run --rm ubuntu:bionic find . | grep copyright
+$ docker run --rm ubuntu:bionic find . | grep copyright
 ./usr/share/doc/libpam-runtime/copyright
 ./usr/share/doc/sensible-utils/copyright
 ./usr/share/doc/libss2/copyright
@@ -133,7 +133,7 @@ Licensing information is present in Ubuntu images, as is demonstrated below.
 You can then print any of these copyright files, as demonstrated below:
 
 ```console
-> docker run --rm ubuntu:bionic cat ./usr/share/doc/apt/copyright
+$ docker run --rm ubuntu:bionic cat ./usr/share/doc/apt/copyright
 Apt is copyright 1997, 1998, 1999 Jason Gunthorpe and others.
 Apt is currently developed by APT Development Team <deity@lists.debian.org>.
 
@@ -328,7 +328,7 @@ $ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim fin
 You can then print any of these copyright files, as demonstrated below:
 
 ```console
-> docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim cat ./usr/share/doc/ca-certificates/copyright
+$ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim cat ./usr/share/doc/ca-certificates/copyright
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Source: http://ftp.debian.org/debian/pool/main/c/ca-certificates/
 
