@@ -1,4 +1,4 @@
-# Run applications in as .NET Core SDK container
+# Run applications in a .NET Core SDK container
 
 You can use containers to establish a .NET Core development environment with only Docker and an editor. The environment can be made to match your local machine, production or both.
 

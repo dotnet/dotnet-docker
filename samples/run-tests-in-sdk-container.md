@@ -6,7 +6,7 @@ You can use Docker to run your unit tests in an isolated environment using the [
 
 This document uses the [tests](complexapp/tests) that are part of [complexapp](complexapp). The instructions assume that you are in the [complexapp](complexapp) directory.
 
-The following examples demonstrate using `dotnet test` in a .NET Core SDK container. It builds tests and dependent projects from source and then tests them. You have to re-launch the container every time you want to test source code changes.
+The following examples demonstrate using `dotnet test` in a .NET Core SDK container. It builds tests and dependent projects from source and then runs them. You have to re-launch the container every time you want to test source code changes.
 
 Alternatively, you can use `dotnet watch test`. This command reruns tests within a running container, with every local code change.
 
@@ -44,7 +44,7 @@ Total tests: 2
 
 In this example, the tests (and any other required code) are [volume mounted](https://docs.docker.com/engine/admin/volumes/volumes/) into the countainer, and `dotnet test` is run from the `tests` directory (`-w` sets the working directory). Test results can be read from the console or from logs, which can be written to disk with the `--logger:trx` flag.
 
-You should find a `.trx` file in the TestResults folder. You can open this file in Visual Studio to see the results of the test run, as you can see in the following image. You can open in Visual Studio (File -> Open -> File) or double-click on the TRX file (if you have Visual Studio installed). There are other TRX file viewers available as well that you can search for.
+When the `--logger:trx` flag is used, you should find a `.trx` file in the TestResults folder. You can open this file in Visual Studio to see the results of the test run, as you can see in the following image. You can open in Visual Studio (File -> Open -> File) or double-click on the TRX file (if you have Visual Studio installed). There are other TRX file viewers available as well that you can search for.
 
 ![Visual Studio Test Results](https://user-images.githubusercontent.com/2608468/35361940-2f5ab914-0118-11e8-9c40-4f252f4568f0.png)
 

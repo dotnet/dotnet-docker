@@ -1,6 +1,6 @@
 # Selecting .NET Core container images
 
-There are many .NET Core images that are available that you can use. Some are very general and others are intended to satisy more specific needs. Together, they satisfy a wide variety of scenarios.
+There are many .NET Core images that are available that you can use. Some are very general and others are intended to satisfy more specific needs. Together, they satisfy a wide variety of scenarios.
 
 You can use the referenced images and tags with the docker CLI, for example with `docker pull` or `docker run`, or as part of a FROM statement within a Dockerfile.
 
@@ -8,14 +8,14 @@ You can use the referenced images and tags with the docker CLI, for example with
 
 There are multiple [.NET Core Docker repos](https://hub.docker.com/_/microsoft-dotnet-core) that expose various layers of the .NET Core platform.
 
-* [dotnet/core/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps/) -- Linux-only images that contains the package manager dependencies of .NET Core. Best used for self-contained applications.
+* [dotnet/core/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps/) -- Linux-only images that contains the native dependencies of .NET Core. Best used for self-contained applications.
 * [dotnet/core/runtime](https://hub.docker.com/_/microsoft-dotnet-core-runtime/) -- Images that contains the .NET Core runtime. Best used for console applications. On Linux, depends on the `runtime-deps` image.
-* [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/) -- Images that contains the ASP.NET Core runtime. Best used for web aplications and services. Depends on the `runtime` image.
+* [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/) -- Images that contains the ASP.NET Core runtime. Best used for web applications and services. Depends on the `runtime` image.
 * [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) -- An image that contains the .NET Core SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/core/aspnet] for Alpine and on [nanoserver](https://hub.docker.com/_/microsoft-windows-nanoserver) for Windows.
 
 The repos above are commonly used on the command line and in Dockerfiles. There are two more repos that may be useful to you:
 
-* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly) -- A duplicate structure of repos for nightly images (which are not supported in production).
+* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly) -- A duplicate structure of repos which contain the latest pre-released versions of .NET Core. (which are not supported in production).
 * [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples) -- A set of samples that demonstrate .NET Core being used in console and web scenarios.
 
 ## Tags that work everywhere
@@ -47,7 +47,7 @@ The following tags demonstrate the pattern used to describe each operating syste
 * `3.1-alpine` (Alpine 3.10)
 * `3.1-bionic` (Ubuntu 18.04)
 * `3.1-buster` (Debian 10)
-* `3.1-nanoserver-1910` (Nano Server, version 1910)
+* `3.1-nanoserver-1909` (Nano Server, version 1909)
 * `3.1-nanoserver-1903` (Nano Server, version 1903)
 * `3.1-nanoserver-1809` (Nano Server, version 1809)
 * `3.1-nanoserver-1803` (Nano Server, version 1803)
@@ -69,7 +69,7 @@ The following tags demonstrate the pattern used to describe each processor, usin
 * `3.1-alpine`
 * `3.1-bionic`
 * `3.1-buster`
-* `3.1-nanoserver-1910`
+* `3.1-nanoserver-1909`
 * `3.1-nanoserver-1903`
 * `3.1-nanoserver-1809`
 * `3.1-nanoserver-1803`
