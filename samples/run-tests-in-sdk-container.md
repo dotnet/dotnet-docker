@@ -22,6 +22,8 @@ Container scenarios that use volume mounting can produce conflicts between the `
 curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-docker/master/samples/Directory.Build.props
 ```
 
+Note: You may need to remove `bin` and `obj` directories if you run these instructions on Windows in both Windows and Linux container modes.
+
 ## Running tests
 
 The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following pattern, with `docker run` and volume mounting.  This initial example is demonstrated on Windows (in Linux container mode). Instructions for all OSes follow.
