@@ -445,7 +445,7 @@ The [ASP.NET image](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/) incl
 
 The [SDK image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) includes the .NET Core SDK, which includes various .NET Core components, with associated licenses and third party notice files.
 
-Note: The SDK image is based on [`buildpack-deps`](https://hub.docker.com/_/buildpack-deps), which includes components that we distribute but not use (like Python).
+Note: The SDK image is based on [`buildpack-deps`](https://hub.docker.com/_/buildpack-deps), which includes components that we distribute but do not use (like Python).
 
 ```console
 $ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find ./usr/share/dotnet ./usr/share/powershell | grep LICENSE
