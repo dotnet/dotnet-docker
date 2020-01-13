@@ -132,17 +132,15 @@ $ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp-tes
 
 It is possible to run tests as part of `docker build`. This approach can be useful if you want `docker build` to fail if your tests fail. It is not generally recommended, as will be described later in this section.
 
-This approach is included in the [Dockerfile](Dockerfile), as follows. While this approach is not recommended, it is left uncommented to make it easy to try, as a sample.
+This approach is can be implemented by the following pattern. It is not included in the sample Dockerfile because it is not the recommended approach
 
 ```Dockerfile
-# Comment out test stage if you don't want to run tests as part of docker build
-# Note: test failures will cascade to docker failure (docker build will fail).
-FROM test
+WORKDIR /source/tests
 RUN dotnet restore
 RUN dotnet test --no-restore --logger:trx
 ```
 
-You can then run tests using the normal `docker build` pattern, as follows:
+The following example demonstrates this pattern, as if it was part of [Dockerfile](Dockerfile). You would then be able run tests using the normal `docker build` pattern, as follows:
 
 ```console
 docker build --pull -t complexapp .
