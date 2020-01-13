@@ -269,7 +269,7 @@ Other potentially useful URLs:
 
 ### Pedigree Details for Base Images used by .NET Core Images
 
-The following links provide the pedigree details for the .NET Core linux base images.
+The following links provide the pedigree details for the .NET Core Linux base images.
 
 * [alpine](https://hub.docker.com/_/alpine)
   * [local](https://github.com/docker-library/repo-info/blob/master/repos/alpine/local/)
