@@ -14,7 +14,7 @@ This document describes the licensing and source pedigree of the following compo
 
 ## Base Images used by .NET Core Images
 
-.NET Core images are provided for a set of Linux distros, delivered via [MCR](https://azure.microsoft.com/blog/microsoft-syndicates-container-catalog/) (and advertised on Docker Hub). The Linux distros are acquired from Docker Hub as part of building the .NET Core images. The following base images are delivered as a component of .NET Core images.
+.NET Core images are provided for a set of Linux distros, delivered via [MCR](https://azure.microsoft.com/blog/microsoft-syndicates-container-catalog/) (and advertised on Docker Hub). The Linux distros are acquired from Docker Hub as part of building the .NET Core images. The following base images are delivered as a component of .NET Core images:
 
 * [alpine](https://hub.docker.com/_/alpine)
 * [debian](https://hub.docker.com/_/debian)
