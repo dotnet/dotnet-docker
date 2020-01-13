@@ -6,10 +6,6 @@ WORKDIR /source
 COPY *.csproj .
 RUN dotnet restore -r win-x64
 
-# Trigger registry hive creation to workaround intermittent Windows arm Docker issue
-# https://github.com/dotnet/dotnet-docker/issues/1054
-USER ContainerAdministrator
-
 # copy and publish app and libraries
 COPY . .
 RUN dotnet publish -c release -o /app -r win-x64 --no-restore
