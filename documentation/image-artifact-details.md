@@ -2,7 +2,7 @@
 
 .NET Core container images contain multiple software components, each built from different source and with different licensing. It is important that users of these images can determine the license requirements of these images and have a link back to the source for pedigree purposes.
 
-This document is intended to be informative, primarily defining patterns for discovering license and pedigree information and describing expectations (whether the desired information can be found). It does not list all of the license and pedigree information you might want. This information can change at any time, which also demonstrates why using the documented patterns is important.
+This document is intended to be informative, primarily defining patterns for discovering license and pedigree information and describing expectations (whether the desired information can be found within the images). It does not list all of the license and pedigree information you might want. This information can change at any time, which also demonstrates why using the documented patterns is important.
 
 The combination of [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) and [.NET Core container images](https://hub.docker.com/_/microsoft-dotnet-core/) are the source and binary artifacts that are used in this document and intended to be used to determine the compliance of .NET Core containers.
 
@@ -173,7 +173,7 @@ of the GNU General Public License.
   * inspected from the image on-disk after it is pulled
   * installed packages, creation date, architecture, environment variables, detected licenses, etc.
 
-An abbreviated copy of the ["extended information" for the Debian repo](https://github.com/docker-library/repo-info/tree/master/repos/debian) for the `debian:buster-slim` image is included below, first the [remote](https://github.com/docker-library/repo-info/blob/master/repos/debian/remote/buster-slim.md) and then the [local](https://github.com/docker-library/repo-info/blob/master/repos/debian/local/buster-slim.md) information.
+An abbreviated copy of the "extended information" for the `debian:buster-slim` image is included below, first the [remote](https://github.com/docker-library/repo-info/blob/master/repos/debian/remote/buster-slim.md) and then the [local](https://github.com/docker-library/repo-info/blob/master/repos/debian/local/buster-slim.md) information.
 
 ### `debian:buster-slim` (remote)
 
@@ -269,7 +269,7 @@ Other potentially useful URLs:
 
 ### Pedigree Details for Base Images used by .NET Core Images
 
-The following list provides the pedigree detail links for the .NET Core base images.
+The following links provide the pedigree details for the .NET Core linux base images.
 
 * [alpine](https://hub.docker.com/_/alpine)
   * [local](https://github.com/docker-library/repo-info/blob/master/repos/alpine/local/)
@@ -288,7 +288,7 @@ The following list provides the pedigree detail links for the .NET Core base ima
 
 .NET Core images install a set of packages (from the associated package manager for the distro).
 
-You can see an example of these packages in this Dockerfile, which is copied below (see `RUN apt-get` instruction).
+You can see an example of these packages in this [runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps) Dockerfile, which is copied below (see `RUN apt-get` instruction).
 
 ```Dockerfile
 FROM debian:buster-slim
@@ -313,7 +313,7 @@ ENV ASPNETCORE_URLS=http://+:80 \
     DOTNET_RUNNING_IN_CONTAINER=true
 ```
 
-The pattern for [Retrieving License Information From Base Images](#retrieving-license-information-from-base-images) can be repeated for packages that are added in .NET Core images (above and beyond the base image). The first package listed in the Dockerfile is `ca-certificates`, which will be used to demonstrate the pattern. The referenced Dockerfile is for an image in the [runtime-deps repo](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps), as you will see demonstrated in the example below.
+The pattern for [Retrieving License Information From Base Images](#retrieving-license-information-from-base-images) can be repeated for packages that are added in .NET Core images (above and beyond the base image). The first package listed in the Dockerfile is `ca-certificates`, which will be used to demonstrate the pattern below.
 
 There is no guarantee that the requested package is not present in the base image, but it typically will not be (hence why it is explicitly installed), as is demonstrated below.
 
@@ -370,7 +370,7 @@ $ docker run -it --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim
 ca-certificates/now 20190110 all [installed,local]
 ```
 
-The source for a particular version of a package can be retrieved with the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) command. This example simply prints the uris of where to retrieve the source from.
+The source for a particular version of a package can be retrieved with the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) command. This example simply prints the source uris.
 
 ```console
 $ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim sh -c "find /etc/apt/sources.list* -type f -exec sed -i -e 'p; s/^deb /deb-src /' '{}' + && apt-get update -qq && apt-get source -qq --print-uris ca-certificates=20190110"
@@ -398,7 +398,7 @@ You can discover the licenses for these components using the following pattern.
 The [.NET Core runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/) includes the .NET Core runtime, with an associated license and third party notice file.
 
 ```console
-$ docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim find . | grep LICENSE
+$ docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim find ./usr/share/dotnet | grep LICENSE
 ./usr/share/dotnet/LICENSE.txt
 ```
 
@@ -425,7 +425,7 @@ furnished to do so, subject to the following conditions:
 Third party notices can also be found, as demonstrated below.
 
 ```console
-$ docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim find . | grep -i third
+$ docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim find ./usr/share/dotnet | grep -i third
 ./usr/share/dotnet/ThirdPartyNotices.txt
 ```
 
@@ -434,9 +434,9 @@ $ docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim find . |
 The [ASP.NET image](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/) includes ASP.NET Core in addition to .NET Core, with associated licenses and third party notice files.
 
 ```console
-% docker run --rm mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim find . | grep LICENSE
+% docker run --rm mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim find ./usr/share/dotnet | grep LICENSE
 ./usr/share/dotnet/LICENSE.txt
-% docker run --rm mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim find . | grep -i third
+% docker run --rm mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim find ./usr/share/dotnet | grep -i third
 ./usr/share/dotnet/ThirdPartyNotices.txt
 ./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.0/THIRD-PARTY-NOTICES.txt
 ```
