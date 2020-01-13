@@ -60,9 +60,9 @@ This Dockerfile copies and restores the project file as the first step so that t
 
 .NET Core multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `3.1`, as opposed to a distro-specific tag like `3.1-alpine`.
 
-This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. Docker makes it easy to use alternate Dockfiles by using the `-f` argument.
+This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. Docker makes it easy to use alternate Dockerfiles by using the `-f` argument.
 
-The following example demonstrates targeting distros explictly and also shows the size differences between the distros. Tags are added to the image name to differentiate the images.
+The following example demonstrates targeting distros explicitly and also shows the size differences between the distros. Tags are added to the image name to differentiate the images.
 
 ```console
 docker build --pull -t dotnetapp:debian -f Dockerfile.debian-x64 .
