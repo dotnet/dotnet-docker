@@ -2,7 +2,7 @@
 
 Docker establishes a virtualized environment that separates the guest (the container) from the host (your computer or production server). This separation is the definition of virtualization. When you establish a docker environment, you specify the settings and files from the host that you want the guest to have access to.
 
-Programming environments, like .NET, have affordances for looking for assets and settings in multiple locations. They also may look at multiple types of files (like `.sln`, `.cs` and `.csproj` files). These locations and file types will not naturally be accessible from within a Docker environment. When you define a docker environment, you need to be intentionally specify all the files, locations and settings that are required for the operation and outcome you want.
+Programming environments, like .NET, have affordances for looking for assets and settings in multiple locations. They also may look at multiple types of files (like `.sln`, `.cs` and `.csproj` files). These locations and file types will not naturally be accessible from within a Docker environment. When you define a docker environment, you need to intentionally specify all the files, locations and settings that are required for the operation and outcome you want.
 
 The remainder of this document will consider the various configuration options used by [.NET Core samples](README.md).
 

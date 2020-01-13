@@ -134,7 +134,7 @@ $ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp-tes
 
 It is possible to run tests as part of `docker build`. This approach can be useful if you want `docker build` to fail if your tests fail. It is not generally recommended, as will be described later in this section.
 
-This approach is can be implemented by the following pattern. It is not included in the sample Dockerfile because it is not the recommended approach
+This approach can be implemented by the following pattern. It is not included in the sample Dockerfile because it is not the recommended approach.
 
 ```Dockerfile
 WORKDIR /source/tests
