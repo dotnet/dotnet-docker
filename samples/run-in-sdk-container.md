@@ -20,7 +20,7 @@ curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-do
 
 ## Console app
 
-The following example demonstrates using `dotnet watch run` with a console app in a .NET Core SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
+The following example demonstrates using `dotnet run` with a console app in a .NET Core SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
 
 The instructions assume you are in the `samples/dotnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax).
 
@@ -95,9 +95,9 @@ docker run --rm -it -v %cd%:c:\app\ -w \app mcr.microsoft.com/dotnet/core/sdk:3.
 
 ## ASP.NET Core App
 
-The following example demonstrates using `dotnet watch run` with an ASP.NET Core app in a .NET Core SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
+The following example demonstrates using `dotnet run` with an ASP.NET Core app in a .NET Core SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
 
-The instructions assume you are in the `samples/aspnetapp/aspnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax).
+The instructions assume you are in the `samples/aspnetapp/aspnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax used).
 
 ```console
 % docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
@@ -112,7 +112,7 @@ info: Microsoft.Hosting.Lifetime[0]
       Content root path: /app
 ```
 
-You can test this working by editing one of the [source files](aspnetapp/aspnetapp). If you make an observable change, you will see it. If you make a syntax error, you will see compiler errors.
+You can use CTRL-C to terminate `dotnet run`. After the application starts, navigate to `http://localhost:8000` in your web browser.
 
 Note: This example (and those in the instructions that follow) configure ASP.NET Core via environment variables and disable the use of a launch profile (none of the launch profiles are compatible with this scenario). Instructions are provided later in this document that add and use a new launch profile, which removes the need for specifying environment variables with the Docker CLI.
 
@@ -130,27 +130,17 @@ docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http:/
 docker run --rm -it -p 8000:80 -v %cd%:/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
 ```
 
-You can use CTRL-C to terminate `dotnet watch`. Navigate to the site at `http://localhost:8000` in your browser.
-
 ### Windows using Windows containers
 
 ```console
 docker run --rm -it -p 8000:80 -v %cd%:C:\app\ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
 ```
 
-You can use CTRL-C to terminate `dotnet watch`.
-
-After the application starts, navigate to `http://localhost:8000` in your web browser. On Windows, you may need to navigate to the container via IP address. See [ASP.NET Core apps in Windows Containers](aspnetcore-docker-windows.md) for instructions on determining the IP address, using the value of `--name` that you used in `docker run`.
-
 ### Using a launch profile to configure ASP.NET Core
 
-The examples above use environment variables to configure ASP.NET Core. You can instead [configure ASP.NET Core with a launchSettings.json file](https://docs.microsoft.com/aspnet/core/fundamentals/environments). The [launchSettings.json file](aspnetapp/aspnetapp/Properties/launchSettings.json) in this app has been updated with a `container` profile that can be used instead of specifying environment variables with the docker CLI. You can see this profile used in the following example:
+The examples above use environment variables to configure ASP.NET Core. You can instead [configure ASP.NET Core with a launchSettings.json file](https://docs.microsoft.com/aspnet/core/fundamentals/environments). The [launchSettings.json file](aspnetapp/aspnetapp/Properties/launchSettings.json) in this app has been updated with a `container` profile that can be used instead of specifying environment variables with the docker CLI.
 
-```console
-% docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
-```
-
-The following JSON segment shows the `container` profile that was added to enable the previous command.
+The following JSON segment shows the `container` profile that was added to enable this workflow.
 
 ```json
 "container": {
@@ -160,6 +150,27 @@ The following JSON segment shows the `container` profile that was added to enabl
   "environmentVariables": {
     "ASPNETCORE_ENVIRONMENT": "Development"
   }
+}
+```
+
+The following instructions demonstrate this scenario in various environments:
+
+### Linux or macOS
+
+```console
+docker run --rm -it -p 8000:80 -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
+```
+
+### Windows using Linux containers
+
+```console
+docker run --rm -it -p 8000:80 -v %cd%:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
+```
+
+### Windows using Windows containers
+
+```console
+docker run --rm -it -p 8000:80 -v %cd%:C:\app -w C:\app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
 ```
 
 ## More Samples
