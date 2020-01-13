@@ -31,12 +31,39 @@ Note: The output of the commands is intentionally cut-off for purposes of brevit
 
 ### alpine
 
-Licensing information is not present in Alpine images, as is demonstrated below. The `-c` grep argument displays the number of copyrights found.
+Licensing information is not present in Alpine images. Licenses are included as part of the Alpine documentation which is not part default Alpine experience. Alpine discusses this in their [package license documentation](https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#license).
+
+> Because we want to save space and don't like to have licenses all over our system we have decided to include the license in the doc subpackage.
+
+There are two options for retrieving the license information for the Alpine images. You can add the `doc` subpackages as referenced above or you can lookup the license information on the [alpine package website](https://pkgs.alpinelinux.org/packages). Not all packages have doc subpackages therefore the recommended solution is to lookup the license information. To do this, you must first retrieve a list of the packages installed within the Alpine images, as demonstrated below.
 
 ```console
-$ docker run --rm alpine:3.11 find . | grep -c copyright
-0
+$ docker run --rm alpine:3.11 apk list -I
+musl-1.1.24-r0 x86_64 {musl} (MIT) [installed]
+WARNING: Ignoring APKINDEX.70f61090.tar.gz: No such file or directory
+WARNING: Ignoring APKINDEX.ca2fea5b.tar.gz: No such file or directory
+zlib-1.2.11-r3 x86_64 {zlib} (Zlib) [installed]
+apk-tools-2.10.4-r3 x86_64 {apk-tools} (GPL2) [installed]
+musl-utils-1.1.24-r0 x86_64 {musl} (MIT BSD GPL2+) [installed]
+libssl1.1-1.1.1d-r2 x86_64 {openssl} (OpenSSL) [installed]
+alpine-baselayout-3.2.0-r3 x86_64 {alpine-baselayout} (GPL-2.0-only) [installed]
+alpine-keys-2.1-r2 x86_64 {alpine-keys} (MIT) [installed]
+busybox-1.31.1-r8 x86_64 {busybox} (GPL-2.0-only) [installed]
+scanelf-1.2.4-r0 x86_64 {pax-utils} (GPL-2.0-only) [installed]
+libc-utils-0.7.2-r0 x86_64 {libc-dev} (BSD) [installed]
+libtls-standalone-2.9.1-r0 x86_64 {libtls-standalone} (ISC) [installed]
+ssl_client-1.31.1-r8 x86_64 {busybox} (GPL-2.0-only) [installed]
+ca-certificates-cacert-20191127-r0 x86_64 {ca-certificates} (MPL-2.0 GPL-2.0-or-later) [installed]
+libcrypto1.1-1.1.1d-r2 x86_64 {openssl} (OpenSSL) [installed]
 ```
+
+You can lookup the individual package information from the [alpine package website](https://pkgs.alpinelinux.org/packages) by entering the package name, branch (which corresponds to the Alpine version), and architecture. Finding the [information for the `zlib` package](https://pkgs.alpinelinux.org/packages?name=zlib&branch=v3.11&repo=main&arch=x86) is demonstrated below.
+
+![zlib package search results](./image-artifact-details-alpine-package-search.png)
+
+Navigating the [Package link](https://pkgs.alpinelinux.org/package/v3.11/main/x86/zlib) will show the detailed package information such as the license and originating source.
+
+![zlib package information](./image-artifact-details-alpine-package-details.png)
 
 ### debian
 
@@ -281,13 +308,6 @@ $ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim fin
 ./usr/share/doc/ca-certificates/examples/ca-certificates-local/debian/copyright
 ```
 
-This pattern can be replicated for all `debian` and `ubuntu` based images. It will not work for `alpine` images as demonstrated below, because they do not carry license information.
-
-```console
-$ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-alpine3.10 find . | grep copyright | grep -c ca-certificates
-0
-```
-
 You can then print any of these copyright files, as demonstrated below:
 
 ```console
@@ -325,6 +345,8 @@ License: GPL-2+
 
 ...
 ```
+
+This pattern can be replicated for all `debian` and `ubuntu` based images. It will not work for `alpine` based images because they do not carry license information.  Instead you must lookup the package license and originating source as described in the [Alpine subsection](#alpine) of [Retrieving License Information From Base Images](#retrieving-license-information-from-base-images)
 
 ## .NET Core and Other Components
 
