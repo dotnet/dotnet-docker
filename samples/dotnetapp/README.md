@@ -185,7 +185,7 @@ You can build ARM32 and ARM64 images on x64 machines, but you will not be able t
 
 ## Build an image optimized for startup performance
 
-You can improve startup performance by using [Ready to Run (R2R) compilation](https://github.com/dotnet/runtime/blob/master/docs/design/coreclr/botr/readytorun-overview.md) for your application. You can do this by setting the `PublishReadyToRun` property, which will result in your application being compiled to native code when you publish it. This is what the `-trim` samples do (they are explained shortly). 
+You can improve startup performance by using [Ready to Run (R2R) compilation](https://github.com/dotnet/runtime/blob/master/docs/design/coreclr/botr/readytorun-overview.md) for your application. You can do this by setting the `PublishReadyToRun` property, which will result in your application being compiled to native code when you publish it. This is what the `-slim` samples do (they are explained shortly). 
 
 You can add the `PublishReadyToRun` property in two ways:
 
@@ -200,7 +200,7 @@ You may want to build a .NET Core image that is optimized for size. You can do t
 
 The following instructions are for x64 only, but can be straightforwardly adapted for use with ARM architectures.
 
-There are a set of `-trim` Dockerfiles included with this sample that are opted into the following .NET Core SDK publish operations:
+There are a set of `-slim` Dockerfiles included with this sample that are opted into the following .NET Core SDK publish operations:
 
 * **Self-contained deployment** -- Publish .NET Core runtime(s) with the application.
 * **Assembly linking** -- Trim assemblies, including in the .NET Core framework, to make the application smaller.
@@ -211,30 +211,30 @@ You are encouraged to experiment with these options if you want to see which com
 The following instructions demonstrate how to build the `trim` Dockerfiles:
 
 ```console
-docker build --pull -t dotnetapp:debian-trim -f Dockerfile.debian-x64-trim .
-docker build --pull -t dotnetapp:ubuntu-trim -f Dockerfile.ubuntu-x64-trim .
-docker build --pull -t dotnetapp:alpine-trim -f Dockerfile.alpine-x64-trim .
+docker build --pull -t dotnetapp:debian-slim -f Dockerfile.debian-x64-slim .
+docker build --pull -t dotnetapp:ubuntu-slim -f Dockerfile.ubuntu-x64-slim .
+docker build --pull -t dotnetapp:alpine-slim -f Dockerfile.alpine-x64-slim .
 ```
 
 It is easy to run them all:
 
 ```console
-docker run --rm dotnetapp:debian-trim
-docker run --rm dotnetapp:ubuntu-trim
-docker run --rm dotnetapp:alpine-trim
+docker run --rm dotnetapp:debian-slim
+docker run --rm dotnetapp:ubuntu-slim
+docker run --rm dotnetapp:alpine-slim
 ```
 
 You can then compare sizes between using a shared layer and optimizing for size using the `docker images` command again. The command below uses `grep`. `findstr` on Windows works equally well.
 
 ```console
 % docker images dotnetapp | grep alpine
-dotnetapp           alpine-trim      9d23e22d7229        About a minute ago   46.3MB
+dotnetapp           alpine-slim      9d23e22d7229        About a minute ago   46.3MB
 dotnetapp           alpine              8933fb9821e8        About an hour ago    87MB
 % docker images dotnetapp | grep ubuntu
-dotnetapp           ubuntu-trim      fe292390c5fb        52 minutes ago      140MB
+dotnetapp           ubuntu-slim      fe292390c5fb        52 minutes ago      140MB
 dotnetapp           ubuntu              373df08a06ec        59 minutes ago      187MB
 % docker images dotnetapp | grep debian
-dotnetapp           debian-trim      41e834fe89e2        52 minutes ago      147MB
+dotnetapp           debian-slim      41e834fe89e2        52 minutes ago      147MB
 dotnetapp           debian              229dd121a96b        59 minutes ago      190MB
 ```
 
@@ -243,7 +243,7 @@ Note: These image sizes are all uncompressed, on-disk sizes. When you pull an im
 You can do the same thing with Windows Nano Server, as follows:
 
 ```console
-docker build --pull -t dotnetapp:nanoserver-trim -f Dockerfile.nanoserver-x64-trim .
+docker build --pull -t dotnetapp:nanoserver-slim -f Dockerfile.nanoserver-x64-slim .
 docker images dotnetapp | findstr nanoserver
 ```
 

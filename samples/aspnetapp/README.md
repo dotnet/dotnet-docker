@@ -33,9 +33,9 @@ Now listening on: http://[::]:80
 Application started. Press Ctrl+C to shut down.
 ```
 
-After the application starts, navigate to `http://localhost:8000` in your web browser. 
+After the application starts, navigate to `http://localhost:8000` in your web browser.
 
-Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on commandline parameters. In some cases, you might see an error because the host port you select is already in use. Choose a different port in that case.
+Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on command-line parameters. In some cases, you might see an error because the host port you select is already in use. Choose a different port in that case.
 
 You can also view the ASP.NET Core site running in the container on another machine. This is particularly useful if you are wanting to view an application running on an ARM device like a Raspberry Pi on your network. In that scenario, you might view the site at a local IP address such as `http://192.168.1.18:8000`.
 
@@ -69,7 +69,7 @@ aspnetapp           nanoserver          d4b7586827f2        About an hour ago   
 
 This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. The [.NET Core Docker Sample](../dotnetapp/README.md) demonstrates targeting a larger set of distros.
 
-The following example demonstrates targeting distros explictly and also shows the size differences between the distros. Tags are added to the image name to differentiate the images.
+The following example demonstrates targeting distros explicitly and also shows the size differences between the distros. Tags are added to the image name to differentiate the images.
 
 On Linux:
 
@@ -106,7 +106,7 @@ By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `
 
 Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
 
-The following example demonstrates targeting architectures explictly on Linux, for ARM32 and ARM64.
+The following example demonstrates targeting architectures explicitly on Linux, for ARM32 and ARM64.
 
 ```console
 docker build --pull -t aspnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
@@ -142,7 +142,7 @@ You won't be able to run .NET Core ARM64 images on x64 machines. Docker relies o
 
 ## Optimizing for startup performance
 
-You can improve startup performance by using [Ready to Run (R2R) compilation](https://github.com/dotnet/runtime/blob/master/docs/design/coreclr/botr/readytorun-overview.md) for your application. You can do this by setting the `PublishReadyToRun` property, which will take effect when you publish an application. This is what the `-trim` samples do (they are explained shortly). 
+You can improve startup performance by using [Ready to Run (R2R) compilation](https://github.com/dotnet/runtime/blob/master/docs/design/coreclr/botr/readytorun-overview.md) for your application. You can do this by setting the `PublishReadyToRun` property, which will take effect when you publish an application. This is what the `-slim` samples do (they are explained shortly). 
 
 You can add the `PublishReadyToRun` property in two ways:
 
@@ -157,7 +157,7 @@ You may want to build an ASP.NET Core image that is optimized for size by publis
 
 The following instructions are for x64 only, but can be straightforwardly updated for use with ARM architectures.
 
-There are a set of '-trim' Dockerfiles included with this sample that are opted into the following .NET Core SDK publish operations:
+There are a set of '-slim' Dockerfiles included with this sample that are opted into the following .NET Core SDK publish operations:
 
 * **Self-contained deployment** -- Publish the runtime with the application.
 * **Assembly linking** -- Trim assemblies, including in the .NET Core framework, to make the application smaller.
@@ -168,15 +168,15 @@ You are encouraged to experiment with these options if you want to see which com
 The following instructions demonstrate how to build the `slim` Dockerfiles:
 
 ```console
-docker build --pull -t aspnetapp:debian-trim -f Dockerfile.debian-x64-trim .
-docker build --pull -t aspnetapp:alpine-trim -f Dockerfile.alpine-x64-trim .
+docker build --pull -t aspnetapp:debian-slim -f Dockerfile.debian-x64-slim .
+docker build --pull -t aspnetapp:alpine-slim -f Dockerfile.alpine-x64-slim .
 ```
 
 You can then compare sizes between using a shared layer and optimizing for size using the `docker images` command again. The command below uses `grep`. `findstr` on Windows works equally well.
 
 ```console
 % docker images aspnetapp | grep alpine
-aspnetapp           alpine-trim         34135d057c0f        2 hours ago         97.7MB
+aspnetapp           alpine-slim         34135d057c0f        2 hours ago         97.7MB
 aspnetapp           alpine              8567c3d23608        2 hours ago         109MB
 ```
 
@@ -184,7 +184,7 @@ Same thing with Debian:
 
 ```console
 % docker images aspnetapp | grep debian
-aspnetapp           debian-trim         43c186e2fe71        About an hour ago   206MB
+aspnetapp           debian-slim         43c186e2fe71        About an hour ago   206MB
 
 % docker images aspnetapp | grep latest
 aspnetapp           latest              eaf9b1b09d69        41 minutes ago      212MB
@@ -195,14 +195,14 @@ Note: These sizes are all uncompressed, on-disk sizes. When you pull an image fr
 You can do the same thing with Windows Nano Server, as follows:
 
 ```console
-docker build --pull -t aspnetapp:nanoserver-trim -f Dockerfile.nanoserver-x64-trim .
+docker build --pull -t aspnetapp:nanoserver-slim -f Dockerfile.nanoserver-x64-slim .
 ```
 
 And `docker images` will show you the Nano Server image you've just built.
 
 ```console
 > docker images aspnetapp | findstr nanoserver
-aspnetapp           nanoserver-trim     199a470a2257        20 seconds ago      341MB
+aspnetapp           nanoserver-slim     199a470a2257        20 seconds ago      341MB
 ```
 
 ## Resources
