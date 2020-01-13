@@ -6,7 +6,7 @@
 # If this script fails, it is probably because docker drive sharing isn't enabled
 
 param(
-    [System.IO.DirectoryInfo]$path
+    [System.IO.DirectoryInfo]$Path
 )
 
 $Time = [System.Diagnostics.Stopwatch]::StartNew()
@@ -33,19 +33,19 @@ $ImageName = "complexapp"
 $TestImageName = "complexapp:test"
 $TestStage = "test"
 
-if (!$path)
+if (!$Path)
 {
-    $path = "."
+    $Path = "."
 }
 
 PrintElapsedTime
 Log "Build application image"
-docker build --pull -t $ImageName $path
+docker build --pull -t $ImageName $Path
 PrintElapsedTime
 Check "docker build (application)"
 
 Log "Build test runner image"
-docker build --target $TestStage -t $TestImageName $path
+docker build --target $TestStage -t $TestImageName $Path
 PrintElapsedTime
 Check "docker build (test runner)"
 
