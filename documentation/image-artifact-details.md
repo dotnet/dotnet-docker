@@ -370,7 +370,7 @@ $ docker run -it --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim
 ca-certificates/now 20190110 all [installed,local]
 ```
 
-The source for a particular version of a package can be retrieved with the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) command. This example simply prints the source uris.
+The source for a particular version of a package can be retrieved with the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) command. This example simply prints the source URIs.
 
 ```console
 $ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim sh -c "find /etc/apt/sources.list* -type f -exec sed -i -e 'p; s/^deb /deb-src /' '{}' + && apt-get update -qq && apt-get source -qq --print-uris ca-certificates=20190110"
