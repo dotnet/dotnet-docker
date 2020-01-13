@@ -84,7 +84,7 @@ $ docker run --rm debian:buster-slim find . | grep copyright
 ...
 ```
 
-You can then print any of these copyright files, as demonstrated below:
+You can then print any of these copyright files, as demonstrated below.
 
 ```console
 $ docker run --rm debian:buster-slim cat ./usr/share/doc/apt/copyright
@@ -130,7 +130,7 @@ $ docker run --rm ubuntu:bionic find . | grep copyright
 ...
 ```
 
-You can then print any of these copyright files, as demonstrated below:
+You can then print any of these copyright files, as demonstrated below.
 
 ```console
 $ docker run --rm ubuntu:bionic cat ./usr/share/doc/apt/copyright
@@ -325,7 +325,7 @@ $ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim fin
 ./usr/share/doc/ca-certificates/examples/ca-certificates-local/debian/copyright
 ```
 
-You can then print any of these copyright files, as demonstrated below:
+You can then print any of these copyright files, as demonstrated below.
 
 ```console
 $ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim cat ./usr/share/doc/ca-certificates/copyright
@@ -363,7 +363,22 @@ License: GPL-2+
 ...
 ```
 
-This pattern can be replicated for all `debian` and `ubuntu` based images. It will not work for `alpine` based images because they do not carry license information.  Instead you must lookup the package license and originating source as described in the [Alpine subsection](#alpine) of [Retrieving License Information From Base Images](#retrieving-license-information-from-base-images)
+You can retrieve the source for any of these packages, as demonstrated below.  The first step is to find the package version.
+
+```console
+$ docker run -it --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim apt list | grep ca-certificates
+ca-certificates/now 20190110 all [installed,local]
+```
+
+The source for a particular version of a package can be retrieved with the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) command. This example simply prints the uris of where to retrieve the source from.
+
+```console
+$ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim sh -c "find /etc/apt/sources.list* -type f -exec sed -i -e 'p; s/^deb /deb-src /' '{}' + && apt-get update -qq && apt-get source -qq --print-uris ca-certificates=20190110"
+'http://deb.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_20190110.dsc' ca-certificates_20190110.dsc 1805 SHA256:bffbfe63a1ad2a07c6094502f05899c65edba93aefe58682f440e000fc65f6f0
+'http://deb.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_20190110.tar.xz' ca-certificates_20190110.tar.xz 243472 SHA256:ee4bf0f4c6398005f5b5ca4e0b87b82837ac5c3b0280a1cb3a63c47555c3a675
+```
+
+The pattern for retrieving license and source can be replicated for all `debian` and `ubuntu` based images. It will not work for `alpine` based images because they do not carry license and source information. Instead you must lookup the package license and originating source as described in the [Alpine subsection](#alpine) of [Retrieving License Information From Base Images](#retrieving-license-information-from-base-images)
 
 ## .NET Core and Other Components
 
