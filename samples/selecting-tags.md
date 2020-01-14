@@ -91,11 +91,20 @@ The following tags demonstrate the pattern used to describe each processor, usin
 * `3.1-buster-slim-arm32v7`
 * `3.1-nanoserver-1809-arm32v7`
 
+## Matching SDK and Runtime images
+
+As already stated, we offer images for Alpine, Debian and Ubuntu, for Linux. People (and organizations) choose each of these distros for different reasons. Many people likely choose Debian, for example, because it is the default distro (for example, the `3.1` tag in each of the .NET Core Docker repos will pull a Debian image).
+
+For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. You may want to make a conscious choice to make the distros match for those two tags. If you are only targeting Debian, this is easy, because you can just use the simple multi-platform tags we expose (like `3.1`), and you'll always get Debian (when building for Linux containers). If you are targeting Alpine or Ubuntu for your final runtime image (`aspnet` or `runtime`), then you have a choice, as follows:
+
+* Target a multi-platform tag for the SDK (like `3.1`) to make the SDK stage simple and to enable your Dockerfile to be built in multiple environments (with different processor architectures). This is what most of the samples Dockerfiles in this repo do.
+* Match SDK and runtime tags to ensure that you are using the same OS (with the associated shell and commands) and package manager for all stages within a Dockerfile.
+
 ## Building for your production environment
 
 Each container image is generated for a specific processor architecture and operating system (Linux or Windows). It is important to construct each Dockerfile so that it will produce the image type you need. Docker [multi-platform](https://www.docker.com/blog/docker-official-images-now-multi-platform/) tags can confuse the situation, since they work on multiple platforms (hence the name) and may produce images that map to your build host and not your production environment.
 
-For multi-stage build Dockerfiles, there are at least two tags referenced, an SDK and a runtime tag. It is fine to use a multi-platform tag for the SDK. That's the pattern used for .NET Core samples. You will pull an SDK image that works on your machine. It is important to define a .NET Core runtime (`runtime-deps`, `runtime`, or `aspnet`) that matches your production environment.
+For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. It is fine to use a multi-platform tag for the SDK. That's the pattern used for .NET Core samples. You will pull an SDK image that works on your machine. It is important to define a .NET Core runtime (`runtime-deps`, `runtime`, or `aspnet`) that matches your production environment.
 
 Linux containers are flexible. As long as the processor architecture matches, you can run Alpine, Debian and Ubuntu (the distros we produce images for) in any environment that supports Linux containers. [Windows images are more restricted](https://docs.microsoft.com/virtualization/windowscontainers/deploy-containers/version-compatibility). You cannot load newer containers for newer Windows versions on older hosts. For the best experience, the Windows container version should match the host Windows version.
 
