@@ -16,7 +16,7 @@ The most common way to build images is using following pattern:
 docker build -t tag .
 ```
 
-The most important aspect of that `docker` command is the `.` at the end. It represents the path to the build context, where Docker will look for assets that are referenced in the Dockerfile and for a `Dockerfile` (if not explicitly specified with the `-f` option). The build context is packaged up and then sent to the Docker daemon (the server), which performs the image build. It is required that all referenced assets are available within the build context, otherwise, they will not be available while the image is being built, which would produce an error.
+The most important aspect of that `docker` command is the `.` at the end. It represents the path to the build context, where Docker will look for assets that are referenced in the Dockerfile and for a `Dockerfile` (if not explicitly specified with the `-f` option). The build context is packaged up and then sent to the Docker daemon (the server), which performs the image build. It is required that all referenced assets are available within the build context, otherwise, they will not be available while the image is being built, which may produce the wrong image or produce an error. You can inspect intermediate or final images to validate that they contain the correct content if you see results you don't expect.
 
 In the case of an application with multiple project dependencies, it may be intuitive to place the Dockerfile beside the project file for the application project, and to assign the build context to that same location. This will not work because project dependencies will not exist within the build context.
 
@@ -64,7 +64,7 @@ COPY tests/ .
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 ```
 
-The presence of the `test` stage costs very little and doesn't significantly change the behavior of the build if you don't specifically target it. By default, the test stage `ENTRYPOINT` will not be used if you build this Dockerfile.  It will be overwritten by the final `ENTRYPOINT` in the [Dockerfile](Dockerfile).
+The presence of the `test` stage costs very little and doesn't significantly change the behavior of the build if you don't specifically target it. By default, the test stage `ENTRYPOINT` will not be used if you build this Dockerfile
 
 The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled:
 
@@ -105,7 +105,7 @@ C:\git\dotnet-docker\samples\complexapp>dir TestResults
 12/19/2019  03:48 PM             3,635 _fd11ea307347_2019-12-19_23_48_20.trx
 ```
 
-> The `run-test-stage.ps1` script implements the same workflow.
+The [run-test-stage.ps1](run-test-stage.ps1) [PowerShell](https://github.com/powershell/powershell) script implements the same workflow. It may be easier to understand the workflow by reading and running the script.
 
 The following instructions demonstrate this scenario in various configurations, with logging enabled.
 
@@ -203,6 +203,8 @@ C:\git\dotnet-docker\samples\complexapp>dir TestResults
 ```
 
 There are two problems with this approach. It is cumbersome and if tests fail, it is not possible to copy the logs from the intermediate container layer, since that layer won't exist. This limitation, and the difficulty of copying files out of intermediate layers, demonstrates the weakness of this approach.
+
+AlternativeLY, you can build with the `--rm=false` option. This leaves the intermediate build containers and you can then issue the `docker cp` command to retrieve the results. The use of docker system prune makes it easy to cleanup the intermediate build containers.
 
 ## More Samples
 

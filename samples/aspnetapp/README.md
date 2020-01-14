@@ -179,17 +179,15 @@ You can then compare sizes between using a shared layer and optimizing for size 
 ```console
 % docker images aspnetapp | grep alpine
 aspnetapp           alpine-slim         34135d057c0f        2 hours ago         97.7MB
-aspnetapp           alpine         8567c3d23608        2 hours ago         109MB
+aspnetapp           alpine              8567c3d23608        2 hours ago         109MB
 ```
 
 Same thing with Debian:
 
 ```console
-% docker images aspnetapp | grep debian
-aspnetapp           debian-slim         43c186e2fe71        About an hour ago   206MB
-
-% docker images aspnetapp | grep latest
-aspnetapp           latest              eaf9b1b09d69        41 minutes ago      212MB
+$ docker images aspnetapp | grep debian
+aspnetapp           debian              edfd63050f14        11 seconds ago      212MB
+aspnetapp           debian-slim         13c30001b4fb        10 minutes ago      202MB
 ```
 
 > Note: These image sizes are all uncompressed, on-disk sizes. When you pull an image from a registry, it is compressed, such that the size will be significantly smaller. See [Retrieving Docker Image Sizes](https://gist.github.com/MichaelSimons/fb588539dcefd9b5fdf45ba04c302db6) for more information.
@@ -203,8 +201,10 @@ docker build --pull -t aspnetapp:nanoserver-slim -f Dockerfile.nanoserver-x64-sl
 And `docker images` will show you the Nano Server image you've just built.
 
 ```console
-> docker images aspnetapp
-aspnetapp           nanoserver-slim     199a470a2257        20 seconds ago      341MB
+>docker images aspnetapp
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+aspnetapp           nanoserver-slim     59d9aa2e5826        11 seconds ago      341MB
+aspnetapp           nanoserver          1e16a73b42b3        34 seconds ago      353MB
 ```
 
 ## More Samples

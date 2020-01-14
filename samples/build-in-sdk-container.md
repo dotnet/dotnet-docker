@@ -18,8 +18,6 @@ It is recommended to pull the SDK image before running the appropriate command. 
 docker pull mcr.microsoft.com/dotnet/core/sdk:3.1
 ```
 
-This step ensures you have the latest patch of the SDK image on your machine.
-
 ## Linux
 
 ```console
@@ -29,10 +27,8 @@ docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dot
 You can see the built binaries with the following command:
 
 ```console
-% ls out
-dotnetapp               dotnetapp.pdb
-dotnetapp.deps.json	    dotnetapp.runtimeconfig.json
-dotnetapp.dll
+$ ls out
+dotnetapp  dotnetapp.deps.json  dotnetapp.dll  dotnetapp.pdb  dotnetapp.runtimeconfig.json
 ```
 
 ## macOS
@@ -45,7 +41,7 @@ You can see the built binaries with the following command:
 
 ```console
 % ls out
-dotnetapp			    dotnetapp.pdb
+dotnetapp			dotnetapp.pdb
 dotnetapp.deps.json		dotnetapp.runtimeconfig.json
 dotnetapp.dll
 ```
@@ -59,12 +55,27 @@ docker run --rm -v %cd%:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotne
 ## Windows using Windows containers
 
 ```console
-docker run --rm -v %cd%:c:\app -w c:\app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c Release -o out
+> docker run --rm -v %cd%:c:\app -w c:\app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c Release -o out
+>dir out
+ Volume in drive C is Windows
+ Volume Serial Number is 384B-0B6E
+
+ Directory of C:\git\dotnet-docker\samples\dotnetapp\out
+
+01/14/2020  01:38 PM    <DIR>          .
+01/14/2020  01:38 PM    <DIR>          ..
+01/14/2020  01:38 PM               419 dotnetapp.deps.json
+01/14/2020  01:38 PM             8,192 dotnetapp.dll
+01/14/2020  01:38 PM           168,448 dotnetapp.exe
+01/14/2020  01:38 PM               744 dotnetapp.pdb
+01/14/2020  01:38 PM               154 dotnetapp.runtimeconfig.json
+               5 File(s)        177,957 bytes
+               2 Dir(s)  50,011,774,976 bytes free
 ```
 
 ## Building to a separate location
 
-You may want the build output to be written to a separate location than the source directory. That's easy to do with a second volume mount. 
+You may want the build output to be written to a separate location than the source directory. That's easy to do with a second volume mount.
 
 The following example demonstrates doing that on macOS:
 
@@ -76,7 +87,7 @@ You can see the built binaries with the following command:
 
 ```console
 > ls ~/dotnetapp
-dotnetapp			    dotnetapp.pdb
+dotnetapp			dotnetapp.pdb
 dotnetapp.deps.json		dotnetapp.runtimeconfig.json
 dotnetapp.dll
 ```
@@ -84,7 +95,23 @@ dotnetapp.dll
 The following example demonstrates doing that on Windows (using Linux containers):
 
 ```console
-docker run --rm -v C:\dotnetapp:/out -v %cd%:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c release -o /out -r win-x64 --self-contained false
+> mkdir C:\dotnetapp
+> docker run --rm -v C:\dotnetapp:/out -v %cd%:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c release -o /out -r win-x64 --self-contained false
+> dir C:\dotnetapp
+ Volume in drive C has no label.
+ Volume Serial Number is 7A9E-EFFE
+
+ Directory of C:\dotnetapp
+
+01/14/2020  12:58 PM    <DIR>          .
+01/14/2020  12:58 PM    <DIR>          ..
+01/14/2020  12:58 PM               449 dotnetapp.deps.json
+01/14/2020  12:58 PM             7,680 dotnetapp.dll
+01/14/2020  12:58 PM           168,448 dotnetapp.exe
+01/14/2020  12:58 PM               736 dotnetapp.pdb
+01/14/2020  12:58 PM               146 dotnetapp.runtimeconfig.json
+               5 File(s)        177,459 bytes
+               2 Dir(s)  106,439,225,344 bytes free
 ```
 
 ## More Samples

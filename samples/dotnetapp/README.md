@@ -219,13 +219,13 @@ You can then compare sizes between using a shared layer and optimizing for size 
 ```console
 % docker images dotnetapp | grep alpine
 dotnetapp           alpine-slim      9d23e22d7229        About a minute ago   46.3MB
-dotnetapp           alpine         8933fb9821e8        About an hour ago    87MB
+dotnetapp           alpine           8933fb9821e8        About an hour ago    87MB
 % docker images dotnetapp | grep ubuntu
 dotnetapp           ubuntu-slim      fe292390c5fb        52 minutes ago      140MB
-dotnetapp           ubuntu         373df08a06ec        59 minutes ago      187MB
+dotnetapp           ubuntu           373df08a06ec        59 minutes ago      187MB
 % docker images dotnetapp | grep debian
 dotnetapp           debian-slim      41e834fe89e2        52 minutes ago      147MB
-dotnetapp           debian         229dd121a96b        59 minutes ago      190MB
+dotnetapp           debian           229dd121a96b        59 minutes ago      190MB
 ```
 
 > Note: These image sizes are all uncompressed, on-disk sizes. When you pull an image from a registry, it is compressed, such that the size will be significantly smaller. See [Retrieving Docker Image Sizes](https://gist.github.com/MichaelSimons/fb588539dcefd9b5fdf45ba04c302db6) for more information.
@@ -234,7 +234,15 @@ You can do the same thing with Windows Nano Server, as follows:
 
 ```console
 docker build --pull -t dotnetapp:nanoserver-slim -f Dockerfile.nanoserver-x64-slim .
-docker images dotnetapp | findstr nanoserver
+```
+
+You can then use `docker images` command again.
+
+```console
+>docker images dotnetapp
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+dotnetapp           nanoserver-slim     7d3666c3b111        4 seconds ago       285MB
+dotnetapp           nanoserver          7092d2e6b0a4        9 minutes ago       328MB
 ```
 
 ## More Samples
