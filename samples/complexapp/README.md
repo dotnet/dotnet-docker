@@ -204,7 +204,7 @@ C:\git\dotnet-docker\samples\complexapp>dir TestResults
 
 There are two problems with this approach. It is cumbersome and if tests fail, it is not possible to copy the logs from the intermediate container layer, since that layer won't exist. This limitation, and the difficulty of copying files out of intermediate layers, demonstrates the weakness of this approach.
 
-## Resources
+## More Samples
 
 * [.NET Core Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)
