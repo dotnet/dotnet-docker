@@ -30,6 +30,7 @@ function Check {
 $dockeros = docker version -f "{{ .Server.Os }}"
 $dockerarch = docker version -f "{{ .Server.Arch }}"
 $nano = "nanoserver"
+$slim = "slim"
 $totalCount = 0
 $buildCount = 0
 $runCount = 0
@@ -41,9 +42,19 @@ Foreach ($file in Get-ChildItem $Path Dockerfile*)
 {
     $totalCount++
     if ($file.Name -eq "Dockerfile") {}
-    elseif ($dockeros -eq "windows" -and $file.Name.Contains($nano)) {}
-    elseif ($dockeros -eq "linux" -and $file.Name.Contains($nano)) {Continue}
+    elseif ($dockeros -eq "windows" -And $file.Name.Contains($nano)) {}
+    elseif ($dockeros -eq "linux" -And $file.Name.Contains($nano)) {Continue}
     elseif ($dockeros -eq "windows") {Continue}
+    
+    # Self-contained apps must be built on matching architecture due to crossgen
+    # This restriction will be lifted at some point
+    if ($file.Name.Contains($slim) -And 
+        (($dockerarch -eq "amd64" -And $file.Name.Contains("x64")) -or
+         ($dockerarch -eq "arm64" -And $file.Name.Contains("arm64")) -or
+         ($dockerarch -eq "arm32" -And $file.Name.Contains("arm32"))
+        )
+       ) {}
+    else {Continue}
 
     $testimage = "testbuildimage"
 
