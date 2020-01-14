@@ -35,7 +35,7 @@ Application started. Press Ctrl+C to shut down.
 
 After the application starts, navigate to `http://localhost:8000` in your web browser.
 
-Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on command-line parameters. In some cases, you might see an error because the host port you select is already in use. Choose a different port in that case.
+> Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on command-line parameters. In some cases, you might see an error because the host port you select is already in use. Choose a different port in that case.
 
 You can also view the ASP.NET Core site running in the container on another machine. This is particularly useful if you are wanting to view an application running on an ARM device like a Raspberry Pi on your network. In that scenario, you might view the site at a local IP address such as `http://192.168.1.18:8000`.
 
@@ -192,7 +192,7 @@ aspnetapp           debian-slim         43c186e2fe71        About an hour ago   
 aspnetapp           latest              eaf9b1b09d69        41 minutes ago      212MB
 ```
 
-Note: These sizes are all uncompressed, on-disk sizes. When you pull an image from a registry, it is compressed, such that the size will be significantly smaller.
+> Note: These image sizes are all uncompressed, on-disk sizes. When you pull an image from a registry, it is compressed, such that the size will be significantly smaller. See [Retrieving Docker Image Sizes](https://gist.github.com/MichaelSimons/fb588539dcefd9b5fdf45ba04c302db6) for more information.
 
 You can do the same thing with Windows Nano Server, as follows:
 
@@ -207,7 +207,7 @@ And `docker images` will show you the Nano Server image you've just built.
 aspnetapp           nanoserver-slim     199a470a2257        20 seconds ago      341MB
 ```
 
-## Resources
+## More Samples
 
 * [.NET Core Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)

@@ -106,7 +106,7 @@ Each container image is generated for a specific processor architecture and oper
 
 For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. It is fine to use a multi-platform tag for the SDK. That's the pattern used for .NET Core samples. You will pull an SDK image that works on your machine. It is important to define a .NET Core runtime (`runtime-deps`, `runtime`, or `aspnet`) that matches your production environment.
 
-Linux containers are flexible. As long as the processor architecture matches, you can run Alpine, Debian and Ubuntu (the distros we produce images for) in any environment that supports Linux containers. [Windows images are more restricted](https://docs.microsoft.com/virtualization/windowscontainers/deploy-containers/version-compatibility). You cannot load newer containers for newer Windows versions on older hosts. For the best experience, the Windows container version should match the host Windows version.
+Linux containers are flexible. As long as the processor architecture matches, you can run Alpine, Debian and Ubuntu (the distros we produce images for) in any environment that supports Linux containers. [Windows images are more restricted](https://docs.microsoft.com/virtualization/windowscontainers/deploy-containers/version-compatibility). You cannot load containers for newer Windows versions on older hosts. For the best experience, the Windows container version should match the host Windows version.
 
 There are multiple patterns used in the samples:
 

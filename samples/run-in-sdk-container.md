@@ -18,7 +18,7 @@ Container scenarios that use volume mounting can produce conflicts between the `
 curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-docker/master/samples/Directory.Build.props
 ```
 
-Note: You may need to remove `bin` and `obj` directories if you run these instructions on Windows in both Windows and Linux container modes.
+> Note: You may need to remove `bin` and `obj` directories if you run these instructions on Windows in both Windows and Linux container modes.
 
 ## Console app
 
@@ -116,7 +116,7 @@ info: Microsoft.Hosting.Lifetime[0]
 
 You can use CTRL-C to terminate `dotnet run`. After the application starts, navigate to `http://localhost:8000` in your web browser.
 
-Note: This example (and those in the instructions that follow) configure ASP.NET Core via environment variables and disable the use of a launch profile (none of the launch profiles are compatible with this scenario). Instructions are provided later in this document that add and use a new launch profile, which removes the need for specifying environment variables with the Docker CLI.
+> Note: This example (and those in the instructions that follow) configure ASP.NET Core via environment variables and disable the use of a launch profile (none of the launch profiles are compatible with this scenario). Instructions are provided later in this document that add and use a new launch profile, which removes the need for specifying environment variables with the Docker CLI.
 
 The following instructions demonstrate this scenario in various environments:
 

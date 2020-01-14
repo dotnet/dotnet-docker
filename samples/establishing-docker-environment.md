@@ -28,7 +28,7 @@ The `.` at the end of the command resolves to the current directory and establis
 The following cases would require a different approach:
 
 * A `Directory.build.props` file exists that specifies additional settings. In this case, another `COPY` command is required for `*.props` files.
-* A `nuget.config` file exists that specific additional feeds. In this case, another `COPY` command is required for `nuget.config`.
+* A `nuget.config` file exists that specifies additional feeds. In this case, another `COPY` command is required for `nuget.config`.
 * The `.csproj` file(s) has dependencies. Dependent `.csproj` files must also be copied before running `dotnet restore`, otherwise the command will fail.
 
 The [complexapp](complexapp) sample contains multiple project files. The instructions require that the the `docker build` path is at the location that contains all project files, at [complexapp](complexapp). Each of the project files is stored within a child directory within [complexapp](complexapp).
