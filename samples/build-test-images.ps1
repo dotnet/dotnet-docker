@@ -56,9 +56,11 @@ Foreach ($file in Get-ChildItem $Path Dockerfile*)
        ) {}
     elseif ($file.Name.Contains($slim)) {Continue}
 
+    ## Limit building ARM32 
+
     $testimage = "testbuildimage"
 
-    Log "Building $file on $dockerarch"
+    Log "Building $file on $dockeros + $dockerarch"
     docker build --pull -t $testimage -f $file $Path
     Check "Build image for $file"
     $buildCount++
