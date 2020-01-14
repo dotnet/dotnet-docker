@@ -135,13 +135,13 @@ The `Dockerfile.nanoserver-x64` Dockerfile targets a version-specific tag, which
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1909
 ```
 
-Note: ARM32 support is only offered by Nano Server, version 1809.
+> Note: ARM32 support is only offered by Nano Server, version 1809.
 
 ## Build an image for ARM32 and ARM64
 
 By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-nanoserver`. You need to use an architecture-specific tag if you want to target ARM. Note that for Alpine, .NET Core is only supported on ARM64 and x64, and not ARM32.
 
-Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
+> Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
 
 The following example demonstrates targeting architectures explictly on Linux, for ARM32 and ARM64.
 
@@ -228,7 +228,7 @@ dotnetapp           debian-slim      41e834fe89e2        52 minutes ago      147
 dotnetapp           debian         229dd121a96b        59 minutes ago      190MB
 ```
 
-Note: These image sizes are all uncompressed, on-disk sizes. When you pull an image from a registry, it is compressed, such that the size will be significantly smaller. See [Retrieving Docker Image Sizes](https://gist.github.com/MichaelSimons/fb588539dcefd9b5fdf45ba04c302db6) for more information.
+> Note: These image sizes are all uncompressed, on-disk sizes. When you pull an image from a registry, it is compressed, such that the size will be significantly smaller. See [Retrieving Docker Image Sizes](https://gist.github.com/MichaelSimons/fb588539dcefd9b5fdf45ba04c302db6) for more information.
 
 You can do the same thing with Windows Nano Server, as follows:
 
@@ -237,7 +237,7 @@ docker build --pull -t dotnetapp:nanoserver-slim -f Dockerfile.nanoserver-x64-sl
 docker images dotnetapp | findstr nanoserver
 ```
 
-## Resources
+## More Samples
 
 * [.NET Core Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)
