@@ -1,17 +1,17 @@
-# Selecting .NET Core container images
+# Selecting .NET Core tags
 
 There are many .NET Core images that are available that you can use. Some are very general and others are intended to satisfy more specific needs. Together, they satisfy a wide variety of scenarios.
 
 You can use the referenced images and tags with the docker CLI, for example with `docker pull`, `docker run`, or as part of a FROM statement within a Dockerfile.
 
-## Repos
+## .NET Core Docker repos
 
 There are multiple [.NET Core Docker repos](https://hub.docker.com/_/microsoft-dotnet-core) that expose various layers of the .NET Core platform.
 
 * [dotnet/core/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps/) -- Linux-only images that contains the native dependencies of .NET Core. Best used for self-contained applications.
 * [dotnet/core/runtime](https://hub.docker.com/_/microsoft-dotnet-core-runtime/) -- Images that contains the .NET Core runtime. Best used for console applications. On Linux, depends on the `runtime-deps` image.
 * [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/) -- Images that contains the ASP.NET Core runtime. Best used for web applications and services. Depends on the `runtime` image.
-* [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) -- An image that contains the .NET Core SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/core/aspnet] for Alpine and on [nanoserver](https://hub.docker.com/_/microsoft-windows-nanoserver) for Windows.
+* [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) -- An image that contains the .NET Core SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/core/aspnet] for Alpine and on [windows/nanoserver](https://hub.docker.com/_/microsoft-windows-nanoserver) for Windows.
 
 The repos above are commonly used on the command line and in Dockerfiles. There are two more repos that may be useful to you:
 
@@ -90,3 +90,17 @@ The following tags demonstrate the pattern used to describe each processor, usin
 * `3.1-buster-arm32v7`
 * `3.1-buster-slim-arm32v7`
 * `3.1-nanoserver-1809-arm32v7`
+
+## Building for your production environment
+
+Each container images is generated for a specific processor architecture and operating system (Linux or Windows). It is important to construct each Dockerfile so that it will produce the image type you need. Docker [multi-platform](https://www.docker.com/blog/docker-official-images-now-multi-platform/) tags can confuse the situation, since they work on multiple platforms (hence the name) and may produce images that map to your build host and not your production environment.
+
+For multi-stage build Dockerfiles, there are at least two tags referenced, an SDK and a runtime tag. It is fine to use a multi-platform tag for the SDK. That's the pattern used for .NET Core samples. You will pull an SDK image that works on your machine. It is important to define a .NET Core runtime (`runtime-deps`, `runtime`, or `aspnet`) that matches your production environment.
+
+Linux containers are flexible. As long as the processor architecture matches, you can run Alpine, Debian and Ubuntu (the distros we produce images for) in any environment that supports Linux containers. [Windows images are more restricted](https://docs.microsoft.com/virtualization/windowscontainers/deploy-containers/version-compatibility). You cannot load newer containers for newer Windows versions on older hosts. For the best experience, the Windows container version should match the host Windows version.
+
+There are multiple patterns used in the samples:
+
+* Multi-platform tags for both SDK and runtime (can be built and run in any single environment) -- see [dotnetapp/Dockerfile](dotnetapp/Dockerfile) and [aspnetapp/Dockerfile](dotnetapp/Dockerfile)
+* Multi-platform tag for the SDK and architecture-specific Linux runtime tag (can be built on any environment that supports Linux containers and run in any processor-specific environment that supports Linux containers) -- see [dotnetapp/Dockerfile.alpine-x64](dotnetapp/Dockerfile) and [aspnetapp/Dockerfile.alpine-arm64](aspnetapp/Dockerfile.alpine-arm64)
+* Multi-platform tag for the SDK and a Windows-version-specific runtime tag (can be build on any environment that supports Windows containers and run in any processor-specific environment that supports the specific Windows versions) -- see [dotnetapp/Dockerfile.nanoserver-x64](Dockerfile.nanoserver-x64) [aspnetapp/Dockerfile.nanoserver-arm32](Dockerfile.nanoserver-arm32)

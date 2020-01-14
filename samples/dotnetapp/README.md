@@ -95,7 +95,7 @@ docker run --rm dotnetapp:alpine
 If you want to double check the distro of an application, you can do that by configuring a different entrypoint when you run the image, as you see in the following example.
 
 ```console
-% docker run --rm --entrypoint cat dotnetapp /etc/os-release    
+% docker run --rm --entrypoint cat dotnetapp /etc/os-release
 PRETTY_NAME="Debian GNU/Linux 10 (buster)"
 NAME="Debian GNU/Linux"
 VERSION_ID="10"
@@ -117,37 +117,25 @@ BUG_REPORT_URL="https://bugs.alpinelinux.org/"
 
 ## Build an image for Windows Nano Server
 
-You can also target Nano Server directly in the same as you can with Linux. The important difference is that Nano Server has a stronger coupling between the host Windows version and the guest container version. All supported versions will be demonstrated in the example below. You are enouraged only to use the version that applies to your environment.
+You can target Nano Server directly in the same as you can with Linux. See [Windows container version compatibility](https://docs.microsoft.com/virtualization/windowscontainers/deploy-containers/version-compatibility) to learn about Windows version container requirements.
+
+All supported versions will be demonstrated in the example below. You are encouraged only to use the version that applies to your environment.
 
 This example will work on any supported version of Windows (Windows 10 RS2+).
 
 ```console
 docker build --pull -t dotnetapp -f Dockerfile.nanoserver-x64 .
 docker run --rm dotnetapp Hello .NET Core from Nano Server
-docker images dotnetapp | findstr nanoserver
+docker images dotnetapp
 ```
 
-The `Dockerfile.nanoserver-x64` Dockerfile targets a multi-arch tag, which will result in a Nano Server version that matches the Windows host version. This works well if that's what you want, but can be a problem if your development environment and target environment don't match. 
-
-You can update the following line in the Dockerfile with the following version-specific tags to explicitly target a given Nano Server version.
-
-```console
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver
-```
-
-Nano Server version-specific tags:
-
-* 3.1-nanoserver-1909
-* 3.1-nanoserver-1903
-* 3.1-nanoserver-1809
-
-Note: ARM32 support is only offered by Nano Server, version 1809.
-
-For example, you would update the `FROM` statement to the following to target Nano Server, version 1909.
+The `Dockerfile.nanoserver-x64` Dockerfile targets a version-specific tag, which will result in a Nano Server version that targets a specific Windows version (and will only work on Windows hosts of the same version or higher). You can update the following the tag to a different version, as needed.
 
 ```console
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1909
 ```
+
+Note: ARM32 support is only offered by Nano Server, version 1809.
 
 ## Build an image for ARM32 and ARM64
 
@@ -231,13 +219,13 @@ You can then compare sizes between using a shared layer and optimizing for size 
 ```console
 % docker images dotnetapp | grep alpine
 dotnetapp           alpine-slim      9d23e22d7229        About a minute ago   46.3MB
-dotnetapp           alpine              8933fb9821e8        About an hour ago    87MB
+dotnetapp           alpine         8933fb9821e8        About an hour ago    87MB
 % docker images dotnetapp | grep ubuntu
 dotnetapp           ubuntu-slim      fe292390c5fb        52 minutes ago      140MB
-dotnetapp           ubuntu              373df08a06ec        59 minutes ago      187MB
+dotnetapp           ubuntu         373df08a06ec        59 minutes ago      187MB
 % docker images dotnetapp | grep debian
 dotnetapp           debian-slim      41e834fe89e2        52 minutes ago      147MB
-dotnetapp           debian              229dd121a96b        59 minutes ago      190MB
+dotnetapp           debian         229dd121a96b        59 minutes ago      190MB
 ```
 
 Note: These image sizes are all uncompressed, on-disk sizes. When you pull an image from a registry, it is compressed, such that the size will be significantly smaller. See [Retrieving Docker Image Sizes](https://gist.github.com/MichaelSimons/fb588539dcefd9b5fdf45ba04c302db6) for more information.

@@ -159,7 +159,7 @@ You may want to build an ASP.NET Core image that is optimized for size by publis
 
 The following instructions are for x64 only, but can be straightforwardly updated for use with ARM architectures.
 
-There are a set of '-slim' Dockerfiles included with this sample that are opted into the following .NET Core SDK publish operations:
+There are a set of '-slim' Dockerfiles included with this sample that are opted into the following [.NET Core SDK publish operations](https://docs.microsoft.com/dotnet/core/deploying/):
 
 * **Self-contained deployment** -- Publish the runtime with the application.
 * **Assembly linking** -- Trim assemblies, including in the .NET Core framework, to make the application smaller.
@@ -179,7 +179,7 @@ You can then compare sizes between using a shared layer and optimizing for size 
 ```console
 % docker images aspnetapp | grep alpine
 aspnetapp           alpine-slim         34135d057c0f        2 hours ago         97.7MB
-aspnetapp           alpine              8567c3d23608        2 hours ago         109MB
+aspnetapp           alpine         8567c3d23608        2 hours ago         109MB
 ```
 
 Same thing with Debian:
@@ -203,7 +203,7 @@ docker build --pull -t aspnetapp:nanoserver-slim -f Dockerfile.nanoserver-x64-sl
 And `docker images` will show you the Nano Server image you've just built.
 
 ```console
-> docker images aspnetapp | findstr nanoserver
+> docker images aspnetapp
 aspnetapp           nanoserver-slim     199a470a2257        20 seconds ago      341MB
 ```
 
