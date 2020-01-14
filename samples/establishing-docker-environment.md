@@ -6,7 +6,7 @@ Programming environments, like .NET, have affordances for looking for assets and
 
 The remainder of this document will consider the various configuration options used by [.NET Core samples](README.md).
 
-The dotnetapp sample demonstrates establishing a Docker environment for a single directory of assets.
+The [dotnetapp sample](dotnetapp/README.md) demonstrates establishing a Docker environment for a single directory of assets.
 
 The [Dockerfile](dotnetapp/Dockerfile) includes the following lines:
 
