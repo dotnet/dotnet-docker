@@ -14,8 +14,8 @@ param(
     [switch]$DisableHttpVerification,
     [switch]$PullImages,
     [string]$ImageInfoPath,
-    [ValidateSet('runtime', "runtime-deps", 'aspnet', 'sdk', 'sample')]
-    [string[]]$TestCategories = @('runtime', "runtime-deps", 'aspnet', 'sdk')
+    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "sample", "image-size")]
+    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk")
 )
 
 function Log {
@@ -117,6 +117,10 @@ Try {
     }
 
     Exec "$DotnetInstallDir/dotnet test $testFilter --logger:trx"
+
+    if ($TestCategories.Contains('image-size')) {
+        & ../performance/Validate-ImageSize.ps1 -PullImages:$PullImages -BaselineIntegrityOnly
+    }
 }
 Finally {
     Pop-Location
