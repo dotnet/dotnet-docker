@@ -56,7 +56,7 @@ The `sdk:3.1` and `runtime:3.1` tags are both multi-arch tags that will result i
 
 This Dockerfile copies and restores the project file as the first step so that the results of those commands can be cached for subsequent builds since project file edits are less common than source code edits. Editing a `.cs` file, for example, does not invalidate the layer created by copying and restoring project file, which makes subsequent docker builds much faster.
 
-> Note: See [Establishing docker environment](establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
+> Note: See [Establishing docker environment](../establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
 
 ## Build an image for Alpine, Debian or Ubuntu
 

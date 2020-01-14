@@ -45,7 +45,7 @@ There are two primary ways to test within the workflow of an application contain
 
 This is different than running tests within a [.NET Core SDK container](../run-tests-in-sdk-container.md), which establishes a generic environment (which also works well). The rest of this document is focused on running tests within the same container environment as the application.
 
-> Note: See [Establishing docker environment](establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
+> Note: See [Establishing docker environment](../establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
 
 ## Running tests as an opt-in stage
 
@@ -53,7 +53,7 @@ There are multiple approaches for testing with containers, such as the `ENTRYPOI
 
 The primary benefit of using an opt-in stage for testing is that it enables using the same environment as the build as an opt-in scenario and allows volume mounting (which isn't possible with `docker build`) to collect test logs.
 
-The [Dockerfile](complexapp/Dockerfile) includes a `test` stage that demonstrates running via its `ENTRYPOINT`, as follows.
+The [Dockerfile](Dockerfile) includes a `test` stage that demonstrates running via its `ENTRYPOINT`, as follows.
 
 ```Dockerfile
 # test stage -- exposes optional entrypoint
@@ -64,7 +64,7 @@ COPY tests/ .
 ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 ```
 
-The presence of the `test` stage costs very little and doesn't significantly change the behavior of the build if you don't specifically target it. By default, the test stage `ENTRYPOINT` will not be used if you build this Dockerfile.  It will be overwritten by the final `ENTRYPOINT` in the [Dockerfile](complexapp/Dockerfile).
+The presence of the `test` stage costs very little and doesn't significantly change the behavior of the build if you don't specifically target it. By default, the test stage `ENTRYPOINT` will not be used if you build this Dockerfile.  It will be overwritten by the final `ENTRYPOINT` in the [Dockerfile](Dockerfile).
 
 The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled:
 
