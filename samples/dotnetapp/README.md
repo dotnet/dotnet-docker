@@ -124,8 +124,8 @@ All supported versions will be demonstrated in the example below. You are encour
 This example will work on any supported version of Windows (Windows 10 RS2+).
 
 ```console
-docker build --pull -t dotnetapp -f Dockerfile.nanoserver-x64 .
-docker run --rm dotnetapp Hello .NET Core from Nano Server
+docker build --pull -t dotnetapp:nanoserver -f Dockerfile.nanoserver-x64 .
+docker run --rm dotnetapp:nanoserver Hello .NET Core from Nano Server
 docker images dotnetapp
 ```
 
