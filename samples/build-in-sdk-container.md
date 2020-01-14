@@ -87,7 +87,7 @@ The following example demonstrates doing that on Windows (using Linux containers
 docker run --rm -v C:\dotnetapp:/out -v %cd%:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c release -o /out -r win-x64 --self-contained false
 ```
 
-## Resources
+## More Samples
 
 * [.NET Core Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)
