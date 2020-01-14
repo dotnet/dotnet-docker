@@ -47,7 +47,7 @@ Foreach ($file in Get-ChildItem $Path Dockerfile*)
 
     $testimage = "testbuildimage"
 
-    Log "Building $file"
+    Log "Building $file on $dockerarch"
     docker build --pull -t $testimage -f $file $Path
     Check "Build image for $file"
     $buildCount++
