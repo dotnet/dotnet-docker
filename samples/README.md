@@ -11,7 +11,7 @@ The following samples and guidance demonstrate how to use .NET Core and Docker f
 ## Development Guidance
 
 * [Establishing a Docker environment](establishing-docker-environment.md)
-* [Selecting .NET Core container tags](selecting-tags.md)
+* [Selecting .NET Core image tags](selecting-tags.md)
 * [Run test in a container](run-tests-in-sdk-container.md)
 * [Build in an SDK container](build-in-sdk-container.md)
 * [Run applications in an SDK container](run-in-sdk-container.md)
