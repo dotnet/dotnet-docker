@@ -6,9 +6,9 @@ FROM mcr.microsoft.com/windows/servercore:1903 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core SDK
-RUN $dotnet_sdk_version = '3.1.100'; `
+RUN $dotnet_sdk_version = '3.1.101'; `
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-win-x64.zip; `
-    $dotnet_sha512 = '94ee575d6104058cdd31370fc686b5d1aa23bf4a54611843c1f93afc82cad3523217b5f2eaddd4b5c136bca252d2c9047092f7054052c8683fa0f363ca28ad11'; `
+    $dotnet_sha512 = 'd9a77240c348f49f730697d1ec0389489a61a9472de43f47215bc61bd0a05ceca53e5e574a26c11a7c2e1d1d05d95182c6230e7488aab837729f5057e9adc771'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -18,9 +18,9 @@ RUN $dotnet_sdk_version = '3.1.100'; `
     Remove-Item -Force dotnet.zip
 
 # Install PowerShell global tool
-RUN $powershell_version = '7.0.0-preview.6'; `
+RUN $powershell_version = '7.0.0-rc.1'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-    $powershell_sha512 = '563a5aaa99b3f330fbfff0f99674f70f469680c8547f7dd07077bb915a6f90de21624b7a935a43efc288b58b3c23ef01ca18262e65bfdbb65014170f8868f62c'; `
+    $powershell_sha512 = 'be63f1d52f938bb2d3ad541e96641e15dd6b9eb27894e45b5a25f63eecf8a956faec2a07ccf49b0a32e1475fc1a411d0fd52f9263e9d8d6098fa96fcbf5141ad'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `

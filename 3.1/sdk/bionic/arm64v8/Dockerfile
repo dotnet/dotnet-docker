@@ -23,9 +23,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core SDK
-RUN dotnet_sdk_version=3.1.100 \
+RUN dotnet_sdk_version=3.1.101 \
     && curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
-    && dotnet_sha512='93634c555698ca5c3392332a93551b1548fa103328401c5c25e8955f085124b887b73736b70a139fc8eb8d622e47fcfc0aa25210b73a8f851906b32eaa8a9887' \
+    && dotnet_sha512='03ea4cc342834a80f29b3b59ea1d7462e1814311dc6597bf2333359061b9b24f5ce98ed6ebf8d7ca05d42db31baba8ed8d4dec30a576fd818b3c0041c86d2937' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
@@ -35,9 +35,9 @@ RUN dotnet_sdk_version=3.1.100 \
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.0.0-preview.6 \
+RUN powershell_version=7.0.0-rc.1 \
     && curl -SL --output PowerShell.Linux.arm64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
-    && powershell_sha512='84c380e3353018452cf6a65b2e35ec2aa9cb0ac7f7b831956fd35ff4ce9f26e031fb61ab26d144e98c4e954dee463098db4bdfa1492c69088ab4cd3e1f7a31bd' \
+    && powershell_sha512='fa803da3df38dde9b0812c787572034fc2166a3fed10f05f4576766aba6b66fe8c073ab56dda252dd02bcc40295bab757c5ba1f667a2355d139ca67652d9014c' \
     && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm64 \

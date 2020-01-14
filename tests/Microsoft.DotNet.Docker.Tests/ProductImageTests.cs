@@ -9,9 +9,9 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public abstract class ImageTests
+    public abstract class ProductImageTests
     {
-        protected ImageTests(ITestOutputHelper outputHelper)
+        protected ProductImageTests(ITestOutputHelper outputHelper)
         {
             DockerHelper = new DockerHelper(outputHelper);
             OutputHelper = outputHelper;
@@ -21,7 +21,7 @@ namespace Microsoft.DotNet.Docker.Tests
         protected ITestOutputHelper OutputHelper { get; }
         protected abstract DotNetImageType ImageType { get; }
 
-        protected void VerifyCommonInsecureFiles(ImageData imageData)
+        protected void VerifyCommonInsecureFiles(ProductImageData imageData)
         {
             if (imageData.Version < new Version("3.1") ||
                 (imageData.OS.Contains("alpine") && imageData.IsArm))

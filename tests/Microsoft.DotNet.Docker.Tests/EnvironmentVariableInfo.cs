@@ -30,7 +30,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static void Validate(
             IEnumerable<EnvironmentVariableInfo> variables,
             DotNetImageType imageType,
-            ImageData imageData,
+            ProductImageData imageData,
             DockerHelper dockerHelper)
         {
             const char delimiter = '|';
