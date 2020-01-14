@@ -54,7 +54,7 @@ Foreach ($file in Get-ChildItem $Path Dockerfile*)
          ($dockerarch -eq "arm32" -And $file.Name.Contains("arm32"))
         )
        ) {}
-    else {Continue}
+    elseif ($file.Name.Contains($slim)) {Continue}
 
     $testimage = "testbuildimage"
 
