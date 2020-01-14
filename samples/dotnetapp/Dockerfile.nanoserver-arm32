@@ -12,7 +12,7 @@ USER ContainerAdministrator
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c release -o /app -r win-arm --no-restore
+RUN dotnet publish -c release -o /app -r win-arm --self-contained false --no-restore
 
 # final stage/image
 # Uses the 1809 release
