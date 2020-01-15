@@ -1,8 +1,15 @@
 # .NET Core Image Artifact Details
 
-.NET Core container images contain multiple software components, each built from different source and with different licensing. It is important that users of these images can determine the license requirements of these images and have a link back to the source for pedigree purposes.
+.NET Core container images contain multiple software components, each built from different source and with different licensing. It is important that users of these images can determine the license requirements of these images and have a link back to the source for copyright and pedigree purposes.
 
 This document is intended to be informative, primarily defining patterns for discovering license and pedigree information and describing expectations (whether the desired information can be found within the images). It does not list all of the license and pedigree information you might want. This information can change at any time, which also demonstrates why using the documented patterns is important.
+
+This document focuses solely on open source Linux distros. Windows is out of scope because it is a proprietary licensed OS.
+
+This document answers two basic questions:
+
+* How can I interrogate an image to determine licensing and version information of the packages and components it includes?
+* Where can I look to learn about source pedigree information for an image from offline sources (since it is difficult/impossible to learn everything from an image)?
 
 The combination of [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) and [.NET Core container images](https://hub.docker.com/_/microsoft-dotnet-core/) are the source and binary artifacts that are used in this document and intended to be used to determine the compliance of .NET Core containers.
 
@@ -23,25 +30,19 @@ This document describes the licensing and source pedigree of the following compo
 
 .NET Core is dependent on those images, and the individuals/organizations that build them, to satisfactorily describe the licensing and pedigree of these images.
 
-## Retrieving License Information From Base Images
+## Retrieving Package Information From Base Images
 
-The copyright practices vary across the base images that .NET Core depends on. This is demonstrated via the following introspection technique, for each of the supported distros.
+The practices to retrieve package information vary across the distro types that .NET Core depends on. This is demonstrated via the following introspection technique, for each of the supported distros.
 
 Note: The output of the commands is intentionally cut-off for purposes of brevity. The output you see below is intended to demonstrate the pattern, and you can repeat it to view all current license information for the base image of your choosing.
 
 ### alpine
 
-Licensing information is not present in Alpine images. Licenses are included as part of the Alpine documentation which is not part of the default Alpine experience. Alpine discusses this in their [package license documentation](https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#license).
-
-> Because we want to save space and don't like to have licenses all over our system we have decided to include the license in the doc subpackage.
-
-There are two options for retrieving the license information for the Alpine images. You can add the `doc` subpackages as referenced above or you can lookup the license information on the [alpine package website](https://pkgs.alpinelinux.org/packages). Not all packages have doc subpackages therefore the recommended solution is to lookup the license information. To do this, you must first retrieve a list of the packages installed within the Alpine images, as demonstrated below.
+You can retrieve the full list of packages installed within Alpine images, as demonstrated below.
 
 ```console
 $ docker run --rm alpine:3.11 apk list -I
 musl-1.1.24-r0 x86_64 {musl} (MIT) [installed]
-WARNING: Ignoring APKINDEX.70f61090.tar.gz: No such file or directory
-WARNING: Ignoring APKINDEX.ca2fea5b.tar.gz: No such file or directory
 zlib-1.2.11-r3 x86_64 {zlib} (Zlib) [installed]
 apk-tools-2.10.4-r3 x86_64 {apk-tools} (GPL2) [installed]
 musl-utils-1.1.24-r0 x86_64 {musl} (MIT BSD GPL2+) [installed]
@@ -57,37 +58,54 @@ ca-certificates-cacert-20191127-r0 x86_64 {ca-certificates} (MPL-2.0 GPL-2.0-or-
 libcrypto1.1-1.1.1d-r2 x86_64 {openssl} (OpenSSL) [installed]
 ```
 
-You can lookup the individual package information from the [alpine package website](https://pkgs.alpinelinux.org/packages) by entering the package name, branch (which corresponds to the Alpine version), and architecture. Finding the [information for the `zlib` package](https://pkgs.alpinelinux.org/packages?name=zlib&branch=v3.11&repo=main&arch=x86) is demonstrated below.
+You can retrieve the license for any package, as demonstrated below.
+
+```console
+$ docker run --rm alpine:3.11 apk info --license musl
+musl-1.1.24-r0 license:
+MIT
+```
+
+You can retrieve the source for any package by looking up the package on the [alpine package website](https://pkgs.alpinelinux.org/packages).  You must enter the package name, branch (which corresponds to the Alpine version), and architecture. Finding the [information for the `zlib` package](https://pkgs.alpinelinux.org/packages?name=zlib&branch=v3.11&repo=main&arch=x86) is demonstrated below.
 
 ![zlib package search results](./image-artifact-details-alpine-package-search.png)
 
-Navigating the [Package link](https://pkgs.alpinelinux.org/package/v3.11/main/x86/zlib) will show the detailed package information such as the license and originating source.
+Navigating the [Package link](https://pkgs.alpinelinux.org/package/v3.11/main/x86/zlib) will show detailed package information including the originating source amongst other information.
 
 ![zlib package information](./image-artifact-details-alpine-package-details.png)
 
 ### debian
 
-Licensing information is present in Debian images, as is demonstrated below.
+You can retrieve the full list of packages installed within Debian images, as demonstrated below.
 
 ```console
-$ docker run --rm debian:buster-slim find . | grep copyright
-./usr/share/doc/libpam-runtime/copyright
-./usr/share/doc/debian-archive-keyring/copyright
-./usr/share/doc/libss2/copyright
-./usr/share/doc/libdebconfclient0/copyright
-./usr/share/doc/bsdutils/copyright
-./usr/share/doc/ncurses-base/copyright
-./usr/share/doc/libudev1/copyright
-./usr/share/doc/libc6/copyright
-./usr/share/doc/debianutils/copyright
-./usr/share/doc/liblzma5/copyright
+$ docker run --rm debian:buster-slim dpkg-query -l
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+||/ Name                    Version                Architecture Description
++++-=======================-======================-============-========================================================================
+ii  adduser                 3.118                  all          add and remove users and groups
+ii  apt                     1.8.2                  amd64        commandline package manager
+ii  base-files              10.3+deb10u2           amd64        Debian base system miscellaneous files
+ii  base-passwd             3.5.46                 amd64        Debian base system master password and group files
+ii  bash                    5.0-4                  amd64        GNU Bourne Again SHell
+ii  bsdutils                1:2.33.1-0.1           amd64        basic utilities from 4.4BSD-Lite
+ii  coreutils               8.30-3                 amd64        GNU core utilities
+ii  dash                    0.5.10.2-5             amd64        POSIX-compliant shell
+ii  debconf                 1.5.71                 all          Debian configuration management system
+ii  debian-archive-keyring  2019.1                 all          GnuPG archive keys of the Debian archive
 ...
 ```
 
-You can then print any of these copyright files, as demonstrated below.
+You can retrieve the license for any package, as demonstrated below. This example retrieves the `apt` license from the `debian:buster-slim` image by performing the following steps with a single command:
+
+1. List out the package contents
+1. Find the copyright file
+1. Print out the copyright file contents
 
 ```console
-$ docker run --rm debian:buster-slim cat ./usr/share/doc/apt/copyright
+$ docker run --rm debian:buster-slim sh -c "cat \`dpkg -L apt | grep copyright\`"
 Apt is copyright 1997, 1998, 1999 Jason Gunthorpe and others.
 Apt is currently developed by APT Development Team <deity@lists.debian.org>.
 
@@ -110,30 +128,51 @@ License: GPLv2+
 See /usr/share/common-licenses/GPL-2, or
 <http://www.gnu.org/copyleft/gpl.txt> for the terms of the latest version
 of the GNU General Public License.
+```
+
+You can retrieve the source for package, as demonstrated below. This example retrieves the `apt` source from the `debian:buster-slim` image by performing the following steps with a single command:
+
+1. Add the source feeds for the existing package feeds.
+1. Utilize the [`apt-get`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) tool to print out the source URIs for the package. See the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) documentation for additional options.
+
+```console
+$ docker run --rm debian:buster-slim sh -c "find /etc/apt/sources.list* -type f -exec sed -i -e 'p; s/^deb /deb-src /' '{}' + && apt-get update -qq && apt-get source -qq --print-uris apt=1.8.2"
+'http://deb.debian.org/debian/pool/main/a/apt/apt_1.8.2.dsc' apt_1.8.2.dsc 2766 SHA256:891cc952f028b79e2eace3db6c19d55dee247ac19d934bbe43c3921104b01c3b
+'http://deb.debian.org/debian/pool/main/a/apt/apt_1.8.2.tar.xz' apt_1.8.2.tar.xz 2188344 SHA256:7f9a91c26624bc85733683ee239b0c0d971a593d670855cf7bcf693b08a37734
 ```
 
 ### ubuntu
 
-Licensing information is present in Ubuntu images, as is demonstrated below.
+You can retrieve the full list of packages installed within Ubuntu images, as demonstrated below.
 
 ```console
-$ docker run --rm ubuntu:bionic find . | grep copyright
-./usr/share/doc/libpam-runtime/copyright
-./usr/share/doc/sensible-utils/copyright
-./usr/share/doc/libss2/copyright
-./usr/share/doc/libdebconfclient0/copyright
-./usr/share/doc/bsdutils/copyright
-./usr/share/doc/ncurses-base/copyright
-./usr/share/doc/libudev1/copyright
-./usr/share/doc/libc6/copyright
-./usr/share/doc/debianutils/copyright
+$ docker run --rm ubuntu:bionic dpkg-query -l
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+||/ Name                              Version               Architecture          Description
++++-=================================-=====================-=====================-=======================================================================
+ii  adduser                           3.116ubuntu1          all                   add and remove users and groups
+ii  apt                               1.6.12                amd64                 commandline package manager
+ii  base-files                        10.1ubuntu2.7         amd64                 Debian base system miscellaneous files
+ii  base-passwd                       3.5.44                amd64                 Debian base system master password and group files
+ii  bash                              4.4.18-2ubuntu1.2     amd64                 GNU Bourne Again SHell
+ii  bsdutils                          1:2.31.1-0.4ubuntu3.4 amd64                 basic utilities from 4.4BSD-Lite
+ii  bzip2                             1.0.6-8.1ubuntu0.2    amd64                 high-quality block-sorting file compressor - utilities
+ii  coreutils                         8.28-1ubuntu1         amd64                 GNU core utilities
+ii  dash                              0.5.8-2.10            amd64                 POSIX-compliant shell
+ii  debconf                           1.5.66ubuntu1         all                   Debian configuration management system
 ...
 ```
 
-You can then print any of these copyright files, as demonstrated below.
+You can retrieve the license for any package, as demonstrated below. This example retrieves the `apt` license from the `ubuntu:bionic` image by performing the following steps with a single command:
+
+1. List out the package contents
+1. Find the copyright file
+1. Print out the copyright file contents
 
 ```console
-$ docker run --rm ubuntu:bionic cat ./usr/share/doc/apt/copyright
+$ docker run --rm ubuntu:bionic sh -c "cat \`dpkg -L apt | grep copyright\`"
 Apt is copyright 1997, 1998, 1999 Jason Gunthorpe and others.
 Apt is currently developed by APT Development Team <deity@lists.debian.org>.
 
@@ -156,15 +195,26 @@ License: GPLv2+
 See /usr/share/common-licenses/GPL-2, or
 <http://www.gnu.org/copyleft/gpl.txt> for the terms of the latest version
 of the GNU General Public License.
+```
+
+You can retrieve the source for package, as demonstrated below. This example retrieves the `apt` source from the `ubuntu:bionic` image by performing the following steps with a single command:
+
+1. Add the source feeds for the existing package feeds.
+1. Utilize the [`apt-get`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) tool to print out the source URIs for the package. See the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) documentation for additional options.
+
+```console
+$ docker run --rm ubuntu:bionic sh -c "find /etc/apt/sources.list* -type f -exec sed -i -e 'p; s/^deb /deb-src /' '{}' + && apt-get update -qq && apt-get source -qq --print-uris apt=1.6.12"
+'http://archive.ubuntu.com/ubuntu/pool/main/a/apt/apt_1.6.12.dsc' apt_1.6.12.dsc 2796 SHA256:061d7de8e9faea48b69b37f01a54b2eac04d39eaab143ec4ffb7cd534fa01cfd
+'http://archive.ubuntu.com/ubuntu/pool/main/a/apt/apt_1.6.12.tar.xz' apt_1.6.12.tar.xz 2171176 SHA256:d4e2ae405a1ff12bd108a5a530a24d52afde9cde40065ed508fdea33302c8a35
 ```
 
 ### buildpack-deps
 
 .NET Core uses the Debian and Ubuntu variants of [`buildpack-deps`](https://hub.docker.com/_/buildpack-deps), enabling you to use the same patterns described above to retrieve the licensing information for these images.
 
-## Retrieving Base Image Pedigree Details
+## Retrieving Pedigree Information for Base Images
 
-.NET Core relies on the official Docker image repositories to provide detailed information about the images. This information includes layer information, source code, license information, etc. This information is stored in the [Official Images "Extended Information" repository](https://github.com/docker-library/repo-info) and is split into two types.
+.NET Core relies on the official Docker image repositories to provide detailed information about the images. This information includes layer information, source code, license information, etc. This information is stored in the [Official Images "Extended Information" repository](https://github.com/docker-library/repo-info) and is split into two types:
 
 * remote
   * gathered from the Docker Hub/Registry API
@@ -267,9 +317,9 @@ Other potentially useful URLs:
 
 ...
 
-### Pedigree Details for Base Images used by .NET Core Images
+### Pedigree Information for Base Images used by .NET Core Images
 
-The following links provide the pedigree details for the .NET Core Linux base images.
+The following links provide the pedigree information for the .NET Core Linux base images.
 
 * [alpine](https://hub.docker.com/_/alpine)
   * [local](https://github.com/docker-library/repo-info/blob/master/repos/alpine/local/)
@@ -284,7 +334,7 @@ The following links provide the pedigree details for the .NET Core Linux base im
   * [local](https://github.com/docker-library/repo-info/blob/master/repos/buildpack-deps/local/)
   * [remote](https://github.com/docker-library/repo-info/blob/master/repos/buildpack-deps/remote/)
 
-## Packages
+## Additional Packages
 
 .NET Core images install a set of packages (from the associated package manager for the distro).
 
@@ -313,72 +363,17 @@ ENV ASPNETCORE_URLS=http://+:80 \
     DOTNET_RUNNING_IN_CONTAINER=true
 ```
 
-The pattern for [Retrieving License Information From Base Images](#retrieving-license-information-from-base-images) can be repeated for packages that are added in .NET Core images (above and beyond the base image). The first package listed in the Dockerfile is `ca-certificates`, which will be used to demonstrate the pattern below.
-
-There is no guarantee that the requested package is not present in the base image, but it typically will not be (hence why it is explicitly installed), as is demonstrated below.
+There is no guarantee that the these packages are not present in the base image, but it typically will not be (hence why it is explicitly installed), as is demonstrated below.
 
 ```console
-$ docker run --rm debian:buster-slim find . | grep copyright | grep -c ca-certificates
-0
-$ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim find . | grep copyright | grep ca-certificates
-./usr/share/doc/ca-certificates/copyright
-./usr/share/doc/ca-certificates/examples/ca-certificates-local/debian/copyright
-```
-
-You can then print any of these copyright files, as demonstrated below.
-
-```console
-$ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim cat ./usr/share/doc/ca-certificates/copyright
-Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Source: http://ftp.debian.org/debian/pool/main/c/ca-certificates/
-
-Files: debian/*
-       examples/*
-       Makefile
-       mozilla/*
-       sbin/*
-Copyright: 2003 Fumitoshi UKAI <ukai@debian.or.jp>
-           2009 Philipp Kern <pkern@debian.org>
-           2011 Michael Shuler <michael@pbandjelly.org>
-           Various Debian Contributors
-License: GPL-2+
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
- .
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- .
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,
- USA.
- .
- On Debian GNU/Linux systems, the complete text of the GNU General Public
- License can be found in '/usr/share/common-licenses/GPL-2'.
-
-...
-```
-
-You can retrieve the source for any of these packages, as demonstrated below.  The first step is to find the package version.
-
-```console
-$ docker run -it --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim apt list | grep ca-certificates
+$ docker run --rm debian:buster-slim apt list ca-certificates
+Listing...
+$ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim apt list ca-certificates
+Listing...
 ca-certificates/now 20190110 all [installed,local]
 ```
 
-The source for a particular version of a package can be retrieved with the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) command. This example simply prints the source URIs.
-
-```console
-$ docker run --rm mcr.microsoft.com/dotnet/core/runtime-deps:3.1-buster-slim sh -c "find /etc/apt/sources.list* -type f -exec sed -i -e 'p; s/^deb /deb-src /' '{}' + && apt-get update -qq && apt-get source -qq --print-uris ca-certificates=20190110"
-'http://deb.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_20190110.dsc' ca-certificates_20190110.dsc 1805 SHA256:bffbfe63a1ad2a07c6094502f05899c65edba93aefe58682f440e000fc65f6f0
-'http://deb.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_20190110.tar.xz' ca-certificates_20190110.tar.xz 243472 SHA256:ee4bf0f4c6398005f5b5ca4e0b87b82837ac5c3b0280a1cb3a63c47555c3a675
-```
-
-The pattern for retrieving license and source can be replicated for all `debian` and `ubuntu` based images. It will not work for `alpine` based images because they do not carry license and source information. Instead you must lookup the package license and originating source as described in the [Alpine subsection](#alpine) of [Retrieving License Information From Base Images](#retrieving-license-information-from-base-images)
+The patterns for [Retrieving Package Information From Base Images](#retrieving-package-information-from-base-images) can be repeated for packages that are added in .NET Core images (above and beyond the base image).
 
 ## .NET Core and Other Components
 
