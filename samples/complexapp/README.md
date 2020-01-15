@@ -112,7 +112,7 @@ The following instructions demonstrate this scenario in various configurations, 
 
 ```console
 docker build --pull --target test -t complexapp-test .
-docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp-test
+docker run --rm -v ${pwd}/TestResults:/source/tests/TestResults complexapp-test
 ```
 
 ### Windows using Linux containers
