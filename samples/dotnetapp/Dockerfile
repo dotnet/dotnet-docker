@@ -1,28 +1,17 @@
+# https://hub.docker.com/_/microsoft-dotnet-core
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-WORKDIR /app
+WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY dotnetapp/*.csproj ./dotnetapp/
-COPY utils/*.csproj ./utils/
-WORKDIR /app/dotnetapp
+COPY *.csproj .
 RUN dotnet restore
 
 # copy and publish app and libraries
-WORKDIR /app/
-COPY dotnetapp/. ./dotnetapp/
-COPY utils/. ./utils/
-WORKDIR /app/dotnetapp
-RUN dotnet publish -c Release -o out
+COPY . .
+RUN dotnet publish -c release -o /app --no-restore
 
-
-# test application -- see: dotnet-docker-unit-testing.md
-FROM build AS testrunner
-WORKDIR /app/tests
-COPY tests/. .
-ENTRYPOINT ["dotnet", "test", "--logger:trx"]
-
-
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1 AS runtime
+# final stage/image
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1
 WORKDIR /app
-COPY --from=build /app/dotnetapp/out ./
+COPY --from=build /app .
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
