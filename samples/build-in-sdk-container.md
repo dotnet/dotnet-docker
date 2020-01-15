@@ -48,29 +48,52 @@ dotnetapp.dll
 
 ## Windows using Linux containers
 
+The following example uses PowerShell.
+
 ```console
-docker run --rm -v %cd%:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c release -o out -r win-x64 --self-contained false
+docker run --rm -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c release -o out -r win-x64 --self-contained false
+```
+
+You can see the built binaries with the following command:
+
+```console
+PS C:\git\dotnet-docker\samples\dotnetapp> dir out
+
+
+    Directory: C:\git\dotnet-docker\samples\dotnetapp\out
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           1/14/2020  9:19 PM            449 dotnetapp.deps.json
+-a---           1/14/2020  9:19 PM           7680 dotnetapp.dll
+-a---           1/14/2020  9:19 PM         168448 dotnetapp.exe
+-a---           1/14/2020  9:19 PM            736 dotnetapp.pdb
+-a---           1/14/2020  9:19 PM            146 dotnetapp.runtimeconfig.json
 ```
 
 ## Windows using Windows containers
 
+The following example uses PowerShell.
+
 ```console
-> docker run --rm -v %cd%:c:\app -w c:\app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c Release -o out
->dir out
- Volume in drive C is Windows
- Volume Serial Number is 384B-0B6E
+docker run --rm -v ${pwd}:c:\app -w c:\app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c Release -o out
+```
 
- Directory of C:\git\dotnet-docker\samples\dotnetapp\out
+You can see the built binaries with the following command:
 
-01/14/2020  01:38 PM    <DIR>          .
-01/14/2020  01:38 PM    <DIR>          ..
-01/14/2020  01:38 PM               419 dotnetapp.deps.json
-01/14/2020  01:38 PM             8,192 dotnetapp.dll
-01/14/2020  01:38 PM           168,448 dotnetapp.exe
-01/14/2020  01:38 PM               744 dotnetapp.pdb
-01/14/2020  01:38 PM               154 dotnetapp.runtimeconfig.json
-               5 File(s)        177,957 bytes
-               2 Dir(s)  50,011,774,976 bytes free
+```console
+PS C:\git\dotnet-docker\samples\dotnetapp> dir out
+
+
+    Directory: C:\git\dotnet-docker\samples\dotnetapp\out
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           1/14/2020  9:25 PM            419 dotnetapp.deps.json
+-a---           1/14/2020  9:25 PM           8192 dotnetapp.dll
+-a---           1/14/2020  9:25 PM         168448 dotnetapp.exe
+-a---           1/14/2020  9:25 PM            744 dotnetapp.pdb
+-a---           1/14/2020  9:25 PM            154 dotnetapp.runtimeconfig.json
 ```
 
 ## Building to a separate location
@@ -92,27 +115,28 @@ dotnetapp.deps.json		dotnetapp.runtimeconfig.json
 dotnetapp.dll
 ```
 
-The following example demonstrates doing that on Windows (using Linux containers):
+The following PowerShell example demonstrates doing that on Windows (using Linux containers):
 
 ```console
-> mkdir C:\dotnetapp
-> docker run --rm -v C:\dotnetapp:/out -v %cd%:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c release -o /out -r win-x64 --self-contained false
-> dir C:\dotnetapp
- Volume in drive C has no label.
- Volume Serial Number is 7A9E-EFFE
-
- Directory of C:\dotnetapp
-
-01/14/2020  12:58 PM    <DIR>          .
-01/14/2020  12:58 PM    <DIR>          ..
-01/14/2020  12:58 PM               449 dotnetapp.deps.json
-01/14/2020  12:58 PM             7,680 dotnetapp.dll
-01/14/2020  12:58 PM           168,448 dotnetapp.exe
-01/14/2020  12:58 PM               736 dotnetapp.pdb
-01/14/2020  12:58 PM               146 dotnetapp.runtimeconfig.json
-               5 File(s)        177,459 bytes
-               2 Dir(s)  106,439,225,344 bytes free
+mkdir C:\dotnetapp
+docker run --rm -v C:\dotnetapp:/out -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet publish -c release -o /out -r win-x64 --self-contained false
 ```
+
+You can see the built binaries with the following command:
+
+```console
+PS C:\git\dotnet-docker\samples\dotnetapp> dir C:\dotnetapp\
+
+
+    Directory: C:\dotnetapp
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           1/14/2020  9:27 PM            449 dotnetapp.deps.json
+-a---           1/14/2020  9:27 PM           7680 dotnetapp.dll
+-a---           1/14/2020  9:27 PM         168448 dotnetapp.exe
+-a---           1/14/2020  9:27 PM            736 dotnetapp.pdb
+-a---           1/14/2020  9:27 PM            146 dotnetapp.runtimeconfig.json
 
 ## More Samples
 
