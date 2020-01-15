@@ -85,14 +85,18 @@ docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.
 
 ## Windows using Linux containers
 
+This example uses PowerShell.
+
 ```console
-docker run --rm -it -v %cd%:/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run
+docker run --rm -it -v ${pwd}:/app/ -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run
 ```
 
 ## Windows using Windows containers
 
+This example uses PowerShell.
+
 ```console
-docker run --rm -it -v %cd%:c:\app\ -w \app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run
+docker run --rm -it -v ${pwd}:c:\app\ -w \app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run
 ```
 
 ## ASP.NET Core App
@@ -128,14 +132,18 @@ docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http:/
 
 ### Windows using Linux containers
 
+This example uses PowerShell.
+
 ```console
-docker run --rm -it -p 8000:80 -v %cd%:/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
+docker run --rm -it -p 8000:80 -v ${pwd}:/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
 ```
 
 ### Windows using Windows containers
 
+This example uses PowerShell.
+
 ```console
-docker run --rm -it -p 8000:80 -v %cd%:C:\app\ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
+docker run --rm -it -p 8000:80 -v ${pwd}:C:\app\ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --no-launch-profile
 ```
 
 ### Using a launch profile to configure ASP.NET Core
@@ -165,14 +173,18 @@ docker run --rm -it -p 8000:80 -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/c
 
 ### Windows using Linux containers
 
+The following example uses PowerShell.
+
 ```console
-docker run --rm -it -p 8000:80 -v %cd%:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
+docker run --rm -it -p 8000:80 -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
 ```
 
 ### Windows using Windows containers
 
+The following example uses PowerShell.
+
 ```console
-docker run --rm -it -p 8000:80 -v %cd%:C:\app -w C:\app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
+docker run --rm -it -p 8000:80 -v ${pwd}:C:\app -w C:\app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
 ```
 
 ## More Samples
