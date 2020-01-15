@@ -82,7 +82,7 @@ docker run --rm -v ${pwd}:c:\app -w c:\app mcr.microsoft.com/dotnet/core/sdk:3.1
 You can see the built binaries with the following command:
 
 ```console
-> dir out
+PS C:\git\dotnet-docker\samples\dotnetapp> dir out
 
 
     Directory: C:\git\dotnet-docker\samples\dotnetapp\out
@@ -125,7 +125,7 @@ docker run --rm -v C:\dotnetapp:/out -v ${pwd}:/app -w /app mcr.microsoft.com/do
 You can see the built binaries with the following command:
 
 ```console
-> dir C:\dotnetapp\
+PS C:\git\dotnet-docker\samples\dotnetapp> dir C:\dotnetapp\
 
 
     Directory: C:\dotnetapp

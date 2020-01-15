@@ -69,7 +69,7 @@ The presence of the `test` stage costs very little and doesn't significantly cha
 The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled, using PowerShell:
 
 ```console
-PS > docker build --pull --target test -t complexapp-test .
+PS C:\git\dotnet-docker\samples\complexapp> docker build --pull --target test -t complexapp-test .
 Sending build context to Docker daemon  12.81MB
 Step 1/15 : FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 3.1: Pulling from dotnet/core/sdk
@@ -77,9 +77,9 @@ Successfully built f98c5453be3d
 Successfully tagged complexapp-test:latest
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 
-PS > mkdir TestResults
+PS C:\git\dotnet-docker\samples\complexapp> mkdir TestResults
 
-PS > docker run --rm -v $pwd/TestResults:/source/tests/TestResults complexapp-test
+PS C:\git\dotnet-docker\samples\complexapp> docker run --rm -v $pwd/TestResults:/source/tests/TestResults complexapp-test
 Test run for /source/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.1)
 Microsoft (R) Test Execution Command Line Tool Version 16.3.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
@@ -94,7 +94,7 @@ Total tests: 2
      Passed: 2
  Total time: 1.8321 Seconds
 
-PS > dir .\TestResults\
+PS C:\git\dotnet-docker\samples\complexapp> dir .\TestResults\
 
 
     Directory: C:\git\dotnet-docker\samples\complexapp\TestResults
