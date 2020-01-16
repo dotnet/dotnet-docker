@@ -16,6 +16,7 @@ The following samples and guidance demonstrate how to use .NET Core and Docker f
 * [Build in an SDK container](build-in-sdk-container.md)
 * [Run applications in an SDK container](run-in-sdk-container.md)
 * [Run ASP.NET Core Applications in development with Docker and HTTPS](run-aspnetcore-https-development.md)
+* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
 
 ## Hosting guidance
 
