@@ -19,6 +19,14 @@ jobs:
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
       artifactName: image-info
+    # Use dry-run option for certain publish operations if this is not a production build
+  - script: |
+      dryRunArg=""
+      if [ "PUBLISHREPOPREFIX" != "public/" ]; then
+        dryRunArg=" --dry-run"
+      fi
+      echo "##vso[task.setvariable variable=dryRunArg]$dryRunArg"
+    displayName: Set Publish Variables
   - script: >
       $(runImageBuilderCmd) copyAcrImages
       $(stagingRepoPrefix)
@@ -50,9 +58,9 @@ jobs:
       $(dotnetBot-email)
       $(dotnet-bot-user-repo-adminrepohook-pat)
       $(publicGitRepoUri)
+      $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Readme
-    condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
   - script: >
       $(runImageBuilderCmd) publishImageInfo
       $(dotnetBot-userName)
@@ -63,8 +71,8 @@ jobs:
       --git-repo versions
       --git-branch master
       --git-path build-info/docker/image-info.$(Build.Repository.Name)-$(publicSourceBranch).json
+      $(dryRunArg)
     displayName: Publish Image Info
-    condition: and(succeeded(), eq(variables['publishRepoPrefix'], 'public/'))
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
     displayName: Component Detection
   - template: ../steps/cleanup-docker-linux.yml
