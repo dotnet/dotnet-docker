@@ -9,7 +9,7 @@ This document focuses solely on open source Linux distros. Windows is out of sco
 This document answers two basic questions:
 
 * How can I interrogate an image to determine licensing and version information of the packages and components it includes?
-* Where can I look to learn about source pedigree information for an image from offline sources (since it is difficult/impossible to learn everything from an image)?
+* Where can I look to learn about source pedigree information for an image from external sources (since it is difficult/impossible to learn everything from an image)?
 
 The combination of [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) and [.NET Core container images](https://hub.docker.com/_/microsoft-dotnet-core/) are the source and binary artifacts that are used in this document and intended to be used to determine the compliance of .NET Core containers.
 
@@ -58,7 +58,7 @@ ca-certificates-cacert-20191127-r0 x86_64 {ca-certificates} (MPL-2.0 GPL-2.0-or-
 libcrypto1.1-1.1.1d-r2 x86_64 {openssl} (OpenSSL) [installed]
 ```
 
-You can retrieve the license for any package, as demonstrated below.
+The package listing above includes the license in the fourth cell. You can also retrieve the license for any single package, as demonstrated below. This example retrieves the `musl` license from the `alpine:3.11` image.
 
 ```console
 $ docker run --rm alpine:3.11 apk info --license musl
@@ -105,7 +105,7 @@ You can retrieve the license for any package, as demonstrated below. This exampl
 1. Print out the copyright file contents
 
 ```console
-$ docker run --rm debian:buster-slim sh -c "cat \`dpkg -L apt | grep copyright\`"
+$ docker run --rm debian:buster-slim sh -c 'cat `dpkg -L apt | grep copyright`'
 Apt is copyright 1997, 1998, 1999 Jason Gunthorpe and others.
 Apt is currently developed by APT Development Team <deity@lists.debian.org>.
 
@@ -133,7 +133,7 @@ of the GNU General Public License.
 You can retrieve the source for package, as demonstrated below. This example retrieves the `apt` source from the `debian:buster-slim` image by performing the following steps with a single command:
 
 1. Add the source feeds for the existing package feeds.
-1. Utilize the [`apt-get`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) tool to print out the source URIs for the package. See the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) documentation for additional options.
+1. Utilize the [`apt-get`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) tool to print out the URIs of archive files that contain the package source. See the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) documentation for additional options.
 
 ```console
 $ docker run --rm debian:buster-slim sh -c "find /etc/apt/sources.list* -type f -exec sed -i -e 'p; s/^deb /deb-src /' '{}' + && apt-get update -qq && apt-get source -qq --print-uris apt=1.8.2"
@@ -172,7 +172,7 @@ You can retrieve the license for any package, as demonstrated below. This exampl
 1. Print out the copyright file contents
 
 ```console
-$ docker run --rm ubuntu:bionic sh -c "cat \`dpkg -L apt | grep copyright\`"
+$ docker run --rm ubuntu:bionic sh -c 'cat `dpkg -L apt | grep copyright`'
 Apt is copyright 1997, 1998, 1999 Jason Gunthorpe and others.
 Apt is currently developed by APT Development Team <deity@lists.debian.org>.
 
@@ -200,7 +200,7 @@ of the GNU General Public License.
 You can retrieve the source for package, as demonstrated below. This example retrieves the `apt` source from the `ubuntu:bionic` image by performing the following steps with a single command:
 
 1. Add the source feeds for the existing package feeds.
-1. Utilize the [`apt-get`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) tool to print out the source URIs for the package. See the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) documentation for additional options.
+1. Utilize the [`apt-get`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) tool to print out the URIs of archive files that contain the package source. See the [`apt-get source`](https://manpages.debian.org/buster/apt/apt-get.8.en.html) documentation for additional options.
 
 ```console
 $ docker run --rm ubuntu:bionic sh -c "find /etc/apt/sources.list* -type f -exec sed -i -e 'p; s/^deb /deb-src /' '{}' + && apt-get update -qq && apt-get source -qq --print-uris apt=1.6.12"
