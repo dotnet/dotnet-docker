@@ -122,7 +122,9 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 * [File a .NET Core Docker issue](https://github.com/dotnet/dotnet-docker/issues)
 * [File a .NET Core issue](https://github.com/dotnet/core/issues)
 * [File an ASP.NET Core issue](https://github.com/aspnet/home/issues)
-* [File an issue for other components](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md)
+* [File an issue for other .NET components](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md)
+* [File a Visual Studio Docker Tools issue](https://github.com/microsoft/dockertools/issues)
+* [File a Microsoft Container Registry (MCR) issue](https://github.com/microsoft/containerregistry/issues)
 * [Ask on Stack Overflow](https://stackoverflow.com/questions/tagged/.net-core)
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/)
 
