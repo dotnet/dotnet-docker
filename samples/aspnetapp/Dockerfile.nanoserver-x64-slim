@@ -17,4 +17,8 @@ RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-rest
 FROM mcr.microsoft.com/windows/nanoserver:1909 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
+
+# Configure web servers to bind to port 80 when present
+ENV ASPNETCORE_URLS=http://+:80
+
 ENTRYPOINT ["aspnetapp"]
