@@ -28,6 +28,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string dockerfile = null,
             string target = null,
             string contextDir = ".",
+            bool pull = false,
             params string[] buildArgs)
         {
             string buildArgsOption = string.Empty;
@@ -41,8 +42,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
             string targetArg = target == null ? string.Empty : $" --target {target}";
             string dockerfileArg = dockerfile == null ? string.Empty : $" -f {dockerfile}";
+            string pullArg = pull ? " --pull" : string.Empty;
 
-            ExecuteWithLogging($"build -t {tag}{targetArg}{buildArgsOption}{dockerfileArg} {contextDir}");
+            ExecuteWithLogging($"build -t {tag}{targetArg}{buildArgsOption}{dockerfileArg}{pullArg} {contextDir}");
         }
 
         public static bool ContainerExists(string name) => ResourceExists("container", $"-f \"name={name}\"");

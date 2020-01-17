@@ -8,14 +8,29 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public class SampleImageData : ImageData
     {
+        /// <summary>
+        /// Gets or sets a value indicating that this represents a local sample only and is not published.
+        /// </summary>
+        public bool LocalOnly { get; set; }
+
+        public string Dockerfile { get; set; }
+
         public string GetImage(SampleImageType imageType, DockerHelper dockerHelper)
         {
             string tagPrefix = Enum.GetName(typeof(SampleImageType), imageType).ToLowerInvariant();
             string tag = GetTagName(tagPrefix, OS);
+            if (LocalOnly)
+            {
+                tag += "-local";
+            }
+
             string imageName = GetImageName(tag, "samples");
 
-            PullImageIfNecessary(imageName, dockerHelper);
-
+            if (!LocalOnly)
+            {
+                PullImageIfNecessary(imageName, dockerHelper);
+            }
+            
             return imageName;
         }
     }

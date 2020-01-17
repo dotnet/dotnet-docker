@@ -59,17 +59,33 @@ namespace Microsoft.DotNet.Docker.Tests
         
         private static readonly SampleImageData[] s_linuxSampleTestData =
         {
-            new SampleImageData { OS = OS.BusterSlim,  Arch = Arch.Amd64 },
-            new SampleImageData { OS = OS.BusterSlim,  Arch = Arch.Arm },
-            new SampleImageData { OS = OS.BusterSlim,  Arch = Arch.Arm64 },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Amd64, Dockerfile = "Dockerfile" },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm,   Dockerfile = "Dockerfile" },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm64, Dockerfile = "Dockerfile" },
+
+            new SampleImageData { OS = OS.Alpine310,  Arch = Arch.Arm64, Dockerfile = "Dockerfile.alpine-arm64",    LocalOnly = true },
+            new SampleImageData { OS = OS.Alpine310,  Arch = Arch.Amd64, Dockerfile = "Dockerfile.alpine-x64",      LocalOnly = true },
+            new SampleImageData { OS = OS.Alpine310,  Arch = Arch.Amd64, Dockerfile = "Dockerfile.alpine-x64-slim", LocalOnly = true },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm,   Dockerfile = "Dockerfile.debian-arm32",    LocalOnly = true },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm64, Dockerfile = "Dockerfile.debian-arm64",    LocalOnly = true },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Amd64, Dockerfile = "Dockerfile.debian-x64",      LocalOnly = true },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Amd64, Dockerfile = "Dockerfile.debian-x64-slim", LocalOnly = true },
+            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Arm,   Dockerfile = "Dockerfile.ubuntu-arm32",    LocalOnly = true },
+            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Arm64, Dockerfile = "Dockerfile.ubuntu-arm64",    LocalOnly = true },
+            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Amd64, Dockerfile = "Dockerfile.ubuntu-x64",      LocalOnly = true },
+            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Amd64, Dockerfile = "Dockerfile.ubuntu-x64-slim", LocalOnly = true },
         };
 
         private static readonly SampleImageData[] s_windowsSampleTestData =
         {
-            new SampleImageData { OS = OS.NanoServer1809,  Arch = Arch.Amd64 },
-            new SampleImageData { OS = OS.NanoServer1809,  Arch = Arch.Arm },
-            new SampleImageData { OS = OS.NanoServer1903,  Arch = Arch.Amd64 },
-            new SampleImageData { OS = OS.NanoServer1909,  Arch = Arch.Amd64 },
+            new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Amd64, Dockerfile = "Dockerfile" },
+            new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Arm,   Dockerfile = "Dockerfile" },
+            new SampleImageData { OS = OS.NanoServer1903, Arch = Arch.Amd64, Dockerfile = "Dockerfile" },
+            new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, Dockerfile = "Dockerfile" },
+
+            new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Arm,   Dockerfile = "Dockerfile.nanoserver-arm32",    LocalOnly = true },
+            new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, Dockerfile = "Dockerfile.nanoserver-x64",      LocalOnly = true },
+            new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, Dockerfile = "Dockerfile.nanoserver-x64-slim", LocalOnly = true },
         };
 
         public static IEnumerable<ProductImageData> GetImageData()
