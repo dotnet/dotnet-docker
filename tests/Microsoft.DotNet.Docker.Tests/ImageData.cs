@@ -124,7 +124,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 JObject repoInfo = (JObject)ImageData.ImageInfoData.Value
                     .FirstOrDefault(imageInfoRepo => imageInfoRepo["repo"].ToString() == repo);
 
-                if (repoInfo["images"] != null)
+                if (repoInfo?["images"] != null)
                 {
                     imageExistsInStaging = repoInfo["images"]
                         .Cast<JProperty>()
