@@ -66,10 +66,10 @@ ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 The presence of the `test` stage costs very little and doesn't significantly change the behavior of the build if you don't specifically target it. By default, the test stage `ENTRYPOINT` will not be used if you build this Dockerfile
 
-The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled:
+The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled, using PowerShell:
 
 ```console
-C:\git\dotnet-docker\samples\complexapp> docker build --pull --target test -t complexapp-test .
+PS C:\git\dotnet-docker\samples\complexapp> docker build --pull --target test -t complexapp-test .
 Sending build context to Docker daemon  12.81MB
 Step 1/15 : FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 3.1: Pulling from dotnet/core/sdk
@@ -77,9 +77,9 @@ Successfully built f98c5453be3d
 Successfully tagged complexapp-test:latest
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 
-C:\git\dotnet-docker\samples\complexapp>mkdir TestResults
+PS C:\git\dotnet-docker\samples\complexapp> mkdir TestResults
 
-C:\git\dotnet-docker\samples\complexapp>docker run --rm -v %cd%/TestResults:/source/tests/TestResults complexapp-test
+PS C:\git\dotnet-docker\samples\complexapp> docker run --rm -v $pwd/TestResults:/source/tests/TestResults complexapp-test
 Test run for /source/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.1)
 Microsoft (R) Test Execution Command Line Tool Version 16.3.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
@@ -94,15 +94,14 @@ Total tests: 2
      Passed: 2
  Total time: 1.8321 Seconds
 
-C:\git\dotnet-docker\samples\complexapp>dir TestResults
- Volume in drive C is Windows
- Volume Serial Number is 384B-0B6E
+PS C:\git\dotnet-docker\samples\complexapp> dir .\TestResults\
 
- Directory of C:\git\dotnet-docker\samples\complexapp\TestResults
 
-12/19/2019  03:48 PM    <DIR>          .
-12/19/2019  03:48 PM    <DIR>          ..
-12/19/2019  03:48 PM             3,635 _fd11ea307347_2019-12-19_23_48_20.trx
+    Directory: C:\git\dotnet-docker\samples\complexapp\TestResults
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           1/14/2020  9:33 PM           3635 _c4f066aca651_2020-01-15_05_33_22.trx
 ```
 
 The [run-test-stage.ps1](run-test-stage.ps1) [PowerShell](https://github.com/powershell/powershell) script implements the same workflow. It may be easier to understand the workflow by reading and running the script.
@@ -112,22 +111,26 @@ The following instructions demonstrate this scenario in various configurations, 
 ### Linux or macOS
 
 ```console
-$ docker build --pull --target test -t complexapp-test .
-$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp-test
+docker build --pull --target test -t complexapp-test .
+docker run --rm -v ${pwd}/TestResults:/source/tests/TestResults complexapp-test
 ```
 
 ### Windows using Linux containers
 
+The following example uses PowerShell.
+
 ```console
->docker build --pull --target test -t complexapp-test .
->docker run --rm -v %cd%/TestResults:/source/tests/TestResults complexapp-test
+docker build --pull --target test -t complexapp-test .
+docker run --rm -v ${pwd}/TestResults:/source/tests/TestResults complexapp-test
 ```
 
 ### Windows using Windows containers
 
+The following example uses PowerShell.
+
 ```console
->docker build --pull --target test -t complexapp-test .
->docker run --rm -v %cd%/TestResults:c:\source\tests\TestResults complexapp-test
+docker build --pull --target test -t complexapp-test .
+docker run --rm -v ${pwd}/TestResults:c:\source\tests\TestResults complexapp-test
 ```
 
 ## Running tests while building an image

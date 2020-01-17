@@ -26,10 +26,10 @@ curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-do
 
 ## Running tests
 
-The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following pattern, with `docker run` and volume mounting.  This initial example is demonstrated on Windows (in Linux container mode). Instructions for all OSes follow.
+The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following pattern, with `docker run` and volume mounting.  This initial example is demonstrated on Windows with PowerShell (in Linux container mode). Instructions for all OSes follow.
 
 ```console
-> docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test
+> docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test
 Test run for /app/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.1)
 Microsoft (R) Test Execution Command Line Tool Version 16.3.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
@@ -60,14 +60,18 @@ docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3
 
 ### Windows using Linux containers
 
+This example uses PowerShell.
+
 ```console
-docker run --rm -v %cd%:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
+docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
 ```
 
 ### Windows using Windows containers
 
+This example uses PowerShell.
+
 ```console
-docker run --rm -v %cd%:C:\app -w C:\app\tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
+docker run --rm -v ${pwd}:C:\app -w C:\app\tests mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet test --logger:trx
 ```
 
 ## More Samples
