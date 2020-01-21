@@ -61,6 +61,7 @@ jobs:
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Readme
+    condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
   - script: >
       $(runImageBuilderCmd) publishImageInfo
       $(dotnetBot-userName)
