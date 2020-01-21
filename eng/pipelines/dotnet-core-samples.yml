@@ -6,6 +6,7 @@ pr:
     - nightly
   paths:
     include:
+    - eng/*
     - samples/*
     - tests/*
 variables:
