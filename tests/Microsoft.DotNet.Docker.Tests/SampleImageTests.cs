@@ -48,7 +48,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAspnetSample(SampleImageData imageData)
         {
-            if (imageData.OS == OS.Bionic && imageData.Dockerfile != "Dockerfile.ubuntu-x64")
+            if (imageData.OS == OS.Bionic && imageData.DockerfileSuffix != "ubuntu-x64")
             {
                 return;
             }
@@ -80,20 +80,33 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string appTag = ImageData.GetImageName("complexapp-local-app", "sample");
             string testTag = ImageData.GetImageName("complexapp-local-test", "sample");
-            string sampleFolder = $"{Config.SamplesPath}/complexapp";
+            string sampleFolder = $"samples/complexapp";
             string dockerfilePath = $"{sampleFolder}/Dockerfile";
-            string containerName = ImageData.GenerateContainerName("sample-complex");
+            string testContainerName = ImageData.GenerateContainerName("sample-complex-test");
             string tempDir = null;
             try
             {
+                // Test that the app works
                 DockerHelper.Build(appTag, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages);
+                string containerName = ImageData.GenerateContainerName("sample-complex");
+                string output = DockerHelper.Run(appTag, containerName);
+                Assert.StartsWith("string: The quick brown fox jumps over the lazy dog", output);
+
+                if (DockerHelper.DockerOS == "windows" &&
+                    DockerHelper.DockerArchitecture.StartsWith("arm", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Skipping run app tests due to a Windows issue: https://microsoft.visualstudio.com/OS/_workitems/edit/24672377
+                    return;
+                }
+
+                // Run the app's tests
                 DockerHelper.Build(testTag, dockerfilePath, target: "test", contextDir: sampleFolder);
+                DockerHelper.Run(testTag, testContainerName, skipAutoCleanup: true);
 
-                DockerHelper.Run(testTag, containerName, skipAutoCleanup: true);
-
+                // Copy the test log from the container to the host
                 tempDir = Directory.CreateDirectory(
                     Path.Combine(Path.GetTempPath(), Path.GetRandomFileName())).FullName;
-                DockerHelper.Copy($"{containerName}:/source/tests/TestResults", tempDir);
+                DockerHelper.Copy($"{testContainerName}:/source/tests/TestResults", tempDir);
                 string testLogFile = new DirectoryInfo($"{tempDir}/TestResults").GetFiles("*.trx").First().FullName;
 
                 // Open the test log file and verify the tests passed
@@ -111,7 +124,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     Directory.Delete(tempDir, true);
                 }
 
-                DockerHelper.DeleteContainer(containerName);
+                DockerHelper.DeleteContainer(testContainerName);
                 DockerHelper.DeleteImage(testTag);
                 DockerHelper.DeleteImage(appTag);
             }
@@ -126,10 +139,10 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageType = Enum.GetName(typeof(SampleImageType), sampleImageType).ToLowerInvariant();
             try
             {
-                if (imageData.LocalOnly)
+                if (!imageData.IsPublished)
                 {
-                    string sampleFolder = $"{Config.SamplesPath}/{imageType}";
-                    string dockerfilePath = $"{sampleFolder}/{imageData.Dockerfile}";
+                    string sampleFolder = $"samples/{imageType}";
+                    string dockerfilePath = $"{sampleFolder}/Dockerfile.{imageData.DockerfileSuffix}";
 
                     DockerHelper.Build(image, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages);
                 }
@@ -139,7 +152,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             finally
             {
-                if (imageData.LocalOnly)
+                if (!imageData.IsPublished)
                 {
                     DockerHelper.DeleteImage(image);
                 }

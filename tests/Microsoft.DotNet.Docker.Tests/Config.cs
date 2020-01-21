@@ -18,7 +18,6 @@ namespace Microsoft.DotNet.Docker.Tests
             Environment.GetEnvironmentVariable("RUNNING_TESTS_IN_CONTAINER") != null;
         public static string RepoPrefix { get; } = Environment.GetEnvironmentVariable("REPO_PREFIX") ?? string.Empty;
         public static string Registry { get; } = Environment.GetEnvironmentVariable("REGISTRY") ?? GetManifestRegistry();
-        public static string SamplesPath { get; } = Environment.GetEnvironmentVariable("SAMPLES_PATH");
 
         private static string GetManifestRegistry()
         {

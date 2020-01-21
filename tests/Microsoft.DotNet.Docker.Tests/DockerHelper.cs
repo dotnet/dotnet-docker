@@ -13,6 +13,7 @@ namespace Microsoft.DotNet.Docker.Tests
     public class DockerHelper
     {
         public static string DockerOS => GetDockerOS();
+        public static string DockerArchitecture => GetDockerArch();
         public static string ContainerWorkDir => IsLinuxContainerModeEnabled ? "/sandbox" : "c:\\sandbox";
         public static bool IsLinuxContainerModeEnabled => string.Equals(DockerOS, "linux", StringComparison.OrdinalIgnoreCase);
 
@@ -185,6 +186,7 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         private static string GetDockerOS() => Execute("version -f \"{{ .Server.Os }}\"");
+        private static string GetDockerArch() => Execute("version -f \"{{ .Server.Arch }}\"");
 
         public string GetContainerAddress(string container) =>
             ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + container);
