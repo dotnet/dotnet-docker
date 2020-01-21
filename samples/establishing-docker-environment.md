@@ -12,7 +12,7 @@ The [Dockerfile](dotnetapp/Dockerfile) includes the following lines:
 
 ```Dockerfile
 COPY *.csproj .
-RUN dotnet restore
+RUN dotnet restore 
 ```
 
 These lines copy any C# `.csproj` project files in the current directory and then restore them.
