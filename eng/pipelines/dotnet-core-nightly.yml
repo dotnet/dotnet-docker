@@ -8,8 +8,6 @@ pr:
     include:
     - nightly
   paths:
-    include:
-    - '*'
     exclude:
     - samples/*
 

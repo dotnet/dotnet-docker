@@ -4,8 +4,6 @@ pr:
     include:
     - master
   paths:
-    include:
-    - '*'
     exclude:
     - samples/*
 
