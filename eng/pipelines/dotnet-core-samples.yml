@@ -1,5 +1,12 @@
 trigger: none
-pr: none
+pr:
+  branches:
+    include:
+      - pipeline-test
+  paths:
+    include:
+      - samples/*
+      - tests/*
 variables:
 - template: variables/common.yml
 - name: manifest
