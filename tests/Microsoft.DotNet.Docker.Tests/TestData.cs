@@ -84,7 +84,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, IsPublished = true },
 
             new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Arm,   DockerfileSuffix = "nanoserver-arm32" },
-            new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64"  },
+            new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
             new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
         };
 

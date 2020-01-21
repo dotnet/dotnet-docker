@@ -92,7 +92,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 string output = DockerHelper.Run(appTag, containerName);
                 Assert.StartsWith("string: The quick brown fox jumps over the lazy dog", output);
 
-                if (DockerHelper.DockerOS == "windows" &&
+                if (!DockerHelper.IsLinuxContainerModeEnabled &&
                     DockerHelper.DockerArchitecture.StartsWith("arm", StringComparison.OrdinalIgnoreCase))
                 {
                     // Skipping run app tests due to a Windows issue: https://microsoft.visualstudio.com/OS/_workitems/edit/24672377
