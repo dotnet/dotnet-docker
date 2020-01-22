@@ -1,5 +1,14 @@
 trigger: none
-pr: none
+pr:
+  branches:
+    include:
+    - master
+    - nightly
+  paths:
+    include:
+    - eng/*
+    - samples/*
+    - tests/*
 variables:
 - template: variables/common.yml
 - name: manifest

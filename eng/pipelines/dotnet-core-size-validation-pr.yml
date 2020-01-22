@@ -1,6 +1,11 @@
 trigger: none
 pr:
-- nightly
+  branches:
+    include:
+    - nightly
+  paths:
+    exclude:
+    - samples/*
 
 variables:
 - template: variables/common.yml

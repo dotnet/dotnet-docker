@@ -4,7 +4,12 @@ trigger:
     include:
     - nightly
 pr:
-- nightly
+  branches:
+    include:
+    - nightly
+  paths:
+    exclude:
+    - samples/*
 
 variables:
 - template: variables/common.yml
