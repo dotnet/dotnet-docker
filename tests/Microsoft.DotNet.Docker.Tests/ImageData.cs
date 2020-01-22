@@ -71,7 +71,9 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public virtual string GetIdentifier(string type) => $"{type}-{DateTime.Now.ToFileTime()}";
+        public virtual string GetIdentifier(string type) => GenerateContainerName(type);
+
+        public static string GenerateContainerName(string prefix) => $"{prefix}-{DateTime.Now.ToFileTime()}";
 
         protected void PullImageIfNecessary(string imageName, DockerHelper dockerHelper)
         {
@@ -86,7 +88,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        protected string GetImageName(string tag, string variantName)
+        public static string GetImageName(string tag, string variantName)
         {
             string repoSuffix = Config.IsNightlyRepo ? "-nightly" : string.Empty;
             string repo = $"dotnet/core{repoSuffix}/{variantName}";
@@ -122,7 +124,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 JObject repoInfo = (JObject)ImageData.ImageInfoData.Value
                     .FirstOrDefault(imageInfoRepo => imageInfoRepo["repo"].ToString() == repo);
 
-                if (repoInfo["images"] != null)
+                if (repoInfo?["images"] != null)
                 {
                     imageExistsInStaging = repoInfo["images"]
                         .Cast<JProperty>()
@@ -139,7 +141,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public override string ToString()
         {
-            return typeof(ImageData).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            return this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
                 .Select(propInfo => $"{propInfo.Name}='{propInfo.GetValue(this) ?? "<null>"}'")
                 .Aggregate((working, next) => $"{working}, {next}");
         }

@@ -31,8 +31,8 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V3_0, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
             new ProductImageData { Version = V3_0, OS = OS.Disco,        Arch = Arch.Arm64 },
             new ProductImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Arm64 },
-            new ProductImageData { Version = V3_0, OS = OS.Alpine39,     Arch = Arch.Arm64,    SdkOS = OS.Buster },
-            new ProductImageData { Version = V3_0, OS = OS.Alpine310,    Arch = Arch.Arm64,    SdkOS = OS.Buster },
+            new ProductImageData { Version = V3_0, OS = OS.Alpine39,     Arch = Arch.Arm64,   SdkOS = OS.Buster },
+            new ProductImageData { Version = V3_0, OS = OS.Alpine310,    Arch = Arch.Arm64,   SdkOS = OS.Buster },
             new ProductImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Amd64 },
@@ -40,7 +40,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Arm },
             new ProductImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
             new ProductImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Arm64 },
-            new ProductImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Arm64,    SdkOS = OS.Buster },
+            new ProductImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Arm64,   SdkOS = OS.Buster },
         };
         private static readonly ProductImageData[] s_windowsTestData =
         {
@@ -59,17 +59,33 @@ namespace Microsoft.DotNet.Docker.Tests
         
         private static readonly SampleImageData[] s_linuxSampleTestData =
         {
-            new SampleImageData { OS = OS.BusterSlim,  Arch = Arch.Amd64 },
-            new SampleImageData { OS = OS.BusterSlim,  Arch = Arch.Arm },
-            new SampleImageData { OS = OS.BusterSlim,  Arch = Arch.Arm64 },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Amd64, IsPublished = true },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm,   IsPublished = true },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm64, IsPublished = true },
+
+            new SampleImageData { OS = OS.Alpine310,  Arch = Arch.Arm64, DockerfileSuffix = "alpine-arm64" },
+            new SampleImageData { OS = OS.Alpine310,  Arch = Arch.Amd64, DockerfileSuffix = "alpine-x64" },
+            new SampleImageData { OS = OS.Alpine310,  Arch = Arch.Amd64, DockerfileSuffix = "alpine-x64-slim" },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm,   DockerfileSuffix = "debian-arm32" },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm64, DockerfileSuffix = "debian-arm64" },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Amd64, DockerfileSuffix = "debian-x64" },
+            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Amd64, DockerfileSuffix = "debian-x64-slim" },
+            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Arm,   DockerfileSuffix = "ubuntu-arm32" },
+            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Arm64, DockerfileSuffix = "ubuntu-arm64" },
+            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Amd64, DockerfileSuffix = "ubuntu-x64" },
+            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Amd64, DockerfileSuffix = "ubuntu-x64-slim" },
         };
 
         private static readonly SampleImageData[] s_windowsSampleTestData =
         {
-            new SampleImageData { OS = OS.NanoServer1809,  Arch = Arch.Amd64 },
-            new SampleImageData { OS = OS.NanoServer1809,  Arch = Arch.Arm },
-            new SampleImageData { OS = OS.NanoServer1903,  Arch = Arch.Amd64 },
-            new SampleImageData { OS = OS.NanoServer1909,  Arch = Arch.Amd64 },
+            new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Amd64, IsPublished = true },
+            new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Arm,   IsPublished = true },
+            new SampleImageData { OS = OS.NanoServer1903, Arch = Arch.Amd64, IsPublished = true },
+            new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, IsPublished = true },
+
+            new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Arm,   DockerfileSuffix = "nanoserver-arm32" },
+            new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
+            new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
         };
 
         public static IEnumerable<ProductImageData> GetImageData()

@@ -1,6 +1,11 @@
 trigger: none
 pr:
-- master
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - samples/*
 
 variables:
 - template: variables/common.yml
