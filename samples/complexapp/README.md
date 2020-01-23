@@ -104,8 +104,6 @@ Mode                 LastWriteTime         Length Name
 -a---           1/14/2020  9:33 PM           3635 _c4f066aca651_2020-01-15_05_33_22.trx
 ```
 
-The [run-test-stage.ps1](run-test-stage.ps1) [PowerShell](https://github.com/powershell/powershell) script implements the same workflow. It may be easier to understand the workflow by reading and running the script.
-
 The following instructions demonstrate this scenario in various configurations, with logging enabled.
 
 ### Linux or macOS
