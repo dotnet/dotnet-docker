@@ -24,7 +24,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 tag += "-local";
             }
 
-            string imageName = GetImageName(tag, "samples");
+            string imageName = GetImageName(tag);
 
             if (IsPublished)
             {
@@ -32,6 +32,11 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             
             return imageName;
+        }
+
+        public static string GetImageName(string tag)
+        {
+            return GetImageName(tag, "samples", repoSuffix: String.Empty);
         }
     }
 }

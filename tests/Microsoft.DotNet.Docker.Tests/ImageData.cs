@@ -91,6 +91,11 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string GetImageName(string tag, string variantName)
         {
             string repoSuffix = Config.IsNightlyRepo ? "-nightly" : string.Empty;
+            return GetImageName(tag, variantName, repoSuffix);
+        }
+
+        protected static string GetImageName(string tag, string variantName, string repoSuffix)
+        {
             string repo = $"dotnet/core{repoSuffix}/{variantName}";
             string registry = GetRegistryName(repo, tag);
 

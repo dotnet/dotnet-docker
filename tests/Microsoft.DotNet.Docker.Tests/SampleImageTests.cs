@@ -78,8 +78,8 @@ namespace Microsoft.DotNet.Docker.Tests
         [Fact]
         public void VerifyComplexAppSample()
         {
-            string appTag = ImageData.GetImageName("complexapp-local-app", "sample");
-            string testTag = ImageData.GetImageName("complexapp-local-test", "sample");
+            string appTag = SampleImageData.GetImageName("complexapp-local-app");
+            string testTag = SampleImageData.GetImageName("complexapp-local-test");
             string sampleFolder = $"samples/complexapp";
             string dockerfilePath = $"{sampleFolder}/Dockerfile";
             string testContainerName = ImageData.GenerateContainerName("sample-complex-test");
