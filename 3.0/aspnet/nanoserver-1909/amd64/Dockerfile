@@ -1,6 +1,6 @@
 # escape=`
 
-ARG REPO=mcr.microsoft.com/dotnet/core-nightly/runtime
+ARG REPO=mcr.microsoft.com/dotnet/core/runtime
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:1909 AS installer
