@@ -34,6 +34,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public async Task Execute()
         {
+            if (imageData.Version.Major == 5)
+            {
+                // TODO: Remove once https://github.com/dotnet/templating/issues/2245 is fixed.
+                OutputHelper.WriteLine(".NET Core 5.0 SDK images don't yet include 5.0 templates.");
+                return;
+            }
+
             string appDir = CreateTestAppWithSdkImage(_isWeb ? "web" : "console");
             List<string> tags = new List<string>();
 
