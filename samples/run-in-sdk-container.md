@@ -153,7 +153,7 @@ The examples above use environment variables to configure ASP.NET Core. You can 
 The following JSON segment shows the `container` profile that was added to enable this workflow.
 
 ```json
-"container": {
+"publicdev": {
   "commandName": "Project",
   "launchBrowser": true,
   "applicationUrl": "http://+:80",
@@ -168,7 +168,7 @@ The following instructions demonstrate this scenario in various environments:
 ### Linux or macOS
 
 ```console
-docker run --rm -it -p 8000:80 -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
+docker run --rm -it -p 8000:80 -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile publicdev
 ```
 
 ### Windows using Linux containers
@@ -176,7 +176,7 @@ docker run --rm -it -p 8000:80 -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/c
 The following example uses PowerShell.
 
 ```console
-docker run --rm -it -p 8000:80 -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
+docker run --rm -it -p 8000:80 -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile publicdev
 ```
 
 ### Windows using Windows containers
@@ -184,7 +184,7 @@ docker run --rm -it -p 8000:80 -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/c
 The following example uses PowerShell.
 
 ```console
-docker run --rm -it -p 8000:80 -v ${pwd}:C:\app -w C:\app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile container
+docker run --rm -it -p 8000:80 -v ${pwd}:C:\app -w C:\app mcr.microsoft.com/dotnet/core/sdk:3.1 dotnet run --launch-profile publicdev
 ```
 
 ## More Samples
