@@ -294,12 +294,6 @@
                 },
                 "3.1-alpine3.10": {
                   "documentationGroup": "3.1"
-                },
-                "$(5.0-RuntimeVersion)-alpine3.10": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-alpine3.10": {
-                  "documentationGroup": "5.0"
                 }
               }
             }
@@ -324,12 +318,6 @@
                 },
                 "3.1-alpine3.10-arm64v8": {
                   "documentationGroup": "3.1"
-                },
-                "$(5.0-RuntimeVersion)-alpine3.10-arm64v8": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-alpine3.10-arm64v8": {
-                  "documentationGroup": "5.0"
                 }
               },
               "variant": "v8"
@@ -450,12 +438,6 @@
                 },
                 "3.1-bionic": {
                   "documentationGroup": "3.1"
-                },
-                "$(5.0-RuntimeVersion)-bionic": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-bionic": {
-                  "documentationGroup": "5.0"
                 }
               }
             }
@@ -480,12 +462,6 @@
                 },
                 "3.1-bionic-arm32v7": {
                   "documentationGroup": "3.1"
-                },
-                "$(5.0-RuntimeVersion)-bionic-arm32v7": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-bionic-arm32v7": {
-                  "documentationGroup": "5.0"
                 }
               },
               "variant": "v7"
@@ -511,12 +487,6 @@
                 },
                 "3.1-bionic-arm64v8": {
                   "documentationGroup": "3.1"
-                },
-                "$(5.0-RuntimeVersion)-bionic-arm64v8": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-bionic-arm64v8": {
-                  "documentationGroup": "5.0"
                 }
               },
               "variant": "v8"
@@ -1349,48 +1319,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "5.0/runtime/alpine3.10/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.10": {},
-                "5.0-alpine3.10": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "5.0/runtime/alpine3.10/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.10-arm64v8": {},
-                "5.0-alpine3.10-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGrouping": [
-                {
-                  "name": "pr-build",
-                  "dependencies": [
-                    "$(Repo:sdk):5.0-buster-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
               "dockerfile": "5.0/runtime/alpine3.11/amd64",
               "os": "linux",
               "osVersion": "alpine3.11",
@@ -1428,58 +1356,6 @@
                   ]
                 }
               ]
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "5.0/runtime/bionic/amd64",
-              "os": "linux",
-              "osVersion": "bionic",
-              "tags": {
-                "$(5.0-RuntimeVersion)-bionic": {},
-                "5.0-bionic": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "architecture": "arm",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "5.0/runtime/bionic/arm32v7",
-              "os": "linux",
-              "osVersion": "bionic",
-              "tags": {
-                "$(5.0-RuntimeVersion)-bionic-arm32v7": {},
-                "5.0-bionic-arm32v7": {}
-              },
-              "variant": "v7"
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "5.0/runtime/bionic/arm64v8",
-              "os": "linux",
-              "osVersion": "bionic",
-              "tags": {
-                "$(5.0-RuntimeVersion)-bionic-arm64v8": {},
-                "5.0-bionic-arm64v8": {}
-              },
-              "variant": "v8"
             }
           ]
         },
@@ -2336,48 +2212,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "5.0/aspnet/alpine3.10/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.10": {},
-                "5.0-alpine3.10": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "5.0/aspnet/alpine3.10/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.10-arm64v8": {},
-                "5.0-alpine3.10-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGrouping": [
-                {
-                  "name": "pr-build",
-                  "dependencies": [
-                    "$(Repo:sdk):5.0-buster-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
               "dockerfile": "5.0/aspnet/alpine3.11/amd64",
               "os": "linux",
               "osVersion": "alpine3.11",
@@ -2415,58 +2249,6 @@
                   ]
                 }
               ]
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "5.0/aspnet/bionic/amd64",
-              "os": "linux",
-              "osVersion": "bionic",
-              "tags": {
-                "$(5.0-RuntimeVersion)-bionic": {},
-                "5.0-bionic": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "architecture": "arm",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "5.0/aspnet/bionic/arm32v7",
-              "os": "linux",
-              "osVersion": "bionic",
-              "tags": {
-                "$(5.0-RuntimeVersion)-bionic-arm32v7": {},
-                "5.0-bionic-arm32v7": {}
-              },
-              "variant": "v7"
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "5.0/aspnet/bionic/arm64v8",
-              "os": "linux",
-              "osVersion": "bionic",
-              "tags": {
-                "$(5.0-RuntimeVersion)-bionic-arm64v8": {},
-                "5.0-bionic-arm64v8": {}
-              },
-              "variant": "v8"
             }
           ]
         },
@@ -3107,22 +2889,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "5.0/sdk/alpine3.10/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(5.0-SdkVersion)-alpine3.10": {},
-                "5.0-alpine3.10": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
               "dockerfile": "5.0/sdk/alpine3.11/amd64",
               "os": "linux",
               "osVersion": "alpine3.11",
@@ -3132,49 +2898,6 @@
                 "$(5.0-SdkVersion)-alpine": {},
                 "5.0-alpine": {}
               }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "dockerfile": "5.0/sdk/bionic/amd64",
-              "os": "linux",
-              "osVersion": "bionic",
-              "tags": {
-                "$(5.0-SdkVersion)-bionic": {},
-                "5.0-bionic": {}
-              }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "architecture": "arm",
-              "dockerfile": "5.0/sdk/bionic/arm32v7",
-              "os": "linux",
-              "osVersion": "bionic",
-              "tags": {
-                "$(5.0-SdkVersion)-bionic-arm32v7": {},
-                "5.0-bionic-arm32v7": {}
-              },
-              "variant": "v7"
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "dockerfile": "5.0/sdk/bionic/arm64v8",
-              "os": "linux",
-              "osVersion": "bionic",
-              "tags": {
-                "$(5.0-SdkVersion)-bionic-arm64v8": {},
-                "5.0-bionic-arm64v8": {}
-              },
-              "variant": "v8"
             }
           ]
         },

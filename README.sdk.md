@@ -68,9 +68,7 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.100-alpha-buster, 5.0-buster, 5.0.100-alpha, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/buster/amd64/Dockerfile) | Debian 10
 5.0.100-alpha-alpine3.11, 5.0-alpine3.11, 5.0.100-alpha-alpine, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/alpine3.11/amd64/Dockerfile) | Alpine 3.11
-5.0.100-alpha-alpine3.10, 5.0-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
 5.0.100-alpha-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/focal/amd64/Dockerfile) | Ubuntu 20.04
-5.0.100-alpha-bionic, 5.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -86,7 +84,6 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.100-alpha-buster-arm64v8, 5.0-buster-arm64v8, 5.0.100-alpha, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/buster/arm64v8/Dockerfile) | Debian 10
 5.0.100-alpha-focal-arm64v8, 5.0-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/focal/arm64v8/Dockerfile) | Ubuntu 20.04
-5.0.100-alpha-bionic-arm64v8, 5.0-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -105,7 +102,6 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.100-alpha-buster-arm32v7, 5.0-buster-arm32v7, 5.0.100-alpha, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/buster/arm32v7/Dockerfile) | Debian 10
 5.0.100-alpha-focal-arm32v7, 5.0-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/focal/arm32v7/Dockerfile) | Ubuntu 20.04
-5.0.100-alpha-bionic-arm32v7, 5.0-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 ## Windows Server, version 1909 amd64 Tags
 Tag | Dockerfile
