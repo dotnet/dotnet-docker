@@ -34,10 +34,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public async Task Execute()
         {
-            if (imageData.Version.Major == 5)
+            if (_imageData.Version.Major == 5)
             {
-                // TODO: Remove once https://github.com/dotnet/templating/issues/2245 is fixed.
-                OutputHelper.WriteLine(".NET Core 5.0 SDK images don't yet include 5.0 templates.");
+                _outputHelper.WriteLine(
+                    "SDK doesn't include 5.0 templates (https://github.com/dotnet/windowsdesktop/issues/427), skip testing");
                 return;
             }
 
