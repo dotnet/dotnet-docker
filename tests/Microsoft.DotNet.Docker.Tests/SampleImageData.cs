@@ -8,15 +8,35 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public class SampleImageData : ImageData
     {
+        /// <summary>
+        /// Gets or sets a value indicating that this sample is published as a Docker image.
+        /// </summary>
+        public bool IsPublished { get; set; }
+
+        public string DockerfileSuffix { get; set; }
+
         public string GetImage(SampleImageType imageType, DockerHelper dockerHelper)
         {
             string tagPrefix = Enum.GetName(typeof(SampleImageType), imageType).ToLowerInvariant();
             string tag = GetTagName(tagPrefix, OS);
-            string imageName = GetImageName(tag, "samples");
+            if (!IsPublished)
+            {
+                tag += "-local";
+            }
 
-            PullImageIfNecessary(imageName, dockerHelper);
+            string imageName = GetImageName(tag);
 
+            if (IsPublished)
+            {
+                PullImageIfNecessary(imageName, dockerHelper);
+            }
+            
             return imageName;
+        }
+
+        public static string GetImageName(string tag)
+        {
+            return GetImageName(tag, "samples", repoSuffix: String.Empty);
         }
     }
 }

@@ -8,7 +8,6 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
-using static Microsoft.DotNet.Docker.Tests.ImageVersion;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
