@@ -18,7 +18,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         // Ubuntu
         public const string Bionic = "bionic";
-        public const string Disco = "disco";
 
         // Windows
         public const string NanoServer1809 = "nanoserver-1809";
