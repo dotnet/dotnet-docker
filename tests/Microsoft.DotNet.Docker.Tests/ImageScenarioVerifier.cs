@@ -34,6 +34,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public async Task Execute()
         {
+            if (_imageData.Version.Major == 5)
+            {
+                _outputHelper.WriteLine(
+                    "SDK doesn't include 5.0 templates (https://github.com/dotnet/templating/issues/2245), skip testing");
+                return;
+            }
+
             string appDir = CreateTestAppWithSdkImage(_isWeb ? "web" : "console");
             List<string> tags = new List<string>();
 
