@@ -78,6 +78,11 @@ You can retrieve a list of all available tags for dotnet/core/runtime-deps at ht
 
 See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master/microsoft-support.md) for the support lifecycle.
 
+# Image Update Policy
+
+* We update the supported .NET Core images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:1909, buildpack-deps:bionic-scm, etc.).
+* We publish .NET Core images as part of releasing new versions of .NET Core including major/minor and servicing.
+
 # Feedback
 
 * [File a .NET Core Docker issue](https://github.com/dotnet/dotnet-docker/issues)
@@ -94,4 +99,4 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 * [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
 * [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
 * [Windows Nano Server license](https://hub.docker.com/_/microsoft-windows-nanoserver/) (only applies to Windows containers)
-* [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/en-us/cloud-platform/windows-server-pricing)
+* [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)
