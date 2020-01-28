@@ -114,6 +114,11 @@ You can retrieve a list of all available tags for dotnet/core/sdk at https://mcr
 
 See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master/microsoft-support.md) for the support lifecycle.
 
+# Image Update Policy
+
+* We update the supported .NET Core images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:1909, buildpack-deps:bionic-scm, etc.).
+* We publish .NET Core images as part of releasing new versions of .NET Core including major/minor and servicing.
+
 # Feedback
 
 * [File a .NET Core Docker issue](https://github.com/dotnet/dotnet-docker/issues)
@@ -124,11 +129,6 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 * [File a Microsoft Container Registry (MCR) issue](https://github.com/microsoft/containerregistry/issues)
 * [Ask on Stack Overflow](https://stackoverflow.com/questions/tagged/.net-core)
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/)
-
-# Image Update Policy
-
-* We update the supported .NET Core images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:1909, buildpack-deps:bionic-scm, etc.).
-* We publish .NET Core images as part of releasing new versions of .NET Core including major/minor and servicing.
 
 # License
 
