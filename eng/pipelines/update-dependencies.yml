@@ -1,5 +1,11 @@
 trigger: none
 pr: none
+schedules:
+- cron: "0 13,17,22 * * Mon-Fri"
+  displayName: M-F 3 times daily build
+  branches:
+    include:
+    - nightly
 variables:
 - group: DotNet-Maestro
 - template: variables/common.yml
@@ -7,6 +13,8 @@ jobs:
 - job: UpdateDependencies
   pool: Hosted Ubuntu 1604
   steps:
+  - script: $(engPath)/get-drop-versions.sh $(channel)
+    displayName: Get Versions
   - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
     displayName: Build Update Dependencies Tool
   - script: >
@@ -14,5 +22,7 @@ jobs:
       --user dotnet-maestro-bot
       --email dotnet-maestro-bot@microsoft.com
       --password $(BotAccount-dotnet-maestro-bot-PAT)
-      --build-info $(buildInfoUrl)
+      --runtime-version $(runtimeVer)
+      --sdk-version $(sdkVer)
+      --aspnet-version $(aspnetVer)
     displayName: Run Update Dependencies
