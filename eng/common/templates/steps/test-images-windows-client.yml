@@ -21,7 +21,7 @@ steps:
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
 - powershell: >
-    ./tests/run-tests.ps1
+    $(testScriptPath)
     -VersionFilter '$(dotnetVersion)'
     -OSFilter '$(osVariant)'
     $(optionalTestArgs)
