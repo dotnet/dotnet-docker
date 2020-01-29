@@ -34,7 +34,7 @@ namespace Dotnet.Docker
 
                 Options.Parse(args);
 
-                IEnumerable<IDependencyInfo> buildInfos = GetBuildInfoAsync();
+                IEnumerable<IDependencyInfo> buildInfos = GetBuildInfo();
                 DependencyUpdateResults updateResults = UpdateFiles(buildInfos);
                 if (updateResults.ChangesDetected())
                 {
@@ -69,20 +69,24 @@ namespace Dotnet.Docker
             return DependencyUpdateUtils.Update(updaters, buildInfos);
         }
 
-        private static IEnumerable<IDependencyInfo> GetBuildInfoAsync()
+        private static IEnumerable<IDependencyInfo> GetBuildInfo()
         {
+            List<IDependencyInfo> buildInfo = new List<IDependencyInfo>();
+
             if (Options.AspnetVersion != null)
             {
-                yield return CreateDependencyBuildInfo(AspNetCoreBuildInfoName, Options.AspnetVersion);
+                buildInfo.Add(CreateDependencyBuildInfo(AspNetCoreBuildInfoName, Options.AspnetVersion));
             }
             if (Options.RuntimeVersion != null)
             {
-                yield return CreateDependencyBuildInfo(RuntimeBuildInfoName, Options.RuntimeVersion);
+                buildInfo.Add(CreateDependencyBuildInfo(RuntimeBuildInfoName, Options.RuntimeVersion));
             }
             if (Options.SdkVersion != null)
             {
-                yield return CreateDependencyBuildInfo(SdkBuildInfoName, Options.SdkVersion);
+                buildInfo.Add(CreateDependencyBuildInfo(SdkBuildInfoName, Options.SdkVersion));
             }
+
+            return buildInfo;
         }
 
         private static IDependencyInfo CreateDependencyBuildInfo(string name, IEnumerable<BuildIdentity> builds)
