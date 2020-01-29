@@ -1,5 +1,5 @@
 # build image
-FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build-env
 
 WORKDIR /update-dependencies
 
@@ -14,7 +14,7 @@ RUN dotnet publish -c Release -o out --no-restore
 
 
 # runtime image
-FROM mcr.microsoft.com/dotnet/core/runtime:2.1-stretch-slim
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim
 
 # install git
 RUN apt-get update \
@@ -37,12 +37,16 @@ RUN apt-get update \
 
 # install PowerShell
 RUN apt-get update \
-    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main" > /etc/apt/sources.list.d/microsoft.list' \
-    && apt-get update \
     && apt-get install -y --no-install-recommends \
-        powershell=6.1.0-1.debian.9 \
-    && rm -rf /var/lib/apt/lists/*
+        less \
+        liblttng-ust0 \
+        locales \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.0.0-rc.2/powershell-7.0.0-rc.2-linux-x64.tar.gz -o /tmp/powershell.tar.gz \
+    && mkdir -p /opt/microsoft/powershell/7-preview \
+    && tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7-preview \
+    && chmod +x /opt/microsoft/powershell/7-preview/pwsh \
+    && ln -s /opt/microsoft/powershell/7-preview/pwsh /usr/bin/pwsh
 
 # copy update-dependencies
 WORKDIR /update-dependencies
