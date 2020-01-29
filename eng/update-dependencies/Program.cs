@@ -6,9 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using LibGit2Sharp;
 using Microsoft.DotNet.VersionTools;
 using Microsoft.DotNet.VersionTools.Automation;
@@ -36,7 +34,7 @@ namespace Dotnet.Docker
 
                 Options.Parse(args);
 
-                IEnumerable<IDependencyInfo> buildInfos = await GetBuildInfoAsync();
+                IEnumerable<IDependencyInfo> buildInfos = GetBuildInfo();
                 DependencyUpdateResults updateResults = UpdateFiles(buildInfos);
                 if (updateResults.ChangesDetected())
                 {
@@ -71,62 +69,24 @@ namespace Dotnet.Docker
             return DependencyUpdateUtils.Update(updaters, buildInfos);
         }
 
-        private static async Task<IEnumerable<IDependencyInfo>> GetBuildInfoAsync()
+        private static IEnumerable<IDependencyInfo> GetBuildInfo()
         {
-            IEnumerable<IDependencyInfo> buildInfo;
+            List<IDependencyInfo> buildInfo = new List<IDependencyInfo>();
 
-            if (Options.BuildInfoUrl != null)
+            if (Options.AspnetVersion != null)
             {
-                buildInfo = await LoadBuildInfoXml();
+                buildInfo.Add(CreateDependencyBuildInfo(AspNetCoreBuildInfoName, Options.AspnetVersion));
             }
-            else
+            if (Options.RuntimeVersion != null)
             {
-                List<IDependencyInfo> buildInfoList = new List<IDependencyInfo>();
-                buildInfo = buildInfoList;
-
-                if (Options.AspnetVersion != null)
-                {
-                    buildInfoList.Add(CreateDependencyBuildInfo(AspNetCoreBuildInfoName, Options.AspnetVersion));
-                }
-                if (Options.RuntimeVersion != null)
-                {
-                    buildInfoList.Add(CreateDependencyBuildInfo(RuntimeBuildInfoName, Options.RuntimeVersion));
-                }
-                if (Options.SdkVersion != null)
-                {
-                    buildInfoList.Add(CreateDependencyBuildInfo(SdkBuildInfoName, Options.SdkVersion));
-                }
+                buildInfo.Add(CreateDependencyBuildInfo(RuntimeBuildInfoName, Options.RuntimeVersion));
+            }
+            if (Options.SdkVersion != null)
+            {
+                buildInfo.Add(CreateDependencyBuildInfo(SdkBuildInfoName, Options.SdkVersion));
             }
 
             return buildInfo;
-        }
-
-        private static async Task<IEnumerable<IDependencyInfo>> LoadBuildInfoXml()
-        {
-            Trace.TraceInformation($"Retrieving build info from '{Options.BuildInfoUrl}'");
-
-            XDocument buildInfoXml;
-            if (File.Exists(Options.BuildInfoUrl.LocalPath))
-            {
-                buildInfoXml = XDocument.Load(Options.BuildInfoUrl.LocalPath);
-            }
-            else
-            {
-                using (HttpClient client = new HttpClient())
-                using (Stream stream = await client.GetStreamAsync(Options.BuildInfoUrl))
-                {
-                    buildInfoXml = XDocument.Load(stream);
-                }
-            }
-
-            OrchestratedBuildModel buildInfo = OrchestratedBuildModel.Parse(buildInfoXml.Root);
-
-            return new[]
-            {
-                CreateDependencyBuildInfo(SdkBuildInfoName, buildInfo.Builds),
-                CreateDependencyBuildInfo(RuntimeBuildInfoName, buildInfo.Builds),
-                CreateDependencyBuildInfo(AspNetCoreBuildInfoName, buildInfo.Builds),
-            };
         }
 
         private static IDependencyInfo CreateDependencyBuildInfo(string name, IEnumerable<BuildIdentity> builds)
