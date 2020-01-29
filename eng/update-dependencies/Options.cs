@@ -1,7 +1,6 @@
 // Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.CommandLine;
 
 namespace Dotnet.Docker
@@ -9,7 +8,6 @@ namespace Dotnet.Docker
     public class Options
     {
         public string AspnetVersion { get; private set; }
-        public Uri BuildInfoUrl { get; private set; }
         public string GitHubEmail { get; private set; }
         public string GitHubPassword { get; private set; }
         public string GitHubProject => "dotnet-docker";
@@ -24,33 +22,25 @@ namespace Dotnet.Docker
         {
             ArgumentSyntax argSyntax = ArgumentSyntax.Parse(args, syntax =>
             {
-                Uri buildInfoUrl = null;
-                Argument<Uri> buildInfoArg = syntax.DefineOption(
-                    "build-info",
-                    ref buildInfoUrl,
-                    (value) => new Uri(value),
-                    "URL of the build info to update the Dockerfiles with (http(s):// or file://) (alternative to *-version)");
-                BuildInfoUrl = buildInfoUrl;
-
                 string aspnetVersion = null;
                 Argument<string> aspnetVersionArg = syntax.DefineOption(
                     "aspnet-version",
                     ref aspnetVersion,
-                    "ASP.NET version to update the Dockerfiles with (alternative to build-info)");
+                    "ASP.NET version to update the Dockerfiles with");
                 AspnetVersion = aspnetVersion;
 
                 string runtimeVersion = null;
                 Argument<string> runtimeVersionArg = syntax.DefineOption(
                     "runtime-version",
                     ref runtimeVersion,
-                    ".NET runtime version to update the Dockerfiles with (alternative to build-info)");
+                    ".NET runtime version to update the Dockerfiles with");
                 RuntimeVersion = runtimeVersion;
 
                 string sdkVersion = null;
                 Argument<string> sdkVersionArg = syntax.DefineOption(
                     "sdk-version",
                     ref sdkVersion,
-                    "SDK version to update the Dockerfiles with (alternative to build-info)");
+                    "SDK version to update the Dockerfiles with");
                 SdkVersion = sdkVersion;
 
                 string gitHubEmail = null;
