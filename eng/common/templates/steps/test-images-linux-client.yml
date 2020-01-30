@@ -43,7 +43,7 @@ steps:
       targetPath: $(Build.ArtifactStagingDirectory)
 - script: >
     docker exec $(testRunner.container) pwsh
-    -File ./tests/run-tests.ps1
+    -File $(testScriptPath)
     -VersionFilter '$(dotnetVersion)'
     -OSFilter '$(osVariant)*'
     -ArchitectureFilter '$(architecture)'
@@ -56,7 +56,7 @@ steps:
     continueOnError: true
 - script: >
     docker cp
-    $(testRunner.container):/repo/tests/Microsoft.DotNet.Docker.Tests/TestResults/
+    $(testRunner.container):/repo/$(testResultsDirectory)
     $(Common.TestResultsDirectory)/.
   displayName: Copy Test Results
   condition: always()
