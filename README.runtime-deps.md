@@ -52,6 +52,7 @@ Tags | Dockerfile | OS Version
 2.1.15-stretch-slim, 2.1-stretch-slim, 2.1.15, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/amd64/Dockerfile) | Debian 9
 2.1.15-alpine3.11, 2.1-alpine3.11, 2.1.15-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 2.1.15-alpine3.10, 2.1-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+2.1.15-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/focal/amd64/Dockerfile) | Ubuntu 20.04
 2.1.15-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm64 Tags
@@ -76,6 +77,7 @@ Tags | Dockerfile | OS Version
 3.0.2-buster-slim-arm32v7, 3.0-buster-slim-arm32v7, 3.0.2, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/buster-slim/arm32v7/Dockerfile) | Debian 10
 3.0.2-bionic-arm32v7, 3.0-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.0/runtime-deps/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 2.1.15-stretch-slim-arm32v7, 2.1-stretch-slim-arm32v7, 2.1.15, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile) | Debian 9
+2.1.15-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 2.1.15-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/runtime-deps/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 You can retrieve a list of all available tags for dotnet/core-nightly/runtime-deps at https://mcr.microsoft.com/v2/dotnet/core-nightly/runtime-deps/tags/list.

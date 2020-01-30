@@ -16,10 +16,12 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             new ProductImageData { Version = V2_1, OS = OS.StretchSlim,  Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.Bionic,       Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.Focal,        Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.Alpine310,    Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.Alpine311,    Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.StretchSlim,  Arch = Arch.Arm },
             new ProductImageData { Version = V2_1, OS = OS.Bionic,       Arch = Arch.Arm },
+            new ProductImageData { Version = V2_1, OS = OS.Focal,        Arch = Arch.Arm },
             new ProductImageData { Version = V3_0, OS = OS.BusterSlim,   Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_0, OS = OS.Alpine310,    Arch = Arch.Amd64 },
