@@ -35,9 +35,9 @@ Type the following command to run a sample web application:
 docker run -it --rm -p 8000:80 --name aspnetcore_sample mcr.microsoft.com/dotnet/core/samples:aspnetapp
 ```
 
-After the application starts, navigate to `http://localhost:8000` in your web browser. On Windows, you may need to navigate to the container via IP address. See [ASP.NET Core apps in Windows Containers](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/aspnetcore-docker-windows.md) for instructions on determining the IP address, using the value of `--name` that you used in `docker run`.
+After the application starts, navigate to `http://localhost:8000` in your web browser.
 
-See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/aspnetcore-docker-https.md) to use HTTPS with this image.
+See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotnet/dotnet-docker/blob/master/samples/host-aspnetcore-https.md) to use HTTPS with this image.
 
 # Related Repos
 
@@ -66,8 +66,8 @@ aspnetapp-buster-slim, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-dotnetapp-buster-slim-arm32v7, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.linux-arm32) | Debian 10
-aspnetapp-buster-slim-arm32v7, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile.linux-arm32) | Debian 10
+dotnetapp-buster-slim-arm32v7, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.debian-arm32) | Debian 10
+aspnetapp-buster-slim-arm32v7, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile.debian-arm32) | Debian 10
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -105,17 +105,25 @@ You can retrieve a list of all available tags for dotnet/core/samples at https:/
 
 See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master/microsoft-support.md) for the support lifecycle.
 
+# Image Update Policy
+
+* We update the supported .NET Core images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:1909, buildpack-deps:bionic-scm, etc.).
+* We publish .NET Core images as part of releasing new versions of .NET Core including major/minor and servicing.
+
 # Feedback
 
 * [File a .NET Core Docker issue](https://github.com/dotnet/dotnet-docker/issues)
 * [File a .NET Core issue](https://github.com/dotnet/core/issues)
 * [File an ASP.NET Core issue](https://github.com/aspnet/home/issues)
-* [File an issue for other components](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md)
+* [File an issue for other .NET components](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md)
+* [File a Visual Studio Docker Tools issue](https://github.com/microsoft/dockertools/issues)
+* [File a Microsoft Container Registry (MCR) issue](https://github.com/microsoft/containerregistry/issues)
 * [Ask on Stack Overflow](https://stackoverflow.com/questions/tagged/.net-core)
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/)
 
 # License
 
 * [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
+* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
 * [Windows Nano Server license](https://hub.docker.com/_/microsoft-windows-nanoserver/) (only applies to Windows containers)
-* [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/en-us/cloud-platform/windows-server-pricing)
+* [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)
