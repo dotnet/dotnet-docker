@@ -1,13 +1,28 @@
 #!/usr/bin/env pwsh
+
+<#
+    .SYNOPSIS
+        Builds the .NET Core Dockerfiles
+#>
+
 [cmdletbinding()]
 param(
+    # Version of .NET Core to filter by
     [string]$VersionFilter = "*",
+
+    # Name of OS to filter by
     [string]$OSFilter = "*",
+
+    # Type of architecture to filter by
     [string]$ArchitectureFilter = "amd64",
+
+    # Custom path filters that override the other filter options
     [string]$PathFilters,
+
+    # Additional args to pass to ImageBuilder
     [string]$OptionalImageBuilderArgs,
-    [string]$OptionalTestArgs,
-    [switch]$SkipTesting = $false,
+
+    # Whether to exclude architecture from the generated path filter
     [switch]$ExcludeArchitecture = $false
 )
 
@@ -42,18 +57,6 @@ try {
     }
 
     ./eng/common/Invoke-ImageBuilder.ps1 "build $PathFilters $OptionalImageBuilderArgs"
-
-    if (-not $SkipTesting) {
-        if (Test-Path ./tests/run-tests.ps1) {
-            if (-not $ExcludeArchitecture) {
-                $OptionalTestArgs += " -ArchitectureFilter $ArchitectureFilter"
-            }
-
-            Exec "./tests/run-tests.ps1 -VersionFilter $VersionFilter -OSFilter $OSFilter $OptionalTestArgs"
-        } else {
-          Write-Warning "Test script file './tests/run-tests.ps1' not found."
-        }
-    }
 }
 finally {
     popd
