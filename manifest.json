@@ -12,7 +12,7 @@
   "repos": [
     {
       "id": "runtime-deps",
-      "name": "dotnet/core/runtime-deps",
+      "name": "dotnet/core-nightly/runtime-deps",
       "readmePath": "README.runtime-deps.md",
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-deps-tags.yml",
       "images": [
@@ -346,7 +346,7 @@
     },
     {
       "id": "runtime",
-      "name": "dotnet/core/runtime",
+      "name": "dotnet/core-nightly/runtime",
       "readmePath": "README.runtime.md",
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-tags.yml",
       "images": [
@@ -834,7 +834,7 @@
     },
     {
       "id": "aspnet",
-      "name": "dotnet/core/aspnet",
+      "name": "dotnet/core-nightly/aspnet",
       "readmePath": "README.aspnet.md",
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/aspnet-tags.yml",
       "images": [
@@ -1346,7 +1346,7 @@
     },
     {
       "id": "sdk",
-      "name": "dotnet/core/sdk",
+      "name": "dotnet/core-nightly/sdk",
       "readmePath": "README.sdk.md",
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/sdk-tags.yml",
       "images": [
