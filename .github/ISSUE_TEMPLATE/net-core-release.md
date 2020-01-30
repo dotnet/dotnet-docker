@@ -15,6 +15,7 @@ _The set of .NET Core versions that are being released as a unit._
 ## 1. Master Branch Tasks
 1. - [ ] Merge appropriate commits from nightly branch (new/EOL distros, infra changes, etc):
       - [ ] commit link
+1. - [ ] Wait for .NET Core archive files (.zip, .tar.gz) to be available at blob storage location
 1. - [ ] Run `update-dependencies` tool to update all the necessary files to reflect the specified .NET Core versions:
       - [ ] `dotnet run --project .\eng\update-dependencies\update-dependencies.csproj --sdk-version <sdk> --runtime-version <runtime> --aspnet-version <runtime>`
 1. - [ ] Inspect generated changes for correctness
