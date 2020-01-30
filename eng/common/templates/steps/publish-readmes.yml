@@ -1,0 +1,17 @@
+parameters:
+  dryRunArg: ""
+  condition:  true
+
+steps:
+- script: >
+    $(runImageBuilderCmd) publishMcrDocs
+    --manifest $(manifest)
+    --registry-override $(acr.server)
+    $(dotnetBot-userName)
+    $(dotnetBot-email)
+    $(dotnet-bot-user-repo-adminrepohook-pat)
+    $(publicGitRepoUri)
+    ${{ parameters.dryRunArg }}
+    $(imageBuilder.queueArgs)
+  displayName: Publish Readmes
+  condition: ${{ parameters.condition }}
