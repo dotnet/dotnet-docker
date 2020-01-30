@@ -29,12 +29,11 @@ else {
 }
 
 if ($build) {
-    & ./eng/common/build-and-test.ps1 `
+    & ./eng/common/build.ps1 `
         -VersionFilter $VersionFilter `
         -OSFilter $OSFilter `
         -ArchitectureFilter $ArchitectureFilter `
-        -OptionalImageBuilderArgs $OptionalImageBuilderArgs `
-        -SkipTesting
+        -OptionalImageBuilderArgs $OptionalImageBuilderArgs
 }
 if ($test) {
     & ./tests/run-tests.ps1 `
