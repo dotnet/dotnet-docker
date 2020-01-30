@@ -32,6 +32,8 @@ namespace Dotnet.Docker
         {
             try
             {
+                ErrorTraceListener errorTraceListener = new ErrorTraceListener();
+                Trace.Listeners.Add(errorTraceListener);
                 Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
 
                 Options.Parse(args);
@@ -48,6 +50,14 @@ namespace Dotnet.Docker
                     {
                         await CreatePullRequestAsync();
                     }
+                }
+
+                if (errorTraceListener.Errors.Any())
+                {
+                    string errors = String.Join(Environment.NewLine, errorTraceListener.Errors);
+                    Console.Error.WriteLine(
+                        $"Failed to update dependencies due to the following errors:{Environment.NewLine}{errors}");
+                    Environment.Exit(1);
                 }
             }
             catch (Exception e)
