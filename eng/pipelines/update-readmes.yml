@@ -1,0 +1,14 @@
+trigger: none
+pr: none
+variables:
+- group: DotNet-Maestro
+- template: variables/common.yml
+- name: manifest
+  value: manifest.json
+jobs:
+- job: UpdateReadmes
+  pool: Hosted Ubuntu 1604
+  steps:
+  - template: ../common/templates/steps/init-docker-linux.yml
+  - template: ../common/templates/steps/publish-readmes.yml
+  - template: ../common/templates/steps/cleanup-docker-linux.yml
