@@ -49,6 +49,10 @@ namespace Dotnet.Docker
             Path = dockerfilePath;
             Regex = regex;
             VersionGroupName = ValueGroupName;
+
+            // Don't allow the base class to log errors when there's no replacement value.
+            // This class will handle that itself. This avoids errors being logged for no-ops.
+            SkipIfNoReplacementFound = true;
         }
 
         public static DockerfileShaUpdater CreateProductShaUpdater(string dockerfilePath) =>
@@ -87,6 +91,10 @@ namespace Dotnet.Docker
                             sha = sha.ToLowerInvariant();
                             s_shaCache.Add(downloadUrl, sha);
                             Trace.TraceInformation($"Retrieved sha '{sha}' for '{downloadUrl}'.");
+                        }
+                        else
+                        {
+                            Trace.TraceError($"Unable to retrieve sha for '{downloadUrl}'.");
                         }
                     }
                 }
