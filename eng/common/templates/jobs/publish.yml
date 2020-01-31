@@ -52,16 +52,10 @@ jobs:
       $(imageBuilder.pathArgs)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Manifest
-  - script: >
-      $(runImageBuilderCmd) publishMcrDocs
-      $(dotnetBot-userName)
-      $(dotnetBot-email)
-      $(dotnet-bot-user-repo-adminrepohook-pat)
-      $(publicGitRepoUri)
-      $(dryRunArg)
-      $(imageBuilder.commonCmdArgs)
-    displayName: Publish Readme
-    condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
+  - template: ../steps/publish-readmes.yml
+    parameters:
+      dryRunArg: $(dryRunArg)
+      condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
   - script: >
       $(runImageBuilderCmd) publishImageInfo
       $(dotnetBot-userName)
