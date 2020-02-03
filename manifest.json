@@ -184,12 +184,6 @@
             "3.1": {
               "documentationGroup": "3.1"
             },
-            "$(5.0-RuntimeVersion)": {
-              "documentationGroup": "5.0"
-            },
-            "5.0": {
-              "documentationGroup": "5.0"
-            },
             "latest": {
               "documentationGroup": "3.1"
             }
@@ -211,12 +205,6 @@
                 },
                 "3.1-buster-slim": {
                   "documentationGroup": "3.1"
-                },
-                "$(5.0-RuntimeVersion)-buster-slim": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-buster-slim": {
-                  "documentationGroup": "5.0"
                 }
               }
             },
@@ -237,12 +225,6 @@
                 },
                 "3.1-buster-slim-arm32v7": {
                   "documentationGroup": "3.1"
-                },
-                "$(5.0-RuntimeVersion)-buster-slim-arm32v7": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-buster-slim-arm32v7": {
-                  "documentationGroup": "5.0"
                 }
               },
               "variant": "v7"
@@ -264,12 +246,6 @@
                 },
                 "3.1-buster-slim-arm64v8": {
                   "documentationGroup": "3.1"
-                },
-                "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-buster-slim-arm64v8": {
-                  "documentationGroup": "5.0"
                 }
               },
               "variant": "v8"
@@ -354,18 +330,6 @@
                 },
                 "3.1-alpine": {
                   "documentationGroup": "3.1"
-                },
-                "$(5.0-RuntimeVersion)-alpine3.11": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-alpine3.11": {
-                  "documentationGroup": "5.0"
-                },
-                "$(5.0-RuntimeVersion)-alpine": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-alpine": {
-                  "documentationGroup": "5.0"
                 }
               }
             }
@@ -402,18 +366,6 @@
                 },
                 "3.1-alpine-arm64v8": {
                   "documentationGroup": "3.1"
-                },
-                "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-alpine3.11-arm64v8": {
-                  "documentationGroup": "5.0"
-                },
-                "$(5.0-RuntimeVersion)-alpine-arm64v8": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-alpine-arm64v8": {
-                  "documentationGroup": "5.0"
                 }
               },
               "variant": "v8"
@@ -501,13 +453,7 @@
               "osVersion": "focal",
               "tags": {
                 "$(3.1-RuntimeVersion)-focal": {},
-                "3.1-focal": {},
-                "$(5.0-RuntimeVersion)-focal": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-focal": {
-                  "documentationGroup": "5.0"
-                }
+                "3.1-focal": {}
               }
             }
           ]
@@ -521,13 +467,7 @@
               "osVersion": "focal",
               "tags": {
                 "$(3.1-RuntimeVersion)-focal-arm32v7": {},
-                "3.1-focal-arm32v7": {},
-                "$(5.0-RuntimeVersion)-focal-arm32v7": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-focal-arm32v7": {
-                  "documentationGroup": "5.0"
-                }
+                "3.1-focal-arm32v7": {}
               },
               "variant": "v7"
             }
@@ -542,13 +482,121 @@
               "osVersion": "focal",
               "tags": {
                 "$(3.1-RuntimeVersion)-focal-arm64v8": {},
-                "3.1-focal-arm64v8": {},
-                "$(5.0-RuntimeVersion)-focal-arm64v8": {
-                  "documentationGroup": "5.0"
-                },
-                "5.0-focal-arm64v8": {
-                  "documentationGroup": "5.0"
-                }
+                "3.1-focal-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "sharedTags": {
+            "$(5.0-RuntimeVersion)": {},
+            "5.0": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "5.0/runtime-deps/buster-slim/amd64",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(5.0-RuntimeVersion)-buster-slim": {},
+                "5.0-buster-slim": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "5.0/runtime-deps/buster-slim/arm32v7",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(5.0-RuntimeVersion)-buster-slim-arm32v7": {},
+                "5.0-buster-slim-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "5.0/runtime-deps/buster-slim/arm64v8",
+              "os": "linux",
+              "osVersion": "buster",
+              "tags": {
+                "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {},
+                "5.0-buster-slim-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "5.0/runtime-deps/alpine3.11/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "$(5.0-RuntimeVersion)-alpine3.11": {},
+                "5.0-alpine3.11": {},
+                "$(5.0-RuntimeVersion)-alpine": {},
+                "5.0-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "5.0/runtime-deps/alpine3.11/arm64v8",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {},
+                "5.0-alpine3.11-arm64v8": {},
+                "$(5.0-RuntimeVersion)-alpine-arm64v8": {},
+                "5.0-alpine-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "dockerfile": "5.0/runtime-deps/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(5.0-RuntimeVersion)-focal": {},
+                "5.0-focal": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm",
+              "dockerfile": "5.0/runtime-deps/focal/arm32v7",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(5.0-RuntimeVersion)-focal-arm32v7": {},
+                "5.0-focal-arm32v7": {}
+              },
+              "variant": "v7"
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "5.0/runtime-deps/focal/arm64v8",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(5.0-RuntimeVersion)-focal-arm64v8": {},
+                "5.0-focal-arm64v8": {}
               },
               "variant": "v8"
             }
