@@ -1,8 +1,8 @@
 trigger: none
 pr: none
 schedules:
-- cron: "0 13,17,22 * * Mon-Fri"
-  displayName: M-F 3 times daily build
+- cron: "0 13 * * Mon-Fri"
+  displayName: M-F daily build
   branches:
     include:
     - nightly
