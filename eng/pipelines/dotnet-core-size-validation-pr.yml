@@ -5,6 +5,8 @@ pr:
     - nightly
   paths:
     exclude:
+    - documentation/*
+    - README*
     - samples/*
 
 variables:
