@@ -5,6 +5,8 @@ pr:
     - master
   paths:
     exclude:
+    - documentation/*
+    - README*
     - samples/*
 
 variables:

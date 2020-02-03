@@ -3,12 +3,19 @@ trigger:
   branches:
     include:
     - nightly
+  paths:
+    exclude:
+    - documentation/*
+    - README*
+    - samples/*
 pr:
   branches:
     include:
     - nightly
   paths:
     exclude:
+    - documentation/*
+    - README*
     - samples/*
 
 variables:
