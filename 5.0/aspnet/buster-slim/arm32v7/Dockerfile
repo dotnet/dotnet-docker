@@ -1,14 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/core/runtime
 
 # Installer image
-FROM arm32v7/debian:buster-slim as installer
-
-# Installer pre-reqs
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-    && rm -rf /var/lib/apt/lists/*
+FROM arm32v7/buildpack-deps:buster-curl as installer
 
 # Retrieve ASP.NET Core
 RUN aspnetcore_version=5.0.0-alpha.1.20071.6 \

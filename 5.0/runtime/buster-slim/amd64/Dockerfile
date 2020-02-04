@@ -1,14 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
 
 # Installer image
-FROM debian:buster-slim as installer
-
-# Installer pre-reqs
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-    && rm -rf /var/lib/apt/lists/*
+FROM buildpack-deps:buster-curl as installer
 
 # Retrieve .NET Core
 RUN dotnet_version=5.0.0-alpha.1.20072.3 \
