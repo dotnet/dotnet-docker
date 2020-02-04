@@ -52,8 +52,6 @@ try {
     else {
         $commandName = "validateImageSize"
         $commandArgs += " --mode $ValidationMode"
-
-
     }
 
     $onCommandExecuted = {
