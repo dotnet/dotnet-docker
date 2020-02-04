@@ -34,6 +34,12 @@ if ($build) {
         -OSFilter $OSFilter `
         -ArchitectureFilter $ArchitectureFilter `
         -OptionalImageBuilderArgs $OptionalImageBuilderArgs
+
+    $sampleArgs = "$OptionalImageBuilderArgs --manifest manifest.samples.json"
+
+    & ./eng/common/build.ps1 `
+        -PathFilters "--path '*'" `
+        -OptionalImageBuilderArgs $sampleArgs
 }
 if ($test) {
     & ./tests/run-tests.ps1 `
