@@ -1,10 +1,3 @@
----
-name: ".NET Core Release"
-about: Tracks information for managing a .NET Core release
-title: ".NET Core Release"
-
----
-
 # .NET Core Release
 
 ## Release Versions
