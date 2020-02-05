@@ -5,6 +5,7 @@ pr:
     - master
   paths:
     exclude:
+    - .github/*
     - documentation/*
     - README*
     - samples/*
