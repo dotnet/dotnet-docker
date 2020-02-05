@@ -1,11 +1,3 @@
----
-name: Patch Tuesday Release
-about: Tracks information for managing a Patch Tuesday update of .NET Core Windows
-  images
-title: Patch Tuesday Release
-
----
-
 # Patch Tuesday Release
 
 ## Tasks
