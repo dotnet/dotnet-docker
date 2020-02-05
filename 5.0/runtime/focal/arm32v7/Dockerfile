@@ -14,7 +14,7 @@ RUN dotnet_version=5.0.0-alpha.1.20072.3 \
 
 
 # .NET Core runtime image
-FROM $REPO:5.0-focal
+FROM $REPO:5.0-focal-arm32v7
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

@@ -20,7 +20,15 @@
     "3.0/runtime-deps/bionic/arm64v8": 99094631,
     "3.1/runtime-deps/focal/amd64": 129846045,
     "3.1/runtime-deps/focal/arm32v7": 96976919,
-    "3.1/runtime-deps/focal/arm64v8": 119013389
+    "3.1/runtime-deps/focal/arm64v8": 119013389,
+    "5.0/runtime-deps/alpine3.11/amd64": 9937498,
+    "5.0/runtime-deps/alpine3.11/arm64v8": 9733357,
+    "5.0/runtime-deps/bionic/amd64": 106459634,
+    "5.0/runtime-deps/bionic/arm32v7": 84576709,
+    "5.0/runtime-deps/bionic/arm64v8": 99094631,
+    "5.0/runtime-deps/focal/amd64": 129846045,
+    "5.0/runtime-deps/focal/arm32v7": 96976919,
+    "5.0/runtime-deps/focal/arm64v8": 119013389
   },
   "dotnet/core-nightly/runtime": {
     "2.1/runtime/stretch-slim/amd64": 180258057,
