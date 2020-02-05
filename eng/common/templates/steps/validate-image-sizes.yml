@@ -1,14 +1,10 @@
 parameters:
   dockerClientOS: null
-  architecture: "*"
-  validationMode: "all"
   
 steps:
   - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
   - powershell: >
       ./tests/performance/Validate-ImageSize.ps1
-      -ImageBuilderCustomArgs "--architecture '${{ parameters.architecture }}'"
-      -ValidationMode:${{ parameters.validationMode }}
-      -PullImages
+      -BaselineIntegrityOnly:$${{ eq(variables['System.TeamProject'], 'public') }}
     displayName: Run Image Size Tests
   - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
