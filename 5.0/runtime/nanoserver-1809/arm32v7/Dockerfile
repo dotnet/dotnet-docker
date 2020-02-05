@@ -14,7 +14,7 @@ RUN setx /M PATH "%PATH%;%ProgramFiles%\dotnet"
 USER ContainerUser
 
 # Install .NET Core
-RUN set "dotnet_version=5.0.0-alpha.1.20072.3" `
+RUN set "dotnet_version=5.0.0-alpha.1.20103.10" `
     && call curl -SL --output dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/%dotnet_version%/dotnet-runtime-%dotnet_version%-win-arm.zip `
     && mkdir "%ProgramFiles%\dotnet" `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
