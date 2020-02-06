@@ -1,3 +1,13 @@
+## Important: Client Firewall Rules Update to Microsoft Container Registry (MCR)
+ 
+
+To provide a consistent FQDNs, on **March 3, 2020** the data endpoint will be changing from *.cdn.mscr.io to *.data.mcr.microsoft.com. 
+
+ 
+
+For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules).
+-------------------------------------------------------------------------------------
+
 # Featured Repos
 
 * [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/): .NET Core SDK
@@ -87,3 +97,4 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 * [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
 * [Windows Nano Server license](https://hub.docker.com/_/microsoft-windows-nanoserver/) (only applies to Windows containers)
 * [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)
+
