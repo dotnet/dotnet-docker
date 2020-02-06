@@ -4,8 +4,8 @@ See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images wi
 
 # Featured Tags
 
-* `3.1` (LTS/Current)
-  * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:3.1`
+* `5.0` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/core-nightly/runtime:5.0`
 
 # About This Image
 

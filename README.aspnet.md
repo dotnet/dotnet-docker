@@ -4,8 +4,8 @@ See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for image
 
 # Featured Tags
 
-* `3.1` (LTS/Current)
-  * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:3.1`
+* `5.0` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:5.0`
 
 # About This Image
 
