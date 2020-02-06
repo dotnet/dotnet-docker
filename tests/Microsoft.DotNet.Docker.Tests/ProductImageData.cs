@@ -10,8 +10,6 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private string _sdkOS;
 
-        public Version Version { get; set; }
-        public string VersionString => Version.ToString(2);
         public bool HasCustomSdk => _sdkOS != null;
 
         public string SdkOS

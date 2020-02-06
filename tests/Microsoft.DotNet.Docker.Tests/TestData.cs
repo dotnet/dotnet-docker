@@ -94,14 +94,15 @@ namespace Microsoft.DotNet.Docker.Tests
         public static IEnumerable<SampleImageData> GetSampleImageData()
         {
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxSampleTestData : s_windowsSampleTestData)
+                .FilterImagesByVersion()
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<SampleImageData>();
         }
 
-        private static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<ProductImageData> imageData)
+        private static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<ImageData> imageData)
         {
-            string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION_FILTER");
+            string versionFilterPattern = Config.GetFilterRegexPattern(Config.VersionFilter);
             return imageData
                 .Where(imageData => versionFilterPattern == null
                     || Regex.IsMatch(imageData.VersionString, versionFilterPattern, RegexOptions.IgnoreCase));
@@ -109,7 +110,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<ImageData> FilterImagesByArch(this IEnumerable<ImageData> imageData)
         {
-            string archFilterPattern = GetFilterRegexPattern("IMAGE_ARCH_FILTER");
+            string archFilterPattern = Config.GetFilterRegexPattern(Config.ArchFilter);
             return imageData
                 .Where(imageData => archFilterPattern == null
                     || Regex.IsMatch(Enum.GetName(typeof(Arch), imageData.Arch), archFilterPattern, RegexOptions.IgnoreCase));
@@ -117,16 +118,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<ImageData> FilterImagesByOs(this IEnumerable<ImageData> imageData)
         {
-            string osFilterPattern = GetFilterRegexPattern("IMAGE_OS_FILTER");
+            string osFilterPattern = Config.GetFilterRegexPattern(Config.OsFilter);
             return imageData
                 .Where(imageData => osFilterPattern == null
                     || Regex.IsMatch(imageData.OS, osFilterPattern, RegexOptions.IgnoreCase));
-        }
-
-        private static string GetFilterRegexPattern(string filterEnvName)
-        {
-            string filter = Environment.GetEnvironmentVariable(filterEnvName);
-            return filter != null ? $"^{Regex.Escape(filter).Replace(@"\*", ".*").Replace(@"\?", ".")}$" : null;
         }
     }
 }
