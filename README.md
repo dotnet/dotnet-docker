@@ -7,7 +7,6 @@ To provide a consistent FQDNs, on **March 3, 2020** the data endpoint will be ch
 
 For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules).
 -------------------------------------------------------------------------------------
-
 # Featured Repos
 
 ## .NET Core 2.1/3.1

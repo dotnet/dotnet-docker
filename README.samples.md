@@ -7,7 +7,6 @@ To provide a consistent FQDNs, on **March 3, 2020** the data endpoint will be ch
 
 For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules).
 -------------------------------------------------------------------------------------
-
 # Featured Tags
 
 * `dotnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)

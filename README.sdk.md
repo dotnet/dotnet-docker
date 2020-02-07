@@ -7,7 +7,6 @@ To provide a consistent FQDNs, on **March 3, 2020** the data endpoint will be ch
 
 For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules).
 -------------------------------------------------------------------------------------
-
 # Featured Tags
 
 * `3.1` (LTS/Current)
