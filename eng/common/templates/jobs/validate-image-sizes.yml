@@ -45,4 +45,3 @@ jobs:
     parameters:
       dockerClientOS: windows
       ${{ if eq(variables['System.TeamProject'], 'public') }}:
-        validationMode: integrity
