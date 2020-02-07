@@ -1,5 +1,28 @@
 jobs:
-- job: LinuxPerfTests
+- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+  # Split the Linux images into separate jobs in order to compensate for less
+  # disk space on the Linux agents. See https://github.com/dotnet/dotnet-docker/issues/1588
+  - job: LinuxAmd64PerfTests
+    pool: Hosted Ubuntu 1604
+    workspace:
+      clean: all
+    steps:
+    - template: ../steps/validate-image-sizes.yml
+      parameters:
+        dockerClientOS: linux
+        architecture: amd64
+        validationMode: size
+  - job: LinuxArmPerfTests
+    pool: Hosted Ubuntu 1604
+    workspace:
+      clean: all
+    steps:
+    - template: ../steps/validate-image-sizes.yml
+      parameters:
+        dockerClientOS: linux
+        architecture: arm*
+        validationMode: size
+- job: LinuxBaselineIntegrityPerfTests
   pool: Hosted Ubuntu 1604
   workspace:
     clean: all
@@ -7,6 +30,7 @@ jobs:
   - template: ../steps/validate-image-sizes.yml
     parameters:
       dockerClientOS: linux
+      validationMode: integrity
 - job: WindowsPerfTests
   pool: # windows1909Amd64
     ${{ if eq(variables['System.TeamProject'], 'public') }}:
@@ -20,3 +44,5 @@ jobs:
   - template: ../steps/validate-image-sizes.yml
     parameters:
       dockerClientOS: windows
+      ${{ if eq(variables['System.TeamProject'], 'public') }}:
+        validationMode: integrity
