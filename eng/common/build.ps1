@@ -54,7 +54,7 @@ try {
     }
 
     if ($ArchitectureFilter) {
-        $args += " --architecture $OSFilter"
+        $args += " --architecture $ArchitectureFilter"
     }
 
     if ($PathFilters) {

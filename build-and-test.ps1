@@ -35,6 +35,7 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
 
     # Build the sample images
     & ./eng/common/build.ps1 `
+        -VersionFilter $VersionFilter `
         -OSFilter $OSFilter `
         -ArchitectureFilter $ArchitectureFilter `
         -PathFilters $PathFilters `
@@ -45,9 +46,9 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Test") {
 
     $localTestCategories = $TestCategories
 
-    if ($PathFilters -and $TestCategories.Contains("sample")) {
+    if ($VersionFilter -ne "*" -and $TestCategories.Contains("sample")) {
         $localTestCategories = $TestCategories | where { $_ -ne "sample"}
-        Write-Warning "Skipping sample image testing since custom path filters were provided"
+        Write-Warning "Skipping sample image testing since VersionFilter was set"
     }
 
     & ./tests/run-tests.ps1 `

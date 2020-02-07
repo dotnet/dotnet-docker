@@ -8,11 +8,6 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public class SampleImageData : ImageData
     {
-        public SampleImageData()
-        {
-            Version = ImageVersion.SampleVersion;
-        }
-
         /// <summary>
         /// Gets or sets a value indicating that this sample is published as a Docker image.
         /// </summary>

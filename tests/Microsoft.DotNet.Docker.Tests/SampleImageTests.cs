@@ -32,7 +32,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageData => new object[] { imageData });
         }
 
-        [SkippableTheory(ImageVersion.SampleVersionString)]
+        [Theory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetSample(SampleImageData imageData)
         {
@@ -44,7 +44,7 @@ namespace Microsoft.DotNet.Docker.Tests
             });
         }
 
-        [SkippableTheory(ImageVersion.SampleVersionString)]
+        [Theory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAspnetSample(SampleImageData imageData)
         {
@@ -75,7 +75,7 @@ namespace Microsoft.DotNet.Docker.Tests
             });
         }
 
-        [SkippableFact(ImageVersion.SampleVersionString)]
+        [Fact]
         public void VerifyComplexAppSample()
         {
             string appTag = SampleImageData.GetImageName("complexapp-local-app");
