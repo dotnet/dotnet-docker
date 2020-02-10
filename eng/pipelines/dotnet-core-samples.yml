@@ -6,7 +6,6 @@ pr:
     - nightly
   paths:
     include:
-    - .github/*
     - eng/*
     - samples/*
     - tests/*
