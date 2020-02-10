@@ -21,11 +21,11 @@
     "3.1/runtime-deps/focal/amd64": 116938173,
     "3.1/runtime-deps/focal/arm32v7": 89026810,
     "3.1/runtime-deps/focal/arm64v8": 109017436,
-    "5.0/runtime-deps/alpine3.11/amd64": 9937498,
-    "5.0/runtime-deps/alpine3.11/arm64v8": 9733357,
     "5.0/runtime-deps/buster-slim/amd64": 110537404,
     "5.0/runtime-deps/buster-slim/arm32v7": 85810304,
     "5.0/runtime-deps/buster-slim/arm64v8": 104153752,
+    "5.0/runtime-deps/alpine3.11/amd64": 9407340,
+    "5.0/runtime-deps/alpine3.11/arm64v8": 9207485,
     "5.0/runtime-deps/focal/amd64": 116938173,
     "5.0/runtime-deps/focal/arm32v7": 89026810,
     "5.0/runtime-deps/focal/arm64v8": 109017436
@@ -67,9 +67,9 @@
     "5.0/runtime/buster-slim/arm64v8": 197045040,
     "5.0/runtime/alpine3.11/amd64": 92129520,
     "5.0/runtime/alpine3.11/arm64v8": 99614022,
-    "5.0/runtime/focal/amd64": 214144844,
-    "5.0/runtime/focal/arm32v7": 179806481,
-    "5.0/runtime/focal/arm64v8": 216615477
+    "5.0/runtime/focal/amd64": 197502114,
+    "5.0/runtime/focal/arm32v7": 167086703,
+    "5.0/runtime/focal/arm64v8": 200492485
   },
   "dotnet/core-nightly/aspnet": {
     "2.1/aspnet/stretch-slim/amd64": 253015005,
@@ -108,9 +108,9 @@
     "5.0/aspnet/buster-slim/arm64v8": 218270150,
     "5.0/aspnet/alpine3.11/amd64": 104956138,
     "5.0/aspnet/alpine3.11/arm64v8": 120839157,
-    "5.0/aspnet/focal/amd64": 231917528,
-    "5.0/aspnet/focal/arm32v7": 200272285,
-    "5.0/aspnet/focal/arm64v8": 237840587
+    "5.0/aspnet/focal/amd64": 215552170,
+    "5.0/aspnet/focal/arm32v7": 187917943,
+    "5.0/aspnet/focal/arm64v8": 222119383
   },
   "dotnet/core-nightly/sdk": {
     "2.1/sdk/stretch/amd64": 1728622878,
