@@ -33,6 +33,13 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
         -PathFilters $PathFilters `
         -OptionalImageBuilderArgs $OptionalImageBuilderArgs
 
+    $activeOS = docker version -f "{{ .Server.Os }}"
+    if ($activeOS -eq "windows" -and -not $OSFilter) {
+        Write-Host "Setting OSFilter to match local Windows host version"
+        $windowsReleaseId = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").ReleaseId
+        $OSFilter = "nanoserver-$windowsReleaseId"
+    }
+
     # Build the sample images
     & ./eng/common/build.ps1 `
         -VersionFilter $VersionFilter `
