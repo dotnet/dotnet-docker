@@ -11,19 +11,19 @@ param(
     [string]$VersionFilter = "*",
 
     # Name of OS to filter by
-    [string]$OSFilter = "*",
+    [string]$OSFilter,
 
     # Type of architecture to filter by
-    [string]$ArchitectureFilter = "amd64",
+    [string]$ArchitectureFilter,
 
-    # Custom path filters that override the other filter options
+    # Additional custom path filters (overrides VersionFilter)
     [string]$PathFilters,
 
-    # Additional args to pass to ImageBuilder
-    [string]$OptionalImageBuilderArgs,
+    # Path to manifest file
+    [string]$Manifest = "manifest.json",
 
-    # Whether to exclude architecture from the generated path filter
-    [switch]$ExcludeArchitecture = $false
+    # Additional args to pass to ImageBuilder
+    [string]$OptionalImageBuilderArgs
 )
 
 Set-StrictMode -Version Latest
@@ -47,16 +47,28 @@ function Exec {
 
 pushd $PSScriptRoot/../..
 try {
-    if (-not $PathFilters) {
-        $PathFilters = "$VersionFilter/*/$OSFilter"
-        if (-not $ExcludeArchitecture) {
-            $PathFilters += "/$ArchitectureFilter"
-        }
+    $args = $OptionalImageBuilderArgs
 
-        $PathFilters = "--path '$PathFilters'"
+    if ($OSFilter) {
+        $args += " --os-version $OSFilter"
     }
 
-    ./eng/common/Invoke-ImageBuilder.ps1 "build $PathFilters $OptionalImageBuilderArgs"
+    if ($ArchitectureFilter) {
+        $args += " --architecture $ArchitectureFilter"
+    }
+
+    if ($PathFilters) {
+        $args += " $PathFilters"
+    }
+    else {
+        $args += " --path '$VersionFilter/*'"
+    }
+
+    if ($Manifest) {
+        $args += " --manifest $Manifest"
+    }
+
+    ./eng/common/Invoke-ImageBuilder.ps1 "build $args"
 }
 finally {
     popd
