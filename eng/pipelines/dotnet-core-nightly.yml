@@ -5,6 +5,7 @@ trigger:
     - nightly
   paths:
     exclude:
+    - .github/*
     - documentation/*
     - README*
     - samples/*
@@ -14,6 +15,7 @@ pr:
     - nightly
   paths:
     exclude:
+    - .github/*
     - documentation/*
     - README*
     - samples/*
