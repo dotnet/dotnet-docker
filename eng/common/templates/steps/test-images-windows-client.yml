@@ -3,7 +3,9 @@ steps:
   - template: init-docker-windows.yml
     parameters:
       setupImageBuilder: false
-  - script: docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)
+  - powershell: >
+      $(engCommonPath)/Invoke-WithRetry.ps1
+      "cmd /c 'docker login -u $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server) 2>&1'"
     displayName: Docker login
 - powershell: |
     if ("${{ eq(variables['System.TeamProject'], 'public') }}" -eq "False") {
