@@ -1,3 +1,10 @@
+## Important: Client Firewall Rules Update to Microsoft Container Registry (MCR)
+
+To provide a consistent FQDNs, on **March 3, 2020** the data endpoint will be changing from *.cdn.mscr.io to *.data.microsoft.com.
+
+For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules).
+---------------------------------------------------------------------------------
+
 The images from the dotnet/core-nightly repositories include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
 
 See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for images with official releases of [.NET Core](https://github.com/dotnet/core).

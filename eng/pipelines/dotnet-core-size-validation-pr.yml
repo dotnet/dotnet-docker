@@ -5,6 +5,7 @@ pr:
     - nightly
   paths:
     exclude:
+    - .github/*
     - documentation/*
     - README*
     - samples/*
