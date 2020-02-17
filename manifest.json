@@ -8,7 +8,7 @@
     "3.0-SdkVersion": "3.0.102",
     "3.1-RuntimeVersion": "3.1.1",
     "3.1-SdkVersion": "3.1.101",
-    "5.0-RuntimeVersion": "5.0.0-alpha",
+    "5.0-RuntimeVersion": "5.0.0-preview",
     "5.0-SdkVersion": "5.0.100-preview"
   },
   "repos": [
