@@ -19,9 +19,9 @@ ENV \
 RUN apk add --no-cache icu-libs
 
 # Install .NET Core SDK
-RUN dotnet_sdk_version=5.0.100-preview.1.20117.1 \
+RUN dotnet_sdk_version=5.0.100-preview.1.20118.1 \
     && wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
-    && dotnet_sha512='f39be7f3551765195b87b24c1b11135c47e5d9c0025cc040b22bbaf96688805b0fc502b6f6d2cc1099695f4e6f912e0b853175b0ef8a9bbcd60e1ad3b3b179bf' \
+    && dotnet_sha512='83856541e5477e40169dc27c800948ad9a957f57fa656015a3789281bc9c15367c9473b916d8e674344dedb2894330e678ac6f42326fdfc0ce0a7b8924abcb1e' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
