@@ -30,6 +30,7 @@ _The set of .NET Core versions that are being released as a unit._
 
           imageBuilder.pathArgs: --path '2.1*' --path '3.0*' --path '3.1*'
           stages: test;publish
+          sourceBuildId: <Build ID from the build stage>
 1. - [ ] Confirm images have been ingested by MCR
 1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-core)
 1. - [ ] Confirm build for [dotnet-docker-samples](https://dev.azure.com/dnceng/internal/_build?definitionId=376) (internal MSFT link) was queued. This will be queued automatically by [dotnet-docker-tools-check-base-image-updates](https://dev.azure.com/dnceng/internal/_build?definitionId=536) when it detects that the product images have been updated (detection runs on a schedule). Alternatively, you can manually queue the samples build.
