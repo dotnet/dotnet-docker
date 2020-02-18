@@ -43,40 +43,40 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-3.1.1-buster-slim, 3.1-buster-slim, 3.1.1, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/amd64/Dockerfile) | Debian 10
-3.1.1-alpine3.11, 3.1-alpine3.11, 3.1.1-alpine, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.11/amd64/Dockerfile) | Alpine 3.11
-3.1.1-alpine3.10, 3.1-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.10/amd64/Dockerfile) | Alpine 3.10
-3.1.1-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/amd64/Dockerfile) | Ubuntu 18.04
-3.0.2-buster-slim, 3.0-buster-slim, 3.0.2, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/amd64/Dockerfile) | Debian 10
-3.0.2-alpine3.11, 3.0-alpine3.11, 3.0.2-alpine, 3.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.11/amd64/Dockerfile) | Alpine 3.11
-3.0.2-alpine3.10, 3.0-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.10/amd64/Dockerfile) | Alpine 3.10
-3.0.2-bionic, 3.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/amd64/Dockerfile) | Ubuntu 18.04
-2.1.15-stretch-slim, 2.1-stretch-slim, 2.1.15, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/amd64/Dockerfile) | Debian 9
-2.1.15-alpine3.11, 2.1-alpine3.11, 2.1.15-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine3.11/amd64/Dockerfile) | Alpine 3.11
-2.1.15-alpine3.10, 2.1-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine3.10/amd64/Dockerfile) | Alpine 3.10
-2.1.15-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/amd64/Dockerfile) | Ubuntu 18.04
+3.1.2-buster-slim, 3.1-buster-slim, 3.1.2, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/amd64/Dockerfile) | Debian 10
+3.1.2-alpine3.11, 3.1-alpine3.11, 3.1.2-alpine, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.11/amd64/Dockerfile) | Alpine 3.11
+3.1.2-alpine3.10, 3.1-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+3.1.2-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/amd64/Dockerfile) | Ubuntu 18.04
+3.0.3-buster-slim, 3.0-buster-slim, 3.0.3, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/amd64/Dockerfile) | Debian 10
+3.0.3-alpine3.11, 3.0-alpine3.11, 3.0.3-alpine, 3.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.11/amd64/Dockerfile) | Alpine 3.11
+3.0.3-alpine3.10, 3.0-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+3.0.3-bionic, 3.0-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/amd64/Dockerfile) | Ubuntu 18.04
+2.1.16-stretch-slim, 2.1-stretch-slim, 2.1.16, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/amd64/Dockerfile) | Debian 9
+2.1.16-alpine3.11, 2.1-alpine3.11, 2.1.16-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine3.11/amd64/Dockerfile) | Alpine 3.11
+2.1.16-alpine3.10, 2.1-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+2.1.16-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-3.1.1-buster-slim-arm64v8, 3.1-buster-slim-arm64v8, 3.1.1, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/arm64v8/Dockerfile) | Debian 10
-3.1.1-alpine3.11-arm64v8, 3.1-alpine3.11-arm64v8, 3.1.1-alpine-arm64v8, 3.1-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
-3.1.1-alpine3.10-arm64v8, 3.1-alpine3.10-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.10/arm64v8/Dockerfile) | Alpine 3.10
-3.1.1-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
-3.0.2-buster-slim-arm64v8, 3.0-buster-slim-arm64v8, 3.0.2, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/arm64v8/Dockerfile) | Debian 10
-3.0.2-alpine3.11-arm64v8, 3.0-alpine3.11-arm64v8, 3.0.2-alpine-arm64v8, 3.0-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
-3.0.2-alpine3.10-arm64v8, 3.0-alpine3.10-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.10/arm64v8/Dockerfile) | Alpine 3.10
-3.0.2-bionic-arm64v8, 3.0-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
+3.1.2-buster-slim-arm64v8, 3.1-buster-slim-arm64v8, 3.1.2, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/arm64v8/Dockerfile) | Debian 10
+3.1.2-alpine3.11-arm64v8, 3.1-alpine3.11-arm64v8, 3.1.2-alpine-arm64v8, 3.1-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
+3.1.2-alpine3.10-arm64v8, 3.1-alpine3.10-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.10/arm64v8/Dockerfile) | Alpine 3.10
+3.1.2-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
+3.0.3-buster-slim-arm64v8, 3.0-buster-slim-arm64v8, 3.0.3, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/arm64v8/Dockerfile) | Debian 10
+3.0.3-alpine3.11-arm64v8, 3.0-alpine3.11-arm64v8, 3.0.3-alpine-arm64v8, 3.0-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
+3.0.3-alpine3.10-arm64v8, 3.0-alpine3.10-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/alpine3.10/arm64v8/Dockerfile) | Alpine 3.10
+3.0.3-bionic-arm64v8, 3.0-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-3.1.1-buster-slim-arm32v7, 3.1-buster-slim-arm32v7, 3.1.1, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/arm32v7/Dockerfile) | Debian 10
-3.1.1-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
-3.0.2-buster-slim-arm32v7, 3.0-buster-slim-arm32v7, 3.0.2, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/arm32v7/Dockerfile) | Debian 10
-3.0.2-bionic-arm32v7, 3.0-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
-2.1.15-stretch-slim-arm32v7, 2.1-stretch-slim-arm32v7, 2.1.15, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile) | Debian 9
-2.1.15-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+3.1.2-buster-slim-arm32v7, 3.1-buster-slim-arm32v7, 3.1.2, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/arm32v7/Dockerfile) | Debian 10
+3.1.2-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+3.0.3-buster-slim-arm32v7, 3.0-buster-slim-arm32v7, 3.0.3, 3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/buster-slim/arm32v7/Dockerfile) | Debian 10
+3.0.3-bionic-arm32v7, 3.0-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.0/runtime-deps/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+2.1.16-stretch-slim-arm32v7, 2.1-stretch-slim-arm32v7, 2.1.16, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/arm32v7/Dockerfile) | Debian 9
+2.1.16-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 You can retrieve a list of all available tags for dotnet/core/runtime-deps at https://mcr.microsoft.com/v2/dotnet/core/runtime-deps/tags/list.
 
