@@ -7,9 +7,9 @@ steps:
     $(runImageBuilderCmd) publishMcrDocs
     --manifest $(manifest)
     --registry-override $(acr.server)
-    $(dotnetBot-userName)
-    $(dotnetBot-email)
-    $(dotnet-bot-user-repo-adminrepohook-pat)
+    $(dotnetDockerBot.userName)
+    $(dotnetDockerBot.email)
+    $(BotAccount-dotnet-docker-bot-PAT)
     $(publicGitRepoUri)
     ${{ parameters.dryRunArg }}
     $(imageBuilder.queueArgs)
