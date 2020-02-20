@@ -12,5 +12,5 @@ variables:
 - name: imageBuilderDockerRunExtraOptions
   value: ""
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-  - group: DotNet-Docker-Common
-  - group: DotNet-Docker-Secrets
+  - group: DotNet-Docker-Common-New
+  - group: DotNet-Docker-Secrets-New
