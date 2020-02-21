@@ -189,46 +189,7 @@ namespace Dotnet.Docker
                 productVersion = _options.RuntimeVersion;
             }
 
-            string uri = $"https://dotnetcli.blob.core.windows.net/dotnet/checksums/{productVersion}-sha.txt";
-            if (!s_releaseChecksumCache.TryGetValue(uri, out Dictionary<string, string> checksumEntries))
-            {
-                checksumEntries = new Dictionary<string, string>();
-                s_releaseChecksumCache.Add(uri, checksumEntries);
-
-                Trace.TraceInformation($"Downloading '{uri}'.");
-                using (HttpClient client = new HttpClient())
-                using (HttpResponseMessage response = await client.GetAsync(uri))
-                {
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string checksums = await response.Content.ReadAsStringAsync();
-                        string[] checksumLines = checksums.Replace("\r\n", "\n").Split("\n");
-                        if (!checksumLines[0].StartsWith("Hash") || !String.IsNullOrEmpty(checksumLines[1]))
-                        {
-                            Trace.TraceError($"Checksum file is not in the expected format: {uri}");
-                        }
-
-                        for (int i = 2; i < checksumLines.Length - 1; i++)
-                        {
-                            string[] parts = checksumLines[i].Split(" ");
-                            if (parts.Length != 2)
-                            {
-                                Trace.TraceError($"Checksum file is not in the expected format: {uri}");
-                            }
-
-                            string fileName = parts[1];
-                            string checksum = parts[0];
-
-                            checksumEntries.Add(fileName, checksum);
-                            Trace.TraceInformation($"Parsed checksum '{checksum}' for '{fileName}'");
-                        }
-                    }
-                    else
-                    {
-                        Trace.TraceInformation($"Failed to find dotnet release checksums");
-                    }
-                }
-            }
+            IDictionary<string, string> checksumEntries = await GetDotnetReleaseChecksums(productVersion);
 
             string installerFileName = productDownloadUrl.Substring(productDownloadUrl.LastIndexOf('/') + 1);
 
@@ -238,6 +199,54 @@ namespace Dotnet.Docker
             }
 
             return sha;
+        }
+
+        private static async Task<IDictionary<string, string>> GetDotnetReleaseChecksums(string productVersion)
+        {
+            string uri = $"https://dotnetcli.blob.core.windows.net/dotnet/checksums/{productVersion}-sha.txt";
+            if (s_releaseChecksumCache.TryGetValue(uri, out Dictionary<string, string> checksumEntries))
+            {
+                return checksumEntries;
+            }
+
+            checksumEntries = new Dictionary<string, string>();
+            s_releaseChecksumCache.Add(uri, checksumEntries);
+
+            Trace.TraceInformation($"Downloading '{uri}'.");
+            using (HttpClient client = new HttpClient())
+            using (HttpResponseMessage response = await client.GetAsync(uri))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    string checksums = await response.Content.ReadAsStringAsync();
+                    string[] checksumLines = checksums.Replace("\r\n", "\n").Split("\n");
+                    if (!checksumLines[0].StartsWith("Hash") || !String.IsNullOrEmpty(checksumLines[1]))
+                    {
+                        Trace.TraceError($"Checksum file is not in the expected format: {uri}");
+                    }
+
+                    for (int i = 2; i < checksumLines.Length - 1; i++)
+                    {
+                        string[] parts = checksumLines[i].Split(" ");
+                        if (parts.Length != 2)
+                        {
+                            Trace.TraceError($"Checksum file is not in the expected format: {uri}");
+                        }
+
+                        string fileName = parts[1];
+                        string checksum = parts[0];
+
+                        checksumEntries.Add(fileName, checksum);
+                        Trace.TraceInformation($"Parsed checksum '{checksum}' for '{fileName}'");
+                    }
+                }
+                else
+                {
+                    Trace.TraceInformation($"Failed to find dotnet release checksums");
+                }
+            }
+
+            return checksumEntries;
         }
 
         private bool TryGetDotNetDownloadUrl(string dockerfile, out string downloadUrl)
@@ -262,18 +271,6 @@ namespace Dotnet.Docker
                 .Replace($"${name}", value)       // *nix and Windows PS variable reference format
                 .Replace($"$Env:{name}", value)   // Windows PS ENV variable reference format
                 .Replace($"%{name}%", value);     // Windows CMD variable reference format
-        }
-
-        private class ReleaseChecksumEntry
-        {
-            public ReleaseChecksumEntry(string sha, string installerFileName)
-            {
-                Sha = sha;
-                InstallerFileName = installerFileName;
-            }
-
-            public string Sha { get; }
-            public string InstallerFileName { get; }
         }
     }
 }
