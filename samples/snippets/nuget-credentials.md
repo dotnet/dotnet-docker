@@ -137,7 +137,7 @@ The `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable is a well-known var
 <configuration>
   <packageSources>
     <add key="public" value="https://api.nuget.org/v3/index.json" />
-    <add key="customfeed" value="https://mycustomfeedurl"  />
+    <add key="customfeed" value="https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json"  />
   </packageSources>
 </configuration>
 ```
@@ -150,7 +150,7 @@ WORKDIR /app
 
 ARG FEED_ACCESSTOKEN
 ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
-    "{\"endpointCredentials\": [{\"endpoint\":\"https://thalman.pkgs.visualstudio.com/_packaging/test/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${FEED_ACCESSTOKEN}\"}]}"
+    "{\"endpointCredentials\": [{\"endpoint\":\"https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${FEED_ACCESSTOKEN}\"}]}"
 
 RUN curl -L https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh  | bash
 
@@ -175,7 +175,8 @@ _Note that a script is called to install the Credential Provider. When `dotnet r
 This Dockerfile would be built using this command:
 
 ```bash
-docker build --build-arg FEED_ACCESSTOKEN=<access_token> .
+# First populate the FEED_ACCESSTOKEN environment variable with an access token, then:
+docker build --build-arg FEED_ACCESSTOKEN .
 ```
 
 Passing the access token to the `docker build` command in this manner can be useful in automated scenarios when that value is stored as an environment variable on the Docker host machine or can be retrieved from an external secrets storage location and passed to the `docker build` command.
