@@ -17,7 +17,7 @@ steps:
     continueOnError: true
   - script: >
       docker run --rm $(dockerArmRunOptions) --entrypoint /bin/bash $(dockerClientImage) -c
-      'docker rmi -f $(docker images --format "{{.Repository}}:{{.Tag}}" | grep -v -e ^arm32v7/ -e ^arm64v8/ -e ^mcr\\.microsoft\\.com/windows)'
+      'docker rmi -f $(docker images --format "{{.Repository}}:{{.Tag}}" | grep -v -e ^arm32v7/ -e ^arm64v8/ -e ^mcr\\.microsoft\\.com/windows -e :\<none\>$)'
     displayName: Cleanup Remote Docker Server (images)
     condition: always()
     continueOnError: true
