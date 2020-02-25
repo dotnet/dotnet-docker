@@ -5,7 +5,7 @@ There are often cases when your Dockerfile needs to build a .NET project that ma
 There are two aspects to be aware of when it comes to protecting credentials:
 
 1. _Exposing credentials in an image that is published to a registry._ This is the most obvious scenario. You don't want consumers of your image to have access to data they should not have. The options listed below demonstrate how to prevent this from happening.
-2. _Exposing secrets locally on the Docker host machine._ This isn't necessarily an issue; it depends on your build processes. Just be aware that while your published image may not be exposing sensitive data, there can be sensitive data stored on the Docker host machine that you may want to clean up depending on how the machine is managed in your build workflow. For example, when using Azure DevOps pipelines with a hosted agent, there's no need to clean up data because the virtual machine of the build agent is automatically deleted at the end of the build. But if you manage your own agent, you're in charge of cleaning any leftover state should it be necessary.
+2. _Exposing secrets locally on the Docker host machine._ This isn't necessarily an issue; it depends on your build processes. Just be aware that while your published image may not be exposing sensitive data, there can be sensitive data stored on the Docker host machine that you may want to clean up depending on how the machine is managed in your build workflow. For example, when using Azure DevOps pipelines with a hosted agent, there's no need to clean up data because the virtual machine of the build agent is automatically deleted at the end of the build. But if you manage your own agent, you're in charge of cleaning any leftover state should it be necessary. Because some environments log command lines, it is a security best-practice to avoid putting secrets on the command line.  To avoid this with `docker build`, store the secret in an enviornment variable with the name you want to build argument to have.  Then, on the `docker build` command line, refer to [just the name of the environment variable](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg) without the `=` or the value.
 
 ## Use a multi-stage build to protect nuget.config passed by build context
 
@@ -114,10 +114,10 @@ COPY --from=build /app/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```
 
-This Dockerfile would be built using this command:
+Before running `docker build`, first populate the `Nuget_CustomFeedUserName` and `Nuget_CustomFeedPassword` environment variables with appropriate secrets. Then, this Dockerfile would be built using this command:
 
 ```bash
-docker build --build-arg Nuget_CustomFeedUserName=<username> --build-arg Nuget_CustomFeedPassword=<password> .
+docker build --build-arg Nuget_CustomFeedUserName --build-arg Nuget_CustomFeedPassword .
 ```
 
 Passing the username and password values to the `docker build` command in this manner can be useful in automated scenarios when those values are stored as environment variables on the Docker host machine or can be retrieved from an external secrets storage location and passed to the `docker build` command.
@@ -137,7 +137,7 @@ The `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable is a well-known var
 <configuration>
   <packageSources>
     <add key="public" value="https://api.nuget.org/v3/index.json" />
-    <add key="customfeed" value="https://mycustomfeedurl"  />
+    <add key="customfeed" value="https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json"  />
   </packageSources>
 </configuration>
 ```
@@ -150,7 +150,7 @@ WORKDIR /app
 
 ARG FEED_ACCESSTOKEN
 ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
-    "{\"endpointCredentials\": [{\"endpoint\":\"https://thalman.pkgs.visualstudio.com/_packaging/test/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${FEED_ACCESSTOKEN}\"}]}"
+    "{\"endpointCredentials\": [{\"endpoint\":\"https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${FEED_ACCESSTOKEN}\"}]}"
 
 RUN curl -L https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh  | bash
 
@@ -172,10 +172,10 @@ ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 
 _Note that a script is called to install the Credential Provider. When `dotnet restore` is run, the Credential Provider is invoked to resolve the credentials and it retrieves them from the `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable._
 
-This Dockerfile would be built using this command:
+Before running `docker build`, first populate the `FEED_ACCESSTOKEN` environment variable with an access token. Then, this Dockerfile would be built using this command:
 
 ```bash
-docker build --build-arg FEED_ACCESSTOKEN=<access_token> .
+docker build --build-arg FEED_ACCESSTOKEN .
 ```
 
 Passing the access token to the `docker build` command in this manner can be useful in automated scenarios when that value is stored as an environment variable on the Docker host machine or can be retrieved from an external secrets storage location and passed to the `docker build` command.
