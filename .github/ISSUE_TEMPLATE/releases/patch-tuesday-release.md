@@ -2,12 +2,9 @@
 
 ## Tasks
 
-1. - [ ] Wait for the following Windows images to have been updated as part of the Windows Patch Tuesday release process:
+1. - [ ] Run the [`Get-BaseImageStatus.ps1`](https://github.com/dotnet/dotnet-docker/blob/master/eng/common/Get-BaseImageStatus.ps1) script and wait until the Windows images have been updated as part of the Windows Patch Tuesday release process. This script will display when the dependent Windows images were last updated. Wait until all the images show that they have been recently updated. "Recently updated" amounts to be having been updated within the past week or so; images from a month ago should be considered to be the old version.
 
-      - [ ] `mcr.microsoft.com/windows/nanoserver:1809`
-      - [ ] `mcr.microsoft.com/windows/nanoserver:1809-arm32v7`
-      - [ ] `mcr.microsoft.com/windows/nanoserver:1903`
-      - [ ] `mcr.microsoft.com/windows/nanoserver:1909`
+          ./eng/common/Get-BaseImageStatus.ps1 -Continuous
 1. - [ ] Queue build of [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with the following parameters:
 
           imageBuilder.pathArgs: --path '*nanoserver*'
