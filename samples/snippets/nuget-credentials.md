@@ -114,7 +114,7 @@ COPY --from=build /app/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```
 
-Before running `docker build`, first populate the Nuget_CustomFeedUserName and Nuget_CustomFeedPassword environment variables with appropriate secrets. Then, this Dockerfile would be built using this command:
+Before running `docker build`, first populate the `Nuget_CustomFeedUserName` and `Nuget_CustomFeedPassword` environment variables with appropriate secrets. Then, this Dockerfile would be built using this command:
 
 ```bash
 docker build --build-arg Nuget_CustomFeedUserName --build-arg Nuget_CustomFeedPassword .
