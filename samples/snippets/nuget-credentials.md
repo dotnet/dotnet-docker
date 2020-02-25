@@ -172,7 +172,7 @@ ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 
 _Note that a script is called to install the Credential Provider. When `dotnet restore` is run, the Credential Provider is invoked to resolve the credentials and it retrieves them from the `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable._
 
-Before running `docker build`, first populate the FEED_ACCESSTOKEN environment variable with an access token. Then, this Dockerfile would be built using this command:
+Before running `docker build`, first populate the `FEED_ACCESSTOKEN` environment variable with an access token. Then, this Dockerfile would be built using this command:
 
 ```bash
 docker build --build-arg FEED_ACCESSTOKEN .
