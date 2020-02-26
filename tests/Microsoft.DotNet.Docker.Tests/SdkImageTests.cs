@@ -123,12 +123,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 OutputHelper.WriteLine("PowerShell does not exist in pre-3.0 images, skip testing");
                 return;
             }
-            if (imageData.Version.Major == 5)
-            {
-                OutputHelper.WriteLine(
-                    "5.0 doesn't support PowerShell (https://github.com/dotnet/windowsdesktop/issues/427), skip testing");
-                return;
-            }
 
             // A basic test which executes an arbitrary command to validate PS is functional
             string output = DockerHelper.Run(
