@@ -25,4 +25,5 @@ jobs:
       --runtime-version $(runtimeVer)
       --sdk-version $(sdkVer)
       --aspnet-version $(aspnetVer)
+      --compute-shas
     displayName: Run Update Dependencies
