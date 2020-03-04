@@ -103,6 +103,17 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.100-preview.3-buster-arm32v7, 5.0-buster-arm32v7, 5.0.100-preview.3, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/buster/arm32v7/Dockerfile) | Debian 10
 
+## Windows Server, version 2004 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+3.1.201-nanoserver-2004, 3.1-nanoserver-2004, 3.1.201, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/sdk/nanoserver-2004/amd64/Dockerfile)
+2.1.805-nanoserver-2004, 2.1-nanoserver-2004, 2.1.805, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-2004/amd64/Dockerfile)
+
+##### .NET Core 5.0 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+5.0.100-preview-nanoserver-2004, 5.0-nanoserver-2004, 5.0.100-preview, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/nanoserver-2004/amd64/Dockerfile)
+
 ## Windows Server, version 1909 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
