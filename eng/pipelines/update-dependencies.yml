@@ -7,7 +7,6 @@ schedules:
     include:
     - nightly
 variables:
-- group: DotNet-Maestro
 - template: variables/common.yml
 jobs:
 - job: UpdateDependencies
@@ -19,9 +18,9 @@ jobs:
     displayName: Build Update Dependencies Tool
   - script: >
       docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies
-      --user dotnet-maestro-bot
-      --email dotnet-maestro-bot@microsoft.com
-      --password $(BotAccount-dotnet-maestro-bot-PAT)
+      --user $(dotnetDockerBot.userName)
+      --email $(dotnetDockerBot.email)
+      --password $(BotAccount-dotnet-docker-bot-PAT)
       --runtime-version $(runtimeVer)
       --sdk-version $(sdkVer)
       --aspnet-version $(aspnetVer)
