@@ -16,6 +16,7 @@ namespace Dotnet.Docker
         public string GitHubUser { get; private set; }
         public string RuntimeVersion { get; private set; }
         public string SdkVersion { get; private set; }
+        public bool ComputeChecksums { get; private set; }
         public bool UpdateOnly => GitHubEmail == null || GitHubPassword == null || GitHubUser == null;
 
         public void Parse(string[] args)
@@ -63,6 +64,13 @@ namespace Dotnet.Docker
                     ref gitHubUser,
                     "GitHub user used to make PR (if not specified, a PR will not be created)");
                 GitHubUser = gitHubUser;
+
+                bool computeChecksums = false;
+                syntax.DefineOption(
+                    "compute-shas",
+                    ref computeChecksums,
+                    "Compute the checksum if a published checksum cannot be found");
+                ComputeChecksums = computeChecksums;
             });
         }
     }

@@ -53,8 +53,10 @@ namespace Dotnet.Docker
                 if (errorTraceListener.Errors.Any())
                 {
                     string errors = String.Join(Environment.NewLine, errorTraceListener.Errors);
-                    Console.Error.WriteLine(
-                        $"Failed to update dependencies due to the following errors:{Environment.NewLine}{errors}");
+                    Console.Error.WriteLine("Failed to update dependencies due to the following errors:");
+                    Console.Error.WriteLine(errors);
+                    Console.Error.WriteLine();
+                    Console.Error.WriteLine("You may need to use the --compute-shas option if checksum files are missing.");
                     Environment.Exit(1);
                 }
             }
@@ -311,8 +313,8 @@ namespace Dotnet.Docker
                     dockerfiles, buildInfos, VariableHelper.AspNetVersionName, AspNetCoreBuildInfoName))
                 .Concat(CreateDockerfileVariableUpdaters(
                     dockerfiles, buildInfos, VariableHelper.DotnetVersionName, RuntimeBuildInfoName))
-                .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateProductShaUpdater(path)))
-                .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateLzmaShaUpdater(path)))
+                .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateProductShaUpdater(path, Options)))
+                .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateLzmaShaUpdater(path, Options)))
                 .Concat(manifestBasedUpdaters);
         }
 
