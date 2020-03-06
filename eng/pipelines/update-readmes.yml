@@ -1,7 +1,6 @@
 trigger: none
 pr: none
 variables:
-- group: DotNet-Maestro
 - template: variables/common.yml
 - name: manifest
   value: manifest.json
