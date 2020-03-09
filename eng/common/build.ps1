@@ -8,16 +8,16 @@
 [cmdletbinding()]
 param(
     # Version of .NET Core to filter by
-    [string]$VersionFilter = "*",
+    [string]$Version = "*",
 
     # Name of OS to filter by
-    [string]$OSFilter,
+    [string]$OS,
 
     # Type of architecture to filter by
-    [string]$ArchitectureFilter,
+    [string]$Architecture,
 
-    # Additional custom path filters (overrides VersionFilter)
-    [string]$PathFilters,
+    # Additional custom path filters (overrides Version)
+    [string]$Path,
 
     # Path to manifest file
     [string]$Manifest = "manifest.json",
@@ -49,19 +49,19 @@ pushd $PSScriptRoot/../..
 try {
     $args = $OptionalImageBuilderArgs
 
-    if ($OSFilter) {
-        $args += " --os-version $OSFilter"
+    if ($OS) {
+        $args += " --os-version $OS"
     }
 
-    if ($ArchitectureFilter) {
-        $args += " --architecture $ArchitectureFilter"
+    if ($Architecture) {
+        $args += " --architecture $Architecture"
     }
 
-    if ($PathFilters) {
-        $args += " $PathFilters"
+    if ($Path) {
+        $args += " $Path"
     }
     else {
-        $args += " --path '$VersionFilter/*'"
+        $args += " --path '$Version/*'"
     }
 
     if ($Manifest) {
