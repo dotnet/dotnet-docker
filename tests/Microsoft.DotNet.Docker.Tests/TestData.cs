@@ -92,7 +92,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<ProductImageData> imageData)
         {
-            string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION_FILTER");
+            string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION");
             return imageData
                 .Where(imageData => versionFilterPattern == null
                     || Regex.IsMatch(imageData.VersionString, versionFilterPattern, RegexOptions.IgnoreCase));
@@ -100,7 +100,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<ImageData> FilterImagesByArch(this IEnumerable<ImageData> imageData)
         {
-            string archFilterPattern = GetFilterRegexPattern("IMAGE_ARCH_FILTER");
+            string archFilterPattern = GetFilterRegexPattern("IMAGE_ARCH");
             return imageData
                 .Where(imageData => archFilterPattern == null
                     || Regex.IsMatch(Enum.GetName(typeof(Arch), imageData.Arch), archFilterPattern, RegexOptions.IgnoreCase));
@@ -108,7 +108,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<ImageData> FilterImagesByOs(this IEnumerable<ImageData> imageData)
         {
-            string osFilterPattern = GetFilterRegexPattern("IMAGE_OS_FILTER");
+            string osFilterPattern = GetFilterRegexPattern("IMAGE_OS");
             return imageData
                 .Where(imageData => osFilterPattern == null
                     || Regex.IsMatch(imageData.OS, osFilterPattern, RegexOptions.IgnoreCase));

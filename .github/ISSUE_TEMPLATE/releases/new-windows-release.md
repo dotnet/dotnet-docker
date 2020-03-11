@@ -17,7 +17,7 @@ Windows version: &lt;version&gt;
 1. - [ ] Test the images
       1. - [ ] Create a local VM of the new Windows version
       1. - [ ] Clone this repo with the above changes onto the VM
-      1. - [ ] Run `.\build-and-test.ps1 -OSFilter nanoserver-<VERSION>` to build and test your changes
+      1. - [ ] Run `.\build-and-test.ps1 -OS nanoserver-<VERSION>` to build and test your changes
 1. - [ ] Commit generated changes
 1. - [ ] Create PR
 1. - [ ] Get PR signoff
