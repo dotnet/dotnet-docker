@@ -18,7 +18,7 @@ Distro: &lt;name/version&gt;
 1. - [ ] Run the command to update the image size baseline file: `.\tests\performance\Validate-ImageSize.ps1 -UpdateBaselines`
 1. - [ ] Inspect generated changes for correctness
 1. - [ ] Consider whether sample Dockerfiles should be authored if this is a new distro and them to the [samples](https://github.com/dotnet/dotnet-docker/tree/master/samples)
-1. - [ ] Run the command to build and test your changes: `.build-and-test.ps1 -OSFilter <os>`
+1. - [ ] Run the command to build and test your changes: `.build-and-test.ps1 -OS <os>`
 1. - [ ] Commit generated changes
 1. - [ ] Create PR
 1. - [ ] Get PR signoff

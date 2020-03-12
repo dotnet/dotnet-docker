@@ -6,9 +6,9 @@
 
 [cmdletbinding()]
 param(
-    [string]$VersionFilter,
-    [string]$ArchitectureFilter,
-    [string]$OSFilter,
+    [string]$Version,
+    [string]$Architecture,
+    [string]$OS,
     [string]$Registry,
     [string]$RepoPrefix,
     [switch]$DisableHttpVerification,
@@ -71,8 +71,8 @@ Push-Location "$PSScriptRoot\Microsoft.DotNet.Docker.Tests"
 
 Try {
     # Run Tests
-    if ([string]::IsNullOrWhiteSpace($ArchitectureFilter)) {
-        $ArchitectureFilter = "amd64"
+    if ([string]::IsNullOrWhiteSpace($Architecture)) {
+        $Architecture = "amd64"
     }
 
     if ($DisableHttpVerification) {
@@ -89,9 +89,9 @@ Try {
         $env:PULL_IMAGES = $null
     }
 
-    $env:IMAGE_ARCH_FILTER = $ArchitectureFilter
-    $env:IMAGE_OS_FILTER = $OSFilter
-    $env:IMAGE_VERSION_FILTER = $VersionFilter
+    $env:IMAGE_ARCH = $Architecture
+    $env:IMAGE_OS = $OS
+    $env:IMAGE_VERSION = $Version
     $env:REGISTRY = $Registry
     $env:REPO_PREFIX = $RepoPrefix
     $env:IMAGE_INFO_PATH = $ImageInfoPath
