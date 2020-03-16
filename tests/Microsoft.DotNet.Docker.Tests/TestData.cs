@@ -30,6 +30,14 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Arm64 },
             new ProductImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Arm64,    SdkOS = OS.Buster },
             new ProductImageData { Version = V3_1, OS = OS.Alpine311,    Arch = Arch.Arm64,    SdkOS = OS.Buster },
+            new ProductImageData { Version = V5_0, OS = OS.BusterSlim,   Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.Focal,        Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.Alpine311,    Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.BusterSlim,   Arch = Arch.Arm },
+            new ProductImageData { Version = V5_0, OS = OS.Focal,        Arch = Arch.Arm },
+            new ProductImageData { Version = V5_0, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
+            new ProductImageData { Version = V5_0, OS = OS.Focal,        Arch = Arch.Arm64 },
+            new ProductImageData { Version = V5_0, OS = OS.Alpine311,    Arch = Arch.Arm64,   SdkOS = OS.Buster },
         };
         private static readonly ProductImageData[] s_windowsTestData =
         {
@@ -40,6 +48,10 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1809, Arch = Arch.Arm },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1809, Arch = Arch.Arm },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
         };
         
         private static readonly SampleImageData[] s_linuxSampleTestData =
