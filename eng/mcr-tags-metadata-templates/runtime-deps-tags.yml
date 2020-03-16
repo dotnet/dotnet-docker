@@ -29,5 +29,3 @@ $(McrTagsYmlTagGroup:2.1-stretch-slim-arm32v7)
 $(McrTagsYmlTagGroup:2.1-bionic-arm32v7)
 $(McrTagsYmlTagGroup:5.0-buster-slim-arm32v7)
     customSubTableTitle: .NET Core 5.0 Preview Tags
-$(McrTagsYmlTagGroup:5.0-focal-arm32v7)
-    customSubTableTitle: .NET Core 5.0 Preview Tags

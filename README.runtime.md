@@ -94,7 +94,6 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-preview, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/runtime/buster-slim/arm32v7/Dockerfile) | Debian 10
-5.0.0-preview-focal-arm32v7, 5.0-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/runtime/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ## Windows Server, version 1909 amd64 Tags
 Tag | Dockerfile
