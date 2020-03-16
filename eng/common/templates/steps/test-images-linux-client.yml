@@ -44,9 +44,9 @@ steps:
 - script: >
     docker exec $(testRunner.container) pwsh
     -File $(testScriptPath)
-    -VersionFilter '$(dotnetVersion)'
-    -OSFilter '$(osVariant)*'
-    -ArchitectureFilter '$(architecture)'
+    -Version '$(dotnetVersion)'
+    -OS '$(osVariant)*'
+    -Architecture '$(architecture)'
     $(optionalTestArgs)
   displayName: Test Images
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:

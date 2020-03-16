@@ -24,8 +24,8 @@ steps:
       targetPath: $(Build.ArtifactStagingDirectory)
 - powershell: >
     $(testScriptPath)
-    -VersionFilter '$(dotnetVersion)'
-    -OSFilter '$(osVariant)'
+    -Version '$(dotnetVersion)'
+    -OS '$(osVariant)'
     $(optionalTestArgs)
   displayName: Test Images
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:

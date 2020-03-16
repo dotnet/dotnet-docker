@@ -21,14 +21,14 @@ _The set of .NET Core versions that are being released as a unit._
 
       Servicing release:
 
-          imageBuilder.pathArgs: --path '2.1*' --path '3.0*' --path '3.1*'
+          imageBuilder.pathArgs: --path '2.1*' --path '3.1*'
           stages: build
 1. - [ ] Wait for NuGet packages to be published during release tic-toc
 1. - [ ] Test and publish images - Queue build of [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with variables:
 
       Servicing release:
 
-          imageBuilder.pathArgs: --path '2.1*' --path '3.0*' --path '3.1*'
+          imageBuilder.pathArgs: --path '2.1*' --path '3.1*'
           stages: test;publish
           sourceBuildId: <Build ID from the build stage>
 1. - [ ] Confirm images have been ingested by MCR
