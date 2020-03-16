@@ -416,21 +416,6 @@
         {
           "platforms": [
             {
-              "architecture": "arm",
-              "dockerfile": "5.0/runtime-deps/focal/arm32v7",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm32v7": {},
-                "5.0-focal-arm32v7": {}
-              },
-              "variant": "v7"
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
               "architecture": "arm64",
               "dockerfile": "5.0/runtime-deps/focal/arm64v8",
               "os": "linux",
@@ -950,24 +935,6 @@
                 "$(5.0-RuntimeVersion)-focal": {},
                 "5.0-focal": {}
               }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "architecture": "arm",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "5.0/runtime/focal/arm32v7",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm32v7": {},
-                "5.0-focal-arm32v7": {}
-              },
-              "variant": "v7"
             }
           ]
         },
@@ -1526,24 +1493,6 @@
         {
           "platforms": [
             {
-              "architecture": "arm",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "5.0/aspnet/focal/arm32v7",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm32v7": {},
-                "5.0-focal-arm32v7": {}
-              },
-              "variant": "v7"
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
               "architecture": "arm64",
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
@@ -1942,21 +1891,6 @@
                 "$(5.0-SdkVersion)-focal": {},
                 "5.0-focal": {}
               }
-            }
-          ]
-        },
-        {
-          "platforms": [
-            {
-              "architecture": "arm",
-              "dockerfile": "5.0/sdk/focal/arm32v7",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "$(5.0-SdkVersion)-focal-arm32v7": {},
-                "5.0-focal-arm32v7": {}
-              },
-              "variant": "v7"
             }
           ]
         },
