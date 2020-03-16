@@ -10,5 +10,6 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         public static readonly Version V2_1 = new Version(2, 1);
         public static readonly Version V3_1 = new Version(3, 1);
+        public static readonly Version V5_0 = new Version(5, 0);
     }
 }
