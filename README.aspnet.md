@@ -97,17 +97,14 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.1.2-buster-slim-arm32v7, 3.1-buster-slim-arm32v7, 3.1.2, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/buster-slim/arm32v7/Dockerfile) | Debian 10
-3.1.2-focal-arm32v7, 3.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 3.1.2-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 2.1.16-stretch-slim-arm32v7, 2.1-stretch-slim-arm32v7, 2.1.16, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/stretch-slim/arm32v7/Dockerfile) | Debian 9
-2.1.16-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 2.1.16-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 ##### .NET Core 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-preview, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/buster-slim/arm32v7/Dockerfile) | Debian 10
-5.0.0-preview-focal-arm32v7, 5.0-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ## Windows Server, version 1909 amd64 Tags
 Tag | Dockerfile
