@@ -13,7 +13,7 @@ ENV `
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1809-arm32
 
 # Install .NET Core SDK
-RUN set "dotnet_sdk_version=5.0.100-preview.1.20155.7" `
+RUN set "dotnet_sdk_version=5.0.100-preview.3.20163.3" `
     && call curl -SL --output dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/%dotnet_sdk_version%/dotnet-sdk-%dotnet_sdk_version%-win-arm.zip `
     && mkdir "%ProgramFiles%\dotnet" `
     && tar -zxf dotnet.zip -C "%ProgramFiles%\dotnet" `
