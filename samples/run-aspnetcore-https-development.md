@@ -65,6 +65,8 @@ dotnet dev-certs https --trust
 
 > Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
 
+> Note: If console returns "A valid HTTPS certificate is already present.", a trusted certificate already exists in your store. It can be exported using MMC Console.
+
 Configure application secrets, for the certificate:
 
 ```console
@@ -182,6 +184,8 @@ dotnet dev-certs https --trust
 > Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
 
 > Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
+
+> Note: If console returns "A valid HTTPS certificate is already present.", a trusted certificate already exists in your store. It can be exported using MMC Console.
 
 Configure application secrets, for the certificate:
 
