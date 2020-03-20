@@ -7,7 +7,7 @@ set -u
 
 channel=$1
 
-curl -SLo sdk.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$channel/dotnet-sdk-latest-win-x64.zip
+curl -SLo sdk.zip https://aka.ms/dotnet/$channel/Sdk/dotnet-sdk-win-x64.zip
 unzip sdk.zip -d sdk
 rm sdk.zip
 
