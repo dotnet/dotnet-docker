@@ -104,10 +104,20 @@ namespace Microsoft.DotNet.Docker.Tests
 
             try
             {
+                string targetFramework;
+                if (_imageData.Version.Major < 5)
+                {
+                    targetFramework = $"netcoreapp{_imageData.Version}";
+                }
+                else
+                {
+                    targetFramework = $"net{_imageData.Version}";
+                }
+
                 _dockerHelper.Run(
                     image: _imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
                     name: containerName,
-                    command: $"dotnet new {appType} --framework netcoreapp{_imageData.Version} --no-restore",
+                    command: $"dotnet new {appType} --framework {targetFramework} --no-restore",
                     workdir: "/app",
                     skipAutoCleanup: true);
 
