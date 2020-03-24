@@ -4,7 +4,7 @@ FROM $REPO:3.1-bionic-arm64v8
 # Install ASP.NET Core
 RUN aspnetcore_version=3.1.3 \
     && curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz \
-    && aspnetcore_sha512='d336cfb37c93eeb7b8967a55b5b324f6e0bac78c7e8b70809d9a589cd8b7101f1c940bcbf046b55df6a92f0c1d53f2c70f543010dc4cccd9e5dd310e838631a2' \
+    && aspnetcore_sha512='1675fc5c801b0655e752aa91c132d6e4103f00ecc9b7f18fde378812d323462dbcf74f3d48ab63f863197b7aee33726286a37c3c5ed360f75278dc9ca677f035' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -ozxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
