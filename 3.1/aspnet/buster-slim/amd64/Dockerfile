@@ -2,9 +2,9 @@ ARG REPO=mcr.microsoft.com/dotnet/core/runtime
 FROM $REPO:3.1-buster-slim
 
 # Install ASP.NET Core
-RUN aspnetcore_version=3.1.2 \
+RUN aspnetcore_version=3.1.3 \
     && curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='35e39d78f134f34f0430fbad995c987a44999e90c588fa9532e3376f8c09e9aeb3bd9b7b04f3af29b2fd1bd14ba4a124f0a32c10fd1bb96964f4232d7321708e' \
+    && aspnetcore_sha512='ced0b7c9faaf250fbee2c850e8941d47a17da06fa8e576d57063fa4bbc6c8435de6ab488b683d4a692cd622e24d9592f11608a1b358074167cf0b76024815611' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -ozxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
