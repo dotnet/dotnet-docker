@@ -105,7 +105,9 @@ namespace Microsoft.DotNet.Docker.Tests
             try
             {
                 string targetFramework;
-                if (_imageData.Version.Major < 5)
+                // TODO: Until https://github.com/dotnet/aspnetcore/pull/19860 is fixed, 5.0 web projects need to
+                // continue to use the old TFM.
+                if (_imageData.Version.Major < 5 || appType == "web")
                 {
                     targetFramework = $"netcoreapp{_imageData.Version}";
                 }
