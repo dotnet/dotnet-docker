@@ -20,7 +20,7 @@ RUN set "dotnet_sdk_version=5.0.100-preview.2.20175.2" `
     && del dotnet.zip
 
 # Install PowerShell global tool
-RUN set "powershell_version=7.0.0" `
+RUN set "powershell_version=7.1.0-preview.1" `
     && call curl -SL --output PowerShell.Windows.arm32.%powershell_version%.nupkg https://pwshtool.blob.core.windows.net/tool/%powershell_version%/PowerShell.Windows.arm32.%powershell_version%.nupkg `
     && mkdir "%ProgramFiles%\powershell" `
     && call "%ProgramFiles%\dotnet\dotnet" tool install --add-source . --tool-path "%ProgramFiles%\powershell" --version %powershell_version% PowerShell.Windows.arm32 `
