@@ -95,7 +95,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 if (!DockerHelper.IsLinuxContainerModeEnabled &&
                     DockerHelper.DockerArchitecture.StartsWith("arm", StringComparison.OrdinalIgnoreCase))
                 {
-                    // Skipping run app tests due to a Windows issue: https://microsoft.visualstudio.com/OS/_workitems/edit/24672377
+                    // Skipping run app tests due to a .NET issue: https://github.com/dotnet/runtime/issues/2082
                     return;
                 }
 

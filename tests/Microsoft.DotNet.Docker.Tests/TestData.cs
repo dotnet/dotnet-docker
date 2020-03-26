@@ -17,38 +17,40 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V2_1, OS = OS.StretchSlim,  Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.Bionic,       Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.Alpine310,    Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.Alpine311,    Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.StretchSlim,  Arch = Arch.Arm },
             new ProductImageData { Version = V2_1, OS = OS.Bionic,       Arch = Arch.Arm },
-            new ProductImageData { Version = V3_0, OS = OS.BusterSlim,   Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_0, OS = OS.Alpine310,    Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_0, OS = OS.BusterSlim,   Arch = Arch.Arm },
-            new ProductImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Arm },
-            new ProductImageData { Version = V3_0, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
-            new ProductImageData { Version = V3_0, OS = OS.Bionic,       Arch = Arch.Arm64 },
-            new ProductImageData { Version = V3_0, OS = OS.Alpine310,    Arch = Arch.Arm64,   SdkOS = OS.Buster },
             new ProductImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Amd64 },
+            new ProductImageData { Version = V3_1, OS = OS.Alpine311,    Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Arm },
             new ProductImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Arm },
             new ProductImageData { Version = V3_1, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
             new ProductImageData { Version = V3_1, OS = OS.Bionic,       Arch = Arch.Arm64 },
-            new ProductImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Arm64,   SdkOS = OS.Buster },
+            new ProductImageData { Version = V3_1, OS = OS.Alpine310,    Arch = Arch.Arm64,    SdkOS = OS.Buster },
+            new ProductImageData { Version = V3_1, OS = OS.Alpine311,    Arch = Arch.Arm64,    SdkOS = OS.Buster },
+            new ProductImageData { Version = V5_0, OS = OS.BusterSlim,   Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.Focal,        Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.Alpine311,    Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.BusterSlim,   Arch = Arch.Arm },
+            new ProductImageData { Version = V5_0, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
+            new ProductImageData { Version = V5_0, OS = OS.Focal,        Arch = Arch.Arm64 },
+            new ProductImageData { Version = V5_0, OS = OS.Alpine311,    Arch = Arch.Arm64,   SdkOS = OS.Buster },
         };
         private static readonly ProductImageData[] s_windowsTestData =
         {
             new ProductImageData { Version = V2_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_0, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_0, OS = OS.NanoServer1809, Arch = Arch.Arm },
-            new ProductImageData { Version = V3_0, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_0, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1809, Arch = Arch.Arm },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1809, Arch = Arch.Arm },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
         };
         
         private static readonly SampleImageData[] s_linuxSampleTestData =
@@ -101,7 +103,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<ProductImageData> imageData)
         {
-            string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION_FILTER");
+            string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION");
             return imageData
                 .Where(imageData => versionFilterPattern == null
                     || Regex.IsMatch(imageData.VersionString, versionFilterPattern, RegexOptions.IgnoreCase));
@@ -109,7 +111,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<ImageData> FilterImagesByArch(this IEnumerable<ImageData> imageData)
         {
-            string archFilterPattern = GetFilterRegexPattern("IMAGE_ARCH_FILTER");
+            string archFilterPattern = GetFilterRegexPattern("IMAGE_ARCH");
             return imageData
                 .Where(imageData => archFilterPattern == null
                     || Regex.IsMatch(Enum.GetName(typeof(Arch), imageData.Arch), archFilterPattern, RegexOptions.IgnoreCase));
@@ -117,7 +119,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<ImageData> FilterImagesByOs(this IEnumerable<ImageData> imageData)
         {
-            string osFilterPattern = GetFilterRegexPattern("IMAGE_OS_FILTER");
+            string osFilterPattern = GetFilterRegexPattern("IMAGE_OS");
             return imageData
                 .Where(imageData => osFilterPattern == null
                     || Regex.IsMatch(imageData.OS, osFilterPattern, RegexOptions.IgnoreCase));

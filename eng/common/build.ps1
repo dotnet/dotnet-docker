@@ -8,22 +8,22 @@
 [cmdletbinding()]
 param(
     # Version of .NET Core to filter by
-    [string]$VersionFilter = "*",
+    [string]$Version = "*",
 
     # Name of OS to filter by
-    [string]$OSFilter = "*",
+    [string]$OS,
 
     # Type of architecture to filter by
-    [string]$ArchitectureFilter = "amd64",
+    [string]$Architecture,
 
-    # Custom path filters that override the other filter options
-    [string]$PathFilters,
+    # Additional custom path filters (overrides Version)
+    [string]$Path,
+
+    # Path to manifest file
+    [string]$Manifest = "manifest.json",
 
     # Additional args to pass to ImageBuilder
-    [string]$OptionalImageBuilderArgs,
-
-    # Whether to exclude architecture from the generated path filter
-    [switch]$ExcludeArchitecture = $false
+    [string]$OptionalImageBuilderArgs
 )
 
 Set-StrictMode -Version Latest
@@ -47,16 +47,28 @@ function Exec {
 
 pushd $PSScriptRoot/../..
 try {
-    if (-not $PathFilters) {
-        $PathFilters = "$VersionFilter/*/$OSFilter"
-        if (-not $ExcludeArchitecture) {
-            $PathFilters += "/$ArchitectureFilter"
-        }
+    $args = $OptionalImageBuilderArgs
 
-        $PathFilters = "--path '$PathFilters'"
+    if ($OS) {
+        $args += " --os-version $OS"
     }
 
-    ./eng/common/Invoke-ImageBuilder.ps1 "build $PathFilters $OptionalImageBuilderArgs"
+    if ($Architecture) {
+        $args += " --architecture $Architecture"
+    }
+
+    if ($Path) {
+        $args += " $Path"
+    }
+    else {
+        $args += " --path '$Version/*'"
+    }
+
+    if ($Manifest) {
+        $args += " --manifest $Manifest"
+    }
+
+    ./eng/common/Invoke-ImageBuilder.ps1 "build $args"
 }
 finally {
     popd

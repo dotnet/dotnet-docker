@@ -11,7 +11,8 @@ param(
     [switch]$PullImages,
     [string]$ImageBuilderCustomArgs = "--architecture '*'",
     [Parameter(ParameterSetName = 'Validate')]
-    [switch]$BaselineIntegrityOnly,
+    [ValidateSet("all", "integrity", "size")]
+    [string]$ValidationMode = "all",
     [Parameter(ParameterSetName = 'Update')]
     [switch]$UpdateBaselines,
     [Parameter(ParameterSetName = 'Update')]
@@ -50,9 +51,7 @@ try {
     }
     else {
         $commandName = "validateImageSize"
-        if ($BaselineIntegrityOnly) {
-            $commandArgs += " --baseline-integrity-only"
-        }
+        $commandArgs += " --mode $ValidationMode"
     }
 
     $onCommandExecuted = {

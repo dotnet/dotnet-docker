@@ -8,6 +8,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         // Alpine
         public const string Alpine310 = "alpine3.10";
+        public const string Alpine311 = "alpine3.11";
 
         // Debian
         public const string Buster = "buster";
@@ -17,6 +18,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         // Ubuntu
         public const string Bionic = "bionic";
+        public const string Focal = "focal";
 
         // Windows
         public const string NanoServer1809 = "nanoserver-1809";

@@ -1,17 +1,17 @@
 // Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.DotNet.VersionTools.Dependencies;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.DotNet.VersionTools.Dependencies;
 
 namespace Dotnet.Docker
 {
@@ -40,12 +40,16 @@ namespace Dotnet.Docker
             VariableHelper.AspNetVersionName, VariableHelper.DotnetSdkVersionName, VariableHelper.DotnetVersionName);
 
         private static readonly Dictionary<string, string> s_shaCache = new Dictionary<string, string>();
+        private static readonly Dictionary<string, Dictionary<string, string>> s_releaseChecksumCache =
+            new Dictionary<string, Dictionary<string, string>>();
 
         private Regex _downloadUrlRegex;
+        private readonly Options _options;
 
-        private DockerfileShaUpdater(string dockerfilePath, Regex regex, Regex downloadUrlRegex) : base()
+        private DockerfileShaUpdater(string dockerfilePath, Regex regex, Regex downloadUrlRegex, Options options) : base()
         {
             _downloadUrlRegex = downloadUrlRegex;
+            _options = options;
             Path = dockerfilePath;
             Regex = regex;
             VersionGroupName = ValueGroupName;
@@ -55,11 +59,11 @@ namespace Dotnet.Docker
             SkipIfNoReplacementFound = true;
         }
 
-        public static DockerfileShaUpdater CreateProductShaUpdater(string dockerfilePath) =>
-            new DockerfileShaUpdater(dockerfilePath, s_productShaRegex, s_productDownloadUrlRegex);
+        public static DockerfileShaUpdater CreateProductShaUpdater(string dockerfilePath, Options options) =>
+            new DockerfileShaUpdater(dockerfilePath, s_productShaRegex, s_productDownloadUrlRegex, options);
 
-        public static DockerfileShaUpdater CreateLzmaShaUpdater(string dockerfilePath) =>
-            new DockerfileShaUpdater(dockerfilePath, s_lzmaShaRegex, s_lzmaDownloadUrlRegex);
+        public static DockerfileShaUpdater CreateLzmaShaUpdater(string dockerfilePath, Options options) =>
+            new DockerfileShaUpdater(dockerfilePath, s_lzmaShaRegex, s_lzmaDownloadUrlRegex, options);
 
         protected override string TryGetDesiredValue(
             IEnumerable<IDependencyInfo> dependencyBuildInfos, out IEnumerable<IDependencyInfo> usedBuildInfos)
@@ -111,8 +115,13 @@ namespace Dotnet.Docker
             return sha;
         }
 
-        private static async Task<string> ComputeChecksumShaAsync(string downloadUrl)
+        private async Task<string> ComputeChecksumShaAsync(string downloadUrl)
         {
+            if (!_options.ComputeChecksums)
+            {
+                return null;
+            }
+
             string sha = null;
 
             Trace.TraceInformation($"Downloading '{downloadUrl}'.");
@@ -146,7 +155,7 @@ namespace Dotnet.Docker
         private static async Task<string> GetDotNetCliChecksumsShaAsync(string productDownloadUrl, string envName)
         {
             string sha = null;
-            string shaExt = envName.Contains("SDK") ? ".sha" : ".sha512";
+            string shaExt = envName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ? ".sha" : ".sha512";
 
             UriBuilder uriBuilder = new UriBuilder(productDownloadUrl);
             uriBuilder.Host = ChecksumsHostName;
@@ -169,12 +178,39 @@ namespace Dotnet.Docker
             return sha;
         }
 
-        private static async Task<string> GetDotNetReleaseChecksumsShaAsync(
+        private async Task<string> GetDotNetReleaseChecksumsShaAsync(
             string productDownloadUrl, string envName, string productVersion)
         {
-            string sha = null;
-            string product = envName == "DOTNET_SDK_VERSION" ? "sdk" : "runtime";
-            string uri = $"https://dotnetcli.blob.core.windows.net/dotnet/checksums/{productVersion}-{product}-sha.txt";
+            // The release checksum file contains content for all products in the release (runtime, sdk, etc.)
+            // and is referenced by the runtime version.
+            if (envName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ||
+                envName.Contains("aspnet", StringComparison.OrdinalIgnoreCase))
+            {
+                productVersion = _options.RuntimeVersion;
+            }
+
+            IDictionary<string, string> checksumEntries = await GetDotnetReleaseChecksums(productVersion);
+
+            string installerFileName = productDownloadUrl.Substring(productDownloadUrl.LastIndexOf('/') + 1);
+
+            if (!checksumEntries.TryGetValue(installerFileName, out string sha))
+            {
+                Trace.TraceInformation($"Failed to find `{installerFileName}` sha");
+            }
+
+            return sha;
+        }
+
+        private static async Task<IDictionary<string, string>> GetDotnetReleaseChecksums(string productVersion)
+        {
+            string uri = $"https://dotnetcli.blob.core.windows.net/dotnet/checksums/{productVersion}-sha.txt";
+            if (s_releaseChecksumCache.TryGetValue(uri, out Dictionary<string, string> checksumEntries))
+            {
+                return checksumEntries;
+            }
+
+            checksumEntries = new Dictionary<string, string>();
+            s_releaseChecksumCache.Add(uri, checksumEntries);
 
             Trace.TraceInformation($"Downloading '{uri}'.");
             using (HttpClient client = new HttpClient())
@@ -183,17 +219,25 @@ namespace Dotnet.Docker
                 if (response.IsSuccessStatusCode)
                 {
                     string checksums = await response.Content.ReadAsStringAsync();
-                    string installerFileName = productDownloadUrl.Substring(productDownloadUrl.LastIndexOf('/') + 1);
-
-                    Regex shaRegex = new Regex($"(?<sha>[\\S]+)[\\s]+{Regex.Escape(installerFileName)}");
-                    Match shaMatch = shaRegex.Match(checksums);
-                    if (shaMatch.Success)
+                    string[] checksumLines = checksums.Replace("\r\n", "\n").Split("\n");
+                    if (!checksumLines[0].StartsWith("Hash") || !String.IsNullOrEmpty(checksumLines[1]))
                     {
-                        sha = shaMatch.Groups["sha"].Value;
+                        Trace.TraceError($"Checksum file is not in the expected format: {uri}");
                     }
-                    else
+
+                    for (int i = 2; i < checksumLines.Length - 1; i++)
                     {
-                        Trace.TraceInformation($"Failed to find `{installerFileName}` sha");
+                        string[] parts = checksumLines[i].Split(" ");
+                        if (parts.Length != 2)
+                        {
+                            Trace.TraceError($"Checksum file is not in the expected format: {uri}");
+                        }
+
+                        string fileName = parts[1];
+                        string checksum = parts[0];
+
+                        checksumEntries.Add(fileName, checksum);
+                        Trace.TraceInformation($"Parsed checksum '{checksum}' for '{fileName}'");
                     }
                 }
                 else
@@ -202,7 +246,7 @@ namespace Dotnet.Docker
                 }
             }
 
-            return sha;
+            return checksumEntries;
         }
 
         private bool TryGetDotNetDownloadUrl(string dockerfile, out string downloadUrl)
