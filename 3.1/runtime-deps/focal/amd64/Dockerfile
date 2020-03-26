@@ -1,14 +1,14 @@
 FROM ubuntu:focal
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         ca-certificates \
         \
 # .NET Core dependencies
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
-        libicu65 \
+        libicu66 \
         libssl1.1 \
         libstdc++6 \
         zlib1g \

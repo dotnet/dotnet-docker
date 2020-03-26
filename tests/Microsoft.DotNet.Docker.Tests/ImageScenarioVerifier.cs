@@ -104,10 +104,22 @@ namespace Microsoft.DotNet.Docker.Tests
 
             try
             {
+                string targetFramework;
+                // TODO: Until https://github.com/dotnet/aspnetcore/pull/19860 is fixed, 5.0 web projects need to
+                // continue to use the old TFM.
+                if (_imageData.Version.Major < 5 || appType == "web")
+                {
+                    targetFramework = $"netcoreapp{_imageData.Version}";
+                }
+                else
+                {
+                    targetFramework = $"net{_imageData.Version}";
+                }
+
                 _dockerHelper.Run(
                     image: _imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
                     name: containerName,
-                    command: $"dotnet new {appType} --framework netcoreapp{_imageData.Version} --no-restore",
+                    command: $"dotnet new {appType} --framework {targetFramework} --no-restore",
                     workdir: "/app",
                     skipAutoCleanup: true);
 

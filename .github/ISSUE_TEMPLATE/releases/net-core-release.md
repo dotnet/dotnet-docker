@@ -19,18 +19,32 @@ _The set of .NET Core versions that are being released as a unit._
 1. - [ ] Wait for changes to be mirrored to internal [dotnet-docker repo](https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet-docker) (internal MSFT link)
 1. - [ ] Build images - Queue build stage of [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with variables:
 
+      All releases:
+
+          stages: build
+
       Servicing release:
 
           imageBuilder.pathArgs: --path '2.1*' --path '3.1*'
-          stages: build
+
+      Preview release:
+
+          imageBuilder.pathArgs: --path '5.0*'
 1. - [ ] Wait for NuGet packages to be published during release tic-toc
 1. - [ ] Test and publish images - Queue build of [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with variables:
 
+      All releases:
+
+          stages: test;publish
+          sourceBuildId: <Build ID from the build stage>
+
       Servicing release:
 
           imageBuilder.pathArgs: --path '2.1*' --path '3.1*'
-          stages: test;publish
-          sourceBuildId: <Build ID from the build stage>
+
+      Preview release:
+
+          imageBuilder.pathArgs: --path '5.0*'
 1. - [ ] Confirm images have been ingested by MCR
 1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-core)
 1. - [ ] Confirm build for [dotnet-docker-samples](https://dev.azure.com/dnceng/internal/_build?definitionId=376) (internal MSFT link) was queued. This will be queued automatically by [dotnet-docker-tools-check-base-image-updates](https://dev.azure.com/dnceng/internal/_build?definitionId=536) when it detects that the product images have been updated (detection runs on a schedule). Alternatively, you can manually queue the samples build.
