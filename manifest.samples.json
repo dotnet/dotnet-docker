@@ -1,5 +1,8 @@
 {
   "registry": "mcr.microsoft.com",
+  "variables": {
+    "SampleProductVersion": "3.1"
+  },
   "repos": [
     {
       "id": "samples",
@@ -8,6 +11,7 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/samples-tags.yml",
       "images": [
         {
+          "productVersion": "$(SampleProductVersion)",
           "sharedTags": {
             "dotnetapp": {},
             "latest": {}
@@ -77,6 +81,7 @@
           ]
         },
         {
+          "productVersion": "$(SampleProductVersion)",
           "sharedTags": {
             "aspnetapp": {}
           },
