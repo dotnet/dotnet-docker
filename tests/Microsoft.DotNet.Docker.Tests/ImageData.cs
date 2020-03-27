@@ -27,8 +27,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             ImageInfoData = new Lazy<JObject>(() =>
             {
-                //string imageInfoPath = Environment.GetEnvironmentVariable("IMAGE_INFO_PATH");
-                string imageInfoPath = @"C:\repos\versions\build-info\docker\image-info.dotnet-dotnet-docker-nightly.json";
+                string imageInfoPath = Environment.GetEnvironmentVariable("IMAGE_INFO_PATH");
                 if (!String.IsNullOrEmpty(imageInfoPath))
                 {
                     string imageInfoContents = File.ReadAllText(imageInfoPath);
