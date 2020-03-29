@@ -30,7 +30,7 @@ namespace Dotnet.Docker
             // Examples: Product build version  => Docker tag version 
             // 2.2.0-rtm-35586 => 2.2.0
             // 3.1.100-preview2-014589 => 3.1.100-preview2
-            // 3.1.0-preview3.19530.9 => 3.1.0-preview3
+            // 5.0.0-preview.2.19530.9 => 5.0.0-preview.2
             int firstDashIndex = version.IndexOf('-');
             if (firstDashIndex != -1)
             {
@@ -40,7 +40,7 @@ namespace Dotnet.Docker
                     _tagVersion = version.Substring(0, secondDashIndex);
                 }
                 else {
-                    int prereleaseLabelDotIndex = version.IndexOf('.', firstDashIndex + 1);
+                    int prereleaseLabelDotIndex = version.IndexOf('.', firstDashIndex + 1, 2);
                     if (prereleaseLabelDotIndex != -1)
                     {
                         _tagVersion = version.Substring(0, prereleaseLabelDotIndex);
