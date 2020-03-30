@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM amd64/ubuntu:focal
 
 # .NET Core dependencies
 RUN apt-get update \

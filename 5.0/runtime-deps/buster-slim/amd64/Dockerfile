@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM amd64/debian:buster-slim
 
 # .NET Core dependencies
 RUN apt-get update \
