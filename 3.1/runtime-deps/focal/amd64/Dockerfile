@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM amd64/ubuntu:focal
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
