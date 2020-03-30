@@ -1,4 +1,4 @@
-FROM alpine:3.11
+FROM amd64/alpine:3.11
 
 # .NET Core dependencies
 RUN apk add --no-cache \

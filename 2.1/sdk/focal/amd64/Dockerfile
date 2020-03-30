@@ -1,4 +1,4 @@
-FROM buildpack-deps:focal-scm
+FROM amd64/buildpack-deps:focal-scm
 
 # Install .NET CLI dependencies
 RUN apt-get update \

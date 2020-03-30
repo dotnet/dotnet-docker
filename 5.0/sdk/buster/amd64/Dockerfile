@@ -1,4 +1,4 @@
-FROM buildpack-deps:buster-scm
+FROM amd64/buildpack-deps:buster-scm
 
 ENV \
     # Enable detection of running in a container

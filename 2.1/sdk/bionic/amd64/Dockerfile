@@ -1,4 +1,4 @@
-FROM buildpack-deps:bionic-scm
+FROM amd64/buildpack-deps:bionic-scm
 
 # Install .NET CLI dependencies
 RUN apt-get update \

@@ -1,4 +1,4 @@
-FROM buildpack-deps:bionic-scm
+FROM amd64/buildpack-deps:bionic-scm
 
 ENV \
     # Enable detection of running in a container
