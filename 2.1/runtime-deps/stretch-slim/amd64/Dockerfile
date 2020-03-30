@@ -1,4 +1,4 @@
-FROM debian:stretch-slim
+FROM amd64/debian:stretch-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
