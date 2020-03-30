@@ -1,4 +1,4 @@
-FROM buildpack-deps:stretch-scm
+FROM amd64/buildpack-deps:stretch-scm
 
 # Install .NET CLI dependencies
 RUN apt-get update \
