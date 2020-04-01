@@ -14,6 +14,9 @@ parameters:
   windowsAmdTestJobTimeout: 60
   windowsArmTestJobTimeout: 60
 
+  linuxAmdBuildPool: "Hosted Ubuntu 1604"
+  linuxAmdBuildQueue: ""
+
 stages:
 
 ################################################################################
@@ -32,7 +35,8 @@ stages:
     parameters:
       name: Build_Linux_amd64
       pool: # linuxAmd64Pool
-        name: Hosted Ubuntu 1604
+        name: ${{ parameters.linuxAmdBuildPool }}
+        queue: ${{ parameters.linuxAmdBuildQueue }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxAmd64']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
