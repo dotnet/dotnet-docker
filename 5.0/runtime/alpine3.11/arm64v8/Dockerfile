@@ -2,9 +2,9 @@ ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
 FROM $REPO:5.0-alpine3.11-arm64v8
 
 # Install .NET Core
-RUN dotnet_version=5.0.0-preview.1.20120.5 \
+RUN dotnet_version=5.0.0-preview.2.20160.6 \
     && wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='8329ac14d78f119ab905d8770f52f0ad7b17a8c6a0c880618318aba1106fbdb04a3f7769c76708c5603101c575acfe401df002777b5ca8e4ea7a0e3604cfe05d' \
+    && dotnet_sha512='ed87ce53b2b22c8e4b407657546182217905e39d7ee43cf9baa31d9598303e1bebddba1f57f77298c6131e413334b58c62254a0c7c7ce27f622367430b1f69b9' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
