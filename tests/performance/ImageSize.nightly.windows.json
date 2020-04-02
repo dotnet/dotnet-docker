@@ -8,7 +8,6 @@
     "3.1/runtime/nanoserver-1903/amd64": 326438075,
     "3.1/runtime/nanoserver-1909/amd64": 328083762,
     "5.0/runtime/nanoserver-1809/amd64": 321408734,
-    "5.0/runtime/nanoserver-1809/arm32v7": 256353134,
     "5.0/runtime/nanoserver-1903/amd64": 326438075,
     "5.0/runtime/nanoserver-1909/amd64": 328083762
   },
@@ -21,7 +20,6 @@
     "3.1/aspnet/nanoserver-1903/amd64": 346102290,
     "3.1/aspnet/nanoserver-1909/amd64": 347747977,
     "5.0/aspnet/nanoserver-1809/amd64": 341072949,
-    "5.0/aspnet/nanoserver-1809/arm32v7": 278558953,
     "5.0/aspnet/nanoserver-1903/amd64": 346102290,
     "5.0/aspnet/nanoserver-1909/amd64": 347747977
   },
@@ -34,7 +32,6 @@
     "3.1/sdk/nanoserver-1903/amd64": 735894844,
     "3.1/sdk/nanoserver-1909/amd64": 737661435,
     "5.0/sdk/nanoserver-1809/amd64": 730951559,
-    "5.0/sdk/nanoserver-1809/arm32v7": 559712172,
     "5.0/sdk/nanoserver-1903/amd64": 735894844,
     "5.0/sdk/nanoserver-1909/amd64": 737661435
   }
