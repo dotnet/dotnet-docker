@@ -133,11 +133,6 @@ Tag | Dockerfile
 ---------| ---------------
 3.1.3-nanoserver-1809-arm32v7, 3.1-nanoserver-1809-arm32v7, 3.1.3, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime/nanoserver-1809/arm32v7/Dockerfile)
 
-##### .NET Core 5.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-5.0.0-preview-nanoserver-1809-arm32v7, 5.0-nanoserver-1809-arm32v7, 5.0.0-preview, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/runtime/nanoserver-1809/arm32v7/Dockerfile)
-
 You can retrieve a list of all available tags for dotnet/core/runtime at https://mcr.microsoft.com/v2/dotnet/core/runtime/tags/list.
 
 # Support
