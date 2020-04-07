@@ -58,7 +58,7 @@ try {
     }
 
     if ($Path) {
-        $args += " $Path"
+        $args += " --path $Path"
     }
     else {
         $args += " --path '$Version/*'"

@@ -990,6 +990,24 @@
         {
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "5.0/runtime/alpine3.11/amd64/composite",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "$(5.0-RuntimeVersion)-alpine3.11-composite": {},
+                "5.0-alpine3.11-composite": {},
+                "$(5.0-RuntimeVersion)-alpine-composite": {},
+                "5.0-alpine-composite": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
               "architecture": "arm64",
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
@@ -1585,6 +1603,43 @@
                 "5.0-alpine3.11": {},
                 "$(5.0-RuntimeVersion)-alpine": {},
                 "5.0-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "5.0/aspnet/alpine3.11/amd64/composite",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "$(5.0-RuntimeVersion)-alpine3.11-composite": {},
+                "5.0-alpine3.11-composite": {},
+                "$(5.0-RuntimeVersion)-alpine-composite": {},
+                "5.0-alpine-composite": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "RUNTIME_DEPS_REPO": "$(Repo:runtime-deps)",
+                "RUNTIME_REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "5.0/aspnet/alpine3.11/amd64/composed-composite",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "$(5.0-RuntimeVersion)-alpine3.11-composed-composite": {},
+                "5.0-alpine3.11-composed-composite": {},
+                "$(5.0-RuntimeVersion)-alpine-composed-composite": {},
+                "5.0-alpine-composed-composite": {}
               }
             }
           ]
