@@ -1613,6 +1613,24 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
+              "dockerfile": "5.0/aspnet/alpine3.11/amd64/runtime-only-composite",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "$(5.0-RuntimeVersion)-alpine3.11-runtime-only-composite": {},
+                "5.0-alpine3.11-runtime-only-composite": {},
+                "$(5.0-RuntimeVersion)-alpine-runtime-only-composite": {},
+                "5.0-alpine-runtime-only-composite": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "5.0/aspnet/alpine3.11/amd64/composite",
               "os": "linux",
               "osVersion": "alpine3.11",
