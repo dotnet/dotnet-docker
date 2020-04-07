@@ -138,6 +138,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {
               "documentationGroup": "3.1"
@@ -342,6 +343,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
             "5.0": {}
@@ -587,6 +589,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {},
             "3.1": {},
@@ -820,6 +823,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
             "5.0": {}
@@ -1121,6 +1125,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {},
             "3.1": {},
@@ -1366,6 +1371,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
             "5.0": {}
@@ -1664,6 +1670,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-SdkVersion)",
           "sharedTags": {
             "$(3.1-SdkVersion)": {},
             "3.1": {},
@@ -1823,6 +1830,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-SdkVersion)",
           "sharedTags": {
             "$(5.0-SdkVersion)": {},
             "5.0": {}
