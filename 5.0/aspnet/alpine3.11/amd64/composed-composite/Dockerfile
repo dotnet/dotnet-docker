@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/core/runtime
 
 
 # Installer image
-FROM $REPO:5.0-alpine3.11 as installer
+FROM $REPO:5.0-alpine3.11-composite as installer
 
 # Install crossgen2
 RUN wget -O crossgen2.tar.gz https://dotnetbinaries.blob.core.windows.net/dockerassets/microsoft.netcore.app.crossgen2.linux-musl-x64.$DOTNET_VERSION.tar.gz \
@@ -21,18 +21,18 @@ RUN \
     &&aspnetcore_sha512='029ed32f8a7dfdb258438177b7fd40c187830db35b3d973dec296d8948f99d30a74269c45d31876c9b4533b8d7b6af65dea319299bd9a7081c6881cf026274b4' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -ozxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
-    && rm aspnetcore.tar.gz
-    # \
+    && rm aspnetcore.tar.gz \
+    \
     # Crossgen .NET Core
-    # && /crossgen2/crossgen2 \
-    #     --composite --inputbubble -O --Os \
-    #     -o /usr/share/dotnet/shared/Microsoft.AspNetCore.App/$ASPNET_VERSION/Microsoft.AspNetCore.App.SharedFramework.dll \
-    #     -r /usr/share/dotnet/shared/Microsoft.NETCore.App/$DOTNET_VERSION/*.dll \
-    #     /usr/share/dotnet/shared/Microsoft.AspNetCore.App/$ASPNET_VERSION/*.dll
+    && /crossgen2/crossgen2 \
+        --composite --inputbubble -O --Os \
+        -r /usr/share/dotnet/shared/Microsoft.NETCore.App/$DOTNET_VERSION/*.dll \
+        -o /usr/share/dotnet/shared/Microsoft.AspNetCore.App/$ASPNET_VERSION/Microsoft.AspNetCore.App.SharedFramework.dll \
+        /usr/share/dotnet/shared/Microsoft.AspNetCore.App/$ASPNET_VERSION/*.dll
 
 
 # ASP.NET Core image
-FROM $REPO:5.0-alpine3.11
+FROM $REPO:5.0-alpine3.11-composite
 
 ENV ASPNET_VERSION 5.0.0-preview.2.20167.3
 
