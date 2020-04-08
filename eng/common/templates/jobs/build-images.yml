@@ -35,6 +35,7 @@ jobs:
       --os-version "$(osVersion)"
       --architecture $(architecture)
       --retry
+      --source-repo $(publicGitRepoUri)
       $(imageBuilderBuildArgs)
       $(imageBuilderImageInfoArg)
     displayName: Build Images
