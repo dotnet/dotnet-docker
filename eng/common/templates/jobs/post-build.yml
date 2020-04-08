@@ -9,6 +9,7 @@ jobs:
       targetPath: $(Build.ArtifactStagingDirectory)
   - script: >
       $(runImageBuilderCmd) mergeImageInfo
+      --manifest $(manifest)
       $(artifactsPath)
       $(artifactsPath)/image-info.json
     displayName: Merge Image Info Files
