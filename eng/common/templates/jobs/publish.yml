@@ -63,6 +63,7 @@ jobs:
       $(dotnetDockerBot.email)
       $(BotAccount-dotnet-docker-bot-PAT)
       $(artifactsPath)/image-info.json
+      --manifest $(manifest)
       --git-owner dotnet
       --git-repo versions
       --git-branch master
