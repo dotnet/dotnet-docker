@@ -1613,14 +1613,14 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "5.0/aspnet/alpine3.11/amd64/runtime-only-composite",
+              "dockerfile": "5.0/aspnet/alpine3.11/amd64/runtime-composite",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11-runtime-only-composite": {},
-                "5.0-alpine3.11-runtime-only-composite": {},
-                "$(5.0-RuntimeVersion)-alpine-runtime-only-composite": {},
-                "5.0-alpine-runtime-only-composite": {}
+                "$(5.0-RuntimeVersion)-alpine3.11-runtime-composite": {},
+                "5.0-alpine3.11-runtime-composite": {},
+                "$(5.0-RuntimeVersion)-alpine-runtime-composite": {},
+                "5.0-alpine-runtime-composite": {}
               }
             }
           ]
@@ -1629,7 +1629,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "5.0/aspnet/alpine3.11/amd64/composite",
               "os": "linux",
@@ -1647,8 +1647,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "RUNTIME_DEPS_REPO": "$(Repo:runtime-deps)",
-                "RUNTIME_REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "5.0/aspnet/alpine3.11/amd64/composed-composite",
               "os": "linux",
@@ -2134,6 +2133,78 @@
                 "5.0-alpine3.11": {},
                 "$(5.0-SdkVersion)-alpine": {},
                 "5.0-alpine": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "5.0/sdk/alpine3.11/amd64/aspnet-base",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "$(5.0-SdkVersion)-alpine3.11-aspnet-base": {},
+                "5.0-alpine3.11-aspnet-base": {},
+                "$(5.0-SdkVersion)-alpine-aspnet-base": {},
+                "5.0-alpine-aspnet-base": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "5.0/sdk/alpine3.11/amd64/aspnet-composed-composite",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "$(5.0-SdkVersion)-alpine3.11-aspnet-composed-composite": {},
+                "5.0-alpine3.11-aspnet-composed-composite": {},
+                "$(5.0-SdkVersion)-alpine-aspnet-composed-composite": {},
+                "5.0-alpine-aspnet-composed-composite": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "5.0/sdk/alpine3.11/amd64/aspnet-composite",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "$(5.0-SdkVersion)-alpine3.11-aspnet-composite": {},
+                "5.0-alpine3.11-aspnet-composite": {},
+                "$(5.0-SdkVersion)-alpine-aspnet-composite": {},
+                "5.0-alpine-aspnet-composite": {}
+              }
+            }
+          ]
+        },
+        {
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "5.0/sdk/alpine3.11/amd64/runtime-composite",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "$(5.0-SdkVersion)-alpine3.11-runtime-composite": {},
+                "5.0-alpine3.11-runtime-composite": {},
+                "$(5.0-SdkVersion)-alpine-runtime-composite": {},
+                "5.0-alpine-runtime-composite": {}
               }
             }
           ]

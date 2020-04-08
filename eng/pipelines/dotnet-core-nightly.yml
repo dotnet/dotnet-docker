@@ -13,6 +13,7 @@ pr:
   branches:
     include:
     - nightly
+    - feature/*
   paths:
     exclude:
     - .github/*

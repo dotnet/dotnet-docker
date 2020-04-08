@@ -10,6 +10,10 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private string _sdkOS;
 
+        public string AspnetVariant { get; set; }
+        public string RuntimeVariant { get; set; }
+        public string SdkVariant { get; set; }
+
         public Version Version { get; set; }
         public string VersionString => Version.ToString(2);
         public bool HasCustomSdk => _sdkOS != null;
@@ -37,15 +41,25 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             Version imageVersion;
             string os;
+            string suffix = null;
             switch (imageType)
             {
                 case DotNetImageType.Runtime:
+                    suffix = RuntimeVariant;
+                    imageVersion = Version;
+                    os = OS;
+                    break;
                 case DotNetImageType.Aspnet:
+                    suffix = AspnetVariant;
+                    imageVersion = Version;
+                    os = OS;
+                    break;
                 case DotNetImageType.Runtime_Deps:
                     imageVersion = Version;
                     os = OS;
                     break;
                 case DotNetImageType.SDK:
+                    suffix = SdkVariant;
                     imageVersion = Version;
                     os = SdkOS;
                     break;
@@ -53,7 +67,12 @@ namespace Microsoft.DotNet.Docker.Tests
                     throw new NotSupportedException($"Unsupported image type '{imageType}'");
             }
 
-            return this.GetTagName(imageVersion.ToString(2), os);
+            if (suffix != null)
+            {
+                suffix = "-" + suffix;
+            }
+
+            return this.GetTagName(imageVersion.ToString(2), os) + suffix;
         }
     }
 }

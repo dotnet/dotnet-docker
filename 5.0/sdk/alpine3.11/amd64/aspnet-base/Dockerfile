@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
 FROM $REPO:5.0-alpine3.11
 
 ENV \
@@ -24,8 +24,7 @@ RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK
     && dotnet_sha512='07b2e91410306297d7d8ccd84aa00be06181efb8cb3cc4fab57cd370aca65409ba59c87dba70d2b46e1dd05c0597c2f0c8f38cde35032910febb08f51b65731a' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
-    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
+    && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./templates \
     && rm dotnet.tar.gz \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
