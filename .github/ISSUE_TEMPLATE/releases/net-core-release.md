@@ -12,6 +12,7 @@ _The set of .NET Core versions that are being released as a unit._
       - [ ] New/EOL distro
       - [ ] Infrastructure changes
       - [ ] PowerShell version
+      - [ ] Check for additional changes by diffing the master and nightly branches
       - [ ] &lt;add link to PR/commit&gt;
 1. - [ ] Wait for .NET Core archive files (.zip, .tar.gz) to be available at blob storage location
 1. - [ ] Run `update-dependencies` tool to update all the necessary files to reflect the specified .NET Core versions (run this command for each version being released):
