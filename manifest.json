@@ -17,6 +17,7 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-deps-tags.yml",
       "images": [
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "sharedTags": {
             "$(2.1-RuntimeVersion)": {
               "documentationGroup": "2.1"
@@ -57,6 +58,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "dockerfile": "2.1/runtime-deps/alpine3.10/amd64",
@@ -74,6 +76,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "dockerfile": "2.1/runtime-deps/alpine3.11/amd64",
@@ -97,6 +100,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "dockerfile": "2.1/runtime-deps/bionic/amd64",
@@ -114,6 +118,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm",
@@ -133,6 +138,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {
               "documentationGroup": "3.1"
@@ -191,6 +197,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "dockerfile": "3.1/runtime-deps/alpine3.10/amd64",
@@ -208,6 +215,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -227,6 +235,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "dockerfile": "3.1/runtime-deps/alpine3.11/amd64",
@@ -250,6 +259,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -275,6 +285,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "dockerfile": "3.1/runtime-deps/bionic/amd64",
@@ -292,6 +303,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm",
@@ -311,6 +323,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -330,6 +343,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
             "5.0": {}
@@ -369,6 +383,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "dockerfile": "5.0/runtime-deps/alpine3.11/amd64",
@@ -384,6 +399,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -401,6 +417,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "dockerfile": "5.0/runtime-deps/focal/amd64",
@@ -414,6 +431,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -437,6 +455,7 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-tags.yml",
       "images": [
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "sharedTags": {
             "$(2.1-RuntimeVersion)": {},
             "2.1": {}
@@ -498,6 +517,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -514,6 +534,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -532,6 +553,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -548,6 +570,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm",
@@ -566,6 +589,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {},
             "3.1": {},
@@ -652,6 +676,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -668,6 +693,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -694,6 +720,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -712,6 +739,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -740,6 +768,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -756,6 +785,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm",
@@ -774,6 +804,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -792,6 +823,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
             "5.0": {}
@@ -867,6 +899,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -885,6 +918,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -913,6 +947,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -929,6 +964,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -955,6 +991,7 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/aspnet-tags.yml",
       "images": [
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "sharedTags": {
             "$(2.1-RuntimeVersion)": {},
             "2.1": {}
@@ -1016,6 +1053,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1032,6 +1070,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1050,6 +1089,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1066,6 +1106,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm",
@@ -1084,6 +1125,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {},
             "3.1": {},
@@ -1182,6 +1224,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1198,6 +1241,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1224,6 +1268,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1242,6 +1287,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1270,6 +1316,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1286,6 +1333,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm",
@@ -1304,6 +1352,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1322,6 +1371,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
             "5.0": {}
@@ -1406,6 +1456,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1424,6 +1475,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1452,6 +1504,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1468,6 +1521,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1494,6 +1548,7 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/sdk-tags.yml",
       "images": [
         {
+          "productVersion": "$(2.1-SdkVersion)",
           "sharedTags": {
             "$(2.1-SdkVersion)": {},
             "2.1": {}
@@ -1549,6 +1604,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-SdkVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1565,6 +1621,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-SdkVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1583,6 +1640,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-SdkVersion)",
           "platforms": [
             {
               "dockerfile": "2.1/sdk/bionic/amd64",
@@ -1596,6 +1654,7 @@
           ]
         },
         {
+          "productVersion": "$(2.1-SdkVersion)",
           "platforms": [
             {
               "architecture": "arm",
@@ -1611,6 +1670,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-SdkVersion)",
           "sharedTags": {
             "$(3.1-SdkVersion)": {},
             "3.1": {},
@@ -1688,6 +1748,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-SdkVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1704,6 +1765,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-SdkVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1722,6 +1784,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-SdkVersion)",
           "platforms": [
             {
               "dockerfile": "3.1/sdk/bionic/amd64",
@@ -1735,6 +1798,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-SdkVersion)",
           "platforms": [
             {
               "architecture": "arm",
@@ -1750,6 +1814,7 @@
           ]
         },
         {
+          "productVersion": "$(3.1-SdkVersion)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1765,6 +1830,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-SdkVersion)",
           "sharedTags": {
             "$(5.0-SdkVersion)": {},
             "5.0": {}
@@ -1831,6 +1897,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-SdkVersion)",
           "platforms": [
             {
               "buildArgs": {
@@ -1849,6 +1916,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-SdkVersion)",
           "platforms": [
             {
               "dockerfile": "5.0/sdk/focal/amd64",
@@ -1862,6 +1930,7 @@
           ]
         },
         {
+          "productVersion": "$(5.0-SdkVersion)",
           "platforms": [
             {
               "architecture": "arm64",

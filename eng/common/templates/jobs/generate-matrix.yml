@@ -16,6 +16,7 @@ jobs:
       --os-type '*'
       --architecture '*'
       --customBuildLegGrouping "${{ parameters.customBuildLegGrouping }}"
+      --productVersionComponents $(productVersionComponents)
       $(imageBuilder.pathArgs)
     displayName: Generate ${{ parameters.matrixType }} Matrix
     name: matrix

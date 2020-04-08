@@ -10,7 +10,7 @@ param(
     [string]$Architecture,
 
     # Additional custom path filters (overrides Version)
-    [string]$Path,
+    [string[]]$Paths,
 
     # Additional args to pass to ImageBuilder
     [string]$OptionalImageBuilderArgs,
@@ -30,7 +30,7 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
         -Version $Version `
         -OS $OS `
         -Architecture $Architecture `
-        -Path $Path `
+        -Paths $Paths `
         -OptionalImageBuilderArgs $OptionalImageBuilderArgs
 
     $activeOS = docker version -f "{{ .Server.Os }}"
@@ -45,7 +45,7 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
         -Version $Version `
         -OS $OS `
         -Architecture $Architecture `
-        -Path $Path `
+        -Paths $Paths `
         -OptionalImageBuilderArgs $OptionalImageBuilderArgs `
         -Manifest manifest.samples.json
 }
@@ -54,7 +54,7 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Test") {
     $localTestCategories = $TestCategories
 
     if ($Version -ne "*" -and $TestCategories.Contains("sample")) {
-        $localTestCategories = $TestCategories | where { $_ -ne "sample"}
+        $localTestCategories = $TestCategories | where { $_ -ne "sample" }
         Write-Warning "Skipping sample image testing since Version was set"
     }
 
