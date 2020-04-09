@@ -61,9 +61,9 @@ Tags | Dockerfile | OS Version
 ##### .NET Core 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.0-preview.2-buster-slim, 5.0-buster-slim, 5.0.0-preview.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/buster-slim/amd64/Dockerfile) | Debian 10
-5.0.0-preview.2-alpine3.11, 5.0-alpine3.11, 5.0.0-preview.2-alpine, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/alpine3.11/amd64/Dockerfile) | Alpine 3.11
-5.0.0-preview.2-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/focal/amd64/Dockerfile) | Ubuntu 20.04
+5.0.0-preview.3-buster-slim, 5.0-buster-slim, 5.0.0-preview.3, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/buster-slim/amd64/Dockerfile) | Debian 10
+5.0.0-preview.3-alpine3.11, 5.0-alpine3.11, 5.0.0-preview.3-alpine, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/alpine3.11/amd64/Dockerfile) | Alpine 3.11
+5.0.0-preview.3-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -77,9 +77,9 @@ Tags | Dockerfile | OS Version
 ##### .NET Core 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.0-preview.2-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.0-preview.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/buster-slim/arm64v8/Dockerfile) | Debian 10
-5.0.0-preview.2-alpine3.11-arm64v8, 5.0-alpine3.11-arm64v8, 5.0.0-preview.2-alpine-arm64v8, 5.0-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
-5.0.0-preview.2-focal-arm64v8, 5.0-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+5.0.0-preview.3-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.0-preview.3, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/buster-slim/arm64v8/Dockerfile) | Debian 10
+5.0.0-preview.3-alpine3.11-arm64v8, 5.0-alpine3.11-arm64v8, 5.0.0-preview.3-alpine-arm64v8, 5.0-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
+5.0.0-preview.3-focal-arm64v8, 5.0-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -92,7 +92,7 @@ Tags | Dockerfile | OS Version
 ##### .NET Core 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.0-preview.2-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-preview.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/buster-slim/arm32v7/Dockerfile) | Debian 10
+5.0.0-preview.3-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-preview.3, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/buster-slim/arm32v7/Dockerfile) | Debian 10
 
 You can retrieve a list of all available tags for dotnet/core-nightly/runtime-deps at https://mcr.microsoft.com/v2/dotnet/core-nightly/runtime-deps/tags/list.
 
