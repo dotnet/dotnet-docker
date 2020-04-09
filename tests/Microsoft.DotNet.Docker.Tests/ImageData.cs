@@ -21,17 +21,17 @@ namespace Microsoft.DotNet.Docker.Tests
         public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
         public string OS { get; set; }
 
-        private static Lazy<JArray> ImageInfoData;
+        private static readonly Lazy<JObject> ImageInfoData;
 
         static ImageData()
         {
-            ImageInfoData = new Lazy<JArray>(() =>
+            ImageInfoData = new Lazy<JObject>(() =>
             {
                 string imageInfoPath = Environment.GetEnvironmentVariable("IMAGE_INFO_PATH");
                 if (!String.IsNullOrEmpty(imageInfoPath))
                 {
                     string imageInfoContents = File.ReadAllText(imageInfoPath);
-                    return JsonConvert.DeserializeObject<JArray>(imageInfoContents);
+                    return JsonConvert.DeserializeObject<JObject>(imageInfoContents);
                 }
 
                 return null;
@@ -127,13 +127,15 @@ namespace Microsoft.DotNet.Docker.Tests
             if (ImageData.ImageInfoData.Value != null)
             {
                 JObject repoInfo = (JObject)ImageData.ImageInfoData.Value
+                    .Value<JArray>("repos")
                     .FirstOrDefault(imageInfoRepo => imageInfoRepo["repo"].ToString() == repo);
 
                 if (repoInfo?["images"] != null)
                 {
-                    imageExistsInStaging = repoInfo["images"]
-                        .Cast<JProperty>()
-                        .Any(imageInfo => imageInfo.Value["simpleTags"].Any(imageTag => imageTag.ToString() == tag));
+                    imageExistsInStaging = repoInfo.Value<JArray>("images")
+                        .SelectMany(imageInfo => imageInfo.Value<JArray>("platforms"))
+                        .Cast<JObject>()
+                        .Any(platformInfo => platformInfo.Value<JArray>("simpleTags").Any(imageTag => imageTag.ToString() == tag));
                 }
                 else
                 {
