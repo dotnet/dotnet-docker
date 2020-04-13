@@ -1,5 +1,7 @@
 # escape=`
 
+ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:1809 AS installer
 
@@ -32,7 +34,7 @@ RUN $powershell_version = '7.1.0-preview.1'; `
     Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force
 
 # SDK image
-FROM mcr.microsoft.com/windows/nanoserver:1809
+FROM $REPO:5.0-nanoserver-1809
 
 ENV `
     # Enable detection of running in a container
@@ -42,14 +44,19 @@ ENV `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip `
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1809
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1809 `
+    # Unset ASPNETCORE_URLS derived from aspnet base image
+    ASPNETCORE_URLS=
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet;C:\Program Files\powershell"
 USER ContainerUser
 
-COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
+COPY --from=installer ["/dotnet/packs", "/Program Files/dotnet/packs"]
+COPY --from=installer ["/dotnet/sdk", "/Program Files/dotnet/sdk"]
+COPY --from=installer ["/dotnet/shared/Microsoft.WindowsDesktop.App", "/Program Files/dotnet/shared/Microsoft.WindowsDesktop.App"]
+COPY --from=installer ["/dotnet/templates", "/Program Files/dotnet/templates"]
 
 COPY --from=installer ["/powershell", "/Program Files/powershell"]
 
