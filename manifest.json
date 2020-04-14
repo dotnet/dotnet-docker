@@ -1877,6 +1877,9 @@
               "variant": "v8"
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "3.1/sdk/nanoserver-1809/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1809",
@@ -1896,6 +1899,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "3.1/sdk/nanoserver-1903/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1903",
@@ -1905,6 +1911,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "3.1/sdk/nanoserver-1909/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1909",
@@ -1920,7 +1929,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "3.1/sdk/alpine3.10/amd64",
               "os": "linux",
@@ -1937,7 +1946,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "3.1/sdk/alpine3.11/amd64",
               "os": "linux",
