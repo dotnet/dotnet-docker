@@ -24,7 +24,7 @@ RUN dotnet_sdk_version=5.0.100-preview.3.20208.17 \
     && dotnet_sha512='0a0173a9cbae0ff5afec431a7918cb53da88ab11a916d6399bd5b7f8c0d2dd4ff1653571dfad36143674f5d252281c3e97fa3421d786212e0acb6b5272e89dd6' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
-    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./*.txt \
+    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
