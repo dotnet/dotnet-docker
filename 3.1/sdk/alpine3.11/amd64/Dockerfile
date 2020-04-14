@@ -2,7 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
 FROM $REPO:3.1-alpine3.11
 
 ENV \
-    # Unset the value from the base image
+    # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \

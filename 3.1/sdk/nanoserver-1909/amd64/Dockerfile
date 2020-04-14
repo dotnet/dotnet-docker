@@ -41,7 +41,7 @@ RUN `
 FROM $REPO:3.1-nanoserver-1909
 
 ENV `
-    # Unset ASPNETCORE_URLS derived from aspnet base image
+    # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
