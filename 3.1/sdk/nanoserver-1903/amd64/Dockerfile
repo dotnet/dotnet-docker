@@ -1,40 +1,48 @@
 # escape=`
 
+ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:1903 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-# Retrieve .NET Core SDK
-RUN $dotnet_sdk_version = '3.1.201'; `
+RUN `
+    # Retrieve .NET Core SDK
+    $dotnet_sdk_version = '3.1.201'; `
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-win-x64.zip; `
     $dotnet_sha512 = '89936531faf24686fb5add6f6771b78df92fab6786398a692ae5930d812322b545199e3c9eec11994233887734a61943c74943f9ba4e491106a0ff794a0ce2a5'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
     }; `
-    `
     Expand-Archive dotnet.zip -DestinationPath dotnet; `
-    Remove-Item -Force dotnet.zip
-
-# Install PowerShell global tool
-RUN $powershell_version = '7.0.0'; `
+    Remove-Item -Force dotnet.zip; `
+    `
+    # Install PowerShell global tool
+    $powershell_version = '7.0.0'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
     $powershell_sha512 = '1980da63a4f6017235e7af810bfda66be8fa53d0475d147a8219a36c76a903af99adb6cd5309e3dadc610389ae3525bca1ca2d30e7a991640e924334fd4e4638'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
     }; `
-    `
     \dotnet\dotnet tool install --add-source . --tool-path \powershell --version $powershell_version PowerShell.Windows.x64; `
     \dotnet\dotnet nuget locals all --clear; `
     Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
-    Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force
+    Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force; `
+    `
+    # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
+    Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','templates','shared' -Path dotnet `
+        | Remove-Item -Force -Recurse; `
+    Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
 # SDK image
-FROM mcr.microsoft.com/windows/nanoserver:1903
+FROM $REPO:3.1-nanoserver-1903
 
 ENV `
+    # Unset ASPNETCORE_URLS derived from aspnet base image
+    ASPNETCORE_URLS= `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -46,7 +54,7 @@ ENV `
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
-RUN setx /M PATH "%PATH%;C:\Program Files\dotnet;C:\Program Files\powershell"
+RUN setx /M PATH "%PATH%;C:\Program Files\powershell"
 USER ContainerUser
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
