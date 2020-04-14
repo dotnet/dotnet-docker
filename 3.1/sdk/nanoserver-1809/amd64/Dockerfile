@@ -1,5 +1,7 @@
 # escape=`
 
+ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:1809 AS installer
 
@@ -31,10 +33,16 @@ RUN $powershell_version = '7.0.0'; `
     Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
     Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force
 
+# Delete everything in the dotnet folder that's not needed in the SDK layer
+RUN Get-ChildItem -Exclude "*.txt","packs","sdk","templates","shared" -Path dotnet | Remove-Item -Force -Recurse; `
+    Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
+
 # SDK image
-FROM mcr.microsoft.com/windows/nanoserver:1809
+FROM $REPO:3.1-nanoserver-1809
 
 ENV `
+    # Unset ASPNETCORE_URLS derived from aspnet base image
+    ASPNETCORE_URLS= `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -46,7 +54,7 @@ ENV `
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
-RUN setx /M PATH "%PATH%;C:\Program Files\dotnet;C:\Program Files\powershell"
+RUN setx /M PATH "%PATH%;C:\Program Files\powershell"
 USER ContainerUser
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
