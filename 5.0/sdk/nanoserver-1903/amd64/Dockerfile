@@ -7,34 +7,34 @@ FROM mcr.microsoft.com/windows/servercore:1903 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-# Retrieve .NET Core SDK
-RUN $dotnet_sdk_version = '5.0.100-preview.3.20208.17'; `
+RUN `
+    # Retrieve .NET Core SDK
+    $dotnet_sdk_version = '5.0.100-preview.3.20208.17'; `
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-win-x64.zip; `
     $dotnet_sha512 = 'f224da928244b23cab3695cff68d183e3a68b31d5be994be15609e2351dae93140beb82677addfb950bfe3f46efe5bfefa315071c7a447ebce472e096a5064f7'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
     }; `
-    `
     Expand-Archive dotnet.zip -DestinationPath dotnet; `
-    Remove-Item -Force dotnet.zip
-
-# Install PowerShell global tool
-RUN $powershell_version = '7.1.0-preview.1'; `
+    Remove-Item -Force dotnet.zip; `
+    `
+    # Install PowerShell global tool
+    $powershell_version = '7.1.0-preview.1'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
     $powershell_sha512 = '8ba8c4226ffc5120782335c46a747c862141b86c3e8ef8833936d2d3fafd544bcc6f4590723caae3e631a23d16748455ceb526799aba50e090a73750363792ba'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
     }; `
-    `
     \dotnet\dotnet tool install --add-source . --tool-path \powershell --version $powershell_version PowerShell.Windows.x64; `
     \dotnet\dotnet nuget locals all --clear; `
     Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
-    Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force
-
-# Delete everything in the dotnet folder that's not needed in the SDK layer
-RUN Get-ChildItem -Exclude "*.txt","packs","sdk","templates","shared" -Path dotnet | Remove-Item -Force -Recurse; `
+    Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force; `
+    `
+    # Delete everything in the dotnet folder that's not needed in the SDK layer
+    $excludedItems = "LICENSE.txt","ThirdPartyNotices.txt","packs","sdk","templates","shared"; `
+    Get-ChildItem -Exclude $excludedItems -Path dotnet | Remove-Item -Force -Recurse; `
     Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
 # SDK image
