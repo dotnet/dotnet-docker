@@ -22,11 +22,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageData => new object[] { imageData });
         }
 
-        protected void VerifyCommonEnvironmentVariables(ProductImageData imageData)
+        protected void VerifyCommonEnvironmentVariables(
+            ProductImageData imageData, IEnumerable<EnvironmentVariableInfo> customVariables = null)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
             variables.AddRange(GetCommonEnvironmentVariables());
             variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:80"));
+
+            if (customVariables != null)
+            {
+                variables.AddRange(customVariables);
+            }
 
             if (imageData.OS.StartsWith(OS.AlpinePrefix))
             {

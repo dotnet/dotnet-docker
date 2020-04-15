@@ -37,7 +37,10 @@ namespace Dotnet.Docker
         private static readonly Regex s_productShaRegex = new Regex(s_productShaPattern);
         private static readonly Regex s_lzmaShaRegex = new Regex(s_lzmaShaPattern);
         private static readonly Regex s_versionRegex = VariableHelper.GetValueRegex(
-            VariableHelper.AspNetVersionName, VariableHelper.DotnetSdkVersionName, VariableHelper.DotnetVersionName);
+            VariableHelper.AspNetVersionName,
+            VariableHelper.AspNetCoreVersionName,
+            VariableHelper.DotnetSdkVersionName,
+            VariableHelper.DotnetVersionName);
 
         private static readonly Dictionary<string, string> s_shaCache = new Dictionary<string, string>();
         private static readonly Dictionary<string, Dictionary<string, string>> s_releaseChecksumCache =

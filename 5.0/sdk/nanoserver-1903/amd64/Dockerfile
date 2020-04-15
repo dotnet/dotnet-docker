@@ -1,16 +1,17 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+ARG DOTNET_SDK_VERSION=5.0.100-preview.3.20215.3
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:1903 AS installer
+ARG DOTNET_SDK_VERSION
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 RUN `
     # Retrieve .NET Core SDK
-    $dotnet_sdk_version = '5.0.100-preview.3.20215.3'; `
-    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-win-x64.zip; `
+    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
     $dotnet_sha512 = '156cbb65dd67fd7b528a1437a3bef0b4edabe451f9973659115e61c32bc674aeebfc9e28452909971a2471e182d46682d1a5b776c0f56f1ba09b9dcd473d7d66'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -40,12 +41,14 @@ RUN `
 # SDK image
 
 FROM $REPO:5.0-nanoserver-1903
+ARG DOTNET_SDK_VERSION
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
+    DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
