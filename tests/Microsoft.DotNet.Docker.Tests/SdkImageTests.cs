@@ -48,10 +48,15 @@ namespace Microsoft.DotNet.Docker.Tests
             variables.Add(new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"));
             variables.Add(new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"));
 
-            if (imageData.Version.Major >= 3
-                && (DockerHelper.IsLinuxContainerModeEnabled || imageData.Version >= new Version("3.1")))
+            if (imageData.Version.Major >= 3)
             {
                 variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
+            }
+
+            if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
+            {
+                string version = imageData.GetProductVersion(ImageType, DockerHelper);
+                variables.Add(new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version));
             }
 
             if (imageData.SdkOS.StartsWith(Tests.OS.AlpinePrefix))

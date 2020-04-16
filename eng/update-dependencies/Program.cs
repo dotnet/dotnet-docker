@@ -312,6 +312,8 @@ namespace Dotnet.Docker
                 .Concat(CreateDockerfileVariableUpdaters(
                     dockerfiles, buildInfos, VariableHelper.AspNetVersionName, AspNetCoreBuildInfoName))
                 .Concat(CreateDockerfileVariableUpdaters(
+                    dockerfiles, buildInfos, VariableHelper.AspNetCoreVersionName, AspNetCoreBuildInfoName))
+                .Concat(CreateDockerfileVariableUpdaters(
                     dockerfiles, buildInfos, VariableHelper.DotnetVersionName, RuntimeBuildInfoName))
                 .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateProductShaUpdater(path, Options)))
                 .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateLzmaShaUpdater(path, Options)))
