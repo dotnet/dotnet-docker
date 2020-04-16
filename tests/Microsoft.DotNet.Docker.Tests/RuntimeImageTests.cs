@@ -33,13 +33,24 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
 
-            if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
+            EnvironmentVariableInfo runtimeVariableInfo = GetRuntimeVersionVariableInfo(imageData, DockerHelper);
+            if (runtimeVariableInfo != null)
             {
-                string version = imageData.GetProductVersion(ImageType, DockerHelper);
-                variables.Add(new EnvironmentVariableInfo("DOTNET_VERSION", version));
+                variables.Add(runtimeVariableInfo);
             }
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);
+        }
+
+        public static EnvironmentVariableInfo GetRuntimeVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
+        {
+            if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
+            {
+                string version = imageData.GetProductVersion(DotNetImageType.Runtime, dockerHelper);
+                return new EnvironmentVariableInfo("DOTNET_VERSION", version);
+            }
+
+            return null;
         }
     }
 }

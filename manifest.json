@@ -2042,6 +2042,9 @@
           },
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "5.0/sdk/buster/amd64",
               "os": "linux",
               "osVersion": "buster",
@@ -2051,6 +2054,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "architecture": "arm",
               "dockerfile": "5.0/sdk/buster/arm32v7",
               "os": "linux",
@@ -2062,6 +2068,9 @@
               "variant": "v7"
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "architecture": "arm64",
               "dockerfile": "5.0/sdk/buster/arm64v8",
               "os": "linux",
@@ -2133,6 +2142,9 @@
           "productVersion": "$(5.0-SdkVersion)",
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "5.0/sdk/focal/amd64",
               "os": "linux",
               "osVersion": "focal",
@@ -2147,6 +2159,9 @@
           "productVersion": "$(5.0-SdkVersion)",
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "architecture": "arm64",
               "dockerfile": "5.0/sdk/focal/arm64v8",
               "os": "linux",

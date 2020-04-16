@@ -33,6 +33,24 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
 
+            EnvironmentVariableInfo aspnetVersionVariableInfo = GetAspnetVersionVariableInfo(imageData, DockerHelper);
+            if (aspnetVersionVariableInfo != null)
+            {
+                variables.Add(aspnetVersionVariableInfo);
+            }
+
+            EnvironmentVariableInfo runtimeVersionVariableInfo =
+                RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper);
+            if (runtimeVersionVariableInfo != null)
+            {
+                variables.Add(runtimeVersionVariableInfo);
+            }
+
+            base.VerifyCommonEnvironmentVariables(imageData, variables);
+        }
+
+        public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
+        {
             string versionEnvName = null;
             if (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled)
             {
@@ -45,11 +63,11 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (versionEnvName != null)
             {
-                string version = imageData.GetProductVersion(ImageType, DockerHelper);
-                variables.Add(new EnvironmentVariableInfo(versionEnvName, version));
+                string version = imageData.GetProductVersion(DotNetImageType.Aspnet, dockerHelper);
+                return new EnvironmentVariableInfo(versionEnvName, version);
             }
 
-            base.VerifyCommonEnvironmentVariables(imageData, variables);
+            return null;
         }
     }
 }
