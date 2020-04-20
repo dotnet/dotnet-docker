@@ -33,10 +33,9 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
 
-            EnvironmentVariableInfo runtimeVariableInfo = GetRuntimeVersionVariableInfo(imageData, DockerHelper);
-            if (runtimeVariableInfo != null)
+            if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
             {
-                variables.Add(runtimeVariableInfo);
+                variables.Add(GetRuntimeVersionVariableInfo(imageData, DockerHelper));
             }
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);
@@ -44,13 +43,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static EnvironmentVariableInfo GetRuntimeVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
         {
-            if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
-            {
-                string version = imageData.GetProductVersion(DotNetImageType.Runtime, dockerHelper);
-                return new EnvironmentVariableInfo("DOTNET_VERSION", version);
-            }
-
-            return null;
+            string version = imageData.GetProductVersion(DotNetImageType.Runtime, dockerHelper);
+            return new EnvironmentVariableInfo("DOTNET_VERSION", version);
         }
     }
 }

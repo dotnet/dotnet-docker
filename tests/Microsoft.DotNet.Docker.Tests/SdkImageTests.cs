@@ -6,12 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
-using SharpCompress.Archives;
-using SharpCompress.Archives.Tar;
+using SharpCompress.Common;
 using SharpCompress.Readers;
 using Xunit;
 using Xunit.Abstractions;
@@ -21,8 +20,8 @@ namespace Microsoft.DotNet.Docker.Tests
     [Trait("Category", "sdk")]
     public class SdkImageTests : ProductImageTests
     {
-        private static readonly Dictionary<string, IEnumerable<string>> sdkContentsCache =
-            new Dictionary<string, IEnumerable<string>>();
+        private static readonly Dictionary<string, IEnumerable<SdkContentFileInfo>> sdkContentsCache =
+            new Dictionary<string, IEnumerable<SdkContentFileInfo>>();
 
         public SdkImageTests(ITestOutputHelper outputHelper)
             : base(outputHelper)
@@ -69,9 +68,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version));
             }
 
-            if (imageData.Version.Major >= 5 ||
-                (imageData.Version.Major >= 3 &&
-                    (imageData.SdkOS.StartsWith(OS.AlpinePrefix) || !DockerHelper.IsLinuxContainerModeEnabled)))
+            if (imageData.Version.Major >= 5)
             {
                 variables.Add(AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper));
                 variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
@@ -153,53 +150,85 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            string command;
+            string dotnetPath;
+
             if (DockerHelper.IsLinuxContainerModeEnabled)
             {
-                command = "find /usr/share/dotnet -type f";
+                dotnetPath = "/usr/share/dotnet";
             }
             else
             {
-                command = "cmd /c dir /s /b /A:-D \"Program Files\\dotnet\"";
+                dotnetPath = "Program Files\\dotnet";
             }
+
+            string powerShellCommand =
+                $"Get-ChildItem -File -Force -Recurse '{dotnetPath}' " +
+                "| Get-FileHash -Algorithm SHA512 " +
+                "| select @{name='Value'; expression={$_.Hash + '  ' +$_.Path}} " +
+                "| select -ExpandProperty Value";
+            string command = $"pwsh -Command \"{powerShellCommand}\"";
 
             string containerFileList = DockerHelper.Run(
                 image: imageData.GetImage(ImageType, DockerHelper),
                 command: command,
                 name: imageData.GetIdentifier("DotnetFolder"));
 
-            IEnumerable<string> actualDotnetFiles = containerFileList.ToLower()
-                .Replace("/usr/share/dotnet", String.Empty)
-                .Replace("c:\\program files\\dotnet", String.Empty)
+            IEnumerable<SdkContentFileInfo> actualDotnetFiles = containerFileList
                 .Replace("\\", "/")
                 .Replace("\r\n", "\n")
                 .Split("\n")
-                .Select(file => file.TrimStart('/'))
-                .OrderBy(file => file);
-
-            IEnumerable<string> expectedDotnetFiles = await GetSdkContentsAsync(imageData);
-
-            Assert.Equal(expectedDotnetFiles, actualDotnetFiles);
-        }
-
-        private IEnumerable<string> EnumerateArchiveContents(string path)
-        {
-            using var file = File.OpenRead(path);
-            using var reader = ReaderFactory.Open(file);
-            while (reader.MoveToNextEntry())
-            {
-                if (!reader.Entry.IsDirectory)
+                .Select(output =>
                 {
-                    yield return reader.Entry.Key;
-                }
+                    string[] outputParts = output.Split("  ");
+                    return new SdkContentFileInfo(outputParts[1], outputParts[0]);
+                })
+                .OrderBy(fileInfo => fileInfo.Path)
+                .ToArray();
+
+            IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetSdkContentsAsync(imageData);
+
+            Assert.Equal(expectedDotnetFiles.Count(), actualDotnetFiles.Count());
+
+            // Skip file comparisons for 3.1 until https://github.com/dotnet/sdk/issues/11327 is fixed.
+            if (imageData.Version.Major == 3)
+            {
+                return;
+            }
+
+            int fileCount = expectedDotnetFiles.Count();
+            for (int i = 0; i < fileCount; i++)
+            {
+                Assert.Equal(expectedDotnetFiles.ElementAt(i), actualDotnetFiles.ElementAt(i));
             }
         }
 
-        private async Task<IEnumerable<string>> GetSdkContentsAsync(ProductImageData imageData)
+        private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string path)
+        {
+            using FileStream fileStream = File.OpenRead(path);
+            using IReader reader = ReaderFactory.Open(fileStream);
+            using TempFolderContext tempFolderContext = FileHelper.UseTempFolder();
+            reader.WriteAllToDirectory(tempFolderContext.Path, new ExtractionOptions() { ExtractFullPath = true });
+
+            foreach (FileInfo file in new DirectoryInfo(tempFolderContext.Path).EnumerateFiles("*", SearchOption.AllDirectories))
+            {
+                using SHA512 sha512 = SHA512.Create();
+                byte[] sha512HashBytes = sha512.ComputeHash(File.ReadAllBytes(file.FullName));
+                string sha512Hash = BitConverter.ToString(sha512HashBytes).Replace("-", String.Empty);
+                yield return new SdkContentFileInfo(
+                    file.FullName.Substring(tempFolderContext.Path.Length), sha512Hash);
+            }
+        }
+
+        private async Task<IEnumerable<SdkContentFileInfo>> GetSdkContentsAsync(ProductImageData imageData)
         {
             string sdkVersion = imageData.GetProductVersion(ImageType, DockerHelper);
 
             string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
+            if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
+            {
+                osType += "-musl";
+            }
+
             string fileType = DockerHelper.IsLinuxContainerModeEnabled ? "tar.gz" : "zip";
 
             string architecture = imageData.Arch switch
@@ -213,7 +242,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string sdkUrl =
                 $"https://dotnetcli.azureedge.net/dotnet/Sdk/{sdkVersion}/dotnet-sdk-{sdkVersion}-{osType}-{architecture}.{fileType}";
 
-            if (!sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<string> files))
+            if (!sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo> files))
             {
                 string sdkFile = Path.GetTempFileName();
 
@@ -221,8 +250,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 await webClient.DownloadFileTaskAsync(new Uri(sdkUrl), sdkFile);
 
                 files = EnumerateArchiveContents(sdkFile)
-                    .Select(file => file.TrimStart('.').TrimStart('/').ToLower())
-                    .OrderBy(file => file);
+                    .OrderBy(file => file.Path)
+                    .ToArray();
 
                 sdkContentsCache.Add(sdkUrl, files);
             }
@@ -276,6 +305,33 @@ namespace Microsoft.DotNet.Docker.Tests
             public int GetHashCode([DisallowNull] ProductImageData obj)
             {
                 return $"{obj.VersionString}-{obj.SdkOS}-{obj.Arch}".GetHashCode();
+            }
+        }
+
+        private class SdkContentFileInfo : IComparable<SdkContentFileInfo>
+        {
+            public SdkContentFileInfo(string path, string sha512)
+            {
+                Path = NormalizePath(path);
+                Sha512 = sha512.ToLower();
+            }
+
+            public string Path { get; }
+            public string Sha512 { get; }
+
+            public int CompareTo([AllowNull] SdkContentFileInfo other)
+            {
+                return (Path + Sha512).CompareTo(other.Path + other.Sha512);
+            }
+
+            private static string NormalizePath(string path)
+            {
+                return path
+                    .Replace("\\", "/")
+                    .Replace("/usr/share/dotnet", String.Empty, StringComparison.OrdinalIgnoreCase)
+                    .Replace("c:/program files/dotnet", String.Empty, StringComparison.OrdinalIgnoreCase)
+                    .TrimStart('/')
+                    .ToLower();
             }
         }
     }

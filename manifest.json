@@ -2049,8 +2049,8 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-SdkVersion)-buster": {},
-                "5.0-buster": {}
+                "$(5.0-SdkVersion)-buster-slim": {},
+                "5.0-buster-slim": {}
               }
             },
             {
@@ -2062,8 +2062,8 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-SdkVersion)-buster-arm32v7": {},
-                "5.0-buster-arm32v7": {}
+                "$(5.0-SdkVersion)-buster-slim-arm32v7": {},
+                "5.0-buster-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -2076,8 +2076,8 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-SdkVersion)-buster-arm64v8": {},
-                "5.0-buster-arm64v8": {}
+                "$(5.0-SdkVersion)-buster-slim-arm64v8": {},
+                "5.0-buster-slim-arm64v8": {}
               },
               "variant": "v8"
             },

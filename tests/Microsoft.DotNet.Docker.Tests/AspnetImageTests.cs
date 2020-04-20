@@ -39,11 +39,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(aspnetVersionVariableInfo);
             }
 
-            EnvironmentVariableInfo runtimeVersionVariableInfo =
-                RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper);
-            if (runtimeVersionVariableInfo != null)
+            if (imageData.Version.Major >= 5)
             {
-                variables.Add(runtimeVersionVariableInfo);
+                string version = imageData.GetProductVersion(DotNetImageType.Runtime, DockerHelper);
+                variables.Add(new EnvironmentVariableInfo("DOTNET_VERSION", version));
             }
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);
