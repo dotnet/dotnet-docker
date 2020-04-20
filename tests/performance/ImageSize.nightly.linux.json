@@ -101,9 +101,9 @@
     "3.1/sdk/bionic/arm64v8": 629031352,
     "3.1/sdk/focal/amd64": 656452398,
     "3.1/sdk/focal/arm64v8": 672793717,
-    "5.0/sdk/buster-slim/amd64": 689019701,
-    "5.0/sdk/buster-slim/arm32v7": 644889584,
-    "5.0/sdk/buster-slim/arm64v8": 712029090,
+    "5.0/sdk/buster-slim/amd64": 598366352,
+    "5.0/sdk/buster-slim/arm32v7": 564714978,
+    "5.0/sdk/buster-slim/arm64v8": 631997544,
     "5.0/sdk/alpine3.11/amd64": 405393358,
     "5.0/sdk/focal/amd64": 656452398,
     "5.0/sdk/focal/arm64v8": 672793717

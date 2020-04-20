@@ -41,8 +41,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (imageData.Version.Major >= 5)
             {
-                string version = imageData.GetProductVersion(DotNetImageType.Runtime, DockerHelper);
-                variables.Add(new EnvironmentVariableInfo("DOTNET_VERSION", version));
+                variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
             }
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);

@@ -150,6 +150,52 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
+            IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
+
+            bool hasCountDifference = expectedDotnetFiles.Count() != actualDotnetFiles.Count();
+
+            bool hasFileContentDifference = false;
+            
+            // Skip file comparisons for 3.1 until https://github.com/dotnet/sdk/issues/11327 is fixed.
+            if (imageData.Version.Major != 3)
+            {
+                int fileCount = expectedDotnetFiles.Count();
+                for (int i = 0; i < fileCount; i++)
+                {
+                    if (expectedDotnetFiles.ElementAt(i).CompareTo(actualDotnetFiles.ElementAt(i)) != 0)
+                    {
+                        hasFileContentDifference = true;
+                        break;
+                    }
+                }
+            }
+
+            if (hasCountDifference || hasFileContentDifference)
+            {
+                OutputHelper.WriteLine(String.Empty);
+                OutputHelper.WriteLine("EXPECTED FILES:");
+                foreach (SdkContentFileInfo file in expectedDotnetFiles)
+                {
+                    OutputHelper.WriteLine($"Path: {file.Path}");
+                    OutputHelper.WriteLine($"Checksum: {file.Sha512}");
+                }
+                
+                OutputHelper.WriteLine(String.Empty);
+                OutputHelper.WriteLine("ACTUAL FILES:");
+                foreach (SdkContentFileInfo file in actualDotnetFiles)
+                {
+                    OutputHelper.WriteLine($"Path: {file.Path}");
+                    OutputHelper.WriteLine($"Checksum: {file.Sha512}");
+                }
+            }
+
+            Assert.Equal(expectedDotnetFiles.Count(), actualDotnetFiles.Count());
+            Assert.False(hasFileContentDifference, "There are file content differences. Check the log output.");
+        }
+
+        private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
+        {
             string dotnetPath;
 
             if (DockerHelper.IsLinuxContainerModeEnabled)
@@ -174,7 +220,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 name: imageData.GetIdentifier("DotnetFolder"));
 
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = containerFileList
-                .Replace("\\", "/")
                 .Replace("\r\n", "\n")
                 .Split("\n")
                 .Select(output =>
@@ -184,22 +229,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 })
                 .OrderBy(fileInfo => fileInfo.Path)
                 .ToArray();
-
-            IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetSdkContentsAsync(imageData);
-
-            Assert.Equal(expectedDotnetFiles.Count(), actualDotnetFiles.Count());
-
-            // Skip file comparisons for 3.1 until https://github.com/dotnet/sdk/issues/11327 is fixed.
-            if (imageData.Version.Major == 3)
-            {
-                return;
-            }
-
-            int fileCount = expectedDotnetFiles.Count();
-            for (int i = 0; i < fileCount; i++)
-            {
-                Assert.Equal(expectedDotnetFiles.ElementAt(i), actualDotnetFiles.ElementAt(i));
-            }
+            return actualDotnetFiles;
         }
 
         private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string path)
@@ -219,7 +249,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private async Task<IEnumerable<SdkContentFileInfo>> GetSdkContentsAsync(ProductImageData imageData)
+        private async Task<IEnumerable<SdkContentFileInfo>> GetExpectedSdkContentsAsync(ProductImageData imageData)
         {
             string sdkVersion = imageData.GetProductVersion(ImageType, DockerHelper);
 
