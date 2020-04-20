@@ -1038,7 +1038,7 @@
                 {
                   "name": "pr-build",
                   "dependencies": [
-                    "$(Repo:sdk):5.0-buster-arm64v8"
+                    "$(Repo:sdk):5.0-buster-slim-arm64v8"
                   ]
                 }
               ]
@@ -1648,7 +1648,7 @@
                 {
                   "name": "pr-build",
                   "dependencies": [
-                    "$(Repo:sdk):5.0-buster-arm64v8"
+                    "$(Repo:sdk):5.0-buster-slim-arm64v8"
                   ]
                 }
               ]
@@ -2045,7 +2045,7 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "5.0/sdk/buster/amd64",
+              "dockerfile": "5.0/sdk/buster-slim/amd64",
               "os": "linux",
               "osVersion": "buster",
               "tags": {
@@ -2058,7 +2058,7 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "architecture": "arm",
-              "dockerfile": "5.0/sdk/buster/arm32v7",
+              "dockerfile": "5.0/sdk/buster-slim/arm32v7",
               "os": "linux",
               "osVersion": "buster",
               "tags": {
@@ -2072,7 +2072,7 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "architecture": "arm64",
-              "dockerfile": "5.0/sdk/buster/arm64v8",
+              "dockerfile": "5.0/sdk/buster-slim/arm64v8",
               "os": "linux",
               "osVersion": "buster",
               "tags": {
