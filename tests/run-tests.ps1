@@ -119,7 +119,7 @@ Try {
     Exec "$DotnetInstallDir/dotnet test $testFilter --logger:trx"
 
     if ($TestCategories.Contains('image-size')) {
-        & ../performance/Validate-ImageSize.ps1 -PullImages:$PullImages -BaselineIntegrityOnly
+        & ../performance/Validate-ImageSize.ps1 -PullImages:$PullImages -ValidationMode Integrity
     }
 }
 Finally {

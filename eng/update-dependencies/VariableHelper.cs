@@ -21,7 +21,7 @@ namespace Dotnet.Docker
             string upperCasedVariableGroup = string.Format(variableGroupFormat, joinedVariableNames.ToUpperInvariant());
             string lowerCasedVariableGroup = string.Format(variableGroupFormat, joinedVariableNames.ToLowerInvariant());
 
-            string argEnvPattern = $" {upperCasedVariableGroup}[= ](?<{ValueGroupName}>[^\r\n$]+)";
+            string argEnvPattern = $" {upperCasedVariableGroup}[= ](?<{ValueGroupName}>[^\\s$]+)";
             string linuxPattern = $"\\b{lowerCasedVariableGroup}=(?<{ValueGroupName}>[^\\s]+)";
             string windowsPowerShellPattern = $"\\${lowerCasedVariableGroup} = '(?<{ValueGroupName}>[^\\s]+)'";
             string windowsCmdPattern = $"\\bset \"{lowerCasedVariableGroup}=(?<{ValueGroupName}>[^\\s]+)\"";
