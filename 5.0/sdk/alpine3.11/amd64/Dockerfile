@@ -16,8 +16,11 @@ ENV \
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Alpine-3.11
 
-# Add dependencies for disabling invariant mode (set in base image)
-RUN apk add --no-cache icu-libs
+RUN apk add --no-cache \
+    ca-certificates \
+    curl \
+    icu-libs \
+    git
 
 # Install .NET Core SDK
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \

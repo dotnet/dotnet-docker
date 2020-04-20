@@ -1,6 +1,9 @@
-FROM arm32v7/buildpack-deps:buster-scm
+ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+FROM $REPO:5.0-buster-slim-arm32v7
 
 ENV \
+    # Unset ASPNETCORE_URLS from aspnet base image
+    ASPNETCORE_URLS= \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_SDK_VERSION=5.0.100-preview.3.20216.6 \
@@ -14,12 +17,16 @@ ENV \
 # Install .NET CLI dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        git \
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
         libicu63 \
         libssl1.1 \
         libstdc++6 \
+        wget \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
@@ -28,9 +35,8 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && dotnet_sha512='608c204bced8e6c6d315c0e1f418b7c7b9bc794a2c2eb70e1bd55f0ffec5782a1006175f1a50f23e2cd2d004fb22a5bfea61dd7d0f573c2352c71e322163b02b' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
-    && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
+    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
