@@ -1,12 +1,13 @@
 ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+ARG DOTNET_VERSION=5.0.0-preview.3.20214.6
 
 # Installer image
 FROM buildpack-deps:focal-curl as installer
+ARG DOTNET_VERSION
 
 # Retrieve .NET Core
-RUN dotnet_version=5.0.0-preview.2.20160.6 \
-    && curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='4454d8cb79f9a14ee9f0aa5c6b91a2d26de8e3748add0396f65f59a78b5c96e8ff2fe5bc0156915a7eebcdcb71bfc3b60d7a5cd66d28b96cc043357c9b07f106' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-x64.tar.gz \
+    && dotnet_sha512='459a5aab9dea6d27e15a55f8fdc4e44e6ed05b20c6d1bd9aba4fbc3b9176ffe79d9ae57b7757401e7c4ed0a11e483c6729b8a25f5af8dd6346dbb0fd025d0f2a' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -ozxf dotnet.tar.gz -C /dotnet \
@@ -15,6 +16,9 @@ RUN dotnet_version=5.0.0-preview.2.20160.6 \
 
 # .NET Core runtime image
 FROM $REPO:5.0-focal
+ARG DOTNET_VERSION
+
+ENV DOTNET_VERSION $DOTNET_VERSION
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
