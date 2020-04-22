@@ -67,7 +67,7 @@ jobs:
       --git-owner dotnet
       --git-repo versions
       --git-branch master
-      --git-path build-info/docker/image-info.$(Build.Repository.Name)-$(publicSourceBranch).json
+      --git-path build-info/docker/image-info.$(Build.Repository.Name)-$(publicSourceBranch)$(imageInfoVariant).json
       $(dryRunArg)
     displayName: Publish Image Info
   - publish: $(Build.ArtifactStagingDirectory)/image-info.json
