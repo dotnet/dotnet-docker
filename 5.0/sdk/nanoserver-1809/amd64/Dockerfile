@@ -40,7 +40,7 @@ RUN $dotnet_sdk_version = '5.0.100-preview.2.20176.6'; `
 FROM $REPO:5.0-nanoserver-1809
 
 ENV `
-    # Unset ASPNETCORE_URLS derived from aspnet base image
+    # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
