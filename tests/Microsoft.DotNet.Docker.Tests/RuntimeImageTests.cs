@@ -35,11 +35,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
             {
-                string version = imageData.GetProductVersion(ImageType, DockerHelper);
-                variables.Add(new EnvironmentVariableInfo("DOTNET_VERSION", version));
+                variables.Add(GetRuntimeVersionVariableInfo(imageData, DockerHelper));
             }
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);
+        }
+
+        public static EnvironmentVariableInfo GetRuntimeVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
+        {
+            string version = imageData.GetProductVersion(DotNetImageType.Runtime, dockerHelper);
+            return new EnvironmentVariableInfo("DOTNET_VERSION", version);
         }
     }
 }

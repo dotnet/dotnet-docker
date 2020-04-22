@@ -1,6 +1,9 @@
-FROM amd64/buildpack-deps:focal-scm
+ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+FROM $REPO:5.0-focal
 
 ENV \
+    # Unset ASPNETCORE_URLS from aspnet base image
+    ASPNETCORE_URLS= \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_SDK_VERSION=5.0.100-preview.3.20215.3 \
@@ -14,12 +17,16 @@ ENV \
 # Install .NET CLI dependencies
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        git \
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
         libicu66 \
         libssl1.1 \
         libstdc++6 \
+        wget \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
@@ -28,9 +35,8 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && dotnet_sha512='251a3d775f3a25c0cb274d061e46530b682e9900839ba7432102aa4b8364faa5620837f03a2b58a2d88c4480f07576ab4c61ddc082f2df8e883efddd5b16abff' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
-    && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
+    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 

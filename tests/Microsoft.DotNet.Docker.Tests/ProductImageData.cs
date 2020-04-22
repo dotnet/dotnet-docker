@@ -17,7 +17,20 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string SdkOS
         {
-            get => _sdkOS ?? OS.TrimEnd(Tests.OS.SlimSuffix);
+            get
+            {
+                if (_sdkOS != null)
+                {
+                    return _sdkOS;
+                }
+
+                if (Version.Major >= 5)
+                {
+                    return OS;
+                }
+
+                return OS.TrimEnd(Tests.OS.SlimSuffix);
+            }
             set { _sdkOS = value; }
         }
 
