@@ -21,7 +21,7 @@ RUN `
     Remove-Item -Force dotnet.zip; `
     `
     # Install PowerShell global tool
-    $powershell_version = '7.1.0-preview.1'; `
+    $powershell_version = '7.1.0-preview.2'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
     $powershell_sha512 = '8ba8c4226ffc5120782335c46a747c862141b86c3e8ef8833936d2d3fafd544bcc6f4590723caae3e631a23d16748455ceb526799aba50e090a73750363792ba'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
