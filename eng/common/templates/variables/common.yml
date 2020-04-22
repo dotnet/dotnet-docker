@@ -13,6 +13,8 @@ variables:
   value: ""
 - name: productVersionComponents
   value: 2
+- name: imageInfoVariant
+  value: ""
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - group: DotNet-Docker-Common
   - group: DotNet-Docker-Secrets
