@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
 FROM $REPO:5.0-alpine3.11
 
 ENV \
@@ -24,8 +24,7 @@ RUN dotnet_sdk_version=5.0.100-preview.2.20176.6 \
     && dotnet_sha512='83b65c6d95d04213685761cbb36a65c1b4c2a2991deeee421446f8e5956acfd1275243f3bd1ce95726b8564d7d88c6a48aa1f7f728b406a385c41e506fb13d29' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
-    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
+    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
