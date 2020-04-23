@@ -1,9 +1,10 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
 FROM $REPO:5.0-alpine3.11
 
 ENV \
-    # Unset the value from the base image
+    # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \
+    DOTNET_SDK_VERSION=5.0.100-preview.3.20216.6 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -13,27 +14,28 @@ ENV \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Alpine-3.10
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Alpine-3.11
 
-# Add dependencies for disabling invariant mode (set in base image)
-RUN apk add --no-cache icu-libs
+RUN apk add --no-cache \
+    ca-certificates \
+    curl \
+    icu-libs \
+    git
 
 # Install .NET Core SDK
-RUN dotnet_sdk_version=5.0.100-preview.2.20176.6 \
-    && wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
-    && dotnet_sha512='83b65c6d95d04213685761cbb36a65c1b4c2a2991deeee421446f8e5956acfd1275243f3bd1ce95726b8564d7d88c6a48aa1f7f728b406a385c41e506fb13d29' \
+RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
+    && dotnet_sha512='4466be190e90ffd85b4dd0a2abc5cacad188ea8f29d7019a2915f98b281a06840a1636f464e6a4a4f871399ca7e1fe00f937cdaa1dd11a27753b606c76c28bdc' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
-    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
+    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.1.0-preview.1 \
+RUN powershell_version=7.1.0-preview.2 \
     && wget -O PowerShell.Linux.Alpine.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha512='9c17a631578874209ab56df46b114cf871547de045cdb77c5af5c6b91d90d3e826f63e1a21ab8ef10d5d66f8751ddd695318f3ddf98a9710f99ca3a9f0febe9c' \
+    && powershell_sha512='eba3ef1551e9234f4412159ebab2ef05ea91201d3c8da5ff60ed9fbb706767e4201067e736fee57ba7abc18319e011a28e46c62bb856608453a6424be58b5b5f' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
