@@ -17,7 +17,7 @@ sdkVer=$(cat $sdkVersionsPath | head -2 | tail -1)
 runtimeVersionsPath=$(find sdk/shared/Microsoft.NETCore.App -name .version)
 runtimeVer=$(cat $runtimeVersionsPath | tail -1)
 
-aspnetVersionsPath=$(find sdk/shared/Microsoft.AspNetCore.App -name .version)
+aspnetVersionsPath=$(find sdk/shared/Microsoft.AspNetCore.App -name Microsoft.AspNetCore.App.versions.txt)
 aspnetVer=$(cat $aspnetVersionsPath | tail -1)
 
 rm -rf sdk
