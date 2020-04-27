@@ -59,10 +59,10 @@ jobs:
       condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
   - script: >
       $(runImageBuilderCmd) publishImageInfo
+      $(artifactsPath)/image-info.json
       $(dotnetDockerBot.userName)
       $(dotnetDockerBot.email)
       $(BotAccount-dotnet-docker-bot-PAT)
-      $(artifactsPath)/image-info.json
       --manifest $(manifest)
       --git-owner dotnet
       --git-repo versions
@@ -70,6 +70,20 @@ jobs:
       --git-path build-info/docker/image-info.$(Build.Repository.Name)-$(publicSourceBranch)$(imageInfoVariant).json
       $(dryRunArg)
     displayName: Publish Image Info
+  - script: >
+      $(runImageBuilderCmd) ingestKustoImageInfo
+      $(artifactsPath)/image-info.json
+      $(kusto.cluster)
+      $(kusto.database)
+      $(kusto.table)
+      $(kusto.servicePrincipalName)
+      $(app-DotnetDockerTelemetryIngestion-client-secret)
+      $(kusto.servicePrincipalTenant)
+      --manifest $(manifest)
+      --os-type '*'
+      --architecture '*'
+      $(dryRunArg)
+    displayName: Ingest Kusto Image Info
   - publish: $(Build.ArtifactStagingDirectory)/image-info.json
     artifact: image-info-final
     displayName: Publish Image Info File Artifact
