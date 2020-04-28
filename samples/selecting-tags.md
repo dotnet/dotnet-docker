@@ -44,7 +44,7 @@ If you want a specific operating system image, you should use a specific operati
 
 The following tags demonstrate the pattern used to describe each operating system (using .NET Core 3.1 as the example):
 
-* `3.1-alpine` (Alpine 3.10)
+* `3.1-alpine` (Latest Alpine)
 * `3.1-bionic` (Ubuntu 18.04)
 * `3.1-buster` (Debian 10)
 * `3.1-buster-slim` (Debian 10)
