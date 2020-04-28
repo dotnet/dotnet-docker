@@ -27,5 +27,5 @@ Nano Server is the only Windows SKU supported by the official .NET Core images. 
 .NET Core supports amd64, arm32 and arm64 architectures.  All of the supported architectures are also supported within containers.
 
 - Linux/Windows x86-64 (amd64)
-- ARMv7 32-bit (arm32v7)
-- ARMv8 64-bit (arm64v8)
+- Linux ARMv7 32-bit (arm32v7)
+- Linux ARMv8 64-bit (arm64v8)
