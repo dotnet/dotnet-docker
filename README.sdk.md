@@ -58,10 +58,12 @@ Tags | Dockerfile | OS Version
 3.1.201-buster, 3.1-buster, 3.1.201, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/buster/amd64/Dockerfile) | Debian 10
 3.1.201-alpine3.11, 3.1-alpine3.11, 3.1.201-alpine, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 3.1.201-alpine3.10, 3.1-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+3.1.201-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.201-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 2.1.805-stretch, 2.1-stretch, 2.1.805, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/amd64/Dockerfile) | Debian 9
 2.1.805-alpine3.11, 2.1-alpine3.11, 2.1.805-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 2.1.805-alpine3.10, 2.1-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+2.1.805-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/focal/amd64/Dockerfile) | Ubuntu 20.04
 2.1.805-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ##### .NET Core 5.0 Preview Tags
@@ -75,6 +77,7 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.1.201-buster-arm64v8, 3.1-buster-arm64v8, 3.1.201, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/buster/arm64v8/Dockerfile) | Debian 10
+3.1.201-focal-arm64v8, 3.1-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 3.1.201-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
 
 ##### .NET Core 5.0 Preview Tags
@@ -128,11 +131,6 @@ Tag | Dockerfile
 Tag | Dockerfile
 ---------| ---------------
 5.0.100-preview.3-nanoserver-1809, 5.0-nanoserver-1809, 5.0.100-preview.3, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/sdk/nanoserver-1809/amd64/Dockerfile)
-
-## Windows Server 2019 arm32 Tags
-Tag | Dockerfile
----------| ---------------
-3.1.201-nanoserver-1809-arm32v7, 3.1-nanoserver-1809-arm32v7, 3.1.201, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/nanoserver-1809/arm32v7/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/core/sdk at https://mcr.microsoft.com/v2/dotnet/core/sdk/tags/list.
 

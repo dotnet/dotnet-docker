@@ -46,10 +46,12 @@ Tags | Dockerfile | OS Version
 3.1.3-buster-slim, 3.1-buster-slim, 3.1.3, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime-deps/buster-slim/amd64/Dockerfile) | Debian 10
 3.1.3-alpine3.11, 3.1-alpine3.11, 3.1.3-alpine, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime-deps/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 3.1.3-alpine3.10, 3.1-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime-deps/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+3.1.3-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime-deps/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.3-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime-deps/bionic/amd64/Dockerfile) | Ubuntu 18.04
 2.1.17-stretch-slim, 2.1-stretch-slim, 2.1.17, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/stretch-slim/amd64/Dockerfile) | Debian 9
 2.1.17-alpine3.11, 2.1-alpine3.11, 2.1.17-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 2.1.17-alpine3.10, 2.1-alpine3.10 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/alpine3.10/amd64/Dockerfile) | Alpine 3.10
+2.1.17-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/focal/amd64/Dockerfile) | Ubuntu 20.04
 2.1.17-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/runtime-deps/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ##### .NET Core 5.0 Preview Tags
@@ -65,6 +67,7 @@ Tags | Dockerfile | OS Version
 3.1.3-buster-slim-arm64v8, 3.1-buster-slim-arm64v8, 3.1.3, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime-deps/buster-slim/arm64v8/Dockerfile) | Debian 10
 3.1.3-alpine3.11-arm64v8, 3.1-alpine3.11-arm64v8, 3.1.3-alpine-arm64v8, 3.1-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime-deps/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
 3.1.3-alpine3.10-arm64v8, 3.1-alpine3.10-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime-deps/alpine3.10/arm64v8/Dockerfile) | Alpine 3.10
+3.1.3-focal-arm64v8, 3.1-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime-deps/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 3.1.3-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/runtime-deps/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
 
 ##### .NET Core 5.0 Preview Tags

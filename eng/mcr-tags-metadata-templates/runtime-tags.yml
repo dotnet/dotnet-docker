@@ -44,4 +44,3 @@ $(McrTagsYmlTagGroup:3.1-nanoserver-1809)
 $(McrTagsYmlTagGroup:2.1-nanoserver-1809)
 $(McrTagsYmlTagGroup:5.0-nanoserver-1809)
     customSubTableTitle: .NET Core 5.0 Preview Tags
-$(McrTagsYmlTagGroup:3.1-nanoserver-1809-arm32v7)
