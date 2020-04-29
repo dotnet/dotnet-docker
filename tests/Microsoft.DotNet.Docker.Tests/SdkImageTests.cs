@@ -77,8 +77,12 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
-                variables.Add(new EnvironmentVariableInfo("LC_ALL", "en_US.UTF-8"));
-                variables.Add(new EnvironmentVariableInfo("LANG", "en_US.UTF-8"));
+
+                if (imageData.Version.Major < 5)
+                {
+                    variables.Add(new EnvironmentVariableInfo("LC_ALL", "en_US.UTF-8"));
+                    variables.Add(new EnvironmentVariableInfo("LANG", "en_US.UTF-8"));
+                }
             }
 
             EnvironmentVariableInfo.Validate(variables, DotNetImageType.SDK, imageData, DockerHelper);
