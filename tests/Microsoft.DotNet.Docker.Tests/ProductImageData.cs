@@ -36,11 +36,22 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
 
+        public string GetProductImageName(string tag, string variantName)
+        {
+            string repoNameModifier = null;
+            if (Version.Major >= 5)
+            {
+                repoNameModifier = Config.IsNightlyRepo ? "/nightly" : string.Empty;
+            }
+
+            return GetImageName(tag, variantName, repoNameModifier);
+        }
+
         public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
         {
             string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
             string tag = GetTagName(imageType);
-            string imageName = GetImageName(tag, variantName);
+            string imageName = GetProductImageName(tag, variantName);
 
             PullImageIfNecessary(imageName, dockerHelper);
 

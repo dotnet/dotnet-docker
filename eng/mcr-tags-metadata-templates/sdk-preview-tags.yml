@@ -1,0 +1,19 @@
+$(McrTagsYmlRepo:sdk-preview)
+$(McrTagsYmlTagGroup:5.0-buster-slim)
+    customSubTableTitle: .NET Core 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-alpine3.11)
+    customSubTableTitle: .NET Core 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-focal)
+    customSubTableTitle: .NET Core 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-buster-slim-arm64v8)
+    customSubTableTitle: .NET Core 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-focal-arm64v8)
+    customSubTableTitle: .NET Core 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-buster-slim-arm32v7)
+    customSubTableTitle: .NET Core 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-nanoserver-1909)
+    customSubTableTitle: .NET Core 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-nanoserver-1903)
+    customSubTableTitle: .NET Core 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-nanoserver-1809)
+    customSubTableTitle: .NET Core 5.0 Preview Tags
