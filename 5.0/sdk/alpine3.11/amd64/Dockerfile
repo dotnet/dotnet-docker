@@ -4,7 +4,7 @@ FROM $REPO:5.0-alpine3.11
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \
-    DOTNET_SDK_VERSION=5.0.100-preview.4.20228.6 \
+    DOTNET_SDK_VERSION=5.0.100-preview.4.20229.10 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -22,7 +22,7 @@ RUN apk add --no-cache \
 
 # Install .NET Core SDK
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='0caa7e96c134cda31e197467526f255844466590d8eae86f99a833539f6c206671239acce4b810ef4179786a2f92fd25fdafccce4a7149dd3e6bde736eeed5b6' \
+    && dotnet_sha512='1c8728e69b690cd5c24648c5d7172fa6a785b726cbd49f66a85d86387561bbfab9d4009d674a38b5cf75fa3b8af5303593f5d487eb3d6c06d6d46c86955bc0ea' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
