@@ -927,7 +927,7 @@
                 {
                   "name": "pr-build",
                   "dependencies": [
-                    "$(Repo:sdk):5.0-buster-slim-arm64v8"
+                    "$(Repo:sdk-preview):5.0-buster-slim-arm64v8"
                   ]
                 }
               ]
@@ -1471,7 +1471,7 @@
                 {
                   "name": "pr-build",
                   "dependencies": [
-                    "$(Repo:sdk):5.0-buster-slim-arm64v8"
+                    "$(Repo:sdk-preview):5.0-buster-slim-arm64v8"
                   ]
                 }
               ]
