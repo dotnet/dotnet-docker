@@ -15,6 +15,9 @@ variables:
   value: 2
 - name: imageInfoVariant
   value: ""
+- name: publishRepoPrefix
+  value: "test/"
+
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - group: DotNet-Docker-Common
   - group: DotNet-Docker-Secrets
