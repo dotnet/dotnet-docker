@@ -24,16 +24,16 @@ jobs:
       # Replace '/' with '-'
       buildRepoName=$(echo $BUILD_REPOSITORY_NAME | sed -e 's/\//-/g')
 
-      echo $SYSTEM_PULLREQUEST_TARGETBRANCH
-      echo $BUILD_SOURCEBRANCHNAME
-
       # publicSourceBranch is not necessarily the working branch, it is the branch referenced in the readme Dockerfile source links
       if [ "$PUBLICSOURCEBRANCH" != "" ]; then
         publicSourceBranch=$PUBLICSOURCEBRANCH
+      # Sample manifests should always be based in master branch
+      elif [[ $manifest != *samples* ]]; then
+        publicSourceBranch="master"
       elif [[ "$BUILD_SOURCEBRANCHNAME" == "nightly" || "$SYSTEM_PULLREQUEST_TARGETBRANCH" == "nightly" ]]; then
-        publicSourceBranch='nightly'
+        publicSourceBranch="nightly"
       else
-        publicSourceBranch='master'
+        publicSourceBranch="master"
       fi
       
       echo "##vso[task.setvariable variable=dryRunArg]$dryRunArg"
