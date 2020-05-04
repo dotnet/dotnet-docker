@@ -24,6 +24,9 @@ jobs:
       # Replace '/' with '-'
       buildRepoName=$(echo $BUILD_REPOSITORY_NAME | sed -e 's/\//-/g')
 
+      echo $SYSTEM_PULLREQUEST_TARGETBRANCH
+      echo $BUILD_SOURCEBRANCHNAME
+
       # publicSourceBranch is not necessarily the working branch, it is the branch referenced in the readme Dockerfile source links
       if [ "$PUBLICSOURCEBRANCH" != "" ]; then
         publicSourceBranch=$PUBLICSOURCEBRANCH
