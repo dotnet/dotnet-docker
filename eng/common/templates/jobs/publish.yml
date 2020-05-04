@@ -8,19 +8,14 @@ jobs:
       --manifest '$(manifest)'
       --registry-override '$(acr.server)'
       $(imageBuilder.queueArgs)
-    # publicSourceBranch is not necessarily the working branch, it is the branch referenced in the readme Dockerfile source links
-    ${{ if contains(variables['Build.SourceBranchName'], 'nightly') }}:
-      publicSourceBranch: nightly
-    ${{ if not(contains(variables['Build.SourceBranchName'], 'nightly')) }}:
-      publicSourceBranch: master
   steps:
   - template: ../steps/init-docker-linux.yml
   - template: ../steps/download-build-artifact.yml
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
       artifactName: image-info
-    # Use dry-run option for certain publish operations if this is not a production build
   - script: |
+      # Use dry-run option for certain publish operations if this is not a production build
       dryRunArg=""
       if [[ "$PUBLISHREPOPREFIX" != "public/" || "$SYSTEM_TEAMPROJECT" == "public" ]]; then
         dryRunArg=" --dry-run"
@@ -28,9 +23,19 @@ jobs:
 
       # Replace '/' with '-'
       buildRepoName=$(echo $BUILD_REPOSITORY_NAME | sed -e 's/\//-/g')
+
+      # publicSourceBranch is not necessarily the working branch, it is the branch referenced in the readme Dockerfile source links
+      if [ "$PUBLICSOURCEBRANCH" != "" ]; then
+        publicSourceBranch=$PUBLICSOURCEBRANCH
+      elif [[ "$BUILD_SOURCEBRANCHNAME" == "nightly" || "$SYSTEM_PULLREQUEST_TARGETBRANCH" == "nightly" ]]; then
+        publicSourceBranch='nightly'
+      else
+        publicSourceBranch='master'
+      fi
       
       echo "##vso[task.setvariable variable=dryRunArg]$dryRunArg"
       echo "##vso[task.setvariable variable=buildRepoName]$buildRepoName"
+      echo "##vso[task.setvariable variable=publicSourceBranch]$publicSourceBranch"
     displayName: Set Publish Variables
   - script: >
       $(runImageBuilderCmd) copyAcrImages
