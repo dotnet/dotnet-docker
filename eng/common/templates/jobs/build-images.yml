@@ -39,10 +39,9 @@ jobs:
       $(imageBuilderBuildArgs)
       $(imageBuilderImageInfoArg)
     displayName: Build Images
-  - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-    - publish: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
-      artifact: $(legName)-image-info
-      displayName: Publish Image Info File Artifact
+  - publish: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
+    artifact: $(legName)-image-info
+    displayName: Publish Image Info File Artifact
   - ${{ if eq(variables['System.TeamProject'], 'public') }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
       parameters:
