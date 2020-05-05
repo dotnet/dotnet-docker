@@ -25,6 +25,10 @@ The following samples and guidance demonstrate how to use .NET Core and Docker f
 * [Push Docker Images to Docker Hub](push-image-to-dockerhub.md)
 * [Deploy ASP.NET Core Applications to Azure Container Instances](deploy-container-to-aci.md)
 
+## Sample scenarios
+
+In addition to fully operational sample projects, [code snippets](../documentation/scenarios/README.md) are also available that demonstrate more specific scenarios.
+
 ## Try pre-built images
 
 The following commands will run a .NET Core console app in a container:
