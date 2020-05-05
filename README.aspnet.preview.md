@@ -57,7 +57,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 # Full Tag Listing
 
 ## Linux amd64 Tags
-##### .NET Core 5.0 Preview Tags
+##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview.4-buster-slim, 5.0-buster-slim, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/buster-slim/amd64/Dockerfile) | Debian 10
@@ -65,7 +65,7 @@ Tags | Dockerfile | OS Version
 5.0.0-preview.4-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm64 Tags
-##### .NET Core 5.0 Preview Tags
+##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview.4-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/buster-slim/arm64v8/Dockerfile) | Debian 10
@@ -73,25 +73,25 @@ Tags | Dockerfile | OS Version
 5.0.0-preview.4-focal-arm64v8, 5.0-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
-##### .NET Core 5.0 Preview Tags
+##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview.4-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/buster-slim/arm32v7/Dockerfile) | Debian 10
 
 ## Windows Server, version 1909 amd64 Tags
-##### .NET Core 5.0 Preview Tags
+##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
 5.0.0-preview.4-nanoserver-1909, 5.0-nanoserver-1909, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/nanoserver-1909/amd64/Dockerfile)
 
 ## Windows Server, version 1903 amd64 Tags
-##### .NET Core 5.0 Preview Tags
+##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
 5.0.0-preview.4-nanoserver-1903, 5.0-nanoserver-1903, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/nanoserver-1903/amd64/Dockerfile)
 
 ## Windows Server 2019 amd64 Tags
-##### .NET Core 5.0 Preview Tags
+##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
 5.0.0-preview.4-nanoserver-1809, 5.0-nanoserver-1809, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/nanoserver-1809/amd64/Dockerfile)

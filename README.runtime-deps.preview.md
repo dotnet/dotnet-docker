@@ -45,7 +45,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 # Full Tag Listing
 
 ## Linux amd64 Tags
-##### .NET Core 5.0 Preview Tags
+##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview.4-buster-slim, 5.0-buster-slim, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/buster-slim/amd64/Dockerfile) | Debian 10
@@ -53,7 +53,7 @@ Tags | Dockerfile | OS Version
 5.0.0-preview.4-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm64 Tags
-##### .NET Core 5.0 Preview Tags
+##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview.4-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/buster-slim/arm64v8/Dockerfile) | Debian 10
@@ -61,7 +61,7 @@ Tags | Dockerfile | OS Version
 5.0.0-preview.4-focal-arm64v8, 5.0-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
-##### .NET Core 5.0 Preview Tags
+##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview.4-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/runtime-deps/buster-slim/arm32v7/Dockerfile) | Debian 10
