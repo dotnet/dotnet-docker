@@ -8,7 +8,7 @@ The following samples and guidance demonstrate how to use .NET Core and Docker f
 * [Build an ASP.NET Core Docker image](aspnetapp/README.md)
 * [Build and test a multi-project solution](complexapp/README.md)
 
-## Development Guidance
+## Development guidance
 
 * [Establishing a Docker environment](establishing-docker-environment.md)
 * [Selecting .NET Core image tags](selecting-tags.md)
@@ -25,13 +25,9 @@ The following samples and guidance demonstrate how to use .NET Core and Docker f
 * [Push Docker Images to Docker Hub](push-image-to-dockerhub.md)
 * [Deploy ASP.NET Core Applications to Azure Container Instances](deploy-container-to-aci.md)
 
-## Sample snippets
+## Scenario guidance
 
-In addition to fully operational sample projects, [code snippets](snippets/) are also provided for demonstrating more specific scenarios.
-
-* [Managing NuGet Credentials in Docker Scenarios](snippets/nuget-credentials.md)
-* [Installing .NET Core in a Dockerfile](snippets/installing-dotnet.md)
-* [Using the System.Drawing.Common Package in a Docker Container](snippets/using-system-drawing-common.md)
+You can find tips and tricks, best practices, and samples of commonly used technology in the [.NET Core Docker scenarios documentation](../documentation/scenarios/README.md).
 
 ## Try pre-built images
 
