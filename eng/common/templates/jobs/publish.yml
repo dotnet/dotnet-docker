@@ -33,7 +33,7 @@ jobs:
       # Sample manifests should always be based in master branch
       elif [[ $manifest != *samples* ]]; then
         publicSourceBranch="master"
-      elif [[ "$BUILD_SOURCEBRANCHNAME" == "nightly" || "$SYSTEM_PULLREQUEST_TARGETBRANCH" == "nightly" ]]; then
+      elif [[ $BUILD_SOURCEBRANCHNAME == *nightly* || $SYSTEM_PULLREQUEST_TARGETBRANCH == *nightly* ]]; then
         publicSourceBranch="nightly"
       else
         publicSourceBranch="master"
