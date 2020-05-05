@@ -5,9 +5,9 @@ To provide a consistent FQDNs, the data endpoint will be changing from *.cdn.msc
 For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules).
 ---------------------------------------------------------------------------------
 
-The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
+The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 
-See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
+See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images with official releases of [.NET](https://github.com/dotnet/core).
 
 # Featured Tags
 
@@ -16,38 +16,38 @@ See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images wi
 
 # About This Image
 
-This image contains the .NET Core SDK which is comprised of three parts:
+This image contains the .NET SDK which is comprised of three parts:
 
-1. .NET Core CLI
-1. .NET Core
+1. .NET CLI
+1. .NET
 1. ASP.NET Core
 
 Use this image for your development process (developing, building and testing applications).
 
 # How to Use the Image
 
-The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together. See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
+The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-## Building .NET Core Apps with Docker
+## Building .NET Apps with Docker
 
-* [.NET Core Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
+* [.NET Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
 * [ASP.NET Core Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
 
-## Develop .NET Core Apps in a Container
+## Develop .NET Apps in a Container
 
-* [Develop .NET Core Applications](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-dev-in-container.md) - This sample shows how to develop, build and test .NET Core applications with Docker without the need to install the .NET Core SDK.
-* [Develop ASP.NET Core Applications](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/aspnet-docker-dev-in-container.md) - This sample shows how to develop and test ASP.NET Core applications with Docker without the need to install the .NET Core SDK.
+* [Develop .NET Applications](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-dev-in-container.md) - This sample shows how to develop, build and test .NET applications with Docker without the need to install the .NET SDK.
+* [Develop ASP.NET Core Applications](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/aspnet-docker-dev-in-container.md) - This sample shows how to develop and test ASP.NET Core applications with Docker without the need to install the .NET SDK.
 
 # Related Repos
 
-.NET Core:
+.NET:
 
 * [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
 * [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
-* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET Core (Preview)
+* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
 * [dotnet/nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Core Runtime (Preview)
-* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Core Runtime Dependencies (Preview)
+* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 
 .NET Framework:
 

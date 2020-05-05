@@ -5,9 +5,11 @@ To provide a consistent FQDNs, the data endpoint will be changing from *.cdn.msc
 For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules).
 ---------------------------------------------------------------------------------
 
-The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
+The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 
-See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
+See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for images with official releases of [.NET](https://github.com/dotnet/core).
+
+As part of the transition to .NET 5.0, Docker repos for .NET 5.0 and higher do not include `core` in the name as was done with older versions. As an example, ASP.NET Core 5.0 can be found at `mcr.microsoft.com/dotnet/nightly/aspnet:5.0` while 3.1 is still at `mcr.microsoft.com/dotnet/core-nightly/aspnet:3.1`. See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
 
 # Featured Tags
 
@@ -22,11 +24,11 @@ Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Dock
 
 # How to Use the Image
 
-The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together. See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
+The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
 ## Container sample: Run a web application
 
-You can quickly run a container with a pre-built [.NET Core Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Docker image](https://hub.docker.com/_/microsoft-dotnet-core-samples/), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md).
 
 Type the following command to run a sample web application:
 
@@ -44,10 +46,20 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 * [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
 * [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
-* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET Core (Preview)
-* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET Core SDK (Preview)
-* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Core Runtime (Preview)
-* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Core Runtime Dependencies (Preview)
+
+.NET Core (Preview):
+
+* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
+* [dotnet/core-nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-core-nightly-sdk/): .NET Core SDK (Preview)
+* [dotnet/core-nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime/): .NET Core Runtime (Preview)
+* [dotnet/core-nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime-deps/): .NET Core Runtime Dependencies (Preview)
+
+.NET (Preview):
+
+* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
+* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
+* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 
 .NET Framework:
 
@@ -100,17 +112,17 @@ You can retrieve a list of all available tags for dotnet/nightly/aspnet at https
 
 # Support
 
-See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master/microsoft-support.md) for the support lifecycle.
+See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/microsoft-support.md) for the support lifecycle.
 
 # Image Update Policy
 
-* We update the supported .NET Core images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:1909, buildpack-deps:bionic-scm, etc.).
-* We publish .NET Core images as part of releasing new versions of .NET Core including major/minor and servicing.
+* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:1909, buildpack-deps:bionic-scm, etc.).
+* We publish .NET images as part of releasing new versions of .NET including major/minor and servicing.
 
 # Feedback
 
-* [File a .NET Core Docker issue](https://github.com/dotnet/dotnet-docker/issues)
-* [File a .NET Core issue](https://github.com/dotnet/core/issues)
+* [File a .NET Docker issue](https://github.com/dotnet/dotnet-docker/issues)
+* [File a .NET issue](https://github.com/dotnet/core/issues)
 * [File an ASP.NET Core issue](https://github.com/aspnet/home/issues)
 * [File an issue for other .NET components](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md)
 * [File a Visual Studio Docker Tools issue](https://github.com/microsoft/dockertools/issues)
@@ -120,7 +132,7 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 
 # License
 
-* [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
+* [.NET license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
 * [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
 * [Windows Nano Server license](https://hub.docker.com/_/microsoft-windows-nanoserver/) (only applies to Windows containers)
 * [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)
