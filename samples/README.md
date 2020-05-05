@@ -8,7 +8,7 @@ The following samples and guidance demonstrate how to use .NET Core and Docker f
 * [Build an ASP.NET Core Docker image](aspnetapp/README.md)
 * [Build and test a multi-project solution](complexapp/README.md)
 
-## Development Guidance
+## Development guidance
 
 * [Establishing a Docker environment](establishing-docker-environment.md)
 * [Selecting .NET Core image tags](selecting-tags.md)
