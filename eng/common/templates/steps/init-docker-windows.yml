@@ -5,12 +5,8 @@ steps:
 - script: echo "##vso[task.setvariable variable=artifactsPath]$(Build.ArtifactStagingDirectory)
   displayName: Define Artifacts Path Variable
 
-- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-  - script: echo '##vso[task.setvariable variable=imageBuilderImageInfoArg]--image-info-output-path $(artifactsPath)/$(legName)-image-info.json
-    displayName: Set Image Info Arg for Image Builder
-- ${{ if eq(variables['System.TeamProject'], 'public') }}:
-  - script: echo '##vso[task.setvariable variable=imageBuilderImageInfoArg]
-    displayName: Set Image Info Arg for Image Builder
+- script: echo '##vso[task.setvariable variable=imageBuilderImageInfoArg]--image-info-output-path $(artifactsPath)/$(legName)-image-info.json
+  displayName: Set Image Info Arg for Image Builder
 
   ################################################################################
   # Cleanup Docker Resources
