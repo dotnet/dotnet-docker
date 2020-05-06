@@ -5,12 +5,12 @@ parameters:
 steps:
 - script: >
     $(runImageBuilderCmd) publishMcrDocs
-    --manifest $(manifest)
-    --registry-override $(acr.server)
-    $(dotnetDockerBot.userName)
-    $(dotnetDockerBot.email)
-    $(BotAccount-dotnet-docker-bot-PAT)
-    $(publicGitRepoUri)
+    --manifest '$(manifest)'
+    --registry-override '$(acr.server)'
+    '$(dotnetDockerBot.userName)'
+    '$(dotnetDockerBot.email)'
+    '$(BotAccount-dotnet-docker-bot-PAT)'
+    '$(publicGitRepoUri)'
     ${{ parameters.dryRunArg }}
     $(imageBuilder.queueArgs)
   displayName: Publish Readmes
