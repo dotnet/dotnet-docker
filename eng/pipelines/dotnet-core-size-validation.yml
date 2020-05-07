@@ -7,7 +7,7 @@ schedules:
   branches:
     include:
     - nightly
-
+  always: true
 variables:
 - template: variables/common.yml
 
