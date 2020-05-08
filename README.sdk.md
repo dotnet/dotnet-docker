@@ -11,8 +11,8 @@ See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images wi
 
 # Featured Tags
 
-* `5.0` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:5.0`
+* `3.1` (LTS/Current)
+  * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:3.1`
 
 # About This Image
 
@@ -68,25 +68,12 @@ Tags | Dockerfile | OS Version
 2.1.805-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/focal/amd64/Dockerfile) | Ubuntu 20.04
 2.1.805-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
-##### .NET Core 5.0 Preview Tags
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-5.0.100-preview.4-buster-slim, 5.0-buster-slim, 5.0.100-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/buster-slim/amd64/Dockerfile) | Debian 10
-5.0.100-preview.4-alpine3.11, 5.0-alpine3.11, 5.0.100-preview.4-alpine, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/alpine3.11/amd64/Dockerfile) | Alpine 3.11
-5.0.100-preview.4-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/focal/amd64/Dockerfile) | Ubuntu 20.04
-
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.1.201-buster-arm64v8, 3.1-buster-arm64v8, 3.1.201, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/sdk/buster/arm64v8/Dockerfile) | Debian 10
 3.1.201-focal-arm64v8, 3.1-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/sdk/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 3.1.201-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/sdk/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
-
-##### .NET Core 5.0 Preview Tags
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-5.0.100-preview.4-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.100-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/buster-slim/arm64v8/Dockerfile) | Debian 10
-5.0.100-preview.4-focal-arm64v8, 5.0-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -96,21 +83,11 @@ Tags | Dockerfile | OS Version
 2.1.805-stretch-arm32v7, 2.1-stretch-arm32v7, 2.1.805, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/stretch/arm32v7/Dockerfile) | Debian 9
 2.1.805-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
-##### .NET Core 5.0 Preview Tags
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-5.0.100-preview.4-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.100-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/buster-slim/arm32v7/Dockerfile) | Debian 10
-
 ## Windows Server, version 1909 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 3.1.201-nanoserver-1909, 3.1-nanoserver-1909, 3.1.201, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/sdk/nanoserver-1909/amd64/Dockerfile)
 2.1.805-nanoserver-1909, 2.1-nanoserver-1909, 2.1.805, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1909/amd64/Dockerfile)
-
-##### .NET Core 5.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-5.0.100-preview.4-nanoserver-1909, 5.0-nanoserver-1909, 5.0.100-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/nanoserver-1909/amd64/Dockerfile)
 
 ## Windows Server, version 1903 amd64 Tags
 Tag | Dockerfile
@@ -118,21 +95,11 @@ Tag | Dockerfile
 3.1.201-nanoserver-1903, 3.1-nanoserver-1903, 3.1.201, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/sdk/nanoserver-1903/amd64/Dockerfile)
 2.1.805-nanoserver-1903, 2.1-nanoserver-1903, 2.1.805, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1903/amd64/Dockerfile)
 
-##### .NET Core 5.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-5.0.100-preview.4-nanoserver-1903, 5.0-nanoserver-1903, 5.0.100-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/nanoserver-1903/amd64/Dockerfile)
-
 ## Windows Server 2019 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 3.1.201-nanoserver-1809, 3.1-nanoserver-1809, 3.1.201, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/sdk/nanoserver-1809/amd64/Dockerfile)
 2.1.805-nanoserver-1809, 2.1-nanoserver-1809, 2.1.805, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
-
-##### .NET Core 5.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-5.0.100-preview.4-nanoserver-1809, 5.0-nanoserver-1809, 5.0.100-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/sdk/nanoserver-1809/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/core-nightly/sdk at https://mcr.microsoft.com/v2/dotnet/core-nightly/sdk/tags/list.
 

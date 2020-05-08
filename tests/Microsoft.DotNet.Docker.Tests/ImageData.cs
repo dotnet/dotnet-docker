@@ -88,15 +88,11 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static string GetImageName(string tag, string variantName)
-        {
-            string repoSuffix = Config.IsNightlyRepo ? "-nightly" : string.Empty;
-            return GetImageName(tag, variantName, repoSuffix);
-        }
+        public static string GetRepoNameModifier() => $"/core{(Config.IsNightlyRepo ? "-nightly" : string.Empty)}";
 
-        protected static string GetImageName(string tag, string variantName, string repoSuffix)
+        public static string GetImageName(string tag, string variantName, string repoNameModifier = null)
         {
-            string repo = $"dotnet/core{repoSuffix}/{variantName}";
+            string repo = $"dotnet{repoNameModifier ?? GetRepoNameModifier()}/{variantName}";
             string registry = GetRegistryName(repo, tag);
 
             return $"{registry}{repo}:{tag}";

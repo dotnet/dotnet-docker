@@ -11,12 +11,12 @@ See [dotnet/dotnet-docker](https://hub.docker.com/r/microsoft/dotnet/) for image
 
 # Featured Tags
 
-* `5.0` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:5.0`
+* `3.1` (LTS/Current)
+  * `docker pull mcr.microsoft.com/dotnet/core-nightly/aspnet:3.1`
 
 # About This Image
 
-This image contains the ASP.NET Core and .NET Core runtimes and libraries and is optimized for running ASP.NET Core apps in production.
+This image contains the ASP.NET Core and .NET Core runtimes and libraries and is optimized for running ASP.NET Core apps in production. This repository is limited to .NET Core 2.1 and 3.1. For .NET 5.0 and higher, see the [readme](README.aspnet.preview.md) for those versions.
 
 Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
 
@@ -44,10 +44,20 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 * [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
 * [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
+
+.NET Core (Preview):
+
 * [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
 * [dotnet/core-nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-core-nightly-sdk/): .NET Core SDK (Preview)
 * [dotnet/core-nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime/): .NET Core Runtime (Preview)
 * [dotnet/core-nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime-deps/): .NET Core Runtime Dependencies (Preview)
+
+.NET (Preview):
+
+* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
+* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
+* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 
 .NET Framework:
 
@@ -68,13 +78,6 @@ Tags | Dockerfile | OS Version
 2.1.17-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/focal/amd64/Dockerfile) | Ubuntu 20.04
 2.1.17-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
-##### .NET Core 5.0 Preview Tags
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-5.0.0-preview.4-buster-slim, 5.0-buster-slim, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/buster-slim/amd64/Dockerfile) | Debian 10
-5.0.0-preview.4-alpine3.11, 5.0-alpine3.11, 5.0.0-preview.4-alpine, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/alpine3.11/amd64/Dockerfile) | Alpine 3.11
-5.0.0-preview.4-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/focal/amd64/Dockerfile) | Ubuntu 20.04
-
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
@@ -82,13 +85,6 @@ Tags | Dockerfile | OS Version
 3.1.3-alpine3.11-arm64v8, 3.1-alpine3.11-arm64v8, 3.1.3-alpine-arm64v8, 3.1-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
 3.1.3-focal-arm64v8, 3.1-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 3.1.3-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
-
-##### .NET Core 5.0 Preview Tags
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-5.0.0-preview.4-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/buster-slim/arm64v8/Dockerfile) | Debian 10
-5.0.0-preview.4-alpine3.11-arm64v8, 5.0-alpine3.11-arm64v8, 5.0.0-preview.4-alpine-arm64v8, 5.0-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
-5.0.0-preview.4-focal-arm64v8, 5.0-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -98,21 +94,11 @@ Tags | Dockerfile | OS Version
 2.1.17-stretch-slim-arm32v7, 2.1-stretch-slim-arm32v7, 2.1.17, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/stretch-slim/arm32v7/Dockerfile) | Debian 9
 2.1.17-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
-##### .NET Core 5.0 Preview Tags
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-5.0.0-preview.4-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/buster-slim/arm32v7/Dockerfile) | Debian 10
-
 ## Windows Server, version 1909 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 3.1.3-nanoserver-1909, 3.1-nanoserver-1909, 3.1.3, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/nanoserver-1909/amd64/Dockerfile)
 2.1.17-nanoserver-1909, 2.1-nanoserver-1909, 2.1.17, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/nanoserver-1909/amd64/Dockerfile)
-
-##### .NET Core 5.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-5.0.0-preview.4-nanoserver-1909, 5.0-nanoserver-1909, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/nanoserver-1909/amd64/Dockerfile)
 
 ## Windows Server, version 1903 amd64 Tags
 Tag | Dockerfile
@@ -120,21 +106,11 @@ Tag | Dockerfile
 3.1.3-nanoserver-1903, 3.1-nanoserver-1903, 3.1.3, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/nanoserver-1903/amd64/Dockerfile)
 2.1.17-nanoserver-1903, 2.1-nanoserver-1903, 2.1.17, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/nanoserver-1903/amd64/Dockerfile)
 
-##### .NET Core 5.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-5.0.0-preview.4-nanoserver-1903, 5.0-nanoserver-1903, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/nanoserver-1903/amd64/Dockerfile)
-
 ## Windows Server 2019 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 3.1.3-nanoserver-1809, 3.1-nanoserver-1809, 3.1.3, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/3.1/aspnet/nanoserver-1809/amd64/Dockerfile)
 2.1.17-nanoserver-1809, 2.1-nanoserver-1809, 2.1.17, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/2.1/aspnet/nanoserver-1809/amd64/Dockerfile)
-
-##### .NET Core 5.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-5.0.0-preview.4-nanoserver-1809, 5.0-nanoserver-1809, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/nanoserver-1809/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/core-nightly/aspnet at https://mcr.microsoft.com/v2/dotnet/core-nightly/aspnet/tags/list.
 
