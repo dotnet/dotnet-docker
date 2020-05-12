@@ -11,7 +11,7 @@ RUN `
     # Retrieve .NET Core SDK
     $dotnet_sdk_version = '3.1.202'; `
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-win-x64.zip; `
-    $dotnet_sha512 = 'fc53a6e97b39f91b2849e7b3b60d8f360175e629377cfcaeb96b09232a1d40d5439d4254baa8f069b7fa1129aaccb4c8b930b9e70d51002416c9ce65ef31b0b6'; `
+    $dotnet_sha512 = '4583691e7f30946ba5d70b913dc3cd1001b34945317412bfaee59a08688bab5a00dc30c892703fd4fefa5c9d6aab6cf67362468589a588dd6eabddd5e934ab93'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
