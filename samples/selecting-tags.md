@@ -89,7 +89,6 @@ The following tags demonstrate the pattern used to describe each processor, usin
 * `3.1-bionic-arm32v7`
 * `3.1-buster-arm32v7`
 * `3.1-buster-slim-arm32v7`
-* `3.1-nanoserver-1809-arm32v7`
 
 ## Matching SDK and Runtime images
 
@@ -112,4 +111,4 @@ There are multiple patterns used in the samples:
 
 * Multi-platform tags for both SDK and runtime (can be built and run in any single environment) -- see [dotnetapp/Dockerfile](dotnetapp/Dockerfile) and [aspnetapp/Dockerfile](dotnetapp/Dockerfile)
 * Multi-platform tag for the SDK and architecture-specific Linux runtime tag (can be built on any environment that supports Linux containers and run in any processor-specific environment that supports Linux containers) -- see [dotnetapp/Dockerfile.alpine-x64](dotnetapp/Dockerfile) and [aspnetapp/Dockerfile.alpine-arm64](aspnetapp/Dockerfile.alpine-arm64)
-* Multi-platform tag for the SDK and a Windows-version-specific runtime tag (can be built on any environment that supports Windows containers and run in any processor-specific environment that supports the specific Windows versions) -- see [dotnetapp/Dockerfile.nanoserver-x64](dotnetapp/Dockerfile.nanoserver-x64) and [aspnetapp/Dockerfile.nanoserver-arm32](aspnetapp/Dockerfile.nanoserver-arm32)
+* Multi-platform tag for the SDK and a Windows-version-specific runtime tag (can be built on any environment that supports Windows containers and run in any processor-specific environment that supports the specific Windows versions) -- see [dotnetapp/Dockerfile.nanoserver-x64](dotnetapp/Dockerfile.nanoserver-x64)

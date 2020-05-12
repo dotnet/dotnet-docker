@@ -2,10 +2,10 @@
   "readmePath": "README.md",
   "registry": "mcr.microsoft.com",
   "variables": {
-    "2.1-RuntimeVersion": "2.1.17",
-    "2.1-SdkVersion": "2.1.805",
-    "3.1-RuntimeVersion": "3.1.3",
-    "3.1-SdkVersion": "3.1.201",
+    "2.1-RuntimeVersion": "2.1.18",
+    "2.1-SdkVersion": "2.1.806",
+    "3.1-RuntimeVersion": "3.1.4",
+    "3.1-SdkVersion": "3.1.202",
     "5.0-RuntimeVersion": "5.0.0-preview.3",
     "5.0-SdkVersion": "5.0.100-preview.3"
   },
@@ -93,6 +93,24 @@
                   "documentationGroup": "2.1"
                 },
                 "2.1-alpine": {
+                  "documentationGroup": "2.1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(2.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "dockerfile": "2.1/runtime-deps/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(2.1-RuntimeVersion)-focal": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-focal": {
                   "documentationGroup": "2.1"
                 }
               }
@@ -337,6 +355,36 @@
                 "3.1-bionic-arm64v8": {
                   "documentationGroup": "3.1"
                 }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "dockerfile": "3.1/runtime-deps/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal": {},
+                "3.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.1/runtime-deps/focal/arm64v8",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal-arm64v8": {},
+                "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -589,6 +637,23 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/runtime/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(2.1-RuntimeVersion)-focal": {},
+                "2.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
           "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {},
@@ -643,16 +708,6 @@
               "tags": {
                 "$(3.1-RuntimeVersion)-nanoserver-1809": {},
                 "3.1-nanoserver-1809": {}
-              }
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "3.1/runtime/nanoserver-1809/arm32v7",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-1809-arm32v7": {},
-                "3.1-nanoserver-1809-arm32v7": {}
               }
             },
             {
@@ -817,6 +872,42 @@
               "tags": {
                 "$(3.1-RuntimeVersion)-bionic-arm64v8": {},
                 "3.1-bionic-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal": {},
+                "3.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/focal/arm64v8",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal-arm64v8": {},
+                "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1125,6 +1216,23 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/aspnet/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(2.1-RuntimeVersion)-focal": {},
+                "2.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
           "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {},
@@ -1182,19 +1290,6 @@
               "tags": {
                 "$(3.1-RuntimeVersion)-nanoserver-1809": {},
                 "3.1-nanoserver-1809": {}
-              }
-            },
-            {
-              "architecture": "arm",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "3.1/aspnet/nanoserver-1809/arm32v7",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-1809-arm32v7": {},
-                "3.1-nanoserver-1809-arm32v7": {}
               }
             },
             {
@@ -1365,6 +1460,42 @@
               "tags": {
                 "$(3.1-RuntimeVersion)-bionic-arm64v8": {},
                 "3.1-bionic-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal": {},
+                "3.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/focal/arm64v8",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal-arm64v8": {},
+                "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1670,6 +1801,20 @@
           ]
         },
         {
+          "productVersion": "$(2.1-SdkVersion)",
+          "platforms": [
+            {
+              "dockerfile": "2.1/sdk/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(2.1-SdkVersion)-focal": {},
+                "2.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
           "productVersion": "$(3.1-SdkVersion)",
           "sharedTags": {
             "$(3.1-SdkVersion)": {},
@@ -1709,6 +1854,9 @@
               "variant": "v8"
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "3.1/sdk/nanoserver-1809/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1809",
@@ -1718,16 +1866,9 @@
               }
             },
             {
-              "architecture": "arm",
-              "dockerfile": "3.1/sdk/nanoserver-1809/arm32v7",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(3.1-SdkVersion)-nanoserver-1809-arm32v7": {},
-                "3.1-nanoserver-1809-arm32v7": {}
-              }
-            },
-            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "3.1/sdk/nanoserver-1903/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1903",
@@ -1737,6 +1878,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "3.1/sdk/nanoserver-1909/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1909",
@@ -1752,7 +1896,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "3.1/sdk/alpine3.10/amd64",
               "os": "linux",
@@ -1769,7 +1913,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "3.1/sdk/alpine3.11/amd64",
               "os": "linux",
@@ -1824,6 +1968,36 @@
               "tags": {
                 "$(3.1-SdkVersion)-bionic-arm64v8": {},
                 "3.1-bionic-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-SdkVersion)",
+          "platforms": [
+            {
+              "dockerfile": "3.1/sdk/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-SdkVersion)-focal": {},
+                "3.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-SdkVersion)",
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.1/sdk/focal/arm64v8",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-SdkVersion)-focal-arm64v8": {},
+                "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
             }
