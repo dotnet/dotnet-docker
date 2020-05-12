@@ -103,6 +103,24 @@
           "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
+              "dockerfile": "2.1/runtime-deps/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(2.1-RuntimeVersion)-focal": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-focal": {
+                  "documentationGroup": "2.1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(2.1-RuntimeVersion)",
+          "platforms": [
+            {
               "dockerfile": "2.1/runtime-deps/bionic/amd64",
               "os": "linux",
               "osVersion": "bionic",
@@ -337,6 +355,36 @@
                 "3.1-bionic-arm64v8": {
                   "documentationGroup": "3.1"
                 }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "dockerfile": "3.1/runtime-deps/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal": {},
+                "3.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.1/runtime-deps/focal/arm64v8",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal-arm64v8": {},
+                "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -589,6 +637,23 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/runtime/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(2.1-RuntimeVersion)-focal": {},
+                "2.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
           "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {},
@@ -817,6 +882,42 @@
               "tags": {
                 "$(3.1-RuntimeVersion)-bionic-arm64v8": {},
                 "3.1-bionic-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal": {},
+                "3.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "3.1/runtime/focal/arm64v8",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal-arm64v8": {},
+                "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1125,6 +1226,23 @@
           ]
         },
         {
+          "productVersion": "$(2.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "2.1/aspnet/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(2.1-RuntimeVersion)-focal": {},
+                "2.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
           "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
             "$(3.1-RuntimeVersion)": {},
@@ -1365,6 +1483,42 @@
               "tags": {
                 "$(3.1-RuntimeVersion)-bionic-arm64v8": {},
                 "3.1-bionic-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal": {},
+                "3.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "3.1/aspnet/focal/arm64v8",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-RuntimeVersion)-focal-arm64v8": {},
+                "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1670,6 +1824,20 @@
           ]
         },
         {
+          "productVersion": "$(2.1-SdkVersion)",
+          "platforms": [
+            {
+              "dockerfile": "2.1/sdk/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(2.1-SdkVersion)-focal": {},
+                "2.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
           "productVersion": "$(3.1-SdkVersion)",
           "sharedTags": {
             "$(3.1-SdkVersion)": {},
@@ -1824,6 +1992,36 @@
               "tags": {
                 "$(3.1-SdkVersion)-bionic-arm64v8": {},
                 "3.1-bionic-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-SdkVersion)",
+          "platforms": [
+            {
+              "dockerfile": "3.1/sdk/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-SdkVersion)-focal": {},
+                "3.1-focal": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(3.1-SdkVersion)",
+          "platforms": [
+            {
+              "architecture": "arm64",
+              "dockerfile": "3.1/sdk/focal/arm64v8",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(3.1-SdkVersion)-focal-arm64v8": {},
+                "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
             }
