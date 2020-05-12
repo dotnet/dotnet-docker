@@ -3,6 +3,7 @@ FROM arm32v7/ubuntu:focal
 # .NET Core dependencies
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        ca-certificates \
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
