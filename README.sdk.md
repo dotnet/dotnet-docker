@@ -18,7 +18,7 @@ This image contains the .NET Core SDK which is comprised of three parts:
 1. .NET Core
 1. ASP.NET Core
 
-Use this image for your development process (developing, building and testing applications).
+Use this image for your development process (developing, building and testing applications). This repository is limited to .NET Core 2.1 and 3.1. For .NET 5.0 and higher, see [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/) for those versions.
 
 # How to Use the Image
 
@@ -36,7 +36,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 # Related Repos
 
-.NET Core:
+.NET Core 2.1/3.1:
 
 * [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
 * [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/): ASP.NET Core Runtime
@@ -44,6 +44,11 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 * [dotnet/core/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps/): .NET Core Runtime Dependencies
 * [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
 * [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
+
+.NET 5.0+:
+
+* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
+* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
 
 .NET Framework:
 
@@ -66,25 +71,12 @@ Tags | Dockerfile | OS Version
 2.1.806-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/focal/amd64/Dockerfile) | Ubuntu 20.04
 2.1.806-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
-##### .NET Core 5.0 Preview Tags
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-5.0.100-preview.3-buster-slim, 5.0-buster-slim, 5.0.100-preview.3, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/sdk/buster-slim/amd64/Dockerfile) | Debian 10
-5.0.100-preview.3-alpine3.11, 5.0-alpine3.11, 5.0.100-preview.3-alpine, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/sdk/alpine3.11/amd64/Dockerfile) | Alpine 3.11
-5.0.100-preview.3-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/sdk/focal/amd64/Dockerfile) | Ubuntu 20.04
-
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.1.202-buster-arm64v8, 3.1-buster-arm64v8, 3.1.202, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/buster/arm64v8/Dockerfile) | Debian 10
 3.1.202-focal-arm64v8, 3.1-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 3.1.202-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
-
-##### .NET Core 5.0 Preview Tags
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-5.0.100-preview.3-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.100-preview.3, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/sdk/buster-slim/arm64v8/Dockerfile) | Debian 10
-5.0.100-preview.3-focal-arm64v8, 5.0-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/sdk/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -94,21 +86,11 @@ Tags | Dockerfile | OS Version
 2.1.806-stretch-arm32v7, 2.1-stretch-arm32v7, 2.1.806, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/arm32v7/Dockerfile) | Debian 9
 2.1.806-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
-##### .NET Core 5.0 Preview Tags
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-5.0.100-preview.3-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.100-preview.3, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/sdk/buster-slim/arm32v7/Dockerfile) | Debian 10
-
 ## Windows Server, version 1909 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 3.1.202-nanoserver-1909, 3.1-nanoserver-1909, 3.1.202, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/nanoserver-1909/amd64/Dockerfile)
 2.1.806-nanoserver-1909, 2.1-nanoserver-1909, 2.1.806, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1909/amd64/Dockerfile)
-
-##### .NET Core 5.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-5.0.100-preview.3-nanoserver-1909, 5.0-nanoserver-1909, 5.0.100-preview.3, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/sdk/nanoserver-1909/amd64/Dockerfile)
 
 ## Windows Server, version 1903 amd64 Tags
 Tag | Dockerfile
@@ -116,21 +98,11 @@ Tag | Dockerfile
 3.1.202-nanoserver-1903, 3.1-nanoserver-1903, 3.1.202, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/nanoserver-1903/amd64/Dockerfile)
 2.1.806-nanoserver-1903, 2.1-nanoserver-1903, 2.1.806, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1903/amd64/Dockerfile)
 
-##### .NET Core 5.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-5.0.100-preview.3-nanoserver-1903, 5.0-nanoserver-1903, 5.0.100-preview.3, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/sdk/nanoserver-1903/amd64/Dockerfile)
-
 ## Windows Server 2019 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 3.1.202-nanoserver-1809, 3.1-nanoserver-1809, 3.1.202, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/nanoserver-1809/amd64/Dockerfile)
 2.1.806-nanoserver-1809, 2.1-nanoserver-1809, 2.1.806, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-1809/amd64/Dockerfile)
-
-##### .NET Core 5.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-5.0.100-preview.3-nanoserver-1809, 5.0-nanoserver-1809, 5.0.100-preview.3, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/sdk/nanoserver-1809/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/core/sdk at https://mcr.microsoft.com/v2/dotnet/core/sdk/tags/list.
 
