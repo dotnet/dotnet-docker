@@ -594,7 +594,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/runtime/alpine3.11/amd64",
               "os": "linux",
@@ -649,7 +649,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/runtime/focal/amd64",
               "os": "linux",
@@ -761,7 +761,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/alpine3.10/arm64v8",
               "os": "linux",
@@ -775,7 +775,7 @@
                 {
                   "name": "pr-build",
                   "dependencies": [
-                    "$(Repo:sdk):3.1-buster-arm64v8"
+                    "$(Repo:core-sdk):3.1-buster-arm64v8"
                   ]
                 }
               ]
@@ -787,7 +787,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/alpine3.11/amd64",
               "os": "linux",
@@ -890,7 +890,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/focal/amd64",
               "os": "linux",
@@ -908,7 +908,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/focal/arm64v8",
               "os": "linux",
@@ -1181,7 +1181,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/aspnet/alpine3.11/amd64",
               "os": "linux",
@@ -1236,7 +1236,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/aspnet/focal/amd64",
               "os": "linux",
@@ -1357,7 +1357,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/alpine3.10/arm64v8",
               "os": "linux",
@@ -1371,7 +1371,7 @@
                 {
                   "name": "pr-build",
                   "dependencies": [
-                    "$(Repo:sdk):3.1-buster-arm64v8"
+                    "$(Repo:core-sdk):3.1-buster-arm64v8"
                   ]
                 }
               ]
@@ -1383,7 +1383,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/alpine3.11/amd64",
               "os": "linux",
@@ -1486,7 +1486,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/focal/amd64",
               "os": "linux",
@@ -1504,7 +1504,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/focal/arm64v8",
               "os": "linux",
@@ -1780,7 +1780,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/sdk/alpine3.11/amd64",
               "os": "linux",
@@ -1879,7 +1879,7 @@
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
+                "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "3.1/sdk/nanoserver-1809/amd64",
               "os": "windows",
@@ -1891,7 +1891,7 @@
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
+                "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "3.1/sdk/nanoserver-1903/amd64",
               "os": "windows",
@@ -1903,7 +1903,7 @@
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
+                "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "3.1/sdk/nanoserver-1909/amd64",
               "os": "windows",
@@ -1920,7 +1920,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
+                "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "3.1/sdk/alpine3.10/amd64",
               "os": "linux",
@@ -1937,7 +1937,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
+                "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "3.1/sdk/alpine3.11/amd64",
               "os": "linux",
