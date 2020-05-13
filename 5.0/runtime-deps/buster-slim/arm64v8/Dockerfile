@@ -1,8 +1,10 @@
 FROM arm64v8/debian:buster-slim
 
-# .NET Core dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        \
+# .NET Core dependencies
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
