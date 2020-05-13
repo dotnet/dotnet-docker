@@ -7,12 +7,10 @@ parameters:
   linuxAmdBuildJobTimeout: 60
   linuxArmBuildJobTimeout: 60
   windowsAmdBuildJobTimeout: 60
-  windowsArmBuildJobTimeout: 60
 
   linuxAmdTestJobTimeout: 60
   linuxArmTestJobTimeout: 60
   windowsAmdTestJobTimeout: 60
-  windowsArmTestJobTimeout: 60
 
   linuxAmdBuildPool: "Hosted Ubuntu 1604"
   linuxAmdBuildQueue: ""
@@ -87,23 +85,6 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows1809Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
-      customInitSteps: ${{ parameters.customBuildInitSteps }}
-  - template: ../jobs/build-images.yml
-    parameters:
-      name: Windows1809_arm32
-      pool: # Windows1809Arm32Pool
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
-        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: DotNetCore-Docker
-        demands:
-        - agent.os -equals linux
-        - RemoteDockerServerOS -equals nanoserver-1809
-        - RemoteDockerServerArch -equals arm32
-      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows1809Arm32']
-      dockerClientOS: linux
-      useRemoteDockerServer: true
-      buildJobTimeout: ${{ parameters.windowsArmBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
   - template: ../jobs/build-images.yml
     parameters:
@@ -226,18 +207,6 @@ stages:
           demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows1809Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
-    - template: ../jobs/test-images-linux-client.yml
-      parameters:
-        name: Windows1809_arm32
-        pool: # Windows1809Arm32Pool
-          name: DotNetCore-Docker
-          demands:
-          - agent.os -equals linux
-          - RemoteDockerServerOS -equals nanoserver-1809
-          - RemoteDockerServerArch -equals arm32
-        matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows1809Arm32']
-        testJobTimeout: ${{ parameters.windowsArmTestJobTimeout }}
-        useRemoteDockerServer: true
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows1903_amd64
