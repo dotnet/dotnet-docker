@@ -5,8 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -35,6 +39,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string appDir = CreateTestAppWithSdkImage(_isWeb ? "web" : "console");
             List<string> tags = new List<string>();
+            InjectCustomTestCode(appDir);
 
             try
             {
@@ -66,6 +71,28 @@ namespace Microsoft.DotNet.Docker.Tests
                 tags.ForEach(tag => _dockerHelper.DeleteImage(tag));
                 Directory.Delete(appDir, true);
             }
+        }
+
+        private static void InjectCustomTestCode(string appDir)
+        {
+            string programFilePath = Path.Combine(appDir, "Program.cs");
+
+            SyntaxTree programTree = CSharpSyntaxTree.ParseText(File.ReadAllText(programFilePath));
+            MethodDeclarationSyntax mainMethod = programTree.GetRoot().DescendantNodes()
+                .OfType<MethodDeclarationSyntax>()
+                .FirstOrDefault(method => method.Identifier.ValueText == "Main");
+
+            StatementSyntax testHttpsConnectivityStatement = SyntaxFactory.ParseStatement(
+                "var task = new System.Net.Http.HttpClient().GetAsync(\"https://www.microsoft.com\");" +
+                "task.Wait();" +
+                "task.Result.EnsureSuccessStatusCode();");
+
+            MethodDeclarationSyntax newMainMethod = mainMethod.InsertNodesBefore(
+                mainMethod.Body.ChildNodes().First(),
+                new SyntaxNode[] { testHttpsConnectivityStatement });
+
+            SyntaxNode newRoot = programTree.GetRoot().ReplaceNode(mainMethod, newMainMethod);
+            File.WriteAllText(programFilePath, newRoot.ToFullString());
         }
 
         private string BuildTestAppImage(string stageTarget, string contextDir, params string[] customBuildArgs)
