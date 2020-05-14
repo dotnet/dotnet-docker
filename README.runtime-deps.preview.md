@@ -9,7 +9,7 @@ The images from the dotnet/nightly repositories include last-known-good (LKG) bu
 
 See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images with official releases of [.NET](https://github.com/dotnet/core).
 
-As part of the transition to .NET 5.0, Docker repos for .NET 5.0 and higher do not include `core` in the name as was done with older versions. As an example, ASP.NET Core 5.0 can be found at `mcr.microsoft.com/dotnet/nightly/runtime-deps:5.0` while 3.1 is still at `mcr.microsoft.com/dotnet/core-nightly/runtime-deps:3.1`. See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
+As part of the transition to .NET 5.0, Docker repos for .NET 5.0 and higher do not include `core` in the name as was done with older versions. As an example, .NET 5.0 Runtime Dependencies can be found at `mcr.microsoft.com/dotnet/nightly/runtime-deps:5.0` while 3.1 is still at `mcr.microsoft.com/dotnet/core-nightly/runtime-deps:3.1`. See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
 
 # Featured Tags
 
