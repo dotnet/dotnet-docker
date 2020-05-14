@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
@@ -16,21 +17,79 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string SdkOS
         {
-            get => _sdkOS ?? OS.TrimEnd(Tests.OS.SlimSuffix);
+            get
+            {
+                if (_sdkOS != null)
+                {
+                    return _sdkOS;
+                }
+
+                if (Version.Major >= 5)
+                {
+                    return OS;
+                }
+
+                return OS.TrimEnd(Tests.OS.SlimSuffix);
+            }
             set { _sdkOS = value; }
         }
 
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
 
+        public string GetProductImageName(string tag, string variantName)
+        {
+            string repoNameModifier = null;
+            if (Version.Major >= 5)
+            {
+                repoNameModifier = Config.IsNightlyRepo ? "/nightly" : string.Empty;
+            }
+
+            return GetImageName(tag, variantName, repoNameModifier);
+        }
+
         public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
         {
             string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
             string tag = GetTagName(imageType);
-            string imageName = GetImageName(tag, variantName);
+            string imageName = GetProductImageName(tag, variantName);
 
             PullImageIfNecessary(imageName, dockerHelper);
 
             return imageName;
+        }
+
+        public string GetProductVersion(DotNetImageType imageType, DockerHelper dockerHelper)
+        {
+            string version;
+            string imageName = GetImage(imageType, dockerHelper);
+            string containerName = GetIdentifier($"GetProductVersion-{imageType}");
+
+            switch (imageType)
+            {
+                case DotNetImageType.SDK:
+                    version = dockerHelper.Run(imageName, containerName, "dotnet --version");
+                    break;
+                case DotNetImageType.Runtime:
+                    version = GetRuntimeVersion(imageName, containerName, "Microsoft.NETCore.App", dockerHelper);
+                    break;
+                case DotNetImageType.Aspnet:
+                    version = GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper);
+                    break;
+                default:
+                    throw new NotSupportedException($"Unsupported image type '{imageType}'");
+            }
+
+            return version;
+        }
+
+        private string GetRuntimeVersion(string imageName, string containerName, string runtimeName, DockerHelper dockerHelper)
+        {
+            const string versionGroupName = "Version";
+
+            string runtimeListing = dockerHelper.Run(imageName, containerName, "dotnet --list-runtimes");
+            Regex versionRegex = new Regex($"{runtimeName} (?<{versionGroupName}>[^\\s]+) ");
+            Match match = versionRegex.Match(runtimeListing);
+            return match.Success ? match.Groups[versionGroupName].Value : string.Empty;
         }
 
         private string GetTagName(DotNetImageType imageType)

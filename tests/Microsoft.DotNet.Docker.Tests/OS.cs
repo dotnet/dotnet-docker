@@ -7,7 +7,7 @@ namespace Microsoft.DotNet.Docker.Tests
     public class OS
     {
         // Alpine
-        public const string Alpine310 = "alpine3.10";
+        public const string Alpine = "alpine";
         public const string Alpine311 = "alpine3.11";
 
         // Debian

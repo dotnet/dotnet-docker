@@ -50,15 +50,6 @@
               }
             },
             {
-              "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver-arm32",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "dotnetapp-nanoserver-1809-arm32v7": {}
-              }
-            },
-            {
               "dockerfile": "samples/dotnetapp",
               "os": "windows",
               "osVersion": "nanoserver-1903",
@@ -72,6 +63,14 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "dotnetapp-nanoserver-1909": {}
+              }
+            },
+            {
+              "dockerfile": "samples/dotnetapp",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "dotnetapp-nanoserver-2004": {}
               }
             }
           ]
@@ -118,15 +117,6 @@
               }
             },
             {
-              "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver-arm32",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "aspnetapp-nanoserver-1809-arm32v7": {}
-              }
-            },
-            {
               "dockerfile": "samples/aspnetapp",
               "os": "windows",
               "osVersion": "nanoserver-1903",
@@ -140,6 +130,14 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "aspnetapp-nanoserver-1909": {}
+              }
+            },
+            {
+              "dockerfile": "samples/aspnetapp",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "aspnetapp-nanoserver-2004": {}
               }
             }
           ]

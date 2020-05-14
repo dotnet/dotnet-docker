@@ -36,7 +36,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static string GetImageName(string tag)
         {
-            return GetImageName(tag, "samples", repoSuffix: String.Empty);
+            return GetImageName(tag, "samples", "/core");
         }
     }
 }

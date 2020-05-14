@@ -2,19 +2,19 @@
   "readmePath": "README.md",
   "registry": "mcr.microsoft.com",
   "variables": {
-    "2.1-RuntimeVersion": "2.1.17",
-    "2.1-SdkVersion": "2.1.805",
-    "3.1-RuntimeVersion": "3.1.3",
-    "3.1-SdkVersion": "3.1.201",
-    "5.0-RuntimeVersion": "5.0.0-preview.3",
-    "5.0-SdkVersion": "5.0.100-preview.3"
+    "2.1-RuntimeVersion": "2.1.18",
+    "2.1-SdkVersion": "2.1.806",
+    "3.1-RuntimeVersion": "3.1.4",
+    "3.1-SdkVersion": "3.1.202",
+    "5.0-RuntimeVersion": "5.0.0-preview.4",
+    "5.0-SdkVersion": "5.0.100-preview.4"
   },
   "repos": [
     {
-      "id": "runtime-deps",
+      "id": "core-runtime-deps",
       "name": "dotnet/core-nightly/runtime-deps",
       "readmePath": "README.runtime-deps.md",
-      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-deps-tags.yml",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/core-runtime-deps-tags.yml",
       "images": [
         {
           "productVersion": "$(2.1-RuntimeVersion)",
@@ -54,24 +54,6 @@
                 }
               },
               "variant": "v7"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(2.1-RuntimeVersion)",
-          "platforms": [
-            {
-              "dockerfile": "2.1/runtime-deps/alpine3.10/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.10": {
-                  "documentationGroup": "2.1"
-                },
-                "2.1-alpine3.10": {
-                  "documentationGroup": "2.1"
-                }
-              }
             }
           ]
         },
@@ -204,44 +186,6 @@
                   "documentationGroup": "3.1"
                 },
                 "3.1-buster-slim-arm64v8": {
-                  "documentationGroup": "3.1"
-                }
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(3.1-RuntimeVersion)",
-          "platforms": [
-            {
-              "dockerfile": "3.1/runtime-deps/alpine3.10/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.10": {
-                  "documentationGroup": "3.1"
-                },
-                "3.1-alpine3.10": {
-                  "documentationGroup": "3.1"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(3.1-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "dockerfile": "3.1/runtime-deps/alpine3.10/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.10-arm64v8": {
-                  "documentationGroup": "3.1"
-                },
-                "3.1-alpine3.10-arm64v8": {
                   "documentationGroup": "3.1"
                 }
               },
@@ -386,7 +330,15 @@
               "variant": "v8"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "runtime-deps",
+      "name": "dotnet/nightly/runtime-deps",
+      "readmePath": "README.runtime-deps.preview.md",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-deps-tags.yml",
+      "images": [
         {
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
@@ -495,10 +447,10 @@
       ]
     },
     {
-      "id": "runtime",
+      "id": "core-runtime",
       "name": "dotnet/core-nightly/runtime",
       "readmePath": "README.runtime.md",
-      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-tags.yml",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/core-runtime-tags.yml",
       "images": [
         {
           "productVersion": "$(2.1-RuntimeVersion)",
@@ -509,7 +461,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/runtime/stretch-slim/amd64",
               "os": "linux",
@@ -522,7 +474,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/runtime/stretch-slim/arm32v7",
               "os": "linux",
@@ -576,24 +528,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "2.1/runtime/alpine3.10/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.10": {},
-                "2.1-alpine3.10": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(2.1-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/runtime/alpine3.11/amd64",
               "os": "linux",
@@ -612,7 +547,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/runtime/bionic/amd64",
               "os": "linux",
@@ -630,7 +565,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/runtime/bionic/arm32v7",
               "os": "linux",
@@ -648,7 +583,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/runtime/focal/amd64",
               "os": "linux",
@@ -669,7 +604,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/buster-slim/amd64",
               "os": "linux",
@@ -682,7 +617,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/buster-slim/arm32v7",
               "os": "linux",
@@ -696,7 +631,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/buster-slim/arm64v8",
               "os": "linux",
@@ -714,16 +649,6 @@
               "tags": {
                 "$(3.1-RuntimeVersion)-nanoserver-1809": {},
                 "3.1-nanoserver-1809": {}
-              }
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "3.1/runtime/nanoserver-1809/arm32v7",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-1809-arm32v7": {},
-                "3.1-nanoserver-1809-arm32v7": {}
               }
             },
             {
@@ -760,51 +685,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "3.1/runtime/alpine3.10/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.10": {},
-                "3.1-alpine3.10": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(3.1-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "3.1/runtime/alpine3.10/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.10-arm64v8": {},
-                "3.1-alpine3.10-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGrouping": [
-                {
-                  "name": "pr-build",
-                  "dependencies": [
-                    "$(Repo:sdk):3.1-buster-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(3.1-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/alpine3.11/amd64",
               "os": "linux",
@@ -824,7 +705,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/alpine3.11/arm64v8",
               "os": "linux",
@@ -840,7 +721,7 @@
                 {
                   "name": "pr-build",
                   "dependencies": [
-                    "$(Repo:sdk):3.1-buster-arm64v8"
+                    "$(Repo:core-sdk):3.1-buster-arm64v8"
                   ]
                 }
               ]
@@ -852,7 +733,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/bionic/amd64",
               "os": "linux",
@@ -870,7 +751,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/bionic/arm32v7",
               "os": "linux",
@@ -889,7 +770,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/bionic/arm64v8",
               "os": "linux",
@@ -907,7 +788,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/focal/amd64",
               "os": "linux",
@@ -925,7 +806,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "3.1/runtime/focal/arm64v8",
               "os": "linux",
@@ -937,7 +818,15 @@
               "variant": "v8"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "runtime",
+      "name": "dotnet/nightly/runtime",
+      "readmePath": "README.runtime.preview.md",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-tags.yml",
+      "images": [
         {
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
@@ -1065,7 +954,7 @@
                 {
                   "name": "pr-build",
                   "dependencies": [
-                    "$(Repo:sdk):5.0-buster-arm64v8"
+                    "$(Repo:sdk):5.0-buster-slim-arm64v8"
                   ]
                 }
               ]
@@ -1111,10 +1000,10 @@
       ]
     },
     {
-      "id": "aspnet",
+      "id": "core-aspnet",
       "name": "dotnet/core-nightly/aspnet",
       "readmePath": "README.aspnet.md",
-      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/aspnet-tags.yml",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/core-aspnet-tags.yml",
       "images": [
         {
           "productVersion": "$(2.1-RuntimeVersion)",
@@ -1125,7 +1014,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/aspnet/stretch-slim/amd64",
               "os": "linux",
@@ -1138,7 +1027,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/aspnet/stretch-slim/arm32v7",
               "os": "linux",
@@ -1192,24 +1081,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "2.1/aspnet/alpine3.10/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.10": {},
-                "2.1-alpine3.10": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(2.1-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/aspnet/alpine3.11/amd64",
               "os": "linux",
@@ -1228,7 +1100,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/aspnet/bionic/amd64",
               "os": "linux",
@@ -1246,7 +1118,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/aspnet/bionic/arm32v7",
               "os": "linux",
@@ -1264,7 +1136,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/aspnet/focal/amd64",
               "os": "linux",
@@ -1285,7 +1157,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/buster-slim/amd64",
               "os": "linux",
@@ -1298,7 +1170,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/buster-slim/arm32v7",
               "os": "linux",
@@ -1312,7 +1184,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/buster-slim/arm64v8",
               "os": "linux",
@@ -1325,7 +1197,7 @@
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/nanoserver-1809/amd64",
               "os": "windows",
@@ -1336,21 +1208,8 @@
               }
             },
             {
-              "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "3.1/aspnet/nanoserver-1809/arm32v7",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-1809-arm32v7": {},
-                "3.1-nanoserver-1809-arm32v7": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/nanoserver-1903/amd64",
               "os": "windows",
@@ -1362,7 +1221,7 @@
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/nanoserver-1909/amd64",
               "os": "windows",
@@ -1391,51 +1250,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "3.1/aspnet/alpine3.10/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.10": {},
-                "3.1-alpine3.10": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(3.1-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "3.1/aspnet/alpine3.10/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.10-arm64v8": {},
-                "3.1-alpine3.10-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGrouping": [
-                {
-                  "name": "pr-build",
-                  "dependencies": [
-                    "$(Repo:sdk):3.1-buster-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(3.1-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/alpine3.11/amd64",
               "os": "linux",
@@ -1455,7 +1270,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/alpine3.11/arm64v8",
               "os": "linux",
@@ -1471,7 +1286,7 @@
                 {
                   "name": "pr-build",
                   "dependencies": [
-                    "$(Repo:sdk):3.1-buster-arm64v8"
+                    "$(Repo:core-sdk):3.1-buster-arm64v8"
                   ]
                 }
               ]
@@ -1483,7 +1298,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/bionic/amd64",
               "os": "linux",
@@ -1501,7 +1316,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/bionic/arm32v7",
               "os": "linux",
@@ -1520,7 +1335,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/bionic/arm64v8",
               "os": "linux",
@@ -1538,7 +1353,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/focal/amd64",
               "os": "linux",
@@ -1556,7 +1371,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/focal/arm64v8",
               "os": "linux",
@@ -1568,7 +1383,15 @@
               "variant": "v8"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "aspnet",
+      "name": "dotnet/nightly/aspnet",
+      "readmePath": "README.aspnet.preview.md",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/aspnet-tags.yml",
+      "images": [
         {
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
@@ -1708,7 +1531,7 @@
                 {
                   "name": "pr-build",
                   "dependencies": [
-                    "$(Repo:sdk):5.0-buster-arm64v8"
+                    "$(Repo:sdk):5.0-buster-slim-arm64v8"
                   ]
                 }
               ]
@@ -1754,10 +1577,10 @@
       ]
     },
     {
-      "id": "sdk",
+      "id": "core-sdk",
       "name": "dotnet/core-nightly/sdk",
       "readmePath": "README.sdk.md",
-      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/sdk-tags.yml",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/core-sdk-tags.yml",
       "images": [
         {
           "productVersion": "$(2.1-SdkVersion)",
@@ -1829,24 +1652,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "2.1/sdk/alpine3.10/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(2.1-SdkVersion)-alpine3.10": {},
-                "2.1-alpine3.10": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(2.1-SdkVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "2.1/sdk/alpine3.11/amd64",
               "os": "linux",
@@ -1943,6 +1749,9 @@
               "variant": "v8"
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:core-aspnet)"
+              },
               "dockerfile": "3.1/sdk/nanoserver-1809/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1809",
@@ -1952,16 +1761,9 @@
               }
             },
             {
-              "architecture": "arm",
-              "dockerfile": "3.1/sdk/nanoserver-1809/arm32v7",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(3.1-SdkVersion)-nanoserver-1809-arm32v7": {},
-                "3.1-nanoserver-1809-arm32v7": {}
-              }
-            },
-            {
+              "buildArgs": {
+                "REPO": "$(Repo:core-aspnet)"
+              },
               "dockerfile": "3.1/sdk/nanoserver-1903/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1903",
@@ -1971,6 +1773,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:core-aspnet)"
+              },
               "dockerfile": "3.1/sdk/nanoserver-1909/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1909",
@@ -1995,24 +1800,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "3.1/sdk/alpine3.10/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.10",
-              "tags": {
-                "$(3.1-SdkVersion)-alpine3.10": {},
-                "3.1-alpine3.10": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(3.1-SdkVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "3.1/sdk/alpine3.11/amd64",
               "os": "linux",
@@ -2101,7 +1889,15 @@
               "variant": "v8"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "sdk",
+      "name": "dotnet/nightly/sdk",
+      "readmePath": "README.sdk.preview.md",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/sdk-tags.yml",
+      "images": [
         {
           "productVersion": "$(5.0-SdkVersion)",
           "sharedTags": {
@@ -2111,37 +1907,49 @@
           },
           "platforms": [
             {
-              "dockerfile": "5.0/sdk/buster/amd64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "5.0/sdk/buster-slim/amd64",
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-SdkVersion)-buster": {},
-                "5.0-buster": {}
+                "$(5.0-SdkVersion)-buster-slim": {},
+                "5.0-buster-slim": {}
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "architecture": "arm",
-              "dockerfile": "5.0/sdk/buster/arm32v7",
+              "dockerfile": "5.0/sdk/buster-slim/arm32v7",
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-SdkVersion)-buster-arm32v7": {},
-                "5.0-buster-arm32v7": {}
+                "$(5.0-SdkVersion)-buster-slim-arm32v7": {},
+                "5.0-buster-slim-arm32v7": {}
               },
               "variant": "v7"
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "architecture": "arm64",
-              "dockerfile": "5.0/sdk/buster/arm64v8",
+              "dockerfile": "5.0/sdk/buster-slim/arm64v8",
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-SdkVersion)-buster-arm64v8": {},
-                "5.0-buster-arm64v8": {}
+                "$(5.0-SdkVersion)-buster-slim-arm64v8": {},
+                "5.0-buster-slim-arm64v8": {}
               },
               "variant": "v8"
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "5.0/sdk/nanoserver-1809/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1809",
@@ -2151,6 +1959,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "5.0/sdk/nanoserver-1903/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1903",
@@ -2160,6 +1971,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "5.0/sdk/nanoserver-1909/amd64",
               "os": "windows",
               "osVersion": "nanoserver-1909",
@@ -2184,7 +1998,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "5.0/sdk/alpine3.11/amd64",
               "os": "linux",
@@ -2202,6 +2016,9 @@
           "productVersion": "$(5.0-SdkVersion)",
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "5.0/sdk/focal/amd64",
               "os": "linux",
               "osVersion": "focal",
@@ -2216,6 +2033,9 @@
           "productVersion": "$(5.0-SdkVersion)",
           "platforms": [
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "architecture": "arm64",
               "dockerfile": "5.0/sdk/focal/arm64v8",
               "os": "linux",
