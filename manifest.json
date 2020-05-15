@@ -393,9 +393,6 @@
         {
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
-            "$(5.0-RuntimeVersion)": {
-              "isUndocumented": true
-            },
             "5.0": {
               "isUndocumented": true
             }
@@ -406,9 +403,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim": {
-                  "isUndocumented": true
-                },
                 "5.0-buster-slim": {
                   "isUndocumented": true
                 }
@@ -420,9 +414,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm32v7": {
-                  "isUndocumented": true
-                },
                 "5.0-buster-slim-arm32v7": {
                   "isUndocumented": true
                 }
@@ -435,9 +426,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {
-                  "isUndocumented": true
-                },
                 "5.0-buster-slim-arm64v8": {
                   "isUndocumented": true
                 }
@@ -454,13 +442,7 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11": {
-                  "isUndocumented": true
-                },
                 "5.0-alpine3.11": {
-                  "isUndocumented": true
-                },
-                "$(5.0-RuntimeVersion)-alpine": {
                   "isUndocumented": true
                 },
                 "5.0-alpine": {
@@ -479,13 +461,7 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {
-                  "isUndocumented": true
-                },
                 "5.0-alpine3.11-arm64v8": {
-                  "isUndocumented": true
-                },
-                "$(5.0-RuntimeVersion)-alpine-arm64v8": {
                   "isUndocumented": true
                 },
                 "5.0-alpine-arm64v8": {
@@ -504,9 +480,6 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal": {
-                  "isUndocumented": true
-                },
                 "5.0-focal": {
                   "isUndocumented": true
                 }
@@ -523,9 +496,6 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm64v8": {
-                  "isUndocumented": true
-                },
                 "5.0-focal-arm64v8": {
                   "isUndocumented": true
                 }
@@ -1068,9 +1038,6 @@
         {
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
-            "$(5.0-RuntimeVersion)": {
-              "isUndocumented": true
-            },
             "5.0": {
               "isUndocumented": true
             }
@@ -1084,9 +1051,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim": {
-                  "isUndocumented": true
-                },
                 "5.0-buster-slim": {
                   "isUndocumented": true
                 }
@@ -1101,9 +1065,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm32v7": {
-                  "isUndocumented": true
-                },
                 "5.0-buster-slim-arm32v7": {
                   "isUndocumented": true
                 }
@@ -1119,9 +1080,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {
-                  "isUndocumented": true
-                },
                 "5.0-buster-slim-arm64v8": {
                   "isUndocumented": true
                 }
@@ -1133,9 +1091,6 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1809": {
-                  "isUndocumented": true
-                },
                 "5.0-nanoserver-1809": {
                   "isUndocumented": true
                 }
@@ -1146,9 +1101,6 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1903": {
-                  "isUndocumented": true
-                },
                 "5.0-nanoserver-1903": {
                   "isUndocumented": true
                 }
@@ -1159,9 +1111,6 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1909": {
-                  "isUndocumented": true
-                },
                 "5.0-nanoserver-1909": {
                   "isUndocumented": true
                 }
@@ -1180,13 +1129,7 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11": {
-                  "isUndocumented": true
-                },
                 "5.0-alpine3.11": {
-                  "isUndocumented": true
-                },
-                "$(5.0-RuntimeVersion)-alpine": {
                   "isUndocumented": true
                 },
                 "5.0-alpine": {
@@ -1208,13 +1151,7 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {
-                  "isUndocumented": true
-                },
                 "5.0-alpine3.11-arm64v8": {
-                  "isUndocumented": true
-                },
-                "$(5.0-RuntimeVersion)-alpine-arm64v8": {
                   "isUndocumented": true
                 },
                 "5.0-alpine-arm64v8": {
@@ -1236,9 +1173,6 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal": {
-                  "isUndocumented": true
-                },
                 "5.0-focal": {
                   "isUndocumented": true
                 }
@@ -1258,9 +1192,6 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm64v8": {
-                  "isUndocumented": true
-                },
                 "5.0-focal-arm64v8": {
                   "isUndocumented": true
                 }
@@ -1868,9 +1799,6 @@
         {
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
-            "$(5.0-RuntimeVersion)": {
-              "isUndocumented": true
-            },
             "5.0": {
               "isUndocumented": true
             }
@@ -1884,9 +1812,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim": {
-                  "isUndocumented": true
-                },
                 "5.0-buster-slim": {
                   "isUndocumented": true
                 }
@@ -1901,9 +1826,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm32v7": {
-                  "isUndocumented": true
-                },
                 "5.0-buster-slim-arm32v7": {
                   "isUndocumented": true
                 }
@@ -1919,9 +1841,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {
-                  "isUndocumented": true
-                },
                 "5.0-buster-slim-arm64v8": {
                   "isUndocumented": true
                 }
@@ -1936,9 +1855,6 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1809": {
-                  "isUndocumented": true
-                },
                 "5.0-nanoserver-1809": {
                   "isUndocumented": true
                 }
@@ -1952,9 +1868,6 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1903": {
-                  "isUndocumented": true
-                },
                 "5.0-nanoserver-1903": {
                   "isUndocumented": true
                 }
@@ -1968,9 +1881,6 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1909": {
-                  "isUndocumented": true
-                },
                 "5.0-nanoserver-1909": {
                   "isUndocumented": true
                 }
@@ -1989,13 +1899,7 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11": {
-                  "isUndocumented": true
-                },
                 "5.0-alpine3.11": {
-                  "isUndocumented": true
-                },
-                "$(5.0-RuntimeVersion)-alpine": {
                   "isUndocumented": true
                 },
                 "5.0-alpine": {
@@ -2017,13 +1921,7 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {
-                  "isUndocumented": true
-                },
                 "5.0-alpine3.11-arm64v8": {
-                  "isUndocumented": true
-                },
-                "$(5.0-RuntimeVersion)-alpine-arm64v8": {
                   "isUndocumented": true
                 },
                 "5.0-alpine-arm64v8": {
@@ -2045,9 +1943,6 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal": {
-                  "isUndocumented": true
-                },
                 "5.0-focal": {
                   "isUndocumented": true
                 }
@@ -2067,9 +1962,6 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm64v8": {
-                  "isUndocumented": true
-                },
                 "5.0-focal-arm64v8": {
                   "isUndocumented": true
                 }
@@ -2591,9 +2483,6 @@
         {
           "productVersion": "$(5.0-SdkVersion)",
           "sharedTags": {
-            "$(5.0-SdkVersion)": {
-              "isUndocumented": true
-            },
             "5.0": {
               "isUndocumented": true
             }
@@ -2650,9 +2539,6 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(5.0-SdkVersion)-nanoserver-1809": {
-                  "isUndocumented": true
-                },
                 "5.0-nanoserver-1809": {
                   "isUndocumented": true
                 }
@@ -2666,9 +2552,6 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(5.0-SdkVersion)-nanoserver-1903": {
-                  "isUndocumented": true
-                },
                 "5.0-nanoserver-1903": {
                   "isUndocumented": true
                 }
@@ -2682,9 +2565,6 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(5.0-SdkVersion)-nanoserver-1909": {
-                  "isUndocumented": true
-                },
                 "5.0-nanoserver-1909": {
                   "isUndocumented": true
                 }
@@ -2703,13 +2583,7 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(5.0-SdkVersion)-alpine3.11": {
-                  "isUndocumented": true
-                },
                 "5.0-alpine3.11": {
-                  "isUndocumented": true
-                },
-                "$(5.0-SdkVersion)-alpine": {
                   "isUndocumented": true
                 },
                 "5.0-alpine": {
@@ -2730,9 +2604,6 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-SdkVersion)-focal": {
-                  "isUndocumented": true
-                },
                 "5.0-focal": {
                   "isUndocumented": true
                 }
@@ -2752,9 +2623,6 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-SdkVersion)-focal-arm64v8": {
-                  "isUndocumented": true
-                },
                 "5.0-focal-arm64v8": {
                   "isUndocumented": true
                 }
