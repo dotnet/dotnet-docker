@@ -3,6 +3,7 @@
 To provide a consistent FQDNs, the data endpoint will be changing from *.cdn.mscr.io to *.data.mcr.microsoft.com
 
 For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules).
+
 ---------------------------------------------------------------------------------
 
 The images from the dotnet/core-nightly repositories include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
