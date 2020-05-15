@@ -2607,12 +2607,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-SdkVersion)-buster-slim": {
-                  "isUndocumented": true
-                },
-                "5.0-buster-slim": {
-                  "isUndocumented": true
-                },
                 "5.0-buster": {
                   "isUndocumented": true
                 }
