@@ -2612,6 +2612,9 @@
                 },
                 "5.0-buster-slim": {
                   "isUndocumented": true
+                },
+                "5.0-buster": {
+                  "isUndocumented": true
                 }
               }
             },
@@ -2628,6 +2631,9 @@
                   "isUndocumented": true
                 },
                 "5.0-buster-slim-arm32v7": {
+                  "isUndocumented": true
+                },
+                "5.0-buster-arm32v7": {
                   "isUndocumented": true
                 }
               },
@@ -2646,6 +2652,9 @@
                   "isUndocumented": true
                 },
                 "5.0-buster-slim-arm64v8": {
+                  "isUndocumented": true
+                },
+                "5.0-buster-arm64v8": {
                   "isUndocumented": true
                 }
               },
