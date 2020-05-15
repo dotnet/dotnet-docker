@@ -5,16 +5,10 @@ To provide a consistent FQDNs, the data endpoint will be changing from *.cdn.msc
 For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules).
 ---------------------------------------------------------------------------------
 
-The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
-
-See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images with official releases of [.NET](https://github.com/dotnet/core).
-
-As part of the transition to .NET 5.0, Docker repos for .NET 5.0 and higher do not include `core` in the name as was done with older versions. As an example, ASP.NET Core 5.0 can be found at `mcr.microsoft.com/dotnet/nightly/sdk:5.0` while 3.1 is still at `mcr.microsoft.com/dotnet/core-nightly/sdk:3.1`. See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
-
 # Featured Tags
 
 * `5.0` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:5.0`
+  * `docker pull mcr.microsoft.com/dotnet/sdk:5.0`
 
 # About This Image
 
@@ -25,6 +19,8 @@ This image contains the .NET SDK which is comprised of three parts:
 1. ASP.NET Core
 
 Use this image for your development process (developing, building and testing applications).
+
+As part of the transition to .NET 5.0, Docker repos for .NET 5.0 and higher do not include `core` in the name as was done with older versions. As an example, .NET 5.0 SDK can be found at `mcr.microsoft.com/dotnet/sdk:5.0` while 3.1 is still at `mcr.microsoft.com/dotnet/core/sdk:3.1`. See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
 
 # How to Use the Image
 
@@ -50,10 +46,10 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/sa
 .NET 5.0+:
 
 * [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
+* [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
+* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
+* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
-* [dotnet/nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
-* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 
 .NET Framework:
 

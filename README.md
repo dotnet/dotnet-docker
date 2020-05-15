@@ -7,11 +7,20 @@ For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules)
 
 # Featured Repos
 
+## .NET Core 2.1/3.1
+
 * [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/): .NET Core SDK
 * [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/): ASP.NET Core Runtime
 * [dotnet/core/runtime](https://hub.docker.com/_/microsoft-dotnet-core-runtime/): .NET Core Runtime
 * [dotnet/core/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps/): .NET Core Runtime Dependencies
 * [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
+
+## .NET 5.0+
+
+* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
+* [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
+* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
+* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 
 # About .NET
 
@@ -61,7 +70,8 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 .NET:
 
-* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET Core (Preview)
+* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core 2.1/3.1 (Preview)
+* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET 5.0+ (Preview)
 
 .NET Framework:
 
