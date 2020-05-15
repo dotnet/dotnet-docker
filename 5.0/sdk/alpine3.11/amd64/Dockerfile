@@ -15,7 +15,6 @@ ENV \
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Alpine-3.11
 
 RUN apk add --no-cache \
-    ca-certificates \
     curl \
     icu-libs \
     git
