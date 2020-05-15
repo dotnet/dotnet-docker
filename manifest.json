@@ -2621,12 +2621,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-SdkVersion)-buster-slim-arm32v7": {
-                  "isUndocumented": true
-                },
-                "5.0-buster-slim-arm32v7": {
-                  "isUndocumented": true
-                },
                 "5.0-buster-arm32v7": {
                   "isUndocumented": true
                 }
@@ -2642,12 +2636,6 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(5.0-SdkVersion)-buster-slim-arm64v8": {
-                  "isUndocumented": true
-                },
-                "5.0-buster-slim-arm64v8": {
-                  "isUndocumented": true
-                },
                 "5.0-buster-arm64v8": {
                   "isUndocumented": true
                 }
