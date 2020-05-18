@@ -6,8 +6,8 @@
     "2.1-SdkVersion": "2.1.806",
     "3.1-RuntimeVersion": "3.1.4",
     "3.1-SdkVersion": "3.1.202",
-    "5.0-RuntimeVersion": "5.0.0-preview.3",
-    "5.0-SdkVersion": "5.0.100-preview.3"
+    "5.0-RuntimeVersion": "5.0.0-preview.4",
+    "5.0-SdkVersion": "5.0.100-preview.4"
   },
   "repos": [
     {
@@ -516,7 +516,8 @@
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
-            "5.0": {}
+            "5.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -1212,7 +1213,8 @@
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
-            "5.0": {}
+            "5.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -1982,7 +1984,8 @@
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
-            "5.0": {}
+            "5.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -2652,7 +2655,8 @@
           "productVersion": "$(5.0-SdkVersion)",
           "sharedTags": {
             "$(5.0-SdkVersion)": {},
-            "5.0": {}
+            "5.0": {},
+            "latest": {}
           },
           "platforms": [
             {
