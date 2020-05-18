@@ -516,7 +516,8 @@
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
-            "5.0": {}
+            "5.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -1212,7 +1213,8 @@
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
-            "5.0": {}
+            "5.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -1982,7 +1984,8 @@
           "productVersion": "$(5.0-RuntimeVersion)",
           "sharedTags": {
             "$(5.0-RuntimeVersion)": {},
-            "5.0": {}
+            "5.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -2652,7 +2655,8 @@
           "productVersion": "$(5.0-SdkVersion)",
           "sharedTags": {
             "$(5.0-SdkVersion)": {},
-            "5.0": {}
+            "5.0": {},
+            "latest": {}
           },
           "platforms": [
             {
