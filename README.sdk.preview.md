@@ -19,7 +19,7 @@ This image contains the .NET SDK which is comprised of three parts:
 
 Use this image for your development process (developing, building and testing applications).
 
-As part of the transition to .NET 5.0, Docker repos for .NET 5.0 and higher do not include `core` in the name as was done with older versions. As an example, .NET 5.0 SDK can be found at `mcr.microsoft.com/dotnet/sdk:5.0` while 3.1 is still at `mcr.microsoft.com/dotnet/core/sdk:3.1`. See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
+As part of the transition to .NET 5.0, Docker repos for .NET 5.0 and higher do not include `core` in the name as was done with older versions. As an example, .NET 5.0 SDK can be found at `mcr.microsoft.com/dotnet/sdk:5.0` while 3.1 is still at `mcr.microsoft.com/dotnet/core/sdk:3.1`. See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1939) for more details.
 
 # How to Use the Image
 

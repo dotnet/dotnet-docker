@@ -13,7 +13,7 @@ For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules)
 
 This image contains the .NET runtimes and libraries and is optimized for running .NET apps in production.
 
-As part of the transition to .NET 5.0, Docker repos for .NET 5.0 and higher do not include `core` in the name as was done with older versions. As an example, .NET 5.0 Runtime can be found at `mcr.microsoft.com/dotnet/runtime:5.0` while 3.1 is still at `mcr.microsoft.com/dotnet/core/runtime:3.1`. See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
+As part of the transition to .NET 5.0, Docker repos for .NET 5.0 and higher do not include `core` in the name as was done with older versions. As an example, .NET 5.0 Runtime can be found at `mcr.microsoft.com/dotnet/runtime:5.0` while 3.1 is still at `mcr.microsoft.com/dotnet/core/runtime:3.1`. See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1939) for more details.
 
 Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
 
