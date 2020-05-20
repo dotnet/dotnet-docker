@@ -38,7 +38,7 @@ RUN `
     Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
 # SDK image
-FROM $REPO:3.1-nanoserver-1909
+FROM $REPO:3.1-nanoserver-2004
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
