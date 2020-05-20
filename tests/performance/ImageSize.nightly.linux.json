@@ -21,8 +21,8 @@
     "5.0/runtime-deps/buster-slim/amd64": 110537404,
     "5.0/runtime-deps/buster-slim/arm32v7": 85810304,
     "5.0/runtime-deps/buster-slim/arm64v8": 104153752,
-    "5.0/runtime-deps/alpine3.11/amd64": 9407340,
-    "5.0/runtime-deps/alpine3.11/arm64v8": 9207485,
+    "5.0/runtime-deps/alpine3.11/amd64": 9958624,
+    "5.0/runtime-deps/alpine3.11/arm64v8": 9745707,
     "5.0/runtime-deps/focal/amd64": 117572886,
     "5.0/runtime-deps/focal/arm64v8": 109676004
   },

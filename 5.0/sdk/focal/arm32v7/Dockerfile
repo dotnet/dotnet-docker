@@ -14,20 +14,11 @@ ENV \
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Ubuntu-20.04-arm32
 
-# Install .NET CLI dependencies
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        ca-certificates \
         curl \
         git \
-        libc6 \
-        libgcc1 \
-        libgssapi-krb5-2 \
-        libicu66 \
-        libssl1.1 \
-        libstdc++6 \
         wget \
-        zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core SDK
@@ -41,9 +32,9 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.1.0-preview.2 \
+RUN powershell_version=7.1.0-preview.3 \
     && curl -SL --output PowerShell.Linux.arm32.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.arm32.$powershell_version.nupkg \
-    && powershell_sha512='3bad721b2f0c72fd61772c0efee16f288174ae1396763ac88a970e5a002c533576375caa6ecbcf4049d5a3f9f8eb0ed5b43440501c1a03fa8283c834022b2d20' \
+    && powershell_sha512='c814442e3340bb203522992d04aa8aea8b59e4f82131469dfda1c2828eb18efea4f312e5e0578b09cb0a67750fef8a39ce74825e5ad46673b0524b2ad1a6694a' \
     && echo "$powershell_sha512  PowerShell.Linux.arm32.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm32 \

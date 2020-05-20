@@ -1,7 +1,9 @@
 FROM amd64/alpine:3.11
 
-# .NET Core dependencies
 RUN apk add --no-cache \
+    ca-certificates \
+    \
+# .NET Core dependencies
     krb5-libs \
     libgcc \
     libintl \

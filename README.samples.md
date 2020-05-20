@@ -3,7 +3,6 @@
 To provide a consistent FQDNs, the data endpoint will be changing from *.cdn.mscr.io to *.data.mcr.microsoft.com
 
 For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules).
----------------------------------------------------------------------------------
 
 # Featured Tags
 
