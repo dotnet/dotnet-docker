@@ -1233,7 +1233,7 @@
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "3.1/aspnet/nanoserver-2004/amd64",
               "os": "windows",
@@ -1785,6 +1785,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:core-aspnet)"
+              },
               "dockerfile": "3.1/sdk/nanoserver-2004/amd64",
               "os": "windows",
               "osVersion": "nanoserver-2004",
@@ -1983,6 +1986,9 @@
               }
             },
             {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "5.0/sdk/nanoserver-2004/amd64",
               "os": "windows",
               "osVersion": "nanoserver-2004",
