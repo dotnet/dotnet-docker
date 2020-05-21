@@ -1,0 +1,30 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - nightly
+  paths:
+    include:
+    - monitor/*
+    - manifest.monitor.json
+pr:
+  branches:
+    include:
+    - master
+    - nightly
+  paths:
+    include:
+    - eng/*
+    - monitor/*
+    - manifest.monitor.json
+variables:
+- template: variables/common.yml
+- name: manifest
+  value: manifest.monitor.json
+- name: imageInfoVariant
+  value: "-monitor"
+stages:
+- template: ../common/templates/stages/build-test-publish-repo.yml
+  parameters:
+    ${{ if eq(variables['System.TeamProject'], 'public') }}:
+      buildMatrixType: platformVersionedOs

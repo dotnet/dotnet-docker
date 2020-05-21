@@ -40,3 +40,5 @@ $gitRepo = "https://github.com/dotnet/dotnet-docker"
     dotnet/$($repoName)sdk README.sdk.preview.md manifest.json $gitRepo $Branch -ReuseImageBuilderImage
 & $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 `
     dotnet/core/samples README.samples.md manifest.samples.json $gitRepo -ReuseImageBuilderImage
+& $PSScriptRoot/common/Invoke-ReadmeGeneration.ps1 `
+    dotnet/$($repoName)monitor README.monitor.preview.md manifest.monitor.json $gitRepo $Branch -ReuseImageBuilderImage

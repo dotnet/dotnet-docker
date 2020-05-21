@@ -1,0 +1,34 @@
+{
+  "readmePath": "README.md",
+  "registry": "mcr.microsoft.com",
+  "variables": {
+    "MonitorVersion": "5.0-preview.6"
+  },
+  "repos": [
+    {
+      "id": "monitor",
+      "name": "dotnet/nightly/monitor",
+      "readmePath": "README.monitor.preview.md",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/monitor-tags.yml",
+      "images": [
+        {
+          "productVersion": "$(MonitorVersion)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "BASEREPO": "mcr.microsoft.com/dotnet/core/aspnet",
+                "STAGEREPO": "mcr.microsoft.com/dotnet/core/sdk"
+              },
+              "dockerfile": "monitor/alpine3.11/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "latest": {}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
