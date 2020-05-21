@@ -89,7 +89,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-preview.4-nanoserver-2004, 5.0-nanoserver-2004, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/nanoserver-2004/amd64/Dockerfile)
+5.0.0-preview.5-nanoserver-2004, 5.0-nanoserver-2004, 5.0.0-preview.5, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/5.0/aspnet/nanoserver-2004/amd64/Dockerfile)
 
 ## Windows Server, version 1909 amd64 Tags
 ##### .NET 5.0 Preview Tags
