@@ -40,6 +40,8 @@ RUN powershell_version=7.1.0-preview.3 \
     && rm PowerShell.Linux.Alpine.$powershell_version.nupkg \
     && chmod 755 /usr/share/powershell/pwsh \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
+    && rm /usr/share/powershell/.store/powershell.linux.alpine/$powershell_version/powershell.linux.alpine/$powershell_version/tools/net5.0/any/pwsh \
+    && ln -s /usr/bin/pwsh /usr/share/powershell/.store/powershell.linux.alpine/$powershell_version/powershell.linux.alpine/$powershell_version/tools/net5.0/any/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm \
     # Add ncurses-terminfo-base to resolve psreadline dependency

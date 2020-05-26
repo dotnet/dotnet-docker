@@ -123,7 +123,8 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
         {
-            PowerShellScenario_Execute(imageData, null);
+            string command = $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value";
+            PowerShellScenario_Execute(imageData, optionalArgs: null, command);
         }
 
         [Theory]
@@ -137,7 +138,16 @@ namespace Microsoft.DotNet.Docker.Tests
                 optRunArgs = "-u ContainerAdministrator ";
             }
 
-            PowerShellScenario_Execute(imageData, optRunArgs);
+            string command = $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value";
+            PowerShellScenario_Execute(imageData, optRunArgs, command);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyPowerShellScenario_Jobs(ProductImageData imageData)
+        {
+            string command = $"pwsh -c '(Start-Job { "test" } | Receive-Job -Wait) -eq 'test''";
+            PowerShellScenario_Execute(imageData, optionalArgs: null, command);
         }
 
         /// <summary>
@@ -160,7 +170,7 @@ namespace Microsoft.DotNet.Docker.Tests
             bool hasCountDifference = expectedDotnetFiles.Count() != actualDotnetFiles.Count();
 
             bool hasFileContentDifference = false;
-            
+
             // Skip file comparisons for 3.1 until https://github.com/dotnet/sdk/issues/11327 is fixed.
             if (imageData.Version.Major != 3)
             {
@@ -184,7 +194,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     OutputHelper.WriteLine($"Path: {file.Path}");
                     OutputHelper.WriteLine($"Checksum: {file.Sha512}");
                 }
-                
+
                 OutputHelper.WriteLine(String.Empty);
                 OutputHelper.WriteLine("ACTUAL FILES:");
                 foreach (SdkContentFileInfo file in actualDotnetFiles)
@@ -293,7 +303,7 @@ namespace Microsoft.DotNet.Docker.Tests
             return files;
         }
 
-        private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
+        private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs, string command)
         {
             if (imageData.Version.Major < 3)
             {
@@ -306,7 +316,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
                 name: imageData.GetIdentifier($"pwsh"),
                 optionalRunArgs: optionalArgs,
-                command: $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value"
+                command: command
             );
 
             Assert.Equal(output, bool.TrueString, ignoreCase: true);
