@@ -146,7 +146,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_Jobs(ProductImageData imageData)
         {
-            string command = $"pwsh -c '(Start-Job { "test" } | Receive-Job -Wait) -eq 'test''";
+            string command = @"pwsh -c '(Start-Job { 'test' } | Receive-Job -Wait) -eq 'test'";
             PowerShellScenario_Execute(imageData, optionalArgs: null, command);
         }
 
