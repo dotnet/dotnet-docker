@@ -75,7 +75,7 @@
     "5.0/aspnet/buster-slim/amd64": 207319902,
     "5.0/aspnet/buster-slim/arm32v7": 185802832,
     "5.0/aspnet/buster-slim/arm64v8": 218270150,
-    "5.0/aspnet/alpine3.11/amd64": 104956138,
+    "5.0/aspnet/alpine3.11/amd64": 110767449,
     "5.0/aspnet/alpine3.11/arm64v8": 120839157,
     "5.0/aspnet/focal/amd64": 217911073,
     "5.0/aspnet/focal/arm64v8": 224146163
