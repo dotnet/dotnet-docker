@@ -83,6 +83,12 @@ Tags | Dockerfile | OS Version
 2.1.806-stretch-arm32v7, 2.1-stretch-arm32v7, 2.1.806, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/arm32v7/Dockerfile) | Debian 9
 2.1.806-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
+## Windows Server, version 2004 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+3.1.300-nanoserver-2004, 3.1-nanoserver-2004, 3.1.300, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/nanoserver-2004/amd64/Dockerfile)
+2.1.806-nanoserver-2004, 2.1-nanoserver-2004, 2.1.806, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/nanoserver-2004/amd64/Dockerfile)
+
 ## Windows Server, version 1909 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------

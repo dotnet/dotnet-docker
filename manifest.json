@@ -628,6 +628,15 @@
                 "$(2.1-RuntimeVersion)-nanoserver-1909": {},
                 "2.1-nanoserver-1909": {}
               }
+            },
+            {
+              "dockerfile": "2.1/runtime/nanoserver-2004/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "$(2.1-RuntimeVersion)-nanoserver-2004": {},
+                "2.1-nanoserver-2004": {}
+              }
             }
           ]
         },
@@ -776,6 +785,15 @@
               "tags": {
                 "$(3.1-RuntimeVersion)-nanoserver-1909": {},
                 "3.1-nanoserver-1909": {}
+              }
+            },
+            {
+              "dockerfile": "3.1/runtime/nanoserver-2004/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-2004": {},
+                "3.1-nanoserver-2004": {}
               }
             }
           ]
@@ -1166,6 +1184,15 @@
                 "$(5.0-RuntimeVersion)-nanoserver-1909": {},
                 "5.0-nanoserver-1909": {}
               }
+            },
+            {
+              "dockerfile": "5.0/runtime/nanoserver-2004/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "$(5.0-RuntimeVersion)-nanoserver-2004": {},
+                "5.0-nanoserver-2004": {}
+              }
             }
           ]
         },
@@ -1319,6 +1346,15 @@
               "tags": {
                 "$(2.1-RuntimeVersion)-nanoserver-1909": {},
                 "2.1-nanoserver-1909": {}
+              }
+            },
+            {
+              "dockerfile": "2.1/aspnet/nanoserver-2004/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "$(2.1-RuntimeVersion)-nanoserver-2004": {},
+                "2.1-nanoserver-2004": {}
               }
             }
           ]
@@ -1477,6 +1513,18 @@
               "tags": {
                 "$(3.1-RuntimeVersion)-nanoserver-1909": {},
                 "3.1-nanoserver-1909": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:core-runtime)"
+              },
+              "dockerfile": "3.1/aspnet/nanoserver-2004/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "$(3.1-RuntimeVersion)-nanoserver-2004": {},
+                "3.1-nanoserver-2004": {}
               }
             }
           ]
@@ -1885,6 +1933,18 @@
                 "$(5.0-RuntimeVersion)-nanoserver-1909": {},
                 "5.0-nanoserver-1909": {}
               }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "5.0/aspnet/nanoserver-2004/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "$(5.0-RuntimeVersion)-nanoserver-2004": {},
+                "5.0-nanoserver-2004": {}
+              }
             }
           ]
         },
@@ -2033,6 +2093,15 @@
                 "$(2.1-SdkVersion)-nanoserver-1909": {},
                 "2.1-nanoserver-1909": {}
               }
+            },
+            {
+              "dockerfile": "2.1/sdk/nanoserver-2004/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "$(2.1-SdkVersion)-nanoserver-2004": {},
+                "2.1-nanoserver-2004": {}
+              }
             }
           ]
         },
@@ -2172,6 +2241,18 @@
               "tags": {
                 "$(3.1-SdkVersion)-nanoserver-1909": {},
                 "3.1-nanoserver-1909": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:core-aspnet)"
+              },
+              "dockerfile": "3.1/sdk/nanoserver-2004/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "$(3.1-SdkVersion)-nanoserver-2004": {},
+                "3.1-nanoserver-2004": {}
               }
             }
           ]
@@ -2521,6 +2602,18 @@
               "tags": {
                 "$(5.0-SdkVersion)-nanoserver-1909": {},
                 "5.0-nanoserver-1909": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "5.0/sdk/nanoserver-2004/amd64",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "$(5.0-SdkVersion)-nanoserver-2004": {},
+                "5.0-nanoserver-2004": {}
               }
             }
           ]
