@@ -3,33 +3,42 @@
     "2.1/runtime/nanoserver-1809/amd64": 314376218,
     "2.1/runtime/nanoserver-1903/amd64": 326367498,
     "2.1/runtime/nanoserver-1909/amd64": 327609836,
+    "2.1/runtime/nanoserver-2004/amd64": 332625363,
     "3.1/runtime/nanoserver-1809/amd64": 321408734,
     "3.1/runtime/nanoserver-1903/amd64": 326438075,
     "3.1/runtime/nanoserver-1909/amd64": 328083762,
+    "3.1/runtime/nanoserver-2004/amd64": 333119873,
     "5.0/runtime/nanoserver-1809/amd64": 321408734,
     "5.0/runtime/nanoserver-1903/amd64": 326438075,
-    "5.0/runtime/nanoserver-1909/amd64": 328083762
+    "5.0/runtime/nanoserver-1909/amd64": 328083762,
+    "5.0/runtime/nanoserver-2004/amd64": 332279013
   },
   "dotnet/core-nightly/aspnet": {
     "2.1/aspnet/nanoserver-1809/amd64": 387919601,
     "2.1/aspnet/nanoserver-1903/amd64": 399947583,
     "2.1/aspnet/nanoserver-1909/amd64": 401265767,
+    "2.1/aspnet/nanoserver-2004/amd64": 406353173,
     "3.1/aspnet/nanoserver-1809/amd64": 341072949,
     "3.1/aspnet/nanoserver-1903/amd64": 346102290,
     "3.1/aspnet/nanoserver-1909/amd64": 347747977,
+    "3.1/aspnet/nanoserver-2004/amd64": 352805234,
     "5.0/aspnet/nanoserver-1809/amd64": 341072949,
     "5.0/aspnet/nanoserver-1903/amd64": 346102290,
-    "5.0/aspnet/nanoserver-1909/amd64": 347747977
+    "5.0/aspnet/nanoserver-1909/amd64": 347747977,
+    "5.0/aspnet/nanoserver-2004/amd64": 352472752
   },
   "dotnet/core-nightly/sdk": {
     "2.1/sdk/nanoserver-1809/amd64": 1651068899,
     "2.1/sdk/nanoserver-1903/amd64": 1666573518,
     "2.1/sdk/nanoserver-1909/amd64": 1672306130,
+    "2.1/sdk/nanoserver-2004/amd64": 1675836982,
     "3.1/sdk/nanoserver-1809/amd64": 730951559,
     "3.1/sdk/nanoserver-1903/amd64": 735894844,
     "3.1/sdk/nanoserver-1909/amd64": 737661435,
+    "3.1/sdk/nanoserver-2004/amd64": 759552332,
     "5.0/sdk/nanoserver-1809/amd64": 782722955,
     "5.0/sdk/nanoserver-1903/amd64": 787755962,
-    "5.0/sdk/nanoserver-1909/amd64": 789170333
+    "5.0/sdk/nanoserver-1909/amd64": 789170333,
+    "5.0/sdk/nanoserver-2004/amd64": 751948036
   }
 }

@@ -64,6 +64,14 @@
               "tags": {
                 "dotnetapp-nanoserver-1909": {}
               }
+            },
+            {
+              "dockerfile": "samples/dotnetapp",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "dotnetapp-nanoserver-2004": {}
+              }
             }
           ]
         },
@@ -122,6 +130,14 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "aspnetapp-nanoserver-1909": {}
+              }
+            },
+            {
+              "dockerfile": "samples/aspnetapp",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {
+                "aspnetapp-nanoserver-2004": {}
               }
             }
           ]
