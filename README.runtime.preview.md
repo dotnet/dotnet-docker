@@ -75,6 +75,12 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview.4-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/runtime/buster-slim/arm32v7/Dockerfile) | Debian 10
 
+## Windows Server, version 2004 amd64 Tags
+##### .NET 5.0 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+5.0.0-preview.4-nanoserver-2004, 5.0-nanoserver-2004, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/runtime/nanoserver-2004/amd64/Dockerfile)
+
 ## Windows Server, version 1909 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
