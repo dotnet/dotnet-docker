@@ -78,9 +78,9 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Amd64, IsPublished = true },
             new SampleImageData { OS = OS.NanoServer1903, Arch = Arch.Amd64, IsPublished = true },
             new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, IsPublished = true },
+            new SampleImageData { OS = OS.NanoServer2004, Arch = Arch.Amd64, IsPublished = false }, // TODO: Set IsPublished back to true once the sample is published
 
-            new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
-            new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
+            new SampleImageData { OS = OS.NanoServer2004, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
             new SampleImageData { OS = OS.NanoServer2004, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
         };
 
