@@ -48,15 +48,6 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
         -Paths $Paths `
         -OptionalImageBuilderArgs $OptionalImageBuilderArgs `
         -Manifest manifest.samples.json
-    
-    # Build the monitor images
-    & ./eng/common/build.ps1 `
-        -Version $Version `
-        -OS $OS `
-        -Architecture $Architecture `
-        -Paths $Paths `
-        -OptionalImageBuilderArgs $OptionalImageBuilderArgs `
-        -Manifest manifest.monitor.json
 }
 if ($Mode -eq "BuildAndTest" -or $Mode -eq "Test") {
 
