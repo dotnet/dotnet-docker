@@ -1974,7 +1974,6 @@
         {
           "productVersion": "$(MonitorFullVersion)",
           "sharedTags": {
-            "latest": {},
             "$(MonitorMajorMinorVersion)": {},
             "$(MonitorFullVersion)": {}
           },
@@ -1988,6 +1987,7 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
+                "latest": {}
               }
             }
           ]
