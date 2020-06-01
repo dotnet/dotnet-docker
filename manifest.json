@@ -1980,8 +1980,8 @@
           "platforms": [
             {
               "buildArgs": {
-                "BASEREPO": "$(Repo:core-aspnet)",
-                "INSTALLERREPO": "$(Repo:core-sdk)"
+                "ASPNET_REPO": "$(Repo:core-aspnet)",
+                "SDK_REPO": "$(Repo:core-sdk)"
               },
               "dockerfile": "monitor/alpine3.11/amd64",
               "os": "linux",
