@@ -132,14 +132,12 @@ docker images dotnetapp
 The `Dockerfile.nanoserver-x64` Dockerfile targets a version-specific tag, which will result in a Nano Server version that targets a specific Windows version (and will only work on Windows hosts of the same version or higher). You can update the following the tag to a different version, as needed.
 
 ```console
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1909
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-2004
 ```
-
-> Note: ARM32 support is only offered by Nano Server, version 1809.
 
 ## Build an image for ARM32 and ARM64
 
-By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-nanoserver`. You need to use an architecture-specific tag if you want to target ARM. Note that for Alpine, .NET Core is only supported on ARM64 and x64, and not ARM32.
+By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that for Alpine, .NET Core is only supported on ARM64 and x64, and not ARM32.
 
 > Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
 
@@ -162,13 +160,6 @@ dotnetapp           alpine-arm64        09a1d1bfd477        20 hours ago        
 dotnetapp           debian-arm64        fa5efe51d9ef        20 hours ago        197MB
 dotnetapp           ubuntu-arm32        ea8ac73f8a72        20 hours ago        165MB
 dotnetapp           debian-arm32        4f6ade8318d4        20 hours ago        165MB
-```
-
-You can do the same thing with Windows Nano Server, as follows:
-
-```console
-docker build --pull -t dotnetapp:nanoserver-arm32 -f Dockerfile.nanoserver-arm32 .
-docker images dotnetapp | findstr arm
 ```
 
 You can build ARM32 and ARM64 images on x64 machines, but you will not be able to run them. Docker relies on QEMU for this scenario, which isn't supported by .NET Core. You must test and run .NET Core imges on actual hardware for the given processor type. A common pattern for this situation is building on x64, [pushing images to a registry](push-image-to-acr.md), and then pulling the image from an ARM device.

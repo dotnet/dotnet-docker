@@ -104,7 +104,7 @@ You can run these images in the same way as is done above, with Alpine.
 
 ## Build an image for ARM32 and ARM64
 
-By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-nanoserver`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET Core is only supported on Alpine on ARM64 and x64, and not ARM32.
+By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET Core is only supported on Alpine on ARM64 and x64, and not ARM32.
 
 Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
 
@@ -123,19 +123,6 @@ You can use `docker images` to see a listing of the images you've built, as you 
 aspnetapp           debian-arm64        8bf21dd704cf        14 seconds ago       223MB
 aspnetapp           debian-arm32        29a8bfa90a03        About a minute ago   190MB
 aspnetapp           alpine-arm64        8ec6bf841319        2 minutes ago        125MB
-```
-
-You can do the same thing with Windows Nano Server, as follows:
-
-```console
-docker build --pull -t aspnetapp:nanoserver-arm32 -f Dockerfile.nanoserver-arm32 .
-```
-
-And `docker images` will show you the Nano Server image you've just built.
-
-```console
->docker images aspnetapp | findstr arm
-aspnetapp           nanoserver-arm32    8cad7f0499ca        23 seconds ago      283MB
 ```
 
 You can build ARM32 and ARM64 images on ARM or x64 machines. It may be preferred to build on x64 to take advantage of higher performance, and the ability to take advantage of CI/CD services.
