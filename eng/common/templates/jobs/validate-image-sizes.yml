@@ -32,12 +32,12 @@ jobs:
       dockerClientOS: linux
       validationMode: integrity
 - job: WindowsPerfTests
-  pool: # windows1909Amd64
+  pool: # windows2004Amd64
     ${{ if eq(variables['System.TeamProject'], 'public') }}:
       name: DotNetCore-Docker-Public
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       name: DotNetCore-Docker
-    demands: VSTS_OS -equals Windows-ServerDatacenter-1909
+    demands: VSTS_OS -equals Windows-ServerDatacenter-2004
   workspace:
     clean: all
   steps:
