@@ -104,5 +104,8 @@
     "5.0/sdk/alpine3.11/amd64": 465060167,
     "5.0/sdk/focal/amd64": 615235315,
     "5.0/sdk/focal/arm64v8": 672793717
+  },
+  "dotnet/nightly/monitor": {
+    "monitor/alpine3.11/amd64": 128430154
   }
 }

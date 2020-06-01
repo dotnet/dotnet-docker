@@ -7,7 +7,9 @@
     "3.1-RuntimeVersion": "3.1.4",
     "3.1-SdkVersion": "3.1.300",
     "5.0-RuntimeVersion": "5.0.0-preview.5",
-    "5.0-SdkVersion": "5.0.100-preview.5"
+    "5.0-SdkVersion": "5.0.100-preview.5",
+    "MonitorFullVersion": "5.0.0",
+    "MonitorMajorMinorVersion": "5.0"
   },
   "repos": [
     {
@@ -2051,6 +2053,35 @@
                 "5.0-focal-arm64v8": {}
               },
               "variant": "v8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "monitor",
+      "name": "dotnet/nightly/monitor",
+      "readmePath": "README.monitor.md",
+      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/monitor-tags.yml",
+      "images": [
+        {
+          "productVersion": "$(MonitorFullVersion)",
+          "sharedTags": {
+            "$(MonitorMajorMinorVersion)": {},
+            "$(MonitorFullVersion)": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "ASPNET_REPO": "$(Repo:core-aspnet)",
+                "SDK_REPO": "$(Repo:core-sdk)"
+              },
+              "dockerfile": "monitor/alpine3.11/amd64",
+              "os": "linux",
+              "osVersion": "alpine3.11",
+              "tags": {
+                "latest": {}
+              }
             }
           ]
         }
