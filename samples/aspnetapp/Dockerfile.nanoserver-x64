@@ -13,8 +13,8 @@ WORKDIR /source/aspnetapp
 RUN dotnet publish -c release -o /app -r win-x64 --self-contained false --no-restore
 
 # final stage/image
-# Uses the 1909 release; 1903, and 1809 are other choices
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-nanoserver-1909 AS runtime
+# Uses the 2004 release; 1909, 1903, and 1809 are other choices
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-nanoserver-2004 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
 ENTRYPOINT ["aspnetapp"]
