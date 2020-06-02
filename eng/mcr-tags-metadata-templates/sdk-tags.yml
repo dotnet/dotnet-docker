@@ -1,6 +1,8 @@
 $(McrTagsYmlRepo:sdk)
 $(McrTagsYmlTagGroup:5.0-buster-slim)
     customSubTableTitle: .NET 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-alpine3.12)
+    customSubTableTitle: .NET 5.0 Preview Tags
 $(McrTagsYmlTagGroup:5.0-alpine3.11)
     customSubTableTitle: .NET 5.0 Preview Tags
 $(McrTagsYmlTagGroup:5.0-focal)
