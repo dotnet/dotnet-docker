@@ -2412,7 +2412,7 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/monitor-tags.yml",
       "images": [
         {
-          "productVersion": "$(MonitorFullVersion)",
+          "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
             "$(MonitorMajorMinorVersion)": {},
             "$(MonitorFullVersion)": {}
