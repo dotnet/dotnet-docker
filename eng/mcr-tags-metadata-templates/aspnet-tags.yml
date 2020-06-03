@@ -1,11 +1,15 @@
 $(McrTagsYmlRepo:aspnet)
 $(McrTagsYmlTagGroup:5.0-buster-slim)
     customSubTableTitle: .NET 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-alpine3.12)
+    customSubTableTitle: .NET 5.0 Preview Tags
 $(McrTagsYmlTagGroup:5.0-alpine3.11)
     customSubTableTitle: .NET 5.0 Preview Tags
 $(McrTagsYmlTagGroup:5.0-focal)
     customSubTableTitle: .NET 5.0 Preview Tags
 $(McrTagsYmlTagGroup:5.0-buster-slim-arm64v8)
+    customSubTableTitle: .NET 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-alpine3.12-arm64v8)
     customSubTableTitle: .NET 5.0 Preview Tags
 $(McrTagsYmlTagGroup:5.0-alpine3.11-arm64v8)
     customSubTableTitle: .NET 5.0 Preview Tags
