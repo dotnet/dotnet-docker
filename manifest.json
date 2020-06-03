@@ -2423,7 +2423,7 @@
                 "ASPNET_REPO": "$(Repo:core-aspnet)",
                 "SDK_REPO": "$(Repo:core-sdk)"
               },
-              "dockerfile": "monitor/5.0/alpine3.12/amd64",
+              "dockerfile": "monitor/5.0/alpine/amd64",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
