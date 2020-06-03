@@ -124,6 +124,6 @@
     "5.0/sdk/focal/arm64v8": 672793717
   },
   "dotnet/nightly/monitor": {
-    "monitor/alpine3.12/amd64": 128431536
+    "monitor/5.0/alpine/amd64": 128431536
   }
 }

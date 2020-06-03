@@ -8,8 +8,7 @@
     "3.1-SdkVersion": "3.1.300",
     "5.0-RuntimeVersion": "5.0.0-preview.5",
     "5.0-SdkVersion": "5.0.100-preview.5",
-    "MonitorFullVersion": "5.0.0",
-    "MonitorMajorMinorVersion": "5.0"
+    "Monitor-5.0-Version": "5.0.0-preview.1"
   },
   "repos": [
     {
@@ -2414,8 +2413,9 @@
         {
           "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
-            "$(MonitorMajorMinorVersion)": {},
-            "$(MonitorFullVersion)": {}
+            "$(Monitor-5.0-Version)": {},
+            "5.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -2423,11 +2423,12 @@
                 "ASPNET_REPO": "$(Repo:core-aspnet)",
                 "SDK_REPO": "$(Repo:core-sdk)"
               },
-              "dockerfile": "monitor/alpine3.12/amd64",
+              "dockerfile": "monitor/5.0/alpine/amd64",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "latest": {}
+                "$(Monitor-5.0-Version)-alpine": {},
+                "5.0-alpine": {}
               }
             }
           ]
