@@ -6,8 +6,8 @@ For more info, see [MCR Client Firewall Rules](https://aka.ms/mcr/firewallrules)
 
 # Featured Tags
 
-* `latest` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:latest`
+* `5.0` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:5.0`
 
 # About This Image
 
@@ -31,7 +31,7 @@ TBD
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-latest, 5.0, 5.0.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/monitor/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+5.0.0-preview.1-alpine, 5.0-alpine, 5.0.0-preview.1, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/monitor/5.0/alpine3.12/amd64/Dockerfile) | Alpine 3.12
 
 You can retrieve a list of all available tags for dotnet/nightly/monitor at https://mcr.microsoft.com/v2/dotnet/nightly/monitor/tags/list.
 
@@ -41,7 +41,7 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 
 # Image Update Policy
 
-* We update the supported .NET Core images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:1909, buildpack-deps:bionic-scm, etc.).
+* We update the supported .NET Core images within 12 hours of any updates to their base images (e.g. amd64/alpine:3.12, etc.).
 
 # Feedback
 

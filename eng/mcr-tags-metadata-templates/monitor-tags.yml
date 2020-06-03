@@ -1,2 +1,2 @@
 $(McrTagsYmlRepo:monitor)
-$(McrTagsYmlTagGroup:latest)
+$(McrTagsYmlTagGroup:5.0-alpine)
