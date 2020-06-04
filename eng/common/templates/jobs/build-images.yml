@@ -40,7 +40,7 @@ jobs:
       $(imageBuilderImageInfoArg)
     displayName: Build Images
   - publish: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
-    artifact: $(legName)-image-info
+    artifact: $(legName)-image-info-$(System.JobAttempt)
     displayName: Publish Image Info File Artifact
   - ${{ if eq(variables['System.TeamProject'], 'public') }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
