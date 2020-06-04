@@ -20,7 +20,11 @@ FROM $ASPNET_REPO:3.1-alpine3.12
 
 WORKDIR /app
 COPY --from=installer /app .
-ENV COMPlus_EnableDiagnostics=0
-ENV PATH="${PATH}:/app"
+
+ENV \
+    # Disable debugger and profiler diagnostics to avoid diagnosing self.
+    COMPlus_EnableDiagnostics=0 \
+    # Add dotnet-monitor path to front of PATH for easier, prioritized execution
+    PATH="/app:${PATH}"
 
 ENTRYPOINT ["dotnet-monitor", "collect"]
