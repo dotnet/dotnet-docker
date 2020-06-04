@@ -7,6 +7,26 @@ jobs:
   - template: ../steps/download-build-artifact.yml
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
+  - pwsh: |
+      # Deletes the artifacts from all the unsuccessful jobs
+      Get-ChildItem $(Build.ArtifactStagingDirectory) -Directory |
+          ForEach-Object {
+              [pscustomobject]@{
+                  # Parse the artifact name to separate the base of the name from the job attempt number 
+                  BaseName = $_.Name.Substring(0, $_.Name.LastIndexOf('-'));
+                  JobAttempt = $_.Name.Substring($_.Name.LastIndexOf('-') + 1)
+                  FullName = $_.FullName
+              }
+          } |
+          Group-Object BaseName |
+          # Delete all but the last artifact from each base name
+          ForEach-Object {
+              $_.Group |
+                  Sort-Object JobAttempt |
+                  Select-Object -ExpandProperty FullName -SkipLast 1 |
+                  Remove-Item -Recurse -Force
+          }
+    displayName: Prune Publish Artifacts
   - script: >
       $(runImageBuilderCmd) mergeImageInfo
       --manifest $(manifest)
