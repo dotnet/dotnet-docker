@@ -60,11 +60,13 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.1.300-buster, 3.1-buster, 3.1.300, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/buster/amd64/Dockerfile) | Debian 10
-3.1.300-alpine3.11, 3.1-alpine3.11, 3.1.300-alpine, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/alpine3.11/amd64/Dockerfile) | Alpine 3.11
+3.1.300-alpine3.12, 3.1-alpine3.12, 3.1.300-alpine, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+3.1.300-alpine3.11, 3.1-alpine3.11 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 3.1.300-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.300-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 2.1.806-stretch, 2.1-stretch, 2.1.806, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/stretch/amd64/Dockerfile) | Debian 9
-2.1.806-alpine3.11, 2.1-alpine3.11, 2.1.806-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.11/amd64/Dockerfile) | Alpine 3.11
+2.1.806-alpine3.12, 2.1-alpine3.12, 2.1.806-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+2.1.806-alpine3.11, 2.1-alpine3.11 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 2.1.806-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/focal/amd64/Dockerfile) | Ubuntu 20.04
 2.1.806-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/sdk/bionic/amd64/Dockerfile) | Ubuntu 18.04
 

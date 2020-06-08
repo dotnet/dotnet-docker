@@ -60,11 +60,13 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.1.4-buster-slim, 3.1-buster-slim, 3.1.4, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/buster-slim/amd64/Dockerfile) | Debian 10
-3.1.4-alpine3.11, 3.1-alpine3.11, 3.1.4-alpine, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/alpine3.11/amd64/Dockerfile) | Alpine 3.11
+3.1.4-alpine3.12, 3.1-alpine3.12, 3.1.4-alpine, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+3.1.4-alpine3.11, 3.1-alpine3.11 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 3.1.4-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.4-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/bionic/amd64/Dockerfile) | Ubuntu 18.04
 2.1.18-stretch-slim, 2.1-stretch-slim, 2.1.18, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/stretch-slim/amd64/Dockerfile) | Debian 9
-2.1.18-alpine3.11, 2.1-alpine3.11, 2.1.18-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/alpine3.11/amd64/Dockerfile) | Alpine 3.11
+2.1.18-alpine3.12, 2.1-alpine3.12, 2.1.18-alpine, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+2.1.18-alpine3.11, 2.1-alpine3.11 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 2.1.18-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/focal/amd64/Dockerfile) | Ubuntu 20.04
 2.1.18-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/2.1/aspnet/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
@@ -72,7 +74,8 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.1.4-buster-slim-arm64v8, 3.1-buster-slim-arm64v8, 3.1.4, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/buster-slim/arm64v8/Dockerfile) | Debian 10
-3.1.4-alpine3.11-arm64v8, 3.1-alpine3.11-arm64v8, 3.1.4-alpine-arm64v8, 3.1-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
+3.1.4-alpine3.12-arm64v8, 3.1-alpine3.12-arm64v8, 3.1.4-alpine-arm64v8, 3.1-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/alpine3.12/arm64v8/Dockerfile) | Alpine 3.12
+3.1.4-alpine3.11-arm64v8, 3.1-alpine3.11-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
 3.1.4-focal-arm64v8, 3.1-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 3.1.4-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/3.1/aspnet/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
 
