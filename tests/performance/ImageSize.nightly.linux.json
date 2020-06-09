@@ -3,7 +3,7 @@
     "2.1/runtime-deps/stretch-slim/amd64": 99052362,
     "2.1/runtime-deps/stretch-slim/arm32v7": 79329954,
     "2.1/runtime-deps/alpine3.11/amd64": 12333463,
-    "2.1/runtime-deps/alpine3.12/amd64": 55514811,
+    "2.1/runtime-deps/alpine3.12/amd64": 12233891,
     "2.1/runtime-deps/bionic/amd64": 111095589,
     "2.1/runtime-deps/bionic/arm32v7": 87327705,
     "2.1/runtime-deps/focal/amd64": 119203506,
@@ -35,7 +35,7 @@
     "2.1/runtime/stretch-slim/amd64": 180258057,
     "2.1/runtime/stretch-slim/arm32v7": 153626488,
     "2.1/runtime/alpine3.11/amd64": 86692780,
-    "2.1/runtime/alpine3.12/amd64": 129877826,
+    "2.1/runtime/alpine3.12/amd64": 86596906,
     "2.1/runtime/bionic/amd64": 191246153,
     "2.1/runtime/bionic/arm32v7": 160181517,
     "2.1/runtime/focal/amd64": 200955744,
@@ -67,7 +67,7 @@
     "2.1/aspnet/stretch-slim/amd64": 253015005,
     "2.1/aspnet/stretch-slim/arm32v7": 189706192,
     "2.1/aspnet/alpine3.11/amd64": 159652406,
-    "2.1/aspnet/alpine3.12/amd64": 202864386,
+    "2.1/aspnet/alpine3.12/amd64": 159583466,
     "2.1/aspnet/bionic/amd64": 264145799,
     "2.1/aspnet/bionic/arm32v7": 196255401,
     "2.1/aspnet/focal/amd64": 285202575,
@@ -124,6 +124,6 @@
     "5.0/sdk/focal/arm64v8": 672793717
   },
   "dotnet/nightly/monitor": {
-    "monitor/alpine3.12/amd64": 128431536
+    "monitor/5.0/alpine/amd64": 128431536
   }
 }
