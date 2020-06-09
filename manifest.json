@@ -2,8 +2,8 @@
   "readmePath": "README.md",
   "registry": "mcr.microsoft.com",
   "variables": {
-    "2.1-RuntimeVersion": "2.1.18",
-    "2.1-SdkVersion": "2.1.806",
+    "2.1-RuntimeVersion": "2.1.19",
+    "2.1-SdkVersion": "2.1.807",
     "3.1-RuntimeVersion": "3.1.5",
     "3.1-SdkVersion": "3.1.301",
     "5.0-RuntimeVersion": "5.0.0-preview.4",
