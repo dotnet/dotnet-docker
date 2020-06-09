@@ -2843,7 +2843,7 @@
               "tags": {
                 "$(5.0-SdkVersion)-alpine3.11": {},
                 "5.0-alpine3.11": {},
-                "$(5.0-RuntimeVersion)-alpine": {},
+                "$(5.0-SdkVersion)-alpine": {},
                 "5.0-alpine": {}
               }
             }
