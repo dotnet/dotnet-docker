@@ -62,7 +62,6 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview.4-buster-slim, 5.0-buster-slim, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/aspnet/buster-slim/amd64/Dockerfile) | Debian 10
-5.0.0-preview.4-alpine3.12, 5.0-alpine3.12, 5.0.0-preview.4-alpine, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/aspnet/alpine3.12/amd64/Dockerfile) | Alpine 3.12
 5.0.0-preview.4-alpine3.11, 5.0-alpine3.11 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/aspnet/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 5.0.0-preview.4-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/aspnet/focal/amd64/Dockerfile) | Ubuntu 20.04
 
@@ -71,7 +70,6 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview.4-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/aspnet/buster-slim/arm64v8/Dockerfile) | Debian 10
-5.0.0-preview.4-alpine3.12-arm64v8, 5.0-alpine3.12-arm64v8, 5.0.0-preview.4-alpine-arm64v8, 5.0-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/aspnet/alpine3.12/arm64v8/Dockerfile) | Alpine 3.12
 5.0.0-preview.4-alpine3.11-arm64v8, 5.0-alpine3.11-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/aspnet/alpine3.11/arm64v8/Dockerfile) | Alpine 3.11
 5.0.0-preview.4-focal-arm64v8, 5.0-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/5.0/aspnet/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
