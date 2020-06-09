@@ -13,15 +13,15 @@ ENV \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Alpine-3.11
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Alpine-3.12
 
 # Add dependencies for disabling invariant mode (set in base image)
 RUN apk add --no-cache icu-libs
 
 # Install .NET Core SDK
-RUN dotnet_sdk_version=3.1.300 \
+RUN dotnet_sdk_version=3.1.301 \
     && wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
-    && dotnet_sha512='4546f5e2b88fc62dc186825fe8b84aa5b0769cef779c4cba988278a9ba8e23f87b07d232ae1ec51fc7f73b24c9234003a3e952c0da7ca0fd4b7baa2ad8cffc6d' \
+    && dotnet_sha512='f1631569991b448ab9814fe1150609136f428d686d67f93e23b203163dc743de9b0c061bd5dd15f383c832a143ed9e2f7e70d4d417f75c6812d4ff09efb82188' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
