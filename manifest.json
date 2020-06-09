@@ -562,7 +562,9 @@
               "osVersion": "alpine3.11",
               "tags": {
                 "$(5.0-RuntimeVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
+                "5.0-alpine3.11": {},
+                "$(5.0-RuntimeVersion)-alpine": {},
+                "5.0-alpine": {}
               }
             }
           ]
@@ -577,7 +579,9 @@
               "osVersion": "alpine3.11",
               "tags": {
                 "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {},
-                "5.0-alpine3.11-arm64v8": {}
+                "5.0-alpine3.11-arm64v8": {},
+                "$(5.0-RuntimeVersion)-alpine-arm64v8": {},
+                "5.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1321,7 +1325,9 @@
               "osVersion": "alpine3.11",
               "tags": {
                 "$(5.0-RuntimeVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
+                "5.0-alpine3.11": {},
+                "$(5.0-RuntimeVersion)-alpine": {},
+                "5.0-alpine": {}
               }
             }
           ]
@@ -1339,7 +1345,9 @@
               "osVersion": "alpine3.11",
               "tags": {
                 "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {},
-                "5.0-alpine3.11-arm64v8": {}
+                "5.0-alpine3.11-arm64v8": {},
+                "$(5.0-RuntimeVersion)-alpine-arm64v8": {},
+                "5.0-alpine-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGrouping": [
@@ -2130,7 +2138,9 @@
               "osVersion": "alpine3.11",
               "tags": {
                 "$(5.0-RuntimeVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
+                "5.0-alpine3.11": {},
+                "$(5.0-RuntimeVersion)-alpine": {},
+                "5.0-alpine": {}
               }
             }
           ]
@@ -2148,7 +2158,9 @@
               "osVersion": "alpine3.11",
               "tags": {
                 "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {},
-                "5.0-alpine3.11-arm64v8": {}
+                "5.0-alpine3.11-arm64v8": {},
+                "$(5.0-RuntimeVersion)-alpine-arm64v8": {},
+                "5.0-alpine-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGrouping": [
@@ -2830,7 +2842,9 @@
               "osVersion": "alpine3.11",
               "tags": {
                 "$(5.0-SdkVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
+                "5.0-alpine3.11": {},
+                "$(5.0-RuntimeVersion)-alpine": {},
+                "5.0-alpine": {}
               }
             }
           ]
