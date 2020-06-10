@@ -8,19 +8,12 @@ set -u
 channel=$1
 
 curl -SLo sdk.zip https://aka.ms/dotnet/$channel/Sdk/dotnet-sdk-win-x64.zip
-unzip sdk.zip -d sdk
+
+sdkVer=$(unzip -p sdk.zip "sdk/*/.version" | cat | head -2 | tail -1)
+runtimeVer=$(unzip -p sdk.zip "shared/Microsoft.NETCore.App/*/.version" | cat | tail -1)
+aspnetVer=$(unzip -p sdk.zip "shared/Microsoft.AspNetCore.App/*/.version" | cat | tail -1)
+
 rm sdk.zip
-
-sdkVersionsPath=$(find sdk/sdk -name .version)
-sdkVer=$(cat $sdkVersionsPath | head -2 | tail -1)
-
-runtimeVersionsPath=$(find sdk/shared/Microsoft.NETCore.App -name .version)
-runtimeVer=$(cat $runtimeVersionsPath | tail -1)
-
-aspnetVersionsPath=$(find sdk/shared/Microsoft.AspNetCore.App -name .version)
-aspnetVer=$(cat $aspnetVersionsPath | tail -1)
-
-rm -rf sdk
 
 echo "##vso[task.setvariable variable=sdkVer]$sdkVer"
 echo "##vso[task.setvariable variable=runtimeVer]$runtimeVer"
