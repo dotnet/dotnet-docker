@@ -441,36 +441,6 @@
           "productVersion": "$(5.0-RuntimeVersion)",
           "platforms": [
             {
-              "dockerfile": "5.0/runtime-deps/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "dockerfile": "5.0/runtime-deps/alpine3.11/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {},
-                "5.0-alpine3.11-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
               "dockerfile": "5.0/runtime-deps/alpine3.12/amd64",
               "os": "linux",
               "osVersion": "alpine3.12",
@@ -1058,50 +1028,6 @@
                 "$(5.0-RuntimeVersion)-nanoserver-2004": {},
                 "5.0-nanoserver-2004": {}
               }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "5.0/runtime/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "5.0/runtime/alpine3.11/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {},
-                "5.0-alpine3.11-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGrouping": [
-                {
-                  "name": "pr-build",
-                  "dependencies": [
-                    "$(Repo:sdk):5.0-buster-slim-arm64v8"
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -1750,50 +1676,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "5.0/aspnet/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "5.0/aspnet/alpine3.11/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {},
-                "5.0-alpine3.11-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGrouping": [
-                {
-                  "name": "pr-build",
-                  "dependencies": [
-                    "$(Repo:sdk):5.0-buster-slim-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
               "dockerfile": "5.0/aspnet/alpine3.12/amd64",
               "os": "linux",
               "osVersion": "alpine3.12",
@@ -2326,23 +2208,6 @@
               "tags": {
                 "$(5.0-SdkVersion)-nanoserver-2004": {},
                 "5.0-nanoserver-2004": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-SdkVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "5.0/sdk/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-SdkVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
               }
             }
           ]
