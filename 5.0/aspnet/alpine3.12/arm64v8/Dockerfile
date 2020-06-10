@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/core/runtime
-FROM $REPO:5.0-alpine3.11-arm64v8
+FROM $REPO:5.0-alpine3.12-arm64v8
 
 # Install ASP.NET Core
 ENV ASPNET_VERSION 5.0.0-preview.5.20279.2

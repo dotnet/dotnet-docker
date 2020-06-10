@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
-FROM $REPO:5.0-alpine3.11
+FROM $REPO:5.0-alpine3.12
 
 # Install .NET Core
 ENV DOTNET_VERSION 5.0.0-preview.5.20278.1
