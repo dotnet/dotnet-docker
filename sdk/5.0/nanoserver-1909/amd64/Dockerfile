@@ -45,8 +45,6 @@ ARG DOTNET_SDK_VERSION
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true `
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
