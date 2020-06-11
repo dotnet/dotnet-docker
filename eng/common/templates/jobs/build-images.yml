@@ -16,6 +16,7 @@ jobs:
     matrix: $[ ${{ parameters.matrix }} ]
   timeoutInMinutes: ${{ parameters.buildJobTimeout }}
   variables:
+    osVersion: ${{ parameters.osVersion }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       imageBuilderBuildArgs: --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --push --username $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(imageBuilder.queueArgs)
     ${{ if eq(variables['System.TeamProject'], 'public') }}:
@@ -30,6 +31,7 @@ jobs:
       $(runImageBuilderCmd) build
       --manifest $(manifest)
       $(imageBuilderPaths)
+      $(osVersions)
       --os-type $(osType)
       --architecture $(architecture)
       --retry
