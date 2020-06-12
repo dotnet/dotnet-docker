@@ -7,6 +7,7 @@ RUN apk add --no-cache \
     krb5-libs \
     libgcc \
     libintl \
+    libldap \
     libssl1.1 \
     libstdc++ \
     zlib
