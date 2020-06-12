@@ -29,7 +29,7 @@ namespace Dotnet.Docker
         private static readonly string s_productUrlPattern = string.Format(s_urlPatternFormat, string.Empty);
         private static readonly string s_lzmaUrlPattern = string.Format(s_urlPatternFormat, "lzma");
         private static readonly string s_shaPatternFormat = $"[ \\$]({{0}})sha512( )*=( )*'(?<{ValueGroupName}>[^'\\s]*)'";
-        private static readonly string s_productShaPattern = string.Format(s_shaPatternFormat, "dotnet_|aspnetcore_");
+        private static readonly string s_productShaPattern = string.Format(s_shaPatternFormat, "dotnet_|aspnetcore_|dotnetmonitor_");
         private static readonly string s_lzmaShaPattern = string.Format(s_shaPatternFormat, "lzma_");
 
         private static readonly Regex s_productDownloadUrlRegex = new Regex(s_productUrlPattern);
@@ -40,7 +40,8 @@ namespace Dotnet.Docker
             VariableHelper.AspNetVersionName,
             VariableHelper.AspNetCoreVersionName,
             VariableHelper.DotnetSdkVersionName,
-            VariableHelper.DotnetVersionName);
+            VariableHelper.DotnetVersionName,
+            VariableHelper.MonitorVersionName);
 
         private static readonly Dictionary<string, string> s_shaCache = new Dictionary<string, string>();
         private static readonly Dictionary<string, Dictionary<string, string>> s_releaseChecksumCache =

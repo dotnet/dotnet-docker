@@ -14,6 +14,7 @@ namespace Dotnet.Docker
         public string GitHubUpstreamBranch => "nightly";
         public string GitHubUpstreamOwner => "dotnet";
         public string GitHubUser { get; private set; }
+        public string MonitorVersion { get; private set; }
         public string RuntimeVersion { get; private set; }
         public string SdkVersion { get; private set; }
         public bool ComputeChecksums { get; private set; }
@@ -43,6 +44,13 @@ namespace Dotnet.Docker
                     ref sdkVersion,
                     "SDK version to update the Dockerfiles with");
                 SdkVersion = sdkVersion;
+
+                string monitorVersion = null;
+                Argument<string> monitorVersionArg = syntax.DefineOption(
+                    "monitor-version",
+                    ref monitorVersion,
+                    ".NET Monitor version to update the Dockerfiles with");
+                MonitorVersion = monitorVersion;
 
                 string gitHubEmail = null;
                 syntax.DefineOption(

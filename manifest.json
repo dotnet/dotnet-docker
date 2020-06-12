@@ -8,7 +8,7 @@
     "3.1-SdkVersion": "3.1.301",
     "5.0-RuntimeVersion": "5.0.0-preview.6",
     "5.0-SdkVersion": "5.0.100-preview.6",
-    "Monitor-5.0-Version": "5.0.0-preview.1"
+    "5.0-MonitorVersion": "5.0.0-preview.2"
   },
   "repos": [
     {
@@ -2278,7 +2278,7 @@
         {
           "productVersion": "$(3.1-RuntimeVersion)",
           "sharedTags": {
-            "$(Monitor-5.0-Version)": {},
+            "$(5.0-MonitorVersion)": {},
             "5.0": {},
             "latest": {}
           },
@@ -2292,7 +2292,7 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(Monitor-5.0-Version)-alpine": {},
+                "$(5.0-MonitorVersion)-alpine": {},
                 "5.0-alpine": {}
               }
             }

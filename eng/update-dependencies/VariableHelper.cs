@@ -11,6 +11,7 @@ namespace Dotnet.Docker
         public const string AspNetCoreVersionName = "aspnetcore_version";
         public const string DotnetVersionName = "dotnet_version";
         public const string DotnetSdkVersionName = "dotnet_sdk_version";
+        public const string MonitorVersionName = "dotnet_monitor_version";
         public const string ValueGroupName = "value";
         public const string VariableGroupName = "variable";
 
