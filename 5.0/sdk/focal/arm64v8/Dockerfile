@@ -4,7 +4,7 @@ FROM $REPO:5.0-focal-arm64v8
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \
-    DOTNET_SDK_VERSION=5.0.100-preview.6.20312.3 \
+    DOTNET_SDK_VERSION=5.0.100-preview.6.20314.3 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -21,7 +21,7 @@ RUN apt-get update \
 
 # Install .NET Core SDK
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm64.tar.gz \
-    && dotnet_sha512='c36f05896db0fcdbb1c9fc0fc2c4c8e2681123ae6557bff2b2de15e2c6ff8006d43d893bb556b595af41b6a05a5901313b195da47e1ca2fcfe1f381dfc420422' \
+    && dotnet_sha512='b2687e20114dc2d6c56cc89e7a94df2df1ebb3f33fe001346576f77ea8b6e00c433db034e800711bbbc0171ca02d1ab516a2e0375ea2eda00cebf9558e5db43b' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
