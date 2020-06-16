@@ -293,7 +293,10 @@ namespace Dotnet.Docker
         private static IEnumerable<IDependencyUpdater> GetUpdaters(
             string dockerfileVersion, IEnumerable<IDependencyInfo> buildInfos)
         {
-            string[] dockerfiles = Directory.GetFiles(RepoRoot, "Dockerfile", SearchOption.AllDirectories)
+            string[] dockerfiles = Directory.GetFiles(
+                    Path.Combine(RepoRoot, "src"), 
+                    "Dockerfile", 
+                    SearchOption.AllDirectories)
                 .Where(dockerfile => dockerfile.Contains($"{Path.DirectorySeparatorChar}{dockerfileVersion}{Path.DirectorySeparatorChar}"))
                 .ToArray();
 

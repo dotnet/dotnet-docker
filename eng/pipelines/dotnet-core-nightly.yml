@@ -6,11 +6,8 @@ trigger:
   paths:
     include:
     - manifest.json
-    - aspnet/*
-    - monitor/*
-    - runtime/*
-    - runtime-deps/*
-    - sdk/*
+    - src/*
+
 pr:
   branches:
     include:
