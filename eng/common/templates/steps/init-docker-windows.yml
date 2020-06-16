@@ -1,12 +1,9 @@
 parameters:
-  setupImageBuilder:  true
+  setupImageBuilder: true
 
 steps:
-- script: echo "##vso[task.setvariable variable=artifactsPath]$(Build.ArtifactStagingDirectory)
+- powershell: echo "##vso[task.setvariable variable=artifactsPath]$(Build.ArtifactStagingDirectory)"
   displayName: Define Artifacts Path Variable
-
-- script: echo '##vso[task.setvariable variable=imageBuilderImageInfoArg]--image-info-output-path $(artifactsPath)/$(legName)-image-info.json
-  displayName: Set Image Info Arg for Image Builder
 
   ################################################################################
   # Cleanup Docker Resources
@@ -17,9 +14,9 @@ steps:
   # Setup Image Builder (Optional)
   ################################################################################
 - ${{ if eq(parameters.setupImageBuilder, 'true') }}:
-  - powershell: $(engCommonPath)/Invoke-WithRetry.ps1 "docker pull $(imageNames.imagebuilder.windows)"
+  - powershell: $(engCommonPath)/Invoke-WithRetry.ps1 "docker pull $(imageNames.imageBuilder)"
     displayName: Pull Image Builder
-  - script: docker create --name setupImageBuilder-$(Build.BuildId)-$(System.JobId) $(imageNames.imagebuilder.windows)
+  - script: docker create --name setupImageBuilder-$(Build.BuildId)-$(System.JobId) $(imageNames.imageBuilder)
     displayName: Create Setup Container
   - script: >
       docker cp
@@ -30,7 +27,7 @@ steps:
     displayName: Cleanup Setup Container
     condition: always()
     continueOnError: true
-  - script: >
+  - powershell: >
       echo "##vso[task.setvariable variable=runImageBuilderCmd]
-      $(Build.BinariesDirectory)\.Microsoft.DotNet.ImageBuilder\Microsoft.DotNet.ImageBuilder.exe
+      $(Build.BinariesDirectory)\.Microsoft.DotNet.ImageBuilder\Microsoft.DotNet.ImageBuilder.exe"
     displayName: Define runImageBuilderCmd Variable
