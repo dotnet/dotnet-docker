@@ -72,7 +72,7 @@ try {
         if ($ReuseImageBuilderImage -ne $True) {
             ./eng/common/Invoke-WithRetry.ps1 "docker pull ${imageNames.imagebuilder}"
             Exec ("docker build -t $imageBuilderImageName --build-arg " `
-                + "IMAGE=${imageNames.imagebuilder.linux} -f eng/common/Dockerfile.WithRepo .")
+                + "IMAGE=${imageNames.imagebuilder} -f eng/common/Dockerfile.WithRepo .")
         }
 
         $imageBuilderCmd = "docker run --name $imageBuilderContainerName -v /var/run/docker.sock:/var/run/docker.sock $imageBuilderImageName"
