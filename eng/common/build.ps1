@@ -61,7 +61,7 @@ try {
         $args += " --path " + ($Paths -join " --path ")
     }
     else {
-        $args += " --path '$Version/*'"
+        $args += " --path 'src/*/$Version/*'"
     }
 
     if ($Manifest) {

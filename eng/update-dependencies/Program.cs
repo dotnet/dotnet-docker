@@ -294,9 +294,11 @@ namespace Dotnet.Docker
             string dockerfileVersion, IEnumerable<IDependencyInfo> buildInfos)
         {
             string[] dockerfiles = Directory.GetFiles(
-                Path.Combine(RepoRoot, dockerfileVersion),
-                "Dockerfile",
-                SearchOption.AllDirectories);
+                    Path.Combine(RepoRoot, "src"), 
+                    "Dockerfile", 
+                    SearchOption.AllDirectories)
+                .Where(dockerfile => dockerfile.Contains($"{Path.DirectorySeparatorChar}{dockerfileVersion}{Path.DirectorySeparatorChar}"))
+                .ToArray();
 
             Trace.TraceInformation("Updating the following Dockerfiles:");
             Trace.TraceInformation(string.Join(Environment.NewLine, dockerfiles));
