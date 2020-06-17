@@ -15,6 +15,8 @@ variables:
   value: 2
 - name: imageInfoVariant
   value: ""
+- name: manifestVariables
+  value: ""
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - group: DotNet-Docker-Common
