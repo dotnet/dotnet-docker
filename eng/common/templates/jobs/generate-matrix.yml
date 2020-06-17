@@ -18,6 +18,7 @@ jobs:
       --customBuildLegGrouping "${{ parameters.customBuildLegGrouping }}"
       --productVersionComponents $(productVersionComponents)
       $(imageBuilder.pathArgs)
+      $(manifestVariables)
     displayName: Generate ${{ parameters.matrixType }} Matrix
     name: matrix
   - template: ../steps/cleanup-docker-linux.yml

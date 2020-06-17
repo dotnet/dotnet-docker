@@ -32,6 +32,7 @@ jobs:
       --manifest $(manifest)
       $(artifactsPath)
       $(artifactsPath)/image-info.json
+      $(manifestVariables)
     displayName: Merge Image Info Files
   - publish: $(Build.ArtifactStagingDirectory)/image-info.json
     artifact: image-info

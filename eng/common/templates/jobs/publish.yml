@@ -7,6 +7,7 @@ jobs:
     imageBuilder.commonCmdArgs: >
       --manifest '$(manifest)'
       --registry-override '$(acr.server)'
+      $(manifestVariables)
       $(imageBuilder.queueArgs)
   steps:
   - template: ../steps/init-docker-linux.yml
@@ -84,6 +85,7 @@ jobs:
       --git-branch 'master'
       --git-path 'build-info/docker/image-info.$(buildRepoName)-$(publicSourceBranch)$(imageInfoVariant).json'
       $(dryRunArg)
+      $(imageBuilder.commonCmdArgs)
     displayName: Publish Image Info
   - script: >
       $(runImageBuilderCmd) ingestKustoImageInfo
@@ -98,6 +100,7 @@ jobs:
       --os-type '*'
       --architecture '*'
       $(dryRunArg)
+      $(imageBuilder.commonCmdArgs)
     displayName: Ingest Kusto Image Info
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
     displayName: Component Detection

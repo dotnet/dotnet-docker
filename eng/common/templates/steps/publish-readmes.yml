@@ -12,6 +12,7 @@ steps:
     '$(BotAccount-dotnet-docker-bot-PAT)'
     '$(publicGitRepoUri)'
     ${{ parameters.dryRunArg }}
+    $(manifestVariables)
     $(imageBuilder.queueArgs)
   displayName: Publish Readmes
   condition: ${{ parameters.condition }}
