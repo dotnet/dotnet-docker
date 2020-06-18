@@ -39,7 +39,6 @@ RUN `
     Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
 # SDK image
-
 FROM $REPO:5.0-nanoserver-1903
 ARG DOTNET_SDK_VERSION
 
