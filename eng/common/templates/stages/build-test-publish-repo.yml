@@ -45,34 +45,42 @@ stages:
       pool: # linuxArm64v8Pool
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: DotNetCore-Docker-Public
+          demands:
+          - Agent.OS -equals linux
+          - Agent.OSArchitecture -equals ARM64
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: DotNetCore-Docker
-        demands:
-        - agent.os -equals linux
-        - RemoteDockerServerOS -equals linux
-        - RemoteDockerServerArch -equals aarch64
+          demands:
+          - Agent.OS -equals linux
+          - RemoteDockerServerOS -equals linux
+          - RemoteDockerServerArch -equals aarch64
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm64v8']
-      useRemoteDockerServer: true
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+        useRemoteDockerServer: true
   - template: ../jobs/build-images.yml
     parameters:
       name: Linux_arm32v7
       pool: # linuxArm32v7Pool
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: DotNetCore-Docker-Public
+          demands:
+          - Agent.OS -equals linux
+          - Agent.OSArchitecture -equals ARM64
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: DotNetCore-Docker
-        demands:
-        - agent.os -equals linux
-        - RemoteDockerServerOS -equals linux
-        - RemoteDockerServerArch -equals aarch64
+          demands:
+          - Agent.OS -equals linux
+          - RemoteDockerServerOS -equals linux
+          - RemoteDockerServerArch -equals aarch64
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm32v7']
-      useRemoteDockerServer: true
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+        useRemoteDockerServer: true
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows1809_amd64
@@ -181,7 +189,7 @@ stages:
         pool: # linuxArm64v8Pool
           name: DotNetCore-Docker
           demands:
-          - agent.os -equals linux
+          - Agent.OS -equals linux
           - RemoteDockerServerOS -equals linux
           - RemoteDockerServerArch -equals aarch64
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm64v8']
@@ -193,7 +201,7 @@ stages:
         pool: # linuxArm32v7Pool
           name: DotNetCore-Docker
           demands:
-          - agent.os -equals linux
+          - Agent.OS -equals linux
           - RemoteDockerServerOS -equals linux
           - RemoteDockerServerArch -equals aarch64
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm32v7']
