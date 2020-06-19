@@ -36,12 +36,6 @@ namespace Dotnet.Docker
         private static readonly Regex s_lzmaDownloadUrlRegex = new Regex(s_lzmaUrlPattern);
         private static readonly Regex s_productShaRegex = new Regex(s_productShaPattern);
         private static readonly Regex s_lzmaShaRegex = new Regex(s_lzmaShaPattern);
-        private static readonly Regex s_versionRegex = VariableHelper.GetValueRegex(
-            VariableHelper.AspNetVersionName,
-            VariableHelper.AspNetCoreVersionName,
-            VariableHelper.DotnetSdkVersionName,
-            VariableHelper.DotnetVersionName,
-            VariableHelper.MonitorVersionName);
 
         private static readonly Dictionary<string, string> s_shaCache = new Dictionary<string, string>();
         private static readonly Dictionary<string, Dictionary<string, string>> s_releaseChecksumCache =
@@ -49,11 +43,14 @@ namespace Dotnet.Docker
 
         private Regex _downloadUrlRegex;
         private readonly Options _options;
+        private readonly Regex _versionRegex;
 
-        private DockerfileShaUpdater(string dockerfilePath, Regex regex, Regex downloadUrlRegex, Options options) : base()
+        private DockerfileShaUpdater(string dockerfilePath, Regex regex, Regex downloadUrlRegex, Options options, string[] versionVariableNames) : base()
         {
             _downloadUrlRegex = downloadUrlRegex;
             _options = options;
+            _versionRegex = VariableHelper.GetValueRegex(versionVariableNames);
+
             Path = dockerfilePath;
             Regex = regex;
             VersionGroupName = ValueGroupName;
@@ -63,11 +60,11 @@ namespace Dotnet.Docker
             SkipIfNoReplacementFound = true;
         }
 
-        public static DockerfileShaUpdater CreateProductShaUpdater(string dockerfilePath, Options options) =>
-            new DockerfileShaUpdater(dockerfilePath, s_productShaRegex, s_productDownloadUrlRegex, options);
+        public static DockerfileShaUpdater CreateProductShaUpdater(string dockerfilePath, Options options, params string[] versionVariableNames) =>
+            new DockerfileShaUpdater(dockerfilePath, s_productShaRegex, s_productDownloadUrlRegex, options, versionVariableNames);
 
-        public static DockerfileShaUpdater CreateLzmaShaUpdater(string dockerfilePath, Options options) =>
-            new DockerfileShaUpdater(dockerfilePath, s_lzmaShaRegex, s_lzmaDownloadUrlRegex, options);
+        public static DockerfileShaUpdater CreateLzmaShaUpdater(string dockerfilePath, Options options, params string[] versionVariableNames) =>
+            new DockerfileShaUpdater(dockerfilePath, s_lzmaShaRegex, s_lzmaDownloadUrlRegex, options, versionVariableNames);
 
         protected override string TryGetDesiredValue(
             IEnumerable<IDependencyInfo> dependencyBuildInfos, out IEnumerable<IDependencyInfo> usedBuildInfos)
@@ -260,9 +257,9 @@ namespace Dotnet.Docker
             return match.Success;
         }
 
-        private static bool TryGetDotNetVersion(string dockerfile, out (string Value, string Name) versionInfo)
+        private bool TryGetDotNetVersion(string dockerfile, out (string Value, string Name) versionInfo)
         {
-            Match match = s_versionRegex.Match(dockerfile);
+            Match match = _versionRegex.Match(dockerfile);
             versionInfo = match.Success
                 ? (match.Groups[VariableHelper.ValueGroupName].Value, match.Groups[VariableHelper.VariableGroupName].Value)
                 : (null, null);

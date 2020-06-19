@@ -11,7 +11,6 @@ using LibGit2Sharp;
 using Microsoft.DotNet.VersionTools;
 using Microsoft.DotNet.VersionTools.Automation;
 using Microsoft.DotNet.VersionTools.Automation.GitHubApi;
-using Microsoft.DotNet.VersionTools.BuildManifest.Model;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
 
@@ -19,10 +18,10 @@ namespace Dotnet.Docker
 {
     public static class Program
     {
-        private const string AspNetCoreBuildInfoName = "aspnet";
-        private const string MonitorBuildInfoName = "monitor";
-        private const string RuntimeBuildInfoName = "core-setup";
-        private const string SdkBuildInfoName = "cli";
+        private const string AspNetCoreBuildInfoName = "AspNet";
+        private const string MonitorBuildInfoName = "Monitor";
+        private const string RuntimeBuildInfoName = "Runtime";
+        private const string SdkBuildInfoName = "Sdk";
 
         private static Options Options { get; } = new Options();
         private static string RepoRoot { get; } = Directory.GetCurrentDirectory();
@@ -37,8 +36,7 @@ namespace Dotnet.Docker
 
                 Options.Parse(args);
 
-                IEnumerable<IDependencyInfo> buildInfos = GetBuildInfo();
-                DependencyUpdateResults updateResults = UpdateFiles(buildInfos);
+                DependencyUpdateResults updateResults = UpdateFiles();
                 if (updateResults.ChangesDetected())
                 {
                     if (Options.UpdateOnly)
@@ -70,49 +68,52 @@ namespace Dotnet.Docker
             Environment.Exit(0);
         }
 
-        private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)
+        private static DependencyUpdateResults UpdateFiles()
         {
-            // NOTE: dotnet-monitor will diverge its versioning in the future; this will need to be refactored in
-            // some way to allow updaters to be collected for each product's individual version.
-            string buildVersion = buildInfos.GetBuildVersion(RuntimeBuildInfoName) ??
-                buildInfos.GetBuildVersion(SdkBuildInfoName) ??
-                buildInfos.GetBuildVersion(AspNetCoreBuildInfoName) ??
-                buildInfos.GetBuildVersion(MonitorBuildInfoName);
-            string productVersion = buildVersion.Split('-')[0];
-            string dockerfileVersion = productVersion.Substring(0, productVersion.LastIndexOf('.'));
-            IEnumerable<IDependencyUpdater> updaters = GetUpdaters(dockerfileVersion, buildInfos);
-
-            return DependencyUpdateUtils.Update(updaters, buildInfos);
-        }
-
-        private static IEnumerable<IDependencyInfo> GetBuildInfo()
-        {
-            List<IDependencyInfo> buildInfo = new List<IDependencyInfo>();
+            List<IDependencyInfo> buildInfos = new List<IDependencyInfo>();
+            List<IDependencyUpdater> updaters = new List<IDependencyUpdater>();
 
             if (Options.AspnetVersion != null)
             {
-                buildInfo.Add(CreateDependencyBuildInfo(AspNetCoreBuildInfoName, Options.AspnetVersion));
+                AddBuildInfoAndUpdatersForProduct(
+                    buildInfos,
+                    updaters,
+                    AspNetCoreBuildInfoName,
+                    Options.AspnetVersion,
+                    VariableHelper.AspNetVersionName,
+                    VariableHelper.AspNetCoreVersionName);
             }
             if (Options.MonitorVersion != null)
             {
-                buildInfo.Add(CreateDependencyBuildInfo(MonitorBuildInfoName, Options.MonitorVersion));
+                AddBuildInfoAndUpdatersForProduct(
+                    buildInfos,
+                    updaters,
+                    MonitorBuildInfoName,
+                    Options.MonitorVersion,
+                    VariableHelper.MonitorVersionName);
             }
             if (Options.RuntimeVersion != null)
             {
-                buildInfo.Add(CreateDependencyBuildInfo(RuntimeBuildInfoName, Options.RuntimeVersion));
+                AddBuildInfoAndUpdatersForProduct(
+                    buildInfos,
+                    updaters,
+                    RuntimeBuildInfoName,
+                    Options.RuntimeVersion,
+                    VariableHelper.DotnetVersionName);
             }
             if (Options.SdkVersion != null)
             {
-                buildInfo.Add(CreateDependencyBuildInfo(SdkBuildInfoName, Options.SdkVersion));
+                AddBuildInfoAndUpdatersForProduct(
+                    buildInfos,
+                    updaters,
+                    SdkBuildInfoName,
+                    Options.SdkVersion,
+                    VariableHelper.DotnetSdkVersionName);
             }
 
-            return buildInfo;
-        }
+            updaters.Add(new ReadMeUpdater(RepoRoot));
 
-        private static IDependencyInfo CreateDependencyBuildInfo(string name, IEnumerable<BuildIdentity> builds)
-        {
-            BuildIdentity buildId = builds.First(build => string.Equals(build.Name, name, StringComparison.OrdinalIgnoreCase));
-            return CreateDependencyBuildInfo(name, buildId.ProductVersion);
+            return DependencyUpdateUtils.Update(updaters, buildInfos);
         }
 
         private static IDependencyInfo CreateDependencyBuildInfo(string name, string version)
@@ -293,52 +294,66 @@ namespace Dotnet.Docker
             }
         }
 
-        private static string GetBuildVersion(this IEnumerable<IDependencyInfo> buildInfos, string name)
+        /// <summary>
+        /// Creates dependency info for build information and updaters to update the repository assets with new version information.
+        /// </summary>
+        /// <param name="buildInfos">
+        /// The list of dependency info that represents each versioned product.
+        /// This method will add the specified build information to this list.
+        /// </param>
+        /// <param name="updaters">
+        /// The list of dependency updaters that will update version and hash information in the repository.
+        /// This method will add updaters for the specified build information to this list.
+        /// </param>
+        /// <param name="buildInfoName">The name of the product for which version and hash information should be updated.</param>
+        /// <param name="buildInfoVersion">The full version of the product.</param>
+        /// <param name="versionVariableNames">The list of variable names whose values shall be updated in Dockerfiles with the <paramref name="buildInfoVersion"/> value.</param>
+        /// <remarks>
+        /// The <paramref name="buildInfoName"/> is the name of the product for dependency information, but is also used for filtering
+        /// which product folder is used to search for Dockerfiles as well as which version variable is updated with version information
+        /// in the manifest.json file.
+        /// </remarks>
+        private static void AddBuildInfoAndUpdatersForProduct(
+            IList<IDependencyInfo> buildInfos,
+            IList<IDependencyUpdater> updaters,
+            string buildInfoName,
+            string buildInfoVersion,
+            params string[] versionVariableNames
+            )
         {
-            return buildInfos.FirstOrDefault(bi => bi.SimpleName == name)?.SimpleVersion;
-        }
-
-        private static IEnumerable<IDependencyUpdater> GetUpdaters(
-            string dockerfileVersion, IEnumerable<IDependencyInfo> buildInfos)
-        {
+            IDependencyInfo buildInfo = CreateDependencyBuildInfo(buildInfoName, buildInfoVersion);
+            buildInfos.Add(buildInfo);
+            
+            string productVersion = buildInfo.SimpleVersion.Split('-')[0];
+            string dockerfileVersion = productVersion.Substring(0, productVersion.LastIndexOf('.'));
             string[] dockerfiles = Directory.GetFiles(
-                    Path.Combine(RepoRoot, "src"), 
-                    "Dockerfile", 
-                    SearchOption.AllDirectories)
-                .Where(dockerfile => dockerfile.Contains($"{Path.DirectorySeparatorChar}{dockerfileVersion}{Path.DirectorySeparatorChar}"))
-                .ToArray();
+                Path.Combine(RepoRoot, "src", buildInfo.SimpleName.ToLowerInvariant(), dockerfileVersion),
+                "Dockerfile",
+                SearchOption.AllDirectories);
 
-            Trace.TraceInformation("Updating the following Dockerfiles:");
+            Trace.TraceInformation($"Updating the following {buildInfo.SimpleName} {dockerfileVersion} Dockerfiles:");
             Trace.TraceInformation(string.Join(Environment.NewLine, dockerfiles));
 
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies 
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
-            List<IDependencyUpdater> manifestBasedUpdaters = new List<IDependencyUpdater>();
-            CreateManifestUpdater(manifestBasedUpdaters, "Sdk", buildInfos, SdkBuildInfoName);
-            CreateManifestUpdater(manifestBasedUpdaters, "Runtime", buildInfos, RuntimeBuildInfoName);
-            CreateManifestUpdater(manifestBasedUpdaters, "Monitor", buildInfos, MonitorBuildInfoName);
-            manifestBasedUpdaters.Add(new ReadMeUpdater(RepoRoot));
+            foreach (string dockerfile in dockerfiles)
+            {
+                // Add version variable updaters
+                foreach (string versionVariableName in versionVariableNames)
+                {
+                    updaters.Add(CreateDockerfileVariableUpdater(dockerfile, versionVariableName, buildInfo.SimpleName));
+                }
 
-            return CreateDockerfileVariableUpdaters(dockerfiles, buildInfos, VariableHelper.DotnetSdkVersionName, SdkBuildInfoName)
-                .Concat(CreateDockerfileVariableUpdaters(
-                    dockerfiles, buildInfos, VariableHelper.AspNetVersionName, AspNetCoreBuildInfoName))
-                .Concat(CreateDockerfileVariableUpdaters(
-                    dockerfiles, buildInfos, VariableHelper.AspNetCoreVersionName, AspNetCoreBuildInfoName))
-                .Concat(CreateDockerfileVariableUpdaters(
-                    dockerfiles, buildInfos, VariableHelper.DotnetVersionName, RuntimeBuildInfoName))
-                .Concat(CreateDockerfileVariableUpdaters(
-                    dockerfiles, buildInfos, VariableHelper.MonitorVersionName, MonitorBuildInfoName))
-                .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateProductShaUpdater(path, Options)))
-                .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateLzmaShaUpdater(path, Options)))
-                .Concat(manifestBasedUpdaters);
-        }
+                // Add hash updaters
+                updaters.Add(DockerfileShaUpdater.CreateProductShaUpdater(dockerfile, Options, versionVariableNames));
+                if (string.Equals(SdkBuildInfoName, buildInfo.SimpleName))
+                {
+                    updaters.Add(DockerfileShaUpdater.CreateLzmaShaUpdater(dockerfile, Options, versionVariableNames));
+                }
+            }
 
-        private static IEnumerable<IDependencyUpdater> CreateDockerfileVariableUpdaters(
-            string[] dockerfilePaths, IEnumerable<IDependencyInfo> buildInfos, string variableName, string buildInfoName)
-        {
-            return GetBuildVersion(buildInfos, buildInfoName) == null
-                ? Enumerable.Empty<IDependencyUpdater>()
-                : dockerfilePaths.Select(path => CreateDockerfileVariableUpdater(path, variableName, buildInfoName));
+            // Add manifest updater
+            updaters.Add(new ManifestUpdater(buildInfo.SimpleName, buildInfo.SimpleVersion, RepoRoot));
         }
 
         private static IDependencyUpdater CreateDockerfileVariableUpdater(
@@ -351,19 +366,6 @@ namespace Dotnet.Docker
                 Regex = VariableHelper.GetValueRegex(variableName),
                 VersionGroupName = VariableHelper.ValueGroupName
             };
-        }
-
-        private static void CreateManifestUpdater(
-            List<IDependencyUpdater> manifestUpdaters,
-            string imageVariantName,
-            IEnumerable<IDependencyInfo> buildInfos,
-            string buildInfoName)
-        {
-            string version = GetBuildVersion(buildInfos, buildInfoName);
-            if (version != null)
-            {
-                manifestUpdaters.Add(new ManifestUpdater(imageVariantName, version, RepoRoot));
-            }
         }
     }
 }
