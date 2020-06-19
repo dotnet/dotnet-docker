@@ -59,10 +59,10 @@ if (!(Test-Path $DotnetInstallScript)) {
 
 if ($IsRunningOnUnix) {
     & chmod +x $DotnetInstallDir/$DotnetInstallScript
-    & $DotnetInstallDir/$DotnetInstallScript --channel "3.1" --version "latest" --architecture x64 --install-dir $DotnetInstallDir
+    & $DotnetInstallDir/$DotnetInstallScript --channel "3.1" --version "latest" --install-dir $DotnetInstallDir
 }
 else {
-    & $DotnetInstallDir/$DotnetInstallScript -Channel "3.1" -Version "latest" -Architecture x64 -InstallDir $DotnetInstallDir
+    & $DotnetInstallDir/$DotnetInstallScript -Channel "3.1" -Version "latest" -InstallDir $DotnetInstallDir
 }
 
 if ($LASTEXITCODE -ne 0) { throw "Failed to install the .NET Core SDK" }
