@@ -2,7 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/core/runtime
 ARG ASPNET_VERSION=5.0.0-preview.6.20312.15
 
 # Installer image
-FROM buildpack-deps:focal-curl as installer
+FROM amd64/buildpack-deps:focal-curl as installer
 ARG ASPNET_VERSION
 
 # Retrieve ASP.NET Core

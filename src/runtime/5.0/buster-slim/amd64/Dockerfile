@@ -2,7 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
 ARG DOTNET_VERSION=5.0.0-preview.6.20305.6
 
 # Installer image
-FROM buildpack-deps:buster-curl as installer
+FROM amd64/buildpack-deps:buster-curl as installer
 ARG DOTNET_VERSION
 
 # Retrieve .NET Core
