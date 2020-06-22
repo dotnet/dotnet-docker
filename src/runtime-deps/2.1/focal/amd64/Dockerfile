@@ -9,6 +9,7 @@ RUN apt-get update \
         libgcc1 \
         libgssapi-krb5-2 \
         libicu66 \
+        liblttng-ust0 \
         libssl1.1 \
         libstdc++6 \
         zlib1g \
