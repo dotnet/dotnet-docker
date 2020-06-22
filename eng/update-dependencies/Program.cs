@@ -20,6 +20,7 @@ namespace Dotnet.Docker
     public static class Program
     {
         private const string AspNetCoreBuildInfoName = "aspnet";
+        private const string MonitorBuildInfoName = "monitor";
         private const string RuntimeBuildInfoName = "core-setup";
         private const string SdkBuildInfoName = "cli";
 
@@ -71,9 +72,12 @@ namespace Dotnet.Docker
 
         private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)
         {
+            // NOTE: dotnet-monitor will diverge its versioning in the future; this will need to be refactored in
+            // some way to allow updaters to be collected for each product's individual version.
             string buildVersion = buildInfos.GetBuildVersion(RuntimeBuildInfoName) ??
                 buildInfos.GetBuildVersion(SdkBuildInfoName) ??
-                buildInfos.GetBuildVersion(AspNetCoreBuildInfoName);
+                buildInfos.GetBuildVersion(AspNetCoreBuildInfoName) ??
+                buildInfos.GetBuildVersion(MonitorBuildInfoName);
             string productVersion = buildVersion.Split('-')[0];
             string dockerfileVersion = productVersion.Substring(0, productVersion.LastIndexOf('.'));
             IEnumerable<IDependencyUpdater> updaters = GetUpdaters(dockerfileVersion, buildInfos);
@@ -88,6 +92,10 @@ namespace Dotnet.Docker
             if (Options.AspnetVersion != null)
             {
                 buildInfo.Add(CreateDependencyBuildInfo(AspNetCoreBuildInfoName, Options.AspnetVersion));
+            }
+            if (Options.MonitorVersion != null)
+            {
+                buildInfo.Add(CreateDependencyBuildInfo(MonitorBuildInfoName, Options.MonitorVersion));
             }
             if (Options.RuntimeVersion != null)
             {
@@ -308,6 +316,7 @@ namespace Dotnet.Docker
             List<IDependencyUpdater> manifestBasedUpdaters = new List<IDependencyUpdater>();
             CreateManifestUpdater(manifestBasedUpdaters, "Sdk", buildInfos, SdkBuildInfoName);
             CreateManifestUpdater(manifestBasedUpdaters, "Runtime", buildInfos, RuntimeBuildInfoName);
+            CreateManifestUpdater(manifestBasedUpdaters, "Monitor", buildInfos, MonitorBuildInfoName);
             manifestBasedUpdaters.Add(new ReadMeUpdater(RepoRoot));
 
             return CreateDockerfileVariableUpdaters(dockerfiles, buildInfos, VariableHelper.DotnetSdkVersionName, SdkBuildInfoName)
@@ -317,6 +326,8 @@ namespace Dotnet.Docker
                     dockerfiles, buildInfos, VariableHelper.AspNetCoreVersionName, AspNetCoreBuildInfoName))
                 .Concat(CreateDockerfileVariableUpdaters(
                     dockerfiles, buildInfos, VariableHelper.DotnetVersionName, RuntimeBuildInfoName))
+                .Concat(CreateDockerfileVariableUpdaters(
+                    dockerfiles, buildInfos, VariableHelper.MonitorVersionName, MonitorBuildInfoName))
                 .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateProductShaUpdater(path, Options)))
                 .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateLzmaShaUpdater(path, Options)))
                 .Concat(manifestBasedUpdaters);

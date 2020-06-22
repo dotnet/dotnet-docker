@@ -13,7 +13,7 @@ jobs:
 - job: UpdateDependencies
   pool: Hosted Ubuntu 1604
   steps:
-  - script: $(engPath)/get-drop-versions.sh $(channel)
+  - script: $(engPath)/get-drop-versions.sh $(channel) $(monitorChannel)
     displayName: Get Versions
   - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
     displayName: Build Update Dependencies Tool
@@ -25,5 +25,6 @@ jobs:
       --runtime-version $(runtimeVer)
       --sdk-version $(sdkVer)
       --aspnet-version $(aspnetVer)
+      --monitor-version $(monitorVer)
       --compute-shas
     displayName: Run Update Dependencies
