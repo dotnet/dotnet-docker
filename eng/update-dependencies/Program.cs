@@ -130,14 +130,17 @@ namespace Dotnet.Docker
 
         private static async Task CreatePullRequestAsync()
         {
+            // Replace slashes with hyphens for use in naming the branch
+            string versionSourceNameForBranch = Options.VersionSourceName.Replace("/", "-");
+
             GitHubAuth gitHubAuth = new GitHubAuth(Options.GitHubPassword, Options.GitHubUser, Options.GitHubEmail);
             PullRequestCreator prCreator = new PullRequestCreator(gitHubAuth, Options.GitHubUser);
             PullRequestOptions prOptions = new PullRequestOptions()
             {
-                BranchNamingStrategy = new SingleBranchNamingStrategy($"UpdateDependencies-{Options.GitHubUpstreamBranch}")
+                BranchNamingStrategy = new SingleBranchNamingStrategy($"UpdateDependencies-{Options.GitHubUpstreamBranch}-From-{versionSourceNameForBranch}")
             };
 
-            string commitMessage = $"[{Options.GitHubUpstreamBranch}] Update dependencies from dotnet/core-sdk";
+            string commitMessage = $"[{Options.GitHubUpstreamBranch}] Update dependencies from {Options.VersionSourceName}";
             GitHubProject upstreamProject = new GitHubProject(Options.GitHubProject, Options.GitHubUpstreamOwner);
             GitHubBranch upstreamBranch = new GitHubBranch(Options.GitHubUpstreamBranch, upstreamProject);
 

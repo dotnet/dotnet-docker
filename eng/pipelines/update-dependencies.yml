@@ -25,6 +25,15 @@ jobs:
       --runtime-version $(runtimeVer)
       --sdk-version $(sdkVer)
       --aspnet-version $(aspnetVer)
-      --monitor-version $(monitorVer)
+      --version-source-name dotnet/core-sdk
       --compute-shas
-    displayName: Run Update Dependencies
+    displayName: Run Update Dependencies for SDK
+  - script: >
+      docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies
+      --user $(dotnetDockerBot.userName)
+      --email $(dotnetDockerBot.email)
+      --password $(BotAccount-dotnet-docker-bot-PAT)
+      --monitor-version $(monitorVer)
+      --version-source-name dotnet/diagnostics
+      --compute-shas
+    displayName: Run Update Dependencies for .NET Monitor
