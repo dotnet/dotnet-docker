@@ -10,7 +10,8 @@ schedules:
 variables:
 - template: variables/common.yml
 jobs:
-- job: UpdateDependencies
+- job: UpdateDependenciesCoreSdk
+  displayName: Update Dependencies (dotnet/core-sdk)
   pool: Hosted Ubuntu 1604
   steps:
   - script: $(engPath)/get-drop-versions.sh $(channel) $(monitorChannel)
@@ -27,7 +28,15 @@ jobs:
       --aspnet-version $(aspnetVer)
       --version-source-name dotnet/core-sdk
       --compute-shas
-    displayName: Run Update Dependencies for SDK
+    displayName: Run Update Dependencies
+- job: UpdateDependenciesDiagnostics
+  displayName: Update Dependencies (dotnet/diagnostics)
+  pool: Hosted Ubuntu 1604
+  steps:
+  - script: $(engPath)/get-drop-versions-monitor.sh $(monitorChannel)
+    displayName: Get Versions
+  - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
+    displayName: Build Update Dependencies Tool
   - script: >
       docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies
       --user $(dotnetDockerBot.userName)
@@ -35,5 +44,4 @@ jobs:
       --password $(BotAccount-dotnet-docker-bot-PAT)
       --monitor-version $(monitorVer)
       --version-source-name dotnet/diagnostics
-      --compute-shas
-    displayName: Run Update Dependencies for .NET Monitor
+    displayName: Run Update Dependencies
