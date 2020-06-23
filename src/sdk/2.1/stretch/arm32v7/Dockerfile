@@ -28,8 +28,9 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && lzma_sha512='f6038cd8524d0b9389704687f603fd1d68fab3b2dff1650829d2ce253a754b681c83aa93388124c463e71d5f9413325c7a4b599d453b1bbddb8f25bdbc25f5be' \
     && echo "$lzma_sha512 /usr/share/dotnet/sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma" | sha512sum -c -
 
-# Configure web servers to bind to port 80 when present
-ENV ASPNETCORE_URLS=http://+:80 \
+ENV \
+    # Configure web servers to bind to port 80 when present
+    ASPNETCORE_URLS=http://+:80 \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Enable correct mode for dotnet watch (only mode supported in a container)
