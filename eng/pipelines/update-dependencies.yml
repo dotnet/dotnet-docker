@@ -14,7 +14,7 @@ jobs:
   displayName: Update Dependencies (dotnet/core-sdk)
   pool: Hosted Ubuntu 1604
   steps:
-  - script: $(engPath)/get-drop-versions.sh $(channel) $(monitorChannel)
+  - script: $(engPath)/get-drop-versions.sh $(channel)
     displayName: Get Versions
   - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
     displayName: Build Update Dependencies Tool
