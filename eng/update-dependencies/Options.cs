@@ -17,6 +17,7 @@ namespace Dotnet.Docker
         public string MonitorVersion { get; private set; }
         public string RuntimeVersion { get; private set; }
         public string SdkVersion { get; private set; }
+        public string VersionSourceName { get; private set; }
         public bool ComputeChecksums { get; private set; }
         public bool UpdateOnly => GitHubEmail == null || GitHubPassword == null || GitHubUser == null;
 
@@ -51,6 +52,13 @@ namespace Dotnet.Docker
                     ref monitorVersion,
                     ".NET Monitor version to update the Dockerfiles with");
                 MonitorVersion = monitorVersion;
+
+                string versionSourceName = null;
+                Argument<string> versionSourceNameArg = syntax.DefineOption(
+                    "version-source-name",
+                    ref versionSourceName,
+                    "The name of the source from which the version information was acquired.");
+                VersionSourceName = versionSourceName;
 
                 string gitHubEmail = null;
                 syntax.DefineOption(
