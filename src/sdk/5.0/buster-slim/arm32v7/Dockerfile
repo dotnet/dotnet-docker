@@ -4,8 +4,6 @@ FROM $REPO:5.0-buster-slim-arm32v7
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_SDK_VERSION=5.0.100-preview.6.20318.15 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
