@@ -103,24 +103,6 @@
           "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/2.1/focal/amd64",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "$(2.1-RuntimeVersion)-focal": {
-                  "documentationGroup": "2.1"
-                },
-                "2.1-focal": {
-                  "documentationGroup": "2.1"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(2.1-RuntimeVersion)",
-          "platforms": [
-            {
               "dockerfile": "src/runtime-deps/2.1/bionic/amd64",
               "os": "linux",
               "osVersion": "bionic",
@@ -152,6 +134,24 @@
                 }
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(2.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/2.1/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(2.1-RuntimeVersion)-focal": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-focal": {
+                  "documentationGroup": "2.1"
+                }
+              }
             }
           ]
         },
