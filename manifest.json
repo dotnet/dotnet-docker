@@ -31,7 +31,7 @@
             {
               "dockerfile": "src/runtime-deps/2.1/stretch-slim/amd64",
               "os": "linux",
-              "osVersion": "stretch",
+              "osVersion": "stretch-slim",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim": {
                   "documentationGroup": "2.1"
@@ -45,7 +45,7 @@
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/2.1/stretch-slim/arm32v7",
               "os": "linux",
-              "osVersion": "stretch",
+              "osVersion": "stretch-slim",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim-arm32v7": {
                   "documentationGroup": "2.1"
@@ -170,7 +170,7 @@
             {
               "dockerfile": "src/runtime-deps/3.1/buster-slim/amd64",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(3.1-RuntimeVersion)-buster-slim": {
                   "documentationGroup": "3.1"
@@ -184,7 +184,7 @@
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/buster-slim/arm32v7",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(3.1-RuntimeVersion)-buster-slim-arm32v7": {
                   "documentationGroup": "3.1"
@@ -199,7 +199,7 @@
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/buster-slim/arm64v8",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(3.1-RuntimeVersion)-buster-slim-arm64v8": {
                   "documentationGroup": "3.1"
@@ -407,7 +407,7 @@
             {
               "dockerfile": "src/runtime-deps/5.0/buster-slim/amd64",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-RuntimeVersion)-buster-slim": {},
                 "5.0-buster-slim": {}
@@ -417,7 +417,7 @@
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/5.0/buster-slim/arm32v7",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-RuntimeVersion)-buster-slim-arm32v7": {},
                 "5.0-buster-slim-arm32v7": {}
@@ -428,7 +428,7 @@
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/5.0/buster-slim/arm64v8",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {},
                 "5.0-buster-slim-arm64v8": {}
@@ -522,7 +522,7 @@
               },
               "dockerfile": "src/runtime/2.1/stretch-slim/amd64",
               "os": "linux",
-              "osVersion": "stretch",
+              "osVersion": "stretch-slim",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim": {},
                 "2.1-stretch-slim": {}
@@ -535,7 +535,7 @@
               },
               "dockerfile": "src/runtime/2.1/stretch-slim/arm32v7",
               "os": "linux",
-              "osVersion": "stretch",
+              "osVersion": "stretch-slim",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim-arm32v7": {},
                 "2.1-stretch-slim-arm32v7": {}
@@ -682,7 +682,7 @@
               },
               "dockerfile": "src/runtime/3.1/buster-slim/amd64",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(3.1-RuntimeVersion)-buster-slim": {},
                 "3.1-buster-slim": {}
@@ -695,7 +695,7 @@
               },
               "dockerfile": "src/runtime/3.1/buster-slim/arm32v7",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(3.1-RuntimeVersion)-buster-slim-arm32v7": {},
                 "3.1-buster-slim-arm32v7": {}
@@ -709,7 +709,7 @@
               },
               "dockerfile": "src/runtime/3.1/buster-slim/arm64v8",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(3.1-RuntimeVersion)-buster-slim-arm64v8": {},
                 "3.1-buster-slim-arm64v8": {}
@@ -959,7 +959,7 @@
               },
               "dockerfile": "src/runtime/5.0/buster-slim/amd64",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-RuntimeVersion)-buster-slim": {},
                 "5.0-buster-slim": {}
@@ -972,7 +972,7 @@
               },
               "dockerfile": "src/runtime/5.0/buster-slim/arm32v7",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-RuntimeVersion)-buster-slim-arm32v7": {},
                 "5.0-buster-slim-arm32v7": {}
@@ -986,7 +986,7 @@
               },
               "dockerfile": "src/runtime/5.0/buster-slim/arm64v8",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {},
                 "5.0-buster-slim-arm64v8": {}
@@ -1136,7 +1136,7 @@
               },
               "dockerfile": "src/aspnet/2.1/stretch-slim/amd64",
               "os": "linux",
-              "osVersion": "stretch",
+              "osVersion": "stretch-slim",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim": {},
                 "2.1-stretch-slim": {}
@@ -1149,7 +1149,7 @@
               },
               "dockerfile": "src/aspnet/2.1/stretch-slim/arm32v7",
               "os": "linux",
-              "osVersion": "stretch",
+              "osVersion": "stretch-slim",
               "tags": {
                 "$(2.1-RuntimeVersion)-stretch-slim-arm32v7": {},
                 "2.1-stretch-slim-arm32v7": {}
@@ -1296,7 +1296,7 @@
               },
               "dockerfile": "src/aspnet/3.1/buster-slim/amd64",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(3.1-RuntimeVersion)-buster-slim": {},
                 "3.1-buster-slim": {}
@@ -1309,7 +1309,7 @@
               },
               "dockerfile": "src/aspnet/3.1/buster-slim/arm32v7",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(3.1-RuntimeVersion)-buster-slim-arm32v7": {},
                 "3.1-buster-slim-arm32v7": {}
@@ -1323,7 +1323,7 @@
               },
               "dockerfile": "src/aspnet/3.1/buster-slim/arm64v8",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(3.1-RuntimeVersion)-buster-slim-arm64v8": {},
                 "3.1-buster-slim-arm64v8": {}
@@ -1585,7 +1585,7 @@
               },
               "dockerfile": "src/aspnet/5.0/buster-slim/amd64",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-RuntimeVersion)-buster-slim": {},
                 "5.0-buster-slim": {}
@@ -1598,7 +1598,7 @@
               },
               "dockerfile": "src/aspnet/5.0/buster-slim/arm32v7",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-RuntimeVersion)-buster-slim-arm32v7": {},
                 "5.0-buster-slim-arm32v7": {}
@@ -1612,7 +1612,7 @@
               },
               "dockerfile": "src/aspnet/5.0/buster-slim/arm64v8",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {},
                 "5.0-buster-slim-arm64v8": {}
@@ -2128,7 +2128,7 @@
               },
               "dockerfile": "src/sdk/5.0/buster-slim/amd64",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-SdkVersion)-buster-slim": {},
                 "5.0-buster-slim": {}
@@ -2141,7 +2141,7 @@
               "architecture": "arm",
               "dockerfile": "src/sdk/5.0/buster-slim/arm32v7",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-SdkVersion)-buster-slim-arm32v7": {},
                 "5.0-buster-slim-arm32v7": {}
@@ -2155,7 +2155,7 @@
               "architecture": "arm64",
               "dockerfile": "src/sdk/5.0/buster-slim/arm64v8",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "buster-slim",
               "tags": {
                 "$(5.0-SdkVersion)-buster-slim-arm64v8": {},
                 "5.0-buster-slim-arm64v8": {}
