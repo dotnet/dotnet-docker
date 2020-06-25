@@ -17,6 +17,8 @@ variables:
   value: ""
 - name: manifestVariables
   value: ""
+- name: defaultLinuxAmd64PoolImage
+  value: ubuntu-latest
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - group: DotNet-Docker-Common
