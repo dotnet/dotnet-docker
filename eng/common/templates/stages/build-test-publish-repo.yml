@@ -12,8 +12,8 @@ parameters:
   linuxArmTestJobTimeout: 60
   windowsAmdTestJobTimeout: 60
 
-  linuxAmdBuildPool: "Hosted Ubuntu 1604"
-  linuxAmdBuildQueue: ""
+  linuxAmd64BuildPool:
+    vmImage: $(defaultLinuxAmd64PoolImage)
 
 stages:
 
@@ -32,9 +32,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: Linux_amd64
-      pool: # linuxAmd64Pool
-        name: ${{ parameters.linuxAmdBuildPool }}
-        queue: ${{ parameters.linuxAmdBuildQueue }}
+      pool: ${{ parameters.linuxAmd64BuildPool }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxAmd64']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
@@ -42,7 +40,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: Linux_arm64v8
-      pool: # linuxArm64v8Pool
+      pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: DotNetCore-Docker-Public
           demands:
@@ -63,7 +61,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: Linux_arm32v7
-      pool: # linuxArm32v7Pool
+      pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: DotNetCore-Docker-Public
           demands:
@@ -84,7 +82,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows1809_amd64
-      pool: # windows1809Amd64
+      pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: DotNetCore-Docker-Public
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
@@ -97,7 +95,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows1903_amd64
-      pool: # windows1903Amd64
+      pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: DotNetCore-Docker-Public
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
@@ -110,7 +108,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows1909_amd64
-      pool: # windows1909Amd64
+      pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: DotNetCore-Docker-Public
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
@@ -123,7 +121,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows2004_amd64
-      pool: # windows2004Amd64
+      pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: DotNetCore-Docker-Public
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
@@ -136,7 +134,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: WindowsLtsc2016_amd64
-      pool: # windows1607Amd64Pool
+      pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: DotNetCore-Docker-Public
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
@@ -179,14 +177,14 @@ stages:
     - template: ../jobs/test-images-linux-client.yml
       parameters:
         name: Linux_amd64
-        pool: # linuxAmd64Pool
-          name: Hosted Ubuntu 1604
+        pool:
+          vmImage: $(defaultLinuxAmd64PoolImage)
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxAmd64']
         testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
     - template: ../jobs/test-images-linux-client.yml
       parameters:
         name: Linux_arm64v8
-        pool: # linuxArm64v8Pool
+        pool:
           name: DotNetCore-Docker
           demands:
           - Agent.OS -equals linux
@@ -198,7 +196,7 @@ stages:
     - template: ../jobs/test-images-linux-client.yml
       parameters:
         name: Linux_arm32v7
-        pool: # linuxArm32v7Pool
+        pool:
           name: DotNetCore-Docker
           demands:
           - Agent.OS -equals linux
@@ -210,7 +208,7 @@ stages:
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows1809_amd64
-        pool: # windows1809Amd64
+        pool:
           name: DotNetCore-Docker
           demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows1809Amd64']
@@ -218,7 +216,7 @@ stages:
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows1903_amd64
-        pool: # windows1903Amd64
+        pool:
           name: DotNetCore-Docker
           demands: VSTS_OS -equals Windows_Server_2019_Data_Center_1903
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows1903Amd64']
@@ -226,7 +224,7 @@ stages:
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows1909_amd64
-        pool: # windows1909Amd64
+        pool:
           name: DotNetCore-Docker
           demands: VSTS_OS -equals Windows-ServerDatacenter-1909
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows1909Amd64']
@@ -234,7 +232,7 @@ stages:
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows2004_amd64
-        pool: # windows2004Amd64
+        pool:
           name: DotNetCore-Docker
           demands: VSTS_OS -equals Windows-ServerDatacenter-2004
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows2004Amd64']
@@ -242,7 +240,7 @@ stages:
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: WindowsLtsc2016_amd64
-        pool: # windows1607Amd64Pool
+        pool:
           name: DotNetCore-Docker
           demands: VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2016Amd64']
@@ -286,5 +284,5 @@ stages:
   jobs:
   - template: ../jobs/publish.yml
     parameters:
-      pool: # linuxAmd64Pool
-        name: Hosted Ubuntu 1604
+      pool:
+        vmImage: $(defaultLinuxAmd64PoolImage)
