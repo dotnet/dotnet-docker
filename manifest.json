@@ -6,8 +6,8 @@
     "2.1-SdkVersion": "2.1.807",
     "3.1-RuntimeVersion": "3.1.5",
     "3.1-SdkVersion": "3.1.301",
-    "5.0-RuntimeVersion": "5.0.0-preview.5",
-    "5.0-SdkVersion": "5.0.100-preview.5"
+    "5.0-RuntimeVersion": "5.0.0-preview.6",
+    "5.0-SdkVersion": "5.0.100-preview.6"
   },
   "repos": [
     {
@@ -103,24 +103,6 @@
           "productVersion": "$(2.1-RuntimeVersion)",
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/2.1/focal/amd64",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "$(2.1-RuntimeVersion)-focal": {
-                  "documentationGroup": "2.1"
-                },
-                "2.1-focal": {
-                  "documentationGroup": "2.1"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(2.1-RuntimeVersion)",
-          "platforms": [
-            {
               "dockerfile": "src/runtime-deps/2.1/bionic/amd64",
               "os": "linux",
               "osVersion": "bionic",
@@ -152,6 +134,24 @@
                 }
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(2.1-RuntimeVersion)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/2.1/focal/amd64",
+              "os": "linux",
+              "osVersion": "focal",
+              "tags": {
+                "$(2.1-RuntimeVersion)-focal": {
+                  "documentationGroup": "2.1"
+                },
+                "2.1-focal": {
+                  "documentationGroup": "2.1"
+                }
+              }
             }
           ]
         },
@@ -389,120 +389,6 @@
               "variant": "v8"
             }
           ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "sharedTags": {
-            "5.0": {
-              "isUndocumented": true
-            }
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/5.0/buster-slim/amd64",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim": {
-                  "isUndocumented": true
-                }
-              }
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "src/runtime-deps/5.0/buster-slim/arm32v7",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim-arm32v7": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v7"
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/5.0/buster-slim/arm64v8",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim-arm64v8": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/5.0/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "5.0-alpine3.11": {
-                  "isUndocumented": true
-                },
-                "5.0-alpine": {
-                  "isUndocumented": true
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/5.0/alpine3.11/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "5.0-alpine3.11-arm64v8": {
-                  "isUndocumented": true
-                },
-                "5.0-alpine-arm64v8": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/5.0/focal/amd64",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "5.0-focal": {
-                  "isUndocumented": true
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/5.0/focal/arm64v8",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "5.0-focal-arm64v8": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v8"
-            }
-          ]
         }
       ]
     },
@@ -548,36 +434,6 @@
               "tags": {
                 "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {},
                 "5.0-buster-slim-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/5.0/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/5.0/alpine3.11/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {},
-                "5.0-alpine3.11-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1083,171 +939,6 @@
               "variant": "v8"
             }
           ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "sharedTags": {
-            "5.0": {
-              "isUndocumented": true
-            }
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
-              },
-              "dockerfile": "src/runtime/5.0/buster-slim/amd64",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim": {
-                  "isUndocumented": true
-                }
-              }
-            },
-            {
-              "architecture": "arm",
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
-              },
-              "dockerfile": "src/runtime/5.0/buster-slim/arm32v7",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim-arm32v7": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v7"
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
-              },
-              "dockerfile": "src/runtime/5.0/buster-slim/arm64v8",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim-arm64v8": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v8"
-            },
-            {
-              "dockerfile": "src/runtime/5.0/nanoserver-1809/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "5.0-nanoserver-1809": {
-                  "isUndocumented": true
-                }
-              }
-            },
-            {
-              "dockerfile": "src/runtime/5.0/nanoserver-1903/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1903",
-              "tags": {
-                "5.0-nanoserver-1903": {
-                  "isUndocumented": true
-                }
-              }
-            },
-            {
-              "dockerfile": "src/runtime/5.0/nanoserver-1909/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1909",
-              "tags": {
-                "5.0-nanoserver-1909": {
-                  "isUndocumented": true
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
-              },
-              "dockerfile": "src/runtime/5.0/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "5.0-alpine3.11": {
-                  "isUndocumented": true
-                },
-                "5.0-alpine": {
-                  "isUndocumented": true
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
-              },
-              "dockerfile": "src/runtime/5.0/alpine3.11/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "5.0-alpine3.11-arm64v8": {
-                  "isUndocumented": true
-                },
-                "5.0-alpine-arm64v8": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
-              },
-              "dockerfile": "src/runtime/5.0/focal/amd64",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "5.0-focal": {
-                  "isUndocumented": true
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
-              },
-              "dockerfile": "src/runtime/5.0/focal/arm64v8",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "5.0-focal-arm64v8": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v8"
-            }
-          ]
         }
       ]
     },
@@ -1340,50 +1031,6 @@
                 "$(5.0-RuntimeVersion)-nanoserver-2004": {},
                 "5.0-nanoserver-2004": {}
               }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "src/runtime/5.0/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "src/runtime/5.0/alpine3.11/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {},
-                "5.0-alpine3.11-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGrouping": [
-                {
-                  "name": "pr-build",
-                  "dependencies": [
-                    "$(Repo:sdk):5.0-buster-slim-arm64v8"
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -1919,180 +1566,6 @@
               "variant": "v8"
             }
           ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "sharedTags": {
-            "5.0": {
-              "isUndocumented": true
-            }
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/buster-slim/amd64",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim": {
-                  "isUndocumented": true
-                }
-              }
-            },
-            {
-              "architecture": "arm",
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/buster-slim/arm32v7",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim-arm32v7": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v7"
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/buster-slim/arm64v8",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim-arm64v8": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v8"
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/nanoserver-1809/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "5.0-nanoserver-1809": {
-                  "isUndocumented": true
-                }
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/nanoserver-1903/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1903",
-              "tags": {
-                "5.0-nanoserver-1903": {
-                  "isUndocumented": true
-                }
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/nanoserver-1909/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1909",
-              "tags": {
-                "5.0-nanoserver-1909": {
-                  "isUndocumented": true
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "5.0-alpine3.11": {
-                  "isUndocumented": true
-                },
-                "5.0-alpine": {
-                  "isUndocumented": true
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/alpine3.11/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "5.0-alpine3.11-arm64v8": {
-                  "isUndocumented": true
-                },
-                "5.0-alpine-arm64v8": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/focal/amd64",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "5.0-focal": {
-                  "isUndocumented": true
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/focal/arm64v8",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "5.0-focal-arm64v8": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v8"
-            }
-          ]
         }
       ]
     },
@@ -2197,50 +1670,6 @@
                 "$(5.0-RuntimeVersion)-nanoserver-2004": {},
                 "5.0-nanoserver-2004": {}
               }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-RuntimeVersion)",
-          "platforms": [
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/5.0/alpine3.11/arm64v8",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.11-arm64v8": {},
-                "5.0-alpine3.11-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGrouping": [
-                {
-                  "name": "pr-build",
-                  "dependencies": [
-                    "$(Repo:sdk):5.0-buster-slim-arm64v8"
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -2681,166 +2110,6 @@
               "variant": "v8"
             }
           ]
-        },
-        {
-          "productVersion": "$(5.0-SdkVersion)",
-          "sharedTags": {
-            "5.0": {
-              "isUndocumented": true
-            }
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
-              },
-              "dockerfile": "src/sdk/5.0/buster-slim/amd64",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim": {
-                  "isUndocumented": true
-                },
-                "5.0-buster": {
-                  "isUndocumented": true
-                }
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
-              },
-              "architecture": "arm",
-              "dockerfile": "src/sdk/5.0/buster-slim/arm32v7",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim-arm32v7": {
-                  "isUndocumented": true
-                },
-                "5.0-buster-arm32v7": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v7"
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
-              },
-              "architecture": "arm64",
-              "dockerfile": "src/sdk/5.0/buster-slim/arm64v8",
-              "os": "linux",
-              "osVersion": "buster",
-              "tags": {
-                "5.0-buster-slim-arm64v8": {
-                  "isUndocumented": true
-                },
-                "5.0-buster-arm64v8": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v8"
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
-              },
-              "dockerfile": "src/sdk/5.0/nanoserver-1809/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "5.0-nanoserver-1809": {
-                  "isUndocumented": true
-                }
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
-              },
-              "dockerfile": "src/sdk/5.0/nanoserver-1903/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1903",
-              "tags": {
-                "5.0-nanoserver-1903": {
-                  "isUndocumented": true
-                }
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
-              },
-              "dockerfile": "src/sdk/5.0/nanoserver-1909/amd64",
-              "os": "windows",
-              "osVersion": "nanoserver-1909",
-              "tags": {
-                "5.0-nanoserver-1909": {
-                  "isUndocumented": true
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-SdkVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
-              },
-              "dockerfile": "src/sdk/5.0/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "5.0-alpine3.11": {
-                  "isUndocumented": true
-                },
-                "5.0-alpine": {
-                  "isUndocumented": true
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-SdkVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
-              },
-              "dockerfile": "src/sdk/5.0/focal/amd64",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "5.0-focal": {
-                  "isUndocumented": true
-                }
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-SdkVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
-              },
-              "architecture": "arm64",
-              "dockerfile": "src/sdk/5.0/focal/arm64v8",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "5.0-focal-arm64v8": {
-                  "isUndocumented": true
-                }
-              },
-              "variant": "v8"
-            }
-          ]
         }
       ]
     },
@@ -2944,23 +2213,6 @@
               "tags": {
                 "$(5.0-SdkVersion)-nanoserver-2004": {},
                 "5.0-nanoserver-2004": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(5.0-SdkVersion)",
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/sdk/5.0/alpine3.11/amd64",
-              "os": "linux",
-              "osVersion": "alpine3.11",
-              "tags": {
-                "$(5.0-SdkVersion)-alpine3.11": {},
-                "5.0-alpine3.11": {}
               }
             }
           ]
