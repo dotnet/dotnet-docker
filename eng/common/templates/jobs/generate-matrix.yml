@@ -5,8 +5,8 @@ parameters:
 
 jobs:
 - job: ${{ parameters.name }}
-  pool: # linuxAmd64Pool
-    name: Hosted Ubuntu 1604
+  pool:
+    vmImage: $(defaultLinuxAmd64PoolImage)
   steps:
   - template: ../steps/init-docker-linux.yml
   - script: >

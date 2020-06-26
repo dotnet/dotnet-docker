@@ -39,7 +39,7 @@ steps:
   continueOnError: true
   inputs:
     testRunner: vSTest
-    testResultsFiles: 'tests/**/*.trx'
+    testResultsFiles: '$(testResultsDirectory)/**/*.trx'
     mergeTestResults: true
     publishRunAttachments: true
     testRunTitle: $(dotnetVersion) $(osVariant) amd64
