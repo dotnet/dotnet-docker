@@ -114,7 +114,7 @@
     "src/sdk/5.0/buster-slim/arm64v8": 631997544,
     "src/sdk/5.0/alpine3.12/amd64": 469719738,
     "src/sdk/5.0/focal/amd64": 615235315,
-    "src/sdk/5.0/focal/arm64v8": 672793717
+    "src/sdk/5.0/focal/arm64v8": 637793431
   },
   "dotnet/nightly/monitor": {
     "src/monitor/5.0/alpine/amd64": 128431536
