@@ -2,7 +2,6 @@ parameters:
   name: null
   pool: {}
   matrix: {}
-  useRemoteDockerServer: false
   testJobTimeout: 60
 jobs:
 - job: ${{ parameters.name }}
@@ -15,6 +14,5 @@ jobs:
   steps:
   - template: ../steps/test-images-linux-client.yml
     parameters:
-      useRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
       setupImageBuilder: false
       setupTestRunner: true
