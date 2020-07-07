@@ -1,10 +1,6 @@
-parameters:
-  useRemoteDockerServer: false
-
 steps:
 - template: init-docker-linux.yml
   parameters:
-    setupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
     setupImageBuilder: false
     setupTestRunner: true
     cleanupDocker: ${{ eq(variables['System.TeamProject'], 'internal') }}
@@ -12,9 +8,6 @@ steps:
     echo "##vso[task.setvariable variable=testRunner.container]testrunner-$(Build.BuildId)-$(System.JobId)"
 
     optionalTestArgs=""
-    if [ "${{ parameters.useRemoteDockerServer }}" == "true" ]; then
-      optionalTestArgs="-DisableHttpVerification"
-    fi
     if [ "${{ eq(variables['System.TeamProject'], 'public') }}" == "False" ]; then
       optionalTestArgs="$optionalTestArgs -PullImages -Registry $(acr.server) -RepoPrefix $(stagingRepoPrefix) -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
     fi
@@ -27,7 +20,6 @@ steps:
     docker run -t -d
     -v /var/run/docker.sock:/var/run/docker.sock
     -v $(Build.ArtifactStagingDirectory):$(artifactsPath)
-    -w /repo $(dockerArmRunOptions)
     -e RUNNING_TESTS_IN_CONTAINER=true 
     --name $(testRunner.container)
     $(imageNames.testRunner.withrepo)
@@ -78,5 +70,3 @@ steps:
   continueOnError: true
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - template: cleanup-docker-linux.yml
-    parameters:
-      cleanupRemoteDockerServer: ${{ parameters.useRemoteDockerServer }}
