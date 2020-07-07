@@ -43,42 +43,30 @@ stages:
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: DotNetCore-Docker-Public
-          demands:
-          - Agent.OS -equals linux
-          - Agent.OSArchitecture -equals ARM64
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: DotNetCore-Docker
-          demands:
-          - Agent.OS -equals linux
-          - RemoteDockerServerOS -equals linux
-          - RemoteDockerServerArch -equals aarch64
+        demands:
+        - Agent.OS -equals linux
+        - Agent.OSArchitecture -equals ARM64
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm64v8']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
-      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-        useRemoteDockerServer: true
   - template: ../jobs/build-images.yml
     parameters:
       name: Linux_arm32v7
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: DotNetCore-Docker-Public
-          demands:
-          - Agent.OS -equals linux
-          - Agent.OSArchitecture -equals ARM64
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: DotNetCore-Docker
-          demands:
-          - Agent.OS -equals linux
-          - RemoteDockerServerOS -equals linux
-          - RemoteDockerServerArch -equals aarch64
+        demands:
+        - Agent.OS -equals linux
+        - Agent.OSArchitecture -equals ARM64
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm32v7']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
-      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-        useRemoteDockerServer: true
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows1809_amd64
@@ -188,11 +176,9 @@ stages:
           name: DotNetCore-Docker
           demands:
           - Agent.OS -equals linux
-          - RemoteDockerServerOS -equals linux
-          - RemoteDockerServerArch -equals aarch64
+          - Agent.OSArchitecture -equals ARM64
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm64v8']
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
-        useRemoteDockerServer: true
     - template: ../jobs/test-images-linux-client.yml
       parameters:
         name: Linux_arm32v7
@@ -200,11 +186,9 @@ stages:
           name: DotNetCore-Docker
           demands:
           - Agent.OS -equals linux
-          - RemoteDockerServerOS -equals linux
-          - RemoteDockerServerArch -equals aarch64
+          - Agent.OSArchitecture -equals ARM64
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm32v7']
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
-        useRemoteDockerServer: true
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows1809_amd64

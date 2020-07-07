@@ -1,5 +1,4 @@
 parameters:
-  setupRemoteDockerServer: false
   setupImageBuilder: true
   setupTestRunner: false
   cleanupDocker: true
@@ -13,21 +12,6 @@ steps:
   ################################################################################
 - ${{ if eq(parameters.cleanupDocker, 'true') }}:
   - template: cleanup-docker-linux.yml
-    parameters:
-      cleanupRemoteDockerServer: ${{ parameters.setupRemoteDockerServer }}
-      initCleanup: true
-
-  ################################################################################
-  # Setup Remote Docker Server (Optional)
-  ################################################################################
-- ${{ if eq(parameters.setupRemoteDockerServer, 'true') }}:
-  - script: >
-      echo "##vso[task.setvariable variable=dockerArmRunOptions]
-      -v $(DOCKER_CERT_PATH):/docker-certs
-      -e DOCKER_CERT_PATH=/docker-certs
-      -e DOCKER_TLS_VERIFY=1
-      -e DOCKER_HOST=tcp://$(DOCKER_HOST_IP):2376"
-    displayName: Define dockerArmRunOptions Variable
 
   ################################################################################
   # Setup Image Builder (Optional)
@@ -47,13 +31,9 @@ steps:
       -v /var/run/docker.sock:/var/run/docker.sock
       -v $(Build.ArtifactStagingDirectory):$(artifactsPath)
       -w /repo
-      $(dockerArmRunOptions)
       $(imageBuilderDockerRunExtraOptions)
       $(imageNames.imageBuilder.withrepo)"
     displayName: Define runImageBuilderCmd Variable
-  - ${{ if eq(parameters.setupRemoteDockerServer, 'true') }}:
-    - script: echo "##vso[task.setvariable variable=dockerClientImage]$(imageNames.imageBuilder.withrepo)"
-      displayName: Define dockerClientImage Variable
 
   ################################################################################
   # Setup Test Runner (Optional)
@@ -67,6 +47,3 @@ steps:
       --build-arg IMAGE=$(imageNames.testrunner)
       -f $(engCommonPath)/Dockerfile.WithRepo .
     displayName: Build Test Runner Image
-  - ${{ if eq(parameters.setupRemoteDockerServer, 'true') }}:
-    - script: echo "##vso[task.setvariable variable=dockerClientImage]$(imageNames.testRunner.withrepo)"
-      displayName: Define dockerClientImage Variable
