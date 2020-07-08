@@ -510,10 +510,11 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/5.0/focal/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm32v7": {},
+                "$(dotnet|5.0|product-version)-focal-arm32v7": {},
                 "5.0-focal-arm32v7": {}
               },
               "variant": "v7"
@@ -521,7 +522,7 @@
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1182,10 +1183,11 @@
                 "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/5.0/focal/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm32v7": {},
+                "$(dotnet|5.0|product-version)-focal-arm32v7": {},
                 "5.0-focal-arm32v7": {}
               },
               "variant": "v7"
@@ -1193,7 +1195,7 @@
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1917,10 +1919,11 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/focal/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm32v7": {},
+                "$(dotnet|5.0|product-version)-focal-arm32v7": {},
                 "5.0-focal-arm32v7": {}
               },
               "variant": "v7"
@@ -1928,7 +1931,7 @@
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -2639,10 +2642,11 @@
               },
               "architecture": "arm",
               "dockerfile": "src/sdk/5.0/focal/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-SdkVersion)-focal-arm32v7": {},
+                "$(sdk|5.0|product-version)-focal-arm32v7": {},
                 "5.0-focal-arm32v7": {}
               },
               "variant": "v7"
@@ -2650,7 +2654,7 @@
           ]
         },
         {
-          "productVersion": "$(5.0-SdkVersion)",
+          "productVersion": "$(sdk|5.0|product-version)",
           "platforms": [
             {
               "buildArgs": {
