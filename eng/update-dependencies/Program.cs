@@ -319,9 +319,9 @@ namespace Dotnet.Docker
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies 
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
             List<IDependencyUpdater> manifestBasedUpdaters = new List<IDependencyUpdater>();
-            CreateManifestUpdater(manifestBasedUpdaters, "Sdk", buildInfos, SdkBuildInfoName);
-            CreateManifestUpdater(manifestBasedUpdaters, "Runtime", buildInfos, RuntimeBuildInfoName);
-            CreateManifestUpdater(manifestBasedUpdaters, "Monitor", buildInfos, MonitorBuildInfoName);
+            CreateManifestUpdater(manifestBasedUpdaters, "sdk", buildInfos, SdkBuildInfoName);
+            CreateManifestUpdater(manifestBasedUpdaters, "dotnet", buildInfos, RuntimeBuildInfoName);
+            CreateManifestUpdater(manifestBasedUpdaters, "monitor", buildInfos, MonitorBuildInfoName);
             manifestBasedUpdaters.Add(new ReadMeUpdater(RepoRoot));
 
             return CreateDockerfileVariableUpdaters(dockerfiles, buildInfos, VariableHelper.DotnetSdkVersionName, SdkBuildInfoName)
