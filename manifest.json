@@ -1,15 +1,9 @@
 {
   "readmePath": "README.md",
   "registry": "mcr.microsoft.com",
-  "variables": {
-    "2.1-RuntimeVersion": "2.1.19",
-    "2.1-SdkVersion": "2.1.807",
-    "3.1-RuntimeVersion": "3.1.5",
-    "3.1-SdkVersion": "3.1.301",
-    "5.0-RuntimeVersion": "5.0.0-preview.7",
-    "5.0-SdkVersion": "5.0.100-preview.7",
-    "5.0-MonitorVersion": "5.0.0-preview.2"
-  },
+  "includes": [
+    "manifest.versions.json"
+  ],
   "repos": [
     {
       "id": "core-runtime-deps",
@@ -18,9 +12,9 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/core-runtime-deps-tags.yml",
       "images": [
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "sharedTags": {
-            "$(2.1-RuntimeVersion)": {
+            "$(dotnet|2.1|product-version)": {
               "documentationGroup": "2.1"
             },
             "2.1": {
@@ -33,7 +27,7 @@
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(2.1-RuntimeVersion)-stretch-slim": {
+                "$(dotnet|2.1|product-version)-stretch-slim": {
                   "documentationGroup": "2.1"
                 },
                 "2.1-stretch-slim": {
@@ -47,7 +41,7 @@
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(2.1-RuntimeVersion)-stretch-slim-arm32v7": {
+                "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {
                   "documentationGroup": "2.1"
                 },
                 "2.1-stretch-slim-arm32v7": {
@@ -59,14 +53,14 @@
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/2.1/alpine3.11/amd64",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.11": {
+                "$(dotnet|2.1|product-version)-alpine3.11": {
                   "documentationGroup": "2.1"
                 },
                 "2.1-alpine3.11": {
@@ -77,20 +71,20 @@
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/2.1/alpine3.12/amd64",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.12": {
+                "$(dotnet|2.1|product-version)-alpine3.12": {
                   "documentationGroup": "2.1"
                 },
                 "2.1-alpine3.12": {
                   "documentationGroup": "2.1"
                 },
-                "$(2.1-RuntimeVersion)-alpine": {
+                "$(dotnet|2.1|product-version)-alpine": {
                   "documentationGroup": "2.1"
                 },
                 "2.1-alpine": {
@@ -101,14 +95,14 @@
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/2.1/bionic/amd64",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(2.1-RuntimeVersion)-bionic": {
+                "$(dotnet|2.1|product-version)-bionic": {
                   "documentationGroup": "2.1"
                 },
                 "2.1-bionic": {
@@ -119,7 +113,7 @@
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "architecture": "arm",
@@ -127,7 +121,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(2.1-RuntimeVersion)-bionic-arm32v7": {
+                "$(dotnet|2.1|product-version)-bionic-arm32v7": {
                   "documentationGroup": "2.1"
                 },
                 "2.1-bionic-arm32v7": {
@@ -139,14 +133,14 @@
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/2.1/focal/amd64",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(2.1-RuntimeVersion)-focal": {
+                "$(dotnet|2.1|product-version)-focal": {
                   "documentationGroup": "2.1"
                 },
                 "2.1-focal": {
@@ -157,9 +151,9 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "sharedTags": {
-            "$(3.1-RuntimeVersion)": {
+            "$(dotnet|3.1|product-version)": {
               "documentationGroup": "3.1"
             },
             "3.1": {
@@ -172,7 +166,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(3.1-RuntimeVersion)-buster-slim": {
+                "$(dotnet|3.1|product-version)-buster-slim": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-buster-slim": {
@@ -186,7 +180,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(3.1-RuntimeVersion)-buster-slim-arm32v7": {
+                "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-buster-slim-arm32v7": {
@@ -201,7 +195,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(3.1-RuntimeVersion)-buster-slim-arm64v8": {
+                "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-buster-slim-arm64v8": {
@@ -213,14 +207,14 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/alpine3.11/amd64",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.11": {
+                "$(dotnet|3.1|product-version)-alpine3.11": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-alpine3.11": {
@@ -231,7 +225,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -239,7 +233,7 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.11-arm64v8": {
+                "$(dotnet|3.1|product-version)-alpine3.11-arm64v8": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-alpine3.11-arm64v8": {
@@ -251,20 +245,20 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/alpine3.12/amd64",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.12": {
+                "$(dotnet|3.1|product-version)-alpine3.12": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-alpine3.12": {
                   "documentationGroup": "3.1"
                 },
-                "$(3.1-RuntimeVersion)-alpine": {
+                "$(dotnet|3.1|product-version)-alpine": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-alpine": {
@@ -275,7 +269,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -283,13 +277,13 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.12-arm64v8": {
+                "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-alpine3.12-arm64v8": {
                   "documentationGroup": "3.1"
                 },
-                "$(3.1-RuntimeVersion)-alpine-arm64v8": {
+                "$(dotnet|3.1|product-version)-alpine-arm64v8": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-alpine-arm64v8": {
@@ -301,14 +295,14 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/bionic/amd64",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-RuntimeVersion)-bionic": {
+                "$(dotnet|3.1|product-version)-bionic": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-bionic": {
@@ -319,7 +313,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm",
@@ -327,7 +321,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-RuntimeVersion)-bionic-arm32v7": {
+                "$(dotnet|3.1|product-version)-bionic-arm32v7": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-bionic-arm32v7": {
@@ -339,7 +333,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -347,7 +341,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-RuntimeVersion)-bionic-arm64v8": {
+                "$(dotnet|3.1|product-version)-bionic-arm64v8": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-bionic-arm64v8": {
@@ -359,21 +353,21 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/focal/amd64",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(3.1-RuntimeVersion)-focal": {},
+                "$(dotnet|3.1|product-version)-focal": {},
                 "3.1-focal": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -381,7 +375,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(3.1-RuntimeVersion)-focal-arm64v8": {},
+                "$(dotnet|3.1|product-version)-focal-arm64v8": {},
                 "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
@@ -397,9 +391,9 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-deps-tags.yml",
       "images": [
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
-            "$(5.0-RuntimeVersion)": {},
+            "$(dotnet|5.0|product-version)": {},
             "5.0": {},
             "latest": {}
           },
@@ -409,7 +403,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim": {},
+                "$(dotnet|5.0|product-version)-buster-slim": {},
                 "5.0-buster-slim": {}
               }
             },
@@ -419,7 +413,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm32v7": {},
+                "$(dotnet|5.0|product-version)-buster-slim-arm32v7": {},
                 "5.0-buster-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -430,7 +424,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {},
+                "$(dotnet|5.0|product-version)-buster-slim-arm64v8": {},
                 "5.0-buster-slim-arm64v8": {}
               },
               "variant": "v8"
@@ -438,23 +432,23 @@
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/5.0/alpine3.12/amd64",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.12": {},
+                "$(dotnet|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(5.0-RuntimeVersion)-alpine": {},
+                "$(dotnet|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -462,9 +456,9 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.12-arm64v8": {},
+                "$(dotnet|5.0|product-version)-alpine3.12-arm64v8": {},
                 "5.0-alpine3.12-arm64v8": {},
-                "$(5.0-RuntimeVersion)-alpine-arm64v8": {},
+                "$(dotnet|5.0|product-version)-alpine-arm64v8": {},
                 "5.0-alpine-arm64v8": {}
               },
               "variant": "v8"
@@ -472,21 +466,21 @@
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/5.0/focal/amd64",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal": {},
+                "$(dotnet|5.0|product-version)-focal": {},
                 "5.0-focal": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -494,7 +488,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm64v8": {},
+                "$(dotnet|5.0|product-version)-focal-arm64v8": {},
                 "5.0-focal-arm64v8": {}
               },
               "variant": "v8"
@@ -510,9 +504,9 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/core-runtime-tags.yml",
       "images": [
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "sharedTags": {
-            "$(2.1-RuntimeVersion)": {},
+            "$(dotnet|2.1|product-version)": {},
             "2.1": {}
           },
           "platforms": [
@@ -524,7 +518,7 @@
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(2.1-RuntimeVersion)-stretch-slim": {},
+                "$(dotnet|2.1|product-version)-stretch-slim": {},
                 "2.1-stretch-slim": {}
               }
             },
@@ -537,7 +531,7 @@
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(2.1-RuntimeVersion)-stretch-slim-arm32v7": {},
+                "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {},
                 "2.1-stretch-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -547,7 +541,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(2.1-RuntimeVersion)-nanoserver-1809": {},
+                "$(dotnet|2.1|product-version)-nanoserver-1809": {},
                 "2.1-nanoserver-1809": {}
               }
             },
@@ -556,7 +550,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(2.1-RuntimeVersion)-nanoserver-1903": {},
+                "$(dotnet|2.1|product-version)-nanoserver-1903": {},
                 "2.1-nanoserver-1903": {}
               }
             },
@@ -565,7 +559,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(2.1-RuntimeVersion)-nanoserver-1909": {},
+                "$(dotnet|2.1|product-version)-nanoserver-1909": {},
                 "2.1-nanoserver-1909": {}
               }
             },
@@ -574,14 +568,14 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(2.1-RuntimeVersion)-nanoserver-2004": {},
+                "$(dotnet|2.1|product-version)-nanoserver-2004": {},
                 "2.1-nanoserver-2004": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -591,14 +585,14 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.11": {},
+                "$(dotnet|2.1|product-version)-alpine3.11": {},
                 "2.1-alpine3.11": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -608,16 +602,16 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.12": {},
+                "$(dotnet|2.1|product-version)-alpine3.12": {},
                 "2.1-alpine3.12": {},
-                "$(2.1-RuntimeVersion)-alpine": {},
+                "$(dotnet|2.1|product-version)-alpine": {},
                 "2.1-alpine": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -627,14 +621,14 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(2.1-RuntimeVersion)-bionic": {},
+                "$(dotnet|2.1|product-version)-bionic": {},
                 "2.1-bionic": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "architecture": "arm",
@@ -645,7 +639,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(2.1-RuntimeVersion)-bionic-arm32v7": {},
+                "$(dotnet|2.1|product-version)-bionic-arm32v7": {},
                 "2.1-bionic-arm32v7": {}
               },
               "variant": "v7"
@@ -653,7 +647,7 @@
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -663,16 +657,16 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(2.1-RuntimeVersion)-focal": {},
+                "$(dotnet|2.1|product-version)-focal": {},
                 "2.1-focal": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "sharedTags": {
-            "$(3.1-RuntimeVersion)": {},
+            "$(dotnet|3.1|product-version)": {},
             "3.1": {}
           },
           "platforms": [
@@ -684,7 +678,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(3.1-RuntimeVersion)-buster-slim": {},
+                "$(dotnet|3.1|product-version)-buster-slim": {},
                 "3.1-buster-slim": {}
               }
             },
@@ -697,7 +691,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(3.1-RuntimeVersion)-buster-slim-arm32v7": {},
+                "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {},
                 "3.1-buster-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -711,7 +705,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(3.1-RuntimeVersion)-buster-slim-arm64v8": {},
+                "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {},
                 "3.1-buster-slim-arm64v8": {}
               },
               "variant": "v8"
@@ -721,7 +715,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-1809": {},
+                "$(dotnet|3.1|product-version)-nanoserver-1809": {},
                 "3.1-nanoserver-1809": {}
               }
             },
@@ -730,7 +724,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-1903": {},
+                "$(dotnet|3.1|product-version)-nanoserver-1903": {},
                 "3.1-nanoserver-1903": {}
               }
             },
@@ -739,7 +733,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-1909": {},
+                "$(dotnet|3.1|product-version)-nanoserver-1909": {},
                 "3.1-nanoserver-1909": {}
               }
             },
@@ -748,14 +742,14 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-2004": {},
+                "$(dotnet|3.1|product-version)-nanoserver-2004": {},
                 "3.1-nanoserver-2004": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -765,14 +759,14 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.11": {},
+                "$(dotnet|3.1|product-version)-alpine3.11": {},
                 "3.1-alpine3.11": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -783,7 +777,7 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.11-arm64v8": {},
+                "$(dotnet|3.1|product-version)-alpine3.11-arm64v8": {},
                 "3.1-alpine3.11-arm64v8": {}
               },
               "variant": "v8",
@@ -799,7 +793,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -809,16 +803,16 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.12": {},
+                "$(dotnet|3.1|product-version)-alpine3.12": {},
                 "3.1-alpine3.12": {},
-                "$(3.1-RuntimeVersion)-alpine": {},
+                "$(dotnet|3.1|product-version)-alpine": {},
                 "3.1-alpine": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -829,9 +823,9 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.12-arm64v8": {},
+                "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {},
                 "3.1-alpine3.12-arm64v8": {},
-                "$(3.1-RuntimeVersion)-alpine-arm64v8": {},
+                "$(dotnet|3.1|product-version)-alpine-arm64v8": {},
                 "3.1-alpine-arm64v8": {}
               },
               "variant": "v8",
@@ -847,7 +841,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -857,14 +851,14 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-RuntimeVersion)-bionic": {},
+                "$(dotnet|3.1|product-version)-bionic": {},
                 "3.1-bionic": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm",
@@ -875,7 +869,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-RuntimeVersion)-bionic-arm32v7": {},
+                "$(dotnet|3.1|product-version)-bionic-arm32v7": {},
                 "3.1-bionic-arm32v7": {}
               },
               "variant": "v7"
@@ -883,7 +877,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -894,7 +888,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-RuntimeVersion)-bionic-arm64v8": {},
+                "$(dotnet|3.1|product-version)-bionic-arm64v8": {},
                 "3.1-bionic-arm64v8": {}
               },
               "variant": "v8"
@@ -902,7 +896,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -912,14 +906,14 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(3.1-RuntimeVersion)-focal": {},
+                "$(dotnet|3.1|product-version)-focal": {},
                 "3.1-focal": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -930,7 +924,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(3.1-RuntimeVersion)-focal-arm64v8": {},
+                "$(dotnet|3.1|product-version)-focal-arm64v8": {},
                 "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
@@ -946,9 +940,9 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/runtime-tags.yml",
       "images": [
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
-            "$(5.0-RuntimeVersion)": {},
+            "$(dotnet|5.0|product-version)": {},
             "5.0": {},
             "latest": {}
           },
@@ -961,7 +955,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim": {},
+                "$(dotnet|5.0|product-version)-buster-slim": {},
                 "5.0-buster-slim": {}
               }
             },
@@ -974,7 +968,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm32v7": {},
+                "$(dotnet|5.0|product-version)-buster-slim-arm32v7": {},
                 "5.0-buster-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -988,7 +982,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {},
+                "$(dotnet|5.0|product-version)-buster-slim-arm64v8": {},
                 "5.0-buster-slim-arm64v8": {}
               },
               "variant": "v8"
@@ -998,7 +992,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1809": {},
+                "$(dotnet|5.0|product-version)-nanoserver-1809": {},
                 "5.0-nanoserver-1809": {}
               }
             },
@@ -1007,7 +1001,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1903": {},
+                "$(dotnet|5.0|product-version)-nanoserver-1903": {},
                 "5.0-nanoserver-1903": {}
               }
             },
@@ -1016,7 +1010,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1909": {},
+                "$(dotnet|5.0|product-version)-nanoserver-1909": {},
                 "5.0-nanoserver-1909": {}
               }
             },
@@ -1025,14 +1019,14 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-2004": {},
+                "$(dotnet|5.0|product-version)-nanoserver-2004": {},
                 "5.0-nanoserver-2004": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1042,16 +1036,16 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.12": {},
+                "$(dotnet|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(5.0-RuntimeVersion)-alpine": {},
+                "$(dotnet|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1062,9 +1056,9 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.12-arm64v8": {},
+                "$(dotnet|5.0|product-version)-alpine3.12-arm64v8": {},
                 "5.0-alpine3.12-arm64v8": {},
-                "$(5.0-RuntimeVersion)-alpine-arm64v8": {},
+                "$(dotnet|5.0|product-version)-alpine-arm64v8": {},
                 "5.0-alpine-arm64v8": {}
               },
               "variant": "v8",
@@ -1080,7 +1074,7 @@
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1090,14 +1084,14 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal": {},
+                "$(dotnet|5.0|product-version)-focal": {},
                 "5.0-focal": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1108,7 +1102,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm64v8": {},
+                "$(dotnet|5.0|product-version)-focal-arm64v8": {},
                 "5.0-focal-arm64v8": {}
               },
               "variant": "v8"
@@ -1124,9 +1118,9 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/core-aspnet-tags.yml",
       "images": [
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "sharedTags": {
-            "$(2.1-RuntimeVersion)": {},
+            "$(dotnet|2.1|product-version)": {},
             "2.1": {}
           },
           "platforms": [
@@ -1138,7 +1132,7 @@
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(2.1-RuntimeVersion)-stretch-slim": {},
+                "$(dotnet|2.1|product-version)-stretch-slim": {},
                 "2.1-stretch-slim": {}
               }
             },
@@ -1151,7 +1145,7 @@
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(2.1-RuntimeVersion)-stretch-slim-arm32v7": {},
+                "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {},
                 "2.1-stretch-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -1161,7 +1155,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(2.1-RuntimeVersion)-nanoserver-1809": {},
+                "$(dotnet|2.1|product-version)-nanoserver-1809": {},
                 "2.1-nanoserver-1809": {}
               }
             },
@@ -1170,7 +1164,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(2.1-RuntimeVersion)-nanoserver-1903": {},
+                "$(dotnet|2.1|product-version)-nanoserver-1903": {},
                 "2.1-nanoserver-1903": {}
               }
             },
@@ -1179,7 +1173,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(2.1-RuntimeVersion)-nanoserver-1909": {},
+                "$(dotnet|2.1|product-version)-nanoserver-1909": {},
                 "2.1-nanoserver-1909": {}
               }
             },
@@ -1188,14 +1182,14 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(2.1-RuntimeVersion)-nanoserver-2004": {},
+                "$(dotnet|2.1|product-version)-nanoserver-2004": {},
                 "2.1-nanoserver-2004": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1205,14 +1199,14 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.11": {},
+                "$(dotnet|2.1|product-version)-alpine3.11": {},
                 "2.1-alpine3.11": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1222,16 +1216,16 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(2.1-RuntimeVersion)-alpine3.12": {},
+                "$(dotnet|2.1|product-version)-alpine3.12": {},
                 "2.1-alpine3.12": {},
-                "$(2.1-RuntimeVersion)-alpine": {},
+                "$(dotnet|2.1|product-version)-alpine": {},
                 "2.1-alpine": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1241,14 +1235,14 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(2.1-RuntimeVersion)-bionic": {},
+                "$(dotnet|2.1|product-version)-bionic": {},
                 "2.1-bionic": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "architecture": "arm",
@@ -1259,7 +1253,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(2.1-RuntimeVersion)-bionic-arm32v7": {},
+                "$(dotnet|2.1|product-version)-bionic-arm32v7": {},
                 "2.1-bionic-arm32v7": {}
               },
               "variant": "v7"
@@ -1267,7 +1261,7 @@
           ]
         },
         {
-          "productVersion": "$(2.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|2.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1277,16 +1271,16 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(2.1-RuntimeVersion)-focal": {},
+                "$(dotnet|2.1|product-version)-focal": {},
                 "2.1-focal": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "sharedTags": {
-            "$(3.1-RuntimeVersion)": {},
+            "$(dotnet|3.1|product-version)": {},
             "3.1": {}
           },
           "platforms": [
@@ -1298,7 +1292,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(3.1-RuntimeVersion)-buster-slim": {},
+                "$(dotnet|3.1|product-version)-buster-slim": {},
                 "3.1-buster-slim": {}
               }
             },
@@ -1311,7 +1305,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(3.1-RuntimeVersion)-buster-slim-arm32v7": {},
+                "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {},
                 "3.1-buster-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -1325,7 +1319,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(3.1-RuntimeVersion)-buster-slim-arm64v8": {},
+                "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {},
                 "3.1-buster-slim-arm64v8": {}
               },
               "variant": "v8"
@@ -1338,7 +1332,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-1809": {},
+                "$(dotnet|3.1|product-version)-nanoserver-1809": {},
                 "3.1-nanoserver-1809": {}
               }
             },
@@ -1350,7 +1344,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-1903": {},
+                "$(dotnet|3.1|product-version)-nanoserver-1903": {},
                 "3.1-nanoserver-1903": {}
               }
             },
@@ -1362,7 +1356,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-1909": {},
+                "$(dotnet|3.1|product-version)-nanoserver-1909": {},
                 "3.1-nanoserver-1909": {}
               }
             },
@@ -1374,14 +1368,14 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(3.1-RuntimeVersion)-nanoserver-2004": {},
+                "$(dotnet|3.1|product-version)-nanoserver-2004": {},
                 "3.1-nanoserver-2004": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1391,14 +1385,14 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.11": {},
+                "$(dotnet|3.1|product-version)-alpine3.11": {},
                 "3.1-alpine3.11": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1409,7 +1403,7 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.11-arm64v8": {},
+                "$(dotnet|3.1|product-version)-alpine3.11-arm64v8": {},
                 "3.1-alpine3.11-arm64v8": {}
               },
               "variant": "v8",
@@ -1425,7 +1419,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1435,16 +1429,16 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.12": {},
+                "$(dotnet|3.1|product-version)-alpine3.12": {},
                 "3.1-alpine3.12": {},
-                "$(3.1-RuntimeVersion)-alpine": {},
+                "$(dotnet|3.1|product-version)-alpine": {},
                 "3.1-alpine": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1455,9 +1449,9 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(3.1-RuntimeVersion)-alpine3.12-arm64v8": {},
+                "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {},
                 "3.1-alpine3.12-arm64v8": {},
-                "$(3.1-RuntimeVersion)-alpine-arm64v8": {},
+                "$(dotnet|3.1|product-version)-alpine-arm64v8": {},
                 "3.1-alpine-arm64v8": {}
               },
               "variant": "v8",
@@ -1473,7 +1467,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1483,14 +1477,14 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-RuntimeVersion)-bionic": {},
+                "$(dotnet|3.1|product-version)-bionic": {},
                 "3.1-bionic": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm",
@@ -1501,7 +1495,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-RuntimeVersion)-bionic-arm32v7": {},
+                "$(dotnet|3.1|product-version)-bionic-arm32v7": {},
                 "3.1-bionic-arm32v7": {}
               },
               "variant": "v7"
@@ -1509,7 +1503,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1520,7 +1514,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-RuntimeVersion)-bionic-arm64v8": {},
+                "$(dotnet|3.1|product-version)-bionic-arm64v8": {},
                 "3.1-bionic-arm64v8": {}
               },
               "variant": "v8"
@@ -1528,7 +1522,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1538,14 +1532,14 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(3.1-RuntimeVersion)-focal": {},
+                "$(dotnet|3.1|product-version)-focal": {},
                 "3.1-focal": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(dotnet|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1556,7 +1550,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(3.1-RuntimeVersion)-focal-arm64v8": {},
+                "$(dotnet|3.1|product-version)-focal-arm64v8": {},
                 "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
@@ -1572,9 +1566,9 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/aspnet-tags.yml",
       "images": [
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
-            "$(5.0-RuntimeVersion)": {},
+            "$(dotnet|5.0|product-version)": {},
             "5.0": {},
             "latest": {}
           },
@@ -1587,7 +1581,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim": {},
+                "$(dotnet|5.0|product-version)-buster-slim": {},
                 "5.0-buster-slim": {}
               }
             },
@@ -1600,7 +1594,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm32v7": {},
+                "$(dotnet|5.0|product-version)-buster-slim-arm32v7": {},
                 "5.0-buster-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -1614,7 +1608,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-RuntimeVersion)-buster-slim-arm64v8": {},
+                "$(dotnet|5.0|product-version)-buster-slim-arm64v8": {},
                 "5.0-buster-slim-arm64v8": {}
               },
               "variant": "v8"
@@ -1627,7 +1621,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1809": {},
+                "$(dotnet|5.0|product-version)-nanoserver-1809": {},
                 "5.0-nanoserver-1809": {}
               }
             },
@@ -1639,7 +1633,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1903": {},
+                "$(dotnet|5.0|product-version)-nanoserver-1903": {},
                 "5.0-nanoserver-1903": {}
               }
             },
@@ -1651,7 +1645,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-1909": {},
+                "$(dotnet|5.0|product-version)-nanoserver-1909": {},
                 "5.0-nanoserver-1909": {}
               }
             },
@@ -1663,14 +1657,14 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(5.0-RuntimeVersion)-nanoserver-2004": {},
+                "$(dotnet|5.0|product-version)-nanoserver-2004": {},
                 "5.0-nanoserver-2004": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1680,16 +1674,16 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.12": {},
+                "$(dotnet|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(5.0-RuntimeVersion)-alpine": {},
+                "$(dotnet|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1700,9 +1694,9 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(5.0-RuntimeVersion)-alpine3.12-arm64v8": {},
+                "$(dotnet|5.0|product-version)-alpine3.12-arm64v8": {},
                 "5.0-alpine3.12-arm64v8": {},
-                "$(5.0-RuntimeVersion)-alpine-arm64v8": {},
+                "$(dotnet|5.0|product-version)-alpine-arm64v8": {},
                 "5.0-alpine-arm64v8": {}
               },
               "variant": "v8",
@@ -1718,7 +1712,7 @@
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1728,14 +1722,14 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal": {},
+                "$(dotnet|5.0|product-version)-focal": {},
                 "5.0-focal": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(5.0-RuntimeVersion)",
+          "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -1746,7 +1740,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-RuntimeVersion)-focal-arm64v8": {},
+                "$(dotnet|5.0|product-version)-focal-arm64v8": {},
                 "5.0-focal-arm64v8": {}
               },
               "variant": "v8"
@@ -1762,9 +1756,9 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/core-sdk-tags.yml",
       "images": [
         {
-          "productVersion": "$(2.1-SdkVersion)",
+          "productVersion": "$(sdk|2.1|product-version)",
           "sharedTags": {
-            "$(2.1-SdkVersion)": {},
+            "$(sdk|2.1|product-version)": {},
             "2.1": {}
           },
           "platforms": [
@@ -1773,7 +1767,7 @@
               "os": "linux",
               "osVersion": "stretch",
               "tags": {
-                "$(2.1-SdkVersion)-stretch": {},
+                "$(sdk|2.1|product-version)-stretch": {},
                 "2.1-stretch": {}
               }
             },
@@ -1783,7 +1777,7 @@
               "os": "linux",
               "osVersion": "stretch",
               "tags": {
-                "$(2.1-SdkVersion)-stretch-arm32v7": {},
+                "$(sdk|2.1|product-version)-stretch-arm32v7": {},
                 "2.1-stretch-arm32v7": {}
               },
               "variant": "v7"
@@ -1793,7 +1787,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(2.1-SdkVersion)-nanoserver-1809": {},
+                "$(sdk|2.1|product-version)-nanoserver-1809": {},
                 "2.1-nanoserver-1809": {}
               }
             },
@@ -1802,7 +1796,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(2.1-SdkVersion)-nanoserver-1903": {},
+                "$(sdk|2.1|product-version)-nanoserver-1903": {},
                 "2.1-nanoserver-1903": {}
               }
             },
@@ -1811,7 +1805,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(2.1-SdkVersion)-nanoserver-1909": {},
+                "$(sdk|2.1|product-version)-nanoserver-1909": {},
                 "2.1-nanoserver-1909": {}
               }
             },
@@ -1820,14 +1814,14 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(2.1-SdkVersion)-nanoserver-2004": {},
+                "$(sdk|2.1|product-version)-nanoserver-2004": {},
                 "2.1-nanoserver-2004": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-SdkVersion)",
+          "productVersion": "$(sdk|2.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1837,14 +1831,14 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(2.1-SdkVersion)-alpine3.11": {},
+                "$(sdk|2.1|product-version)-alpine3.11": {},
                 "2.1-alpine3.11": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-SdkVersion)",
+          "productVersion": "$(sdk|2.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -1854,30 +1848,30 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(2.1-SdkVersion)-alpine3.12": {},
+                "$(sdk|2.1|product-version)-alpine3.12": {},
                 "2.1-alpine3.12": {},
-                "$(2.1-SdkVersion)-alpine": {},
+                "$(sdk|2.1|product-version)-alpine": {},
                 "2.1-alpine": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-SdkVersion)",
+          "productVersion": "$(sdk|2.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/sdk/2.1/bionic/amd64",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(2.1-SdkVersion)-bionic": {},
+                "$(sdk|2.1|product-version)-bionic": {},
                 "2.1-bionic": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(2.1-SdkVersion)",
+          "productVersion": "$(sdk|2.1|product-version)",
           "platforms": [
             {
               "architecture": "arm",
@@ -1885,7 +1879,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(2.1-SdkVersion)-bionic-arm32v7": {},
+                "$(sdk|2.1|product-version)-bionic-arm32v7": {},
                 "2.1-bionic-arm32v7": {}
               },
               "variant": "v7"
@@ -1893,23 +1887,23 @@
           ]
         },
         {
-          "productVersion": "$(2.1-SdkVersion)",
+          "productVersion": "$(sdk|2.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/sdk/2.1/focal/amd64",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(2.1-SdkVersion)-focal": {},
+                "$(sdk|2.1|product-version)-focal": {},
                 "2.1-focal": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-SdkVersion)",
+          "productVersion": "$(sdk|3.1|product-version)",
           "sharedTags": {
-            "$(3.1-SdkVersion)": {},
+            "$(sdk|3.1|product-version)": {},
             "3.1": {}
           },
           "platforms": [
@@ -1918,7 +1912,7 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(3.1-SdkVersion)-buster": {},
+                "$(sdk|3.1|product-version)-buster": {},
                 "3.1-buster": {}
               }
             },
@@ -1928,7 +1922,7 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(3.1-SdkVersion)-buster-arm32v7": {},
+                "$(sdk|3.1|product-version)-buster-arm32v7": {},
                 "3.1-buster-arm32v7": {}
               },
               "variant": "v7"
@@ -1939,7 +1933,7 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(3.1-SdkVersion)-buster-arm64v8": {},
+                "$(sdk|3.1|product-version)-buster-arm64v8": {},
                 "3.1-buster-arm64v8": {}
               },
               "variant": "v8"
@@ -1952,7 +1946,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(3.1-SdkVersion)-nanoserver-1809": {},
+                "$(sdk|3.1|product-version)-nanoserver-1809": {},
                 "3.1-nanoserver-1809": {}
               }
             },
@@ -1964,7 +1958,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(3.1-SdkVersion)-nanoserver-1903": {},
+                "$(sdk|3.1|product-version)-nanoserver-1903": {},
                 "3.1-nanoserver-1903": {}
               }
             },
@@ -1976,7 +1970,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(3.1-SdkVersion)-nanoserver-1909": {},
+                "$(sdk|3.1|product-version)-nanoserver-1909": {},
                 "3.1-nanoserver-1909": {}
               }
             },
@@ -1988,14 +1982,14 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(3.1-SdkVersion)-nanoserver-2004": {},
+                "$(sdk|3.1|product-version)-nanoserver-2004": {},
                 "3.1-nanoserver-2004": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-SdkVersion)",
+          "productVersion": "$(sdk|3.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -2005,14 +1999,14 @@
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
-                "$(3.1-SdkVersion)-alpine3.11": {},
+                "$(sdk|3.1|product-version)-alpine3.11": {},
                 "3.1-alpine3.11": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-SdkVersion)",
+          "productVersion": "$(sdk|3.1|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -2022,30 +2016,30 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(3.1-SdkVersion)-alpine3.12": {},
+                "$(sdk|3.1|product-version)-alpine3.12": {},
                 "3.1-alpine3.12": {},
-                "$(3.1-SdkVersion)-alpine": {},
+                "$(sdk|3.1|product-version)-alpine": {},
                 "3.1-alpine": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-SdkVersion)",
+          "productVersion": "$(sdk|3.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/sdk/3.1/bionic/amd64",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-SdkVersion)-bionic": {},
+                "$(sdk|3.1|product-version)-bionic": {},
                 "3.1-bionic": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-SdkVersion)",
+          "productVersion": "$(sdk|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm",
@@ -2053,7 +2047,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-SdkVersion)-bionic-arm32v7": {},
+                "$(sdk|3.1|product-version)-bionic-arm32v7": {},
                 "3.1-bionic-arm32v7": {}
               },
               "variant": "v7"
@@ -2061,7 +2055,7 @@
           ]
         },
         {
-          "productVersion": "$(3.1-SdkVersion)",
+          "productVersion": "$(sdk|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -2069,7 +2063,7 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(3.1-SdkVersion)-bionic-arm64v8": {},
+                "$(sdk|3.1|product-version)-bionic-arm64v8": {},
                 "3.1-bionic-arm64v8": {}
               },
               "variant": "v8"
@@ -2077,21 +2071,21 @@
           ]
         },
         {
-          "productVersion": "$(3.1-SdkVersion)",
+          "productVersion": "$(sdk|3.1|product-version)",
           "platforms": [
             {
               "dockerfile": "src/sdk/3.1/focal/amd64",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(3.1-SdkVersion)-focal": {},
+                "$(sdk|3.1|product-version)-focal": {},
                 "3.1-focal": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(3.1-SdkVersion)",
+          "productVersion": "$(sdk|3.1|product-version)",
           "platforms": [
             {
               "architecture": "arm64",
@@ -2099,7 +2093,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(3.1-SdkVersion)-focal-arm64v8": {},
+                "$(sdk|3.1|product-version)-focal-arm64v8": {},
                 "3.1-focal-arm64v8": {}
               },
               "variant": "v8"
@@ -2115,9 +2109,9 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/sdk-tags.yml",
       "images": [
         {
-          "productVersion": "$(5.0-SdkVersion)",
+          "productVersion": "$(sdk|5.0|product-version)",
           "sharedTags": {
-            "$(5.0-SdkVersion)": {},
+            "$(sdk|5.0|product-version)": {},
             "5.0": {},
             "latest": {}
           },
@@ -2130,7 +2124,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-SdkVersion)-buster-slim": {},
+                "$(sdk|5.0|product-version)-buster-slim": {},
                 "5.0-buster-slim": {}
               }
             },
@@ -2143,7 +2137,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-SdkVersion)-buster-slim-arm32v7": {},
+                "$(sdk|5.0|product-version)-buster-slim-arm32v7": {},
                 "5.0-buster-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -2157,7 +2151,7 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(5.0-SdkVersion)-buster-slim-arm64v8": {},
+                "$(sdk|5.0|product-version)-buster-slim-arm64v8": {},
                 "5.0-buster-slim-arm64v8": {}
               },
               "variant": "v8"
@@ -2170,7 +2164,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(5.0-SdkVersion)-nanoserver-1809": {},
+                "$(sdk|5.0|product-version)-nanoserver-1809": {},
                 "5.0-nanoserver-1809": {}
               }
             },
@@ -2182,7 +2176,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(5.0-SdkVersion)-nanoserver-1903": {},
+                "$(sdk|5.0|product-version)-nanoserver-1903": {},
                 "5.0-nanoserver-1903": {}
               }
             },
@@ -2194,7 +2188,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(5.0-SdkVersion)-nanoserver-1909": {},
+                "$(sdk|5.0|product-version)-nanoserver-1909": {},
                 "5.0-nanoserver-1909": {}
               }
             },
@@ -2206,14 +2200,14 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(5.0-SdkVersion)-nanoserver-2004": {},
+                "$(sdk|5.0|product-version)-nanoserver-2004": {},
                 "5.0-nanoserver-2004": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(5.0-SdkVersion)",
+          "productVersion": "$(sdk|5.0|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -2223,16 +2217,16 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(5.0-SdkVersion)-alpine3.12": {},
+                "$(sdk|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(5.0-SdkVersion)-alpine": {},
+                "$(sdk|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(5.0-SdkVersion)",
+          "productVersion": "$(sdk|5.0|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -2242,14 +2236,14 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-SdkVersion)-focal": {},
+                "$(sdk|5.0|product-version)-focal": {},
                 "5.0-focal": {}
               }
             }
           ]
         },
         {
-          "productVersion": "$(5.0-SdkVersion)",
+          "productVersion": "$(sdk|5.0|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -2260,7 +2254,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(5.0-SdkVersion)-focal-arm64v8": {},
+                "$(sdk|5.0|product-version)-focal-arm64v8": {},
                 "5.0-focal-arm64v8": {}
               },
               "variant": "v8"
@@ -2276,9 +2270,9 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/monitor-tags.yml",
       "images": [
         {
-          "productVersion": "$(5.0-MonitorVersion)",
+          "productVersion": "$(monitor|5.0|product-version)",
           "sharedTags": {
-            "$(5.0-MonitorVersion)": {},
+            "$(monitor|5.0|product-version)": {},
             "5.0": {},
             "latest": {}
           },
@@ -2292,7 +2286,7 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(5.0-MonitorVersion)-alpine": {},
+                "$(monitor|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
