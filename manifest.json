@@ -2276,7 +2276,7 @@
       "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/monitor-tags.yml",
       "images": [
         {
-          "productVersion": "$(3.1-RuntimeVersion)",
+          "productVersion": "$(5.0-MonitorVersion)",
           "sharedTags": {
             "$(5.0-MonitorVersion)": {},
             "5.0": {},
