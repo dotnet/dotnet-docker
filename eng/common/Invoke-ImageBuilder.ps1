@@ -52,6 +52,14 @@ function Exec {
     }
 }
 
+function PullImageBuilder {
+    Invoke-Expression "docker inspect ${imageNames.imagebuilder} | Out-Null"
+    if ($LASTEXITCODE -ne 0) {
+        Log "Pulling"
+        ./eng/common/Invoke-WithRetry.ps1 "docker pull ${imageNames.imagebuilder}"
+    }
+}
+
 $imageBuilderContainerName = "ImageBuilder-$(Get-Date -Format yyyyMMddhhmmss)"
 $containerCreated = $false
 
@@ -70,7 +78,7 @@ try {
         # On Linux, ImageBuilder is run within a container.
         $imageBuilderImageName = "microsoft-dotnet-imagebuilder-withrepo"
         if ($ReuseImageBuilderImage -ne $True) {
-            ./eng/common/Invoke-WithRetry.ps1 "docker pull ${imageNames.imagebuilder}"
+            PullImageBuilder
             Exec ("docker build -t $imageBuilderImageName --build-arg " `
                 + "IMAGE=${imageNames.imagebuilder} -f eng/common/Dockerfile.WithRepo .")
         }
@@ -83,7 +91,7 @@ try {
         $imageBuilderFolder = ".Microsoft.DotNet.ImageBuilder"
         $imageBuilderCmd = [System.IO.Path]::Combine($imageBuilderFolder, "Microsoft.DotNet.ImageBuilder.exe")
         if (-not (Test-Path -Path "$imageBuilderCmd" -PathType Leaf)) {
-            ./eng/common/Invoke-WithRetry.ps1 "docker pull ${imageNames.imagebuilder}"
+            PullImageBuilder
             Exec "docker create --name $imageBuilderContainerName ${imageNames.imagebuilder}"
             $containerCreated = $true
             if (Test-Path -Path $imageBuilderFolder)
