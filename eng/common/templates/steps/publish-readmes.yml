@@ -1,6 +1,6 @@
 parameters:
   dryRunArg: ""
-  condition:  true
+  condition: true
 
 steps:
 - script: >
@@ -14,5 +14,10 @@ steps:
     ${{ parameters.dryRunArg }}
     $(manifestVariables)
     $(imageBuilder.queueArgs)
+  name: PublishReadmes
   displayName: Publish Readmes
   condition: ${{ parameters.condition }}
+- template: wait-for-mcr-doc-ingestion.yml
+  parameters:
+    commitDigest: $(PublishReadmes.readmeCommitDigest)
+    condition: and(${{ parameters.condition }}, ne(variables['PublishReadmes.readmeCommitDigest'], ''))

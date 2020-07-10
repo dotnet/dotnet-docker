@@ -1,7 +1,7 @@
 parameters:
   targetPath: ""
   artifactName: ""
-  requiresPublicRepoPrefix: false
+  condition: true
 
 steps:
 - task: DownloadPipelineArtifact@1
@@ -14,5 +14,4 @@ steps:
     targetPath: ${{ parameters.targetPath }}
     artifactName: ${{ parameters.artifactName }}
   displayName: Download Build Artifact(s)
-  ${{ if eq(parameters.requiresPublicRepoPrefix, true) }}:
-    condition: and(succeeded(), eq(variables['publishRepoPrefix'], 'public/'))
+  condition: ${{ parameters.condition }}

@@ -1,0 +1,16 @@
+parameters:
+  imageInfoPath: null
+  minQueueTime: null
+  condition: true
+
+steps:
+- script: >
+    $(runImageBuilderCmd) waitForMcrImageIngestion
+    '${{ parameters.imageInfoPath }}'
+    '$(mcrStatus.servicePrincipalName)'
+    '$(app-DotnetDockerMcrStatusApi-client-secret)'
+    '$(mcrStatus.servicePrincipalTenant)'
+    --manifest '$(manifest)'
+    --min-queue-time '${{ parameters.minQueueTime }}'
+  displayName: Wait for Image Ingestion
+  condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
