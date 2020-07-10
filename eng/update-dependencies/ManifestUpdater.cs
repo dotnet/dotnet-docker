@@ -40,11 +40,11 @@ namespace Dotnet.Docker
 
             string productVersion = version.Split('-')[0];
             string dockerfileVersion = productVersion.Substring(0, productVersion.LastIndexOf('.'));
-            string versionVariableName = $"{imageVariantName}\\|{dockerfileVersion}\\|product-version";
+            string versionVariableName = $"{imageVariantName}|{dockerfileVersion}|product-version";
             Trace.TraceInformation($"Updating {versionVariableName} to {_tagVersion}");
 
             Path = System.IO.Path.Combine(repoRoot, "manifest.versions.json");
-            Regex = new Regex($"\"{versionVariableName}\": \"(?<{TagVersionValueGroupName}>{versionRegexPattern})\"");
+            Regex = new Regex($"\"{Regex.Escape(versionVariableName)}\": \"(?<{TagVersionValueGroupName}>{Regex.Escape(versionRegexPattern)})\"");
             VersionGroupName = TagVersionValueGroupName;
         }
 
