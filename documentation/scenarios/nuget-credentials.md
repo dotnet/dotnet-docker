@@ -150,15 +150,14 @@ Instead, the credentials for `customfeed` are defined in the Dockerfile by makin
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app
 
-ARG FEED_ACCESSTOKEN
-ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
-    "{\"endpointCredentials\": [{\"endpoint\":\"https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${FEED_ACCESSTOKEN}\"}]}"
-
 RUN curl -L https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh  | bash
 
 # Copy csproj and restore as distinct layers
 COPY *.csproj .
 COPY ./nuget.config .
+ARG FEED_ACCESSTOKEN
+ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
+    "{\"endpointCredentials\": [{\"endpoint\":\"https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${FEED_ACCESSTOKEN}\"}]}"
 RUN dotnet restore
 
 # Copy and publish app and libraries
@@ -190,10 +189,6 @@ RUN Invoke-WebRequest https://raw.githubusercontent.com/microsoft/artifacts-cred
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 
-ARG FEED_ACCESSTOKEN
-ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS `
-    "{`"endpointCredentials`": [{`"endpoint`":`"https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json`", `"username`":`"docker`", `"password`":`"${FEED_ACCESSTOKEN}`"}]}"
-
 # Copy cred provider from installer stage
 COPY --from=credproviderinstaller C:\Users\ContainerAdministrator\.nuget\plugins C:\Users\ContainerUser\.nuget\plugins
 
@@ -202,6 +197,9 @@ WORKDIR /app
 # Copy csproj and restore as distinct layers
 COPY *.csproj .
 COPY nuget.config .
+ARG FEED_ACCESSTOKEN
+ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS `
+    "{`"endpointCredentials`": [{`"endpoint`":`"https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json`", `"username`":`"docker`", `"password`":`"${FEED_ACCESSTOKEN}`"}]}"
 RUN dotnet restore
 
 # Copy and publish app and libraries
@@ -217,13 +215,41 @@ ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 
 _Note that a script is called to install the Credential Provider. When `dotnet restore` is run, the Credential Provider is invoked to resolve the credentials and it retrieves them from the `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable._
 
-Before running `docker build`, first populate the `FEED_ACCESSTOKEN` environment variable with an access token. Then, this Dockerfile would be built using this command:
+Before running `docker build`, first populate the `FEED_ACCESSTOKEN` environment variable with a [personal access token](https://docs.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate). Then, this Dockerfile would be built using this command:
 
 ```bash
 docker build --build-arg FEED_ACCESSTOKEN .
 ```
 
 Passing the access token to the `docker build` command in this manner can be useful in automated scenarios when that value is stored as an environment variable on the Docker host machine or can be retrieved from an external secrets storage location and passed to the `docker build` command.
+
+### Credential Provider Troubleshooting
+
+If you are having authentication issues, try adding a command to the Dockerfile to print out the value of the `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable. This will help you to ensure it is set and formatted correctly.
+
+Example (Linux):
+
+```Dockerfile
+ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS `
+    "{`"endpointCredentials`": [{`"endpoint`":`"https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json`", `"username`":`"docker`", `"password`":`"${FEED_ACCESSTOKEN}`"}]}"
+RUN echo $VSS_NUGET_EXTERNAL_FEED_ENDPOINTS
+```
+
+Example (Windows PowerShell):
+
+```Dockerfile
+ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS `
+    "{`"endpointCredentials`": [{`"endpoint`":`"https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json`", `"username`":`"docker`", `"password`":`"${FEED_ACCESSTOKEN}`"}]}"
+RUN echo $Env:VSS_NUGET_EXTERNAL_FEED_ENDPOINTS
+```
+
+Example (Windows Cmd):
+
+```Dockerfile
+ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS `
+    "{`"endpointCredentials`": [{`"endpoint`":`"https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json`", `"username`":`"docker`", `"password`":`"${FEED_ACCESSTOKEN}`"}]}"
+RUN echo %VSS_NUGET_EXTERNAL_FEED_ENDPOINTS%
+```
 
 ## Passing secrets by file with BuildKit
 
@@ -281,3 +307,9 @@ DOCKER_BUILDKIT=1 docker build --secret id=nugetconfig,src=nuget.config .
 ## Other Options
 
 There are a number of techniques that can be used to protect secrets in a Docker build. Doing a web search yields a good quantity of material out there. The options listed above are considered to be simple and straightforward but depending on your environment and tolerance for complexity, you may want to consider other options. You're encouraged to do your research and find an option that works best for you.
+
+## General Troubleshooting
+
+* The sample Dockerfiles provided above make the assumption that the application's projects are all based on .NET Core. If you're attempting to build a project that is based on a .NET Framework project that makes use of a packages.config file, you'll need to run `nuget restore` instead of `dotnet restore` for that project or solution.
+
+* Often times, restoration of NuGet packages is the first point in a Dockerfile that attempts to make a network call. Firewalls and proxies can impact network connectivity. If you're encountering connection issues when attempting to restore NuGet packages, make sure that the container actually has network access by adding a command like `RUN ping www.microsoft.com`.

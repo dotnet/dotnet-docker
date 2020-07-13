@@ -1,0 +1,37 @@
+# escape=`
+
+# Install the cred provider in a separate stage based on Windows Server Core
+# due to https://github.com/microsoft/artifacts-credprovider/issues/201
+FROM mcr.microsoft.com/powershell as credproviderinstaller
+
+SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
+RUN Invoke-WebRequest https://raw.githubusercontent.com/microsoft/artifacts-credprovider/master/helpers/installcredprovider.ps1 -OutFile installcredprovider.ps1; `
+    .\installcredprovider.ps1; `
+    del installcredprovider.ps1
+
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+
+# Copy cred provider from installer stage
+COPY --from=credproviderinstaller C:\Users\ContainerAdministrator\.nuget\plugins C:\Users\ContainerUser\.nuget\plugins
+
+WORKDIR /app
+
+# Copy csproj and restore as distinct layers
+COPY *.csproj .
+COPY nuget.config .
+ARG FEED_ACCESSTOKEN
+ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS `
+    "{`"endpointCredentials`": [{`"endpoint`":`"https://fabrikam.pkgs.visualstudio.com/_packaging/MyGreatFeed/nuget/v3/index.json`", `"username`":`"docker`", `"password`":`"${FEED_ACCESSTOKEN}`"}]}"
+RUN dotnet restore
+
+# Copy and publish app and libraries
+COPY . .
+RUN dotnet publish -c Release -o out --no-restore
+
+
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1 AS runtime
+WORKDIR /app/
+COPY --from=build /app/out ./
+ENTRYPOINT ["dotnet", "dotnetapp.dll"]
