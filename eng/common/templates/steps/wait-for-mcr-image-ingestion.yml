@@ -2,6 +2,7 @@ parameters:
   imageInfoPath: null
   minQueueTime: null
   condition: true
+  dryRunArg: ""
 
 steps:
 - script: >
@@ -12,5 +13,6 @@ steps:
     '$(mcrStatus.servicePrincipalTenant)'
     --manifest '$(manifest)'
     --min-queue-time '${{ parameters.minQueueTime }}'
+    ${{ parameters.dryRunArg }}
   displayName: Wait for Image Ingestion
   condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
