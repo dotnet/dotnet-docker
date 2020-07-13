@@ -1,0 +1,15 @@
+parameters:
+  commitDigest: null
+  condition: true
+  dryRunArg: ""
+
+steps:
+- script: >
+    $(runImageBuilderCmd) waitForMcrDocIngestion
+    '${{ parameters.commitDigest }}'
+    '$(mcrStatus.servicePrincipalName)'
+    '$(app-DotnetDockerMcrStatusApi-client-secret)'
+    '$(mcrStatus.servicePrincipalTenant)'
+    ${{ parameters.dryRunArg }}
+  displayName: Wait for MCR Doc Ingestion
+  condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
