@@ -4,8 +4,8 @@
   "variables": {
     "2.1-RuntimeVersion": "2.1.19",
     "2.1-SdkVersion": "2.1.807",
-    "3.1-RuntimeVersion": "3.1.5",
-    "3.1-SdkVersion": "3.1.301",
+    "3.1-RuntimeVersion": "3.1.6",
+    "3.1-SdkVersion": "3.1.302",
     "5.0-RuntimeVersion": "5.0.0-preview.6",
     "5.0-SdkVersion": "5.0.100-preview.6"
   },
