@@ -74,6 +74,7 @@ jobs:
     parameters:
       imageInfoPath: '$(artifactsPath)/image-info.json'
       minQueueTime: $(imageQueueTime)
+      dryRunArg: $(dryRunArg)
   - template: ../steps/publish-readmes.yml
     parameters:
       dryRunArg: $(dryRunArg)

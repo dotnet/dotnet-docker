@@ -21,3 +21,4 @@ steps:
   parameters:
     commitDigest: $(PublishReadmes.readmeCommitDigest)
     condition: and(${{ parameters.condition }}, ne(variables['PublishReadmes.readmeCommitDigest'], ''))
+    dryRunArg: ${{ parameters.dryRunArg }}
