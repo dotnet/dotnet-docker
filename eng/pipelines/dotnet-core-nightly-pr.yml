@@ -1,12 +1,13 @@
-trigger:
-  batch: true
+pr:
   branches:
     include:
     - nightly
   paths:
-    include:
-    - manifest.json
-    - src/*
+    exclude:
+    - .github/*
+    - documentation/*
+    - README*
+    - samples/*
 
 variables:
 - template: variables/common.yml
@@ -14,3 +15,6 @@ variables:
   value: manifest.json
 stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
+  parameters:
+    buildMatrixType: platformVersionedOs
+    customBuildLegGrouping: pr-build
