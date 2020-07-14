@@ -9,9 +9,9 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 RUN `
     # Retrieve .NET Core SDK
-    $dotnet_sdk_version = '3.1.301'; `
+    $dotnet_sdk_version = '3.1.302'; `
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-win-x64.zip; `
-    $dotnet_sha512 = '99a124d19503036bcedefffb348fa23476e60cdabfcb8e9cddc6545f05f57d8d2cf5bc7ff9b42039387a15328471c5bd47e50c5ea129fbd418a6e0fa9607bb17'; `
+    $dotnet_sha512 = '1db61a6e2e888c4a1b81dce5c5f64110bd622dfc35a12cb68784b5a2afc86f26a2d3db177560bcb997ecf4f1dfd34a9465812caed270319b359a8a858d7bddbc'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -20,9 +20,9 @@ RUN `
     Remove-Item -Force dotnet.zip; `
     `
     # Install PowerShell global tool
-    $powershell_version = '7.0.1'; `
+    $powershell_version = '7.0.2'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-    $powershell_sha512 = 'a649278de61f4654cb39648e247521989ecd9125580681bb5436dd1500d400edfc259ef6db0579a6b718529bc9d680e28ecd02e3a396bb36103caabf44d0959d'; `
+    $powershell_sha512 = '7bc1f801c5475bb74150e0470614dfa9f5176c1780fa9664f0043cc4dc9d3d01cd2c963b18726b72e38b68a303a46a7f757f9253ee70ddd7cb2504b3639c4a6f'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -43,8 +43,6 @@ FROM $REPO:3.1-nanoserver-1909
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
