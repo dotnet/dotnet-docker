@@ -31,9 +31,9 @@ namespace Dotnet.Docker
         private static readonly Dictionary<string, string> urls = new Dictionary<string, string> {
             {"powershell", "https://pwshtool.blob.core.windows.net/tool/$VERSION/PowerShell.$OS.$ARCH.$VERSION.nupkg"},
             {"monitor", "https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor5.0/dotnet-monitor.$VERSION.nupkg"},
-            {"runtime", "https://dotnetcli.azureedge.net/dotnet/Runtime/$VERSION/dotnet-runtime-$VERSION-$OS-$ARCH.$COMPRESS_EXT"},
-            {"aspnet", "https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$VERSION/aspnetcore-runtime-$VERSION-$OS-$ARCH.$COMPRESS_EXT"},
-            {"sdk", "https://dotnetcli.azureedge.net/dotnet/Sdk/$VERSION/dotnet-sdk-$VERSION-$OS-$ARCH.$COMPRESS_EXT"},
+            {"runtime", "https://dotnetcli.azureedge.net/dotnet/Runtime/$VERSION/dotnet-runtime-$VERSION-$OS-$ARCH.$ARCHIVE_EXT"},
+            {"aspnet", "https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$VERSION/aspnetcore-runtime-$VERSION-$OS-$ARCH.$ARCHIVE_EXT"},
+            {"sdk", "https://dotnetcli.azureedge.net/dotnet/Sdk/$VERSION/dotnet-sdk-$VERSION-$OS-$ARCH.$ARCHIVE_EXT"},
             {"lzma", "https://dotnetcli.azureedge.net/dotnet/Sdk/$VERSION/nuGetPackagesArchive.lzma"}
         };
 
@@ -87,7 +87,8 @@ namespace Dotnet.Docker
                         $"{shaVariablePattern.Replace(".*", Regex.Escape(osPattern + archPattern))} \"(?<{ShaValueGroupName}>.*)\"");
 
                     return updater;
-                });
+                })
+                .ToArray();
         }
 
         protected override string TryGetDesiredValue(
@@ -101,7 +102,7 @@ namespace Dotnet.Docker
                 .Replace("$VERSION", _buildVersion)
                 .Replace("$OS", _os)
                 .Replace("$ARCH", _arch)
-                .Replace("$COMPRESS_EXT", _os.Contains("win") ? "zip" : "tar.gz")
+                .Replace("$ARCHIVE_EXT", _os.Contains("win") ? "zip" : "tar.gz")
                 .Replace("..", ".");
             return GetArtifactShaAsync(downloadUrl).Result;
         }
