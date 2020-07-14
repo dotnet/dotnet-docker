@@ -20,6 +20,7 @@ namespace Dotnet.Docker
     public static class Program
     {
         private const string AspNetCoreBuildInfoName = "aspnet";
+        private const string MonitorBuildInfoName = "monitor";
         private const string RuntimeBuildInfoName = "core-setup";
         private const string SdkBuildInfoName = "cli";
 
@@ -71,9 +72,12 @@ namespace Dotnet.Docker
 
         private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)
         {
+            // NOTE: dotnet-monitor will diverge its versioning in the future; this will need to be refactored in
+            // some way to allow updaters to be collected for each product's individual version.
             string buildVersion = buildInfos.GetBuildVersion(RuntimeBuildInfoName) ??
                 buildInfos.GetBuildVersion(SdkBuildInfoName) ??
-                buildInfos.GetBuildVersion(AspNetCoreBuildInfoName);
+                buildInfos.GetBuildVersion(AspNetCoreBuildInfoName) ??
+                buildInfos.GetBuildVersion(MonitorBuildInfoName);
             string productVersion = buildVersion.Split('-')[0];
             string dockerfileVersion = productVersion.Substring(0, productVersion.LastIndexOf('.'));
             IEnumerable<IDependencyUpdater> updaters = GetUpdaters(dockerfileVersion, buildInfos);
@@ -88,6 +92,10 @@ namespace Dotnet.Docker
             if (Options.AspnetVersion != null)
             {
                 buildInfo.Add(CreateDependencyBuildInfo(AspNetCoreBuildInfoName, Options.AspnetVersion));
+            }
+            if (Options.MonitorVersion != null)
+            {
+                buildInfo.Add(CreateDependencyBuildInfo(MonitorBuildInfoName, Options.MonitorVersion));
             }
             if (Options.RuntimeVersion != null)
             {
@@ -122,14 +130,19 @@ namespace Dotnet.Docker
 
         private static async Task CreatePullRequestAsync()
         {
+            // Replace slashes with hyphens for use in naming the branch
+            string versionSourceNameForBranch = Options.VersionSourceName.Replace("/", "-");
+
             GitHubAuth gitHubAuth = new GitHubAuth(Options.GitHubPassword, Options.GitHubUser, Options.GitHubEmail);
             PullRequestCreator prCreator = new PullRequestCreator(gitHubAuth, Options.GitHubUser);
+
+            string branchSuffix = $"UpdateDependencies-{Options.GitHubUpstreamBranch}-From-{versionSourceNameForBranch}";
             PullRequestOptions prOptions = new PullRequestOptions()
             {
-                BranchNamingStrategy = new SingleBranchNamingStrategy($"UpdateDependencies-{Options.GitHubUpstreamBranch}")
+                BranchNamingStrategy = new SingleBranchNamingStrategy(branchSuffix)
             };
 
-            string commitMessage = $"[{Options.GitHubUpstreamBranch}] Update dependencies from dotnet/core-sdk";
+            string commitMessage = $"[{Options.GitHubUpstreamBranch}] Update dependencies from {Options.VersionSourceName}";
             GitHubProject upstreamProject = new GitHubProject(Options.GitHubProject, Options.GitHubUpstreamOwner);
             GitHubBranch upstreamBranch = new GitHubBranch(Options.GitHubUpstreamBranch, upstreamProject);
 
@@ -140,7 +153,7 @@ namespace Dotnet.Docker
                     upstreamBranch.Name,
                     await client.GetMyAuthorIdAsync());
 
-                if (pullRequestToUpdate == null)
+                if (pullRequestToUpdate == null || pullRequestToUpdate.Head.Ref != $"{upstreamBranch.Name}-{branchSuffix}")
                 {
                     await prCreator.CreateOrUpdateAsync(
                         commitMessage,
@@ -318,6 +331,8 @@ namespace Dotnet.Docker
                     dockerfiles, buildInfos, VariableHelper.AspNetCoreVersionName, AspNetCoreBuildInfoName))
                 .Concat(CreateDockerfileVariableUpdaters(
                     dockerfiles, buildInfos, VariableHelper.DotnetVersionName, RuntimeBuildInfoName))
+                .Concat(CreateDockerfileVariableUpdaters(
+                    dockerfiles, buildInfos, VariableHelper.MonitorVersionName, MonitorBuildInfoName))
                 .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateProductShaUpdater(path, Options)))
                 .Concat(dockerfiles.Select(path => DockerfileShaUpdater.CreateLzmaShaUpdater(path, Options)))
                 .Concat(manifestBasedUpdaters);
