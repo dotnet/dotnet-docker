@@ -99,10 +99,10 @@ namespace Dotnet.Docker
             usedBuildInfos = new IDependencyInfo[] { productInfo };
 
             string downloadUrl = urls[_productName]
+                .Replace("$ARCHIVE_EXT", _os.Contains("win") ? "zip" : "tar.gz")
                 .Replace("$VERSION", _buildVersion)
                 .Replace("$OS", _os)
                 .Replace("$ARCH", _arch)
-                .Replace("$ARCHIVE_EXT", _os.Contains("win") ? "zip" : "tar.gz")
                 .Replace("..", ".");
             return GetArtifactShaAsync(downloadUrl).Result;
         }
