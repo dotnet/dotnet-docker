@@ -1,12 +1,13 @@
 // Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.DotNet.VersionTools.Dependencies;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Microsoft.DotNet.VersionTools.Dependencies;
 
 namespace Dotnet.Docker
 {
@@ -53,15 +54,21 @@ namespace Dotnet.Docker
             Trace.TraceInformation($"Executing '{_scriptPath}'");
 
             // Support both execution within Windows 10, Nano Server and Linux environments.
+            Process process;
             try
             {
-                Process process = Process.Start("pwsh", _scriptPath);
+                process = Process.Start("pwsh", _scriptPath);
                 process.WaitForExit();
             }
             catch (Win32Exception)
             {
-                Process process = Process.Start("powershell", _scriptPath);
+                process = Process.Start("powershell", _scriptPath);
                 process.WaitForExit();
+            }
+
+            if (process.ExitCode != 0)
+            {
+                throw new InvalidOperationException($"Unable to successfully execute '{_scriptPath}'");
             }
         }
     }

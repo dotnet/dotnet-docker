@@ -9,7 +9,9 @@ parameters:
 jobs:
 - job: ${{ parameters.name }}
   condition: and(succeeded(), ${{ parameters.matrix }})
-  dependsOn: GenerateBuildMatrix
+  dependsOn: 
+    - PreBuildValidation
+    - GenerateBuildMatrix
   pool: ${{ parameters.pool }}
   strategy:
     matrix: $[ ${{ parameters.matrix }} ]
