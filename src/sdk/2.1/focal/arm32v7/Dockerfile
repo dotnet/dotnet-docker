@@ -14,10 +14,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.1.807
+ENV DOTNET_SDK_VERSION 2.1.808
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
-    && dotnet_sha512='0b3e80abf6895d46cee8ad5c81aa7968cc6876f5a98c79ce6ad5f28fb43208aff8e5f2bca618c36577bf9f91d1f7a4f962accbe2ab472f713ba8e503519802b0' \
+    && dotnet_sha512='35e024fafa3babc367900828299d16c484f380c171b849d5157202b77dc99ed4c5f7af612f427bbeefba4939eb95d1faeb9c8bfb6afa14ce75d5c2c36210d5ec' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
@@ -25,7 +25,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     # Add NuGet cache (ARM SDK doesn't include it)
     && curl -SL --output /usr/share/dotnet/sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma \
-    && lzma_sha512='f6038cd8524d0b9389704687f603fd1d68fab3b2dff1650829d2ce253a754b681c83aa93388124c463e71d5f9413325c7a4b599d453b1bbddb8f25bdbc25f5be' \
+    && lzma_sha512='9f10d94c9fa136ac7beee48f05b1ff9ce86196224fc73d17d6111d415ee285ab25c84ad47998de93009feb9af08ffbb6406379a3d226c96891b3d244e0823548' \
     && echo "$lzma_sha512 /usr/share/dotnet/sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma" | sha512sum -c -
 
 # Configure web servers to bind to port 80 when present
