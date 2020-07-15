@@ -10,6 +10,7 @@ steps:
     '$(mcrStatus.servicePrincipalName)'
     '$(app-DotnetDockerMcrStatusApi-client-secret)'
     '$(mcrStatus.servicePrincipalTenant)'
+    --timeout '$(mcrDocIngestionTimeout)'
     ${{ parameters.dryRunArg }}
   displayName: Wait for MCR Doc Ingestion
   condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
