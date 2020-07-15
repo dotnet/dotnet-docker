@@ -10,7 +10,7 @@ jobs:
       condition: and(succeeded(), ne(variables['sourceBuildId'], ''))
   - powershell: |
       # Get the last image info artifact that was published
-      $imageInfoDirName = $(dir $(Build.ArtifactStagingDirectory)/image-info-final-* | select -ExpandProperty Name)[-1]
+      $imageInfoDirName = @($(dir $(Build.ArtifactStagingDirectory)/image-info-final-* | select -ExpandProperty Name))[-1]
       $imageInfoPath = "$(artifactsPath)/$imageInfoDirName/image-info.json"
       echo "##vso[task.setvariable variable=imageInfoPath]$imageInfoPath"
     displayName: Get Image Info Path

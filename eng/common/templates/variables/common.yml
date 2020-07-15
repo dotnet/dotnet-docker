@@ -19,6 +19,10 @@ variables:
   value: ""
 - name: defaultLinuxAmd64PoolImage
   value: ubuntu-latest
+- name: mcrImageIngestionTimeout
+  value: "00:20:00"
+- name: mcrDocIngestionTimeout
+  value: "00:05:00"
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - group: DotNet-Docker-Common
