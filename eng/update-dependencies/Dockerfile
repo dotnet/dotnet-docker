@@ -6,11 +6,11 @@ WORKDIR /update-dependencies
 # copy csproj and restore as distinct layers
 COPY eng/update-dependencies/*.csproj ./
 COPY eng/update-dependencies/NuGet.config ./
-RUN dotnet restore
+RUN dotnet restore -r linux-x64
 
 # copy everything else and build
 COPY eng/update-dependencies/. ./
-RUN dotnet publish -c Release -o out --no-restore
+RUN dotnet publish -c Release -o out --no-restore -r linux-x64
 
 
 # runtime image
