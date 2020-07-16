@@ -6,6 +6,7 @@ pr:
     - nightly
   paths:
     include:
+    - manifest.samples.json
     - eng/*
     - samples/*
     - tests/*
