@@ -223,6 +223,10 @@ docker build --build-arg FEED_ACCESSTOKEN .
 
 Passing the access token to the `docker build` command in this manner can be useful in automated scenarios when that value is stored as an environment variable on the Docker host machine or can be retrieved from an external secrets storage location and passed to the `docker build` command.
 
+### Sample
+
+A [sample project](credential-provider-sample/README.md) is available to test out your Azure Artifacts feed with. This provides a simple set of steps you can follow to ensure validity of the configuration.
+
 ### Credential Provider Troubleshooting
 
 If you are having authentication issues, try adding a command to the Dockerfile to print out the value of the `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable. This will help you to ensure it is set and formatted correctly.
