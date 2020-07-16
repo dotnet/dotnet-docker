@@ -20,6 +20,7 @@ FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         git \
+        libgit2-27 \
     && rm -rf /var/lib/apt/lists/*
 
 # install Docker
