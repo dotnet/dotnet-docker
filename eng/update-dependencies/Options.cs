@@ -1,60 +1,42 @@
 // Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
 using System.CommandLine;
+using System.Linq;
 
 namespace Dotnet.Docker
 {
     public class Options
     {
-        public string AspnetVersion { get; private set; }
+        public bool ComputeChecksums { get; private set; }
+        public string DockerfileVersion { get; private set; }
         public string GitHubEmail { get; private set; }
         public string GitHubPassword { get; private set; }
         public string GitHubProject => "dotnet-docker";
         public string GitHubUpstreamBranch => "nightly";
         public string GitHubUpstreamOwner => "dotnet";
         public string GitHubUser { get; private set; }
-        public string MonitorVersion { get; private set; }
-        public string RuntimeVersion { get; private set; }
-        public string SdkVersion { get; private set; }
+        public IDictionary<string, string> ProductVersions { get; set; } = new Dictionary<string, string>();
         public string VersionSourceName { get; private set; }
-        public bool ComputeChecksums { get; private set; }
         public bool UpdateOnly => GitHubEmail == null || GitHubPassword == null || GitHubUser == null;
 
         public void Parse(string[] args)
         {
             ArgumentSyntax argSyntax = ArgumentSyntax.Parse(args, syntax =>
             {
-                string aspnetVersion = null;
-                Argument<string> aspnetVersionArg = syntax.DefineOption(
-                    "aspnet-version",
-                    ref aspnetVersion,
-                    "ASP.NET version to update the Dockerfiles with");
-                AspnetVersion = aspnetVersion;
-
-                string runtimeVersion = null;
-                Argument<string> runtimeVersionArg = syntax.DefineOption(
-                    "runtime-version",
-                    ref runtimeVersion,
-                    ".NET runtime version to update the Dockerfiles with");
-                RuntimeVersion = runtimeVersion;
-
-                string sdkVersion = null;
-                Argument<string> sdkVersionArg = syntax.DefineOption(
-                    "sdk-version",
-                    ref sdkVersion,
-                    "SDK version to update the Dockerfiles with");
-                SdkVersion = sdkVersion;
-
-                string monitorVersion = null;
-                Argument<string> monitorVersionArg = syntax.DefineOption(
-                    "monitor-version",
-                    ref monitorVersion,
-                    ".NET Monitor version to update the Dockerfiles with");
-                MonitorVersion = monitorVersion;
+                IReadOnlyList<string> productVersions = Array.Empty<string>();
+                syntax.DefineOptionList(
+                    "product-version",
+                    ref productVersions,
+                    "Product versions to update (<product-name>=<version>)");
+                ProductVersions = productVersions
+                    .Select(pair => pair.Split(new char[] { '=' }, 2))
+                    .ToDictionary(split => split[0].ToLower(), split => split[1]);
 
                 string versionSourceName = null;
-                Argument<string> versionSourceNameArg = syntax.DefineOption(
+                syntax.DefineOption(
                     "version-source-name",
                     ref versionSourceName,
                     "The name of the source from which the version information was acquired.");
@@ -87,6 +69,13 @@ namespace Dotnet.Docker
                     ref computeChecksums,
                     "Compute the checksum if a published checksum cannot be found");
                 ComputeChecksums = computeChecksums;
+
+                string dockerfileVersion = null;
+                syntax.DefineParameter(
+                    "dockerfile-version",
+                    ref dockerfileVersion,
+                    "Version to the Dockerfiles to update");
+                DockerfileVersion = dockerfileVersion;
             });
         }
     }

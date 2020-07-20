@@ -2,7 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Microsoft.DotNet.VersionTools.Dependencies;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -12,42 +11,56 @@ using System.Linq;
 namespace Dotnet.Docker
 {
     /// <summary>
-    /// An IDependencyUpdater that will update the tags section of the readme with the latest tags for the repo.
+    /// An IDependencyUpdater that executes a PowerShell script to perform the update.
     /// </summary>
-    public class ReadMeUpdater : IDependencyUpdater
+    public class ScriptRunnerUpdater : IDependencyUpdater
     {
-        private string _repoRoot;
+        private string _scriptPath;
 
-        public ReadMeUpdater(string repoRoot)
+        private ScriptRunnerUpdater()
         {
-            _repoRoot = repoRoot;
+        }
+
+        public static IDependencyUpdater GetDockerfileUpdater(string repoRoot)
+        {
+            return new ScriptRunnerUpdater()
+            {
+                _scriptPath = Path.Combine(repoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1")
+            };
+        }
+
+        public static IDependencyUpdater GetReadMeUpdater(string repoRoot)
+        {
+            return new ScriptRunnerUpdater()
+            {
+                _scriptPath = Path.Combine(repoRoot, "eng", "Get-TagsDocumentation.ps1")
+            };
         }
 
         public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos)
         {
             return new DependencyUpdateTask[] {
                 new DependencyUpdateTask(
-                    () => InvokeGetTagsDocumentationScript(),
+                    () => ExecuteScript(),
                     Enumerable.Empty<IDependencyInfo>(),
                     Enumerable.Empty<string>()
                 )
             };
         }
 
-        private void InvokeGetTagsDocumentationScript()
+        private void ExecuteScript()
         {
-            Trace.TraceInformation($"InvokeGetTagsDocumentationScript");
+            Trace.TraceInformation($"Executing '{_scriptPath}'");
 
             // Support both execution within Windows 10, Nano Server and Linux environments.
-            string scriptPath = Path.Combine(_repoRoot, "eng", "Get-TagsDocumentation.ps1");
             try
             {
-                Process process = Process.Start("pwsh", scriptPath);
+                Process process = Process.Start("pwsh", _scriptPath);
                 process.WaitForExit();
             }
             catch (Win32Exception)
             {
-                Process process = Process.Start("powershell", scriptPath);
+                Process process = Process.Start("powershell", _scriptPath);
                 process.WaitForExit();
             }
         }
