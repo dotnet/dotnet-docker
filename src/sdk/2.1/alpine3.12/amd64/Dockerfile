@@ -9,10 +9,10 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     LANG=en_US.UTF-8
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION 2.1.807
+ENV DOTNET_SDK_VERSION 2.1.808
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='65ee089284f293d506a386bf51198e6ee88722b5a0a8f786c3fe6f6b440d4da1222806b62f06627d521653a022519f010e4467a9caed47a46fc6605b8d70c359' \
+    && dotnet_sha512='8f6e04fe7091364dde709c53969e07e8504a66177c9ccad6871a42b3d2de0a96aba424ce39b281a4855b51f5129d25fd3ee1c49f95d675621dc8454b1243826a' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \
