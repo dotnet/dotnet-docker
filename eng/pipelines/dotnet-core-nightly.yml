@@ -8,7 +8,6 @@ trigger:
     - manifest.json
     - manifest.versions.json
     - src/*
-pr: none
 
 variables:
 - template: variables/common.yml

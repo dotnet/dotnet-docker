@@ -24,7 +24,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/2.1/stretch-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
@@ -39,7 +38,6 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/2.1/stretch-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
@@ -59,7 +57,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/2.1/alpine3.11/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/2.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
@@ -78,7 +75,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/2.1/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/2.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -103,7 +99,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/2.1/bionic/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -123,7 +118,6 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/2.1/bionic/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -143,7 +137,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/2.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -170,7 +163,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/buster-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -185,7 +177,6 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/buster-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -201,7 +192,6 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/buster-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -221,7 +211,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/alpine3.11/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
@@ -241,7 +230,6 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/alpine3.11/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
@@ -261,7 +249,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -287,7 +274,6 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/alpine3.12/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -313,7 +299,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/bionic/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -333,7 +318,6 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/bionic/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -354,7 +338,6 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/bionic/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -374,7 +357,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -390,7 +372,6 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -419,7 +400,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/5.0/buster-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -430,7 +410,6 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/5.0/buster-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -442,7 +421,6 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/5.0/buster-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -458,7 +436,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/5.0/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -476,7 +453,6 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/5.0/alpine3.12/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -494,7 +470,6 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/5.0/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -510,7 +485,6 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/5.0/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -541,7 +515,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/stretch-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
@@ -555,7 +528,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/stretch-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
@@ -566,7 +538,6 @@
             },
             {
               "dockerfile": "src/runtime/2.1/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -576,7 +547,6 @@
             },
             {
               "dockerfile": "src/runtime/2.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
@@ -586,7 +556,6 @@
             },
             {
               "dockerfile": "src/runtime/2.1/nanoserver-1909/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
@@ -596,7 +565,6 @@
             },
             {
               "dockerfile": "src/runtime/2.1/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
@@ -614,7 +582,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/alpine3.11/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
@@ -632,7 +599,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -652,7 +618,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/bionic/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -671,7 +636,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/bionic/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -690,7 +654,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -713,7 +676,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/buster-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -727,7 +689,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/buster-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -742,7 +703,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/buster-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -753,7 +713,6 @@
             },
             {
               "dockerfile": "src/runtime/3.1/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -763,7 +722,6 @@
             },
             {
               "dockerfile": "src/runtime/3.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
@@ -773,7 +731,6 @@
             },
             {
               "dockerfile": "src/runtime/3.1/nanoserver-1909/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
@@ -783,7 +740,6 @@
             },
             {
               "dockerfile": "src/runtime/3.1/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
@@ -801,7 +757,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/alpine3.11/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
@@ -820,7 +775,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/alpine3.11/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
@@ -847,7 +801,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -868,7 +821,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/alpine3.12/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -897,7 +849,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/bionic/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -916,7 +867,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/bionic/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -936,7 +886,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/bionic/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -955,7 +904,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -974,7 +922,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -1006,7 +953,6 @@
                 "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/5.0/buster-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -1020,7 +966,6 @@
                 "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/5.0/buster-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -1035,7 +980,6 @@
                 "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/5.0/buster-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -1046,7 +990,6 @@
             },
             {
               "dockerfile": "src/runtime/5.0/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -1056,7 +999,6 @@
             },
             {
               "dockerfile": "src/runtime/5.0/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
@@ -1066,7 +1008,6 @@
             },
             {
               "dockerfile": "src/runtime/5.0/nanoserver-1909/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
@@ -1076,7 +1017,6 @@
             },
             {
               "dockerfile": "src/runtime/5.0/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
@@ -1094,7 +1034,6 @@
                 "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/5.0/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -1115,7 +1054,6 @@
                 "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/5.0/alpine3.12/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -1144,7 +1082,6 @@
                 "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/5.0/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -1163,7 +1100,6 @@
                 "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/5.0/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -1194,7 +1130,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/stretch-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
@@ -1208,7 +1143,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/stretch-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
@@ -1219,7 +1153,6 @@
             },
             {
               "dockerfile": "src/aspnet/2.1/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -1229,7 +1162,6 @@
             },
             {
               "dockerfile": "src/aspnet/2.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
@@ -1239,7 +1171,6 @@
             },
             {
               "dockerfile": "src/aspnet/2.1/nanoserver-1909/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
@@ -1249,7 +1180,6 @@
             },
             {
               "dockerfile": "src/aspnet/2.1/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
@@ -1267,7 +1197,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/alpine3.11/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
@@ -1285,7 +1214,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -1305,7 +1233,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/bionic/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -1324,7 +1251,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/bionic/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -1343,7 +1269,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -1366,7 +1291,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/buster-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -1380,7 +1304,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/buster-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -1395,7 +1318,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/buster-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -1409,7 +1331,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -1422,7 +1343,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
@@ -1435,7 +1355,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/nanoserver-1909/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
@@ -1448,7 +1367,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
@@ -1466,7 +1384,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/alpine3.11/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
@@ -1485,7 +1402,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/alpine3.11/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
@@ -1512,7 +1428,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -1533,7 +1448,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/alpine3.12/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -1562,7 +1476,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/bionic/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -1581,7 +1494,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/bionic/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -1601,7 +1513,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/bionic/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -1620,7 +1531,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -1639,7 +1549,6 @@
                 "REPO": "$(Repo:core-runtime)"
               },
               "dockerfile": "src/aspnet/3.1/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -1671,7 +1580,6 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/buster-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -1685,7 +1593,6 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/buster-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -1700,7 +1607,6 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/buster-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -1714,7 +1620,6 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -1727,7 +1632,6 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
@@ -1740,7 +1644,6 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/nanoserver-1909/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
@@ -1753,7 +1656,6 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
@@ -1771,7 +1673,6 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -1792,7 +1693,6 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/alpine3.12/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -1821,7 +1721,6 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -1840,7 +1739,6 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/5.0/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -1868,7 +1766,6 @@
           "platforms": [
             {
               "dockerfile": "src/sdk/2.1/stretch/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch",
               "tags": {
@@ -1879,7 +1776,6 @@
             {
               "architecture": "arm",
               "dockerfile": "src/sdk/2.1/stretch/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch",
               "tags": {
@@ -1890,7 +1786,6 @@
             },
             {
               "dockerfile": "src/sdk/2.1/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -1900,7 +1795,6 @@
             },
             {
               "dockerfile": "src/sdk/2.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
@@ -1910,7 +1804,6 @@
             },
             {
               "dockerfile": "src/sdk/2.1/nanoserver-1909/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
@@ -1920,7 +1813,6 @@
             },
             {
               "dockerfile": "src/sdk/2.1/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
@@ -1938,7 +1830,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/sdk/2.1/alpine3.11/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
@@ -1956,7 +1847,6 @@
                 "REPO": "$(Repo:core-runtime-deps)"
               },
               "dockerfile": "src/sdk/2.1/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -1973,7 +1863,6 @@
           "platforms": [
             {
               "dockerfile": "src/sdk/2.1/bionic/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -1989,7 +1878,6 @@
             {
               "architecture": "arm",
               "dockerfile": "src/sdk/2.1/bionic/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -2005,7 +1893,6 @@
           "platforms": [
             {
               "dockerfile": "src/sdk/2.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -2025,7 +1912,6 @@
           "platforms": [
             {
               "dockerfile": "src/sdk/3.1/buster/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster",
               "tags": {
@@ -2036,7 +1922,6 @@
             {
               "architecture": "arm",
               "dockerfile": "src/sdk/3.1/buster/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster",
               "tags": {
@@ -2048,7 +1933,6 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/sdk/3.1/buster/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster",
               "tags": {
@@ -2062,7 +1946,6 @@
                 "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "src/sdk/3.1/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -2075,7 +1958,6 @@
                 "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "src/sdk/3.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
@@ -2088,7 +1970,6 @@
                 "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "src/sdk/3.1/nanoserver-1909/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
@@ -2101,7 +1982,6 @@
                 "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "src/sdk/3.1/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
@@ -2119,7 +1999,6 @@
                 "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "src/sdk/3.1/alpine3.11/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.11",
               "tags": {
@@ -2137,7 +2016,6 @@
                 "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "src/sdk/3.1/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -2154,7 +2032,6 @@
           "platforms": [
             {
               "dockerfile": "src/sdk/3.1/bionic/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -2170,7 +2047,6 @@
             {
               "architecture": "arm",
               "dockerfile": "src/sdk/3.1/bionic/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -2187,7 +2063,6 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/sdk/3.1/bionic/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -2203,7 +2078,6 @@
           "platforms": [
             {
               "dockerfile": "src/sdk/3.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -2219,7 +2093,6 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/sdk/3.1/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -2251,7 +2124,6 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/5.0/buster-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -2265,7 +2137,6 @@
               },
               "architecture": "arm",
               "dockerfile": "src/sdk/5.0/buster-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -2280,7 +2151,6 @@
               },
               "architecture": "arm64",
               "dockerfile": "src/sdk/5.0/buster-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -2294,7 +2164,6 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/5.0/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -2307,7 +2176,6 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/5.0/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
@@ -2320,7 +2188,6 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/5.0/nanoserver-1909/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
@@ -2333,7 +2200,6 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/5.0/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
@@ -2351,7 +2217,6 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/5.0/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -2371,7 +2236,6 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/5.0/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -2390,7 +2254,6 @@
               },
               "architecture": "arm64",
               "dockerfile": "src/sdk/5.0/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -2423,7 +2286,6 @@
                 "SDK_REPO": "$(Repo:core-sdk)"
               },
               "dockerfile": "src/monitor/5.0/alpine/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/5.0/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
