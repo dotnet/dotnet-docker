@@ -26,7 +26,7 @@ jobs:
       --password $(BotAccount-dotnet-docker-bot-PAT)
       --product-version runtime=$(runtimeVer)
       --product-version sdk=$(sdkVer)
-      --product-aspnet-version aspnet=$(aspnetVer)
+      --product-version aspnet=$(aspnetVer)
       --version-source-name dotnet/core-sdk
       --compute-shas
     displayName: Run Update Dependencies
