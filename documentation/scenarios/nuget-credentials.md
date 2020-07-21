@@ -176,21 +176,17 @@ ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```Dockerfile
 # escape=`
 
-# Install the cred provider in a separate stage based on Windows Server Core
-# due to https://github.com/microsoft/artifacts-credprovider/issues/201
-FROM mcr.microsoft.com/powershell as credproviderinstaller
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
+# Change user to workaround https://github.com/microsoft/artifacts-credprovider/issues/201
+USER ContainerAdministrator
+# Install the cred provider
 RUN Invoke-WebRequest https://raw.githubusercontent.com/microsoft/artifacts-credprovider/master/helpers/installcredprovider.ps1 -OutFile installcredprovider.ps1; `
     .\installcredprovider.ps1; `
     del installcredprovider.ps1
-
-
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-
-# Copy cred provider from installer stage
-COPY --from=credproviderinstaller C:\Users\ContainerAdministrator\.nuget\plugins C:\Users\ContainerUser\.nuget\plugins
+USER ContainerUser
 
 WORKDIR /app
 
