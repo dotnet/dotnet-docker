@@ -16,7 +16,7 @@ _The set of .NET Core versions that are being released as a unit._
       - [ ] &lt;add link to PR/commit&gt;
 1. - [ ] Wait for .NET Core archive files (.zip, .tar.gz) to be available at blob storage location
 1. - [ ] Run `update-dependencies` tool to update all the necessary files to reflect the specified .NET Core versions (run this command for each version being released):
-      - [ ] `dotnet run --project .\eng\update-dependencies\update-dependencies.csproj --product-version sdk=<sdk> --product-version runtime=<runtime> --product-version aspnet=<runtime>`
+      - [ ] `dotnet run --project .\eng\update-dependencies\update-dependencies.csproj <major/minor version> --product-version sdk=<sdk> --product-version runtime=<runtime> --product-version aspnet=<aspnet>`
 1. - [ ] Inspect generated changes for correctness
 1. - [ ] Commit generated changes
 1. - [ ] Create PR
