@@ -6,11 +6,11 @@ WORKDIR /update-dependencies
 # copy csproj and restore as distinct layers
 COPY eng/update-dependencies/*.csproj ./
 COPY eng/update-dependencies/NuGet.config ./
-RUN dotnet restore -r alpine.3.9-x64
+RUN dotnet restore -r alpine.3.11-x64
 
 # copy everything else and build
 COPY eng/update-dependencies/. ./
-RUN dotnet publish -c Release -o out --no-restore -r alpine.3.9-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true
+RUN dotnet publish -c Release -o out --no-restore -r alpine.3.11-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true
 
 
 # runtime image
