@@ -14,6 +14,7 @@ steps:
     --manifest '$(manifest)'
     --min-queue-time '${{ parameters.minQueueTime }}'
     --timeout '$(mcrImageIngestionTimeout)'
+    $(manifestVariables)
     ${{ parameters.dryRunArg }}
   displayName: Wait for Image Ingestion
   condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
