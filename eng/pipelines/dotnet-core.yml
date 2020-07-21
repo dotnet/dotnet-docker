@@ -4,11 +4,12 @@ pr:
     include:
     - master
   paths:
-    exclude:
-    - .github/*
-    - documentation/*
-    - README*
-    - samples/*
+    include:
+    - manifest.json
+    - manifest.versions.json
+    - eng/*
+    - src/*
+    - tests/*
 
 variables:
 - template: variables/common.yml
