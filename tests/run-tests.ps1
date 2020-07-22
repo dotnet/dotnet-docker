@@ -14,7 +14,7 @@ param(
     [switch]$DisableHttpVerification,
     [switch]$PullImages,
     [string]$ImageInfoPath,
-    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "sample", "image-size")]
+    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size")]
     [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk")
 )
 
@@ -95,6 +95,7 @@ Try {
     $env:REGISTRY = $Registry
     $env:REPO_PREFIX = $RepoPrefix
     $env:IMAGE_INFO_PATH = $ImageInfoPath
+    $env:SOURCE_REPO_ROOT = (Get-Item "$PSScriptRoot").Parent.FullName
 
     $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
     $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1

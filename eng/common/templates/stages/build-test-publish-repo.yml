@@ -23,6 +23,14 @@ stages:
 - stage: Build
   condition: and(succeeded(), contains(variables['stages'], 'build'))
   jobs:
+  - template: ../jobs/test-images-linux-client.yml
+    parameters:
+      name: PreBuildValidation
+      pool:
+        vmImage: $(defaultLinuxAmd64PoolImage)
+      testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
+      preBuildValidation: true
+
   - template: ../jobs/generate-matrix.yml
     parameters:
       matrixType: ${{ parameters.buildMatrixType }}

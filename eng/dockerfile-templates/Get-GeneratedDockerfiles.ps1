@@ -1,20 +1,22 @@
 #!/usr/bin/env pwsh
 param(
-    # Paths to the Dockerfiles to generate.
-    [string[]]$Paths
+    [switch]$Validate
 )
 
-if ($Paths) {
-    $pathArgs = " --path " + ($Paths -join " --path ")
+if ($Validate) {
+    $customImageBuilderArgs = " --validate"
 }
 
 $repoRoot = (Get-Item "$PSScriptRoot").Parent.Parent.FullName
 
 $onDockerfilesGenerated = {
     param($ContainerName)
-    Exec "docker cp ${ContainerName}:/repo/src $repoRoot"
+
+    if (-Not $Validate) {
+        Exec "docker cp ${ContainerName}:/repo/src $repoRoot"
+    }
 }
 
 & $PSScriptRoot/../common/Invoke-ImageBuilder.ps1 `
-    -ImageBuilderArgs "generateDockerfiles --architecture * --os-type *$pathArgs" `
+    -ImageBuilderArgs "generateDockerfiles --architecture '*' --os-type '*'$customImageBuilderArgs" `
     -OnCommandExecuted $onDockerfilesGenerated

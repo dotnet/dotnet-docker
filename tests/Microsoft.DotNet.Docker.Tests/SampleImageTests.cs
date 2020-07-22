@@ -16,6 +16,8 @@ namespace Microsoft.DotNet.Docker.Tests
     [Trait("Category", "sample")]
     public class SampleImageTests
     {
+        private static readonly string s_samplesPath = Path.Combine(Config.SourceRepoRoot, "samples");
+
         public SampleImageTests(ITestOutputHelper outputHelper)
         {
             OutputHelper = outputHelper;
@@ -80,7 +82,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string appTag = SampleImageData.GetImageName("complexapp-local-app");
             string testTag = SampleImageData.GetImageName("complexapp-local-test");
-            string sampleFolder = $"samples/complexapp";
+            string sampleFolder = Path.Combine(s_samplesPath, "complexapp");
             string dockerfilePath = $"{sampleFolder}/Dockerfile";
             string testContainerName = ImageData.GenerateContainerName("sample-complex-test");
             string tempDir = null;
@@ -141,7 +143,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 if (!imageData.IsPublished)
                 {
-                    string sampleFolder = $"samples/{imageType}";
+                    string sampleFolder = Path.Combine(s_samplesPath, imageType);
                     string dockerfilePath = $"{sampleFolder}/Dockerfile.{imageData.DockerfileSuffix}";
 
                     DockerHelper.Build(image, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages);
