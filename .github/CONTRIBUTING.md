@@ -27,7 +27,7 @@ The [`build-and-test.ps1`](https://github.com/dotnet/dotnet-docker/blob/master/b
 - Build and test the samples
 
     ``` console
-    > ./build-and-test.ps1 -Path *samples*
+    > ./build-and-test.ps1 -Path *samples* -TestCategories sample
     ```
 
 - Test the 5.0 Alpine 3.12 images for the current architecture (e.g. x64, arm, arm64).
