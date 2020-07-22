@@ -273,7 +273,7 @@ namespace Dotnet.Docker
             DirectoryInfo dir = new DirectoryInfo(sourceDirName);
 
             DirectoryInfo[] dirs = dir.GetDirectories()
-                .Where(dir => !dir.Name.StartsWith("."))
+                .Where(dir => dir.Name != ".git")
                 .ToArray();
 
             // If the destination directory doesn't exist, create it.
