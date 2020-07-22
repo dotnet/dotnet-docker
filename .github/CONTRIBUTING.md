@@ -12,7 +12,7 @@ When making PRs, all source code changes (e.g. Dockerfiles, tests, and infrastru
 
 The [`build-and-test.ps1`](https://github.com/dotnet/dotnet-docker/blob/master/build-and-test.ps1) script will build and test the .NET Docker images. Given the matrix of supported .NET versions, distros, and architectures there are numerous Dockerfiles and building can take a while. To make this manageable, the script supports several options for filtering down what images get built and tested.
 
-- Build and test all of the .NET 5.0 images for the current platform (e.g. linux/x64, linux/arm, linux/arm64, windows/x64).
+- Build and test all of the .NET 5.0 images for the Docker platform your machine is targeting (e.g. linux/x64, linux/arm, linux/arm64, windows/x64).
 
     ``` console
     > ./build-and-test.ps1 -Version 5.0
