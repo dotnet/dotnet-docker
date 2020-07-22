@@ -4,7 +4,7 @@ RUN apt-get update \
     &&{{if OS_VERSION = "focal": DEBIAN_FRONTEND=noninteractive}} apt-get install -y --no-install-recommends \
         ca-certificates \
         \
-# .NET Core dependencies
+        # .NET Core dependencies
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
