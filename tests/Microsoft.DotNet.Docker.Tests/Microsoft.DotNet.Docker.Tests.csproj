@@ -18,13 +18,6 @@
     <Content Include="TestAppArtifacts/*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="../../manifest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="../../samples/**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>samples/%(RecursiveDir)%(Filename)%(Extension)</Link>
-    </Content>
   </ItemGroup>
 
 </Project>

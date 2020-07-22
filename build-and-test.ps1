@@ -24,6 +24,10 @@ param(
     [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "sample", "image-size")
 )
 
+if ($Mode -eq "BuildAndTest" -or $Mode -eq "Test") {
+    & ./tests/run-tests.ps1 -TestCategories "pre-build"
+}
+
 if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
     # Build the product images
     & ./eng/common/build.ps1 `

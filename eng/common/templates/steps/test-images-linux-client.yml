@@ -1,3 +1,6 @@
+parameters:
+  preBuildValidation: false
+
 steps:
 - template: init-docker-linux.yml
   parameters:
@@ -8,11 +11,15 @@ steps:
     echo "##vso[task.setvariable variable=testRunner.container]testrunner-$(Build.BuildId)-$(System.JobId)"
 
     optionalTestArgs=""
-    if [ "${{ eq(variables['System.TeamProject'], 'public') }}" == "False" ]; then
-      optionalTestArgs="$optionalTestArgs -PullImages -Registry $(acr.server) -RepoPrefix $(stagingRepoPrefix) -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
-    fi
-    if [ "$REPOTESTARGS" != "" ]; then
-      optionalTestArgs="$optionalTestArgs $REPOTESTARGS"
+    if [ "${{ parameters.preBuildValidation }}" == "true" ]; then
+      optionalTestArgs="$optionalTestArgs -TestCategories pre-build"
+    else
+      if [ "${{ eq(variables['System.TeamProject'], 'public') }}" == "False" ]; then
+        optionalTestArgs="$optionalTestArgs -PullImages -Registry $(acr.server) -RepoPrefix $(stagingRepoPrefix) -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
+      fi
+      if [ "$REPOTESTARGS" != "" ]; then
+        optionalTestArgs="$optionalTestArgs $REPOTESTARGS"
+      fi
     fi
     echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
   displayName: Set Test Variables
@@ -30,9 +37,10 @@ steps:
       -File $(engCommonRelativePath)/Invoke-WithRetry.ps1
       "docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)"
     displayName: Docker login
-  - template: ../steps/download-build-artifact.yml
-    parameters:
-      targetPath: $(Build.ArtifactStagingDirectory)
+  - ${{ if eq(parameters.preBuildValidation, 'false') }}:
+    - template: ../steps/download-build-artifact.yml
+      parameters:
+        targetPath: $(Build.ArtifactStagingDirectory)
 - script: >
     docker exec $(testRunner.container) pwsh
     -File $(testScriptPath)
@@ -63,7 +71,10 @@ steps:
     searchFolder: $(Common.TestResultsDirectory)
     mergeTestResults: true
     publishRunAttachments: true
-    testRunTitle: $(dotnetVersion) $(osVariant) $(architecture)
+    ${{ if eq(parameters.preBuildValidation, 'false') }}:
+      testRunTitle: $(dotnetVersion) $(osVariant) $(architecture)
+    ${{ if eq(parameters.preBuildValidation, 'true') }}:
+      testRunTitle: Pre-Build Validation
 - script: docker rm -f $(testRunner.container)
   displayName: Cleanup TestRunner Container
   condition: always()
