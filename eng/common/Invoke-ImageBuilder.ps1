@@ -48,6 +48,8 @@ function Exec {
     Log "Executing: '$Cmd'"
     Invoke-Expression $Cmd
     if ($LASTEXITCODE -ne 0) {
+        $host.SetShouldExit($LASTEXITCODE)
+        exit $LASTEXITCODE
         throw "Failed: '$Cmd'"
     }
 }
