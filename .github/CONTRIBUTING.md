@@ -57,7 +57,7 @@ The [`manifest.json`](https://github.com/dotnet/dotnet-docker/blob/master/manife
 - Image Tags
 - Manifest/shared tags to create and which images they reference
 - Docker repositories to publish the images to
-- Dockerfile templates used to generated the Dockerfiles
+- Dockerfile templates used to generate the Dockerfiles
 - etc.
 
 When adding or removing Dockerfiles, it is important to update the `manifest.json` accordingly.
