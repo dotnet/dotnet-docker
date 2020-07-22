@@ -389,7 +389,7 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
             "5.0": {
-              "isUndocumented": true
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -399,7 +399,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster-slim": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -410,7 +410,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster-slim-arm32v7": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v7"
@@ -422,7 +422,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster-slim-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -438,10 +438,10 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "5.0-alpine3.12": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 },
                 "5.0-alpine": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             }
@@ -457,10 +457,10 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "5.0-alpine3.12-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 },
                 "5.0-alpine-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -476,7 +476,7 @@
               "osVersion": "focal",
               "tags": {
                 "5.0-focal": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             }
@@ -492,7 +492,7 @@
               "osVersion": "focal",
               "tags": {
                 "5.0-focal-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -1053,7 +1053,7 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
             "5.0": {
-              "isUndocumented": true
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -1066,7 +1066,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster-slim": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -1080,7 +1080,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster-slim-arm32v7": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v7"
@@ -1095,7 +1095,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster-slim-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -1106,7 +1106,7 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "5.0-nanoserver-1809": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -1116,7 +1116,7 @@
               "osVersion": "nanoserver-1903",
               "tags": {
                 "5.0-nanoserver-1903": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -1126,7 +1126,7 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "5.0-nanoserver-1909": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -1136,7 +1136,7 @@
               "osVersion": "nanoserver-2004",
               "tags": {
                 "5.0-nanoserver-2004": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             }
@@ -1154,10 +1154,10 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "5.0-alpine3.12": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 },
                 "5.0-alpine": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             }
@@ -1176,10 +1176,10 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "5.0-alpine3.12-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 },
                 "5.0-alpine-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -1198,7 +1198,7 @@
               "osVersion": "focal",
               "tags": {
                 "5.0-focal": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             }
@@ -1217,7 +1217,7 @@
               "osVersion": "focal",
               "tags": {
                 "5.0-focal-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -1855,7 +1855,7 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
             "5.0": {
-              "isUndocumented": true
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -1868,7 +1868,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster-slim": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -1882,7 +1882,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster-slim-arm32v7": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v7"
@@ -1897,7 +1897,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster-slim-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -1911,7 +1911,7 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "5.0-nanoserver-1809": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -1924,7 +1924,7 @@
               "osVersion": "nanoserver-1903",
               "tags": {
                 "5.0-nanoserver-1903": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -1937,7 +1937,7 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "5.0-nanoserver-1909": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -1950,7 +1950,7 @@
               "osVersion": "nanoserver-2004",
               "tags": {
                 "5.0-nanoserver-2004": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             }
@@ -1968,10 +1968,10 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "5.0-alpine3.12": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 },
                 "5.0-alpine": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             }
@@ -1990,10 +1990,10 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "5.0-alpine3.12-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 },
                 "5.0-alpine-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -2012,7 +2012,7 @@
               "osVersion": "focal",
               "tags": {
                 "5.0-focal": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             }
@@ -2031,7 +2031,7 @@
               "osVersion": "focal",
               "tags": {
                 "5.0-focal-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -2586,7 +2586,7 @@
           "productVersion": "$(sdk|5.0|product-version)",
           "sharedTags": {
             "5.0": {
-              "isUndocumented": true
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -2599,10 +2599,10 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 },
                 "5.0-buster-slim": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -2616,10 +2616,10 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster-arm32v7": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 },
                 "5.0-buster-slim-arm32v7": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v7"
@@ -2634,10 +2634,10 @@
               "osVersion": "buster-slim",
               "tags": {
                 "5.0-buster-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 },
                 "5.0-buster-slim-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -2651,7 +2651,7 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "5.0-nanoserver-1809": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -2664,7 +2664,7 @@
               "osVersion": "nanoserver-1903",
               "tags": {
                 "5.0-nanoserver-1903": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -2677,7 +2677,7 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "5.0-nanoserver-1909": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -2690,7 +2690,7 @@
               "osVersion": "nanoserver-2004",
               "tags": {
                 "5.0-nanoserver-2004": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             }
@@ -2708,10 +2708,10 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "5.0-alpine3.12": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 },
                 "5.0-alpine": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             }
@@ -2729,7 +2729,7 @@
               "osVersion": "focal",
               "tags": {
                 "5.0-focal": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               }
             }
@@ -2748,7 +2748,7 @@
               "osVersion": "focal",
               "tags": {
                 "5.0-focal-arm64v8": {
-                  "isUndocumented": true
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
