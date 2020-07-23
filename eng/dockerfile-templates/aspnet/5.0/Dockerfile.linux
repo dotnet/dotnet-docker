@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime
+ARG REPO=mcr.microsoft.com/dotnet/runtime
 ARG ASPNET_VERSION={{VARIABLES["aspnet|5.0|build-version"]}}
 
 # Installer image

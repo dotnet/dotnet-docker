@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:5.0-alpine3.12
 
 ENV \
@@ -12,14 +12,14 @@ ENV \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Alpine-3.12
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Alpine-3.12
 
 RUN apk add --no-cache \
     curl \
     icu-libs \
     git
 
-# Install .NET Core SDK
+# Install .NET SDK
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
     && dotnet_sha512='001e0d48ab8e735549908ae23cd0e391e6cc0057502efdad253c492c570a35831f958692ef3efae4d8b8059339f5a568ef540818ddfecfaa83f8204f995f8b4f' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
