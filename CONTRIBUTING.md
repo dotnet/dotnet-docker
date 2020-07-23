@@ -61,3 +61,25 @@ The [`manifest.json`](https://github.com/dotnet/dotnet-docker/blob/master/manife
 - etc.
 
 When adding or removing Dockerfiles, it is important to update the `manifest.json` accordingly.
+
+### Updating Product Versions
+
+Updating the product versions (e.g. .NET runtime, ASP.NET runtime, PowerShell, etc.) contained within the images is typically performed by automation. All of the product version information is stored in the [`manifest.versions.json`](https://github.com/dotnet/dotnet-docker/blob/master/manifest.versions.json) file. The Dockerfile templates reference the product versions numbers and checksum shas from this file. Updating a product version involves updating the `manifest.versions.json` and regenerating the Dockerfiles. If there are cases where you need to update a product version, you can use the [update-dependencies](https://github.com/dotnet/dotnet-docker/tree/master/eng/update-dependencies) tool.  The tool will do the following:
+
+1. Update the product versions and checksums stored in `manifest.versions.json`
+1. Regenerated the Dockerfiles
+1. Update the tags listing in the readmes
+
+The following examples illustrate how to run `update-dependencies`
+
+- Update the 3.1 product versions
+
+    ``` console
+    > dotnet run --project .\eng\update-dependencies\ -- 3.1 --product-version runtime=3.1.6 --product-version aspnet=3.1.6 --product-version sdk=3.1.302
+    ```
+
+- Update the PowerShell version used in the 5.0 images
+
+    ``` console
+    > dotnet run --project .\eng\update-dependencies\ -- 5.0 --product-version powershell=7.1.0-preview.4 --compute-shas
+    ```
