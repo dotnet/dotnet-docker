@@ -70,7 +70,7 @@ Updating the product versions (e.g. .NET runtime, ASP.NET runtime, PowerShell, e
 1. Regenerate the Dockerfiles
 1. Update the tags listing in the readmes
 
-The following examples illustrate how to run `update-dependencies`
+The following examples illustrate how to run `update-dependencies`:
 
 - Update the 3.1 product versions
 
