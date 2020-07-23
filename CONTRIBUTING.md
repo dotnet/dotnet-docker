@@ -64,7 +64,7 @@ When adding or removing Dockerfiles, it is important to update the `manifest.jso
 
 ### Updating Product Versions
 
-Updating the product versions (e.g. .NET runtime, ASP.NET runtime, PowerShell, etc.) contained within the images is typically performed by automation. All of the product version information is stored in the [`manifest.versions.json`](https://github.com/dotnet/dotnet-docker/blob/master/manifest.versions.json) file. The Dockerfile templates reference the product versions numbers and checksum shas from this file. Updating a product version involves updating the `manifest.versions.json` and regenerating the Dockerfiles. If there are cases where you need to update a product version, you can use the [update-dependencies](https://github.com/dotnet/dotnet-docker/tree/master/eng/update-dependencies) tool.  The tool will do the following:
+Updating the product versions (e.g. .NET runtime, ASP.NET runtime, PowerShell, etc.) contained within the images is typically performed by automation. All of the product version information is stored in the [`manifest.versions.json`](https://github.com/dotnet/dotnet-docker/blob/master/manifest.versions.json) file. The Dockerfile templates reference the product versions numbers and checksums from this file. Updating a product version involves updating the `manifest.versions.json` and regenerating the Dockerfiles. If there are cases where you need to update a product version, you can use the [update-dependencies](https://github.com/dotnet/dotnet-docker/tree/master/eng/update-dependencies) tool.  The tool will do the following:
 
 1. Update the product versions and checksums stored in `manifest.versions.json`
 1. Regenerate the Dockerfiles
