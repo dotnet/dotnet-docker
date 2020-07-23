@@ -1,6 +1,6 @@
 # escape=`
 
-ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
 ARG DOTNET_SDK_VERSION=5.0.100-preview.7.20366.15
 
 # Installer image
@@ -10,7 +10,7 @@ ARG DOTNET_SDK_VERSION
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 RUN `
-    # Retrieve .NET Core SDK
+    # Retrieve .NET SDK
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
     $dotnet_sha512 = '6caff10ee37a3ec2d3460daa231b470275c2601d8a6fa8db9a1399d208c2959d485531dcc671808ad50ac6eb7c0923c08a187c6a46a2ffb130eb348c5de618da'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
@@ -51,7 +51,7 @@ ENV `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip `
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1909
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-NanoServer-1909
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator

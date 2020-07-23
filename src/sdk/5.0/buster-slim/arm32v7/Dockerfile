@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:5.0-buster-slim-arm32v7
 
 ENV \
@@ -10,7 +10,7 @@ ENV \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Debian-10-arm32
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Debian-10-arm32
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -19,7 +19,7 @@ RUN apt-get update \
         wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Install .NET Core SDK
+# Install .NET SDK
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
     && dotnet_sha512='92d7dce81172e49fe061be1aaff4d934a3339977a862eb765b6c6aaf45740a1a7c08abbf089c89818361c48a9699c7eebdad6514ae350ddb095e74b3781d2135' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \

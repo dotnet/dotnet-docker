@@ -1,6 +1,6 @@
 # escape=`
 
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime
+ARG REPO=mcr.microsoft.com/dotnet/runtime
 ARG ASPNET_VERSION={{VARIABLES["aspnet|5.0|build-version"]}}
 
 # Installer image
@@ -21,7 +21,7 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/do
     Remove-Item -Force aspnetcore.zip
 
 
-# Runtime image
+# ASP.NET Core image
 FROM $REPO:5.0-{{OS_VERSION}}
 ARG ASPNET_VERSION
 

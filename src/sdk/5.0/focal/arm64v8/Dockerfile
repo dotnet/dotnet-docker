@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:5.0-focal-arm64v8
 
 ENV \
@@ -10,7 +10,7 @@ ENV \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Ubuntu-20.04-arm64
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Ubuntu-20.04-arm64
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -19,7 +19,7 @@ RUN apt-get update \
         wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Install .NET Core SDK
+# Install .NET SDK
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm64.tar.gz \
     && dotnet_sha512='8bc7f4e833224596ce3adac7600f77db07ecc22b8ed883a811d4bdcffb97d68c31e9dadb46fb5218c8e2bea24fc45000bc84b39d4f3e580a3f6414e6e9fa90e6' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
