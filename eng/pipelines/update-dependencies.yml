@@ -10,10 +10,10 @@ schedules:
 variables:
 - template: variables/common.yml
 stages:
-- stage: UpdateDependenciesDotNet
+- stage: DotNet
   condition: eq(variables['update-dotnet-enabled'], 'true')
   jobs:
-  - job: UpdateDependenciesDotNet
+  - job: UpdateDependencies
     displayName: Update Dependencies (dotnet/installer)
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
@@ -34,11 +34,11 @@ stages:
         --version-source-name dotnet/core-sdk
         --compute-shas
       displayName: Run Update Dependencies
-- stage: UpdateDependenciesDiagnostics
+- stage: Diagnostics
   condition: eq(variables['update-diagnostics-enabled'], 'true')
   dependsOn: [] # Allows it to run in parallel
   jobs:
-  - job: UpdateDependenciesDiagnostics
+  - job: UpdateDependencies
     displayName: Update Dependencies (dotnet/diagnostics)
     variables:
       isEnabled: $(update-diagnostics-enabled)
