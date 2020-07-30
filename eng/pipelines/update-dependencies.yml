@@ -40,8 +40,6 @@ stages:
   jobs:
   - job: UpdateDependencies
     displayName: Update Dependencies (dotnet/diagnostics)
-    variables:
-      isEnabled: $(update-diagnostics-enabled)
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
