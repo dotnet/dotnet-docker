@@ -86,7 +86,16 @@
               "osVersion": "buster",
               "tags": {
                 "aspnetapp-buster-slim": {}
-              }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-buster-slim"
+                  ]
+                }
+              ]
             },
             {
               "architecture": "arm",
@@ -96,7 +105,16 @@
               "tags": {
                 "aspnetapp-buster-slim-arm32v7": {}
               },
-              "variant": "v7"
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-buster-slim-arm32v7"
+                  ]
+                }
+              ]
             },
             {
               "architecture": "arm64",
@@ -106,7 +124,16 @@
               "tags": {
                 "aspnetapp-buster-slim-arm64v8": {}
               },
-              "variant": "v8"
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-buster-slim-arm64v8"
+                  ]
+                }
+              ]
             },
             {
               "dockerfile": "samples/aspnetapp",
@@ -114,7 +141,16 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "aspnetapp-nanoserver-1809": {}
-              }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-nanoserver-1809"
+                  ]
+                }
+              ]
             },
             {
               "dockerfile": "samples/aspnetapp",
@@ -122,7 +158,16 @@
               "osVersion": "nanoserver-1903",
               "tags": {
                 "aspnetapp-nanoserver-1903": {}
-              }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-nanoserver-1903"
+                  ]
+                }
+              ]
             },
             {
               "dockerfile": "samples/aspnetapp",
@@ -130,7 +175,16 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "aspnetapp-nanoserver-1909": {}
-              }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-nanoserver-1909"
+                  ]
+                }
+              ]
             },
             {
               "dockerfile": "samples/aspnetapp",
@@ -138,7 +192,16 @@
               "osVersion": "nanoserver-2004",
               "tags": {
                 "aspnetapp-nanoserver-2004": {}
-              }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-nanoserver-2004"
+                  ]
+                }
+              ]
             }
           ]
         }
