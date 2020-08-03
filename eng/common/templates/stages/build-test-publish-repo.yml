@@ -1,7 +1,8 @@
 parameters:
   buildMatrixType: platformDependencyGraph
   testMatrixType: platformVersionedOs
-  customBuildLegGrouping: ""
+  buildMatrixCustomBuildLegGroupArgs: ""
+  testMatrixCustomBuildLegGroupArgs: ""
   customBuildInitSteps: []
   
   linuxAmdBuildJobTimeout: 60
@@ -35,7 +36,7 @@ stages:
     parameters:
       matrixType: ${{ parameters.buildMatrixType }}
       name: GenerateBuildMatrix
-      customBuildLegGrouping: ${{ parameters.customBuildLegGrouping }}
+      customBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
 
   - template: ../jobs/build-images.yml
     parameters:
@@ -169,6 +170,7 @@ stages:
       parameters:
         matrixType: ${{ parameters.testMatrixType }}
         name: GenerateTestMatrix
+        customBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}
 
     - template: ../jobs/test-images-linux-client.yml
       parameters:
