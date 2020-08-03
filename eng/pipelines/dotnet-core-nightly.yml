@@ -17,4 +17,4 @@ variables:
 stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
   parameters:
-    testMatrixCustomBuildLegGroupArgs: --custom-build-leg-group default-platformVersionedOs
+    testMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies

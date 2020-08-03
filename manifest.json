@@ -1231,7 +1231,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-runtime):2.1-nanoserver-1809"
@@ -1250,7 +1250,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-runtime):2.1-nanoserver-1903"
@@ -1269,7 +1269,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-runtime):2.1-nanoserver-1909"
@@ -1288,7 +1288,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-runtime):2.1-nanoserver-2004"
@@ -1919,7 +1919,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):2.1-stretch-slim"
@@ -1940,7 +1940,7 @@
               "variant": "v7",
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):2.1-stretch-slim-arm32v7"
@@ -1959,7 +1959,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):2.1-nanoserver-1809"
@@ -1978,7 +1978,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):2.1-nanoserver-1903"
@@ -1997,7 +1997,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):2.1-nanoserver-1909"
@@ -2016,7 +2016,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):2.1-nanoserver-2004"
@@ -2078,7 +2078,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):2.1-bionic"
@@ -2104,7 +2104,7 @@
               "variant": "v7",
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):2.1-bionic-arm32v7"
@@ -2128,7 +2128,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):2.1-focal"
@@ -2157,7 +2157,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):3.1-buster-slim"
@@ -2178,7 +2178,7 @@
               "variant": "v7",
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):3.1-buster-slim-arm32v7"
@@ -2199,7 +2199,7 @@
               "variant": "v8",
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):3.1-buster-slim-arm64v8"
@@ -2313,7 +2313,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):3.1-bionic"
@@ -2339,7 +2339,7 @@
               "variant": "v7",
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):3.1-bionic-arm32v7"
@@ -2365,7 +2365,7 @@
               "variant": "v8",
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):3.1-bionic-arm64v8"
@@ -2389,7 +2389,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):3.1-focal"
@@ -2415,7 +2415,7 @@
               "variant": "v8",
               "customBuildLegGroups": [
                 {
-                  "name": "default-platformVersionedOs",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:core-aspnet):3.1-focal-arm64v8"
