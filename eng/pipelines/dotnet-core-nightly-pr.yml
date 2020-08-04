@@ -19,4 +19,4 @@ stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
   parameters:
     buildMatrixType: platformVersionedOs
-    customBuildLegGrouping: pr-build
+    buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies

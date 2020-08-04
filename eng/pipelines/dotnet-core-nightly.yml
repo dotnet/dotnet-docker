@@ -16,3 +16,5 @@ variables:
   value: manifest.json
 stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
+  parameters:
+    testMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
