@@ -1,6 +1,6 @@
 # Determining License and Source Pedigree for .NET Core Container Images
 
-This document is intended to be complimentary to the [Instructions for Finding Linux Legal Metadata](https://aka.ms/mcr/osslinuxmetadata).  This document describes how to interrogate the .NET Core images to determine licensing and version information for the .NET Core and other components (beyond base images and packages).
+This document is intended to be complimentary to the [Instructions for Finding Linux Legal Metadata](https://aka.ms/mcr/osslinuxmetadata).  This document describes how to interrogate the .NET Core images to determine licensing and version information for .NET Core and other components.
 
 ## .NET Core and Other Components
 
