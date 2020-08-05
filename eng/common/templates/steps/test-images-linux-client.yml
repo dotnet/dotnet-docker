@@ -44,7 +44,7 @@ steps:
 - script: >
     docker exec $(testRunner.container) pwsh
     -File $(testScriptPath)
-    -Version '$(dotnetVersion)'
+    -Version '$(productVersion)'
     -OS '$(osVariant)*'
     -Architecture '$(architecture)'
     $(optionalTestArgs)
@@ -72,7 +72,7 @@ steps:
     mergeTestResults: true
     publishRunAttachments: true
     ${{ if eq(parameters.preBuildValidation, 'false') }}:
-      testRunTitle: $(dotnetVersion) $(osVariant) $(architecture)
+      testRunTitle: $(productVersion) $(osVariant) $(architecture)
     ${{ if eq(parameters.preBuildValidation, 'true') }}:
       testRunTitle: Pre-Build Validation
 - script: docker rm -f $(testRunner.container)
