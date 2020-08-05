@@ -34,7 +34,7 @@ When authoring your Dockerfiles, you can look to the official [.NET Core Dockerf
 
 In addition to installing .NET Core, you'll also need to ensure that the [prerequisites](https://github.com/dotnet/core/blob/master/Documentation/prereqs.md) are installed. The [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) also demonstrate how that can be done.
 
-In the spirit of [clarity](https://github.com/docker-library/official-images#clarity), the Dockerfiles for the official .NET Docker images do not use a general purpose script for installing .NET Core. Rather, they explicity provide each step of the installation process and reference the exact URL of the binary archive.
+In the spirit of [clarity](https://github.com/docker-library/official-images#clarity), the Dockerfiles for the official .NET Docker images do not use a general purpose script for installing .NET Core. Rather, they explicitly provide each step of the installation process and reference the exact URL of the binary archive.
 
 Example (Linux):
 
