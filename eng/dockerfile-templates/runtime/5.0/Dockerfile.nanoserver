@@ -3,7 +3,7 @@
 ARG DOTNET_VERSION={{VARIABLES["runtime|5.0|build-version"]}}
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}} AS installer
+FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
 ARG DOTNET_VERSION
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
@@ -21,7 +21,7 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet
 
 
 # Runtime image
-FROM mcr.microsoft.com/windows/nanoserver:{{OS_VERSION_NUMBER}}
+FROM mcr.microsoft.com/windows/nanoserver:{{OS_VERSION_NUMBER}}-amd64
 ARG DOTNET_VERSION
 
 ENV `

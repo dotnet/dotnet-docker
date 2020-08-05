@@ -3,7 +3,7 @@
 ARG DOTNET_VERSION=5.0.0-preview.7.20364.11
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:2004 AS installer
+FROM mcr.microsoft.com/windows/servercore:2004-amd64 AS installer
 ARG DOTNET_VERSION
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
@@ -21,7 +21,7 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet
 
 
 # Runtime image
-FROM mcr.microsoft.com/windows/nanoserver:2004
+FROM mcr.microsoft.com/windows/nanoserver:2004-amd64
 ARG DOTNET_VERSION
 
 ENV `

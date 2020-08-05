@@ -1,7 +1,7 @@
 # escape=`
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}} AS installer
+FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
@@ -19,7 +19,7 @@ RUN $dotnet_version = '{{VARIABLES["runtime|3.1|build-version"]}}'; `
 
 
 # Runtime image
-FROM mcr.microsoft.com/windows/nanoserver:{{OS_VERSION_NUMBER}}
+FROM mcr.microsoft.com/windows/nanoserver:{{OS_VERSION_NUMBER}}-amd64
 
 ENV `
     # Configure web servers to bind to port 80 when present
