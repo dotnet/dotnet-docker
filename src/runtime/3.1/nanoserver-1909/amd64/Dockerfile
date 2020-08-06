@@ -1,7 +1,7 @@
 # escape=`
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:1909 AS installer
+FROM mcr.microsoft.com/windows/servercore:1909-amd64 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
@@ -19,7 +19,7 @@ RUN $dotnet_version = '3.1.6'; `
 
 
 # Runtime image
-FROM mcr.microsoft.com/windows/nanoserver:1909
+FROM mcr.microsoft.com/windows/nanoserver:1909-amd64
 
 ENV `
     # Configure web servers to bind to port 80 when present
