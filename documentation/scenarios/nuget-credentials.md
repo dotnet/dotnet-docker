@@ -150,7 +150,7 @@ Instead, the credentials for `customfeed` are defined in the Dockerfile by makin
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app
 
-RUN curl -L https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh  | bash
+RUN curl -L https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh  | sh
 
 # Copy csproj and restore as distinct layers
 COPY *.csproj .
