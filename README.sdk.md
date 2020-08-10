@@ -75,8 +75,10 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.1.302-buster-arm32v7, 3.1-buster-arm32v7, 3.1.302, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/buster/arm32v7/Dockerfile) | Debian 10
+3.1.302-focal-arm32v7, 3.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 3.1.302-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 2.1.808-stretch-arm32v7, 2.1-stretch-arm32v7, 2.1.808, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/stretch/arm32v7/Dockerfile) | Debian 9
+2.1.808-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 2.1.808-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 ## Windows Server, version 2004 amd64 Tags

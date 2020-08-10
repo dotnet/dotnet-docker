@@ -65,8 +65,10 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 3.1.6-buster-slim-arm32v7, 3.1-buster-slim-arm32v7, 3.1.6, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime-deps/3.1/buster-slim/arm32v7/Dockerfile) | Debian 10
+3.1.6-focal-arm32v7, 3.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime-deps/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 3.1.6-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime-deps/3.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 2.1.20-stretch-slim-arm32v7, 2.1-stretch-slim-arm32v7, 2.1.20, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime-deps/2.1/stretch-slim/arm32v7/Dockerfile) | Debian 9
+2.1.20-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime-deps/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 2.1.20-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime-deps/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 You can retrieve a list of all available tags for dotnet/core/runtime-deps at https://mcr.microsoft.com/v2/dotnet/core/runtime-deps/tags/list.
