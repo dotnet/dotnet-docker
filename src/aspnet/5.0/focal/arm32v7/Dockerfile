@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime
+ARG REPO=mcr.microsoft.com/dotnet/runtime
 ARG ASPNET_VERSION=5.0.0-preview.7.20365.19
 
 # Installer image
