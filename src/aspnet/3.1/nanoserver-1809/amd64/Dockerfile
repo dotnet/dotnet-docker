@@ -3,7 +3,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/core/runtime
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:1809 AS installer
+FROM mcr.microsoft.com/windows/servercore:1809-amd64 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 

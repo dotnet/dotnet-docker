@@ -3,7 +3,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:2004 AS installer
+FROM mcr.microsoft.com/windows/servercore:2004-amd64 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
