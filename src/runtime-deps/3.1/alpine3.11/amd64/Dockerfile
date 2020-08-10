@@ -1,15 +1,15 @@
 FROM amd64/alpine:3.11
 
 RUN apk add --no-cache \
-    ca-certificates \
-    \
-    # .NET Core dependencies
-    krb5-libs \
-    libgcc \
-    libintl \
-    libssl1.1 \
-    libstdc++ \
-    zlib
+        ca-certificates \
+        \
+        # .NET Core dependencies
+        krb5-libs \
+        libgcc \
+        libintl \
+        libssl1.1 \
+        libstdc++ \
+        zlib
 
 ENV \
     # Configure web servers to bind to port 80 when present
