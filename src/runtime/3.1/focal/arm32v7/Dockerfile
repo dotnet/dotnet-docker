@@ -7,9 +7,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core
-RUN dotnet_version=3.1.6 \
+RUN dotnet_version=3.1.7 \
     && curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
-    && dotnet_sha512='8500e595a26e4d658ebce2103d2640237b472eafc4b8347b44ca2e7540137d32ed3c18d6a0159012ec46e3950bcdef8f1d50b085fa768e52f41002f15d35943f' \
+    && dotnet_sha512='a586ed88cebbef298cda04c94e1809017800abea50668e18bcf27c3aa1ca114bb16963bcdcc4fd535288838120cba52966d594ef395bb8fac11693f64c97ccc1' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
