@@ -2910,6 +2910,7 @@
                 "REPO": "$(Repo:core-aspnet)"
               },
               "dockerfile": "src/sdk/3.1/alpine3.12/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
