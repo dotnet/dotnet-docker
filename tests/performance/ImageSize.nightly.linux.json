@@ -86,7 +86,7 @@
     "src/sdk/2.1/bionic/amd64": 1705835924,
     "src/sdk/2.1/bionic/arm32v7": 1551712848,
     "src/sdk/2.1/focal/amd64": 1726739576,
-    "src/sdk/2.1/focal/arm32v7": 1726739576,
+    "src/sdk/2.1/focal/arm32v7": 1579298453,
     "src/sdk/3.1/buster/amd64": 689019701,
     "src/sdk/3.1/buster/arm32v7": 644889584,
     "src/sdk/3.1/buster/arm64v8": 712029090,
@@ -95,7 +95,7 @@
     "src/sdk/3.1/bionic/arm32v7": 571858059,
     "src/sdk/3.1/bionic/arm64v8": 629031352,
     "src/sdk/3.1/focal/amd64": 698502715,
-    "src/sdk/3.1/focal/arm32v7": 714031873,
+    "src/sdk/3.1/focal/arm32v7": 646074732,
     "src/sdk/3.1/focal/arm64v8": 714031873
   },
   "dotnet/nightly/sdk": {
@@ -104,7 +104,7 @@
     "src/sdk/5.0/buster-slim/arm64v8": 631997544,
     "src/sdk/5.0/alpine3.12/amd64": 469719738,
     "src/sdk/5.0/focal/amd64": 615235315,
-    "src/sdk/5.0/focal/arm32v7": 637793431,
+    "src/sdk/5.0/focal/arm32v7": 564440607,
     "src/sdk/5.0/focal/arm64v8": 637793431
   },
   "dotnet/nightly/monitor": {
