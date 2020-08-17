@@ -11,11 +11,11 @@ using Xunit.Abstractions;
 namespace Microsoft.DotNet.Docker.Tests
 {
     [Trait("Category", "pre-build")]
-    public class TemplateTests
+    public class GeneratedArtifactTests
     {
         private ITestOutputHelper OutputHelper { get; }
 
-        public TemplateTests(ITestOutputHelper outputHelper)
+        public GeneratedArtifactTests(ITestOutputHelper outputHelper)
         {
             OutputHelper = outputHelper;
         }
@@ -24,7 +24,23 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VerifyDockerfileTemplates()
         {
             string generateDockerfilesScript = Path.Combine(Config.SourceRepoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1");
-            string powershellArgs = $"-File {generateDockerfilesScript} -Validate";
+            ValidateGeneratedArtifacts(
+                generateDockerfilesScript,
+                $"The Dockerfiles are out of sync with the templates.  Update the Dockerfiles by running `{generateDockerfilesScript}`.");
+        }
+
+        [Fact]
+        public void VerifyTagsDocumentation()
+        {
+            string generateTagsDocumentationScript = Path.Combine(Config.SourceRepoRoot, "eng", "Get-TagsDocumentation.ps1");
+            ValidateGeneratedArtifacts(
+                generateTagsDocumentationScript,
+                $"The Readmes are out of date.  Update the Readmes by running `{generateTagsDocumentationScript}`.");
+        }
+
+        private void ValidateGeneratedArtifacts(string generateScriptPath, string errorMessage)
+        {
+            string powershellArgs = $"-File {generateScriptPath} -Validate";
             (Process Process, string StdOut, string StdErr) executeResult;
 
             // Support both execution within Windows 10, Nano Server and Linux environments.
@@ -39,8 +55,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (executeResult.Process.ExitCode != 0)
             {
-                OutputHelper.WriteLine(
-                    $"The Dockerfiles are out of sync with the templates.  Update the Dockerfiles by running `{generateDockerfilesScript}`.");
+                OutputHelper.WriteLine(errorMessage);
             }
 
             Assert.Equal(0, executeResult.Process.ExitCode);
