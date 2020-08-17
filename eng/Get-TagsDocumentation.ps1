@@ -37,8 +37,7 @@ function GenerateReadme {
         $manifest = "manifest.json"
     }
 
-    if (-not $FirstCall)
-    {
+    if (-not $FirstCall) {
         $optionalArgs = "-ReuseImageBuilderImage"
     }
 
