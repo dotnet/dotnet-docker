@@ -39,11 +39,27 @@ In the spirit of [clarity](https://github.com/docker-library/official-images#cla
 Example (Linux):
 
 ```Dockerfile
+FROM amd64/ubuntu:focal
+
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        ca-certificates \
+        \
+        # .NET Core dependencies
+        libc6 \
+        libgcc1 \
+        libgssapi-krb5-2 \
+        libicu66 \
+        libssl1.1 \
+        libstdc++6 \
+        zlib1g \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install .NET Core
-ENV DOTNET_VERSION 3.0.0
+ENV DOTNET_VERSION=3.1.7
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-x64.tar.gz \
-    && dotnet_sha512='0cabf85877eb3ee0415e6f8de9390c95ec90fa8f5a0fdb104f1163924fd52d89932a51c2e07b5c13a6b9802d5b6962676042a586ec8aff4f2a641d33c6c84dec' \
+    && dotnet_sha512='6919e87b0e8e2c42349acb1042dba81eaf2fdadd8967f9b78e192676efd883962e3b928c423055cef010bdf1923527817553cd24036303ee2741485fc44fb116' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
@@ -54,14 +70,16 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runti
 Example (Windows):
 
 ```Dockerfile
+FROM mcr.microsoft.com/windows/servercore:2004
+
 # Install .NET Core
-ENV DOTNET_VERSION 3.0.0
+ENV DOTNET_VERSION=3.1.7
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:DOTNET_VERSION-win-x64.zip; `
-        $dotnet_sha512 = '9cab40057badcad236cd4855fcccb2acab150fa85c26b9c794f1eeab28c6ed5f0e338da5dec0ab4a8ba3a1af5f0feada987bae0d456dacef6858736a6033f4c5'; `
+        $dotnet_sha512 = '51ef166e9c935ee236b16aa2f87e985664740de7f4a53c1c1becc04a42d7c7cd52afa652d9b2e477a014f959b349826d6f8c2f703ab11b312fcd202b0b22d1ca'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -77,14 +95,14 @@ This provides full transparency to consumers of the image in regard to where the
 
 By having the version of .NET Core you're installing explicitly defined in the Dockerfile, as should be done for clarity reasons, it means the Dockerfile must be regularly maintained to account for servicing releases of .NET Core. There are two parts of the install steps that will need to updated in order to reference a new release:
 
-* Version environment variable that is referenced in the download URL (e.g. `ENV DOTNET_VERSION 3.0.0`)
-* SHA value (e.g. `dotnet_sha512='0cabf85877eb3ee0415e6f8de9390c95ec90fa8f5a0fdb104f1163924fd52d89932a51c2e07b5c13a6b9802d5b6962676042a586ec8aff4f2a641d33c6c84dec'`)
+* Version environment variable that is referenced in the download URL (e.g. `ENV DOTNET_VERSION 3.1.7`)
+* SHA value (e.g. `dotnet_sha512='6919e87b0e8e2c42349acb1042dba81eaf2fdadd8967f9b78e192676efd883962e3b928c423055cef010bdf1923527817553cd24036303ee2741485fc44fb116'`)
 
-You can track these values by making use of the information contained in the `releases.json` of the relevant release. For example, the [`releases.json`](https://dotnetcli.azureedge.net/dotnet/release-metadata/3.0/releases.json) for 3.0 contains all the metadata for the 3.0 releases including download links of the binary archives as well as their hash values. The release information is described on the main [release notes](https://github.com/dotnet/core/blob/master/release-notes/README.md) page.
+You can track these values by making use of the information contained in the `releases.json` of the relevant release. For example, the [`releases.json`](https://dotnetcli.azureedge.net/dotnet/release-metadata/3.1/releases.json) for 3.1 contains all the metadata for the 3.1 releases including download links of the binary archives as well as their hash values. The release information is described on the main [release notes](https://github.com/dotnet/core/blob/master/release-notes/README.md) page.
 
 ### Installing from a Linux Package Manager
 
-For Linux, you may prefer to use your Linux distro's package manager to install .NET Core rather than directly from a binary archive. Each .NET Core release provides instructions on how to install .NET Core from the various distro package managers. To locate the instructions, visit the [.NET Core download page](https://dotnet.microsoft.com/download/dotnet-core), select the desired version, click the `Package Manager Instructions: x64` link, and then select the desired distro. As an example, you can find the package manager instructions for .NET Core 3.0 [here](https://dotnet.microsoft.com/download/linux-package-manager/rhel7/sdk-3.0.100).
+For Linux, you may prefer to use your Linux distro's package manager to install .NET Core rather than directly from a binary archive. See the [Install .NET Core on Linux](https://docs.microsoft.com/en-us/dotnet/core/install/linux) guideance on how to install .NET Core from the various distro package managers.
 
 Using a package manager allows for easier maintenance since you only have to reference the major/minor version of the release and you'll get servicing releases "for free". This is true as long as you are mindful of Docker's caching functionality. You may need to build with the `--no-cache` option to force the build to re-execute the commands that install .NET Core in order to get an updated servicing release. Alternatively, you can specify the full version (major/minor/build) and increment that with each service release.
 
@@ -93,8 +111,9 @@ Another benefit of installing via a package manager is that all of .NET Core's d
 Example:
 
 ```Dockerfile
-FROM ubuntu:disco
-RUN apt-get update \
+FROM ubuntu:focal
+RUN export DEBIAN_FRONTEND=noninteractive \
+    apt-get update \
     # Install prerequisites
     && apt-get install -y --no-install-recommends \
        wget \
@@ -108,7 +127,7 @@ RUN apt-get update \
     # Install .NET Core
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-        dotnet-runtime-3.0 \
+        dotnet-runtime-3.1 \
     \
     # Cleanup
     && rm -rf /var/lib/apt/lists/*
@@ -116,17 +135,17 @@ RUN apt-get update \
 
 ### Installing from dotnet-install script
 
-A set of [installation scripts](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET Core on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive link and package manager). They fill a gap on systems where the desired .NET Core release is not available through a package manager and you don't want to deal with the cost of maintaining a direct link to a binary package. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 3.0.1, the latest of a release channel such as the latest 3.0 patch, etc.
+A set of [installation scripts](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET Core on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive link and package manager). They fill a gap on systems where the desired .NET Core release is not available through a package manager and you don't want to deal with the cost of maintaining a direct link to a binary package. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 3.1.7, the latest of a release channel such as the latest 3.1 patch, etc.
 
 In addition to installing .NET Core, you'll also need to ensure that the [prerequisites](https://github.com/dotnet/core/blob/master/Documentation/prereqs.md) are installed. The [.NET Core Dockerfiles](https://github.com/dotnet/dotnet-docker) also demonstrate how that can be done.
 
 Example (Linux):
 
 ```Dockerfile
-FROM ubuntu:disco
+FROM ubuntu:focal
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         curl \
         ca-certificates \
         \
@@ -134,13 +153,13 @@ RUN apt-get update \
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
-        libicu63 \
+        libicu66 \
         libssl1.1 \
         libstdc++6 \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin -Channel 3.0 -Runtime dotnet -InstallDir /usr/share/dotnet \
+RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin -Channel 3.1 -Runtime dotnet -InstallDir /usr/share/dotnet \
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 ```
 
@@ -149,7 +168,7 @@ Example (Windows):
 ```Dockerfile
 # escape=`
 
-FROM mcr.microsoft.com/windows/servercore:1909
+FROM mcr.microsoft.com/windows/servercore:2004
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
@@ -159,7 +178,7 @@ RUN powershell -Command `
             -OutFile dotnet-install.ps1; `
         ./dotnet-install.ps1 `
             -InstallDir '/Program Files/dotnet' `
-            -Channel 3.0 `
+            -Channel 3.1 `
             -Runtime dotnet; `
         Remove-Item -Force dotnet-install.ps1 `
     && setx /M PATH "%PATH%;C:\Program Files\dotnet"
