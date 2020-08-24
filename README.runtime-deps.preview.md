@@ -60,6 +60,7 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.0-preview.7-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-preview.7, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime-deps/5.0/buster-slim/arm32v7/Dockerfile) | Debian 10
+5.0.0-preview.7-focal-arm32v7, 5.0-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime-deps/5.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 You can retrieve a list of all available tags for dotnet/runtime-deps at https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list.
 
