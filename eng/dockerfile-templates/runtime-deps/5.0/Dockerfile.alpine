@@ -3,7 +3,7 @@ FROM {{ARCH_VERSIONED}}/alpine:{{OS_VERSION_NUMBER}}
 RUN apk add --no-cache \
         ca-certificates \
         \
-        # .NET Core dependencies
+        # .NET dependencies
         krb5-libs \
         libgcc \
         libintl \

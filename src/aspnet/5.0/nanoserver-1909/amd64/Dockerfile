@@ -1,6 +1,6 @@
 # escape=`
 
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime
+ARG REPO=mcr.microsoft.com/dotnet/runtime
 ARG ASPNET_VERSION=5.0.0-preview.7.20365.19
 
 # Installer image
@@ -21,7 +21,7 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/do
     Remove-Item -Force aspnetcore.zip
 
 
-# Runtime image
+# ASP.NET Core image
 FROM $REPO:5.0-nanoserver-1909
 ARG ASPNET_VERSION
 
