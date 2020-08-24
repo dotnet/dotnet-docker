@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 ARG DOTNET_SDK_VERSION=5.0.100-preview.7.20366.15
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:1809 AS installer
+FROM mcr.microsoft.com/windows/servercore:1809-amd64 AS installer
 ARG DOTNET_SDK_VERSION
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
