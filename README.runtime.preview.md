@@ -51,48 +51,48 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 ##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.0-preview.7-buster-slim, 5.0-buster-slim, 5.0.0-preview.7, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/buster-slim/amd64/Dockerfile) | Debian 10
-5.0.0-preview.7-alpine3.12, 5.0-alpine3.12, 5.0.0-preview.7-alpine, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/alpine3.12/amd64/Dockerfile) | Alpine 3.12
-5.0.0-preview.7-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
+5.0.0-preview.8-buster-slim, 5.0-buster-slim, 5.0.0-preview.8, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/buster-slim/amd64/Dockerfile) | Debian 10
+5.0.0-preview.8-alpine3.12, 5.0-alpine3.12, 5.0.0-preview.8-alpine, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+5.0.0-preview.8-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm64 Tags
 ##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.0-preview.7-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.0-preview.7, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/buster-slim/arm64v8/Dockerfile) | Debian 10
-5.0.0-preview.7-alpine3.12-arm64v8, 5.0-alpine3.12-arm64v8, 5.0.0-preview.7-alpine-arm64v8, 5.0-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/alpine3.12/arm64v8/Dockerfile) | Alpine 3.12
-5.0.0-preview.7-focal-arm64v8, 5.0-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+5.0.0-preview.8-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.0-preview.8, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/buster-slim/arm64v8/Dockerfile) | Debian 10
+5.0.0-preview.8-alpine3.12-arm64v8, 5.0-alpine3.12-arm64v8, 5.0.0-preview.8-alpine-arm64v8, 5.0-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/alpine3.12/arm64v8/Dockerfile) | Alpine 3.12
+5.0.0-preview.8-focal-arm64v8, 5.0-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
 ##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.0-preview.7-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-preview.7, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/buster-slim/arm32v7/Dockerfile) | Debian 10
-5.0.0-preview.7-focal-arm32v7, 5.0-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+5.0.0-preview.8-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-preview.8, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/buster-slim/arm32v7/Dockerfile) | Debian 10
+5.0.0-preview.8-focal-arm32v7, 5.0-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ## Windows Server, version 2004 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-preview.7-nanoserver-2004, 5.0-nanoserver-2004, 5.0.0-preview.7, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-2004/amd64/Dockerfile)
+5.0.0-preview.8-nanoserver-2004, 5.0-nanoserver-2004, 5.0.0-preview.8, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-2004/amd64/Dockerfile)
 
 ## Windows Server, version 1909 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-preview.7-nanoserver-1909, 5.0-nanoserver-1909, 5.0.0-preview.7, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-1909/amd64/Dockerfile)
+5.0.0-preview.8-nanoserver-1909, 5.0-nanoserver-1909, 5.0.0-preview.8, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-1909/amd64/Dockerfile)
 
 ## Windows Server, version 1903 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-preview.7-nanoserver-1903, 5.0-nanoserver-1903, 5.0.0-preview.7, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-1903/amd64/Dockerfile)
+5.0.0-preview.8-nanoserver-1903, 5.0-nanoserver-1903, 5.0.0-preview.8, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-1903/amd64/Dockerfile)
 
 ## Windows Server 2019 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-preview.7-nanoserver-1809, 5.0-nanoserver-1809, 5.0.0-preview.7, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-1809/amd64/Dockerfile)
+5.0.0-preview.8-nanoserver-1809, 5.0-nanoserver-1809, 5.0.0-preview.8, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-1809/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/runtime at https://mcr.microsoft.com/v2/dotnet/runtime/tags/list.
 
