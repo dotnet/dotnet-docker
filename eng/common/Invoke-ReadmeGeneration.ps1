@@ -5,7 +5,8 @@ param (
     [string] $Manifest,
     [string] $GitRepo,
     [string] $Branch = "master",
-    [switch] $ReuseImageBuilderImage
+    [switch] $ReuseImageBuilderImage,
+    [switch] $Validate
 )
 
 $ErrorActionPreference = 'Stop'
@@ -29,16 +30,24 @@ function Exec {
 
 $onTagsGenerated = {
     param($ContainerName)
-    Exec "docker cp ${ContainerName}:/repo/$ReadmePath $repoRoot/$ReadmePath"
+
+    if (-Not $Validate) {
+        Exec "docker cp ${ContainerName}:/repo/$ReadmePath $repoRoot/$ReadmePath"
+    }
+}
+
+if ($Validate) {
+    $customImageBuilderArgs = " --validate"
 }
 
 $imageBuilderArgs = "generateTagsReadme" `
     + " --manifest $Manifest" `
     + " --repo $Repo" `
     + " --source-branch $Branch" `
+    + $customImageBuilderArgs `
     + " $GitRepo"
 
-& "$PSScriptRoot/Invoke-ImageBuilder.ps1" `
+& $PSScriptRoot/Invoke-ImageBuilder.ps1 `
     -ImageBuilderArgs $imageBuilderArgs `
     -ReuseImageBuilderImage:$ReuseImageBuilderImage `
     -OnCommandExecuted $onTagsGenerated

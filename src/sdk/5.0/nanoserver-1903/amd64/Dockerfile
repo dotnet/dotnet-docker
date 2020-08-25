@@ -1,18 +1,18 @@
 # escape=`
 
-ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
-ARG DOTNET_SDK_VERSION=5.0.100-preview.7.20366.15
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
+ARG DOTNET_SDK_VERSION=5.0.100-preview.8.20417.9
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:1903 AS installer
+FROM mcr.microsoft.com/windows/servercore:1903-amd64 AS installer
 ARG DOTNET_SDK_VERSION
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 RUN `
-    # Retrieve .NET Core SDK
+    # Retrieve .NET SDK
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = '6caff10ee37a3ec2d3460daa231b470275c2601d8a6fa8db9a1399d208c2959d485531dcc671808ad50ac6eb7c0923c08a187c6a46a2ffb130eb348c5de618da'; `
+    $dotnet_sha512 = 'dab0eb2c2aa29fc8d952e155a9f744e48f6155cb2dfbc1240ade40da22c882df299274a770d3d4002a8e22cb17a45b1aa63baa4edd7bfb70d41f8bbeee4a105d'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -21,9 +21,9 @@ RUN `
     Remove-Item -Force dotnet.zip; `
     `
     # Install PowerShell global tool
-    $powershell_version = '7.1.0-preview.5'; `
+    $powershell_version = '7.1.0-preview.6'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-    $powershell_sha512 = '280f5b1495fb4a4e86de37dbd9011409ace72de6438ec4372d5063942f5c377c33ec2382ba469ddc6ae5c72fe4d721903f41d6bc51da93df8ecc6f3640a4411c'; `
+    $powershell_sha512 = 'e405134c6cd065f67fe031cce77a329d15f06359a45a98e5bdd020ff51939e51c73480aaff01404d45df5c88084515b5f46f80af959f58a3c9dfa6048c95803c'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -51,7 +51,7 @@ ENV `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip `
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-1903
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-NanoServer-1903
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator

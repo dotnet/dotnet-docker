@@ -3,12 +3,12 @@
 ARG DOTNET_VERSION={{VARIABLES["runtime|5.0|build-version"]}}
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}} AS installer
+FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
 ARG DOTNET_VERSION
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-# Retrieve .NET Core Runtime
+# Retrieve .NET Runtime
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:DOTNET_VERSION-win-x64.zip; `
     $dotnet_sha512 = '{{VARIABLES["runtime|5.0|win|x64|sha"]}}'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
@@ -21,7 +21,7 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet
 
 
 # Runtime image
-FROM mcr.microsoft.com/windows/nanoserver:{{OS_VERSION_NUMBER}}
+FROM mcr.microsoft.com/windows/nanoserver:{{OS_VERSION_NUMBER}}-amd64
 ARG DOTNET_VERSION
 
 ENV `

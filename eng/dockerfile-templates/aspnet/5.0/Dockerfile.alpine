@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime
+ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:5.0-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
 # Install ASP.NET Core

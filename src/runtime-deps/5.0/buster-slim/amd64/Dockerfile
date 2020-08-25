@@ -4,7 +4,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
         \
-# .NET Core dependencies
+        # .NET dependencies
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
