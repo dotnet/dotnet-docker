@@ -16,6 +16,7 @@ parameters:
   linuxAmd64BuildPool:
     vmImage: $(defaultLinuxAmd64PoolImage)
 
+  noCache: false
 stages:
 
 ################################################################################
@@ -46,6 +47,7 @@ stages:
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Linux_arm64v8
@@ -61,6 +63,7 @@ stages:
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Linux_arm32v7
@@ -76,6 +79,7 @@ stages:
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows1809_amd64
@@ -89,6 +93,7 @@ stages:
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows1903_amd64
@@ -102,6 +107,7 @@ stages:
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows1909_amd64
@@ -115,6 +121,7 @@ stages:
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows2004_amd64
@@ -128,6 +135,7 @@ stages:
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
   - template: ../jobs/build-images.yml
     parameters:
       name: WindowsLtsc2016_amd64
@@ -141,6 +149,7 @@ stages:
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
 
 ################################################################################
 # Post-Build
