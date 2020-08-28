@@ -7,7 +7,7 @@ docker volume prune -f
 
 # Preserve the tagged Windows base images and the common eng infra images (e.g. ImageBuilder)
 # to avoid the expense of having to repull continuously.
-$engInfraImages = Get-Content ./eng/common/templates/variables/docker-images.yml |
+$engInfraImages = Get-Content $PSScriptRoot/templates/variables/docker-images.yml |
     Where-Object { $_.Trim() -notlike 'variables:' } |
     ForEach-Object { $_.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)[1] }
 
