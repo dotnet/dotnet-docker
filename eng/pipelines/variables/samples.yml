@@ -1,0 +1,8 @@
+variables:
+- template: common.yml
+- name: manifest
+  value: manifest.samples.json
+- name: repoTestArgs
+  value: -TestCategories sample
+- name: imageInfoVariant
+  value: "-samples"

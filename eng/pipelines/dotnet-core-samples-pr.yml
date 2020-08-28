@@ -19,13 +19,8 @@ resources:
     name: dotnet/versions
 
 variables:
-- template: variables/common.yml
-- name: manifest
-  value: manifest.samples.json
-- name: repoTestArgs
-  value: -TestCategories sample
-- name: imageInfoVariant
-  value: "-samples"
+- template: variables/samples.yml
+
 stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
   parameters:
