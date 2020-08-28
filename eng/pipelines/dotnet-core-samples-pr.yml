@@ -1,0 +1,33 @@
+trigger: none
+pr:
+  branches:
+    include:
+    - master
+    - nightly
+  paths:
+    include:
+    - manifest.samples.json
+    - eng/*
+    - samples/*
+    - tests/*
+
+resources:
+  repositories:
+  - repository: VersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+
+variables:
+- template: variables/common.yml
+- name: manifest
+  value: manifest.samples.json
+- name: repoTestArgs
+  value: -TestCategories sample
+- name: imageInfoVariant
+  value: "-samples"
+stages:
+- template: ../common/templates/stages/build-test-publish-repo.yml
+  parameters:
+    buildMatrixType: platformVersionedOs
+    buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build
