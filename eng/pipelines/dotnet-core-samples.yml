@@ -10,6 +10,15 @@ pr:
     - eng/*
     - samples/*
     - tests/*
+
+resources:
+  repositories:
+  - ${{ if eq(variables['System.TeamProject'], 'public') }}:
+    - repository: VersionsRepo
+      type: github
+      endpoint: dotnet
+      name: dotnet/versions
+
 variables:
 - template: variables/common.yml
 - name: manifest

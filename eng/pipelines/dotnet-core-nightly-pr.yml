@@ -11,6 +11,13 @@ pr:
     - src/*
     - tests/*
 
+resources:
+  repositories:
+  - repository: VersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+
 variables:
 - template: variables/common.yml
 - name: manifest
