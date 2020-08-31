@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-ARG DOTNET_VERSION=5.0.0-rc.1.20427.12
+ARG DOTNET_VERSION=5.0.0-rc.1.20430.6
 
 # Installer image
 FROM arm64v8/buildpack-deps:focal-curl as installer
@@ -7,7 +7,7 @@ ARG DOTNET_VERSION
 
 # Retrieve .NET
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-arm64.tar.gz \
-    && dotnet_sha512='18303015a2c1a15180a0d4a6f58fc4098c524b959151b20802ce4cea8c7ac9f46abda9bcede446acb99cb76f1c8bb0aa868c3385686745047c88c57aa6ff685a' \
+    && dotnet_sha512='d057177694fd22c9edef4ade6f71a2ddeae1ee38adf9c203aac96b67ca5bb0c1f5167c24630128b8c095cc14381fde043edb879c342aed9efbd886131623da50' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -ozxf dotnet.tar.gz -C /dotnet \
