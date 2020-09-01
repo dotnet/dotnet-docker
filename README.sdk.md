@@ -47,11 +47,6 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 * [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
 * [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
 
-.NET 5.0+:
-
-* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
-* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
-
 .NET Framework:
 
 * [dotnet/framework](https://hub.docker.com/_/microsoft-dotnet-framework/): .NET Framework, ASP.NET and WCF
