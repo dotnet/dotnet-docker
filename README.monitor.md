@@ -49,7 +49,7 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/)
 
 # License
-- Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 
+* Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 * [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/nightly/LICENSE)
 * [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/nightly/documentation/image-artifact-details.md)
