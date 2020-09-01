@@ -88,9 +88,6 @@
                 "2.1-alpine3.12": {
                   "documentationGroup": "2.1"
                 },
-                "$(dotnet|2.1|product-version)-alpine": {
-                  "documentationGroup": "2.1"
-                },
                 "2.1-alpine": {
                   "documentationGroup": "2.1"
                 }
@@ -292,9 +289,6 @@
                 "3.1-alpine3.12": {
                   "documentationGroup": "3.1"
                 },
-                "$(dotnet|3.1|product-version)-alpine": {
-                  "documentationGroup": "3.1"
-                },
                 "3.1-alpine": {
                   "documentationGroup": "3.1"
                 }
@@ -316,9 +310,6 @@
                   "documentationGroup": "3.1"
                 },
                 "3.1-alpine3.12-arm64v8": {
-                  "documentationGroup": "3.1"
-                },
-                "$(dotnet|3.1|product-version)-alpine-arm64v8": {
                   "documentationGroup": "3.1"
                 },
                 "3.1-alpine-arm64v8": {
@@ -502,7 +493,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(dotnet|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
@@ -520,7 +510,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12-arm64v8": {},
                 "5.0-alpine3.12-arm64v8": {},
-                "$(dotnet|5.0|product-version)-alpine-arm64v8": {},
                 "5.0-alpine-arm64v8": {}
               },
               "variant": "v8"
@@ -693,7 +682,6 @@
               "tags": {
                 "$(dotnet|2.1|product-version)-alpine3.12": {},
                 "2.1-alpine3.12": {},
-                "$(dotnet|2.1|product-version)-alpine": {},
                 "2.1-alpine": {}
               }
             }
@@ -929,7 +917,6 @@
               "tags": {
                 "$(dotnet|3.1|product-version)-alpine3.12": {},
                 "3.1-alpine3.12": {},
-                "$(dotnet|3.1|product-version)-alpine": {},
                 "3.1-alpine": {}
               }
             }
@@ -950,7 +937,6 @@
               "tags": {
                 "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {},
                 "3.1-alpine3.12-arm64v8": {},
-                "$(dotnet|3.1|product-version)-alpine-arm64v8": {},
                 "3.1-alpine-arm64v8": {}
               },
               "variant": "v8",
@@ -1197,7 +1183,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(dotnet|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
@@ -1218,7 +1203,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12-arm64v8": {},
                 "5.0-alpine3.12-arm64v8": {},
-                "$(dotnet|5.0|product-version)-alpine-arm64v8": {},
                 "5.0-alpine-arm64v8": {}
               },
               "variant": "v8",
@@ -1445,7 +1429,6 @@
               "tags": {
                 "$(dotnet|2.1|product-version)-alpine3.12": {},
                 "2.1-alpine3.12": {},
-                "$(dotnet|2.1|product-version)-alpine": {},
                 "2.1-alpine": {}
               }
             }
@@ -1693,7 +1676,6 @@
               "tags": {
                 "$(dotnet|3.1|product-version)-alpine3.12": {},
                 "3.1-alpine3.12": {},
-                "$(dotnet|3.1|product-version)-alpine": {},
                 "3.1-alpine": {}
               }
             }
@@ -1714,7 +1696,6 @@
               "tags": {
                 "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {},
                 "3.1-alpine3.12-arm64v8": {},
-                "$(dotnet|3.1|product-version)-alpine-arm64v8": {},
                 "3.1-alpine-arm64v8": {}
               },
               "variant": "v8",
@@ -1973,7 +1954,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(dotnet|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
@@ -1994,7 +1974,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12-arm64v8": {},
                 "5.0-alpine3.12-arm64v8": {},
-                "$(dotnet|5.0|product-version)-alpine-arm64v8": {},
                 "5.0-alpine-arm64v8": {}
               },
               "variant": "v8",
@@ -2233,7 +2212,6 @@
               "tags": {
                 "$(sdk|2.1|product-version)-alpine3.12": {},
                 "2.1-alpine3.12": {},
-                "$(sdk|2.1|product-version)-alpine": {},
                 "2.1-alpine": {}
               }
             }
@@ -2494,7 +2472,6 @@
               "tags": {
                 "$(sdk|3.1|product-version)-alpine3.12": {},
                 "3.1-alpine3.12": {},
-                "$(sdk|3.1|product-version)-alpine": {},
                 "3.1-alpine": {}
               }
             }
@@ -2779,7 +2756,6 @@
               "tags": {
                 "$(sdk|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(sdk|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
@@ -2869,7 +2845,6 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(monitor|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
