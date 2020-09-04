@@ -1,25 +1,10 @@
 trigger: none
-pr:
-  branches:
-    include:
-    - master
-  paths:
-    include:
-    - manifest.json
-    - manifest.versions.json
-    - eng/*
-    - src/*
-    - tests/*
+pr: none
 
 variables:
-- template: variables/common.yml
-- name: manifest
-  value: manifest.json
+- template: variables/core.yml
+
 stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
   parameters:
-    ${{ if eq(variables['System.TeamProject'], 'public') }}:
-      buildMatrixType: platformVersionedOs
-      buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
-    ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-      testMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
+    testMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies

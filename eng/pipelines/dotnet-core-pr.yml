@@ -2,7 +2,7 @@ trigger: none
 pr:
   branches:
     include:
-    - nightly
+    - master
   paths:
     include:
     - manifest.json

@@ -1,26 +1,8 @@
 trigger: none
-pr:
-  branches:
-    include:
-    - master
-    - nightly
-  paths:
-    include:
-    - manifest.samples.json
-    - eng/*
-    - samples/*
-    - tests/*
+pr: none
+
 variables:
-- template: variables/common.yml
-- name: manifest
-  value: manifest.samples.json
-- name: repoTestArgs
-  value: -TestCategories sample
-- name: imageInfoVariant
-  value: "-samples"
+- template: variables/samples.yml
+
 stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
-  parameters:
-    ${{ if eq(variables['System.TeamProject'], 'public') }}:
-      buildMatrixType: platformVersionedOs
-      buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build
