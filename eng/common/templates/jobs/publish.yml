@@ -15,38 +15,25 @@ jobs:
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
       artifactName: image-info
+  - template: ../steps/set-image-info-path-var.yml
   - script: |
       # Use dry-run option for certain publish operations if this is not a production build
       dryRunArg=""
       if [[ "$PUBLISHREPOPREFIX" != "public/" || "$SYSTEM_TEAMPROJECT" == "public" ]]; then
         dryRunArg=" --dry-run"
       fi
-
-      # Replace '/' with '-'
-      buildRepoName=$(echo $BUILD_REPOSITORY_NAME | sed -e 's/\//-/g')
-
-      # publicSourceBranch is not necessarily the working branch, it is the branch referenced in the readme Dockerfile source links
-      if [ "$PUBLICSOURCEBRANCH" != "" ]; then
-        publicSourceBranch=$PUBLICSOURCEBRANCH
-      elif [[ $MANIFEST != *samples* && ($BUILD_SOURCEBRANCHNAME == nightly || $SYSTEM_PULLREQUEST_TARGETBRANCH == nightly) ]]; then
-        publicSourceBranch="nightly"
-      else
-        publicSourceBranch="master"
-      fi
       
       echo "##vso[task.setvariable variable=dryRunArg]$dryRunArg"
-      echo "##vso[task.setvariable variable=buildRepoName]$buildRepoName"
-      echo "##vso[task.setvariable variable=publicSourceBranch]$publicSourceBranch"
       echo "##vso[task.setvariable variable=imageQueueTime]$(date --rfc-2822)"
     displayName: Set Publish Variables
   - script: >
       $(runImageBuilderCmd) copyAcrImages
-      '$(stagingRepoPrefix)'
       '$(acr.servicePrincipalName)'
       '$(app-dotnetdockerbuild-client-secret)'
       '$(acr.servicePrincipalTenant)'
       '$(acr.subscription)'
       '$(acr.resourceGroup)'
+      '$(stagingRepoPrefix)'
       --os-type '*'
       --architecture '*'
       --repo-prefix '$(publishRepoPrefix)'
@@ -89,7 +76,7 @@ jobs:
       --git-owner 'dotnet'
       --git-repo 'versions'
       --git-branch 'master'
-      --git-path 'build-info/docker/image-info.$(buildRepoName)-$(publicSourceBranch)$(imageInfoVariant).json'
+      --git-path '$(imageInfoVersionsPath)'
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Image Info
