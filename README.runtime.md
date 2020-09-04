@@ -2,6 +2,8 @@ The images from the dotnet/core-nightly repositories include last-known-good (LK
 
 See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
 
+As part of the .NET 5.0 release the Docker images are published to different repositories.  The 2.1 and 3.1 images are published to [core branded repositories](https://hub.docker.com/_/microsoft-dotnet-core/) while the 5.0 and higher versions will be published to [non-core branded repositories](https://hub.docker.com/_/microsoft-dotnet/).  See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
+
 # Featured Tags
 
 * `3.1` (LTS/Current)
@@ -9,7 +11,7 @@ See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images wi
 
 # About This Image
 
-This image contains the .NET Core runtimes and libraries and is optimized for running .NET Core apps in production. This repository is limited to .NET Core 2.1 and 3.1. For .NET 5.0 and higher, see [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/) for those versions.
+This image contains the .NET Core runtimes and libraries and is optimized for running .NET Core apps in production.
 
 Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
 
@@ -42,6 +44,7 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 
 * [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
 * [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
+* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
 
 .NET Framework:
 

@@ -2,6 +2,8 @@ The images from the dotnet/core-nightly repositories include last-known-good (LK
 
 See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
 
+As part of the .NET 5.0 release the Docker images are published to different repositories.  The 2.1 and 3.1 images are published to [core branded repositories](https://hub.docker.com/_/microsoft-dotnet-core/) while the 5.0 and higher versions will be published to [non-core branded repositories](https://hub.docker.com/_/microsoft-dotnet/).  See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
+
 # Featured Tags
 
 * `3.1` (LTS/Current)
@@ -15,7 +17,9 @@ This image contains the .NET Core SDK which is comprised of three parts:
 1. .NET Core
 1. ASP.NET Core
 
-Use this image for your development process (developing, building and testing applications). This repository is limited to .NET Core 2.1 and 3.1. For .NET 5.0 and higher, see [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/) for those versions.
+Use this image for your development process (developing, building and testing applications).
+
+Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
 
 # How to Use the Image
 
@@ -46,6 +50,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 * [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
 * [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
+* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
 
 .NET Framework:
 
@@ -135,5 +140,6 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 * [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
+* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
 * [Windows Nano Server license](https://hub.docker.com/_/microsoft-windows-nanoserver/) (only applies to Windows containers)
 * [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)
