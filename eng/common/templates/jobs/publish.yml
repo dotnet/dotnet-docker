@@ -28,12 +28,12 @@ jobs:
     displayName: Set Publish Variables
   - script: >
       $(runImageBuilderCmd) copyAcrImages
-      '$(stagingRepoPrefix)'
       '$(acr.servicePrincipalName)'
       '$(app-dotnetdockerbuild-client-secret)'
       '$(acr.servicePrincipalTenant)'
       '$(acr.subscription)'
       '$(acr.resourceGroup)'
+      '$(stagingRepoPrefix)'
       --os-type '*'
       --architecture '*'
       --repo-prefix '$(publishRepoPrefix)'
