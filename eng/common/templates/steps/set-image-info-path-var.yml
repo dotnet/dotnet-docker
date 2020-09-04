@@ -1,0 +1,19 @@
+steps:
+- powershell: >
+    $buildRepoName = $env:BUILD_REPOSITORY_NAME.Replace("/", "-")
+
+      # publicSourceBranch is not necessarily the working branch, it is the branch referenced in the readme Dockerfile source links
+    if ($env:PUBLICSOURCEBRANCH) {
+        $publicSourceBranch = $env:PUBLICSOURCEBRANCH
+    }
+    elseif (-not $env:MANIFEST.Contains("samples") -and ($env:BUILD_SOURCEBRANCHNAME -eq "nightly" -or $env:SYSTEM_PULLREQUEST_TARGETBRANCH -eq "nightly")) {
+        $publicSourceBranch = "nightly"
+    }
+    else {
+        $publicSourceBranch = "master"
+    }
+
+    $imageInfoVersionsPath = "build-info/docker/image-info.$buildRepoName-$publicSourceBranch$env:IMAGEINFOVARIANT.json"
+
+    echo "##vso[task.setvariable variable=imageInfoVersionsPath]$imageInfoVersionsPath"
+  displayName: Set Image Info Path Var
