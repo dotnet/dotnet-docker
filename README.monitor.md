@@ -1,3 +1,9 @@
+The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
+
+See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
+
+As part of the .NET 5.0 release the Docker images are published to different repositories.  The 2.1 and 3.1 images are published to [core branded repositories](https://hub.docker.com/_/microsoft-dotnet-core/) while the 5.0 and higher versions will be published to [non-core branded repositories](https://hub.docker.com/_/microsoft-dotnet/).  See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
+
 # Featured Tags
 
 * `5.0` (Preview)
@@ -9,16 +15,35 @@ This image contains the .NET Monitor tool.
 
 Use this image as a sidecar container to collect diagnostic information from other containers running .NET Core 3.1 or later processes.
 
+Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
+
 # How to Use the Image
+
+The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET Core and Docker together. See [Building Docker Images for .NET Core Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
 TBD
 
 # Related Repos
 
-.NET Core:
+.NET Core 2.1/3.1:
 
 * [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
-* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET Core (Preview)
+* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
+* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
+
+.NET 5.0+:
+
+* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
+* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
+* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
+* [dotnet/nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
+* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
+
+.NET Framework:
+
+* [dotnet/framework](https://hub.docker.com/_/microsoft-dotnet-framework/): .NET Framework, ASP.NET and WCF
+* [dotnet/framework/samples](https://hub.docker.com/_/microsoft-dotnet-framework-samples/): .NET Framework, ASP.NET and WCF Samples
 
 # Full Tag Listing
 
@@ -35,7 +60,8 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 
 # Image Update Policy
 
-* We update the supported .NET Core images within 12 hours of any updates to their base images (e.g. amd64/alpine:3.12, etc.).
+* We update the supported .NET Core images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:1909, buildpack-deps:bionic-scm, etc.).
+* We publish .NET Core images as part of releasing new versions of .NET Core including major/minor and servicing.
 
 # Feedback
 
@@ -51,5 +77,7 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 # License
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
-* [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/nightly/LICENSE)
-* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/nightly/documentation/image-artifact-details.md)
+* [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
+* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
+* [Windows Nano Server license](https://hub.docker.com/_/microsoft-windows-nanoserver/) (only applies to Windows containers)
+* [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)
