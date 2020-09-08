@@ -61,11 +61,11 @@ Tags | Dockerfile | OS Version
 3.1.401-alpine3.11, 3.1-alpine3.11 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/alpine3.11/amd64/Dockerfile) | Alpine 3.11
 3.1.401-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.401-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
-2.1.809-stretch, 2.1-stretch, 2.1.809, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/stretch/amd64/Dockerfile) | Debian 9
-2.1.809-alpine3.12, 2.1-alpine3.12, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/alpine3.12/amd64/Dockerfile) | Alpine 3.12
-2.1.809-alpine3.11, 2.1-alpine3.11 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/alpine3.11/amd64/Dockerfile) | Alpine 3.11
-2.1.809-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/focal/amd64/Dockerfile) | Ubuntu 20.04
-2.1.809-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
+2.1.810-stretch, 2.1-stretch, 2.1.810, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/stretch/amd64/Dockerfile) | Debian 9
+2.1.810-alpine3.12, 2.1-alpine3.12, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+2.1.810-alpine3.11, 2.1-alpine3.11 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/alpine3.11/amd64/Dockerfile) | Alpine 3.11
+2.1.810-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/focal/amd64/Dockerfile) | Ubuntu 20.04
+2.1.810-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -80,33 +80,33 @@ Tags | Dockerfile | OS Version
 3.1.401-buster-arm32v7, 3.1-buster-arm32v7, 3.1.401, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/buster/arm32v7/Dockerfile) | Debian 10
 3.1.401-focal-arm32v7, 3.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 3.1.401-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
-2.1.809-stretch-arm32v7, 2.1-stretch-arm32v7, 2.1.809, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/stretch/arm32v7/Dockerfile) | Debian 9
-2.1.809-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
-2.1.809-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+2.1.810-stretch-arm32v7, 2.1-stretch-arm32v7, 2.1.810, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/stretch/arm32v7/Dockerfile) | Debian 9
+2.1.810-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+2.1.810-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 ## Windows Server, version 2004 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 3.1.401-nanoserver-2004, 3.1-nanoserver-2004, 3.1.401, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-2004/amd64/Dockerfile)
-2.1.809-nanoserver-2004, 2.1-nanoserver-2004, 2.1.809, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-2004/amd64/Dockerfile)
+2.1.810-nanoserver-2004, 2.1-nanoserver-2004, 2.1.810, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-2004/amd64/Dockerfile)
 
 ## Windows Server, version 1909 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 3.1.401-nanoserver-1909, 3.1-nanoserver-1909, 3.1.401, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-1909/amd64/Dockerfile)
-2.1.809-nanoserver-1909, 2.1-nanoserver-1909, 2.1.809, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1909/amd64/Dockerfile)
+2.1.810-nanoserver-1909, 2.1-nanoserver-1909, 2.1.810, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1909/amd64/Dockerfile)
 
 ## Windows Server, version 1903 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 3.1.401-nanoserver-1903, 3.1-nanoserver-1903, 3.1.401, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-1903/amd64/Dockerfile)
-2.1.809-nanoserver-1903, 2.1-nanoserver-1903, 2.1.809, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1903/amd64/Dockerfile)
+2.1.810-nanoserver-1903, 2.1-nanoserver-1903, 2.1.810, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1903/amd64/Dockerfile)
 
 ## Windows Server 2019 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 3.1.401-nanoserver-1809, 3.1-nanoserver-1809, 3.1.401, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-1809/amd64/Dockerfile)
-2.1.809-nanoserver-1809, 2.1-nanoserver-1809, 2.1.809, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1809/amd64/Dockerfile)
+2.1.810-nanoserver-1809, 2.1-nanoserver-1809, 2.1.810, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1809/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/core/sdk at https://mcr.microsoft.com/v2/dotnet/core/sdk/tags/list.
 
