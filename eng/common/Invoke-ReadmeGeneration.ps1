@@ -32,7 +32,7 @@ $onTagsGenerated = {
     param($ContainerName)
 
     if (-Not $Validate) {
-        Exec "docker cp ${ContainerName}:/repo/$ReadmePath $repoRoot/$ReadmePath"
+        Exec "docker cp '${ContainerName}:/repo/$ReadmePath' '$repoRoot/$ReadmePath'"
     }
 }
 
