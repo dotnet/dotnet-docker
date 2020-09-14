@@ -1,5 +1,4 @@
 #!/usr/bin/env pwsh
-#!/usr/bin/env pwsh
 param(
     [switch] $Validate,
     [string] $Branch

@@ -66,7 +66,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 .NET Core 2.1/3.1:
 
-{{if !IS_PRODUCT_FAMILY || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "nightly")
+{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly"
     :* [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
 }}{{if (PARENT_REPO = "core" && SHORT_REPO != "sdk") || (PARENT_REPO = "dotnet" && SHORT_REPO = "sdk")
     :* [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/): .NET Core SDK
@@ -78,7 +78,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
     :* [dotnet/core/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps/): .NET Core Runtime Dependencies
 }}{{if REPO != "dotnet/core/samples"
     :* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
-}}{{if !IS_PRODUCT_FAMILY || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "master")
+}}{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "master"
     :* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
 }}{{if (PARENT_REPO = "core-nightly" && SHORT_REPO != "sdk") || (PARENT_REPO = "nightly" && SHORT_REPO = "sdk")
     :* [dotnet/core-nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-core-nightly-sdk/): .NET Core SDK (Preview)
@@ -91,7 +91,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 }}
 .NET 5.0+:
 
-{{if !IS_PRODUCT_FAMILY || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "nightly")
+{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly"
     :* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
 }}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "sdk") || (PARENT_REPO = "core" && SHORT_REPO = "sdk")
     :* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
@@ -101,7 +101,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
     :* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
 }}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "runtime-deps") || (PARENT_REPO = "core" && SHORT_REPO = "runtime-deps")
     :* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
-}}{{if !IS_PRODUCT_FAMILY || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "master")
+}}{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "master"
     :* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
 }}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "sdk") || (PARENT_REPO = "core-nightly" && SHORT_REPO = "sdk")
     :* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
