@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-ARG DOTNET_SDK_VERSION=5.0.100-preview.8.20417.9
+ARG DOTNET_SDK_VERSION=5.0.100-rc.1.20452.10
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:2004-amd64 AS installer
@@ -12,7 +12,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 RUN `
     # Retrieve .NET SDK
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = 'dab0eb2c2aa29fc8d952e155a9f744e48f6155cb2dfbc1240ade40da22c882df299274a770d3d4002a8e22cb17a45b1aa63baa4edd7bfb70d41f8bbeee4a105d'; `
+    $dotnet_sha512 = '299c1b232ba5a8bdcfd3b890816a3aad806cc22551f6a17554fd3a0220b2168af011431c191e2e33f9dd8a50194cdc207db5dd70708bef45b560af9eb0b20f5e'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -21,9 +21,9 @@ RUN `
     Remove-Item -Force dotnet.zip; `
     `
     # Install PowerShell global tool
-    $powershell_version = '7.1.0-preview.6'; `
+    $powershell_version = '7.1.0-preview.7'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-    $powershell_sha512 = 'e405134c6cd065f67fe031cce77a329d15f06359a45a98e5bdd020ff51939e51c73480aaff01404d45df5c88084515b5f46f80af959f58a3c9dfa6048c95803c'; `
+    $powershell_sha512 = 'c445ae1ae668c837fb6c05116576118e96b83fca6b7e62cb0303d9cf2a18737c9c4cc9432402ace3be78aba60979e2d0dba3fb209d88a3ab227ece6178b91439'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
