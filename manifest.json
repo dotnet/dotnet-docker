@@ -437,7 +437,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(dotnet|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
@@ -455,7 +454,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12-arm64v8": {},
                 "5.0-alpine3.12-arm64v8": {},
-                "$(dotnet|5.0|product-version)-alpine-arm64v8": {},
                 "5.0-alpine-arm64v8": {}
               },
               "variant": "v8"
@@ -1064,7 +1062,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(dotnet|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
@@ -1085,7 +1082,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12-arm64v8": {},
                 "5.0-alpine3.12-arm64v8": {},
-                "$(dotnet|5.0|product-version)-alpine-arm64v8": {},
                 "5.0-alpine-arm64v8": {}
               },
               "variant": "v8",
@@ -1772,7 +1768,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(dotnet|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }
@@ -1793,7 +1788,6 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-alpine3.12-arm64v8": {},
                 "5.0-alpine3.12-arm64v8": {},
-                "$(dotnet|5.0|product-version)-alpine-arm64v8": {},
                 "5.0-alpine-arm64v8": {}
               },
               "variant": "v8",
@@ -2540,7 +2534,6 @@
               "tags": {
                 "$(sdk|5.0|product-version)-alpine3.12": {},
                 "5.0-alpine3.12": {},
-                "$(sdk|5.0|product-version)-alpine": {},
                 "5.0-alpine": {}
               }
             }

@@ -60,7 +60,7 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.100-preview.8-buster-slim, 5.0-buster-slim, 5.0.100-preview.8, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/buster-slim/amd64/Dockerfile) | Debian 10
-5.0.100-preview.8-alpine3.12, 5.0-alpine3.12, 5.0.100-preview.8-alpine, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+5.0.100-preview.8-alpine3.12, 5.0-alpine3.12, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/alpine3.12/amd64/Dockerfile) | Alpine 3.12
 5.0.100-preview.8-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm64 Tags
