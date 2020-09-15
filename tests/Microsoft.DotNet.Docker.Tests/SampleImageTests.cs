@@ -113,9 +113,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 // Open the test log file and verify the tests passed
                 XDocument doc = XDocument.Load(testLogFile);
-                var summary = doc.Root.Element(XName.Get("ResultSummary", doc.Root.Name.NamespaceName));
+                XElement summary = doc.Root.Element(XName.Get("ResultSummary", doc.Root.Name.NamespaceName));
                 Assert.Equal("Completed", summary.Attribute("outcome").Value);
-                var counters = summary.Element(XName.Get("Counters", doc.Root.Name.NamespaceName));
+                XElement counters = summary.Element(XName.Get("Counters", doc.Root.Name.NamespaceName));
                 Assert.Equal("2", counters.Attribute("total").Value);
                 Assert.Equal("2", counters.Attribute("passed").Value);
             }

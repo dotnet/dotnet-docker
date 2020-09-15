@@ -17,14 +17,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public EnvironmentVariableInfo(string name, string expectedValue)
         {
-            this.Name = name;
-            this.ExpectedValue = expectedValue;
+            Name = name;
+            ExpectedValue = expectedValue;
         }
 
         public EnvironmentVariableInfo(string name, bool allowAnyValue)
         {
-            this.Name = name;
-            this.AllowAnyValue = allowAnyValue;
+            Name = name;
+            AllowAnyValue = allowAnyValue;
         }
 
         public static void Validate(
@@ -54,7 +54,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string combinedValues = dockerHelper.Run(
                 image: imageData.GetImage(imageType, dockerHelper),
                 name: imageData.GetIdentifier($"env"),
-                command: $"{invokeCommand} \"echo {String.Join($"{delimiterEscape}{delimiter}", echoParts)}\"");
+                command: $"{invokeCommand} \"echo {string.Join($"{delimiterEscape}{delimiter}", echoParts)}\"");
 
             string[] values = combinedValues.Split(delimiter);
             Assert.Equal(variables.Count(), values.Count());
