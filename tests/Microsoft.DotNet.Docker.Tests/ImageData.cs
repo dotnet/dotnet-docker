@@ -15,20 +15,20 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public abstract class ImageData
     {
-        private List<string> _pulledImages = new List<string>();
+        private readonly List<string> _pulledImages = new List<string>();
 
         public Arch Arch { get; set; }
         public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
         public string OS { get; set; }
 
-        private static readonly Lazy<JObject> ImageInfoData;
+        private static readonly Lazy<JObject> s_imageInfoData;
 
         static ImageData()
         {
-            ImageInfoData = new Lazy<JObject>(() =>
+            s_imageInfoData = new Lazy<JObject>(() =>
             {
                 string imageInfoPath = Environment.GetEnvironmentVariable("IMAGE_INFO_PATH");
-                if (!String.IsNullOrEmpty(imageInfoPath))
+                if (!string.IsNullOrEmpty(imageInfoPath))
                 {
                     string imageInfoContents = File.ReadAllText(imageInfoPath);
                     return JsonConvert.DeserializeObject<JObject>(imageInfoContents);
@@ -120,9 +120,9 @@ namespace Microsoft.DotNet.Docker.Tests
             // In the case of running this in a local development environment, there would likely be no image info file
             // provided. In that case, the assumption is that the images exist in the staging location.
 
-            if (ImageData.ImageInfoData.Value != null)
+            if (ImageData.s_imageInfoData.Value != null)
             {
-                JObject repoInfo = (JObject)ImageData.ImageInfoData.Value
+                JObject repoInfo = (JObject)ImageData.s_imageInfoData.Value
                     .Value<JArray>("repos")
                     .FirstOrDefault(imageInfoRepo => imageInfoRepo["repo"].ToString() == repo);
 
@@ -144,7 +144,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public override string ToString()
         {
-            return this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
+            return GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
                 .Select(propInfo => $"{propInfo.Name}='{propInfo.GetValue(this) ?? "<null>"}'")
                 .Aggregate((working, next) => $"{working}, {next}");
         }
