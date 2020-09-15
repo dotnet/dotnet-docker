@@ -30,12 +30,12 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         [Fact]
-        public void VerifyTagsDocumentation()
+        public void VerifyReadmeTemplates()
         {
-            string generateTagsDocumentationScript = Path.Combine(Config.SourceRepoRoot, "eng", "Get-TagsDocumentation.ps1");
+            string generateTagsDocumentationScript = Path.Combine(Config.SourceRepoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1");
             ValidateGeneratedArtifacts(
                 generateTagsDocumentationScript,
-                $"The Readmes are out of date.  Update the Readmes by running `{generateTagsDocumentationScript}`.");
+                $"The Readmes are out of sync with the templates.  Update the Readmes by running `{generateTagsDocumentationScript}`.");
         }
 
         private void ValidateGeneratedArtifacts(string generateScriptPath, string errorMessage)
