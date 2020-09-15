@@ -51,7 +51,7 @@ namespace Dotnet.Docker
 
                 if (errorTraceListener.Errors.Any())
                 {
-                    string errors = String.Join(Environment.NewLine, errorTraceListener.Errors);
+                    string errors = string.Join(Environment.NewLine, errorTraceListener.Errors);
                     Console.Error.WriteLine("Failed to update dependencies due to the following errors:");
                     Console.Error.WriteLine(errors);
                     Console.Error.WriteLine();
@@ -61,7 +61,7 @@ namespace Dotnet.Docker
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine($"Failed to update dependencies:{Environment.NewLine}{e.ToString()}");
+                Console.Error.WriteLine($"Failed to update dependencies:{Environment.NewLine}{e}");
                 Environment.Exit(1);
             }
 
@@ -91,7 +91,7 @@ namespace Dotnet.Docker
 
         private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)
         {
-            IEnumerable<IDependencyUpdater> updaters = GetUpdaters(Options.DockerfileVersion, buildInfos);
+            IEnumerable<IDependencyUpdater> updaters = GetUpdaters();
 
             return DependencyUpdateUtils.Update(updaters, buildInfos);
         }
@@ -202,7 +202,7 @@ namespace Dotnet.Docker
                         CredentialsProvider = (url, user, credTypes) => new UsernamePasswordCredentials
                         {
                             Username = Options.GitHubPassword,
-                            Password = String.Empty
+                            Password = string.Empty
                         }
                     };
 
@@ -279,7 +279,7 @@ namespace Dotnet.Docker
             }
         }
 
-        private static IEnumerable<IDependencyUpdater> GetUpdaters(string dockerfileVersion, IEnumerable<IDependencyInfo> buildInfos)
+        private static IEnumerable<IDependencyUpdater> GetUpdaters()
         {
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)

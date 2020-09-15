@@ -16,11 +16,11 @@ namespace Dotnet.Docker
     /// </summary>
     public class VersionUpdater : FileRegexUpdater
     {
-        private readonly static string[] s_excludedMonikers = { "servicing", "rtm" };
-        private readonly static string s_versionGroupName = "versionValue";
+        private static readonly string[] s_excludedMonikers = { "servicing", "rtm" };
+        private static readonly string s_versionGroupName = "versionValue";
 
-        private string _productName;
-        private VersionType _versionType;
+        private readonly string _productName;
+        private readonly VersionType _versionType;
 
         public VersionUpdater(VersionType versionType, string productName, string dockerfileVersion, string repoRoot) : base()
         {
@@ -42,20 +42,12 @@ namespace Dotnet.Docker
 
             usedBuildInfos = new IDependencyInfo[] { productInfo };
 
-            string version;
-            switch (_versionType)
+            return _versionType switch
             {
-                case VersionType.Build:
-                    version = GetBuildVersion(productInfo);
-                    break;
-                case VersionType.Product:
-                    version = GetProductVersion(productInfo);
-                    break;
-                default:
-                    throw new NotSupportedException($"Unsupported VersionType: {_versionType}");
-            }
-
-            return version;
+                VersionType.Build => GetBuildVersion(productInfo),
+                VersionType.Product => GetProductVersion(productInfo),
+                _ => throw new NotSupportedException($"Unsupported VersionType: {_versionType}"),
+            };
         }
 
         private string GetBuildVersion(IDependencyInfo productInfo) => productInfo.SimpleVersion;
