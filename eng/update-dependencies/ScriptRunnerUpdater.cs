@@ -34,7 +34,7 @@ namespace Dotnet.Docker
         {
             return new ScriptRunnerUpdater()
             {
-                _scriptPath = Path.Combine(repoRoot, "eng", "Get-TagsDocumentation.ps1")
+                _scriptPath = Path.Combine(repoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1")
             };
         }
 
