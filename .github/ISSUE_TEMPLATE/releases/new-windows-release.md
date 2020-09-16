@@ -10,7 +10,7 @@ Windows version: &lt;version&gt;
 1. - [ ] Update [manifest.json](https://github.com/dotnet/dotnet-docker/blob/nightly/manifest.json) to reference the new set of Dockerfiles with the appropriate tags
 1. - [ ] Update the [test data](https://github.com/dotnet/dotnet-docker/blob/nightly/tests/Microsoft.DotNet.Docker.Tests/TestData.cs) to include the new Windows version
 1. - [ ] Update the [tags metadata templates](https://github.com/dotnet/dotnet-docker/tree/master/eng/mcr-tags-metadata-templates) to include the new Windows version
-1. - [ ] Run the command to update the READMEs: `.\eng\Get-TagsDocumentation.ps1`
+1. - [ ] Run the command to update the READMEs: `.\eng\readme-templates\Get-GeneratedReadmes.ps1`
 1. - [ ] Run the command to update the image size baseline file: `.\tests\performance\Validate-ImageSize.ps1 -UpdateBaselines`
 1. - [ ] Inspect generated changes for correctness
 1. - [ ] Test the images
