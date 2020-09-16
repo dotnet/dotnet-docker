@@ -99,8 +99,10 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string tag = _imageData.GetIdentifier(stageTarget);
 
-            List<string> buildArgs = new List<string>();
-            buildArgs.Add($"sdk_image={_imageData.GetImage(DotNetImageType.SDK, _dockerHelper)}");
+            List<string> buildArgs = new List<string>
+            {
+                $"sdk_image={_imageData.GetImage(DotNetImageType.SDK, _dockerHelper)}"
+            };
 
             DotNetImageType runtimeImageType = _isWeb ? DotNetImageType.Aspnet : DotNetImageType.Runtime;
             buildArgs.Add($"runtime_image={_imageData.GetImage(runtimeImageType, _dockerHelper)}");
@@ -209,10 +211,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
         {
-            var retries = 30;
+            int retries = 30;
 
             // Can't use localhost when running inside containers or Windows.
-            var url = !Config.IsRunningInContainer && DockerHelper.IsLinuxContainerModeEnabled
+            string url = !Config.IsRunningInContainer && DockerHelper.IsLinuxContainerModeEnabled
                 ? $"http://localhost:{dockerHelper.GetContainerHostPort(containerName)}"
                 : $"http://{dockerHelper.GetContainerAddress(containerName)}";
 
@@ -235,7 +237,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     }
                     catch (Exception ex)
                     {
-                        outputHelper.WriteLine($"Request to {url} failed - retrying: {ex.ToString()}");
+                        outputHelper.WriteLine($"Request to {url} failed - retrying: {ex}");
                     }
                 }
             }

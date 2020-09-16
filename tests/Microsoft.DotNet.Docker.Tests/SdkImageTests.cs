@@ -20,7 +20,7 @@ namespace Microsoft.DotNet.Docker.Tests
     [Trait("Category", "sdk")]
     public class SdkImageTests : ProductImageTests
     {
-        private static readonly Dictionary<string, IEnumerable<SdkContentFileInfo>> sdkContentsCache =
+        private static readonly Dictionary<string, IEnumerable<SdkContentFileInfo>> s_sdkContentsCache =
             new Dictionary<string, IEnumerable<SdkContentFileInfo>>();
 
         public SdkImageTests(ITestOutputHelper outputHelper)
@@ -130,7 +130,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_NonDefaultUser(ProductImageData imageData)
         {
-            var optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
+            string optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
             if (imageData.OS.Contains("nanoserver", StringComparison.OrdinalIgnoreCase))
             {
                 // windows containers test as Admin, default execution is as ContainerUser
@@ -177,7 +177,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (hasCountDifference || hasFileContentDifference)
             {
-                OutputHelper.WriteLine(String.Empty);
+                OutputHelper.WriteLine(string.Empty);
                 OutputHelper.WriteLine("EXPECTED FILES:");
                 foreach (SdkContentFileInfo file in expectedDotnetFiles)
                 {
@@ -185,7 +185,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     OutputHelper.WriteLine($"Checksum: {file.Sha512}");
                 }
                 
-                OutputHelper.WriteLine(String.Empty);
+                OutputHelper.WriteLine(string.Empty);
                 OutputHelper.WriteLine("ACTUAL FILES:");
                 foreach (SdkContentFileInfo file in actualDotnetFiles)
                 {
@@ -247,7 +247,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 using SHA512 sha512 = SHA512.Create();
                 byte[] sha512HashBytes = sha512.ComputeHash(File.ReadAllBytes(file.FullName));
-                string sha512Hash = BitConverter.ToString(sha512HashBytes).Replace("-", String.Empty);
+                string sha512Hash = BitConverter.ToString(sha512HashBytes).Replace("-", string.Empty);
                 yield return new SdkContentFileInfo(
                     file.FullName.Substring(tempFolderContext.Path.Length), sha512Hash);
             }
@@ -276,7 +276,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string sdkUrl =
                 $"https://dotnetcli.azureedge.net/dotnet/Sdk/{sdkVersion}/dotnet-sdk-{sdkVersion}-{osType}-{architecture}.{fileType}";
 
-            if (!sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo> files))
+            if (!s_sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo> files))
             {
                 string sdkFile = Path.GetTempFileName();
 
@@ -287,7 +287,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     .OrderBy(file => file.Path)
                     .ToArray();
 
-                sdkContentsCache.Add(sdkUrl, files);
+                s_sdkContentsCache.Add(sdkUrl, files);
             }
 
             return files;
@@ -362,8 +362,8 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 return path
                     .Replace("\\", "/")
-                    .Replace("/usr/share/dotnet", String.Empty, StringComparison.OrdinalIgnoreCase)
-                    .Replace("c:/program files/dotnet", String.Empty, StringComparison.OrdinalIgnoreCase)
+                    .Replace("/usr/share/dotnet", string.Empty, StringComparison.OrdinalIgnoreCase)
+                    .Replace("c:/program files/dotnet", string.Empty, StringComparison.OrdinalIgnoreCase)
                     .TrimStart('/')
                     .ToLower();
             }

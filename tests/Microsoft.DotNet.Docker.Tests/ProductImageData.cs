@@ -60,26 +60,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string GetProductVersion(DotNetImageType imageType, DockerHelper dockerHelper)
         {
-            string version;
             string imageName = GetImage(imageType, dockerHelper);
             string containerName = GetIdentifier($"GetProductVersion-{imageType}");
 
-            switch (imageType)
+            return imageType switch
             {
-                case DotNetImageType.SDK:
-                    version = dockerHelper.Run(imageName, containerName, "dotnet --version");
-                    break;
-                case DotNetImageType.Runtime:
-                    version = GetRuntimeVersion(imageName, containerName, "Microsoft.NETCore.App", dockerHelper);
-                    break;
-                case DotNetImageType.Aspnet:
-                    version = GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper);
-                    break;
-                default:
-                    throw new NotSupportedException($"Unsupported image type '{imageType}'");
-            }
-
-            return version;
+                DotNetImageType.SDK => dockerHelper.Run(imageName, containerName, "dotnet --version"),
+                DotNetImageType.Runtime => GetRuntimeVersion(imageName, containerName, "Microsoft.NETCore.App", dockerHelper),
+                DotNetImageType.Aspnet => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
+                _ => throw new NotSupportedException($"Unsupported image type '{imageType}'"),
+            };
         }
 
         private string GetRuntimeVersion(string imageName, string containerName, string runtimeName, DockerHelper dockerHelper)
@@ -112,7 +102,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     throw new NotSupportedException($"Unsupported image type '{imageType}'");
             }
 
-            return this.GetTagName(imageVersion.ToString(2), os);
+            return GetTagName(imageVersion.ToString(2), os);
         }
     }
 }

@@ -4,8 +4,9 @@
     {
       "id": "samples",
       "name": "dotnet/core/samples",
-      "readmePath": "README.samples.md",
-      "mcrTagsMetadataTemplatePath": "eng/mcr-tags-metadata-templates/samples-tags.yml",
+      "readme": "README.samples.md",
+      "readmeTemplate": "eng/readme-templates/README.md",
+      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/samples-tags.yml",
       "images": [
         {
           "sharedTags": {

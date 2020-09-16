@@ -65,11 +65,14 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 # Related Repos
 
-.NET:
+.NET Core 2.1/3.1:
 
-* [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core 2.1/3.1
-* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET 5.0+
+* [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
 * [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
+
+.NET 5.0+:
+
+* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
 
 .NET Framework:
 
