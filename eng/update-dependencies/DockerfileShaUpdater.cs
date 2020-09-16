@@ -28,7 +28,7 @@ namespace Dotnet.Docker
         private static readonly Dictionary<string, string> s_shaCache = new Dictionary<string, string>();
         private static readonly Dictionary<string, Dictionary<string, string>> s_releaseChecksumCache =
              new Dictionary<string, Dictionary<string, string>>();
-        private static readonly Dictionary<string, string> urls = new Dictionary<string, string> {
+        private static readonly Dictionary<string, string> s_urls = new Dictionary<string, string> {
             {"powershell", "https://pwshtool.blob.core.windows.net/tool/$VERSION/PowerShell.$OS.$ARCH.$VERSION.nupkg"},
             {"monitor", "https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor5.0/dotnet-monitor.$VERSION.nupkg"},
             {"runtime", "https://dotnetcli.azureedge.net/dotnet/Runtime/$VERSION/dotnet-runtime-$VERSION-$OS-$ARCH.$ARCHIVE_EXT"},
@@ -98,7 +98,7 @@ namespace Dotnet.Docker
 
             usedBuildInfos = new IDependencyInfo[] { productInfo };
 
-            string downloadUrl = urls[_productName]
+            string downloadUrl = s_urls[_productName]
                 .Replace("$ARCHIVE_EXT", _os.Contains("win") ? "zip" : "tar.gz")
                 .Replace("$VERSION", _buildVersion)
                 .Replace("$OS", _os)
@@ -109,9 +109,7 @@ namespace Dotnet.Docker
 
         private async Task<string> GetArtifactShaAsync(string downloadUrl)
         {
-            string sha = null;
-
-            if (!s_shaCache.TryGetValue(downloadUrl, out sha))
+            if (!s_shaCache.TryGetValue(downloadUrl, out string sha))
             {
                 sha = await GetDotNetCliChecksumsShaAsync(downloadUrl)
                     ?? await GetDotNetReleaseChecksumsShaAsync(downloadUrl)
@@ -174,8 +172,10 @@ namespace Dotnet.Docker
             string sha = null;
             string shaExt = _productName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ? ".sha" : ".sha512";
 
-            UriBuilder uriBuilder = new UriBuilder(productDownloadUrl);
-            uriBuilder.Host = ChecksumsHostName;
+            UriBuilder uriBuilder = new UriBuilder(productDownloadUrl)
+            {
+                Host = ChecksumsHostName
+            };
             string shaUrl = uriBuilder.ToString() + shaExt;
 
             Trace.TraceInformation($"Downloading '{shaUrl}'.");
@@ -238,7 +238,7 @@ namespace Dotnet.Docker
                 {
                     string checksums = await response.Content.ReadAsStringAsync();
                     string[] checksumLines = checksums.Replace("\r\n", "\n").Split("\n");
-                    if (!checksumLines[0].StartsWith("Hash") || !String.IsNullOrEmpty(checksumLines[1]))
+                    if (!checksumLines[0].StartsWith("Hash") || !string.IsNullOrEmpty(checksumLines[1]))
                     {
                         Trace.TraceError($"Checksum file is not in the expected format: {uri}");
                     }
