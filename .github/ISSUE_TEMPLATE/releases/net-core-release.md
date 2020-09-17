@@ -35,7 +35,7 @@ _The set of .NET Core versions that are being released as a unit._
 
       Preview release:
 
-          imageBuilder.pathArgs: --path 'src/*/5.0/*'
+          imageBuilder.pathArgs: --path 'src/runtime-deps/3.1/*' --path 'src/*/5.0/*'
 1. - [ ] Wait for NuGet packages to be published during release tic-toc
 1. - [ ] Test and publish images - Queue build of [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with variables:
 
@@ -50,7 +50,7 @@ _The set of .NET Core versions that are being released as a unit._
 
       Preview release:
 
-          imageBuilder.pathArgs: --path 'src/*/5.0/*'
+          imageBuilder.pathArgs: --path 'src/runtime-deps/3.1/*' --path 'src/*/5.0/*'
 1. - [ ] Confirm images have been ingested by MCR
 1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-core)
 
