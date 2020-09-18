@@ -34,7 +34,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageData => new object[] { imageData });
         }
 
-        [Theory]
+        [SkippableTheory("windowsservercore-ltsc2019")]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetSample(SampleImageData imageData)
         {
@@ -46,7 +46,7 @@ namespace Microsoft.DotNet.Docker.Tests
             });
         }
 
-        [Theory]
+        [SkippableTheory("windowsservercore-ltsc2019")]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAspnetSample(SampleImageData imageData)
         {
