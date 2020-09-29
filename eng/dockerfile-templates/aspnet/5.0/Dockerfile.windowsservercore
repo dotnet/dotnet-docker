@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:5.0-{{OS_VERSION}}
+FROM $REPO:5.0-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
 ENV ASPNET_VERSION {{VARIABLES["aspnet|5.0|build-version"]}}
 
