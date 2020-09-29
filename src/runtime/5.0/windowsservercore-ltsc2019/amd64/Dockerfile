@@ -2,14 +2,12 @@
 
 FROM mcr.microsoft.com/windows/servercore:ltsc2019-amd64
 
-ARG DOTNET_VERSION=5.0.0-rc.2.20472.7
-
 ENV `
     # Configure web servers to bind to port 80 when present
     ASPNETCORE_URLS=http://+:80 `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
-    DOTNET_VERSION=$DOTNET_VERSION
+    DOTNET_VERSION=5.0.0-rc.2.20472.7
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
@@ -23,7 +21,8 @@ RUN powershell -Command `
             exit 1; `
         }; `
         `
-        Expand-Archive dotnet.zip -DestinationPath 'C:\Program Files\dotnet'; `
+        mkdir $Env:ProgramFiles\dotnet; `
+        tar -C $Env:ProgramFiles\dotnet -oxzf dotnet.zip; `
         Remove-Item -Force dotnet.zip
 
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"

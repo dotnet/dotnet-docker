@@ -40,6 +40,6 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         public static string GetFilterRegexPattern(string filter) =>
-            $"^{Regex.Escape(filter).Replace(@"\*", ".*").Replace(@"\?", ".")}$";
+            filter is null ? null : $"^{Regex.Escape(filter).Replace(@"\*", ".*").Replace(@"\?", ".")}$";
     }
 }

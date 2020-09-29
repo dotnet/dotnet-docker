@@ -16,7 +16,8 @@ RUN $aspnetcore_version = '{{VARIABLES["aspnet|3.1|build-version"]}}'; `
         exit 1; `
     }; `
     `
-    Expand-Archive aspnetcore.zip -DestinationPath dotnet; `
+    mkdir dotnet/shared/Microsoft.AspNetCore.App; `
+    tar -C dotnet -oxzf aspnetcore.zip ./shared/Microsoft.AspNetCore.App; `
     Remove-Item -Force aspnetcore.zip
 
 

@@ -3,12 +3,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:5.0-windowsservercore-ltsc2019
 
-ARG DOTNET_SDK_VERSION=5.0.100-rc.2.20473.16
-
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
-    DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION `
+    DOTNET_SDK_VERSION=5.0.100-rc.2.20473.16 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -16,8 +14,7 @@ ENV `
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-WindowsServerCore-ltsc2019
 
-RUN `
-    powershell -Command "`
+RUN powershell -Command "`
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
@@ -44,10 +41,7 @@ RUN `
         Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
         Remove-Item -Path $Env:ProgramFiles\powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force;"
 
-# In order to set system PATH, ContainerAdministrator must be used
-USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;C:\Program Files\powershell"
-USER ContainerUser
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help

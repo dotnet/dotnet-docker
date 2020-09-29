@@ -3,8 +3,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:5.0-windowsservercore-ltsc2019
 
-ARG ASPNET_VERSION=5.0.0-rc.2.20473.3
-ENV ASPNET_VERSION $ASPNET_VERSION
+ENV ASPNET_VERSION 5.0.0-rc.2.20473.3
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
