@@ -50,6 +50,7 @@ jobs:
         $manifest = "$buildRepoName/$(manifest)"
         $testResultsDirectory = "$buildRepoName/$testResultsDirectory"
 
+        echo "##vso[task.setvariable variable=buildRepoName]$buildRepoName"
         echo "##vso[task.setvariable variable=manifest]$manifest"
         echo "##vso[task.setvariable variable=engCommonPath]$engCommonPath"
         echo "##vso[task.setvariable variable=engPath]$engPath"
