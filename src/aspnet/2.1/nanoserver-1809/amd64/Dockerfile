@@ -15,7 +15,8 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/do
         exit 1; `
     }; `
     `
-    Expand-Archive aspnetcore.zip -DestinationPath dotnet; `
+    mkdir dotnet; `
+    tar -C dotnet -oxzf aspnetcore.zip; `
     Remove-Item -Force aspnetcore.zip
 
 

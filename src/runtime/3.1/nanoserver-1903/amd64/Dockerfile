@@ -14,7 +14,8 @@ RUN $dotnet_version = '3.1.8'; `
         exit 1; `
     }; `
     `
-    Expand-Archive dotnet.zip -DestinationPath dotnet; `
+    mkdir dotnet; `
+    tar -C dotnet -oxzf dotnet.zip; `
     Remove-Item -Force dotnet.zip
 
 

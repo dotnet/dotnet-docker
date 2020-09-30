@@ -131,7 +131,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VerifyPowerShellScenario_NonDefaultUser(ProductImageData imageData)
         {
             string optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
-            if (imageData.OS.Contains("nanoserver", StringComparison.OrdinalIgnoreCase))
+            if (!DockerHelper.IsLinuxContainerModeEnabled)
             {
                 // windows containers test as Admin, default execution is as ContainerUser
                 optRunArgs = "-u ContainerAdministrator ";
