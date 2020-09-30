@@ -15,7 +15,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runti
 
 
 # .NET runtime image
-FROM $REPO:5.0-focal
+FROM $REPO:5.0-focal-amd64
 ARG DOTNET_VERSION
 
 ENV DOTNET_VERSION $DOTNET_VERSION

@@ -396,8 +396,8 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|5.0|product-version)-buster-slim": {},
-                "5.0-buster-slim": {}
+                "$(dotnet|5.0|product-version)-buster-slim-amd64": {},
+                "5.0-buster-slim-amd64": {}
               }
             },
             {
@@ -435,9 +435,9 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|5.0|product-version)-alpine3.12": {},
-                "5.0-alpine3.12": {},
-                "5.0-alpine": {}
+                "$(dotnet|5.0|product-version)-alpine3.12-amd64": {},
+                "5.0-alpine3.12-amd64": {},
+                "5.0-alpine-amd64": {}
               }
             }
           ]
@@ -469,8 +469,8 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|5.0|product-version)-focal": {},
-                "5.0-focal": {}
+                "$(dotnet|5.0|product-version)-focal-amd64": {},
+                "5.0-focal-amd64": {}
               }
             }
           ]
@@ -974,8 +974,8 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|5.0|product-version)-buster-slim": {},
-                "5.0-buster-slim": {}
+                "$(dotnet|5.0|product-version)-buster-slim-amd64": {},
+                "5.0-buster-slim-amd64": {}
               }
             },
             {
@@ -1014,8 +1014,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1809": {},
-                "5.0-nanoserver-1809": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1809-amd64": {},
+                "5.0-nanoserver-1809-amd64": {}
               }
             },
             {
@@ -1024,8 +1024,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1903": {},
-                "5.0-nanoserver-1903": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1903-amd64": {},
+                "5.0-nanoserver-1903-amd64": {}
               }
             },
             {
@@ -1034,8 +1034,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1909": {},
-                "5.0-nanoserver-1909": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1909-amd64": {},
+                "5.0-nanoserver-1909-amd64": {}
               }
             },
             {
@@ -1044,8 +1044,8 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-2004": {},
-                "5.0-nanoserver-2004": {}
+                "$(dotnet|5.0|product-version)-nanoserver-2004-amd64": {},
+                "5.0-nanoserver-2004-amd64": {}
               }
             }
           ]
@@ -1062,9 +1062,9 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|5.0|product-version)-alpine3.12": {},
-                "5.0-alpine3.12": {},
-                "5.0-alpine": {}
+                "$(dotnet|5.0|product-version)-alpine3.12-amd64": {},
+                "5.0-alpine3.12-amd64": {},
+                "5.0-alpine-amd64": {}
               }
             }
           ]
@@ -1111,8 +1111,8 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|5.0|product-version)-focal": {},
-                "5.0-focal": {}
+                "$(dotnet|5.0|product-version)-focal-amd64": {},
+                "5.0-focal-amd64": {}
               }
             }
           ]
@@ -1166,8 +1166,8 @@
               "os": "windows",
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
-                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019": {},
-                "5.0-windowsservercore-ltsc2019": {}
+                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019-amd64": {},
+                "5.0-windowsservercore-ltsc2019-amd64": {}
               }
             }
           ]
@@ -1685,8 +1685,8 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|5.0|product-version)-buster-slim": {},
-                "5.0-buster-slim": {}
+                "$(dotnet|5.0|product-version)-buster-slim-amd64": {},
+                "5.0-buster-slim-amd64": {}
               }
             },
             {
@@ -1728,8 +1728,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1809": {},
-                "5.0-nanoserver-1809": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1809-amd64": {},
+                "5.0-nanoserver-1809-amd64": {}
               }
             },
             {
@@ -1741,8 +1741,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1903": {},
-                "5.0-nanoserver-1903": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1903-amd64": {},
+                "5.0-nanoserver-1903-amd64": {}
               }
             },
             {
@@ -1754,8 +1754,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1909": {},
-                "5.0-nanoserver-1909": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1909-amd64": {},
+                "5.0-nanoserver-1909-amd64": {}
               }
             },
             {
@@ -1767,8 +1767,8 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-2004": {},
-                "5.0-nanoserver-2004": {}
+                "$(dotnet|5.0|product-version)-nanoserver-2004-amd64": {},
+                "5.0-nanoserver-2004-amd64": {}
               }
             }
           ]
@@ -1785,9 +1785,9 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|5.0|product-version)-alpine3.12": {},
-                "5.0-alpine3.12": {},
-                "5.0-alpine": {}
+                "$(dotnet|5.0|product-version)-alpine3.12-amd64": {},
+                "5.0-alpine3.12-amd64": {},
+                "5.0-alpine-amd64": {}
               }
             }
           ]
@@ -1834,8 +1834,8 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|5.0|product-version)-focal": {},
-                "5.0-focal": {}
+                "$(dotnet|5.0|product-version)-focal-amd64": {},
+                "5.0-focal-amd64": {}
               }
             }
           ]
@@ -1892,8 +1892,8 @@
               "os": "windows",
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
-                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019": {},
-                "5.0-windowsservercore-ltsc2019": {}
+                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019-amd64": {},
+                "5.0-windowsservercore-ltsc2019-amd64": {}
               }
             }
           ]
@@ -2471,8 +2471,8 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(sdk|5.0|product-version)-buster-slim": {},
-                "5.0-buster-slim": {}
+                "$(sdk|5.0|product-version)-buster-slim-amd64": {},
+                "5.0-buster-slim-amd64": {}
               }
             },
             {
@@ -2514,8 +2514,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(sdk|5.0|product-version)-nanoserver-1809": {},
-                "5.0-nanoserver-1809": {}
+                "$(sdk|5.0|product-version)-nanoserver-1809-amd64": {},
+                "5.0-nanoserver-1809-amd64": {}
               }
             },
             {
@@ -2527,8 +2527,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(sdk|5.0|product-version)-nanoserver-1903": {},
-                "5.0-nanoserver-1903": {}
+                "$(sdk|5.0|product-version)-nanoserver-1903-amd64": {},
+                "5.0-nanoserver-1903-amd64": {}
               }
             },
             {
@@ -2540,8 +2540,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(sdk|5.0|product-version)-nanoserver-1909": {},
-                "5.0-nanoserver-1909": {}
+                "$(sdk|5.0|product-version)-nanoserver-1909-amd64": {},
+                "5.0-nanoserver-1909-amd64": {}
               }
             },
             {
@@ -2553,8 +2553,8 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(sdk|5.0|product-version)-nanoserver-2004": {},
-                "5.0-nanoserver-2004": {}
+                "$(sdk|5.0|product-version)-nanoserver-2004-amd64": {},
+                "5.0-nanoserver-2004-amd64": {}
               }
             }
           ]
@@ -2571,9 +2571,9 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(sdk|5.0|product-version)-alpine3.12": {},
-                "5.0-alpine3.12": {},
-                "5.0-alpine": {}
+                "$(sdk|5.0|product-version)-alpine3.12-amd64": {},
+                "5.0-alpine3.12-amd64": {},
+                "5.0-alpine-amd64": {}
               }
             }
           ]
@@ -2590,8 +2590,8 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|5.0|product-version)-focal": {},
-                "5.0-focal": {}
+                "$(sdk|5.0|product-version)-focal-amd64": {},
+                "5.0-focal-amd64": {}
               }
             }
           ]
@@ -2648,8 +2648,8 @@
               "os": "windows",
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
-                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019": {},
-                "5.0-windowsservercore-ltsc2019": {}
+                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019-amd64": {},
+                "5.0-windowsservercore-ltsc2019-amd64": {}
               }
             }
           ]

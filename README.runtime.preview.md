@@ -58,9 +58,9 @@ docker run --rm mcr.microsoft.com/dotnet/core/samples
 ##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.0-rc.2-buster-slim, 5.0-buster-slim, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/buster-slim/amd64/Dockerfile) | Debian 10
-5.0.0-rc.2-alpine3.12, 5.0-alpine3.12, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/alpine3.12/amd64/Dockerfile) | Alpine 3.12
-5.0.0-rc.2-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
+5.0.0-rc.2-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/buster-slim/amd64/Dockerfile) | Debian 10
+5.0.0-rc.2-alpine3.12-amd64, 5.0-alpine3.12-amd64, 5.0-alpine-amd64 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+5.0.0-rc.2-focal-amd64, 5.0-focal-amd64 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm64 Tags
 ##### .NET 5.0 Preview Tags
@@ -81,26 +81,26 @@ Tags | Dockerfile | OS Version
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-rc.2-nanoserver-2004, 5.0-nanoserver-2004, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/nanoserver-2004/amd64/Dockerfile)
+5.0.0-rc.2-nanoserver-2004-amd64, 5.0-nanoserver-2004-amd64, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/nanoserver-2004/amd64/Dockerfile)
 
 ## Windows Server, version 1909 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-rc.2-nanoserver-1909, 5.0-nanoserver-1909, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/nanoserver-1909/amd64/Dockerfile)
+5.0.0-rc.2-nanoserver-1909-amd64, 5.0-nanoserver-1909-amd64, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/nanoserver-1909/amd64/Dockerfile)
 
 ## Windows Server, version 1903 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-rc.2-nanoserver-1903, 5.0-nanoserver-1903, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/nanoserver-1903/amd64/Dockerfile)
+5.0.0-rc.2-nanoserver-1903-amd64, 5.0-nanoserver-1903-amd64, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/nanoserver-1903/amd64/Dockerfile)
 
 ## Windows Server 2019 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-rc.2-nanoserver-1809, 5.0-nanoserver-1809, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/nanoserver-1809/amd64/Dockerfile)
-5.0.0-rc.2-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+5.0.0-rc.2-nanoserver-1809-amd64, 5.0-nanoserver-1809-amd64, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/nanoserver-1809/amd64/Dockerfile)
+5.0.0-rc.2-windowsservercore-ltsc2019-amd64, 5.0-windowsservercore-ltsc2019-amd64 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/nightly/runtime at https://mcr.microsoft.com/v2/dotnet/nightly/runtime/tags/list.
 
