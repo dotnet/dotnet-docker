@@ -386,7 +386,9 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
             "$(dotnet|5.0|product-version)": {},
+            "$(dotnet|5.0|product-version)-buster-slim": {},
             "5.0": {},
+            "5.0-buster-slim": {},
             "latest": {}
           },
           "platforms": [
@@ -428,6 +430,10 @@
         },
         {
           "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-alpine3.12": {},
+            "5.0-alpine": {}
+          },
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/alpine3.12/amd64",
@@ -439,12 +445,7 @@
                 "5.0-alpine3.12-amd64": {},
                 "5.0-alpine-amd64": {}
               }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|5.0|product-version)",
-          "platforms": [
+            },
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/alpine3.12/arm64v8",
@@ -462,6 +463,10 @@
         },
         {
           "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-focal": {},
+            "5.0-focal": {}
+          },
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/focal/amd64",
@@ -472,12 +477,7 @@
                 "$(dotnet|5.0|product-version)-focal-amd64": {},
                 "5.0-focal-amd64": {}
               }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|5.0|product-version)",
-          "platforms": [
+            },
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/focal/arm32v7",
@@ -489,12 +489,7 @@
                 "5.0-focal-arm32v7": {}
               },
               "variant": "v7"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|5.0|product-version)",
-          "platforms": [
+            },
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/focal/arm64v8",
@@ -1051,7 +1046,123 @@
           ]
         },
         {
+          "id": "buster-slim",
           "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-buster-slim": {},
+            "5.0-buster-slim": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/5.0/buster-slim/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "buster-slim",
+              "tags": {}
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/5.0/buster-slim/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "buster-slim",
+              "tags": {},
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/5.0/buster-slim/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "buster-slim",
+              "tags": {},
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-1809",
+          "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-nanoserver-1809": {},
+            "5.0-nanoserver-1809": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/5.0/nanoserver-1809/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-1903",
+          "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-nanoserver-1903": {},
+            "5.0-nanoserver-1903": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/5.0/nanoserver-1903/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-1909",
+          "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-nanoserver-1909": {},
+            "5.0-nanoserver-1909": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/5.0/nanoserver-1909/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-2004",
+          "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-nanoserver-2004": {},
+            "5.0-nanoserver-2004": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/5.0/nanoserver-2004/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-alpine3.12": {},
+            "5.0-alpine": {}
+          },
           "platforms": [
             {
               "buildArgs": {
@@ -1066,12 +1177,7 @@
                 "5.0-alpine3.12-amd64": {},
                 "5.0-alpine-amd64": {}
               }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|5.0|product-version)",
-          "platforms": [
+            },
             {
               "architecture": "arm64",
               "buildArgs": {
@@ -1101,6 +1207,10 @@
         },
         {
           "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-focal": {},
+            "5.0-focal": {}
+          },
           "platforms": [
             {
               "buildArgs": {
@@ -1114,12 +1224,7 @@
                 "$(dotnet|5.0|product-version)-focal-amd64": {},
                 "5.0-focal-amd64": {}
               }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|5.0|product-version)",
-          "platforms": [
+            },
             {
               "architecture": "arm",
               "buildArgs": {
@@ -1134,12 +1239,7 @@
                 "5.0-focal-arm32v7": {}
               },
               "variant": "v7"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|5.0|product-version)",
-          "platforms": [
+            },
             {
               "architecture": "arm64",
               "buildArgs": {
@@ -1158,6 +1258,10 @@
           ]
         },
         {
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019": {},
+            "5.0-windowsservercore-ltsc2019": {}
+          },
           "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
@@ -1774,7 +1878,135 @@
           ]
         },
         {
+          "id": "buster-slim",
           "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-buster-slim": {},
+            "5.0-buster-slim": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/5.0/buster-slim/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "buster-slim",
+              "tags": {}
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/5.0/buster-slim/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "buster-slim",
+              "tags": {},
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/5.0/buster-slim/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "buster-slim",
+              "tags": {},
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-1809",
+          "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-nanoserver-1809": {},
+            "5.0-nanoserver-1809": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/5.0/nanoserver-1809/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-1903",
+          "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-nanoserver-1903": {},
+            "5.0-nanoserver-1903": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/5.0/nanoserver-1903/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-1909",
+          "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-nanoserver-1909": {},
+            "5.0-nanoserver-1909": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/5.0/nanoserver-1909/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-2004",
+          "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-nanoserver-2004": {},
+            "5.0-nanoserver-2004": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/5.0/nanoserver-2004/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-alpine3.12": {},
+            "5.0-alpine": {}
+          },
           "platforms": [
             {
               "buildArgs": {
@@ -1789,12 +2021,7 @@
                 "5.0-alpine3.12-amd64": {},
                 "5.0-alpine-amd64": {}
               }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|5.0|product-version)",
-          "platforms": [
+            },
             {
               "architecture": "arm64",
               "buildArgs": {
@@ -1824,6 +2051,10 @@
         },
         {
           "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-focal": {},
+            "5.0-focal": {}
+          },
           "platforms": [
             {
               "buildArgs": {
@@ -1837,12 +2068,7 @@
                 "$(dotnet|5.0|product-version)-focal-amd64": {},
                 "5.0-focal-amd64": {}
               }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|5.0|product-version)",
-          "platforms": [
+            },
             {
               "architecture": "arm",
               "buildArgs": {
@@ -1857,12 +2083,7 @@
                 "5.0-focal-arm32v7": {}
               },
               "variant": "v7"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|5.0|product-version)",
-          "platforms": [
+            },
             {
               "architecture": "arm64",
               "buildArgs": {
@@ -1882,6 +2103,10 @@
         },
         {
           "productVersion": "$(dotnet|5.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019": {},
+            "5.0-windowsservercore-ltsc2019": {}
+          },
           "platforms": [
             {
               "buildArgs": {
@@ -2560,7 +2785,135 @@
           ]
         },
         {
+          "id": "buster-slim",
           "productVersion": "$(sdk|5.0|product-version)",
+          "sharedTags": {
+            "$(sdk|5.0|product-version)-buster-slim": {},
+            "5.0-buster-slim": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/5.0/buster-slim/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "buster-slim",
+              "tags": {}
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "architecture": "arm",
+              "dockerfile": "src/sdk/5.0/buster-slim/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "buster-slim",
+              "tags": {},
+              "variant": "v7"
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "architecture": "arm64",
+              "dockerfile": "src/sdk/5.0/buster-slim/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "buster-slim",
+              "tags": {},
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-1809",
+          "productVersion": "$(sdk|5.0|product-version)",
+          "sharedTags": {
+            "$(sdk|5.0|product-version)-nanoserver-1809": {},
+            "5.0-nanoserver-1809": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/5.0/nanoserver-1809/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-1903",
+          "productVersion": "$(sdk|5.0|product-version)",
+          "sharedTags": {
+            "$(sdk|5.0|product-version)-nanoserver-1903": {},
+            "5.0-nanoserver-1903": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/5.0/nanoserver-1903/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-1903",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-1909",
+          "productVersion": "$(sdk|5.0|product-version)",
+          "sharedTags": {
+            "$(sdk|5.0|product-version)-nanoserver-1909": {},
+            "5.0-nanoserver-1909": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/5.0/nanoserver-1909/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-1909",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "id": "nanoserver-2004",
+          "productVersion": "$(sdk|5.0|product-version)",
+          "sharedTags": {
+            "$(sdk|5.0|product-version)-nanoserver-2004": {},
+            "5.0-nanoserver-2004": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/5.0/nanoserver-2004/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2004",
+              "tags": {}
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|5.0|product-version)",
+          "sharedTags": {
+            "$(sdk|5.0|product-version)-alpine3.12": {},
+            "5.0-alpine": {}
+          },
           "platforms": [
             {
               "buildArgs": {
@@ -2580,6 +2933,10 @@
         },
         {
           "productVersion": "$(sdk|5.0|product-version)",
+          "sharedTags": {
+            "$(sdk|5.0|product-version)-focal": {},
+            "5.0-focal": {}
+          },
           "platforms": [
             {
               "buildArgs": {
@@ -2593,12 +2950,7 @@
                 "$(sdk|5.0|product-version)-focal-amd64": {},
                 "5.0-focal-amd64": {}
               }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|5.0|product-version)",
-          "platforms": [
+            },
             {
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
@@ -2613,12 +2965,7 @@
                 "5.0-focal-arm32v7": {}
               },
               "variant": "v7"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|5.0|product-version)",
-          "platforms": [
+            },
             {
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
@@ -2638,6 +2985,10 @@
         },
         {
           "productVersion": "$(sdk|5.0|product-version)",
+          "sharedTags": {
+            "$(sdk|5.0|product-version)-windowsservercore-ltsc2019": {},
+            "5.0-windowsservercore-ltsc2019": {}
+          },
           "platforms": [
             {
               "buildArgs": {
