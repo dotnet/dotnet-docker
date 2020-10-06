@@ -52,6 +52,8 @@ else {
     $DotnetInstallScript = "dotnet-install.ps1"
 }
 
+$activeOS = docker version -f "{{ .Server.Os }}"
+
 if (!(Test-Path $DotnetInstallScript)) {
     $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
     Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript
@@ -107,11 +109,20 @@ Try {
         # selected TestCategories (using an OR operator between each category).
         # See https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests
         $TestCategories | foreach {
-            if ($testFilter) {
-                $testFilter += "|"
-            }
+            # Skip pre-build tests on Windows because of missing pre-reqs (https://github.com/dotnet/dotnet-docker/issues/2261)
+            if ($_ -eq "pre-build" -and $activeOS -eq "windows") {
+                Write-Warning "Skipping pre-build tests for Windows containers"
+            } else {
+                if ($testFilter) {
+                    $testFilter += "|"
+                }
 
-            $testFilter += "Category=$_"
+                $testFilter += "Category=$_"
+            }
+        }
+
+        if (-not $testFilter) {
+            exit;
         }
 
         $testFilter = "--filter `"$testFilter`""
