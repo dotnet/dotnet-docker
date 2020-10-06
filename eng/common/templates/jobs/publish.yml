@@ -10,6 +10,7 @@ jobs:
       $(manifestVariables)
       $(imageBuilder.queueArgs)
   steps:
+  - template: ../steps/validate-branch.yml
   - template: ../steps/init-docker-linux.yml
   - template: ../steps/download-build-artifact.yml
     parameters:
