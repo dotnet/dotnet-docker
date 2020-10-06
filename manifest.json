@@ -432,6 +432,7 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
             "$(dotnet|5.0|product-version)-alpine3.12": {},
+            "5.0-alpine3.12": {},
             "5.0-alpine": {}
           },
           "platforms": [
@@ -1161,6 +1162,7 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
             "$(dotnet|5.0|product-version)-alpine3.12": {},
+            "5.0-alpine3.12": {},
             "5.0-alpine": {}
           },
           "platforms": [
@@ -2005,6 +2007,7 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
             "$(dotnet|5.0|product-version)-alpine3.12": {},
+            "5.0-alpine3.12": {},
             "5.0-alpine": {}
           },
           "platforms": [
@@ -2912,6 +2915,7 @@
           "productVersion": "$(sdk|5.0|product-version)",
           "sharedTags": {
             "$(sdk|5.0|product-version)-alpine3.12": {},
+            "5.0-alpine3.12": {},
             "5.0-alpine": {}
           },
           "platforms": [
