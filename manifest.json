@@ -1010,8 +1010,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1809-amd64": {},
-                "5.0-nanoserver-1809-amd64": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1809": {},
+                "5.0-nanoserver-1809": {}
               }
             },
             {
@@ -1020,8 +1020,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1903-amd64": {},
-                "5.0-nanoserver-1903-amd64": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1903": {},
+                "5.0-nanoserver-1903": {}
               }
             },
             {
@@ -1030,8 +1030,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1909-amd64": {},
-                "5.0-nanoserver-1909-amd64": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1909": {},
+                "5.0-nanoserver-1909": {}
               }
             },
             {
@@ -1040,8 +1040,8 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-2004-amd64": {},
-                "5.0-nanoserver-2004-amd64": {}
+                "$(dotnet|5.0|product-version)-nanoserver-2004": {},
+                "5.0-nanoserver-2004": {}
               }
             }
           ]
@@ -1200,8 +1200,8 @@
               "os": "windows",
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
-                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019-amd64": {},
-                "5.0-windowsservercore-ltsc2019-amd64": {}
+                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019": {},
+                "5.0-windowsservercore-ltsc2019": {}
               }
             }
           ]
@@ -1762,8 +1762,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1809-amd64": {},
-                "5.0-nanoserver-1809-amd64": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1809": {},
+                "5.0-nanoserver-1809": {}
               }
             },
             {
@@ -1775,8 +1775,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1903-amd64": {},
-                "5.0-nanoserver-1903-amd64": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1903": {},
+                "5.0-nanoserver-1903": {}
               }
             },
             {
@@ -1788,8 +1788,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-1909-amd64": {},
-                "5.0-nanoserver-1909-amd64": {}
+                "$(dotnet|5.0|product-version)-nanoserver-1909": {},
+                "5.0-nanoserver-1909": {}
               }
             },
             {
@@ -1801,8 +1801,8 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(dotnet|5.0|product-version)-nanoserver-2004-amd64": {},
-                "5.0-nanoserver-2004-amd64": {}
+                "$(dotnet|5.0|product-version)-nanoserver-2004": {},
+                "5.0-nanoserver-2004": {}
               }
             }
           ]
@@ -1964,8 +1964,8 @@
               "os": "windows",
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
-                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019-amd64": {},
-                "5.0-windowsservercore-ltsc2019-amd64": {}
+                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019": {},
+                "5.0-windowsservercore-ltsc2019": {}
               }
             }
           ]
@@ -2586,8 +2586,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(sdk|5.0|product-version)-nanoserver-1809-amd64": {},
-                "5.0-nanoserver-1809-amd64": {}
+                "$(sdk|5.0|product-version)-nanoserver-1809": {},
+                "5.0-nanoserver-1809": {}
               }
             },
             {
@@ -2599,8 +2599,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(sdk|5.0|product-version)-nanoserver-1903-amd64": {},
-                "5.0-nanoserver-1903-amd64": {}
+                "$(sdk|5.0|product-version)-nanoserver-1903": {},
+                "5.0-nanoserver-1903": {}
               }
             },
             {
@@ -2612,8 +2612,8 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(sdk|5.0|product-version)-nanoserver-1909-amd64": {},
-                "5.0-nanoserver-1909-amd64": {}
+                "$(sdk|5.0|product-version)-nanoserver-1909": {},
+                "5.0-nanoserver-1909": {}
               }
             },
             {
@@ -2625,8 +2625,8 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(sdk|5.0|product-version)-nanoserver-2004-amd64": {},
-                "5.0-nanoserver-2004-amd64": {}
+                "$(sdk|5.0|product-version)-nanoserver-2004": {},
+                "5.0-nanoserver-2004": {}
               }
             }
           ]
@@ -2763,8 +2763,8 @@
               "os": "windows",
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
-                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019-amd64": {},
-                "5.0-windowsservercore-ltsc2019-amd64": {}
+                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019": {},
+                "5.0-windowsservercore-ltsc2019": {}
               }
             }
           ]
