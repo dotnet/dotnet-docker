@@ -12,6 +12,8 @@ pr: none
 
 variables:
 - template: variables/core.yml
+- name: officialBranches
+  value: "'nightly'"
 
 stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
