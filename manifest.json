@@ -1192,10 +1192,6 @@
           ]
         },
         {
-          "sharedTags": {
-            "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019": {},
-            "5.0-windowsservercore-ltsc2019": {}
-          },
           "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
@@ -1958,10 +1954,6 @@
         },
         {
           "productVersion": "$(dotnet|5.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019": {},
-            "5.0-windowsservercore-ltsc2019": {}
-          },
           "platforms": [
             {
               "buildArgs": {
@@ -2761,10 +2753,6 @@
         },
         {
           "productVersion": "$(sdk|5.0|product-version)",
-          "sharedTags": {
-            "$(sdk|5.0|product-version)-windowsservercore-ltsc2019": {},
-            "5.0-windowsservercore-ltsc2019": {}
-          },
           "platforms": [
             {
               "buildArgs": {
