@@ -98,7 +98,10 @@ namespace Microsoft.DotNet.Docker.Tests
             return $"{registry}{repo}:{tag}";
         }
 
-        protected string GetTagName(string tagPrefix, string os)
+        protected string GetTagName(string tagPrefix, string os) =>
+            $"{tagPrefix}-{os}{GetArchTagSuffix()}";
+
+        protected virtual string GetArchTagSuffix()
         {
             string arch = string.Empty;
             if (Arch == Arch.Arm)
@@ -110,7 +113,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 arch = "-arm64v8";
             }
 
-            return $"{tagPrefix}-{os}{arch}";
+            return arch;
         }
 
         private static string GetRegistryName(string repo, string tag)
