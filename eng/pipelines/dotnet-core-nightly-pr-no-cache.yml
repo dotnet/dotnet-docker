@@ -3,13 +3,9 @@ pr:
   branches:
     include:
     - nightly
-    - feature/*
   paths:
     include:
-    - manifest.json
-    - manifest.versions.json
     - eng/*
-    - src/*
     - tests/*
 
 resources:
@@ -27,3 +23,4 @@ stages:
   parameters:
     buildMatrixType: platformVersionedOs
     buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
+    noCache: true

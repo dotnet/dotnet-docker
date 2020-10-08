@@ -138,6 +138,20 @@ stages:
       noCache: ${{ parameters.noCache }}
   - template: ../jobs/build-images.yml
     parameters:
+      name: Windows2009_amd64
+      pool:
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: DotNetCore-Docker-Public
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: DotNetCore-Docker
+        demands: VSTS_OS -equals Windows-ServerDatacenter-2009
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows2009Amd64']
+      dockerClientOS: windows
+      buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
+  - template: ../jobs/build-images.yml
+    parameters:
       name: WindowsLtsc2016_amd64
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
@@ -239,6 +253,14 @@ stages:
           name: DotNetCore-Docker
           demands: VSTS_OS -equals Windows-ServerDatacenter-2004
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows2004Amd64']
+        testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+    - template: ../jobs/test-images-windows-client.yml
+      parameters:
+        name: Windows2009_amd64
+        pool:
+          name: DotNetCore-Docker
+          demands: VSTS_OS -equals Windows-ServerDatacenter-2009
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows2009Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
