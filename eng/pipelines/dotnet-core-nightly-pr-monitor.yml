@@ -7,7 +7,6 @@ pr:
   paths:
     include:
     - manifest.json
-    - manifest.versions.json
     - eng/*
     - src/monitor/*
     - tests/*

@@ -7,7 +7,6 @@ pr:
   paths:
     include:
     - manifest.json
-    - manifest.versions.json
     - eng/*
     - src/aspnet/2.1/*
     - src/runtime/2.1/*
