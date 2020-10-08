@@ -2,14 +2,16 @@ trigger: none
 pr:
   branches:
     include:
-    - nightly
-    - feature/*
+    - master
   paths:
     include:
     - manifest.json
     - manifest.versions.json
     - eng/*
-    - src/*
+    - src/aspnet/5.0/*
+    - src/runtime/5.0/*
+    - src/runtime-deps/5.0/*
+    - src/sdk/5.0/*
     - tests/*
 
 resources:
@@ -21,6 +23,8 @@ resources:
 
 variables:
 - template: variables/core.yml
+- name: imageBuilder.pathArgs
+  value: --path 'src/*/5.0/*'
 
 stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
