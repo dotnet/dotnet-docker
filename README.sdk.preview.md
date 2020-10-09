@@ -94,17 +94,10 @@ Tag | Dockerfile
 ---------| ---------------
 5.0.100-rc.2-nanoserver-1909, 5.0-nanoserver-1909, 5.0.100-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/nanoserver-1909/amd64/Dockerfile)
 
-## Windows Server, version 1903 amd64 Tags
-##### .NET 5.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-5.0.100-rc.2-nanoserver-1903, 5.0-nanoserver-1903, 5.0.100-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/nanoserver-1903/amd64/Dockerfile)
-
 ## Windows Server 2019 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.100-rc.2-nanoserver-1809, 5.0-nanoserver-1809, 5.0.100-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/nanoserver-1809/amd64/Dockerfile)
 5.0.0-rc.2-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/nightly/sdk at https://mcr.microsoft.com/v2/dotnet/nightly/sdk/tags/list.
