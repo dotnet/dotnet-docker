@@ -14,6 +14,8 @@ _The set of .NET Core versions that are being released as a unit._
       - [ ] PowerShell version
       - [ ] Check for additional changes by diffing the master and nightly branches
       - [ ] &lt;add link to PR/commit&gt;
+1. - [ ] Check whether a change has been made to a Dockerfile that is shared by multiple .NET versions. If a change has been made and the .NET versions that share that file are not being released at the same time, define a separate Dockerfile to isolate the change to the .NET version that's being released. Conversely, after a shared Dockerfile has diverged in such a way, it should be combined again into a shared Dockerfile when the other other .NET version is released. Shared Dockerfiles to check:
+      - [ ] 3.1 runtime-deps shared with 5.0
 1. - [ ] Wait for .NET Core archive files (.zip, .tar.gz) to be available at blob storage location
 1. - [ ] Run `update-dependencies` tool to update all the necessary files to reflect the specified .NET Core versions (run this command for each version being released):
       - [ ] `dotnet run --project .\eng\update-dependencies\update-dependencies.csproj <major/minor version> --product-version sdk=<sdk> --product-version runtime=<runtime> --product-version aspnet=<aspnet>`
@@ -29,13 +31,13 @@ _The set of .NET Core versions that are being released as a unit._
 
           stages: build
 
-      Servicing release:
+      Servicing release (exclude 5.0 if separate runtime-deps Dockerfiles were defined):
 
-          imageBuilder.pathArgs: --path 'src/*/2.1/*' --path 'src/*/3.1/*'
+          imageBuilder.pathArgs: --path 'src/*/2.1/*' --path 'src/*/3.1/*' --path 'src/*/5.0/*'
 
-      Preview release:
+      Preview release (exclude 3.1 if separate runtime-deps Dockerfiles were defined):
 
-          imageBuilder.pathArgs: --path 'src/*/5.0/*'
+          imageBuilder.pathArgs: --path 'src/*/3.1/*' --path 'src/*/5.0/*'
 1. - [ ] Wait for NuGet packages to be published during release tic-toc
 1. - [ ] Test and publish images - Queue build of [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with variables:
 
@@ -44,13 +46,13 @@ _The set of .NET Core versions that are being released as a unit._
           stages: test;publish
           sourceBuildId: <Build ID from the build stage>
 
-      Servicing release:
+      Servicing release (exclude 5.0 if separate runtime-deps Dockerfiles were defined):
 
-          imageBuilder.pathArgs: --path 'src/*/2.1/*' --path 'src/*/3.1/*'
+          imageBuilder.pathArgs: --path 'src/*/2.1/*' --path 'src/*/3.1/*' --path 'src/*/5.0/*'
 
-      Preview release:
+      Preview release (exclude 3.1 if separate runtime-deps Dockerfiles were defined):
 
-          imageBuilder.pathArgs: --path 'src/*/5.0/*'
+          imageBuilder.pathArgs: --path 'src/*/3.1/*' --path 'src/*/5.0/*'
 1. - [ ] Confirm images have been ingested by MCR
 1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-core)
 

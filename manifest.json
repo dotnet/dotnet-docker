@@ -394,8 +394,8 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/5.0/buster-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
+              "dockerfile": "src/runtime-deps/3.1/buster-slim/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -405,8 +405,8 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "src/runtime-deps/5.0/buster-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
+              "dockerfile": "src/runtime-deps/3.1/buster-slim/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -417,8 +417,8 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/5.0/buster-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
+              "dockerfile": "src/runtime-deps/3.1/buster-slim/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -433,8 +433,8 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/5.0/alpine3.12/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.alpine",
+              "dockerfile": "src/runtime-deps/3.1/alpine3.12/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -450,8 +450,8 @@
           "platforms": [
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/5.0/alpine3.12/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.alpine",
+              "dockerfile": "src/runtime-deps/3.1/alpine3.12/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
@@ -467,8 +467,8 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/5.0/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
+              "dockerfile": "src/runtime-deps/3.1/focal/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -483,8 +483,8 @@
           "platforms": [
             {
               "architecture": "arm",
-              "dockerfile": "src/runtime-deps/5.0/focal/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
+              "dockerfile": "src/runtime-deps/3.1/focal/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -500,8 +500,8 @@
           "platforms": [
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/5.0/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.linux",
+              "dockerfile": "src/runtime-deps/3.1/focal/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {

@@ -19,16 +19,6 @@
     "src/runtime-deps/3.1/focal/arm32v7": 91727521,
     "src/runtime-deps/3.1/focal/arm64v8": 111261028
   },
-  "dotnet/nightly/runtime-deps": {
-    "src/runtime-deps/5.0/buster-slim/amd64": 110537404,
-    "src/runtime-deps/5.0/buster-slim/arm32v7": 85810304,
-    "src/runtime-deps/5.0/buster-slim/arm64v8": 104153752,
-    "src/runtime-deps/5.0/alpine3.12/amd64": 9866786,
-    "src/runtime-deps/5.0/alpine3.12/arm64v8": 9641621,
-    "src/runtime-deps/5.0/focal/amd64": 117572886,
-    "src/runtime-deps/5.0/focal/arm32v7": 91727521,
-    "src/runtime-deps/5.0/focal/arm64v8": 109676004
-  },
   "dotnet/core-nightly/runtime": {
     "src/runtime/2.1/stretch-slim/amd64": 180258057,
     "src/runtime/2.1/stretch-slim/arm32v7": 153626488,
