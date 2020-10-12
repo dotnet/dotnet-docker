@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:5.0-alpine3.12
+FROM $REPO:5.0-alpine3.12-amd64
 
 # Install ASP.NET Core
 ENV ASPNET_VERSION 5.0.0-rc.1.20451.17

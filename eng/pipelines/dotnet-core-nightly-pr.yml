@@ -3,6 +3,7 @@ pr:
   branches:
     include:
     - nightly
+    - feature/*
   paths:
     include:
     - manifest.json
