@@ -95,6 +95,7 @@ Tag | Dockerfile
 Tag | Dockerfile
 ---------| ---------------
 5.0.0-rc.1-nanoserver-1809, 5.0-nanoserver-1809, 5.0.0-rc.1, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-1809/amd64/Dockerfile)
+5.0.0-rc.1-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/runtime at https://mcr.microsoft.com/v2/dotnet/runtime/tags/list.
 

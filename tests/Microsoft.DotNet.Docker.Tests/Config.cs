@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -22,6 +23,8 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string RepoPrefix { get; } = Environment.GetEnvironmentVariable("REPO_PREFIX") ?? string.Empty;
         public static string Registry { get; } =
             Environment.GetEnvironmentVariable("REGISTRY") ?? (string)Manifest.Value["registry"];
+        public static string Os { get; } =
+            Environment.GetEnvironmentVariable("IMAGE_OS") ?? string.Empty;
 
         private static bool GetIsNightlyRepo()
         {
@@ -35,5 +38,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string manifestJson = File.ReadAllText(manifestPath);
             return JObject.Parse(manifestJson);
         }
+
+        public static string GetFilterRegexPattern(string filter) =>
+            filter is null ? null : $"^{Regex.Escape(filter).Replace(@"\*", ".*").Replace(@"\?", ".")}$";
     }
 }
