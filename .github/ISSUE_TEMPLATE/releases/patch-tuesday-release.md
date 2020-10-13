@@ -7,10 +7,10 @@
           ./eng/common/Get-BaseImageStatus.ps1 -Continuous
 1. - [ ] Queue build of [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with the following parameters:
 
-          imageBuilder.pathArgs: --path '*nanoserver*'
+          imageBuilder.pathArgs: --path '*nanoserver*' --path '*windowsservercore*'
 1. - [ ] Queue build of [dotnet-docker-nightly pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=359) (internal MSFT link) with the following parameters:
 
-          imageBuilder.pathArgs: --path '*nanoserver*'
+          imageBuilder.pathArgs: --path '*nanoserver*' --path '*windowsservercore*'
 1. - [ ] Confirm images have been ingested by MCR
 1. - [ ] Confirm `Last Modified` field has been updated in Docker Hub for [microsoft-dotnet-core](https://hub.docker.com/_/microsoft-dotnet-core)
 1. - [ ] Confirm `Last Modified` field has been updated in Docker Hub for [microsoft-dotnet-core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly)
