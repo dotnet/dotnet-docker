@@ -43,18 +43,18 @@ namespace Microsoft.DotNet.Docker.Tests
         };
         private static readonly ProductImageData[] s_windowsTestData =
         {
-            new ProductImageData { Version = V2_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V2_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V2_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V2_1, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V5_0, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V5_0, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V5_0, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V5_0, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.NanoServer1903,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.NanoServer1909,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.NanoServer2004,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V3_1, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V3_1, OS = OS.NanoServer1903,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V3_1, OS = OS.NanoServer1909,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V3_1, OS = OS.NanoServer2004,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1909,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer2004,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
         };
         
         private static readonly SampleImageData[] s_linuxSampleTestData =
@@ -131,7 +131,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private static string GetFilterRegexPattern(string filterEnvName)
         {
             string filter = Environment.GetEnvironmentVariable(filterEnvName);
-            return filter != null ? $"^{Regex.Escape(filter).Replace(@"\*", ".*").Replace(@"\?", ".")}$" : null;
+            return Config.GetFilterRegexPattern(filter);
         }
     }
 }

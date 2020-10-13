@@ -14,7 +14,8 @@ RUN $dotnet_version = '{{VARIABLES["runtime|3.1|build-version"]}}'; `
         exit 1; `
     }; `
     `
-    Expand-Archive dotnet.zip -DestinationPath dotnet; `
+    mkdir dotnet; `
+    tar -C dotnet -oxzf dotnet.zip; `
     Remove-Item -Force dotnet.zip
 
 

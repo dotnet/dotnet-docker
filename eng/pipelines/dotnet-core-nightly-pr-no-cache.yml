@@ -1,0 +1,26 @@
+trigger: none
+pr:
+  branches:
+    include:
+    - nightly
+  paths:
+    include:
+    - eng/*
+    - tests/*
+
+resources:
+  repositories:
+  - repository: VersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+
+variables:
+- template: variables/core.yml
+
+stages:
+- template: ../common/templates/stages/build-test-publish-repo.yml
+  parameters:
+    buildMatrixType: platformVersionedOs
+    buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
+    noCache: true

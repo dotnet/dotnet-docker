@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:5.0-{{OS_VERSION}}{{if ARCH_VERSIONED != "amd64":{{ARCH_TAG_SUFFIX}}}}
+FROM $REPO:5.0-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
 # Install ASP.NET Core
 ENV ASPNET_VERSION {{VARIABLES["aspnet|5.0|build-version"]}}

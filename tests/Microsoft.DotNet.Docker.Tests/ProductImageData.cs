@@ -104,5 +104,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
             return GetTagName(imageVersion.ToString(2), os);
         }
+
+        protected override string GetArchTagSuffix()
+        {
+            if (Arch == Arch.Amd64 && Version.Major >= 5 && DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                return "-amd64";
+            }
+
+            return base.GetArchTagSuffix();
+        }
     }
 }

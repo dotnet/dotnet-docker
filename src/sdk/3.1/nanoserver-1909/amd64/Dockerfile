@@ -9,14 +9,15 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 RUN `
     # Retrieve .NET Core SDK
-    $dotnet_sdk_version = '3.1.402'; `
+    $dotnet_sdk_version = '3.1.403'; `
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-win-x64.zip; `
-    $dotnet_sha512 = 'a9e391ce51bf63fe223ca020de4be3e1cbdaa42ca49b3f46ab21890afaa58747eedec3937026ae4f046a8a584c802bc604f635dff5a71d6ccd755ca15c5cc566'; `
+    $dotnet_sha512 = '280c7dee8c6cfa56f1f37efe901d124495ca0a9bdb1f3d535e37ca069ec7bb646cded362517b9d3f63233ecf184914254217914a981037f9050a94480322ad00'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
     }; `
-    Expand-Archive dotnet.zip -DestinationPath dotnet; `
+    mkdir dotnet; `
+    tar -C dotnet -oxzf dotnet.zip; `
     Remove-Item -Force dotnet.zip; `
     `
     # Install PowerShell global tool
