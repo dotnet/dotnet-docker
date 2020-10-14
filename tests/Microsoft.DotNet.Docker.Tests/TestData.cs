@@ -58,6 +58,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V5_0, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.NanoServer2009, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
         };
         
         private static readonly SampleImageData[] s_linuxSampleTestData =
@@ -135,7 +136,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private static string GetFilterRegexPattern(string filterEnvName)
         {
             string filter = Environment.GetEnvironmentVariable(filterEnvName);
-            return filter != null ? $"^{Regex.Escape(filter).Replace(@"\*", ".*").Replace(@"\?", ".")}$" : null;
+            return Config.GetFilterRegexPattern(filter);
         }
     }
 }

@@ -1,9 +1,9 @@
 $(McrTagsYmlRepo:runtime-deps)
-$(McrTagsYmlTagGroup:5.0-buster-slim)
+$(McrTagsYmlTagGroup:5.0-buster-slim-amd64)
     customSubTableTitle: .NET 5.0 Preview Tags
-$(McrTagsYmlTagGroup:5.0-alpine3.12)
+$(McrTagsYmlTagGroup:5.0-alpine3.12-amd64)
     customSubTableTitle: .NET 5.0 Preview Tags
-$(McrTagsYmlTagGroup:5.0-focal)
+$(McrTagsYmlTagGroup:5.0-focal-amd64)
     customSubTableTitle: .NET 5.0 Preview Tags
 $(McrTagsYmlTagGroup:5.0-buster-slim-arm64v8)
     customSubTableTitle: .NET 5.0 Preview Tags

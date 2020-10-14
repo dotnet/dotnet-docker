@@ -8,6 +8,7 @@ jobs:
   pool:
     vmImage: $(defaultLinuxAmd64PoolImage)
   steps:
+  - template: ../steps/validate-branch.yml
   - template: ../steps/init-docker-linux.yml
   - script: >
       $(runImageBuilderCmd) generateBuildMatrix

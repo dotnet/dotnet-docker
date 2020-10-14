@@ -23,6 +23,9 @@ variables:
   value: "00:20:00"
 - name: mcrDocIngestionTimeout
   value: "00:05:00"
+- name: officialBranches
+  # list multiple branches as "'branch1', 'branch2', etc."
+  value: "'master'"
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - group: DotNet-Docker-Common

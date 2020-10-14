@@ -15,7 +15,8 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet
         exit 1; `
     }; `
     `
-    Expand-Archive dotnet.zip -DestinationPath dotnet; `
+    mkdir dotnet; `
+    tar -C dotnet -oxzf dotnet.zip; `
     Remove-Item -Force dotnet.zip
 
 

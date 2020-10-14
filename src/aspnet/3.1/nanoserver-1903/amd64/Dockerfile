@@ -8,15 +8,16 @@ FROM mcr.microsoft.com/windows/servercore:1903-amd64 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-RUN $aspnetcore_version = '3.1.8'; `
+RUN $aspnetcore_version = '3.1.9'; `
     Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
-    $aspnetcore_sha512 = '95fc66351c93c873e98bf3559894dc6bd7cc94a4507261294696f4035c5934735e7c67cdd81998e59d14d6719cf10ce7d8d9e142c0a525c887b164407acc09fd'; `
+    $aspnetcore_sha512 = 'a165e61234cea95440383a36fe3bc826af1057f3a987d815667b0157d4cde2a4ac5bcbd6d905dda3ce57259b26619f592b84ae15089b0db7bf5d258225537c86'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
     }; `
     `
-    Expand-Archive aspnetcore.zip -DestinationPath dotnet; `
+    mkdir dotnet/shared/Microsoft.AspNetCore.App; `
+    tar -C dotnet -oxzf aspnetcore.zip ./shared/Microsoft.AspNetCore.App; `
     Remove-Item -Force aspnetcore.zip
 
 
