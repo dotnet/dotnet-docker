@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/microsoft-dotnet-core
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0.100-rc.2-nanoserver-2004 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -10,7 +10,10 @@ RUN dotnet restore -r win-x64
 # copy everything else and build app
 COPY aspnetapp/. ./aspnetapp/
 WORKDIR /source/aspnetapp
-RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true
+# /p:PublishTrimmed=true may remove dependencies https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained
+# removing for now for ssl loading in sample app.
+# RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true
+RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-restore /p:PublishReadyToRun=true
 
 # final stage/image
 # Uses the 2004 release; 1909, 1903, and 1809 are other choices
