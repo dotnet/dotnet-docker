@@ -9,7 +9,7 @@ Please keep in mind that the GitHub issue tracker is not intended as a general s
 
 If you believe you have an issue that affects the SECURITY of the platform, please do NOT create an issue and instead email your issue details to secure@microsoft.com. Your report may be eligible for our [bug bounty](https://www.microsoft.com/en-us/msrc/bounty-dot-net-core) but ONLY if it is reported through email.
 
-For other types of questions, consider using [StackOverflow](https://stackoverflow.com).
+For other types of questions, consider using [Stack Overflow](https://stackoverflow.com).
 -->
 
 ### Describe the Bug
