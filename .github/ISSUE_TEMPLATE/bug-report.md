@@ -19,7 +19,7 @@ For other types of questions, consider using [Stack Overflow](https://stackoverf
 ### Steps to Reproduce
 
 <!--
-We ❤ code! Include minimal steps to reproduce the problem if possible or point us to a minimalistic repro project hosted in a GitHub repo.
+We ❤ code! Include minimal steps to reproduce the problem if possible or point us to a simple repro project hosted in a GitHub repo.
 
 We will close this issue if:
 - the repro project you share with us is complex. We can't investigate complex projects, so don't point us to such, please.
