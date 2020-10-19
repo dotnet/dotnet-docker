@@ -11,8 +11,12 @@ RUN dotnet restore -r win-x64
 COPY aspnetapp/. ./aspnetapp/
 WORKDIR /source/aspnetapp
 # /p:PublishTrimmed=true may remove dependencies https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained
-# We can set /p:PublishTrimmed=false for now if we would like to test with ssl.
-# Issue filed here: https://github.com/dotnet/sdk/issues/14238
+# https://github.com/dotnet/sdk/issues/14238 
+# We can use TrimmerRootAssembly to 'include' the ssl dependencies.
+# <ItemGroup>
+#    <TrimmerRootAssembly Include="System.Net.Security" />
+#    <TrimmerRootAssembly Include="System.Security" />
+#  </ItemGroup>
 RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true
 
 # final stage/image
