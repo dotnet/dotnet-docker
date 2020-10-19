@@ -1,0 +1,23 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions
+    url: https://stackoverflow.com/questions/tagged/.net-core
+    about: Is your issue perhaps more of a question? Please post questions on Stack Overflow.
+  - name: Issue with .NET runtime or core .NET libraries
+    url:  https://github.com/dotnet/runtime/issues/new/choose
+    about: Please open issues relating to the .NET runtime or core .NET libraries in dotnet/runtime.
+  - name: Issue with ASP.NET Core
+    url:  https://github.com/dotnet/efcore/issues/new/choose
+    about: Please open issues relating to ASP.NET Core in dotnet/aspnetcore.
+  - name: Issue with .NET SDK
+    url:  https://github.com/dotnet/sdk/issues/new/choose
+    about: Please open issues relating to the .NET SDK itself in dotnet/sdk.
+  - name: Issue with other .NET components
+    url:  https://github.com/dotnet/core/blob/master/Documentation/core-repos.md
+    about: Having issues with other .NET components? Please find the correct location where to open an issue.
+  - name: Issue with Visual Studio Tools for Docker
+    url:  https://github.com/microsoft/dockertools/issues
+    about: Please open issues relating to the Visual Studio Tools for Docker in microsoft/dockertools.
+  - name: Issue with Microsoft Container Registry (MCR)
+    url:  https://github.com/microsoft/containerregistry/issues
+    about: Please open issues relating to the Microsoft Container Registry (MCR) in microsoft/containerregistry.
