@@ -23,7 +23,7 @@ We ❤ code! Include minimal steps to reproduce the problem if possible or point
 
 We will close this issue if:
 - the repro project you share with us is complex. We can't investigate complex projects, so don't point us to such, please.
-- if we are not be able to repro the behavior you're reporting
+- if we are not able to repro the behavior you're reporting
 -->
 
 ### Other Information
