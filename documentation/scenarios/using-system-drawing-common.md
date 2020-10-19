@@ -39,7 +39,7 @@ You have two deployment options available: you can choose to use a [framework-de
 A self-contained deployment is particularly handy in this scenario where there's a dependency on the System.Drawing.Common package. This is because there's no need to use a base image that has .NET Core installed. By deploying your app and all of its .NET Core dependencies, you can select the particular Windows base image that meets your need. In this example, since Server Core has the required files and Nano Server does not, you can simply select a Server Core image to use as your base image.
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-2004 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-2009 AS build
 
 WORKDIR /app
 
@@ -53,7 +53,7 @@ RUN dotnet publish -c Release -o out -r win-x64 --self-contained true
 
 
 # reference the Server Core image from the windows repo
-FROM mcr.microsoft.com/windows/servercore:2004 AS runtime
+FROM mcr.microsoft.com/windows/servercore:2009 AS runtime
 WORKDIR /app
 COPY --from=build /app/out ./
 
@@ -67,7 +67,7 @@ For a framework-dependent deployment, you're relying on .NET Core being installe
 Follow the instructions for [Installing .NET Core in a Dockerfile](installing-dotnet.md) in order to create a custom image based on [Server Core](https://hub.docker.com/_/microsoft-windows-servercore) or [Windows](https://hub.docker.com/_/microsoft-windows) that has .NET Core installed. For this example, let's say that you've tagged your image as `servercore/runtime:3.1`. You can then construct your application's Dockerfile to reference that tag as the base image:
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-2004 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-2009 AS build
 
 WORKDIR /app
 
