@@ -24,7 +24,7 @@ rm sdkversion
 curl -SLo versionDetails.xml https://raw.githubusercontent.com/dotnet/installer/$commitSha/eng/Version.Details.xml
 
 runtimeVer=$(xmllint --xpath string\(//ProductDependencies/Dependency[@Name=\'Microsoft.NETCore.App.Internal\']/@Version\) versionDetails.xml)
-aspnetVer=$(xmllint --xpath string\(//ProductDependencies/Dependency[contains\(@Name,\'Microsoft.AspNetCore.App.Ref.Internal\'\)]/@Version\) versionDetails.xml)
+aspnetVer=$(xmllint --xpath string\(//ProductDependencies/Dependency[@Name=\'Microsoft.AspNetCore.App.Ref.Internal\']/@Version\) versionDetails.xml)
 
 rm sdk.zip
 rm versionDetails.xml
