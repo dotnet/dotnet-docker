@@ -56,6 +56,7 @@ $activeOS = docker version -f "{{ .Server.Os }}"
 
 if (!(Test-Path $DotnetInstallScript)) {
     $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
+    echo $DOTNET_INSTALL_SCRIPT_URL
     Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript
 }
 
