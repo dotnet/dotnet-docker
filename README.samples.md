@@ -80,6 +80,12 @@ Tags | Dockerfile | OS Version
 dotnetapp-buster-slim-arm64v8, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) | Debian 10
 aspnetapp-buster-slim-arm64v8, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) | Debian 10
 
+## Windows Server, version 2009 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+dotnetapp-nanoserver-2009, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+aspnetapp-nanoserver-2009, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+
 ## Windows Server, version 2004 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
@@ -117,13 +123,7 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 
 # Feedback
 
-* [File a .NET Core Docker issue](https://github.com/dotnet/dotnet-docker/issues)
-* [File a .NET Core issue](https://github.com/dotnet/core/issues)
-* [File an ASP.NET Core issue](https://github.com/aspnet/home/issues)
-* [File an issue for other .NET components](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md)
-* [File a Visual Studio Docker Tools issue](https://github.com/microsoft/dockertools/issues)
-* [File a Microsoft Container Registry (MCR) issue](https://github.com/microsoft/containerregistry/issues)
-* [Ask on Stack Overflow](https://stackoverflow.com/questions/tagged/.net-core)
+* [File an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose)
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/)
 
 # License

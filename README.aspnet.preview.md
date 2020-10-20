@@ -81,6 +81,12 @@ Tags | Dockerfile | OS Version
 5.0.0-rc.2-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-rc.2-buster-slim, 5.0-buster-slim, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/buster-slim/arm32v7/Dockerfile) | Debian 10
 5.0.0-rc.2-focal-arm32v7, 5.0-focal-arm32v7, 5.0.0-rc.2-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
+## Windows Server, version 2009 amd64 Tags
+##### .NET 5.0 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+5.0.0-rc.2-nanoserver-2009, 5.0-nanoserver-2009, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/nanoserver-2009/amd64/Dockerfile)
+
 ## Windows Server, version 2004 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
@@ -113,13 +119,7 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 
 # Feedback
 
-* [File a .NET Core Docker issue](https://github.com/dotnet/dotnet-docker/issues)
-* [File a .NET Core issue](https://github.com/dotnet/core/issues)
-* [File an ASP.NET Core issue](https://github.com/aspnet/home/issues)
-* [File an issue for other .NET components](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md)
-* [File a Visual Studio Docker Tools issue](https://github.com/microsoft/dockertools/issues)
-* [File a Microsoft Container Registry (MCR) issue](https://github.com/microsoft/containerregistry/issues)
-* [Ask on Stack Overflow](https://stackoverflow.com/questions/tagged/.net-core)
+* [File an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose)
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/)
 
 # License

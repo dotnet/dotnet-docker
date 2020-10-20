@@ -25,6 +25,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string NanoServer1903 = "nanoserver-1903";
         public const string NanoServer1909 = "nanoserver-1909";
         public const string NanoServer2004 = "nanoserver-2004";
+        public const string NanoServer2009 = "nanoserver-2009";
         public const string ServerCoreLtsc2019 = "windowsservercore-ltsc2019";
 
         // Helpers

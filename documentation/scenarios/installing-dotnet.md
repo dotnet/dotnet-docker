@@ -70,7 +70,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runti
 Example (Windows):
 
 ```Dockerfile
-FROM mcr.microsoft.com/windows/servercore:2004
+FROM mcr.microsoft.com/windows/servercore:2009
 
 # Install .NET Core
 ENV DOTNET_VERSION=3.1.7
@@ -168,7 +168,7 @@ Example (Windows):
 ```Dockerfile
 # escape=`
 
-FROM mcr.microsoft.com/windows/servercore:2004
+FROM mcr.microsoft.com/windows/servercore:2009
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `

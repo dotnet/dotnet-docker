@@ -13,6 +13,8 @@ $(McrTagsYmlTagGroup:5.0-buster-slim-arm32v7)
     customSubTableTitle: .NET 5.0 Preview Tags
 $(McrTagsYmlTagGroup:5.0-focal-arm32v7)
     customSubTableTitle: .NET 5.0 Preview Tags
+$(McrTagsYmlTagGroup:5.0-nanoserver-2009)
+    customSubTableTitle: .NET 5.0 Preview Tags
 $(McrTagsYmlTagGroup:5.0-nanoserver-2004)
     customSubTableTitle: .NET 5.0 Preview Tags
 $(McrTagsYmlTagGroup:5.0-nanoserver-1909)

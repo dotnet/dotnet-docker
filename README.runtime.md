@@ -83,6 +83,12 @@ Tags | Dockerfile | OS Version
 2.1.23-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 2.1.23-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
+## Windows Server, version 2009 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+3.1.9-nanoserver-2009, 3.1-nanoserver-2009, 3.1.9, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/3.1/nanoserver-2009/amd64/Dockerfile)
+2.1.23-nanoserver-2009, 2.1-nanoserver-2009, 2.1.23, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/2.1/nanoserver-2009/amd64/Dockerfile)
+
 ## Windows Server, version 2004 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
@@ -120,13 +126,7 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 
 # Feedback
 
-* [File a .NET Core Docker issue](https://github.com/dotnet/dotnet-docker/issues)
-* [File a .NET Core issue](https://github.com/dotnet/core/issues)
-* [File an ASP.NET Core issue](https://github.com/aspnet/home/issues)
-* [File an issue for other .NET components](https://github.com/dotnet/core/blob/master/Documentation/core-repos.md)
-* [File a Visual Studio Docker Tools issue](https://github.com/microsoft/dockertools/issues)
-* [File a Microsoft Container Registry (MCR) issue](https://github.com/microsoft/containerregistry/issues)
-* [Ask on Stack Overflow](https://stackoverflow.com/questions/tagged/.net-core)
+* [File an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose)
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/)
 
 # License
