@@ -25,6 +25,7 @@ steps:
   displayName: Set Test Variables
 - script: >
     docker run -t -d
+    --dns 8.8.8.8
     -v /var/run/docker.sock:/var/run/docker.sock
     -v $(Build.ArtifactStagingDirectory):$(artifactsPath)
     -e RUNNING_TESTS_IN_CONTAINER=true 
