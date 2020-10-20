@@ -61,7 +61,9 @@ if (!(Test-Path $DotnetInstallScript)) {
     $InvokeWithRetryDir = "$PSScriptRoot/../eng/common"
     $NumberRetries = 3
     $RetryWaitTime = 5
-    $InvokeWithRetryDir/Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript" $NumberRetries $RetryWaitTime
+    Push-Location "$InvokeWithRetryDir"
+    ./Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript" $NumberRetries $RetryWaitTime
+    Pop-Location
 }
 
 if ($IsRunningOnUnix) {
