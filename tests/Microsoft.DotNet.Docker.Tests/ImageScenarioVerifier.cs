@@ -216,7 +216,12 @@ namespace Microsoft.DotNet.Docker.Tests
             // Can't use localhost when running inside containers or Windows.
             string url = !Config.IsRunningInContainer && DockerHelper.IsLinuxContainerModeEnabled
                 ? $"http://localhost:{dockerHelper.GetContainerHostPort(containerName)}"
-                : $"http://{dockerHelper.GetContainerNatAddress(containerName)}";
+                : $"http://{dockerHelper.GetContainerAddress(containerName)}";
+
+            // if we're in windows and the address is empty, try with the nat address.
+            if (url == "http://" && !DockerHelper.IsLinuxContainerModeEnabled){
+                url = $"http://{dockerHelper.GetContainerNatAddress(containerName)}";
+            }
 
             using (HttpClient client = new HttpClient())
             {
