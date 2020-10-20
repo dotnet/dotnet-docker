@@ -5,11 +5,12 @@
 param (
         [Parameter(Mandatory = $true)][string]$Cmd,
         [int]$Retries = 2,
-        [int]$WaitFactor = 6
+        [int]$WaitFactor = 6,
+        [string]$errorActionPref = 'Stop'
     )
 
 Set-StrictMode -Version Latest
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = $errorActionPref
 
 $count = 0
 $completed = $false
