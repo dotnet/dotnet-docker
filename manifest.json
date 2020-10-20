@@ -591,6 +591,16 @@
                 "$(dotnet|2.1|product-version)-nanoserver-2004": {},
                 "2.1-nanoserver-2004": {}
               }
+            },
+            {
+              "dockerfile": "src/runtime/2.1/nanoserver-2009/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2009",
+              "tags": {
+                "$(dotnet|2.1|product-version)-nanoserver-2009": {},
+                "2.1-nanoserver-2009": {}
+              }
             }
           ]
         },
@@ -778,6 +788,16 @@
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-2004": {},
                 "3.1-nanoserver-2004": {}
+              }
+            },
+            {
+              "dockerfile": "src/runtime/3.1/nanoserver-2009/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2009",
+              "tags": {
+                "$(dotnet|3.1|product-version)-nanoserver-2009": {},
+                "3.1-nanoserver-2009": {}
               }
             }
           ]
@@ -1035,6 +1055,16 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-nanoserver-2004": {},
                 "5.0-nanoserver-2004": {}
+              }
+            },
+            {
+              "dockerfile": "src/runtime/5.0/nanoserver-2009/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2009",
+              "tags": {
+                "$(dotnet|5.0|product-version)-nanoserver-2009": {},
+                "5.0-nanoserver-2009": {}
               }
             }
           ]
@@ -1318,6 +1348,25 @@
                   ]
                 }
               ]
+            },
+            {
+              "dockerfile": "src/aspnet/2.1/nanoserver-2009/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2009",
+              "tags": {
+                "$(dotnet|2.1|product-version)-nanoserver-2009": {},
+                "2.1-nanoserver-2009": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:core-runtime):2.1-nanoserver-2009"
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -1517,6 +1566,19 @@
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-2004": {},
                 "3.1-nanoserver-2004": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:core-runtime)"
+              },
+              "dockerfile": "src/aspnet/3.1/nanoserver-2009/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2009",
+              "tags": {
+                "$(dotnet|3.1|product-version)-nanoserver-2009": {},
+                "3.1-nanoserver-2009": {}
               }
             }
           ]
@@ -1783,6 +1845,19 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-nanoserver-2004": {},
                 "5.0-nanoserver-2004": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/5.0/nanoserver-2009/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2009",
+              "tags": {
+                "$(dotnet|5.0|product-version)-nanoserver-2009": {},
+                "5.0-nanoserver-2009": {}
               }
             }
           ]
@@ -2081,6 +2156,25 @@
                   ]
                 }
               ]
+            },
+            {
+              "dockerfile": "src/sdk/2.1/nanoserver-2009/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2009",
+              "tags": {
+                "$(sdk|2.1|product-version)-nanoserver-2009": {},
+                "2.1-nanoserver-2009": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:core-aspnet):2.1-nanoserver-2009"
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -2322,6 +2416,19 @@
               "tags": {
                 "$(sdk|3.1|product-version)-nanoserver-2004": {},
                 "3.1-nanoserver-2004": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:core-aspnet)"
+              },
+              "dockerfile": "src/sdk/3.1/nanoserver-2009/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2009",
+              "tags": {
+                "$(sdk|3.1|product-version)-nanoserver-2009": {},
+                "3.1-nanoserver-2009": {}
               }
             }
           ]
@@ -2594,6 +2701,19 @@
               "tags": {
                 "$(sdk|5.0|product-version)-nanoserver-2004": {},
                 "5.0-nanoserver-2004": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/5.0/nanoserver-2009/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-2009",
+              "tags": {
+                "$(sdk|5.0|product-version)-nanoserver-2009": {},
+                "5.0-nanoserver-2009": {}
               }
             }
           ]

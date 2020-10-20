@@ -48,6 +48,7 @@ The following tags demonstrate the pattern used to describe each operating syste
 * `3.1-bionic` (Ubuntu 18.04)
 * `3.1-buster` (Debian 10)
 * `3.1-buster-slim` (Debian 10)
+* `3.1-nanoserver-2009` (Nano Server, version 2009)
 * `3.1-nanoserver-2004` (Nano Server, version 2004)
 * `3.1-nanoserver-1909` (Nano Server, version 1909)
 * `3.1-nanoserver-1903` (Nano Server, version 1903)
