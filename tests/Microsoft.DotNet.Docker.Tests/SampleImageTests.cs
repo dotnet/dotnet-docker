@@ -68,6 +68,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (!Config.IsHttpVerificationDisabled)
                     {
                         // inspect image
+                        // TODO: remove when done testing.
                         DockerHelper.GetInspect(containerName);
                         await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(containerName, DockerHelper, OutputHelper);
                     }
