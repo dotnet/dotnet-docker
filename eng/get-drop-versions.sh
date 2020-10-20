@@ -12,15 +12,19 @@ sudo apt-get update && \
 
 curl -SLo sdk.zip https://aka.ms/dotnet/$channel/Sdk/dotnet-sdk-win-x64.zip
 
-commitSha=$(unzip -p sdk.zip "sdk/*/.version" | cat | head -1)
-# Remove last character (end-of-line)
-commitSha=${commitSha%?}
-sdkVer=$(unzip -p sdk.zip "sdk/*/.version" | cat | head -2 | tail -1)
+unzip -p sdk.zip "sdk/*/.version" > sdkversion
+
+commitSha=$(cat sdkversion | head -1)
+commitSha=${commitSha%?} # Remove last character (newline)
+
+sdkVer=$(cat sdkversion | head -2 | tail -1)
+
+rm sdkversion
 
 curl -SLo versionDetails.xml https://raw.githubusercontent.com/dotnet/installer/$commitSha/eng/Version.Details.xml
 
 runtimeVer=$(xmllint --xpath string\(//ProductDependencies/Dependency[@Name=\'Microsoft.NETCore.App.Internal\']/@Version\) versionDetails.xml)
-aspnetVer=$(xmllint --xpath string\(//ProductDependencies/Dependency[contains\(@Name,\'VS.Redist.Common.AspNetCore.TargetingPack.x64\'\)]/@Version\) versionDetails.xml)
+aspnetVer=$(xmllint --xpath string\(//ProductDependencies/Dependency[contains\(@Name,\'Microsoft.AspNetCore.App.Ref.Internal\'\)]/@Version\) versionDetails.xml)
 
 rm sdk.zip
 rm versionDetails.xml
