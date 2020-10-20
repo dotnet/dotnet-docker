@@ -72,6 +72,12 @@ Tags | Dockerfile | OS Version
 5.0.0-rc.2-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-rc.2-buster-slim, 5.0-buster-slim, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/buster-slim/arm32v7/Dockerfile) | Debian 10
 5.0.0-rc.2-focal-arm32v7, 5.0-focal-arm32v7, 5.0.0-rc.2-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
+## Windows Server, version 2009 amd64 Tags
+##### .NET 5.0 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+5.0.0-rc.2-nanoserver-2009, 5.0-nanoserver-2009, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-2009/amd64/Dockerfile)
+
 ## Windows Server, version 2004 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile

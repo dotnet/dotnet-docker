@@ -132,7 +132,7 @@ docker images dotnetapp
 The `Dockerfile.nanoserver-x64` Dockerfile targets a version-specific tag, which will result in a Nano Server version that targets a specific Windows version (and will only work on Windows hosts of the same version or higher). You can update the following the tag to a different version, as needed.
 
 ```console
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-2004
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-2009
 ```
 
 ## Build an image for ARM32 and ARM64

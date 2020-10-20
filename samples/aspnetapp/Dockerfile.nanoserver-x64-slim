@@ -13,8 +13,8 @@ WORKDIR /source/aspnetapp
 RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true
 
 # final stage/image
-# Uses the 2004 release; 1909, 1903, and 1809 are other choices
-FROM mcr.microsoft.com/windows/nanoserver:2004 AS runtime
+# Uses the 2009 release; 2004, 1909, 1903, and 1809 are other choices
+FROM mcr.microsoft.com/windows/nanoserver:2009 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
 
