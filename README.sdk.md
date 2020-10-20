@@ -91,8 +91,8 @@ Tags | Dockerfile | OS Version
 ## Windows Server, version 2009 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-3.1.403-nanoserver-2009, 3.1-nanoserver-2009, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-2009/amd64/Dockerfile)
-2.1.811-nanoserver-2009, 2.1-nanoserver-2009, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-2009/amd64/Dockerfile)
+3.1.403-nanoserver-2009, 3.1-nanoserver-2009, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/nanoserver-2009/amd64/Dockerfile)
+2.1.811-nanoserver-2009, 2.1-nanoserver-2009, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-2009/amd64/Dockerfile)
 
 ## Windows Server, version 2004 amd64 Tags
 Tag | Dockerfile

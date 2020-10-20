@@ -86,7 +86,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.100-rc.2-nanoserver-2009, 5.0-nanoserver-2009, 5.0.100-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/nanoserver-2009/amd64/Dockerfile)
+5.0.100-rc.2-nanoserver-2009, 5.0-nanoserver-2009, 5.0.100-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/nanoserver-2009/amd64/Dockerfile)
 
 ## Windows Server, version 2004 amd64 Tags
 ##### .NET 5.0 Preview Tags
