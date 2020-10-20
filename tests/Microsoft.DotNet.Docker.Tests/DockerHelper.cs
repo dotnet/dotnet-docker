@@ -153,6 +153,9 @@ namespace Microsoft.DotNet.Docker.Tests
         public string GetInspect(string container) =>
             ExecuteWithLogging("inspect " + container);
 
+        public string GetContainerNatAddress(string container) =>
+            ExecuteWithLogging("inspect -f \"{{.NetworkSettings.Networks.nat.IPAddress }}\" " + container);
+
         public string GetContainerAddress(string container) =>
             ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + container);
 
