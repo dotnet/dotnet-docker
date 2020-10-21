@@ -6,11 +6,9 @@ pr:
   paths:
     include:
     - manifest.json
+    - manifest.versions.json
     - eng/*
-    - src/aspnet/3.1/*
-    - src/runtime/3.1/*
-    - src/runtime-deps/3.1/*
-    - src/sdk/3.1/*
+    - src/*
     - tests/*
 
 resources:
@@ -22,8 +20,6 @@ resources:
 
 variables:
 - template: variables/core.yml
-- name: imageBuilder.pathArgs
-  value: --path 'src/*/3.1/*'
 
 stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
