@@ -56,21 +56,23 @@ else {
 $activeOS = docker version -f "{{ .Server.Os }}"
 
 if (!(Test-Path $DotnetInstallScript)) {
-    $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
-    echo $DOTNET_INSTALL_SCRIPT_URL
-    
-    $InvokeWithRetryDir = "$PSScriptRoot/../eng/common"
-    $NumberRetries = 3
-    $RetryWaitTime = 5
-    $errorActionPref = "SilentlyContinue" # Stop for now.  Could use SilentlyContinue but would need to update retry logic.
-    Push-Location "$InvokeWithRetryDir"
-    ./Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript" $NumberRetries $RetryWaitTime $errorActionPref
-    Pop-Location
-
-    # Still unable to load file.  So use static script that was already downloaded.
-    if (!(Test-Path "$DotnetInstallDir/$DotnetInstallScript")){
+    # Using static script that was already downloaded.
+    if (!(Test-Path "$DotnetInstallDir/$DotnetInstallScript") -and (Test-Path "$DotnetInstallScriptBackupDir/$DotnetInstallScript")){
         # copy script and proceed.
         cp $DotnetInstallScriptBackupDir/$DotnetInstallScript $DotnetInstallDir/$DotnetInstallScript
+    }
+    else{
+        # not using static script, will try to pull instead.
+        $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
+        echo $DOTNET_INSTALL_SCRIPT_URL
+        
+        $InvokeWithRetryDir = "$PSScriptRoot/../eng/common"
+        $NumberRetries = 3
+        $RetryWaitTime = 5
+        $errorActionPref = "SilentlyContinue" # Stop for now.  Could use SilentlyContinue but would need to update retry logic.
+        Push-Location "$InvokeWithRetryDir"
+        ./Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript" $NumberRetries $RetryWaitTime $errorActionPref
+        Pop-Location
     }
 }
 
