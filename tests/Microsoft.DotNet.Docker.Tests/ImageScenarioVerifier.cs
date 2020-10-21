@@ -235,6 +235,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
                     dockerHelper.GetProcessesAll(); // confirm that the containerName is still running.
+                    dockerHelper.GetInspect(containerName); // confirm the ip address?
 
                     try
                     {
