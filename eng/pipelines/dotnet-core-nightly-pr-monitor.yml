@@ -21,7 +21,7 @@ resources:
 variables:
 - template: variables/core.yml
 - name: imageBuilder.pathArgs
-  value: --path 'src/*/3.1/alpine*/amd64' --path 'src/monitor/*'
+  value: --path 'src/*/3.1/alpine*/amd64' --path 'src/*/5.0/alpine*/amd64' --path 'src/monitor/*'
 
 stages:
 - template: ../common/templates/stages/build-test-publish-repo.yml
