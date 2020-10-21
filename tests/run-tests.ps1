@@ -38,6 +38,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $DotnetInstallDir = "$PSScriptRoot/../.dotnet"
+$DotnetInstallScriptBackupDir = "$PSScriptRoot/dotnet-install-backup"
 
 if (!(Test-Path "$DotnetInstallDir")) {
     mkdir "$DotnetInstallDir" | Out-Null
@@ -61,10 +62,16 @@ if (!(Test-Path $DotnetInstallScript)) {
     $InvokeWithRetryDir = "$PSScriptRoot/../eng/common"
     $NumberRetries = 3
     $RetryWaitTime = 5
-    $errorActionPref = "Stop" # Stop for now.  Could use SilentlyContinue but would need to update retry logic.
+    $errorActionPref = "SilentlyContinue" # Stop for now.  Could use SilentlyContinue but would need to update retry logic.
     Push-Location "$InvokeWithRetryDir"
     ./Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript" $NumberRetries $RetryWaitTime $errorActionPref
     Pop-Location
+
+    # Still unable to load file.  So use static script that was already downloaded.
+    if (!(Test-Path "$DotnetInstallDir/$DotnetInstallScript")){
+        # copy script and proceed.
+        cp $DotnetInstallScriptBackupDir/$DotnetInstallScript $DotnetInstallDir/$DotnetInstallScript
+    }
 }
 
 if ($IsRunningOnUnix) {
