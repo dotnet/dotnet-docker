@@ -220,6 +220,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             // if we're in windows and the address is empty, try with the nat address.
             if (url == "http://" && !DockerHelper.IsLinuxContainerModeEnabled){
+                dockerHelper.GetProcessesAll(); // confirm that the containerName is still running.
                 url = $"http://{dockerHelper.GetContainerNatAddress(containerName)}";
             }
 
