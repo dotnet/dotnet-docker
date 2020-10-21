@@ -12,8 +12,6 @@ ENV \
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Ubuntu-20.04
 
-ARG PRODUCT_VERSION=5.0.100
-
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         curl \
@@ -22,7 +20,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET SDK
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$PRODUCT_VERSION-linux-x64.tar.gz \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-5.0.100-linux-x64.tar.gz \
     && dotnet_sha512='00032b358b8e8ea286ed41fc6f1383fcfdbd2de1e861f04e725b4ae176faab5494e01333fb26d7fdcde69cfcfef5734e0290d15426d8987f1f8b4c5afd27f2b9' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \

@@ -5,12 +5,11 @@ ARG DOTNET_VERSION={{VARIABLES["runtime|5.0|build-version"]}}
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
 ARG DOTNET_VERSION
-ARG PRODUCT_VERSION={{VARIABLES["dotnet|5.0|product-version"]}}
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Runtime
-RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:PRODUCT_VERSION-win-x64.zip; `
+RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-{{VARIABLES["dotnet|5.0|product-version"]}}-win-x64.zip; `
     $dotnet_sha512 = '{{VARIABLES["runtime|5.0|win|x64|sha"]}}'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `

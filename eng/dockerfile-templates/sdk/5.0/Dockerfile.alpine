@@ -14,15 +14,13 @@ ENV \
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-{{OS_ARCH_HYPHENATED}}
 
-ARG PRODUCT_VERSION={{VARIABLES["sdk|5.0|product-version"]}}
-
 RUN apk add --no-cache \
     curl \
     icu-libs \
     git
 
 # Install .NET SDK
-RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$PRODUCT_VERSION-linux-musl-x64.tar.gz \
+RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-{{VARIABLES["sdk|5.0|product-version"]}}-linux-musl-x64.tar.gz \
     && dotnet_sha512='{{VARIABLES["sdk|5.0|linux-musl|x64|sha"]}}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \

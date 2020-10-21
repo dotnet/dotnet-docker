@@ -4,14 +4,13 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:5.0-{{OS_VERSION}}
 
 ENV ASPNET_VERSION {{VARIABLES["aspnet|5.0|build-version"]}}
-ARG PRODUCT_VERSION={{VARIABLES["dotnet|5.0|product-version"]}}
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Install ASP.NET Core Runtime
-        Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNET_VERSION/aspnetcore-runtime-$Env:PRODUCT_VERSION-win-x64.zip; `
+        Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNET_VERSION/aspnetcore-runtime-{{VARIABLES["dotnet|5.0|product-version"]}}-win-x64.zip; `
         $aspnetcore_sha512 = '{{VARIABLES["aspnet|5.0|win|x64|sha"]}}'; `
         if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
