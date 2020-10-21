@@ -234,6 +234,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     retries--;
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
+                    dockerHelper.GetProcessesAll(); // confirm that the containerName is still running.
+
                     try
                     {
                         using (HttpResponseMessage result = await client.GetAsync(url))
