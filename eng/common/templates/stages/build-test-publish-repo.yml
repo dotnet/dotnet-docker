@@ -194,6 +194,7 @@ stages:
         matrixType: ${{ parameters.testMatrixType }}
         name: GenerateTestMatrix
         customBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}
+        isTestStage: true
 
     - template: ../jobs/test-images-linux-client.yml
       parameters:
