@@ -17,7 +17,6 @@ parameters:
     vmImage: $(defaultLinuxAmd64PoolImage)
 
   noCache: false
-  windowsServerDatacenter2009AgentAvailable: false
 stages:
 
 ################################################################################
@@ -138,7 +137,6 @@ stages:
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
   - template: ../jobs/build-images.yml
-    condition: and(succeeded(), eq('${{ parameters.windowsServerDatacenter2009AgentAvailable }}', true))
     parameters:
       name: Windows2009_amd64
       pool:
@@ -152,6 +150,7 @@ stages:
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      agentTypeAvailable: false
   - template: ../jobs/build-images.yml
     parameters:
       name: WindowsLtsc2016_amd64
@@ -264,6 +263,7 @@ stages:
           demands: VSTS_OS -equals Windows-ServerDatacenter-2009
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows2009Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+        agentTypeAvailable: false
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: WindowsLtsc2016_amd64

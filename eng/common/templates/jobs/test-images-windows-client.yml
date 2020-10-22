@@ -3,9 +3,10 @@ parameters:
   pool: {}
   matrix: {}
   testJobTimeout: 60
+  agentTypeAvailable: true
 jobs:
 - job: ${{ parameters.name }}
-  condition: and(succeeded(), ${{ parameters.matrix }})
+  condition: and(succeeded(), ${{ parameters.matrix }}, eq('${{ parameters.agentTypeAvailable }}', true))
   dependsOn: GenerateTestMatrix
   pool: ${{ parameters.pool }}
   strategy:
