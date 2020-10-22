@@ -17,6 +17,7 @@ parameters:
     vmImage: $(defaultLinuxAmd64PoolImage)
 
   noCache: false
+  windowsServerDatacenter2009AgentAvailable: false
 stages:
 
 ################################################################################
@@ -137,6 +138,7 @@ stages:
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
   - template: ../jobs/build-images.yml
+    condition: and(succeeded(), eq('${{ parameters.windowsServerDatacenter2009AgentAvailable }}', true))
     parameters:
       name: Windows2009_amd64
       pool:
