@@ -2,22 +2,32 @@
   "readme": "README.md",
   "readmeTemplate": "eng/readme-templates/README.md",
   "registry": "mcr.microsoft.com",
+  "variables": {
+    "syndicatedRuntimeDepsRepo": "dotnet/core-nightly/runtime-deps",
+    "syndicatedRuntimeRepo": "dotnet/core-nightly/runtime",
+    "syndicatedAspnetRepo": "dotnet/core-nightly/aspnet",
+    "syndicatedSdkRepo": "dotnet/core-nightly/sdk"
+  },
   "includes": [
     "manifest.versions.json"
   ],
   "repos": [
     {
-      "id": "core-runtime-deps",
-      "name": "dotnet/core-nightly/runtime-deps",
+      "id": "runtime-deps",
+      "name": "dotnet/nightly/runtime-deps",
       "readme": "README.runtime-deps.md",
       "readmeTemplate": "eng/readme-templates/README.md",
-      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/core-runtime-deps-tags.yml",
+      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/runtime-deps-tags.yml",
       "images": [
         {
           "productVersion": "$(dotnet|2.1|product-version)",
           "sharedTags": {
-            "$(dotnet|2.1|product-version)": {},
-            "2.1": {}
+            "$(dotnet|2.1|product-version)": {
+              "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+            },
+            "2.1": {
+              "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+            }
           },
           "platforms": [
             {
@@ -26,8 +36,12 @@
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(dotnet|2.1|product-version)-stretch-slim": {},
-                "2.1-stretch-slim": {}
+                "$(dotnet|2.1|product-version)-stretch-slim": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "2.1-stretch-slim": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               }
             },
             {
@@ -37,8 +51,12 @@
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {},
-                "2.1-stretch-slim-arm32v7": {}
+                "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "2.1-stretch-slim-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -53,9 +71,15 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|2.1|product-version)-alpine3.12": {},
-                "2.1-alpine3.12": {},
-                "2.1-alpine": {}
+                "$(dotnet|2.1|product-version)-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "2.1-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "2.1-alpine": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               }
             }
           ]
@@ -69,7 +93,9 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|2.1|product-version)-bionic": {},
+                "$(dotnet|2.1|product-version)-bionic": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
                 "2.1-bionic": {}
               }
             }
@@ -85,8 +111,12 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|2.1|product-version)-bionic-arm32v7": {},
-                "2.1-bionic-arm32v7": {}
+                "$(dotnet|2.1|product-version)-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "2.1-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -101,8 +131,12 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|2.1|product-version)-focal": {},
-                "2.1-focal": {}
+                "$(dotnet|2.1|product-version)-focal": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "2.1-focal": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               }
             }
           ]
@@ -117,8 +151,12 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|2.1|product-version)-focal-arm32v7": {},
-                "2.1-focal-arm32v7": {}
+                "$(dotnet|2.1|product-version)-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "2.1-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -127,8 +165,29 @@
         {
           "productVersion": "$(dotnet|3.1|product-version)",
           "sharedTags": {
-            "$(dotnet|3.1|product-version)": {},
-            "3.1": {}
+            "$(dotnet|3.1|product-version)": {
+              "documentationGroup": "3.1",
+              "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+            },
+            "3.1": {
+              "documentationGroup": "3.1",
+              "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+            },
+            "$(dotnet|5.0|product-version)": {
+              "documentationGroup": "5.0"
+            },
+            "$(dotnet|5.0|product-version)-buster-slim": {
+              "documentationGroup": "5.0"
+            },
+            "5.0": {
+              "documentationGroup": "5.0"
+            },
+            "5.0-buster-slim": {
+              "documentationGroup": "5.0"
+            },
+            "latest": {
+              "documentationGroup": "5.0"
+            }
           },
           "platforms": [
             {
@@ -137,8 +196,20 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|3.1|product-version)-buster-slim": {},
-                "3.1-buster-slim": {}
+                "$(dotnet|3.1|product-version)-buster-slim": {
+                  "documentationGroup": "3.1",
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-buster-slim": {
+                  "documentationGroup": "3.1",
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "$(dotnet|5.0|product-version)-buster-slim-amd64": {
+                  "documentationGroup": "5.0"
+                },
+                "5.0-buster-slim-amd64": {
+                  "documentationGroup": "5.0"
+                }
               }
             },
             {
@@ -148,8 +219,20 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {},
-                "3.1-buster-slim-arm32v7": {}
+                "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {
+                  "documentationGroup": "3.1",
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-buster-slim-arm32v7": {
+                  "documentationGroup": "3.1",
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "$(dotnet|5.0|product-version)-buster-slim-arm32v7": {
+                  "documentationGroup": "5.0"
+                },
+                "5.0-buster-slim-arm32v7": {
+                  "documentationGroup": "5.0"
+                }
               },
               "variant": "v7"
             },
@@ -160,8 +243,20 @@
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {},
-                "3.1-buster-slim-arm64v8": {}
+                "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {
+                  "documentationGroup": "3.1",
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-buster-slim-arm64v8": {
+                  "documentationGroup": "3.1",
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "$(dotnet|5.0|product-version)-buster-slim-arm64v8": {
+                  "documentationGroup": "5.0"
+                },
+                "5.0-buster-slim-arm64v8": {
+                  "documentationGroup": "5.0"
+                }
               },
               "variant": "v8"
             }
@@ -176,9 +271,15 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|3.1|product-version)-alpine3.12": {},
-                "3.1-alpine3.12": {},
-                "3.1-alpine": {}
+                "$(dotnet|3.1|product-version)-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-alpine": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               }
             }
           ]
@@ -193,9 +294,15 @@
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {},
-                "3.1-alpine3.12-arm64v8": {},
-                "3.1-alpine-arm64v8": {}
+                "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-alpine3.12-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-alpine-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               },
               "variant": "v8"
             }
@@ -210,8 +317,12 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|3.1|product-version)-bionic": {},
-                "3.1-bionic": {}
+                "$(dotnet|3.1|product-version)-bionic": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-bionic": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               }
             }
           ]
@@ -226,8 +337,12 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|3.1|product-version)-bionic-arm32v7": {},
-                "3.1-bionic-arm32v7": {}
+                "$(dotnet|3.1|product-version)-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -243,8 +358,12 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|3.1|product-version)-bionic-arm64v8": {},
-                "3.1-bionic-arm64v8": {}
+                "$(dotnet|3.1|product-version)-bionic-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-bionic-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               },
               "variant": "v8"
             }
@@ -259,8 +378,12 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|3.1|product-version)-focal": {},
-                "3.1-focal": {}
+                "$(dotnet|3.1|product-version)-focal": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-focal": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               }
             }
           ]
@@ -275,8 +398,12 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|3.1|product-version)-focal-arm32v7": {},
-                "3.1-focal-arm32v7": {}
+                "$(dotnet|3.1|product-version)-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -292,63 +419,12 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|3.1|product-version)-focal-arm64v8": {},
-                "3.1-focal-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "runtime-deps",
-      "name": "dotnet/nightly/runtime-deps",
-      "readme": "README.runtime-deps.preview.md",
-      "readmeTemplate": "eng/readme-templates/README.md",
-      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/runtime-deps-tags.yml",
-      "images": [
-        {
-          "productVersion": "$(dotnet|5.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|5.0|product-version)": {},
-            "$(dotnet|5.0|product-version)-buster-slim": {},
-            "5.0": {},
-            "5.0-buster-slim": {},
-            "latest": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/3.1/buster-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "buster-slim",
-              "tags": {
-                "$(dotnet|5.0|product-version)-buster-slim-amd64": {},
-                "5.0-buster-slim-amd64": {}
-              }
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "src/runtime-deps/3.1/buster-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "buster-slim",
-              "tags": {
-                "$(dotnet|5.0|product-version)-buster-slim-arm32v7": {},
-                "5.0-buster-slim-arm32v7": {}
-              },
-              "variant": "v7"
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/3.1/buster-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "buster-slim",
-              "tags": {
-                "$(dotnet|5.0|product-version)-buster-slim-arm64v8": {},
-                "5.0-buster-slim-arm64v8": {}
+                "$(dotnet|3.1|product-version)-focal-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                },
+                "3.1-focal-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                }
               },
               "variant": "v8"
             }
@@ -434,44 +510,56 @@
       ]
     },
     {
-      "id": "core-runtime",
-      "name": "dotnet/core-nightly/runtime",
+      "id": "runtime",
+      "name": "dotnet/nightly/runtime",
       "readme": "README.runtime.md",
       "readmeTemplate": "eng/readme-templates/README.md",
-      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/core-runtime-tags.yml",
+      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/runtime-tags.yml",
       "images": [
         {
           "productVersion": "$(dotnet|2.1|product-version)",
           "sharedTags": {
-            "$(dotnet|2.1|product-version)": {},
-            "2.1": {}
+            "$(dotnet|2.1|product-version)": {
+              "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+            },
+            "2.1": {
+              "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+            }
           },
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/stretch-slim/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(dotnet|2.1|product-version)-stretch-slim": {},
-                "2.1-stretch-slim": {}
+                "$(dotnet|2.1|product-version)-stretch-slim": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-stretch-slim": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             },
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/stretch-slim/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {},
-                "2.1-stretch-slim-arm32v7": {}
+                "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-stretch-slim-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               },
               "variant": "v7"
             },
@@ -481,8 +569,12 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-1809": {},
-                "2.1-nanoserver-1809": {}
+                "$(dotnet|2.1|product-version)-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             },
             {
@@ -491,8 +583,12 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-1903": {},
-                "2.1-nanoserver-1903": {}
+                "$(dotnet|2.1|product-version)-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             },
             {
@@ -501,8 +597,12 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-1909": {},
-                "2.1-nanoserver-1909": {}
+                "$(dotnet|2.1|product-version)-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             },
             {
@@ -511,8 +611,12 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-2004": {},
-                "2.1-nanoserver-2004": {}
+                "$(dotnet|2.1|product-version)-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             },
             {
@@ -521,8 +625,12 @@
               "os": "windows",
               "osVersion": "nanoserver-2009",
               "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-2009": {},
-                "2.1-nanoserver-2009": {}
+                "$(dotnet|2.1|product-version)-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             }
           ]
@@ -532,16 +640,22 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/alpine3.12/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|2.1|product-version)-alpine3.12": {},
-                "2.1-alpine3.12": {},
-                "2.1-alpine": {}
+                "$(dotnet|2.1|product-version)-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-alpine": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             }
           ]
@@ -551,15 +665,19 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/bionic/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|2.1|product-version)-bionic": {},
-                "2.1-bionic": {}
+                "$(dotnet|2.1|product-version)-bionic": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-bionic": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             }
           ]
@@ -570,15 +688,19 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/bionic/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|2.1|product-version)-bionic-arm32v7": {},
-                "2.1-bionic-arm32v7": {}
+                "$(dotnet|2.1|product-version)-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -589,15 +711,19 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/focal/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|2.1|product-version)-focal": {},
-                "2.1-focal": {}
+                "$(dotnet|2.1|product-version)-focal": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-focal": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             }
           ]
@@ -608,15 +734,19 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/2.1/focal/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|2.1|product-version)-focal-arm32v7": {},
-                "2.1-focal-arm32v7": {}
+                "$(dotnet|2.1|product-version)-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "2.1-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -625,51 +755,66 @@
         {
           "productVersion": "$(dotnet|3.1|product-version)",
           "sharedTags": {
-            "$(dotnet|3.1|product-version)": {},
-            "3.1": {},
-            "latest": {}
+            "$(dotnet|3.1|product-version)": {
+              "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+            },
+            "3.1": {
+              "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+            }
           },
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/buster-slim/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|3.1|product-version)-buster-slim": {},
-                "3.1-buster-slim": {}
+                "$(dotnet|3.1|product-version)-buster-slim": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-buster-slim": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             },
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/buster-slim/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {},
-                "3.1-buster-slim-arm32v7": {}
+                "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-buster-slim-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               },
               "variant": "v7"
             },
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/buster-slim/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {},
-                "3.1-buster-slim-arm64v8": {}
+                "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-buster-slim-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               },
               "variant": "v8"
             },
@@ -679,8 +824,12 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-1809": {},
-                "3.1-nanoserver-1809": {}
+                "$(dotnet|3.1|product-version)-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             },
             {
@@ -689,8 +838,12 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-1903": {},
-                "3.1-nanoserver-1903": {}
+                "$(dotnet|3.1|product-version)-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             },
             {
@@ -699,8 +852,12 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-1909": {},
-                "3.1-nanoserver-1909": {}
+                "$(dotnet|3.1|product-version)-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             },
             {
@@ -709,8 +866,12 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-2004": {},
-                "3.1-nanoserver-2004": {}
+                "$(dotnet|3.1|product-version)-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             },
             {
@@ -719,8 +880,12 @@
               "os": "windows",
               "osVersion": "nanoserver-2009",
               "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-2009": {},
-                "3.1-nanoserver-2009": {}
+                "$(dotnet|3.1|product-version)-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             }
           ]
@@ -730,16 +895,22 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/alpine3.12/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|3.1|product-version)-alpine3.12": {},
-                "3.1-alpine3.12": {},
-                "3.1-alpine": {}
+                "$(dotnet|3.1|product-version)-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-alpine": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             }
           ]
@@ -750,16 +921,22 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/alpine3.12/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {},
-                "3.1-alpine3.12-arm64v8": {},
-                "3.1-alpine-arm64v8": {}
+                "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-alpine3.12-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-alpine-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -767,7 +944,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:core-sdk):3.1-buster-arm64v8"
+                    "$(Repo:sdk):3.1-buster-arm64v8"
                   ]
                 }
               ]
@@ -779,15 +956,19 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/bionic/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|3.1|product-version)-bionic": {},
-                "3.1-bionic": {}
+                "$(dotnet|3.1|product-version)-bionic": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-bionic": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             }
           ]
@@ -798,15 +979,19 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/bionic/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|3.1|product-version)-bionic-arm32v7": {},
-                "3.1-bionic-arm32v7": {}
+                "$(dotnet|3.1|product-version)-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -818,15 +1003,19 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/bionic/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|3.1|product-version)-bionic-arm64v8": {},
-                "3.1-bionic-arm64v8": {}
+                "$(dotnet|3.1|product-version)-bionic-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-bionic-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               },
               "variant": "v8"
             }
@@ -837,15 +1026,19 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/focal/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|3.1|product-version)-focal": {},
-                "3.1-focal": {}
+                "$(dotnet|3.1|product-version)-focal": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-focal": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               }
             }
           ]
@@ -856,15 +1049,19 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/focal/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|3.1|product-version)-focal-arm32v7": {},
-                "3.1-focal-arm32v7": {}
+                "$(dotnet|3.1|product-version)-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -876,29 +1073,24 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/runtime/3.1/focal/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|3.1|product-version)-focal-arm64v8": {},
-                "3.1-focal-arm64v8": {}
+                "$(dotnet|3.1|product-version)-focal-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                },
+                "3.1-focal-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                }
               },
               "variant": "v8"
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "runtime",
-      "name": "dotnet/nightly/runtime",
-      "readme": "README.runtime.preview.md",
-      "readmeTemplate": "eng/readme-templates/README.md",
-      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/runtime-tags.yml",
-      "images": [
+        },
         {
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
@@ -1155,44 +1347,56 @@
       ]
     },
     {
-      "id": "core-aspnet",
-      "name": "dotnet/core-nightly/aspnet",
+      "id": "aspnet",
+      "name": "dotnet/nightly/aspnet",
       "readme": "README.aspnet.md",
       "readmeTemplate": "eng/readme-templates/README.md",
-      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/core-aspnet-tags.yml",
+      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/aspnet-tags.yml",
       "images": [
         {
           "productVersion": "$(dotnet|2.1|product-version)",
           "sharedTags": {
-            "$(dotnet|2.1|product-version)": {},
-            "2.1": {}
+            "$(dotnet|2.1|product-version)": {
+              "syndicatedRepo": "$(syndicatedAspnetRepo)"
+            },
+            "2.1": {
+              "syndicatedRepo": "$(syndicatedAspnetRepo)"
+            }
           },
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/stretch-slim/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(dotnet|2.1|product-version)-stretch-slim": {},
-                "2.1-stretch-slim": {}
+                "$(dotnet|2.1|product-version)-stretch-slim": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-stretch-slim": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             },
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/stretch-slim/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "stretch-slim",
               "tags": {
-                "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {},
-                "2.1-stretch-slim-arm32v7": {}
+                "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-stretch-slim-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "variant": "v7"
             },
@@ -1202,15 +1406,19 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-1809": {},
-                "2.1-nanoserver-1809": {}
+                "$(dotnet|2.1|product-version)-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-runtime):2.1-nanoserver-1809"
+                    "$(Repo:runtime):2.1-nanoserver-1809"
                   ]
                 }
               ]
@@ -1221,15 +1429,19 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-1903": {},
-                "2.1-nanoserver-1903": {}
+                "$(dotnet|2.1|product-version)-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-runtime):2.1-nanoserver-1903"
+                    "$(Repo:runtime):2.1-nanoserver-1903"
                   ]
                 }
               ]
@@ -1240,15 +1452,19 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-1909": {},
-                "2.1-nanoserver-1909": {}
+                "$(dotnet|2.1|product-version)-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-runtime):2.1-nanoserver-1909"
+                    "$(Repo:runtime):2.1-nanoserver-1909"
                   ]
                 }
               ]
@@ -1259,15 +1475,19 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-2004": {},
-                "2.1-nanoserver-2004": {}
+                "$(dotnet|2.1|product-version)-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-runtime):2.1-nanoserver-2004"
+                    "$(Repo:runtime):2.1-nanoserver-2004"
                   ]
                 }
               ]
@@ -1278,15 +1498,19 @@
               "os": "windows",
               "osVersion": "nanoserver-2009",
               "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-2009": {},
-                "2.1-nanoserver-2009": {}
+                "$(dotnet|2.1|product-version)-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-runtime):2.1-nanoserver-2009"
+                    "$(Repo:runtime):2.1-nanoserver-2009"
                   ]
                 }
               ]
@@ -1298,16 +1522,22 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/alpine3.12/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|2.1|product-version)-alpine3.12": {},
-                "2.1-alpine3.12": {},
-                "2.1-alpine": {}
+                "$(dotnet|2.1|product-version)-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-alpine": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             }
           ]
@@ -1317,15 +1547,19 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/bionic/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|2.1|product-version)-bionic": {},
-                "2.1-bionic": {}
+                "$(dotnet|2.1|product-version)-bionic": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-bionic": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             }
           ]
@@ -1336,15 +1570,19 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/bionic/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|2.1|product-version)-bionic-arm32v7": {},
-                "2.1-bionic-arm32v7": {}
+                "$(dotnet|2.1|product-version)-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -1355,15 +1593,19 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/focal/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|2.1|product-version)-focal": {},
-                "2.1-focal": {}
+                "$(dotnet|2.1|product-version)-focal": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-focal": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             }
           ]
@@ -1374,15 +1616,19 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/2.1/focal/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|2.1|product-version)-focal-arm32v7": {},
-                "2.1-focal-arm32v7": {}
+                "$(dotnet|2.1|product-version)-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "2.1-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -1391,117 +1637,152 @@
         {
           "productVersion": "$(dotnet|3.1|product-version)",
           "sharedTags": {
-            "$(dotnet|3.1|product-version)": {},
-            "3.1": {},
-            "latest": {}
+            "$(dotnet|3.1|product-version)": {
+              "syndicatedRepo": "$(syndicatedAspnetRepo)"
+            },
+            "3.1": {
+              "syndicatedRepo": "$(syndicatedAspnetRepo)"
+            }
           },
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/buster-slim/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|3.1|product-version)-buster-slim": {},
-                "3.1-buster-slim": {}
+                "$(dotnet|3.1|product-version)-buster-slim": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-buster-slim": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             },
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/buster-slim/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {},
-                "3.1-buster-slim-arm32v7": {}
+                "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-buster-slim-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "variant": "v7"
             },
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/buster-slim/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
-                "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {},
-                "3.1-buster-slim-arm64v8": {}
+                "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-buster-slim-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "variant": "v8"
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/nanoserver-1809/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-1809": {},
-                "3.1-nanoserver-1809": {}
+                "$(dotnet|3.1|product-version)-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/nanoserver-1903/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-1903": {},
-                "3.1-nanoserver-1903": {}
+                "$(dotnet|3.1|product-version)-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/nanoserver-1909/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-1909": {},
-                "3.1-nanoserver-1909": {}
+                "$(dotnet|3.1|product-version)-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/nanoserver-2004/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-2004": {},
-                "3.1-nanoserver-2004": {}
+                "$(dotnet|3.1|product-version)-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/nanoserver-2009/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2009",
               "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-2009": {},
-                "3.1-nanoserver-2009": {}
+                "$(dotnet|3.1|product-version)-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             }
           ]
@@ -1511,16 +1792,22 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/alpine3.12/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|3.1|product-version)-alpine3.12": {},
-                "3.1-alpine3.12": {},
-                "3.1-alpine": {}
+                "$(dotnet|3.1|product-version)-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-alpine": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             }
           ]
@@ -1531,16 +1818,22 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/alpine3.12/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {},
-                "3.1-alpine3.12-arm64v8": {},
-                "3.1-alpine-arm64v8": {}
+                "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-alpine3.12-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-alpine-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -1548,7 +1841,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:core-sdk):3.1-buster-arm64v8"
+                    "$(Repo:sdk):3.1-buster-arm64v8"
                   ]
                 }
               ]
@@ -1560,15 +1853,19 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/bionic/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|3.1|product-version)-bionic": {},
-                "3.1-bionic": {}
+                "$(dotnet|3.1|product-version)-bionic": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-bionic": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             }
           ]
@@ -1579,15 +1876,19 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/bionic/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|3.1|product-version)-bionic-arm32v7": {},
-                "3.1-bionic-arm32v7": {}
+                "$(dotnet|3.1|product-version)-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -1599,15 +1900,19 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/bionic/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(dotnet|3.1|product-version)-bionic-arm64v8": {},
-                "3.1-bionic-arm64v8": {}
+                "$(dotnet|3.1|product-version)-bionic-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-bionic-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "variant": "v8"
             }
@@ -1618,15 +1923,19 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/focal/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|3.1|product-version)-focal": {},
-                "3.1-focal": {}
+                "$(dotnet|3.1|product-version)-focal": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-focal": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               }
             }
           ]
@@ -1637,15 +1946,19 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/focal/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|3.1|product-version)-focal-arm32v7": {},
-                "3.1-focal-arm32v7": {}
+                "$(dotnet|3.1|product-version)-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "variant": "v7"
             }
@@ -1657,29 +1970,24 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime)"
+                "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/3.1/focal/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.linux",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(dotnet|3.1|product-version)-focal-arm64v8": {},
-                "3.1-focal-arm64v8": {}
+                "$(dotnet|3.1|product-version)-focal-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                },
+                "3.1-focal-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                }
               },
               "variant": "v8"
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "aspnet",
-      "name": "dotnet/nightly/aspnet",
-      "readme": "README.aspnet.preview.md",
-      "readmeTemplate": "eng/readme-templates/README.md",
-      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/aspnet-tags.yml",
-      "images": [
+        },
         {
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
@@ -1951,17 +2259,21 @@
       ]
     },
     {
-      "id": "core-sdk",
-      "name": "dotnet/core-nightly/sdk",
+      "id": "sdk",
+      "name": "dotnet/nightly/sdk",
       "readme": "README.sdk.md",
       "readmeTemplate": "eng/readme-templates/README.md",
-      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/core-sdk-tags.yml",
+      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/sdk-tags.yml",
       "images": [
         {
           "productVersion": "$(sdk|2.1|product-version)",
           "sharedTags": {
-            "$(sdk|2.1|product-version)": {},
-            "2.1": {}
+            "$(sdk|2.1|product-version)": {
+              "syndicatedRepo": "$(syndicatedSdkRepo)"
+            },
+            "2.1": {
+              "syndicatedRepo": "$(syndicatedSdkRepo)"
+            }
           },
           "platforms": [
             {
@@ -1970,15 +2282,19 @@
               "os": "linux",
               "osVersion": "stretch",
               "tags": {
-                "$(sdk|2.1|product-version)-stretch": {},
-                "2.1-stretch": {}
+                "$(sdk|2.1|product-version)-stretch": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-stretch": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):2.1-stretch-slim"
+                    "$(Repo:aspnet):2.1-stretch-slim"
                   ]
                 }
               ]
@@ -1990,8 +2306,12 @@
               "os": "linux",
               "osVersion": "stretch",
               "tags": {
-                "$(sdk|2.1|product-version)-stretch-arm32v7": {},
-                "2.1-stretch-arm32v7": {}
+                "$(sdk|2.1|product-version)-stretch-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-stretch-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -1999,7 +2319,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):2.1-stretch-slim-arm32v7"
+                    "$(Repo:aspnet):2.1-stretch-slim-arm32v7"
                   ]
                 }
               ]
@@ -2010,15 +2330,19 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(sdk|2.1|product-version)-nanoserver-1809": {},
-                "2.1-nanoserver-1809": {}
+                "$(sdk|2.1|product-version)-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):2.1-nanoserver-1809"
+                    "$(Repo:aspnet):2.1-nanoserver-1809"
                   ]
                 }
               ]
@@ -2029,15 +2353,19 @@
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(sdk|2.1|product-version)-nanoserver-1903": {},
-                "2.1-nanoserver-1903": {}
+                "$(sdk|2.1|product-version)-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):2.1-nanoserver-1903"
+                    "$(Repo:aspnet):2.1-nanoserver-1903"
                   ]
                 }
               ]
@@ -2048,15 +2376,19 @@
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(sdk|2.1|product-version)-nanoserver-1909": {},
-                "2.1-nanoserver-1909": {}
+                "$(sdk|2.1|product-version)-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):2.1-nanoserver-1909"
+                    "$(Repo:aspnet):2.1-nanoserver-1909"
                   ]
                 }
               ]
@@ -2067,15 +2399,19 @@
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(sdk|2.1|product-version)-nanoserver-2004": {},
-                "2.1-nanoserver-2004": {}
+                "$(sdk|2.1|product-version)-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):2.1-nanoserver-2004"
+                    "$(Repo:aspnet):2.1-nanoserver-2004"
                   ]
                 }
               ]
@@ -2086,15 +2422,19 @@
               "os": "windows",
               "osVersion": "nanoserver-2009",
               "tags": {
-                "$(sdk|2.1|product-version)-nanoserver-2009": {},
-                "2.1-nanoserver-2009": {}
+                "$(sdk|2.1|product-version)-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):2.1-nanoserver-2009"
+                    "$(Repo:aspnet):2.1-nanoserver-2009"
                   ]
                 }
               ]
@@ -2106,16 +2446,22 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-runtime-deps)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/sdk/2.1/alpine3.12/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(sdk|2.1|product-version)-alpine3.12": {},
-                "2.1-alpine3.12": {},
-                "2.1-alpine": {}
+                "$(sdk|2.1|product-version)-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-alpine": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               }
             }
           ]
@@ -2129,15 +2475,19 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(sdk|2.1|product-version)-bionic": {},
-                "2.1-bionic": {}
+                "$(sdk|2.1|product-version)-bionic": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-bionic": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):2.1-bionic"
+                    "$(Repo:aspnet):2.1-bionic"
                   ]
                 }
               ]
@@ -2154,8 +2504,12 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(sdk|2.1|product-version)-bionic-arm32v7": {},
-                "2.1-bionic-arm32v7": {}
+                "$(sdk|2.1|product-version)-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -2163,7 +2517,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):2.1-bionic-arm32v7"
+                    "$(Repo:aspnet):2.1-bionic-arm32v7"
                   ]
                 }
               ]
@@ -2179,15 +2533,19 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|2.1|product-version)-focal": {},
-                "2.1-focal": {}
+                "$(sdk|2.1|product-version)-focal": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-focal": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):2.1-focal"
+                    "$(Repo:aspnet):2.1-focal"
                   ]
                 }
               ]
@@ -2204,8 +2562,12 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|2.1|product-version)-focal-arm32v7": {},
-                "2.1-focal-arm32v7": {}
+                "$(sdk|2.1|product-version)-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "2.1-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -2213,7 +2575,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):2.1-focal-arm32v7"
+                    "$(Repo:aspnet):2.1-focal-arm32v7"
                   ]
                 }
               ]
@@ -2223,9 +2585,12 @@
         {
           "productVersion": "$(sdk|3.1|product-version)",
           "sharedTags": {
-            "$(sdk|3.1|product-version)": {},
-            "3.1": {},
-            "latest": {}
+            "$(sdk|3.1|product-version)": {
+              "syndicatedRepo": "$(syndicatedSdkRepo)"
+            },
+            "3.1": {
+              "syndicatedRepo": "$(syndicatedSdkRepo)"
+            }
           },
           "platforms": [
             {
@@ -2234,15 +2599,19 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(sdk|3.1|product-version)-buster": {},
-                "3.1-buster": {}
+                "$(sdk|3.1|product-version)-buster": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-buster": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):3.1-buster-slim"
+                    "$(Repo:aspnet):3.1-buster-slim"
                   ]
                 }
               ]
@@ -2254,8 +2623,12 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(sdk|3.1|product-version)-buster-arm32v7": {},
-                "3.1-buster-arm32v7": {}
+                "$(sdk|3.1|product-version)-buster-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-buster-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -2263,7 +2636,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):3.1-buster-slim-arm32v7"
+                    "$(Repo:aspnet):3.1-buster-slim-arm32v7"
                   ]
                 }
               ]
@@ -2275,8 +2648,12 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "$(sdk|3.1|product-version)-buster-arm64v8": {},
-                "3.1-buster-arm64v8": {}
+                "$(sdk|3.1|product-version)-buster-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-buster-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2284,74 +2661,94 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):3.1-buster-slim-arm64v8"
+                    "$(Repo:aspnet):3.1-buster-slim-arm64v8"
                   ]
                 }
               ]
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/3.1/nanoserver-1809/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(sdk|3.1|product-version)-nanoserver-1809": {},
-                "3.1-nanoserver-1809": {}
+                "$(sdk|3.1|product-version)-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-nanoserver-1809": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               }
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/3.1/nanoserver-1903/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1903",
               "tags": {
-                "$(sdk|3.1|product-version)-nanoserver-1903": {},
-                "3.1-nanoserver-1903": {}
+                "$(sdk|3.1|product-version)-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-nanoserver-1903": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               }
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/3.1/nanoserver-1909/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1909",
               "tags": {
-                "$(sdk|3.1|product-version)-nanoserver-1909": {},
-                "3.1-nanoserver-1909": {}
+                "$(sdk|3.1|product-version)-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-nanoserver-1909": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               }
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/3.1/nanoserver-2004/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2004",
               "tags": {
-                "$(sdk|3.1|product-version)-nanoserver-2004": {},
-                "3.1-nanoserver-2004": {}
+                "$(sdk|3.1|product-version)-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-nanoserver-2004": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               }
             },
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/3.1/nanoserver-2009/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-2009",
               "tags": {
-                "$(sdk|3.1|product-version)-nanoserver-2009": {},
-                "3.1-nanoserver-2009": {}
+                "$(sdk|3.1|product-version)-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-nanoserver-2009": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               }
             }
           ]
@@ -2361,16 +2758,22 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:core-aspnet)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/sdk/3.1/alpine3.12/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(sdk|3.1|product-version)-alpine3.12": {},
-                "3.1-alpine3.12": {},
-                "3.1-alpine": {}
+                "$(sdk|3.1|product-version)-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-alpine3.12": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-alpine": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               }
             }
           ]
@@ -2384,15 +2787,19 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(sdk|3.1|product-version)-bionic": {},
-                "3.1-bionic": {}
+                "$(sdk|3.1|product-version)-bionic": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-bionic": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):3.1-bionic"
+                    "$(Repo:aspnet):3.1-bionic"
                   ]
                 }
               ]
@@ -2409,8 +2816,12 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(sdk|3.1|product-version)-bionic-arm32v7": {},
-                "3.1-bionic-arm32v7": {}
+                "$(sdk|3.1|product-version)-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-bionic-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -2418,7 +2829,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):3.1-bionic-arm32v7"
+                    "$(Repo:aspnet):3.1-bionic-arm32v7"
                   ]
                 }
               ]
@@ -2435,8 +2846,12 @@
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
-                "$(sdk|3.1|product-version)-bionic-arm64v8": {},
-                "3.1-bionic-arm64v8": {}
+                "$(sdk|3.1|product-version)-bionic-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-bionic-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2444,7 +2859,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):3.1-bionic-arm64v8"
+                    "$(Repo:aspnet):3.1-bionic-arm64v8"
                   ]
                 }
               ]
@@ -2460,15 +2875,19 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|3.1|product-version)-focal": {},
-                "3.1-focal": {}
+                "$(sdk|3.1|product-version)-focal": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-focal": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):3.1-focal"
+                    "$(Repo:aspnet):3.1-focal"
                   ]
                 }
               ]
@@ -2485,8 +2904,12 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|3.1|product-version)-focal-arm32v7": {},
-                "3.1-focal-arm32v7": {}
+                "$(sdk|3.1|product-version)-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-focal-arm32v7": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -2494,7 +2917,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):3.1-focal-arm32v7"
+                    "$(Repo:aspnet):3.1-focal-arm32v7"
                   ]
                 }
               ]
@@ -2511,8 +2934,12 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|3.1|product-version)-focal-arm64v8": {},
-                "3.1-focal-arm64v8": {}
+                "$(sdk|3.1|product-version)-focal-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                },
+                "3.1-focal-arm64v8": {
+                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2520,22 +2947,13 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:core-aspnet):3.1-focal-arm64v8"
+                    "$(Repo:aspnet):3.1-focal-arm64v8"
                   ]
                 }
               ]
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "sdk",
-      "name": "dotnet/nightly/sdk",
-      "readme": "README.sdk.preview.md",
-      "readmeTemplate": "eng/readme-templates/README.md",
-      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/sdk-tags.yml",
-      "images": [
+        },
         {
           "productVersion": "$(sdk|5.0|product-version)",
           "sharedTags": {
@@ -2798,8 +3216,8 @@
           "platforms": [
             {
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:core-aspnet)",
-                "SDK_REPO": "$(Repo:core-sdk)"
+                "ASPNET_REPO": "$(Repo:aspnet)",
+                "SDK_REPO": "$(Repo:sdk)"
               },
               "dockerfile": "src/monitor/5.0/alpine/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/5.0/Dockerfile.alpine",
