@@ -63,15 +63,15 @@ if (!(Test-Path $DotnetInstallScript)) {
     }
     else{
         # not using static script, will try to pull instead.
-        $DotnetInstallScriptUrl = "https://dot.net/v1/$DotnetInstallScript"
-        echo $DotnetInstallScriptUrl
+        $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
+        echo $DOTNET_INSTALL_SCRIPT_URL
         
         $InvokeWithRetryDir = "$PSScriptRoot/../eng/common"
-        $NumberRetries = 3
-        $RetryWaitTime = 5
-        $errorActionPref = "Stop" # Stop for now.  Could use SilentlyContinue but would need to update retry logic.
+        $NUMBER_RETRIES = 3
+        $RETRY_WAIT_TIME = 5
+        $ERROR_ACTION_PREFERENCE = "Stop" # Stop for now.  Could use SilentlyContinue but would need to update retry logic.
         Push-Location "$InvokeWithRetryDir"
-        ./Invoke-WithRetry.ps1 "Invoke-WebRequest $DotnetInstallScriptUrl -OutFile $DotnetInstallDir/$DotnetInstallScript" $NumberRetries $RetryWaitTime $errorActionPref
+        ./Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript" $NUMBER_RETRIES $RETRY_WAIT_TIME $ERROR_ACTION_PREFERENCE
         Pop-Location
     }
 }
