@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-ARG DOTNET_SDK_VERSION=5.0.100-rc.2.20479.15
+ARG DOTNET_SDK_VERSION=5.0.100-rtm.20522.4
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:2004-amd64 AS installer
@@ -11,8 +11,8 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 RUN `
     # Retrieve .NET SDK
-    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = '49ea4f9e0fdc51bfd46b1269b84dd09f26be957c3a81c80203a0b0d521c8ec190d0d2d631a4e1899c83b604bf9a529698f19eccdf4aed3d0fd2f89102f6556e1'; `
+    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-5.0.100-win-x64.zip; `
+    $dotnet_sha512 = '3fe5ef6d5eef2b3d466b060e2adaf778711370d75f2d0335a6e5574554613d85ef0e719a375408467803ffb3ebc8f17b49b7c054a9082be7270fa8281c14c512'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -22,9 +22,9 @@ RUN `
     Remove-Item -Force dotnet.zip; `
     `
     # Install PowerShell global tool
-    $powershell_version = '7.1.0-rc.1'; `
+    $powershell_version = '7.1.0-rc.2'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-    $powershell_sha512 = '11548549314d2e940210ef1d79b6948ca14a6ad1296591ad115a292b4003ff5090ea376b2d7957c00b88b153c9e043b95cf91e3ff20bd74c6e8ba44a763ec957'; `
+    $powershell_sha512 = 'fd236e7cd3aa31d997b2f9051cfe7056971c8712b88acb3b6bda46617542b450505bd5890f4e34f4b14fcb7006af15d8900e3e1b852ccdeaf681917c838ced9f'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `

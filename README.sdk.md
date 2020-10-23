@@ -1,7 +1,13 @@
+The images from the dotnet/core-nightly repositories include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
+
+See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
+
+As part of the .NET 5.0 release the Docker images are published to different repositories.  The 2.1 and 3.1 images are published to [core branded repositories](https://hub.docker.com/_/microsoft-dotnet-core/) while the 5.0 and higher versions will be published to [non-core branded repositories](https://hub.docker.com/_/microsoft-dotnet/).  See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
+
 # Featured Tags
 
 * `3.1` (LTS/Current)
-  * `docker pull mcr.microsoft.com/dotnet/core/sdk:3.1`
+  * `docker pull mcr.microsoft.com/dotnet/core-nightly/sdk:3.1`
 
 # About This Image
 
@@ -34,17 +40,17 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 .NET Core 2.1/3.1:
 
 * [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
-* [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/): ASP.NET Core Runtime
-* [dotnet/core/runtime](https://hub.docker.com/_/microsoft-dotnet-core-runtime/): .NET Core Runtime
-* [dotnet/core/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps/): .NET Core Runtime Dependencies
 * [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
 * [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
+* [dotnet/core-nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-nightly-aspnet/): ASP.NET Core Runtime (Preview)
+* [dotnet/core-nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime/): .NET Core Runtime (Preview)
+* [dotnet/core-nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime-deps/): .NET Core Runtime Dependencies (Preview)
 
 .NET 5.0+:
 
 * [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
-* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
 * [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
+* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
 
 .NET Framework:
 
@@ -56,63 +62,63 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-3.1.403-buster, 3.1-buster, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/buster/amd64/Dockerfile) | Debian 10
-3.1.403-alpine3.12, 3.1-alpine3.12, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/alpine3.12/amd64/Dockerfile) | Alpine 3.12
-3.1.403-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
-3.1.403-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
-2.1.811-stretch, 2.1-stretch, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/stretch/amd64/Dockerfile) | Debian 9
-2.1.811-alpine3.12, 2.1-alpine3.12, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/alpine3.12/amd64/Dockerfile) | Alpine 3.12
-2.1.811-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/focal/amd64/Dockerfile) | Ubuntu 20.04
-2.1.811-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
+3.1.403-buster, 3.1-buster, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/buster/amd64/Dockerfile) | Debian 10
+3.1.403-alpine3.12, 3.1-alpine3.12, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+3.1.403-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
+3.1.403-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
+2.1.811-stretch, 2.1-stretch, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/stretch/amd64/Dockerfile) | Debian 9
+2.1.811-alpine3.12, 2.1-alpine3.12, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+2.1.811-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/focal/amd64/Dockerfile) | Ubuntu 20.04
+2.1.811-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-3.1.403-buster-arm64v8, 3.1-buster-arm64v8, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/buster/arm64v8/Dockerfile) | Debian 10
-3.1.403-focal-arm64v8, 3.1-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/focal/arm64v8/Dockerfile) | Ubuntu 20.04
-3.1.403-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
+3.1.403-buster-arm64v8, 3.1-buster-arm64v8, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/buster/arm64v8/Dockerfile) | Debian 10
+3.1.403-focal-arm64v8, 3.1-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+3.1.403-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-3.1.403-buster-arm32v7, 3.1-buster-arm32v7, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/buster/arm32v7/Dockerfile) | Debian 10
-3.1.403-focal-arm32v7, 3.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
-3.1.403-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
-2.1.811-stretch-arm32v7, 2.1-stretch-arm32v7, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/stretch/arm32v7/Dockerfile) | Debian 9
-2.1.811-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
-2.1.811-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+3.1.403-buster-arm32v7, 3.1-buster-arm32v7, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/buster/arm32v7/Dockerfile) | Debian 10
+3.1.403-focal-arm32v7, 3.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+3.1.403-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+2.1.811-stretch-arm32v7, 2.1-stretch-arm32v7, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/stretch/arm32v7/Dockerfile) | Debian 9
+2.1.811-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+2.1.811-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 ## Windows Server, version 2009 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-3.1.403-nanoserver-2009, 3.1-nanoserver-2009, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-2009/amd64/Dockerfile)
-2.1.811-nanoserver-2009, 2.1-nanoserver-2009, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-2009/amd64/Dockerfile)
+3.1.403-nanoserver-2009, 3.1-nanoserver-2009, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/nanoserver-2009/amd64/Dockerfile)
+2.1.811-nanoserver-2009, 2.1-nanoserver-2009, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-2009/amd64/Dockerfile)
 
 ## Windows Server, version 2004 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-3.1.403-nanoserver-2004, 3.1-nanoserver-2004, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-2004/amd64/Dockerfile)
-2.1.811-nanoserver-2004, 2.1-nanoserver-2004, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-2004/amd64/Dockerfile)
+3.1.403-nanoserver-2004, 3.1-nanoserver-2004, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/nanoserver-2004/amd64/Dockerfile)
+2.1.811-nanoserver-2004, 2.1-nanoserver-2004, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-2004/amd64/Dockerfile)
 
 ## Windows Server, version 1909 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-3.1.403-nanoserver-1909, 3.1-nanoserver-1909, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-1909/amd64/Dockerfile)
-2.1.811-nanoserver-1909, 2.1-nanoserver-1909, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1909/amd64/Dockerfile)
+3.1.403-nanoserver-1909, 3.1-nanoserver-1909, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/nanoserver-1909/amd64/Dockerfile)
+2.1.811-nanoserver-1909, 2.1-nanoserver-1909, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-1909/amd64/Dockerfile)
 
 ## Windows Server, version 1903 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-3.1.403-nanoserver-1903, 3.1-nanoserver-1903, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-1903/amd64/Dockerfile)
-2.1.811-nanoserver-1903, 2.1-nanoserver-1903, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1903/amd64/Dockerfile)
+3.1.403-nanoserver-1903, 3.1-nanoserver-1903, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/nanoserver-1903/amd64/Dockerfile)
+2.1.811-nanoserver-1903, 2.1-nanoserver-1903, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-1903/amd64/Dockerfile)
 
 ## Windows Server 2019 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-3.1.403-nanoserver-1809, 3.1-nanoserver-1809, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-1809/amd64/Dockerfile)
-2.1.811-nanoserver-1809, 2.1-nanoserver-1809, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1809/amd64/Dockerfile)
+3.1.403-nanoserver-1809, 3.1-nanoserver-1809, 3.1.403, 3.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/nanoserver-1809/amd64/Dockerfile)
+2.1.811-nanoserver-1809, 2.1-nanoserver-1809, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-1809/amd64/Dockerfile)
 
-You can retrieve a list of all available tags for dotnet/core/sdk at https://mcr.microsoft.com/v2/dotnet/core/sdk/tags/list.
+You can retrieve a list of all available tags for dotnet/core-nightly/sdk at https://mcr.microsoft.com/v2/dotnet/core-nightly/sdk/tags/list.
 
 # Support
 

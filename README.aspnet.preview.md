@@ -1,9 +1,13 @@
+The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
+
+See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
+
 As part of the .NET 5.0 release the Docker images are published to different repositories.  The 2.1 and 3.1 images are published to [core branded repositories](https://hub.docker.com/_/microsoft-dotnet-core/) while the 5.0 and higher versions will be published to [non-core branded repositories](https://hub.docker.com/_/microsoft-dotnet/).  See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
 
 # Featured Tags
 
 * `5.0` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/aspnet:5.0`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:5.0`
 
 # About This Image
 
@@ -34,17 +38,18 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 .NET Core 2.1/3.1:
 
 * [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
-* [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/): ASP.NET Core Runtime
 * [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
 * [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
+* [dotnet/core-nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-nightly-aspnet/): ASP.NET Core Runtime (Preview)
 
 .NET 5.0+:
 
 * [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
-* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
-* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
-* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
+* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
+* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
+* [dotnet/nightly/monitor](https://hub.docker.com/_/microsoft-dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
 
 .NET Framework:
 
@@ -57,51 +62,51 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 ##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.0-rc.2-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.0-rc.2-buster-slim, 5.0-buster-slim, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/buster-slim/amd64/Dockerfile) | Debian 10
-5.0.0-rc.2-alpine3.12-amd64, 5.0-alpine3.12-amd64, 5.0-alpine-amd64, 5.0.0-rc.2-alpine3.12, 5.0-alpine3.12, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/alpine3.12/amd64/Dockerfile) | Alpine 3.12
-5.0.0-rc.2-focal-amd64, 5.0-focal-amd64, 5.0.0-rc.2-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
+5.0.0-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.0-buster-slim, 5.0-buster-slim, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/buster-slim/amd64/Dockerfile) | Debian 10
+5.0.0-alpine3.12-amd64, 5.0-alpine3.12-amd64, 5.0-alpine-amd64, 5.0.0-alpine3.12, 5.0-alpine3.12, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+5.0.0-focal-amd64, 5.0-focal-amd64, 5.0.0-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm64 Tags
 ##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.0-rc.2-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.0-rc.2-buster-slim, 5.0-buster-slim, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/buster-slim/arm64v8/Dockerfile) | Debian 10
-5.0.0-rc.2-alpine3.12-arm64v8, 5.0-alpine3.12-arm64v8, 5.0-alpine-arm64v8, 5.0.0-rc.2-alpine3.12, 5.0-alpine3.12, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/alpine3.12/arm64v8/Dockerfile) | Alpine 3.12
-5.0.0-rc.2-focal-arm64v8, 5.0-focal-arm64v8, 5.0.0-rc.2-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+5.0.0-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.0-buster-slim, 5.0-buster-slim, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/buster-slim/arm64v8/Dockerfile) | Debian 10
+5.0.0-alpine3.12-arm64v8, 5.0-alpine3.12-arm64v8, 5.0-alpine-arm64v8, 5.0.0-alpine3.12, 5.0-alpine3.12, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/alpine3.12/arm64v8/Dockerfile) | Alpine 3.12
+5.0.0-focal-arm64v8, 5.0-focal-arm64v8, 5.0.0-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
 ##### .NET 5.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.0-rc.2-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-rc.2-buster-slim, 5.0-buster-slim, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/buster-slim/arm32v7/Dockerfile) | Debian 10
-5.0.0-rc.2-focal-arm32v7, 5.0-focal-arm32v7, 5.0.0-rc.2-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+5.0.0-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.0-buster-slim, 5.0-buster-slim, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/buster-slim/arm32v7/Dockerfile) | Debian 10
+5.0.0-focal-arm32v7, 5.0-focal-arm32v7, 5.0.0-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ## Windows Server, version 2009 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-rc.2-nanoserver-2009, 5.0-nanoserver-2009, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/nanoserver-2009/amd64/Dockerfile)
+5.0.0-nanoserver-2009, 5.0-nanoserver-2009, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/nanoserver-2009/amd64/Dockerfile)
 
 ## Windows Server, version 2004 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-rc.2-nanoserver-2004, 5.0-nanoserver-2004, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/nanoserver-2004/amd64/Dockerfile)
+5.0.0-nanoserver-2004, 5.0-nanoserver-2004, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/nanoserver-2004/amd64/Dockerfile)
 
 ## Windows Server, version 1909 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-rc.2-nanoserver-1909, 5.0-nanoserver-1909, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/nanoserver-1909/amd64/Dockerfile)
+5.0.0-nanoserver-1909, 5.0-nanoserver-1909, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/nanoserver-1909/amd64/Dockerfile)
 
 ## Windows Server 2019 amd64 Tags
 ##### .NET 5.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-rc.2-nanoserver-1809, 5.0-nanoserver-1809, 5.0.0-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/nanoserver-1809/amd64/Dockerfile)
-5.0.0-rc.2-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+5.0.0-nanoserver-1809, 5.0-nanoserver-1809, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/nanoserver-1809/amd64/Dockerfile)
+5.0.0-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
-You can retrieve a list of all available tags for dotnet/aspnet at https://mcr.microsoft.com/v2/dotnet/aspnet/tags/list.
+You can retrieve a list of all available tags for dotnet/nightly/aspnet at https://mcr.microsoft.com/v2/dotnet/nightly/aspnet/tags/list.
 
 # Support
 

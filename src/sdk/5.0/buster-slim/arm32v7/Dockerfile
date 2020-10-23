@@ -4,7 +4,7 @@ FROM $REPO:5.0-buster-slim-arm32v7
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \
-    DOTNET_SDK_VERSION=5.0.100-rc.2.20479.15 \
+    DOTNET_SDK_VERSION=5.0.100-rtm.20522.4 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -20,8 +20,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET SDK
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
-    && dotnet_sha512='22e97c15393a4f986563f5e8b031b49983eb55531170b86594d7caab819b41032393a9b3db4ee96cb88fae3971ba243bb64187606e3a00fc64d2e434d906a637' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-5.0.100-linux-arm.tar.gz \
+    && dotnet_sha512='ec5d03ce758d1678a90305784205aca96db31a8c3186fb9c25f76a506e543b45c06ce3b8a39e5debba185b4d9b63bcfe67e0e17bd11c55656e25a5f5baec5d5a' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -30,9 +30,9 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.1.0-rc.1 \
+RUN powershell_version=7.1.0-rc.2 \
     && curl -SL --output PowerShell.Linux.arm32.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.arm32.$powershell_version.nupkg \
-    && powershell_sha512='02a5b1b86cd010688fade04a68da4ac6138114f96998b81433c84296158f057e65c3d97dbba8ded7543c01202456b57f506053319ed0a03082f9927c075fce51' \
+    && powershell_sha512='a80753389f3cbcb1e4cce7db69cf70b60686633f72a6f9a3a0a1997536a5d96b8dea2449ee822b3344198da84a9936a6a1de9230e47e19399ec75ed2cbc0a692' \
     && echo "$powershell_sha512  PowerShell.Linux.arm32.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm32 \
