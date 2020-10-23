@@ -71,7 +71,7 @@ if (!(Test-Path $DotnetInstallScript)) {
         $RetryWaitTime = 5
         $errorActionPref = "Stop" # Stop for now.  Could use SilentlyContinue but would need to update retry logic.
         Push-Location "$InvokeWithRetryDir"
-        ./Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript" $NumberRetries $RetryWaitTime $errorActionPref
+        ./Invoke-WithRetry.ps1 "Invoke-WebRequest $DotnetInstallScriptUrl -OutFile $DotnetInstallDir/$DotnetInstallScript" $NumberRetries $RetryWaitTime $errorActionPref
         Pop-Location
     }
 }
