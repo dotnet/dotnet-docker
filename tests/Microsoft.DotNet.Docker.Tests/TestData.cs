@@ -54,8 +54,6 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V3_1, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer2009, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
-            // removing .net 5 with 1903
-            // new ProductImageData { Version = V5_0, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.NanoServer2009, Arch = Arch.Amd64 },

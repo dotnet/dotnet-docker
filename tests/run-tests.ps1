@@ -63,8 +63,8 @@ if (!(Test-Path $DotnetInstallScript)) {
     }
     else{
         # not using static script, will try to pull instead.
-        $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
-        echo $DOTNET_INSTALL_SCRIPT_URL
+        $DotnetInstallScriptUrl = "https://dot.net/v1/$DotnetInstallScript"
+        echo $DotnetInstallScriptUrl
         
         $InvokeWithRetryDir = "$PSScriptRoot/../eng/common"
         $NumberRetries = 3
