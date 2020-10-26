@@ -218,15 +218,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 ? $"http://localhost:{dockerHelper.GetContainerHostPort(containerName)}"
                 : $"http://{dockerHelper.GetContainerAddress(containerName)}";
 
-            // if we're in windows and the address is empty, try with the nat address.
-            if (url == "http://" && !DockerHelper.IsLinuxContainerModeEnabled){
-                dockerHelper.GetProcessesAll(); // confirm that the containerName is still running.
-                if(!DockerHelper.ContainerExists(containerName)){
-                    throw new Exception($"Container {containerName} isn't running, so it will not receive requests");
-                }
-                url = $"http://{dockerHelper.GetContainerNatAddress(containerName)}";
-            }
-
             using (HttpClient client = new HttpClient())
             {
                 while (retries > 0)
@@ -234,8 +225,10 @@ namespace Microsoft.DotNet.Docker.Tests
                     retries--;
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
-                    dockerHelper.GetProcessesAll(); // confirm that the containerName is still running.
-                    dockerHelper.GetInspect(containerName); // confirm the ip address?
+                    if (dockerHelper.IsContainerRunning(containerName) != true)
+                    {
+                        continue; //container isn't running.
+                    }
 
                     try
                     {

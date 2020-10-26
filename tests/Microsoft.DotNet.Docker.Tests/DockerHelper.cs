@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using System.Runtime;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -153,14 +154,24 @@ namespace Microsoft.DotNet.Docker.Tests
         public string GetProcessesAll() =>
             ExecuteWithLogging("ps -a");
 
+        public bool IsContainerRunning(string container) =>
+            ExecuteWithLogging("inspect -f \"{{ .State.Running }}\" " + container) == "true";
+
         public string GetInspect(string container) =>
             ExecuteWithLogging("inspect " + container);
 
         public string GetContainerNatAddress(string container) =>
             ExecuteWithLogging("inspect -f \"{{.NetworkSettings.Networks.nat.IPAddress }}\" " + container);
 
-        public string GetContainerAddress(string container) =>
-            ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + container);
+        public string GetContainerAddress(string container)
+        {
+            string containerAddress = ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + container);
+            if (String.IsNullOrWhiteSpace(containerAddress)){
+                containerAddress = ExecuteWithLogging("inspect -f \"{{.NetworkSettings.Networks.nat.IPAddress }}\" " + container);
+            }
+
+            return containerAddress;
+        }
 
         public string GetContainerHostPort(string container, int containerPort = 80) =>
             ExecuteWithLogging(
