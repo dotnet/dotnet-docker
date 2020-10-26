@@ -1,5 +1,5 @@
 {
-  "dotnet/core-nightly/runtime-deps": {
+  "dotnet/nightly/runtime-deps": {
     "src/runtime-deps/2.1/stretch-slim/amd64": 99052362,
     "src/runtime-deps/2.1/stretch-slim/arm32v7": 79329954,
     "src/runtime-deps/2.1/alpine3.12/amd64": 12233891,
@@ -19,7 +19,7 @@
     "src/runtime-deps/3.1/focal/arm32v7": 91727521,
     "src/runtime-deps/3.1/focal/arm64v8": 111261028
   },
-  "dotnet/core-nightly/runtime": {
+  "dotnet/nightly/runtime": {
     "src/runtime/2.1/stretch-slim/amd64": 180258057,
     "src/runtime/2.1/stretch-slim/arm32v7": 153626488,
     "src/runtime/2.1/alpine3.12/amd64": 86596906,
@@ -37,9 +37,7 @@
     "src/runtime/3.1/bionic/arm64v8": 192660378,
     "src/runtime/3.1/focal/amd64": 203447068,
     "src/runtime/3.1/focal/arm32v7": 174831371,
-    "src/runtime/3.1/focal/arm64v8": 216615477
-  },
-  "dotnet/nightly/runtime": {
+    "src/runtime/3.1/focal/arm64v8": 216615477,
     "src/runtime/5.0/buster-slim/amd64": 189547466,
     "src/runtime/5.0/buster-slim/arm32v7": 153318194,
     "src/runtime/5.0/buster-slim/arm64v8": 185989084,
@@ -49,7 +47,7 @@
     "src/runtime/5.0/focal/arm32v7": 158248922,
     "src/runtime/5.0/focal/arm64v8": 192095507
   },
-  "dotnet/core-nightly/aspnet": {
+  "dotnet/nightly/aspnet": {
     "src/aspnet/2.1/stretch-slim/amd64": 253015005,
     "src/aspnet/2.1/stretch-slim/arm32v7": 189706192,
     "src/aspnet/2.1/alpine3.12/amd64": 159583466,
@@ -67,9 +65,7 @@
     "src/aspnet/3.1/bionic/arm64v8": 213885488,
     "src/aspnet/3.1/focal/amd64": 221248034,
     "src/aspnet/3.1/focal/arm32v7": 195338257,
-    "src/aspnet/3.1/focal/arm64v8": 237840587
-  },
-  "dotnet/nightly/aspnet": {
+    "src/aspnet/3.1/focal/arm64v8": 237840587,
     "src/aspnet/5.0/buster-slim/amd64": 207319902,
     "src/aspnet/5.0/buster-slim/arm32v7": 173449729,
     "src/aspnet/5.0/buster-slim/arm64v8": 207240373,
@@ -79,7 +75,7 @@
     "src/aspnet/5.0/focal/arm32v7": 186853059,
     "src/aspnet/5.0/focal/arm64v8": 224146163
   },
-  "dotnet/core-nightly/sdk": {
+  "dotnet/nightly/sdk": {
     "src/sdk/2.1/stretch/amd64": 1728622878,
     "src/sdk/2.1/stretch/arm32v7": 1580645025,
     "src/sdk/2.1/alpine3.12/amd64": 1521578582,
@@ -96,9 +92,7 @@
     "src/sdk/3.1/bionic/arm64v8": 629031352,
     "src/sdk/3.1/focal/amd64": 698502715,
     "src/sdk/3.1/focal/arm32v7": 646074732,
-    "src/sdk/3.1/focal/arm64v8": 714031873
-  },
-  "dotnet/nightly/sdk": {
+    "src/sdk/3.1/focal/arm64v8": 714031873,
     "src/sdk/5.0/buster-slim/amd64": 598366352,
     "src/sdk/5.0/buster-slim/arm32v7": 564714978,
     "src/sdk/5.0/buster-slim/arm64v8": 631997544,
