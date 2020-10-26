@@ -44,10 +44,12 @@ namespace Microsoft.DotNet.Docker.Tests
         private static readonly ProductImageData[] s_windowsTestData =
         {
             new ProductImageData { Version = V2_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.NanoServer2009, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V3_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer2009, Arch = Arch.Amd64 },
