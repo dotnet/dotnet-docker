@@ -186,7 +186,8 @@
               "documentationGroup": "5.0"
             },
             "latest": {
-              "documentationGroup": "5.0"
+              "documentationGroup": "5.0",
+              "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
             }
           },
           "platforms": [
