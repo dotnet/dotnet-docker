@@ -7,6 +7,7 @@ These scenarios contain tips and tricks, best practices, and samples of commonly
 * [Managing NuGet Credentials in Docker Scenarios](nuget-credentials.md)
 * [Installing .NET Core in a Dockerfile](installing-dotnet.md)
 * [Using the System.Drawing.Common Package in a Docker Container](using-system-drawing-common.md)
+* [Including Dependencies for loading SSL in an ASP.NET core Docker Windows Container](including-dependencies-for-ssl.md)
 
 ## Community
 

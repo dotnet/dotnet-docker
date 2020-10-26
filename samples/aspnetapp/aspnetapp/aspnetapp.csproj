@@ -4,9 +4,5 @@
     <TargetFramework>.net5.0</TargetFramework>
     <UserSecretsId>57393389627611478466</UserSecretsId>
   </PropertyGroup>
-  <ItemGroup>
-    <TrimmerRootAssembly Include="System.Net.Security" />
-    <TrimmerRootAssembly Include="System.Security" />
-  </ItemGroup>
 
 </Project>

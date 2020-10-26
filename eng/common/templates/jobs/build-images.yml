@@ -6,11 +6,10 @@ parameters:
   buildJobTimeout: 60
   customInitSteps: []
   noCache: false
-  agentTypeAvailable: true
 
 jobs:
 - job: ${{ parameters.name }}
-  condition: and(succeeded(), ${{ parameters.matrix }}, eq('${{ parameters.agentTypeAvailable }}', true))
+  condition: and(succeeded(), ${{ parameters.matrix }})
   dependsOn: 
     - PreBuildValidation
     - GenerateBuildMatrix

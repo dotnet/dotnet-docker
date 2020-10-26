@@ -10,17 +10,11 @@ RUN dotnet restore -r win-x64
 # copy everything else and build app
 COPY aspnetapp/. ./aspnetapp/
 WORKDIR /source/aspnetapp
-# /p:PublishTrimmed=true may remove dependencies https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained
-# https://github.com/dotnet/sdk/issues/14238 
-# We can use TrimmerRootAssembly to 'include' the ssl dependencies.
-# <ItemGroup>
-#    <TrimmerRootAssembly Include="System.Net.Security" />
-#    <TrimmerRootAssembly Include="System.Security" />
-#  </ItemGroup>
+
 RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true
 
 # final stage/image
-# Uses the 2009 release; 2004, 1909, 1903, and 1809 are other choices
+# Uses the 2009 release; 2004, 1909, and 1809 are other choices
 FROM mcr.microsoft.com/windows/nanoserver:2009 AS runtime
 WORKDIR /app
 COPY --from=build /app ./

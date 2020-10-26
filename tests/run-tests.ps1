@@ -38,7 +38,6 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $DotnetInstallDir = "$PSScriptRoot/../.dotnet"
-$DotnetInstallScriptBackupDir = "$PSScriptRoot/dotnet-install-backup"
 
 if (!(Test-Path "$DotnetInstallDir")) {
     mkdir "$DotnetInstallDir" | Out-Null
@@ -56,24 +55,17 @@ else {
 $activeOS = docker version -f "{{ .Server.Os }}"
 
 if (!(Test-Path $DotnetInstallScript)) {
-    # Using static script that was already downloaded.
-    if (!(Test-Path "$DotnetInstallDir/$DotnetInstallScript") -and (Test-Path "$DotnetInstallScriptBackupDir/$DotnetInstallScript")){
-        # copy script and proceed.
-        cp $DotnetInstallScriptBackupDir/$DotnetInstallScript $DotnetInstallDir/$DotnetInstallScript
-    }
-    else{
-        # not using static script, will try to pull instead.
-        $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
-        echo $DOTNET_INSTALL_SCRIPT_URL
-        
-        $InvokeWithRetryDir = "$PSScriptRoot/../eng/common"
-        $NUMBER_RETRIES = 3
-        $RETRY_WAIT_TIME = 5
-        $ERROR_ACTION_PREFERENCE = "Stop" # Stop for now.  Could use SilentlyContinue but would need to update retry logic.
-        Push-Location "$InvokeWithRetryDir"
-        ./Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript" $NUMBER_RETRIES $RETRY_WAIT_TIME $ERROR_ACTION_PREFERENCE
-        Pop-Location
-    }
+    
+    # not using static script, will try to pull instead.
+    $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
+    echo $DOTNET_INSTALL_SCRIPT_URL
+    
+    $InvokeWithRetryDir = "$PSScriptRoot/../eng/common"
+    $NUMBER_RETRIES = 3
+    $RETRY_WAIT_TIME = 5
+    Push-Location "$InvokeWithRetryDir"
+    ./Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript" $NUMBER_RETRIES $RETRY_WAIT_TIME
+    Pop-Location
 }
 
 if ($IsRunningOnUnix) {
