@@ -23,10 +23,14 @@
           "productVersion": "$(dotnet|2.1|product-version)",
           "sharedTags": {
             "$(dotnet|2.1|product-version)": {
-              "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+              "syndication": {
+                "repo": "$(syndicatedRuntimeDepsRepo)"
+              }
             },
             "2.1": {
-              "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+              "syndication": {
+                "repo": "$(syndicatedRuntimeDepsRepo)"
+              }
             }
           },
           "platforms": [
@@ -37,10 +41,14 @@
               "osVersion": "stretch-slim",
               "tags": {
                 "$(dotnet|2.1|product-version)-stretch-slim": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "2.1-stretch-slim": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               }
             },
@@ -52,10 +60,14 @@
               "osVersion": "stretch-slim",
               "tags": {
                 "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "2.1-stretch-slim-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -72,13 +84,19 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "$(dotnet|2.1|product-version)-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "2.1-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "2.1-alpine": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               }
             }
@@ -94,7 +112,9 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|2.1|product-version)-bionic": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "2.1-bionic": {}
               }
@@ -112,10 +132,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|2.1|product-version)-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "2.1-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -132,10 +156,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|2.1|product-version)-focal": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "2.1-focal": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               }
             }
@@ -152,10 +180,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|2.1|product-version)-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "2.1-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -167,11 +199,15 @@
           "sharedTags": {
             "$(dotnet|3.1|product-version)": {
               "documentationGroup": "3.1",
-              "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+              "syndication": {
+                "repo": "$(syndicatedRuntimeDepsRepo)"
+              }
             },
             "3.1": {
               "documentationGroup": "3.1",
-              "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+              "syndication": {
+                "repo": "$(syndicatedRuntimeDepsRepo)"
+              }
             },
             "$(dotnet|5.0|product-version)": {
               "documentationGroup": "5.0"
@@ -187,7 +223,9 @@
             },
             "latest": {
               "documentationGroup": "5.0",
-              "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+              "syndication": {
+                "repo": "$(syndicatedRuntimeDepsRepo)"
+              }
             }
           },
           "platforms": [
@@ -199,11 +237,15 @@
               "tags": {
                 "$(dotnet|3.1|product-version)-buster-slim": {
                   "documentationGroup": "3.1",
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-buster-slim": {
                   "documentationGroup": "3.1",
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "$(dotnet|5.0|product-version)-buster-slim-amd64": {
                   "documentationGroup": "5.0"
@@ -222,11 +264,15 @@
               "tags": {
                 "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {
                   "documentationGroup": "3.1",
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-buster-slim-arm32v7": {
                   "documentationGroup": "3.1",
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "$(dotnet|5.0|product-version)-buster-slim-arm32v7": {
                   "documentationGroup": "5.0"
@@ -246,11 +292,15 @@
               "tags": {
                 "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {
                   "documentationGroup": "3.1",
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-buster-slim-arm64v8": {
                   "documentationGroup": "3.1",
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "$(dotnet|5.0|product-version)-buster-slim-arm64v8": {
                   "documentationGroup": "5.0"
@@ -273,13 +323,19 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "$(dotnet|3.1|product-version)-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-alpine": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               }
             }
@@ -296,13 +352,19 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-alpine3.12-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-alpine-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               },
               "variant": "v8"
@@ -319,10 +381,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|3.1|product-version)-bionic": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-bionic": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               }
             }
@@ -339,10 +405,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|3.1|product-version)-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -360,10 +430,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|3.1|product-version)-bionic-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-bionic-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               },
               "variant": "v8"
@@ -380,10 +454,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|3.1|product-version)-focal": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-focal": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               }
             }
@@ -400,10 +478,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|3.1|product-version)-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -421,10 +503,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|3.1|product-version)-focal-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 },
                 "3.1-focal-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeDepsRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeDepsRepo)"
+                  }
                 }
               },
               "variant": "v8"
@@ -521,10 +607,14 @@
           "productVersion": "$(dotnet|2.1|product-version)",
           "sharedTags": {
             "$(dotnet|2.1|product-version)": {
-              "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+              "syndication": {
+                "repo": "$(syndicatedRuntimeRepo)"
+              }
             },
             "2.1": {
-              "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+              "syndication": {
+                "repo": "$(syndicatedRuntimeRepo)"
+              }
             }
           },
           "platforms": [
@@ -538,10 +628,14 @@
               "osVersion": "stretch-slim",
               "tags": {
                 "$(dotnet|2.1|product-version)-stretch-slim": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-stretch-slim": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             },
@@ -556,10 +650,14 @@
               "osVersion": "stretch-slim",
               "tags": {
                 "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-stretch-slim-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -571,10 +669,14 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(dotnet|2.1|product-version)-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             },
@@ -585,10 +687,14 @@
               "osVersion": "nanoserver-1903",
               "tags": {
                 "$(dotnet|2.1|product-version)-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             },
@@ -599,10 +705,14 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "$(dotnet|2.1|product-version)-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             },
@@ -613,10 +723,14 @@
               "osVersion": "nanoserver-2004",
               "tags": {
                 "$(dotnet|2.1|product-version)-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             },
@@ -627,10 +741,14 @@
               "osVersion": "nanoserver-2009",
               "tags": {
                 "$(dotnet|2.1|product-version)-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             }
@@ -649,13 +767,19 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "$(dotnet|2.1|product-version)-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-alpine": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             }
@@ -674,10 +798,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|2.1|product-version)-bionic": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-bionic": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             }
@@ -697,10 +825,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|2.1|product-version)-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -720,10 +852,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|2.1|product-version)-focal": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-focal": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             }
@@ -743,10 +879,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|2.1|product-version)-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "2.1-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -757,10 +897,18 @@
           "productVersion": "$(dotnet|3.1|product-version)",
           "sharedTags": {
             "$(dotnet|3.1|product-version)": {
-              "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+              "syndication": {
+                "repo": "$(syndicatedRuntimeRepo)"
+              }
             },
             "3.1": {
-              "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+              "syndication": {
+                "repo": "$(syndicatedRuntimeRepo)",
+                "destinationTags": [
+                  "3.1",
+                  "latest"
+                ]
+              }
             }
           },
           "platforms": [
@@ -774,10 +922,14 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(dotnet|3.1|product-version)-buster-slim": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-buster-slim": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             },
@@ -792,10 +944,14 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-buster-slim-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -811,10 +967,14 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-buster-slim-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               },
               "variant": "v8"
@@ -826,10 +986,14 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             },
@@ -840,10 +1004,14 @@
               "osVersion": "nanoserver-1903",
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             },
@@ -854,10 +1022,14 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             },
@@ -868,10 +1040,14 @@
               "osVersion": "nanoserver-2004",
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             },
@@ -882,10 +1058,14 @@
               "osVersion": "nanoserver-2009",
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             }
@@ -904,13 +1084,19 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "$(dotnet|3.1|product-version)-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-alpine": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             }
@@ -930,13 +1116,19 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-alpine3.12-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-alpine-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               },
               "variant": "v8",
@@ -965,10 +1157,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|3.1|product-version)-bionic": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-bionic": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             }
@@ -988,10 +1184,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|3.1|product-version)-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -1012,10 +1212,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|3.1|product-version)-bionic-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-bionic-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               },
               "variant": "v8"
@@ -1035,10 +1239,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|3.1|product-version)-focal": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-focal": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               }
             }
@@ -1058,10 +1266,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|3.1|product-version)-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -1082,10 +1294,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|3.1|product-version)-focal-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 },
                 "3.1-focal-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedRuntimeRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedRuntimeRepo)"
+                  }
                 }
               },
               "variant": "v8"
@@ -1358,10 +1574,14 @@
           "productVersion": "$(dotnet|2.1|product-version)",
           "sharedTags": {
             "$(dotnet|2.1|product-version)": {
-              "syndicatedRepo": "$(syndicatedAspnetRepo)"
+              "syndication": {
+                "repo": "$(syndicatedAspnetRepo)"
+              }
             },
             "2.1": {
-              "syndicatedRepo": "$(syndicatedAspnetRepo)"
+              "syndication": {
+                "repo": "$(syndicatedAspnetRepo)"
+              }
             }
           },
           "platforms": [
@@ -1375,10 +1595,14 @@
               "osVersion": "stretch-slim",
               "tags": {
                 "$(dotnet|2.1|product-version)-stretch-slim": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-stretch-slim": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             },
@@ -1393,10 +1617,14 @@
               "osVersion": "stretch-slim",
               "tags": {
                 "$(dotnet|2.1|product-version)-stretch-slim-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-stretch-slim-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -1408,10 +1636,14 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(dotnet|2.1|product-version)-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -1431,10 +1663,14 @@
               "osVersion": "nanoserver-1903",
               "tags": {
                 "$(dotnet|2.1|product-version)-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -1454,10 +1690,14 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "$(dotnet|2.1|product-version)-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -1477,10 +1717,14 @@
               "osVersion": "nanoserver-2004",
               "tags": {
                 "$(dotnet|2.1|product-version)-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -1500,10 +1744,14 @@
               "osVersion": "nanoserver-2009",
               "tags": {
                 "$(dotnet|2.1|product-version)-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -1531,13 +1779,19 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "$(dotnet|2.1|product-version)-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-alpine": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             }
@@ -1556,10 +1810,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|2.1|product-version)-bionic": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-bionic": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             }
@@ -1579,10 +1837,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|2.1|product-version)-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -1602,10 +1864,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|2.1|product-version)-focal": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-focal": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             }
@@ -1625,10 +1891,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|2.1|product-version)-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "2.1-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -1639,10 +1909,18 @@
           "productVersion": "$(dotnet|3.1|product-version)",
           "sharedTags": {
             "$(dotnet|3.1|product-version)": {
-              "syndicatedRepo": "$(syndicatedAspnetRepo)"
+              "syndication": {
+                "repo": "$(syndicatedAspnetRepo)"
+              }
             },
             "3.1": {
-              "syndicatedRepo": "$(syndicatedAspnetRepo)"
+              "syndication": {
+                "repo": "$(syndicatedAspnetRepo)",
+                "destinationTags": [
+                  "3.1",
+                  "latest"
+                ]
+              }
             }
           },
           "platforms": [
@@ -1656,10 +1934,14 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(dotnet|3.1|product-version)-buster-slim": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-buster-slim": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             },
@@ -1674,10 +1956,14 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(dotnet|3.1|product-version)-buster-slim-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-buster-slim-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -1693,10 +1979,14 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(dotnet|3.1|product-version)-buster-slim-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-buster-slim-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "variant": "v8"
@@ -1711,10 +2001,14 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             },
@@ -1728,10 +2022,14 @@
               "osVersion": "nanoserver-1903",
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             },
@@ -1745,10 +2043,14 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             },
@@ -1762,10 +2064,14 @@
               "osVersion": "nanoserver-2004",
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             },
@@ -1779,10 +2085,14 @@
               "osVersion": "nanoserver-2009",
               "tags": {
                 "$(dotnet|3.1|product-version)-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             }
@@ -1801,13 +2111,19 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "$(dotnet|3.1|product-version)-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-alpine": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             }
@@ -1827,13 +2143,19 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "$(dotnet|3.1|product-version)-alpine3.12-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-alpine3.12-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-alpine-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "variant": "v8",
@@ -1862,10 +2184,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|3.1|product-version)-bionic": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-bionic": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             }
@@ -1885,10 +2211,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|3.1|product-version)-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -1909,10 +2239,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(dotnet|3.1|product-version)-bionic-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-bionic-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "variant": "v8"
@@ -1932,10 +2266,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|3.1|product-version)-focal": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-focal": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               }
             }
@@ -1955,10 +2293,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|3.1|product-version)-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "variant": "v7"
@@ -1979,10 +2321,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(dotnet|3.1|product-version)-focal-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 },
                 "3.1-focal-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedAspnetRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedAspnetRepo)"
+                  }
                 }
               },
               "variant": "v8"
@@ -2270,10 +2616,14 @@
           "productVersion": "$(sdk|2.1|product-version)",
           "sharedTags": {
             "$(sdk|2.1|product-version)": {
-              "syndicatedRepo": "$(syndicatedSdkRepo)"
+              "syndication": {
+                "repo": "$(syndicatedSdkRepo)"
+              }
             },
             "2.1": {
-              "syndicatedRepo": "$(syndicatedSdkRepo)"
+              "syndication": {
+                "repo": "$(syndicatedSdkRepo)"
+              }
             }
           },
           "platforms": [
@@ -2284,10 +2634,14 @@
               "osVersion": "stretch",
               "tags": {
                 "$(sdk|2.1|product-version)-stretch": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-stretch": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -2308,10 +2662,14 @@
               "osVersion": "stretch",
               "tags": {
                 "$(sdk|2.1|product-version)-stretch-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-stretch-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "variant": "v7",
@@ -2332,10 +2690,14 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(sdk|2.1|product-version)-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -2355,10 +2717,14 @@
               "osVersion": "nanoserver-1903",
               "tags": {
                 "$(sdk|2.1|product-version)-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -2378,10 +2744,14 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "$(sdk|2.1|product-version)-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -2401,10 +2771,14 @@
               "osVersion": "nanoserver-2004",
               "tags": {
                 "$(sdk|2.1|product-version)-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -2424,10 +2798,14 @@
               "osVersion": "nanoserver-2009",
               "tags": {
                 "$(sdk|2.1|product-version)-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -2455,13 +2833,19 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "$(sdk|2.1|product-version)-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-alpine": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               }
             }
@@ -2477,10 +2861,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(sdk|2.1|product-version)-bionic": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-bionic": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -2506,10 +2894,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(sdk|2.1|product-version)-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "variant": "v7",
@@ -2535,10 +2927,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(sdk|2.1|product-version)-focal": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-focal": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -2564,10 +2960,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(sdk|2.1|product-version)-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "2.1-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "variant": "v7",
@@ -2587,10 +2987,18 @@
           "productVersion": "$(sdk|3.1|product-version)",
           "sharedTags": {
             "$(sdk|3.1|product-version)": {
-              "syndicatedRepo": "$(syndicatedSdkRepo)"
+              "syndication": {
+                "repo": "$(syndicatedSdkRepo)"
+              }
             },
             "3.1": {
-              "syndicatedRepo": "$(syndicatedSdkRepo)"
+              "syndication": {
+                "repo": "$(syndicatedSdkRepo)",
+                "destinationTags": [
+                  "3.1",
+                  "latest"
+                ]
+              }
             }
           },
           "platforms": [
@@ -2601,10 +3009,14 @@
               "osVersion": "buster",
               "tags": {
                 "$(sdk|3.1|product-version)-buster": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-buster": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -2625,10 +3037,14 @@
               "osVersion": "buster",
               "tags": {
                 "$(sdk|3.1|product-version)-buster-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-buster-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "variant": "v7",
@@ -2650,10 +3066,14 @@
               "osVersion": "buster",
               "tags": {
                 "$(sdk|3.1|product-version)-buster-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-buster-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "variant": "v8",
@@ -2677,10 +3097,14 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(sdk|3.1|product-version)-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-nanoserver-1809": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               }
             },
@@ -2694,10 +3118,14 @@
               "osVersion": "nanoserver-1903",
               "tags": {
                 "$(sdk|3.1|product-version)-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-nanoserver-1903": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               }
             },
@@ -2711,10 +3139,14 @@
               "osVersion": "nanoserver-1909",
               "tags": {
                 "$(sdk|3.1|product-version)-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-nanoserver-1909": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               }
             },
@@ -2728,10 +3160,14 @@
               "osVersion": "nanoserver-2004",
               "tags": {
                 "$(sdk|3.1|product-version)-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-nanoserver-2004": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               }
             },
@@ -2745,10 +3181,14 @@
               "osVersion": "nanoserver-2009",
               "tags": {
                 "$(sdk|3.1|product-version)-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-nanoserver-2009": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               }
             }
@@ -2767,13 +3207,19 @@
               "osVersion": "alpine3.12",
               "tags": {
                 "$(sdk|3.1|product-version)-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-alpine3.12": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-alpine": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               }
             }
@@ -2789,10 +3235,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(sdk|3.1|product-version)-bionic": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-bionic": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -2818,10 +3268,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(sdk|3.1|product-version)-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-bionic-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "variant": "v7",
@@ -2848,10 +3302,14 @@
               "osVersion": "bionic",
               "tags": {
                 "$(sdk|3.1|product-version)-bionic-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-bionic-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "variant": "v8",
@@ -2877,10 +3335,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(sdk|3.1|product-version)-focal": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-focal": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "customBuildLegGroups": [
@@ -2906,10 +3368,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(sdk|3.1|product-version)-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-focal-arm32v7": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "variant": "v7",
@@ -2936,10 +3402,14 @@
               "osVersion": "focal",
               "tags": {
                 "$(sdk|3.1|product-version)-focal-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 },
                 "3.1-focal-arm64v8": {
-                  "syndicatedRepo": "$(syndicatedSdkRepo)"
+                  "syndication": {
+                    "repo": "$(syndicatedSdkRepo)"
+                  }
                 }
               },
               "variant": "v8",
