@@ -55,10 +55,7 @@ else {
 $activeOS = docker version -f "{{ .Server.Os }}"
 
 if (!(Test-Path $DotnetInstallScript)) {
-    
-    # not using static script, will try to pull instead.
     $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
-    echo $DOTNET_INSTALL_SCRIPT_URL
     
     $InvokeWithRetryDir = "$PSScriptRoot/../eng/common"
     $NUMBER_RETRIES = 3
