@@ -17,15 +17,11 @@ $onDockerfilesGenerated = {
 
     if (-Not $Validate) {
         Exec "docker cp ${ContainerName}:/repo/README.aspnet.md $repoRoot"
-        Exec "docker cp ${ContainerName}:/repo/README.aspnet.preview.md $repoRoot"
         Exec "docker cp ${ContainerName}:/repo/README.md $repoRoot"
         Exec "docker cp ${ContainerName}:/repo/README.runtime-deps.md $repoRoot"
-        Exec "docker cp ${ContainerName}:/repo/README.runtime-deps.preview.md $repoRoot"
         Exec "docker cp ${ContainerName}:/repo/README.runtime.md $repoRoot"
-        Exec "docker cp ${ContainerName}:/repo/README.runtime.preview.md $repoRoot"
         Exec "docker cp ${ContainerName}:/repo/README.samples.md $repoRoot"
         Exec "docker cp ${ContainerName}:/repo/README.sdk.md $repoRoot"
-        Exec "docker cp ${ContainerName}:/repo/README.sdk.preview.md $repoRoot"
     }
 }
 
