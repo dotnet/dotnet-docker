@@ -151,9 +151,6 @@ namespace Microsoft.DotNet.Docker.Tests
         private static string GetDockerOS() => Execute("version -f \"{{ .Server.Os }}\"");
         private static string GetDockerArch() => Execute("version -f \"{{ .Server.Arch }}\"");
 
-        public bool IsContainerRunning(string container) =>
-            ExecuteWithLogging("inspect -f \"{{ .State.Running }}\" " + container) == "true";
-
         public string GetContainerAddress(string container)
         {
             string containerAddress = ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + container);

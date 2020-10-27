@@ -225,11 +225,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     retries--;
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
-                    if (dockerHelper.IsContainerRunning(containerName) != true)
-                    {
-                        continue; //container isn't running.
-                    }
-
                     try
                     {
                         using (HttpResponseMessage result = await client.GetAsync(url))
