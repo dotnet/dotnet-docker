@@ -1,6 +1,6 @@
 # escape=`
 
-ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:2004-amd64 AS installer

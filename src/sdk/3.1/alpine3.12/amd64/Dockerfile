@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/aspnet
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:3.1-alpine3.12
 
 ENV \

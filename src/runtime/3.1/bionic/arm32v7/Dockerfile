@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:3.1-bionic-arm32v7
 
 RUN apt-get update \
