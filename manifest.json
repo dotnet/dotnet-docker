@@ -206,7 +206,11 @@
             "3.1": {
               "documentationGroup": "3.1",
               "syndication": {
-                "repo": "$(syndicatedRuntimeDepsRepo)"
+                "repo": "$(syndicatedRuntimeDepsRepo)",
+                "destinationTags": [
+                  "3.1",
+                  "latest"
+                ]
               }
             },
             "$(dotnet|5.0|product-version)": {
@@ -222,10 +226,7 @@
               "documentationGroup": "5.0"
             },
             "latest": {
-              "documentationGroup": "5.0",
-              "syndication": {
-                "repo": "$(syndicatedRuntimeDepsRepo)"
-              }
+              "documentationGroup": "5.0"
             }
           },
           "platforms": [
