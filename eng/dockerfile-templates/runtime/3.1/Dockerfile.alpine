@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:3.1-{{OS_VERSION}}{{if ARCH_VERSIONED != "amd64":{{ARCH_TAG_SUFFIX}}}}
 
 # Install .NET Core
