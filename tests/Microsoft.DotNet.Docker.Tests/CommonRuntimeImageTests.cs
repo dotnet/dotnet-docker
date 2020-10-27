@@ -39,7 +39,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
             }
 
-            EnvironmentVariableInfo.Validate(variables, ImageType, imageData, DockerHelper);
+            EnvironmentVariableInfo.Validate(variables, imageData.GetImage(ImageType, DockerHelper), imageData, DockerHelper);
         }
 
         [LinuxImageTheory]

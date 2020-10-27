@@ -132,6 +132,45 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
+        [SkippableTheory("windowsservercore-ltsc2019")]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifyAspnetEnvironmentVariables(SampleImageData imageData)
+        {
+            await VerifySampleAsync(imageData, SampleImageType.Aspnetapp, (image, containerName) =>
+            {
+                List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
+                variables.AddRange(ProductImageTests.GetCommonEnvironmentVariables());
+                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:80"));
+
+                EnvironmentVariableInfo.Validate(
+                    variables,
+                    image,
+                    imageData,
+                    DockerHelper);
+
+                return Task.CompletedTask;
+            });
+        }
+
+        [SkippableTheory("windowsservercore-ltsc2019")]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifyDotnetEnvironmentVariables(SampleImageData imageData)
+        {
+            await VerifySampleAsync(imageData, SampleImageType.Dotnetapp, (image, containerName) =>
+            {
+                List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
+                variables.AddRange(ProductImageTests.GetCommonEnvironmentVariables());
+
+                EnvironmentVariableInfo.Validate(
+                    variables,
+                    image,
+                    imageData,
+                    DockerHelper);
+
+                return Task.CompletedTask;
+            });
+        }
+
         private async Task VerifySampleAsync(
             SampleImageData imageData,
             SampleImageType sampleImageType,

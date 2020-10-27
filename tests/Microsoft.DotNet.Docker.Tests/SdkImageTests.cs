@@ -85,7 +85,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
             }
 
-            EnvironmentVariableInfo.Validate(variables, DotNetImageType.SDK, imageData, DockerHelper);
+            EnvironmentVariableInfo.Validate(variables, imageData.GetImage(DotNetImageType.SDK, DockerHelper), imageData, DockerHelper);
         }
 
         [Theory]

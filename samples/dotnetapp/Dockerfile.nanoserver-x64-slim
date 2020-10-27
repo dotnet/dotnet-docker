@@ -15,4 +15,8 @@ RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-rest
 FROM mcr.microsoft.com/windows/nanoserver:2009
 WORKDIR /app
 COPY --from=build /app .
+
+# Enable detection of running in a container
+ENV DOTNET_RUNNING_IN_CONTAINER=true
+
 ENTRYPOINT ["dotnetapp"]
