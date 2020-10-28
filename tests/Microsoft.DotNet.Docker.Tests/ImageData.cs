@@ -88,7 +88,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static string GetRepoNameModifier() => $"/core{(Config.IsNightlyRepo ? "-nightly" : string.Empty)}";
+        public static string GetRepoNameModifier() => $"{(Config.IsNightlyRepo ? "/nightly" : string.Empty)}";
 
         public static string GetImageName(string tag, string variantName, string repoNameModifier = null)
         {

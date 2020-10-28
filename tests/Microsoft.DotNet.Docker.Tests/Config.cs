@@ -29,7 +29,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private static bool GetIsNightlyRepo()
         {
             string repo = (string)Manifest.Value["repos"][0]["name"];
-            return repo.Contains("-nightly");
+            return repo.Contains("/nightly/");
         }
 
         private static JObject LoadManifest()

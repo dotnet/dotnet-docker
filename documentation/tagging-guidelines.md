@@ -55,7 +55,7 @@ All shared tags [support multiple platforms](https://blog.docker.com/2017/09/doc
 
 1. Include Linux entries based on Debian.
 
-1. Include Windows entries for each supported version.
+1. Include Windows Nano Server entries for each supported version.
 
 ## Tag Parts
 
