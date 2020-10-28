@@ -1,6 +1,8 @@
 The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
 
-See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
+See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
+
+As part of the .NET 5.0 release, all .NET Docker images (including .NET Core 2.1 and 3.1) have transitioned to a new set of Docker repositories described below. Updates will continue to be made to supported tags in the old repository locations for backwards compatibility. Please update any repository references to these new names. For more information see the [.NET 5.0 repository rename announcement](https://github.com/dotnet/dotnet-docker/issues/2337).
 
 # Featured Repos
 
@@ -37,7 +39,7 @@ You can quickly run a container with a pre-built [.NET Docker image](https://hub
 Type the following command to run a sample console application:
 
 ```console
-docker run --rm mcr.microsoft.com/dotnet/core/samples
+docker run --rm mcr.microsoft.com/dotnet/samples
 ```
 
 ## Container sample: Run a web application
@@ -47,7 +49,7 @@ You can quickly run a container with a pre-built [.NET Docker image](https://hub
 Type the following command to run a sample web application:
 
 ```console
-docker run -it --rm -p 8000:80 --name aspnetcore_sample mcr.microsoft.com/dotnet/core/samples:aspnetapp
+docker run -it --rm -p 8000:80 --name aspnetcore_sample mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser.
@@ -59,7 +61,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 .NET:
 
 * [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
-* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Core Samples
+* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
 
 .NET Framework:
 

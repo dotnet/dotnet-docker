@@ -1,3 +1,5 @@
+As part of the .NET 5.0 release, all .NET Docker images (including .NET Core 2.1 and 3.1) have transitioned to a new set of Docker repositories described below. Updates will continue to be made to supported tags in the old repository locations for backwards compatibility. Please update any repository references to these new names. For more information see the [.NET 5.0 repository rename announcement](https://github.com/dotnet/dotnet-docker/issues/2337).
+
 # Featured Tags
 
 * `dotnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
@@ -22,7 +24,7 @@ You can quickly run a container with a pre-built [.NET Core Docker image](https:
 Type the following command to run a sample console application:
 
 ```console
-docker run --rm mcr.microsoft.com/dotnet/core/samples
+docker run --rm mcr.microsoft.com/dotnet/samples
 ```
 
 ## Container sample: Run a web application
@@ -32,7 +34,7 @@ You can quickly run a container with a pre-built [.NET Core Docker image](https:
 Type the following command to run a sample web application:
 
 ```console
-docker run -it --rm -p 8000:80 --name aspnetcore_sample mcr.microsoft.com/dotnet/core/samples:aspnetapp
+docker run -it --rm -p 8000:80 --name aspnetcore_sample mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser.
@@ -44,7 +46,10 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 .NET:
 
 * [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
-* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Core Samples
+* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
+* [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
+* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
+* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
 
 .NET Framework:
@@ -102,7 +107,7 @@ Tag | Dockerfile
 dotnetapp-nanoserver-1809, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 aspnetapp-nanoserver-1809, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-You can retrieve a list of all available tags for dotnet/core/samples at https://mcr.microsoft.com/v2/dotnet/core/samples/tags/list.
+You can retrieve a list of all available tags for dotnet/samples at https://mcr.microsoft.com/v2/dotnet/samples/tags/list.
 
 # Support
 
