@@ -98,12 +98,6 @@ Tag | Dockerfile
 dotnetapp-nanoserver-1909, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 aspnetapp-nanoserver-1909, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-## Windows Server, version 1903 amd64 Tags
-Tag | Dockerfile
----------| ---------------
-dotnetapp-nanoserver-1903, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-aspnetapp-nanoserver-1903, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
-
 ## Windows Server 2019 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
