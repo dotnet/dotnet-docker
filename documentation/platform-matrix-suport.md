@@ -14,7 +14,7 @@ Each distribution (distro) has a unique approach to releasing, schedule and end-
 - Debian — support the latest *stable* version at the time a `major.minor` version of .NET Core is released.  Add support for each new *stable* version as it is released.  Debian images are included in the shared/multi-arch tags.
 - Ubuntu — support the latest *LTS* version at the time a `major.minor` version of .NET Core is released.  Add support for each new *LTS* version as it is released.
 
-Pre-release versions of the supported distros will be made available within the [nightly repositories](https://hub.docker.com/_/microsoft-dotnet-core-nightly) based on the availability of pre-release OS base images.
+Pre-release versions of the supported distros will be made available within the [nightly repositories](https://hub.docker.com/_/microsoft-dotnet-nightly) based on the availability of pre-release OS base images.
 
 ### Windows
 

@@ -23,7 +23,7 @@ Windows version: &lt;version&gt;
 1. - [ ] Merge PR as part of the master branch [release process](net-core-release.md) for the next .NET Core release
 1. - [ ] Wait for automatically queued CI build to finish on [dotnet-docker-nightly pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=359) (internal MSFT link)
 1. - [ ] Confirm images have been ingested by MCR
-1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-core-nightly)
+1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-nightly)
 1. - [ ] Create an announcement (example: [Nano Server, version 1909](https://github.com/dotnet/dotnet-docker/issues/1460))
 1. - [ ] Update the samples to reference the new Windows version:
       - [ ] [Nano Server sample Dockerfiles](https://github.com/dotnet/dotnet-docker/tree/master/samples)

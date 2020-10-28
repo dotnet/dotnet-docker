@@ -6,17 +6,17 @@ You can use the referenced images and tags with the docker CLI, for example with
 
 ## .NET Core Docker repos
 
-There are multiple [.NET Core Docker repos](https://hub.docker.com/_/microsoft-dotnet-core) that expose various layers of the .NET Core platform.
+There are multiple [.NET Core Docker repos](https://hub.docker.com/_/microsoft-dotnet) that expose various layers of the .NET Core platform.
 
-* [dotnet/core/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps/) -- Linux-only images that contains the native dependencies of .NET Core. Best used for self-contained applications.
-* [dotnet/core/runtime](https://hub.docker.com/_/microsoft-dotnet-core-runtime/) -- Images that contains the .NET Core runtime. Best used for console applications. On Linux, depends on the `runtime-deps` image.
-* [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/) -- Images that contains the ASP.NET Core runtime. Best used for web applications and services. Depends on the `runtime` image.
-* [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) -- An image that contains the .NET Core SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/core/aspnet] for Alpine and on [windows/nanoserver](https://hub.docker.com/_/microsoft-windows-nanoserver) for Windows.
+* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) -- Linux-only images that contains the native dependencies of .NET Core. Best used for self-contained applications.
+* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/) -- Images that contains the .NET Core runtime. Best used for console applications. On Linux, depends on the `runtime-deps` image.
+* [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/) -- Images that contains the ASP.NET Core runtime. Best used for web applications and services. Depends on the `runtime` image.
+* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/) -- An image that contains the .NET Core SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/) for Alpine and on [windows/nanoserver](https://hub.docker.com/_/microsoft-windows-nanoserver) for Windows.
 
 The repos above are commonly used on the command line and in Dockerfiles. There are two more repos that may be useful to you:
 
-* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly) -- A duplicate structure of repos which contain the latest pre-released versions of .NET Core. (which are not supported in production).
-* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples) -- A set of samples that demonstrate .NET Core being used in console and web scenarios.
+* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly) -- A duplicate structure of repos which contain the latest pre-released versions of .NET Core. (which are not supported in production).
+* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples) -- A set of samples that demonstrate .NET Core being used in console and web scenarios.
 
 ## Tags that work everywhere
 
@@ -27,13 +27,13 @@ When you pull these tags, you will get a Debian image for Linux and Windows Nano
 For example, the following command will work in all supported environments:
 
 ```console
-docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1 dotnet
+docker run --rm mcr.microsoft.com/dotnet/runtime:3.1 dotnet
 ```
 
 Similarly, you can build an image with the following `FROM` statement:
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/aspnet:3.1
 ```
 
 This will work on all operating systems and on all supported chips, but building this Dockerfile on Windows x64 will produce a different image than on Linux ARM64 and they are not interchangeable.
@@ -59,7 +59,7 @@ The following tags demonstrate the pattern used to describe each operating syste
 For example, the following command will pull an x64 Alpine image:
 
 ```console
-docker pull mcr.microsoft.com/dotnet/core/runtime:3.1-alpine
+docker pull mcr.microsoft.com/dotnet/runtime:3.1-alpine
 ```
 
 ## Targeting a specific processor type

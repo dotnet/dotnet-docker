@@ -2,7 +2,7 @@
 
 This sample demonstrates how to build container images for .NET Core console apps. You can use this samples for Linux and Windows containers, for x64, ARM32 and ARM64 architectures.
 
-The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You can test the built image locally or deploy it to a [container registry](../push-image-to-acr.md).
+The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-runtime/). You can test the built image locally or deploy it to a [container registry](../push-image-to-acr.md).
 
 The instructions assume that you have cloned this repo, have [Docker](https://www.docker.com/products/docker) installed, and have a command prompt open within the `samples/dotnetapp` directory within the repo.
 
@@ -11,7 +11,7 @@ The instructions assume that you have cloned this repo, have [Docker](https://ww
 If want to skip ahead, you can try a pre-built version with the following command:
 
 ```console
-docker run --rm mcr.microsoft.com/dotnet/core/samples
+docker run --rm mcr.microsoft.com/dotnet/samples
 ```
 
 ## Build a .NET Core image
@@ -34,7 +34,7 @@ dotnetapp           latest              baee380605f4        14 seconds ago      
 The logic to build the image is described in the [Dockerfile](Dockerfile), which follows.
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -46,7 +46,7 @@ COPY . .
 RUN dotnet publish -c release -o /app --no-restore
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1
+FROM mcr.microsoft.com/dotnet/runtime:3.1
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["./dotnetapp"]
@@ -132,7 +132,7 @@ docker images dotnetapp
 The `Dockerfile.nanoserver-x64` Dockerfile targets a version-specific tag, which will result in a Nano Server version that targets a specific Windows version (and will only work on Windows hosts of the same version or higher). You can update the following the tag to a different version, as needed.
 
 ```console
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-2009
+FROM mcr.microsoft.com/dotnet/runtime:3.1-nanoserver-2009
 ```
 
 ## Build an image for ARM32 and ARM64
