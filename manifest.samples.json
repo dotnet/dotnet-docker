@@ -3,7 +3,7 @@
   "repos": [
     {
       "id": "samples",
-      "name": "dotnet/core/samples",
+      "name": "dotnet/samples",
       "readme": "README.samples.md",
       "readmeTemplate": "eng/readme-templates/README.md",
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/samples-tags.yml",

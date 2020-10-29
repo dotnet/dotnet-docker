@@ -1,5 +1,5 @@
-ARG ASPNET_REPO=mcr.microsoft.com/dotnet/core/aspnet
-ARG SDK_REPO=mcr.microsoft.com/dotnet/core/sdk
+ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
+ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
 FROM $SDK_REPO:3.1-alpine3.12 AS installer

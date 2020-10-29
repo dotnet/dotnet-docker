@@ -17,17 +17,17 @@ You can discover the licenses for these components using the following pattern.
 
 ### .NET Core Runtime Image
 
-The [.NET Core runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/) includes the .NET Core runtime, with an associated license and third party notice file.
+The [.NET Core runtime image](https://hub.docker.com/_/microsoft-dotnet-runtime/) includes the .NET Core runtime, with an associated license and third party notice file.
 
 ```console
-$ docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim find ./usr/share/dotnet | grep LICENSE
+$ docker run --rm mcr.microsoft.com/dotnet/runtime:3.1-buster-slim find ./usr/share/dotnet | grep LICENSE
 ./usr/share/dotnet/LICENSE.txt
 ```
 
 The license can be printed out, as follows.
 
 ```console
-$ docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim cat ./usr/share/dotnet/LICENSE.txt
+$ docker run --rm mcr.microsoft.com/dotnet/runtime:3.1-buster-slim cat ./usr/share/dotnet/LICENSE.txt
 The MIT License (MIT)
 
 Copyright (c) .NET Foundation and Contributors
@@ -47,45 +47,45 @@ furnished to do so, subject to the following conditions:
 Third party notices can also be found, as demonstrated below.
 
 ```console
-$ docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim find ./usr/share/dotnet | grep -i third
+$ docker run --rm mcr.microsoft.com/dotnet/runtime:3.1-buster-slim find ./usr/share/dotnet | grep -i third
 ./usr/share/dotnet/ThirdPartyNotices.txt
 ```
 
 ### .NET Core ASP.NET Image
 
-The [ASP.NET image](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/) includes ASP.NET Core in addition to .NET Core, with associated licenses and third party notice files.
+The [ASP.NET image](https://hub.docker.com/_/microsoft-dotnet-aspnet/) includes ASP.NET Core in addition to .NET Core, with associated licenses and third party notice files.
 
 ```console
-% docker run --rm mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim find ./usr/share/dotnet | grep LICENSE
+% docker run --rm mcr.microsoft.com/dotnet/aspnet:3.1-buster-slim find ./usr/share/dotnet | grep LICENSE
 ./usr/share/dotnet/LICENSE.txt
-% docker run --rm mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim find ./usr/share/dotnet | grep -i third
+% docker run --rm mcr.microsoft.com/dotnet/aspnet:3.1-buster-slim find ./usr/share/dotnet | grep -i third
 ./usr/share/dotnet/ThirdPartyNotices.txt
 ./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.0/THIRD-PARTY-NOTICES.txt
 ```
 
 ### .NET Core SDK Image
 
-The [SDK image](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) includes the .NET Core SDK, which includes various .NET Core components, with associated licenses and third party notice files.
+The [SDK image](https://hub.docker.com/_/microsoft-dotnet-sdk/) includes the .NET Core SDK, which includes various .NET Core components, with associated licenses and third party notice files.
 
 Note: The SDK image is based on [`buildpack-deps`](https://hub.docker.com/_/buildpack-deps), which includes components that we distribute but do not use (like Python).
 
 ```console
-$ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find ./usr/share/dotnet ./usr/share/powershell | grep LICENSE
+$ docker run --rm mcr.microsoft.com/dotnet/sdk:3.1-buster find ./usr/share/dotnet ./usr/share/powershell | grep LICENSE
 ./usr/share/dotnet/sdk/3.1.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/LICENSE.TXT
 ./usr/share/dotnet/LICENSE.txt
 ./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/LICENSE.txt
-$ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find ./usr/share/dotnet | grep -i third
+$ docker run --rm mcr.microsoft.com/dotnet/sdk:3.1-buster find ./usr/share/dotnet | grep -i third
 ./usr/share/dotnet/sdk/3.1.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
 ./usr/share/dotnet/ThirdPartyNotices.txt
 ./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.0/THIRD-PARTY-NOTICES.txt
-$ docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1-buster find ./usr/share/dotnet ./usr/share/powershell | grep -i third
+$ docker run --rm mcr.microsoft.com/dotnet/sdk:3.1-buster find ./usr/share/dotnet ./usr/share/powershell | grep -i third
 ./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/ThirdPartyNotices.txt
 ```
 
 Python also provides third party notice files, via `buildpack-deps`. You will see those if you use the following (unfiltered) pattern:
 
 ```console
-% docker run --rm mcr.microsoft.com/dotnet/core/sdk:3.1 find . | grep -i third
+% docker run --rm mcr.microsoft.com/dotnet/sdk:3.1 find . | grep -i third
 ./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/ThirdPartyNotices.txt
 ./usr/share/dotnet/ThirdPartyNotices.txt
 ./usr/share/dotnet/sdk/3.1.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
