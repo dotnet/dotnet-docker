@@ -19,7 +19,7 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "dotnetapp-buster-slim": {}
+                "dotnetapp-buster-slim-amd64": {}
               }
             },
             {
@@ -86,14 +86,14 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "aspnetapp-buster-slim": {}
+                "aspnetapp-buster-slim-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-buster-slim"
+                    "$(Repo:samples):dotnetapp-buster-slim-amd64"
                   ]
                 }
               ]
