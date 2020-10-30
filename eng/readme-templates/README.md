@@ -12,10 +12,12 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
   * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp`
 * `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
-^elif match(PARENT_REPO, "core"):* `3.1` (LTS/Current)
-  * `docker pull {{FULL_REPO}}:3.1`
-^else:* `5.0` (Preview)
+^elif match(SHORT_REPO, "monitor"):* `5.0` (Preview)
   * `docker pull {{FULL_REPO}}:5.0`
+^else:* `5.0` (Current)
+  * `docker pull {{FULL_REPO}}:5.0`
+* `3.1` (LTS)
+  * `docker pull {{FULL_REPO}}:3.1`
 }}}}{{if IS_PRODUCT_FAMILY && VARIABLES["branch"] = "master"
 :# Featured Repos
 
@@ -49,13 +51,13 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 
 {{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly"
     :* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
-}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "sdk") || (PARENT_REPO = "core" && SHORT_REPO = "sdk")
+}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "sdk")
     :* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
-}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "aspnet") || (PARENT_REPO = "core" && SHORT_REPO = "aspnet")
+}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "aspnet")
     :* [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
-}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "runtime") || (PARENT_REPO = "core" && SHORT_REPO = "runtime")
+}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "runtime")
     :* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
-}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "runtime-deps") || (PARENT_REPO = "core" && SHORT_REPO = "runtime-deps")
+}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "runtime-deps")
     :* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 }}{{if REPO != "dotnet/samples"
     :* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples

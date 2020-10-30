@@ -2,8 +2,10 @@ As part of the .NET 5.0 release, all .NET Docker images (including .NET Core 2.1
 
 # Featured Tags
 
-* `5.0` (Preview)
+* `5.0` (Current)
   * `docker pull mcr.microsoft.com/dotnet/aspnet:5.0`
+* `3.1` (LTS)
+  * `docker pull mcr.microsoft.com/dotnet/aspnet:3.1`
 
 # About This Image
 
