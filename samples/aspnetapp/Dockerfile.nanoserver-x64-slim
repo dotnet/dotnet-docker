@@ -1,3 +1,5 @@
+# escape=`
+
 # https://hub.docker.com/_/microsoft-dotnet
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /source
@@ -18,7 +20,10 @@ FROM mcr.microsoft.com/windows/nanoserver:2009 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
 
-# Configure web servers to bind to port 80 when present
-ENV ASPNETCORE_URLS=http://+:80
+ENV `
+    # Configure web servers to bind to port 80 when present
+    ASPNETCORE_URLS=http://+:80 `
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true
 
 ENTRYPOINT ["aspnetapp"]

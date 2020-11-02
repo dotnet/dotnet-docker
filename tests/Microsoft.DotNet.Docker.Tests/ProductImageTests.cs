@@ -53,7 +53,7 @@ namespace Microsoft.DotNet.Docker.Tests
             Assert.Empty(output);
         }
 
-        protected static IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
+        public static IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
         {
             yield return new EnvironmentVariableInfo("DOTNET_RUNNING_IN_CONTAINER", "true");
         }
