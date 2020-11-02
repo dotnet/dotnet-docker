@@ -29,31 +29,35 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static void Validate(
             IEnumerable<EnvironmentVariableInfo> variables,
-            DotNetImageType imageType,
-            ProductImageData imageData,
+            string imageName,
+            ImageData imageData,
             DockerHelper dockerHelper)
         {
             const char delimiter = '|';
             IEnumerable<string> echoParts;
             string invokeCommand;
             char delimiterEscape;
+            string entrypoint;
 
             if (DockerHelper.IsLinuxContainerModeEnabled)
             {
                 echoParts = variables.Select(envVar => $"${envVar.Name}");
-                invokeCommand = $"/bin/sh -c";
+                entrypoint = "/bin/sh";
+                invokeCommand = "-c";
                 delimiterEscape = '\\';
             }
             else
             {
                 echoParts = variables.Select(envVar => $"%{envVar.Name}%");
-                invokeCommand = $"CMD /S /C";
+                entrypoint = "CMD";
+                invokeCommand = "/S /C";
                 delimiterEscape = '^';
             }
 
             string combinedValues = dockerHelper.Run(
-                image: imageData.GetImage(imageType, dockerHelper),
+                image: imageName,
                 name: imageData.GetIdentifier($"env"),
+                optionalRunArgs: $"--entrypoint {entrypoint}",
                 command: $"{invokeCommand} \"echo {string.Join($"{delimiterEscape}{delimiter}", echoParts)}\"");
 
             string[] values = combinedValues.Split(delimiter);
