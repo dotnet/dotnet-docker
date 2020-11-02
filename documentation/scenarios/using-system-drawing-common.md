@@ -64,7 +64,7 @@ ENTRYPOINT ["dotnetapp"]
 
 For a framework-dependent deployment, you're relying on .NET Core being installed in the base image you'll be referencing. Because there are no official .NET Core 2.1/3.1 images based on [Windows Server Core](https://hub.docker.com/_/microsoft-windows-servercore) or [Windows](https://hub.docker.com/_/microsoft-windows), you'll need to author a Dockerfile that installs .NET Core yourself.
 
-Follow the instructions for [Installing .NET Core in a Dockerfile](installing-dotnet.md) in order to create a custom image based on [Server Core](https://hub.docker.com/_/microsoft-windows-servercore) or [Windows](https://hub.docker.com/_/microsoft-windows) that has .NET Core installed. For this example, let's say that you've tagged your image as `servercore/runtime:3.1`. You can then construct your application's Dockerfile to reference that tag as the base image:
+Follow the instructions for [Installing .NET Core in a Dockerfile](installing-dotnet.md) in order to create a custom image based on [Windows Server Core](https://hub.docker.com/_/microsoft-windows-servercore) or [Windows](https://hub.docker.com/_/microsoft-windows) that has .NET Core installed. For this example, let's say that you've tagged your image as `servercore/runtime:3.1`. You can then construct your application's Dockerfile to reference that tag as the base image:
 
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/sdk:3.1-nanoserver-2009 AS build

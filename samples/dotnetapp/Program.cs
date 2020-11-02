@@ -6,7 +6,7 @@ public static class Program
 {
     public static void Main(string[] args) 
     {
-          var defaultMessage = "Hello from .NET Core!";
+          var defaultMessage = "Hello from .NET!";
           var message = args is object && args.Length > 0 ? string.Join(' ', args): defaultMessage;
 
           WriteLine();

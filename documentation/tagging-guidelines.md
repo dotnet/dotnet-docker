@@ -10,19 +10,25 @@ The .NET Core image tags strive to align with the tagging practices utilized by 
 
     **Examples**
 
-    * `2.1.11-stretch-slim-arm32v7`
-    * `2.2.5-alpine3.9`
-    * `3.0.0-nanoserver-1809`
-    * `3.1.0-preview1-disco-arm64v8`
+    * `2.1.23-stretch-slim-arm32v7`
+    * `2.1.23-alpine3.12`
+    * `3.1.9-nanoserver-1809`
+    * `5.0.0-focal-arm64v8`
+    * `5.0.0-focal-amd64`
+
+> NOTE: In versions 2.1 and 3.1 of .NET Core, tags for the AMD64 architecture do not include the "-amd64" suffix (e.g. `2.1.23-alpine3.12`). In .NET 5.0 and higher, it is explicitly included (e.g. `5.0.0-focal-amd64`).
 
 1. `<Major.Minor Version>-<OS>-<Architecture>`
 
     **Examples**
 
     * `2.1-stretch-slim-arm32v7`
-    * `2.2-alpine3.9`
-    * `3.0-nanoserver-1809`
-    * `3.1-disco-arm64v8`
+    * `3.1-alpine3.12`
+    * `3.1-nanoserver-1809`
+    * `5.0-focal-amd64`
+    * `5.0-focal-arm64v8`
+
+> NOTE: In versions 2.1 and 3.1 of .NET Core, tags for the AMD64 architecture do not include the "-amd64" suffix (e.g. `3.1-alpine3.12`). In .NET 5.0 and higher, it is explicitly included (e.g. `5.0-focal-amd64`).
 
 ## Shared Tags
 
@@ -30,19 +36,17 @@ The .NET Core image tags strive to align with the tagging practices utilized by 
 
     **Examples**
 
-    * `2.1.11`
-    * `2.2.5`
-    * `3.0.0`
-    * `3.1.0-preview1`
+    * `2.1.23`
+    * `3.1.9`
+    * `5.0.0`
 
 1. `<Major.Minor Version>`
 
     **Examples**
 
     * `2.1`
-    * `2.2`
-    * `3.0`
     * `3.1`
+    * `5.0`
 
 1. `latest`
 
