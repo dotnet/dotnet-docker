@@ -134,7 +134,7 @@ docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http:/
 
 This example uses PowerShell.
 
-```PowerShell
+```console
 docker run --rm -it -p 8000:80 -v ${pwd}:/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:5.0 dotnet run --no-launch-profile
 ```
 
@@ -183,7 +183,7 @@ docker run --rm -it -p 8000:80 -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/s
 
 The following example uses PowerShell.
 
-```PowerShell
+```console
 docker run --rm -it -p 8000:80 -v ${pwd}:C:\app -w C:\app mcr.microsoft.com/dotnet/sdk:5.0 dotnet run --launch-profile publicdev
 ```
 

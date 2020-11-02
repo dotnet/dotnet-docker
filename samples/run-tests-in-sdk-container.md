@@ -65,7 +65,7 @@ docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/sdk:5.0 do
 
 This example uses PowerShell.
 
-```PowerShell
+```console
 docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:5.0 dotnet test --logger:trx
 ```
 
@@ -73,7 +73,7 @@ docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:5.0 do
 
 This example uses PowerShell.
 
-```PowerShell
+```console
 docker run --rm -v ${pwd}:C:\app -w C:\app\tests mcr.microsoft.com/dotnet/sdk:5.0 dotnet test --logger:trx
 ```
 
