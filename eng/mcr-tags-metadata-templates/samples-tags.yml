@@ -1,6 +1,6 @@
 $(McrTagsYmlRepo:samples)
-$(McrTagsYmlTagGroup:dotnetapp-buster-slim)
-$(McrTagsYmlTagGroup:aspnetapp-buster-slim)
+$(McrTagsYmlTagGroup:dotnetapp-buster-slim-amd64)
+$(McrTagsYmlTagGroup:aspnetapp-buster-slim-amd64)
 $(McrTagsYmlTagGroup:dotnetapp-buster-slim-arm32v7)
 $(McrTagsYmlTagGroup:aspnetapp-buster-slim-arm32v7)
 $(McrTagsYmlTagGroup:dotnetapp-buster-slim-arm64v8)
