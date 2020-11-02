@@ -101,9 +101,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected override string GetArchTagSuffix()
         {
-            if (Arch == Arch.Amd64 && Version.Major >= 5 && DockerHelper.IsLinuxContainerModeEnabled)
+            if (Arch == Arch.Amd64 && Version.Major < 5)
             {
-                return "-amd64";
+                return string.Empty;
             }
 
             return base.GetArchTagSuffix();
