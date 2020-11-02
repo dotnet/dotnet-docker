@@ -111,6 +111,7 @@ Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aa
 The following example demonstrates targeting architectures explicitly on Linux, for ARM32 and ARM64.
 
 ```console
+docker build --pull -t aspnetapp:alpine-arm32 -f Dockerfile.alpine-arm32 .
 docker build --pull -t aspnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
 docker build --pull -t aspnetapp:debian-arm32 -f Dockerfile.debian-arm32 .
 docker build --pull -t aspnetapp:debian-arm64 -f Dockerfile.debian-arm64 .
@@ -123,6 +124,7 @@ You can use `docker images` to see a listing of the images you've built, as you 
 aspnetapp           debian-arm64        8bf21dd704cf        14 seconds ago       223MB
 aspnetapp           debian-arm32        29a8bfa90a03        About a minute ago   190MB
 aspnetapp           alpine-arm64        8ec6bf841319        2 minutes ago        125MB
+aspnetapp           alpine-arm32        f99fda7e1807        8 seconds ago        98.9MB
 ```
 
 You can build ARM32 and ARM64 images on ARM or x64 machines. It may be preferred to build on x64 to take advantage of higher performance, and the ability to take advantage of CI/CD services.
