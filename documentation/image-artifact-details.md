@@ -20,14 +20,14 @@ You can discover the licenses for these components using the following pattern.
 The [.NET Core runtime image](https://hub.docker.com/_/microsoft-dotnet-runtime/) includes the .NET Core runtime, with an associated license and third party notice file.
 
 ```console
-$ docker run --rm mcr.microsoft.com/dotnet/runtime:3.1-buster-slim find ./usr/share/dotnet | grep LICENSE
+$ docker run --rm mcr.microsoft.com/dotnet/runtime:5.0-buster-slim find ./usr/share/dotnet | grep LICENSE
 ./usr/share/dotnet/LICENSE.txt
 ```
 
 The license can be printed out, as follows.
 
 ```console
-$ docker run --rm mcr.microsoft.com/dotnet/runtime:3.1-buster-slim cat ./usr/share/dotnet/LICENSE.txt
+$ docker run --rm mcr.microsoft.com/dotnet/runtime:5.0-buster-slim cat ./usr/share/dotnet/LICENSE.txt
 The MIT License (MIT)
 
 Copyright (c) .NET Foundation and Contributors
@@ -47,7 +47,7 @@ furnished to do so, subject to the following conditions:
 Third party notices can also be found, as demonstrated below.
 
 ```console
-$ docker run --rm mcr.microsoft.com/dotnet/runtime:3.1-buster-slim find ./usr/share/dotnet | grep -i third
+$ docker run --rm mcr.microsoft.com/dotnet/runtime:5.0-buster-slim find ./usr/share/dotnet | grep -i third
 ./usr/share/dotnet/ThirdPartyNotices.txt
 ```
 
@@ -56,40 +56,41 @@ $ docker run --rm mcr.microsoft.com/dotnet/runtime:3.1-buster-slim find ./usr/sh
 The [ASP.NET image](https://hub.docker.com/_/microsoft-dotnet-aspnet/) includes ASP.NET Core in addition to .NET Core, with associated licenses and third party notice files.
 
 ```console
-% docker run --rm mcr.microsoft.com/dotnet/aspnet:3.1-buster-slim find ./usr/share/dotnet | grep LICENSE
+$ docker run --rm mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim find ./usr/share/dotnet | grep LICENSE
 ./usr/share/dotnet/LICENSE.txt
-% docker run --rm mcr.microsoft.com/dotnet/aspnet:3.1-buster-slim find ./usr/share/dotnet | grep -i third
+$ docker run --rm mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim find ./usr/share/dotnet | grep -i third
 ./usr/share/dotnet/ThirdPartyNotices.txt
-./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.0/THIRD-PARTY-NOTICES.txt
+./usr/share/dotnet/shared/Microsoft.AspNetCore.App/5.0.0/THIRD-PARTY-NOTICES.txt
 ```
 
 ### .NET Core SDK Image
 
 The [SDK image](https://hub.docker.com/_/microsoft-dotnet-sdk/) includes the .NET Core SDK, which includes various .NET Core components, with associated licenses and third party notice files.
 
-Note: The SDK image is based on [`buildpack-deps`](https://hub.docker.com/_/buildpack-deps), which includes components that we distribute but do not use (like Python).
-
 ```console
-$ docker run --rm mcr.microsoft.com/dotnet/sdk:3.1-buster find ./usr/share/dotnet ./usr/share/powershell | grep LICENSE
-./usr/share/dotnet/sdk/3.1.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/LICENSE.TXT
+$ docker run --rm mcr.microsoft.com/dotnet/sdk:5.0-buster-slim find ./usr/share/dotnet ./usr/share/powershell | grep LICENSE
 ./usr/share/dotnet/LICENSE.txt
-./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/LICENSE.txt
-$ docker run --rm mcr.microsoft.com/dotnet/sdk:3.1-buster find ./usr/share/dotnet | grep -i third
-./usr/share/dotnet/sdk/3.1.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
+./usr/share/dotnet/sdk/5.0.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/LICENSE.TXT
+./usr/share/powershell/.store/powershell.linux.x64/7.1.0-rc.2/powershell.linux.x64/7.1.0-rc.2/tools/net5.0/any/LICENSE.txt
+$ docker run --rm mcr.microsoft.com/dotnet/sdk:5.0-buster-slim find ./usr/share/dotnet | grep -i third
 ./usr/share/dotnet/ThirdPartyNotices.txt
-./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.0/THIRD-PARTY-NOTICES.txt
-$ docker run --rm mcr.microsoft.com/dotnet/sdk:3.1-buster find ./usr/share/dotnet ./usr/share/powershell | grep -i third
-./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/ThirdPartyNotices.txt
+./usr/share/dotnet/shared/Microsoft.AspNetCore.App/5.0.0/THIRD-PARTY-NOTICES.txt
+./usr/share/dotnet/sdk/5.0.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
+$ docker run --rm mcr.microsoft.com/dotnet/sdk:5.0-buster-slim find ./usr/share/dotnet ./usr/share/powershell | grep -i third
+./usr/share/dotnet/ThirdPartyNotices.txt
+./usr/share/dotnet/shared/Microsoft.AspNetCore.App/5.0.0/THIRD-PARTY-NOTICES.txt
+./usr/share/dotnet/sdk/5.0.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
+./usr/share/powershell/.store/powershell.linux.x64/7.1.0-rc.2/powershell.linux.x64/7.1.0-rc.2/tools/net5.0/any/ThirdPartyNotices.txt
 ```
 
-Python also provides third party notice files, via `buildpack-deps`. You will see those if you use the following (unfiltered) pattern:
+Note: In .NET Core 2.1 and 3.1, the SDK image is based on [`buildpack-deps`](https://hub.docker.com/_/buildpack-deps), which includes components that we distribute but do not use (like Python). Python also provides third party notice files, via `buildpack-deps`. You will see those if you use the following (unfiltered) pattern:
 
 ```console
-% docker run --rm mcr.microsoft.com/dotnet/sdk:3.1 find . | grep -i third
-./usr/share/powershell/.store/powershell.linux.x64/7.0.0-preview.6/powershell.linux.x64/7.0.0-preview.6/tools/netcoreapp3.1/any/ThirdPartyNotices.txt
+$ docker run --rm mcr.microsoft.com/dotnet/sdk:3.1 find . | grep -i third
+./usr/share/powershell/.store/powershell.linux.x64/7.0.3/powershell.linux.x64/7.0.3/tools/netcoreapp3.1/any/ThirdPartyNotices.txt
 ./usr/share/dotnet/ThirdPartyNotices.txt
-./usr/share/dotnet/sdk/3.1.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
-./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.0/THIRD-PARTY-NOTICES.txt
+./usr/share/dotnet/sdk/3.1.403/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
+./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.9/THIRD-PARTY-NOTICES.txt
 ./usr/lib/python2.7/dist-packages/mercurial/thirdparty
 ./usr/lib/python2.7/dist-packages/mercurial/thirdparty/cbor
 ./usr/lib/python2.7/dist-packages/mercurial/thirdparty/cbor/__init__.py
