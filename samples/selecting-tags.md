@@ -67,12 +67,14 @@ The following tags demonstrate the pattern used to describe each processor, usin
 
 ### x64
 
-* `5.0-alpine`
-* `5.0-bionic`
-* `5.0-buster-slim`
+* `5.0-alpine-amd64`
+* `5.0-bionic-amd64`
+* `5.0-buster-slim-amd64`
+* `5.0-nanoserver-2009`
 * `5.0-nanoserver-2004`
 * `5.0-nanoserver-1909`
 * `5.0-nanoserver-1809`
+* `5.0-windowsservercore-ltsc2019`
 
 ### ARM64
 
