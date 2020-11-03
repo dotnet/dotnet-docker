@@ -118,9 +118,9 @@ Tag | Dockerfile
 Tag | Dockerfile
 ---------| ---------------
 5.0.100-rc.2-nanoserver-1809, 5.0-nanoserver-1809, 5.0.100-rc.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/nanoserver-1809/amd64/Dockerfile)
+5.0.100-rc.2-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 3.1.403-nanoserver-1809, 3.1-nanoserver-1809, 3.1.403, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-1809/amd64/Dockerfile)
 2.1.811-nanoserver-1809, 2.1-nanoserver-1809, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1809/amd64/Dockerfile)
-5.0.0-rc.2-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/sdk at https://mcr.microsoft.com/v2/dotnet/sdk/tags/list.
 
