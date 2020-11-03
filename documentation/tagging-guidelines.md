@@ -10,19 +10,25 @@ The .NET Core image tags strive to align with the tagging practices utilized by 
 
     **Examples**
 
-    * `2.1.11-stretch-slim-arm32v7`
-    * `2.2.5-alpine3.9`
-    * `3.0.0-nanoserver-1809`
-    * `3.1.0-preview1-disco-arm64v8`
+    * `2.1.23-stretch-slim-arm32v7`
+    * `2.1.23-alpine3.12`
+    * `3.1.9-nanoserver-1809`
+    * `5.0.0-focal-arm64v8`
+    * `5.0.0-focal-amd64`
+
+> NOTE: In versions 2.1 and 3.1 of .NET Core, tags for the AMD64 architecture do not include the "-amd64" suffix (e.g. `2.1.23-alpine3.12`). In .NET 5.0 and higher, it is explicitly included for Linux distros (e.g. `5.0.0-focal-amd64`).
 
 1. `<Major.Minor Version>-<OS>-<Architecture>`
 
     **Examples**
 
     * `2.1-stretch-slim-arm32v7`
-    * `2.2-alpine3.9`
-    * `3.0-nanoserver-1809`
-    * `3.1-disco-arm64v8`
+    * `3.1-alpine3.12`
+    * `3.1-nanoserver-1809`
+    * `5.0-focal-amd64`
+    * `5.0-focal-arm64v8`
+
+> NOTE: In versions 2.1 and 3.1 of .NET Core, tags for the AMD64 architecture do not include the "-amd64" suffix (e.g. `3.1-alpine3.12`). In .NET 5.0 and higher, it is explicitly included for Linux distros (e.g. `5.0-focal-amd64`).
 
 ## Shared Tags
 
@@ -30,19 +36,17 @@ The .NET Core image tags strive to align with the tagging practices utilized by 
 
     **Examples**
 
-    * `2.1.11`
-    * `2.2.5`
-    * `3.0.0`
-    * `3.1.0-preview1`
+    * `2.1.23`
+    * `3.1.9`
+    * `5.0.0`
 
 1. `<Major.Minor Version>`
 
     **Examples**
 
     * `2.1`
-    * `2.2`
-    * `3.0`
     * `3.1`
+    * `5.0`
 
 1. `latest`
 
@@ -65,4 +69,4 @@ All shared tags [support multiple platforms](https://blog.docker.com/2017/09/doc
 
 * `<OS>` - The name of the OS release and variant the image is based upon.  The image the tag references is updated whenever a new OS patch is released.  The OS release name does support pinning to specific OS patches.  If OS patch pinning is required then the image digest should be used (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
 
-* `<Architecture>` - The architecture the image is based on.  `amd64` is the implied default if no architecture is specified.
+* `<Architecture>` - The architecture the image is based on.  For .NET Core 2.1 and 3.1, `amd64` is the implied default if no architecture is specified. In .NET 5.0 and higher, `amd64` is explicitly included for Linux distros (e.g. `5.0-focal-amd64`).

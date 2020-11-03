@@ -15,13 +15,13 @@ This scenario relies on [volume mounting](https://docs.docker.com/engine/admin/v
 It is recommended to pull the SDK image before running the appropriate command. This ensures that you get the latest patch version of the SDK. Use the following command:
 
 ```console
-docker pull mcr.microsoft.com/dotnet/sdk:3.1
+docker pull mcr.microsoft.com/dotnet/sdk:5.0
 ```
 
 ## Linux
 
 ```console
-docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:3.1 dotnet publish -c release -o out
+docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:5.0 dotnet publish -c release -o out
 ```
 
 You can see the built binaries with the following command:
@@ -34,7 +34,7 @@ dotnetapp  dotnetapp.deps.json  dotnetapp.dll  dotnetapp.pdb  dotnetapp.runtimec
 ## macOS
 
 ```console
-docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:3.1 dotnet publish -c release -o out -r osx-x64 --self-contained false
+docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:5.0 dotnet publish -c release -o out -r osx-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:
@@ -51,7 +51,7 @@ dotnetapp.dll
 The following example uses PowerShell.
 
 ```console
-docker run --rm -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:3.1 dotnet publish -c release -o out -r win-x64 --self-contained false
+docker run --rm -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:5.0 dotnet publish -c release -o out -r win-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:
@@ -64,11 +64,11 @@ PS C:\git\dotnet-docker\samples\dotnetapp> dir out
 
 Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
--a---           1/14/2020  9:19 PM            449 dotnetapp.deps.json
--a---           1/14/2020  9:19 PM           7680 dotnetapp.dll
--a---           1/14/2020  9:19 PM         168448 dotnetapp.exe
--a---           1/14/2020  9:19 PM            736 dotnetapp.pdb
--a---           1/14/2020  9:19 PM            146 dotnetapp.runtimeconfig.json
+-a----         11/2/2020  10:46 AM            449 dotnetapp.deps.json
+-a----         11/2/2020  10:46 AM           7680 dotnetapp.dll
+-a----         11/2/2020  10:46 AM         141312 dotnetapp.exe
+-a----         11/2/2020  10:46 AM           9444 dotnetapp.pdb
+-a----         11/2/2020  10:46 AM            152 dotnetapp.runtimeconfig.json
 ```
 
 ## Windows using Windows containers
@@ -76,7 +76,7 @@ Mode                 LastWriteTime         Length Name
 The following example uses PowerShell.
 
 ```console
-docker run --rm -v ${pwd}:c:\app -w c:\app mcr.microsoft.com/dotnet/sdk:3.1 dotnet publish -c Release -o out
+docker run --rm -v ${pwd}:c:\app -w c:\app mcr.microsoft.com/dotnet/sdk:5.0 dotnet publish -c Release -o out
 ```
 
 You can see the built binaries with the following command:
@@ -89,11 +89,11 @@ PS C:\git\dotnet-docker\samples\dotnetapp> dir out
 
 Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
--a---           1/14/2020  9:25 PM            419 dotnetapp.deps.json
--a---           1/14/2020  9:25 PM           8192 dotnetapp.dll
--a---           1/14/2020  9:25 PM         168448 dotnetapp.exe
--a---           1/14/2020  9:25 PM            744 dotnetapp.pdb
--a---           1/14/2020  9:25 PM            154 dotnetapp.runtimeconfig.json
+-a----         11/2/2020  10:49 AM            419 dotnetapp.deps.json
+-a----         11/2/2020  10:49 AM           8192 dotnetapp.dll
+-a----         11/2/2020  10:49 AM         141312 dotnetapp.exe
+-a----         11/2/2020  10:49 AM           9440 dotnetapp.pdb
+-a----         11/2/2020  10:49 AM            160 dotnetapp.runtimeconfig.json
 ```
 
 ## Building to a separate location
@@ -103,7 +103,7 @@ You may want the build output to be written to a separate location than the sour
 The following example demonstrates doing that on macOS:
 
 ```console
-docker run --rm -v ~/dotnetapp:/out -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:3.1 dotnet publish -c release -o /out -r osx-x64 --self-contained false
+docker run --rm -v ~/dotnetapp:/out -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:5.0 dotnet publish -c release -o /out -r osx-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:
@@ -119,7 +119,7 @@ The following PowerShell example demonstrates doing that on Windows (using Linux
 
 ```console
 mkdir C:\dotnetapp
-docker run --rm -v C:\dotnetapp:/out -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:3.1 dotnet publish -c release -o /out -r win-x64 --self-contained false
+docker run --rm -v C:\dotnetapp:c:\app\out -v ${pwd}:c:\app -w /app mcr.microsoft.com/dotnet/sdk:5.0 dotnet publish -c release -o out -r win-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:
@@ -132,11 +132,12 @@ PS C:\git\dotnet-docker\samples\dotnetapp> dir C:\dotnetapp\
 
 Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
--a---           1/14/2020  9:27 PM            449 dotnetapp.deps.json
--a---           1/14/2020  9:27 PM           7680 dotnetapp.dll
--a---           1/14/2020  9:27 PM         168448 dotnetapp.exe
--a---           1/14/2020  9:27 PM            736 dotnetapp.pdb
--a---           1/14/2020  9:27 PM            146 dotnetapp.runtimeconfig.json
+-a----         11/2/2020  10:52 AM            472 dotnetapp.deps.json
+-a----         11/2/2020  10:52 AM           7680 dotnetapp.dll
+-a----         11/2/2020  10:52 AM         141312 dotnetapp.exe
+-a----         11/2/2020  10:52 AM           9452 dotnetapp.pdb
+-a----         11/2/2020  10:52 AM            160 dotnetapp.runtimeconfig.json
+```
 
 ## More Samples
 
