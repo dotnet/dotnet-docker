@@ -3663,7 +3663,7 @@
               "os": "windows",
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
-                "$(dotnet|5.0|product-version)-windowsservercore-ltsc2019": {},
+                "$(sdk|5.0|product-version)-windowsservercore-ltsc2019": {},
                 "5.0-windowsservercore-ltsc2019": {}
               }
             }
