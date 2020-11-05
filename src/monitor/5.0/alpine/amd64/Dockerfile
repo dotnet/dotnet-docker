@@ -27,6 +27,6 @@ ENV \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
 
-RUN ["chmod", "755", "dotnet-monitor"]
+RUN chmod 755 dotnet-monitor
 
 ENTRYPOINT ["dotnet-monitor", "collect"]
