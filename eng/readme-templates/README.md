@@ -1,50 +1,33 @@
 {{if match(PARENT_REPO, "nightly") || VARIABLES["branch"] = "nightly"
 :The images from the dotnet/{{if IS_PRODUCT_FAMILY:nightly^else:{{PARENT_REPO}}}} repositories include last-known-good (LKG) builds for the next release of [.NET Core](https://github.com/dotnet/core).
 
-See [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
+See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with official releases of [.NET Core](https://github.com/dotnet/core).
 
-}}{{if match(PARENT_REPO, "nightly") || PARENT_REPO = "dotnet"
-:As part of the .NET 5.0 release the Docker images are published to different repositories.  The 2.1 and 3.1 images are published to [core branded repositories](https://hub.docker.com/_/microsoft-dotnet-core/) while the 5.0 and higher versions will be published to [non-core branded repositories](https://hub.docker.com/_/microsoft-dotnet/).  See the [related issue](https://github.com/dotnet/dotnet-docker/issues/1765) for more details.
+}}As part of the .NET 5.0 release, all .NET Docker images (including .NET Core 2.1 and 3.1) have transitioned to a new set of Docker repositories described below. Updates will continue to be made to supported tags in the old repository locations for backwards compatibility. Please update any repository references to these new names. For more information see the [.NET 5.0 repository rename announcement](https://github.com/dotnet/dotnet-docker/issues/2337).
 
-}}{{if !IS_PRODUCT_FAMILY:# Featured Tags
+{{if !IS_PRODUCT_FAMILY:# Featured Tags
 
 {{if match(SHORT_REPO, "samples")
 :* `dotnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-  * `docker pull mcr.microsoft.com/dotnet/core/samples:dotnetapp`
+  * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp`
 * `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
-  * `docker pull mcr.microsoft.com/dotnet/core/samples:aspnetapp`
-^elif match(PARENT_REPO, "core"):* `3.1` (LTS/Current)
-  * `docker pull {{FULL_REPO}}:3.1`
-^else:* `5.0` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
+^elif match(SHORT_REPO, "monitor"):* `5.0` (Preview)
   * `docker pull {{FULL_REPO}}:5.0`
+^else:* `5.0` (Current)
+  * `docker pull {{FULL_REPO}}:5.0`
+* `3.1` (LTS)
+  * `docker pull {{FULL_REPO}}:3.1`
 }}}}{{if IS_PRODUCT_FAMILY && VARIABLES["branch"] = "master"
 :# Featured Repos
-
-## .NET Core 2.1/3.1
-
-* [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/): .NET Core SDK
-* [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/): ASP.NET Core Runtime
-* [dotnet/core/runtime](https://hub.docker.com/_/microsoft-dotnet-core-runtime/): .NET Core Runtime
-* [dotnet/core/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps/): .NET Core Runtime Dependencies
-* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
-
-## .NET 5.0+
 
 * [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
 * [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
 * [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
+* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
 ^elif IS_PRODUCT_FAMILY && VARIABLES["branch"] = "nightly"
 :# Featured Repos
-
-## .NET Core 2.1/3.1
-
-* [dotnet/core-nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-core-nightly-sdk/): .NET Core SDK (Preview)
-* [dotnet/core-nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-nightly-aspnet/): ASP.NET Core Runtime (Preview)
-* [dotnet/core-nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime/): .NET Core Runtime (Preview)
-* [dotnet/core-nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime-deps/): .NET Core Runtime Dependencies (Preview)
-
-## .NET 5.0+
 
 * [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
@@ -64,52 +47,29 @@ The [.NET Core Docker samples](https://github.com/dotnet/dotnet-docker/blob/mast
 {{InsertTemplate(join(filter(["Use", SHORT_REPO, "md"], len), "."))}}
 # Related Repos
 
-.NET Core 2.1/3.1:
-
-{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly"
-    :* [dotnet/core](https://hub.docker.com/_/microsoft-dotnet-core/): .NET Core
-}}{{if (PARENT_REPO = "core" && SHORT_REPO != "sdk") || (PARENT_REPO = "dotnet" && SHORT_REPO = "sdk")
-    :* [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/): .NET Core SDK
-}}{{if (PARENT_REPO = "core" && SHORT_REPO != "aspnet") || (PARENT_REPO = "dotnet" && SHORT_REPO = "aspnet")
-    :* [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/): ASP.NET Core Runtime
-}}{{if (PARENT_REPO = "core" && SHORT_REPO != "runtime") || (PARENT_REPO = "dotnet" && SHORT_REPO = "runtime")
-    :* [dotnet/core/runtime](https://hub.docker.com/_/microsoft-dotnet-core-runtime/): .NET Core Runtime
-}}{{if (PARENT_REPO = "core" && SHORT_REPO != "runtime-deps") || (PARENT_REPO = "dotnet" && SHORT_REPO = "runtime-deps")
-    :* [dotnet/core/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps/): .NET Core Runtime Dependencies
-}}{{if REPO != "dotnet/core/samples"
-    :* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/): .NET Core Samples
-}}{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "master"
-    :* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly/): .NET Core (Preview)
-}}{{if (PARENT_REPO = "core-nightly" && SHORT_REPO != "sdk") || (PARENT_REPO = "nightly" && SHORT_REPO = "sdk")
-    :* [dotnet/core-nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-core-nightly-sdk/): .NET Core SDK (Preview)
-}}{{if (PARENT_REPO = "core-nightly" && SHORT_REPO != "aspnet") || (PARENT_REPO = "nightly" && SHORT_REPO = "aspnet")
-    :* [dotnet/core-nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-nightly-aspnet/): ASP.NET Core Runtime (Preview)
-}}{{if (PARENT_REPO = "core-nightly" && SHORT_REPO != "runtime") || (PARENT_REPO = "nightly" && SHORT_REPO = "runtime")
-    :* [dotnet/core-nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime/): .NET Core Runtime (Preview)
-}}{{if (PARENT_REPO = "core-nightly" && SHORT_REPO != "runtime-deps") || (PARENT_REPO = "nightly" && SHORT_REPO = "runtime-deps")
-    :* [dotnet/core-nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-nightly-runtime-deps/): .NET Core Runtime Dependencies (Preview)
-}}
-.NET 5.0+:
+.NET:
 
 {{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly"
     :* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
-}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "sdk") || (PARENT_REPO = "core" && SHORT_REPO = "sdk")
+}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "sdk")
     :* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
-}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "aspnet") || (PARENT_REPO = "core" && SHORT_REPO = "aspnet")
+}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "aspnet")
     :* [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
-}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "runtime") || (PARENT_REPO = "core" && SHORT_REPO = "runtime")
+}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "runtime")
     :* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
-}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "runtime-deps") || (PARENT_REPO = "core" && SHORT_REPO = "runtime-deps")
+}}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "runtime-deps")
     :* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
+}}{{if REPO != "dotnet/samples"
+    :* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
 }}{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "master"
     :* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
-}}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "sdk") || (PARENT_REPO = "core-nightly" && SHORT_REPO = "sdk")
+}}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "sdk")
     :* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
-}}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "aspnet") || (PARENT_REPO = "core-nightly" && SHORT_REPO = "aspnet")
+}}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "aspnet")
     :* [dotnet/nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
-}}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "runtime") || (PARENT_REPO = "core-nightly" && SHORT_REPO = "runtime")
+}}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "runtime")
     :* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
-}}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "runtime-deps") || (PARENT_REPO = "core-nightly" && SHORT_REPO = "runtime-deps")
+}}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "runtime-deps")
     :* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 }}{{if PARENT_REPO = "nightly" && SHORT_REPO != "monitor"
     :* [dotnet/nightly/monitor](https://hub.docker.com/_/microsoft-dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
@@ -140,5 +100,5 @@ See [Microsoft Support for .NET Core](https://github.com/dotnet/core/blob/master
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 * [.NET Core license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
 * [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
-* [Windows Nano Server license](https://hub.docker.com/_/microsoft-windows-nanoserver/) (only applies to Windows containers)
+* [Windows base image license](https://docs.microsoft.com/virtualization/windowscontainers/images-eula) (only applies to Windows containers)
 * [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)

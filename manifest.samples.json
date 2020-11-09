@@ -3,7 +3,7 @@
   "repos": [
     {
       "id": "samples",
-      "name": "dotnet/core/samples",
+      "name": "dotnet/samples",
       "readme": "README.samples.md",
       "readmeTemplate": "eng/readme-templates/README.md",
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/samples-tags.yml",
@@ -19,7 +19,7 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "dotnetapp-buster-slim": {}
+                "dotnetapp-buster-slim-amd64": {}
               }
             },
             {
@@ -48,14 +48,6 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "dotnetapp-nanoserver-1809": {}
-              }
-            },
-            {
-              "dockerfile": "samples/dotnetapp",
-              "os": "windows",
-              "osVersion": "nanoserver-1903",
-              "tags": {
-                "dotnetapp-nanoserver-1903": {}
               }
             },
             {
@@ -94,14 +86,14 @@
               "os": "linux",
               "osVersion": "buster",
               "tags": {
-                "aspnetapp-buster-slim": {}
+                "aspnetapp-buster-slim-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-buster-slim"
+                    "$(Repo:samples):dotnetapp-buster-slim-amd64"
                   ]
                 }
               ]
@@ -157,23 +149,6 @@
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:samples):dotnetapp-nanoserver-1809"
-                  ]
-                }
-              ]
-            },
-            {
-              "dockerfile": "samples/aspnetapp",
-              "os": "windows",
-              "osVersion": "nanoserver-1903",
-              "tags": {
-                "aspnetapp-nanoserver-1903": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "pr-build",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:samples):dotnetapp-nanoserver-1903"
                   ]
                 }
               ]

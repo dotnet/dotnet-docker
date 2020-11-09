@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime
+ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:3.1-bionic-arm64v8
 
 # Install ASP.NET Core

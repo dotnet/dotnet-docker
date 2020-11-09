@@ -41,7 +41,10 @@ namespace Microsoft.DotNet.Docker.Tests
             await VerifySampleAsync(imageData, SampleImageType.Dotnetapp, (image, containerName) =>
             {
                 string output = DockerHelper.Run(image, containerName);
-                Assert.StartsWith("Hello from .NET Core!", output);
+                Assert.StartsWith("Hello from .NET!", output);
+
+                ValidateEnvironmentVariables(imageData, image, SampleImageType.Dotnetapp);
+
                 return Task.CompletedTask;
             });
         }
@@ -69,6 +72,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(containerName, DockerHelper, OutputHelper);
                     }
+
+                    ValidateEnvironmentVariables(imageData, image, SampleImageType.Aspnetapp);
                 }
                 finally
                 {
@@ -159,6 +164,23 @@ namespace Microsoft.DotNet.Docker.Tests
                     DockerHelper.DeleteImage(image);
                 }
             }
+        }
+
+        private void ValidateEnvironmentVariables(SampleImageData imageData, string image, SampleImageType imageType)
+        {
+            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
+            variables.AddRange(ProductImageTests.GetCommonEnvironmentVariables());
+
+            if (imageType == SampleImageType.Aspnetapp)
+            {
+                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:80"));
+            }
+            
+            EnvironmentVariableInfo.Validate(
+                variables,
+                image,
+                imageData,
+                DockerHelper);
         }
     }
 }

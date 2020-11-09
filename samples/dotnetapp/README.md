@@ -2,7 +2,7 @@
 
 This sample demonstrates how to build container images for .NET Core console apps. You can use this samples for Linux and Windows containers, for x64, ARM32 and ARM64 architectures.
 
-The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You can test the built image locally or deploy it to a [container registry](../push-image-to-acr.md).
+The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-runtime/). You can test the built image locally or deploy it to a [container registry](../push-image-to-acr.md).
 
 The instructions assume that you have cloned this repo, have [Docker](https://www.docker.com/products/docker) installed, and have a command prompt open within the `samples/dotnetapp` directory within the repo.
 
@@ -11,7 +11,7 @@ The instructions assume that you have cloned this repo, have [Docker](https://ww
 If want to skip ahead, you can try a pre-built version with the following command:
 
 ```console
-docker run --rm mcr.microsoft.com/dotnet/core/samples
+docker run --rm mcr.microsoft.com/dotnet/samples
 ```
 
 ## Build a .NET Core image
@@ -34,7 +34,7 @@ dotnetapp           latest              baee380605f4        14 seconds ago      
 The logic to build the image is described in the [Dockerfile](Dockerfile), which follows.
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -46,13 +46,13 @@ COPY . .
 RUN dotnet publish -c release -o /app --no-restore
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1
+FROM mcr.microsoft.com/dotnet/runtime:5.0
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["./dotnetapp"]
 ```
 
-The `sdk:3.1` and `runtime:3.1` tags are both multi-arch tags that will result in an image that is compatible for the given chip and OS. These simple tags (only contain a version number) are great to get started with Docker because they adapt to your environment. We recommend using an OS-specific tag for the runtime for production applications to ensure that you always get the OS you expect. This level of specification isn't needed for the SDK in most cases.
+The `sdk:5.0` and `runtime:5.0` tags are both multi-arch tags that will result in an image that is compatible for the given chip and OS. These simple tags (only contain a version number) are great to get started with Docker because they adapt to your environment. We recommend using an OS-specific tag for the runtime for production applications to ensure that you always get the OS you expect. This level of specification isn't needed for the SDK in most cases.
 
 This Dockerfile copies and restores the project file as the first step so that the results of those commands can be cached for subsequent builds since project file edits are less common than source code edits. Editing a `.cs` file, for example, does not invalidate the layer created by copying and restoring project file, which makes subsequent docker builds much faster.
 
@@ -60,7 +60,7 @@ This Dockerfile copies and restores the project file as the first step so that t
 
 ## Build an image for Alpine, Debian or Ubuntu
 
-.NET Core multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `3.1`, as opposed to a distro-specific tag like `3.1-alpine`.
+.NET Core multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `5.0`, as opposed to a distro-specific tag like `5.0-alpine`.
 
 This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. Docker makes it easy to use alternate Dockerfiles by using the `-f` argument.
 
@@ -132,12 +132,12 @@ docker images dotnetapp
 The `Dockerfile.nanoserver-x64` Dockerfile targets a version-specific tag, which will result in a Nano Server version that targets a specific Windows version (and will only work on Windows hosts of the same version or higher). You can update the following the tag to a different version, as needed.
 
 ```console
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-2009
+FROM mcr.microsoft.com/dotnet/runtime:5.0-nanoserver-2009
 ```
 
 ## Build an image for ARM32 and ARM64
 
-By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that for Alpine, .NET Core is only supported on ARM64 and x64, and not ARM32.
+By default, distro-specific .NET Core tags target x64, such as `5.0-alpine` or `5.0-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that for Alpine, .NET Core is only supported on ARM64 and x64, and not ARM32.
 
 > Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
 

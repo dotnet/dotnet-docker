@@ -6,34 +6,34 @@ You can use the referenced images and tags with the docker CLI, for example with
 
 ## .NET Core Docker repos
 
-There are multiple [.NET Core Docker repos](https://hub.docker.com/_/microsoft-dotnet-core) that expose various layers of the .NET Core platform.
+There are multiple [.NET Core Docker repos](https://hub.docker.com/_/microsoft-dotnet) that expose various layers of the .NET Core platform.
 
-* [dotnet/core/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-core-runtime-deps/) -- Linux-only images that contains the native dependencies of .NET Core. Best used for self-contained applications.
-* [dotnet/core/runtime](https://hub.docker.com/_/microsoft-dotnet-core-runtime/) -- Images that contains the .NET Core runtime. Best used for console applications. On Linux, depends on the `runtime-deps` image.
-* [dotnet/core/aspnet](https://hub.docker.com/_/microsoft-dotnet-core-aspnet/) -- Images that contains the ASP.NET Core runtime. Best used for web applications and services. Depends on the `runtime` image.
-* [dotnet/core/sdk](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) -- An image that contains the .NET Core SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/core/aspnet] for Alpine and on [windows/nanoserver](https://hub.docker.com/_/microsoft-windows-nanoserver) for Windows.
+* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) -- Linux-only images that contains the native dependencies of .NET Core. Best used for self-contained applications.
+* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/) -- Images that contains the .NET Core runtime. Best used for console applications. On Linux, depends on the `runtime-deps` image.
+* [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/) -- Images that contains the ASP.NET Core runtime. Best used for web applications and services. Depends on the `runtime` image.
+* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/) -- An image that contains the .NET Core SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/) for Alpine and on [windows/nanoserver](https://hub.docker.com/_/microsoft-windows-nanoserver) for Windows.
 
 The repos above are commonly used on the command line and in Dockerfiles. There are two more repos that may be useful to you:
 
-* [dotnet/core-nightly](https://hub.docker.com/_/microsoft-dotnet-core-nightly) -- A duplicate structure of repos which contain the latest pre-released versions of .NET Core. (which are not supported in production).
-* [dotnet/core/samples](https://hub.docker.com/_/microsoft-dotnet-core-samples) -- A set of samples that demonstrate .NET Core being used in console and web scenarios.
+* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly) -- A duplicate structure of repos which contain the latest pre-released versions of .NET Core. (which are not supported in production).
+* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples) -- A set of samples that demonstrate .NET Core being used in console and web scenarios.
 
 ## Tags that work everywhere
 
-Each repo exposes a set of tags you can use. There are a set of version number tags, like `3.1`, that you can use on multiple operating systems and are supported on most processor types (x64, ARM64 and ARM32). If you don't see an operating system or processor type in the tag, you know it's a [multi-platform](https://www.docker.com/blog/docker-official-images-now-multi-platform/) tag that will work everywhere.
+Each repo exposes a set of tags you can use. There are a set of version number tags, like `5.0`, that you can use on multiple operating systems and are supported on most processor types (x64, ARM64 and ARM32). If you don't see an operating system or processor type in the tag, you know it's a [multi-platform](https://www.docker.com/blog/docker-official-images-now-multi-platform/) tag that will work everywhere.
 
 When you pull these tags, you will get a Debian image for Linux and Windows Nano Server images on Windows (if you are using Windows containers). If you are happy with that behavior, then these are the easiest tags to use and enable you to write Dockerfiles that can be built on multiple machines. However, the images you produce may differ across environments (which may or may not be what you want).
 
 For example, the following command will work in all supported environments:
 
 ```console
-docker run --rm mcr.microsoft.com/dotnet/core/runtime:3.1 dotnet
+docker run --rm mcr.microsoft.com/dotnet/runtime:5.0 dotnet
 ```
 
 Similarly, you can build an image with the following `FROM` statement:
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
 ```
 
 This will work on all operating systems and on all supported chips, but building this Dockerfile on Windows x64 will produce a different image than on Linux ARM64 and they are not interchangeable.
@@ -42,24 +42,21 @@ This will work on all operating systems and on all supported chips, but building
 
 If you want a specific operating system image, you should use a specific operating system tag. We publish images for Alpine, Debian, Ubuntu and Windows Nano Server.
 
-The following tags demonstrate the pattern used to describe each operating system (using .NET Core 3.1 as the example):
+The following tags demonstrate the pattern used to describe each operating system (using .NET 5.0 as the example):
 
-* `3.1-alpine` (Latest Alpine)
-* `3.1-bionic` (Ubuntu 18.04)
-* `3.1-buster` (Debian 10)
-* `3.1-buster-slim` (Debian 10)
-* `3.1-nanoserver-2009` (Nano Server, version 2009)
-* `3.1-nanoserver-2004` (Nano Server, version 2004)
-* `3.1-nanoserver-1909` (Nano Server, version 1909)
-* `3.1-nanoserver-1903` (Nano Server, version 1903)
-* `3.1-nanoserver-1809` (Nano Server, version 1809)
-
-> Note: Both `buster` and `buster-slim` tags are used, for .NET Core Debian images. The `buster` base image is used for SDK images and `buster-slim` is used by runtime-related images.
+* `5.0-alpine` (Latest Alpine)
+* `5.0-bionic` (Ubuntu 18.04)
+* `5.0-buster-slim` (Debian 10)
+* `5.0-nanoserver-2009` (Nano Server, version 2009)
+* `5.0-nanoserver-2004` (Nano Server, version 2004)
+* `5.0-nanoserver-1909` (Nano Server, version 1909)
+* `5.0-nanoserver-1809` (Nano Server, version 1809)
+* `5.0-windowsservercore-ltsc2019` (Windows Server Core LTSC 2019)
 
 For example, the following command will pull an x64 Alpine image:
 
 ```console
-docker pull mcr.microsoft.com/dotnet/core/runtime:3.1-alpine
+docker pull mcr.microsoft.com/dotnet/runtime:5.0-alpine
 ```
 
 ## Targeting a specific processor type
@@ -70,36 +67,34 @@ The following tags demonstrate the pattern used to describe each processor, usin
 
 ### x64
 
-* `3.1-alpine`
-* `3.1-bionic`
-* `3.1-buster`
-* `3.1-buster-slim`
-* `3.1-nanoserver-2004`
-* `3.1-nanoserver-1909`
-* `3.1-nanoserver-1903`
-* `3.1-nanoserver-1809`
+* `5.0-alpine-amd64`
+* `5.0-bionic-amd64`
+* `5.0-buster-slim-amd64`
+* `5.0-nanoserver-2009`
+* `5.0-nanoserver-2004`
+* `5.0-nanoserver-1909`
+* `5.0-nanoserver-1809`
+* `5.0-windowsservercore-ltsc2019`
 
 ### ARM64
 
-* `3.1-alpine-arm64v8`
-* `3.1-bionic-arm64v8`
-* `3.1-buster-arm64v8`
-* `3.1-buster-slim-arm64v8`
+* `5.0-alpine-arm64v8`
+* `5.0-bionic-arm64v8`
+* `5.0-buster-slim-arm64v8`
 
 ### ARM32
 
-* `3.1-alpine-arm32v7`
-* `3.1-bionic-arm32v7`
-* `3.1-buster-arm32v7`
-* `3.1-buster-slim-arm32v7`
+* `5.0-alpine-arm32v7`
+* `5.0-bionic-arm32v7`
+* `5.0-buster-slim-arm32v7`
 
 ## Matching SDK and Runtime images
 
-As already stated, we offer images for Alpine, Debian and Ubuntu, for Linux. People (and organizations) choose each of these distros for different reasons. Many people likely choose Debian, for example, because it is the default distro (for example, the `3.1` tag in each of the .NET Core Docker repos will pull a Debian image).
+As already stated, we offer images for Alpine, Debian and Ubuntu, for Linux. People (and organizations) choose each of these distros for different reasons. Many people likely choose Debian, for example, because it is the default distro (for example, the `5.0` tag in each of the .NET Core Docker repos will pull a Debian image).
 
-For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. You may want to make a conscious choice to make the distros match for those two tags. If you are only targeting Debian, this is easy, because you can just use the simple multi-platform tags we expose (like `3.1`), and you'll always get Debian (when building for Linux containers). If you are targeting Alpine or Ubuntu for your final runtime image (`aspnet` or `runtime`), then you have a choice, as follows:
+For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. You may want to make a conscious choice to make the distros match for those two tags. If you are only targeting Debian, this is easy, because you can just use the simple multi-platform tags we expose (like `5.0`), and you'll always get Debian (when building for Linux containers). If you are targeting Alpine or Ubuntu for your final runtime image (`aspnet` or `runtime`), then you have a choice, as follows:
 
-* Target a multi-platform tag for the SDK (like `3.1`) to make the SDK stage simple and to enable your Dockerfile to be built in multiple environments (with different processor architectures). This is what most of the samples Dockerfiles in this repo do.
+* Target a multi-platform tag for the SDK (like `5.0`) to make the SDK stage simple and to enable your Dockerfile to be built in multiple environments (with different processor architectures). This is what most of the samples Dockerfiles in this repo do.
 * Match SDK and runtime tags to ensure that you are using the same OS (with the associated shell and commands) and package manager for all stages within a Dockerfile.
 
 ## Building for your production environment

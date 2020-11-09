@@ -54,13 +54,13 @@ _The set of .NET Core versions that are being released as a unit._
 
           imageBuilder.pathArgs: --path 'src/*/3.1/*' --path 'src/*/5.0/*'
 1. - [ ] Confirm images have been ingested by MCR
-1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-core)
+1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet)
 
 ## 2. Sample Images (Not needed for Preview-only release)
 
 1. - [ ] Confirm build for [dotnet-docker-samples](https://dev.azure.com/dnceng/internal/_build?definitionId=376) (internal MSFT link) was queued. This will be queued automatically by [dotnet-docker-tools-check-base-image-updates](https://dev.azure.com/dnceng/internal/_build?definitionId=536) when it detects that the product images have been updated (detection runs on a schedule). Alternatively, you can manually queue the samples build.
 1. - [ ] Confirm sample images have been ingested by MCR
-1. - [ ] Confirm README has been updated in Docker Hub for [microsoft-dotnet-core-samples](https://hub.docker.com/_/microsoft-dotnet-core-samples/)
+1. - [ ] Confirm README has been updated in Docker Hub for [microsoft-dotnet-samples](https://hub.docker.com/_/microsoft-dotnet-samples/)
 
 ## 3. Nightly Branch Tasks (Not needed for Preview-only release)
 
@@ -73,4 +73,4 @@ _The set of .NET Core versions that are being released as a unit._
 1. - [ ] Merge PR
 1. - [ ] Wait for automatically queued CI build to finish on [dotnet-docker-nightly pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=359) (internal MSFT link)
 1. - [ ] Confirm images have been ingested by MCR
-1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-core-nightly)
+1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-nightly)

@@ -56,7 +56,8 @@ $activeOS = docker version -f "{{ .Server.Os }}"
 
 if (!(Test-Path $DotnetInstallScript)) {
     $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
-    Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript
+    $EngCommonDir = "$PSScriptRoot/../eng/common"
+    & $EngCommonDir/Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript"
 }
 
 if ($IsRunningOnUnix) {

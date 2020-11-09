@@ -38,13 +38,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string GetProductImageName(string tag, string variantName)
         {
-            string repoNameModifier = null;
-            if (Version.Major >= 5)
-            {
-                repoNameModifier = Config.IsNightlyRepo ? "/nightly" : string.Empty;
-            }
-
-            return GetImageName(tag, variantName, repoNameModifier);
+            return GetImageName(tag, variantName);
         }
 
         public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
@@ -107,9 +101,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected override string GetArchTagSuffix()
         {
-            if (Arch == Arch.Amd64 && Version.Major >= 5 && DockerHelper.IsLinuxContainerModeEnabled)
+            if (Arch == Arch.Amd64 && Version.Major < 5)
             {
-                return "-amd64";
+                return string.Empty;
             }
 
             return base.GetArchTagSuffix();

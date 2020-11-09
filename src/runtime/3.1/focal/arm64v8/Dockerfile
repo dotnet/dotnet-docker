@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:3.1-focal-arm64v8
 
 RUN apt-get update \

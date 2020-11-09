@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using System.Runtime;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -150,8 +151,15 @@ namespace Microsoft.DotNet.Docker.Tests
         private static string GetDockerOS() => Execute("version -f \"{{ .Server.Os }}\"");
         private static string GetDockerArch() => Execute("version -f \"{{ .Server.Arch }}\"");
 
-        public string GetContainerAddress(string container) =>
-            ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + container);
+        public string GetContainerAddress(string container)
+        {
+            string containerAddress = ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + container);
+            if (String.IsNullOrWhiteSpace(containerAddress)){
+                containerAddress = ExecuteWithLogging("inspect -f \"{{.NetworkSettings.Networks.nat.IPAddress }}\" " + container);
+            }
+
+            return containerAddress;
+        }
 
         public string GetContainerHostPort(string container, int containerPort = 80) =>
             ExecuteWithLogging(

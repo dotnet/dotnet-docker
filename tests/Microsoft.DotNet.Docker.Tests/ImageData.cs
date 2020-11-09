@@ -88,7 +88,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static string GetRepoNameModifier() => $"/core{(Config.IsNightlyRepo ? "-nightly" : string.Empty)}";
+        public static string GetRepoNameModifier() => $"{(Config.IsNightlyRepo ? "/nightly" : string.Empty)}";
 
         public static string GetImageName(string tag, string variantName, string repoNameModifier = null)
         {
@@ -103,17 +103,20 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected virtual string GetArchTagSuffix()
         {
-            string arch = string.Empty;
-            if (Arch == Arch.Arm)
+            if (Arch == Arch.Amd64 && DockerHelper.IsLinuxContainerModeEnabled)
             {
-                arch = "-arm32v7";
+                return "-amd64";
+            }
+            else if (Arch == Arch.Arm)
+            {
+                return "-arm32v7";
             }
             else if (Arch == Arch.Arm64)
             {
-                arch = "-arm64v8";
+                return "-arm64v8";
             }
 
-            return arch;
+            return string.Empty;
         }
 
         private static string GetRegistryName(string repo, string tag)

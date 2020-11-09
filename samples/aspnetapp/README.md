@@ -2,7 +2,7 @@
 
 This sample demonstrates how to build container images for ASP.NET Core web apps. You can use these samples for Linux and Windows containers, for x64, ARM32 and ARM64 architectures.
 
-The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-core-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-core-runtime/). You can test the built image locally or deploy it to a [container registry](../push-image-to-acr.md).
+The sample builds an application in a [.NET Core SDK container](https://hub.docker.com/_/microsoft-dotnet-sdk/) and then copies the build result into a new image (the one you are building) based on the smaller [.NET Core Docker Runtime image](https://hub.docker.com/_/microsoft-dotnet-runtime/). You can test the built image locally or deploy it to a [container registry](../push-image-to-acr.md).
 
 The instructions assume that you have cloned this repo, have [Docker](https://www.docker.com/products/docker) installed, and have a command prompt open within the `samples/aspnetapp` directory within the repo.
 
@@ -11,7 +11,7 @@ The instructions assume that you have cloned this repo, have [Docker](https://ww
 If want to skip ahead, you can try a pre-built version with the following command and access it in your web browser at `http://localhost:8000`.
 
 ```console
-docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/core/samples:aspnetapp
+docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 ## Build an ASP.NET Core image
@@ -67,7 +67,7 @@ aspnetapp           nanoserver          d4b7586827f2        About an hour ago   
 
 ## Build an image for Alpine, Debian or Ubuntu
 
-.NET Core multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `3.1`, as opposed to a distro-specific tag like `3.1-alpine`.
+.NET Core multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `5.0`, as opposed to a distro-specific tag like `5.0-alpine`.
 
 This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. The [.NET Core Docker Sample](../dotnetapp/README.md) demonstrates targeting a larger set of distros.
 
@@ -104,7 +104,7 @@ You can run these images in the same way as is done above, with Alpine.
 
 ## Build an image for ARM32 and ARM64
 
-By default, distro-specific .NET Core tags target x64, such as `3.1-alpine` or `3.1-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET Core is only supported on Alpine on ARM64 and x64, and not ARM32.
+By default, distro-specific .NET Core tags target x64, such as `5.0-alpine` or `5.0-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET Core is only supported on Alpine on ARM64 and x64, and not ARM32.
 
 Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
 

@@ -14,13 +14,14 @@ Each distribution (distro) has a unique approach to releasing, schedule and end-
 - Debian — support the latest *stable* version at the time a `major.minor` version of .NET Core is released.  Add support for each new *stable* version as it is released.  Debian images are included in the shared/multi-arch tags.
 - Ubuntu — support the latest *LTS* version at the time a `major.minor` version of .NET Core is released.  Add support for each new *LTS* version as it is released.
 
-Pre-release versions of the supported distros will be made available within the [nightly repositories](https://hub.docker.com/_/microsoft-dotnet-core-nightly) based on the availability of pre-release OS base images.
+Pre-release versions of the supported distros will be made available within the [nightly repositories](https://hub.docker.com/_/microsoft-dotnet-nightly) based on the availability of pre-release OS base images.
 
 ### Windows
 
-Nano Server is the only Windows SKU supported by the official .NET Core images.  Nano Server is the best Windows SKU to run .NET Core apps from a performance perspective.  In order for Nano Server to perform well and remain lightweight, it doesn't have support for every scenario.  For these cases, it is expected that consumers will need to manage their own custom .NET Core images based on [Windows Server Core](https://hub.docker.com/_/microsoft-windows-servercore) or [Windows](https://hub.docker.com/_/microsoft-windows).
+The official .NET Core images support Nano Server as well as LTS versions of Windows Server Core for .NET 5.0 and higher.  Nano Server is the best Windows SKU to run .NET Core apps from a performance perspective.  In order for Nano Server to perform well and remain lightweight, it doesn't have support for every scenario.  In case your scenario isn't supported by Nano Server, you may need to use one of the .NET images based on Windows Server Core. For scenarios where the official .NET images don't meet your needs, you will need to manage your own custom .NET Core images based on [Windows Server Core](https://hub.docker.com/_/microsoft-windows-servercore) or [Windows](https://hub.docker.com/_/microsoft-windows).
 
 - Nano Server - support all supported versions with each .NET Core version.  Each version is also included within the shared/multi-arch tags.
+- Windows Server Core - support all LTS versions starting with .NET 5.0.  Each version is also included within the shared/multi-arch tags.
 
 ## Architectures
 

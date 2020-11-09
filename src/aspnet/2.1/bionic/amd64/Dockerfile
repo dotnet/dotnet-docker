@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/core/runtime-deps
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:2.1-bionic
 
 RUN apt-get update \
