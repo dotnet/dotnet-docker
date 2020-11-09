@@ -6,7 +6,7 @@ FROM arm32v7/buildpack-deps:focal-curl as installer
 ARG DOTNET_VERSION
 
 # Retrieve .NET
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-5.0.0-linux-arm.tar.gz \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-arm.tar.gz \
     && dotnet_sha512='b186bcf68b1fb6fbad750e0716b323e6f474f1977ce413646ecf2b009e2590c66956c44b883cc26263e65d9356ae8cd6f738476cb66a9434cc50d1fc4b11e790' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
