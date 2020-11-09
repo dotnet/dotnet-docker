@@ -1,6 +1,6 @@
 # escape=`
 
-ARG DOTNET_VERSION=5.0.0-rtm.20519.4
+ARG DOTNET_VERSION=5.0.0
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:2009-amd64 AS installer

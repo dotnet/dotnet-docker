@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-ARG ASPNET_VERSION=5.0.0-rtm.20526.5
+ARG ASPNET_VERSION=5.0.0
 
 # Installer image
 FROM arm32v7/buildpack-deps:focal-curl as installer

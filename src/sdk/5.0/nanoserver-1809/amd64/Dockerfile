@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-ARG DOTNET_SDK_VERSION=5.0.100-rtm.20526.5
+ARG DOTNET_SDK_VERSION=5.0.100
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:1809-amd64 AS installer

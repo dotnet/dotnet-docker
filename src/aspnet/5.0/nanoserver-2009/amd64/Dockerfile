@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-ARG ASPNET_VERSION=5.0.0-rtm.20526.5
+ARG ASPNET_VERSION=5.0.0
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:2009-amd64 AS installer

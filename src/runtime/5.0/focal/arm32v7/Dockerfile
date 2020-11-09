@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-ARG DOTNET_VERSION=5.0.0-rtm.20519.4
+ARG DOTNET_VERSION=5.0.0
 
 # Installer image
 FROM arm32v7/buildpack-deps:focal-curl as installer

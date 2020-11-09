@@ -7,7 +7,7 @@ ENV `
     ASPNETCORE_URLS=http://+:80 `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
-    DOTNET_VERSION=5.0.0-rtm.20519.4
+    DOTNET_VERSION=5.0.0
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
