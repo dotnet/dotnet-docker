@@ -35,7 +35,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
             {
-               variables.Add(GetRuntimeVersionVariableInfo(imageData, DockerHelper));
+                variables.Add(GetRuntimeVersionVariableInfo(imageData, DockerHelper));
             }
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);

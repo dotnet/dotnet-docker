@@ -64,14 +64,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
             {
-               string version = imageData.GetProductVersion(ImageType, DockerHelper);
-               variables.Add(new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version));
+                string version = imageData.GetProductVersion(ImageType, DockerHelper);
+                variables.Add(new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version));
             }
 
             if (imageData.Version.Major >= 5)
             {
-               variables.Add(AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper));
-               variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
+                variables.Add(AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper));
+                variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
             }
 
             if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))

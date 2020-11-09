@@ -36,12 +36,12 @@ namespace Microsoft.DotNet.Docker.Tests
             EnvironmentVariableInfo aspnetVersionVariableInfo = GetAspnetVersionVariableInfo(imageData, DockerHelper);
             if (aspnetVersionVariableInfo != null)
             {
-               variables.Add(aspnetVersionVariableInfo);
+                variables.Add(aspnetVersionVariableInfo);
             }
 
             if (imageData.Version.Major >= 5)
             {
-               variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
+                variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
             }
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);
