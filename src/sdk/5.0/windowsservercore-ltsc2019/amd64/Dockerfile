@@ -6,7 +6,7 @@ FROM $REPO:5.0-windowsservercore-ltsc2019
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
-    DOTNET_SDK_VERSION=5.0.100-rc.2.20479.15 `
+    DOTNET_SDK_VERSION=5.0.100 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -20,7 +20,7 @@ RUN powershell -Command "`
         `
         # Retrieve .NET SDK
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-        $dotnet_sha512 = '49ea4f9e0fdc51bfd46b1269b84dd09f26be957c3a81c80203a0b0d521c8ec190d0d2d631a4e1899c83b604bf9a529698f19eccdf4aed3d0fd2f89102f6556e1'; `
+        $dotnet_sha512 = '6836916bc6f3f9f7c183eb49fa1f6130640bcf623f310785466cb36c98f0554d656ec69ce3524f22d1e0d21528796182c7b4f0ed7c66e37cbc0ecbcd9f59bcd5'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -29,9 +29,9 @@ RUN powershell -Command "`
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.1.0-rc.1'; `
+        $powershell_version = '7.1.0'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = '11548549314d2e940210ef1d79b6948ca14a6ad1296591ad115a292b4003ff5090ea376b2d7957c00b88b153c9e043b95cf91e3ff20bd74c6e8ba44a763ec957'; `
+        $powershell_sha512 = 'ce3fca7de7cf45db939c7b4c251f285f515b74b5f5ee50888ef65c3f22e66866cab4759c4b1752703610eb64cc97c5d38dda5ec96c2171e2fbc9188b16eb8763'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
