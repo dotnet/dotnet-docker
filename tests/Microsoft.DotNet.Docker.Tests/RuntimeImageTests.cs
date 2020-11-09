@@ -33,10 +33,10 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
 
-            //if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
-            //{
-            //    variables.Add(GetRuntimeVersionVariableInfo(imageData, DockerHelper));
-            //}
+            if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
+            {
+               variables.Add(GetRuntimeVersionVariableInfo(imageData, DockerHelper));
+            }
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);
         }

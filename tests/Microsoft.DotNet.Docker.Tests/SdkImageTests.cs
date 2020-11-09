@@ -62,17 +62,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
             }
 
-            //if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
-            //{
-            //    string version = imageData.GetProductVersion(ImageType, DockerHelper);
-            //    variables.Add(new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version));
-            //}
+            if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
+            {
+               string version = imageData.GetProductVersion(ImageType, DockerHelper);
+               variables.Add(new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version));
+            }
 
-            //if (imageData.Version.Major >= 5)
-            //{
-            //    variables.Add(AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper));
-            //    variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
-            //}
+            if (imageData.Version.Major >= 5)
+            {
+               variables.Add(AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper));
+               variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
+            }
 
             if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
             {
@@ -143,7 +143,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// <summary>
         /// Verifies that the dotnet folder contents of an SDK container match the contents in the official SDK archive file.
         /// </summary>
-        //[Theory]
+        [Theory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
