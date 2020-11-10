@@ -306,6 +306,6 @@ There are a number of techniques that can be used to protect secrets in a Docker
 
 ## General Troubleshooting
 
-* The sample Dockerfiles provided above make the assumption that the application's projects are all based on .NET Core. If you're attempting to build a project that is based on a .NET Framework project that makes use of a packages.config file, you'll need to run `nuget restore` instead of `dotnet restore` for that project or solution.
+* The sample Dockerfiles provided above make the assumption that the application's projects are all based on .NET. If you're attempting to build a project that is based on a .NET Framework project that makes use of a packages.config file, you'll need to run `nuget restore` instead of `dotnet restore` for that project or solution.
 
 * Often times, restoration of NuGet packages is the first point in a Dockerfile that attempts to make a network call. Firewalls and proxies can impact network connectivity. If you're encountering connection issues when attempting to restore NuGet packages, make sure that the container actually has network access by adding a command like `RUN ping www.microsoft.com`.

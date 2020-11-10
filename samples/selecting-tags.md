@@ -1,22 +1,22 @@
-# Selecting .NET Core tags
+# Selecting .NET tags
 
-There are many .NET Core images that are available that you can use. Some are very general and others are intended to satisfy more specific needs. Together, they satisfy a wide variety of scenarios.
+There are many .NET images that are available that you can use. Some are very general and others are intended to satisfy more specific needs. Together, they satisfy a wide variety of scenarios.
 
 You can use the referenced images and tags with the docker CLI, for example with `docker pull`, `docker run`, or as part of a FROM statement within a Dockerfile.
 
-## .NET Core Docker repos
+## .NET Docker repos
 
-There are multiple [.NET Core Docker repos](https://hub.docker.com/_/microsoft-dotnet) that expose various layers of the .NET Core platform.
+There are multiple [.NET Docker repos](https://hub.docker.com/_/microsoft-dotnet) that expose various layers of the .NET platform.
 
-* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) -- Linux-only images that contains the native dependencies of .NET Core. Best used for self-contained applications.
-* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/) -- Images that contains the .NET Core runtime. Best used for console applications. On Linux, depends on the `runtime-deps` image.
+* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) -- Linux-only images that contains the native dependencies of .NET. Best used for self-contained applications.
+* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/) -- Images that contains the .NET runtime. Best used for console applications. On Linux, depends on the `runtime-deps` image.
 * [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/) -- Images that contains the ASP.NET Core runtime. Best used for web applications and services. Depends on the `runtime` image.
-* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/) -- An image that contains the .NET Core SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/) for Alpine and on [windows/nanoserver](https://hub.docker.com/_/microsoft-windows-nanoserver) for Windows.
+* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/) -- An image that contains the .NET SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/) for Alpine and on [windows/nanoserver](https://hub.docker.com/_/microsoft-windows-nanoserver) for Windows.
 
 The repos above are commonly used on the command line and in Dockerfiles. There are two more repos that may be useful to you:
 
-* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly) -- A duplicate structure of repos which contain the latest pre-released versions of .NET Core. (which are not supported in production).
-* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples) -- A set of samples that demonstrate .NET Core being used in console and web scenarios.
+* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly) -- A duplicate structure of repos which contain the latest pre-released versions of .NET. (which are not supported in production).
+* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples) -- A set of samples that demonstrate .NET being used in console and web scenarios.
 
 ## Tags that work everywhere
 
@@ -90,7 +90,7 @@ The following tags demonstrate the pattern used to describe each processor, usin
 
 ## Matching SDK and Runtime images
 
-As already stated, we offer images for Alpine, Debian and Ubuntu, for Linux. People (and organizations) choose each of these distros for different reasons. Many people likely choose Debian, for example, because it is the default distro (for example, the `5.0` tag in each of the .NET Core Docker repos will pull a Debian image).
+As already stated, we offer images for Alpine, Debian and Ubuntu, for Linux. People (and organizations) choose each of these distros for different reasons. Many people likely choose Debian, for example, because it is the default distro (for example, the `5.0` tag in each of the .NET Docker repos will pull a Debian image).
 
 For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. You may want to make a conscious choice to make the distros match for those two tags. If you are only targeting Debian, this is easy, because you can just use the simple multi-platform tags we expose (like `5.0`), and you'll always get Debian (when building for Linux containers). If you are targeting Alpine or Ubuntu for your final runtime image (`aspnet` or `runtime`), then you have a choice, as follows:
 
@@ -101,7 +101,7 @@ For multi-stage Dockerfiles, there are typically at least two tags referenced, a
 
 Each container image is generated for a specific processor architecture and operating system (Linux or Windows). It is important to construct each Dockerfile so that it will produce the image type you need. Docker [multi-platform](https://www.docker.com/blog/docker-official-images-now-multi-platform/) tags can confuse the situation, since they work on multiple platforms (hence the name) and may produce images that map to your build host and not your production environment.
 
-For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. It is fine to use a multi-platform tag for the SDK. That's the pattern used for .NET Core samples. You will pull an SDK image that works on your machine. It is important to define a .NET Core runtime (`runtime-deps`, `runtime`, or `aspnet`) that matches your production environment.
+For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. It is fine to use a multi-platform tag for the SDK. That's the pattern used for .NET samples. You will pull an SDK image that works on your machine. It is important to define a .NET runtime (`runtime-deps`, `runtime`, or `aspnet`) that matches your production environment.
 
 Linux containers are flexible. As long as the processor architecture matches, you can run Alpine, Debian and Ubuntu (the distros we produce images for) in any environment that supports Linux containers. [Windows images are more restricted](https://docs.microsoft.com/virtualization/windowscontainers/deploy-containers/version-compatibility). You cannot load containers for newer Windows versions on older hosts. For the best experience, the Windows container version should match the host Windows version.
 

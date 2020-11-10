@@ -1,6 +1,6 @@
-# Build in a .NET Core SDK container
+# Build in a .NET SDK container
 
-You can use Docker to run your build in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-sdk/). This is useful to either avoid the need to install .NET Core on the build machine or ensure that your environment is correctly configured (dev, staging, or production).
+You can use Docker to run your build in an isolated environment using the [.NET SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-sdk/). This is useful to either avoid the need to install .NET on the build machine or ensure that your environment is correctly configured (dev, staging, or production).
 
 The instructions assume that you have cloned the repository locally, and that you are in the `samples/dotnetapp` directory (due to the volume mounting syntax), as demonstrated by the examples.
 
@@ -141,5 +141,5 @@ Mode                 LastWriteTime         Length Name
 
 ## More Samples
 
-* [.NET Core Docker Samples](../README.md)
+* [.NET Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)

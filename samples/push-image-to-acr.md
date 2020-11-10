@@ -1,6 +1,6 @@
 # Push Docker Images to Azure Container Registry
 
-This sample demonstrates how to push .NET Core images to [Azure Container Registry (ACR)](https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal). The instructions are based on the [.NET Core Docker Sample](README.md).
+This sample demonstrates how to push .NET images to [Azure Container Registry (ACR)](https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal). The instructions are based on the [.NET Docker Sample](README.md).
 
 These instructions use the [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) and the [Docker client](https://www.docker.com/products/docker).
 
@@ -105,5 +105,5 @@ docker run --rm richlander.azurecr.io/dotnetapp
 
 ## More Samples
 
-* [.NET Core Docker Samples](../README.md)
+* [.NET Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)

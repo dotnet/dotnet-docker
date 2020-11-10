@@ -1,23 +1,23 @@
-# Determining License and Source Pedigree for .NET Core Container Images
+# Determining License and Source Pedigree for .NET Container Images
 
-This document is intended to be complimentary to the [Instructions for Finding Linux Legal Metadata](https://aka.ms/mcr/osslinuxmetadata).  This document describes how to interrogate the .NET Core images to determine licensing and version information for .NET Core and other components.
+This document is intended to be complimentary to the [Instructions for Finding Linux Legal Metadata](https://aka.ms/mcr/osslinuxmetadata).  This document describes how to interrogate the .NET images to determine licensing and version information for .NET and other components.
 
-## .NET Core and Other Components
+## .NET and Other Components
 
-.NET Core and other components are carried in .NET Core images, all of which are from Microsoft or the .NET Foundation. The following list describes the complete set of other software (beyond base images and packages):
+.NET and other components are carried in .NET images, all of which are from Microsoft or the .NET Foundation. The following list describes the complete set of other software (beyond base images and packages):
 
-* .NET Core Runtime
+* .NET Runtime
 * ASP.NET Core Runtime
-* .NET Core SDK
+* .NET SDK
 * PowerShell
 
 You can see these components installed in the [runtime](https://github.com/dotnet/dotnet-docker/blob/d4a9e799d047f3e86cd2730f48b689c371d38480/3.1/runtime/buster-slim/amd64/Dockerfile#L9-L17), [aspnet](https://github.com/dotnet/dotnet-docker/blob/d4a9e799d047f3e86cd2730f48b689c371d38480/3.1/aspnet/buster-slim/amd64/Dockerfile#L4-10), and [sdk](https://github.com/dotnet/dotnet-docker/blob/d4a9e799d047f3e86cd2730f48b689c371d38480/3.1/sdk/buster/amd64/Dockerfile#L26-L49) Dockerfiles.
 
 You can discover the licenses for these components using the following pattern.
 
-### .NET Core Runtime Image
+### .NET Runtime Image
 
-The [.NET Core runtime image](https://hub.docker.com/_/microsoft-dotnet-runtime/) includes the .NET Core runtime, with an associated license and third party notice file.
+The [.NET runtime image](https://hub.docker.com/_/microsoft-dotnet-runtime/) includes the .NET runtime, with an associated license and third party notice file.
 
 ```console
 $ docker run --rm mcr.microsoft.com/dotnet/runtime:5.0-buster-slim find ./usr/share/dotnet | grep LICENSE
@@ -51,9 +51,9 @@ $ docker run --rm mcr.microsoft.com/dotnet/runtime:5.0-buster-slim find ./usr/sh
 ./usr/share/dotnet/ThirdPartyNotices.txt
 ```
 
-### .NET Core ASP.NET Image
+### ASP.NET Core Image
 
-The [ASP.NET image](https://hub.docker.com/_/microsoft-dotnet-aspnet/) includes ASP.NET Core in addition to .NET Core, with associated licenses and third party notice files.
+The [ASP.NET Core image](https://hub.docker.com/_/microsoft-dotnet-aspnet/) includes ASP.NET Core in addition to .NET, with associated licenses and third party notice files.
 
 ```console
 $ docker run --rm mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim find ./usr/share/dotnet | grep LICENSE
@@ -63,9 +63,9 @@ $ docker run --rm mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim find ./usr/sha
 ./usr/share/dotnet/shared/Microsoft.AspNetCore.App/5.0.0/THIRD-PARTY-NOTICES.txt
 ```
 
-### .NET Core SDK Image
+### .NET SDK Image
 
-The [SDK image](https://hub.docker.com/_/microsoft-dotnet-sdk/) includes the .NET Core SDK, which includes various .NET Core components, with associated licenses and third party notice files.
+The [SDK image](https://hub.docker.com/_/microsoft-dotnet-sdk/) includes the .NET SDK, which includes various .NET components, with associated licenses and third party notice files.
 
 ```console
 $ docker run --rm mcr.microsoft.com/dotnet/sdk:5.0-buster-slim find ./usr/share/dotnet ./usr/share/powershell | grep LICENSE
