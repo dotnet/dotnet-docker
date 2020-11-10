@@ -1,12 +1,12 @@
 # Running Tests with Docker
 
-You can use Docker to run your unit tests in an isolated environment using the [.NET Core SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-sdk/). This is useful if your development and production environments don't match, like, for example, Windows and Linux, respectively. There are multiple ways to run unit tests in containers, which are demonstrated in this document.
+You can use Docker to run your unit tests in an isolated environment using the [.NET SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-sdk/). This is useful if your development and production environments don't match, like, for example, Windows and Linux, respectively. There are multiple ways to run unit tests in containers, which are demonstrated in this document.
 
 [Building in an SDK container](build-in-sdk-container.md) is a similar scenario and relies on similar patterns. [Building and testing multiple projects with Docker](https://github.com/dotnet/dotnet-docker/blob/samples/samples/complexapp/README.md) sample offers additional test patterns that you may want to adopt.
 
 This document uses the [tests](complexapp/tests) that are part of [complexapp](complexapp). The instructions assume that you are in the [complexapp](complexapp) directory.
 
-The following examples demonstrate using `dotnet test` in a .NET Core SDK container. It builds tests and dependent projects from source and then runs them. You have to re-launch the container every time you want to test source code changes.
+The following examples demonstrate using `dotnet test` in a .NET SDK container. It builds tests and dependent projects from source and then runs them. You have to re-launch the container every time you want to test source code changes.
 
 Alternatively, you can use `dotnet watch test`. This command reruns tests within a running container, with every local code change.
 
@@ -26,7 +26,7 @@ curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-do
 
 ## Running tests
 
-The easiest approach is to run `dotnet test` within a .NET Core SDK container using the following pattern, with `docker run` and volume mounting.  This initial example is demonstrated on Windows with PowerShell (in Linux container mode). Instructions for all OSes follow.
+The easiest approach is to run `dotnet test` within a .NET SDK container using the following pattern, with `docker run` and volume mounting.  This initial example is demonstrated on Windows with PowerShell (in Linux container mode). Instructions for all OSes follow.
 
 ```console
 > docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:5.0 dotnet test
@@ -79,5 +79,5 @@ docker run --rm -v ${pwd}:C:\app -w C:\app\tests mcr.microsoft.com/dotnet/sdk:5.
 
 ## More Samples
 
-* [.NET Core Docker Samples](../README.md)
+* [.NET Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)

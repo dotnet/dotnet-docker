@@ -4,7 +4,7 @@ It is easy to build and test multiple projects with Docker by following some bas
 
 The `complexapp` sample is intended to act as a [very simple](complexapp/Program.cs) "complex application". It is composed of multiple projects, including a test project. It is used to demonstrate various workflows.
 
-Simpler workflows are provided at [.NET Core Docker samples](../README.md).
+Simpler workflows are provided at [.NET Docker samples](../README.md).
 
 The instructions assume that you have cloned this repo, have [Docker](https://www.docker.com/products/docker) installed, and have a command prompt open within the `samples/complexapp` directory within the repo.
 
@@ -43,7 +43,7 @@ There are two primary ways to test within the workflow of an application contain
 * Run `dotnet test` as a `RUN` step within the image build.
 * Expose an opt-in `ENTRYPOINT` as part of a Dockerfile stage.
 
-This is different than running tests within a [.NET Core SDK container](../run-tests-in-sdk-container.md), which establishes a generic environment (which also works well). The rest of this document is focused on running tests within the same container environment as the application.
+This is different than running tests within a [.NET SDK container](../run-tests-in-sdk-container.md), which establishes a generic environment (which also works well). The rest of this document is focused on running tests within the same container environment as the application.
 
 > Note: See [Establishing docker environment](../establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
 
@@ -213,5 +213,5 @@ Alternatively, you can build with the `--rm=false` option. This leaves the inter
 
 ## More Samples
 
-* [.NET Core Docker Samples](../README.md)
+* [.NET Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)

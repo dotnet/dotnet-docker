@@ -4,7 +4,7 @@ Docker establishes a virtualized environment that separates the guest (the conta
 
 Programming environments, like .NET, have affordances for looking for assets and settings in multiple locations. They also may look at multiple types of files (like `.sln`, `.cs` and `.csproj` files). These locations and file types will not naturally be accessible from within a Docker environment. When you define a Docker environment, you need to intentionally specify all the files, locations and settings that are required for the operation and outcome you want.
 
-The remainder of this document will consider the various configuration options used by [.NET Core samples](README.md).
+The remainder of this document will consider the various configuration options used by [.NET samples](README.md).
 
 The [dotnetapp sample](dotnetapp/README.md) demonstrates establishing a Docker environment for a single directory of assets.
 

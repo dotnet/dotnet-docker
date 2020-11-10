@@ -1,8 +1,8 @@
-# Run applications in a .NET Core SDK container
+# Run applications in a .NET SDK container
 
-You can use containers to establish a .NET Core development environment with only Docker and an editor. The environment can be made to match your local machine, production or both.
+You can use containers to establish a .NET development environment with only Docker and an editor. The environment can be made to match your local machine, production or both.
 
-The following examples demonstrate using `dotnet run` in a .NET Core SDK container. It builds an application from source and then launches it. You have to re-launch the container every time you want to observe source code changes.
+The following examples demonstrate using `dotnet run` in a .NET SDK container. It builds an application from source and then launches it. You have to re-launch the container every time you want to observe source code changes.
 
 Alternatively, you can use `dotnet watch run`. This command reruns the application within a running container, with every local code change.
 
@@ -22,7 +22,7 @@ curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-do
 
 ## Console app
 
-The following example demonstrates using `dotnet run` with a console app in a .NET Core SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
+The following example demonstrates using `dotnet run` with a console app in a .NET SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
 
 The instructions assume you are in the `samples/dotnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax).
 
@@ -101,7 +101,7 @@ docker run --rm -it -v ${pwd}:c:\app\ -w \app mcr.microsoft.com/dotnet/sdk:5.0 d
 
 ## ASP.NET Core App
 
-The following example demonstrates using `dotnet run` with an ASP.NET Core app in a .NET Core SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
+The following example demonstrates using `dotnet run` with an ASP.NET Core app in a .NET SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
 
 The instructions assume you are in the `samples/aspnetapp/aspnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax used).
 
@@ -189,5 +189,5 @@ docker run --rm -it -p 8000:80 -v ${pwd}:C:\app -w C:\app mcr.microsoft.com/dotn
 
 ## More Samples
 
-* [.NET Core Docker Samples](../README.md)
+* [.NET Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)
