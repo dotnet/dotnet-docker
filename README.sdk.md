@@ -12,8 +12,8 @@ As part of the .NET 5.0 release, all .NET Docker images (including .NET Core 2.1
 This image contains the .NET SDK which is comprised of three parts:
 
 1. .NET CLI
-2. .NET runtime
-3. ASP.NET Core
+1. .NET runtime
+1. ASP.NET Core
 
 Use this image for your development process (developing, building and testing applications).
 
