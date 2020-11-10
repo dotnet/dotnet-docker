@@ -29,5 +29,5 @@ Distro: &lt;name/version&gt;
 
 ## Master Branch Tasks
 
-1. - [ ] After the product teams have signed off on the new distro, merge these changes to the master branch as part of the [release process](net-core-release.md) for the next .NET Core release
+1. - [ ] After the product teams have signed off on the new distro, merge these changes to the master branch as part of the [release process](dotnet-release.md) for the next .NET release
 1. - [ ] Create an announcement (example: [Alpine 3.10](https://github.com/dotnet/dotnet-docker/issues/1418)) unless the new distro is added only for pre-release versions in which the announcement would be incorporated in the pre-release notes.

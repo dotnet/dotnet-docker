@@ -1,12 +1,12 @@
 # Push Docker Images to Docker Hub
 
-This sample demonstrates hot to push .NET Core images to the [Docker Hub](https://hub.docker.com/) container registry. The instructions are based on the [.NET Core Docker Sample](README.md).
+This sample demonstrates hot to push .NET images to the [Docker Hub](https://hub.docker.com/) container registry. The instructions are based on the [.NET Docker Sample](README.md).
 
 Similar instructions are also available to [push to Azure Container Registry](push-image-to-acr.md).
 
 ## Build the Image
 
-The following instructions are a subset of the [.NET Core Docker Sample](README.md) instructions, which assume that you are starting from the root of the [dotnet-docker repo](https://github.com/dotnet/dotnet-docker).
+The following instructions are a subset of the [.NET Docker Sample](README.md) instructions, which assume that you are starting from the root of the [dotnet-docker repo](https://github.com/dotnet/dotnet-docker).
 
 ```console
 cd samples
@@ -73,5 +73,5 @@ docker run --rm richlander/dotnetapp
 
 ## More Samples
 
-* [.NET Core Docker Samples](../README.md)
+* [.NET Docker Samples](../README.md)
 * [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker-samples/)
