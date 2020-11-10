@@ -143,11 +143,17 @@ namespace Microsoft.DotNet.Docker.Tests
         /// <summary>
         /// Verifies that the dotnet folder contents of an SDK container match the contents in the official SDK archive file.
         /// </summary>
-        //[Theory]
-        // Disabled this test due to https://github.com/dotnet/aspnetcore/issues/27670
+        [Theory]
+        
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
+            // Disable this test for 5.0 due to https://github.com/dotnet/aspnetcore/issues/27670
+            if (imageData.Version.Major == 5)
+            {
+                return;
+            }
+
             if (!(imageData.Version.Major >= 5 ||
                 (imageData.Version.Major >= 3 &&
                     (imageData.SdkOS.StartsWith(OS.AlpinePrefix) || !DockerHelper.IsLinuxContainerModeEnabled))))
