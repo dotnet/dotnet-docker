@@ -1,8 +1,8 @@
 # Image Tagging Guidelines
 
-This document describes the tagging practices used on the official .NET Core Docker images.
+This document describes the tagging practices used on the official .NET Docker images.
 
-The .NET Core image tags strive to align with the tagging practices utilized by the [Official Images on Docker Hub](https://hub.docker.com/search?q=&type=image&image_filter=official).
+The .NET image tags strive to align with the tagging practices utilized by the [Official Images on Docker Hub](https://hub.docker.com/search?q=&type=image&image_filter=official).
 
 ## Simple Tags
 
@@ -63,9 +63,9 @@ All shared tags [support multiple platforms](https://blog.docker.com/2017/09/doc
 
 ## Tag Parts
 
-* `<Major.Minor.Patch Version>` - The `Major.Minor.Patch` number of the .NET Core version included in the image.
+* `<Major.Minor.Patch Version>` - The `Major.Minor.Patch` number of the .NET version included in the image.
 
-* `<Major.Minor Version>` - The `Major.Minor` number of the .NET Core version included in the image.  The tag is updated to always reference the most recent patch that is currently available for the `Major.Minor` release.
+* `<Major.Minor Version>` - The `Major.Minor` number of the .NET version included in the image.  The tag is updated to always reference the most recent patch that is currently available for the `Major.Minor` release.
 
 * `<OS>` - The name of the OS release and variant the image is based upon.  The image the tag references is updated whenever a new OS patch is released.  The OS release name does support pinning to specific OS patches.  If OS patch pinning is required then the image digest should be used (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
 

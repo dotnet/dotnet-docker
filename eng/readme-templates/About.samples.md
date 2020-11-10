@@ -1,1 +1,1 @@
-These images contain sample .NET Core and ASP.NET Core applications.
+These images contain sample .NET and ASP.NET Core applications.

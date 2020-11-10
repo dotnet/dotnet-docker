@@ -16,7 +16,7 @@ using Microsoft.DotNet.VersionTools.Dependencies;
 namespace Dotnet.Docker
 {
     /// <summary>
-    /// An IDependencyUpdater that will scan a Dockerfile for the .NET Core artifacts that are installed.
+    /// An IDependencyUpdater that will scan a Dockerfile for the .NET artifacts that are installed.
     /// The updater will then retrieve and update the checksum sha used to validate the downloaded artifacts.
     /// </summary>
     public class DockerfileShaUpdater : FileRegexUpdater
