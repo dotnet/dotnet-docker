@@ -144,7 +144,6 @@ namespace Microsoft.DotNet.Docker.Tests
         /// Verifies that the dotnet folder contents of an SDK container match the contents in the official SDK archive file.
         /// </summary>
         [Theory]
-        
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
