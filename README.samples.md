@@ -102,6 +102,9 @@ dotnetapp-nanoserver-1809, dotnetapp, latest | [Dockerfile](https://github.com/d
 aspnetapp-nanoserver-1809, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/samples at https://mcr.microsoft.com/v2/dotnet/samples/tags/list.
+<!--End of generated tags-->
+
+For tags contained in the old dotnet/core/samples repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core/samples/tags/list.
 
 # Support
 

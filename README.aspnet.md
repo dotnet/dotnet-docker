@@ -123,6 +123,9 @@ Tag | Dockerfile
 2.1.23-nanoserver-1809, 2.1-nanoserver-1809, 2.1.23, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/aspnet/2.1/nanoserver-1809/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/aspnet at https://mcr.microsoft.com/v2/dotnet/aspnet/tags/list.
+<!--End of generated tags-->
+
+For tags contained in the old dotnet/core/aspnet repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core/aspnet/tags/list.
 
 # Support
 
