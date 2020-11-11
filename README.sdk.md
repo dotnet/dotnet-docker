@@ -123,6 +123,9 @@ Tag | Dockerfile
 2.1.811-nanoserver-1809, 2.1-nanoserver-1809, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1809/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/sdk at https://mcr.microsoft.com/v2/dotnet/sdk/tags/list.
+<!--End of generated tags-->
+
+For tags contained in the old dotnet/core/sdk repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core/sdk/tags/list.
 
 # Support
 
