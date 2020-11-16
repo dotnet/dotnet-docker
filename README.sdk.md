@@ -30,8 +30,12 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/sa
 
 ## Develop .NET Apps in a Container
 
-* [Develop .NET Applications](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-dev-in-container.md) - This sample shows how to develop, build and test .NET applications with Docker without the need to install the .NET SDK.
-* [Develop ASP.NET Core Applications](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/aspnet-docker-dev-in-container.md) - This sample shows how to develop and test ASP.NET Core applications with Docker without the need to install the .NET SDK.
+The following samples show how to develop, build and test .NET applications with Docker without the need to install the .NET SDK.
+
+* [Build .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/master/samples/build-in-sdk-container.md)
+* [Test .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/master/samples/run-tests-in-sdk-container.md)
+* [Run .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/master/samples/run-in-sdk-container.md)
+
 
 # Related Repos
 
