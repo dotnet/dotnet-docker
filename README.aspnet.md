@@ -92,12 +92,12 @@ Tags | Dockerfile | OS Version
 2.1.23-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 2.1.23-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
-## Windows Server, version 2009 amd64 Tags
+## Windows Server, version 20H2 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.0-nanoserver-2009, 5.0-nanoserver-2009, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/nanoserver-2009/amd64/Dockerfile)
-3.1.10-nanoserver-2009, 3.1-nanoserver-2009, 3.1.10, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/3.1/nanoserver-2009/amd64/Dockerfile)
-2.1.23-nanoserver-2009, 2.1-nanoserver-2009, 2.1.23, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/2.1/nanoserver-2009/amd64/Dockerfile)
+5.0.0-nanoserver-20H2, 5.0-nanoserver-20H2, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/nanoserver-20H2/amd64/Dockerfile)
+3.1.10-nanoserver-20H2, 3.1-nanoserver-20H2, 3.1.10, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/3.1/nanoserver-20H2/amd64/Dockerfile)
+2.1.23-nanoserver-20H2, 2.1-nanoserver-20H2, 2.1.23, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/2.1/nanoserver-20H2/amd64/Dockerfile)
 
 ## Windows Server, version 2004 amd64 Tags
 Tag | Dockerfile

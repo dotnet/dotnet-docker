@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 ARG ASPNET_VERSION=5.0.0
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:2009-amd64 AS installer
+FROM mcr.microsoft.com/windows/servercore:20H2-amd64 AS installer
 ARG ASPNET_VERSION
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
@@ -23,7 +23,7 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/do
 
 
 # ASP.NET Core image
-FROM $REPO:5.0-nanoserver-2009
+FROM $REPO:5.0-nanoserver-20H2
 ARG ASPNET_VERSION
 
 ENV ASPNET_VERSION $ASPNET_VERSION

@@ -69,9 +69,12 @@
             {
               "dockerfile": "samples/dotnetapp",
               "os": "windows",
-              "osVersion": "nanoserver-2009",
+              "osVersion": "nanoserver-20H2",
               "tags": {
-                "dotnetapp-nanoserver-2009": {}
+                "dotnetapp-nanoserver-20H2": {},
+                "dotnetapp-nanoserver-2009": {
+                  "docType": "Undocumented"
+                }
               }
             }
           ]
@@ -190,16 +193,19 @@
             {
               "dockerfile": "samples/aspnetapp",
               "os": "windows",
-              "osVersion": "nanoserver-2009",
+              "osVersion": "nanoserver-20H2",
               "tags": {
-                "aspnetapp-nanoserver-2009": {}
+                "aspnetapp-nanoserver-20H2": {},
+                "aspnetapp-nanoserver-2009": {
+                  "docType": "Undocumented"
+                }
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-nanoserver-2009"
+                    "$(Repo:samples):dotnetapp-nanoserver-20H2"
                   ]
                 }
               ]
