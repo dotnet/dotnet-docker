@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 
 # Load common image names
-Get-Content ./eng/common/templates/variables/docker-images.yml |
+Get-Content $PSScriptRoot/templates/variables/docker-images.yml |
 Where-Object { $_.Trim() -notlike 'variables:' } |
 ForEach-Object { 
     $parts = $_.Split(':', 2)
