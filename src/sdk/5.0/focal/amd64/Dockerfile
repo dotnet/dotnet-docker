@@ -17,6 +17,8 @@ RUN apt-get update \
         curl \
         git \
         wget \
+        # Required for "dotnet watch" to run in Debian based SDK images
+        procps \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET SDK
