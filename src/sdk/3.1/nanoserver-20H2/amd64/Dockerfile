@@ -49,7 +49,7 @@ ENV `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip `
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-nanoserver-20H2
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-20H2
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
