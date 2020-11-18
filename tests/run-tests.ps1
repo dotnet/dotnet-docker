@@ -53,10 +53,10 @@ else {
 }
 
 $activeOS = docker version -f "{{ .Server.Os }}"
+$EngCommonDir = "$PSScriptRoot/../eng/common"
 
 if (!(Test-Path $DotnetInstallScript)) {
     $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
-    $EngCommonDir = "$PSScriptRoot/../eng/common"
     & $EngCommonDir/Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript"
 }
 
@@ -69,6 +69,9 @@ else {
 }
 
 if ($LASTEXITCODE -ne 0) { throw "Failed to install the .NET Core SDK" }
+
+# Ensure that ImageBuilder image is pulled because some tests require it
+& $EngCommonDir/Get-ImageBuilder.ps1
 
 Push-Location "$PSScriptRoot\Microsoft.DotNet.Docker.Tests"
 
