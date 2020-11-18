@@ -121,6 +121,33 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
+        public void CheckForProcpsOnDebianBasedImages(ProductImageData imageData)
+        {
+            if (!DockerHelper.IsLinuxContainerModeEnabled)
+                return;
+
+            // Check if dpkg is present, if not, abort the test
+            var dpkgCheckResult = DockerHelper.Run(
+                image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
+                command: "/bin/sh -c \"(which dpkg > /dev/null 2>&1 && echo 'present') || echo 'missing'\"",
+                name: imageData.GetIdentifier("ProcpsDebianBaseCheck"));
+
+            if (dpkgCheckResult != "present")
+                return;
+
+            // If dpkg is present (i.e. we're on a Debian-based distribution),
+            // ensure that the procps package is present as it is required by
+            // dotnet watch.
+            var result = DockerHelper.Run(
+                image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
+                command: "/bin/sh -c \"(dpkg -l procps > /dev/null 2>&1 && echo 'present') || echo 'missing'\"",
+                name: imageData.GetIdentifier("ProcpsCheck"));
+
+            Assert.Equal("present", result);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
         {
             PowerShellScenario_Execute(imageData, null);
