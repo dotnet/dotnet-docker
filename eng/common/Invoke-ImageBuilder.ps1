@@ -54,33 +54,17 @@ function Exec {
     }
 }
 
-function PullImageBuilder {
-    Invoke-Expression "docker inspect ${imageNames.imagebuilder} | Out-Null"
-    if ($LASTEXITCODE -ne 0) {
-        Log "Pulling"
-        ./eng/common/Invoke-WithRetry.ps1 "docker pull ${imageNames.imagebuilder}"
-    }
-}
-
 $imageBuilderContainerName = "ImageBuilder-$(Get-Date -Format yyyyMMddhhmmss)"
 $containerCreated = $false
 
 pushd $PSScriptRoot/../../
 try {
-    # Load common image names
-    Get-Content ./eng/common/templates/variables/docker-images.yml |
-    Where-Object { $_.Trim() -notlike 'variables:' } |
-    ForEach-Object { 
-        $parts = $_.Split(':', 2)
-        Set-Variable -Name $parts[0].Trim() -Value $parts[1].Trim()
-    }
-
     $activeOS = docker version -f "{{ .Server.Os }}"
     if ($activeOS -eq "linux") {
         # On Linux, ImageBuilder is run within a container.
         $imageBuilderImageName = "microsoft-dotnet-imagebuilder-withrepo"
         if ($ReuseImageBuilderImage -ne $True) {
-            PullImageBuilder
+            & ./eng/common/Get-ImageBuilder.ps1
             Exec ("docker build -t $imageBuilderImageName --build-arg " `
                 + "IMAGE=${imageNames.imagebuilder} -f eng/common/Dockerfile.WithRepo .")
         }
@@ -93,7 +77,7 @@ try {
         $imageBuilderFolder = ".Microsoft.DotNet.ImageBuilder"
         $imageBuilderCmd = [System.IO.Path]::Combine($imageBuilderFolder, "Microsoft.DotNet.ImageBuilder.exe")
         if (-not (Test-Path -Path "$imageBuilderCmd" -PathType Leaf)) {
-            PullImageBuilder
+            & ./eng/common/Get-ImageBuilder.ps1
             Exec "docker create --name $imageBuilderContainerName ${imageNames.imagebuilder}"
             $containerCreated = $true
             if (Test-Path -Path $imageBuilderFolder)
