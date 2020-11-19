@@ -47,16 +47,16 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V2_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
             new ProductImageData { Version = V2_1, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V2_1, OS = OS.NanoServer2009, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.NanoServer20H2, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1903, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.NanoServer2009, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V3_1, OS = OS.NanoServer20H2, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V5_0, OS = OS.NanoServer2009, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer20H2, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
         };
         
@@ -84,10 +84,10 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Amd64, IsPublished = true },
             new SampleImageData { OS = OS.NanoServer1909, Arch = Arch.Amd64, IsPublished = true },
             new SampleImageData { OS = OS.NanoServer2004, Arch = Arch.Amd64, IsPublished = true },
-            new SampleImageData { OS = OS.NanoServer2009, Arch = Arch.Amd64, IsPublished = true },
+            new SampleImageData { OS = OS.NanoServer20H2, Arch = Arch.Amd64, IsPublished = true },
 
-            new SampleImageData { OS = OS.NanoServer2009, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
-            new SampleImageData { OS = OS.NanoServer2009, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
+            new SampleImageData { OS = OS.NanoServer20H2, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
+            new SampleImageData { OS = OS.NanoServer20H2, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
         };
 
         public static IEnumerable<ProductImageData> GetImageData()
