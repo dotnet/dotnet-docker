@@ -71,10 +71,7 @@
               "os": "windows",
               "osVersion": "nanoserver-20H2",
               "tags": {
-                "dotnetapp-nanoserver-20H2": {},
-                "dotnetapp-nanoserver-2009": {
-                  "docType": "Undocumented"
-                }
+                "dotnetapp-nanoserver-20H2": {}
               }
             }
           ]
@@ -195,10 +192,7 @@
               "os": "windows",
               "osVersion": "nanoserver-20H2",
               "tags": {
-                "aspnetapp-nanoserver-20H2": {},
-                "aspnetapp-nanoserver-2009": {
-                  "docType": "Undocumented"
-                }
+                "aspnetapp-nanoserver-20H2": {}
               },
               "customBuildLegGroups": [
                 {
