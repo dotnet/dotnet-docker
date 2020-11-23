@@ -78,11 +78,17 @@ jobs:
       '$(dotnetDockerBot.userName)'
       '$(dotnetDockerBot.email)'
       '$(BotAccount-dotnet-docker-bot-PAT)'
+      '$(BotAccount-dotnet-docker-dnceng-code-rw)'
+      'dnceng'
+      'internal'
       --manifest '$(manifest)'
       --git-owner 'dotnet'
       --git-repo 'versions'
       --git-branch 'master'
       --git-path '$(imageInfoVersionsPath)'
+      --azdo-repo 'dotnet-versions'
+      --azdo-branch 'master'
+      --azdo-path '$(imageInfoVersionsPath)'
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Image Info
