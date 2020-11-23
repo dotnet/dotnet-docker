@@ -23,6 +23,12 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
+            // Skip test for 6.0 due to https://github.com/dotnet/sdk/issues/14624
+            if (imageData.Version.Major == 6)
+            {
+                return;
+            }
+
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper);
             await verifier.Execute();
         }
