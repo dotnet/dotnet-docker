@@ -3,4 +3,3 @@ variables:
   engCommonPath: $(Build.Repository.LocalPath)/$(engCommonRelativePath)
   engPath: $(Build.Repository.LocalPath)/eng
   testScriptPath: ./tests/run-tests.ps1
-  testResultsDirectory: tests/Microsoft.DotNet.Docker.Tests/TestResults/
