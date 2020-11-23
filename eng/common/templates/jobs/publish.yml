@@ -4,7 +4,10 @@ jobs:
 - job: Publish
   pool: ${{ parameters.pool }}
   variables:
-    imageBuilder.commonCmdArgs: >
+  - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+    - group: DotNet-AllOrgs-Darc-Pats
+  - name: imageBuilder.commonCmdArgs
+    value: >
       --manifest '$(manifest)'
       --registry-override '$(acr.server)'
       $(manifestVariables)
@@ -78,7 +81,7 @@ jobs:
       '$(dotnetDockerBot.userName)'
       '$(dotnetDockerBot.email)'
       '$(BotAccount-dotnet-docker-bot-PAT)'
-      '$(BotAccount-dotnet-docker-dnceng-code-rw)'
+      '$(dn-bot-devdiv-dnceng-rw-code-pat)'
       'dnceng'
       'internal'
       --manifest '$(manifest)'
