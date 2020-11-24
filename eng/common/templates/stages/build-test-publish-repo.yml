@@ -257,11 +257,11 @@ stages:
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
-        name: Windows2009_amd64
+        name: Windows20H2_amd64
         pool:
           name: DotNetCore-Docker
           demands: VSTS_OS -equals Windows-ServerDatacenter-2009
-        matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows2009Amd64']
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows20H2Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
