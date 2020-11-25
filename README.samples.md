@@ -77,25 +77,25 @@ Tags | Dockerfile | OS Version
 dotnetapp-buster-slim-arm64v8, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) | Debian 10
 aspnetapp-buster-slim-arm64v8, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) | Debian 10
 
-## Windows Server, version 2009 amd64 Tags
+## Nano Server, version 2009 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 dotnetapp-nanoserver-2009, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 aspnetapp-nanoserver-2009, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-## Windows Server, version 2004 amd64 Tags
+## Nano Server, version 2004 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 dotnetapp-nanoserver-2004, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 aspnetapp-nanoserver-2004, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-## Windows Server, version 1909 amd64 Tags
+## Nano Server, version 1909 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 dotnetapp-nanoserver-1909, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
 aspnetapp-nanoserver-1909, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
 
-## Windows Server 2019 amd64 Tags
+## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 dotnetapp-nanoserver-1809, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)

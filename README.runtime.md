@@ -83,40 +83,44 @@ Tags | Dockerfile | OS Version
 2.1.23-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 2.1.23-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
-## Windows Server, version 2009 amd64 Tags
+## Nano Server, version 2009 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 5.0.0-nanoserver-2009, 5.0-nanoserver-2009, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-2009/amd64/Dockerfile)
 3.1.10-nanoserver-2009, 3.1-nanoserver-2009, 3.1.10, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/3.1/nanoserver-2009/amd64/Dockerfile)
 2.1.23-nanoserver-2009, 2.1-nanoserver-2009, 2.1.23, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/2.1/nanoserver-2009/amd64/Dockerfile)
 
-## Windows Server, version 2004 amd64 Tags
+## Nano Server, version 2004 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 5.0.0-nanoserver-2004, 5.0-nanoserver-2004, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-2004/amd64/Dockerfile)
 3.1.10-nanoserver-2004, 3.1-nanoserver-2004, 3.1.10, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/3.1/nanoserver-2004/amd64/Dockerfile)
 2.1.23-nanoserver-2004, 2.1-nanoserver-2004, 2.1.23, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/2.1/nanoserver-2004/amd64/Dockerfile)
 
-## Windows Server, version 1909 amd64 Tags
+## Nano Server, version 1909 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 5.0.0-nanoserver-1909, 5.0-nanoserver-1909, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-1909/amd64/Dockerfile)
 3.1.10-nanoserver-1909, 3.1-nanoserver-1909, 3.1.10, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/3.1/nanoserver-1909/amd64/Dockerfile)
 2.1.23-nanoserver-1909, 2.1-nanoserver-1909, 2.1.23, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/2.1/nanoserver-1909/amd64/Dockerfile)
 
-## Windows Server, version 1903 amd64 Tags
+## Nano Server, version 1903 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 3.1.10-nanoserver-1903, 3.1-nanoserver-1903, 3.1.10, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/3.1/nanoserver-1903/amd64/Dockerfile)
 2.1.23-nanoserver-1903, 2.1-nanoserver-1903, 2.1.23, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/2.1/nanoserver-1903/amd64/Dockerfile)
 
-## Windows Server 2019 amd64 Tags
+## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 5.0.0-nanoserver-1809, 5.0-nanoserver-1809, 5.0.0, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/nanoserver-1809/amd64/Dockerfile)
-5.0.0-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 3.1.10-nanoserver-1809, 3.1-nanoserver-1809, 3.1.10, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/3.1/nanoserver-1809/amd64/Dockerfile)
 2.1.23-nanoserver-1809, 2.1-nanoserver-1809, 2.1.23, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/2.1/nanoserver-1809/amd64/Dockerfile)
+
+## Windows Server Core 2019 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+5.0.0-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/runtime at https://mcr.microsoft.com/v2/dotnet/runtime/tags/list.
 <!--End of generated tags-->
