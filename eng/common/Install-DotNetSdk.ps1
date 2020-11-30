@@ -37,12 +37,14 @@ if (!(Test-Path $DotnetInstallScript)) {
     Invoke-WebRequest "https://dot.net/v1/$DotnetInstallScript" -OutFile $InstallPath/$DotnetInstallScript
 }
 
+$DotnetChannel = "5.0"
+
 if ($IsRunningOnUnix) {
     & chmod +x $InstallPath/$DotnetInstallScript
-    & $InstallPath/$DotnetInstallScript --channel "3.1" --version "latest" --install-dir $InstallPath
+    & $InstallPath/$DotnetInstallScript --channel $DotnetChannel --version "latest" --install-dir $InstallPath
 }
 else {
-    & $InstallPath/$DotnetInstallScript -Channel "3.1" -Version "latest" -InstallDir $InstallPath
+    & $InstallPath/$DotnetInstallScript -Channel $DotnetChannel -Version "latest" -InstallDir $InstallPath
 }
 
 if ($LASTEXITCODE -ne 0) { throw "Failed to install the .NET Core SDK" }
