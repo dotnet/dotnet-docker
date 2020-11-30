@@ -16,7 +16,7 @@ RUN dotnet publish -c Release -o out --no-restore -r alpine.3.12-x64 /p:PublishS
 
 
 # runtime image
-FROM mcr.microsoft.com/dotnet/runtime:5.0-alpine
+FROM mcr.microsoft.com/dotnet/runtime-deps:5.0-alpine
 
 # install git and Docker
 RUN apk add --no-cache \
