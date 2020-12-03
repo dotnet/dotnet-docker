@@ -86,8 +86,10 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.NanoServer2004, Arch = Arch.Amd64, IsPublished = true },
             new SampleImageData { OS = OS.NanoServer20H2, Arch = Arch.Amd64, IsPublished = true },
 
-            new SampleImageData { OS = OS.NanoServer20H2, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
-            new SampleImageData { OS = OS.NanoServer20H2, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
+            new SampleImageData { OS = OS.NanoServer20H2,     Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
+            new SampleImageData { OS = OS.NanoServer20H2,     Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
+            new SampleImageData { OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64" },
+            new SampleImageData { OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64-slim" },
         };
 
         public static IEnumerable<ProductImageData> GetImageData()
