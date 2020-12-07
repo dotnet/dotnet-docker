@@ -132,6 +132,9 @@ Tag | Dockerfile
 5.0.0-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/nightly/aspnet at https://mcr.microsoft.com/v2/dotnet/nightly/aspnet/tags/list.
+<!--End of generated tags-->
+
+For tags contained in the old dotnet/core-nightly/aspnet repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core-nightly/aspnet/tags/list.
 
 # Support
 
