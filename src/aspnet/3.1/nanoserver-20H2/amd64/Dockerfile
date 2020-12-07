@@ -3,7 +3,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:2009-amd64 AS installer
+FROM mcr.microsoft.com/windows/servercore:20H2-amd64 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
@@ -22,6 +22,6 @@ RUN $aspnetcore_version = '3.1.10'; `
 
 
 # Runtime image
-FROM $REPO:3.1-nanoserver-2009
+FROM $REPO:3.1-nanoserver-20H2
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

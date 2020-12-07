@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 ARG DOTNET_SDK_VERSION=5.0.100
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:2009-amd64 AS installer
+FROM mcr.microsoft.com/windows/servercore:20H2-amd64 AS installer
 ARG DOTNET_SDK_VERSION
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
@@ -40,7 +40,7 @@ RUN `
     Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
 # SDK image
-FROM $REPO:5.0-nanoserver-2009
+FROM $REPO:5.0-nanoserver-20H2
 ARG DOTNET_SDK_VERSION
 
 ENV `
@@ -52,7 +52,7 @@ ENV `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip `
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-NanoServer-2009
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-NanoServer-20H2
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator

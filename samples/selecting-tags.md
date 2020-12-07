@@ -47,7 +47,7 @@ The following tags demonstrate the pattern used to describe each operating syste
 * `5.0-alpine` (Latest Alpine)
 * `5.0-bionic` (Ubuntu 18.04)
 * `5.0-buster-slim` (Debian 10)
-* `5.0-nanoserver-2009` (Nano Server, version 2009)
+* `5.0-nanoserver-20H2` (Nano Server, version 20H2)
 * `5.0-nanoserver-2004` (Nano Server, version 2004)
 * `5.0-nanoserver-1909` (Nano Server, version 1909)
 * `5.0-nanoserver-1809` (Nano Server, version 1809)
@@ -70,7 +70,7 @@ The following tags demonstrate the pattern used to describe each processor, usin
 * `5.0-alpine-amd64`
 * `5.0-bionic-amd64`
 * `5.0-buster-slim-amd64`
-* `5.0-nanoserver-2009`
+* `5.0-nanoserver-20H2`
 * `5.0-nanoserver-2004`
 * `5.0-nanoserver-1909`
 * `5.0-nanoserver-1809`
