@@ -80,6 +80,9 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/sa
 * [dotnet/framework/samples](https://hub.docker.com/_/microsoft-dotnet-framework-samples/): .NET Framework, ASP.NET and WCF Samples
 
 {{if !IS_PRODUCT_FAMILY:# Full Tag Listing
+<!--End of generated tags-->
+
+For tags contained in the old dotnet/core{{if (PARENT_REPO = "nightly"):-nightly}}/{{SHORT_REPO}} repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core{{if (PARENT_REPO = "nightly"):-nightly}}/{{SHORT_REPO}}/tags/list.
 
 }}# Support
 

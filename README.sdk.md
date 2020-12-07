@@ -34,8 +34,12 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/sa
 
 ## Develop .NET Apps in a Container
 
-* [Develop .NET Applications](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/dotnet-docker-dev-in-container.md) - This sample shows how to develop, build and test .NET applications with Docker without the need to install the .NET SDK.
-* [Develop ASP.NET Core Applications](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/aspnet-docker-dev-in-container.md) - This sample shows how to develop and test ASP.NET Core applications with Docker without the need to install the .NET SDK.
+The following samples show how to develop, build and test .NET applications with Docker without the need to install the .NET SDK.
+
+* [Build .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/master/samples/build-in-sdk-container.md)
+* [Test .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/master/samples/run-tests-in-sdk-container.md)
+* [Run .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/master/samples/run-in-sdk-container.md)
+
 
 # Related Repos
 
@@ -132,6 +136,9 @@ Tag | Dockerfile
 5.0.100-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/nightly/sdk at https://mcr.microsoft.com/v2/dotnet/nightly/sdk/tags/list.
+<!--End of generated tags-->
+
+For tags contained in the old dotnet/core-nightly/sdk repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core-nightly/sdk/tags/list.
 
 # Support
 
