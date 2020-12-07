@@ -43,7 +43,7 @@ stages:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - script: $(engPath)/get-drop-versions-monitor.sh $(monitorChannel)
+    - script: $(engPath)/get-drop-versions-monitor.sh
       displayName: Get Versions
     - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
       displayName: Build Update Dependencies Tool
