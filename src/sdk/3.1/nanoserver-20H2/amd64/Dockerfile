@@ -1,18 +1,17 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-ARG DOTNET_SDK_VERSION=5.0.100
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:2009-amd64 AS installer
-ARG DOTNET_SDK_VERSION
+FROM mcr.microsoft.com/windows/servercore:20H2-amd64 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 RUN `
-    # Retrieve .NET SDK
-    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = '6836916bc6f3f9f7c183eb49fa1f6130640bcf623f310785466cb36c98f0554d656ec69ce3524f22d1e0d21528796182c7b4f0ed7c66e37cbc0ecbcd9f59bcd5'; `
+    # Retrieve .NET Core SDK
+    $dotnet_sdk_version = '3.1.404'; `
+    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-win-x64.zip; `
+    $dotnet_sha512 = '8faf1a077e2d67217e2bbc01aed4b30fd55b1f2c0b2ccee55e3c6523a869949b8cf48a39b320bf822c5b75f01453811f00b997bcaa2a5b79890ec83a8dc50d3c'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -22,9 +21,9 @@ RUN `
     Remove-Item -Force dotnet.zip; `
     `
     # Install PowerShell global tool
-    $powershell_version = '7.1.0'; `
+    $powershell_version = '7.0.3'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-    $powershell_sha512 = 'ce3fca7de7cf45db939c7b4c251f285f515b74b5f5ee50888ef65c3f22e66866cab4759c4b1752703610eb64cc97c5d38dda5ec96c2171e2fbc9188b16eb8763'; `
+    $powershell_sha512 = '48b2e7b922faaedfa6671fda5d710858b608ea729a3d5e42b3d0b5004ff36251e013d2d09b5597aac6383892fca6f0e53144f23e514355951a2ef8b2636398ff'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -40,19 +39,17 @@ RUN `
     Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
 # SDK image
-FROM $REPO:5.0-nanoserver-2009
-ARG DOTNET_SDK_VERSION
+FROM $REPO:3.1-nanoserver-20H2
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
-    DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip `
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-NanoServer-2009
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-NanoServer-20H2
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
