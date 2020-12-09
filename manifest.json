@@ -682,24 +682,6 @@
               }
             },
             {
-              "dockerfile": "src/runtime/2.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-1903",
-              "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-1903": {
-                  "syndication": {
-                    "repo": "$(syndicatedRuntimeRepo)"
-                  }
-                },
-                "2.1-nanoserver-1903": {
-                  "syndication": {
-                    "repo": "$(syndicatedRuntimeRepo)"
-                  }
-                }
-              }
-            },
-            {
               "dockerfile": "src/runtime/2.1/nanoserver-1909/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/2.1/Dockerfile.nanoserver",
               "os": "windows",
@@ -996,24 +978,6 @@
                   }
                 },
                 "3.1-nanoserver-1809": {
-                  "syndication": {
-                    "repo": "$(syndicatedRuntimeRepo)"
-                  }
-                }
-              }
-            },
-            {
-              "dockerfile": "src/runtime/3.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/3.1/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-1903",
-              "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-1903": {
-                  "syndication": {
-                    "repo": "$(syndicatedRuntimeRepo)"
-                  }
-                },
-                "3.1-nanoserver-1903": {
                   "syndication": {
                     "repo": "$(syndicatedRuntimeRepo)"
                   }
@@ -1672,33 +1636,6 @@
               ]
             },
             {
-              "dockerfile": "src/aspnet/2.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-1903",
-              "tags": {
-                "$(dotnet|2.1|product-version)-nanoserver-1903": {
-                  "syndication": {
-                    "repo": "$(syndicatedAspnetRepo)"
-                  }
-                },
-                "2.1-nanoserver-1903": {
-                  "syndication": {
-                    "repo": "$(syndicatedAspnetRepo)"
-                  }
-                }
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:runtime):2.1-nanoserver-1903"
-                  ]
-                }
-              ]
-            },
-            {
               "dockerfile": "src/aspnet/2.1/nanoserver-1909/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/2.1/Dockerfile.nanoserver",
               "os": "windows",
@@ -2025,27 +1962,6 @@
                   }
                 },
                 "3.1-nanoserver-1809": {
-                  "syndication": {
-                    "repo": "$(syndicatedAspnetRepo)"
-                  }
-                }
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/3.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/3.1/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-1903",
-              "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-1903": {
-                  "syndication": {
-                    "repo": "$(syndicatedAspnetRepo)"
-                  }
-                },
-                "3.1-nanoserver-1903": {
                   "syndication": {
                     "repo": "$(syndicatedAspnetRepo)"
                   }
@@ -2740,33 +2656,6 @@
               ]
             },
             {
-              "dockerfile": "src/sdk/2.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-1903",
-              "tags": {
-                "$(sdk|2.1|product-version)-nanoserver-1903": {
-                  "syndication": {
-                    "repo": "$(syndicatedSdkRepo)"
-                  }
-                },
-                "2.1-nanoserver-1903": {
-                  "syndication": {
-                    "repo": "$(syndicatedSdkRepo)"
-                  }
-                }
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:aspnet):2.1-nanoserver-1903"
-                  ]
-                }
-              ]
-            },
-            {
               "dockerfile": "src/sdk/2.1/nanoserver-1909/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/2.1/Dockerfile.nanoserver",
               "os": "windows",
@@ -3135,27 +3024,6 @@
                   }
                 },
                 "3.1-nanoserver-1809": {
-                  "syndication": {
-                    "repo": "$(syndicatedSdkRepo)"
-                  }
-                }
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/sdk/3.1/nanoserver-1903/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/3.1/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-1903",
-              "tags": {
-                "$(sdk|3.1|product-version)-nanoserver-1903": {
-                  "syndication": {
-                    "repo": "$(syndicatedSdkRepo)"
-                  }
-                },
-                "3.1-nanoserver-1903": {
                   "syndication": {
                     "repo": "$(syndicatedSdkRepo)"
                   }

@@ -112,12 +112,6 @@ Tag | Dockerfile
 3.1.404-nanoserver-1909, 3.1-nanoserver-1909, 3.1.404, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-1909/amd64/Dockerfile)
 2.1.811-nanoserver-1909, 2.1-nanoserver-1909, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1909/amd64/Dockerfile)
 
-## Nano Server, version 1903 amd64 Tags
-Tag | Dockerfile
----------| ---------------
-3.1.404-nanoserver-1903, 3.1-nanoserver-1903, 3.1.404, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/nanoserver-1903/amd64/Dockerfile)
-2.1.811-nanoserver-1903, 2.1-nanoserver-1903, 2.1.811, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/2.1/nanoserver-1903/amd64/Dockerfile)
-
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
