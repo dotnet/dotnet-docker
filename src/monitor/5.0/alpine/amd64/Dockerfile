@@ -5,9 +5,9 @@ ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 FROM $SDK_REPO:3.1-alpine3.12 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=5.0.0-preview.3.20614.1
+ENV DOTNET_MONITOR_VERSION=5.0.0-preview.3.20615.1
 RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://pkgs.dev.azure.com/dnceng/public/_apis/packaging/feeds/dotnet-tools/nuget/packages/dotnet-monitor/versions/$DOTNET_MONITOR_VERSION/content \
-    && dotnetmonitor_sha512='0a7515f54d449bb9aacfbcdcbbf6cf22a0ebcbd7f1524f36699a23ea6c9a1f7297a93c73b75461341f8df50d582037078b960155e5e682fec6e1de2aeec0a75d' \
+    && dotnetmonitor_sha512='5681f1134ad39662c3f58ee899550bd5fe3bfc6785a16711119d667253cc3283895d990a25f99df08231802deafd9f463c55acf4cdf5eaf1ac2891d67f8c047a' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --no-cache \
     # To reduce image size, remove the copy of the nupkg under the tools.
