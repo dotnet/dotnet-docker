@@ -34,6 +34,7 @@ else {
 }
 
 if (!(Test-Path $DotnetInstallScript)) {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;
     Invoke-WebRequest "https://dot.net/v1/$DotnetInstallScript" -OutFile $InstallPath/$DotnetInstallScript
 }
 
