@@ -37,8 +37,10 @@ function Exec {
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+$EngCommonDir = "$PSScriptRoot/../eng/common"
+
 $DotnetInstallDir = "$PSScriptRoot/../.dotnet"
-& $PSScriptRoot/../eng/common/Install-DotNetSdk.ps1 -InstallPath $DotnetInstallDir
+& $EngCommonDir/Install-DotNetSdk.ps1 -InstallPath $DotnetInstallDir
 
 # Ensure that ImageBuilder image is pulled because some tests require it
 & $EngCommonDir/Get-ImageBuilder.ps1
