@@ -37,41 +37,15 @@ function Exec {
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-$DotnetInstallDir = "$PSScriptRoot/../.dotnet"
-
-if (!(Test-Path "$DotnetInstallDir")) {
-    mkdir "$DotnetInstallDir" | Out-Null
-}
-
-# Install the .NET Core SDK
-$IsRunningOnUnix = $PSVersionTable.contains("Platform") -and $PSVersionTable.Platform -eq "Unix"
-if ($IsRunningOnUnix) {
-    $DotnetInstallScript = "dotnet-install.sh"
-}
-else {
-    $DotnetInstallScript = "dotnet-install.ps1"
-}
-
-$activeOS = docker version -f "{{ .Server.Os }}"
 $EngCommonDir = "$PSScriptRoot/../eng/common"
 
-if (!(Test-Path $DotnetInstallScript)) {
-    $DOTNET_INSTALL_SCRIPT_URL = "https://dot.net/v1/$DotnetInstallScript"
-    & $EngCommonDir/Invoke-WithRetry.ps1 "Invoke-WebRequest $DOTNET_INSTALL_SCRIPT_URL -OutFile $DotnetInstallDir/$DotnetInstallScript"
-}
-
-if ($IsRunningOnUnix) {
-    & chmod +x $DotnetInstallDir/$DotnetInstallScript
-    & $DotnetInstallDir/$DotnetInstallScript --channel "3.1" --version "latest" --install-dir $DotnetInstallDir
-}
-else {
-    & $DotnetInstallDir/$DotnetInstallScript -Channel "3.1" -Version "latest" -InstallDir $DotnetInstallDir
-}
-
-if ($LASTEXITCODE -ne 0) { throw "Failed to install the .NET Core SDK" }
+$DotnetInstallDir = "$PSScriptRoot/../.dotnet"
+& $EngCommonDir/Install-DotNetSdk.ps1 -InstallPath $DotnetInstallDir
 
 # Ensure that ImageBuilder image is pulled because some tests require it
 & $EngCommonDir/Get-ImageBuilder.ps1
+
+$activeOS = docker version -f "{{ .Server.Os }}"
 
 Push-Location "$PSScriptRoot\Microsoft.DotNet.Docker.Tests"
 
