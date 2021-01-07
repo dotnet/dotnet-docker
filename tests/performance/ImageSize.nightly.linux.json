@@ -45,7 +45,15 @@
     "src/runtime/5.0/alpine3.12/arm64v8": 95670556,
     "src/runtime/5.0/focal/amd64": 199679121,
     "src/runtime/5.0/focal/arm32v7": 158248922,
-    "src/runtime/5.0/focal/arm64v8": 192095507
+    "src/runtime/5.0/focal/arm64v8": 192095507,
+    "src/runtime/6.0/buster-slim/amd64": 179185670,
+    "src/runtime/6.0/buster-slim/arm32v7": 147861854,
+    "src/runtime/6.0/buster-slim/arm64v8": 178916994,
+    "src/runtime/6.0/alpine3.12/amd64": 77914620,
+    "src/runtime/6.0/alpine3.12/arm64v8": 84392743,
+    "src/runtime/6.0/focal/amd64": 186940410,
+    "src/runtime/6.0/focal/arm32v7": 152852897,
+    "src/runtime/6.0/focal/arm64v8": 185087882
   },
   "dotnet/nightly/aspnet": {
     "src/aspnet/2.1/stretch-slim/amd64": 253015005,
@@ -73,7 +81,15 @@
     "src/aspnet/5.0/alpine3.12/arm64v8": 116635395,
     "src/aspnet/5.0/focal/amd64": 217911073,
     "src/aspnet/5.0/focal/arm32v7": 186853059,
-    "src/aspnet/5.0/focal/arm64v8": 224146163
+    "src/aspnet/5.0/focal/arm64v8": 224146163,
+    "src/aspnet/6.0/buster-slim/amd64": 198190437,
+    "src/aspnet/6.0/buster-slim/arm32v7": 168084669,
+    "src/aspnet/6.0/buster-slim/arm64v8": 200288747,
+    "src/aspnet/6.0/alpine3.12/amd64": 96919412,
+    "src/aspnet/6.0/alpine3.12/arm64v8": 105764521,
+    "src/aspnet/6.0/focal/amd64": 205945177,
+    "src/aspnet/6.0/focal/arm32v7": 173075712,
+    "src/aspnet/6.0/focal/arm64v8": 206459635
   },
   "dotnet/nightly/sdk": {
     "src/sdk/2.1/stretch/amd64": 1728622878,
@@ -99,7 +115,14 @@
     "src/sdk/5.0/alpine3.12/amd64": 469719738,
     "src/sdk/5.0/focal/amd64": 615235315,
     "src/sdk/5.0/focal/arm32v7": 564440607,
-    "src/sdk/5.0/focal/arm64v8": 637793431
+    "src/sdk/5.0/focal/arm64v8": 637793431,
+    "src/sdk/6.0/buster-slim/amd64": 615724227,
+    "src/sdk/6.0/buster-slim/arm32v7": 560467682,
+    "src/sdk/6.0/buster-slim/arm64v8": 630849653,
+    "src/sdk/6.0/alpine3.12/amd64": 485555870,
+    "src/sdk/6.0/focal/amd64": 631776580,
+    "src/sdk/6.0/focal/arm32v7": 570689058,
+    "src/sdk/6.0/focal/arm64v8": 644325728
   },
   "dotnet/nightly/monitor": {
     "src/monitor/5.0/alpine/amd64": 112576244
