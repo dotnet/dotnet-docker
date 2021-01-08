@@ -57,7 +57,8 @@ namespace Microsoft.DotNet.Docker.Tests
             variables.Add(new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"));
             variables.Add(new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"));
 
-            if (imageData.Version.Major >= 3)
+            // Don't validate this variable until PowerShell is supported in 6.0 (https://github.com/dotnet/dotnet-docker/issues/2488)
+            if (imageData.Version.Major >= 3 && imageData.Version.Major != 6)
             {
                 variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
             }
@@ -123,6 +124,12 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
         {
+            // Disable this test for 6.0 until PowerShell has a version based on 6.0 (https://github.com/dotnet/dotnet-docker/issues/2488)
+            if (imageData.Version.Major == 6)
+            {
+                return;
+            }
+
             PowerShellScenario_Execute(imageData, null);
         }
 
@@ -130,6 +137,12 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_NonDefaultUser(ProductImageData imageData)
         {
+            // Disable this test for 6.0 until PowerShell has a version based on 6.0 (https://github.com/dotnet/dotnet-docker/issues/2488)
+            if (imageData.Version.Major == 6)
+            {
+                return;
+            }
+
             string optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
             if (!DockerHelper.IsLinuxContainerModeEnabled)
             {
