@@ -3,7 +3,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:6.0-windowsservercore-ltsc2019
 
-ENV ASPNET_VERSION 6.0.0-alpha.1.20629.3
+ENV ASPNET_VERSION=6.0.0-alpha.1.20629.3
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `

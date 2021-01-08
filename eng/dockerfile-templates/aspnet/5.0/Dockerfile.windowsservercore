@@ -3,7 +3,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:5.0-{{OS_VERSION}}
 
-ENV ASPNET_VERSION {{VARIABLES["aspnet|5.0|build-version"]}}
+ENV ASPNET_VERSION={{VARIABLES["aspnet|5.0|build-version"]}}
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `

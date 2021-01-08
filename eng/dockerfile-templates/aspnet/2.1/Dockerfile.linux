@@ -7,7 +7,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install ASP.NET Core
-ENV ASPNETCORE_VERSION {{VARIABLES["aspnet|2.1|build-version"]}}
+ENV ASPNETCORE_VERSION={{VARIABLES["aspnet|2.1|build-version"]}}
 
 RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-{{ARCH_SHORT}}.tar.gz \
     && aspnetcore_sha512='{{VARIABLES[cat("aspnet|2.1|linux|", ARCH_SHORT, "|sha")]}}' \

@@ -17,6 +17,6 @@ RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/a
 FROM $REPO:5.0-buster-slim-arm64v8
 ARG ASPNET_VERSION
 
-ENV ASPNET_VERSION $ASPNET_VERSION
+ENV ASPNET_VERSION=$ASPNET_VERSION
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]
