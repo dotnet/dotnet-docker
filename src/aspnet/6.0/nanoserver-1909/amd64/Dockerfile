@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-ARG ASPNET_VERSION=6.0.0-alpha.1.20629.3
+ARG ASPNET_VERSION=6.0.0-alpha.1.21057.7
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:1909-amd64 AS installer
@@ -11,7 +11,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 # Install ASP.NET Core Runtime
 RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNET_VERSION/aspnetcore-runtime-$Env:ASPNET_VERSION-win-x64.zip; `
-    $aspnetcore_sha512 = '25b457682f003d6875be3ac11cc387fcf788c2274979fc9debcf732d0d963fb33e08ea1c7e58824884d758b968f163f30cad9563c2b9bb35b4c932764390de77'; `
+    $aspnetcore_sha512 = '6ad7424f7e5b2f2e29ba5a2527471761970869cbbc6db1e758e2588289ee759a21251b32cfa23010af4259ac21d7d745fbdbdd3d868f52851f4ff8861fa47869'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
