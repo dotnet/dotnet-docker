@@ -57,8 +57,7 @@ namespace Microsoft.DotNet.Docker.Tests
             variables.Add(new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"));
             variables.Add(new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"));
 
-            // Don't validate this variable until PowerShell is supported in 6.0 (https://github.com/dotnet/dotnet-docker/issues/2488)
-            if (imageData.Version.Major >= 3 && imageData.Version.Major != 6)
+            if (imageData.Version.Major >= 3)
             {
                 variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
             }
