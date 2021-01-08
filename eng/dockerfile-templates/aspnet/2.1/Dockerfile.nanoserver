@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS install
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-ENV ASPNETCORE_VERSION {{VARIABLES["aspnet|2.1|build-version"]}}
+ENV ASPNETCORE_VERSION={{VARIABLES["aspnet|2.1|build-version"]}}
 
 RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNETCORE_VERSION/aspnetcore-runtime-$Env:ASPNETCORE_VERSION-win-x64.zip; `
     $aspnetcore_sha512 = '{{VARIABLES["aspnet|2.1|win|x64|sha"]}}'; `

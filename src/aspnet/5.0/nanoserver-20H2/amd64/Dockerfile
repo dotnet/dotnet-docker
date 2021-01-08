@@ -26,6 +26,6 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/do
 FROM $REPO:5.0-nanoserver-20H2
 ARG ASPNET_VERSION
 
-ENV ASPNET_VERSION $ASPNET_VERSION
+ENV ASPNET_VERSION=$ASPNET_VERSION
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS install
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core SDK
-ENV DOTNET_SDK_VERSION {{VARIABLES["sdk|2.1|build-version"]}}
+ENV DOTNET_SDK_VERSION={{VARIABLES["sdk|2.1|build-version"]}}
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
     $dotnet_sha512 = '{{VARIABLES["sdk|2.1|win|x64|sha"]}}'; `

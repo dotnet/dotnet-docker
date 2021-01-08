@@ -18,7 +18,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runti
 FROM $REPO:5.0-buster-slim-arm32v7
 ARG DOTNET_VERSION
 
-ENV DOTNET_VERSION $DOTNET_VERSION
+ENV DOTNET_VERSION=$DOTNET_VERSION
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
