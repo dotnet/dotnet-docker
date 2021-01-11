@@ -40,7 +40,7 @@ namespace Dotnet.Docker
 
         private static async Task ExecuteAsync(Options options)
         {
-            InitOptions(options);
+            Options = options;
 
             try
             {
@@ -81,27 +81,6 @@ namespace Dotnet.Docker
             }
 
             Environment.Exit(0);
-        }
-
-        private static void InitOptions(Options options)
-        {
-            Options = options;
-
-            // Special case for handling the lzma NuGet package cache.
-            if (Options.ProductVersions.ContainsKey("sdk") && Options.DockerfileVersion == "2.1")
-            {
-                Options.ProductVersions["lzma"] = Options.ProductVersions["sdk"];
-            }
-
-            // Special case for handling the shared dotnet product version variables.
-            if (Options.ProductVersions.ContainsKey("runtime"))
-            {
-                Options.ProductVersions["dotnet"] = Options.ProductVersions["runtime"];
-            }
-            else if (Options.ProductVersions.ContainsKey("aspnet"))
-            {
-                Options.ProductVersions["dotnet"] = Options.ProductVersions["aspnet"];
-            }
         }
 
         private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)

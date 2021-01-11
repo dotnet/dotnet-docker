@@ -32,12 +32,28 @@ namespace Dotnet.Docker
             GitHubPassword = password;
             GitHubUser = user;
             ComputeChecksums = computeShas;
+
+            // Special case for handling the lzma NuGet package cache.
+            if (ProductVersions.ContainsKey("sdk") && DockerfileVersion == "2.1")
+            {
+                ProductVersions["lzma"] = ProductVersions["sdk"];
+            }
+
+            // Special case for handling the shared dotnet product version variables.
+            if (ProductVersions.ContainsKey("runtime"))
+            {
+                ProductVersions["dotnet"] = ProductVersions["runtime"];
+            }
+            else if (ProductVersions.ContainsKey("aspnet"))
+            {
+                ProductVersions["dotnet"] = ProductVersions["aspnet"];
+            }
         }
 
         public static IEnumerable<Symbol> GetCliSymbols() =>
             new Symbol[]
             {
-                new Argument<string>("dockerfile-version", "Version to the Dockerfiles to update"),
+                new Argument<string>("dockerfile-version", "Version of the Dockerfiles to update"),
                 new Option<string[]>("--product-version", "Product versions to update (<product-name>=<version>)"),
                 new Option<string>("--version-source-name", "The name of the source from which the version information was acquired."),
                 new Option<string>("--email", "GitHub email used to make PR (if not specified, a PR will not be created)"),
