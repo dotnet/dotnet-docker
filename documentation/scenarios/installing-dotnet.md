@@ -95,7 +95,7 @@ This provides full transparency to consumers of the image in regard to where the
 
 By having the version of .NET you're installing explicitly defined in the Dockerfile, as should be done for clarity reasons, it means the Dockerfile must be regularly maintained to account for servicing releases of .NET. There are two parts of the install steps that will need to updated in order to reference a new release:
 
-* Version environment variable that is referenced in the download URL (e.g. `ENV DOTNET_VERSION 5.0.0`)
+* Version environment variable that is referenced in the download URL (e.g. `ENV DOTNET_VERSION=5.0.0`)
 * SHA value (e.g. `dotnet_sha512='d4d67df5ff5f6dde0d865a6e87559955bd57429df396cf7d05fe77f09e6220c67dc5e66439b1801ca4d301a62f81f666122bf4b623b31a46b861677dcafc62a4'`)
 
 You can track these values by making use of the information contained in the `releases.json` of the relevant release. For example, the [`releases.json`](https://dotnetcli.azureedge.net/dotnet/release-metadata/5.0/releases.json) for 5.0 contains all the metadata for the 5.0 releases including download links of the binary archives as well as their hash values. The release information is described on the main [release notes](https://github.com/dotnet/core/blob/master/release-notes/README.md) page.

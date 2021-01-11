@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/windows/servercore:1909-amd64 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-ENV ASPNETCORE_VERSION 2.1.23
+ENV ASPNETCORE_VERSION=2.1.23
 
 RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNETCORE_VERSION/aspnetcore-runtime-$Env:ASPNETCORE_VERSION-win-x64.zip; `
     $aspnetcore_sha512 = 'fbd00d08c701dfadd98c205e5182f330842efad8500c1f75f6b7ef5ea4eac8569dd283c61ed00baf57155dcb11434242a9e44fcc650655b3cc0651ed6364ce39'; `
