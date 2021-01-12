@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS install
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core Runtime
-ENV DOTNET_VERSION {{VARIABLES["runtime|2.1|build-version"]}}
+ENV DOTNET_VERSION={{VARIABLES["runtime|2.1|build-version"]}}
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:DOTNET_VERSION-win-x64.zip; `
     $dotnet_sha512 = '{{VARIABLES["runtime|2.1|win|x64|sha"]}}'; `
