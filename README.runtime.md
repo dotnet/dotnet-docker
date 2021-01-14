@@ -107,6 +107,7 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 6.0.0-alpha.1-buster-slim-arm32v7, 6.0-buster-slim-arm32v7, 6.0.0-alpha.1-buster-slim, 6.0-buster-slim, 6.0.0-alpha.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/buster-slim/arm32v7/Dockerfile) | Debian 10
+6.0.0-alpha.1-alpine3.12-arm32v7, 6.0-alpine3.12-arm32v7, 6.0-alpine-arm32v7, 6.0.0-alpha.1-alpine3.12, 6.0-alpine3.12, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/alpine3.12/arm32v7/Dockerfile) | Alpine 3.12
 6.0.0-alpha.1-focal-arm32v7, 6.0-focal-arm32v7, 6.0.0-alpha.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ## Nano Server, version 20H2 amd64 Tags
