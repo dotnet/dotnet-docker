@@ -658,6 +658,19 @@
               }
             },
             {
+              "architecture": "arm",
+              "dockerfile": "src/runtime-deps/5.0/alpine3.12/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
+              "os": "linux",
+              "osVersion": "alpine3.12",
+              "tags": {
+                "$(dotnet|6.0|product-version)-alpine3.12-arm32v7": {},
+                "6.0-alpine3.12-arm32v7": {},
+                "6.0-alpine-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/alpine3.12/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
@@ -1844,6 +1857,31 @@
               }
             },
             {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/alpine3.12/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.alpine",
+              "os": "linux",
+              "osVersion": "alpine3.12",
+              "tags": {
+                "$(dotnet|6.0|product-version)-alpine3.12-arm32v7": {},
+                "6.0-alpine3.12-arm32v7": {},
+                "6.0-alpine-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-buster-slim-arm32v7"
+                  ]
+                }
+              ]
+            },
+            {
               "architecture": "arm64",
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
@@ -2848,6 +2886,31 @@
               }
             },
             {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/5.0/alpine3.12/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.alpine",
+              "os": "linux",
+              "osVersion": "alpine3.12",
+              "tags": {
+                "$(dotnet|5.0|product-version)-alpine3.12-arm32v7": {},
+                "5.0-alpine3.12-arm32v7": {},
+                "5.0-alpine-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):5.0-buster-slim-arm32v7"
+                  ]
+                }
+              ]
+            },
+            {
               "architecture": "arm64",
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
@@ -3120,14 +3183,14 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/5.0/alpine3.12/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/5.0/Dockerfile.alpine",
+              "dockerfile": "src/aspnet/6.0/alpine3.12/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine3.12",
               "tags": {
-                "$(dotnet|5.0|product-version)-alpine3.12-arm32v7": {},
-                "5.0-alpine3.12-arm32v7": {},
-                "5.0-alpine-arm32v7": {}
+                "$(dotnet|6.0|product-version)-alpine3.12-arm32v7": {},
+                "6.0-alpine3.12-arm32v7": {},
+                "6.0-alpine-arm32v7": {}
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -3135,7 +3198,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):5.0-buster-slim-arm32v7"
+                    "$(Repo:sdk):6.0-buster-slim-arm32v7"
                   ]
                 }
               ]
