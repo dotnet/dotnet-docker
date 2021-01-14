@@ -24,14 +24,14 @@ COPY --from=installer /app .
 ENV \
     # Disable debugger and profiler diagnostics to avoid diagnosing self.
     COMPlus_EnableDiagnostics=0 \
-    # Add dotnet-monitor path to front of PATH for easier, prioritized execution
-    PATH="/app:${PATH}" \
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
     Logging__Console__FormatterOptions__TimestampFormat=yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z' \
     # Logging: Write timestamps using UTC offset (+0:00)
-    Logging__Console__FormatterOptions__UseUtcTimestamp=true
+    Logging__Console__FormatterOptions__UseUtcTimestamp=true \
+    # Add dotnet-monitor path to front of PATH for easier, prioritized execution
+    PATH="/app:${PATH}"
 
 RUN chmod 755 dotnet-monitor
 
