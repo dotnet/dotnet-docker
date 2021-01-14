@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.CommandLine;
+using System.CommandLine.Invocation;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -20,18 +22,31 @@ namespace Dotnet.Docker
     {
         public const string VersionsFilename = "manifest.versions.json";
 
-        private static Options Options { get; } = new Options();
+        private static Options Options { get; set; }
         private static string RepoRoot { get; } = Directory.GetCurrentDirectory();
 
-        public static async Task Main(string[] args)
+        public static Task Main(string[] args)
         {
+            RootCommand command = new RootCommand();
+            foreach (Symbol option in Options.GetCliSymbols())
+            {
+                command.Add(option);
+            };
+
+            command.Handler = CommandHandler.Create<Options>(ExecuteAsync);
+
+            return command.InvokeAsync(args);
+        }
+
+        private static async Task ExecuteAsync(Options options)
+        {
+            Options = options;
+
             try
             {
                 ErrorTraceListener errorTraceListener = new ErrorTraceListener();
                 Trace.Listeners.Add(errorTraceListener);
                 Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-
-                ParseOptions(args);
 
                 IEnumerable<IDependencyInfo> buildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
@@ -66,27 +81,6 @@ namespace Dotnet.Docker
             }
 
             Environment.Exit(0);
-        }
-
-        private static void ParseOptions(string[] args)
-        {
-            Options.Parse(args);
-
-            // Special case for handling the lzma NuGet package cache.
-            if (Options.ProductVersions.ContainsKey("sdk") && Options.DockerfileVersion == "2.1")
-            {
-                Options.ProductVersions["lzma"] = Options.ProductVersions["sdk"];
-            }
-
-            // Special case for handling the shared dotnet product version variables.
-            if (Options.ProductVersions.ContainsKey("runtime"))
-            {
-                Options.ProductVersions["dotnet"] = Options.ProductVersions["runtime"];
-            }
-            else if (Options.ProductVersions.ContainsKey("aspnet"))
-            {
-                Options.ProductVersions["dotnet"] = Options.ProductVersions["aspnet"];
-            }
         }
 
         private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)

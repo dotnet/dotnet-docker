@@ -10,6 +10,6 @@
     <PackageReference Include="LibGit2Sharp" Version="0.26.2" />
     <PackageReference Include="Microsoft.DotNet.VersionTools" Version="5.0.0-beta.19617.1" />
     <PackageReference Include="System.Diagnostics.TextWriterTraceListener" Version="4.3.0" />
-    <PackageReference Include="System.CommandLine" Version="0.1.0-e170603-2"/>
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20574.7" />
   </ItemGroup>
 </Project>

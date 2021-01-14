@@ -1,7 +1,6 @@
 // Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.Linq;
@@ -22,61 +21,45 @@ namespace Dotnet.Docker
         public string VersionSourceName { get; private set; }
         public bool UpdateOnly => GitHubEmail == null || GitHubPassword == null || GitHubUser == null;
 
-        public void Parse(string[] args)
+        public Options(string dockerfileVersion, string[] productVersion, string versionSourceName, string email, string password, string user, bool computeShas)
         {
-            ArgumentSyntax argSyntax = ArgumentSyntax.Parse(args, syntax =>
+            DockerfileVersion = dockerfileVersion;
+            ProductVersions = productVersion
+                .Select(pair => pair.Split(new char[] { '=' }, 2))
+                .ToDictionary(split => split[0].ToLower(), split => split[1]);
+            VersionSourceName = versionSourceName;
+            GitHubEmail = email;
+            GitHubPassword = password;
+            GitHubUser = user;
+            ComputeChecksums = computeShas;
+
+            // Special case for handling the lzma NuGet package cache.
+            if (ProductVersions.ContainsKey("sdk") && DockerfileVersion == "2.1")
             {
-                IReadOnlyList<string> productVersions = Array.Empty<string>();
-                syntax.DefineOptionList(
-                    "product-version",
-                    ref productVersions,
-                    "Product versions to update (<product-name>=<version>)");
-                ProductVersions = productVersions
-                    .Select(pair => pair.Split(new char[] { '=' }, 2))
-                    .ToDictionary(split => split[0].ToLower(), split => split[1]);
+                ProductVersions["lzma"] = ProductVersions["sdk"];
+            }
 
-                string versionSourceName = null;
-                syntax.DefineOption(
-                    "version-source-name",
-                    ref versionSourceName,
-                    "The name of the source from which the version information was acquired.");
-                VersionSourceName = versionSourceName;
-
-                string gitHubEmail = null;
-                syntax.DefineOption(
-                    "email",
-                    ref gitHubEmail,
-                    "GitHub email used to make PR (if not specified, a PR will not be created)");
-                GitHubEmail = gitHubEmail;
-
-                string gitHubPassword = null;
-                syntax.DefineOption(
-                    "password",
-                    ref gitHubPassword,
-                    "GitHub password used to make PR (if not specified, a PR will not be created)");
-                GitHubPassword = gitHubPassword;
-
-                string gitHubUser = null;
-                syntax.DefineOption(
-                    "user",
-                    ref gitHubUser,
-                    "GitHub user used to make PR (if not specified, a PR will not be created)");
-                GitHubUser = gitHubUser;
-
-                bool computeChecksums = false;
-                syntax.DefineOption(
-                    "compute-shas",
-                    ref computeChecksums,
-                    "Compute the checksum if a published checksum cannot be found");
-                ComputeChecksums = computeChecksums;
-
-                string dockerfileVersion = null;
-                syntax.DefineParameter(
-                    "dockerfile-version",
-                    ref dockerfileVersion,
-                    "Version to the Dockerfiles to update");
-                DockerfileVersion = dockerfileVersion;
-            });
+            // Special case for handling the shared dotnet product version variables.
+            if (ProductVersions.ContainsKey("runtime"))
+            {
+                ProductVersions["dotnet"] = ProductVersions["runtime"];
+            }
+            else if (ProductVersions.ContainsKey("aspnet"))
+            {
+                ProductVersions["dotnet"] = ProductVersions["aspnet"];
+            }
         }
+
+        public static IEnumerable<Symbol> GetCliSymbols() =>
+            new Symbol[]
+            {
+                new Argument<string>("dockerfile-version", "Version of the Dockerfiles to update"),
+                new Option<string[]>("--product-version", "Product versions to update (<product-name>=<version>)"),
+                new Option<string>("--version-source-name", "The name of the source from which the version information was acquired."),
+                new Option<string>("--email", "GitHub email used to make PR (if not specified, a PR will not be created)"),
+                new Option<string>("--password", "GitHub password used to make PR (if not specified, a PR will not be created)"),
+                new Option<string>("--user", "GitHub user used to make PR (if not specified, a PR will not be created)"),
+                new Option<bool>("--compute-shas", "Compute the checksum if a published checksum cannot be found")
+            };
     }
 }
