@@ -1,6 +1,6 @@
 # escape=`
 
-ARG DOTNET_VERSION=6.0.0-alpha.1.21063.13
+ARG DOTNET_VERSION=6.0.0-alpha.1.21066.5
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:1909-amd64 AS installer
@@ -10,7 +10,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 # Retrieve .NET Runtime
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:DOTNET_VERSION-win-x64.zip; `
-    $dotnet_sha512 = '228c10fb5d714d8563ff16f52af35ef7ef3604fb78698b325793270767e48587836421d7ebe29ee9fb9384e48e5e898f14399d5a2a28318c60965e75dc8a4e02'; `
+    $dotnet_sha512 = 'ba1bc8124205c0ddac8c68b8a9aea043fc21939b4947cb4256a07f19228a7ff6a0b04bf81fd424909f789845cd1a399b677cd7e9405f849f5bbf9d997d2ca7f5'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
