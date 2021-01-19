@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-ARG ASPNET_VERSION=6.0.0-alpha.1.21064.29
+ARG ASPNET_VERSION=6.0.0-alpha.1.21068.3
 
 # Installer image
 FROM arm32v7/buildpack-deps:focal-curl as installer
@@ -7,7 +7,7 @@ ARG ASPNET_VERSION
 
 # Retrieve ASP.NET Core
 RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-arm.tar.gz \
-    && aspnetcore_sha512='063489cfc7cac79a5a4934078a2c33041b90e21c6e39cee58840920d058e0a643e602296efb0c79d571e70fa9e5a3207ba789365a35e4b7588f9b34240775392' \
+    && aspnetcore_sha512='4d5008435958929e7c0c6d8c981c0e98f83663133e67c7d92abd323d1fba8dbb3b4a5838f3d084255837e6a51864df1a809fd0d711115664de861c999096664f' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -ozxf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
