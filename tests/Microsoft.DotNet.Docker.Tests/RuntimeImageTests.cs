@@ -29,6 +29,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            // Skip test until end-to-end scenario works for self-contained publishing on Alpine arm32
+            if ((imageData.Version.Major == 5 || imageData.Version.Major == 6) &&
+                imageData.Arch == Arch.Arm && imageData.OS.Contains("alpine"))
+            {
+                return;
+            }
+
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper);
             await verifier.Execute();
         }

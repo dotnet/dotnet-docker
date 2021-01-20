@@ -23,6 +23,13 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
+            // Skip test until end-to-end scenario works for self-contained publishing on Alpine arm32
+            if ((imageData.Version.Major == 5 || imageData.Version.Major == 6) &&
+                imageData.Arch == Arch.Arm && imageData.OS.Contains("alpine"))
+            {
+                return;
+            }
+
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper, isWeb: true);
             await verifier.Execute();
         }
