@@ -84,7 +84,6 @@ jobs:
       '$(dn-bot-devdiv-dnceng-rw-code-pat)'
       'dnceng'
       'internal'
-      --manifest '$(manifest)'
       --git-owner 'dotnet'
       --git-repo 'versions'
       --git-branch 'master'
@@ -104,7 +103,6 @@ jobs:
       '$(kusto.servicePrincipalName)'
       '$(app-DotnetDockerTelemetryIngestion-client-secret)'
       '$(kusto.servicePrincipalTenant)'
-      --manifest '$(manifest)'
       --os-type '*'
       --architecture '*'
       $(dryRunArg)
