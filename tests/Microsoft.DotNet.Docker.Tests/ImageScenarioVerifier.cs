@@ -60,6 +60,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
+                    // Skip test until end-to-end scenario works for self-contained publishing on Alpine arm32
+                    if ((_imageData.Version.Major == 5 || _imageData.Version.Major == 6) &&
+                        _imageData.Arch == Arch.Arm && _imageData.OS.Contains("alpine"))
+                    {
+                        return;
+                    }
+
                     // Use `sdk` image to publish self contained app and run with `runtime-deps` image
                     string selfContainedTag = BuildTestAppImage("self_contained_app", appDir, customBuildArgs: $"rid={_imageData.Rid}");
                     tags.Add(selfContainedTag);

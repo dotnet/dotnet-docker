@@ -146,6 +146,7 @@ The following example demonstrates targeting architectures explictly on Linux, f
 ```console
 docker build --pull -t dotnetapp:debian-arm32 -f Dockerfile.debian-arm32 .
 docker build --pull -t dotnetapp:ubuntu-arm32 -f Dockerfile.ubuntu-arm32 .
+docker build --pull -t dotnetapp:alpine-arm32 -f Dockerfile.alpine-arm32 .
 docker build --pull -t dotnetapp:debian-arm64 -f Dockerfile.debian-arm64 .
 docker build --pull -t dotnetapp:ubuntu-arm64 -f Dockerfile.ubuntu-arm64 .
 docker build --pull -t dotnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
@@ -159,6 +160,7 @@ dotnetapp           ubuntu-arm64        3be8a7da7148        14 seconds ago      
 dotnetapp           alpine-arm64        09a1d1bfd477        20 hours ago        99.5MB
 dotnetapp           debian-arm64        fa5efe51d9ef        20 hours ago        197MB
 dotnetapp           ubuntu-arm32        ea8ac73f8a72        20 hours ago        165MB
+dotnetapp           alpine-arm32        f85033da1b6f        20 hours ago        74.2MB
 dotnetapp           debian-arm32        4f6ade8318d4        20 hours ago        165MB
 ```
 

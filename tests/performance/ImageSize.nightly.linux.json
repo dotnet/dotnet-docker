@@ -20,7 +20,8 @@
     "src/runtime-deps/3.1/bionic/arm64v8": 96024081,
     "src/runtime-deps/3.1/focal/amd64": 119203506,
     "src/runtime-deps/3.1/focal/arm32v7": 91727521,
-    "src/runtime-deps/3.1/focal/arm64v8": 111261028
+    "src/runtime-deps/3.1/focal/arm64v8": 111261028,
+    "src/runtime-deps/5.0/alpine3.12/arm32v7": 6783323
   },
   "dotnet/nightly/runtime": {
     "src/runtime/2.1/stretch-slim/amd64": 180258057,
@@ -48,6 +49,7 @@
     "src/runtime/5.0/buster-slim/arm32v7": 153318194,
     "src/runtime/5.0/buster-slim/arm64v8": 185989084,
     "src/runtime/5.0/alpine3.12/amd64": 83878949,
+    "src/runtime/5.0/alpine3.12/arm32v7": 74105012,
     "src/runtime/5.0/alpine3.12/arm64v8": 95670556,
     "src/runtime/5.0/alpine3.13/amd64": 84035542,
     "src/runtime/5.0/alpine3.13/arm64v8": 95670556,
@@ -58,6 +60,7 @@
     "src/runtime/6.0/buster-slim/arm32v7": 147861854,
     "src/runtime/6.0/buster-slim/arm64v8": 178916994,
     "src/runtime/6.0/alpine3.13/amd64": 78088510,
+    "src/runtime/6.0/alpine3.13/arm32v7": 68897973,
     "src/runtime/6.0/alpine3.13/arm64v8": 85403621,
     "src/runtime/6.0/focal/amd64": 186940410,
     "src/runtime/6.0/focal/arm32v7": 152852897,
@@ -89,6 +92,7 @@
     "src/aspnet/5.0/buster-slim/arm32v7": 173449729,
     "src/aspnet/5.0/buster-slim/arm64v8": 207240373,
     "src/aspnet/5.0/alpine3.12/amd64": 102766349,
+    "src/aspnet/5.0/alpine3.12/arm32v7": 94277555,
     "src/aspnet/5.0/alpine3.12/arm64v8": 116635395,
     "src/aspnet/5.0/alpine3.13/amd64": 102959317,
     "src/aspnet/5.0/alpine3.13/arm64v8": 116635395,
@@ -98,8 +102,9 @@
     "src/aspnet/6.0/buster-slim/amd64": 198190437,
     "src/aspnet/6.0/buster-slim/arm32v7": 168084669,
     "src/aspnet/6.0/buster-slim/arm64v8": 200288747,
-    "src/aspnet/6.0/alpine3.13/amd64": 97129528,
-    "src/aspnet/6.0/alpine3.13/arm64v8": 106855410,
+    "src/aspnet/6.0/alpine3.12/amd64": 97129528,
+    "src/aspnet/6.0/alpine3.12/arm32v7": 89120813,
+    "src/aspnet/6.0/alpine3.12/arm64v8": 106855410,
     "src/aspnet/6.0/focal/amd64": 205945177,
     "src/aspnet/6.0/focal/arm32v7": 173075712,
     "src/aspnet/6.0/focal/arm64v8": 206459635
