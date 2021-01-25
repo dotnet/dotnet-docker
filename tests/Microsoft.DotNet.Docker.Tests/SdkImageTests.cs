@@ -160,8 +160,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
             // Disable this test for 5.0 due to https://github.com/dotnet/aspnetcore/issues/27670
-            // Disable this test for 6.0 due to https://github.com/dotnet/aspnetcore/issues/29092
-            if (imageData.Version.Major == 5 || imageData.Version.Major == 6)
+            if (imageData.Version.Major == 5)
             {
                 return;
             }
