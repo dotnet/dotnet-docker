@@ -81,9 +81,9 @@ Tags | Dockerfile | OS Version
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.100-alpha.1-buster-slim-amd64, 6.0-buster-slim-amd64, 6.0.100-alpha.1-buster-slim, 6.0-buster-slim, 6.0.100-alpha.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/buster-slim/amd64/Dockerfile) | Debian 10
-6.0.100-alpha.1-alpine3.13-amd64, 6.0-alpine3.13-amd64, 6.0-alpine-amd64, 6.0.100-alpha.1-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.13/amd64/Dockerfile) | Alpine 3.13
-6.0.100-alpha.1-focal-amd64, 6.0-focal-amd64, 6.0.100-alpha.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
+6.0.100-preview.1-buster-slim-amd64, 6.0-buster-slim-amd64, 6.0.100-preview.1-buster-slim, 6.0-buster-slim, 6.0.100-preview.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/buster-slim/amd64/Dockerfile) | Debian 10
+6.0.100-preview.1-alpine3.13-amd64, 6.0-alpine3.13-amd64, 6.0-alpine-amd64, 6.0.100-preview.1-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.13/amd64/Dockerfile) | Alpine 3.13
+6.0.100-preview.1-focal-amd64, 6.0-focal-amd64, 6.0.100-preview.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -97,8 +97,8 @@ Tags | Dockerfile | OS Version
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.100-alpha.1-buster-slim-arm64v8, 6.0-buster-slim-arm64v8, 6.0.100-alpha.1-buster-slim, 6.0-buster-slim, 6.0.100-alpha.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/buster-slim/arm64v8/Dockerfile) | Debian 10
-6.0.100-alpha.1-focal-arm64v8, 6.0-focal-arm64v8, 6.0.100-alpha.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+6.0.100-preview.1-buster-slim-arm64v8, 6.0-buster-slim-arm64v8, 6.0.100-preview.1-buster-slim, 6.0-buster-slim, 6.0.100-preview.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/buster-slim/arm64v8/Dockerfile) | Debian 10
+6.0.100-preview.1-focal-arm64v8, 6.0-focal-arm64v8, 6.0.100-preview.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -115,8 +115,8 @@ Tags | Dockerfile | OS Version
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.100-alpha.1-buster-slim-arm32v7, 6.0-buster-slim-arm32v7, 6.0.100-alpha.1-buster-slim, 6.0-buster-slim, 6.0.100-alpha.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/buster-slim/arm32v7/Dockerfile) | Debian 10
-6.0.100-alpha.1-focal-arm32v7, 6.0-focal-arm32v7, 6.0.100-alpha.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+6.0.100-preview.1-buster-slim-arm32v7, 6.0-buster-slim-arm32v7, 6.0.100-preview.1-buster-slim, 6.0-buster-slim, 6.0.100-preview.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/buster-slim/arm32v7/Dockerfile) | Debian 10
+6.0.100-preview.1-focal-arm32v7, 6.0-focal-arm32v7, 6.0.100-preview.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ## Nano Server, version 20H2 amd64 Tags
 Tag | Dockerfile
@@ -128,7 +128,7 @@ Tag | Dockerfile
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.100-alpha.1-nanoserver-20H2, 6.0-nanoserver-20H2, 6.0.100-alpha.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/nanoserver-20H2/amd64/Dockerfile)
+6.0.100-preview.1-nanoserver-20H2, 6.0-nanoserver-20H2, 6.0.100-preview.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/nanoserver-20H2/amd64/Dockerfile)
 
 ## Nano Server, version 2004 amd64 Tags
 Tag | Dockerfile
@@ -140,7 +140,7 @@ Tag | Dockerfile
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.100-alpha.1-nanoserver-2004, 6.0-nanoserver-2004, 6.0.100-alpha.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/nanoserver-2004/amd64/Dockerfile)
+6.0.100-preview.1-nanoserver-2004, 6.0-nanoserver-2004, 6.0.100-preview.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/nanoserver-2004/amd64/Dockerfile)
 
 ## Nano Server, version 1909 amd64 Tags
 Tag | Dockerfile
@@ -152,7 +152,7 @@ Tag | Dockerfile
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.100-alpha.1-nanoserver-1909, 6.0-nanoserver-1909, 6.0.100-alpha.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/nanoserver-1909/amd64/Dockerfile)
+6.0.100-preview.1-nanoserver-1909, 6.0-nanoserver-1909, 6.0.100-preview.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/nanoserver-1909/amd64/Dockerfile)
 
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
@@ -164,7 +164,7 @@ Tag | Dockerfile
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.100-alpha.1-nanoserver-1809, 6.0-nanoserver-1809, 6.0.100-alpha.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/nanoserver-1809/amd64/Dockerfile)
+6.0.100-preview.1-nanoserver-1809, 6.0-nanoserver-1809, 6.0.100-preview.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server Core 2019 amd64 Tags
 Tag | Dockerfile
@@ -174,7 +174,7 @@ Tag | Dockerfile
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.100-alpha.1-windowsservercore-ltsc2019, 6.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+6.0.100-preview.1-windowsservercore-ltsc2019, 6.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/nightly/sdk at https://mcr.microsoft.com/v2/dotnet/nightly/sdk/tags/list.
 <!--End of generated tags-->
