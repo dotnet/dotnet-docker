@@ -23,12 +23,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
-            // Skip test for 6.0 due to https://github.com/dotnet/sdk/issues/14624
-            if (imageData.Version.Major == 6)
-            {
-                return;
-            }
-
             // Skip test for Arm32 Alpine 3.13 due to https://github.com/dotnet/runtime/issues/47423
             if (imageData.OS == "alpine3.13" && imageData.Arch == Arch.Arm)
             {
