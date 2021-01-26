@@ -165,6 +165,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
+            if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
+            {
+                return;
+            }
+
             if (!(imageData.Version.Major >= 5 ||
                 (imageData.Version.Major >= 3 &&
                     (imageData.SdkOS.StartsWith(OS.AlpinePrefix) || !DockerHelper.IsLinuxContainerModeEnabled))))

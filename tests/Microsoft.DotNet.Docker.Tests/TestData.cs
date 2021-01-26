@@ -54,8 +54,8 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V6_0, OS = OS.BusterSlim,   Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.Focal,        Arch = Arch.Arm },
             new ProductImageData { Version = V6_0, OS = OS.Focal,        Arch = Arch.Arm64 },
-            new ProductImageData { Version = V6_0, OS = OS.Alpine313,    Arch = Arch.Arm,     SdkOS = OS.BusterSlim },
-            new ProductImageData { Version = V6_0, OS = OS.Alpine313,    Arch = Arch.Arm64,   SdkOS = OS.BusterSlim },
+            new ProductImageData { Version = V6_0, OS = OS.Alpine313,    Arch = Arch.Arm },
+            new ProductImageData { Version = V6_0, OS = OS.Alpine313,    Arch = Arch.Arm64 },
         };
         private static readonly ProductImageData[] s_windowsTestData =
         {
