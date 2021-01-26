@@ -153,6 +153,8 @@
 
     "sdk|6.0|build-version": "6.0.100-preview.1.21075.9",
     "sdk|6.0|product-version": "6.0.100-preview.1",
+    "sdk|6.0|linux-musl|arm|sha": "dc2ca32a68468f4a64adc276b1a08eb193e661c55d0aa9265c10772cc1b20ac28ae3154d5825459ac668d29a83841d1a22170f649bbee2acf9c3a3f1c069b024",
+    "sdk|6.0|linux-musl|arm64|sha": "5cc10a05aa7b574dc42c63bdb7bdbb558437ef2787e5329742c16161b5d460ff3da8bb87bcbd47ad59e3c0fecd57dae185dd81266c7ea78e7f0a7096233d28de",
     "sdk|6.0|linux-musl|x64|sha": "853f7f2cdc64d7a76de439f1558cd05fd77c65116f57e0e7c85d9a568b8e542f160fb6b349dac266104483c88e87f0cd14e115455d59213e79b697a328dbe38d",
     "sdk|6.0|linux|arm|sha": "ca8bb1168246623976e6f0383242697f679bf2438d409d615c03bfd7caa2521bd931fc8841bfcda5347be7067bf3f5d9beff21fb8fdf8d51e60d94ba67ac3ae9",
     "sdk|6.0|linux|arm64|sha": "eac96f6499a826aad04be59964ea9ff30caf8f57faca3cd2d61ebd2a1b2cde82391b4d2349ea9ca37ef70f5ef5c8b5672faffff01d2b793ae3efd7e5640a6aba",
