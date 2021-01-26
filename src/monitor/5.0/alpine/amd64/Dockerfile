@@ -22,6 +22,8 @@ WORKDIR /app
 COPY --from=installer /app .
 
 ENV \
+    # Unset ASPNETCORE_URLS from aspnet base image
+    ASPNETCORE_URLS= \
     # Disable debugger and profiler diagnostics to avoid diagnosing self.
     COMPlus_EnableDiagnostics=0 \
     # Logging: JSON format so that analytic platforms can get discrete entry information
