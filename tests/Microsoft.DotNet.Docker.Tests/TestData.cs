@@ -107,7 +107,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Cast<SampleImageData>();
         }
 
-        private static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<ProductImageData> imageData)
+        public static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<ProductImageData> imageData)
         {
             string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION");
             return imageData
@@ -115,7 +115,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     || Regex.IsMatch(imageData.VersionString, versionFilterPattern, RegexOptions.IgnoreCase));
         }
 
-        private static IEnumerable<ImageData> FilterImagesByArch(this IEnumerable<ImageData> imageData)
+        public static IEnumerable<ImageData> FilterImagesByArch(this IEnumerable<ImageData> imageData)
         {
             string archFilterPattern = GetFilterRegexPattern("IMAGE_ARCH");
             return imageData
@@ -123,7 +123,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     || Regex.IsMatch(Enum.GetName(typeof(Arch), imageData.Arch), archFilterPattern, RegexOptions.IgnoreCase));
         }
 
-        private static IEnumerable<ImageData> FilterImagesByOs(this IEnumerable<ImageData> imageData)
+        public static IEnumerable<ImageData> FilterImagesByOs(this IEnumerable<ImageData> imageData)
         {
             string osFilterPattern = GetFilterRegexPattern("IMAGE_OS");
             return imageData
