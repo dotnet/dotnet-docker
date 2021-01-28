@@ -80,6 +80,7 @@
 
     "sdk|5.0|build-version": "5.0.102",
     "sdk|5.0|product-version": "5.0.102-1",
+    "sdk-ca-patch|5.0|product-version": "5.0.102-ca-patch",
     "sdk|5.0|linux-musl|x64|sha": "91ac9ea608b38402b2424d7754a823fade38261904a0fbb087f982b324aacf322c3500b520507f21b4aaac40eb059d8ef6d1656fd4f161d5afde2950210e86e8",
     "sdk|5.0|linux|arm|sha": "23610a4193d8116109aaeebefa0bf023808f86d3e0a8ba52b89aa5b4b869385a5e57fc8458ff12f9ea8f359f6978498d47fd80d073ab79b2a7dfbc103b8ff903",
     "sdk|5.0|linux|arm64|sha": "031272b86f435f88963b560c14342635d892345ac9a35d59ecaf6e425de8aab15ca5c3d0685c79027364e7a323927ba90568fe7ed8610f52ee5f961aef9fcf72",

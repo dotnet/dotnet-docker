@@ -58,6 +58,7 @@ The following samples show how to develop, build and test .NET applications with
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
+5.0.102-ca-patch-buster-slim-amd64, 5.0.102-ca-patch-buster-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/buster-slim-ca-patch/amd64/Dockerfile) | Debian 10
 5.0.102-1-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.102-1-buster-slim, 5.0-buster-slim, 5.0.102-1, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/buster-slim/amd64/Dockerfile) | Debian 10
 5.0.102-1-alpine3.12-amd64, 5.0-alpine3.12-amd64, 5.0-alpine-amd64, 5.0.102-1-alpine3.12, 5.0-alpine3.12, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/alpine3.12/amd64/Dockerfile) | Alpine 3.12
 5.0.102-1-focal-amd64, 5.0-focal-amd64, 5.0.102-1-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
@@ -73,6 +74,7 @@ Tags | Dockerfile | OS Version
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
+5.0.102-ca-patch-buster-slim-arm64v8, 5.0.102-ca-patch-buster-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/buster-slim-ca-patch/arm64v8/Dockerfile) | Debian 10
 5.0.102-1-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.102-1-buster-slim, 5.0-buster-slim, 5.0.102-1, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/buster-slim/arm64v8/Dockerfile) | Debian 10
 5.0.102-1-focal-arm64v8, 5.0-focal-arm64v8, 5.0.102-1-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 3.1.405-buster-arm64v8, 3.1-buster-arm64v8, 3.1.405, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/buster/arm64v8/Dockerfile) | Debian 10
@@ -82,6 +84,7 @@ Tags | Dockerfile | OS Version
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
+5.0.102-ca-patch-buster-slim-arm32v7, 5.0.102-ca-patch-buster-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/buster-slim-ca-patch/arm32v7/Dockerfile) | Debian 10
 5.0.102-1-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.102-1-buster-slim, 5.0-buster-slim, 5.0.102-1, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/buster-slim/arm32v7/Dockerfile) | Debian 10
 5.0.102-1-focal-arm32v7, 5.0-focal-arm32v7, 5.0.102-1-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/5.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 3.1.405-buster-arm32v7, 3.1-buster-arm32v7, 3.1.405, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/sdk/3.1/buster/arm32v7/Dockerfile) | Debian 10

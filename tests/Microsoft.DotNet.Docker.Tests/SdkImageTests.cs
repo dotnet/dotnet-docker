@@ -33,10 +33,22 @@ namespace Microsoft.DotNet.Docker.Tests
         public static IEnumerable<object[]> GetImageData()
         {
             return TestData.GetImageData()
+                .Concat(GetCaPatchData())
                 // Filter the image data down to the distinct SDK OSes
                 .Distinct(new SdkImageDataEqualityComparer())
+                .FilterImagesByVersion()
+                .FilterImagesByArch()
+                .FilterImagesByOs()
                 .Select(imageData => new object[] { imageData });
         }
+
+        private static IEnumerable<ProductImageData> GetCaPatchData() =>
+            new ProductImageData[]
+            {
+                new ProductImageData { Version = ImageVersion.V5_0, OS = OS.BusterSlim, Arch = Arch.Amd64, SdkTagSuffix = ".102-ca-patch" },
+                new ProductImageData { Version = ImageVersion.V5_0, OS = OS.BusterSlim, Arch = Arch.Arm, SdkTagSuffix = ".102-ca-patch" },
+                new ProductImageData { Version = ImageVersion.V5_0, OS = OS.BusterSlim, Arch = Arch.Arm64, SdkTagSuffix = ".102-ca-patch" }
+            };
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
@@ -339,7 +351,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 return x.VersionString == y.VersionString &&
                     x.SdkOS == y.SdkOS &&
-                    x.Arch == y.Arch;
+                    x.Arch == y.Arch &&
+                    x.SdkTagSuffix == y.SdkTagSuffix;
             }
 
             public int GetHashCode([DisallowNull] ProductImageData obj)
