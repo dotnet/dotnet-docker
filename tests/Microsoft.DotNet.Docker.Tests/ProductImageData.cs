@@ -34,6 +34,8 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _sdkOS = value; }
         }
 
+        public string SdkTagSuffix { get; set; }
+
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
 
         public string GetProductImageName(string tag, string variantName)
@@ -96,7 +98,14 @@ namespace Microsoft.DotNet.Docker.Tests
                     throw new NotSupportedException($"Unsupported image type '{imageType}'");
             }
 
-            return GetTagName(imageVersion.ToString(2), os);
+            string tagVersion = imageVersion.ToString(2);
+
+            if (imageType == DotNetImageType.SDK && SdkTagSuffix != null)
+            {
+                tagVersion += SdkTagSuffix;
+            }
+
+            return GetTagName(tagVersion, os);
         }
 
         protected override string GetArchTagSuffix()

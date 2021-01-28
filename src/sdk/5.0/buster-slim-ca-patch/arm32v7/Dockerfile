@@ -1,27 +1,36 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:6.0-focal-arm32v7
+FROM $REPO:5.0-buster-slim-arm32v7
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \
-    DOTNET_SDK_VERSION=6.0.100-preview.1.21078.3 \
+    DOTNET_SDK_VERSION=5.0.102 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Ubuntu-20.04-arm32
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Debian-10-arm32
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         curl \
         git \
+        procps \
         wget \
     && rm -rf /var/lib/apt/lists/*
 
+# Install ca-certificates from bullseye repository: https://github.com/NuGet/Announcements/issues/49
+RUN echo "deb http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+         ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && sed -i '$ d' /etc/apt/sources.list
+
 # Install .NET SDK
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
-    && dotnet_sha512='83489b20d35ad6a42a37c36cd32986148134e6b722a80f7bb3b0c74fb746fe0d61b77c1c79f38c11d2015dea2d043813acc5ed07c761738f7edd479efbf654f1' \
+    && dotnet_sha512='23610a4193d8116109aaeebefa0bf023808f86d3e0a8ba52b89aa5b4b869385a5e57fc8458ff12f9ea8f359f6978498d47fd80d073ab79b2a7dfbc103b8ff903' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -30,9 +39,9 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.2.0-preview.1 \
+RUN powershell_version=7.1.1 \
     && curl -SL --output PowerShell.Linux.arm32.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.arm32.$powershell_version.nupkg \
-    && powershell_sha512='61ae39546e9edd9359f6599341c176f6cbf9477b50e8a543c0ad7424c2f522d92e1466fa169dcc888f9bb215e26092dd91e995791ad4e77eea69d27441daf2fd' \
+    && powershell_sha512='95dd1e28c86856ffa96f6e4b6a1f9e4f1b1703e9ad29216f6b12c4a780b919422afc6233e3879c15b868c4feef018630cc14c604af6c75d13fa91807beaa4d20' \
     && echo "$powershell_sha512  PowerShell.Linux.arm32.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm32 \
