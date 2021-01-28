@@ -13,8 +13,9 @@ public static class Program
           WriteLine($"      {message}{GetBot()}");
           
           WriteLine("Environment:");
-          WriteLine(RuntimeInformation.FrameworkDescription);
+          WriteLine($"{RuntimeInformation.FrameworkDescription} ({RuntimeInformation.ProcessArchitecture})");
           WriteLine(RuntimeInformation.OSDescription);
+
     }
 
     private static string GetBot() 
