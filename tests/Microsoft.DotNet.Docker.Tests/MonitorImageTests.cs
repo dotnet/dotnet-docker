@@ -15,8 +15,6 @@ namespace Microsoft.DotNet.Docker.Tests
     [Trait("Category", "monitor")]
     public class MonitorImageTests
     {
-        private static readonly string s_samplesPath = Path.Combine(Config.SourceRepoRoot, "samples");
-
         public MonitorImageTests(ITestOutputHelper outputHelper)
         {
             OutputHelper = outputHelper;
@@ -31,13 +29,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             return TestData.GetMonitorImageData()
                 .Select(imageData => new object[] { imageData });
-        }
-
-        [Theory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyEnvironmentVariables(MonitorImageData imageData)
-        {
-            ValidateEnvironmentVariables(imageData, imageData.GetImage(DockerHelper));
         }
 
         [Theory]
