@@ -33,6 +33,25 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetImageData))]
+        public void VerifyEnvironmentVariables(MonitorImageData imageData)
+        {
+            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
+            variables.AddRange(ProductImageTests.GetCommonEnvironmentVariables());
+
+            // ASPNETCORE_URLS has been unset to allow the default URL binding to occur.
+            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty));
+            // Diagnostics should be disabled
+            variables.Add(new EnvironmentVariableInfo("COMPlus_EnableDiagnostics", "0"));
+
+            EnvironmentVariableInfo.Validate(
+                variables,
+                imageData.GetImage(DockerHelper),
+                imageData,
+                DockerHelper);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetImageData))]
         public Task VerifyMetricsEndpoint(MonitorImageData imageData)
         {
             return VerifyAsync(imageData, async (image, containerName) =>
@@ -55,8 +74,6 @@ namespace Microsoft.DotNet.Docker.Tests
                             52325,
                             "metrics");
                     }
-
-                    ValidateEnvironmentVariables(imageData, image);
                 }
                 finally
                 {
@@ -74,23 +91,6 @@ namespace Microsoft.DotNet.Docker.Tests
             string containerName = imageData.GetIdentifier("monitor");
 
             await verifyImageAsync(image, containerName);
-        }
-
-        private void ValidateEnvironmentVariables(MonitorImageData imageData, string image)
-        {
-            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
-            variables.AddRange(ProductImageTests.GetCommonEnvironmentVariables());
-
-            // ASPNETCORE_URLS has been unset to allow the default URL binding to occur.
-            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty));
-            // Diagnostics should be disabled
-            variables.Add(new EnvironmentVariableInfo("COMPlus_EnableDiagnostics", "0"));
-
-            EnvironmentVariableInfo.Validate(
-                variables,
-                image,
-                imageData,
-                DockerHelper);
         }
     }
 }
