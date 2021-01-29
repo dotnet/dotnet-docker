@@ -31,7 +31,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageData => new object[] { imageData });
         }
 
-        [Theory]
+        [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(MonitorImageData imageData)
         {
@@ -50,7 +50,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 DockerHelper);
         }
 
-        [Theory]
+        [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
         public Task VerifyMetricsEndpoint(MonitorImageData imageData)
         {
