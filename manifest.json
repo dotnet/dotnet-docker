@@ -3348,7 +3348,10 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(sdk|5.0|product-version)-buster-slim-amd64": {},
-                "5.0-buster-slim-amd64": {}
+                "5.0-buster-slim-amd64": {},
+                "5.0.102-ca-patch-buster-slim-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -3362,7 +3365,10 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(sdk|5.0|product-version)-buster-slim-arm32v7": {},
-                "5.0-buster-slim-arm32v7": {}
+                "5.0-buster-slim-arm32v7": {},
+                "5.0.102-ca-patch-buster-slim-arm32v7": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v7"
             },
@@ -3377,7 +3383,10 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(sdk|5.0|product-version)-buster-slim-arm64v8": {},
-                "5.0-buster-slim-arm64v8": {}
+                "5.0-buster-slim-arm64v8": {},
+                "5.0.102-ca-patch-buster-slim-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             },
@@ -3442,59 +3451,14 @@
           ]
         },
         {
-          "productVersion": "$(sdk|5.0|product-version)",
-          "sharedTags": {
-            "$(sdk-ca-patch|5.0|product-version)-buster-slim": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/sdk/5.0/buster-slim-ca-patch/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.debian",
-              "os": "linux",
-              "osVersion": "buster-slim",
-              "tags": {
-                "$(sdk-ca-patch|5.0|product-version)-buster-slim-amd64": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "architecture": "arm",
-              "dockerfile": "src/sdk/5.0/buster-slim-ca-patch/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.debian",
-              "os": "linux",
-              "osVersion": "buster-slim",
-              "tags": {
-                "$(sdk-ca-patch|5.0|product-version)-buster-slim-arm32v7": {}
-              },
-              "variant": "v7"
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "architecture": "arm64",
-              "dockerfile": "src/sdk/5.0/buster-slim-ca-patch/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/5.0/Dockerfile.debian",
-              "os": "linux",
-              "osVersion": "buster-slim",
-              "tags": {
-                "$(sdk-ca-patch|5.0|product-version)-buster-slim-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
           "id": "buster-slim",
           "productVersion": "$(sdk|5.0|product-version)",
           "sharedTags": {
             "$(sdk|5.0|product-version)-buster-slim": {},
-            "5.0-buster-slim": {}
+            "5.0-buster-slim": {},
+            "5.0.102-ca-patch-buster-slim": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
