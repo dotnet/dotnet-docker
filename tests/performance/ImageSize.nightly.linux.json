@@ -144,8 +144,8 @@
     "src/sdk/6.0/buster-slim/arm32v7": 560467682,
     "src/sdk/6.0/buster-slim/arm64v8": 630849653,
     "src/sdk/6.0/alpine3.13/amd64": 483297399,
-    "src/sdk/6.0/alpine3.13/arm32v7": 479381569,
-    "src/sdk/6.0/alpine3.13/arm64v8": 521161475,
+    "src/sdk/6.0/alpine3.13/arm32v7": 441388589,
+    "src/sdk/6.0/alpine3.13/arm64v8": 483142686,
     "src/sdk/6.0/focal/amd64": 631776580,
     "src/sdk/6.0/focal/arm32v7": 570689058,
     "src/sdk/6.0/focal/arm64v8": 644325728
