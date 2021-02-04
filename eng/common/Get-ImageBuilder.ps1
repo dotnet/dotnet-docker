@@ -9,7 +9,7 @@ ForEach-Object {
 }
 
 & docker inspect ${imageNames.imagebuilder} | Out-Null
-if ($LASTEXITCODE -ne 0) {
+if (-not $?) {
     Write-Output "Pulling"
     & $PSScriptRoot/Invoke-WithRetry.ps1 "docker pull ${imageNames.imagebuilder}"
 }
