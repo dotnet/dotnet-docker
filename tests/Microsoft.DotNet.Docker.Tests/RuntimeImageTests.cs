@@ -19,7 +19,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected override DotNetImageType ImageType => DotNetImageType.Runtime;
 
-        [Theory]
+        [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
@@ -33,7 +33,7 @@ namespace Microsoft.DotNet.Docker.Tests
             await verifier.Execute();
         }
 
-        [Theory]
+        [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {

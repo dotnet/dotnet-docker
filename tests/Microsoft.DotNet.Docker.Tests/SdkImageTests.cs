@@ -57,7 +57,7 @@ namespace Microsoft.DotNet.Docker.Tests
             base.VerifyCommonInsecureFiles(imageData);
         }
 
-        [Theory]
+        [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
@@ -100,7 +100,7 @@ namespace Microsoft.DotNet.Docker.Tests
             EnvironmentVariableInfo.Validate(variables, imageData.GetImage(DotNetImageType.SDK, DockerHelper), imageData, DockerHelper);
         }
 
-        [Theory]
+        [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyPackageCache(ProductImageData imageData)
         {
@@ -131,7 +131,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        [Theory]
+        [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
         {
@@ -144,7 +144,7 @@ namespace Microsoft.DotNet.Docker.Tests
             PowerShellScenario_Execute(imageData, null);
         }
 
-        [Theory]
+        [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_NonDefaultUser(ProductImageData imageData)
         {
@@ -167,7 +167,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// <summary>
         /// Verifies that the dotnet folder contents of an SDK container match the contents in the official SDK archive file.
         /// </summary>
-        [Theory]
+        [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
