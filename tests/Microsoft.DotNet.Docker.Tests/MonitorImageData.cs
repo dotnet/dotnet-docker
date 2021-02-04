@@ -12,12 +12,11 @@ namespace Microsoft.DotNet.Docker.Tests
         public string RuntimeVersionString => RuntimeVersion.ToString(2);
         public Version Version { get; set; }
         public string VersionString => Version.ToString(2);
+        public string OSTag { get; set; }
 
         public string GetImage(DockerHelper dockerHelper)
         {
-            string tagVersion = Version.ToString(2);
-
-            string tag = GetTagName(tagVersion, OS);
+            string tag = GetTagName(VersionString, OSTag);
 
             string imageName = GetImageName(tag, "monitor");
 
