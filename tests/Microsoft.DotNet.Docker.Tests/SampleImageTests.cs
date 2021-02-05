@@ -34,7 +34,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageData => new object[] { imageData });
         }
 
-        [Theory]
+        [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetSample(SampleImageData imageData)
         {
@@ -49,7 +49,7 @@ namespace Microsoft.DotNet.Docker.Tests
             });
         }
 
-        [Theory]
+        [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAspnetSample(SampleImageData imageData)
         {

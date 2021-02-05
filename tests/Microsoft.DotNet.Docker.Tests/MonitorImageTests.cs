@@ -1,0 +1,96 @@
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+//
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
+using Xunit.Abstractions;
+
+namespace Microsoft.DotNet.Docker.Tests
+{
+    [Trait("Category", "monitor")]
+    public class MonitorImageTests
+    {
+        public MonitorImageTests(ITestOutputHelper outputHelper)
+        {
+            OutputHelper = outputHelper;
+            DockerHelper = new DockerHelper(outputHelper);
+        }
+
+        protected DockerHelper DockerHelper { get; }
+
+        protected ITestOutputHelper OutputHelper { get; }
+
+        public static IEnumerable<object[]> GetImageData()
+        {
+            return TestData.GetMonitorImageData()
+                .Select(imageData => new object[] { imageData });
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyEnvironmentVariables(MonitorImageData imageData)
+        {
+            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
+            variables.AddRange(ProductImageTests.GetCommonEnvironmentVariables());
+
+            // ASPNETCORE_URLS has been unset to allow the default URL binding to occur.
+            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty));
+            // Diagnostics should be disabled
+            variables.Add(new EnvironmentVariableInfo("COMPlus_EnableDiagnostics", "0"));
+
+            EnvironmentVariableInfo.Validate(
+                variables,
+                imageData.GetImage(DockerHelper),
+                imageData,
+                DockerHelper);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public Task VerifyMetricsEndpoint(MonitorImageData imageData)
+        {
+            return VerifyAsync(imageData, async (image, containerName) =>
+            {
+                try
+                {
+                    DockerHelper.Run(
+                        image: image,
+                        name: containerName,
+                        detach: true,
+                        optionalRunArgs: "-p 52325");
+
+                    if (!Config.IsHttpVerificationDisabled)
+                    {
+                        // Verify metrics endpoint is accessible
+                        await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(
+                            containerName,
+                            DockerHelper,
+                            OutputHelper,
+                            52325,
+                            "metrics");
+                    }
+                }
+                finally
+                {
+                    DockerHelper.DeleteContainer(containerName);
+                }
+            });
+        }
+
+        private async Task VerifyAsync(
+            MonitorImageData imageData,
+            Func<string, string, Task> verifyImageAsync)
+        {
+            string image = imageData.GetImage(DockerHelper);
+
+            string containerName = imageData.GetIdentifier("monitor");
+
+            await verifyImageAsync(image, containerName);
+        }
+    }
+}
