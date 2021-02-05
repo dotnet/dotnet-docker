@@ -2,7 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 ARG DOTNET_VERSION=6.0.0-preview.1.21102.12
 
 # Installer image
-FROM arm32v7/buildpack-deps:buster-curl as installer
+FROM arm32v7/buildpack-deps:bullseye-curl as installer
 ARG DOTNET_VERSION
 
 # Retrieve .NET
@@ -15,7 +15,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runti
 
 
 # .NET runtime image
-FROM $REPO:6.0-buster-slim-arm32v7
+FROM $REPO:6.0-bullseye-slim-arm32v7
 ARG DOTNET_VERSION
 
 ENV DOTNET_VERSION=$DOTNET_VERSION

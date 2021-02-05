@@ -63,7 +63,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.0-preview.1-buster-slim-amd64, 6.0-buster-slim-amd64, 6.0.0-preview.1, 6.0.0-preview.1-buster-slim, 6.0, 6.0-buster-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/buster-slim/amd64/Dockerfile) | Debian 10
+6.0.0-preview.1-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.0-preview.1, 6.0.0-preview.1-bullseye-slim, 6.0, 6.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
 6.0.0-preview.1-alpine3.13-amd64, 6.0-alpine3.13-amd64, 6.0-alpine-amd64, 6.0.0-preview.1-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/5.0/alpine3.13/amd64/Dockerfile) | Alpine 3.13
 6.0.0-preview.1-focal-amd64, 6.0-focal-amd64, 6.0.0-preview.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
 
@@ -83,7 +83,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.0-preview.1-buster-slim-arm64v8, 6.0-buster-slim-arm64v8, 6.0.0-preview.1, 6.0.0-preview.1-buster-slim, 6.0, 6.0-buster-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/buster-slim/arm64v8/Dockerfile) | Debian 10
+6.0.0-preview.1-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.0-preview.1, 6.0.0-preview.1-bullseye-slim, 6.0, 6.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
 6.0.0-preview.1-alpine3.13-arm64v8, 6.0-alpine3.13-arm64v8, 6.0-alpine-arm64v8, 6.0.0-preview.1-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/alpine3.13/arm64v8/Dockerfile) | Alpine 3.13
 6.0.0-preview.1-focal-arm64v8, 6.0-focal-arm64v8, 6.0.0-preview.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
@@ -104,7 +104,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.0-preview.1-buster-slim-arm32v7, 6.0-buster-slim-arm32v7, 6.0.0-preview.1, 6.0.0-preview.1-buster-slim, 6.0, 6.0-buster-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/buster-slim/arm32v7/Dockerfile) | Debian 10
+6.0.0-preview.1-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.0-preview.1, 6.0.0-preview.1-bullseye-slim, 6.0, 6.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
 6.0.0-preview.1-alpine3.13-arm32v7, 6.0-alpine3.13-arm32v7, 6.0-alpine-arm32v7, 6.0.0-preview.1-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/5.0/alpine3.13/arm32v7/Dockerfile) | Alpine 3.13
 6.0.0-preview.1-focal-arm32v7, 6.0-focal-arm32v7, 6.0.0-preview.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
