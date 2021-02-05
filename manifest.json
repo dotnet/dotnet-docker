@@ -239,21 +239,6 @@
             },
             "5.0-buster-slim": {
               "documentationGroup": "5.0"
-            },
-            "$(dotnet|6.0|product-version)": {
-              "documentationGroup": "6.0"
-            },
-            "$(dotnet|6.0|product-version)-buster-slim": {
-              "documentationGroup": "6.0"
-            },
-            "6.0": {
-              "documentationGroup": "6.0"
-            },
-            "6.0-buster-slim": {
-              "documentationGroup": "6.0"
-            },
-            "latest": {
-              "documentationGroup": "6.0"
             }
           },
           "platforms": [
@@ -280,12 +265,6 @@
                 },
                 "5.0-buster-slim-amd64": {
                   "documentationGroup": "5.0"
-                },
-                "$(dotnet|6.0|product-version)-buster-slim-amd64": {
-                  "documentationGroup": "6.0"
-                },
-                "6.0-buster-slim-amd64": {
-                  "documentationGroup": "6.0"
                 }
               }
             },
@@ -313,12 +292,6 @@
                 },
                 "5.0-buster-slim-arm32v7": {
                   "documentationGroup": "5.0"
-                },
-                "$(dotnet|6.0|product-version)-buster-slim-arm32v7": {
-                  "documentationGroup": "6.0"
-                },
-                "6.0-buster-slim-arm32v7": {
-                  "documentationGroup": "6.0"
                 }
               },
               "variant": "v7"
@@ -347,12 +320,6 @@
                 },
                 "5.0-buster-slim-arm64v8": {
                   "documentationGroup": "5.0"
-                },
-                "$(dotnet|6.0|product-version)-buster-slim-arm64v8": {
-                  "documentationGroup": "6.0"
-                },
-                "6.0-buster-slim-arm64v8": {
-                  "documentationGroup": "6.0"
                 }
               },
               "variant": "v8"
@@ -723,6 +690,52 @@
               "tags": {
                 "$(dotnet|5.0|product-version)-focal-arm64v8": {},
                 "5.0-focal-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)": {},
+            "$(dotnet|6.0|product-version)-bullseye-slim": {},
+            "6.0": {},
+            "6.0-bullseye-slim": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/6.0/bullseye-slim/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "bullseye-slim",
+              "tags": {
+                "$(dotnet|6.0|product-version)-bullseye-slim-amd64": {},
+                "6.0-bullseye-slim-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "src/runtime-deps/6.0/bullseye-slim/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "bullseye-slim",
+              "tags": {
+                "$(dotnet|6.0|product-version)-bullseye-slim-arm32v7": {},
+                "6.0-bullseye-slim-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/6.0/bullseye-slim/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "bullseye-slim",
+              "tags": {
+                "$(dotnet|6.0|product-version)-bullseye-slim-arm64v8": {},
+                "6.0-bullseye-slim-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1922,7 +1935,7 @@
             }
           ]
         },
-{
+        {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)": {},
@@ -1934,13 +1947,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/6.0/buster-slim/amd64",
+              "dockerfile": "src/runtime/6.0/bullseye-slim/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {
-                "$(dotnet|6.0|product-version)-buster-slim-amd64": {},
-                "6.0-buster-slim-amd64": {}
+                "$(dotnet|6.0|product-version)-bullseye-slim-amd64": {},
+                "6.0-bullseye-slim-amd64": {}
               }
             },
             {
@@ -1948,13 +1961,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/6.0/buster-slim/arm32v7",
+              "dockerfile": "src/runtime/6.0/bullseye-slim/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {
-                "$(dotnet|6.0|product-version)-buster-slim-arm32v7": {},
-                "6.0-buster-slim-arm32v7": {}
+                "$(dotnet|6.0|product-version)-bullseye-slim-arm32v7": {},
+                "6.0-bullseye-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -1963,13 +1976,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/6.0/buster-slim/arm64v8",
+              "dockerfile": "src/runtime/6.0/bullseye-slim/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {
-                "$(dotnet|6.0|product-version)-buster-slim-arm64v8": {},
-                "6.0-buster-slim-arm64v8": {}
+                "$(dotnet|6.0|product-version)-bullseye-slim-arm64v8": {},
+                "6.0-bullseye-slim-arm64v8": {}
               },
               "variant": "v8"
             },
@@ -2016,21 +2029,21 @@
           ]
         },
         {
-          "id": "buster-slim",
+          "id": "bullseye-slim",
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
-            "$(dotnet|6.0|product-version)-buster-slim": {},
-            "6.0-buster-slim": {}
+            "$(dotnet|6.0|product-version)-bullseye-slim": {},
+            "6.0-bullseye-slim": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/6.0/buster-slim/amd64",
+              "dockerfile": "src/runtime/6.0/bullseye-slim/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {}
             },
             {
@@ -2038,10 +2051,10 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/6.0/buster-slim/arm32v7",
+              "dockerfile": "src/runtime/6.0/bullseye-slim/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {},
               "variant": "v7"
             },
@@ -2050,10 +2063,10 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/6.0/buster-slim/arm64v8",
+              "dockerfile": "src/runtime/6.0/bullseye-slim/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {},
               "variant": "v8"
             }
@@ -3361,13 +3374,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/6.0/buster-slim/amd64",
+              "dockerfile": "src/aspnet/6.0/bullseye-slim/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {
-                "$(dotnet|6.0|product-version)-buster-slim-amd64": {},
-                "6.0-buster-slim-amd64": {}
+                "$(dotnet|6.0|product-version)-bullseye-slim-amd64": {},
+                "6.0-bullseye-slim-amd64": {}
               }
             },
             {
@@ -3375,13 +3388,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/6.0/buster-slim/arm32v7",
+              "dockerfile": "src/aspnet/6.0/bullseye-slim/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {
-                "$(dotnet|6.0|product-version)-buster-slim-arm32v7": {},
-                "6.0-buster-slim-arm32v7": {}
+                "$(dotnet|6.0|product-version)-bullseye-slim-arm32v7": {},
+                "6.0-bullseye-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -3390,13 +3403,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/6.0/buster-slim/arm64v8",
+              "dockerfile": "src/aspnet/6.0/bullseye-slim/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {
-                "$(dotnet|6.0|product-version)-buster-slim-arm64v8": {},
-                "6.0-buster-slim-arm64v8": {}
+                "$(dotnet|6.0|product-version)-bullseye-slim-arm64v8": {},
+                "6.0-bullseye-slim-arm64v8": {}
               },
               "variant": "v8"
             },
@@ -3455,21 +3468,21 @@
           ]
         },
         {
-          "id": "buster-slim",
+          "id": "bullseye-slim",
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
-            "$(dotnet|6.0|product-version)-buster-slim": {},
-            "6.0-buster-slim": {}
+            "$(dotnet|6.0|product-version)-bullseye-slim": {},
+            "6.0-bullseye-slim": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/6.0/buster-slim/amd64",
+              "dockerfile": "src/aspnet/6.0/bullseye-slim/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {}
             },
             {
@@ -3477,10 +3490,10 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/6.0/buster-slim/arm32v7",
+              "dockerfile": "src/aspnet/6.0/bullseye-slim/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {},
               "variant": "v7"
             },
@@ -3489,10 +3502,10 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/6.0/buster-slim/arm64v8",
+              "dockerfile": "src/aspnet/6.0/bullseye-slim/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {},
               "variant": "v8"
             }
@@ -4744,13 +4757,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/sdk/6.0/buster-slim/amd64",
+              "dockerfile": "src/sdk/6.0/bullseye-slim/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-buster-slim-amd64": {},
-                "6.0-buster-slim-amd64": {}
+                "$(sdk|6.0|product-version)-bullseye-slim-amd64": {},
+                "6.0-bullseye-slim-amd64": {}
               }
             },
             {
@@ -4758,13 +4771,13 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "architecture": "arm",
-              "dockerfile": "src/sdk/6.0/buster-slim/arm32v7",
+              "dockerfile": "src/sdk/6.0/bullseye-slim/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-buster-slim-arm32v7": {},
-                "6.0-buster-slim-arm32v7": {}
+                "$(sdk|6.0|product-version)-bullseye-slim-arm32v7": {},
+                "6.0-bullseye-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -4773,13 +4786,13 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "architecture": "arm64",
-              "dockerfile": "src/sdk/6.0/buster-slim/arm64v8",
+              "dockerfile": "src/sdk/6.0/bullseye-slim/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-buster-slim-arm64v8": {},
-                "6.0-buster-slim-arm64v8": {}
+                "$(sdk|6.0|product-version)-bullseye-slim-arm64v8": {},
+                "6.0-bullseye-slim-arm64v8": {}
               },
               "variant": "v8"
             },
@@ -4838,21 +4851,21 @@
           ]
         },
         {
-          "id": "buster-slim",
+          "id": "bullseye-slim",
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-buster-slim": {},
-            "6.0-buster-slim": {}
+            "$(sdk|6.0|product-version)-bullseye-slim": {},
+            "6.0-bullseye-slim": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/sdk/6.0/buster-slim/amd64",
+              "dockerfile": "src/sdk/6.0/bullseye-slim/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {}
             },
             {
@@ -4860,10 +4873,10 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "architecture": "arm",
-              "dockerfile": "src/sdk/6.0/buster-slim/arm32v7",
+              "dockerfile": "src/sdk/6.0/bullseye-slim/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {},
               "variant": "v7"
             },
@@ -4872,10 +4885,10 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "architecture": "arm64",
-              "dockerfile": "src/sdk/6.0/buster-slim/arm64v8",
+              "dockerfile": "src/sdk/6.0/bullseye-slim/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/6.0/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "buster-slim",
+              "osVersion": "bullseye-slim",
               "tags": {},
               "variant": "v8"
             }
