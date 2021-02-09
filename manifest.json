@@ -3471,10 +3471,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(sdk|5.0|product-version)-buster-slim-amd64": {},
-                "5.0-buster-slim-amd64": {},
-                "5.0.102-ca-patch-buster-slim-amd64": {
-                  "docType": "Undocumented"
-                }
+                "5.0-buster-slim-amd64": {}
               }
             },
             {
@@ -3488,10 +3485,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(sdk|5.0|product-version)-buster-slim-arm32v7": {},
-                "5.0-buster-slim-arm32v7": {},
-                "5.0.102-ca-patch-buster-slim-arm32v7": {
-                  "docType": "Undocumented"
-                }
+                "5.0-buster-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -3506,10 +3500,7 @@
               "osVersion": "buster-slim",
               "tags": {
                 "$(sdk|5.0|product-version)-buster-slim-arm64v8": {},
-                "5.0-buster-slim-arm64v8": {},
-                "5.0.102-ca-patch-buster-slim-arm64v8": {
-                  "docType": "Undocumented"
-                }
+                "5.0-buster-slim-arm64v8": {}
               },
               "variant": "v8"
             },
@@ -3578,10 +3569,7 @@
           "productVersion": "$(sdk|5.0|product-version)",
           "sharedTags": {
             "$(sdk|5.0|product-version)-buster-slim": {},
-            "5.0-buster-slim": {},
-            "5.0.102-ca-patch-buster-slim": {
-              "docType": "Undocumented"
-            }
+            "5.0-buster-slim": {}
           },
           "platforms": [
             {
