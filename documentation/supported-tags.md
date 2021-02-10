@@ -2,11 +2,11 @@
 
 This document describes the supported tags for the official .NET Docker images.
 
-The tagging practices used by .NET aligns with the tags of the [Official Images on Docker Hub](https://hub.docker.com/search?q=&type=image&image_filter=official).
+The .NET team strives to align image tagging practices with tagging practices utilized by the [Official Images on Docker Hub](https://hub.docker.com/search?q=&type=image&image_filter=official).
 
 ## Simple Tags
 
-_Simple Tags_ reference an image for a single platform (e.g. `Windows amd64` or `Linux arm64v8`).
+_Simple Tags_ reference an image for a single platform (e.g. `Windows x64` or `Linux ARMv8 64-bit`).
 
 1. `<Major.Minor.Patch .NET Version>-<OS>-<Architecture>`
 

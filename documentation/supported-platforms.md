@@ -11,8 +11,8 @@ This document describes the platforms (OS and architectures) supported by the of
 Each distribution (distro) has a unique approach to releasing, schedule and end-of life (EOL). This prohibits the definition of a one-size-fits-all policy. Instead, a policy is defined for each supported distro.
 
 - Alpine — support tip and retain support for the previous version one quarter (3 months) after a new version is released.
-- Debian — support the latest *stable* version at the time a `major.minor` version of .NET is released. Add support for each new *stable* version as it is released. Debian images are included in the shared/multi-arch tags.
-- Ubuntu — support the latest *LTS* version at the time a `major.minor` version of .NET is released. Add support for each new *LTS* version as it is released.
+- Debian — support the latest *stable* version at the time a `major.minor` version of .NET is released. As new *stable* versions are released, support is added to the latest .NET version and latest LTS (if they differ).
+- Ubuntu — support the latest *LTS* version at the time a `major.minor` version of .NET is released. As new *LTS* versions are released, support is added to the latest .NET version and latest LTS (if they differ).
 
 Pre-release versions of the supported distros will be made available within the [nightly repositories](https://hub.docker.com/_/microsoft-dotnet-nightly) based on the availability of pre-release OS base images.
 
@@ -25,7 +25,7 @@ The official .NET images support Nano Server as well as LTS versions of Windows 
 
 ## Architectures
 
-.NET supports amd64, arm32 and arm64 architectures. All of the supported architectures are also supported within containers.
+.NET images are provided for the following architectures.
 
 - Linux/Windows x86-64 (amd64)
 - Linux ARMv7 32-bit (arm32v7)
