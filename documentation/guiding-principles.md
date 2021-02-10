@@ -43,6 +43,4 @@ See the [supported tags](supported-tags.md) for the tagging practices and polici
 
 1. The [Dockerfiles](https://github.com/dotnet/dotnet-docker/search?q=filename%3ADockerfile) used to produce all of the images will be publicly available. Customers will be able to take the Dockerfiles and build them to produce their own equivalent images. No special build steps or permissions should be needed to build the Dockerfiles.
 
-1. If a change is ever made to the tagging patterns, all of the old tags will be serviced appropriately through the lifetime of the contained .NET version. All old tags will no longer be documented within the tag details section of the readme.
-
 1. No experimental Docker features will be utilized within the infrastructure used to produce the images. Utilizing experimental features can negatively affect the reliability of image production and introduces a risk to the integrity of the resulting artifacts.
