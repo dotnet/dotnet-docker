@@ -27,11 +27,11 @@ These are the guiding principles for the content, tagging and production of the 
     1. If support for a new distro is added for a particular .NET version, then new `runtime-deps`, `runtime`, `aspnet`, and `sdk` images should all be added for the new distro.
     1. If a new component is added, it should be available across all supported OS types and architectures.
 
-1. The matrix of [supported container operating systems and versions](suported-platforms.md) will evolve on a continuous basis.
+1. The matrix of [supported container operating systems and versions](supported-platforms.md) will evolve on a continuous basis.
 
 ## Image Tagging
 
-See the [supported tags](suported-tags.md) for the tagging practices and policies used by the .NET team.
+See the [supported tags](supported-tags.md) for the tagging practices and policies used by the .NET team.
 
 ## Engineering
 
