@@ -31,7 +31,7 @@ These are the guiding principles for the content, tagging and production of the 
 
 ## Image Tagging
 
-See the [supported tags](suported-tags.md) for the taggings practices and policies used by the .NET team.
+See the [supported tags](suported-tags.md) for the tagging practices and policies used by the .NET team.
 
 ## Engineering
 
