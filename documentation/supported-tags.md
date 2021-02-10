@@ -90,7 +90,7 @@ _Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/
 
 1. `<Architecture>` - The architecture the image is based on. See [Supported Platforms](suported-platforms.md#architectures) for the list of supported architectures.
 
-    * For Windows, `amd64` is the only architecture supported and is excluded.
+    * For Windows, `amd64` is the only architecture supported and is excluded from the tag name.
     * For .NET Core 2.1 and 3.1, `amd64` is the implied default if no architecture is specified.
 
 ## Tag Listing
