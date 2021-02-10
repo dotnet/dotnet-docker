@@ -4,7 +4,7 @@ This document describes the platforms (OS and architectures) supported by the of
 
 ## Operating Systems
 
-.NET tries to [support a broad set of operating systems and versions](https://github.com/dotnet/core/blob/master/os-lifecycle-policy.md). With containers, it’s too expensive and confusing to support the full matrix of options. In practice, images are produced for a select set of operating systems and versions.
+.NET tries to [support a broad set of operating systems and versions](https://github.com/dotnet/core/blob/master/os-lifecycle-policy.md). With containers, it’s too expensive and confusing to support the full matrix of options. In practice, images are produced for a select set of operating systems and versions. If official .NET Docker images aren't provided for your choice OS, you'll need to [author your own Dockerfile which installs .NET](scenarios/installing-dotnet.md).
 
 ### Linux
 

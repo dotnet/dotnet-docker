@@ -77,7 +77,7 @@ _Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/
 1. `<Major.Minor.Patch .NET Version>` - The `Major.Minor.Patch` number of the .NET version included in the image.
 
     * Tags which use this version format are considered _fixed tags_. The .NET related contents of the referenced images are guaranteed to not change.
-    * In the event servicing of the .NET contents of the image is required outside of a regular .NET service release, a `-n` suffix will be added to the .NET version number where n is an incremental count (e.g. 5.0.1-1).
+    * In the event servicing of the .NET contents of the image is required outside of a regular .NET service release, a `-n` suffix will be added to the .NET version number where n is an incremental count (e.g. [5.0.1-1](https://github.com/dotnet/dotnet-docker/pull/2516)).
 
 1. `<Major.Minor .NET Version>` - The `Major.Minor` number of the .NET version included in the image.
 
