@@ -54,8 +54,7 @@ jobs:
       $(runImageBuilderCmd) publishManifest
       '$(artifactsPath)/image-info.json'
       --repo-prefix '$(publishRepoPrefix)'
-      --username '$(acr.userName)'
-      --password '$(BotAccount-dotnet-docker-acr-bot-password)'
+      --registry-creds '$(acr.server)=$(acr.userName);$(BotAccount-dotnet-docker-acr-bot-password)'
       --os-type '*'
       --architecture '*'
       $(dryRunArg)
