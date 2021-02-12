@@ -172,7 +172,7 @@ namespace Microsoft.DotNet.Docker.Tests
             bool hasCountDifference = expectedDotnetFiles.Count() != actualDotnetFiles.Count();
 
             bool hasFileContentDifference = false;
-            
+
             // Skip file comparisons for 3.1 until https://github.com/dotnet/sdk/issues/11327 is fixed.
             if (imageData.Version.Major != 3)
             {
@@ -196,7 +196,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     OutputHelper.WriteLine($"Path: {file.Path}");
                     OutputHelper.WriteLine($"Checksum: {file.Sha512}");
                 }
-                
+
                 OutputHelper.WriteLine(string.Empty);
                 OutputHelper.WriteLine("ACTUAL FILES:");
                 foreach (SdkContentFileInfo file in actualDotnetFiles)
@@ -310,6 +310,13 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.Version.Major < 3)
             {
                 OutputHelper.WriteLine("PowerShell does not exist in pre-3.0 images, skip testing");
+                return;
+            }
+
+            // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
+            if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
+            {
+                OutputHelper.WriteLine("PowerShell does not have Alpine arm images, skip testing");
                 return;
             }
 
