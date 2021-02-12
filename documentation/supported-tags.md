@@ -108,7 +108,7 @@ Each tag will be supported for the lifetime of the .NET and OS version reference
 ### Examples
 
 * `5.0` - Will be supported for the lifetime of the .NET 5.0 release.
-* `5.0.2` - Will be supported for the liftime of the 5.0.2 servicing release.
+* `5.0.2` - Will be supported for the lifetime of the 5.0.2 servicing release.
 * `5.0-windowservercore-ltsc2019` - Will be supported for the lifetime of the .NET 5.0 and Windows Server Core LTSC 2019 releases, whichever is shorter.
 * `5.0-focal` - Will be supported for the lifetime of the .NET 5.0 and Ubuntu Focal release, whichever is shorter.
 
