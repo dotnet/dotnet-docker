@@ -123,12 +123,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
         {
-            // Disable this test for 6.0 until PowerShell has a version based on 6.0 (https://github.com/dotnet/dotnet-docker/issues/2488)
-            if (imageData.Version.Major == 6)
-            {
-                return;
-            }
-
             PowerShellScenario_Execute(imageData, null);
         }
 
@@ -136,12 +130,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_NonDefaultUser(ProductImageData imageData)
         {
-            // Disable this test for 6.0 until PowerShell has a version based on 6.0 (https://github.com/dotnet/dotnet-docker/issues/2488)
-            if (imageData.Version.Major == 6)
-            {
-                return;
-            }
-
             string optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
             if (!DockerHelper.IsLinuxContainerModeEnabled)
             {
