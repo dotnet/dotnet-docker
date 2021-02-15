@@ -123,12 +123,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
         {
-            // Disable this test for 6.0 until PowerShell has a version based on 6.0 (https://github.com/dotnet/dotnet-docker/issues/2488)
-            if (imageData.Version.Major == 6)
-            {
-                return;
-            }
-
             PowerShellScenario_Execute(imageData, null);
         }
 
@@ -136,12 +130,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_NonDefaultUser(ProductImageData imageData)
         {
-            // Disable this test for 6.0 until PowerShell has a version based on 6.0 (https://github.com/dotnet/dotnet-docker/issues/2488)
-            if (imageData.Version.Major == 6)
-            {
-                return;
-            }
-
             string optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
             if (!DockerHelper.IsLinuxContainerModeEnabled)
             {
@@ -184,7 +172,7 @@ namespace Microsoft.DotNet.Docker.Tests
             bool hasCountDifference = expectedDotnetFiles.Count() != actualDotnetFiles.Count();
 
             bool hasFileContentDifference = false;
-            
+
             // Skip file comparisons for 3.1 until https://github.com/dotnet/sdk/issues/11327 is fixed.
             if (imageData.Version.Major != 3)
             {
@@ -208,7 +196,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     OutputHelper.WriteLine($"Path: {file.Path}");
                     OutputHelper.WriteLine($"Checksum: {file.Sha512}");
                 }
-                
+
                 OutputHelper.WriteLine(string.Empty);
                 OutputHelper.WriteLine("ACTUAL FILES:");
                 foreach (SdkContentFileInfo file in actualDotnetFiles)
@@ -322,6 +310,13 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.Version.Major < 3)
             {
                 OutputHelper.WriteLine("PowerShell does not exist in pre-3.0 images, skip testing");
+                return;
+            }
+
+            // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
+            if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
+            {
+                OutputHelper.WriteLine("PowerShell does not have Alpine arm images, skip testing");
                 return;
             }
 
