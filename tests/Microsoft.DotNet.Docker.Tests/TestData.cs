@@ -45,6 +45,14 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V5_0, OS = OS.Focal,        Arch = Arch.Arm64 },
             new ProductImageData { Version = V5_0, OS = OS.Alpine312,    Arch = Arch.Arm64,   SdkOS = OS.BusterSlim },
             new ProductImageData { Version = V5_0, OS = OS.Alpine313,    Arch = Arch.Arm64,   SdkOS = OS.BusterSlim },
+            new ProductImageData { Version = V6_0, OS = OS.BullseyeSlim, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V6_0, OS = OS.Focal,        Arch = Arch.Amd64 },
+            new ProductImageData { Version = V6_0, OS = OS.Alpine313,    Arch = Arch.Amd64 },
+            new ProductImageData { Version = V6_0, OS = OS.BullseyeSlim, Arch = Arch.Arm },
+            new ProductImageData { Version = V6_0, OS = OS.BullseyeSlim, Arch = Arch.Arm64 },
+            new ProductImageData { Version = V6_0, OS = OS.Focal,        Arch = Arch.Arm },
+            new ProductImageData { Version = V6_0, OS = OS.Focal,        Arch = Arch.Arm64 },
+            new ProductImageData { Version = V6_0, OS = OS.Alpine313,    Arch = Arch.Arm64 },
         };
         private static readonly ProductImageData[] s_windowsTestData =
         {
@@ -61,6 +69,11 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V5_0, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.NanoServer20H2, Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V6_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V6_0, OS = OS.NanoServer1909,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V6_0, OS = OS.NanoServer2004,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V6_0, OS = OS.NanoServer20H2,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V6_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
         };
         
         private static readonly SampleImageData[] s_linuxSampleTestData =
