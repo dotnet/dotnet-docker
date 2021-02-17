@@ -216,7 +216,18 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null)
+        public static Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null)
+        {
+            return GetHttpResponseFromContainerAsync(
+                containerName,
+                dockerHelper,
+                outputHelper,
+                containerPort,
+                pathAndQuery,
+                m => m.EnsureSuccessStatusCode());
+        }
+
+        public static async Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null)
         {
             int retries = 30;
 
@@ -232,24 +243,44 @@ namespace Microsoft.DotNet.Docker.Tests
                     retries--;
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
+                    HttpResponseMessage result = null;
                     try
                     {
-                        using (HttpResponseMessage result = await client.GetAsync(url))
+                        result = await client.GetAsync(url);
+                        outputHelper.WriteLine($"HTTP {result.StatusCode}\n{(await result.Content.ReadAsStringAsync())}");
+
+                        if (null != validateCallback)
                         {
-                            outputHelper.WriteLine($"HTTP {result.StatusCode}\n{(await result.Content.ReadAsStringAsync())}");
-                            result.EnsureSuccessStatusCode();
+                            validateCallback(result);
                         }
 
-                        return;
+                        // Store response in local that will not be disposed
+                        HttpResponseMessage returnResult = result;
+                        result = null;
+                        return returnResult;
                     }
                     catch (Exception ex)
                     {
                         outputHelper.WriteLine($"Request to {url} failed - retrying: {ex}");
                     }
+                    finally
+                    {
+                        result?.Dispose();
+                    }
                 }
             }
 
             throw new TimeoutException($"Timed out attempting to access the endpoint {url} on container {containerName}");
+        }
+
+        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null)
+        {
+            (await GetHttpResponseFromContainerAsync(
+                containerName,
+                dockerHelper,
+                outputHelper,
+                containerPort,
+                pathAndQuery)).Dispose();
         }
     }
 }
