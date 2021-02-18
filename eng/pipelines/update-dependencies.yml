@@ -54,5 +54,5 @@ stages:
         --email $(dotnetDockerBot.email)
         --password $(BotAccount-dotnet-docker-bot-PAT)
         --product-version monitor=$(monitorVer)
-        --version-source-name dotnet/diagnostics
+        --version-source-name dotnet/dotnet-monitor
       displayName: Run Update Dependencies
