@@ -12,6 +12,4 @@ monitorVer=$(tr -d '\r\n' < dotnet-monitor.nupkg.version)
 
 rm dotnet-monitor.nupkg.version
 
-#echo "##vso[task.setvariable variable=monitorVer]$monitorVer"
-# Temporarily fix the version since Arcade cannot properly create aka.ms for assets without an aka.ms channel name.
-echo "##vso[task.setvariable variable=monitorVer]5.0.0-preview.4.21117.6"
+echo "##vso[task.setvariable variable=monitorVer]$monitorVer"
