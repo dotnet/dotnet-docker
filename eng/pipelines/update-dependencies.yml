@@ -34,12 +34,12 @@ stages:
         --version-source-name dotnet/core-sdk
         --compute-shas
       displayName: Run Update Dependencies
-- stage: Diagnostics
-  condition: eq(variables['update-diagnostics-enabled'], 'true')
+- stage: Monitor
+  condition: eq(variables['update-monitor-enabled'], 'true')
   dependsOn: [] # Allows it to run in parallel
   jobs:
   - job: UpdateDependencies
-    displayName: Update Dependencies (dotnet/diagnostics)
+    displayName: Update Dependencies (dotnet/dotnet-monitor)
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
@@ -54,5 +54,5 @@ stages:
         --email $(dotnetDockerBot.email)
         --password $(BotAccount-dotnet-docker-bot-PAT)
         --product-version monitor=$(monitorVer)
-        --version-source-name dotnet/diagnostics
+        --version-source-name dotnet/dotnet-monitor
       displayName: Run Update Dependencies
