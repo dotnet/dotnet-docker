@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -160,19 +161,18 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         // Verify metrics endpoint is accessible and produces zero processes
                         using HttpResponseMessage processesMessage =
-                        await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
-                            containerName,
-                            DockerHelper,
-                            OutputHelper,
-                            DefaultArtifactsPort,
-                            UrlPath_Processes);
+                            await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                                containerName,
+                                DockerHelper,
+                                OutputHelper,
+                                DefaultArtifactsPort,
+                                UrlPath_Processes);
 
-                        JsonDocument processesDocument = JsonDocument.Parse(processesMessage.Content.ReadAsStream());
-                        JsonElement processesElement = processesDocument.RootElement;
+                        JsonElement rootElement = GetContentAsJsonElement(processesMessage);
 
                         // Verify returns an empty array (should not detect any processes)
-                        Assert.Equal(JsonValueKind.Array, processesElement.ValueKind);
-                        Assert.Equal(0, processesElement.GetArrayLength());
+                        Assert.Equal(JsonValueKind.Array, rootElement.ValueKind);
+                        Assert.Equal(0, rootElement.GetArrayLength());
                     }
                 },
                 builder =>
@@ -208,8 +208,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 DefaultArtifactsPort,
                                 UrlPath_Processes);
 
-                        JsonDocument document = JsonDocument.Parse(responseMessage.Content.ReadAsStream());
-                        JsonElement rootElement = document.RootElement;
+                        JsonElement rootElement = GetContentAsJsonElement(responseMessage);
 
                         // Verify returns an array with one element (the sample container process)
                         Assert.Equal(JsonValueKind.Array, rootElement.ValueKind);
@@ -244,8 +243,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 DefaultArtifactsPort,
                                 UrlPath_Processes);
 
-                        JsonDocument document = JsonDocument.Parse(responseMessage.Content.ReadAsStream());
-                        JsonElement rootElement = document.RootElement;
+                        JsonElement rootElement = GetContentAsJsonElement(responseMessage);
 
                         // Verify returns an array with one element (the sample container process)
                         Assert.Equal(JsonValueKind.Array, rootElement.ValueKind);
@@ -448,7 +446,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void GetNames(SampleImageData imageData, out string imageName, out string containerName)
         {
-            imageName = imageData.GetImage(SampleImageType.Aspnetapp, DockerHelper);
+            // Need to allow pulling of the sample image since these are not built in the same pipeline
+            // as the other images; otherwise, these tests will fail due to lack of sample image.
+            imageName = imageData.GetImage(SampleImageType.Aspnetapp, DockerHelper, allowPull: true);
             containerName = imageData.GetIdentifier("monitortest-sample");
         }
 
@@ -457,6 +457,14 @@ namespace Microsoft.DotNet.Docker.Tests
             if (message.StatusCode != statusCode)
             {
                 throw new HttpRequestException($"Expected status code {statusCode}", null, statusCode);
+            }
+        }
+
+        private static JsonElement GetContentAsJsonElement(HttpResponseMessage message)
+        {
+            using (Stream stream = message.Content.ReadAsStream())
+            {
+                return JsonDocument.Parse(stream).RootElement;
             }
         }
     }

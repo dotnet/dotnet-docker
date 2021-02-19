@@ -216,17 +216,6 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null)
-        {
-            return GetHttpResponseFromContainerAsync(
-                containerName,
-                dockerHelper,
-                outputHelper,
-                containerPort,
-                pathAndQuery,
-                m => m.EnsureSuccessStatusCode());
-        }
-
         public static async Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null)
         {
             int retries = 30;
@@ -249,7 +238,11 @@ namespace Microsoft.DotNet.Docker.Tests
                         result = await client.GetAsync(url);
                         outputHelper.WriteLine($"HTTP {result.StatusCode}\n{(await result.Content.ReadAsStringAsync())}");
 
-                        if (null != validateCallback)
+                        if (null == validateCallback)
+                        {
+                            result.EnsureSuccessStatusCode();
+                        }
+                        else
                         {
                             validateCallback(result);
                         }
