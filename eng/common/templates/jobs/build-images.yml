@@ -10,9 +10,10 @@ parameters:
 jobs:
 - job: ${{ parameters.name }}
   condition: and(succeeded(), ${{ parameters.matrix }})
-  dependsOn: 
-    - PreBuildValidation
-    - GenerateBuildMatrix
+  dependsOn:
+  - PreBuildComplete
+  # Still need a dependency on GenerateBuildMatrix in order to reference its output variables
+  - GenerateBuildMatrix
   pool: ${{ parameters.pool }}
   strategy:
     matrix: $[ ${{ parameters.matrix }} ]
@@ -82,6 +83,7 @@ jobs:
       --architecture $(architecture)
       --retry
       --source-repo $(publicGitRepoUri)
+      --source-repo-prefix $(mirrorRepoPrefix)
       $(manifestVariables)
       $(imageBuilderBuildArgs)
     displayName: Build Images

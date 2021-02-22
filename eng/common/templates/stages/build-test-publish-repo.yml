@@ -32,12 +32,27 @@ stages:
         vmImage: $(defaultLinuxAmd64PoolImage)
       testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
       preBuildValidation: true
-
+  - template: ../jobs/copy-base-images.yml
+    parameters:
+      name: CopyBaseImages
+      pool:
+        vmImage: $(defaultLinuxAmd64PoolImage)
+      additionalOptions: "--manifest $(manifest)"
   - template: ../jobs/generate-matrix.yml
     parameters:
       matrixType: ${{ parameters.buildMatrixType }}
       name: GenerateBuildMatrix
       customBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
+
+  # This is just a helper job with no tasks that will complete once all pre-build-related jobs have finished
+  # It allows other jobs, that should execute after pre-build jobs, to take a dependency on this job instead
+  # of enumerating all the pre-build jobs that may exist.
+  - job: PreBuildComplete
+    pool: server
+    dependsOn:
+    - PreBuildValidation
+    - CopyBaseImages
+    - GenerateBuildMatrix
 
   - template: ../jobs/build-images.yml
     parameters:
