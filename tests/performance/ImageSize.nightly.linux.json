@@ -145,15 +145,15 @@
     "src/sdk/5.0/focal/amd64": 615235315,
     "src/sdk/5.0/focal/arm32v7": 564440607,
     "src/sdk/5.0/focal/arm64v8": 637793431,
-    "src/sdk/6.0/bullseye-slim/amd64": 636616449,
-    "src/sdk/6.0/bullseye-slim/arm32v7": 581134977,
-    "src/sdk/6.0/bullseye-slim/arm64v8": 651457983,
-    "src/sdk/6.0/alpine3.13/amd64": 483297399,
-    "src/sdk/6.0/alpine3.13/arm32v7": 441388589,
-    "src/sdk/6.0/alpine3.13/arm64v8": 483142686,
-    "src/sdk/6.0/focal/amd64": 631776580,
-    "src/sdk/6.0/focal/arm32v7": 570689058,
-    "src/sdk/6.0/focal/arm64v8": 644325728
+    "src/sdk/6.0/bullseye-slim/amd64": 682659285,
+    "src/sdk/6.0/bullseye-slim/arm32v7": 627024836,
+    "src/sdk/6.0/bullseye-slim/arm64v8": 705910796,
+    "src/sdk/6.0/alpine3.13/amd64": 545538118,
+    "src/sdk/6.0/alpine3.13/arm32v7": 489852105,
+    "src/sdk/6.0/alpine3.13/arm64v8": 540618890,
+    "src/sdk/6.0/focal/amd64": 695286852,
+    "src/sdk/6.0/focal/arm32v7": 633335823,
+    "src/sdk/6.0/focal/arm64v8": 715651780
   },
   "dotnet/nightly/monitor": {
     "src/monitor/5.0/alpine/amd64": 112576244
