@@ -128,10 +128,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 .FilterImagesByOs()
                 .Cast<ProductImageData>();
         }
-        
+
+        public static IEnumerable<SampleImageData> GetAllSampleImageData() =>
+            DockerHelper.IsLinuxContainerModeEnabled ? s_linuxSampleTestData : s_windowsSampleTestData;
+
         public static IEnumerable<SampleImageData> GetSampleImageData()
         {
-            return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxSampleTestData : s_windowsSampleTestData)
+            return GetAllSampleImageData()
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<SampleImageData>();

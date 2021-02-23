@@ -15,7 +15,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string DockerfileSuffix { get; set; }
 
-        public string GetImage(SampleImageType imageType, DockerHelper dockerHelper)
+        public string GetImage(SampleImageType imageType, DockerHelper dockerHelper, bool allowPull = false)
         {
             string tagPrefix = Enum.GetName(typeof(SampleImageType), imageType).ToLowerInvariant();
             string tag = GetTagName(tagPrefix, OS);
@@ -28,7 +28,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (IsPublished)
             {
-                PullImageIfNecessary(imageName, dockerHelper);
+                PullImageIfNecessary(imageName, dockerHelper, allowPull);
             }
             
             return imageName;
