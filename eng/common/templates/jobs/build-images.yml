@@ -64,7 +64,7 @@ jobs:
   - powershell: |
       $imageBuilderBuildArgs = "$(imageBuilder.queueArgs) --image-info-output-path $(artifactsPath)/$(legName)-image-info.json"
       if ($env:SYSTEM_TEAMPROJECT -eq "internal") {
-        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --push --registry-creds ""$(acr.server)=$(acr.userName);$(BotAccount-dotnet-docker-acr-bot-password)"""
+        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push --registry-creds ""$(acr.server)=$(acr.userName);$(BotAccount-dotnet-docker-acr-bot-password)"""
       }
 
       # If the pipeline isn't configured to disable the cache and a build variable hasn't been set to disable the cache
@@ -83,7 +83,6 @@ jobs:
       --architecture $(architecture)
       --retry
       --source-repo $(publicGitRepoUri)
-      --source-repo-prefix $(mirrorRepoPrefix)
       $(manifestVariables)
       $(imageBuilderBuildArgs)
     displayName: Build Images
