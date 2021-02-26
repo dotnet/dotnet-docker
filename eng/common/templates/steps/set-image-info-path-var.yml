@@ -10,7 +10,7 @@ steps:
         $publicSourceBranch = "nightly"
     }
     else {
-        $publicSourceBranch = "master"
+        $publicSourceBranch = "main"
     }
 
     $imageInfoVersionsPath = "build-info/docker/image-info.$buildRepoName-$publicSourceBranch$env:IMAGEINFOVARIANT.json"
