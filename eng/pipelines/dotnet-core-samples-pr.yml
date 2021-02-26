@@ -3,7 +3,6 @@ pr:
   branches:
     include:
     - main
-    - master
     - nightly
   paths:
     include:

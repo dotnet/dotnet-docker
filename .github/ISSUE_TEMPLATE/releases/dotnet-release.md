@@ -6,13 +6,13 @@ _The set of .NET versions that are being released as a unit._
 
 * runtime/SDK
 
-## 1. Master Branch Tasks
+## 1. Main Branch Tasks
 
 1. - [ ] Merge appropriate commits from nightly branch.  Things to check:
       - [ ] New/EOL distro
       - [ ] Infrastructure changes
       - [ ] PowerShell version
-      - [ ] Check for additional changes by diffing the master and nightly branches
+      - [ ] Check for additional changes by diffing the main and nightly branches
       - [ ] &lt;add link to PR/commit&gt;
 1. - [ ] Check whether a change has been made to a Dockerfile that is shared by multiple .NET versions. If a change has been made and the .NET versions that share that file are not being released at the same time, define a separate Dockerfile to isolate the change to the .NET version that's being released. Conversely, after a shared Dockerfile has diverged in such a way, it should be combined again into a shared Dockerfile when the other other .NET version is released. Shared Dockerfiles to check:
       - [ ] 3.1 runtime-deps shared with 5.0
@@ -64,8 +64,8 @@ _The set of .NET versions that are being released as a unit._
 
 ## 3. Nightly Branch Tasks (Not needed for Preview-only release)
 
-1. - [ ] Merge master branch to nightly
-1. - [ ] Run the same `update-dependencies` command(s) in nightly that were run for the master branch
+1. - [ ] Merge main branch to nightly
+1. - [ ] Run the same `update-dependencies` command(s) in nightly that were run for the main branch
 1. - [ ] Inspect generated changes for correctness
 1. - [ ] Commit generated changes
 1. - [ ] Create PR

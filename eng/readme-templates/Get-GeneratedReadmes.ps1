@@ -40,9 +40,9 @@ if (!$Branch) {
         $Branch = "nightly"
     }
     else {
-        $Branch = "master"
+        $Branch = "main"
     }
 }
 
 Invoke-GenerateReadme "manifest.json" $Branch
-Invoke-GenerateReadme "manifest.samples.json" "master"
+Invoke-GenerateReadme "manifest.samples.json" "main"
