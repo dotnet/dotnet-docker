@@ -10,7 +10,7 @@ channel=$1
 sudo apt-get update && \
     sudo apt-get install -y --no-install-recommends libxml2-utils
 
-curl -SLo sdk.zip https://aka.ms/dotnet/$channel/Sdk/dotnet-sdk-win-x64.zip
+curl -SLo sdk.zip https://aka.ms/dotnet/$channel/dotnet-sdk-win-x64.zip
 
 unzip -p sdk.zip "sdk/*/.version" > sdkversion
 
