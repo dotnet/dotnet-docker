@@ -239,4 +239,4 @@ dotnetapp           nanoserver          7092d2e6b0a4        9 minutes ago       
 ## More Samples
 
 * [.NET Docker Samples](../README.md)
-* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/main/samples/README.md)

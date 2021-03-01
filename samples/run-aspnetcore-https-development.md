@@ -18,7 +18,7 @@ The easiest way to get the sample is by cloning the samples repository with git,
 git clone https://github.com/dotnet/dotnet-docker/
 ```
 
-You can also [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/master.zip).
+You can also [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/main.zip).
 
 ## Certificates
 
@@ -28,7 +28,7 @@ The instructions volume mount certificates into containers. You can add certific
 
 ## Application Secrets
 
-These instructions assume that your project is configured for [application secrets](https://docs.microsoft.com/aspnet/core/security/app-secrets). The primary requirement is a [UserSecretsId](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/aspnetapp/aspnetapp.csproj#L5) element in your project file. If you are using the ASP.NET Core sample in this repo, you don't need to do anything. It is already correctly configured. If you are using your own project file, add an `UserSecretsId` element.
+These instructions assume that your project is configured for [application secrets](https://docs.microsoft.com/aspnet/core/security/app-secrets). The primary requirement is a [UserSecretsId](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/aspnetapp/aspnetapp.csproj#L5) element in your project file. If you are using the ASP.NET Core sample in this repo, you don't need to do anything. It is already correctly configured. If you are using your own project file, add an `UserSecretsId` element.
 
 You can add the element manually or use Visual Studio to do it for you. The following image demonstrates the experience in Visual Studio.
 

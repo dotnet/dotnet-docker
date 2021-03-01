@@ -214,4 +214,4 @@ Alternatively, you can build with the `--rm=false` option. This leaves the inter
 ## More Samples
 
 * [.NET Docker Samples](../README.md)
-* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/master/samples/README.md)
+* [.NET Framework Docker Samples](https://github.com/microsoft/dotnet-framework-docker/blob/main/samples/README.md)

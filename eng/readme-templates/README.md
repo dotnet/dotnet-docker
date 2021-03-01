@@ -8,9 +8,9 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
 {{if !IS_PRODUCT_FAMILY:# Featured Tags
 
 {{if match(SHORT_REPO, "samples")
-:* `dotnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+:* `dotnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp`
-* `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+* `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
 ^elif match(SHORT_REPO, "monitor"):* `5.0` (Preview)
   * `docker pull {{FULL_REPO}}:5.0`
@@ -18,7 +18,7 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
   * `docker pull {{FULL_REPO}}:5.0`
 * `3.1` (LTS)
   * `docker pull {{FULL_REPO}}:3.1`
-}}}}{{if IS_PRODUCT_FAMILY && VARIABLES["branch"] = "master"
+}}}}{{if IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"
 :# Featured Repos
 
 * [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
@@ -42,7 +42,7 @@ Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Dock
 
 # How to Use the Image{{if IS_PRODUCT_FAMILY:s}}
 
-The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
+The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
 {{InsertTemplate(join(filter(["Use", SHORT_REPO, "md"], len), "."))}}
 # Related Repos
@@ -61,7 +61,7 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/sa
     :* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 }}{{if REPO != "dotnet/samples"
     :* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
-}}{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "master"
+}}{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "main"
     :* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
 }}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "sdk")
     :* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
@@ -101,7 +101,7 @@ See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/micr
 # License
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
-* [.NET license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
-* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
+* [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)
+* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md)
 * [Windows base image license](https://docs.microsoft.com/virtualization/windowscontainers/images-eula) (only applies to Windows containers)
 * [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)
