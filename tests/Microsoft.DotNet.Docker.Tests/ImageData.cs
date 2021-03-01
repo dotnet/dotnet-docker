@@ -82,9 +82,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static string GenerateContainerName(string prefix) => $"{prefix}-{DateTime.Now.ToFileTime()}";
 
-        protected void PullImageIfNecessary(string imageName, DockerHelper dockerHelper)
+        protected void PullImageIfNecessary(string imageName, DockerHelper dockerHelper, bool allowPull = false)
         {
-            if (Config.PullImages && !_pulledImages.Contains(imageName))
+            if ((Config.PullImages || allowPull) && !_pulledImages.Contains(imageName))
             {
                 dockerHelper.Pull(imageName);
                 _pulledImages.Add(imageName);
