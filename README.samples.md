@@ -2,9 +2,9 @@ As part of the .NET 5.0 release, all .NET Docker images (including .NET Core 2.1
 
 # Featured Tags
 
-* `dotnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
+* `dotnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp`
-* `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+* `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
 
 # About This Image
@@ -15,11 +15,11 @@ Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Dock
 
 # How to Use the Image
 
-The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
+The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
 ## Container sample: Run a simple application
 
-You can quickly run a container with a pre-built [.NET Docker image](https://hub.docker.com/_/microsoft-dotnet-samples/), based on the [.NET console sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Docker image](https://hub.docker.com/_/microsoft-dotnet-samples/), based on the [.NET console sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/README.md).
 
 Type the following command to run a sample console application:
 
@@ -29,7 +29,7 @@ docker run --rm mcr.microsoft.com/dotnet/samples
 
 ## Container sample: Run a web application
 
-You can quickly run a container with a pre-built [.NET Docker image](https://hub.docker.com/_/microsoft-dotnet-samples/), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Docker image](https://hub.docker.com/_/microsoft-dotnet-samples/), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md).
 
 Type the following command to run a sample web application:
 
@@ -39,7 +39,7 @@ docker run -it --rm -p 8000:80 --name aspnetcore_sample mcr.microsoft.com/dotnet
 
 After the application starts, navigate to `http://localhost:8000` in your web browser.
 
-See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotnet/dotnet-docker/blob/master/samples/host-aspnetcore-https.md) to use HTTPS with this image.
+See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotnet/dotnet-docker/blob/main/samples/host-aspnetcore-https.md) to use HTTPS with this image.
 
 # Related Repos
 
@@ -62,44 +62,44 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-dotnetapp-buster-slim-amd64, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) | Debian 10
-aspnetapp-buster-slim-amd64, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) | Debian 10
+dotnetapp-buster-slim-amd64, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile) | Debian 10
+aspnetapp-buster-slim-amd64, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile) | Debian 10
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-dotnetapp-buster-slim-arm32v7, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile.debian-arm32) | Debian 10
-aspnetapp-buster-slim-arm32v7, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile.debian-arm32) | Debian 10
+dotnetapp-buster-slim-arm32v7, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.debian-arm32) | Debian 10
+aspnetapp-buster-slim-arm32v7, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.debian-arm32) | Debian 10
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-dotnetapp-buster-slim-arm64v8, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) | Debian 10
-aspnetapp-buster-slim-arm64v8, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) | Debian 10
+dotnetapp-buster-slim-arm64v8, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile) | Debian 10
+aspnetapp-buster-slim-arm64v8, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile) | Debian 10
 
 ## Nano Server, version 20H2 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-dotnetapp-nanoserver-20H2, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-aspnetapp-nanoserver-20H2, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+dotnetapp-nanoserver-20H2, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile)
+aspnetapp-nanoserver-20H2, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
 
 ## Nano Server, version 2004 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-dotnetapp-nanoserver-2004, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-aspnetapp-nanoserver-2004, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+dotnetapp-nanoserver-2004, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile)
+aspnetapp-nanoserver-2004, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
 
 ## Nano Server, version 1909 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-dotnetapp-nanoserver-1909, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-aspnetapp-nanoserver-1909, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+dotnetapp-nanoserver-1909, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile)
+aspnetapp-nanoserver-1909, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
 
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-dotnetapp-nanoserver-1809, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile)
-aspnetapp-nanoserver-1809, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile)
+dotnetapp-nanoserver-1809, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile)
+aspnetapp-nanoserver-1809, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/samples at https://mcr.microsoft.com/v2/dotnet/samples/tags/list.
 <!--End of generated tags-->
@@ -123,7 +123,7 @@ See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/micr
 # License
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
-* [.NET license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
-* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
+* [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)
+* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md)
 * [Windows base image license](https://docs.microsoft.com/virtualization/windowscontainers/images-eula) (only applies to Windows containers)
 * [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)

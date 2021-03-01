@@ -25,20 +25,20 @@ Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Dock
 
 # How to Use the Image
 
-The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
+The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
 ## Building .NET Apps with Docker
 
-* [.NET Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
-* [ASP.NET Core Docker Sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
+* [.NET Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
+* [ASP.NET Core Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
 
 ## Develop .NET Apps in a Container
 
 The following samples show how to develop, build and test .NET applications with Docker without the need to install the .NET SDK.
 
-* [Build .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/master/samples/build-in-sdk-container.md)
-* [Test .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/master/samples/run-tests-in-sdk-container.md)
-* [Run .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/master/samples/run-in-sdk-container.md)
+* [Build .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/build-in-sdk-container.md)
+* [Test .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-tests-in-sdk-container.md)
+* [Run .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-in-sdk-container.md)
 
 
 # Related Repos
@@ -200,7 +200,7 @@ See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/micr
 # License
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
-* [.NET license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
-* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
+* [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)
+* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md)
 * [Windows base image license](https://docs.microsoft.com/virtualization/windowscontainers/images-eula) (only applies to Windows containers)
 * [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)

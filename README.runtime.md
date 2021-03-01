@@ -19,11 +19,11 @@ Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Dock
 
 # How to Use the Image
 
-The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/master/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
+The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
 ## Container sample: Run a simple application
 
-You can quickly run a container with a pre-built [.NET Docker image](https://hub.docker.com/_/microsoft-dotnet-samples/), based on the [.NET console sample](https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Docker image](https://hub.docker.com/_/microsoft-dotnet-samples/), based on the [.NET console sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/README.md).
 
 Type the following command to run a sample console application:
 
@@ -196,7 +196,7 @@ See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/micr
 # License
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
-* [.NET license](https://github.com/dotnet/dotnet-docker/blob/master/LICENSE)
-* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/master/documentation/image-artifact-details.md)
+* [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)
+* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md)
 * [Windows base image license](https://docs.microsoft.com/virtualization/windowscontainers/images-eula) (only applies to Windows containers)
 * [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)
