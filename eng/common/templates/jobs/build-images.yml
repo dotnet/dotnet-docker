@@ -11,8 +11,8 @@ jobs:
 - job: ${{ parameters.name }}
   condition: and(succeeded(), ${{ parameters.matrix }})
   dependsOn:
-  - PreBuildComplete
-  # Still need a dependency on GenerateBuildMatrix in order to reference its output variables
+  - PreBuildValidation
+  - CopyBaseImages
   - GenerateBuildMatrix
   pool: ${{ parameters.pool }}
   strategy:
