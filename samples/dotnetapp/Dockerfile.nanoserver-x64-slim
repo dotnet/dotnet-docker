@@ -8,7 +8,7 @@ RUN dotnet restore -r win-x64
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true
+RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true
 
 # final stage/image
 # Uses the 20H2 release; Other choices: 2004, 1909, 1809
