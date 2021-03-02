@@ -3,11 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Text.RegularExpressions;
-using Xunit;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class SkippableTheoryAttribute : TheoryAttribute
+    public class SkippableTheoryAttribute : DotNetTheoryAttribute
     {
         public SkippableTheoryAttribute(params string[] skippedOperatingSystems)
         {
