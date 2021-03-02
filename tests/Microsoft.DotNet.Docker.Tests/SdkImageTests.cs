@@ -172,7 +172,7 @@ namespace Microsoft.DotNet.Docker.Tests
             bool hasCountDifference = expectedDotnetFiles.Count() != actualDotnetFiles.Count();
 
             bool hasFileContentDifference = false;
-            
+
             // Skip file comparisons for 3.1 until https://github.com/dotnet/sdk/issues/11327 is fixed.
             if (imageData.Version.Major != 3)
             {
@@ -196,7 +196,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     OutputHelper.WriteLine($"Path: {file.Path}");
                     OutputHelper.WriteLine($"Checksum: {file.Sha512}");
                 }
-                
+
                 OutputHelper.WriteLine(string.Empty);
                 OutputHelper.WriteLine("ACTUAL FILES:");
                 foreach (SdkContentFileInfo file in actualDotnetFiles)
