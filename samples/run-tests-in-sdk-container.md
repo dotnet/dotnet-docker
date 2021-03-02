@@ -19,7 +19,7 @@ You may need to enable [shared drives (Windows)](https://docs.docker.com/docker-
 Container scenarios that use volume mounting can produce conflicts between the `bin` and `obj` directories in local and container environments.  To avoid that, you need to use a different set of `obj` and `bin` folders for your container environment. The easiest way to do that is to copy a custom [Directory.Build.props](Directory.Build.props) into the directory you are using (like the `complexapp` directory in the following example), either via copying from this repo or downloading with the following command:
 
 ```console
-curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-docker/master/samples/Directory.Build.props
+curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/Directory.Build.props
 ```
 
 > Note: You may need to remove `bin` and `obj` directories if you run these instructions on Windows in both Windows and Linux container modes.

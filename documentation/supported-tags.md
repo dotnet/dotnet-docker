@@ -99,7 +99,7 @@ Each [Docker Hub repository](https://hub.docker.com/_/microsoft-dotnet) contains
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.2-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.2-buster-slim, 5.0-buster-slim, 5.0.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/master/src/runtime/5.0/buster-slim/amd64/Dockerfile) | Debian 10
+5.0.2-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.2-buster-slim, 5.0-buster-slim, 5.0.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/5.0/buster-slim/amd64/Dockerfile) | Debian 10
 
 ## Tag Lifecycle
 
@@ -108,7 +108,7 @@ Each tag will be supported for the lifetime of the .NET and OS version reference
 ### Examples
 
 * `5.0` - Will be supported for the lifetime of the .NET 5.0 release.
-* `5.0.2` - Will be supported for the liftime of the 5.0.2 servicing release.
+* `5.0.2` - Will be supported for the lifetime of the 5.0.2 servicing release.
 * `5.0-windowservercore-ltsc2019` - Will be supported for the lifetime of the .NET 5.0 and Windows Server Core LTSC 2019 releases, whichever is shorter.
 * `5.0-focal` - Will be supported for the lifetime of the .NET 5.0 and Ubuntu Focal release, whichever is shorter.
 
