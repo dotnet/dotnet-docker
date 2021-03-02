@@ -209,14 +209,14 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
+        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null)
         {
             int retries = 30;
 
             // Can't use localhost when running inside containers or Windows.
             string url = !Config.IsRunningInContainer && DockerHelper.IsLinuxContainerModeEnabled
-                ? $"http://localhost:{dockerHelper.GetContainerHostPort(containerName)}"
-                : $"http://{dockerHelper.GetContainerAddress(containerName)}";
+                ? $"http://localhost:{dockerHelper.GetContainerHostPort(containerName, containerPort)}/{pathAndQuery}"
+                : $"http://{dockerHelper.GetContainerAddress(containerName)}:{containerPort}/{pathAndQuery}";
 
             using (HttpClient client = new HttpClient())
             {

@@ -49,14 +49,14 @@
     "src/sdk/3.1/nanoserver-2004/amd64": 759552332,
     "src/sdk/3.1/nanoserver-20H2/amd64": 764063867,
     "src/sdk/5.0/nanoserver-1809/amd64": 782722955,
-    "src/sdk/5.0/nanoserver-1909/amd64": 789170333,
+    "src/sdk/5.0/nanoserver-1909/amd64": 828946911,
     "src/sdk/5.0/nanoserver-2004/amd64": 820353958,
     "src/sdk/5.0/nanoserver-20H2/amd64": 832507988,
     "src/sdk/5.0/windowsservercore-ltsc2019/amd64": 5746263526,
-    "src/sdk/6.0/nanoserver-1809/amd64": 846950866,
-    "src/sdk/6.0/nanoserver-1909/amd64": 852518104,
-    "src/sdk/6.0/nanoserver-2004/amd64": 858341301,
-    "src/sdk/6.0/nanoserver-20H2/amd64": 858399611,
+    "src/sdk/6.0/nanoserver-1809/amd64": 910773895,
+    "src/sdk/6.0/nanoserver-1909/amd64": 915653962,
+    "src/sdk/6.0/nanoserver-2004/amd64": 922322813,
+    "src/sdk/6.0/nanoserver-20H2/amd64": 922312433,
     "src/sdk/6.0/windowsservercore-ltsc2019/amd64": 5844379409
   }
 }
