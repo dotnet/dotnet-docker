@@ -32,13 +32,17 @@ stages:
         vmImage: $(defaultLinuxAmd64PoolImage)
       testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
       preBuildValidation: true
-
+  - template: ../jobs/copy-base-images.yml
+    parameters:
+      name: CopyBaseImages
+      pool:
+        vmImage: $(defaultLinuxAmd64PoolImage)
+      additionalOptions: "--manifest $(manifest)"
   - template: ../jobs/generate-matrix.yml
     parameters:
       matrixType: ${{ parameters.buildMatrixType }}
       name: GenerateBuildMatrix
       customBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
-
   - template: ../jobs/build-images.yml
     parameters:
       name: Linux_amd64
