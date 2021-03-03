@@ -108,6 +108,7 @@ jobs:
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Ingest Kusto Image Info
-  - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-    displayName: Component Detection
+  - ${{ if eq(variables['System.TeamProject'], 'internal') }}:    
+    - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+      displayName: Component Detection
   - template: ../steps/cleanup-docker-linux.yml
