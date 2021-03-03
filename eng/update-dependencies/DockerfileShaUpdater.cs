@@ -36,6 +36,7 @@ namespace Dotnet.Docker
             {"sdk", "https://dotnetcli.azureedge.net/dotnet/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT"},
             {"lzma", "https://dotnetcli.azureedge.net/dotnet/Sdk/$VERSION_DIR/nuGetPackagesArchive.lzma"}
         };
+        private static HttpClient s_httpClient { get; } = new HttpClient();
 
         private string _productName;
         private string _dockerfileVersion;
@@ -71,7 +72,7 @@ namespace Dotnet.Docker
                     DockerfileShaUpdater updater = new DockerfileShaUpdater()
                     {
                         _productName = productName,
-                        _buildVersion = VersionUpdater.GetBuildVersion(productName, dockerfileVersion, versions),
+                        _buildVersion = GetBuildVersion(productName, dockerfileVersion, versions, options),
                         _dockerfileVersion = dockerfileVersion,
                         _os = parts.Length >= 4 ? parts[2] : string.Empty,
                         _arch = parts.Length >= 5 ? parts[3] : string.Empty,
@@ -122,7 +123,8 @@ namespace Dotnet.Docker
             if (!s_shaCache.TryGetValue(downloadUrl, out string sha))
             {
                 sha = await GetDotNetCliChecksumsShaAsync(downloadUrl)
-                    ?? await GetDotNetReleaseChecksumsShaAsync(downloadUrl)
+                    ?? await GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(downloadUrl)
+                    ?? await GetDotNetReleaseChecksumsShaFromBuildVersionAsync(downloadUrl)
                     ?? await ComputeChecksumShaAsync(downloadUrl);
 
                 if (sha != null)
@@ -150,8 +152,7 @@ namespace Dotnet.Docker
             string sha = null;
 
             Trace.TraceInformation($"Downloading '{downloadUrl}'.");
-            using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync(downloadUrl))
+            using (HttpResponseMessage response = await s_httpClient.GetAsync(downloadUrl))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -189,8 +190,7 @@ namespace Dotnet.Docker
             string shaUrl = uriBuilder.ToString() + shaExt;
 
             Trace.TraceInformation($"Downloading '{shaUrl}'.");
-            using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync(shaUrl))
+            using (HttpResponseMessage response = await s_httpClient.GetAsync(shaUrl))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -205,19 +205,28 @@ namespace Dotnet.Docker
             return sha;
         }
 
-        private async Task<string> GetDotNetReleaseChecksumsShaAsync(
+        private Task<string> GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(
             string productDownloadUrl)
         {
-            string buildVersion = _buildVersion;
+            string version = _buildVersion;
             // The release checksum file contains content for all products in the release (runtime, sdk, etc.)
             // and is referenced by the runtime version.
             if (_productName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ||
                 _productName.Contains("aspnet", StringComparison.OrdinalIgnoreCase))
             {
-                buildVersion = VersionUpdater.GetBuildVersion("runtime", _dockerfileVersion, _versions);
+                version = GetBuildVersion("runtime", _dockerfileVersion, _versions, _options);
             }
 
-            IDictionary<string, string> checksumEntries = await GetDotnetReleaseChecksums(buildVersion);
+            return GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, version);
+        }
+
+        private Task<string> GetDotNetReleaseChecksumsShaFromBuildVersionAsync(string productDownloadUrl) =>
+            GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, _buildVersion);
+
+        private async Task<string> GetDotNetReleaseChecksumsShaAsync(
+            string productDownloadUrl, string version)
+        {
+            IDictionary<string, string> checksumEntries = await GetDotnetReleaseChecksums(version);
 
             string installerFileName = productDownloadUrl.Substring(productDownloadUrl.LastIndexOf('/') + 1);
 
@@ -241,8 +250,7 @@ namespace Dotnet.Docker
             s_releaseChecksumCache.Add(uri, checksumEntries);
 
             Trace.TraceInformation($"Downloading '{uri}'.");
-            using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync(uri))
+            using (HttpResponseMessage response = await s_httpClient.GetAsync(uri))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -275,6 +283,16 @@ namespace Dotnet.Docker
             }
 
             return checksumEntries;
+        }
+
+        private static string GetBuildVersion(string productName, string dockerfileVersion, string variables, Options options)
+        {
+            if (options.ProductVersions.TryGetValue(productName, out string version))
+            {
+                return version;
+            }
+
+            return VersionUpdater.GetBuildVersion(productName, dockerfileVersion, variables);
         }
     }
 }
