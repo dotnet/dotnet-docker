@@ -22,9 +22,7 @@
     "src/runtime-deps/3.1/focal/arm32v7": 91727521,
     "src/runtime-deps/3.1/focal/arm64v8": 111261028,
     "src/runtime-deps/5.0/alpine3.12/arm32v7": 6783323,
-    "src/runtime-deps/5.0/alpine3.13/amd64": 9964359,
     "src/runtime-deps/5.0/alpine3.13/arm32v7": 6973412,
-    "src/runtime-deps/5.0/alpine3.13/arm64v8": 9641621,
     "src/runtime-deps/6.0/bullseye-slim/amd64": 119138082,
     "src/runtime-deps/6.0/bullseye-slim/arm32v7": 92679175,
     "src/runtime-deps/6.0/bullseye-slim/arm64v8": 113021457
