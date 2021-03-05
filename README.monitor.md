@@ -45,7 +45,7 @@ TBD
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0-alpine, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/5.0/alpine/amd64/Dockerfile) | Alpine 3.12
+5.0-alpine, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/5.0/alpine/amd64/Dockerfile) | Alpine 3.13
 
 You can retrieve a list of all available tags for dotnet/nightly/monitor at https://mcr.microsoft.com/v2/dotnet/nightly/monitor/tags/list.
 <!--End of generated tags-->
