@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-ARG DOTNET_VERSION=6.0.0-preview.2.21123.7
+ARG DOTNET_VERSION=6.0.0-preview.2.21154.6
 
 # Installer image
 FROM amd64/buildpack-deps:bullseye-curl as installer
@@ -7,7 +7,7 @@ ARG DOTNET_VERSION
 
 # Retrieve .NET
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-x64.tar.gz \
-    && dotnet_sha512='ab14f851a01836509a31853d5f3348d9b5c69b6eed073c728772d00a176bc4568490e8fa0d535bc23872b567c1524a2a2c83986d9a03aa6f3a1387b713a35062' \
+    && dotnet_sha512='88ba8c4fe252fb76e0c40a4dcd2fe3e9c2960f445dd97a8044be9900f3641f18b2687ec10a36545a141a1e6820bb61278d2047cacd93365954a124c92463b17b' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -ozxf dotnet.tar.gz -C /dotnet \
