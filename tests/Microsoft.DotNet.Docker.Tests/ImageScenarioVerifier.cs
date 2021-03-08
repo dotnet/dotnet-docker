@@ -60,6 +60,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
+                    // Skip test until end-to-end scenario works for self-contained publishing on Alpine arm32
+                    if ((_imageData.Version.Major == 5 || _imageData.Version.Major == 6) &&
+                        _imageData.Arch == Arch.Arm && _imageData.OS.Contains("alpine"))
+                    {
+                        return;
+                    }
+
                     // Use `sdk` image to publish self contained app and run with `runtime-deps` image
                     string selfContainedTag = BuildTestAppImage("self_contained_app", appDir, customBuildArgs: $"rid={_imageData.Rid}");
                     tags.Add(selfContainedTag);
@@ -209,7 +216,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null)
+        public static async Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null)
         {
             int retries = 30;
 
@@ -225,24 +232,48 @@ namespace Microsoft.DotNet.Docker.Tests
                     retries--;
                     await Task.Delay(TimeSpan.FromSeconds(2));
 
+                    HttpResponseMessage result = null;
                     try
                     {
-                        using (HttpResponseMessage result = await client.GetAsync(url))
+                        result = await client.GetAsync(url);
+                        outputHelper.WriteLine($"HTTP {result.StatusCode}\n{(await result.Content.ReadAsStringAsync())}");
+
+                        if (null == validateCallback)
                         {
-                            outputHelper.WriteLine($"HTTP {result.StatusCode}\n{(await result.Content.ReadAsStringAsync())}");
                             result.EnsureSuccessStatusCode();
                         }
+                        else
+                        {
+                            validateCallback(result);
+                        }
 
-                        return;
+                        // Store response in local that will not be disposed
+                        HttpResponseMessage returnResult = result;
+                        result = null;
+                        return returnResult;
                     }
                     catch (Exception ex)
                     {
                         outputHelper.WriteLine($"Request to {url} failed - retrying: {ex}");
                     }
+                    finally
+                    {
+                        result?.Dispose();
+                    }
                 }
             }
 
             throw new TimeoutException($"Timed out attempting to access the endpoint {url} on container {containerName}");
+        }
+
+        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null)
+        {
+            (await GetHttpResponseFromContainerAsync(
+                containerName,
+                dockerHelper,
+                outputHelper,
+                containerPort,
+                pathAndQuery)).Dispose();
         }
     }
 }
