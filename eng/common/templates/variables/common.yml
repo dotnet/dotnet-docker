@@ -18,7 +18,7 @@ variables:
 - name: manifestVariables
   value: ""
 - name: defaultLinuxAmd64PoolImage
-  value: ubuntu-18.04
+  value: ubuntu-latest
 - name: mcrImageIngestionTimeout
   value: "00:20:00"
 - name: mcrDocIngestionTimeout
