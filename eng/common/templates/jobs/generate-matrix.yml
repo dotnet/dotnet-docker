@@ -18,6 +18,9 @@ jobs:
         artifactName: image-info
     - script: echo "##vso[task.setvariable variable=additionalGenerateBuildMatrixOptions]--image-info $(artifactsPath)/image-info.json"
       displayName: Set GenerateBuildMatrix Variables
+  - ${{ if eq(parameters.isTestStage, false) }}:
+    - script: echo "##vso[task.setvariable variable=additionalGenerateBuildMatrixOptions]"
+      displayName: Set GenerateBuildMatrix Variables
   - script: >
       $(runImageBuilderCmd) generateBuildMatrix
       --manifest $(manifest)
