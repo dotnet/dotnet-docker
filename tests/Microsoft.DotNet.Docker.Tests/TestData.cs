@@ -56,18 +56,18 @@ namespace Microsoft.DotNet.Docker.Tests
         };
         private static readonly ProductImageData[] s_windowsTestData =
         {
-            new ProductImageData { Version = V2_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V2_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V2_1, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V2_1, OS = OS.NanoServer20H2, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.NanoServer20H2, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V5_0, OS = OS.NanoServer1809, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V5_0, OS = OS.NanoServer1909, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V5_0, OS = OS.NanoServer2004, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V5_0, OS = OS.NanoServer20H2, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.NanoServer1909,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.NanoServer2004,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V2_1, OS = OS.NanoServer20H2,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V3_1, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V3_1, OS = OS.NanoServer1909,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V3_1, OS = OS.NanoServer2004,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V3_1, OS = OS.NanoServer20H2,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer1909,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer2004,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V5_0, OS = OS.NanoServer20H2,     Arch = Arch.Amd64 },
             new ProductImageData { Version = V5_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.NanoServer1909,     Arch = Arch.Amd64 },
@@ -116,10 +116,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 .FilterImagesByOs()
                 .Cast<ProductImageData>();
         }
-        
+
+        public static IEnumerable<SampleImageData> GetAllSampleImageData() =>
+            DockerHelper.IsLinuxContainerModeEnabled ? s_linuxSampleTestData : s_windowsSampleTestData;
+
         public static IEnumerable<SampleImageData> GetSampleImageData()
         {
-            return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxSampleTestData : s_windowsSampleTestData)
+            return GetAllSampleImageData()
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<SampleImageData>();
