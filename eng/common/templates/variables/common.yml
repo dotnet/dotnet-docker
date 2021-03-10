@@ -26,6 +26,8 @@ variables:
 - name: officialBranches
   # list multiple branches as "'branch1', 'branch2', etc."
   value: "'main'"
+- name: mirrorRepoPrefix
+  value: 'mirror/'
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - group: DotNet-Docker-Common
