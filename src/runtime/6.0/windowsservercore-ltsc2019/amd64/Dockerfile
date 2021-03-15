@@ -7,7 +7,7 @@ ENV `
     ASPNETCORE_URLS=http://+:80 `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
-    DOTNET_VERSION=6.0.0-preview.3.21161.2
+    DOTNET_VERSION=6.0.0-preview.3.21163.9
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
@@ -15,7 +15,7 @@ RUN powershell -Command `
         `
         # Install .NET
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:DOTNET_VERSION-win-x64.zip; `
-        $dotnet_sha512 = '429d2460e96f769233010d2716eac2da0846194abee23df2197e19fa87819b7092a39537c1b401b4e1a3b233110a2038538e4058aa3f10f12703318c83836392'; `
+        $dotnet_sha512 = '4f89124b175ff3bfb1a1f96721aa45d414fd92f1521eca042dc049f52adfd72609cf9d2607e542a7e23b87db60d1fa03e343eee02e7facc87bec733f140f50cb'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `

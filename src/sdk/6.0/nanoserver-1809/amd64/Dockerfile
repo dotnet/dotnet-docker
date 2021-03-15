@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-ARG DOTNET_SDK_VERSION=6.0.100-preview.3.21162.3
+ARG DOTNET_SDK_VERSION=6.0.100-preview.3.21165.3
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:1809-amd64 AS installer
@@ -12,7 +12,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 RUN `
     # Retrieve .NET SDK
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = '988b3325dddf7486cb767b84ff51d2bb81a2190fe391870691222b1d6c519b4b667622efc63dfcb1e2c4f4c0b15e36314e8d8d10b678d42221f1f501cd69efb6'; `
+    $dotnet_sha512 = 'e0a0fcb9233481c33d112e6927ed580668e2b872d12b0d5031a52934aef04a2b23bbdb03a4adc96a80ef58a5fbf9d64ad6b531f62fb432cbec8c4265a2dc4ccc'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
