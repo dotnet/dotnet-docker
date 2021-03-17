@@ -1,0 +1,14 @@
+trigger:
+  branches:
+    include:
+    - main
+    - nightly
+pr: none
+
+variables:
+- template: ../common/templates/variables/common.yml
+- name: cgBuildGrepArgs
+  value: -v -e 'samples/' -e 'tests/'
+
+jobs:
+- template: ../common/templates/jobs/cg-detection.yml
