@@ -1,0 +1,10 @@
+jobs:
+- job: Build
+  pool:
+    vmImage: $(defaultLinuxAmd64PoolImage)
+  steps:
+  - script: >
+      find . -name '*.csproj' | grep $(cgBuildGrepArgs) | xargs -n 1 dotnet build
+    displayName: Build Projects
+  - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+    displayName: Component Detection
