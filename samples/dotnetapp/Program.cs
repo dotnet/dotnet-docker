@@ -48,11 +48,42 @@ WriteLine();
 WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
 WriteLine($"{nameof(Environment.ProcessorCount)}: {Environment.ProcessorCount}");
 
+// Cgroup information
 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && 
     Directory.Exists("/sys/fs/cgroup/cpu") &&
     Directory.Exists("/sys/fs/cgroup/memory"))
 {
-    WriteLine($"cfs_quota_us: {File.ReadAllLines("/sys/fs/cgroup/cpu/cpu.cfs_quota_us")[0]}");
-    WriteLine($"memory.limit_in_bytes: {File.ReadAllLines("/sys/fs/cgroup/memory/memory.limit_in_bytes")[0]}");
-    WriteLine($"memory.usage_in_bytes: {File.ReadAllLines("/sys/fs/cgroup/memory/memory.usage_in_bytes")[0]}");
+    string cpuquota = File.ReadAllLines("/sys/fs/cgroup/cpu/cpu.cfs_quota_us")[0];
+    if (int.TryParse(cpuquota, out int quota) && quota > 0)
+    {
+        WriteLine($"cfs_quota_us: {quota}");
+    }
+    string usageBytes = File.ReadAllLines("/sys/fs/cgroup/memory/memory.usage_in_bytes")[0];
+    string limitBytes = File.ReadAllLines("/sys/fs/cgroup/memory/memory.limit_in_bytes")[0];
+
+    long.TryParse(usageBytes, out long usage);
+    long.TryParse(limitBytes, out long limit);
+
+    WriteLine($"usage_in_bytes: {usageBytes} {GetInBiggerUnit(usage)}");
+    WriteLine($"limit_in_bytes: {limitBytes} {GetInBiggerUnit(limit)}");
+}
+
+string GetInBiggerUnit(long size)
+{
+    long mebi = 1048576;
+    long gibi = 134217728;
+    if (size < mebi)
+    {
+        return string.Empty;
+    }
+    else if (size < gibi)
+    {
+        long mebibytes = size / mebi;
+        return $"({mebibytes} MiB)";
+    }
+    else
+    {
+        long gibibytes = size / gibi;
+        return $"({gibibytes} GiB)";
+    }
 }
