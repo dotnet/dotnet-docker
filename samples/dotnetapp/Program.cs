@@ -33,6 +33,7 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) &&
       {
           ReadOnlySpan<char> value = line.AsSpan()[(prettyname.Length + 2)..^1];
           Console.WriteLine(value.ToString());
+          break;
       }
   }
 }
