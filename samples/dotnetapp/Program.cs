@@ -7,7 +7,7 @@ using static System.Console;
 // Variant of https://github.com/dotnet/core/tree/main/samples/dotnet-runtimeinfo
 // Ascii text: https://ascii.co.uk/text (Univers font)
 
-WriteLine("\r\n" +
+WriteLine(
 "         42\r\n" +
 "         42              ,d                             ,d\r\n" +  
 "         42              42                             42\r\n" +
