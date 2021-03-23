@@ -3,9 +3,9 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using static System.Console;
-using static System.IO.File;
 
 // Variant of https://github.com/dotnet/core/tree/main/samples/dotnet-runtimeinfo
+// Ascii text: https://ascii.co.uk/text (Univers font)
 
 WriteLine("\r\n" +
 "         42\r\n" +
@@ -51,8 +51,7 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) &&
     Directory.Exists("/sys/fs/cgroup/cpu") &&
     Directory.Exists("/sys/fs/cgroup/memory"))
 {
-    WriteLine($"cfs_quota_us: {ReadAllLines("/sys/fs/cgroup/cpu/cpu.cfs_quota_us")[0]}");
-    WriteLine($"memory.limit_in_bytes: {ReadAllLines("/sys/fs/cgroup/memory/memory.limit_in_bytes")[0]}");
-    WriteLine($"memory.usage_in_bytes: {ReadAllLines("/sys/fs/cgroup/memory/memory.usage_in_bytes")[0]}");
+    WriteLine($"cfs_quota_us: {File.ReadAllLines("/sys/fs/cgroup/cpu/cpu.cfs_quota_us")[0]}");
+    WriteLine($"memory.limit_in_bytes: {File.ReadAllLines("/sys/fs/cgroup/memory/memory.limit_in_bytes")[0]}");
+    WriteLine($"memory.usage_in_bytes: {File.ReadAllLines("/sys/fs/cgroup/memory/memory.usage_in_bytes")[0]}");
 }
-
