@@ -66,8 +66,11 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) &&
     string usageBytes = File.ReadAllLines("/sys/fs/cgroup/memory/memory.usage_in_bytes")[0];
     string limitBytes = File.ReadAllLines("/sys/fs/cgroup/memory/memory.limit_in_bytes")[0];
 
-    long.TryParse(usageBytes, out long usage);
-    long.TryParse(limitBytes, out long limit);
+    if (!long.TryParse(usageBytes, out long usage) ||
+        !long.TryParse(limitBytes, out long limit))
+    {
+        return;
+    }
 
     // above this size is unlikely to be an intentionally constrained cgroup
     if (limit < 10 * gibi)
