@@ -57,23 +57,21 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) &&
     Directory.Exists("/sys/fs/cgroup/cpu") &&
     Directory.Exists("/sys/fs/cgroup/memory"))
 {
+    // get cpu cgroup information
     string cpuquota = File.ReadAllLines("/sys/fs/cgroup/cpu/cpu.cfs_quota_us")[0];
-    if (int.TryParse(cpuquota, out int quota) && quota > 0)
+    if (int.TryParse(cpuquota, out int quota) &&
+        quota > 0)
     {
         WriteLine($"cfs_quota_us: {quota}");
     }
 
+    // get memory cgroup information
     string usageBytes = File.ReadAllLines("/sys/fs/cgroup/memory/memory.usage_in_bytes")[0];
     string limitBytes = File.ReadAllLines("/sys/fs/cgroup/memory/memory.limit_in_bytes")[0];
-
-    if (!long.TryParse(usageBytes, out long usage) ||
-        !long.TryParse(limitBytes, out long limit))
-    {
-        return;
-    }
-
-    // above this size is unlikely to be an intentionally constrained cgroup
-    if (limit < 10 * gibi)
+    if (long.TryParse(usageBytes, out long usage) &&
+        long.TryParse(limitBytes, out long limit) &&
+        // above this size is unlikely to be an intentionally constrained cgroup
+        limit < 10 * gibi)
     {
         WriteLine($"usage_in_bytes: {usageBytes} {GetInBiggerUnit(usage)}");
         WriteLine($"limit_in_bytes: {limitBytes} {GetInBiggerUnit(limit)}");
