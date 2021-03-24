@@ -23,17 +23,17 @@ $" `\"8bbdP\"Y8  `\"YbbdP\"\'   \"Y428 42       42  `\"Ybbd8\"\'   \"Y428{nl}");
 WriteLine(RuntimeInformation.FrameworkDescription);
 
 // OS information
-string osrel = "/etc/os-release";
+const string OSRel = "/etc/os-release";
 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && 
     File.Exists(osrel))
 {
-  string prettyname = "PRETTY_NAME";
+  const string PrettyName = "PRETTY_NAME";
   foreach(string line in File.ReadAllLines(osrel))
   {
       if (line.StartsWith(prettyname))
       {
           ReadOnlySpan<char> value = line.AsSpan()[(prettyname.Length + 2)..^1];
-          Console.WriteLine(value.ToString());
+          WriteLine(value.ToString());
           break;
       }
   }
@@ -49,8 +49,8 @@ WriteLine();
 WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
 WriteLine($"{nameof(Environment.ProcessorCount)}: {Environment.ProcessorCount}");
 
-long mebi = 1048576;
-long gibi = mebi * 1024;
+const long Mebi = 1048576;
+const long Gibi = mebi * 1024;
 
 // cgroup information
 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && 
