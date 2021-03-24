@@ -25,14 +25,14 @@ WriteLine(RuntimeInformation.FrameworkDescription);
 // OS information
 const string OSRel = "/etc/os-release";
 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && 
-    File.Exists(osrel))
+    File.Exists(OSRel))
 {
   const string PrettyName = "PRETTY_NAME";
-  foreach(string line in File.ReadAllLines(osrel))
+  foreach(string line in File.ReadAllLines(OSRel))
   {
-      if (line.StartsWith(prettyname))
+      if (line.StartsWith(PrettyName))
       {
-          ReadOnlySpan<char> value = line.AsSpan()[(prettyname.Length + 2)..^1];
+          ReadOnlySpan<char> value = line.AsSpan()[(PrettyName.Length + 2)..^1];
           WriteLine(value.ToString());
           break;
       }
@@ -49,8 +49,8 @@ WriteLine();
 WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
 WriteLine($"{nameof(Environment.ProcessorCount)}: {Environment.ProcessorCount}");
 
-const long Mebi = 1048576;
-const long Gibi = mebi * 1024;
+const long Mebi = 1024 * 1024;
+const long Gibi = Mebi * 1024;
 
 // cgroup information
 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && 
@@ -71,7 +71,7 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) &&
     if (long.TryParse(usageBytes, out long usage) &&
         long.TryParse(limitBytes, out long limit) &&
         // above this size is unlikely to be an intentionally constrained cgroup
-        limit < 10 * gibi)
+        limit < 10 * Gibi)
     {
         WriteLine($"usage_in_bytes: {usageBytes} {GetInBiggerUnit(usage)}");
         WriteLine($"limit_in_bytes: {limitBytes} {GetInBiggerUnit(limit)}");
@@ -80,18 +80,18 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) &&
 
 string GetInBiggerUnit(long size)
 {
-    if (size < mebi)
+    if (size < Mebi)
     {
         return string.Empty;
     }
-    else if (size < gibi)
+    else if (size < Gibi)
     {
-        long mebibytes = size / mebi;
+        long mebibytes = size / Mebi;
         return $"({mebibytes} MiB)";
     }
     else
     {
-        long gibibytes = size / gibi;
+        long gibibytes = size / Gibi;
         return $"({gibibytes} GiB)";
     }
 }
