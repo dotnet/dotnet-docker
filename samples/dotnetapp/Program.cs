@@ -1,21 +1,22 @@
 using System;
 using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using static System.Console;
 
 // Variant of https://github.com/dotnet/core/tree/main/samples/dotnet-runtimeinfo
 // Ascii text: https://ascii.co.uk/text (Univers font)
 
+string nl = Environment.NewLine;
+
 WriteLine(
-"         42\r\n" +
-"         42              ,d                             ,d\r\n" +  
-"         42              42                             42\r\n" +
-" ,adPPYb,42  ,adPPYba, MM42MMM 8b,dPPYba,   ,adPPYba, MM42MMM\r\n" +
-"a8\"    `Y42 a8\"     \"8a  42    42P\'   `\"8a a8P_____42   42\r\n" +  
-"8b       42 8b       d8  42    42       42 8PP\"\"\"\"\"\"\"   42\r\n" +    
-"\"8a,   ,d42 \"8a,   ,a8\"  42,   42       42 \"8b,   ,aa   42,\r\n" +
-" `\"8bbdP\"Y8  `\"YbbdP\"\'   \"Y428 42       42  `\"Ybbd8\"\'   \"Y428\r\n");
+$"         42{nl}" +
+$"         42              ,d                             ,d{nl}" +
+$"         42              42                             42{nl}" +
+$" ,adPPYb,42  ,adPPYba, MM42MMM 8b,dPPYba,   ,adPPYba, MM42MMM{nl}" +
+$"a8\"    `Y42 a8\"     \"8a  42    42P\'   `\"8a a8P_____42   42{nl}" +
+$"8b       42 8b       d8  42    42       42 8PP\"\"\"\"\"\"\"   42{nl}" +
+$"\"8a,   ,d42 \"8a,   ,a8\"  42,   42       42 \"8b,   ,aa   42,{nl}" +
+$" `\"8bbdP\"Y8  `\"YbbdP\"\'   \"Y428 42       42  `\"Ybbd8\"\'   \"Y428{nl}");
 
 
 // .NET information
