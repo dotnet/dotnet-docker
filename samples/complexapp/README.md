@@ -62,8 +62,7 @@ $ pwd
 /home/rich/git/dotnet-docker/samples/complexapp
 $ docker build --pull --target test -t complexapp:test .
 $ mkdir TestResults
-$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults comp
-lexapp:test
+$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp:test
   libfoo -> /source/libfoo/bin/Debug/net5.0/libfoo.dll
   libbar -> /source/libbar/bin/Debug/netstandard2.0/libbar.dll
   tests -> /source/tests/bin/Debug/net5.0/tests.dll
@@ -100,6 +99,16 @@ Total tests: 2
  Total time: 0.7896 Seconds
 $ ls TestResults/
 _512cd4682573_2021-03-30_18_47_24.trx  _eb8b8c6b50ca_2021-03-30_18_48_30.trx
+```
+
+To sum up this option, if you wanted to build an image, and then test if for multiple target frameworks, your script would look the following, presumably including error checking after each command. If your tests were not multi-targeted, then the last two commands could be removed.
+
+```bash
+docker build --pull -t complexapp .
+docker build --pull -t complexapp:test --target test .
+docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp:test
+docker build --pull -t complexapp:test31 --target test31 .
+docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp:test31
 ```
 
 ## Running tests while building an image
