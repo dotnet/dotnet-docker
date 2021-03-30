@@ -4,6 +4,10 @@ namespace libfoo
 {
     public class StringLibrary
     {
-       public static string GetString() => "The quick brown fox jumps over the lazy dog"; 
+        private const string Phrase = "The quick brown fox jumps over the lazy dog";
+        public static string GetString() => Phrase;
+#if NET5_0
+        public static ReadOnlySpan<char> GetSpan() => Phrase.AsSpan();
+#endif
     }
 }

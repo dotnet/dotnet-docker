@@ -2,27 +2,13 @@
 
 It is easy to build and test multiple projects with Docker by following some basic patterns. Docker comes with some requirements and some useful mechanisms that can help you manage various container-based workflows.
 
-The `complexapp` sample is intended to act as a [very simple](complexapp/Program.cs) "complex application". It is composed of multiple projects, including a test project. It is used to demonstrate various workflows.
+The `complexapp` sample is intended to act as a [very simple](complexapp/Program.cs) "complex application". It is composed of multiple projects, including a test project. It is used to demonstrate various workflows, including testing multi-targeted library projects. Some aspects of this example may not be important for your scenario, and can be ignored.
 
 Simpler workflows are provided at [.NET Docker samples](../README.md).
 
 The instructions assume that you have cloned this repo, have [Docker](https://www.docker.com/products/docker) installed, and have a command prompt open within the `samples/complexapp` directory within the repo.
 
 ## Building an image including multiple projects
-
-The most common way to build images is using following pattern:
-
-```console
-docker build -t tag .
-```
-
-The most important aspect of that `docker` command is the `.` at the end. It represents the path to the build context, where Docker will look for assets that are referenced in the Dockerfile and for a `Dockerfile` (if not explicitly specified with the `-f` option). The build context is packaged up and then sent to the Docker daemon (the server), which performs the image build. It is required that all referenced assets are available within the build context, otherwise, they will not be available while the image is being built, which may produce the wrong image or produce an error. You can inspect intermediate or final images to validate that they contain the correct content if you see results you don't expect.
-
-In the case of an application with multiple project dependencies, it may be intuitive to place the Dockerfile beside the project file for the application project, and to assign the build context to that same location. This will not work because project dependencies will not exist within the build context.
-
-Instead, in a multi-project solution, the best pattern is to place the Dockerfile at the same location you would place a solution file, which is typically one directory above the application project. At that location, you can use the pattern  demonstrated above, using `.` for the build context at the same location as the Dockerfile, and enabling all resources to be naturally located within that context.
-
-This is the approach used with [complexapp](.). The [Dockerfile](Dockerfile) for the sample is at the same location as the `.sln` file, and all projects are available when that same location is used as the build context. There are other options, but this approach is the easiest.
 
 You can build and run the complexapp using the following commands:
 
@@ -32,6 +18,10 @@ docker run --rm complexapp
 ```
 
 It will restore and build all required projects and produce an application image.
+
+In the case of an application with multiple project dependencies, it may be intuitive to place the Dockerfile beside the project file for the application project, and to assign the build context (the `.` in the `docker build` command above) to that same location. This will not work because project dependencies will not exist within the build context. Instead, in a multi-project solution, the best pattern is to place the Dockerfile at the same location you would place a solution file, which is typically one directory above the application project.
+
+## Running tests
 
 One or more of the projects in your solution might be test projects. It can be useful to include testing within same container-based workflow as the application. This is helpful for at least two reasons:
 
@@ -45,24 +35,23 @@ There are two primary ways to test within the workflow of an application contain
 
 This is different than running tests within a [.NET SDK container](../run-tests-in-sdk-container.md), which establishes a generic environment (which also works well). The rest of this document is focused on running tests within the same container environment as the application.
 
-> Note: See [Establishing docker environment](../establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
-
 ## Running tests as an opt-in stage
 
-There are multiple approaches for testing with containers, such as the `ENTRYPOINT` of an opt-in stage (covered in this section) or as part of `docker build` (covered in the next section). The opt-in test stage approach covered in this section is the recommended approach because it is more flexible.
+The benefit of using an opt-in stage for testing is that it enables using the same environment as the build, allows volume mounting (which isn't possible with `docker build`) to collect test logs, and is opt-in so you to skip running tests if you don't want to pay that cost. The downside is that you need to orchestrate building and testing with some form of script. One `docker` command cannot build and test with this model.
 
-The primary benefit of using an opt-in stage for testing is that it enables using the same environment as the build as an opt-in scenario and allows volume mounting (which isn't possible with `docker build`) to collect test logs.
-
-The [Dockerfile](Dockerfile) includes a `test` stage that demonstrates running via its `ENTRYPOINT`, as follows.
+The [Dockerfile](Dockerfile) includes two `test` stages that demonstrates running tests via an`ENTRYPOINT`, as follows.
 
 ```Dockerfile
-# test stage -- exposes optional entrypoint
+# test stage for .NET 5.0 -- exposes optional entrypoint
 # target entrypoint with: docker build --target test
 FROM build AS test
 WORKDIR /source/tests
 COPY tests/ .
-ENTRYPOINT ["dotnet", "test", "--logger:trx"]
+RUN dotnet build -c debug -f net5.0
+ENTRYPOINT ["dotnet", "test", "-f", "net5.0", "--logger:trx"]
 ```
+
+Note: The two test stages, and testing in terms of a framework, are present due to one of the libraries and the test project being multi-targeted. These are artificial complication in order to demonstrate different (optional) scenarios.
 
 The presence of the `test` stage costs very little and doesn't significantly change the behavior of the build if you don't specifically target it. By default, the test stage `ENTRYPOINT` will not be used if you build this Dockerfile
 
