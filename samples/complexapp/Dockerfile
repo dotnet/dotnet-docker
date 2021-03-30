@@ -21,7 +21,7 @@ FROM build AS test
 WORKDIR /source/tests
 COPY tests/ .
 RUN dotnet build -c debug -f net5.0
-ENTRYPOINT ["dotnet", "test", "-f", "net5.0", "--logger:trx"]
+ENTRYPOINT ["dotnet", "test", "-f", "net5.0", "--no-restore", "--logger:trx"]
 
 # test stage for .NET Core 3.1 -- exposes optional entrypoint
 # target entrypoint with: docker build --target test31
@@ -32,7 +32,7 @@ COPY tests/ .
 WORKDIR /source/tests
 COPY tests/ .
 RUN dotnet build -c debug -f netcoreapp3.1
-ENTRYPOINT ["dotnet", "test", "-f", "netcoreapp3.1", "--logger:trx"]
+ENTRYPOINT ["dotnet", "test", "-f", "netcoreapp3.1", "--no-restore", "--logger:trx"]
 
 FROM build AS publish
 RUN dotnet publish -c release -f net5.0 --no-build -o /app

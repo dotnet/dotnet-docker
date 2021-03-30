@@ -51,82 +51,60 @@ RUN dotnet build -c debug -f net5.0
 ENTRYPOINT ["dotnet", "test", "-f", "net5.0", "--logger:trx"]
 ```
 
-Note: The two test stages, and testing in terms of a framework, are present due to one of the libraries and the test project being multi-targeted. These are artificial complication in order to demonstrate different (optional) scenarios.
+Note: The two test stages, and testing in terms of a framework, are present due to one of the libraries and the test project being multi-targeted. These are artificial complication in order to demonstrate different (optional) scenarios. If you don't have this need, then you can remove the second test stage.
 
-The presence of the `test` stage costs very little and doesn't significantly change the behavior of the build if you don't specifically target it. By default, the test stage `ENTRYPOINT` will not be used if you build this Dockerfile
+The presence of the `test` stage costs very little and doesn't change the behavior of the build if you don't specifically target it. By default, the test stage `ENTRYPOINT` will not be used if you build this Dockerfile
 
-The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled, using PowerShell:
+The following example demonstrates targeting the `test` stage with the `--target` argument, and with logging enabled, in WSL2:
 
 ```console
-PS C:\git\dotnet-docker\samples\complexapp> docker build --pull --target test -t complexapp-test .
-Sending build context to Docker daemon  12.81MB
-Step 1/15 : FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-5.0: Pulling from dotnet/sdk
-Successfully built f98c5453be3d
-Successfully tagged complexapp-test:latest
-SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
-
-PS C:\git\dotnet-docker\samples\complexapp> mkdir TestResults
-
-PS C:\git\dotnet-docker\samples\complexapp> docker run --rm -v $pwd\TestResults:/source/tests/TestResults complexapp-test
-  Determining projects to restore...
-  Restored /source/tests/tests.csproj (in 7.73 sec).
-  2 of 3 projects are up-to-date for restore.
+$ pwd
+/home/rich/git/dotnet-docker/samples/complexapp
+$ docker build --pull --target test -t complexapp:test .
+$ mkdir TestResults
+$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults comp
+lexapp:test
+  libfoo -> /source/libfoo/bin/Debug/net5.0/libfoo.dll
   libbar -> /source/libbar/bin/Debug/netstandard2.0/libbar.dll
-  libfoo -> /source/libfoo/bin/Debug/netstandard2.0/libfoo.dll
   tests -> /source/tests/bin/Debug/net5.0/tests.dll
 Test run for /source/tests/bin/Debug/net5.0/tests.dll (.NETCoreApp,Version=v5.0)
-Microsoft (R) Test Execution Command Line Tool Version 16.8.0
+Microsoft (R) Test Execution Command Line Tool Version 16.9.1
 Copyright (c) Microsoft Corporation.  All rights reserved.
 
 Starting test execution, please wait...
 A total of 1 test files matched the specified pattern.
-Results File: /source/tests/TestResults/_886d04dbf347_2020-11-02_18_30_59.trx
+Results File: /source/tests/TestResults/_512cd4682573_2021-03-30_18_47_24.trx
 
-Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 2 ms - /source/tests/bin/Debug/net5.0/tests.dll (net5.0)
-
-PS C:\git\dotnet-docker\samples\complexapp> dir .\TestResults\
-
-
-    Directory: C:\git\dotnet-docker\samples\complexapp\TestResults
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
--a----         11/2/2020  12:31 PM           3583 _886d04dbf347_2020-11-02_18_30_59.trx
+Passed!  - Failed:     0, Passed:     3, Skipped:     0, Total:     3, Duration: 2 ms - /source/tests/bin/Debug/net5.0/tests.dll (net5.0)
+$ ls TestResults/
+_512cd4682573_2021-03-30_18_47_24.trx
 ```
 
-The following instructions demonstrate this scenario in various configurations, with logging enabled.
+You can do the same thing with the `test31` stage, to test the library with .NET Core 3.1.
 
-### Linux or macOS
+```bash
+$ docker build --pull --target test31 -t complexapp:test31 .
+$ docker run --rm -v $(pwd)/TestResults:/source/tests/TestResults complexapp:test31
+Test run for /source/tests/bin/Debug/netcoreapp3.1/tests.dll(.NETCoreApp,Version=v3.1)
+Microsoft (R) Test Execution Command Line Tool Version 16.7.1
+Copyright (c) Microsoft Corporation.  All rights reserved.
 
-```console
-docker build --pull --target test -t complexapp-test .
-docker run --rm -v ${pwd}/TestResults:/source/tests/TestResults complexapp-test
-```
+Starting test execution, please wait...
 
-### Windows using Linux containers
+A total of 1 test files matched the specified pattern.
+Results File: /source/tests/TestResults/_eb8b8c6b50ca_2021-03-30_18_48_30.trx
 
-The following example uses PowerShell.
-
-```console
-docker build --pull --target test -t complexapp-test .
-docker run --rm -v ${pwd}\TestResults:/source/tests/TestResults complexapp-test
-```
-
-### Windows using Windows containers
-
-The following example uses PowerShell.
-
-```console
-docker build --pull --target test -t complexapp-test .
-docker run --rm -v ${pwd}\TestResults:c:\source\tests\TestResults complexapp-test
+Test Run Successful.
+Total tests: 2
+     Passed: 2
+ Total time: 0.7896 Seconds
+$ ls TestResults/
+_512cd4682573_2021-03-30_18_47_24.trx  _eb8b8c6b50ca_2021-03-30_18_48_30.trx
 ```
 
 ## Running tests while building an image
 
-It is possible to run tests as part of `docker build`. This approach can be useful if you want `docker build` to fail if your tests fail. It is not generally recommended, as will be described later in this section.
-
-This approach can be implemented by the following pattern. It is not included in the sample Dockerfile because it is not the recommended approach.
+It is possible to run tests as part of `docker build`. This approach can be useful if you want `docker build` to fail if your tests fail.
 
 ```Dockerfile
 WORKDIR /source/tests
@@ -134,7 +112,9 @@ RUN dotnet restore
 RUN dotnet test --no-restore --logger:trx
 ```
 
-The following example demonstrates this pattern, as if it was part of [Dockerfile](Dockerfile). You would then be able run tests using the normal `docker build` pattern, as follows:
+Note: Multi-targeted tests present a problem with this scenario since it isn't possibly to use two .NET SDK images in the same `Dockerfiile`, as was done in the previous section. With this model, you either need to not multi-target tests, run the tests with the matching target framework as the .NET SDK image supports, or install a second runtime manually.
+
+The following example demonstrates building with this pattern, as if it was part of [Dockerfile](Dockerfile). You would then be able run tests using the normal `docker build` pattern, as follows:
 
 ```console
 docker build --pull -t complexapp .
