@@ -23,7 +23,7 @@ namespace tests
             Assert.True(InputString == returnedString, $"The {nameof(StringLibrary)} string was not correct.");
         }
 
-#if NET5_0
+#if NETSTANDARD2_1
         [Fact]
         public void SourceSpan()
         {
