@@ -37,9 +37,9 @@ This is different than running tests within a [.NET SDK container](../run-tests-
 
 ## Running tests as an opt-in stage
 
-The benefit of using an opt-in stage for testing is that it enables using the same environment as the build, allows volume mounting (which isn't possible with `docker build`) to collect test logs, and is opt-in so you to skip running tests if you don't want to pay that cost. The downside is that you need to orchestrate building and testing with some form of script. One `docker` command cannot build and test with this model.
+The benefit of using an opt-in stage for testing is that it enables using the same environment as the build, allows volume mounting (which isn't possible with `docker build`) to collect test logs, and is opt-in so you can skip running tests if you don't want to pay that cost. The downside is that you need to orchestrate building and testing with some form of script. One `docker` command cannot build and test with this model.
 
-The [Dockerfile](Dockerfile) includes two `test` stages that demonstrates running tests via an`ENTRYPOINT`, as follows.
+The [Dockerfile](Dockerfile) includes two `test` stages that demonstrates running tests via an `ENTRYPOINT`, as follows.
 
 ```Dockerfile
 # test stage for .NET 5.0 -- exposes optional entrypoint
@@ -101,7 +101,7 @@ $ ls TestResults/
 _512cd4682573_2021-03-30_18_47_24.trx  _eb8b8c6b50ca_2021-03-30_18_48_30.trx
 ```
 
-To sum up this option, if you wanted to build an image, and then test if for multiple target frameworks, your script would look the following, presumably including error checking after each command. If your tests were not multi-targeted, then the last two commands could be removed.
+To sum up this option, if you wanted to build an image, and then test it for multiple target frameworks, your script would look the following, presumably including error checking after each command. If your tests were not multi-targeted, then the last two commands could be removed.
 
 ```bash
 docker build --pull -t complexapp .
