@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-ARG DOTNET_SDK_VERSION=6.0.100-preview.3.21168.1
+ARG DOTNET_SDK_VERSION=6.0.100-preview.3.21180.3
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:20H2-amd64 AS installer
@@ -12,7 +12,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 RUN `
     # Retrieve .NET SDK
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = 'c4e8acbb2c540c379df7e0b3637b34b02e8e01e31d6e35d25ce75eec322d4640ddd7420a896c67cf227118295adb7cde0ad14ab9f6a2f87f08b0167dc69d2478'; `
+    $dotnet_sha512 = '0b1e7ff8b4843d29124e3573dd55da115cc4e124800e5446c4eaea41f1664020af19d677ab79511da37e9ebbfa09590925a74c87f5ee468df87dd8961d81a9e1'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -35,7 +35,7 @@ RUN `
     Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force; `
     `
     # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
-    Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','templates','shared' -Path dotnet `
+    Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
         | Remove-Item -Force -Recurse; `
     Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
