@@ -4,6 +4,11 @@ FROM $REPO:6.0-alpine3.13-amd64
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=0 \
+    # Do not show first run text
+    DOTNET_NOLOGO=1 \
+    # SDK version
     DOTNET_SDK_VERSION=6.0.100-preview.2.21155.3 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
