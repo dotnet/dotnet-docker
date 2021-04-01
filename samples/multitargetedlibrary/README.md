@@ -29,7 +29,7 @@ RUN dotnet build -f net6.0
 ENTRYPOINT ["dotnet", "test", "-f", "net6.0", "--no-build", "--logger:trx"]
 ```
 
-The number `60` in `test60` is shorthand for *test stage for `net6.0` target framework.* The same scheme is used for .NET Core 3.1.
+The number `60` in `test60` is shorthand for *test stage for `net6.0` target framework.* The same scheme is used for .NET Core 3.1 in this sample.
 
 ## Building a stage
 
