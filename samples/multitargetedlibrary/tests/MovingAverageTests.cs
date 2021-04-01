@@ -22,7 +22,7 @@ namespace tests
             Assert.True(avg.GetAverage() == 5);
         }
 
-#if NET5_0
+#if NET5_0_OR_GREATER
         [Fact]
         public async Task StreamingAverage()
         {
