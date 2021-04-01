@@ -67,3 +67,7 @@ After running those tests with volume mounts, the following test logs are on the
 $ ls TestResults
 _4cbce5765cc8_2021-04-01_22_34_23.trx  _8694221bef55_2021-04-01_22_35_04.trx
 ```
+
+## OR_GREATER preprocessor symbols
+
+This sample demonstrates using [OR_GREATER preprocessor symbols](https://github.com/dotnet/designs/blob/main/accepted/2020/or-greater-defines/or-greater-defines.md). They enable you to write multi-targeted libraries in a way that describes intent and enables the target frameworks in your project file and the ones used for conditional compilation to not directly match.
