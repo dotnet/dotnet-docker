@@ -41,7 +41,7 @@ namespace Utils
 
         public int GetAverage() => _average;
 
-#if NETSTANDARD2_1_OR_GREATER
+#if NET5_0_OR_GREATER
         public async IAsyncEnumerable<int> GetAveragesAsync(IAsyncEnumerable<int> source)
         {
             await foreach (int result in source)
