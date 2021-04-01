@@ -41,7 +41,7 @@ docker build --target test60 -t movingaverage60 .
 
 ## Scripting tests
 
-You can script testing multiple target frameworks for a given multi-targeted library.
+You can script testing multiple target frameworks for a given multi-targeted library. The following examples are in WSL2 (on Windows) targeting Linux container images.
 
 ```bash
 docker build --target test60 -t movingaverage60 .
@@ -54,8 +54,16 @@ If you want to harvest the test logs, you can adapt the `docker run` commands to
 
 
 ```bash
-docker build --target test60 -t movingaverage60 .
-docker run --rm -v $pwd\TestResults:/source/tests/TestResults movingaverage60
-docker build --target test31 -t movingaverage31 .
-docker run --rm -v $pwd\TestResults:/source/tests/TestResults movingaverage31
+mkdir TestResults
+docker build --pull --target test60 -t movingaverage60 .
+docker run --rm -v $pwd/TestResults:/source/tests/TestResults movingaverage60
+docker build --pull --target test31 -t movingaverage31 .
+docker run --rm -v $pwd/TestResults:/source/tests/TestResults movingaverage31
+```
+
+After running those tests with volume mounts, the following test logs are on the local machine.
+
+```bash
+$ ls TestResults
+_4cbce5765cc8_2021-04-01_22_34_23.trx  _8694221bef55_2021-04-01_22_35_04.trx
 ```
