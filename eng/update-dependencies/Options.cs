@@ -11,6 +11,7 @@ namespace Dotnet.Docker
     {
         public bool ComputeChecksums { get; private set; }
         public string DockerfileVersion { get; private set; }
+        public string ChannelName { get; private set; }
         public string GitHubEmail { get; private set; }
         public string GitHubPassword { get; private set; }
         public string GitHubProject => "dotnet-docker";
@@ -21,12 +22,13 @@ namespace Dotnet.Docker
         public string VersionSourceName { get; private set; }
         public bool UpdateOnly => GitHubEmail == null || GitHubPassword == null || GitHubUser == null;
 
-        public Options(string dockerfileVersion, string[] productVersion, string versionSourceName, string email, string password, string user, bool computeShas)
+        public Options(string dockerfileVersion, string[] productVersion, string channelName, string versionSourceName, string email, string password, string user, bool computeShas)
         {
             DockerfileVersion = dockerfileVersion;
             ProductVersions = productVersion
                 .Select(pair => pair.Split(new char[] { '=' }, 2))
                 .ToDictionary(split => split[0].ToLower(), split => split[1]);
+            ChannelName = channelName;
             VersionSourceName = versionSourceName;
             GitHubEmail = email;
             GitHubPassword = password;
@@ -55,6 +57,7 @@ namespace Dotnet.Docker
             {
                 new Argument<string>("dockerfile-version", "Version of the Dockerfiles to update"),
                 new Option<string[]>("--product-version", "Product versions to update (<product-name>=<version>)"),
+                new Option<string>("--channel-name", "The name of the channel from which to find product files."),
                 new Option<string>("--version-source-name", "The name of the source from which the version information was acquired."),
                 new Option<string>("--email", "GitHub email used to make PR (if not specified, a PR will not be created)"),
                 new Option<string>("--password", "GitHub password used to make PR (if not specified, a PR will not be created)"),
