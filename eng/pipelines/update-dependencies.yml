@@ -43,7 +43,7 @@ stages:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - script: $(engPath)/get-drop-versions-monitor.sh
+    - script: $(engPath)/get-drop-versions-monitor.sh $(monitorChannel)
       displayName: Get Versions
     - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
       displayName: Build Update Dependencies Tool
@@ -54,5 +54,6 @@ stages:
         --email $(dotnetDockerBot.email)
         --password $(BotAccount-dotnet-docker-bot-PAT)
         --product-version monitor=$(monitorVer)
+        --channel-name $(monitorChannel)
         --version-source-name dotnet/dotnet-monitor
       displayName: Run Update Dependencies
