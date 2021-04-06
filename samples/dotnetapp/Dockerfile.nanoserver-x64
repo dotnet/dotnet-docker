@@ -11,8 +11,10 @@ COPY . .
 RUN dotnet publish -c release -o /app -r win-x64 --self-contained false --no-restore
 
 # final stage/image
-# Uses the 20H2 release; Other choices: 2004, 1909, 1809
-FROM mcr.microsoft.com/dotnet/runtime:5.0-nanoserver-20H2
+# Relies on 5.0 multi-arch tag to pick the same Windows version as the host. 
+# Alternatively, a release specific tag can be used, like: `5.0-nanoserver-1809`
+# Other versions are 20H2, 2004, and 1909 (in place of the `1809` substring above)
+FROM mcr.microsoft.com/dotnet/runtime:5.0
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnetapp"]
