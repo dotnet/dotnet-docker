@@ -89,10 +89,10 @@ stages:
       name: Windows1809_amd64
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
+          name: Docker-1809-Public
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: DotNetCore-Docker
-        demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
+          demands: VSTS_OS -equals Windows_Server_2019_Data_Center_RS5
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows1809Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
@@ -103,10 +103,10 @@ stages:
       name: Windows1909_amd64
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
+          name: Docker-1909-Public
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: DotNetCore-Docker
-        demands: VSTS_OS -equals Windows-ServerDatacenter-1909
+          demands: VSTS_OS -equals Windows-ServerDatacenter-1909
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows1909Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
@@ -117,10 +117,10 @@ stages:
       name: Windows2004_amd64
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
+          name: Docker-2004-Public
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: DotNetCore-Docker
-        demands: VSTS_OS -equals Windows-ServerDatacenter-2004
+          demands: VSTS_OS -equals Windows-ServerDatacenter-2004
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows2004Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
@@ -131,10 +131,10 @@ stages:
       name: Windows20H2_amd64
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
+          name: Docker-20H2-Public
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: DotNetCore-Docker
-        demands: VSTS_OS -equals Windows-ServerDatacenter-2009
+          demands: VSTS_OS -equals Windows-ServerDatacenter-2009
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows20H2Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
@@ -145,10 +145,10 @@ stages:
       name: WindowsLtsc2016_amd64
       pool:
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
+          name: Docker-2016-Public
         ${{ if eq(variables['System.TeamProject'], 'internal') }}:
           name: DotNetCore-Docker
-        demands: VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
+          demands: VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2016Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
