@@ -37,10 +37,10 @@ jobs:
 - job: WindowsPerfTests
   pool:
     ${{ if eq(variables['System.TeamProject'], 'public') }}:
-      name: DotNetCore-Docker-Public
+      name: Docker-20H2-Public
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       name: DotNetCore-Docker
-    demands: VSTS_OS -equals Windows-ServerDatacenter-2009
+      demands: VSTS_OS -equals Windows-ServerDatacenter-2009
   workspace:
     clean: all
   steps:
