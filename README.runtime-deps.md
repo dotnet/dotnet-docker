@@ -49,11 +49,11 @@ Tags | Dockerfile | OS Version
 3.1.14-alpine3.12, 3.1-alpine3.12 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/alpine3.12/amd64/Dockerfile) | Alpine 3.12
 3.1.14-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.14-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
-2.1.26-stretch-slim, 2.1-stretch-slim, 2.1.26, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/stretch-slim/amd64/Dockerfile) | Debian 9
-2.1.26-alpine3.13, 2.1-alpine3.13, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/alpine3.13/amd64/Dockerfile) | Alpine 3.13
-2.1.26-alpine3.12, 2.1-alpine3.12 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/alpine3.12/amd64/Dockerfile) | Alpine 3.12
-2.1.26-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/focal/amd64/Dockerfile) | Ubuntu 20.04
-2.1.26-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
+2.1.27-stretch-slim, 2.1-stretch-slim, 2.1.27, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/stretch-slim/amd64/Dockerfile) | Debian 9
+2.1.27-alpine3.13, 2.1-alpine3.13, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/alpine3.13/amd64/Dockerfile) | Alpine 3.13
+2.1.27-alpine3.12, 2.1-alpine3.12 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/alpine3.12/amd64/Dockerfile) | Alpine 3.12
+2.1.27-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/focal/amd64/Dockerfile) | Ubuntu 20.04
+2.1.27-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
@@ -90,9 +90,9 @@ Tags | Dockerfile | OS Version
 3.1.14-buster-slim-arm32v7, 3.1-buster-slim-arm32v7, 3.1.14, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/buster-slim/arm32v7/Dockerfile) | Debian 10
 3.1.14-focal-arm32v7, 3.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 3.1.14-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
-2.1.26-stretch-slim-arm32v7, 2.1-stretch-slim-arm32v7, 2.1.26, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/stretch-slim/arm32v7/Dockerfile) | Debian 9
-2.1.26-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
-2.1.26-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+2.1.27-stretch-slim-arm32v7, 2.1-stretch-slim-arm32v7, 2.1.27, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/stretch-slim/arm32v7/Dockerfile) | Debian 9
+2.1.27-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+2.1.27-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
