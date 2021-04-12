@@ -4,7 +4,7 @@ FROM $REPO:5.0-buster-slim-amd64
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \
-    DOTNET_SDK_VERSION=5.0.201 \
+    DOTNET_SDK_VERSION=5.0.202 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -22,7 +22,7 @@ RUN apt-get update \
 
 # Install .NET SDK
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
-    && dotnet_sha512='099084cc7935482e363bd7802d2fdd909b3d72d2e9706e9ba4df95e3d142a28b780d2b85e5fb4662dcaad18e91c7e06519184fae981a521425eed605770c3c5a' \
+    && dotnet_sha512='01ed59f236184987405673d24940d55ce29d830e7dbbc19556fdc03893039e6046712de6f901dc9911047a0dee4fd15319b7e94f8a31df6b981fa35bd93d9838' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -31,9 +31,9 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.1.2 \
+RUN powershell_version=7.1.3 \
     && curl -SL --output PowerShell.Linux.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='ceb638846a99d2852afeea844b5ac18d5f3150ba239d302160ffe711c102a41baf7853087b9afbd0d0b3966c59a83dde2206885efb0b1a49ca9878891b3648ca' \
+    && powershell_sha512='537d885b79dd1cd183d14b5f5e71046558fb015f562bb817ee90fbabaa9b1039c822949b7e1a5c9b69a976eae09786e3b2c0f0586c01c822868cc48ea7e36620' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \

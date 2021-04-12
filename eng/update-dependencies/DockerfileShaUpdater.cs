@@ -30,7 +30,7 @@ namespace Dotnet.Docker
              new Dictionary<string, Dictionary<string, string>>();
         private static readonly Dictionary<string, string> s_urls = new Dictionary<string, string> {
             {"powershell", "https://pwshtool.blob.core.windows.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg"},
-            {"monitor", "https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor5.0/dotnet-monitor.$VERSION_FILE.nupkg"},
+            {"monitor", "https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor$CHANNEL_NAME/dotnet-monitor.$VERSION_FILE.nupkg"},
             {"runtime", "https://dotnetcli.azureedge.net/dotnet/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT"},
             {"aspnet", "https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT"},
             {"sdk", "https://dotnetcli.azureedge.net/dotnet/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT"},
@@ -112,6 +112,7 @@ namespace Dotnet.Docker
                 .Replace("$ARCHIVE_EXT", _os.Contains("win") ? "zip" : "tar.gz")
                 .Replace("$VERSION_DIR", versionDir)
                 .Replace("$VERSION_FILE", versionFile)
+                .Replace("$CHANNEL_NAME", _options.ChannelName)
                 .Replace("$OS", _os)
                 .Replace("$ARCH", _arch)
                 .Replace("..", ".");

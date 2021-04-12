@@ -11,7 +11,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=1 `
     # SDK version
-    DOTNET_SDK_VERSION=6.0.100-preview.2.21155.3 `
+    DOTNET_SDK_VERSION=6.0.100-preview.4.21210.1 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -25,18 +25,18 @@ RUN powershell -Command "`
         `
         # Retrieve .NET SDK
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-        $dotnet_sha512 = 'a56debdba83e7477c069aff43bf1fc7f552b68879ed6a36e4f3903dd121ab70a762acc2120b7cd95d5d45b8f762ae71dfa2fd8b3b6165673ac2e7251682a1f6b'; `
+        $dotnet_sha512 = 'f220e6983381ddad39197b8477e59da7b0f12f9ff843d0dc0086ba7c8e88310c8614a76f31e93e0238abe15e6c387fdeb9f35e6414c171a7345a3669aa0c5a59'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
         }; `
-        tar -C $Env:ProgramFiles\dotnet -oxzf dotnet.zip ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt ./shared/Microsoft.WindowsDesktop.App; `
+        tar -C $Env:ProgramFiles\dotnet -oxzf dotnet.zip ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt ./shared/Microsoft.WindowsDesktop.App; `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.2.0-preview.3'; `
+        $powershell_version = '7.2.0-preview.4'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = 'edf0073f7bea811b68cc54d0325990a4b28c583c11cac92914f9bd44bf7dead733f5833006d55e19d65d23864e90919826c86f061578889b30521fc5d70fd685'; `
+        $powershell_sha512 = '0c673f82fdd7335c4c4e3efd28d1472bddc3e9a48677a25be81f0edfc642a1bf410bb42324c4971540293cfef762f37403a3683dc14464f8686a5ad0463c4613'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
