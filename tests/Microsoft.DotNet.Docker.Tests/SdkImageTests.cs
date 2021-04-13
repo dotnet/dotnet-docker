@@ -49,15 +49,16 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
-            variables.AddRange(GetCommonEnvironmentVariables());
-
             string aspnetUrlsValue = imageData.Version.Major < 3 ? "http://+:80" : string.Empty;
-            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", aspnetUrlsValue));          
-            variables.Add(new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"));
-            variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));
-            variables.Add(new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"));
-            variables.Add(new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"));
+            List<EnvironmentVariableInfo> variables = new()
+            {
+                new EnvironmentVariableInfo("ASPNETCORE_URLS", aspnetUrlsValue),          
+                new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
+                new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"),
+                new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
+                new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip")
+            };
+            variables.AddRange(GetCommonEnvironmentVariables());
 
             if (imageData.Version.Major >= 3)
             {
