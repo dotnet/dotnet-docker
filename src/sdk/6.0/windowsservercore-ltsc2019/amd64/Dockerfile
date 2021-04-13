@@ -7,9 +7,9 @@ ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
     # Do not generate certificate
-    DOTNET_GENERATE_ASPNET_CERTIFICATE=0 `
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
     # Do not show first run text
-    DOTNET_NOLOGO=1 `
+    DOTNET_NOLOGO=true `
     # SDK version
     DOTNET_SDK_VERSION=6.0.100-preview.4.21210.1 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
