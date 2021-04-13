@@ -2,6 +2,14 @@
 
 FROM mcr.microsoft.com/windows/servercore:ltsc2019-amd64
 
+# Apply latest patch
+RUN curl -fSLo patch.msu http://download.windowsupdate.com/c/msdownload/update/software/secu/2021/01/windows10.0-kb4601060-x64_b645458f512391ae20e17e21f01d24183b5076c9.msu `
+    && mkdir patch `
+    && expand patch.msu patch -F:* `
+    && del /F /Q patch.msu `
+    && dism /Online /Quiet /Add-Package /PackagePath:C:\patch\windows10.0-kb4601060-x64.cab `
+    && rmdir /S /Q patch
+
 ENV `
     # Configure web servers to bind to port 80 when present
     ASPNETCORE_URLS=http://+:80 `
@@ -9,11 +17,11 @@ ENV `
     DOTNET_RUNNING_IN_CONTAINER=true `
     DOTNET_VERSION=6.0.0-preview.4.21205.3
 
+# Install .NET
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        # Install .NET
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:DOTNET_VERSION-win-x64.zip; `
         $dotnet_sha512 = 'a2c3b17b60f822fc19c53fe16e0c7a3a5fc921cc8b9909fafed2bdb86fa3d7abc85bbd5c59d175e2faa963637ca27722fbe835fb894632076f0094eaaa9164d7'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
