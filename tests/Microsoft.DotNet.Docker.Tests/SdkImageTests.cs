@@ -53,8 +53,6 @@ namespace Microsoft.DotNet.Docker.Tests
             List<EnvironmentVariableInfo> variables = new()
             {
                 new EnvironmentVariableInfo("ASPNETCORE_URLS", aspnetUrlsValue),
-                new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
-                new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"),
                 new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
                 new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip")
             };
@@ -75,6 +73,12 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 variables.Add(AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper));
                 variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
+            }
+
+            if (imageData.Version.Major >= 6)
+            {
+                variables.Add(new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"));
+                variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));
             }
 
             if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
