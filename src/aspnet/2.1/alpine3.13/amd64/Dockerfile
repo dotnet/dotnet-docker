@@ -2,10 +2,10 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:2.1-alpine3.13
 
 # Install ASP.NET Core
-ENV ASPNETCORE_VERSION=2.1.26
+ENV ASPNETCORE_VERSION=2.1.27
 
 RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-musl-x64.tar.gz \
-    && aspnetcore_sha512='c1c279e9ac1bbd5fa8ffbb71e7aaafa393643f9fa9c78b4f61b7c206e77f4f4a7c4b1daf779ab62c1844eef3912785d2b4bf63309ef46f6dfdec9b20242d51c0' \
+    && aspnetcore_sha512='45a0e5d56676b6d8f4ae66dcda40090816f92414b493013db8e23b560a50ba2d8379ad0a1e978177fee97d6c6e6d24fcf0b62bca65442ce54bf5078171011046' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet \
