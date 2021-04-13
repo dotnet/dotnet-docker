@@ -25,7 +25,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     # Add NuGet cache (ARM SDK doesn't include it)
     && curl -SL --output /usr/share/dotnet/sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma \
-    && lzma_sha512='0101f0fb5bbcaf3f54a637e02061e8a43deafec1196ad7f9b8dd8412563c4ce8bdb840e7261063c0ed5fdbc2f7ac3ae8906679fe1e870994dd81748cb654e626' \
+    && lzma_sha512='4d26867d707dd6b3132c7040db1a610ad1cd1a6f64c2295d7df62d1ba913325e6ab645a4ca719f060e727b8641839e2ec1148a784ded450c95c0ccd2b3d5e260' \
     && echo "$lzma_sha512 /usr/share/dotnet/sdk/$DOTNET_SDK_VERSION/nuGetPackagesArchive.lzma" | sha512sum -c -
 
 ENV \
