@@ -46,6 +46,11 @@ ARG DOTNET_SDK_VERSION
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
+    # Do not show first run text
+    DOTNET_NOLOGO=true `
+    # SDK version
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
