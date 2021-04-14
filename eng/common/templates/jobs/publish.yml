@@ -78,10 +78,10 @@ jobs:
       'internal'
       --git-owner 'dotnet'
       --git-repo 'versions'
-      --git-branch 'master'
+      --git-branch 'main'
       --git-path '$(imageInfoVersionsPath)'
       --azdo-repo 'dotnet-versions'
-      --azdo-branch 'master'
+      --azdo-branch 'main'
       --azdo-path '$(imageInfoVersionsPath)'
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
