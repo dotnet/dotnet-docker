@@ -49,13 +49,14 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
-            variables.AddRange(GetCommonEnvironmentVariables());
-
             string aspnetUrlsValue = imageData.Version.Major < 3 ? "http://+:80" : string.Empty;
-            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", aspnetUrlsValue));
-            variables.Add(new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"));
-            variables.Add(new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"));
+            List<EnvironmentVariableInfo> variables = new()
+            {
+                new EnvironmentVariableInfo("ASPNETCORE_URLS", aspnetUrlsValue),
+                new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
+                new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip")
+            };
+            variables.AddRange(GetCommonEnvironmentVariables());
 
             if (imageData.Version.Major >= 3)
             {
@@ -72,6 +73,12 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 variables.Add(AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper));
                 variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
+            }
+
+            if (imageData.Version.Major >= 6)
+            {
+                variables.Add(new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"));
+                variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));
             }
 
             if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
