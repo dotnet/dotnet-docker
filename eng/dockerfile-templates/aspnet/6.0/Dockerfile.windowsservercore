@@ -4,6 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:6.0-{{OS_VERSION}}
 
 ENV `
+    # ASP.NET Core version
     ASPNET_VERSION={{VARIABLES["aspnet|6.0|build-version"]}} `
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
