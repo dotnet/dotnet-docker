@@ -79,6 +79,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"));
                 variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));
+                variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", string.Empty));
             }
 
             if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))

@@ -1,9 +1,13 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:6.0-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
-# Install ASP.NET Core
-ENV ASPNET_VERSION={{VARIABLES["aspnet|6.0|build-version"]}}
+ENV \
+    # ASP.NET Core version
+    ASPNET_VERSION={{VARIABLES["aspnet|6.0|build-version"]}} \
+    # Set the default console formatter to JSON
+    Logging__Console__FormatterName=Json
 
+# Install ASP.NET Core
 RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-{{ARCH_SHORT}}.tar.gz \
     && aspnetcore_sha512='{{VARIABLES[cat("aspnet|6.0|linux-musl|", ARCH_SHORT, "|sha")]}}' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
