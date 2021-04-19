@@ -108,6 +108,15 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64-slim" },
         };
 
+        private static readonly MonitorImageData[] s_linuxMonitorTestData =
+        {
+            new MonitorImageData { Version = V5_0, RuntimeVersion = V3_1, OS = OS.Alpine313, OSTag = OS.Alpine, Arch = Arch.Amd64 },
+        };
+
+        private static readonly MonitorImageData[] s_windowsMonitorTestData =
+        {
+        };
+
         public static IEnumerable<ProductImageData> GetImageData()
         {
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxTestData : s_windowsTestData)
@@ -128,12 +137,29 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Cast<SampleImageData>();
         }
 
+        public static IEnumerable<MonitorImageData> GetMonitorImageData()
+        {
+            return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxMonitorTestData : s_windowsMonitorTestData)
+                .FilterMonitorImagesByRuntimeVersion()
+                .FilterImagesByArch()
+                .FilterImagesByOs()
+                .Cast<MonitorImageData>();
+        }
+
         public static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<ProductImageData> imageData)
         {
             string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION");
             return imageData
                 .Where(imageData => versionFilterPattern == null
                     || Regex.IsMatch(imageData.VersionString, versionFilterPattern, RegexOptions.IgnoreCase));
+        }
+
+        public static IEnumerable<ImageData> FilterMonitorImagesByRuntimeVersion(this IEnumerable<MonitorImageData> imageData)
+        {
+            string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION");
+            return imageData
+                .Where(imageData => versionFilterPattern == null
+                    || Regex.IsMatch(imageData.RuntimeVersionString, versionFilterPattern, RegexOptions.IgnoreCase));
         }
 
         public static IEnumerable<ImageData> FilterImagesByArch(this IEnumerable<ImageData> imageData)
