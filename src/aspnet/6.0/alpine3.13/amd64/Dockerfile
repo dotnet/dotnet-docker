@@ -2,6 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:6.0-alpine3.13-amd64
 
 ENV \
+    # ASP.NET Core version
     ASPNET_VERSION=6.0.0-preview.4.21213.1 \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
