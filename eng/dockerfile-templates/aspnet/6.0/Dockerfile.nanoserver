@@ -26,6 +26,10 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/do
 FROM $REPO:6.0-{{OS_VERSION}}
 ARG ASPNET_VERSION
 
-ENV ASPNET_VERSION=$ASPNET_VERSION
+ENV `
+    # ASP.NET Core version
+    ASPNET_VERSION=$ASPNET_VERSION `
+    # Set the default console formatter to JSON
+    Logging__Console__FormatterName=Json
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

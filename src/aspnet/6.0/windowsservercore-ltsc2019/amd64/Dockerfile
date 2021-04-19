@@ -3,7 +3,11 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:6.0-windowsservercore-ltsc2019
 
-ENV ASPNET_VERSION=6.0.0-preview.3.21201.13
+ENV `
+    # ASP.NET Core version
+    ASPNET_VERSION=6.0.0-preview.3.21201.13 `
+    # Set the default console formatter to JSON
+    Logging__Console__FormatterName=Json
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
