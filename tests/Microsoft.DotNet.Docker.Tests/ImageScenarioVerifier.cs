@@ -61,7 +61,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
                     // Skip test until end-to-end scenario works for self-contained publishing on Alpine arm32
-                    if ((_imageData.Version.Major == 5 || _imageData.Version.Major == 6) &&
+                    if ((_imageData.Version.Major == 5) &&
                         _imageData.Arch == Arch.Arm && _imageData.OS.Contains("alpine"))
                     {
                         return;

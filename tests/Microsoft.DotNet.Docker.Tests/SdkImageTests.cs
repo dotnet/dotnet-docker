@@ -155,12 +155,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            // Disable this test for 5.0 due to https://github.com/dotnet/aspnetcore/issues/27670
-            if (imageData.Version.Major == 5)
-            {
-                return;
-            }
-
             // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
             {
@@ -181,17 +175,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
             bool hasFileContentDifference = false;
 
-            // Skip file comparisons for 3.1 until https://github.com/dotnet/sdk/issues/11327 is fixed.
-            if (imageData.Version.Major != 3)
+            int fileCount = expectedDotnetFiles.Count();
+            for (int i = 0; i < fileCount; i++)
             {
-                int fileCount = expectedDotnetFiles.Count();
-                for (int i = 0; i < fileCount; i++)
+                if (expectedDotnetFiles.ElementAt(i).CompareTo(actualDotnetFiles.ElementAt(i)) != 0)
                 {
-                    if (expectedDotnetFiles.ElementAt(i).CompareTo(actualDotnetFiles.ElementAt(i)) != 0)
-                    {
-                        hasFileContentDifference = true;
-                        break;
-                    }
+                    hasFileContentDifference = true;
+                    break;
                 }
             }
 
