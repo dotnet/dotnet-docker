@@ -1,13 +1,9 @@
-The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
-
-See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with official releases of [.NET](https://github.com/dotnet/core).
-
 As part of the .NET 5.0 release, all .NET Docker images (including .NET Core 2.1 and 3.1) have transitioned to a new set of Docker repositories described below. Updates will continue to be made to supported tags in the old repository locations for backwards compatibility. Please update any repository references to these new names. For more information see the [.NET 5.0 repository rename announcement](https://github.com/dotnet/dotnet-docker/issues/2375).
 
 # Featured Tags
 
 * `5.0` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:5.0`
+  * `docker pull mcr.microsoft.com/dotnet/monitor:5.0`
 
 # About This Image
 
@@ -32,12 +28,12 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 .NET:
 
 * [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
+* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
+* [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
+* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
+* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
 * [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
-* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
-* [dotnet/nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
-* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 
 .NET Framework:
 
@@ -51,10 +47,10 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0-alpine, 5.0.0-preview.4, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/5.0/alpine/amd64/Dockerfile) | Alpine 3.13
 
-You can retrieve a list of all available tags for dotnet/nightly/monitor at https://mcr.microsoft.com/v2/dotnet/nightly/monitor/tags/list.
+You can retrieve a list of all available tags for dotnet/monitor at https://mcr.microsoft.com/v2/dotnet/monitor/tags/list.
 <!--End of generated tags-->
 
-For tags contained in the old dotnet/core-nightly/monitor repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core-nightly/monitor/tags/list.
+For tags contained in the old dotnet/core/monitor repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core/monitor/tags/list.
 
 # Support
 

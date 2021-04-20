@@ -4830,7 +4830,7 @@
     },
     {
       "id": "monitor",
-      "name": "dotnet/nightly/monitor",
+      "name": "dotnet/monitor",
       "readme": "README.monitor.md",
       "readmeTemplate": "eng/readme-templates/README.md",
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/monitor-tags.yml",
