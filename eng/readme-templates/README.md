@@ -25,6 +25,7 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
 * [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
 * [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
+* [dotnet/monitor](https://hub.docker.com/_/microsoft-dotnet-monitor/): .NET Monitor Tool
 * [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
 ^elif IS_PRODUCT_FAMILY && VARIABLES["branch"] = "nightly"
 :# Featured Repos
@@ -59,6 +60,8 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
     :* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
 }}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "runtime-deps")
     :* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
+}}{{if PARENT_REPO = "dotnet" && SHORT_REPO != "monitor"
+    :* [dotnet/monitor](https://hub.docker.com/_/microsoft-dotnet-monitor/): .NET Monitor Tool
 }}{{if REPO != "dotnet/samples"
     :* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
 }}{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "main"
@@ -82,9 +85,9 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 {{if !IS_PRODUCT_FAMILY:# Full Tag Listing
 <!--End of generated tags-->
 
-For tags contained in the old dotnet/core{{if (PARENT_REPO = "nightly"):-nightly}}/{{SHORT_REPO}} repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core{{if (PARENT_REPO = "nightly"):-nightly}}/{{SHORT_REPO}}/tags/list.
+{{if SHORT_REPO != "monitor":For tags contained in the old dotnet/core{{if (PARENT_REPO = "nightly"):-nightly}}/{{SHORT_REPO}} repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core{{if (PARENT_REPO = "nightly"):-nightly}}/{{SHORT_REPO}}/tags/list.
 
-}}# Support
+}}}}# Support
 
 See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/microsoft-support.md) for the support lifecycle.
 
