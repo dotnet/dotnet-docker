@@ -4827,6 +4827,41 @@
           ]
         }
       ]
+    },
+    {
+      "id": "monitor",
+      "name": "dotnet/monitor",
+      "readme": "README.monitor.md",
+      "readmeTemplate": "eng/readme-templates/README.md",
+      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/monitor-tags.yml",
+      "images": [
+        {
+          "productVersion": "$(monitor|5.0|product-version)",
+          "sharedTags": {
+            "$(monitor|5.0|product-version)-alpine": {},
+            "5.0-alpine": {},
+            "$(monitor|5.0|product-version)": {},
+            "5.0": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "ASPNET_REPO": "$(Repo:aspnet)",
+                "SDK_REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/monitor/5.0/alpine/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/5.0/Dockerfile.alpine",
+              "os": "linux",
+              "osVersion": "alpine3.13",
+              "tags": {
+                "$(monitor|5.0|product-version)-alpine-amd64": {},
+                "5.0-alpine-amd64": {}
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }
