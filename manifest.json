@@ -5020,6 +5020,8 @@
         {
           "productVersion": "$(monitor|5.0|product-version)",
           "sharedTags": {
+            "$(monitor|5.0|product-version)-alpine": {},
+            "5.0-alpine": {},
             "$(monitor|5.0|product-version)": {},
             "5.0": {},
             "latest": {}
@@ -5035,7 +5037,8 @@
               "os": "linux",
               "osVersion": "alpine3.13",
               "tags": {
-                "5.0-alpine": {}
+                "$(monitor|5.0|product-version)-alpine-amd64": {},
+                "5.0-alpine-amd64": {}
               }
             }
           ]

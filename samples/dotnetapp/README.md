@@ -49,7 +49,7 @@ RUN dotnet publish -c release -o /app --no-restore
 FROM mcr.microsoft.com/dotnet/runtime:5.0
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["./dotnetapp"]
+ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```
 
 The `sdk:5.0` and `runtime:5.0` tags are both multi-arch tags that will result in an image that is compatible for the given chip and OS. These simple tags (only contain a version number) are great to get started with Docker because they adapt to your environment. We recommend using an OS-specific tag for the runtime for production applications to ensure that you always get the OS you expect. This level of specification isn't needed for the SDK in most cases.
