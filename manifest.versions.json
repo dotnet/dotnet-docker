@@ -41,10 +41,6 @@
     "monitor|5.0|product-version": "5.0.0-preview.5",
     "monitor|5.0|sha": "76e2793e963aed5fc3282ae60dc7e6d8e44df90c1fe46ddf3b397d2ca93cf79a370bbd4f16cd7b4aff95125eaf1b3ad7a1e355912ae86b57aed71a76eeb2c0d7",
 
-    "monitor|5.0|build-version": "5.0.0-preview.5.21221.3",
-    "monitor|5.0|product-version": "5.0.0-preview.5",
-    "monitor|5.0|sha": "76e2793e963aed5fc3282ae60dc7e6d8e44df90c1fe46ddf3b397d2ca93cf79a370bbd4f16cd7b4aff95125eaf1b3ad7a1e355912ae86b57aed71a76eeb2c0d7",
-
     "lzma|2.1|sha": "4d26867d707dd6b3132c7040db1a610ad1cd1a6f64c2295d7df62d1ba913325e6ab645a4ca719f060e727b8641839e2ec1148a784ded450c95c0ccd2b3d5e260",
 
     "powershell|3.1|build-version": "7.0.6",
