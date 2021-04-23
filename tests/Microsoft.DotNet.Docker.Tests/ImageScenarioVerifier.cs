@@ -85,20 +85,41 @@ namespace Microsoft.DotNet.Docker.Tests
             string programFilePath = Path.Combine(appDir, "Program.cs");
 
             SyntaxTree programTree = CSharpSyntaxTree.ParseText(File.ReadAllText(programFilePath));
+
+            SyntaxNode newRoot;
+
             MethodDeclarationSyntax mainMethod = programTree.GetRoot().DescendantNodes()
                 .OfType<MethodDeclarationSyntax>()
                 .FirstOrDefault(method => method.Identifier.ValueText == "Main");
 
-            StatementSyntax testHttpsConnectivityStatement = SyntaxFactory.ParseStatement(
-                "var task = new System.Net.Http.HttpClient().GetAsync(\"https://www.microsoft.com\");" +
-                "task.Wait();" +
-                "task.Result.EnsureSuccessStatusCode();");
+            if (mainMethod is null)
+            {
+                StatementSyntax testHttpsConnectivityStatement = SyntaxFactory.ParseStatement(
+                    "var task = new System.Net.Http.HttpClient().GetAsync(\"https://www.microsoft.com\");" +
+                    "task.Wait();" +
+                    "task.Result.EnsureSuccessStatusCode();");
 
-            MethodDeclarationSyntax newMainMethod = mainMethod.InsertNodesBefore(
-                mainMethod.Body.ChildNodes().First(),
-                new SyntaxNode[] { testHttpsConnectivityStatement });
+                MethodDeclarationSyntax newMainMethod = mainMethod.InsertNodesBefore(
+                    mainMethod.Body.ChildNodes().First(),
+                    new SyntaxNode[] { testHttpsConnectivityStatement });
 
-            SyntaxNode newRoot = programTree.GetRoot().ReplaceNode(mainMethod, newMainMethod);
+                newRoot = programTree.GetRoot().ReplaceNode(mainMethod, newMainMethod);
+            }
+            else
+            {
+                // Handles project templates that use top-level statements instead of a Main method
+                GlobalStatementSyntax firstGlobalStatement = programTree.GetRoot().DescendantNodes()
+                    .OfType<GlobalStatementSyntax>()
+                    .First();
+                StatementSyntax testHttpsConnectivityStatement = SyntaxFactory.ParseStatement(
+                    "var response = await new System.Net.Http.HttpClient().GetAsync(\"https://www.microsoft.com\");" +
+                    "response.EnsureSuccessStatusCode();");
+
+                newRoot = programTree.GetRoot().InsertNodesBefore(
+                    firstGlobalStatement,
+                    new SyntaxNode[] { SyntaxFactory.GlobalStatement(testHttpsConnectivityStatement) });
+            }
+            
             File.WriteAllText(programFilePath, newRoot.ToFullString());
         }
 
