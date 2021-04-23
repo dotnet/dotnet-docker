@@ -94,19 +94,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (mainMethod is null)
             {
-                StatementSyntax testHttpsConnectivityStatement = SyntaxFactory.ParseStatement(
-                    "var task = new System.Net.Http.HttpClient().GetAsync(\"https://www.microsoft.com\");" +
-                    "task.Wait();" +
-                    "task.Result.EnsureSuccessStatusCode();");
-
-                MethodDeclarationSyntax newMainMethod = mainMethod.InsertNodesBefore(
-                    mainMethod.Body.ChildNodes().First(),
-                    new SyntaxNode[] { testHttpsConnectivityStatement });
-
-                newRoot = programTree.GetRoot().ReplaceNode(mainMethod, newMainMethod);
-            }
-            else
-            {
                 // Handles project templates that use top-level statements instead of a Main method
                 GlobalStatementSyntax firstGlobalStatement = programTree.GetRoot().DescendantNodes()
                     .OfType<GlobalStatementSyntax>()
@@ -118,6 +105,19 @@ namespace Microsoft.DotNet.Docker.Tests
                 newRoot = programTree.GetRoot().InsertNodesBefore(
                     firstGlobalStatement,
                     new SyntaxNode[] { SyntaxFactory.GlobalStatement(testHttpsConnectivityStatement) });
+            }
+            else
+            {
+                StatementSyntax testHttpsConnectivityStatement = SyntaxFactory.ParseStatement(
+                    "var task = new System.Net.Http.HttpClient().GetAsync(\"https://www.microsoft.com\");" +
+                    "task.Wait();" +
+                    "task.Result.EnsureSuccessStatusCode();");
+
+                MethodDeclarationSyntax newMainMethod = mainMethod.InsertNodesBefore(
+                    mainMethod.Body.ChildNodes().First(),
+                    new SyntaxNode[] { testHttpsConnectivityStatement });
+
+                newRoot = programTree.GetRoot().ReplaceNode(mainMethod, newMainMethod);
             }
             
             File.WriteAllText(programFilePath, newRoot.ToFullString());
