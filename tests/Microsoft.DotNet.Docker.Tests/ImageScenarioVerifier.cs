@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -86,7 +87,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             SyntaxTree programTree = CSharpSyntaxTree.ParseText(File.ReadAllText(programFilePath));
 
-            SyntaxNode newRoot;
+            string newContent;
 
             MethodDeclarationSyntax mainMethod = programTree.GetRoot().DescendantNodes()
                 .OfType<MethodDeclarationSyntax>()
@@ -95,16 +96,27 @@ namespace Microsoft.DotNet.Docker.Tests
             if (mainMethod is null)
             {
                 // Handles project templates that use top-level statements instead of a Main method
-                GlobalStatementSyntax firstGlobalStatement = programTree.GetRoot().DescendantNodes()
-                    .OfType<GlobalStatementSyntax>()
-                    .First();
-                StatementSyntax testHttpsConnectivityStatement = SyntaxFactory.ParseStatement(
-                    "var response = await new System.Net.Http.HttpClient().GetAsync(\"https://www.microsoft.com\");" +
-                    "response.EnsureSuccessStatusCode();");
+                IEnumerable<SyntaxNode> nodes = programTree.GetRoot().ChildNodes();
 
-                newRoot = programTree.GetRoot().InsertNodesBefore(
-                    firstGlobalStatement,
-                    new SyntaxNode[] { SyntaxFactory.GlobalStatement(testHttpsConnectivityStatement) });
+                IEnumerable<UsingDirectiveSyntax> usingDirectives = nodes.OfType<UsingDirectiveSyntax>();
+
+                IEnumerable<SyntaxNode> otherNodes = nodes.Except(usingDirectives);
+
+                StringBuilder builder = new();
+                foreach (UsingDirectiveSyntax usingDir in usingDirectives)
+                {
+                    builder.Append(usingDir.ToFullString());
+                }
+
+                builder.AppendLine("var response = await new System.Net.Http.HttpClient().GetAsync(\"https://www.microsoft.com\");");
+                builder.AppendLine("response.EnsureSuccessStatusCode();");
+
+                foreach (SyntaxNode otherNode in otherNodes)
+                {
+                    builder.Append(otherNode.ToFullString());
+                }
+
+                newContent = builder.ToString();
             }
             else
             {
@@ -117,10 +129,11 @@ namespace Microsoft.DotNet.Docker.Tests
                     mainMethod.Body.ChildNodes().First(),
                     new SyntaxNode[] { testHttpsConnectivityStatement });
 
-                newRoot = programTree.GetRoot().ReplaceNode(mainMethod, newMainMethod);
+                SyntaxNode newRoot = programTree.GetRoot().ReplaceNode(mainMethod, newMainMethod);
+                newContent = newRoot.ToFullString();
             }
             
-            File.WriteAllText(programFilePath, newRoot.ToFullString());
+            File.WriteAllText(programFilePath, newContent);
         }
 
         private string BuildTestAppImage(string stageTarget, string contextDir, params string[] customBuildArgs)
