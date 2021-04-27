@@ -34,11 +34,11 @@ _The set of .NET versions that are being released as a unit._
       Servicing release (exclude 5.0/6.0 if separate runtime-deps Dockerfiles were defined):
 
           noCache: true
-          imageBuilder.pathArgs: --path 'src/*/2.1/*' --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*'
+          imageBuilder.pathArgs: --path 'src/*/2.1/*' --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*' --path 'src/monitor/*'
 
       Preview release (exclude 3.1 if separate runtime-deps Dockerfiles were defined):
 
-          imageBuilder.pathArgs: --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*'
+          imageBuilder.pathArgs: --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*' --path 'src/monitor/*'
 1. - [ ] Wait for NuGet packages to be published during release tic-toc
 1. - [ ] Test and publish images - Queue build of [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with variables:
 
@@ -49,12 +49,11 @@ _The set of .NET versions that are being released as a unit._
 
       Servicing release (exclude 5.0/6.0 if separate runtime-deps Dockerfiles were defined):
 
-          imageBuilder.pathArgs: --path 'src/*/2.1/*' --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*'
+          imageBuilder.pathArgs: --path 'src/*/2.1/*' --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*' --path 'src/monitor/*'
 
       Preview release (exclude 3.1 if separate runtime-deps Dockerfiles were defined):
 
-          imageBuilder.pathArgs: --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*'
-1. - [ ] Confirm images have been ingested by MCR
+          imageBuilder.pathArgs: --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*' --path 'src/monitor/*'
 1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet)
 
 ## 2. Sample Images (Not needed for Preview-only release)
@@ -73,5 +72,4 @@ _The set of .NET versions that are being released as a unit._
 1. - [ ] Get PR signoff
 1. - [ ] Merge PR
 1. - [ ] Wait for automatically queued CI build to finish on [dotnet-docker-nightly pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=359) (internal MSFT link)
-1. - [ ] Confirm images have been ingested by MCR
 1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-nightly)

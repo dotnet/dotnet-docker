@@ -11,7 +11,6 @@
 1. - [ ] Queue build of [dotnet-docker-nightly pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=359) (internal MSFT link) with the following parameters:
 
           imageBuilder.pathArgs: --path '*nanoserver*' --path '*windowsservercore*'
-1. - [ ] Confirm images have been ingested by MCR
 1. - [ ] Confirm `Last Modified` field has been updated in Docker Hub for [microsoft-dotnet](https://hub.docker.com/_/microsoft-dotnet)
 1. - [ ] Confirm `Last Modified` field has been updated in Docker Hub for [microsoft-dotnet-nightly](https://hub.docker.com/_/microsoft-dotnet-nightly)
 1. - [ ] Confirm build for [dotnet-docker-samples](https://dev.azure.com/dnceng/internal/_build?definitionId=376) (internal MSFT link) was queued. This will be queued automatically by [dotnet-docker-tools-check-base-image-updates](https://dev.azure.com/dnceng/internal/_build?definitionId=536) when it detects that the product images have been updated (detection runs on a schedule). Alternatively, you can manually queue the samples build.
