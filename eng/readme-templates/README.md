@@ -48,7 +48,7 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 .NET:
 
-{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly"
+{{if !IS_PRODUCT_FAMILY
     :* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
 }}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "sdk")
     :* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
@@ -62,8 +62,6 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
     :* [dotnet/monitor](https://hub.docker.com/_/microsoft-dotnet-monitor/): .NET Monitor Tool
 }}{{if REPO != "dotnet/samples"
     :* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
-}}{{if !IS_PRODUCT_FAMILY || VARIABLES["branch"] = "main"
-    :* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
 }}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "sdk")
     :* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
 }}{{if (PARENT_REPO = "nightly" && SHORT_REPO != "aspnet")

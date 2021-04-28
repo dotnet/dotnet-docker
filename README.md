@@ -59,7 +59,6 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 .NET:
 
 * [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
-* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
 
 .NET Framework:
 
