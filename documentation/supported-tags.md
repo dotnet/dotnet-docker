@@ -70,7 +70,7 @@ _Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/
 1. `latest`
 
     * [dotnet/](https://hub.docker.com/_/microsoft-dotnet) - `latest` will reference the `<Major.Minor.Patch Version>` image for the most recent GA release.
-    * [dotnet/nightly/](https://hub.docker.com/_/microsoft-dotnet-nightly) - `latest` will reference the `<Major.Minor.Patch Version>` image for the most recent release. This implies `latest` will at times reference prerelease versions. In the event when there are multiple active prerelease versions (e.g. 3.1 preview 3 and 5.0 preview 1), `latest` will reference the lower prerelease version (e.g. 3.1 preview 3) until the point when the lower version (e.g. 3.1) is released. Once this happens, `latest` will reference the higher version (e.g. 5.0 preview 1).
+    * [dotnet/nightly/](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) - `latest` will reference the `<Major.Minor.Patch Version>` image for the most recent release. This implies `latest` will at times reference prerelease versions. In the event when there are multiple active prerelease versions (e.g. 3.1 preview 3 and 5.0 preview 1), `latest` will reference the lower prerelease version (e.g. 3.1 preview 3) until the point when the lower version (e.g. 3.1) is released. Once this happens, `latest` will reference the higher version (e.g. 5.0 preview 1).
 
 ## Tag Parts
 
