@@ -15,7 +15,7 @@ There are multiple [.NET Docker repos](https://hub.docker.com/_/microsoft-dotnet
 
 The repos above are commonly used on the command line and in Dockerfiles. There are two more repos that may be useful to you:
 
-* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly) -- A duplicate structure of repos which contain the latest pre-released versions of .NET. (which are not supported in production).
+* [dotnet/nightly](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) -- A duplicate structure of repos which contain the latest pre-released versions of .NET. (which are not supported in production).
 * [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples) -- A set of samples that demonstrate .NET being used in console and web scenarios.
 
 ## Tags that work everywhere

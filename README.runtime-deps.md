@@ -26,8 +26,7 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 * [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
 * [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
 * [dotnet/monitor](https://hub.docker.com/_/microsoft-dotnet-monitor/): .NET Monitor Tool
-* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
-* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
+* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 
 .NET Framework:
 

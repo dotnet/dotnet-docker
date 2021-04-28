@@ -30,8 +30,7 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 * [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
 * [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
-* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
-* [dotnet/nightly](https://hub.docker.com/_/microsoft-dotnet-nightly/): .NET (Preview)
+* [dotnet/nightly/monitor](https://hub.docker.com/_/microsoft-dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
 
 .NET Framework:
 

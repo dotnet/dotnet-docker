@@ -24,7 +24,7 @@ Distro: &lt;name/version&gt;
 1. - [ ] Get PR signoff
 1. - [ ] Merge PR to nightly branch
 1. - [ ] Wait for automatically queued CI build to finish on [dotnet-docker-nightly pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=359) (internal MSFT link)
-1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-nightly)
+1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet)
 
 ## Main Branch Tasks
 
