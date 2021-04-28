@@ -39,7 +39,7 @@ See the [supported tags](supported-tags.md) for the tagging practices and polici
 
 1. Images will be rebuilt within hours of base image changes. For example, suppose a particular version of Alpine is patched. The .NET images based on this version of Alpine will be rebuilt with this new base image within hours of its release.
 
-1. Images will never be deleted from the [official Docker repositories](https://hub.docker.com/_/microsoft-dotnet/). This does not apply to the [nightly repositories](https://hub.docker.com/_/microsoft-dotnet-nightly).
+1. Images will never be deleted from the [official Docker repositories](https://hub.docker.com/_/microsoft-dotnet/). This does not apply to the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md).
 
 1. The [Dockerfiles](https://github.com/dotnet/dotnet-docker/search?q=filename%3ADockerfile) used to produce all of the images will be publicly available. Customers will be able to take the Dockerfiles and build them to produce their own equivalent images. No special build steps or permissions should be needed to build the Dockerfiles.
 

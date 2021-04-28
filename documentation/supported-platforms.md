@@ -14,7 +14,7 @@ Each distribution (distro) has a unique approach to releasing, schedule, and end
 - Debian — support the latest *stable* version at the time a `major.minor` version of .NET is released. As new *stable* versions are released, support is added to the latest .NET version and latest LTS (if they differ).
 - Ubuntu — support the latest *LTS* version at the time a `major.minor` version of .NET is released. As new *LTS* versions are released, support is added to the latest .NET version and latest LTS (if they differ).
 
-Pre-release versions of the supported distros will be made available within the [nightly repositories](https://hub.docker.com/_/microsoft-dotnet-nightly) based on the availability of pre-release OS base images.
+Pre-release versions of the supported distros will be made available within the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) based on the availability of pre-release OS base images.
 
 ### Windows
 
