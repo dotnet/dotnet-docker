@@ -16,7 +16,7 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
   * `docker pull {{FULL_REPO}}:5.0`
 * `3.1` (LTS)
   * `docker pull {{FULL_REPO}}:3.1`
-}}}}{{if IS_PRODUCT_FAMILY
+}}}}{{if IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"
 :# Featured Repos
 
 * [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
@@ -25,6 +25,14 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
 * [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/monitor](https://hub.docker.com/_/microsoft-dotnet-monitor/): .NET Monitor Tool
 * [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
+^elif IS_PRODUCT_FAMILY && VARIABLES["branch"] = "nightly"
+:# Featured Repos
+
+* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
+* [dotnet/nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
+* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
+* [dotnet/nightly/monitor](https://hub.docker.com/_/microsoft-dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
 }}
 # About {{if IS_PRODUCT_FAMILY:.NET^else:This Image}}
 
@@ -40,7 +48,7 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 .NET:
 
-{{if !IS_PRODUCT_FAMILY
+{{if (!IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly")
     :* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
 }}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "sdk")
     :* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
@@ -52,15 +60,17 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
     :* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 }}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "monitor")
     :* [dotnet/monitor](https://hub.docker.com/_/microsoft-dotnet-monitor/): .NET Monitor Tool
-}}{{if IS_PRODUCT_FAMILY || ((PARENT_REPO = "nightly" && SHORT_REPO != "sdk") || (PARENT_REPO = "dotnet" && SHORT_REPO = "sdk"))
+}}{{if ((!IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly") && SHORT_REPO != "samples")
+    :* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
+}}{{if ((PARENT_REPO = "nightly" && SHORT_REPO != "sdk") || (PARENT_REPO = "dotnet" && SHORT_REPO = "sdk") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
-}}{{if IS_PRODUCT_FAMILY || ((PARENT_REPO = "nightly" && SHORT_REPO != "aspnet") || (PARENT_REPO = "dotnet" && SHORT_REPO = "aspnet"))
+}}{{if ((PARENT_REPO = "nightly" && SHORT_REPO != "aspnet") || (PARENT_REPO = "dotnet" && SHORT_REPO = "aspnet") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
-}}{{if IS_PRODUCT_FAMILY || ((PARENT_REPO = "nightly" && SHORT_REPO != "runtime") || (PARENT_REPO = "dotnet" && SHORT_REPO = "runtime"))
+}}{{if ((PARENT_REPO = "nightly" && SHORT_REPO != "runtime") || (PARENT_REPO = "dotnet" && SHORT_REPO = "runtime") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
-}}{{if IS_PRODUCT_FAMILY || ((PARENT_REPO = "nightly" && SHORT_REPO != "runtime-deps") || (PARENT_REPO = "dotnet" && SHORT_REPO = "runtime-deps"))
+}}{{if ((PARENT_REPO = "nightly" && SHORT_REPO != "runtime-deps") || (PARENT_REPO = "dotnet" && SHORT_REPO = "runtime-deps") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
-}}{{if IS_PRODUCT_FAMILY || ((PARENT_REPO = "nightly" && SHORT_REPO != "monitor") || (PARENT_REPO = "dotnet" && SHORT_REPO = "monitor"))
+}}{{if ((PARENT_REPO = "nightly" && SHORT_REPO != "monitor") || (PARENT_REPO = "dotnet" && SHORT_REPO = "monitor") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/monitor](https://hub.docker.com/_/microsoft-dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
 }}
 .NET Framework:
