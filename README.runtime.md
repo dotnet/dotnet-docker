@@ -34,6 +34,7 @@ docker run --rm mcr.microsoft.com/dotnet/samples
 * [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/monitor](https://hub.docker.com/_/microsoft-dotnet-monitor/): .NET Monitor Tool
+* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
 * [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
 
 .NET Framework:
