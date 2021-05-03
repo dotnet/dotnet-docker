@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=6.0.100-preview.4.21228.18 \
+    DOTNET_SDK_VERSION=6.0.100-preview.4.21252.1 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Unset Logging__Console__FormatterName from aspnet base image
@@ -28,7 +28,7 @@ RUN apt-get update \
 
 # Install .NET SDK
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
-    && dotnet_sha512='29040c91be9af164ebc92d0a95ea881a339131f5a320916acc20adef4c86d86802ba95373f83645fdf440dd5cfd4dbe6f9c29794c2dd99a1148104b1735c5bbc' \
+    && dotnet_sha512='bd81bea691fbcce45975702ae9d6679d90b2650300004c4392c3f8eb09d26bba03ee4aa62483a4e7aa485220d0dea04ddd16297f38b36e947d5e5131ebb354c1' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
