@@ -167,6 +167,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            // Disable test on CBL-Mariner for 6.0 due to churn in optional workloads causing differences in tarball vs rpm
+            if (imageData.Version.Major == 6 && imageData.OS.Contains("cbl-mariner"))
+            {
+                return;
+            }
+
             if (!(imageData.Version.Major >= 5 ||
                 (imageData.Version.Major >= 3 &&
                     (imageData.SdkOS.StartsWith(OS.AlpinePrefix) || !DockerHelper.IsLinuxContainerModeEnabled))))

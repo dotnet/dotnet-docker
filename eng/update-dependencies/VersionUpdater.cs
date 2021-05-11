@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+#nullable enable
 namespace Dotnet.Docker
 {
     /// <summary>
@@ -50,7 +51,7 @@ namespace Dotnet.Docker
             };
         }
 
-        private string GetBuildVersion(IDependencyInfo productInfo) => productInfo.SimpleVersion;
+        private static string GetBuildVersion(IDependencyInfo productInfo) => productInfo.SimpleVersion ?? string.Empty;
 
         public static string GetBuildVersion(string productName, string dockerfileVersion, string variables)
         {
@@ -71,8 +72,13 @@ namespace Dotnet.Docker
             return match.Groups[s_versionGroupName].Value;
         }
 
-        private string GetProductVersion(IDependencyInfo productInfo)
+        private static string GetProductVersion(IDependencyInfo productInfo)
         {
+            if (productInfo.SimpleVersion is null)
+            {
+                return string.Empty;
+            }
+
             // Derive the Docker tag version from the product build version.
             // 5.0.0-preview.2.19530.9 => 5.0.0-preview.2
             string versionRegexPattern = "[\\d]+.[\\d]+.[\\d]+(-[\\w]+(.[\\d]+)?)?";
@@ -98,3 +104,4 @@ namespace Dotnet.Docker
             $"{productName}|{dockerfileVersion}|{versionType.ToString().ToLowerInvariant()}-version";
     }
 }
+#nullable disable
