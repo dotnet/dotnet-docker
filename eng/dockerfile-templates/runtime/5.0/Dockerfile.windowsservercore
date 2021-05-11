@@ -3,7 +3,7 @@
 FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64
 
 # Apply latest patch
-RUN curl -fSLo patch.msu http://download.windowsupdate.com/d/msdownload/update/software/updt/2021/02/windows10.0-kb4601558-x64_2abd844aa457ecf0cf668fd8c449a1bc3b4da4b4.msu `
+RUN curl -fSLo patch.msu http://download.windowsupdate.com/c/msdownload/update/software/secu/2021/05/windows10.0-kb5003171-x64_30162051d5376b7a19c4c25157347c522e804bbb.msu `
     && mkdir patch `
     && expand patch.msu patch -F:* `
     && del /F /Q patch.msu `
