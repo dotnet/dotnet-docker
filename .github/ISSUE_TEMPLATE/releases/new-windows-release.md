@@ -23,7 +23,7 @@ Windows version: &lt;version&gt;
 1. - [ ] Merge PR as part of the main branch [release process](dotnet-release.md) for the next .NET release
 1. - [ ] Wait for automatically queued CI build to finish on [dotnet-docker-nightly pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=359) (internal MSFT link)
 1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet)
-1. - [ ] Create an announcement (example: [Nano Server, version 1909](https://github.com/dotnet/dotnet-docker/issues/1460))
+1. - [ ] Create an announcement (example: [Nano Server, version 20H2](https://github.com/dotnet/dotnet-docker/issues/2322))
 1. - [ ] Update the samples to reference the new Windows version:
       - [ ] [Nano Server sample Dockerfiles](https://github.com/dotnet/dotnet-docker/tree/main/samples)
       - [ ] [manifest.samples.json](https://github.com/dotnet/dotnet-docker/blob/main/manifest.samples.json)
