@@ -110,7 +110,7 @@ See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/micr
 
 # Image Update Policy
 
-* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:1909, buildpack-deps:bionic-scm, etc.).
+* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:20H2, buildpack-deps:bionic-scm, etc.).
 * We publish .NET images as part of releasing new versions of .NET including major/minor and servicing.
 
 # Feedback

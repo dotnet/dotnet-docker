@@ -135,18 +135,6 @@ Tag | Dockerfile
 ---------| ---------------
 6.0.0-preview.3-nanoserver-2004, 6.0-nanoserver-2004, 6.0.0-preview.3, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-2004/amd64/Dockerfile)
 
-## Nano Server, version 1909 amd64 Tags
-Tag | Dockerfile
----------| ---------------
-5.0.6-nanoserver-1909, 5.0-nanoserver-1909, 5.0.6, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/nanoserver-1909/amd64/Dockerfile)
-3.1.15-nanoserver-1909, 3.1-nanoserver-1909, 3.1.15, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/nanoserver-1909/amd64/Dockerfile)
-2.1.28-nanoserver-1909, 2.1-nanoserver-1909, 2.1.28, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/2.1/nanoserver-1909/amd64/Dockerfile)
-
-##### .NET 6.0 Preview Tags
-Tag | Dockerfile
----------| ---------------
-6.0.0-preview.3-nanoserver-1909, 6.0-nanoserver-1909, 6.0.0-preview.3, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-1909/amd64/Dockerfile)
-
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
@@ -180,7 +168,7 @@ See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/micr
 
 # Image Update Policy
 
-* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:1909, buildpack-deps:bionic-scm, etc.).
+* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:20H2, buildpack-deps:bionic-scm, etc.).
 * We publish .NET images as part of releasing new versions of .NET including major/minor and servicing.
 
 # Feedback
