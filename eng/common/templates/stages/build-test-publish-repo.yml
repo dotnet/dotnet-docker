@@ -87,11 +87,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows1809_amd64
-      pool:
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: Docker-1809-Public
-        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: Docker-1809-Internal
+      pool: Docker-1809-${{ variables['System.TeamProject'] }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows1809Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
@@ -100,11 +96,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows2004_amd64
-      pool:
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: Docker-2004-Public
-        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: Docker-2004-Internal
+      pool: Docker-2004-${{ variables['System.TeamProject'] }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows2004Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
@@ -113,11 +105,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows20H2_amd64
-      pool:
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: Docker-20H2-Public
-        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: Docker-20H2-Internal
+      pool: Docker-20H2-${{ variables['System.TeamProject'] }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows20H2Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
@@ -126,11 +114,7 @@ stages:
   - template: ../jobs/build-images.yml
     parameters:
       name: WindowsLtsc2016_amd64
-      pool:
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: Docker-2016-Public
-        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: Docker-2016-Internal
+      pool: Docker-2016-${{ variables['System.TeamProject'] }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2016Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
@@ -198,29 +182,25 @@ stages:
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows1809_amd64
-        pool:
-          name: Docker-1809-Internal
+        pool: Docker-1809-${{ variables['System.TeamProject'] }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows1809Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows2004_amd64
-        pool:
-          name: Docker-2004-Internal
+        pool: Docker-2004-${{ variables['System.TeamProject'] }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows2004Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows20H2_amd64
-        pool:
-          name: Docker-20H2-Internal
+        pool: Docker-20H2-${{ variables['System.TeamProject'] }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows20H2Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: WindowsLtsc2016_amd64
-        pool:
-          name: Docker-2016-Internal
+        pool: Docker-2016-${{ variables['System.TeamProject'] }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2016Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
 
