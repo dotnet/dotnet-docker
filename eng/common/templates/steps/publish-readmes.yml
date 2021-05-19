@@ -3,6 +3,16 @@ parameters:
   condition: true
 
 steps:
+- powershell: >
+    if ($env:BUILD_SOURCEBRANCHNAME -eq "nightly" -or $env:SYSTEM_PULLREQUEST_TARGETBRANCH -eq "nightly") {
+        $additionalPublishMcrDocsArgs = "--exclude-product-family"
+    }
+    else {
+        $additionalPublishMcrDocsArgs = ""
+    }
+
+    echo "##vso[task.setvariable variable=additionalPublishMcrDocsArgs]$additionalPublishMcrDocsArgs"
+  displayName: Set publishMcrDocs Args
 - script: >
     $(runImageBuilderCmd) publishMcrDocs
     --manifest '$(manifest)'
@@ -14,6 +24,7 @@ steps:
     ${{ parameters.dryRunArg }}
     $(manifestVariables)
     $(imageBuilder.queueArgs)
+    $(additionalPublishMcrDocsArgs)
   name: PublishReadmes
   displayName: Publish Readmes
   condition: ${{ parameters.condition }}
