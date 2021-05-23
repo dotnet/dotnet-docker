@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using static System.Console;
 
@@ -45,12 +46,14 @@ else
 
 WriteLine();
 
+const long Mebi = 1024 * 1024;
+const long Gibi = Mebi * 1024;
+GCMemoryInfo gcInfo = GC.GetGCMemoryInfo();
+
 // Environment information
 WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
 WriteLine($"{nameof(Environment.ProcessorCount)}: {Environment.ProcessorCount}");
-
-const long Mebi = 1024 * 1024;
-const long Gibi = Mebi * 1024;
+WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {GetInBestUnit(gcInfo.TotalAvailableMemoryBytes)}");
 
 // cgroup information
 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && 
@@ -73,25 +76,25 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) &&
         // above this size is unlikely to be an intentionally constrained cgroup
         limit < 10 * Gibi)
     {
-        WriteLine($"usage_in_bytes: {usageBytes} {GetInBiggerUnit(usage)}");
-        WriteLine($"limit_in_bytes: {limitBytes} {GetInBiggerUnit(limit)}");
+        WriteLine($"usage_in_bytes: {usageBytes} {GetInBestUnit(usage)}");
+        WriteLine($"limit_in_bytes: {limitBytes} {GetInBestUnit(limit)}");
     }
 }
 
-string GetInBiggerUnit(long size)
+string GetInBestUnit(long size)
 {
     if (size < Mebi)
     {
-        return string.Empty;
+        return $"{size} bytes";
     }
     else if (size < Gibi)
     {
-        long mebibytes = size / Mebi;
-        return $"({mebibytes} MiB)";
+        decimal mebibytes = Decimal.Divide(size, Mebi);
+        return $"{mebibytes:F} MiB";
     }
     else
     {
-        long gibibytes = size / Gibi;
-        return $"({gibibytes} GiB)";
+        decimal gibibytes = Decimal.Divide(size, Gibi);
+        return $"{gibibytes:F} GiB";
     }
 }
