@@ -23,8 +23,8 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
-            // Skip test for Arm32 Alpine 3.13 due to https://github.com/dotnet/runtime/issues/47423
-            if (imageData.OS == "alpine3.13" && imageData.Arch == Arch.Arm)
+            // Skip test for .NET 5 on Arm32 Alpine 3.13 due to https://github.com/dotnet/runtime/issues/47423
+            if (imageData.Version.Major == 5 && imageData.OS == "alpine3.13" && imageData.Arch == Arch.Arm)
             {
                 return;
             }
@@ -48,6 +48,11 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.Version.Major >= 5)
             {
                 variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
+            }
+
+            if (imageData.Version.Major >= 6)
+            {
+                variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", "Json"));
             }
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);

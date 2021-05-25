@@ -49,13 +49,14 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
-            variables.AddRange(GetCommonEnvironmentVariables());
-
             string aspnetUrlsValue = imageData.Version.Major < 3 ? "http://+:80" : string.Empty;
-            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", aspnetUrlsValue));
-            variables.Add(new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"));
-            variables.Add(new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"));
+            List<EnvironmentVariableInfo> variables = new()
+            {
+                new EnvironmentVariableInfo("ASPNETCORE_URLS", aspnetUrlsValue),
+                new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
+                new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip")
+            };
+            variables.AddRange(GetCommonEnvironmentVariables());
 
             if (imageData.Version.Major >= 3)
             {
@@ -72,6 +73,13 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 variables.Add(AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper));
                 variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
+            }
+
+            if (imageData.Version.Major >= 6)
+            {
+                variables.Add(new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"));
+                variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));
+                variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", string.Empty));
             }
 
             if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
@@ -147,12 +155,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            // Disable this test for 5.0 due to https://github.com/dotnet/aspnetcore/issues/27670
-            if (imageData.Version.Major == 5)
-            {
-                return;
-            }
-
             // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
             {
@@ -173,17 +175,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
             bool hasFileContentDifference = false;
 
-            // Skip file comparisons for 3.1 until https://github.com/dotnet/sdk/issues/11327 is fixed.
-            if (imageData.Version.Major != 3)
+            int fileCount = expectedDotnetFiles.Count();
+            for (int i = 0; i < fileCount; i++)
             {
-                int fileCount = expectedDotnetFiles.Count();
-                for (int i = 0; i < fileCount; i++)
+                if (expectedDotnetFiles.ElementAt(i).CompareTo(actualDotnetFiles.ElementAt(i)) != 0)
                 {
-                    if (expectedDotnetFiles.ElementAt(i).CompareTo(actualDotnetFiles.ElementAt(i)) != 0)
-                    {
-                        hasFileContentDifference = true;
-                        break;
-                    }
+                    hasFileContentDifference = true;
+                    break;
                 }
             }
 

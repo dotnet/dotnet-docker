@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-ARG DOTNET_SDK_VERSION=6.0.100-preview.3.21202.5
+ARG DOTNET_SDK_VERSION=6.0.100-preview.4.21255.9
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:2004-amd64 AS installer
@@ -12,7 +12,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 RUN `
     # Retrieve .NET SDK
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-    $dotnet_sha512 = '38fc6d76ef0d2331fcc32319be17edf4887443ad7504131041a12026340f7418227b85aa597d7ecb6c4a57cfd928004c6511455cedc6dcee42284793f66146cf'; `
+    $dotnet_sha512 = '0dce469c5b6d4a83555e966556c5b8c12f6598f14a5221c5757f77e874f39834d7342fbb0ec928eb659ab8685b944b6845e17495df4a5a2eca83b9986f716c27'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -22,9 +22,9 @@ RUN `
     Remove-Item -Force dotnet.zip; `
     `
     # Install PowerShell global tool
-    $powershell_version = '7.2.0-preview.3'; `
+    $powershell_version = '7.2.0-preview.5'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-    $powershell_sha512 = 'edf0073f7bea811b68cc54d0325990a4b28c583c11cac92914f9bd44bf7dead733f5833006d55e19d65d23864e90919826c86f061578889b30521fc5d70fd685'; `
+    $powershell_sha512 = '76fec0e3160bb9d19531cb95f7bd1fce07074f990bc2e2e35fe67b00460e034a24079d52aef0353070cecb8261721f1bb314bdd8919f52f788e6c48cadedbecd'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -46,9 +46,16 @@ ARG DOTNET_SDK_VERSION
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
+    # Do not show first run text
+    DOTNET_NOLOGO=true `
+    # SDK version
     DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
+    # Unset Logging__Console__FormatterName from aspnet base image
+    Logging__Console__FormatterName= `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip `
     # PowerShell telemetry for docker image usage

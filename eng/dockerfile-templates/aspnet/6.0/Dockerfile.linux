@@ -17,6 +17,10 @@ RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/a
 FROM $REPO:6.0-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 ARG ASPNET_VERSION
 
-ENV ASPNET_VERSION=$ASPNET_VERSION
+ENV \
+    # ASP.NET Core version
+    ASPNET_VERSION=$ASPNET_VERSION \
+    # Set the default console formatter to JSON
+    Logging__Console__FormatterName=Json
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]
