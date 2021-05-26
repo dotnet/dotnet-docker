@@ -161,6 +161,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            // Disable test on Windows due to PowerShell crash (https://github.com/dotnet/runtime/issues/53298)
+            if (imageData.Version.Major == 6 && !DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                return;
+            }
+
             if (!(imageData.Version.Major >= 5 ||
                 (imageData.Version.Major >= 3 &&
                     (imageData.SdkOS.StartsWith(OS.AlpinePrefix) || !DockerHelper.IsLinuxContainerModeEnabled))))
