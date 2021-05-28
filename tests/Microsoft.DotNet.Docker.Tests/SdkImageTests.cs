@@ -220,6 +220,19 @@ namespace Microsoft.DotNet.Docker.Tests
             Assert.False(hasFileContentDifference, "There are file content differences. Check the log output.");
         }
 
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyPackageInstallation(ProductImageData imageData)
+        {
+            if (!(imageData.OS.Contains("cbl-mariner") && imageData.Version.Major >= 6))
+            {
+                return;
+            }
+
+            IEnumerable<string> installedPackages = GetInstalledRpmPackages(imageData);
+            VerifyExpectedPackagesInstalled(imageData, installedPackages);
+        }
+
         private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
         {
             string dotnetPath;
@@ -339,6 +352,22 @@ namespace Microsoft.DotNet.Docker.Tests
             );
 
             Assert.Equal(output, bool.TrueString, ignoreCase: true);
+        }
+
+        private static void VerifyExpectedPackagesInstalled(ProductImageData imageData, IEnumerable<string> installedPackages)
+        {
+            AspnetImageTests.VerifyExpectedPackagesInstalled(imageData, installedPackages);
+            VerifyExpectedInstalledRpmPackages(
+                imageData,
+                new string[]
+                {
+                    $"dotnet-sdk-{imageData.VersionString}",
+                    $"dotnet-targeting-pack-{imageData.VersionString}",
+                    $"aspnetcore-targeting-pack-{imageData.VersionString}",
+                    $"dotnet-apphost-pack-{imageData.VersionString}",
+                    $"netstandard-targeting-pack-2.1"
+                },
+                installedPackages);
         }
 
         private class SdkImageDataEqualityComparer : IEqualityComparer<ProductImageData>

@@ -26,6 +26,7 @@ namespace Dotnet.Docker
         private const string ShaVariableGroupName = "shaVariable";
         private const string ShaValueGroupName = "shaValue";
         private const string NetStandard21TargetingPackRpm = "netstandard-targeting-pack-2.1.0-rpm";
+        private const string DotnetBaseUrl = "https://dotnetcli.azureedge.net/dotnet";
 
         private static readonly Dictionary<string, string> s_shaCache = new();
         private static readonly Dictionary<string, Dictionary<string, string>> s_releaseChecksumCache = new();
@@ -38,34 +39,34 @@ namespace Dotnet.Docker
         private static readonly Dictionary<string, string[]> s_urls = new() {
             {"powershell", new string[] { "https://pwshtool.blob.core.windows.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" }},
 
-            {"monitor", new string[] { "https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor$CHANNEL_NAME/dotnet-monitor.$VERSION_FILE.nupkg" }},
+            {"monitor", new string[] { $"{DotnetBaseUrl}/diagnostics/monitor$CHANNEL_NAME/dotnet-monitor.$VERSION_FILE.nupkg" }},
 
-            {"runtime", new string[] { "https://dotnetcli.azureedge.net/dotnet/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" }},
-            {"runtime-rpm", new string[] { "https://dotnetcli.azureedge.net/dotnet/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE-$ARCH.rpm" }},
-            {"host-rpm", new string[] { "https://dotnetcli.azureedge.net/dotnet/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-$ARCH.rpm" }},
-            {"hostfxr-rpm", new string[] { "https://dotnetcli.azureedge.net/dotnet/Runtime/$VERSION_DIR/dotnet-hostfxr-$VERSION_FILE-$ARCH.rpm" }},
+            {"runtime", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" }},
+            {"runtime-rpm", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE-$ARCH.rpm" }},
+            {"host-rpm", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-$ARCH.rpm" }},
+            {"hostfxr-rpm", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-hostfxr-$VERSION_FILE-$ARCH.rpm" }},
             {"targeting-pack-rpm", new string[]
                 {
-                    "https://dotnetcli.azureedge.net/dotnet/Runtime/$VERSION_DIR/dotnet-targeting-pack-$VERSION_FILE-$ARCH.rpm",
-                    "https://dotnetcli.azureedge.net/dotnet/Runtime/$DF_VERSION.0/dotnet-targeting-pack-$DF_VERSION.0-$ARCH.rpm"
+                    $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-targeting-pack-$VERSION_FILE-$ARCH.rpm",
+                    $"{DotnetBaseUrl}/Runtime/$DF_VERSION.0/dotnet-targeting-pack-$DF_VERSION.0-$ARCH.rpm"
                 }
             },
-            {"apphost-pack-rpm", new string[] { "https://dotnetcli.azureedge.net/dotnet/Runtime/$VERSION_DIR/dotnet-apphost-pack-$VERSION_FILE-$ARCH.rpm" }},
-            {NetStandard21TargetingPackRpm, new string[] { "https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-$ARCH.rpm" }},
-            {"runtime-deps-cm.1-rpm", new string[] { "https://dotnetcli.azureedge.net/dotnet/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.1-$ARCH.rpm" }},
+            {"apphost-pack-rpm", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-apphost-pack-$VERSION_FILE-$ARCH.rpm" }},
+            {NetStandard21TargetingPackRpm, new string[] { $"{DotnetBaseUrl}/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-$ARCH.rpm" }},
+            {"runtime-deps-cm.1-rpm", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.1-$ARCH.rpm" }},
 
-            {"aspnet", new string[] { "https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" }},
-            {"aspnet-rpm", new string[] { "https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE-$ARCH.rpm" }},
+            {"aspnet", new string[] { $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" }},
+            {"aspnet-rpm", new string[] { $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE-$ARCH.rpm" }},
             {"aspnet-targeting-pack-rpm", new string[]
                 {
-                    "https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-targeting-pack-$VERSION_FILE.rpm",
-                    "https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$DF_VERSION.0/aspnetcore-targeting-pack-$DF_VERSION.0.rpm"
+                    $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-targeting-pack-$VERSION_FILE.rpm",
+                    $"{DotnetBaseUrl}/aspnetcore/Runtime/$DF_VERSION.0/aspnetcore-targeting-pack-$DF_VERSION.0.rpm"
                 }
             },
 
-            {"sdk", new string[] { "https://dotnetcli.azureedge.net/dotnet/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" }},
-            {"sdk-rpm", new string[] { "https://dotnetcli.azureedge.net/dotnet/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE-$ARCH.rpm" }},
-            {"lzma", new string[] { "https://dotnetcli.azureedge.net/dotnet/Sdk/$VERSION_DIR/nuGetPackagesArchive.lzma" }}
+            {"sdk", new string[] { $"{DotnetBaseUrl}/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" }},
+            {"sdk-rpm", new string[] { $"{DotnetBaseUrl}/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE-$ARCH.rpm" }},
+            {"lzma", new string[] { $"{DotnetBaseUrl}/Sdk/$VERSION_DIR/nuGetPackagesArchive.lzma" }}
         };
 
         private static HttpClient s_httpClient { get; } = new();

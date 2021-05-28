@@ -24,8 +24,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN DOTNET_SDK_VERSION=6.0.100-preview.5.21277.1 \
-    && curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-x64.rpm \
+RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-x64.rpm \
     && dotnet_sha512='5681a4015e724e8202149f2f112e407960acf3854761e5e7b35ad23b38f9ed2489e31750d3bdc50a8c82789c311f99e2140385a41c22383fd40dab1f2586c2b8' \
     && echo "$dotnet_sha512 dotnet.rpm" | sha512sum -c - \
     \

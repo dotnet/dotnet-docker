@@ -47,10 +47,34 @@ namespace Microsoft.DotNet.Docker.Tests
             base.VerifyCommonEnvironmentVariables(imageData, variables);
         }
 
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyPackageInstallation(ProductImageData imageData)
+        {
+            if (!(imageData.OS.Contains("cbl-mariner") && imageData.Version.Major >= 6))
+            {
+                return;
+            }
+
+            IEnumerable<string> installedPackages = GetInstalledRpmPackages(imageData);
+            VerifyExpectedPackagesInstalled(imageData, installedPackages);
+        }
+
         public static EnvironmentVariableInfo GetRuntimeVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
         {
             string version = imageData.GetProductVersion(DotNetImageType.Runtime, dockerHelper);
             return new EnvironmentVariableInfo("DOTNET_VERSION", version);
         }
+
+        internal static void VerifyExpectedPackagesInstalled(ProductImageData imageData, IEnumerable<string> installedPackages) =>
+            VerifyExpectedInstalledRpmPackages(
+                imageData,
+                new string[]
+                {
+                    "dotnet-host",
+                    $"dotnet-hostfxr-{imageData.VersionString}",
+                    $"dotnet-runtime-{imageData.VersionString}",
+                },
+                installedPackages);
     }
 }
