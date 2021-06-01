@@ -5,21 +5,19 @@ FROM $REPO:6.0-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 ENV DOTNET_VERSION={{VARIABLES["runtime|6.0|build-version"]}}
 
 RUN curl -SL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
-    && dotnet_sha512='{{VARIABLES[cat("host-rpm|6.0|linux|", ARCH_SHORT, "|sha")]}}' \
-    && echo "$dotnet_sha512 dotnet-host.rpm" | sha512sum -c - \
+    && dotnet_sha512='{{VARIABLES[cat("runtime-host-rpm|6.0|linux|", ARCH_SHORT, "|sha")]}}' \
+    && echo "$dotnet_sha512  dotnet-host.rpm" | sha512sum -c - \
     \
     && curl -SL --output dotnet-hostfxr.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-hostfxr-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
-    && dotnet_sha512='{{VARIABLES[cat("hostfxr-rpm|6.0|linux|", ARCH_SHORT, "|sha")]}}' \
-    && echo "$dotnet_sha512 dotnet-hostfxr.rpm" | sha512sum -c - \
-    \
-    && curl -SL --output dotnet-runtime-deps.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-deps-$DOTNET_VERSION-cm.1-{{ARCH_SHORT}}.rpm \
-    && dotnet_sha512='{{VARIABLES[cat("runtime-deps-cm.1-rpm|6.0|linux|", ARCH_SHORT, "|sha")]}}' \
-    && echo "$dotnet_sha512 dotnet-runtime-deps.rpm" | sha512sum -c - \
+    && dotnet_sha512='{{VARIABLES[cat("runtime-hostfxr-rpm|6.0|linux|", ARCH_SHORT, "|sha")]}}' \
+    && echo "$dotnet_sha512  dotnet-hostfxr.rpm" | sha512sum -c - \
     \
     && curl -SL --output dotnet-runtime.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-rpm|6.0|linux|", ARCH_SHORT, "|sha")]}}' \
-    && echo "$dotnet_sha512 dotnet-runtime.rpm" | sha512sum -c - \
+    && echo "$dotnet_sha512  dotnet-runtime.rpm" | sha512sum -c - \
     \
-    && rpm --install dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime-deps.rpm dotnet-runtime.rpm \
-    && rm dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime-deps.rpm dotnet-runtime.rpm \
+    && rpm --install dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
+    && rm dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
+    \
+    ## Manually configure symbol link due to https://github.com/dotnet/runtime/issues/53543
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet

@@ -54,7 +54,7 @@ namespace Microsoft.DotNet.Docker.Tests
             Assert.Empty(output);
         }
 
-        protected IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)
+        private IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)
         {
             // Get list of installed RPM packages
             string command = $"bash -c \"rpm -qa | sort\"";
@@ -67,8 +67,8 @@ namespace Microsoft.DotNet.Docker.Tests
             return installedPackages.Split(Environment.NewLine);
         }
 
-        protected static void VerifyExpectedInstalledRpmPackages(
-            ProductImageData imageData, IEnumerable<string> expectedPackages, IEnumerable<string> installedPackages)
+        protected void VerifyExpectedInstalledRpmPackages(
+            ProductImageData imageData, IEnumerable<string> expectedPackages)
         {
             foreach (string expectedPackage in expectedPackages)
             {
@@ -83,7 +83,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     prefix = expectedPackage;
                 }
 
-                bool installed = installedPackages.Any(pkg => pkg.StartsWith(prefix));
+                bool installed = GetInstalledRpmPackages(imageData).Any(pkg => pkg.StartsWith(prefix));
                 Assert.True(installed, $"Package '{expectedPackage}' is not installed.");
             }
         }

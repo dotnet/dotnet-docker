@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -67,8 +68,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            IEnumerable<string> installedPackages = GetInstalledRpmPackages(imageData);
-            VerifyExpectedPackagesInstalled(imageData, installedPackages);
+            VerifyExpectedInstalledRpmPackages(
+                imageData,
+                GetExpectedRpmPackagesInstalled(imageData)
+                    .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
         }
 
         public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
@@ -92,16 +95,10 @@ namespace Microsoft.DotNet.Docker.Tests
             return null;
         }
 
-        internal static void VerifyExpectedPackagesInstalled(ProductImageData imageData, IEnumerable<string> installedPackages)
-        {
-            RuntimeImageTests.VerifyExpectedPackagesInstalled(imageData, installedPackages);
-            VerifyExpectedInstalledRpmPackages(
-                imageData,
-                new string[]
+        internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>
+            new string[]
                 {
                     $"aspnetcore-runtime-{imageData.VersionString}"
-                },
-                installedPackages);
-        }
+                };
     }
 }

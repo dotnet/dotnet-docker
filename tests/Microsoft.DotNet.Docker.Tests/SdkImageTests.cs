@@ -167,7 +167,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            // Disable test on CBL-Mariner for 6.0 due to churn in optional workloads causing differences in tarball vs rpm
+            // Skip test on CBL-Mariner for 6.0. Since installation is done via RPM package, we just need to verify the package installation
+            // was done (handled by VerifyPackageInstallation test). There's no need to check the actual contents of the package.
             if (imageData.Version.Major == 6 && imageData.OS.Contains("cbl-mariner"))
             {
                 return;
@@ -229,8 +230,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            IEnumerable<string> installedPackages = GetInstalledRpmPackages(imageData);
-            VerifyExpectedPackagesInstalled(imageData, installedPackages);
+            VerifyExpectedInstalledRpmPackages(
+                imageData,
+                new string[]
+                {
+                    $"dotnet-sdk-{imageData.VersionString}",
+                    $"dotnet-targeting-pack-{imageData.VersionString}",
+                    $"aspnetcore-targeting-pack-{imageData.VersionString}",
+                    $"dotnet-apphost-pack-{imageData.VersionString}",
+                    $"netstandard-targeting-pack-2.1"
+                }
+                .Concat(AspnetImageTests.GetExpectedRpmPackagesInstalled(imageData)));
         }
 
         private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
@@ -352,22 +362,6 @@ namespace Microsoft.DotNet.Docker.Tests
             );
 
             Assert.Equal(output, bool.TrueString, ignoreCase: true);
-        }
-
-        private static void VerifyExpectedPackagesInstalled(ProductImageData imageData, IEnumerable<string> installedPackages)
-        {
-            AspnetImageTests.VerifyExpectedPackagesInstalled(imageData, installedPackages);
-            VerifyExpectedInstalledRpmPackages(
-                imageData,
-                new string[]
-                {
-                    $"dotnet-sdk-{imageData.VersionString}",
-                    $"dotnet-targeting-pack-{imageData.VersionString}",
-                    $"aspnetcore-targeting-pack-{imageData.VersionString}",
-                    $"dotnet-apphost-pack-{imageData.VersionString}",
-                    $"netstandard-targeting-pack-2.1"
-                },
-                installedPackages);
         }
 
         private class SdkImageDataEqualityComparer : IEqualityComparer<ProductImageData>

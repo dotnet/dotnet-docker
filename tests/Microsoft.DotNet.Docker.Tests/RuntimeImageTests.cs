@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -56,8 +57,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            IEnumerable<string> installedPackages = GetInstalledRpmPackages(imageData);
-            VerifyExpectedPackagesInstalled(imageData, installedPackages);
+            VerifyExpectedInstalledRpmPackages(
+                imageData,
+                GetExpectedRpmPackagesInstalled(imageData)
+                    .Concat(RuntimeDepsImageTests.GetExpectedRpmPackagesInstalled(imageData)));
         }
 
         public static EnvironmentVariableInfo GetRuntimeVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
@@ -66,15 +69,12 @@ namespace Microsoft.DotNet.Docker.Tests
             return new EnvironmentVariableInfo("DOTNET_VERSION", version);
         }
 
-        internal static void VerifyExpectedPackagesInstalled(ProductImageData imageData, IEnumerable<string> installedPackages) =>
-            VerifyExpectedInstalledRpmPackages(
-                imageData,
-                new string[]
+        internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>
+            new string[]
                 {
                     "dotnet-host",
                     $"dotnet-hostfxr-{imageData.VersionString}",
                     $"dotnet-runtime-{imageData.VersionString}",
-                },
-                installedPackages);
+                };
     }
 }
