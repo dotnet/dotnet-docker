@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=6.0.100-preview.5.21277.1 \
+    DOTNET_SDK_VERSION=6.0.100-preview.5.21301.32 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Unset Logging__Console__FormatterName from aspnet base image
@@ -28,7 +28,7 @@ RUN apt-get update \
 
 # Install .NET SDK
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm64.tar.gz \
-    && dotnet_sha512='3a2f3f13e222216a1db277bb82bf60f8fd24a8e8ad86b9f3443a9aaee2acd3d21bf4604e1f00dfced34dfe0b3b5a589aecd9c913040952ecdfeede8fd1cb7787' \
+    && dotnet_sha512='d2400555fd37fe2f760ef919734bd9ce5e20254313ae75de61138db838ac12bfadbdebfb97df8daff0ab1a37740f57a12d9102a5c3d656bd66af7454795fcaa7' \
     && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -37,9 +37,9 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.2.0-preview.5 \
+RUN powershell_version=7.2.0-preview.6 \
     && curl -SL --output PowerShell.Linux.arm64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
-    && powershell_sha512='c18386b717567ec7aa52d161713225cd9fa782a77601b4fe829faece49ba3ceed7b8297e8be1dc8f8ac98e2bec1e92bce49c5f191ee90391bbb0c419453021b8' \
+    && powershell_sha512='87b1d51125f8c492fa806c90ec52be013fb52e7d56d3a67b2a0dbb203715ea2f9ac514b95074e4f5d058c40ac4fbb0f83eba1ff862d10b0adb5e6cb22f76dc09' \
     && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm64 \
