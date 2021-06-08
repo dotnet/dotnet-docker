@@ -13,7 +13,7 @@ WORKDIR /source/aspnetapp
 RUN dotnet publish -c release -o /app --no-restore
 
 # final stage/image
-FROM aspnet6
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2019
 ENV DOTNET_ROLL_FORWARD=LatestMajor
 WORKDIR /inetpub/wwwroot
 COPY --from=build /app ./
