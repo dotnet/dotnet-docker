@@ -889,9 +889,6 @@
           },
           "platforms": [
             {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
               "dockerfile": "src/runtime-deps/6.0/cbl-mariner1.0/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/6.0/Dockerfile.mariner",
               "os": "linux",

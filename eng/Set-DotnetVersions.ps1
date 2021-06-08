@@ -35,15 +35,15 @@ param(
 $updateDepsArgs = @($ProductVersion)
 
 if ($SdkVersion) {
-    $updateDepsArgs += @("--product-version", "sdk=$SdkVersion", "--product-version", "sdk-rpm=$SdkVersion")
+    $updateDepsArgs += @("--product-version", "sdk=$SdkVersion", "--product-version")
 }
 
 if ($AspnetVersion) {
-    $updateDepsArgs += @("--product-version", "aspnet=$AspnetVersion", "--product-version", "aspnet-rpm=$AspnetVersion", "--product-version", "aspnet-runtime-targeting-pack-rpm=$AspnetVersion")
+    $updateDepsArgs += @("--product-version", "aspnet=$AspnetVersion", "--product-version", "--product-version", "aspnet-runtime-targeting-pack=$AspnetVersion")
 }
 
 if ($RuntimeVersion) {
-    $updateDepsArgs += @("--product-version", "runtime=$RuntimeVersion", "--product-version", "runtime-rpm=$RuntimeVersion", "--product-version", "runtime-apphost-pack-rpm=$RuntimeVersion", "--product-version", "runtime-targeting-pack-rpm=$RuntimeVersion", "--product-version", "runtime-host-rpm=$RuntimeVersion", "--product-version", "runtime-hostfxr-rpm=$RuntimeVersion", "--product-version", "runtime-deps-cm.1-rpm=$RuntimeVersion", "--product-version", "netstandard-targeting-pack-2.1.0-rpm")
+    $updateDepsArgs += @("--product-version", "runtime=$RuntimeVersion", "--product-version", "--product-version", "runtime-apphost-pack=$RuntimeVersion", "--product-version", "runtime-targeting-pack=$RuntimeVersion", "--product-version", "runtime-host=$RuntimeVersion", "--product-version", "runtime-hostfxr=$RuntimeVersion", "--product-version", "runtime-deps-cm.1=$RuntimeVersion", "--product-version", "netstandard-targeting-pack-2.1.0")
 }
 
 if ($ComputeShas) {

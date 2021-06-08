@@ -25,7 +25,7 @@ namespace Dotnet.Docker
         private const string ChecksumsHostName = "dotnetclichecksums.blob.core.windows.net";
         private const string ShaVariableGroupName = "shaVariable";
         private const string ShaValueGroupName = "shaValue";
-        private const string NetStandard21TargetingPackRpm = "netstandard-targeting-pack-2.1.0-rpm";
+        private const string NetStandard21TargetingPack = "netstandard-targeting-pack-2.1.0";
         private const string DotnetBaseUrl = "https://dotnetcli.azureedge.net/dotnet";
 
         private static readonly Dictionary<string, string> s_shaCache = new();
@@ -41,31 +41,28 @@ namespace Dotnet.Docker
 
             {"monitor", new string[] { $"{DotnetBaseUrl}/diagnostics/monitor$CHANNEL_NAME/dotnet-monitor.$VERSION_FILE.nupkg" }},
 
-            {"runtime", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" }},
-            {"runtime-rpm", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE-$ARCH.rpm" }},
-            {"runtime-host-rpm", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-$ARCH.rpm" }},
-            {"runtime-hostfxr-rpm", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-hostfxr-$VERSION_FILE-$ARCH.rpm" }},
-            {"runtime-targeting-pack-rpm", new string[]
+            {"runtime", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE$OPTIONAL_OS-$ARCH.$ARCHIVE_EXT" }},
+            {"runtime-host", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-$ARCH.$ARCHIVE_EXT" }},
+            {"runtime-hostfxr", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-hostfxr-$VERSION_FILE-$ARCH.$ARCHIVE_EXT" }},
+            {"runtime-targeting-pack", new string[]
                 {
-                    $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-targeting-pack-$VERSION_FILE-$ARCH.rpm",
-                    $"{DotnetBaseUrl}/Runtime/$DF_VERSION.0/dotnet-targeting-pack-$DF_VERSION.0-$ARCH.rpm"
+                    $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-targeting-pack-$VERSION_FILE-$ARCH.$ARCHIVE_EXT",
+                    $"{DotnetBaseUrl}/Runtime/$DF_VERSION.0/dotnet-targeting-pack-$DF_VERSION.0-$ARCH.$ARCHIVE_EXT"
                 }
             },
-            {"runtime-apphost-pack-rpm", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-apphost-pack-$VERSION_FILE-$ARCH.rpm" }},
-            {NetStandard21TargetingPackRpm, new string[] { $"{DotnetBaseUrl}/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-$ARCH.rpm" }},
-            {"runtime-deps-cm.1-rpm", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.1-$ARCH.rpm" }},
+            {"runtime-apphost-pack", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-apphost-pack-$VERSION_FILE-$ARCH.$ARCHIVE_EXT" }},
+            {NetStandard21TargetingPack, new string[] { $"{DotnetBaseUrl}/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-$ARCH.$ARCHIVE_EXT" }},
+            {"runtime-deps-cm.1", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.1-$ARCH.$ARCHIVE_EXT" }},
 
-            {"aspnet", new string[] { $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" }},
-            {"aspnet-rpm", new string[] { $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE-$ARCH.rpm" }},
-            {"aspnet-runtime-targeting-pack-rpm", new string[]
+            {"aspnet", new string[] { $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE$OPTIONAL_OS-$ARCH.$ARCHIVE_EXT" }},
+            {"aspnet-runtime-targeting-pack", new string[]
                 {
-                    $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-targeting-pack-$VERSION_FILE.rpm",
-                    $"{DotnetBaseUrl}/aspnetcore/Runtime/$DF_VERSION.0/aspnetcore-targeting-pack-$DF_VERSION.0.rpm"
+                    $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-targeting-pack-$VERSION_FILE.$ARCHIVE_EXT",
+                    $"{DotnetBaseUrl}/aspnetcore/Runtime/$DF_VERSION.0/aspnetcore-targeting-pack-$DF_VERSION.0.$ARCHIVE_EXT"
                 }
             },
 
-            {"sdk", new string[] { $"{DotnetBaseUrl}/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" }},
-            {"sdk-rpm", new string[] { $"{DotnetBaseUrl}/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE-$ARCH.rpm" }},
+            {"sdk", new string[] { $"{DotnetBaseUrl}/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE$OPTIONAL_OS-$ARCH.$ARCHIVE_EXT" }},
             {"lzma", new string[] { $"{DotnetBaseUrl}/Sdk/$VERSION_DIR/nuGetPackagesArchive.lzma" }}
         };
 
@@ -100,7 +97,7 @@ namespace Dotnet.Docker
             // The format of the sha variable name is '<productName>|<dockerfileVersion>|<os>|<arch>|sha'.
             // The 'os' and 'arch' segments are optional.
             string shaVariablePattern;
-            if (productName == NetStandard21TargetingPackRpm)
+            if (productName == NetStandard21TargetingPack)
             {
                 // NetStandard targeting pack is not associated with a specific Dockerfile version
                 shaVariablePattern = $"\"(?<{ShaVariableGroupName}>{Regex.Escape(productName)}.*\\|sha)\":";
@@ -124,7 +121,7 @@ namespace Dotnet.Docker
                         dockerfileVersion,
                         GetBuildVersion(productName, dockerfileVersion, versions, options),
                         GetArch(parts),
-                        parts.Length >= 4 ? parts[2] : string.Empty,
+                        GetOs(parts),
                         versions,
                         options)
                     {
@@ -158,17 +155,34 @@ namespace Dotnet.Docker
                 versionFile = versionFile.Substring(0, versionFile.IndexOf(RtmSubstring));
             }
 
+            string archiveExt;
+            if (_os.Contains("win"))
+            {
+                archiveExt = "zip";
+            }
+            else if (_os.Contains("rpm"))
+            {
+                archiveExt = "rpm";
+            }
+            else
+            {
+                archiveExt = "tar.gz";
+            }
+
+            string optionalOs = _os.Contains("rpm") ? string.Empty : $"-{_os}";
+
             // Each product name has one or more candidate URLs from which to retrieve the artifact. Multiple candidate URLs
             // should be listed in priority order. Each subsequent URL listed is treated as a fallback.
             string[] candidateUrls = s_urls[_productName];
             for (int i = 0; i < candidateUrls.Length; i++)
             {
                 string downloadUrl = candidateUrls[i]
-                    .Replace("$ARCHIVE_EXT", _os.Contains("win") ? "zip" : "tar.gz")
+                    .Replace("$ARCHIVE_EXT", archiveExt)
                     .Replace("$VERSION_DIR", versionDir)
                     .Replace("$VERSION_FILE", versionFile)
                     .Replace("$CHANNEL_NAME", _options.ChannelName)
                     .Replace("$OS", _os)
+                    .Replace("$OPTIONAL_OS", optionalOs)
                     .Replace("$ARCH", _arch)
                     .Replace("$DF_VERSION", _options.DockerfileVersion)
                     .Replace("..", ".");
@@ -182,15 +196,27 @@ namespace Dotnet.Docker
             return null;
         }
 
+        private static string GetOs(string[] variableParts)
+        {
+            if (variableParts.Length == 4)
+            {
+                // Handles the case of "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha".
+                return variableParts[1];
+            }
+            else if (variableParts.Length >= 5)
+            {
+                return variableParts[2];
+            }
+
+            return string.Empty;
+        }
+
         private static string GetArch(string[] variableParts)
         {
-            if (variableParts.Length == 3)
+            if (variableParts.Length == 4)
             {
-                // Typical 3-part variables look like "lzma|2.1|sha" or "powershell|3.1|build-version" which don't
-                // have arch values. In these cases, they are all indicated by having a product version in the
-                // second position. But there's another case to consider: "netstandard-targeting-pack-2.1.0-rpm|x64|sha".
-                // The arch value in this case is in the second position.
-                return Version.TryParse(variableParts[1], out _) ? string.Empty : variableParts[1];
+                // Handles the case of "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha".
+                return variableParts[2];
             }
             else if (variableParts.Length >= 5)
             {
