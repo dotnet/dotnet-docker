@@ -13,7 +13,7 @@ WORKDIR /source/aspnetapp
 RUN dotnet publish -c release -o /app --no-restore
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
-WORKDIR /app
+FROM aspnet6
+ENV DOTNET_ROLL_FORWARD=LatestMajor
+WORKDIR /inetpub/wwwroot
 COPY --from=build /app ./
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
