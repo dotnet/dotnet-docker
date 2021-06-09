@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -51,6 +52,40 @@ namespace Microsoft.DotNet.Docker.Tests
                 );
 
             Assert.Empty(output);
+        }
+
+        private IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)
+        {
+            // Get list of installed RPM packages
+            string command = $"bash -c \"rpm -qa | sort\"";
+
+            string installedPackages = DockerHelper.Run(
+                image: imageData.GetImage(ImageType, DockerHelper),
+                command: command,
+                name: imageData.GetIdentifier("PackageInstallation"));
+
+            return installedPackages.Split(Environment.NewLine);
+        }
+
+        protected void VerifyExpectedInstalledRpmPackages(
+            ProductImageData imageData, IEnumerable<string> expectedPackages)
+        {
+            foreach (string expectedPackage in expectedPackages)
+            {
+                // Example package name: dotnet-runtime-6.0-6.0.0-0.1.preview.5.21270.12.x86_64
+                string prefix;
+                if (expectedPackage.EndsWith(imageData.VersionString))
+                {
+                    prefix = $"{expectedPackage}-{imageData.VersionString}.";
+                }
+                else
+                {
+                    prefix = expectedPackage;
+                }
+
+                bool installed = GetInstalledRpmPackages(imageData).Any(pkg => pkg.StartsWith(prefix));
+                Assert.True(installed, $"Package '{expectedPackage}' is not installed.");
+            }
         }
 
         public static IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()

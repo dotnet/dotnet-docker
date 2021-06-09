@@ -756,6 +756,33 @@
               "variant": "v8"
             }
           ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0": {
+              "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner1.0": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/6.0/cbl-mariner1.0/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/6.0/Dockerfile.mariner",
+              "os": "linux",
+              "osVersion": "cbl-mariner1.0",
+              "tags": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner1.0-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            }
+          ]
         }
       ]
     },
@@ -1915,6 +1942,36 @@
                 "6.0-focal-arm64v8": {}
               },
               "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0": {
+              "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner1.0": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/cbl-mariner1.0/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.mariner",
+              "os": "linux",
+              "osVersion": "cbl-mariner1.0",
+              "tags": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner1.0-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
             }
           ]
         },
@@ -3148,6 +3205,36 @@
                 "6.0-focal-arm64v8": {}
               },
               "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0": {
+              "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner1.0": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/6.0/cbl-mariner1.0/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.mariner",
+              "os": "linux",
+              "osVersion": "cbl-mariner1.0",
+              "tags": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner1.0-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
             }
           ]
         },
@@ -4423,6 +4510,36 @@
                 "6.0-focal-arm64v8": {}
               },
               "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|6.0|product-version)",
+          "sharedTags": {
+            "$(sdk|6.0|product-version)-cbl-mariner1.0": {
+              "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner1.0": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/6.0/cbl-mariner1.0/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/6.0/Dockerfile.mariner",
+              "os": "linux",
+              "osVersion": "cbl-mariner1.0",
+              "tags": {
+                "$(sdk|6.0|product-version)-cbl-mariner1.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner1.0-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
             }
           ]
         },
