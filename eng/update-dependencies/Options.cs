@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.CommandLine;
 using System.Linq;
 
+#nullable enable
 namespace Dotnet.Docker
 {
     public class Options
@@ -18,7 +19,7 @@ namespace Dotnet.Docker
         public string GitHubUpstreamBranch => "nightly";
         public string GitHubUpstreamOwner => "dotnet";
         public string GitHubUser { get; private set; }
-        public IDictionary<string, string> ProductVersions { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, string?> ProductVersions { get; set; } = new Dictionary<string, string?>();
         public string VersionSourceName { get; private set; }
         public bool UpdateOnly => GitHubEmail == null || GitHubPassword == null || GitHubUser == null;
 
@@ -27,7 +28,7 @@ namespace Dotnet.Docker
             DockerfileVersion = dockerfileVersion;
             ProductVersions = productVersion
                 .Select(pair => pair.Split(new char[] { '=' }, 2))
-                .ToDictionary(split => split[0].ToLower(), split => split[1]);
+                .ToDictionary(split => split[0].ToLower(), split => split.Skip(1).FirstOrDefault());
             ChannelName = channelName;
             VersionSourceName = versionSourceName;
             GitHubEmail = email;
@@ -66,3 +67,4 @@ namespace Dotnet.Docker
             };
     }
 }
+#nullable disable

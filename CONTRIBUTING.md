@@ -76,10 +76,16 @@ Updating the product versions (e.g. .NET runtime, ASP.NET runtime, PowerShell, e
 
 The following examples illustrate how to run `update-dependencies`:
 
-- Update the 3.1 product versions
+- Update the 3.1 product versions (uses a helper script for running update-dependencies)
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- 3.1 --product-version runtime=3.1.6 --product-version aspnet=3.1.6 --product-version sdk=3.1.302
+    > ./eng/Set-DotnetVersions.ps1 -ProductVersion 3.1 -SdkVersion 3.1.302 -RuntimeVersion 3.1.6 -AspnetVersion 3.1.6
+    ```
+
+- Update the .NET Monitor version
+
+    ``` console
+    > dotnet run --project .\eng\update-dependencies\update-dependencies.csproj 5.0 --product-version monitor=5.0.0-preview.5.21277.3 --channel-name 5.0/preview.5
     ```
 
 - Update the PowerShell version used in the 5.0 images
