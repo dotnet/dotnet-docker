@@ -17,6 +17,9 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string Stretch = "stretch";
         public const string StretchSlim = "stretch-slim";
 
+        // Mariner
+        public const string Mariner10 = "cbl-mariner1.0";
+
         // Ubuntu
         public const string Bionic = "bionic";
         public const string Focal = "focal";
