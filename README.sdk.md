@@ -59,16 +59,13 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.301-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.301-buster-slim, 5.0-buster-slim, 5.0.301, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/5.0/buster-slim/amd64/Dockerfile) | Debian 10
 5.0.301-alpine3.13-amd64, 5.0-alpine3.13-amd64, 5.0-alpine-amd64, 5.0.301-alpine3.13, 5.0-alpine3.13, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/5.0/alpine3.13/amd64/Dockerfile) | Alpine 3.13
-5.0.301-alpine3.12-amd64, 5.0-alpine3.12-amd64, 5.0.301-alpine3.12, 5.0-alpine3.12 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/5.0/alpine3.12/amd64/Dockerfile) | Alpine 3.12
 5.0.301-focal-amd64, 5.0-focal-amd64, 5.0.301-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.410-buster, 3.1-buster, 3.1.410, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/buster/amd64/Dockerfile) | Debian 10
 3.1.410-alpine3.13, 3.1-alpine3.13, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/alpine3.13/amd64/Dockerfile) | Alpine 3.13
-3.1.410-alpine3.12, 3.1-alpine3.12 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/alpine3.12/amd64/Dockerfile) | Alpine 3.12
 3.1.410-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.410-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
 2.1.816-stretch, 2.1-stretch, 2.1.816, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/2.1/stretch/amd64/Dockerfile) | Debian 9
 2.1.816-alpine3.13, 2.1-alpine3.13, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/2.1/alpine3.13/amd64/Dockerfile) | Alpine 3.13
-2.1.816-alpine3.12, 2.1-alpine3.12 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/2.1/alpine3.12/amd64/Dockerfile) | Alpine 3.12
 2.1.816-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/2.1/focal/amd64/Dockerfile) | Ubuntu 20.04
 2.1.816-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/2.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
