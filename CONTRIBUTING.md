@@ -30,10 +30,10 @@ The [`build-and-test.ps1`](https://github.com/dotnet/dotnet-docker/blob/main/bui
     > ./build-and-test.ps1 -Path *samples* -TestCategories sample
     ```
 
-- Test the 5.0 Alpine 3.12 images for the current architecture (e.g. x64, arm, arm64).
+- Test the 5.0 Alpine 3.13 images for the current architecture (e.g. x64, arm, arm64).
 
     ``` console
-    > ./build-and-test.ps1 -Version 5.0 -OS alpine3.12 -Mode Test
+    > ./build-and-test.ps1 -Version 5.0 -OS alpine3.13 -Mode Test
     ```
 
 ### Editing Dockerfiles
