@@ -5,9 +5,9 @@ ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 FROM $SDK_REPO:3.1-alpine3.13 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=5.0.0-preview.4.21219.3
+ENV DOTNET_MONITOR_VERSION=5.0.0-preview.5.21302.5
 RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://pkgs.dev.azure.com/dnceng/public/_apis/packaging/feeds/dotnet-tools/nuget/packages/dotnet-monitor/versions/$DOTNET_MONITOR_VERSION/content \
-    && dotnetmonitor_sha512='f88da3c12362eda933d973ab2e72231681c59c5c43f5f17285b8f95e2fcb70a0e3efc747881b3383506edb90244f66ea4069bff3e78fcb0f5554476d40a1610e' \
+    && dotnetmonitor_sha512='82b7d224f69c4d83119ac8192be2cd764bafa8a195a435bcfe566cfaf37aa77cb9ca723a62fbc3410b05e785b99dfd157c30a5e142e069c621445d2ead9a770d' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --no-cache \
     # To reduce image size, remove the copy of the nupkg under the tools.
@@ -26,6 +26,9 @@ ENV \
     ASPNETCORE_URLS= \
     # Disable debugger and profiler diagnostics to avoid diagnosing self.
     COMPlus_EnableDiagnostics=0 \
+    # Default Filter
+    DotnetMonitor_DefaultProcess__Filters__0__Key=ProcessId \
+    DotnetMonitor_DefaultProcess__Filters__0__Value=1 \
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
