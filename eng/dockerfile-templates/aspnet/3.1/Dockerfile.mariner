@@ -1,0 +1,10 @@
+ARG REPO=mcr.microsoft.com/dotnet/runtime
+FROM $REPO:3.1-{{OS_VERSION}}{{if ARCH_VERSIONED != "amd64":{{ARCH_TAG_SUFFIX}}}}
+
+# Install ASP.NET Core
+RUN aspnetcore_version={{VARIABLES["aspnet|3.1|build-version"]}} \
+    && curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-{{ARCH_SHORT}}.tar.gz \
+    && aspnetcore_sha512='{{VARIABLES[cat("aspnet|3.1|linux|", ARCH_SHORT, "|sha")]}}' \
+    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
+    && tar -ozxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
+    && rm aspnetcore.tar.gz

@@ -1,0 +1,12 @@
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
+FROM $REPO:3.1-{{OS_VERSION}}{{if ARCH_VERSIONED != "amd64":{{ARCH_TAG_SUFFIX}}}}
+
+# Install .NET Core
+RUN dotnet_version={{VARIABLES["runtime|3.1|build-version"]}} \
+    && curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-{{ARCH_SHORT}}.tar.gz \
+    && dotnet_sha512='{{VARIABLES[cat("runtime|3.1|linux|", ARCH_SHORT, "|sha")]}}' \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /usr/share/dotnet \
+    && tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
+    && rm dotnet.tar.gz \
+    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
