@@ -133,7 +133,7 @@
     "src/sdk/5.0/focal/amd64": 615235315,
     "src/sdk/5.0/focal/arm32v7": 564440607,
     "src/sdk/5.0/focal/arm64v8": 637793431,
-    "src/sdk/5.0/cbl-mariner1.0/amd64": 830419972,
+    "src/sdk/5.0/cbl-mariner1.0/amd64": 785492419,
     "src/sdk/6.0/bullseye-slim/amd64": 674991599,
     "src/sdk/6.0/bullseye-slim/arm32v7": 619204906,
     "src/sdk/6.0/bullseye-slim/arm64v8": 694614928,
