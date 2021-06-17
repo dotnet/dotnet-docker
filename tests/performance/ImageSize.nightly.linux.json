@@ -22,7 +22,8 @@
     "src/runtime-deps/5.0/alpine3.13/arm32v7": 6973412,
     "src/runtime-deps/6.0/bullseye-slim/amd64": 129796307,
     "src/runtime-deps/6.0/bullseye-slim/arm32v7": 99237019,
-    "src/runtime-deps/6.0/bullseye-slim/arm64v8": 121213417
+    "src/runtime-deps/6.0/bullseye-slim/arm64v8": 121213417,
+    "src/runtime-deps/6.0/cbl-mariner1.0/amd64": 212940029
   },
   "dotnet/nightly/runtime": {
     "src/runtime/2.1/stretch-slim/amd64": 180258057,
@@ -62,7 +63,8 @@
     "src/runtime/6.0/alpine3.13/arm64v8": 85403621,
     "src/runtime/6.0/focal/amd64": 186940410,
     "src/runtime/6.0/focal/arm32v7": 152852897,
-    "src/runtime/6.0/focal/arm64v8": 185087882
+    "src/runtime/6.0/focal/arm64v8": 185087882,
+    "src/runtime/6.0/cbl-mariner1.0/amd64": 276271150
   },
   "dotnet/nightly/aspnet": {
     "src/aspnet/2.1/stretch-slim/amd64": 253015005,
@@ -102,7 +104,8 @@
     "src/aspnet/6.0/alpine3.13/arm64v8": 106855410,
     "src/aspnet/6.0/focal/amd64": 205945177,
     "src/aspnet/6.0/focal/arm32v7": 173075712,
-    "src/aspnet/6.0/focal/arm64v8": 206459635
+    "src/aspnet/6.0/focal/arm64v8": 206459635,
+    "src/aspnet/6.0/cbl-mariner1.0/amd64": 294595059
   },
   "dotnet/nightly/sdk": {
     "src/sdk/2.1/stretch/amd64": 1728622878,
@@ -130,7 +133,7 @@
     "src/sdk/5.0/focal/amd64": 615235315,
     "src/sdk/5.0/focal/arm32v7": 564440607,
     "src/sdk/5.0/focal/arm64v8": 637793431,
-    "src/sdk/5.0/cbl-mariner1.0/amd64": 830419972,
+    "src/sdk/5.0/cbl-mariner1.0/amd64": 785492419,
     "src/sdk/6.0/bullseye-slim/amd64": 674991599,
     "src/sdk/6.0/bullseye-slim/arm32v7": 619204906,
     "src/sdk/6.0/bullseye-slim/arm64v8": 694614928,
@@ -139,7 +142,8 @@
     "src/sdk/6.0/alpine3.13/arm64v8": 521464732,
     "src/sdk/6.0/focal/amd64": 652648922,
     "src/sdk/6.0/focal/arm32v7": 591681171,
-    "src/sdk/6.0/focal/arm64v8": 669929244
+    "src/sdk/6.0/focal/arm64v8": 669929244,
+    "src/sdk/6.0/cbl-mariner1.0/amd64": 823610845
   },
   "dotnet/nightly/monitor": {
     "src/monitor/5.0/alpine/amd64": 112576244

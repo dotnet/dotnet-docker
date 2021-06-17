@@ -161,6 +161,19 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            // Disable test on Windows due to PowerShell crash (https://github.com/dotnet/runtime/issues/53298)
+            if (imageData.Version.Major == 6 && !DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                return;
+            }
+
+            // Skip test on CBL-Mariner for 6.0. Since installation is done via RPM package, we just need to verify the package installation
+            // was done (handled by VerifyPackageInstallation test). There's no need to check the actual contents of the package.
+            if (imageData.Version.Major == 6 && imageData.OS.Contains("cbl-mariner"))
+            {
+                return;
+            }
+
             if (!(imageData.Version.Major >= 5 ||
                 (imageData.Version.Major >= 3 &&
                     (imageData.SdkOS.StartsWith(OS.AlpinePrefix) || !DockerHelper.IsLinuxContainerModeEnabled))))
@@ -206,6 +219,28 @@ namespace Microsoft.DotNet.Docker.Tests
 
             Assert.Equal(expectedDotnetFiles.Count(), actualDotnetFiles.Count());
             Assert.False(hasFileContentDifference, "There are file content differences. Check the log output.");
+        }
+
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyPackageInstallation(ProductImageData imageData)
+        {
+            if (!(imageData.OS.Contains("cbl-mariner") && imageData.Version.Major >= 6))
+            {
+                return;
+            }
+
+            VerifyExpectedInstalledRpmPackages(
+                imageData,
+                new string[]
+                {
+                    $"dotnet-sdk-{imageData.VersionString}",
+                    $"dotnet-targeting-pack-{imageData.VersionString}",
+                    $"aspnetcore-targeting-pack-{imageData.VersionString}",
+                    $"dotnet-apphost-pack-{imageData.VersionString}",
+                    $"netstandard-targeting-pack-2.1"
+                }
+                .Concat(AspnetImageTests.GetExpectedRpmPackagesInstalled(imageData)));
         }
 
         private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)

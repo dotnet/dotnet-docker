@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -58,6 +59,21 @@ namespace Microsoft.DotNet.Docker.Tests
             base.VerifyCommonEnvironmentVariables(imageData, variables);
         }
 
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyPackageInstallation(ProductImageData imageData)
+        {
+            if (!(imageData.OS.Contains("cbl-mariner") && imageData.Version.Major >= 6))
+            {
+                return;
+            }
+
+            VerifyExpectedInstalledRpmPackages(
+                imageData,
+                GetExpectedRpmPackagesInstalled(imageData)
+                    .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
+        }
+
         public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
         {
             string versionEnvName = null;
@@ -78,5 +94,11 @@ namespace Microsoft.DotNet.Docker.Tests
 
             return null;
         }
+
+        internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>
+            new string[]
+                {
+                    $"aspnetcore-runtime-{imageData.VersionString}"
+                };
     }
 }
