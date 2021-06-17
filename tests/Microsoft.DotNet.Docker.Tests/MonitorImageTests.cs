@@ -91,6 +91,13 @@ namespace Microsoft.DotNet.Docker.Tests
             variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty));
             // Diagnostics should be disabled
             variables.Add(new EnvironmentVariableInfo("COMPlus_EnableDiagnostics", "0"));
+            // DefaultProcess filter should select a process with a process ID of 1
+            variables.Add(new EnvironmentVariableInfo("DotnetMonitor_DefaultProcess__Filters__0__Key", "ProcessId"));
+            variables.Add(new EnvironmentVariableInfo("DotnetMonitor_DefaultProcess__Filters__0__Value", "1"));
+            // Console logger format should be JSON and output UTC timestamps without timezone information
+            variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", "json"));
+            variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterOptions__TimestampFormat", "yyyy-MM-ddTHH:mm:ss.fffffffZ"));
+            variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterOptions__UseUtcTimestamp", "true"));
 
             EnvironmentVariableInfo.Validate(
                 variables,
