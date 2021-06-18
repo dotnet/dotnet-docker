@@ -61,12 +61,12 @@
     "powershell|5.0|Linux|x64|sha": "537d885b79dd1cd183d14b5f5e71046558fb015f562bb817ee90fbabaa9b1039c822949b7e1a5c9b69a976eae09786e3b2c0f0586c01c822868cc48ea7e36620",
     "powershell|5.0|Windows|x64|sha": "6a390cddbc88fe9a645363ccec9819603cfb754b5dead3161197f45c4b248b6bd4176b369ded139d7f9d485105351395de07cd8e61ed4f22a9cdd34bfaff9fc5",
 
-    "powershell|6.0|build-version": "7.2.0-preview.6",
-    "powershell|6.0|Linux.Alpine|sha": "ec3b6d18778b16b96b6735f53e8ab3c7ada2f5a1df26cfae699a902a0ecc9c4bd03aaf60ec0bdca919a4d6d2333144cb9e59a63dbdd38cabc900c7a0bedc527b",
-    "powershell|6.0|Linux|arm32|sha": "789185f4a44d45270d9fc8fbaa56009985ca93144f190bc9a7220aeac6247d8582503257fe3668f0113879897a43dc876d19926d4c0ece61240cbff3c443b718",
-    "powershell|6.0|Linux|arm64|sha": "87b1d51125f8c492fa806c90ec52be013fb52e7d56d3a67b2a0dbb203715ea2f9ac514b95074e4f5d058c40ac4fbb0f83eba1ff862d10b0adb5e6cb22f76dc09",
-    "powershell|6.0|Linux|x64|sha": "f241505d1dd976faefa3a8a14bb57f43be057fcbf2f199551d9abb589f64436d28a69978baaa51f91e840da5dc36f7218cbc670bbcd0810c3b8e5fdefae88142",
-    "powershell|6.0|Windows|x64|sha": "ee6684bf0d8ed26116e26205a8c2e041aca96d28dd2de0fd6401c14185e351c2daca82009f7ec46ecf12e9e30b860e0216a64c436d18f213ad269236d7359094",
+    "powershell|6.0|build-version": "7.2.0-preview.7",
+    "powershell|6.0|Linux.Alpine|sha": "4f1701fa91a27e53eb2c3f6656ea24f15d0c89a9fc3d076c3971c73a8693cf0434a2d33a04b574740d8fc81b9f77b4094b30b66ae31f8e28e481be880b698a54",
+    "powershell|6.0|Linux|arm32|sha": "c089845387a9b92b1811f816b634d6d5c3814db41b14d37d3f11b4da789d9427a210ecf2e818ab6cb48bd96323ff6f187f3e76b835e033afec68debaa257b863",
+    "powershell|6.0|Linux|arm64|sha": "6a5f6a07d62f401560039e32c88cffc68d2fcc8d6db6cd3ac7449bc884d7ab8b25895d8fff5633c2ca824cfdfe4d94916d59601a57d5d8164a6244a4a47bf72a",
+    "powershell|6.0|Linux|x64|sha": "c436f2c646c8aa36d8552465d0388ce08919362bb0d074c5c7761dc7750e3749165fc01a5d37aa1f6fad751fb98560b2e96b7b0137e6b5dee9a5bf44823c9877",
+    "powershell|6.0|Windows|x64|sha": "fe7ceb2deab0a0f70b4751e63a3f94d5dd1fa93fd744243f5e1f017bda714aacc1f272af74be53a1ae909c7645484d37faf96cbef71da533eda9ba5182ea9f9e",
 
     "runtime|2.1|build-version": "2.1.28",
     "runtime|2.1|linux-musl|x64|sha": "a8e6f3e20b6ecc9bb8501ae61caadeecfcf7cb61343b1f4008138f2dcf15f23bad4c228d61f334b1dec5afb635d6bfb5aae01e82bc95a70af5509b51d2d40efe",
