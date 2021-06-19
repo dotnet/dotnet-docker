@@ -17,12 +17,12 @@ RUN powershell -Command `
         Add-WindowsFeature Web-Server; `
         Remove-Item -Recurse C:\inetpub\wwwroot\*; `
         # Acquire ServiceMonitor
-        Invoke-WebRequest -Uri https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.10/ServiceMonitor.exe -OutFile C:\ServiceMonitor.exe; `
+        Invoke-WebRequest -OutFile C:\ServiceMonitor.exe -Uri https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.10/ServiceMonitor.exe; `
         # Install ASP.NET Core Runtime
         Invoke-WebRequest -OutFile c:\aspnetcore-hosting.exe https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNET_VERSION/dotnet-hosting-$Env:ASPNET_VERSION-win.exe; `
-        $process = start-process -Filepath C:\aspnetcore-hosting.exe -ArgumentList  @('/install', '/q', '/norestart', 'OPT_NO_SHAREDFX=1') -Wait -PassThru ; `
+        $process = start-process -Filepath C:\aspnetcore-hosting.exe -ArgumentList  @('/install', '/q', '/norestart', 'OPT_NO_RUNTIME=1') -Wait -PassThru ; `
         `
         if ($process.ExitCode -ne 0) { `
         exit $process.ExitCode ; `
         } `
-        Remove-Item -Force C:\aspnetcore-dotnet-hosting.exe
+        Remove-Item -Force C:\aspnetcore-hosting.exe
