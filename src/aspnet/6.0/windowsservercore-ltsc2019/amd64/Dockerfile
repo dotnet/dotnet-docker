@@ -13,13 +13,16 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
+         # Install IIS
+        Add-WindowsFeature Web-Server; `
+        Remove-Item -Recurse C:\inetpub\wwwroot\*; `
+        # Acquire ServiceMonitor
+        Invoke-WebRequest -Uri https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.10/ServiceMonitor.exe -OutFile C:\ServiceMonitor.exe; `
         # Install ASP.NET Core Runtime
-        Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNET_VERSION/aspnetcore-runtime-$Env:ASPNET_VERSION-win-x64.zip; `
-        $aspnetcore_sha512 = '049c9c489a6461677abeb7646874ebf59f11d404214c14c138a2ed6ce10a276302815864e9594f470fb407280edbfc10f27b8fd3fb585e3df27d02ab2cf14635'; `
-        if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
-            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-            exit 1; `
-        }; `
+        Invoke-WebRequest -OutFile c:\aspnetcore-hosting.exe https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNET_VERSION/dotnet-hosting-$Env:ASPNET_VERSION-win.exe; `
+        $process = start-process -Filepath C:\aspnetcore-hosting.exe -ArgumentList  ('/install', '/q', '/norestart', 'OPT_NO_SHAREDFX=1') -Wait -PassThru ; `
         `
-        tar -C $Env:ProgramFiles\dotnet -oxzf aspnetcore.zip ./shared/Microsoft.AspNetCore.App; `
-        Remove-Item -Force aspnetcore.zip
+        if ($process.ExitCode -ne 0) { `
+        exit $process.ExitCode ; `
+        } `
+        Remove-Item -Force C:\aspnetcore-dotnet-hosting.exe
