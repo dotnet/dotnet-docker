@@ -198,12 +198,12 @@ namespace Dotnet.Docker
 
         private static string GetOs(string[] variableParts)
         {
-            if (variableParts.Length == 4)
+            if (variableParts.Length == 4 && !Version.TryParse(variableParts[1], out _))
             {
                 // Handles the case of "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha".
                 return variableParts[1];
             }
-            else if (variableParts.Length >= 5)
+            else if (variableParts.Length >= 4)
             {
                 return variableParts[2];
             }
@@ -213,7 +213,7 @@ namespace Dotnet.Docker
 
         private static string GetArch(string[] variableParts)
         {
-            if (variableParts.Length == 4)
+            if (variableParts.Length == 4 && !Version.TryParse(variableParts[1], out _))
             {
                 // Handles the case of "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha".
                 return variableParts[2];
