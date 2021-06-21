@@ -103,6 +103,27 @@ Tags | Dockerfile | OS Version
 6.0.0-preview.5-alpine3.13-arm32v7, 6.0-alpine3.13-arm32v7, 6.0-alpine-arm32v7, 6.0.0-preview.5-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/6.0/alpine3.13/arm32v7/Dockerfile) | Alpine 3.13
 6.0.0-preview.5-focal-arm32v7, 6.0-focal-arm32v7, 6.0.0-preview.5-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
+## Nano Server 2022 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+5.0.7-nanoserver-ltsc2022, 5.0-nanoserver-ltsc2022, 5.0.7, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/5.0/nanoserver-ltsc2022/amd64/Dockerfile)
+3.1.16-nanoserver-ltsc2022, 3.1-nanoserver-ltsc2022, 3.1.16, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/3.1/nanoserver-ltsc2022/amd64/Dockerfile)
+
+##### .NET 6.0 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+6.0.0-preview.5-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.0-preview.5, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
+
+## Windows Server Core 2022 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+5.0.7-windowsservercore-ltsc2022, 5.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/5.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+
+##### .NET 6.0 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+6.0.0-preview.5-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+
 ## Nano Server, version 20H2 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
