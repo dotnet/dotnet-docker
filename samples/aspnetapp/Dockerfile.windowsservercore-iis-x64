@@ -14,8 +14,15 @@ RUN dotnet publish -c release -o /app --no-restore
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2019
-ENV DOTNET_ROLL_FORWARD=LatestMajor
+
 WORKDIR /inetpub/wwwroot
+
+# Only needed for this sample because the sample project is targeting .NET 5
+ENV DOTNET_ROLL_FORWARD=LatestMajor
+
+# Enable IIS on startup
+RUN powershell Set-Service W3SVC -StartupType Automatic
+
 COPY --from=build /app ./
 
 EXPOSE 80
