@@ -5,7 +5,7 @@ FROM $REPO:6.0-windowsservercore-ltsc2019
 
 ENV `
     # ASP.NET Core version
-    ASPNET_VERSION=6.0.0-preview.6.21323.4 `
+    ASPNET_VERSION=6.0.0-preview.6.21325.10 `
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
@@ -28,7 +28,7 @@ RUN powershell -Command `
         `
         # Install .NET Core Hosting bundle and ASP.NET Core Runtime
         Invoke-WebRequest -OutFile c:\aspnetcore-hosting.exe https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNET_VERSION/dotnet-hosting-$Env:ASPNET_VERSION-win.exe; `
-        $dotnet_hosting_sha512 = '73f16bdef21f288c7532ce301d34c2438f47893b17aed1e17cd80251fea30744d63881440fa15b104f2756ce29f99f017d2facb968352d1e6b7d0b21047b7f2f'; `
+        $dotnet_hosting_sha512 = '82b415196be1394fdb779fe19addddc44b181e1370934a798a95c323ff38a42eaf5da19c4e0166e5469700a176d6f57edaca0c416b5360277d18c01df97ad364'; `
         if ((Get-FileHash aspnetcore-hosting.exe -Algorithm sha512).Hash -ne $dotnet_hosting_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
