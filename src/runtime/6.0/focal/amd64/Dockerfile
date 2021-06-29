@@ -8,7 +8,7 @@ ARG DOTNET_VERSION
 # Retrieve .NET
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-x64.tar.gz \
     && dotnet_sha512='d22907bcd79150867653995ff72c607b99540fecaaa8afbcfd4b86efb9189ff31150985088e88525e4967ef5f9f3928d6f35e62f8a6581c4be5e682c18d0f2ac' \
-    && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -ozxf dotnet.tar.gz -C /dotnet \
     && rm dotnet.tar.gz
