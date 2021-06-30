@@ -161,12 +161,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            // Disable test on Windows due to PowerShell crash (https://github.com/dotnet/runtime/issues/53298)
-            if (imageData.Version.Major == 6 && !DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                return;
-            }
-
             // Skip test on CBL-Mariner for 6.0. Since installation is done via RPM package, we just need to verify the package installation
             // was done (handled by VerifyPackageInstallation test). There's no need to check the actual contents of the package.
             if (imageData.Version.Major == 6 && imageData.OS.Contains("cbl-mariner"))
