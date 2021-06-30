@@ -55,7 +55,6 @@ namespace Dotnet.Docker
             {"runtime-deps-cm.1", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.1-$ARCH.$ARCHIVE_EXT" }},
 
             {"aspnet", new string[] { $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE$OPTIONAL_OS-$ARCH.$ARCHIVE_EXT" }},
-            {"aspnet-dotnet-hosting", new string[] { $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/dotnet-hosting-$VERSION_FILE-$OS.exe" }},
             {"aspnet-runtime-targeting-pack", new string[]
                 {
                     $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-targeting-pack-$VERSION_FILE.$ARCHIVE_EXT",

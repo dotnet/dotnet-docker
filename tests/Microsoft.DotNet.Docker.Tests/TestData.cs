@@ -101,6 +101,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.NanoServer20H2,     Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
             new SampleImageData { OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64" },
             new SampleImageData { OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64-slim" },
+            new SampleImageData { OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-iis-x64" },
         };
 
         private static readonly MonitorImageData[] s_linuxMonitorTestData =

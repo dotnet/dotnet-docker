@@ -13,28 +13,13 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-         # Install IIS and disable it for startup
-        Add-WindowsFeature Web-Server; `
-        Remove-Item -Recurse C:\inetpub\wwwroot\*; `
-        Set-Service W3SVC -StartupType Disabled; `
-        `
-        # Acquire ServiceMonitor
-        Invoke-WebRequest -OutFile C:\ServiceMonitor.exe -Uri https://dotnetbinaries.blob.core.windows.net/servicemonitor/{{VARIABLES["servicemonitor|2.0|product-version"]}}/ServiceMonitor.exe; `
-        $servicemonitor_sha512 = '{{VARIABLES["servicemonitor|2.0|win|sha"]}}'; `
-        if ((Get-FileHash ServiceMonitor.exe -Algorithm sha512).Hash -ne $servicemonitor_sha512) { `
+        # Install ASP.NET Core Runtime
+        Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNET_VERSION/aspnetcore-runtime-$Env:ASPNET_VERSION-win-x64.zip; `
+        $aspnetcore_sha512 = '{{VARIABLES["aspnet|6.0|win|x64|sha"]}}'; `
+        if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
         }; `
         `
-        # Install .NET Core Hosting bundle and ASP.NET Core Runtime
-        Invoke-WebRequest -OutFile c:\aspnetcore-hosting.exe https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNET_VERSION/dotnet-hosting-$Env:ASPNET_VERSION-win.exe; `
-        $dotnet_hosting_sha512 = '{{VARIABLES["aspnet-dotnet-hosting|6.0|win|x64|sha"]}}'; `
-        if ((Get-FileHash aspnetcore-hosting.exe -Algorithm sha512).Hash -ne $dotnet_hosting_sha512) { `
-            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-            exit 1; `
-        }; `
-        $process = Start-Process -Filepath C:\aspnetcore-hosting.exe -ArgumentList  @('/install', '/q', '/norestart', 'OPT_NO_RUNTIME=1', 'OPT_NO_X86=1') -Wait -PassThru ; `
-        if ($process.ExitCode -ne 0) { `
-            exit $process.ExitCode ; `
-        } `
-        Remove-Item -Force C:\aspnetcore-hosting.exe
+        tar -C $Env:ProgramFiles\dotnet -oxzf aspnetcore.zip ./shared/Microsoft.AspNetCore.App; `
+        Remove-Item -Force aspnetcore.zip
