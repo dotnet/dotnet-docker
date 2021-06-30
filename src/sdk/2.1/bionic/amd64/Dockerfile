@@ -18,7 +18,7 @@ ENV DOTNET_SDK_VERSION=2.1.816
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
     && dotnet_sha512='58f0bc1f67de034ffd0dafb9c0fdb082786fc5057e89396ff574428d57331cd8d5b3e944e103918e05f7b66e354d56cdb242350a6ef932906c9c3d4b08d177e9' \
-    && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
     && rm dotnet.tar.gz \
