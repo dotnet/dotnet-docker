@@ -17,8 +17,6 @@ RUN dotnet publish -c release -o /app --no-restore
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2019
 
-WORKDIR /inetpub/wwwroot
-
 # Only needed for this sample because the sample project is targeting .NET 5
 ENV DOTNET_ROLL_FORWARD=LatestMajor
 
@@ -42,6 +40,7 @@ RUN powershell -Command `
         Remove-Item -Force C:\dotnet-hosting-win.exe; `
         Remove-Item -Force -Recurse $Env:Temp\*
 
+WORKDIR /inetpub/wwwroot
 COPY --from=build /app ./
 
 EXPOSE 80

@@ -39,7 +39,7 @@ if ($SdkVersion) {
 }
 
 if ($AspnetVersion) {
-    $updateDepsArgs += @("--product-version", "aspnet=$AspnetVersion", "--product-version", "aspnet-runtime-targeting-pack=$AspnetVersion", "--product-version")
+    $updateDepsArgs += @("--product-version", "aspnet=$AspnetVersion", "--product-version", "aspnet-runtime-targeting-pack=$AspnetVersion")
 }
 
 if ($RuntimeVersion) {
