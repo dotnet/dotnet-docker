@@ -24,6 +24,10 @@ steps:
     ${{ parameters.dryRunArg }}
     $(manifestVariables)
     $(imageBuilder.queueArgs)
+    --git-owner 'Microsoft'
+    --git-repo 'mcrdocs'
+    --git-branch 'main'
+    --git-path 'teams'
     $(additionalPublishMcrDocsArgs)
   name: PublishReadmes
   displayName: Publish Readmes
