@@ -65,6 +65,17 @@ aspnetapp           latest              b2f0ecb7bdf9        About an hour ago   
 aspnetapp           nanoserver          d4b7586827f2        About an hour ago   353MB
 ```
 
+## Build an image for Windows Server Core
+
+The instructions for Windows Server Core are very similar to Windows Nano Server. There are three different sample Dockerfile files provided for Windows Server Core, which can all be used with the same approach as the Nano Server ones.
+
+In addition, one of the samples enables using IIS as the Web Server instead of Kestrel. The following example demonstrates using that Dockerfile.
+
+```console
+docker build -t aspnetapp -f .\Dockerfile.windowsservercore-iis-x64 .
+docker run --rm -it -p:8080:80 aspnetapp
+```
+
 ## Build an image for Alpine, Debian or Ubuntu
 
 .NET multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `5.0`, as opposed to a distro-specific tag like `5.0-alpine`.
