@@ -15,7 +15,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runti
 
 
 # .NET runtime image
-FROM $REPO:6.0.0-preview.5-bullseye-slim-arm64v8
+FROM $REPO:6.0.0-preview.6-bullseye-slim-arm64v8
 ARG DOTNET_VERSION
 
 ENV DOTNET_VERSION=$DOTNET_VERSION

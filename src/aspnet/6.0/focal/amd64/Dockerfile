@@ -14,7 +14,7 @@ RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/a
 
 
 # ASP.NET Core image
-FROM $REPO:6.0.0-preview.5-focal-amd64
+FROM $REPO:6.0.0-preview.6-focal-amd64
 ARG ASPNET_VERSION
 
 ENV \
