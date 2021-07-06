@@ -15,7 +15,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runti
 
 
 # .NET runtime image
-FROM $REPO:6.0-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
+FROM $REPO:{{VARIABLES["dotnet|6.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 ARG DOTNET_VERSION
 
 ENV DOTNET_VERSION=$DOTNET_VERSION

@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:6.0-alpine3.13-arm32v7
+FROM $REPO:6.0.0-preview.5-alpine3.13-arm32v7
 
 # Install .NET
 ENV DOTNET_VERSION=6.0.0-preview.5.21301.5

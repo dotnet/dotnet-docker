@@ -23,7 +23,7 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/do
 
 
 # ASP.NET Core image
-FROM $REPO:{{VARIABLES["aspnet|5.0|build-version"]}}-{{OS_VERSION}}
+FROM $REPO:{{VARIABLES["dotnet|5.0|product-version"]}}-{{OS_VERSION}}
 ARG ASPNET_VERSION
 
 ENV ASPNET_VERSION=$ASPNET_VERSION
