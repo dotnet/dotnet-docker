@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=6.0.100-preview.6.21351.7 \
+    DOTNET_SDK_VERSION=6.0.100-preview.6.21354.2 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Unset Logging__Console__FormatterName from aspnet base image
@@ -25,15 +25,15 @@ RUN tdnf install -y \
 
 # Install .NET SDK
 RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-x64.rpm \
-    && dotnet_sha512='539acee633d294c116e5189a75348e2aa8cff16c7f157971327fd26c15dfee31138e53cfcf59b78e43bed1e8cf1e44cdb8f5171991e6abef468fae3cd47ff018' \
+    && dotnet_sha512='9612a80a7c5c406175bf8a822bd12b87a155fc5635a461c8f1d11abeac1a9a39cca860381eabf561d8cefd3700b80b0cfd5159932b925181191b8711421b2932' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
     && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='118ffc2c55a3bb65837884f227b41a7eb99d6b0cbf99eb30746f95cd6badd76baed162ef880566f724bc71d5d80ca57d14918b0ca4efdd8f6ac661b90e3a9cb1' \
+    && dotnet_sha512='005bb79c7a9bbf04c9f7a3cf427ea7911766215aa79b3754d5460bcd4cb98bd74b7a0aa9a5c7eb8f2949d7af524b1a2cdd80bfa2f01c4ede5a7cdde5996fd4f8' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
     && curl -SL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-targeting-pack-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='83b255731f5a961ff77d06013540eef578e19f8c3c0bec021717a0558692bb4db355083272b22e0036be0a2b463ff678f227a7baa49df20ca9913437abfa8956' \
+    && dotnet_sha512='40f00a410b2514170b0a9ab351d91b41cdd910b553b669c0de640444db9c25dcd2c648e2241205e18e10e940cd1507d4d9d1eed21e563f0d85919ea719fc3e8c' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
     && curl -SL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-targeting-pack-$ASPNET_VERSION.rpm \
