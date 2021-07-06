@@ -130,7 +130,7 @@
     "src/sdk/5.0/buster-slim/arm32v7": 564714978,
     "src/sdk/5.0/buster-slim/arm64v8": 631997544,
     "src/sdk/5.0/alpine3.13/amd64": 481299738,
-    "src/sdk/5.0/focal/amd64": 615235315,
+    "src/sdk/5.0/focal/amd64": 646583460,
     "src/sdk/5.0/focal/arm32v7": 564440607,
     "src/sdk/5.0/focal/arm64v8": 637793431,
     "src/sdk/5.0/cbl-mariner1.0/amd64": 785492419,
