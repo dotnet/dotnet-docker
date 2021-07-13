@@ -2,7 +2,6 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
 FROM amd64/buildpack-deps:focal-curl as installer
-ARG DOTNET_VERSION
 
 # Retrieve .NET
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.0-preview.6.21352.12/dotnet-runtime-6.0.0-preview.6.21352.12-linux-x64.tar.gz \
