@@ -198,12 +198,12 @@ namespace Dotnet.Docker
 
         private static string GetOs(string[] variableParts)
         {
-            if (variableParts.Length == 4)
+            if (variableParts.Length == 4 && !Version.TryParse(variableParts[1], out _))
             {
                 // Handles the case of "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha".
                 return variableParts[1];
             }
-            else if (variableParts.Length >= 5)
+            else if (variableParts.Length >= 4)
             {
                 return variableParts[2];
             }
@@ -213,7 +213,7 @@ namespace Dotnet.Docker
 
         private static string GetArch(string[] variableParts)
         {
-            if (variableParts.Length == 4)
+            if (variableParts.Length == 4 && !Version.TryParse(variableParts[1], out _))
             {
                 // Handles the case of "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha".
                 return variableParts[2];
@@ -230,9 +230,10 @@ namespace Dotnet.Docker
         {
             if (!s_shaCache.TryGetValue(downloadUrl, out string? sha))
             {
-                sha = await GetDotNetCliChecksumsShaAsync(downloadUrl)
-                    ?? await GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(downloadUrl)
+                sha = await GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(downloadUrl)
                     ?? await GetDotNetReleaseChecksumsShaFromBuildVersionAsync(downloadUrl)
+                    ?? await GetDotNetReleaseChecksumsShaFromPreviewVersionAsync(downloadUrl)
+                    ?? await GetDotNetCliChecksumsShaAsync(downloadUrl)
                     ?? await ComputeChecksumShaAsync(downloadUrl);
 
                 if (sha != null)
@@ -321,8 +322,10 @@ namespace Dotnet.Docker
             return sha;
         }
 
-        private Task<string?> GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(
-            string productDownloadUrl)
+        private Task<string?> GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(string productDownloadUrl) =>
+            GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, GetRuntimeVersion());
+
+        private string? GetRuntimeVersion()
         {
             string? version = _buildVersion;
             // The release checksum file contains content for all products in the release (runtime, sdk, etc.)
@@ -333,13 +336,24 @@ namespace Dotnet.Docker
                 version = GetBuildVersion("runtime", _dockerfileVersion, _versions, _options);
             }
 
-            return GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, version);
+            return version;
         }
 
         private Task<string?> GetDotNetReleaseChecksumsShaFromBuildVersionAsync(string productDownloadUrl) =>
             GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, _buildVersion);
 
-        private async Task<string?> GetDotNetReleaseChecksumsShaAsync(
+        private Task<string?> GetDotNetReleaseChecksumsShaFromPreviewVersionAsync(string productDownloadUrl)
+        {
+            string? runtimeVersion = GetRuntimeVersion();
+            if (runtimeVersion is not null && TryParsePreviewVersion(runtimeVersion, out string? previewVersion))
+            {
+                return GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, previewVersion);
+            }
+
+            return Task.FromResult<string?>(null);
+        }
+
+        private static async Task<string?> GetDotNetReleaseChecksumsShaAsync(
             string productDownloadUrl, string? version)
         {
             IDictionary<string, string> checksumEntries = await GetDotnetReleaseChecksums(version);
@@ -352,6 +366,26 @@ namespace Dotnet.Docker
             }
 
             return sha;
+        }
+
+        private static bool TryParsePreviewVersion(string version, out string? previewVersion)
+        {
+            // Example format: 6.0.0-preview.5.21301.5
+            // This method returns the 6.0.0-preview.5 segment of that value.
+
+            const string PreviewGroup = "Preview";
+            string PreviewVersionRegex = @$"(?<{PreviewGroup}>\d+\.\d+\.\d+-[\w-]+\.\d+)\.[\d\.]+";
+            Match match = Regex.Match(version, PreviewVersionRegex);
+            if (match.Success)
+            {
+                previewVersion = match.Groups[PreviewGroup].Value;
+                return true;
+            }
+            else
+            {
+                previewVersion = null;
+                return false;
+            }
         }
 
         private static async Task<IDictionary<string, string>> GetDotnetReleaseChecksums(string? version)

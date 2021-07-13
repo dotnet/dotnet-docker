@@ -24,12 +24,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
-            // Skip test for .NET 5 on Arm32 Alpine 3.13 due to https://github.com/dotnet/runtime/issues/47423
-            if (imageData.Version.Major == 5 && imageData.OS == "alpine3.13" && imageData.Arch == Arch.Arm)
-            {
-                return;
-            }
-
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper);
             await verifier.Execute();
         }

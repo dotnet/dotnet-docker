@@ -65,6 +65,17 @@ aspnetapp           latest              b2f0ecb7bdf9        About an hour ago   
 aspnetapp           nanoserver          d4b7586827f2        About an hour ago   353MB
 ```
 
+## Build an image for Windows Server Core
+
+The instructions for Windows Server Core are very similar to Windows Nano Server. There are three different sample Dockerfile files provided for Windows Server Core, which can all be used with the same approach as the Nano Server ones.
+
+In addition, one of the samples enables using IIS as the Web Server instead of Kestrel. The following example demonstrates using that Dockerfile.
+
+```console
+docker build -t aspnetapp -f .\Dockerfile.windowsservercore-iis-x64 .
+docker run --rm -it -p:8080:80 aspnetapp
+```
+
 ## Build an image for Alpine, Debian or Ubuntu
 
 .NET multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `5.0`, as opposed to a distro-specific tag like `5.0-alpine`.
@@ -111,6 +122,7 @@ Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aa
 The following example demonstrates targeting architectures explicitly on Linux, for ARM32 and ARM64.
 
 ```console
+docker build --pull -t aspnetapp:alpine-arm32 -f Dockerfile.alpine-arm32 .
 docker build --pull -t aspnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
 docker build --pull -t aspnetapp:debian-arm32 -f Dockerfile.debian-arm32 .
 docker build --pull -t aspnetapp:debian-arm64 -f Dockerfile.debian-arm64 .
@@ -123,6 +135,7 @@ You can use `docker images` to see a listing of the images you've built, as you 
 aspnetapp           debian-arm64        8bf21dd704cf        14 seconds ago       223MB
 aspnetapp           debian-arm32        29a8bfa90a03        About a minute ago   190MB
 aspnetapp           alpine-arm64        8ec6bf841319        2 minutes ago        125MB
+aspnetapp           alpine-arm32        f99fda7e1807        8 seconds ago        98.9MB
 ```
 
 You can build ARM32 and ARM64 images on ARM or x64 machines. It may be preferred to build on x64 to take advantage of higher performance, and the ability to take advantage of CI/CD services.
