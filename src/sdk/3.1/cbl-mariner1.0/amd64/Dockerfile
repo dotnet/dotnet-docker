@@ -12,9 +12,9 @@ ENV \
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-CBL-Mariner-1.0
 
 # Install .NET Core SDK
-RUN dotnet_sdk_version=3.1.410 \
+RUN dotnet_sdk_version=3.1.411 \
     && curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
-    && dotnet_sha512='aef9340008c2002b73171f186a6a167edf3494b740286927fc86f908eca20f5df13289f88ba2a1ef2011c93542d8aefec11d919ed191fb449dcf1b22e0cd74bc' \
+    && dotnet_sha512='4117763444028519865f11f3c1f7e951245b06e93f30429fc97089f31ef0ce63777ebfa83b3c729b8c5ec9b2562a0f23036e69b3a5766ff999106e2068b55950' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \

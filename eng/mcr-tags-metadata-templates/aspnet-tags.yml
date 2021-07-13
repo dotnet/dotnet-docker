@@ -36,6 +36,7 @@ $(McrTagsYmlTagGroup:6.0-alpine3.13-arm32v7)
 $(McrTagsYmlTagGroup:6.0-focal-arm32v7)
     customSubTableTitle: .NET 6.0 Preview Tags
 $(McrTagsYmlTagGroup:5.0-buster-slim-arm32v7)
+$(McrTagsYmlTagGroup:5.0-alpine3.13-arm32v7)
 $(McrTagsYmlTagGroup:5.0-focal-arm32v7)
 $(McrTagsYmlTagGroup:3.1-buster-slim-arm32v7)
 $(McrTagsYmlTagGroup:3.1-focal-arm32v7)

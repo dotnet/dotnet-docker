@@ -1,0 +1,48 @@
+# escape=`
+
+# https://hub.docker.com/_/microsoft-dotnet
+FROM mcr.microsoft.com/dotnet/sdk:6.0-windowsservercore-ltsc2019 AS build
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY aspnetapp/*.csproj ./aspnetapp/
+RUN dotnet restore
+
+# copy everything else and build app
+COPY aspnetapp/. ./aspnetapp/
+WORKDIR /source/aspnetapp
+RUN dotnet publish -c release -o /app --no-restore
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2019
+
+# Only needed for this sample because the sample project is targeting .NET 5
+ENV DOTNET_ROLL_FORWARD=LatestMajor
+
+RUN powershell -Command `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        # Install IIS
+        Add-WindowsFeature Web-Server; `
+        Remove-Item -Recurse C:\inetpub\wwwroot\*; `
+        `
+        # Acquire ServiceMonitor
+        Invoke-WebRequest -OutFile C:\ServiceMonitor.exe -Uri https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.10/ServiceMonitor.exe; `
+        `
+        # Install the ASP.NET Core Module
+        Invoke-WebRequest -OutFile c:\dotnet-hosting-win.exe https://aka.ms/dotnet/6.0/preview/dotnet-hosting-win.exe; `
+        $process = Start-Process -Filepath C:\dotnet-hosting-win.exe -ArgumentList  @('/install', '/q', '/norestart', 'OPT_NO_RUNTIME=1', 'OPT_NO_X86=1', 'OPT_NO_SHAREDFX=1') -Wait -PassThru ; `
+        if ($process.ExitCode -ne 0) { `
+            exit $process.ExitCode; `
+        } `
+        Remove-Item -Force C:\dotnet-hosting-win.exe; `
+        Remove-Item -Force -Recurse $Env:Temp\*
+
+WORKDIR /inetpub/wwwroot
+COPY --from=build /app ./
+
+EXPOSE 80
+
+ENTRYPOINT ["C:\\ServiceMonitor.exe", "w3svc"]

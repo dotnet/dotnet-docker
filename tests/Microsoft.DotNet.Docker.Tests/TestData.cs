@@ -96,10 +96,18 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.NanoServer2004, Arch = Arch.Amd64, IsPublished = true },
             new SampleImageData { OS = OS.NanoServer20H2, Arch = Arch.Amd64, IsPublished = true },
 
-            new SampleImageData { OS = OS.NanoServer20H2,     Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
-            new SampleImageData { OS = OS.NanoServer20H2,     Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
-            new SampleImageData { OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64" },
-            new SampleImageData { OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64-slim" },
+            new SampleImageData { OS = OS.NanoServer20H2, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
+            new SampleImageData { OS = OS.NanoServer20H2, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
+
+            // Use Nano Server as the OS even though the Dockerfiles are for Windows Server Core. This is because the OS value
+            // needs to match the filter set by the build/test job. We only produce builds jobs based on what's in the manifest
+            // and the manifest only defines Nano Server-based Dockerfiles. So we just need to piggyback on the Nano Server
+            // jobs in order to test the Windows Server Core samples.
+            new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64" },
+            new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-iis-x64" },
+
+            // Disabling the slim sample due to https://github.com/dotnet/dotnet-docker/issues/2938
+            //new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64-slim" },
         };
 
         private static readonly MonitorImageData[] s_linuxMonitorTestData =
