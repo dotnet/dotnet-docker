@@ -16,7 +16,7 @@ RUN tdnf install -y \
 # Install dotnet-runtime-deps package
 RUN dotnet_version=6.0.0-preview.6.21352.12 \
     && curl -SL --output dotnet-runtime-deps.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-x64.rpm \
-    && dotnet_sha512='10f8b9ac0da11a102b34169008195193ed811c5d04a15cd2899acaca28571847354dc198e70f7b4707a4c04461494e2d5c98889ad320aa633b8f7215481e58dc' \
+    && dotnet_sha512='5184dcc08f9b287214a96eb333731178be89a883e6c6557983730932f09508ece6c825998da485d71d57b6f54eefaf7f67579dad49e3c04c36a1ec045f320695' \
     && echo "$dotnet_sha512  dotnet-runtime-deps.rpm" | sha512sum -c - \
     && rpm --install dotnet-runtime-deps.rpm \
     && rm dotnet-runtime-deps.rpm
