@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:2.1-focal
+FROM $REPO:2.1.28-focal
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

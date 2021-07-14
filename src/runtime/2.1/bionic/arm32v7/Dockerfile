@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:2.1-bionic-arm32v7
+FROM $REPO:2.1.28-bionic-arm32v7
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

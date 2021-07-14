@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:3.1-bionic
+FROM $REPO:3.1.17-bionic
 
 # Install ASP.NET Core
 RUN aspnetcore_version=3.1.17 \

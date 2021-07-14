@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:2.1-{{OS_VERSION}}{{if ARCH_VERSIONED != "amd64":{{ARCH_TAG_SUFFIX}}}}
+FROM $REPO:{{VARIABLES["dotnet|2.1|product-version"]}}-{{OS_VERSION}}{{if ARCH_VERSIONED != "amd64":{{ARCH_TAG_SUFFIX}}}}
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

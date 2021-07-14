@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:2.1-alpine3.14
+FROM $REPO:2.1.28-alpine3.14
 
 # Disable the invariant mode (set in base image)
 RUN apk add --no-cache icu-libs

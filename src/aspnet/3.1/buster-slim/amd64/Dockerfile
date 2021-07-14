@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:3.1-buster-slim
+FROM $REPO:3.1.17-buster-slim
 
 # Install ASP.NET Core
 RUN aspnetcore_version=3.1.17 \

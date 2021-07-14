@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:5.0-buster-slim-arm32v7
+FROM $REPO:5.0.8-buster-slim-arm32v7
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image

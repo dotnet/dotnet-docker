@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:2.1-{{OS_VERSION}}
+FROM $REPO:{{VARIABLES["dotnet|2.1|product-version"]}}-{{OS_VERSION}}
 
 # Install ASP.NET Core
 ENV ASPNETCORE_VERSION={{VARIABLES["aspnet|2.1|build-version"]}}

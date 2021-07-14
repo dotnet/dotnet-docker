@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:6.0-alpine3.13-arm32v7
+FROM $REPO:6.0.0-preview.6-alpine3.13-arm32v7
 
 ENV \
     # ASP.NET Core version

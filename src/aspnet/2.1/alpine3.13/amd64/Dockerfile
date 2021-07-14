@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:2.1-alpine3.13
+FROM $REPO:2.1.28-alpine3.13
 
 # Install ASP.NET Core
 ENV ASPNETCORE_VERSION=2.1.28

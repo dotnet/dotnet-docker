@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:3.1-cbl-mariner1.0
+FROM $REPO:3.1.17-cbl-mariner1.0
 
 # Install ASP.NET Core
 RUN aspnetcore_version=3.1.17 \

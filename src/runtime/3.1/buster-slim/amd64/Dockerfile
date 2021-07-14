@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:3.1-buster-slim
+FROM $REPO:3.1.17-buster-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
