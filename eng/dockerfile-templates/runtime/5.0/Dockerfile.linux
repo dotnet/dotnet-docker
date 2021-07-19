@@ -1,12 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-ARG DOTNET_VERSION={{VARIABLES["runtime|5.0|build-version"]}}
 
 # Installer image
 FROM {{ARCH_VERSIONED}}/buildpack-deps:{{OS_VERSION_BASE}}-curl as installer
-ARG DOTNET_VERSION
 
 # Retrieve .NET
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-{{ARCH_SHORT}}.tar.gz \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["runtime|5.0|build-version"]}}/dotnet-runtime-{{VARIABLES["runtime|5.0|build-version"]}}-linux-{{ARCH_SHORT}}.tar.gz \
     && dotnet_sha512='{{VARIABLES[cat("runtime|5.0|linux|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
@@ -15,10 +13,9 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runti
 
 
 # .NET runtime image
-FROM $REPO:5.0-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
-ARG DOTNET_VERSION
+FROM $REPO:{{VARIABLES["dotnet|5.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
-ENV DOTNET_VERSION=$DOTNET_VERSION
+ENV DOTNET_VERSION={{VARIABLES["runtime|5.0|build-version"]}}
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

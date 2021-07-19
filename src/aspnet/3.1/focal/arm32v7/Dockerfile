@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:3.1-focal-arm32v7
+FROM $REPO:3.1.17-focal-arm32v7
 
 # Install ASP.NET Core
 RUN aspnetcore_version=3.1.17 \

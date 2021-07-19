@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:3.1-cbl-mariner1.0
+FROM $REPO:3.1.17-cbl-mariner1.0
 
 # Install .NET Core
 RUN dotnet_version=3.1.17 \
