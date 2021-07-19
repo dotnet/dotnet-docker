@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:3.1-alpine3.13-arm64v8
+FROM $REPO:3.1.17-alpine3.13-arm64v8
 
 # Install .NET Core
 RUN dotnet_version=3.1.17 \

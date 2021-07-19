@@ -22,6 +22,6 @@ RUN $aspnetcore_version = '3.1.17'; `
 
 
 # Runtime image
-FROM $REPO:3.1-nanoserver-1809
+FROM $REPO:3.1.17-nanoserver-1809
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:3.1-alpine3.13
+FROM $REPO:3.1.17-alpine3.13
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
