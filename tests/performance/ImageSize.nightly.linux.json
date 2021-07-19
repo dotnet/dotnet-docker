@@ -77,7 +77,7 @@
     "src/runtime/6.0/focal/amd64": 186940410,
     "src/runtime/6.0/focal/arm32v7": 152852897,
     "src/runtime/6.0/focal/arm64v8": 185087882,
-    "src/runtime/6.0/cbl-mariner1.0/amd64": 276271150
+    "src/runtime/6.0/cbl-mariner1.0/amd64": 293523435
   },
   "dotnet/nightly/aspnet": {
     "src/aspnet/2.1/stretch-slim/amd64": 253015005,
@@ -127,7 +127,7 @@
     "src/aspnet/6.0/focal/amd64": 205945177,
     "src/aspnet/6.0/focal/arm32v7": 173075712,
     "src/aspnet/6.0/focal/arm64v8": 206459635,
-    "src/aspnet/6.0/cbl-mariner1.0/amd64": 294595059
+    "src/aspnet/6.0/cbl-mariner1.0/amd64": 317380163
   },
   "dotnet/nightly/sdk": {
     "src/sdk/2.1/stretch/amd64": 1728622878,
