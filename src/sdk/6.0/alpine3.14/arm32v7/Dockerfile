@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:6.0.0-preview.6-alpine3.13-arm64v8
+FROM $REPO:6.0.0-preview.6-alpine3.14-arm32v7
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -19,7 +19,7 @@ ENV \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Alpine-3.13-arm64
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Alpine-3.14-arm32
 
 RUN apk add --no-cache \
         curl \
@@ -27,8 +27,8 @@ RUN apk add --no-cache \
         git
 
 # Install .NET SDK
-RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='367e6a90e2527e0f1f3f63a245a7026e64d9d4407159f620bb2c4c90f3981266bab55e0adcc6e7b9861c1b8be50867dbfa33ecb7ba4c56936029aee1fcfafdae' \
+RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-arm.tar.gz \
+    && dotnet_sha512='6a9a0e1affde3766e8b06a1bf105abfdc0d02d33e0f9b3512d4c419f4443a24bca171dd5231e999fae5581ceaaee8064ac5e1c6dedc62da2bd29fa3c9a5a06a3' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \

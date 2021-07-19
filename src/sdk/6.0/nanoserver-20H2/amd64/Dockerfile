@@ -1,17 +1,15 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-ARG DOTNET_SDK_VERSION=6.0.100-preview.6.21355.2
 
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:20H2-amd64 AS installer
-ARG DOTNET_SDK_VERSION
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 RUN `
     # Retrieve .NET SDK
-    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
+    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-preview.6.21355.2/dotnet-sdk-6.0.100-preview.6.21355.2-win-x64.zip; `
     $dotnet_sha512 = 'e126fea62f3719cc2c0cef9858e2dad85b31029e1766f2df091c611396ed5b8f02e3874827a4f30e3d5ef0b7b3a318d8bf9a728c74c14425c42befca5c85b26d'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -43,8 +41,7 @@ RUN `
     Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
 # SDK image
-FROM $REPO:6.0-nanoserver-20H2
-ARG DOTNET_SDK_VERSION
+FROM $REPO:6.0.0-preview.6-nanoserver-20H2
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -54,7 +51,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=$DOTNET_SDK_VERSION `
+    DOTNET_SDK_VERSION=6.0.100-preview.6.21355.2 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Unset Logging__Console__FormatterName from aspnet base image
