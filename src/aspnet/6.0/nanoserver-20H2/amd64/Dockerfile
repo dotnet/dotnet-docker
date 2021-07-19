@@ -9,7 +9,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 # Install ASP.NET Core Runtime
 RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-preview.6.21355.2/aspnetcore-runtime-6.0.0-preview.6.21355.2-win-x64.zip; `
-    $aspnetcore_sha512 = '63bd7c920c45af0114597f25d37bef4529ad63b4da5cecc8465c9f52a427cf2085f8965d3730cede47f1af9d585ec2571b077dddde5325c3b70d22138e9b6891'; `
+    $aspnetcore_sha512 = '3220634d47d556caedbe3f8b11d37f819226654e52fb5641ac705b34f19105144908008c4557213cc61765a2f78f17c21b076217feb911729d9aa0b2f131fd03'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `

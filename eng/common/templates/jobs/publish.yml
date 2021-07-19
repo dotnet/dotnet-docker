@@ -21,6 +21,11 @@ jobs:
       artifactName: image-info
   - template: ../steps/set-image-info-path-var.yml
   - template: ../steps/set-dry-run.yml
+  - script: echo $(sourceBuildId) > $(Build.ArtifactStagingDirectory)/source-build-id.txt
+    displayName: Write Source Build ID to File
+  - publish: $(Build.ArtifactStagingDirectory)/source-build-id.txt
+    artifact: source-build-id
+    displayName: Publish Source Build ID Artifact
   - script: echo "##vso[task.setvariable variable=imageQueueTime]$(date --rfc-2822)"
     displayName: Set Publish Variables
   - script: >
