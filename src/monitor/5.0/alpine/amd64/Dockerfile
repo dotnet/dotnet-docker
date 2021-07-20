@@ -27,8 +27,8 @@ ENV \
     # Disable debugger and profiler diagnostics to avoid diagnosing self.
     COMPlus_EnableDiagnostics=0 \
     # Default Filter
-    DotnetMonitor_DefaultProcess__Filters__0__Key=ProcessId \
-    DotnetMonitor_DefaultProcess__Filters__0__Value=1 \
+    DefaultProcess__Filters__0__Key=ProcessId \
+    DefaultProcess__Filters__0__Value=1 \
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
