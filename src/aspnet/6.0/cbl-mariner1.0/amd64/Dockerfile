@@ -3,13 +3,13 @@ FROM $REPO:6.0.0-preview.7-cbl-mariner1.0-amd64
 
 ENV \
     # ASP.NET Core version
-    ASPNET_VERSION=6.0.0-preview.7.21369.12 \
+    ASPNET_VERSION=6.0.0-preview.7.21371.13 \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
 # Install ASP.NET Core
 RUN curl -SL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-x64.rpm \
-    && dotnet_sha512='09f7dcab9f69fdb145cdf74cbe056b37d6d0c1792dbb86db6497a4f00ebbf2da4aa9471de96e535702858fd63e5ffc3d6055e3a707b987f912858d70b0077d72' \
+    && dotnet_sha512='38b91d20869be401f10b209d21584e78336d356fe187c50624786d6848e8a5396e8ee7dc4010ad8c05f1d918209941a5a659dceba9706d7a188943153328e7af' \
     && echo "$dotnet_sha512  aspnetcore.rpm" | sha512sum -c - \
     && rpm --install aspnetcore.rpm \
     && rm aspnetcore.rpm
