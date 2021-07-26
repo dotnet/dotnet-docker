@@ -17,7 +17,4 @@ RUN curl -SL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Run
     && echo "$dotnet_sha512  dotnet-runtime.rpm" | sha512sum -c - \
     \
     && rpm --install dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
-    && rm dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
-    \
-    ## Manually configure symbol link due to https://github.com/dotnet/runtime/issues/53543
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+    && rm dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm
