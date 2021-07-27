@@ -6,6 +6,7 @@ using static System.Console;
 
 // Variant of https://github.com/dotnet/core/tree/main/samples/dotnet-runtimeinfo
 // Ascii text: https://ascii.co.uk/text (Univers font)
+// a comment
 
 string nl = Environment.NewLine;
 
