@@ -167,9 +167,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            // Skip test on CBL-Mariner for 6.0. Since installation is done via RPM package, we just need to verify the package installation
+            // Skip test on CBL-Mariner. Since installation is done via RPM package, we just need to verify the package installation
             // was done (handled by VerifyPackageInstallation test). There's no need to check the actual contents of the package.
-            if (imageData.Version.Major == 6 && imageData.OS.Contains("cbl-mariner"))
+            if (imageData.OS.Contains("cbl-mariner"))
             {
                 return;
             }
@@ -225,7 +225,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPackageInstallation(ProductImageData imageData)
         {
-            if (!(imageData.OS.Contains("cbl-mariner") && imageData.Version.Major >= 6))
+            if (!imageData.OS.Contains("cbl-mariner"))
             {
                 return;
             }

@@ -3,8 +3,8 @@ FROM $REPO:3.1.17-cbl-mariner1.0
 
 # Install ASP.NET Core
 RUN aspnetcore_version=3.1.17 \
-    && curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='456cdf2eaa85ab6eeab6555072bd472090fdd2aa20bf830c13b33976c3cac02570bf573ba08098d0303746203787d227e716fd417f94cc04a6256528e2459f97' \
-    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
-    && tar -ozxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
-    && rm aspnetcore.tar.gz
+    && curl -SL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-x64.rpm \
+    && aspnetcore_sha512='69124446aede08ec8876ac6ab2ddf0e561479d9117217295d973c4ccebe8da7e82485df43c448f720eb1d2bfdb12879c88f4eacfbd1be3d8bb242178b6cdf409' \
+    && echo "$aspnetcore_sha512  aspnetcore.rpm" | sha512sum -c - \
+    && rpm --install aspnetcore.rpm \
+    && rm aspnetcore.rpm

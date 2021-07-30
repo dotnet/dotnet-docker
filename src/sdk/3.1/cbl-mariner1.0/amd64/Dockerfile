@@ -13,12 +13,30 @@ ENV \
 
 # Install .NET Core SDK
 RUN dotnet_sdk_version=3.1.411 \
-    && curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
-    && dotnet_sha512='4117763444028519865f11f3c1f7e951245b06e93f30429fc97089f31ef0ce63777ebfa83b3c729b8c5ec9b2562a0f23036e69b3a5766ff999106e2068b55950' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz \
+    dotnet_version=3.1.17 \
+    aspnet_version=3.1.17 \
+    && curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-x64.rpm \
+    && dotnet_sha512='7cc5938e8e2be73035756f46f3139be632b2ab7e7b84d70ea8d3f0071874bd2efc02dfee324b0faaa72583fbbff8ffba22ce6f67921217700e868deda7ff4aa7' \
+    && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
+    \
+    && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-apphost-pack-$dotnet_version-x64.rpm \
+    && dotnet_sha512='b8241a64eee132033c4432a872ae313ca23c18fa133e8e00a5dda371996ae88bc0adf1617ad0c427ed0d82610e3b27ae49be45c904462bdd2de311d4d8afa454' \
+    && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
+    \
+    && curl -SL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/dotnet-targeting-pack-3.1.0-x64.rpm \
+    && dotnet_sha512='9111ef4a0083c1fbd969f5adfca8f7b0a2e90eada94771c68ca4d00d34756fb280de153ecce4ad3da4b16698b7add4848f5b6ec24b89a144c2a119a42fb27c85' \
+    && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
+    \
+    && curl -SL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/3.1.0/aspnetcore-targeting-pack-3.1.0.rpm \
+    && dotnet_sha512='fdab7122896ff3602d8a25c0b283996973ef0cf4f4d0f9eba429d3a93b2441ebe0e0d0b499b97bb28c43cfb386501cc617ca7ed7c949dd3e45c61db0d5879fd4' \
+    && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
+    \
+    && curl -SL --output netstandard-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-x64.rpm \
+    && dotnet_sha512='fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880' \
+    && echo "$dotnet_sha512  netstandard-targeting-pack.rpm" | sha512sum -c - \
+    \
+    && rpm --install dotnet.rpm apphost.rpm targeting-pack.rpm aspnetcore-targeting-pack.rpm netstandard-targeting-pack.rpm \
+    && rm dotnet.rpm apphost.rpm targeting-pack.rpm aspnetcore-targeting-pack.rpm netstandard-targeting-pack.rpm \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
