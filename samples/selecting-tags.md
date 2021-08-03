@@ -40,12 +40,12 @@ This will work on all operating systems and on all supported chips, but building
 
 ## Targeting a specific operating system
 
-If you want a specific operating system image, you should use a specific operating system tag. We publish images for Alpine, Debian, Ubuntu and Windows Nano Server.
+If you want a specific operating system image, you should use a specific operating system tag. We publish images for [Alpine](#alpine), [Debian](#debian), [Ubuntu](#ubuntu), [Windows Nano Server](#nano-server), and [Windows Server Core](#windows-server-core).
 
 The following tags demonstrate the pattern used to describe each operating system (using .NET 5.0 as the example):
 
 * `5.0-alpine` (Latest Alpine)
-* `5.0-bionic` (Ubuntu 18.04)
+* `5.0-focal` (Ubuntu 20.04)
 * `5.0-buster-slim` (Debian 10)
 * `5.0-nanoserver-20H2` (Nano Server, version 20H2)
 * `5.0-nanoserver-2004` (Nano Server, version 2004)
@@ -57,6 +57,42 @@ For example, the following command will pull an x64 Alpine image:
 ```console
 docker pull mcr.microsoft.com/dotnet/runtime:5.0-alpine
 ```
+
+### Linux
+
+#### Debian
+
+* When targeting Linux containers, Debian is the default Linux distro for all tags that do not specify an OS. For example, `latest`, `5.0`, and `5.0.0` will all provide a Debian image.
+* Very stable.
+
+#### Ubuntu
+
+* Shares Debian's codebase.
+* Feature-rich.
+* Less stable compared to Debain.
+
+#### Alpine
+
+* Security-oriented and lightweight.
+* Uses [musl instead of glibc](https://wiki.musl-libc.org/functional-differences-from-glibc.html) which may have incompatibility with your existing software.
+
+<a name="alpine-globalization">Globalization Support</a>:
+
+By default, the `icu-libs` package is not included and the [globalization invariant mode](https://github.com/dotnet/runtime/blob/main/docs/design/features/globalization-invariant-mode.md) is enabled. You can opt into globalization support by [following the pattern shown in the sample Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.alpine-x64#L19).
+
+### Windows
+
+#### Nano Server
+
+* When targeting Windows containers, Nano Server is the default OS for all tags that do not specify an OS. For example, `latest`, `5.0`, and `5.0.0` will all provide a Nano Server image.
+* Small, minimalistic version of Windows.
+
+#### Windows Server Core
+
+* Significantly larger than Nano Server.
+* Contains additional components that are missing from Nano Server.
+* Capable of running IIS.
+* Supports running .NET Framework.
 
 ## Targeting a specific processor type
 
