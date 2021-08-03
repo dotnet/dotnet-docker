@@ -33,6 +33,8 @@ USER ContainerUser
 ENV `
     # Configure web servers to bind to port 80 when present
     ASPNETCORE_URLS=http://+:80 `
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # Enable correct mode for dotnet watch (only mode supported in a container)

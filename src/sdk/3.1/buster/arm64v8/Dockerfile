@@ -1,6 +1,8 @@
 FROM arm64v8/buildpack-deps:buster-scm
 
 ENV \
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Enable correct mode for dotnet watch (only mode supported in a container)
