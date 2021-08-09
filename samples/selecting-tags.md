@@ -60,21 +60,21 @@ docker pull mcr.microsoft.com/dotnet/runtime:5.0-alpine
 
 ### Linux
 
-#### Debian
+#### [Debian](https://www.debian.org)
 
 * When targeting Linux containers, Debian is the default Linux distro for all tags that do not specify an OS. For example, `latest`, `5.0`, and `5.0.0` will all provide a Debian image.
 * Very stable.
 
-#### Ubuntu
+#### [Ubuntu](https://ubuntu.com)
 
 * Shares Debian's codebase.
 * Feature-rich.
 * Less stable compared to Debain.
 
-#### Alpine
+#### [Alpine](https://www.alpinelinux.org)
 
 * Security-oriented and lightweight.
-* Uses [musl instead of glibc](https://wiki.musl-libc.org/functional-differences-from-glibc.html) which may have incompatibility with your existing software.
+* Uses [musl instead of glibc](https://wiki.musl-libc.org/functional-differences-from-glibc.html) which may have incompatibility with your software.
 
 <a name="alpine-globalization">Globalization Support</a>:
 
@@ -82,17 +82,20 @@ By default, the `icu-libs` package is not included and the [globalization invari
 
 ### Windows
 
-#### Nano Server
+#### [Nano Server](https://docs.microsoft.com/virtualization/windowscontainers/manage-containers/container-base-images)
 
 * When targeting Windows containers, Nano Server is the default OS for all tags that do not specify an OS. For example, `latest`, `5.0`, and `5.0.0` will all provide a Nano Server image.
 * Small, minimalistic version of Windows.
+* Good option for new application development.
 
-#### Windows Server Core
+#### [Windows Server Core](https://docs.microsoft.com/virtualization/windowscontainers/manage-containers/container-base-images)
 
 * Significantly larger than Nano Server.
-* Contains additional components that are missing from Nano Server.
-* Capable of running IIS.
-* Supports running .NET Framework.
+* Feature-rich; contains additional components that are missing from Nano Server.
+* Supports:
+  * IIS
+  * .NET Framework
+* Good option for "lifting and shifting" Windows Server apps.
 
 ## Targeting a specific processor type
 
