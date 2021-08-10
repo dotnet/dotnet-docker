@@ -619,8 +619,8 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/3.1/cbl-mariner1.0/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.mariner",
+              "dockerfile": "src/runtime-deps/5.0/cbl-mariner1.0/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.mariner",
               "os": "linux",
               "osVersion": "cbl-mariner1.0",
               "tags": {

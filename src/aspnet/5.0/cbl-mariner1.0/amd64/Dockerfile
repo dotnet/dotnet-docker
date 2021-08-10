@@ -1,11 +1,11 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:5.0-cbl-mariner1.0-amd64
+FROM $REPO:5.0.9-cbl-mariner1.0-amd64
 
 # Install ASP.NET Core
-ENV ASPNET_VERSION=5.0.8
+ENV ASPNET_VERSION=5.0.9
 
-RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-x64.tar.gz \
-    && aspnetcore_sha512='77c9854f2bc947675025a9489baec2587cc9ef95e3be9351060c0d64fe0cede3e9c1395fe700715df520f106dccda9a21f7d21981df70653c49fd20418dc385f' \
-    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
-    && tar -ozxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
-    && rm aspnetcore.tar.gz
+RUN curl -SL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-x64.rpm \
+    && dotnet_sha512='fda4073ebc35b2cd9d36dc4a9152b55955fb45b8ede03ec3396c6b7444114ffb6b2c6bfca1cb72026f58a9ff82f20ed631ee23ffcb75d2c912ce1ad3e84083e6' \
+    && echo "$dotnet_sha512  aspnetcore.rpm" | sha512sum -c - \
+    && rpm --install aspnetcore.rpm \
+    && rm aspnetcore.rpm

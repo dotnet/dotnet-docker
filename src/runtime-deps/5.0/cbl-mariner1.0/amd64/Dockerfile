@@ -1,9 +1,9 @@
-FROM cblmariner.azurecr.io/base/core:{{OS_VERSION_NUMBER}}
+FROM cblmariner.azurecr.io/base/core:1.0
 
 RUN tdnf install -y \
         ca-certificates \
         \
-        # .NET Core dependencies
+        # .NET dependencies
         glibc \
         icu \
         krb5 \
@@ -14,9 +14,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install dotnet-runtime-deps package
-RUN dotnet_version={{VARIABLES["runtime|3.1|build-version"]}} \
-    && curl -SL --output dotnet-runtime-deps.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-{{ARCH_SHORT}}.rpm \
-    && dotnet_sha512='{{VARIABLES[cat("runtime-deps-cm.1|3.1|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
+RUN dotnet_version=5.0.9 \
+    && curl -SL --output dotnet-runtime-deps.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-x64.rpm \
+    && dotnet_sha512='4a051b48f42e8c1fdb972679a9b9fab3961ee2c3cdfc6875e1a9121aebb86b4b02f803bf8578d7df151ea27f7b1c4a68903b536147e20d2a38872d1b6535f6dd' \
     && echo "$dotnet_sha512  dotnet-runtime-deps.rpm" | sha512sum -c - \
     && rpm --install dotnet-runtime-deps.rpm \
     && rm dotnet-runtime-deps.rpm

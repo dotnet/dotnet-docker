@@ -1,11 +1,11 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:5.0-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
+FROM $REPO:{{VARIABLES["dotnet|5.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
 # Install ASP.NET Core
 ENV ASPNET_VERSION={{VARIABLES["aspnet|5.0|build-version"]}}
 
-RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-{{ARCH_SHORT}}.tar.gz \
-    && aspnetcore_sha512='{{VARIABLES[cat("aspnet|5.0|linux|", ARCH_SHORT, "|sha")]}}' \
-    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
-    && tar -ozxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
-    && rm aspnetcore.tar.gz
+RUN curl -SL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-{{ARCH_SHORT}}.rpm \
+    && dotnet_sha512='{{VARIABLES[cat("aspnet|5.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
+    && echo "$dotnet_sha512  aspnetcore.rpm" | sha512sum -c - \
+    && rpm --install aspnetcore.rpm \
+    && rm aspnetcore.rpm
