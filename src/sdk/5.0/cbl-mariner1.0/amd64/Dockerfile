@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:5.0.8-cbl-mariner1.0-amd64
+FROM $REPO:5.0.9-cbl-mariner1.0-amd64
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -7,7 +7,7 @@ ENV \
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
     # SDK version
-    DOTNET_SDK_VERSION=5.0.302 \
+    DOTNET_SDK_VERSION=5.0.303 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -22,11 +22,11 @@ RUN tdnf install -y \
 
 # Install .NET SDK
 RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-x64.rpm \
-    && dotnet_sha512='295db489334a285a2c20fa2676d5dcc4e5a2ff0ec310959a22c6da4154aaaefd0c052dddbfc20a8c59bf3ed3f68ec2893d4b835ba1688095f16d6992ca9f58f6' \
+    && dotnet_sha512='21970c806d07d301a29c679b9b576fe690d7dceb504a7cdf69cb65882b41928b085dba0222e2eb8634fcf2bba25f9257743ebeb03ba1936bba19ac90e83a3b25' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
     && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='024af774e0afb26bc139fef80e7c5da1f6aa4d04a1504c175b09c935add16c52422cdffa4ee648f018ca15f64b6db9917ef807f5bb07baa811311abf260603ce' \
+    && dotnet_sha512='4a91fe60f9e81b2da2e2b0e1090f66af5d3465a80c5c8e23af02ea546c0d9d9f4307f903c019b11cfc67416cc97297b49021fc7964a0dae2bcdec0744a3c78fe' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
     && curl -SL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/5.0.0/dotnet-targeting-pack-5.0.0-x64.rpm \
