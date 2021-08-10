@@ -43,6 +43,8 @@ FROM $REPO:5.0.9-nanoserver-1809
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= `
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
     # SDK version
     DOTNET_SDK_VERSION=5.0.303 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
