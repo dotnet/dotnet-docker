@@ -1,6 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:2.1.29-alpine3.13
 
+# .NET Core globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
+# by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
+
 # Install .NET Core
 ENV DOTNET_VERSION=2.1.29
 
