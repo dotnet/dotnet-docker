@@ -18,7 +18,7 @@ ENV DOTNET_SDK_VERSION={{VARIABLES["sdk|2.1|build-version"]}}
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-{{ARCH_SHORT}}.tar.gz \
     && dotnet_sha512='{{VARIABLES[cat("sdk|2.1|linux|", ARCH_SHORT, "|sha")]}}' \
-    && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
     && rm dotnet.tar.gz \
@@ -31,6 +31,8 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
 ENV \
     # Configure web servers to bind to port 80 when present
     ASPNETCORE_URLS=http://+:80 \
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Enable correct mode for dotnet watch (only mode supported in a container)

@@ -1,9 +1,11 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:3.1-alpine3.13
+FROM $REPO:3.1.18-alpine3.13
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -19,9 +21,9 @@ ENV \
 RUN apk add --no-cache icu-libs
 
 # Install .NET Core SDK
-RUN dotnet_sdk_version=3.1.411 \
+RUN dotnet_sdk_version=3.1.412 \
     && wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
-    && dotnet_sha512='58bf68237e604cb4b5f64b71c140f5498ee4c2471689fc7630fdcf09c5694fe75d75961418fc4ac6cebac6544972aee98dc9c3cfab3876182c4a5eba694e90dc' \
+    && dotnet_sha512='f81ec24d3550bd414fb0fa154007f88a2e2956c73d033c2a82a6cea3402f0a842d1f32e8ffc199c0d9ed86faa8005a76b7c3b130e9cd0c1bea71d0631c9a1bcd' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \

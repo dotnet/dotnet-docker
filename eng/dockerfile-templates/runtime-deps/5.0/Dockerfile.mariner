@@ -1,0 +1,28 @@
+FROM cblmariner.azurecr.io/base/core:{{OS_VERSION_NUMBER}}
+
+RUN tdnf install -y \
+        ca-certificates \
+        \
+        # .NET dependencies
+        glibc \
+        icu \
+        krb5 \
+        libgcc \
+        libstdc++ \
+        openssl-libs \
+        zlib \
+    && tdnf clean all
+
+# Install dotnet-runtime-deps package
+RUN dotnet_version={{VARIABLES["runtime|5.0|build-version"]}} \
+    && curl -SL --output dotnet-runtime-deps.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-{{ARCH_SHORT}}.rpm \
+    && dotnet_sha512='{{VARIABLES[cat("runtime-deps-cm.1|5.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
+    && echo "$dotnet_sha512  dotnet-runtime-deps.rpm" | sha512sum -c - \
+    && rpm --install dotnet-runtime-deps.rpm \
+    && rm dotnet-runtime-deps.rpm
+
+ENV \
+    # Configure web servers to bind to port 80 when present
+    ASPNETCORE_URLS=http://+:80 \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true

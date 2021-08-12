@@ -1,16 +1,13 @@
 # escape=`
 
-ARG DOTNET_VERSION=6.0.0-preview.5.21301.5
-
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:2004-amd64 AS installer
-ARG DOTNET_VERSION
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Runtime
-RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:DOTNET_VERSION-win-x64.zip; `
-    $dotnet_sha512 = 'c1e4656198f60297511fc28b5b1d6ad28eceec29fe59ea7a9e1c8b0b7622ef69e8af481c98a1958f65cb5b3de81d755ce3402d10712944c0e313366741a0e738'; `
+RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.0-preview.7.21377.19/dotnet-runtime-6.0.0-preview.7.21377.19-win-x64.zip; `
+    $dotnet_sha512 = '0a9542a9aec6b5a8e57934ad4f903ba194f8d6411a10744adffb7398f51b16b65ed8c0cd0d34b90fab7fb9f55d24aef066176314e33298c2ab78af061e0039d6'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -23,14 +20,13 @@ RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet
 
 # Runtime image
 FROM mcr.microsoft.com/windows/nanoserver:2004-amd64
-ARG DOTNET_VERSION
 
 ENV `
     # Configure web servers to bind to port 80 when present
     ASPNETCORE_URLS=http://+:80 `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
-    DOTNET_VERSION=$DOTNET_VERSION
+    DOTNET_VERSION=6.0.0-preview.7.21377.19
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator

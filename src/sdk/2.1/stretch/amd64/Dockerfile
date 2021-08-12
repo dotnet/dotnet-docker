@@ -14,11 +14,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core SDK
-ENV DOTNET_SDK_VERSION=2.1.816
+ENV DOTNET_SDK_VERSION=2.1.817
 
 RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
-    && dotnet_sha512='58f0bc1f67de034ffd0dafb9c0fdb082786fc5057e89396ff574428d57331cd8d5b3e944e103918e05f7b66e354d56cdb242350a6ef932906c9c3d4b08d177e9' \
-    && echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
+    && dotnet_sha512='1bdc0f0bba9a0fbdf0546ff5296d6198aec34b96f5a771ef54f905678ce78de3b1abeac92f42f2118043a69271d268cba196ff3958a37094e5f2e9703966c300' \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
     && rm dotnet.tar.gz \
@@ -27,6 +27,8 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$
 ENV \
     # Configure web servers to bind to port 80 when present
     ASPNETCORE_URLS=http://+:80 \
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Enable correct mode for dotnet watch (only mode supported in a container)
