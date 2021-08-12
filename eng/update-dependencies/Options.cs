@@ -36,12 +36,6 @@ namespace Dotnet.Docker
             GitHubUser = user;
             ComputeChecksums = computeShas;
 
-            // Special case for handling the lzma NuGet package cache.
-            if (ProductVersions.ContainsKey("sdk") && DockerfileVersion == "2.1")
-            {
-                ProductVersions["lzma"] = ProductVersions["sdk"];
-            }
-
             // Special case for handling the shared dotnet product version variables.
             if (ProductVersions.ContainsKey("runtime"))
             {
