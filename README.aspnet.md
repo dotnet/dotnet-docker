@@ -111,23 +111,23 @@ Tags | Dockerfile | OS Version
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.8-nanoserver-ltsc2022, 5.0-nanoserver-ltsc2022, 5.0.8, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/nanoserver-ltsc2022/amd64/Dockerfile)
-3.1.17-nanoserver-ltsc2022, 3.1-nanoserver-ltsc2022, 3.1.17, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/nanoserver-ltsc2022/amd64/Dockerfile)
+5.0.9-nanoserver-ltsc2022, 5.0-nanoserver-ltsc2022, 5.0.9, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/nanoserver-ltsc2022/amd64/Dockerfile)
+3.1.18-nanoserver-ltsc2022, 3.1-nanoserver-ltsc2022, 3.1.18, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.0-preview.5-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.0-preview.5, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
+6.0.0-preview.7-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.0-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ## Windows Server Core 2022 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.8-windowsservercore-ltsc2022, 5.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+5.0.9-windowsservercore-ltsc2022, 5.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.0-preview.5-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+6.0.0-preview.7-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ## Nano Server, version 20H2 amd64 Tags
 Tag | Dockerfile
