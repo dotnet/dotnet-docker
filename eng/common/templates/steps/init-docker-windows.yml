@@ -2,6 +2,7 @@ parameters:
   setupImageBuilder: true
 
 steps:
+- template: init-common.yml
 - powershell: echo "##vso[task.setvariable variable=artifactsPath]$(Build.ArtifactStagingDirectory)"
   displayName: Define Artifacts Path Variable
 

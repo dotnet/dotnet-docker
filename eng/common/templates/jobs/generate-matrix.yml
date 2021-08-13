@@ -9,8 +9,8 @@ jobs:
   pool:
     vmImage: $(defaultLinuxAmd64PoolImage)
   steps:
-  - template: ../steps/validate-branch.yml
   - template: ../steps/init-docker-linux.yml
+  - template: ../steps/validate-branch.yml
   - ${{ if eq(parameters.isTestStage, true) }}:
     - template: ../steps/download-build-artifact.yml
       parameters:
