@@ -2,10 +2,10 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:6.0.0-rc.1-alpine3.13-arm64v8
 
 # Install .NET
-ENV DOTNET_VERSION=6.0.0-rc.1.21411.2
+ENV DOTNET_VERSION=6.0.0-rc.1.21411.5
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='75e3721b381b04a3615de793bc5e02db8cd12dc79fb0e86fab220fcace665cab83e6ad6999122d6b7fa1cbbd1e8e6ca18a82d7fc50bb44ac9f8e5456a7a7220e' \
+    && dotnet_sha512='35cb7a2b2f3692f998bab12f2e9b3f344a02bbd3967a2a08aa7bbccb8cbb92971d736dd19a7f96362320ef50def32a74ee2aa4714fc3758a80042e95e9028911' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
