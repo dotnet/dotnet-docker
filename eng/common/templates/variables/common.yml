@@ -30,7 +30,3 @@ variables:
   value: 'mirror/'
 - name: cgBuildGrepArgs
   value: "''"
-
-- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-  - group: DotNet-Docker-Common
-  - group: DotNet-Docker-Secrets

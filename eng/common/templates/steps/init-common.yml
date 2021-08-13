@@ -1,0 +1,5 @@
+steps:
+- powershell: |
+    $sourceBranch=$Env:BUILD_SOURCEBRANCH -replace "refs/heads/","" -replace "refs/tags/","" -replace "refs/pull/","" 
+    echo "##vso[task.setvariable variable=sourceBranch]$sourceBranch"
+  displayName: Define Source Branch Variable
