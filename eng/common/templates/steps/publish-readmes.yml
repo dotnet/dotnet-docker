@@ -4,7 +4,7 @@ parameters:
 
 steps:
 - powershell: >
-    if ($env:BUILD_SOURCEBRANCHNAME -eq "nightly" -or $env:SYSTEM_PULLREQUEST_TARGETBRANCH -eq "nightly") {
+    if ($env:SOURCEBRANCH -eq "nightly" -or $env:SYSTEM_PULLREQUEST_TARGETBRANCH -eq "nightly") {
         $additionalPublishMcrDocsArgs = "--exclude-product-family"
     }
     else {

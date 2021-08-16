@@ -35,8 +35,6 @@ stages:
   - template: ../jobs/copy-base-images.yml
     parameters:
       name: CopyBaseImages
-      pool:
-        vmImage: $(defaultLinuxAmd64PoolImage)
       additionalOptions: "--manifest '$(manifest)' $(manifestVariables)"
   - template: ../jobs/generate-matrix.yml
     parameters:
@@ -107,6 +105,15 @@ stages:
       name: Windows20H2_amd64
       pool: Docker-20H2-${{ variables['System.TeamProject'] }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows20H2Amd64']
+      dockerClientOS: windows
+      buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
+  - template: ../jobs/build-images.yml
+    parameters:
+      name: Windows2022_amd64
+      pool: Docker-2022-${{ variables['System.TeamProject'] }}
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2022Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
@@ -196,6 +203,12 @@ stages:
         name: Windows20H2_amd64
         pool: Docker-20H2-${{ variables['System.TeamProject'] }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows20H2Amd64']
+        testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+    - template: ../jobs/test-images-windows-client.yml
+      parameters:
+        name: Windows2022_amd64
+        pool: Docker-2022-${{ variables['System.TeamProject'] }}
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2022Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:

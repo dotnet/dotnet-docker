@@ -4,6 +4,7 @@ parameters:
   cleanupDocker: true
 
 steps:
+- template: init-common.yml
 - script: echo "##vso[task.setvariable variable=artifactsPath]/artifacts"
   displayName: Define Artifacts Path Variable
 
