@@ -6,8 +6,8 @@ FROM mcr.microsoft.com/windows/servercore:1809-amd64 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Runtime
-RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.0-rc.1.21414.4/dotnet-runtime-6.0.0-rc.1.21414.4-win-x64.zip; `
-    $dotnet_sha512 = '96fe937c6c71b78c9f339e1816390015a28b65ab7a7bb1fb14068e1e2dfb82294ea7cd0ff0c4ceb523cc6eda1df167566f3ba395d37ce0621aed9fa367605b4f'; `
+RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.0-rc.1.21415.6/dotnet-runtime-6.0.0-rc.1.21415.6-win-x64.zip; `
+    $dotnet_sha512 = '2e78e9e691b051f0247491606658b20d42843bb75d7d80a525395ff1db9e80a3d0d73cfa8628a974b2f20f0ad4025397b1e9fe3733cce059ecb6f3d573e7bb68'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -26,7 +26,7 @@ ENV `
     ASPNETCORE_URLS=http://+:80 `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
-    DOTNET_VERSION=6.0.0-rc.1.21414.4
+    DOTNET_VERSION=6.0.0-rc.1.21415.6
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
