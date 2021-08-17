@@ -7,6 +7,7 @@ ENV `
     ASPNETCORE_URLS=http://+:80 `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
+    # .NET Runtime version
     DOTNET_VERSION=5.0.9
 
 # Install .NET
