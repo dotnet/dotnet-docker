@@ -92,6 +92,7 @@ jobs:
       --architecture $(architecture)
       --retry
       --source-repo $(publicGitRepoUri)
+      --get-installed-pkgs-path /repo/dotnet-dotnet-docker/$(engCommonRelativePath)/package-scripts/get-installed-packages.sh
       $(manifestVariables)
       $(imageBuilderBuildArgs)
     displayName: Build Images

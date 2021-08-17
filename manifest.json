@@ -946,7 +946,11 @@
                     "$(Repo:sdk):6.0-cbl-mariner1.0-amd64"
                   ]
                 }
-              ]
+              ],
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-installed-packages.1.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.1.0.sh"
+              }
             }
           ]
         },
@@ -1145,7 +1149,11 @@
                     "$(Repo:sdk):7.0-cbl-mariner1.0-amd64"
                   ]
                 }
-              ]
+              ],
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.1.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.1.0.sh"
+              }
             }
           ]
         }
@@ -2581,7 +2589,11 @@
                     "$(Repo:sdk):6.0-cbl-mariner1.0-amd64"
                   ]
                 }
-              ]
+              ],
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-installed-packages.1.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.1.0.sh"
+              }
             }
           ]
         },
@@ -2905,7 +2917,11 @@
                     "$(Repo:sdk):7.0-cbl-mariner1.0-amd64"
                   ]
                 }
-              ]
+              ],
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.1.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.1.0.sh"
+              }
             }
           ]
         },
@@ -4410,7 +4426,11 @@
                     "$(Repo:sdk):6.0-cbl-mariner1.0-amd64"
                   ]
                 }
-              ]
+              ],
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-installed-packages.1.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.1.0.sh"
+              }
             }
           ]
         },
@@ -4746,7 +4766,11 @@
                     "$(Repo:sdk):7.0-cbl-mariner1.0-amd64"
                   ]
                 }
-              ]
+              ],
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.1.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.1.0.sh"
+              }
             }
           ]
         },
