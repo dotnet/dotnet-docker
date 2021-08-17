@@ -10,7 +10,7 @@ RUN apt-get update \
 ENV ASPNETCORE_VERSION=2.1.30
 
 RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-arm.tar.gz \
-    && aspnetcore_sha512='749c5aab079a8d23db9048874b6827dd2435480c76cd54a2580e5176ccd81b0cd116c41eab32c7826509549ca3cb7b4c2b49d936969df311d0fc3982fa4323ff' \
+    && aspnetcore_sha512='a696a868955ef7bf31c830382e646e8c07040abfe50b49da345f22fa8b45576673aee36a0d4a836dbb987f138b19f856e979b0e5dab8f05c04feced0031a3b46' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet \

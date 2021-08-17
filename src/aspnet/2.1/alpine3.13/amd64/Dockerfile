@@ -8,7 +8,7 @@ FROM $REPO:2.1.30-alpine3.13
 ENV ASPNETCORE_VERSION=2.1.30
 
 RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-musl-x64.tar.gz \
-    && aspnetcore_sha512='152ee894ef43d780a44ca10024e0a0436388e1c472a6d7aaabde27be46cb7724dfc268c19dcd0ba1f44e644a90a0069dc2debb3c88e1dd1b912e7104c58b73c5' \
+    && aspnetcore_sha512='4a54deb9cb470bea560eb1fc23b4608581f1df814e6a7b696049c74f422e1ba66249fbd239e5f5d98cf3b43418f2b2c2484b7cc9eafc97ecd0759f95b89039f8' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet \

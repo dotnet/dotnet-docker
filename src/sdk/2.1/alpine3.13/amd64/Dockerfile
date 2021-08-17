@@ -12,7 +12,7 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
 ENV DOTNET_SDK_VERSION=2.1.818
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='addbf94fd23ab2bd5719d1b554b92a6e29cf340c06eb5c0ab23027c501fa53dc9af97e72520e9f5502b2cd45e113c1c8d4533a9854056f95cc782148d3295a84' \
+    && dotnet_sha512='a9de41de8bc464024bf8bb51067279789e4234b51969543270fdc2c6ef83aa507ed0739547ae9be81a49abacad6b94926b24cbb3a70a960d2bad85f205ac8d86' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -xzf dotnet.tar.gz \

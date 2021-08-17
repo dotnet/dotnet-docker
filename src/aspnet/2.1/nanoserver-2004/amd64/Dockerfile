@@ -9,7 +9,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 ENV ASPNETCORE_VERSION=2.1.30
 
 RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNETCORE_VERSION/aspnetcore-runtime-$Env:ASPNETCORE_VERSION-win-x64.zip; `
-    $aspnetcore_sha512 = '7449a60c2a7c0c1939fe907dcfeba65fb1a853f256b14cb8320d5303c970bfd36bc7771ccf5bf34d3e775c45fc06c339c3ed45abd881dd556c33a53de4b427da'; `
+    $aspnetcore_sha512 = 'a49b1394ec0756872eba64d13eb693803f37cdc36ee59ea965692999d88736abaa097e37b7dc76439e84bd3e34b3c531cc9ae193534e5f07484f69aa0a467fd2'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
