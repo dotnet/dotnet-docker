@@ -8,7 +8,8 @@ jobs:
     vmImage: $(defaultLinuxAmd64PoolImage)
   steps:
   - template: ../steps/init-docker-linux.yml
-  - template: ../steps/set-dry-run.yml
+  - ${{ if eq(variables['System.TeamProject'], 'public') }}:
+    - template: ../steps/set-dry-run.yml
   - script: >
       $(runImageBuilderCmd)
       copyBaseImages
@@ -22,9 +23,8 @@ jobs:
       --registry-override '$(acr.server)'
       --os-type 'linux'
       --architecture '*'
-      $(dryRunArg)
+      $DRYRUNARG
       ${{ parameters.additionalOptions }}
     displayName: Copy Base Images
     continueOnError: true
   - template: ../steps/cleanup-docker-linux.yml
-
