@@ -111,6 +111,27 @@ Tags | Dockerfile | OS Version
 6.0.100-preview.7-alpine3.13-arm32v7, 6.0-alpine3.13-arm32v7, 6.0-alpine-arm32v7, 6.0.100-preview.7-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.13/arm32v7/Dockerfile) | Alpine 3.13
 6.0.100-preview.7-focal-arm32v7, 6.0-focal-arm32v7, 6.0.100-preview.7-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
+## Nano Server 2022 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+5.0.400-nanoserver-ltsc2022, 5.0-nanoserver-ltsc2022, 5.0.400, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/5.0/nanoserver-ltsc2022/amd64/Dockerfile)
+3.1.412-nanoserver-ltsc2022, 3.1-nanoserver-ltsc2022, 3.1.412, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/nanoserver-ltsc2022/amd64/Dockerfile)
+
+##### .NET 6.0 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+6.0.100-preview.7-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.100-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
+
+## Windows Server Core 2022 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+5.0.400-windowsservercore-ltsc2022, 5.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/5.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+
+##### .NET 6.0 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+6.0.100-preview.7-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+
 ## Nano Server, version 20H2 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
@@ -168,7 +189,7 @@ See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/micr
 
 # Image Update Policy
 
-* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:20H2, buildpack-deps:bionic-scm, etc.).
+* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:ltsc2022, buildpack-deps:bionic-scm, etc.).
 * We publish .NET images as part of releasing new versions of .NET including major/minor and servicing.
 
 # Feedback

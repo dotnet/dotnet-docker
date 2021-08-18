@@ -15,8 +15,8 @@ WORKDIR /source/aspnetapp
 RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true
 
 # final stage/image
-# Uses the ltsc2019 release; 20H2, 2004, and ltsc2016 are other choices
-FROM mcr.microsoft.com/windows/servercore:ltsc2019 AS runtime
+# Uses the ltsc2022 release; 20H2, 2004, ltsc2019 and ltsc2016 are other choices
+FROM mcr.microsoft.com/windows/servercore:ltsc2022 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
 
