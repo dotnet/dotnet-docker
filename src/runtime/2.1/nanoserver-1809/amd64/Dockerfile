@@ -6,10 +6,10 @@ FROM mcr.microsoft.com/windows/servercore:1809-amd64 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core Runtime
-ENV DOTNET_VERSION=2.1.29
+ENV DOTNET_VERSION=2.1.30
 
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:DOTNET_VERSION-win-x64.zip; `
-    $dotnet_sha512 = 'eb74735e66b9962e6d761df8fa68532871e31c4cb8f11c2a42e50cb5e196b626871c42d012580958869e98fe601f6aea7ba31e7a5efb99c343ddb0d93de4d87f'; `
+    $dotnet_sha512 = '3656c1a5dcf2196a34a06a01eb98851cad94663d654b8500b20b4a80cb5e7477b07172590b132805d3367bde2fc8dd7b7624a2f57f7ac425333e99424612b3fa'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
