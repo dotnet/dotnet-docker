@@ -109,8 +109,6 @@ namespace Microsoft.DotNet.Docker.Tests
             // needs to match the filter set by the build/test job. We only produce builds jobs based on what's in the manifest
             // and the manifest only defines Nano Server-based Dockerfiles. So we just need to piggyback on the Nano Server
             // jobs in order to test the Windows Server Core samples.
-            new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64" },
-            new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-iis-x64" },
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64" },
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-iis-x64" },
 
