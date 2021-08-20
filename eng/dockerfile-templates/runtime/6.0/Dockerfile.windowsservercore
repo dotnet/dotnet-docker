@@ -7,6 +7,7 @@ ENV `
     ASPNETCORE_URLS=http://+:80 `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
+    # .NET Runtime version
     DOTNET_VERSION={{VARIABLES["runtime|6.0|build-version"]}}
 
 # Install .NET

@@ -97,6 +97,14 @@
                   }
                 }
               }
+            },
+            {
+              "dockerfile": "samples/dotnetapp",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2022",
+              "tags": {
+                "dotnetapp-nanoserver-ltsc2022": {}
+              }
             }
           ]
         },
@@ -235,6 +243,23 @@
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:samples):dotnetapp-nanoserver-20H2"
+                  ]
+                }
+              ]
+            },
+            {
+              "dockerfile": "samples/aspnetapp",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2022",
+              "tags": {
+                "aspnetapp-nanoserver-ltsc2022": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-nanoserver-ltsc2022"
                   ]
                 }
               ]

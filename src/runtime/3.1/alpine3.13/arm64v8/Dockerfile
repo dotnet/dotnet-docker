@@ -1,6 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:3.1.18-alpine3.13-arm64v8
 
+# .NET Core globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
+# by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
+
 # Install .NET Core
 RUN dotnet_version=3.1.18 \
     && wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \

@@ -5,7 +5,7 @@ FROM $REPO:6.0.0-rc.1-windowsservercore-ltsc2019
 
 ENV `
     # ASP.NET Core version
-    ASPNET_VERSION=6.0.0-rc.1.21411.15 `
+    ASPNET_VERSION=6.0.0-rc.1.21419.28 `
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
@@ -15,7 +15,7 @@ RUN powershell -Command `
         `
         # Install ASP.NET Core Runtime
         Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNET_VERSION/aspnetcore-runtime-$Env:ASPNET_VERSION-win-x64.zip; `
-        $aspnetcore_sha512 = '59ab28e1646ad2153403870da9ec949195095496a12d647404371a2366e47fd6da64d9fd25a449b16928a75678f4707bce07a90afdf9a679aab94d35a868f6cf'; `
+        $aspnetcore_sha512 = '121aad832e0110eedc185cf4c0fc9a5523ef6433d489f43dce3fac2cb997bd1d7b86064cb30b9f4ae3339ebc7a067787a61db415d3e3fd7ef5f860ecab7a4637'; `
         if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
