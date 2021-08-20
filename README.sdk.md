@@ -69,11 +69,11 @@ Tags | Dockerfile | OS Version
 3.1.412-alpine3.13, 3.1-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/alpine3.13/amd64/Dockerfile) | Alpine 3.13
 3.1.412-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.412-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
-2.1.817-stretch, 2.1-stretch, 2.1.817, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/stretch/amd64/Dockerfile) | Debian 9
-2.1.817-alpine3.14, 2.1-alpine3.14, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/alpine3.14/amd64/Dockerfile) | Alpine 3.14
-2.1.817-alpine3.13, 2.1-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/alpine3.13/amd64/Dockerfile) | Alpine 3.13
-2.1.817-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/focal/amd64/Dockerfile) | Ubuntu 20.04
-2.1.817-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
+2.1.818-stretch, 2.1-stretch, 2.1.818, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/stretch/amd64/Dockerfile) | Debian 9
+2.1.818-alpine3.14, 2.1-alpine3.14, 2.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/alpine3.14/amd64/Dockerfile) | Alpine 3.14
+2.1.818-alpine3.13, 2.1-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/alpine3.13/amd64/Dockerfile) | Alpine 3.13
+2.1.818-focal, 2.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/focal/amd64/Dockerfile) | Ubuntu 20.04
+2.1.818-bionic, 2.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
@@ -108,9 +108,9 @@ Tags | Dockerfile | OS Version
 3.1.412-buster-arm32v7, 3.1-buster-arm32v7, 3.1.412, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/buster/arm32v7/Dockerfile) | Debian 10
 3.1.412-focal-arm32v7, 3.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 3.1.412-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
-2.1.817-stretch-arm32v7, 2.1-stretch-arm32v7, 2.1.817, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/stretch/arm32v7/Dockerfile) | Debian 9
-2.1.817-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
-2.1.817-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+2.1.818-stretch-arm32v7, 2.1-stretch-arm32v7, 2.1.818, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/stretch/arm32v7/Dockerfile) | Debian 9
+2.1.818-focal-arm32v7, 2.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+2.1.818-bionic-arm32v7, 2.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
@@ -120,12 +120,33 @@ Tags | Dockerfile | OS Version
 6.0.100-rc.1-alpine3.13-arm32v7, 6.0-alpine3.13-arm32v7, 6.0.100-rc.1-alpine3.13, 6.0-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.13/arm32v7/Dockerfile) | Alpine 3.13
 6.0.100-rc.1-focal-arm32v7, 6.0-focal-arm32v7, 6.0.100-rc.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
+## Nano Server 2022 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+5.0.400-nanoserver-ltsc2022, 5.0-nanoserver-ltsc2022, 5.0.400, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/nanoserver-ltsc2022/amd64/Dockerfile)
+3.1.412-nanoserver-ltsc2022, 3.1-nanoserver-ltsc2022, 3.1.412, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/nanoserver-ltsc2022/amd64/Dockerfile)
+
+##### .NET 6.0 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+6.0.100-rc.1-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.100-rc.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
+
+## Windows Server Core 2022 amd64 Tags
+Tag | Dockerfile
+---------| ---------------
+5.0.400-windowsservercore-ltsc2022, 5.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+
+##### .NET 6.0 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+6.0.100-rc.1-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+
 ## Nano Server, version 20H2 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 5.0.400-nanoserver-20H2, 5.0-nanoserver-20H2, 5.0.400, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/nanoserver-20H2/amd64/Dockerfile)
 3.1.412-nanoserver-20H2, 3.1-nanoserver-20H2, 3.1.412, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/nanoserver-20H2/amd64/Dockerfile)
-2.1.817-nanoserver-20H2, 2.1-nanoserver-20H2, 2.1.817, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-20H2/amd64/Dockerfile)
+2.1.818-nanoserver-20H2, 2.1-nanoserver-20H2, 2.1.818, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-20H2/amd64/Dockerfile)
 
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
@@ -137,7 +158,7 @@ Tag | Dockerfile
 ---------| ---------------
 5.0.400-nanoserver-2004, 5.0-nanoserver-2004, 5.0.400, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/nanoserver-2004/amd64/Dockerfile)
 3.1.412-nanoserver-2004, 3.1-nanoserver-2004, 3.1.412, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/nanoserver-2004/amd64/Dockerfile)
-2.1.817-nanoserver-2004, 2.1-nanoserver-2004, 2.1.817, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-2004/amd64/Dockerfile)
+2.1.818-nanoserver-2004, 2.1-nanoserver-2004, 2.1.818, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-2004/amd64/Dockerfile)
 
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
@@ -149,7 +170,7 @@ Tag | Dockerfile
 ---------| ---------------
 5.0.400-nanoserver-1809, 5.0-nanoserver-1809, 5.0.400, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/nanoserver-1809/amd64/Dockerfile)
 3.1.412-nanoserver-1809, 3.1-nanoserver-1809, 3.1.412, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/nanoserver-1809/amd64/Dockerfile)
-2.1.817-nanoserver-1809, 2.1-nanoserver-1809, 2.1.817, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-1809/amd64/Dockerfile)
+2.1.818-nanoserver-1809, 2.1-nanoserver-1809, 2.1.818, 2.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/2.1/nanoserver-1809/amd64/Dockerfile)
 
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
@@ -177,7 +198,7 @@ See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/micr
 
 # Image Update Policy
 
-* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:20H2, buildpack-deps:bionic-scm, etc.).
+* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:ltsc2022, buildpack-deps:bionic-scm, etc.).
 * We publish .NET images as part of releasing new versions of .NET including major/minor and servicing.
 
 # Feedback

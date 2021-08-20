@@ -95,7 +95,7 @@ _Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/
 
 ## Tag Listing
 
-Each [Docker Hub repository](https://hub.docker.com/_/microsoft-dotnet) contains a detailed listing of all supported tags. The listing is broken apart by OS platform (e.g. `Linux amd64 Tags` or `Nano Server, version 20H2 amd64 Tags`). Each row represents a single image and contains all of the tags that reference it. For example the following entry represents the 5.0 runtime Buster image which is referenced by seven tags:
+Each [Docker Hub repository](https://hub.docker.com/_/microsoft-dotnet) contains a detailed listing of all supported tags. The listing is broken apart by OS platform (e.g. `Linux amd64 Tags` or `Nano Server 2022 amd64 Tags`). Each row represents a single image and contains all of the tags that reference it. For example the following entry represents the 5.0 runtime Buster image which is referenced by seven tags:
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
