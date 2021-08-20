@@ -43,9 +43,9 @@
     "dotnet|5.0|product-version": "5.0.9",
     "dotnet|6.0|product-version": "6.0.0-rc.1",
 
-    "monitor|5.0|build-version": "5.0.0-preview.7.21418.2",
+    "monitor|5.0|build-version": "5.0.0-preview.7.21419.4",
     "monitor|5.0|product-version": "5.0.0-preview.7",
-    "monitor|5.0|sha": "5e3ceaeb7bded4717eabf6ffb08b90520198f31babafe0beae2470f114ae851515d5e06bf64882268e65c0ebb017288bc8abcc80906c5ea194d396c7f2913711",
+    "monitor|5.0|sha": "d70c3d1796168432f76dad2ff3298e68a69b1e75af16f21afbc3372c93c906d64542cd92348306e7e9ca0c7cd18d2fe49952ae6867661ca3fa7b6607aa22937c",
 
     "lzma|2.1|sha": "34f838973e49f6adc214f64082af701d947bba07f8b455b4ef691d5ac59fda2dbd77edcb3977bb20c6b739ff998fd05cc6c1e00c59b5c08b2ffb65a8aaa7bcec",
 
