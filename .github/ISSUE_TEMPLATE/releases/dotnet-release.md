@@ -34,7 +34,7 @@ _The set of .NET versions that are being released as a unit._
       Servicing release (exclude 5.0/6.0 if separate runtime-deps Dockerfiles were defined):
 
           noCache: true
-          imageBuilder.pathArgs: --path 'src/*/2.1/*' --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*' --path 'src/monitor/*'
+          imageBuilder.pathArgs: --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*' --path 'src/monitor/*'
 
       Preview release (exclude 3.1 if separate runtime-deps Dockerfiles were defined):
 
@@ -49,7 +49,7 @@ _The set of .NET versions that are being released as a unit._
 
       Servicing release (exclude 5.0/6.0 if separate runtime-deps Dockerfiles were defined):
 
-          imageBuilder.pathArgs: --path 'src/*/2.1/*' --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*' --path 'src/monitor/*'
+          imageBuilder.pathArgs: --path 'src/*/3.1/*' --path 'src/*/5.0/*' --path 'src/*/6.0/*' --path 'src/monitor/*'
 
       Preview release (exclude 3.1 if separate runtime-deps Dockerfiles were defined):
 
