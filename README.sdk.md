@@ -75,7 +75,6 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 6.0.100-rc.1-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.100-rc.1-bullseye-slim, 6.0-bullseye-slim, 6.0.100-rc.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
 6.0.100-rc.1-alpine3.14-amd64, 6.0-alpine3.14-amd64, 6.0-alpine-amd64, 6.0.100-rc.1-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.14/amd64/Dockerfile) | Alpine 3.14
-6.0.100-rc.1-alpine3.13-amd64, 6.0-alpine3.13-amd64, 6.0.100-rc.1-alpine3.13, 6.0-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.13/amd64/Dockerfile) | Alpine 3.13
 6.0.100-rc.1-focal-amd64, 6.0-focal-amd64, 6.0.100-rc.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm64 Tags
@@ -92,7 +91,6 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 6.0.100-rc.1-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.100-rc.1-bullseye-slim, 6.0-bullseye-slim, 6.0.100-rc.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
 6.0.100-rc.1-alpine3.14-arm64v8, 6.0-alpine3.14-arm64v8, 6.0-alpine-arm64v8, 6.0.100-rc.1-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.14/arm64v8/Dockerfile) | Alpine 3.14
-6.0.100-rc.1-alpine3.13-arm64v8, 6.0-alpine3.13-arm64v8, 6.0.100-rc.1-alpine3.13, 6.0-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.13/arm64v8/Dockerfile) | Alpine 3.13
 6.0.100-rc.1-focal-arm64v8, 6.0-focal-arm64v8, 6.0.100-rc.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
@@ -109,7 +107,6 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 6.0.100-rc.1-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.100-rc.1-bullseye-slim, 6.0-bullseye-slim, 6.0.100-rc.1, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
 6.0.100-rc.1-alpine3.14-arm32v7, 6.0-alpine3.14-arm32v7, 6.0-alpine-arm32v7, 6.0.100-rc.1-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.14/arm32v7/Dockerfile) | Alpine 3.14
-6.0.100-rc.1-alpine3.13-arm32v7, 6.0-alpine3.13-arm32v7, 6.0.100-rc.1-alpine3.13, 6.0-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.13/arm32v7/Dockerfile) | Alpine 3.13
 6.0.100-rc.1-focal-arm32v7, 6.0-focal-arm32v7, 6.0.100-rc.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ## Nano Server 2022 amd64 Tags
