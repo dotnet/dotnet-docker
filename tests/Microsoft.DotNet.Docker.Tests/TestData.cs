@@ -87,10 +87,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly SampleImageData[] s_windowsSampleTestData =
         {
-            new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Amd64, IsPublished = true },
-            new SampleImageData { OS = OS.NanoServer2004, Arch = Arch.Amd64, IsPublished = true },
-            new SampleImageData { OS = OS.NanoServer20H2, Arch = Arch.Amd64, IsPublished = true },
-            // TODO: Add NanoServerLtsc2022 once the sample image has been published.
+            new SampleImageData { OS = OS.NanoServer1809,     Arch = Arch.Amd64, IsPublished = true },
+            new SampleImageData { OS = OS.NanoServer2004,     Arch = Arch.Amd64, IsPublished = true },
+            new SampleImageData { OS = OS.NanoServer20H2,     Arch = Arch.Amd64, IsPublished = true },
+            new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, IsPublished = true },
 
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64-slim" },
