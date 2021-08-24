@@ -83,7 +83,7 @@ $ docker run --rm mcr.microsoft.com/dotnet/sdk:5.0-buster-slim find ./usr/share/
 ./usr/share/powershell/.store/powershell.linux.x64/7.1.0-rc.2/powershell.linux.x64/7.1.0-rc.2/tools/net5.0/any/ThirdPartyNotices.txt
 ```
 
-Note: In .NET Core 2.1 and 3.1, the SDK image is based on [`buildpack-deps`](https://hub.docker.com/_/buildpack-deps), which includes components that we distribute but do not use (like Python). Python also provides third party notice files, via `buildpack-deps`. You will see those if you use the following (unfiltered) pattern:
+Note: In .NET Core 3.1, the SDK image is based on [`buildpack-deps`](https://hub.docker.com/_/buildpack-deps), which includes components that we distribute but do not use (like Python). Python also provides third party notice files, via `buildpack-deps`. You will see those if you use the following (unfiltered) pattern:
 
 ```console
 $ docker run --rm mcr.microsoft.com/dotnet/sdk:3.1 find . | grep -i third
