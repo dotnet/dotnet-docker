@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=6.0.100-rc.1.21422.7 \
+    DOTNET_SDK_VERSION=6.0.100-rc.1.21424.1 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -28,7 +28,7 @@ RUN apk add --no-cache \
 
 # Install .NET SDK
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='b466596f8854c68d37b3c76a217db0d81102fd2c139823aad7533c00c0a457275d52cef7ced302fc31ca8d36fbd36d3f54e91b74efbc7ad919580ac94bf7a0ee' \
+    && dotnet_sha512='abfe99e57d649c45462aca115ca898dfae31f95d68a1077008836de326a65a24685cef9600db270bac6a4fd3b082805cb4e8c5761de8a15be6cdc9b1fc618285' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -37,9 +37,9 @@ RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.2.0-preview.8 \
+RUN powershell_version=7.2.0-preview.9 \
     && wget -O PowerShell.Linux.Alpine.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha512='bcff66a0a9c275c3836e87811710060a0f1b1fc72f27ae0535ff5f8babcad38660205203378e98ad721f184490138f4a702165d055d46a93dffa48bdba5196c6' \
+    && powershell_sha512='65b78934c2141c4da198fe7ef17f5e08682f2e55ab2bc9851e0b0e8220427002dbe962f85a410872675fd94780e74173addbcc281ff59c3854758462b67c7e88' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \

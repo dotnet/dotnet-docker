@@ -11,7 +11,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=6.0.100-rc.1.21422.7 `
+    DOTNET_SDK_VERSION=6.0.100-rc.1.21424.1 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Unset Logging__Console__FormatterName from aspnet base image
@@ -27,7 +27,7 @@ RUN powershell -Command "`
         `
         # Retrieve .NET SDK
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-        $dotnet_sha512 = 'a45281370b2907d65f1084c064005e685a4926d06be27f3b756fb28474997fdc903624df5661d4b5c644ceefc4e076918e5ff99d9d892eb8df82d158865f9483'; `
+        $dotnet_sha512 = 'c32adf90334aee981acf1001546f214461cc81651e175613c63ef063e3e8e74c3604aafc4694c8fb8e15bba7ebb2b224335c42726ddd8fd226a5913717f50b01'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -36,9 +36,9 @@ RUN powershell -Command "`
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.2.0-preview.8'; `
+        $powershell_version = '7.2.0-preview.9'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = 'acd3df3b8b48f3b557fc4be115df48dcb29b4a673a47a2cbcff3aea2444ac7854b2107a876fc9bc566623a73ee167ed0ae94250ce69ac0a2fe31d14f650510ff'; `
+        $powershell_sha512 = '7d43493ee1e0bb07c3d4bc339c1bd8050de73dd4f77c97f891eb1ebe71e76406d821dbebeaf368fabb0363491d468181abafe6248e525e2a140eba929a4afebd'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
