@@ -1,12 +1,13 @@
 parameters:
   preBuildValidation: false
+  internalProjectName: null
 
 steps:
 - template: init-docker-linux.yml
   parameters:
     setupImageBuilder: false
     setupTestRunner: true
-    cleanupDocker: ${{ eq(variables['System.TeamProject'], 'internal') }}
+    cleanupDocker: ${{ eq(variables['System.TeamProject'], parameters.internalProjectName) }}
 - script: |
     echo "##vso[task.setvariable variable=testRunner.container]testrunner-$(Build.BuildId)-$(System.JobId)"
 
@@ -14,7 +15,7 @@ steps:
     if [ "${{ parameters.preBuildValidation }}" == "true" ]; then
       optionalTestArgs="$optionalTestArgs -TestCategories pre-build"
     else
-      if [ "${{ eq(variables['System.TeamProject'], 'public') }}" == "False" ]; then
+      if [ "${{ variables['System.TeamProject'] }}" == "${{ parameters.internalProjectName }}" ]; then
         optionalTestArgs="$optionalTestArgs -PullImages -Registry $(acr.server) -RepoPrefix $(stagingRepoPrefix) -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
       fi
       if [ "$REPOTESTARGS" != "" ]; then
@@ -31,11 +32,11 @@ steps:
     --name $(testRunner.container)
     $(imageNames.testRunner.withrepo)
   displayName: Start Test Runner Container
-- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
   - script: >
       docker exec $(testRunner.container) pwsh
       -File $(engCommonRelativePath)/Invoke-WithRetry.ps1
-      "docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)"
+      "docker login -u $(acr.userName) -p $(acr.password) $(acr.server)"
     displayName: Docker login
   - ${{ if eq(parameters.preBuildValidation, 'false') }}:
     - template: ../steps/download-build-artifact.yml
@@ -49,7 +50,7 @@ steps:
     -Architecture '$(architecture)'
     $(optionalTestArgs)
   displayName: Test Images
-- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
   - script: docker exec $(testRunner.container) docker logout $(acr.server)
     displayName: Docker logout
     condition: always()
@@ -79,5 +80,5 @@ steps:
   displayName: Cleanup TestRunner Container
   condition: always()
   continueOnError: true
-- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
   - template: cleanup-docker-linux.yml

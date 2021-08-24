@@ -3,6 +3,7 @@ parameters:
   name: null
   customBuildLegGroupArgs: ""
   isTestStage: false
+  internalProjectName: null
 
 jobs:
 - job: ${{ parameters.name }}
@@ -11,6 +12,8 @@ jobs:
   steps:
   - template: ../steps/init-docker-linux.yml
   - template: ../steps/validate-branch.yml
+    parameters:
+      internalProjectName: ${{ parameters.internalProjectName }}
   - ${{ if eq(parameters.isTestStage, true) }}:
     - template: ../steps/download-build-artifact.yml
       parameters:

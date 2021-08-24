@@ -1,8 +1,14 @@
 trigger: none
 pr: none
 
+resources:
+  repositories:
+  - repository: InternalVersionsRepo
+    type: git
+    name: internal/dotnet-versions
+
 variables:
 - template: variables/samples.yml
 
 stages:
-- template: ../common/templates/stages/build-test-publish-repo.yml
+- template: stages/build-test-publish-repo.yml

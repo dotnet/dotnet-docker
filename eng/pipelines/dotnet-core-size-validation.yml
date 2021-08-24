@@ -13,3 +13,6 @@ variables:
 
 jobs:
 - template: ../common/templates/jobs/validate-image-sizes.yml
+  parameters:
+    internalProjectName:
+    publicProjectName: 

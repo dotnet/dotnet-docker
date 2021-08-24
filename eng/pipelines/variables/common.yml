@@ -1,11 +1,10 @@
 variables:
 - template: ../../common/templates/variables/common.yml
-- name: publicGitRepoUri
-  value: https://github.com/dotnet/dotnet-docker
-- name: productVersionComponents
-  value: 2
-- name: testResultsDirectory
-  value: tests/Microsoft.DotNet.Docker.Tests/TestResults/
+- name: publicProjectName
+  value: public
+- name: internalProjectName
+  value: internal
+
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - group: DotNet-Docker-Common
   - group: DotNet-Docker-Secrets

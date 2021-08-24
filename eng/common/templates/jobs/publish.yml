@@ -1,25 +1,33 @@
 parameters:
   pool: {}
+  internalProjectName: null
+  customInitSteps: []
+  customPublishVariables: []
+
 jobs:
 - job: Publish
   pool: ${{ parameters.pool }}
   variables:
-  - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-    - group: DotNet-AllOrgs-Darc-Pats
   - name: imageBuilder.commonCmdArgs
     value: >
       --manifest '$(manifest)'
       --registry-override '$(acr.server)'
       $(manifestVariables)
       $(imageBuilder.queueArgs)
+  - ${{ parameters.customPublishVariables }}
   steps:
   - template: ../steps/init-docker-linux.yml
+  - ${{ parameters.customInitSteps }}
   - template: ../steps/validate-branch.yml
+    parameters:
+      internalProjectName: ${{ parameters.internalProjectName }}
   - template: ../steps/download-build-artifact.yml
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
       artifactName: image-info
   - template: ../steps/set-image-info-path-var.yml
+    parameters:
+      publicSourceBranch: $(publicSourceBranch)
   - template: ../steps/set-dry-run.yml
   - script: echo $(sourceBuildId) > $(Build.ArtifactStagingDirectory)/source-build-id.txt
     displayName: Write Source Build ID to File
@@ -35,7 +43,7 @@ jobs:
   - script: >
       $(runImageBuilderCmd) copyAcrImages
       '$(acr.servicePrincipalName)'
-      '$(app-dotnetdockerbuild-client-secret)'
+      '$(acr.servicePrincipalPassword)'
       '$(acr.servicePrincipalTenant)'
       '$(acr.subscription)'
       '$(acr.resourceGroup)'
@@ -52,7 +60,7 @@ jobs:
       $(runImageBuilderCmd) publishManifest
       '$(artifactsPath)/image-info.json'
       --repo-prefix '$(publishRepoPrefix)'
-      --registry-creds '$(acr.server)=$(acr.userName);$(BotAccount-dotnet-docker-acr-bot-password)'
+      --registry-creds '$(acr.server)=$(acr.userName);$(acr.password)'
       --os-type '*'
       --architecture '*'
       $(dryRunArg)
@@ -75,19 +83,19 @@ jobs:
   - script: >
       $(runImageBuilderCmd) publishImageInfo
       '$(artifactsPath)/image-info.json'
-      '$(dotnetDockerBot.userName)'
-      '$(dotnetDockerBot.email)'
-      '$(BotAccount-dotnet-docker-bot-PAT)'
-      '$(dn-bot-devdiv-dnceng-rw-code-pat)'
-      'dnceng'
-      'internal'
-      --git-owner 'dotnet'
-      --git-repo 'versions'
-      --git-branch 'main'
-      --git-path '$(imageInfoVersionsPath)'
-      --azdo-repo 'dotnet-versions'
-      --azdo-branch 'main'
-      --azdo-path '$(imageInfoVersionsPath)'
+      '$(gitHubVersionsRepoInfo.userName)'
+      '$(gitHubVersionsRepoInfo.email)'
+      '$(gitHubVersionsRepoInfo.accessToken)'
+      '$(azdoVersionsRepoInfo.accessToken)'
+      '$(azdoVersionsRepoInfo.org)'
+      '$(azdoVersionsRepoInfo.project)'
+      --git-owner '$(gitHubVersionsRepoInfo.org)'
+      --git-repo '$(gitHubVersionsRepoInfo.repo)'
+      --git-branch '$(gitHubVersionsRepoInfo.branch)'
+      --git-path '$(gitHubImageInfoVersionsPath)'
+      --azdo-repo '$(azdoVersionsRepoInfo.repo)'
+      --azdo-branch '$(azdoVersionsRepoInfo.branch)'
+      --azdo-path '$(azdoImageInfoVersionsPath)'
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Image Info
@@ -99,7 +107,7 @@ jobs:
       '$(kusto.imageTable)'
       '$(kusto.layerTable)'
       '$(kusto.servicePrincipalName)'
-      '$(app-DotnetDockerTelemetryIngestion-client-secret)'
+      '$(kusto.servicePrincipalPassword)'
       '$(kusto.servicePrincipalTenant)'
       --os-type '*'
       --architecture '*'

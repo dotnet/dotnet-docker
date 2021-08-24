@@ -1,4 +1,4 @@
 variables:
-- template: common.yml
+- template: build-test-publish.yml
 - name: manifest
   value: manifest.json

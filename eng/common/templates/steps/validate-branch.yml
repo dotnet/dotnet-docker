@@ -1,8 +1,11 @@
+parameters:
+  internalProjectName: null
+
 steps:
-- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
   - script: |
       if [[ "$OFFICIALBRANCHES" != *\'$SOURCEBRANCH\'* && \
-            "$PUBLISHREPOPREFIX" == "public/" && \
+            "$PUBLISHREPOPREFIX" == "$OFFICIALREPOPREFIX" && \
             "$OVERRIDEOFFICIALBRANCHVALIDATION" != "true" ]]; then
           echo "##vso[task.logissue type=error]Official builds must be done from an official branch: $OFFICIALBRANCHES"
           exit 1
