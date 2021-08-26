@@ -4,8 +4,8 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm32v7/buildpack-deps:focal-curl as installer
 
 # Retrieve ASP.NET Core
-RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rc.1.21424.27/aspnetcore-runtime-6.0.0-rc.1.21424.27-linux-arm.tar.gz \
-    && aspnetcore_sha512='475c9b8b56a1153b32c9b620f756d60b88c317262bcef8b8a594f3f54c262676ed537204dcfb29956ff1082d63916df011e63f3289ff38b47f196fbcea8bcfe8' \
+RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rc.1.21425.34/aspnetcore-runtime-6.0.0-rc.1.21425.34-linux-arm.tar.gz \
+    && aspnetcore_sha512='0e550bd327948152d822a92adf1eeb70141214a868bd653fdb07b9aa196fd9489495140f1eb6a1c3b0247fab13229e836bf1048253bc83aa24bc81c954e09600' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -ozxf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
@@ -16,7 +16,7 @@ FROM $REPO:6.0.0-rc.1-focal-arm32v7
 
 ENV \
     # ASP.NET Core version
-    ASPNET_VERSION=6.0.0-rc.1.21424.27 \
+    ASPNET_VERSION=6.0.0-rc.1.21425.34 \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
