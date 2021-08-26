@@ -43,7 +43,7 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.0-preview.6-alpine-amd64, 5.0-alpine-amd64, 5.0.0-preview.6-alpine, 5.0-alpine, 5.0.0-preview.6, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/5.0/alpine/amd64/Dockerfile) | Alpine 3.13
+5.0.0-preview.7-alpine-amd64, 5.0-alpine-amd64, 5.0.0-preview.7-alpine, 5.0-alpine, 5.0.0-preview.7, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/5.0/alpine/amd64/Dockerfile) | Alpine 3.13
 
 You can retrieve a list of all available tags for dotnet/monitor at https://mcr.microsoft.com/v2/dotnet/monitor/tags/list.
 <!--End of generated tags-->
