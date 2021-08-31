@@ -315,3 +315,4 @@ stages:
         vmImage: $(defaultLinuxAmd64PoolImage)
       internalProjectName: ${{ parameters.internalProjectName }}
       customPublishVariables: ${{ parameters.customPublishVariables }}
+      customInitSteps: ${{ parameters.customPublishInitSteps }}
