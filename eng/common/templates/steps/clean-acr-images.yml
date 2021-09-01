@@ -1,0 +1,19 @@
+parameters:
+  repo: null
+  action: null
+  age: null
+  customArgs: ""
+steps:
+  - script: >
+      $(runImageBuilderCmd) cleanAcrImages
+      ${{ parameters.repo }}
+      $(acr.servicePrincipalName)
+      $(app-dotnetdockerbuild-client-secret)
+      $(acr.servicePrincipalTenant)
+      $(acr.subscription)
+      $(acr.resourceGroup)
+      $(acr.server)
+      --action ${{ parameters.action }}
+      --age ${{ parameters.age }}
+      ${{ parameters.customArgs }}
+    displayName: Clean ACR Images - ${{ parameters.repo }}
