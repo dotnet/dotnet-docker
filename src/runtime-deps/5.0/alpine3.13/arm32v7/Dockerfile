@@ -9,8 +9,7 @@ RUN apk add --no-cache \
         libintl \
         libssl1.1 \
         libstdc++ \
-        zlib \
-    && apk upgrade
+        zlib
 
 ENV \
     # Configure web servers to bind to port 80 when present
