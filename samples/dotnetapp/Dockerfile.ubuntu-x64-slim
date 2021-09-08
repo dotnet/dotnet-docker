@@ -4,7 +4,7 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
-RUN dotnet restore -r linux-x64
+RUN dotnet restore -r linux-x64 /p:PublishReadyToRun=true
 
 # copy and publish app and libraries
 COPY . .
