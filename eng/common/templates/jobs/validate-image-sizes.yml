@@ -35,7 +35,7 @@ jobs:
       dockerClientOS: linux
       validationMode: integrity
 - job: WindowsPerfTests
-  pool: Docker-20H2-${{ variables['System.TeamProject'] }}
+  pool: Docker-2022-${{ variables['System.TeamProject'] }}
   workspace:
     clean: all
   steps:
