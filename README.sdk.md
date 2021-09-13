@@ -58,10 +58,12 @@ The following samples show how to develop, build and test .NET applications with
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 5.0.400-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.400-buster-slim, 5.0-buster-slim, 5.0.400, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/5.0/buster-slim/amd64/Dockerfile) | Debian 10
-5.0.400-alpine3.13-amd64, 5.0-alpine3.13-amd64, 5.0-alpine-amd64, 5.0.400-alpine3.13, 5.0-alpine3.13, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/5.0/alpine3.13/amd64/Dockerfile) | Alpine 3.13
+5.0.400-alpine3.14-amd64, 5.0-alpine3.14-amd64, 5.0-alpine-amd64, 5.0.400-alpine3.14, 5.0-alpine3.14, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/5.0/alpine3.14/amd64/Dockerfile) | Alpine 3.14
+5.0.400-alpine3.13-amd64, 5.0-alpine3.13-amd64, 5.0.400-alpine3.13, 5.0-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/5.0/alpine3.13/amd64/Dockerfile) | Alpine 3.13
 5.0.400-focal-amd64, 5.0-focal-amd64, 5.0.400-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.412-buster, 3.1-buster, 3.1.412, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/buster/amd64/Dockerfile) | Debian 10
-3.1.412-alpine3.13, 3.1-alpine3.13, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/alpine3.13/amd64/Dockerfile) | Alpine 3.13
+3.1.412-alpine3.14, 3.1-alpine3.14, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/alpine3.14/amd64/Dockerfile) | Alpine 3.14
+3.1.412-alpine3.13, 3.1-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/alpine3.13/amd64/Dockerfile) | Alpine 3.13
 3.1.412-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.412-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
@@ -69,7 +71,7 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 6.0.100-preview.7-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.100-preview.7-bullseye-slim, 6.0-bullseye-slim, 6.0.100-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
-6.0.100-preview.7-alpine3.13-amd64, 6.0-alpine3.13-amd64, 6.0-alpine-amd64, 6.0.100-preview.7-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.13/amd64/Dockerfile) | Alpine 3.13
+6.0.100-preview.7-alpine3.14-amd64, 6.0-alpine3.14-amd64, 6.0-alpine-amd64, 6.0.100-preview.7-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.14/amd64/Dockerfile) | Alpine 3.14
 6.0.100-preview.7-focal-amd64, 6.0-focal-amd64, 6.0.100-preview.7-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm64 Tags
@@ -85,7 +87,7 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 6.0.100-preview.7-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.100-preview.7-bullseye-slim, 6.0-bullseye-slim, 6.0.100-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
-6.0.100-preview.7-alpine3.13-arm64v8, 6.0-alpine3.13-arm64v8, 6.0-alpine-arm64v8, 6.0.100-preview.7-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.13/arm64v8/Dockerfile) | Alpine 3.13
+6.0.100-preview.7-alpine3.14-arm64v8, 6.0-alpine3.14-arm64v8, 6.0-alpine-arm64v8, 6.0.100-preview.7-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.14/arm64v8/Dockerfile) | Alpine 3.14
 6.0.100-preview.7-focal-arm64v8, 6.0-focal-arm64v8, 6.0.100-preview.7-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
@@ -101,7 +103,7 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 6.0.100-preview.7-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.100-preview.7-bullseye-slim, 6.0-bullseye-slim, 6.0.100-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
-6.0.100-preview.7-alpine3.13-arm32v7, 6.0-alpine3.13-arm32v7, 6.0-alpine-arm32v7, 6.0.100-preview.7-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.13/arm32v7/Dockerfile) | Alpine 3.13
+6.0.100-preview.7-alpine3.14-arm32v7, 6.0-alpine3.14-arm32v7, 6.0-alpine-arm32v7, 6.0.100-preview.7-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.14/arm32v7/Dockerfile) | Alpine 3.14
 6.0.100-preview.7-focal-arm32v7, 6.0-focal-arm32v7, 6.0.100-preview.7-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ## Nano Server 2022 amd64 Tags

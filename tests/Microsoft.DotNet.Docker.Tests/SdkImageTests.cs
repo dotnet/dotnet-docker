@@ -161,6 +161,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            // Disable this test for 6.0 on Alpine 3.14 due to PowerShell issue https://github.com/PowerShell/PowerShell/issues/15710
+            if (imageData.Version.Major == 6 && imageData.OS == "alpine3.14")
+            {
+                return;
+            }
+
             // Skip test on CBL-Mariner. Since installation is done via RPM package, we just need to verify the package installation
             // was done (handled by VerifyPackageInstallation test). There's no need to check the actual contents of the package.
             if (imageData.OS.Contains("cbl-mariner"))
@@ -344,6 +350,12 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
             {
                 OutputHelper.WriteLine("PowerShell does not have Alpine arm images, skip testing");
+                return;
+            }
+
+            // Disable this test for 6.0 on Alpine 3.14 due to PowerShell issue https://github.com/PowerShell/PowerShell/issues/15710
+            if (imageData.Version.Major == 6 && imageData.OS == "alpine3.14")
+            {
                 return;
             }
 
