@@ -4646,7 +4646,7 @@
               "dockerfile": "src/monitor/5.0/alpine/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/5.0/Dockerfile.alpine",
               "os": "linux",
-              "osVersion": "alpine3.13",
+              "osVersion": "alpine3.14",
               "tags": {
                 "$(monitor|5.0|product-version)-alpine-amd64": {},
                 "5.0-alpine-amd64": {}
