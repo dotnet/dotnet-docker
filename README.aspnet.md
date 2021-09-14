@@ -51,119 +51,130 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.9-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.9-buster-slim, 5.0-buster-slim, 5.0.9, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/buster-slim/amd64/Dockerfile) | Debian 10
-5.0.9-alpine3.13-amd64, 5.0-alpine3.13-amd64, 5.0-alpine-amd64, 5.0.9-alpine3.13, 5.0-alpine3.13, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/alpine3.13/amd64/Dockerfile) | Alpine 3.13
-5.0.9-focal-amd64, 5.0-focal-amd64, 5.0.9-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
-3.1.18-buster-slim, 3.1-buster-slim, 3.1.18, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/buster-slim/amd64/Dockerfile) | Debian 10
-3.1.18-alpine3.13, 3.1-alpine3.13, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/alpine3.13/amd64/Dockerfile) | Alpine 3.13
-3.1.18-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
-3.1.18-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
+5.0.10-bullseye-slim-amd64, 5.0-bullseye-slim-amd64, 5.0.10-bullseye-slim, 5.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/bullseye-slim/amd64/Dockerfile) | Debian 11
+5.0.10-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.10-buster-slim, 5.0-buster-slim, 5.0.10, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/buster-slim/amd64/Dockerfile) | Debian 10
+5.0.10-alpine3.14-amd64, 5.0-alpine3.14-amd64, 5.0-alpine-amd64, 5.0.10-alpine3.14, 5.0-alpine3.14, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/alpine3.14/amd64/Dockerfile) | Alpine 3.14
+5.0.10-alpine3.13-amd64, 5.0-alpine3.13-amd64, 5.0.10-alpine3.13, 5.0-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/alpine3.13/amd64/Dockerfile) | Alpine 3.13
+5.0.10-focal-amd64, 5.0-focal-amd64, 5.0.10-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
+3.1.19-bullseye-slim, 3.1-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/bullseye-slim/amd64/Dockerfile) | Debian 11
+3.1.19-buster-slim, 3.1-buster-slim, 3.1.19, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/buster-slim/amd64/Dockerfile) | Debian 10
+3.1.19-alpine3.14, 3.1-alpine3.14, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/alpine3.14/amd64/Dockerfile) | Alpine 3.14
+3.1.19-alpine3.13, 3.1-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/alpine3.13/amd64/Dockerfile) | Alpine 3.13
+3.1.19-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
+3.1.19-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
 
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.0-preview.7-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.0-preview.7-bullseye-slim, 6.0-bullseye-slim, 6.0.0-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
-6.0.0-preview.7-alpine3.13-amd64, 6.0-alpine3.13-amd64, 6.0-alpine-amd64, 6.0.0-preview.7-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/alpine3.13/amd64/Dockerfile) | Alpine 3.13
-6.0.0-preview.7-focal-amd64, 6.0-focal-amd64, 6.0.0-preview.7-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
+6.0.0-rc.1-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.0-rc.1-bullseye-slim, 6.0-bullseye-slim, 6.0.0-rc.1, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
+6.0.0-rc.1-alpine3.14-amd64, 6.0-alpine3.14-amd64, 6.0-alpine-amd64, 6.0.0-rc.1-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/alpine3.14/amd64/Dockerfile) | Alpine 3.14
+6.0.0-rc.1-focal-amd64, 6.0-focal-amd64, 6.0.0-rc.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.9-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.9-buster-slim, 5.0-buster-slim, 5.0.9, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/buster-slim/arm64v8/Dockerfile) | Debian 10
-5.0.9-alpine3.13-arm64v8, 5.0-alpine3.13-arm64v8, 5.0-alpine-arm64v8, 5.0.9-alpine3.13, 5.0-alpine3.13, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/alpine3.13/arm64v8/Dockerfile) | Alpine 3.13
-5.0.9-focal-arm64v8, 5.0-focal-arm64v8, 5.0.9-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
-3.1.18-buster-slim-arm64v8, 3.1-buster-slim-arm64v8, 3.1.18, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/buster-slim/arm64v8/Dockerfile) | Debian 10
-3.1.18-alpine3.13-arm64v8, 3.1-alpine3.13-arm64v8, 3.1-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/alpine3.13/arm64v8/Dockerfile) | Alpine 3.13
-3.1.18-focal-arm64v8, 3.1-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/focal/arm64v8/Dockerfile) | Ubuntu 20.04
-3.1.18-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
+5.0.10-bullseye-slim-arm64v8, 5.0-bullseye-slim-arm64v8, 5.0.10-bullseye-slim, 5.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
+5.0.10-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.10-buster-slim, 5.0-buster-slim, 5.0.10, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/buster-slim/arm64v8/Dockerfile) | Debian 10
+5.0.10-alpine3.14-arm64v8, 5.0-alpine3.14-arm64v8, 5.0-alpine-arm64v8, 5.0.10-alpine3.14, 5.0-alpine3.14, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/alpine3.14/arm64v8/Dockerfile) | Alpine 3.14
+5.0.10-alpine3.13-arm64v8, 5.0-alpine3.13-arm64v8, 5.0.10-alpine3.13, 5.0-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/alpine3.13/arm64v8/Dockerfile) | Alpine 3.13
+5.0.10-focal-arm64v8, 5.0-focal-arm64v8, 5.0.10-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+3.1.19-bullseye-slim-arm64v8, 3.1-bullseye-slim-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/bullseye-slim/arm64v8/Dockerfile) | Debian 11
+3.1.19-buster-slim-arm64v8, 3.1-buster-slim-arm64v8, 3.1.19, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/buster-slim/arm64v8/Dockerfile) | Debian 10
+3.1.19-alpine3.14-arm64v8, 3.1-alpine3.14-arm64v8, 3.1-alpine-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/alpine3.14/arm64v8/Dockerfile) | Alpine 3.14
+3.1.19-alpine3.13-arm64v8, 3.1-alpine3.13-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/alpine3.13/arm64v8/Dockerfile) | Alpine 3.13
+3.1.19-focal-arm64v8, 3.1-focal-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+3.1.19-bionic-arm64v8, 3.1-bionic-arm64v8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/bionic/arm64v8/Dockerfile) | Ubuntu 18.04
 
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.0-preview.7-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.0-preview.7-bullseye-slim, 6.0-bullseye-slim, 6.0.0-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
-6.0.0-preview.7-alpine3.13-arm64v8, 6.0-alpine3.13-arm64v8, 6.0-alpine-arm64v8, 6.0.0-preview.7-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/alpine3.13/arm64v8/Dockerfile) | Alpine 3.13
-6.0.0-preview.7-focal-arm64v8, 6.0-focal-arm64v8, 6.0.0-preview.7-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+6.0.0-rc.1-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.0-rc.1-bullseye-slim, 6.0-bullseye-slim, 6.0.0-rc.1, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
+6.0.0-rc.1-alpine3.14-arm64v8, 6.0-alpine3.14-arm64v8, 6.0-alpine-arm64v8, 6.0.0-rc.1-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/alpine3.14/arm64v8/Dockerfile) | Alpine 3.14
+6.0.0-rc.1-focal-arm64v8, 6.0-focal-arm64v8, 6.0.0-rc.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.9-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.9-buster-slim, 5.0-buster-slim, 5.0.9, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/buster-slim/arm32v7/Dockerfile) | Debian 10
-5.0.9-alpine3.13-arm32v7, 5.0-alpine3.13-arm32v7, 5.0-alpine-arm32v7, 5.0.9-alpine3.13, 5.0-alpine3.13, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/alpine3.13/arm32v7/Dockerfile) | Alpine 3.13
-5.0.9-focal-arm32v7, 5.0-focal-arm32v7, 5.0.9-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
-3.1.18-buster-slim-arm32v7, 3.1-buster-slim-arm32v7, 3.1.18, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/buster-slim/arm32v7/Dockerfile) | Debian 10
-3.1.18-focal-arm32v7, 3.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
-3.1.18-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
+5.0.10-bullseye-slim-arm32v7, 5.0-bullseye-slim-arm32v7, 5.0.10-bullseye-slim, 5.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
+5.0.10-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.10-buster-slim, 5.0-buster-slim, 5.0.10, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/buster-slim/arm32v7/Dockerfile) | Debian 10
+5.0.10-alpine3.14-arm32v7, 5.0-alpine3.14-arm32v7, 5.0-alpine-arm32v7, 5.0.10-alpine3.14, 5.0-alpine3.14, 5.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/alpine3.14/arm32v7/Dockerfile) | Alpine 3.14
+5.0.10-alpine3.13-arm32v7, 5.0-alpine3.13-arm32v7, 5.0.10-alpine3.13, 5.0-alpine3.13 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/alpine3.13/arm32v7/Dockerfile) | Alpine 3.13
+5.0.10-focal-arm32v7, 5.0-focal-arm32v7, 5.0.10-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+3.1.19-bullseye-slim-arm32v7, 3.1-bullseye-slim-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/bullseye-slim/arm32v7/Dockerfile) | Debian 11
+3.1.19-buster-slim-arm32v7, 3.1-buster-slim-arm32v7, 3.1.19, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/buster-slim/arm32v7/Dockerfile) | Debian 10
+3.1.19-focal-arm32v7, 3.1-focal-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+3.1.19-bionic-arm32v7, 3.1-bionic-arm32v7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/bionic/arm32v7/Dockerfile) | Ubuntu 18.04
 
 ##### .NET 6.0 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.0-preview.7-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.0-preview.7-bullseye-slim, 6.0-bullseye-slim, 6.0.0-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
-6.0.0-preview.7-alpine3.13-arm32v7, 6.0-alpine3.13-arm32v7, 6.0-alpine-arm32v7, 6.0.0-preview.7-alpine3.13, 6.0-alpine3.13, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/alpine3.13/arm32v7/Dockerfile) | Alpine 3.13
-6.0.0-preview.7-focal-arm32v7, 6.0-focal-arm32v7, 6.0.0-preview.7-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+6.0.0-rc.1-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.0-rc.1-bullseye-slim, 6.0-bullseye-slim, 6.0.0-rc.1, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
+6.0.0-rc.1-alpine3.14-arm32v7, 6.0-alpine3.14-arm32v7, 6.0-alpine-arm32v7, 6.0.0-rc.1-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/alpine3.14/arm32v7/Dockerfile) | Alpine 3.14
+6.0.0-rc.1-focal-arm32v7, 6.0-focal-arm32v7, 6.0.0-rc.1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.9-nanoserver-ltsc2022, 5.0-nanoserver-ltsc2022, 5.0.9, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/nanoserver-ltsc2022/amd64/Dockerfile)
-3.1.18-nanoserver-ltsc2022, 3.1-nanoserver-ltsc2022, 3.1.18, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/nanoserver-ltsc2022/amd64/Dockerfile)
+5.0.10-nanoserver-ltsc2022, 5.0-nanoserver-ltsc2022, 5.0.10, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/nanoserver-ltsc2022/amd64/Dockerfile)
+3.1.19-nanoserver-ltsc2022, 3.1-nanoserver-ltsc2022, 3.1.19, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.0-preview.7-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.0-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
+6.0.0-rc.1-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.0-rc.1, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ## Windows Server Core 2022 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.9-windowsservercore-ltsc2022, 5.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+5.0.10-windowsservercore-ltsc2022, 5.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.0-preview.7-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+6.0.0-rc.1-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ## Nano Server, version 20H2 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.9-nanoserver-20H2, 5.0-nanoserver-20H2, 5.0.9, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/nanoserver-20H2/amd64/Dockerfile)
-3.1.18-nanoserver-20H2, 3.1-nanoserver-20H2, 3.1.18, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/nanoserver-20H2/amd64/Dockerfile)
+5.0.10-nanoserver-20H2, 5.0-nanoserver-20H2, 5.0.10, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/nanoserver-20H2/amd64/Dockerfile)
+3.1.19-nanoserver-20H2, 3.1-nanoserver-20H2, 3.1.19, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/nanoserver-20H2/amd64/Dockerfile)
 
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.0-preview.7-nanoserver-20H2, 6.0-nanoserver-20H2, 6.0.0-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-20H2/amd64/Dockerfile)
+6.0.0-rc.1-nanoserver-20H2, 6.0-nanoserver-20H2, 6.0.0-rc.1, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-20H2/amd64/Dockerfile)
 
 ## Nano Server, version 2004 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.9-nanoserver-2004, 5.0-nanoserver-2004, 5.0.9, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/nanoserver-2004/amd64/Dockerfile)
-3.1.18-nanoserver-2004, 3.1-nanoserver-2004, 3.1.18, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/nanoserver-2004/amd64/Dockerfile)
+5.0.10-nanoserver-2004, 5.0-nanoserver-2004, 5.0.10, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/nanoserver-2004/amd64/Dockerfile)
+3.1.19-nanoserver-2004, 3.1-nanoserver-2004, 3.1.19, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/nanoserver-2004/amd64/Dockerfile)
 
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.0-preview.7-nanoserver-2004, 6.0-nanoserver-2004, 6.0.0-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-2004/amd64/Dockerfile)
+6.0.0-rc.1-nanoserver-2004, 6.0-nanoserver-2004, 6.0.0-rc.1, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-2004/amd64/Dockerfile)
 
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.9-nanoserver-1809, 5.0-nanoserver-1809, 5.0.9, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/nanoserver-1809/amd64/Dockerfile)
-3.1.18-nanoserver-1809, 3.1-nanoserver-1809, 3.1.18, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/nanoserver-1809/amd64/Dockerfile)
+5.0.10-nanoserver-1809, 5.0-nanoserver-1809, 5.0.10, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/nanoserver-1809/amd64/Dockerfile)
+3.1.19-nanoserver-1809, 3.1-nanoserver-1809, 3.1.19, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/3.1/nanoserver-1809/amd64/Dockerfile)
 
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.0-preview.7-nanoserver-1809, 6.0-nanoserver-1809, 6.0.0-preview.7, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-1809/amd64/Dockerfile)
+6.0.0-rc.1-nanoserver-1809, 6.0-nanoserver-1809, 6.0.0-rc.1, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server Core 2019 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-5.0.9-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+5.0.10-windowsservercore-ltsc2019, 5.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/5.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 ##### .NET 6.0 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.0-preview.7-windowsservercore-ltsc2019, 6.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+6.0.0-rc.1-windowsservercore-ltsc2019, 6.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/6.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/aspnet at https://mcr.microsoft.com/v2/dotnet/aspnet/tags/list.
 <!--End of generated tags-->

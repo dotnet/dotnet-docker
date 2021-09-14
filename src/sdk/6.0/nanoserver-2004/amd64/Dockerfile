@@ -9,8 +9,8 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 RUN `
     # Retrieve .NET SDK
-    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-preview.7.21379.14/dotnet-sdk-6.0.100-preview.7.21379.14-win-x64.zip; `
-    $dotnet_sha512 = '0f164ef5248951762fe063f118d8172c080cf1797e38be858f62637833fb1fb0f19e25680c32ee9e8977e9da36449eab7e6bad36245720f352a91854868c51aa'; `
+    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-rc.1.21458.32/dotnet-sdk-6.0.100-rc.1.21458.32-win-x64.zip; `
+    $dotnet_sha512 = 'e142b0fa75f4be2bc67abbd2e61342014221fec1c0cac1d96f71663a648d8fcd31e3bfa2cf9ad9f826e70c45527227d10991a5cedf5b2492c881b8288b10dca2'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -20,9 +20,9 @@ RUN `
     Remove-Item -Force dotnet.zip; `
     `
     # Install PowerShell global tool
-    $powershell_version = '7.2.0-preview.8'; `
+    $powershell_version = '7.2.0-preview.9'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-    $powershell_sha512 = 'acd3df3b8b48f3b557fc4be115df48dcb29b4a673a47a2cbcff3aea2444ac7854b2107a876fc9bc566623a73ee167ed0ae94250ce69ac0a2fe31d14f650510ff'; `
+    $powershell_sha512 = '7d43493ee1e0bb07c3d4bc339c1bd8050de73dd4f77c97f891eb1ebe71e76406d821dbebeaf368fabb0363491d468181abafe6248e525e2a140eba929a4afebd'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -41,7 +41,7 @@ RUN `
     Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
 # SDK image
-FROM $REPO:6.0.0-preview.7-nanoserver-2004
+FROM $REPO:6.0.0-rc.1-nanoserver-2004
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -51,7 +51,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=6.0.100-preview.7.21379.14 `
+    DOTNET_SDK_VERSION=6.0.100-rc.1.21458.32 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Unset Logging__Console__FormatterName from aspnet base image

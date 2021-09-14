@@ -9,8 +9,8 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 RUN `
     # Retrieve .NET SDK
-    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/5.0.400/dotnet-sdk-5.0.400-win-x64.zip; `
-    $dotnet_sha512 = '169640641622c76f3f78eeb33f369286b0b487be635685a7653e847a8cda8e5782d8803d5f993a7d36fb0d38dd03a0576d97413ed23b0e2cbbd67d4c65de9f94'; `
+    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/5.0.401/dotnet-sdk-5.0.401-win-x64.zip; `
+    $dotnet_sha512 = '9838f0286afe3724f490c6686564dae3ab27c9fe0e2c41a48d8aaeaabd07d9a219e207206d88311241c66dde8c79a9dae7ec1f8103303aeaf6943a3a9f6d34e5'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -20,9 +20,9 @@ RUN `
     Remove-Item -Force dotnet.zip; `
     `
     # Install PowerShell global tool
-    $powershell_version = '7.1.3'; `
+    $powershell_version = '7.1.4'; `
     Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-    $powershell_sha512 = '6a390cddbc88fe9a645363ccec9819603cfb754b5dead3161197f45c4b248b6bd4176b369ded139d7f9d485105351395de07cd8e61ed4f22a9cdd34bfaff9fc5'; `
+    $powershell_sha512 = 'bc6992fb6077546aea9d0e2f99a2d25c6bdebf509178e8432b5bd50c36e2d5371c7c92c103539f0da8c190c5ab1430aa4ad927a79702bf0aa4af05fa35f5dcda'; `
     if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -38,7 +38,7 @@ RUN `
     Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
 # SDK image
-FROM $REPO:5.0.9-nanoserver-2004
+FROM $REPO:5.0.10-nanoserver-2004
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -46,7 +46,7 @@ ENV `
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
     # SDK version
-    DOTNET_SDK_VERSION=5.0.400 `
+    DOTNET_SDK_VERSION=5.0.401 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

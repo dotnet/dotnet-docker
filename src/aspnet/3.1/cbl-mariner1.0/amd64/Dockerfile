@@ -1,10 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:3.1.18-cbl-mariner1.0
+FROM $REPO:3.1.19-cbl-mariner1.0
 
 # Install ASP.NET Core
-RUN aspnetcore_version=3.1.18 \
+RUN aspnetcore_version=3.1.19 \
     && curl -SL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-x64.rpm \
-    && aspnetcore_sha512='d26b9b637c33e1a64e0b3101c3e4059eeabb16096b1f558845d9d9d6fd3ffa01132a3210c2b90ec5283f899a174a38db036c60bb353e6296ee4e283332bba89f' \
+    && aspnetcore_sha512='ec2788885aa4d18fa59bfa8ee62ee567fcc93c1708d9fd77c72778b862e6baca4a7519695ced2e362551fc11c66b0152fe5a30857537a7d3beacb052ff632cf7' \
     && echo "$aspnetcore_sha512  aspnetcore.rpm" | sha512sum -c - \
     && rpm --install aspnetcore.rpm \
     && rm aspnetcore.rpm

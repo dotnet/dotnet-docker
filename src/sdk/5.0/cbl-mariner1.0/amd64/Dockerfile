@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:5.0.9-cbl-mariner1.0-amd64
+FROM $REPO:5.0.10-cbl-mariner1.0-amd64
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -7,7 +7,7 @@ ENV \
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
     # SDK version
-    DOTNET_SDK_VERSION=5.0.400 \
+    DOTNET_SDK_VERSION=5.0.401 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -22,11 +22,11 @@ RUN tdnf install -y \
 
 # Install .NET SDK
 RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-x64.rpm \
-    && dotnet_sha512='a7b7c16b1eda2d71d27de44b899be50eaccf1840ffe9a8a0dce1bcadbcbb2f85a034bc3b792fa0abf9493d9cc5ca850fa51194bb6d8dce43bcaae09aa899f820' \
+    && dotnet_sha512='4d5c079b739116163a9df6042006103a30e5146ba5053256ab7673054c259c97573fcf3bac40b4f9281f2f5c0ebc7391a6c22ad39cc6dea4b08ff7d588583b7b' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
     && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='4a91fe60f9e81b2da2e2b0e1090f66af5d3465a80c5c8e23af02ea546c0d9d9f4307f903c019b11cfc67416cc97297b49021fc7964a0dae2bcdec0744a3c78fe' \
+    && dotnet_sha512='e46d34b8a3be62c82f16e80c0efaa2f7cd0bfe425a8a6bf9ac47658f061b6735747753dc508656931338c21e14bffb2e882da4bd4af07421b589400c905b2243' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
     && curl -SL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/5.0.0/dotnet-targeting-pack-5.0.0-x64.rpm \
@@ -47,9 +47,9 @@ RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOT
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.1.3 \
+RUN powershell_version=7.1.4 \
     && curl -SL --output PowerShell.Linux.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='537d885b79dd1cd183d14b5f5e71046558fb015f562bb817ee90fbabaa9b1039c822949b7e1a5c9b69a976eae09786e3b2c0f0586c01c822868cc48ea7e36620' \
+    && powershell_sha512='b163608ef7ceb5bae84cc8e841ff3dc1a6df129737444084dfeaaa7911c86e0084f5418926541aed97be5886bc4a14c9777741d15192b87c263c0b86b8391e0e' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \
