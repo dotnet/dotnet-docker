@@ -4,8 +4,8 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm32v7/buildpack-deps:buster-curl as installer
 
 # Retrieve .NET
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/5.0.9/dotnet-runtime-5.0.9-linux-arm.tar.gz \
-    && dotnet_sha512='9019858e75f73b5fd6ce0e04aeb060f61221391b6a55dbf8ed2e43f1011198252f651fb0e07b2b8e7d8d558403f2c86f6ced147c2501e36a90411bd21e521a4f' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/5.0.10/dotnet-runtime-5.0.10-linux-arm.tar.gz \
+    && dotnet_sha512='3f0e86f14fe8a9b8773a6078fe236e746ca078cb1deab36f4b770170d6a4322b1c870328148934dd4bd5953d5962de4a32ef487c6142079759512b8281d8c7a1' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -ozxf dotnet.tar.gz -C /dotnet \
@@ -13,9 +13,9 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runti
 
 
 # .NET runtime image
-FROM $REPO:5.0.9-buster-slim-arm32v7
+FROM $REPO:5.0.10-buster-slim-arm32v7
 
-ENV DOTNET_VERSION=5.0.9
+ENV DOTNET_VERSION=5.0.10
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
