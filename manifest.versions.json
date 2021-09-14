@@ -36,9 +36,9 @@
     "dotnet|5.0|product-version": "5.0.9",
     "dotnet|6.0|product-version": "6.0.0-rc.1",
 
-    "monitor|5.0|build-version": "5.0.0-preview.8.21462.1",
+    "monitor|5.0|build-version": "5.0.0-preview.8.21463.2",
     "monitor|5.0|product-version": "5.0.0-preview.8",
-    "monitor|5.0|sha": "14ad61d13cb925862361e0b727e47626828582ac75d9fad711c7937f9c6f2215101ae1788fcc17160b6047cd8e7ff3cf55931a2dc6467bb3125b5f4a17e5151e",
+    "monitor|5.0|sha": "c26611bbc675cc796d9337c512b005f287624bf720aea650e4cb68e6dc999f3b9f9a62e4835a29b1b93a6e0c19a807b2f0c5ce7d889aa898037fe46b7ad9a56e",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
