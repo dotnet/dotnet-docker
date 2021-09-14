@@ -8,8 +8,8 @@ FROM mcr.microsoft.com/windows/servercore:1809-amd64 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/5.0.9/aspnetcore-runtime-5.0.9-win-x64.zip; `
-    $aspnetcore_sha512 = 'a53a41683821e1c21a72966d9564da4961780b0cdefe80c9511a9614dd42677cd3ae74cfc2aa361c8910772aa5616a01321121ec7ea54e70bb1786e305df9bbb'; `
+RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/5.0.10/aspnetcore-runtime-5.0.10-win-x64.zip; `
+    $aspnetcore_sha512 = '6fdb4960a670f0aee52bf40a68339762d9088ecaee29c5a379570eb910cb6fe0f0eadfe971e1820ac713beef61363980485eae96ac7e10cc83384674a2071e27'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -21,8 +21,8 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/do
 
 
 # ASP.NET Core image
-FROM $REPO:5.0.9-nanoserver-1809
+FROM $REPO:5.0.10-nanoserver-1809
 
-ENV ASPNET_VERSION=5.0.9
+ENV ASPNET_VERSION=5.0.10
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

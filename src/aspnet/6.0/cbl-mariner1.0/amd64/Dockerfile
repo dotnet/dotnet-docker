@@ -9,7 +9,7 @@ ENV \
 
 # Install ASP.NET Core
 RUN curl -SL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-x64.rpm \
-    && dotnet_sha512='284b2c322183c875c90f2e13762eb5a6d772dc5bf6ba653edebea6588cd06f36d93b96b0879ace5375c6c4bdee6e4f553cb31b654058a51f130fc796d2c9d071' \
+    && dotnet_sha512='b6eb777aaef13cb45c80210a370174e79e51bb9b5c32cb69a3595837928c9fa335c0d699c9072a2491e1ca1bf814026cc256a88e2a357667c71e8f1286fe9895' \
     && echo "$dotnet_sha512  aspnetcore.rpm" | sha512sum -c - \
     && rpm --install aspnetcore.rpm \
     && rm aspnetcore.rpm
