@@ -17,22 +17,25 @@ $completed = $false
 Write-Output "Executing '$Cmd'"
 
 while (-not $completed) {
-    Invoke-Expression $Cmd
-    $exit = $LASTEXITCODE
+    try {
+        Invoke-Expression $Cmd
+        if (-not $(Test-Path variable:LASTEXITCODE) -or $LASTEXITCODE -eq 0) {
+            $completed = $true
+            continue
+        }
+    }
+    catch {
+    }
+
     $count++
 
-    if ($exit -eq 0) {
-        $completed = $true
+    if ($count -lt $Retries) {
+        $wait = [Math]::Pow($WaitFactor, $count - 1)
+        Write-Output "Retry $count/$Retries, retrying in $wait seconds..."
+        Start-Sleep $wait
     }
     else {
-        if ($count -lt $Retries) {
-            $wait = [Math]::Pow($WaitFactor, $count - 1)
-            Write-Output "Retry $count/$Retries exited $exit, retrying in $wait seconds..."
-            Start-Sleep $wait
-        }
-        else {
-            Write-Output "Retry $count/$Retries exited $exit, no more retries left."
-            throw "Failed to execute '$Cmd'"
-        }
+        Write-Output "Retry $count/$Retries, no more retries left."
+        throw "Failed to execute '$Cmd'"
     }
 }
