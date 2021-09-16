@@ -29,22 +29,22 @@ curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-do
 The easiest approach is to run `dotnet test` within a .NET SDK container using the following pattern, with `docker run` and volume mounting.  This initial example is demonstrated on Windows with PowerShell (in Linux container mode). Instructions for all OSes follow.
 
 ```console
-> docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:5.0 dotnet test
+> docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:6.0 dotnet test
   Determining projects to restore...
   Restored /app/libbar/libbar.csproj (in 3.95 sec).
   Restored /app/libfoo/libfoo.csproj (in 3.95 sec).
   Restored /app/tests/tests.csproj (in 8.25 sec).
   libfoo -> /app/libfoo/bin/Debug/netstandard2.0/libfoo.dll
   libbar -> /app/libbar/bin/Debug/netstandard2.0/libbar.dll
-  tests -> /app/tests/bin/Debug/net5.0/tests.dll
-Test run for /app/tests/bin/Debug/net5.0/tests.dll (.NETCoreApp,Version=v5.0)
+  tests -> /app/tests/bin/Debug/net6.0/tests.dll
+Test run for /app/tests/bin/Debug/net6.0/tests.dll (.NETCoreApp,Version=v6.0)
 Microsoft (R) Test Execution Command Line Tool Version 16.8.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
 
 Starting test execution, please wait...
 A total of 1 test files matched the specified pattern.
 
-Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 2 ms - /app/tests/bin/Debug/net5.0/tests.dll (net5.0)
+Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 2 ms - /app/tests/bin/Debug/net6.0/tests.dll (net6.0)
  ```
 
 In this example, the tests (and any other required code) are [volume mounted](https://docs.docker.com/engine/admin/volumes/volumes/) into the countainer, and `dotnet test` is run from the `tests` directory (`-w` sets the working directory). Test results can be read from the console or from logs, which can be written to disk with the `--logger:trx` flag.
@@ -58,7 +58,7 @@ The following instructions demonstrate this scenario in various configurations, 
 ### Linux or macOS
 
 ```console
-docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/sdk:5.0 dotnet test --logger:trx
+docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/sdk:6.0 dotnet test --logger:trx
 ```
 
 ### Windows using Linux containers
@@ -66,7 +66,7 @@ docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/sdk:5.0 do
 This example uses PowerShell.
 
 ```console
-docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:5.0 dotnet test --logger:trx
+docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:6.0 dotnet test --logger:trx
 ```
 
 ### Windows using Windows containers
@@ -74,7 +74,7 @@ docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:5.0 do
 This example uses PowerShell.
 
 ```console
-docker run --rm -v ${pwd}:C:\app -w C:\app\tests mcr.microsoft.com/dotnet/sdk:5.0 dotnet test --logger:trx
+docker run --rm -v ${pwd}:C:\app -w C:\app\tests mcr.microsoft.com/dotnet/sdk:6.0 dotnet test --logger:trx
 ```
 
 ## More Samples

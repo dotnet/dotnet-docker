@@ -78,7 +78,7 @@ docker run --rm -it -p:8080:80 aspnetapp
 
 ## Build an image for Alpine, Debian or Ubuntu
 
-.NET multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `5.0`, as opposed to a distro-specific tag like `5.0-alpine`.
+.NET multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `6.0`, as opposed to a distro-specific tag like `6.0-alpine`.
 
 This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. The [.NET Docker Sample](../dotnetapp/README.md) demonstrates targeting a larger set of distros.
 
@@ -115,7 +115,7 @@ You can run these images in the same way as is done above, with Alpine.
 
 ## Build an image for ARM32 and ARM64
 
-By default, distro-specific .NET tags target x64, such as `5.0-alpine` or `5.0-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET is only supported on Alpine on ARM64 and x64, and not ARM32.
+By default, distro-specific .NET tags target x64, such as `6.0-alpine` or `6.0-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET is only supported on Alpine on ARM64 and x64, and not ARM32.
 
 Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
 
