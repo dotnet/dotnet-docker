@@ -123,7 +123,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 DockerHelper.Run(
                     image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
                     command: verifyCacheCommand,
-                    name: imageData.GetIdentifier("PackageCache"));
+                    name: imageData.GetIdentifier("PackageCache"),
+                    user: "root");
             }
         }
 
@@ -266,7 +267,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string containerFileList = DockerHelper.Run(
                 image: imageData.GetImage(ImageType, DockerHelper),
                 command: command,
-                name: imageData.GetIdentifier("DotnetFolder"));
+                name: imageData.GetIdentifier("DotnetFolder"),
+                user: "root");
 
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = containerFileList
                 .Replace("\r\n", "\n")

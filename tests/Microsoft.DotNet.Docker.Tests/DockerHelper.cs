@@ -187,11 +187,13 @@ namespace Microsoft.DotNet.Docker.Tests
             string optionalRunArgs = null,
             bool detach = false,
             bool runAsContainerAdministrator = false,
-            bool skipAutoCleanup = false)
+            bool skipAutoCleanup = false,
+            string user = null)
         {
             string cleanupArg = skipAutoCleanup ? string.Empty : " --rm";
             string detachArg = detach ? " -d -t" : string.Empty;
-            string userArg = runAsContainerAdministrator ? " -u ContainerAdministrator" : string.Empty;
+            string linuxUserArg = user != null ? $" -u {user}" : string.Empty;
+            string userArg = runAsContainerAdministrator ? " -u ContainerAdministrator" : linuxUserArg;
             string workdirArg = workdir == null ? string.Empty : $" -w {workdir}";
             return ExecuteWithLogging(
                 $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg} {optionalRunArgs} {image} {command}");

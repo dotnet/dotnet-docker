@@ -180,6 +180,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 _dockerHelper.Run(
                     image: _imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
                     name: containerName,
+                    user: "root",
                     command: $"dotnet new {appType} --framework {targetFramework} --no-restore",
                     workdir: "/app",
                     skipAutoCleanup: true);
@@ -227,6 +228,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 _dockerHelper.Run(
                     image: image,
                     name: containerName,
+                    user: "root",
                     detach: _isWeb,
                     optionalRunArgs: _isWeb ? "-p 80" : string.Empty,
                     runAsContainerAdministrator: runAsAdmin,

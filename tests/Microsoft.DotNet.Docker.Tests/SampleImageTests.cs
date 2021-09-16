@@ -70,6 +70,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     DockerHelper.Run(
                         image: image,
                         name: containerName,
+                        user: "root",
                         detach: true,
                         optionalRunArgs: "-p 80");
 

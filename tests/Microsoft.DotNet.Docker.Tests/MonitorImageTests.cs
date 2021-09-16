@@ -286,6 +286,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 DockerHelper.Run(
                     image: monitorImageName,
                     name: monitorContainerName,
+                    user: "root",
                     command: GetMonitorAdditionalArgs(noAuthentication),
                     detach: true,
                     optionalRunArgs: runArgsBuilder.Build());
@@ -396,6 +397,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 DockerHelper.Run(
                     image: sampleImageName,
                     name: sampleContainerName,
+                    user: "root",
                     detach: true,
                     optionalRunArgs: sampleArgsBuilder.Build());
 
@@ -403,6 +405,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 DockerHelper.Run(
                     image: monitorImageName,
                     name: monitorContainerName,
+                    user: "root",
                     command: GetMonitorAdditionalArgs(noAuthentication),
                     detach: true,
                     optionalRunArgs: monitorArgsBuilder.Build());

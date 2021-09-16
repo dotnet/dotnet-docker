@@ -57,6 +57,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string combinedValues = dockerHelper.Run(
                 image: imageName,
                 name: imageData.GetIdentifier($"env"),
+                user: "root",
                 optionalRunArgs: $"--entrypoint {entrypoint}",
                 command: $"{invokeCommand} \"echo {string.Join($"{delimiterEscape}{delimiter}", echoParts)}\"");
 

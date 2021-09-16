@@ -48,6 +48,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string output = DockerHelper.Run(
                     image: imageData.GetImage(ImageType, DockerHelper),
                     name: imageData.GetIdentifier($"InsecureFiles-{ImageType}"),
+                    user: "root",
                     command: command
                 );
 
@@ -62,7 +63,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string installedPackages = DockerHelper.Run(
                 image: imageData.GetImage(ImageType, DockerHelper),
                 command: command,
-                name: imageData.GetIdentifier("PackageInstallation"));
+                name: imageData.GetIdentifier("PackageInstallation"),
+                user: "root");
 
             return installedPackages.Split(Environment.NewLine);
         }
