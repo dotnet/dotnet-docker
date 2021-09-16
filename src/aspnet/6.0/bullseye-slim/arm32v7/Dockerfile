@@ -1,4 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
+USER root
 
 # Installer image
 FROM arm32v7/buildpack-deps:bullseye-curl as installer
@@ -21,3 +22,6 @@ ENV \
     Logging__Console__FormatterName=Json
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]
+
+# Run as non-root
+USER 1000:3000

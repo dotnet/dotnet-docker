@@ -19,10 +19,25 @@ RUN dotnet_version={{VARIABLES["runtime|6.0|build-version"]}} \
     && dotnet_sha512='{{VARIABLES[cat("runtime-deps-cm.1|6.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet-runtime-deps.rpm" | sha512sum -c - \
     && rpm --install dotnet-runtime-deps.rpm \
-    && rm dotnet-runtime-deps.rpm
+    && rm dotnet-runtime-deps.rpm \
+    \
+    # Non-root user and group
+    && groupadd \
+        --gid 3000 \
+        dotnet \
+    && adduser \
+        --uid 1000 \
+        --gid 3000 \
+        --shell /usr/sbin/nologin \
+        --no-create-home \
+        --system \
+        "dotnet"
 
 ENV \
-    # Configure web servers to bind to port 80 when present
-    ASPNETCORE_URLS=http://+:80 \
+    # Configure web servers to bind to port 8080 when present
+    ASPNETCORE_URLS=http://+:8080 \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
+
+# Run as non-root
+USER 1000:3000

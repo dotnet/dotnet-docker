@@ -1,5 +1,6 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:6.0.0-rc.1-cbl-mariner1.0-amd64
+USER root
 
 ENV \
     # ASP.NET Core version
@@ -13,3 +14,6 @@ RUN curl -SL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspn
     && echo "$dotnet_sha512  aspnetcore.rpm" | sha512sum -c - \
     && rpm --install aspnetcore.rpm \
     && rm aspnetcore.rpm
+
+# Run as non-root
+USER 1000:3000

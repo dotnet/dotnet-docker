@@ -12,10 +12,22 @@ RUN apt-get update \
         libssl1.1 \
         libstdc++6 \
         zlib1g \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    \
+    # Non-root user and group
+    && addgroup \
+        --group dotnet \
+        --gid 3000 \
+    && adduser \
+        --uid 1000 \
+        --gid 3000 \
+        --disabled-login \
+        --no-create-home \
+        --system \
+        "dotnet"
 
 ENV \
-    # Configure web servers to bind to port 80 when present
-    ASPNETCORE_URLS=http://+:80 \
+    # Configure web servers to bind to port 8080 when present
+    ASPNETCORE_URLS=http://+:8080 \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true

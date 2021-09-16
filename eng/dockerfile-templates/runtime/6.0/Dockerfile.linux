@@ -20,3 +20,6 @@ ENV DOTNET_VERSION={{VARIABLES["runtime|6.0|build-version"]}}
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+
+# Run as non-root
+USER 1000:3000

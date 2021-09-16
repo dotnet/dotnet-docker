@@ -18,3 +18,6 @@ RUN curl -SL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Run
     \
     && rpm --install dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
     && rm dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm
+
+# Run as non-root
+USER 1000:3000

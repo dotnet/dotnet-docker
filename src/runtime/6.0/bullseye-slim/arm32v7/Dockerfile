@@ -20,3 +20,6 @@ ENV DOTNET_VERSION=6.0.0-rc.1.21451.13
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+
+# Run as non-root
+USER 1000:3000
