@@ -5,7 +5,6 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-    var process = Process.GetCurrentProcess();
     var hostName = System.Net.Dns.GetHostName();
     var ipList = await System.Net.Dns.GetHostAddressesAsync(hostName);
 
