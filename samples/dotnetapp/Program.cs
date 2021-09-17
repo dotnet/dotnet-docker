@@ -49,11 +49,12 @@ WriteLine();
 const long Mebi = 1024 * 1024;
 const long Gibi = Mebi * 1024;
 GCMemoryInfo gcInfo = GC.GetGCMemoryInfo();
+string totalAvailableMemory = GetInBestUnit(gcInfo.TotalAvailableMemoryBytes);
 
 // Environment information
 WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
 WriteLine($"{nameof(Environment.ProcessorCount)}: {Environment.ProcessorCount}");
-WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {GetInBestUnit(gcInfo.TotalAvailableMemoryBytes)}");
+WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {totalAvailableMemory}");
 
 // cgroup information
 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && 
