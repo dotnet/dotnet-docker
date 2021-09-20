@@ -1,14 +1,14 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:6.0.0-rc.1-alpine3.14-arm64v8
+FROM $REPO:6.0.0-rc.2-alpine3.14-arm64v8
 
 # .NET globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 # Install .NET
-ENV DOTNET_VERSION=6.0.0-rc.1.21451.13
+ENV DOTNET_VERSION=6.0.0-rc.2.21468.3
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='5a718a94e065d105f2e056672f8a0a7f3486626f253360ca0945dd468d9276e0c33c5a28b82dda9f3928b86967777af780bc2932d07ccea9b7a497dd9d90356c' \
+    && dotnet_sha512='348b2f0ec0c32c4ca0d63ec0b3a401a5b849d47a4c54339f85008ed4064d87b8a5279ce2680283843c5ca9b2fa8aae7974c07d9cc9ee8a53b1e0029aeeb653f6' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
