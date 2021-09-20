@@ -144,7 +144,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     imageExistsInStaging = repoInfo.Value<JArray>("images")
                         .SelectMany(imageInfo => imageInfo.Value<JArray>("platforms"))
                         .Cast<JObject>()
-                        .Any(platformInfo => platformInfo.Value<JArray>("simpleTags").Any(imageTag => imageTag.ToString() == tag));
+                        .Any(platformInfo => platformInfo.Value<JArray>("simpleTags")?.Any(imageTag => imageTag.ToString() == tag) == true);
                 }
                 else
                 {
