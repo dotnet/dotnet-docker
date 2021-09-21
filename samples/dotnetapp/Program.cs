@@ -49,7 +49,8 @@ WriteLine();
 const long Mebi = 1024 * 1024;
 const long Gibi = Mebi * 1024;
 GCMemoryInfo gcInfo = GC.GetGCMemoryInfo();
-string totalAvailableMemory = GetInBestUnit(gcInfo.TotalAvailableMemoryBytes);
+long totalMemoryBytes = gcInfo.TotalAvailableMemoryBytes;
+string totalAvailableMemory = GetInBestUnit(totalMemoryBytes);
 
 // Environment information
 WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
@@ -79,6 +80,7 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) &&
     {
         WriteLine($"usage_in_bytes: {usageBytes} {GetInBestUnit(usage)}");
         WriteLine($"limit_in_bytes: {limitBytes} {GetInBestUnit(limit)}");
+        WriteLine($"GC Hard limit %:  {decimal.Divide(totalMemoryBytes,limit) * 100}");
     }
 }
 
