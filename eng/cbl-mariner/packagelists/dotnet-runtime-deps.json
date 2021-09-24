@@ -1,0 +1,12 @@
+{
+    "packages": [
+        "ca-certificates-microsoft",
+        "glibc",
+        "icu",
+        "krb5",
+        "libgcc",
+        "libstdc++",
+        "openssl-libs",
+        "zlib"
+    ]
+}

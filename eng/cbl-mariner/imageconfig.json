@@ -1,0 +1,22 @@
+{
+    "Disks": [
+        {
+            "Artifacts": [
+                {
+                    "Name": "dotnet-runtime-deps",
+                    "Compression": "tar.gz"
+                }
+            ]
+        }
+    ],
+    "SystemConfigs": [
+        {
+            "Name": "Standard",
+            "PackageLists": [
+                "packagelists/distroless-packages-container-minimal.json",
+                "packagelists/dotnet-runtime-deps.json"
+            ],
+            "RemoveRpmDb": true
+        }
+    ]
+}
