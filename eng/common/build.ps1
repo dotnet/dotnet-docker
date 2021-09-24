@@ -2,21 +2,21 @@
 
 <#
     .SYNOPSIS
-        Builds the .NET Core Dockerfiles
+        Builds the Dockerfiles
 #>
 
 [cmdletbinding()]
 param(
-    # Version of .NET Core to filter by
-    [string]$Version = "*",
+    # Product versions to filter by
+    [string[]]$Version = "*",
 
-    # Name of OS to filter by
-    [string]$OS,
+    # Names of OS to filter by
+    [string[]]$OS,
 
     # Type of architecture to filter by
     [string]$Architecture,
 
-    # Additional custom path filters (overrides Version)
+    # Additional custom path filters
     [string[]]$Paths,
 
     # Path to manifest file
@@ -49,8 +49,12 @@ pushd $PSScriptRoot/../..
 try {
     $args = $OptionalImageBuilderArgs
 
+    if ($Version) {
+        $args += " --version " + ($Version -join " --version ")
+    }
+
     if ($OS) {
-        $args += " --os-version $OS"
+        $args += " --os-version " + ($OS -join " --os-version ")
     }
 
     if ($Architecture) {
@@ -59,9 +63,6 @@ try {
 
     if ($Paths) {
         $args += " --path " + ($Paths -join " --path ")
-    }
-    else {
-        $args += " --path 'src/*/$Version/*'"
     }
 
     if ($Manifest) {

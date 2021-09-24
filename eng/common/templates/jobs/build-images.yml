@@ -9,7 +9,7 @@ parameters:
 
 jobs:
 - job: ${{ parameters.name }}
-  condition: and(succeeded(), ${{ parameters.matrix }})
+  condition: and(${{ parameters.matrix }}, in(dependencies.PreBuildValidation.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))
   dependsOn:
   - PreBuildValidation
   - CopyBaseImages
@@ -47,9 +47,12 @@ jobs:
 
         $engCommonPath = "$(Build.Repository.LocalPath)/$buildRepoName/$(engCommonRelativePath)"
         $engPath = "$(Build.Repository.LocalPath)/$buildRepoName/eng"
-        $testScriptPath = "$buildRepoName/$(testScriptPath)"
         $manifest = "$buildRepoName/$(manifest)"
         $testResultsDirectory = "$buildRepoName/$testResultsDirectory"
+
+        if ("$(testScriptPath)") {
+          $testScriptPath = "$buildRepoName/$(testScriptPath)"
+        }
 
         echo "##vso[task.setvariable variable=buildRepoName]$buildRepoName"
         echo "##vso[task.setvariable variable=manifest]$manifest"
@@ -91,4 +94,6 @@ jobs:
     displayName: Publish Image Info File Artifact
   - ${{ if eq(variables['System.TeamProject'], 'public') }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
+      parameters:
+        condition: ne(variables.testScriptPath, '')
   - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}

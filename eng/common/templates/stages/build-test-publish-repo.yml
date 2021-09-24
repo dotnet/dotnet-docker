@@ -145,12 +145,14 @@ stages:
     dependsOn: Post_Build
     condition: "
       and(
-        contains(variables['stages'], 'test'),
-        or(
-          and(
-            succeeded(),
-            contains(variables['stages'], 'build')),
-          not(contains(variables['stages'], 'build'))))"
+        ne(variables['testScriptPath'], ''),
+        and(
+          contains(variables['stages'], 'test'),
+          or(
+            and(
+              succeeded(),
+              contains(variables['stages'], 'build')),
+            not(contains(variables['stages'], 'build')))))"
     jobs:
     - template: ../jobs/generate-matrix.yml
       parameters:
@@ -236,13 +238,13 @@ stages:
               succeeded('Post_Build')),
             and(
               contains(variables['stages'], 'test'),
-              succeeded('Test'))),
+              in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
           or(
             and(
               not(contains(variables['stages'], 'build')),
               and(
                 contains(variables['stages'], 'test'),
-                succeeded('Test'))),
+                in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
             and(
               not(contains(variables['stages'], 'test')),
               and(

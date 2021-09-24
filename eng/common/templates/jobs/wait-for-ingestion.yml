@@ -7,7 +7,7 @@ jobs:
   - template: ../steps/download-build-artifact.yml
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
-      condition: and(succeeded(), ne(variables['sourceBuildId'], ''))
+      condition: ne(variables['sourceBuildId'], '')
   - powershell: |
       # Get the last image info artifact that was published
       $imageInfoDirName = @($(dir $(Build.ArtifactStagingDirectory)/image-info-final-* | select -ExpandProperty Name))[-1]
