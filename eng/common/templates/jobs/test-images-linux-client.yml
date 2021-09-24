@@ -11,6 +11,8 @@ jobs:
     dependsOn: GenerateTestMatrix
     strategy:
       matrix: $[ ${{ parameters.matrix }} ]
+  ${{ if eq(parameters.preBuildValidation, 'true') }}:
+    condition: and(succeeded(), ne(variables.testScriptPath, ''))
   pool: ${{ parameters.pool }}
   timeoutInMinutes: ${{ parameters.testJobTimeout }}
   steps:

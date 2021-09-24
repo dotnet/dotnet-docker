@@ -1,5 +1,6 @@
 parameters:
   preBuildValidation: false
+  condition: true
 
 steps:
 - template: init-docker-linux.yml
@@ -7,6 +8,7 @@ steps:
     setupImageBuilder: false
     setupTestRunner: true
     cleanupDocker: ${{ eq(variables['System.TeamProject'], 'internal') }}
+    condition: ${{ parameters.condition }}
 - script: |
     echo "##vso[task.setvariable variable=testRunner.container]testrunner-$(Build.BuildId)-$(System.JobId)"
 
@@ -23,6 +25,7 @@ steps:
     fi
     echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
   displayName: Set Test Variables
+  condition: and(succeeded(), ${{ parameters.condition }})
 - script: >
     docker run -t -d
     -v /var/run/docker.sock:/var/run/docker.sock
@@ -31,16 +34,19 @@ steps:
     --name $(testRunner.container)
     $(imageNames.testRunner.withrepo)
   displayName: Start Test Runner Container
+  condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - script: >
       docker exec $(testRunner.container) pwsh
       -File $(engCommonRelativePath)/Invoke-WithRetry.ps1
       "docker login -u $(acr.userName) -p $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server)"
     displayName: Docker login
+    condition: and(succeeded(), ${{ parameters.condition }})
   - ${{ if eq(parameters.preBuildValidation, 'false') }}:
     - template: ../steps/download-build-artifact.yml
       parameters:
         targetPath: $(Build.ArtifactStagingDirectory)
+        condition: ${{ parameters.condition }}
 - script: >
     docker exec $(testRunner.container) pwsh
     -File $(testScriptPath)
@@ -49,21 +55,22 @@ steps:
     -Architecture '$(architecture)'
     $(optionalTestArgs)
   displayName: Test Images
+  condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - script: docker exec $(testRunner.container) docker logout $(acr.server)
     displayName: Docker logout
-    condition: always()
+    condition: and(always(), ${{ parameters.condition }})
     continueOnError: true
 - script: >
     docker cp
     $(testRunner.container):/repo/$(testResultsDirectory)
     $(Common.TestResultsDirectory)/.
   displayName: Copy Test Results
-  condition: always()
+  condition: and(always(), ${{ parameters.condition }})
   continueOnError: true
 - task: PublishTestResults@2
   displayName: Publish Test Results
-  condition: always()
+  condition: and(always(), ${{ parameters.condition }})
   continueOnError: true
   inputs:
     testRunner: vSTest
@@ -77,7 +84,9 @@ steps:
       testRunTitle: Pre-Build Validation
 - script: docker rm -f $(testRunner.container)
   displayName: Cleanup TestRunner Container
-  condition: always()
+  condition: and(always(), ${{ parameters.condition }})
   continueOnError: true
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - template: cleanup-docker-linux.yml
+    parameters:
+      condition: ${{ parameters.condition }}
