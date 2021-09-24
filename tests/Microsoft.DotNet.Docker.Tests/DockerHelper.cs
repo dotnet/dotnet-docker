@@ -4,6 +4,8 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using Xunit.Abstractions;
 
@@ -15,6 +17,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string DockerArchitecture => GetDockerArch();
         public static string ContainerWorkDir => IsLinuxContainerModeEnabled ? "/sandbox" : "c:\\sandbox";
         public static bool IsLinuxContainerModeEnabled => string.Equals(DockerOS, "linux", StringComparison.OrdinalIgnoreCase);
+        public static string TestArtifactsDir { get; } = Path.Combine(Directory.GetCurrentDirectory(), "TestAppArtifacts");
 
         private ITestOutputHelper OutputHelper { get; set; }
 
@@ -45,6 +48,36 @@ namespace Microsoft.DotNet.Docker.Tests
             string pullArg = pull ? " --pull" : string.Empty;
 
             ExecuteWithLogging($"build -t {tag}{targetArg}{buildArgsOption}{dockerfileArg}{pullArg} {contextDir}");
+        }
+
+        /// <summary>
+        /// Builds a helper image intended to test distroless scenarios.
+        /// </summary>
+        /// <remarks>
+        /// Because distroless containers do not contain a shell, and potentially other packages necessary for testing,
+        /// this helper image adds the necessary packages to a distroless image.
+        /// </remarks>
+        public string BuildDistrolessHelper(DotNetImageType imageType, ProductImageData imageData, params string[] requiredPackages)
+        {
+            string dockerfile;
+            if (imageData.OS.Contains("mariner"))
+            {
+                dockerfile = Path.Combine(TestArtifactsDir, "Dockerfile.cbl-mariner-distroless");
+            }
+            else
+            {
+                throw new NotImplementedException($"Distroless helper not implemented for OS '{imageData.OS}'");
+            }
+
+            string baseImageTag = imageData.GetImage(imageType, this);
+            string installerImageTag = baseImageTag.Replace("-distroless", string.Empty);
+
+            string tag = imageData.GetIdentifier("distroless-helper");
+            Build(tag, dockerfile, null, TestArtifactsDir, false,
+                $"installer_image={installerImageTag}",
+                $"base_image={baseImageTag}",
+                $"\"required_packages={string.Join(" ", requiredPackages)}\"");
+            return tag;
         }
 
         public static bool ContainerExists(string name) => ResourceExists("container", $"-f \"name={name}\"");
@@ -186,12 +219,12 @@ namespace Microsoft.DotNet.Docker.Tests
             string workdir = null,
             string optionalRunArgs = null,
             bool detach = false,
-            bool runAsContainerAdministrator = false,
+            string runAsUser = null,
             bool skipAutoCleanup = false)
         {
             string cleanupArg = skipAutoCleanup ? string.Empty : " --rm";
             string detachArg = detach ? " -d -t" : string.Empty;
-            string userArg = runAsContainerAdministrator ? " -u ContainerAdministrator" : string.Empty;
+            string userArg = runAsUser != null ? $" -u {runAsUser}" : string.Empty;
             string workdirArg = workdir == null ? string.Empty : $" -w {workdir}";
             return ExecuteWithLogging(
                 $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg} {optionalRunArgs} {image} {command}");
