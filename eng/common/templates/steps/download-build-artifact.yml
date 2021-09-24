@@ -14,4 +14,4 @@ steps:
     targetPath: ${{ parameters.targetPath }}
     artifactName: ${{ parameters.artifactName }}
   displayName: Download Build Artifact(s)
-  condition: ${{ parameters.condition }}
+  condition: and(succeeded(), ${{ parameters.condition }})

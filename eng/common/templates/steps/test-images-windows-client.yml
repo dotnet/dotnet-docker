@@ -1,12 +1,17 @@
+parameters:
+  condition: true
+
 steps:
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - template: init-docker-windows.yml
     parameters:
       setupImageBuilder: false
+      condition: ${{ parameters.condition }}
   - powershell: >
       $(engCommonPath)/Invoke-WithRetry.ps1
       "cmd /c 'docker login -u $(acr.userName) --password $(BotAccount-dotnet-docker-acr-bot-password) $(acr.server) 2>&1'"
     displayName: Docker login
+    condition: and(succeeded(), ${{ parameters.condition }})
 - powershell: |
     if ("${{ eq(variables['System.TeamProject'], 'public') }}" -eq "False") {
       $optionalTestArgs="$optionalTestArgs -PullImages -Registry $env:ACR_SERVER -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
@@ -16,26 +21,30 @@ steps:
     }
     echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
   displayName: Set Test Variables
+  condition: and(succeeded(), ${{ parameters.condition }})
 - powershell: Get-ChildItem -Path tests -r | Where {$_.Extension -match "trx"} | Remove-Item
   displayName: Cleanup Old Test Results
+  condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - template: ../steps/download-build-artifact.yml
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
+      condition: ${{ parameters.condition }}
 - powershell: >
     $(testScriptPath)
     -Version '$(productVersion)'
     -OS '$(osVariant)'
     $(optionalTestArgs)
   displayName: Test Images
+  condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - script: docker logout $(acr.server)
     displayName: Docker logout
-    condition: always()
+    condition: and(always(), ${{ parameters.condition }})
     continueOnError: true
 - task: PublishTestResults@2
   displayName: Publish Test Results
-  condition: always()
+  condition: and(always(), ${{ parameters.condition }})
   continueOnError: true
   inputs:
     testRunner: vSTest
@@ -45,3 +54,5 @@ steps:
     testRunTitle: $(productVersion) $(osVariant) amd64
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - template: cleanup-docker-windows.yml
+    parameters:
+      condition: ${{ parameters.condition }}

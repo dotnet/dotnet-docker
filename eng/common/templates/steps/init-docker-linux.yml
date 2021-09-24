@@ -2,17 +2,23 @@ parameters:
   setupImageBuilder: true
   setupTestRunner: false
   cleanupDocker: true
+  condition: true
 
 steps:
 - template: init-common.yml
+  parameters:
+    condition: ${{ parameters.condition }}
 - script: echo "##vso[task.setvariable variable=artifactsPath]/artifacts"
   displayName: Define Artifacts Path Variable
+  condition: and(succeeded(), ${{ parameters.condition }})
 
   ################################################################################
   # Cleanup Docker Resources
   ################################################################################
 - ${{ if eq(parameters.cleanupDocker, 'true') }}:
   - template: cleanup-docker-linux.yml
+    parameters:
+      condition: ${{ parameters.condition }}
 
   ################################################################################
   # Setup Image Builder (Optional)
@@ -20,12 +26,14 @@ steps:
 - ${{ if eq(parameters.setupImageBuilder, 'true') }}:
   - script: $(engCommonPath)/pull-image.sh $(imageNames.imageBuilder)
     displayName: Pull Image Builder
+    condition: and(succeeded(), ${{ parameters.condition }})
   - script: >
       docker build
       -t $(imageNames.imageBuilder.withrepo)
       --build-arg IMAGE=$(imageNames.imageBuilder)
       -f $(engCommonPath)/Dockerfile.WithRepo .
     displayName: Build Image for Image Builder
+    condition: and(succeeded(), ${{ parameters.condition }})
   - script: >
       echo "##vso[task.setvariable variable=runImageBuilderCmd]
       docker run --rm
@@ -35,6 +43,7 @@ steps:
       $(imageBuilderDockerRunExtraOptions)
       $(imageNames.imageBuilder.withrepo)"
     displayName: Define runImageBuilderCmd Variable
+    condition: and(succeeded(), ${{ parameters.condition }})
 
   ################################################################################
   # Setup Test Runner (Optional)
@@ -42,9 +51,11 @@ steps:
 - ${{ if eq(parameters.setupTestRunner, 'true') }}:
   - script: $(engCommonPath)/pull-image.sh $(imageNames.testrunner)
     displayName: Pull Test Runner
+    condition: and(succeeded(), ${{ parameters.condition }})
   - script: >
       docker build
       -t $(imageNames.testRunner.withrepo)
       --build-arg IMAGE=$(imageNames.testrunner)
       -f $(engCommonPath)/Dockerfile.WithRepo .
     displayName: Build Test Runner Image
+    condition: and(succeeded(), ${{ parameters.condition }})
