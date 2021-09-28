@@ -4,8 +4,8 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
 
 # Featured Tags
 
-* `5.0` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:5.0`
+* `6.0` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:6.0`
 
 # About This Image
 
