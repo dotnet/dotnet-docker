@@ -121,7 +121,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly MonitorImageData[] s_linuxMonitorTestData =
         {
-            new MonitorImageData { Version = V5_0, RuntimeVersion = V3_1, OS = OS.Alpine314, OSTag = OS.Alpine, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_0, RuntimeVersion = V6_0, OS = OS.Alpine314, OSTag = OS.Alpine, Arch = Arch.Amd64 },
         };
 
         private static readonly MonitorImageData[] s_windowsMonitorTestData =
