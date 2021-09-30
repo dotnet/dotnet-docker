@@ -12,6 +12,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string Alpine314 = "alpine3.14";
 
         // Debian
+        public const string Bullseye = "bullseye";
         public const string BullseyeSlim = "bullseye-slim";
         public const string Buster = "buster";
         public const string BusterSlim = "buster-slim";

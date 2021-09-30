@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:6.0.0-rc.1-cbl-mariner1.0-amd64
+FROM $REPO:6.0.0-rc.2-cbl-mariner1.0-amd64
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=6.0.100-rc.1.21424.1 \
+    DOTNET_SDK_VERSION=6.0.100-rc.2.21478.37 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Unset Logging__Console__FormatterName from aspnet base image
@@ -25,19 +25,19 @@ RUN tdnf install -y \
 
 # Install .NET SDK
 RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-x64.rpm \
-    && dotnet_sha512='151e21d7af026e1a525a4b9815f72756b175f151c5ea8ae0dd6d08db9a52e861ba41026de15374cc7e555edec5c7dc9482da26a0f2ebc8c2c7e9d63ae9db991d' \
+    && dotnet_sha512='22bb6913eec0823ad2480e736bd13715aafeb3ff509bb86a212de6a490e9bfb46e1bf383f387d62a0608f1b059936ce91bf7f00b72b470c39250d3350f5e5515' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
     && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='f00e8b504dc6000f617bdbd928dfc835bb29a10b5e5a34f8d64a36de48b383c0959b7d146836b86c007e3beea8c2b1a6823e388789af347198e084eac856486d' \
+    && dotnet_sha512='fcbccf37fc606e411a0b2166c7e56b2bcbc8d16cf227717112370dc2416d698b74c72b24fffce52406057ee24b985c5f9cae0fad2e8032637c85650e1865fa59' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
     && curl -SL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-targeting-pack-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='5579577b15a4ae48c90620ea6bd00dc343fa9977d9f4b1f01ef490b96c67411cbcaa35668cc7938ed4e47d4f9e7942348ca9ece978a09b1899e4f8b69d5b5cfc' \
+    && dotnet_sha512='16728758a53b089b4ecff6e015d900740c9a230945cab6ccb4396408dd6447d0d41943a28836e0b1c079852538e114af85341ac1b2e49bdedfcf4a42737cd537' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
     && curl -SL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-targeting-pack-$ASPNET_VERSION.rpm \
-    && dotnet_sha512='1ebabddb8ea40de3f0a8e4cd7c1270cb2fa15a954e82ef1f7febf3c47745481a7e6f2f225a09514e76d72832b30ae189c59b1f0dc45a242ee21e49540ebcbe57' \
+    && dotnet_sha512='e1354f4d070cb961f230516f4490bda4443b2c58a0076645c6b93e435e56c96ee2ce01a495a700e383cece6322090cf736e338361812118cb28a5d9452a51732' \
     && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
     \
     && curl -SL --output netstandard-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-x64.rpm \
@@ -50,9 +50,9 @@ RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOT
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.2.0-preview.9 \
+RUN powershell_version=7.2.0-preview.10 \
     && curl -SL --output PowerShell.Linux.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='9888cfdc2d090b556c63544ff98a0f3e2a10fecf5c6068371278b670f08c1a5a8e134d23d1840eb0229e420d01f1ce17f9900e7e2fa05e9dde2252c22ada43ae' \
+    && powershell_sha512='bcf4cb050215742e08a31079b85b9289955017c91a6c6c5bb2865b0ff5c9a967422c9c5235b0e38329d2d44fd2d1c40922f55371df782ed7e44fdf048c229a0a' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \

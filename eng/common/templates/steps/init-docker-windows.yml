@@ -1,15 +1,21 @@
 parameters:
   setupImageBuilder: true
+  condition: true
 
 steps:
 - template: init-common.yml
+  parameters:
+    condition: ${{ parameters.condition }}
 - powershell: echo "##vso[task.setvariable variable=artifactsPath]$(Build.ArtifactStagingDirectory)"
   displayName: Define Artifacts Path Variable
+  condition: and(succeeded(), ${{ parameters.condition }})
 
   ################################################################################
   # Cleanup Docker Resources
   ################################################################################
 - template: cleanup-docker-windows.yml
+  parameters:
+    condition: ${{ parameters.condition }}
 
   ################################################################################
   # Setup Image Builder (Optional)
@@ -17,18 +23,22 @@ steps:
 - ${{ if eq(parameters.setupImageBuilder, 'true') }}:
   - powershell: $(engCommonPath)/Invoke-WithRetry.ps1 "docker pull $(imageNames.imageBuilder)"
     displayName: Pull Image Builder
+    condition: and(succeeded(), ${{ parameters.condition }})
   - script: docker create --name setupImageBuilder-$(Build.BuildId)-$(System.JobId) $(imageNames.imageBuilder)
     displayName: Create Setup Container
+    condition: and(succeeded(), ${{ parameters.condition }})
   - script: >
       docker cp
       setupImageBuilder-$(Build.BuildId)-$(System.JobId):/image-builder
       $(Build.BinariesDirectory)/.Microsoft.DotNet.ImageBuilder
     displayName: Copy Image Builder
+    condition: and(succeeded(), ${{ parameters.condition }})
   - script: docker rm -f setupImageBuilder-$(Build.BuildId)-$(System.JobId)
     displayName: Cleanup Setup Container
-    condition: always()
+    condition: and(always(), ${{ parameters.condition }})
     continueOnError: true
   - powershell: >
       echo "##vso[task.setvariable variable=runImageBuilderCmd]
       $(Build.BinariesDirectory)\.Microsoft.DotNet.ImageBuilder\Microsoft.DotNet.ImageBuilder.exe"
     displayName: Define runImageBuilderCmd Variable
+    condition: and(succeeded(), ${{ parameters.condition }})

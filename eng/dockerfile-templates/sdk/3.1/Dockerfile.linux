@@ -18,7 +18,7 @@ RUN apt-get update \
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
-        libicu{{if OS_VERSION = "bionic":60^elif OS_VERSION = "buster":63^elif OS_VERSION = "focal":66}} \
+        libicu{{if OS_VERSION = "bionic":60^elif OS_VERSION = "buster":63^elif OS_VERSION = "focal":66^elif OS_VERSION = "bullseye":67}} \
         libssl1.1 \
         libstdc++6 \
         zlib1g \

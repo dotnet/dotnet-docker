@@ -114,4 +114,5 @@ jobs:
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Ingest Kusto Image Info
+    condition: and(succeeded(), eq(variables['ingestKustoImageInfo'], 'true'))
   - template: ../steps/cleanup-docker-linux.yml

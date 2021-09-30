@@ -24,7 +24,5 @@ namespace Microsoft.DotNet.Docker.Tests
 
             return imageName;
         }
-
-        protected override string GetArchTagSuffix() => string.Empty;
     }
 }

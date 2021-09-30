@@ -8,8 +8,8 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2022-amd64 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rc.1.21423.14/aspnetcore-runtime-6.0.0-rc.1.21423.14-win-x64.zip; `
-    $aspnetcore_sha512 = '05e2b1171f8d74dc5fced3d4fd64dc192d22c2f2b01a1659da357a8574c203a2862b6e45d1db02f5882373836165553c2cb5276d044ccd4b6f556c9dcefd029f'; `
+RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rc.2.21470.37/aspnetcore-runtime-6.0.0-rc.2.21470.37-win-x64.zip; `
+    $aspnetcore_sha512 = '3f666288ce1ac06e597ea8a8e0cbffd33f5c4c2c956d5238b06f5dc7f3b1699450d09b13a38f769b3bf027bc0b85234a3da1b8aa62d4c324756261917e334795'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -21,11 +21,11 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/do
 
 
 # ASP.NET Core image
-FROM $REPO:6.0.0-rc.1-nanoserver-ltsc2022
+FROM $REPO:6.0.0-rc.2-nanoserver-ltsc2022
 
 ENV `
     # ASP.NET Core version
-    ASPNET_VERSION=6.0.0-rc.1.21423.14 `
+    ASPNET_VERSION=6.0.0-rc.2.21470.37 `
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 

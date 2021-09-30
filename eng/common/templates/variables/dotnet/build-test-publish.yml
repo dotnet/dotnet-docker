@@ -5,6 +5,8 @@ variables:
   value: build-info/docker
 - name: publicGitRepoUri
   value: https://github.com/dotnet/dotnet-docker
+- name: testScriptPath
+  value: ./tests/run-tests.ps1
 - name: testResultsDirectory
   value: tests/Microsoft.DotNet.Docker.Tests/TestResults/
 - name: mirrorRegistryCreds
