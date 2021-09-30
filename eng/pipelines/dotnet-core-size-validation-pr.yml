@@ -11,7 +11,7 @@ pr:
     - samples/*
 
 variables:
-- template: ../../common/templates/variables/dotnet/common.yml
+- template: ../common/templates/variables/dotnet/common.yml
 
 jobs:
 - template: ../common/templates/jobs/validate-image-sizes.yml
