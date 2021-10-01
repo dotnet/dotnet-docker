@@ -3,23 +3,13 @@ parameters:
   condition: true
 
 steps:
-- powershell: >
-    if ($env:SOURCEBRANCH -eq "nightly" -or $env:SYSTEM_PULLREQUEST_TARGETBRANCH -eq "nightly") {
-        $additionalPublishMcrDocsArgs = "--exclude-product-family"
-    }
-    else {
-        $additionalPublishMcrDocsArgs = ""
-    }
-
-    echo "##vso[task.setvariable variable=additionalPublishMcrDocsArgs]$additionalPublishMcrDocsArgs"
-  displayName: Set publishMcrDocs Args
 - script: >
     $(runImageBuilderCmd) publishMcrDocs
     --manifest '$(manifest)'
     --registry-override '$(acr.server)'
-    '$(dotnetDockerBot.userName)'
-    '$(dotnetDockerBot.email)'
-    '$(BotAccount-dotnet-docker-bot-PAT)'
+    '$(mcrDocsRepoInfo.userName)'
+    '$(mcrDocsRepoInfo.email)'
+    '$(mcrDocsRepoInfo.accessToken)'
     '$(publicGitRepoUri)'
     ${{ parameters.dryRunArg }}
     $(manifestVariables)

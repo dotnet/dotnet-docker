@@ -8,7 +8,7 @@ schedules:
     - nightly
   always: true
 variables:
-- template: variables/common.yml
+- template: ../common/templates/variables/dotnet/common.yml
 stages:
 - stage: DotNet
   condition: eq(variables['update-dotnet-enabled'], 'true')

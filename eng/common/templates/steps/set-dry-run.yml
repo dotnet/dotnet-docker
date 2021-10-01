@@ -2,7 +2,7 @@ steps:
 - script: |
       # Use dry-run option for certain publish operations if this is not a production build
       dryRunArg=""
-      if [[ "$PUBLISHREPOPREFIX" != "public/" || "$SYSTEM_TEAMPROJECT" == "public" ]]; then
+      if [[ "$PUBLISHREPOPREFIX" != "$OFFICIALREPOPREFIX" || "$SYSTEM_TEAMPROJECT" == "$PUBLICPROJECTNAME" ]]; then
         dryRunArg=" --dry-run"
       fi
       
