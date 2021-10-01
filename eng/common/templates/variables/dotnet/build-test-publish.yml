@@ -1,3 +1,5 @@
+# Common variables for building/testing/publishing in the .NET team's pipelines
+
 variables:
 - template: common.yml
 

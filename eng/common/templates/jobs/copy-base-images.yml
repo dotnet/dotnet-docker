@@ -1,12 +1,12 @@
 parameters:
   name: null
+  pool: {}
   additionalOptions: null
   publicProjectName: null
   
 jobs:
 - job: ${{ parameters.name }}
-  pool:
-    vmImage: $(defaultLinuxAmd64PoolImage)
+  pool: ${{ parameters.pool }}
   steps:
   - template: ../steps/init-docker-linux.yml
   - ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
