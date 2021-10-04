@@ -1,5 +1,4 @@
 parameters:
-  isPullRequestPipeline: false
   noCache: false
   internalProjectName: null
   publicProjectName: null
@@ -12,12 +11,11 @@ stages:
     publicProjectName: ${{ parameters.publicProjectName }}
     internalVersionsRepoRef: InternalVersionsRepo
     publicVersionsRepoRef: PublicVersionsRepo
-    ${{ if parameters.isPullRequestPipeline }}:
+    ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
       buildMatrixType: platformVersionedOs
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
-    ${{ if not(parameters.isPullRequestPipeline) }}:
-      buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
     ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+      buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
       customPublishVariables:
       - group: DotNet-AllOrgs-Darc-Pats
 
