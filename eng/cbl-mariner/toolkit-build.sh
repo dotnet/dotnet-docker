@@ -10,7 +10,7 @@ scriptDir=$(dirname "$script")
 # Necessary to avoid having the toolkit think it's running in a CDPx build environment which would cause this build to not work
 rm /.dockerenv
 
-git clone --depth 1 --branch 1.0-stable https://github.com/microsoft/CBL-Mariner.git /CBL-Mariner
+git clone --depth 1 --branch $marinerRepoTag https://github.com/microsoft/CBL-Mariner.git /CBL-Mariner
 cd /CBL-Mariner/toolkit
 make package-toolkit REBUILD_TOOLS=y
 
