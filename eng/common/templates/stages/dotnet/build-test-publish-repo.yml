@@ -5,7 +5,6 @@ parameters:
   noCache: false
   internalProjectName: null
   publicProjectName: null
-  buildMatrixType: null
   buildMatrixCustomBuildLegGroupArgs: null
   customBuildInitSteps: []
   customPublishInitSteps: []
@@ -16,7 +15,6 @@ stages:
     noCache: ${{ parameters.noCache }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
-    buildMatrixType: ${{ parameters.buildMatrixType }}
     buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
     customBuildInitSteps: ${{ parameters.customBuildInitSteps }}
     customPublishInitSteps: ${{ parameters.customPublishInitSteps }}
@@ -28,6 +26,9 @@ stages:
       customPublishVariables:
       - group: DotNet-AllOrgs-Darc-Pats
     
+    ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+      buildMatrixType: platformVersionedOs
+
     linuxArm64Pool:
         ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
           name: DotNetCore-Docker-Public

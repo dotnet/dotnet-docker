@@ -2,7 +2,6 @@
 # specific to the Dockerfiles in this repo.
 
 parameters:
-  isPullRequestPipeline: false
   noCache: false
   internalProjectName: null
   publicProjectName: null
@@ -13,10 +12,9 @@ stages:
     noCache: ${{ parameters.noCache }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
-    ${{ if parameters.isPullRequestPipeline }}:
-      buildMatrixType: platformVersionedOs
+    ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
-    ${{ if not(parameters.isPullRequestPipeline) }}:
+    ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
 
     # Template paths must be relative to the YAML job that executes them
