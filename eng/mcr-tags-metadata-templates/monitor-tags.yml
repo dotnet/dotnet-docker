@@ -1,2 +1,2 @@
 $(McrTagsYmlRepo:monitor)
-$(McrTagsYmlTagGroup:5.0-alpine-amd64)
+$(McrTagsYmlTagGroup:6.0-alpine-amd64)
