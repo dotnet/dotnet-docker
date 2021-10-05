@@ -4,14 +4,23 @@ set -e
 
 marinerRepoTag="$1"
 outputPath="$2"
+runtimeDepsPackageListPath="$3"
 script=$(readlink -f "$0")
 scriptDir=$(dirname "$script")
 
-# Run container to build distroless tarball
-docker build --pull -t mariner-prereqs $scriptDir
+repoRoot=$(git rev-parse --show-toplevel)
+containerRepoPath="/repo"
+
+# Build an image with the CBL-Mariner prereqs that also contains the contents of this repo
+docker build --pull -t mariner-prereqs -f $scriptDir/Dockerfile --build-arg REPO_PATH=$containerRepoPath $repoRoot
+
 containerOutputPath="/dotnet-runtime-deps.tar.gz"
-docker run --name mariner-build --privileged mariner-prereqs ./toolkit-build.sh $marinerRepoTag $containerOutputPath
+containerName="mariner-build-$(cat /proc/sys/kernel/random/uuid)"
+toolkitScriptPath="${scriptDir#$repoRoot}/toolkit-build.sh"
+
+# Run container to build distroless tarball
+docker run --name $containerName --privileged mariner-prereqs $containerRepoPath$toolkitScriptPath $marinerRepoTag $containerOutputPath $runtimeDepsPackageListPath
 
 # Copy tarball out of container and clean up
-docker cp mariner-build:$containerOutputPath $outputPath
-docker rm mariner-build
+docker cp $containerName:$containerOutputPath $outputPath
+docker rm $containerName

@@ -4,8 +4,10 @@ set -e
 
 marinerRepoTag="$1"
 outputPath="$2"
+runtimeDepsPackageListPath="$3"
 script=$(readlink -f "$0")
 scriptDir=$(dirname "$script")
+repoRoot=$(git rev-parse --show-toplevel)
 
 # Necessary to avoid having the toolkit think it's running in a CDPx build environment which would cause this build to not work
 rm /.dockerenv
@@ -21,6 +23,11 @@ cp /CBL-Mariner/out/toolkit-*.tar.gz ./
 tar -xzvf toolkit-*.tar.gz
 cd toolkit
 
-make image CONFIG_FILE=$scriptDir/imageconfig.json
+configPath="$scriptDir/imageconfig.json"
 
+# Add the runtime-deps package list path to the image config
+echo $(jq --arg new $repoRoot$runtimeDepsPackageListPath '.SystemConfigs[].PackageLists? += [$new]' $configPath) > $configPath
+
+# Build the distroless tarball
+make image CONFIG_FILE=$configPath
 mv /builder/out/images/imageconfig/dotnet-runtime-deps-*.tar.gz $outputPath

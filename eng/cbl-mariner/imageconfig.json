@@ -13,8 +13,7 @@
         {
             "Name": "Standard",
             "PackageLists": [
-                "packagelists/distroless-packages-container-minimal.json",
-                "packagelists/dotnet-runtime-deps.json"
+                "packagelists/distroless-packages-container-minimal.json"
             ],
             "RemoveRpmDb": true
         }
