@@ -21,5 +21,5 @@
 1. - [ ] Wait for changes to be mirrored to internal [dotnet-docker repo](https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet-docker) (internal MSFT link)
 1.  - [ ] Build images - Queue build stage of [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with variables:
 
-      `imageBuilder.pathArgs: --path 'src/*/3.1/alpine3.13/amd64' --path 'src/*/5.0/alpine3.13/amd64' --path 'src/*/6.0/alpine3.13/amd64' --path 'src/monitor/*'`
+      `imageBuilder.pathArgs: --path 'src/*/3.1/alpine3.14/amd64' --path 'src/*/5.0/alpine3.14/amd64' --path 'src/*/6.0/alpine3.14/amd64' --path 'src/monitor/*'`
 1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/_/microsoft-dotnet-monitor)
