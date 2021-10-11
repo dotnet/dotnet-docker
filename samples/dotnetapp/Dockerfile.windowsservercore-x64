@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:5.0-windowsservercore-ltsc2022 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-windowsservercore-ltsc2022 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -11,7 +11,7 @@ COPY . .
 RUN dotnet publish -c release -o /app -r win-x64 --self-contained false --no-restore
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/runtime:5.0-windowsservercore-ltsc2022
+FROM mcr.microsoft.com/dotnet/runtime:6.0-windowsservercore-ltsc2022
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnetapp"]
