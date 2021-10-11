@@ -8,9 +8,9 @@ FROM mcr.microsoft.com/windows/servercore:20H2-amd64 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-RUN $aspnetcore_version = '3.1.19'; `
+RUN $aspnetcore_version = '3.1.20'; `
     Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
-    $aspnetcore_sha512 = 'd0499511faf606c32ad51d9e9f112ad80b04689a5163df10f8f476cf7042cc7f5a9c616e0b80077a21efc48e88e3a1f5e2bbc382ee38c288bd0bab860437540d'; `
+    $aspnetcore_sha512 = '7449ea01e470336653cedc51ce7981c8bfd75d9714ded437d9ea32d103f0a880780fbcd35edfe3431dc50edf0ae9e82d4bf2e3309930d7b0cb27e7b3d7c90aaa'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -22,6 +22,6 @@ RUN $aspnetcore_version = '3.1.19'; `
 
 
 # Runtime image
-FROM $REPO:3.1.19-nanoserver-20H2
+FROM $REPO:3.1.20-nanoserver-20H2
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
