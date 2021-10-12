@@ -1,11 +1,11 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:5.0.10-cbl-mariner1.0-amd64
+FROM $REPO:5.0.11-cbl-mariner1.0-amd64
 
 # Install ASP.NET Core
-ENV ASPNET_VERSION=5.0.10
+ENV ASPNET_VERSION=5.0.11
 
 RUN curl -SL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-x64.rpm \
-    && dotnet_sha512='01e581edc981e5ea169107bce76249bbfb2139c69ae1627ba705c486d44082f4e9cc7cc0ac6362c9c49860e19eb2894b28865e5ef49a2b8eb66ed001cf35cc53' \
+    && dotnet_sha512='5d50308db196f1aae85c09e30c0b372ef38c224e39250461c716c110e569337516bb0674467d6fa821df3b82167406c4c05f61147b17b5c6ab4d3ab15c9ef1b5' \
     && echo "$dotnet_sha512  aspnetcore.rpm" | sha512sum -c - \
     && rpm --install aspnetcore.rpm \
     && rm aspnetcore.rpm
