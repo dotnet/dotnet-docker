@@ -4,19 +4,19 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm64v8/buildpack-deps:bullseye-curl as installer
 
 # Retrieve ASP.NET Core
-RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rc.1.21452.15/aspnetcore-runtime-6.0.0-rc.1.21452.15-linux-arm64.tar.gz \
-    && aspnetcore_sha512='9c52b365920b8fd6e819ce207018c967c8e3ffa9682da8374c113ae23fc8e63ce6a88d66fe55ccce94a4b7cd7e29fd3161c2bb5c72a136448c8cc6eb55889c97' \
+RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rc.2.21480.10/aspnetcore-runtime-6.0.0-rc.2.21480.10-linux-arm64.tar.gz \
+    && aspnetcore_sha512='3a92e93a8cb0c186f1c4a822d46a37604bc470599dbcbe05a7f1ea7c7d1dd9c0e6571de524de8729d19d237078742a0b4e3a1daa11b5eb5f8cce74b69710ada4' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -ozxf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
 
 
 # ASP.NET Core image
-FROM $REPO:6.0.0-rc.1-bullseye-slim-arm64v8
+FROM $REPO:6.0.0-rc.2-bullseye-slim-arm64v8
 
 ENV \
     # ASP.NET Core version
-    ASPNET_VERSION=6.0.0-rc.1.21452.15 \
+    ASPNET_VERSION=6.0.0-rc.2.21480.10 \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
