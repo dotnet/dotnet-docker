@@ -10,20 +10,22 @@ namespace Dotnet.Docker
 {
     public class Options
     {
-        public bool ComputeChecksums { get; private set; }
-        public string DockerfileVersion { get; private set; }
-        public string ChannelName { get; private set; }
-        public string GitHubEmail { get; private set; }
-        public string GitHubPassword { get; private set; }
+        public bool ComputeChecksums { get; }
+        public string DockerfileVersion { get; }
+        public string ChannelName { get; }
+        public string GitHubEmail { get; }
+        public string GitHubPassword { get; }
         public string GitHubProject => "dotnet-docker";
         public string GitHubUpstreamBranch => "nightly";
         public string GitHubUpstreamOwner => "dotnet";
-        public string GitHubUser { get; private set; }
+        public string GitHubUser { get; }
         public IDictionary<string, string?> ProductVersions { get; set; } = new Dictionary<string, string?>();
-        public string VersionSourceName { get; private set; }
+        public string VersionSourceName { get; }
+        public bool UseStableBranding { get; }
         public bool UpdateOnly => GitHubEmail == null || GitHubPassword == null || GitHubUser == null;
 
-        public Options(string dockerfileVersion, string[] productVersion, string channelName, string versionSourceName, string email, string password, string user, bool computeShas)
+        public Options(string dockerfileVersion, string[] productVersion, string channelName, string versionSourceName, string email, string password, string user,
+            bool computeShas, bool stableBranding)
         {
             DockerfileVersion = dockerfileVersion;
             ProductVersions = productVersion
@@ -35,6 +37,7 @@ namespace Dotnet.Docker
             GitHubPassword = password;
             GitHubUser = user;
             ComputeChecksums = computeShas;
+            UseStableBranding = stableBranding;
 
             // Special case for handling the shared dotnet product version variables.
             if (ProductVersions.ContainsKey("runtime"))
@@ -57,7 +60,8 @@ namespace Dotnet.Docker
                 new Option<string>("--email", "GitHub email used to make PR (if not specified, a PR will not be created)"),
                 new Option<string>("--password", "GitHub password used to make PR (if not specified, a PR will not be created)"),
                 new Option<string>("--user", "GitHub user used to make PR (if not specified, a PR will not be created)"),
-                new Option<bool>("--compute-shas", "Compute the checksum if a published checksum cannot be found")
+                new Option<bool>("--compute-shas", "Compute the checksum if a published checksum cannot be found"),
+                new Option<bool>("--stable-branding", "Use stable branding version numbers to compute paths")
             };
     }
 }

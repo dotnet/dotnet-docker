@@ -146,14 +146,8 @@ namespace Dotnet.Docker
 
             usedBuildInfos = new IDependencyInfo[] { productInfo };
 
-            const string RtmSubstring = "-rtm.";
-
             string? versionDir = _buildVersion;
-            string? versionFile = _buildVersion;
-            if (versionFile?.Contains(RtmSubstring) == true)
-            {
-                versionFile = versionFile.Substring(0, versionFile.IndexOf(RtmSubstring));
-            }
+            string? versionFile = Program.ResolveProductVersion(_buildVersion, _options);
 
             string archiveExt;
             if (_os.Contains("win"))
@@ -437,12 +431,22 @@ namespace Dotnet.Docker
 
         private static string? GetBuildVersion(string productName, string dockerfileVersion, string variables, Options options)
         {
+            string? buildVersion;
             if (options.ProductVersions.TryGetValue(productName, out string? version))
             {
-                return version;
+                buildVersion = version;
+            }
+            else
+            {
+                buildVersion = VersionUpdater.GetBuildVersion(productName, dockerfileVersion, variables);
             }
 
-            return VersionUpdater.GetBuildVersion(productName, dockerfileVersion, variables);
+            if (buildVersion is not null)
+            {
+                buildVersion = Program.ResolveProductVersion(buildVersion, options);
+            }
+
+            return buildVersion;
         }
     }
 }
