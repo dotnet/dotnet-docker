@@ -21,7 +21,7 @@
     "aspnet|5.0|win|x64|sha": "ebfdab8c09fbb17d9e49971c0e4927cacaa164187dbfc4df8fd1ed52656d97681486ac148a2f2543d88da7a766287d5570fc8686deea12fdeef2b57afa0e084e",
     "aspnet-runtime-targeting-pack|5.0|linux-rpm|x64|sha": "350a7fdb18a79fe7de2a83b3fe92a0f9d7f3e78f0ee96216e553e7c0b247923bad58e028534cd51d0ad11091bae50dd74c3ec426127f7fe59396c4260bf120c1",
 
-    "aspnet|6.0|build-version": "6.0.0-rc.2.21480.10",
+    "aspnet|6.0|build-version": "6.0.0-rtm.21512.5",
     "aspnet|6.0|linux-musl|x64|sha": "bb85419cdc2cd6d5f357737230038d3ab685832a48964ef9e8a9f783e1ed6cba0f293ed47e187f05209f3d4c919d81de27c5add5c2424e15bc1b0600c92ed390",
     "aspnet|6.0|linux-musl|arm|sha": "8fde5df285a852cfa37bc026983357cac8fdc77c5f9e2fdb242f1c967375e43bac9cc6f9ac6caa684a9bb3aab94c0f98ff93e8e9650399b44917c9e51d8e545c",
     "aspnet|6.0|linux-musl|arm64|sha": "2a8bbd4d767864e5cf87ad2f7cb8b94065af325b72b1c626f4b1791b091e818b6e54cae302293815e5739d198f791bc1194efc21117234536752d7b13ad2a4d4",
@@ -34,7 +34,7 @@
 
     "dotnet|3.1|product-version": "3.1.20",
     "dotnet|5.0|product-version": "5.0.11",
-    "dotnet|6.0|product-version": "6.0.0-rc.2",
+    "dotnet|6.0|product-version": "6.0.0",
 
     "monitor|6.0|build-version": "6.0.0-rc.1.21509.1",
     "monitor|6.0|product-version": "6.0.0-rc.1",
@@ -92,7 +92,7 @@
     "runtime-hostfxr|5.0|linux-rpm|x64|sha": "2cb42f063274ca2cf4a8c4ca21f70d684fcd8021456fba599203002d15ca89c21f7d664e85b24995a723a5ce300be6a208baa1cece9206c10e0166b565796457",
     "runtime-targeting-pack|5.0|linux-rpm|x64|sha": "cabeb2f82acbcb391c101087be7dedb0e65149782922cb07dba5231e360f4b2e08873b444c774f73925d81c975af51b76799d2b394c19b384d46c301d7710c3e",
 
-    "runtime|6.0|build-version": "6.0.0-rc.2.21480.5",
+    "runtime|6.0|build-version": "6.0.0-rtm.21512.8",
     "runtime|6.0|linux-musl|x64|sha": "ee3fb0c0311e0d88ae3f8b0d150f8d98da4fa24d77c429438fad04393b24e214db49bfbc4c9e89918e99061004d63f40ec7b76cb1c0e1c2b12414be29ab63238",
     "runtime|6.0|linux-musl|arm|sha": "3ce96ba48e87ddb942ef7927c66b899ff535f2ceed1fc8e89f6f68c4d5cb2745a5e31737d6cb65fc0569e5695ce7c291102501f5ab0561afc26528d3afebfcdc",
     "runtime|6.0|linux-musl|arm64|sha": "8a301cc23db700d5188f29b1e63c3bde1631cf1bdc02d1070923532733d7a030be17dd4391d6d1f4596c11b1009aa38efbfa8335219bd1fac989158ba7e2a728",
@@ -125,8 +125,8 @@
     "sdk|5.0|linux|x64|sha": "6b2937ad1f026fd91d0c8e6101b0422a8d19ead022055021b55a722c34dcc3697b592592eacc6def8748981bd996bc2a511d7c3f05b0ae431c00ede0376deacc",
     "sdk|5.0|win|x64|sha": "bc6aacc194c10a1171a18ae2115887b6ffff2a501463a68a354390150afc3630cfb0c3606097c9f90c67709bcbc4dee27d94e045e79d1f046db5c25f8aa81ac8",
 
-    "sdk|6.0|build-version": "6.0.100-rc.2.21505.57",
-    "sdk|6.0|product-version": "6.0.100-rc.2",
+    "sdk|6.0|build-version": "6.0.100-rtm.21512.45",
+    "sdk|6.0|product-version": "6.0.100",
     "sdk|6.0|linux-musl|arm|sha": "6e74874ad38946cb4d8ddcacf61171c440c49b4a5262256ac9b110d7d7981eee1870731df82b6d825117bbb799d2b780b7509a1bd2f9aec8c6fa71edbc745dee",
     "sdk|6.0|linux-musl|arm64|sha": "286231a82a5c5b2262049b02875ba3f7569dfbefee8b96dfebddd5c98a45918679a28879150286d9a3c1fa02536effab635c27451748a69e36fcf1e71b57b3a7",
     "sdk|6.0|linux-musl|x64|sha": "088de76a319ccc11e2d06310d096540100a76a94933602a614fb1f2b71ecaadcb573f2db71ef61cca339ce28caab07827bdb3eb0d7cd3199b0f4b8917f0bdfc3",

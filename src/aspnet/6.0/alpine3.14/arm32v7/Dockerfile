@@ -1,12 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:6.0.0-rc.2-alpine3.14-arm32v7
+FROM $REPO:6.0.0-alpine3.14-arm32v7
 
 # .NET globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 ENV \
     # ASP.NET Core version
-    ASPNET_VERSION=6.0.0-rc.2.21480.10 \
+    ASPNET_VERSION=6.0.0-rtm.21512.5 \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 

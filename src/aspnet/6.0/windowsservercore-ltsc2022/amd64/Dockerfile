@@ -1,11 +1,11 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:6.0.0-rc.2-windowsservercore-ltsc2022
+FROM $REPO:6.0.0-windowsservercore-ltsc2022
 
 ENV `
     # ASP.NET Core version
-    ASPNET_VERSION=6.0.0-rc.2.21480.10 `
+    ASPNET_VERSION=6.0.0-rtm.21512.5 `
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
