@@ -91,7 +91,7 @@ namespace Dotnet.Docker
         public static IEnumerable<IDependencyUpdater> CreateUpdaters(
             string productName, string dockerfileVersion, string repoRoot, Options options)
         {
-            string versionsPath = System.IO.Path.Combine(repoRoot, Program.VersionsFilename);
+            string versionsPath = System.IO.Path.Combine(repoRoot, UpdateDependencies.VersionsFilename);
             string versions = File.ReadAllText(versionsPath);
 
             // The format of the sha variable name is '<productName>|<dockerfileVersion>|<os>|<arch>|sha'.
@@ -147,7 +147,7 @@ namespace Dotnet.Docker
             usedBuildInfos = new IDependencyInfo[] { productInfo };
 
             string? versionDir = _buildVersion;
-            string? versionFile = Program.ResolveProductVersion(_buildVersion, _options);
+            string? versionFile = UpdateDependencies.ResolveProductVersion(_buildVersion, _options);
 
             string archiveExt;
             if (_os.Contains("win"))
@@ -443,7 +443,7 @@ namespace Dotnet.Docker
 
             if (buildVersion is not null)
             {
-                buildVersion = Program.ResolveProductVersion(buildVersion, options);
+                buildVersion = UpdateDependencies.ResolveProductVersion(buildVersion, options);
             }
 
             return buildVersion;

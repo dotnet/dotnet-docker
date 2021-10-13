@@ -18,7 +18,7 @@ using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
 
 namespace Dotnet.Docker
 {
-    public static class Program
+    public static class UpdateDependencies
     {
         public const string VersionsFilename = "manifest.versions.json";
 

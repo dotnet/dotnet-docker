@@ -33,7 +33,7 @@ namespace Dotnet.Docker
 
             Trace.TraceInformation($"Updating {versionVariableName}");
 
-            Path = System.IO.Path.Combine(repoRoot, Program.VersionsFilename);
+            Path = System.IO.Path.Combine(repoRoot, UpdateDependencies.VersionsFilename);
             VersionGroupName = s_versionGroupName;
             Regex = GetVersionVariableRegex(versionVariableName);
         }
@@ -96,7 +96,7 @@ namespace Dotnet.Docker
                 }
             }
 
-            return Program.ResolveProductVersion(version, _options);
+            return UpdateDependencies.ResolveProductVersion(version, _options);
         }
 
         private static Regex GetVersionVariableRegex(string versionVariableName) =>
