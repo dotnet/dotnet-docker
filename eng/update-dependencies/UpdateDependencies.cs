@@ -18,7 +18,7 @@ using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
 
 namespace Dotnet.Docker
 {
-    public static class Program
+    public static class UpdateDependencies
     {
         public const string VersionsFilename = "manifest.versions.json";
 
@@ -36,6 +36,20 @@ namespace Dotnet.Docker
             command.Handler = CommandHandler.Create<Options>(ExecuteAsync);
 
             return command.InvokeAsync(args);
+        }
+
+        internal static string ResolveProductVersion(string version, Options options)
+        {
+            if (version is not null && options.UseStableBranding)
+            {
+                int monikerSeparatorIndex = version.IndexOf("-");
+                if (monikerSeparatorIndex >= 0)
+                {
+                    return version.Substring(0, monikerSeparatorIndex);
+                }
+            }
+
+            return version;
         }
 
         private static async Task ExecuteAsync(Options options)
@@ -279,8 +293,8 @@ namespace Dotnet.Docker
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
             foreach (string productName in Options.ProductVersions.Keys)
             {
-                yield return new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot);
-                yield return new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, RepoRoot);
+                yield return new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot, Options);
+                yield return new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, RepoRoot, Options);
 
                 foreach (IDependencyUpdater shaUpdater in DockerfileShaUpdater.CreateUpdaters(productName, Options.DockerfileVersion, RepoRoot, Options))
                 {
