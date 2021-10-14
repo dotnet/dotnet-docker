@@ -1,0 +1,15 @@
+steps:
+- powershell: |
+    # publicSourceBranch is not necessarily the working branch, it is the branch referenced in the readme Dockerfile source links
+    if ($env:PUBLICSOURCEBRANCH) {
+        $publicSourceBranch = $env:PUBLICSOURCEBRANCH
+    }
+    elseif (-not "$(manifest)".Contains("samples") -and ("$(sourceBranch)" -eq "nightly" -or $env:SYSTEM_PULLREQUEST_TARGETBRANCH -eq "nightly")) {
+        $publicSourceBranch = "nightly"
+    }
+    else {
+        $publicSourceBranch = "main"
+    }
+
+    echo "##vso[task.setvariable variable=publicSourceBranch]$publicSourceBranch"
+  displayName: Set Public Source Branch Var

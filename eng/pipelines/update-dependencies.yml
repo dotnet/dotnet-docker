@@ -8,7 +8,7 @@ schedules:
     - nightly
   always: true
 variables:
-- template: variables/common.yml
+- template: ../common/templates/variables/dotnet/common.yml
 stages:
 - stage: DotNet
   condition: eq(variables['update-dotnet-enabled'], 'true')
@@ -30,7 +30,8 @@ stages:
         --user $(dotnetDockerBot.userName)
         --email $(dotnetDockerBot.email)
         --password $(BotAccount-dotnet-docker-bot-PAT)
-        --version-source-name dotnet/core-sdk
+        --stable-branding $(dotnetStableBranding)
+        --version-source-name dotnet/installer
       displayName: Run Update Dependencies
 - stage: Monitor
   condition: eq(variables['update-monitor-enabled'], 'true')
@@ -53,5 +54,6 @@ stages:
         --password $(BotAccount-dotnet-docker-bot-PAT)
         --product-version monitor=$(monitorVer)
         --channel-name $(monitorChannel)
+        --stable-branding $(monitorStableBranding)
         --version-source-name dotnet/dotnet-monitor
       displayName: Run Update Dependencies

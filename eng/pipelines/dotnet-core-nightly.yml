@@ -10,12 +10,19 @@ trigger:
     - src/*
 pr: none
 
+resources:
+  repositories:
+  - repository: InternalVersionsRepo
+    type: git
+    name: internal/dotnet-versions
+
 variables:
 - template: variables/core.yml
 - name: officialBranches
   value: "'nightly'"
 
 stages:
-- template: ../common/templates/stages/build-test-publish-repo.yml
+- template: stages/build-test-publish-repo.yml
   parameters:
-    testMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
+    internalProjectName: ${{ variables.internalProjectName }}
+    publicProjectName: ${{ variables.publicProjectName }}

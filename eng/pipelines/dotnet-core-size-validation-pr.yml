@@ -11,7 +11,10 @@ pr:
     - samples/*
 
 variables:
-- template: variables/common.yml
+- template: ../common/templates/variables/dotnet/common.yml
 
 jobs:
 - template: ../common/templates/jobs/validate-image-sizes.yml
+  parameters:
+    internalProjectName: ${{ variables.internalProjectName }}
+    publicProjectName: ${{ variables.publicProjectName }}

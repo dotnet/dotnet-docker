@@ -5,7 +5,7 @@ parameters:
   noCache: false
   internalProjectName: null
   publicProjectName: null
-  buildMatrixCustomBuildLegGroupArgs: ""
+  buildMatrixCustomBuildLegGroupArgs: null
   customBuildInitSteps: []
   customPublishInitSteps: []
 
