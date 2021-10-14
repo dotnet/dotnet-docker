@@ -1,0 +1,25 @@
+# A wrapper template around the common .NET build-test-publish-repo template with settings
+# specific to the Dockerfiles in this repo.
+
+parameters:
+  noCache: false
+  internalProjectName: null
+  publicProjectName: null
+
+stages:
+- template: ../../common/templates/stages/dotnet/build-test-publish-repo.yml
+  parameters:
+    noCache: ${{ parameters.noCache }}
+    internalProjectName: ${{ parameters.internalProjectName }}
+    publicProjectName: ${{ parameters.publicProjectName }}
+    ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+      buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
+    ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+      buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
+
+    # Template paths must be relative to the YAML job that executes them
+    customBuildInitSteps:
+    - template: ../../../pipelines/steps/set-public-source-branch-var.yml
+    customPublishInitSteps:
+    - template: ../../../pipelines/steps/set-public-source-branch-var.yml
+    - template: ../../../pipelines/steps/set-publish-mcrdocs-args-var.yml

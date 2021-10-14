@@ -6,6 +6,10 @@ parameters:
   buildJobTimeout: 60
   customInitSteps: []
   noCache: false
+  internalProjectName: null
+  publicProjectName: null
+  internalVersionsRepoRef: null
+  publicVersionsRepoRef: null
 
 jobs:
 - job: ${{ parameters.name }}
@@ -29,11 +33,11 @@ jobs:
       pipelineDisabledCache: true
   steps:
   - checkout: self
-  - ${{ if and(eq(variables['System.TeamProject'], 'public'), eq(parameters.noCache, false)) }}:
-    - checkout: VersionsRepo
+  - ${{ if and(eq(variables['System.TeamProject'], parameters.publicProjectName), eq(parameters.noCache, false)) }}:
+    - checkout: ${{ parameters.publicVersionsRepoRef }}
       path: s/$(versionsRepoPath)
-  - ${{ if and(eq(variables['System.TeamProject'], 'internal'), eq(parameters.noCache, false)) }}:
-    - checkout: git://internal/dotnet-versions
+  - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), eq(parameters.noCache, false)) }}:
+    - checkout: ${{ parameters.internalVersionsRepoRef }}
       path: s/$(versionsRepoPath)
   - ${{ if eq(parameters.noCache, false) }}:
     - powershell: |
@@ -64,10 +68,12 @@ jobs:
   - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
   - ${{ parameters.customInitSteps }}
   - template: ../steps/set-image-info-path-var.yml
+    parameters:
+      publicSourceBranch: $(publicSourceBranch)
   - powershell: |
       $imageBuilderBuildArgs = "$(imageBuilder.queueArgs) --image-info-output-path $(artifactsPath)/$(legName)-image-info.json"
-      if ($env:SYSTEM_TEAMPROJECT -eq "internal") {
-        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push --registry-creds ""$(acr.server)=$(acr.userName);$(BotAccount-dotnet-docker-acr-bot-password)"""
+      if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}") {
+        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push --registry-creds ""$(acr.server)=$(acr.userName);$(acr.password)"""
       }
 
       # If the pipeline isn't configured to disable the cache and a build variable hasn't been set to disable the cache
@@ -92,7 +98,7 @@ jobs:
   - publish: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
     artifact: $(legName)-image-info-$(System.JobAttempt)
     displayName: Publish Image Info File Artifact
-  - ${{ if eq(variables['System.TeamProject'], 'public') }}:
+  - ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
       parameters:
         condition: ne(variables.testScriptPath, '')

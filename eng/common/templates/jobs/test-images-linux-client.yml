@@ -4,6 +4,8 @@ parameters:
   matrix: {}
   testJobTimeout: 60
   preBuildValidation: false
+  internalProjectName: null
+
 jobs:
 - job: ${{ parameters.name }}
   ${{ if eq(parameters.preBuildValidation, 'false') }}:
@@ -19,3 +21,4 @@ jobs:
   - template: ../steps/test-images-linux-client.yml
     parameters:
       preBuildValidation: ${{ parameters.preBuildValidation }}
+      internalProjectName: ${{ parameters.internalProjectName }}

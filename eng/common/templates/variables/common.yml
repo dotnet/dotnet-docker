@@ -19,8 +19,6 @@ variables:
   value: true
 - name: manifestVariables
   value: ""
-- name: defaultLinuxAmd64PoolImage
-  value: ubuntu-latest
 - name: mcrImageIngestionTimeout
   value: "00:20:00"
 - name: mcrDocIngestionTimeout
@@ -32,3 +30,20 @@ variables:
   value: 'mirror/'
 - name: cgBuildGrepArgs
   value: "''"
+
+- name: defaultLinuxAmd64PoolImage
+  value: ubuntu-latest
+- name: defaultLinuxArm32PoolImage
+  value: null
+- name: defaultLinuxArm64PoolImage
+  value: null
+- name: defaultWindows2016PoolImage
+  value: vs2017-win2016
+- name: defaultWindows1809PoolImage
+  value: windows-2019
+- name: defaultWindows2004PoolImage
+  value: null
+- name: defaultWindows20H2PoolImage
+  value: null
+- name: defaultWindows2022PoolImage
+  value: windows-2022

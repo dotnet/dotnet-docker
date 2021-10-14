@@ -1,0 +1,52 @@
+# A wrapper template around the common build-test-publish-repo template with settings
+# specific to the .NET team's infrastructure.
+
+parameters:
+  noCache: false
+  internalProjectName: null
+  publicProjectName: null
+  buildMatrixCustomBuildLegGroupArgs: null
+  customBuildInitSteps: []
+  customPublishInitSteps: []
+
+stages:
+- template: ../build-test-publish-repo.yml
+  parameters:
+    noCache: ${{ parameters.noCache }}
+    internalProjectName: ${{ parameters.internalProjectName }}
+    publicProjectName: ${{ parameters.publicProjectName }}
+    buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
+    customBuildInitSteps: ${{ parameters.customBuildInitSteps }}
+    customPublishInitSteps: ${{ parameters.customPublishInitSteps }}
+
+    internalVersionsRepoRef: InternalVersionsRepo
+    publicVersionsRepoRef: PublicVersionsRepo
+    
+    ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+      customPublishVariables:
+      - group: DotNet-AllOrgs-Darc-Pats
+    
+    ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+      buildMatrixType: platformVersionedOs
+
+    linuxArm64Pool:
+        ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+          name: DotNetCore-Docker-Public
+        ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+          name: DotNetCore-Docker
+        demands:
+        - Agent.OS -equals linux
+        - Agent.OSArchitecture -equals ARM64
+    linuxArm32Pool:
+        ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+          name: DotNetCore-Docker-Public
+        ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+          name: DotNetCore-Docker
+        demands:
+        - Agent.OS -equals linux
+        - Agent.OSArchitecture -equals ARM64
+    windows2016Pool: Docker-2016-${{ variables['System.TeamProject'] }}
+    windows1809Pool: Docker-1809-${{ variables['System.TeamProject'] }}
+    windows2004Pool: Docker-2004-${{ variables['System.TeamProject'] }}
+    windows20H2Pool: Docker-20H2-${{ variables['System.TeamProject'] }}
+    windows2022Pool: Docker-2022-${{ variables['System.TeamProject'] }}

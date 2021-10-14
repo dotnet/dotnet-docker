@@ -1,10 +1,14 @@
 trigger: none
 pr: none
 
+resources:
+  repositories:
+  - repository: InternalVersionsRepo
+    type: git
+    name: internal/dotnet-versions
+
 variables:
 - template: variables/core.yml
 
 stages:
-- template: ../common/templates/stages/build-test-publish-repo.yml
-  parameters:
-    testMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
+- template: stages/build-test-publish-repo.yml
