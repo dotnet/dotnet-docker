@@ -1,0 +1,61 @@
+# Common variables for building/testing/publishing in the .NET team's pipelines
+
+variables:
+- template: common.yml
+
+- name: commonVersionsImageInfoPath
+  value: build-info/docker
+- name: publicGitRepoUri
+  value: https://github.com/dotnet/dotnet-docker
+- name: testScriptPath
+  value: ./tests/run-tests.ps1
+- name: testResultsDirectory
+  value: tests/Microsoft.DotNet.Docker.Tests/TestResults/
+- name: mirrorRegistryCreds
+  value: --registry-creds 'docker.io=$(dotnetDockerHubBot.userName);$(BotAccount-dotnet-dockerhub-bot-PAT)'
+- name: officialRepoPrefix
+  value: public/
+
+- name: mcrDocsRepoInfo.accessToken
+  value: $(BotAccount-dotnet-docker-bot-PAT)
+- name: mcrDocsRepoInfo.userName
+  value: $(dotnetDockerBot.userName)
+- name: mcrDocsRepoInfo.email
+  value: $(dotnetDockerBot.email)
+
+- name: gitHubVersionsRepoInfo.org
+  value: dotnet
+- name: gitHubVersionsRepoInfo.repo
+  value: versions
+- name: gitHubVersionsRepoInfo.branch
+  value: main
+- name: gitHubVersionsRepoInfo.path
+  value: ${{ variables.commonVersionsImageInfoPath }}
+- name: gitHubVersionsRepoInfo.accessToken
+  value: $(BotAccount-dotnet-docker-bot-PAT)
+- name: gitHubVersionsRepoInfo.userName
+  value: $(dotnetDockerBot.userName)
+- name: gitHubVersionsRepoInfo.email
+  value: $(dotnetDockerBot.email)
+
+- name: azdoVersionsRepoInfo.org
+  value: dnceng
+- name: azdoVersionsRepoInfo.project
+  value: ${{ variables.internalProjectName }}
+- name: azdoVersionsRepoInfo.repo
+  value: dotnet-versions
+- name: azdoVersionsRepoInfo.branch
+  value: main
+- name: azdoVersionsRepoInfo.path
+  value: ${{ variables.commonVersionsImageInfoPath }}
+- name: azdoVersionsRepoInfo.accessToken
+  value: $(dn-bot-devdiv-dnceng-rw-code-pat)
+
+- name: kusto.servicePrincipalPassword
+  value: $(app-DotnetDockerTelemetryIngestion-client-secret)
+- name: mcrStatus.servicePrincipalPassword
+  value: $(app-DotnetDockerMcrStatusApi-client-secret)
+- name: acr.servicePrincipalPassword
+  value: $(app-dotnetdockerbuild-client-secret)
+- name: acr.password
+  value: $(BotAccount-dotnet-docker-acr-bot-password)

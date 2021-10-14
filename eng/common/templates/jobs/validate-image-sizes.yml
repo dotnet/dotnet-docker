@@ -1,5 +1,9 @@
+parameters:
+  internalProjectName: null
+  publicProjectName: null
+
 jobs:
-- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
   # Split the Linux images into separate jobs in order to compensate for less
   # disk space on the Linux agents. See https://github.com/dotnet/dotnet-docker/issues/1588
   - job: LinuxAmd64PerfTests
@@ -42,5 +46,5 @@ jobs:
   - template: ../steps/validate-image-sizes.yml
     parameters:
       dockerClientOS: windows
-      ${{ if eq(variables['System.TeamProject'], 'public') }}:
+      ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         validationMode: integrity

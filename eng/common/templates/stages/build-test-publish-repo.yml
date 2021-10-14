@@ -4,6 +4,8 @@ parameters:
   buildMatrixCustomBuildLegGroupArgs: ""
   testMatrixCustomBuildLegGroupArgs: ""
   customBuildInitSteps: []
+  customPublishInitSteps: []
+  customPublishVariables: []
   
   linuxAmdBuildJobTimeout: 60
   linuxArmBuildJobTimeout: 60
@@ -13,10 +15,31 @@ parameters:
   linuxArmTestJobTimeout: 60
   windowsAmdTestJobTimeout: 60
 
-  linuxAmd64BuildPool:
-    vmImage: $(defaultLinuxAmd64PoolImage)
-
   noCache: false
+
+  internalProjectName: null
+  publicProjectName: null
+
+  internalVersionsRepoRef: null
+  publicVersionsRepoRef: null
+
+  linuxAmd64Pool:
+    vmImage: $(defaultLinuxAmd64PoolImage)
+  linuxArm32Pool:
+    vmImage: $(defaultLinuxArm32PoolImage)
+  linuxArm64Pool:
+    vmImage: $(defaultLinuxArm64PoolImage)
+  windows2016Pool:
+    vmImage: $(defaultWindows2016PoolImage)
+  windows1809Pool:
+    vmImage: $(defaultWindows1809PoolImage)
+  windows2004Pool:
+    vmImage: $(defaultWindows2004PoolImage)
+  windows20H2Pool:
+    vmImage: $(defaultWindows20H2PoolImage)
+  windows2022Pool:
+    vmImage: $(defaultWindows2022PoolImage)
+
 stages:
 
 ################################################################################
@@ -28,105 +51,129 @@ stages:
   - template: ../jobs/test-images-linux-client.yml
     parameters:
       name: PreBuildValidation
-      pool:
-        vmImage: $(defaultLinuxAmd64PoolImage)
+      pool: ${{ parameters.linuxAmd64Pool }}
       testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
       preBuildValidation: true
+      internalProjectName: ${{ parameters.internalProjectName }}
   - template: ../jobs/copy-base-images.yml
     parameters:
       name: CopyBaseImages
+      pool: ${{ parameters.linuxAmd64Pool }}
       additionalOptions: "--manifest '$(manifest)' $(manifestVariables)"
+      publicProjectName: ${{ parameters.publicProjectName }}
   - template: ../jobs/generate-matrix.yml
     parameters:
       matrixType: ${{ parameters.buildMatrixType }}
       name: GenerateBuildMatrix
+      pool: ${{ parameters.linuxAmd64Pool }}
       customBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Linux_amd64
-      pool: ${{ parameters.linuxAmd64BuildPool }}
+      pool: ${{ parameters.linuxAmd64Pool }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxAmd64']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Linux_arm64v8
-      pool:
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
-        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: DotNetCore-Docker
-        demands:
-        - Agent.OS -equals linux
-        - Agent.OSArchitecture -equals ARM64
+      pool: ${{ parameters.linuxArm64Pool }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm64v8']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Linux_arm32v7
-      pool:
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: DotNetCore-Docker-Public
-        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: DotNetCore-Docker
-        demands:
-        - Agent.OS -equals linux
-        - Agent.OSArchitecture -equals ARM64
+      pool: ${{ parameters.linuxArm32Pool }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm32v7']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows1809_amd64
-      pool: Docker-1809-${{ variables['System.TeamProject'] }}
+      pool: ${{ parameters.windows1809Pool }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows1809Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows2004_amd64
-      pool: Docker-2004-${{ variables['System.TeamProject'] }}
+      pool: ${{ parameters.windows2004Pool }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows2004Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows20H2_amd64
-      pool: Docker-20H2-${{ variables['System.TeamProject'] }}
+      pool: ${{ parameters.windows20H2Pool }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows20H2Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: ../jobs/build-images.yml
     parameters:
       name: Windows2022_amd64
-      pool: Docker-2022-${{ variables['System.TeamProject'] }}
+      pool: ${{ parameters.windows2022Pool }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2022Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: ../jobs/build-images.yml
     parameters:
       name: WindowsLtsc2016_amd64
-      pool: Docker-2016-${{ variables['System.TeamProject'] }}
+      pool: ${{ parameters.windows2016Pool }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2016Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
 
 ################################################################################
 # Post-Build
@@ -140,7 +187,7 @@ stages:
 ################################################################################
 # Test Images
 ################################################################################
-- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
   - stage: Test
     dependsOn: Post_Build
     condition: "
@@ -158,74 +205,76 @@ stages:
       parameters:
         matrixType: ${{ parameters.testMatrixType }}
         name: GenerateTestMatrix
+        pool: ${{ parameters.linuxAmd64Pool }}
         customBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}
         isTestStage: true
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publicProjectName: ${{ parameters.publicProjectName }}
 
     - template: ../jobs/test-images-linux-client.yml
       parameters:
         name: Linux_amd64
-        pool:
-          vmImage: $(defaultLinuxAmd64PoolImage)
+        pool: ${{ parameters.linuxAmd64Pool }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxAmd64']
         testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
     - template: ../jobs/test-images-linux-client.yml
       parameters:
         name: Linux_arm64v8
-        pool:
-          name: DotNetCore-Docker
-          demands:
-          - Agent.OS -equals linux
-          - Agent.OSArchitecture -equals ARM64
+        pool: ${{ parameters.linuxArm64Pool }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm64v8']
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
     - template: ../jobs/test-images-linux-client.yml
       parameters:
         name: Linux_arm32v7
-        pool:
-          name: DotNetCore-Docker
-          demands:
-          - Agent.OS -equals linux
-          - Agent.OSArchitecture -equals ARM64
+        pool: ${{ parameters.linuxArm32Pool }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm32v7']
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows1809_amd64
-        pool: Docker-1809-${{ variables['System.TeamProject'] }}
+        pool: ${{ parameters.windows1809Pool }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows1809Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows2004_amd64
-        pool: Docker-2004-${{ variables['System.TeamProject'] }}
+        pool: ${{ parameters.windows2004Pool }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows2004Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows20H2_amd64
-        pool: Docker-20H2-${{ variables['System.TeamProject'] }}
+        pool: ${{ parameters.windows20H2Pool }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows20H2Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows2022_amd64
-        pool: Docker-2022-${{ variables['System.TeamProject'] }}
+        pool: ${{ parameters.windows2022Pool }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2022Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: WindowsLtsc2016_amd64
-        pool: Docker-2016-${{ variables['System.TeamProject'] }}
+        pool: ${{ parameters.windows2016Pool }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2016Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
 
 ################################################################################
 # Publish Images
 ################################################################################
 - stage: Publish
-  ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+  ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
     dependsOn: Test
-  ${{ if eq(variables['System.TeamProject'], 'public') }}:
+  ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
     dependsOn: Post_Build
   condition: "
     and(
@@ -257,5 +306,7 @@ stages:
   jobs:
   - template: ../jobs/publish.yml
     parameters:
-      pool:
-        vmImage: $(defaultLinuxAmd64PoolImage)
+      pool: ${{ parameters.linuxAmd64Pool }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      customPublishVariables: ${{ parameters.customPublishVariables }}
+      customInitSteps: ${{ parameters.customPublishInitSteps }}

@@ -1,19 +1,25 @@
-steps:
-- powershell: >
-    $buildRepoName = $env:BUILD_REPOSITORY_NAME.Replace("/", "-")
+parameters:
+  publicSourceBranch: null
 
-      # publicSourceBranch is not necessarily the working branch, it is the branch referenced in the readme Dockerfile source links
-    if ($env:PUBLICSOURCEBRANCH) {
-        $publicSourceBranch = $env:PUBLICSOURCEBRANCH
-    }
-    elseif (-not $env:MANIFEST.Contains("samples") -and ($env:SOURCEBRANCH -eq "nightly" -or $env:SYSTEM_PULLREQUEST_TARGETBRANCH -eq "nightly")) {
-        $publicSourceBranch = "nightly"
+steps:
+- powershell: |
+    if ("$(System.TeamProject)" -eq "$(publicProjectName)") {
+        $basePath = "$(gitHubVersionsRepoInfo.path)"
     }
     else {
-        $publicSourceBranch = "main"
+        $basePath= "$(azdoVersionsRepoInfo.path)"
     }
 
-    $imageInfoVersionsPath = "build-info/docker/image-info.$buildRepoName-$publicSourceBranch$env:IMAGEINFOVARIANT.json"
+    $publicSourceBranch = "${{ parameters.publicSourceBranch }}"
 
-    echo "##vso[task.setvariable variable=imageInfoVersionsPath]$imageInfoVersionsPath"
-  displayName: Set Image Info Path Var
+    if ($publicSourceBranch -eq "") {
+        throw "publicSourceBranch variable is not set"
+    }
+
+    $buildRepoName = "$(Build.Repository.Name)".Replace("/", "-")
+    $imageInfoName = "image-info.$buildRepoName-$publicSourceBranch$(imageInfoVariant).json"
+
+    echo "##vso[task.setvariable variable=imageInfoVersionsPath]$basePath/$imageInfoName"
+    echo "##vso[task.setvariable variable=gitHubImageInfoVersionsPath]$(gitHubVersionsRepoInfo.path)/$imageInfoName"
+    echo "##vso[task.setvariable variable=azdoImageInfoVersionsPath]$(azdoVersionsRepoInfo.path)/$imageInfoName"
+  displayName: Set Image Info Path Vars
