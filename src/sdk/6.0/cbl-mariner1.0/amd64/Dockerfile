@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=6.0.100-rtm.21513.19 \
+    DOTNET_SDK_VERSION=6.0.100-rtm.21514.1 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Unset Logging__Console__FormatterName from aspnet base image
@@ -25,19 +25,19 @@ RUN tdnf install -y \
 
 # Install .NET SDK
 RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-x64.rpm \
-    && dotnet_sha512='4a98c0591079018a72b72e4a26867362e66b7b58a776c2e0319edc95886a7255a966089113dd1667e622987a765dd577f3ff8d6f69abaaa0f2c6ae0bd682f8a7' \
+    && dotnet_sha512='40bd228fb03562dd5f72ad92d60e199805d1c4412ccba7f72dad79a9e5e93bef973aa7fcbf50094a82e87ff973343cc6a242c10ee699daa3a621ccb90cf29cd6' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
     && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='e23d5da4560a22218cf91a47f666073c14d6ce0bf5958ab3a995ed0fa7946d865a52f3e9b9dbbacd8ae14cdf4acc350394837a9fb145e50da183fc8bcc45af4e' \
+    && dotnet_sha512='e47c3dd8b9ba3b22c0d60654591f586332ed0f24b298e553ffc4955c60b89234290e2749b6190141fbbda5750bb2e498c5dc289637c36b8fd94b02765d3120a1' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
     && curl -SL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-targeting-pack-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='8d68c98528dcd5e9487f33f42526a5059c5158473f4e8394abbd3d1979a44dc7f63e614ece9551d0221cef25e3ca7c98304719e114527ced411161b949b5df63' \
+    && dotnet_sha512='53886145174451e8d075e79484a0d8f3154715ae6deb4e51fb2b3edd21a75ea2291cb05902284d121ed664097ed2188cae56e5d80586fb6a411291227d35dfc4' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
     && curl -SL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-targeting-pack-$ASPNET_VERSION.rpm \
-    && dotnet_sha512='986d8dcf3a20393a28a6d66b5fd28cc1a11a9a02c3d446734593740314bcc7f0052e9bcd3f51ffc630099709bd7f3e535d03198e5d086d53e4f30fc6a2328416' \
+    && dotnet_sha512='1177cf3e3a61e38ae97f7f3e37a127519ef738f22345dbef93c09008ebb1f51f7d615a3ba8288717960e58fef1b7d8cf8b25f8e0c7d950dad15de64662ebbe39' \
     && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
     \
     && curl -SL --output netstandard-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-x64.rpm \
