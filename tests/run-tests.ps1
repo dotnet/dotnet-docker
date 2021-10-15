@@ -69,6 +69,11 @@ Try {
         $env:PULL_IMAGES = $null
     }
 
+    if ($OS -and $Version -eq "3.1") {
+        # Use a wildcard for the OS to account for 3.1 having variation between its runtime and sdk OS version names (e.g. buster-slim vs buster)
+        $OS += "*"
+    }
+
     $env:IMAGE_ARCH = $Architecture
     $env:IMAGE_OS = $OS
     $env:IMAGE_VERSION = $Version
