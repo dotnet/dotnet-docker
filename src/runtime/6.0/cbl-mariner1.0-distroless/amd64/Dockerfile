@@ -1,7 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM amd64/alpine:latest AS installer
+FROM cblmariner.azurecr.io/base/core:1.0 AS installer
+
+RUN tdnf install -y ca-certificates-microsoft \
+    && tdnf clean all
 
 # Acquire .NET
 RUN dotnet_version='6.0.0-rtm.21514.7' \
@@ -10,7 +13,6 @@ RUN dotnet_version='6.0.0-rtm.21514.7' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
     && rm dotnet.tar.gz
 
 RUN mkdir /dotnet-symlink \

@@ -1,7 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM amd64/alpine:latest AS installer
+FROM cblmariner.azurecr.io/base/core:1.0 AS installer
+
+RUN tdnf install -y ca-certificates-microsoft \
+    && tdnf clean all
 
 # Acquire ASP.NET Core
 RUN aspnet_version='6.0.0-rtm.21514.23' \
@@ -13,7 +16,7 @@ RUN aspnet_version='6.0.0-rtm.21514.23' \
     && rm aspnetcore.tar.gz
 
 
-# # ASP.NET Core image
+# ASP.NET Core image
 FROM $REPO:6.0.0-cbl-mariner1.0-distroless-amd64
 
 ENV \
