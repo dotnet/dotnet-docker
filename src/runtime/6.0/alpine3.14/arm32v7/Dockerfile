@@ -5,10 +5,10 @@ FROM $REPO:6.0.0-alpine3.14-arm32v7
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 # Install .NET
-ENV DOTNET_VERSION=6.0.0-rtm.21514.7
+ENV DOTNET_VERSION=6.0.0-rtm.21517.2
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-arm.tar.gz \
-    && dotnet_sha512='42f49b94b8d7375140534795b44d0f638f8c959c846c32565460ac8180ffe1f97da4f785ffcdd8ab4a4b7fa0a4e5a9fa06b135df58412c2db81838a6b4e4c6f1' \
+    && dotnet_sha512='91687410f237bb92851d28bf2c72385942b3107ce50cf9ce9fc5129f29eba5d6dc7a1db61745b838ee6a315e0398362ec9172bc26160a715ee6f80da417c7e12' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
