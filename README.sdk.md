@@ -1,9 +1,7 @@
 # Featured Tags
 
-* `5.0` (Current)
-  * `docker pull mcr.microsoft.com/dotnet/sdk:5.0`
-* `3.1` (LTS)
-  * `docker pull mcr.microsoft.com/dotnet/sdk:3.1`
+* `6.0` (Current, LTS)
+  * `docker pull mcr.microsoft.com/dotnet/sdk:6.0`
 
 # About This Image
 

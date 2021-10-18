@@ -12,20 +12,20 @@ _Simple Tags_ reference an image for a single platform (e.g. `Windows x64` or `L
 
     **Examples**
 
-    * `5.0.0-focal-amd64`
-    * `5.0.0-focal-arm64v8`
+    * `6.0.0-focal-amd64`
+    * `6.0.0-focal-arm64v8`
     * `3.1.18-nanoserver-1809`
-    * `3.1.18-alpine3.13`
+    * `3.1.18-alpine3.14`
     * `3.1.18-buster-slim-arm32v7`
 
 1. `<Major.Minor .NET Version>-<OS>-<Architecture>`
 
     **Examples**
 
-    * `5.0-focal-arm64v8`
-    * `5.0-focal-amd64`
+    * `6.0-focal-arm64v8`
+    * `6.0-focal-amd64`
     * `3.1-nanoserver-1809`
-    * `3.1-alpine3.12`
+    * `3.1-alpine3.14`
     * `3.1-buster-slim-arm32v7`
 
 ## Shared Tags
@@ -41,28 +41,28 @@ _Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/
 
     **Examples**
 
-    * `5.0.2-focal`
-    * `5.0.2-alpine3.12`
+    * `6.0.0-focal`
+    * `6.0.0-alpine3.14`
 
 1. `<Major.Minor .NET Version>-<OS>`
 
     **Examples**
 
-    * `5.0-focal`
-    * `5.0-alpine3.12`
+    * `6.0-focal`
+    * `6.0-alpine3.14`
 
 1. `<Major.Minor.Patch .NET Version>`
 
     **Examples**
 
-    * `5.0.0`
-    * `3.1.9`
+    * `6.0.0`
+    * `3.1.20`
 
 1. `<Major.Minor .NET Version>`
 
     **Examples**
 
-    * `5.0`
+    * `6.0`
     * `3.1`
 
 1. `latest`
@@ -75,7 +75,7 @@ _Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/
 1. `<Major.Minor.Patch .NET Version>` - The `Major.Minor.Patch` number of the .NET version included in the image.
 
     * Tags which use this version format are considered _fixed tags_. The .NET related contents of the referenced images are guaranteed to not change.
-    * In the event servicing of the .NET contents of the image is required outside of a regular .NET service release, a `-n` suffix will be added to the .NET version number where n is an incremental count (e.g. [5.0.1-1](https://github.com/dotnet/dotnet-docker/pull/2516)).
+    * In the event servicing of the .NET contents of the image is required outside of a regular .NET service release, a `-n` suffix will be added to the .NET version number where n is an incremental count (e.g. [6.0.0-1](https://github.com/dotnet/dotnet-docker/pull/2516)).
 
 1. `<Major.Minor .NET Version>` - The `Major.Minor` number of the .NET version included in the image.
 
@@ -93,11 +93,11 @@ _Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/
 
 ## Tag Listing
 
-Each [Docker Hub repository](https://hub.docker.com/_/microsoft-dotnet) contains a detailed listing of all supported tags. The listing is broken apart by OS platform (e.g. `Linux amd64 Tags` or `Nano Server 2022 amd64 Tags`). Each row represents a single image and contains all of the tags that reference it. For example the following entry represents the 5.0 runtime Buster image which is referenced by seven tags:
+Each [Docker Hub repository](https://hub.docker.com/_/microsoft-dotnet) contains a detailed listing of all supported tags. The listing is broken apart by OS platform (e.g. `Linux amd64 Tags` or `Nano Server 2022 amd64 Tags`). Each row represents a single image and contains all of the tags that reference it. For example the following entry represents the 6.0 runtime Bullseye image which is referenced by seven tags:
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-5.0.2-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.2-buster-slim, 5.0-buster-slim, 5.0.2, 5.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/5.0/buster-slim/amd64/Dockerfile) | Debian 10
+6.0.0-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.0-bullseye-slim, 6.0-bullseye-slim, 6.0.0, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
 
 ## Tag Lifecycle
 
@@ -105,10 +105,10 @@ Each tag will be supported for the lifetime of the .NET and OS version reference
 
 ### Examples
 
-* `5.0` - Will be supported for the lifetime of the .NET 5.0 release.
-* `5.0.2` - Will be supported for the lifetime of the 5.0.2 servicing release.
-* `5.0-windowservercore-ltsc2019` - Will be supported for the lifetime of the .NET 5.0 and Windows Server Core LTSC 2019 releases, whichever is shorter.
-* `5.0-focal` - Will be supported for the lifetime of the .NET 5.0 and Ubuntu Focal release, whichever is shorter.
+* `6.0` - Will be supported for the lifetime of the .NET 6.0 release.
+* `6.0.0` - Will be supported for the lifetime of the 6.0.0 servicing release.
+* `6.0-windowservercore-ltsc2019` - Will be supported for the lifetime of the .NET 6.0 and Windows Server Core LTSC 2019 releases, whichever is shorter.
+* `6.0-focal` - Will be supported for the lifetime of the .NET 6.0 and Ubuntu Focal release, whichever is shorter.
 
 ## Policy Changes
 
