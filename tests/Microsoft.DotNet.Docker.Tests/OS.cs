@@ -21,6 +21,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         // Mariner
         public const string Mariner10 = "cbl-mariner1.0";
+        public const string Mariner10Distroless = "cbl-mariner1.0-distroless";
 
         // Ubuntu
         public const string Bionic = "bionic";
