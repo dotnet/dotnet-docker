@@ -796,6 +796,42 @@
               }
             }
           ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/6.0/cbl-mariner1.0-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/6.0/Dockerfile.mariner-distroless",
+              "os": "linux",
+              "osVersion": "cbl-mariner1.0-distroless",
+              "tags": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-cbl-mariner1.0-amd64"
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -2023,6 +2059,45 @@
                   "docType": "Undocumented"
                 }
               }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/cbl-mariner1.0-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.mariner-distroless",
+              "os": "linux",
+              "osVersion": "cbl-mariner1.0-distroless",
+              "tags": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-cbl-mariner1.0-amd64"
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -3321,6 +3396,45 @@
                   "docType": "Undocumented"
                 }
               }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/6.0/cbl-mariner1.0-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.mariner-distroless",
+              "os": "linux",
+              "osVersion": "cbl-mariner1.0-distroless",
+              "tags": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-cbl-mariner1.0-amd64"
+                  ]
+                }
+              ]
             }
           ]
         },

@@ -1,0 +1,23 @@
+ARG installer_image
+ARG base_image
+
+FROM $installer_image AS installer
+
+ARG required_packages
+
+RUN tdnf install -y dnf
+RUN mkdir /staging \
+    && dnf install -y --releasever=1.0 --installroot /staging $(echo $required_packages)
+
+
+FROM $base_image AS base
+
+
+FROM base
+
+COPY --from=installer /staging/ /
+
+# When installing to the staging location in the installer stage, there will be a dependency on the filesystem package
+# which will create new user and group files. We want to keep the original files from the base image instead.
+COPY --from=base /etc/passwd /etc/passwd
+COPY --from=base /etc/group /etc/group

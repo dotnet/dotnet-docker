@@ -22,7 +22,6 @@ namespace Microsoft.DotNet.Docker.Tests
         private readonly ProductImageData _imageData;
         private readonly bool _isWeb;
         private readonly ITestOutputHelper _outputHelper;
-        private readonly string _testArtifactsDir = Path.Combine(Directory.GetCurrentDirectory(), "TestAppArtifacts");
 
         public ImageScenarioVerifier(
             ProductImageData imageData,
@@ -189,7 +188,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 string sourceDockerfileName = $"Dockerfile.{DockerHelper.DockerOS.ToLower()}";
 
                 File.Copy(
-                    Path.Combine(_testArtifactsDir, sourceDockerfileName),
+                    Path.Combine(DockerHelper.TestArtifactsDir, sourceDockerfileName),
                     Path.Combine(appDir, "Dockerfile"));
 
                 string nuGetConfigFileName = "NuGet.config";
@@ -198,8 +197,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     nuGetConfigFileName += ".nightly";
                 }
 
-                File.Copy(Path.Combine(_testArtifactsDir, nuGetConfigFileName), Path.Combine(appDir, "NuGet.config"));
-                File.Copy(Path.Combine(_testArtifactsDir, ".dockerignore"), Path.Combine(appDir, ".dockerignore"));
+                File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, nuGetConfigFileName), Path.Combine(appDir, "NuGet.config"));
+                File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, ".dockerignore"), Path.Combine(appDir, ".dockerignore"));
             }
             catch (Exception)
             {
@@ -229,7 +228,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     name: containerName,
                     detach: _isWeb,
                     optionalRunArgs: _isWeb ? "-p 80" : string.Empty,
-                    runAsContainerAdministrator: runAsAdmin,
+                    runAsUser: runAsAdmin ? "ContainerAdministrator" : null,
                     command: command);
 
                 if (_isWeb && !Config.IsHttpVerificationDisabled)

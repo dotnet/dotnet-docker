@@ -20,6 +20,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public Arch Arch { get; set; }
         public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
         public string OS { get; set; }
+        public bool IsDistroless => this.OS.Contains("distroless");
 
         private static readonly Lazy<JObject> s_imageInfoData;
 
