@@ -8,8 +8,8 @@ FROM mcr.microsoft.com/windows/servercore:20H2-amd64 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rtm.21518.18/aspnetcore-runtime-6.0.0-rtm.21518.18-win-x64.zip; `
-    $aspnetcore_sha512 = '5ccbe509b0bc3a09fc23ced7c1b5415c52053ee97ff80fc7db35f319d50141ac78798cbe2340f70b8aeba08f02970aea18581fc66b458d2c2bf6be8a8043008c'; `
+RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rtm.21518.20/aspnetcore-runtime-6.0.0-rtm.21518.20-win-x64.zip; `
+    $aspnetcore_sha512 = 'ca86b568ee27395e8d5ef978ffe1869515cd94d21a297d15e935822f7a2f91357bac1f6c7c844162c4dfd15111e04a230238083560e9a371564bda56b80bd267'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -25,7 +25,7 @@ FROM $REPO:6.0.0-nanoserver-20H2
 
 ENV `
     # ASP.NET Core version
-    ASPNET_VERSION=6.0.0-rtm.21518.18 `
+    ASPNET_VERSION=6.0.0-rtm.21518.20 `
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
