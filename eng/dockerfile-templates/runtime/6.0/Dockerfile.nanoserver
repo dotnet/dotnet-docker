@@ -27,7 +27,7 @@ ENV `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # .NET Runtime version
-    DOTNET_VERSION={{VARIABLES["runtime|6.0|build-version"]}}
+    DOTNET_VERSION={{VARIABLES["dotnet|6.0|product-version"]}}
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator

@@ -2,7 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:6.0.0-cbl-mariner1.0-amd64
 
 # Install .NET
-ENV DOTNET_VERSION=6.0.0-rtm.21521.6
+ENV DOTNET_VERSION=6.0.0
 
 RUN curl -SL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-host-6.0.0-x64.rpm \
     && dotnet_sha512='eaa29e3a68bfb589fc917f26a2385220dcb6efb40696d357c29b9bba2018f9e614c1f0dd1b3b73945ba9c983ffc8cfe8de00c96ab47e00d2a5d1ed7782c96283' \

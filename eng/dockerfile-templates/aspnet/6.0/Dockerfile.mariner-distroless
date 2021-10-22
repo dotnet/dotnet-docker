@@ -21,7 +21,7 @@ FROM $REPO:{{VARIABLES["dotnet|6.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_
 
 ENV \
     # ASP.NET Core version
-    ASPNET_VERSION={{VARIABLES["aspnet|6.0|build-version"]}} \
+    ASPNET_VERSION={{VARIABLES["dotnet|6.0|product-version"]}} \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
