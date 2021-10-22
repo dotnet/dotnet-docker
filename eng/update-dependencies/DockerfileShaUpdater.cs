@@ -441,11 +441,6 @@ namespace Dotnet.Docker
                 buildVersion = VersionUpdater.GetBuildVersion(productName, dockerfileVersion, variables);
             }
 
-            if (buildVersion is not null)
-            {
-                buildVersion = UpdateDependencies.ResolveProductVersion(buildVersion, options);
-            }
-
             return buildVersion;
         }
     }
