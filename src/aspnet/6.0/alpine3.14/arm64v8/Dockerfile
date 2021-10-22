@@ -11,7 +11,7 @@ ENV \
     Logging__Console__FormatterName=Json
 
 # Install ASP.NET Core
-RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-6.0.0-linux-musl-arm64.tar.gz \
+RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rtm.21521.10/aspnetcore-runtime-6.0.0-linux-musl-arm64.tar.gz \
     && aspnetcore_sha512='311afe5043cb109109c12ca446acc178bfa384120d978b53a28bad8c3e5b2c2d25d02422019f6724d837db8df6f1f25038a4353c05f6047149c1ec3d1e9b5b3d' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -ozxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \

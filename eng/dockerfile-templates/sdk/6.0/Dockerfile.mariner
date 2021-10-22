@@ -24,19 +24,19 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-{{VARIABLES["sdk|6.0|product-version"]}}-{{ARCH_SHORT}}.rpm \
+RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/{{VARIABLES["sdk|6.0|build-version"]}}/dotnet-sdk-{{VARIABLES["sdk|6.0|product-version"]}}-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("sdk|6.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
-    && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-{{VARIABLES["dotnet|6.0|product-version"]}}-{{ARCH_SHORT}}.rpm \
+    && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["sdk|6.0|build-version"]}}/dotnet-apphost-pack-{{VARIABLES["dotnet|6.0|product-version"]}}-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-apphost-pack|6.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
-    && curl -SL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-targeting-pack-{{VARIABLES["dotnet|6.0|product-version"]}}-{{ARCH_SHORT}}.rpm \
+    && curl -SL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["sdk|6.0|build-version"]}}/dotnet-targeting-pack-{{VARIABLES["dotnet|6.0|product-version"]}}-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-targeting-pack|6.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
-    && curl -SL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-targeting-pack-{{VARIABLES["dotnet|6.0|product-version"]}}.rpm \
+    && curl -SL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{VARIABLES["aspnet|6.0|build-version"]}}/aspnetcore-targeting-pack-{{VARIABLES["dotnet|6.0|product-version"]}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("aspnet-runtime-targeting-pack|6.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
     \
