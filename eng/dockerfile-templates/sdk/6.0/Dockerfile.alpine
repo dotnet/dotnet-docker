@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION={{VARIABLES["sdk|6.0|build-version"]}} \
+    DOTNET_SDK_VERSION={{VARIABLES["sdk|6.0|product-version"]}} \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)

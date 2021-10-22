@@ -155,6 +155,12 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
+            // TODO: Remove after 6.0 GA
+            if (imageData.Version.Major == 6)
+            {
+                return;
+            }
+
             // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
             {
