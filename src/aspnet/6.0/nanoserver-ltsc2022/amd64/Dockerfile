@@ -8,8 +8,8 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2022-amd64 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rtm.21521.10/aspnetcore-runtime-6.0.0-win-x64.zip; `
-    $aspnetcore_sha512 = '6420d34cf393a2819cbab9979396925ef7b721450371d0db91eca85716c3944f38c0851f01d9a9427c01aaf375722dfc75a7ad8f1bfe511fcf31d576236478f8'; `
+RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rtm.21523.4/aspnetcore-runtime-6.0.0-win-x64.zip; `
+    $aspnetcore_sha512 = '6eeb3b27b2f767ec7099aa37a687ae08f6c6ac4f8bb5adbc47335132cd5737a03750d40a8bc0791fb42ec52634dc2ce05b05c31b8b1293048704f50db4686d73'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `

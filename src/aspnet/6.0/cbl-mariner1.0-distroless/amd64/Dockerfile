@@ -7,9 +7,9 @@ RUN tdnf install -y ca-certificates-microsoft \
     && tdnf clean all
 
 # Acquire ASP.NET Core
-RUN aspnet_version='6.0.0-rtm.21521.10' \
+RUN aspnet_version='6.0.0-rtm.21523.4' \
     && wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnet_version/aspnetcore-runtime-6.0.0-linux-x64.tar.gz \
-    && aspnetcore_sha512='7a292efc160d07461f5b6a1d64f82920131287f423d393cb79d668fbca23a16c9922c4904abaf939fbf1beef5ee8ed52255d6b41aef84f4411731ee3cbce8cfa' \
+    && aspnetcore_sha512='bba65db0062145766360bcfa7bdd18396fb6002fddee70fd665ee7033c8d7dfbefbc0e6e961a6f90ba0635710125e6c1cc3a31dedf2658b0560b4e9a9da498f2' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -ozxf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \

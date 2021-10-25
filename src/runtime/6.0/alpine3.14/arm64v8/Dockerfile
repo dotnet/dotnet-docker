@@ -7,8 +7,8 @@ FROM $REPO:6.0.0-alpine3.14-arm64v8
 # Install .NET
 ENV DOTNET_VERSION=6.0.0
 
-RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.0-rtm.21521.6/dotnet-runtime-6.0.0-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='26f122f5217075ea361bf599fef67263535ca690a954c3d4f19fbe515dd55cba263da1a426d09366ca220299c5747cdbf1b808d906b23b8e651e1c9877ed31fe' \
+RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.0-rtm.21522.10/dotnet-runtime-6.0.0-linux-musl-arm64.tar.gz \
+    && dotnet_sha512='e5555d81b06f4617569cbe183150f03e483da7b0d2d7da7da4fcaa80decd1ae2369efc4122eb3c6e59a0631c6a51559d8458a022680074f2548df534685ff2cb' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
