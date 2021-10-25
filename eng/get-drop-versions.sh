@@ -10,14 +10,19 @@ channel=$1
 sudo apt-get update && \
     sudo apt-get install -y --no-install-recommends libxml2-utils
 
-curl -SLo sdk.zip https://aka.ms/dotnet/$channel/dotnet-sdk-win-x64.zip
+# Download the SDK and resolve the redirected URL
+sdkUrl=$(curl -w %{url_effective} -sSLo sdk.zip https://aka.ms/dotnet/$channel/dotnet-sdk-win-x64.zip)
 
 unzip -p sdk.zip "sdk/*/.version" > sdkversion
 
 commitSha=$(cat sdkversion | head -1)
 commitSha=${commitSha%?} # Remove last character (newline)
 
-sdkVer=$(cat sdkversion | head -2 | tail -1)
+# Resolve the SDK build version from the SDK URL
+# Example URL: https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-rtm.21522.1/dotnet-sdk-6.0.100-win-x64.zip
+#   The sed command below extracts the 6.0.100-rtm.21522.1 from the URL
+# We don't want the version contained in the SDK's .version file because that may be a stable branding version
+sdkVer=$(echo $sdkUrl | sed 's|.*/Sdk/\(.*\)/.*|\1|g')
 
 rm sdkversion
 

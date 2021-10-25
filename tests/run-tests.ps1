@@ -69,6 +69,11 @@ Try {
         $env:PULL_IMAGES = $null
     }
 
+    # By default, account for the OS having a -slim variant, except for mariner which has a -distroless variant that needs to be tested separately.
+    if (-not $OS.Contains("mariner")) {
+        $OS += "*"
+    }
+
     $env:IMAGE_ARCH = $Architecture
     $env:IMAGE_OS = $OS
     $env:IMAGE_VERSION = $Version
