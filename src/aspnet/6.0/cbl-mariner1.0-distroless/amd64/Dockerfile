@@ -7,9 +7,9 @@ RUN tdnf install -y ca-certificates-microsoft \
     && tdnf clean all
 
 # Acquire ASP.NET Core
-RUN aspnet_version='6.0.0-rtm.21518.20' \
-    && wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnet_version/aspnetcore-runtime-$aspnet_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='61c1feb088ab0d9024b3aaf00b30c7764e172ffb64f1361b02ec8d6ae34ec9eed10d3be8708f0c73e9ce2439329e68417e0716eb72ffac0f8c63f96bccc26818' \
+RUN aspnet_version='6.0.0-rtm.21523.4' \
+    && wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnet_version/aspnetcore-runtime-6.0.0-linux-x64.tar.gz \
+    && aspnetcore_sha512='bba65db0062145766360bcfa7bdd18396fb6002fddee70fd665ee7033c8d7dfbefbc0e6e961a6f90ba0635710125e6c1cc3a31dedf2658b0560b4e9a9da498f2' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -ozxf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
@@ -21,7 +21,7 @@ FROM $REPO:6.0.0-cbl-mariner1.0-distroless-amd64
 
 ENV \
     # ASP.NET Core version
-    ASPNET_VERSION=6.0.0-rtm.21518.20 \
+    ASPNET_VERSION=6.0.0 \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 

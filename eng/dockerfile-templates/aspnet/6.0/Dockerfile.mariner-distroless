@@ -8,7 +8,7 @@ RUN tdnf install -y ca-certificates-microsoft \
 
 # Acquire ASP.NET Core
 RUN aspnet_version='{{VARIABLES["aspnet|6.0|build-version"]}}' \
-    && wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnet_version/aspnetcore-runtime-$aspnet_version-linux-{{ARCH_SHORT}}.tar.gz \
+    && wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnet_version/aspnetcore-runtime-{{VARIABLES["dotnet|6.0|product-version"]}}-linux-{{ARCH_SHORT}}.tar.gz \
     && aspnetcore_sha512='{{VARIABLES[cat("aspnet|6.0|linux|", ARCH_SHORT, "|sha")]}}' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
@@ -21,7 +21,7 @@ FROM $REPO:{{VARIABLES["dotnet|6.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_
 
 ENV \
     # ASP.NET Core version
-    ASPNET_VERSION={{VARIABLES["aspnet|6.0|build-version"]}} \
+    ASPNET_VERSION={{VARIABLES["dotnet|6.0|product-version"]}} \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 

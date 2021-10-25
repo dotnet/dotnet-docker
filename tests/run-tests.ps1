@@ -69,8 +69,8 @@ Try {
         $env:PULL_IMAGES = $null
     }
 
-    if ($OS -and $Version -eq "3.1") {
-        # Use a wildcard for the OS to account for 3.1 having variation between its runtime and sdk OS version names (e.g. buster-slim vs buster)
+    # By default, account for the OS having a -slim variant, except for mariner which has a -distroless variant that needs to be tested separately.
+    if (-not $OS.Contains("mariner")) {
         $OS += "*"
     }
 
