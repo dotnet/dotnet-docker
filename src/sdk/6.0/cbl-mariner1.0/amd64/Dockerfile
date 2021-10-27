@@ -24,8 +24,8 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-rtm.21524.1/dotnet-sdk-6.0.100-x64.rpm \
-    && dotnet_sha512='9558b89c16fed920fe8be2555558a0c04e366e71338e5562a007cf18d187ff7c4eeacc2ed42e58b3dc52d96508f2ec0ccb68b7777e5df9ce68f1cea21755f6eb' \
+RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-rtm.21526.10/dotnet-sdk-6.0.100-x64.rpm \
+    && dotnet_sha512='a2c91cc9e3dfad9be50c6c0b9e4e99fda045a65daf04b6f688505dd3ed7e9ec0878565ff9acbaab614dde0a5f9dae5379cbaa6b76fda8a25f8310aef821d15e4' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
     && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.0-rtm.21522.10/dotnet-apphost-pack-6.0.0-x64.rpm \
@@ -36,8 +36,8 @@ RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.
     && dotnet_sha512='d66a3f413d80503f92bdf9b74defbb35c08e06d4ce5279ee8f473aa59bc2cbab74b431d44af21dbe6af5b5b9f667d08ba19378e53e776023bc74625e59d58a46' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
-    && curl -SL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rtm.21523.4/aspnetcore-targeting-pack-6.0.0.rpm \
-    && dotnet_sha512='9628089148a315b30f730fe35a3adccde12bc567157bc8eaffae803e3c9b03a9a45daf867f810846553b1888e58dd5a17ec1dca964b8ae1d42341ed89c9aca20' \
+    && curl -SL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.0-rtm.21526.8/aspnetcore-targeting-pack-6.0.0.rpm \
+    && dotnet_sha512='2ff4d759145cc82b3de6855af69b67d1d7e5cf379fe408e5072be0947b9fccfd991e42f47453c5f95c9eef1a520c0eb9aa352d58b6a08c4963764cbdd14bf6b3' \
     && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
     \
     && curl -SL --output netstandard-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-x64.rpm \
