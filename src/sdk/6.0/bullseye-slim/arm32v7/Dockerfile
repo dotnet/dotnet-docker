@@ -27,8 +27,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET SDK
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-rtm.21524.1/dotnet-sdk-6.0.100-linux-arm.tar.gz \
-    && dotnet_sha512='9901848ca489c7fbf046e9b3c6fe819e0cce7e9ab7e357363e861381beeb73b78d333f882b5d0198f72a4e7eb96190cb6b5854d18bd4f207096c70955d3160cc' \
+RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-rtm.21526.10/dotnet-sdk-6.0.100-linux-arm.tar.gz \
+    && dotnet_sha512='a49df57d94e39b06a225669b11abd444dbe6a59d51929e8ae10df5e452277be0a2d26192ad9dace698a7a0d66d4bdf0bc118cd4961caf27698a910c7c70a3b11' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
