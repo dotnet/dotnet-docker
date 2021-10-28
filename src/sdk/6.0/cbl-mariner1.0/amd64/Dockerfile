@@ -24,8 +24,8 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-rtm.21526.10/dotnet-sdk-6.0.100-x64.rpm \
-    && dotnet_sha512='a2c91cc9e3dfad9be50c6c0b9e4e99fda045a65daf04b6f688505dd3ed7e9ec0878565ff9acbaab614dde0a5f9dae5379cbaa6b76fda8a25f8310aef821d15e4' \
+RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-rtm.21527.11/dotnet-sdk-6.0.100-x64.rpm \
+    && dotnet_sha512='340340e6aa8d4bb48506327f0603875c860dd421901aaa4c75c5112d909b4e787266a5fcf5d8e927fef4b43b8fc9b951d94bf2461a6ce8dc5aa8a19b0a92a9ee' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
     && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.0-rtm.21522.10/dotnet-apphost-pack-6.0.0-x64.rpm \
