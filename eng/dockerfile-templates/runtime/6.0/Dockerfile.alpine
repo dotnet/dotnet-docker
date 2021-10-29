@@ -5,9 +5,9 @@ FROM $REPO:{{VARIABLES["dotnet|6.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 # Install .NET
-ENV DOTNET_VERSION={{VARIABLES["dotnet|6.0|product-version"]}}
+ENV DOTNET_VERSION={{VARIABLES["runtime|6.0|build-version"]}}
 
-RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["runtime|6.0|build-version"]}}/dotnet-runtime-{{VARIABLES["dotnet|6.0|product-version"]}}-linux-musl-{{ARCH_SHORT}}.tar.gz \
+RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-{{ARCH_SHORT}}.tar.gz \
     && dotnet_sha512='{{VARIABLES[cat("runtime|6.0|linux-musl|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
