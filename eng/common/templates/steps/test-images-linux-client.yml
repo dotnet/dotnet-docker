@@ -52,7 +52,7 @@ steps:
     docker exec $(testRunner.container) pwsh
     -File $(testScriptPath)
     -Version '$(productVersion)'
-    -OS '$(osVariant)*'
+    -OS '$(osVariant)'
     -Architecture '$(architecture)'
     $(optionalTestArgs)
   displayName: Test Images

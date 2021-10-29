@@ -13,6 +13,8 @@ parameters:
   linuxAmdBuildJobTimeout: 60
   linuxAmd64Pool:
     vmImage: $(defaultLinuxAmd64PoolImage)
+  buildMatrixType: platformDependencyGraph
+  testMatrixType: platformVersionedOs
 
 stages:
 - template: ../build-test-publish-repo.yml
@@ -26,6 +28,8 @@ stages:
     windowsAmdBuildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
     windowsAmdTestJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
     linuxAmdBuildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
+    buildMatrixType: ${{ parameters.buildMatrixType }}
+    testMatrixType: ${{ parameters.testMatrixType }}
 
     internalVersionsRepoRef: InternalVersionsRepo
     publicVersionsRepoRef: PublicVersionsRepo
@@ -33,9 +37,6 @@ stages:
     ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
       customPublishVariables:
       - group: DotNet-AllOrgs-Darc-Pats
-    
-    ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-      buildMatrixType: platformVersionedOs
 
     linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
     linuxArm64Pool:
