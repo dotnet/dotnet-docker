@@ -16,7 +16,7 @@ RUN powershell -Command `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.0-rtm.21522.10/dotnet-runtime-6.0.0-win-x64.zip; `
-        $dotnet_sha512 = 'fdcd2b7e99f896b4d03a932cee2569feca1d144f6a2f5c96af1f961de3523682f36fa9cddd1b8ea2d15440ffacf9041f59c99ba30d5d2b58fefc9f62c5305e2f'; `
+        $dotnet_sha512 = 'db8ad4e70b2779886f9e8e2aa89c40461f94ec4291786b2c4f9fdc5df1c707acf0bf1fab8fb99d42abb0d8010949e39175d39dea7ac154ea0ac2cf5761f539d3'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `

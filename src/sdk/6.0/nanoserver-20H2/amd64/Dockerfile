@@ -10,7 +10,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 RUN `
     # Retrieve .NET SDK
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-rtm.21527.11/dotnet-sdk-6.0.100-win-x64.zip; `
-    $dotnet_sha512 = 'ae883ef37d7c22b4b8e50f848f39191733092195bbe5ea6a32602c7e9cfe5821c5ae42c92434821317e5ab342ffd2af7f08726b93469db2bd04145a8780110b5'; `
+    $dotnet_sha512 = 'd2fa2f0d2b4550ac3408b924ab356add378af1d0f639623f0742e37f57b3f2b525d81f5d5c029303b6d95fed516b04a7b6c3a98f27f770fc8b4e76414cf41660'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
