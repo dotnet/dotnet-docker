@@ -124,7 +124,6 @@ Tag | Dockerfile
 ## Nano Server, version 2004 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-6.0.0-nanoserver-2004, 6.0-nanoserver-2004, 6.0.0, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/6.0/nanoserver-2004/amd64/Dockerfile)
 5.0.11-nanoserver-2004, 5.0-nanoserver-2004, 5.0.11, 5.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/5.0/nanoserver-2004/amd64/Dockerfile)
 3.1.20-nanoserver-2004, 3.1-nanoserver-2004, 3.1.20, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/3.1/nanoserver-2004/amd64/Dockerfile)
 

@@ -77,18 +77,6 @@
             {
               "dockerfile": "samples/dotnetapp",
               "os": "windows",
-              "osVersion": "nanoserver-2004",
-              "tags": {
-                "dotnetapp-nanoserver-2004": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
-              }
-            },
-            {
-              "dockerfile": "samples/dotnetapp",
-              "os": "windows",
               "osVersion": "nanoserver-20H2",
               "tags": {
                 "dotnetapp-nanoserver-20H2": {
@@ -201,27 +189,6 @@
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:samples):dotnetapp-nanoserver-1809"
-                  ]
-                }
-              ]
-            },
-            {
-              "dockerfile": "samples/aspnetapp",
-              "os": "windows",
-              "osVersion": "nanoserver-2004",
-              "tags": {
-                "aspnetapp-nanoserver-2004": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "pr-build",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:samples):dotnetapp-nanoserver-2004"
                   ]
                 }
               ]
