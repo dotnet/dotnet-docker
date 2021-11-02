@@ -49,7 +49,6 @@ The following tags demonstrate the pattern used to describe each operating syste
 * `6.0-bullseye-slim` (Debian 11)
 * `6.0-nanoserver-ltsc2022` (Nano Server LTSC 2022)
 * `6.0-nanoserver-20H2` (Nano Server, version 20H2)
-* `6.0-nanoserver-2004` (Nano Server, version 2004)
 * `6.0-nanoserver-1809` (Nano Server, version 1809)
 * `6.0-windowsservercore-ltsc2022` (Windows Server Core LTSC 2022)
 * `6.0-windowsservercore-ltsc2019` (Windows Server Core LTSC 2019)
@@ -111,7 +110,6 @@ The following tags demonstrate the pattern used to describe each processor, usin
 * `6.0-focal-amd64`
 * `6.0-bullseye-slim-amd64`
 * `6.0-nanoserver-20H2`
-* `6.0-nanoserver-2004`
 * `6.0-nanoserver-1809`
 * `6.0-windowsservercore-ltsc2019`
 
