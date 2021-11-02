@@ -1823,16 +1823,6 @@
               }
             },
             {
-              "dockerfile": "src/runtime/6.0/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-2004",
-              "tags": {
-                "$(dotnet|6.0|product-version)-nanoserver-2004": {},
-                "6.0-nanoserver-2004": {}
-              }
-            },
-            {
               "dockerfile": "src/runtime/6.0/nanoserver-20H2/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.nanoserver",
               "os": "windows",
@@ -3128,19 +3118,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/6.0/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-2004",
-              "tags": {
-                "$(dotnet|6.0|product-version)-nanoserver-2004": {},
-                "6.0-nanoserver-2004": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
               "dockerfile": "src/aspnet/6.0/nanoserver-20H2/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.nanoserver",
               "os": "windows",
@@ -4358,19 +4335,6 @@
               "tags": {
                 "$(sdk|6.0|product-version)-nanoserver-1809": {},
                 "6.0-nanoserver-1809": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/sdk/6.0/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/6.0/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-2004",
-              "tags": {
-                "$(sdk|6.0|product-version)-nanoserver-2004": {},
-                "6.0-nanoserver-2004": {}
               }
             },
             {
