@@ -392,8 +392,7 @@
             "$(dotnet|5.0|product-version)": {},
             "$(dotnet|5.0|product-version)-buster-slim": {},
             "5.0": {},
-            "5.0-buster-slim": {},
-            "latest": {}
+            "5.0-buster-slim": {}
           },
           "platforms": [
             {
@@ -641,7 +640,8 @@
             "$(dotnet|6.0|product-version)": {},
             "$(dotnet|6.0|product-version)-bullseye-slim": {},
             "6.0": {},
-            "6.0-bullseye-slim": {}
+            "6.0-bullseye-slim": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -1350,8 +1350,7 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
             "$(dotnet|5.0|product-version)": {},
-            "5.0": {},
-            "latest": {}
+            "5.0": {}
           },
           "platforms": [
             {
@@ -1802,7 +1801,8 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)": {},
-            "6.0": {}
+            "6.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -2660,8 +2660,7 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
             "$(dotnet|5.0|product-version)": {},
-            "5.0": {},
-            "latest": {}
+            "5.0": {}
           },
           "platforms": [
             {
@@ -3130,7 +3129,8 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)": {},
-            "6.0": {}
+            "6.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -4020,8 +4020,7 @@
           "productVersion": "$(sdk|5.0|product-version)",
           "sharedTags": {
             "$(sdk|5.0|product-version)": {},
-            "5.0": {},
-            "latest": {}
+            "5.0": {}
           },
           "platforms": [
             {
@@ -4392,7 +4391,8 @@
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
             "$(sdk|6.0|product-version)": {},
-            "6.0": {}
+            "6.0": {},
+            "latest": {}
           },
           "platforms": [
             {
