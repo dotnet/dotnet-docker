@@ -6,7 +6,7 @@ FROM $SDK_REPO:{{VARIABLES["sdk|6.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION={{VARIABLES["monitor|6.0|build-version"]}}
-RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://pkgs.dev.azure.com/dnceng/public/_apis/packaging/feeds/dotnet-tools/nuget/packages/dotnet-monitor/versions/$DOTNET_MONITOR_VERSION/content \
+RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://www.nuget.org/api/v2/package/dotnet-monitor/$DOTNET_MONITOR_VERSION \
     && dotnetmonitor_sha512='{{VARIABLES["monitor|6.0|sha"]}}' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net6.0 --no-cache \
