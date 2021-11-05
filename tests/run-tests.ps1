@@ -111,7 +111,8 @@ Try {
         $testFilter = "--filter `"$testFilter`""
     }
 
-    Exec "$DotnetInstallDir/dotnet test $testFilter --logger:trx"
+    & $PSScriptRoot/../eng/common/Invoke-WithRetry.ps1 "$DotnetInstallDir/dotnet restore"
+    Exec "$DotnetInstallDir/dotnet test --no-restore $testFilter --logger:trx"
 
     if ($TestCategories.Contains('image-size')) {
         & ../performance/Validate-ImageSize.ps1 -PullImages:$PullImages -ValidationMode Integrity
