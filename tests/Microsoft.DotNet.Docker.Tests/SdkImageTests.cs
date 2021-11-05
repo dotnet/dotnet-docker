@@ -49,10 +49,9 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            string aspnetUrlsValue = imageData.Version.Major < 3 ? "http://+:80" : string.Empty;
             List<EnvironmentVariableInfo> variables = new()
             {
-                new EnvironmentVariableInfo("ASPNETCORE_URLS", aspnetUrlsValue),
+                new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty),
                 new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
                 new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
                 new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip")
@@ -64,7 +63,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
             }
 
-            if (imageData.Version.Major >= 5 || (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled))
+            if (imageData.Version.Major >= 5)
             {
                 string version = imageData.GetProductVersion(ImageType, DockerHelper);
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version));
@@ -98,37 +97,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyPackageCache(ProductImageData imageData)
-        {
-            string verifyCacheCommand = null;
-            if (imageData.Version.Major == 2)
-            {
-                if (DockerHelper.IsLinuxContainerModeEnabled)
-                {
-                    verifyCacheCommand = "test -d /usr/share/dotnet/sdk/NuGetFallbackFolder";
-                }
-                else
-                {
-                    verifyCacheCommand = "CMD /S /C PUSHD \"C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\"";
-                }
-            }
-            else
-            {
-                OutputHelper.WriteLine(".NET Core SDK images >= 3.0 don't include a package cache.");
-            }
-
-            if (verifyCacheCommand != null)
-            {
-                // Simple check to verify the NuGet package cache was created
-                DockerHelper.Run(
-                    image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
-                    command: verifyCacheCommand,
-                    name: imageData.GetIdentifier("PackageCache"));
-            }
-        }
-
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
         {
             PowerShellScenario_Execute(imageData, null);
@@ -157,12 +125,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
-            {
-                return;
-            }
-
-            // Disable this test for 6.0 on Alpine 3.14 due to PowerShell issue https://github.com/PowerShell/PowerShell/issues/15710
-            if (imageData.Version.Major == 6 && imageData.OS == "alpine3.14")
             {
                 return;
             }
@@ -340,22 +302,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
         {
-            if (imageData.Version.Major < 3)
-            {
-                OutputHelper.WriteLine("PowerShell does not exist in pre-3.0 images, skip testing");
-                return;
-            }
-
             // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
             {
                 OutputHelper.WriteLine("PowerShell does not have Alpine arm images, skip testing");
-                return;
-            }
-
-            // Disable this test for 6.0 on Alpine 3.14 due to PowerShell issue https://github.com/PowerShell/PowerShell/issues/15710
-            if (imageData.Version.Major == 6 && imageData.OS == "alpine3.14")
-            {
                 return;
             }
 
