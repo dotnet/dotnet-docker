@@ -87,12 +87,6 @@ Tag | Dockerfile
 dotnetapp-nanoserver-20H2, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile)
 aspnetapp-nanoserver-20H2, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
 
-## Nano Server, version 2004 amd64 Tags
-Tag | Dockerfile
----------| ---------------
-dotnetapp-nanoserver-2004, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile)
-aspnetapp-nanoserver-2004, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
-
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------

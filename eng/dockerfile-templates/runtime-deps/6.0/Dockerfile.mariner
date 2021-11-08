@@ -1,7 +1,7 @@
 FROM cblmariner.azurecr.io/base/core:{{OS_VERSION_NUMBER}}
 
 RUN tdnf install -y \
-        ca-certificates \
+        ca-certificates-microsoft \
         \
         # .NET dependencies
         glibc \

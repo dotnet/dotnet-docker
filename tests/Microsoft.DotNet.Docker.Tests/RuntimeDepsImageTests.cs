@@ -24,11 +24,31 @@ namespace Microsoft.DotNet.Docker.Tests
             base.VerifyCommonEnvironmentVariables(imageData);
         }
 
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyDistrolessRunsAsNonRootUser(ProductImageData imageData)
+        {
+            if (!imageData.IsDistroless)
+            {
+                return;
+            }
+
+            string command = $"bash -c \"echo $EUID\"";
+
+            string imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash");
+
+            string userId = DockerHelper.Run(
+                image: imageTag,
+                command: command,
+                name: imageData.GetIdentifier("NonRootUser"));
+            Assert.NotEqual("0", userId);
+        }
+
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyPackageInstallation(ProductImageData imageData)
         {
-            if (!imageData.OS.Contains("cbl-mariner"))
+            if (!imageData.OS.Contains("cbl-mariner") || imageData.IsDistroless)
             {
                 return;
             }

@@ -45,10 +45,21 @@ namespace Microsoft.DotNet.Docker.Tests
 
             string command = $"/bin/sh -c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd} && {noUserOrGroupFilesCmd}\"";
 
+            string imageTag;
+            if (imageData.IsDistroless)
+            {
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash", "findutils");
+            }
+            else
+            {
+                imageTag = imageData.GetImage(ImageType, DockerHelper);
+            }
+
             string output = DockerHelper.Run(
-                    image: imageData.GetImage(ImageType, DockerHelper),
+                    image: imageTag,
                     name: imageData.GetIdentifier($"InsecureFiles-{ImageType}"),
-                    command: command
+                    command: command,
+                    runAsUser: "root"
                 );
 
             Assert.Empty(output);
@@ -59,8 +70,18 @@ namespace Microsoft.DotNet.Docker.Tests
             // Get list of installed RPM packages
             string command = $"bash -c \"rpm -qa | sort\"";
 
+            string imageTag;
+            if (imageData.IsDistroless)
+            {
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash", "rpm");
+            }
+            else
+            {
+                imageTag = imageData.GetImage(ImageType, DockerHelper);
+            }
+
             string installedPackages = DockerHelper.Run(
-                image: imageData.GetImage(ImageType, DockerHelper),
+                image: imageTag,
                 command: command,
                 name: imageData.GetIdentifier("PackageInstallation"));
 

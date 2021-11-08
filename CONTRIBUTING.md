@@ -12,10 +12,10 @@ When making PRs, all source code changes (e.g. Dockerfiles, tests, and infrastru
 
 The [`build-and-test.ps1`](https://github.com/dotnet/dotnet-docker/blob/main/build-and-test.ps1) script will build and test the .NET Docker images. Given the matrix of supported .NET versions, distros, and architectures there are numerous Dockerfiles and building can take a while. To make this manageable, the script supports several options for filtering down what images get built and tested.
 
-- Build and test all of the .NET 5.0 images for the Docker platform your machine is targeting (e.g. linux/x64, linux/arm, linux/arm64, windows/x64).
+- Build and test all of the .NET 6.0 images for the Docker platform your machine is targeting (e.g. linux/x64, linux/arm, linux/arm64, windows/x64).
 
     ``` console
-    > ./build-and-test.ps1 -Version 5.0
+    > ./build-and-test.ps1 -Version 6.0
     ```
 
 - Build the 3.1 Nano Server 1809 images
@@ -30,10 +30,10 @@ The [`build-and-test.ps1`](https://github.com/dotnet/dotnet-docker/blob/main/bui
     > ./build-and-test.ps1 -Path *samples* -TestCategories sample
     ```
 
-- Test the 5.0 Alpine 3.13 images for the current architecture (e.g. x64, arm, arm64).
+- Test the 6.0 Alpine 3.14 images for the current architecture (e.g. x64, arm, arm64).
 
     ``` console
-    > ./build-and-test.ps1 -Version 5.0 -OS alpine3.13 -Mode Test
+    > ./build-and-test.ps1 -Version 6.0 -OS alpine3.14 -Mode Test
     ```
 
 ### Editing Dockerfiles
@@ -85,11 +85,11 @@ The following examples illustrate how to run `update-dependencies`:
 - Update the .NET Monitor version
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\update-dependencies.csproj 5.0 --product-version monitor=5.0.0-preview.5.21277.3 --channel-name 5.0/preview.5
+    > dotnet run --project .\eng\update-dependencies\update-dependencies.csproj 6.0 --product-version monitor=6.0.0-rc.1.21515.7 --channel-name 6.0/rc.1
     ```
 
-- Update the PowerShell version used in the 5.0 images
+- Update the PowerShell version used in the 6.0 images
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- 5.0 --product-version powershell=7.1.0-preview.4 --compute-shas
+    > dotnet run --project .\eng\update-dependencies\ -- 6.0 --product-version powershell=7.1.0-preview.4 --compute-shas
     ```

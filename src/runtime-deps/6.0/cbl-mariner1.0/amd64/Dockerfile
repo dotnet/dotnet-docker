@@ -1,7 +1,7 @@
 FROM cblmariner.azurecr.io/base/core:1.0
 
 RUN tdnf install -y \
-        ca-certificates \
+        ca-certificates-microsoft \
         \
         # .NET dependencies
         glibc \
@@ -14,9 +14,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install dotnet-runtime-deps package
-RUN dotnet_version=6.0.0-rc.2.21480.5 \
+RUN dotnet_version=6.0.0 \
     && curl -SL --output dotnet-runtime-deps.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-x64.rpm \
-    && dotnet_sha512='2e22e65f1ee96869cd4e6c4e24098e0d443e5938ab2f3b94376a9667d8d0b7a3268026ccd48e67ce6191dbcdef520983d810bbcf36773022952e04aba1c6b63f' \
+    && dotnet_sha512='71ac8db2f0577765e9cd3067b20b23af23e55d3d88478aa6160b51055f9715a32cbb532e7d2fd1f6d06a504b8b820c18688309b587eff22c936d420d587c3b84' \
     && echo "$dotnet_sha512  dotnet-runtime-deps.rpm" | sha512sum -c - \
     && rpm --install dotnet-runtime-deps.rpm \
     && rm dotnet-runtime-deps.rpm

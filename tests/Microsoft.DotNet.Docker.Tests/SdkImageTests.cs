@@ -225,7 +225,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPackageInstallation(ProductImageData imageData)
         {
-            if (!imageData.OS.Contains("cbl-mariner"))
+            if (!imageData.OS.Contains("cbl-mariner") || imageData.IsDistroless)
             {
                 return;
             }

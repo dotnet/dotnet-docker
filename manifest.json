@@ -392,8 +392,7 @@
             "$(dotnet|5.0|product-version)": {},
             "$(dotnet|5.0|product-version)-buster-slim": {},
             "5.0": {},
-            "5.0-buster-slim": {},
-            "latest": {}
+            "5.0-buster-slim": {}
           },
           "platforms": [
             {
@@ -641,7 +640,8 @@
             "$(dotnet|6.0|product-version)": {},
             "$(dotnet|6.0|product-version)-bullseye-slim": {},
             "6.0": {},
-            "6.0-bullseye-slim": {}
+            "6.0-bullseye-slim": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -794,6 +794,42 @@
                   "docType": "Undocumented"
                 }
               }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/6.0/cbl-mariner1.0-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/6.0/Dockerfile.mariner-distroless",
+              "os": "linux",
+              "osVersion": "cbl-mariner1.0-distroless",
+              "tags": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-cbl-mariner1.0-amd64"
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -1314,8 +1350,7 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
             "$(dotnet|5.0|product-version)": {},
-            "5.0": {},
-            "latest": {}
+            "5.0": {}
           },
           "platforms": [
             {
@@ -1766,7 +1801,8 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)": {},
-            "6.0": {}
+            "6.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -1820,16 +1856,6 @@
               "tags": {
                 "$(dotnet|6.0|product-version)-nanoserver-1809": {},
                 "6.0-nanoserver-1809": {}
-              }
-            },
-            {
-              "dockerfile": "src/runtime/6.0/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-2004",
-              "tags": {
-                "$(dotnet|6.0|product-version)-nanoserver-2004": {},
-                "6.0-nanoserver-2004": {}
               }
             },
             {
@@ -2033,6 +2059,45 @@
                   "docType": "Undocumented"
                 }
               }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/cbl-mariner1.0-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/6.0/Dockerfile.mariner-distroless",
+              "os": "linux",
+              "osVersion": "cbl-mariner1.0-distroless",
+              "tags": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-cbl-mariner1.0-amd64"
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -2595,8 +2660,7 @@
           "productVersion": "$(dotnet|5.0|product-version)",
           "sharedTags": {
             "$(dotnet|5.0|product-version)": {},
-            "5.0": {},
-            "latest": {}
+            "5.0": {}
           },
           "platforms": [
             {
@@ -3065,7 +3129,8 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)": {},
-            "6.0": {}
+            "6.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -3122,19 +3187,6 @@
               "tags": {
                 "$(dotnet|6.0|product-version)-nanoserver-1809": {},
                 "6.0-nanoserver-1809": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/6.0/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-2004",
-              "tags": {
-                "$(dotnet|6.0|product-version)-nanoserver-2004": {},
-                "6.0-nanoserver-2004": {}
               }
             },
             {
@@ -3344,6 +3396,45 @@
                   "docType": "Undocumented"
                 }
               }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner1.0-distroless": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/6.0/cbl-mariner1.0-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/6.0/Dockerfile.mariner-distroless",
+              "os": "linux",
+              "osVersion": "cbl-mariner1.0-distroless",
+              "tags": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner1.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-cbl-mariner1.0-amd64"
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -3929,8 +4020,7 @@
           "productVersion": "$(sdk|5.0|product-version)",
           "sharedTags": {
             "$(sdk|5.0|product-version)": {},
-            "5.0": {},
-            "latest": {}
+            "5.0": {}
           },
           "platforms": [
             {
@@ -4301,7 +4391,8 @@
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
             "$(sdk|6.0|product-version)": {},
-            "6.0": {}
+            "6.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -4358,19 +4449,6 @@
               "tags": {
                 "$(sdk|6.0|product-version)-nanoserver-1809": {},
                 "6.0-nanoserver-1809": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/sdk/6.0/nanoserver-2004/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/6.0/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-2004",
-              "tags": {
-                "$(sdk|6.0|product-version)-nanoserver-2004": {},
-                "6.0-nanoserver-2004": {}
               }
             },
             {

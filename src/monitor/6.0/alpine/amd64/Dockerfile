@@ -2,21 +2,23 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:6.0.100-rc.2-alpine3.14-amd64 AS installer
+FROM $SDK_REPO:6.0.100-alpine3.14-amd64 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=6.0.0-rc.1.21518.6
-RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://pkgs.dev.azure.com/dnceng/public/_apis/packaging/feeds/dotnet-tools/nuget/packages/dotnet-monitor/versions/$DOTNET_MONITOR_VERSION/content \
-    && dotnetmonitor_sha512='d405a2756e353c56b3b0f3e32103ca75d8cabd9d91666f2e4ef057af7872cfa29a1efbc881f799f49774bb3b84deae0e18c746e3a13bbd61589fbc19c066b2ac' \
+ENV DOTNET_MONITOR_VERSION=6.0.0
+RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://www.nuget.org/api/v2/package/dotnet-monitor/$DOTNET_MONITOR_VERSION \
+    && dotnetmonitor_sha512='ce7b9332555220ff415699a138b3b25eb781634d361de19d9795829c132fd2bea371dc1201bc1cfd38cc4f07bd018eb459d3e87d7d020c5d0e75e910f13f31e0' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
-    && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --no-cache \
+    && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net6.0 --no-cache \
     # To reduce image size, remove the copy of the nupkg under the tools.
     && find /app -print | grep -i '.*[.]nupkg$' | xargs rm \
+    # To reduce image size, remove all non-net6.0 TFMs
+    && find /app -print | grep -i '.*/netcoreapp3[.]1$' | xargs rm -rf \
     && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
 
 
 # Monitor image
-FROM $ASPNET_REPO:6.0.0-rc.2-alpine3.14-amd64
+FROM $ASPNET_REPO:6.0.0-alpine3.14-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
@@ -40,4 +42,4 @@ ENV \
 
 RUN chmod 755 dotnet-monitor
 
-ENTRYPOINT [ "dotnet-monitor", "collect", "-urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
+ENTRYPOINT [ "dotnet-monitor", "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]

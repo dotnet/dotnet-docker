@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:3.1.20-alpine3.14
+FROM $REPO:3.1.21-alpine3.14
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -21,9 +21,9 @@ ENV \
 RUN apk add --no-cache icu-libs
 
 # Install .NET Core SDK
-RUN dotnet_sdk_version=3.1.414 \
+RUN dotnet_sdk_version=3.1.415 \
     && wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
-    && dotnet_sha512='500b52967a47c90fe2dc638385d10eb3df64999d7eea26951f4cf180ec603f0a93afa498c71f62e056d56cfe273a6ea4de1533cfcbbc74bf139db685b5de8c33' \
+    && dotnet_sha512='20297eb436db2fe0cb3d8edfe4ad5b7c7871116616843314830533471a344f0ca943fbc5f92685113afc331a64c90f271245a36be1c232c364add936dd06d13d' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -32,9 +32,9 @@ RUN dotnet_sdk_version=3.1.414 \
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.0.7 \
+RUN powershell_version=7.0.8 \
     && wget -O PowerShell.Linux.Alpine.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha512='b20b930f79d1ba823164032e9df4e29b227b37646f502061c4b5acbc9bf2b8dfad769a347911af0dbace154f3bea7602b85c7559bb10c527537a70a03911f34e' \
+    && powershell_sha512='a40a28def07d07cbf18bfe9634011e657b3b66d6ff08cc6889ec2bcabb0f3e0e5b4c3d17e1e4b4d73ef91b05502b179aebfdcc631648d2f768b217babf438c68' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \

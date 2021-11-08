@@ -6,9 +6,9 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2022-amd64 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Retrieve .NET Core Runtime
-RUN $dotnet_version = '3.1.20'; `
+RUN $dotnet_version = '3.1.21'; `
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip; `
-    $dotnet_sha512 = 'f1bade5de56d93c87e38f81facf18ed15614696ad616d47c2502b4281ef547b505da3c62262098fe4007fd1ccb0f03f65191d413e4c1b8b127ff2bf3c81d6654'; `
+    $dotnet_sha512 = '7ba766b2f388ab09beee6a465f1eeb6b9a6858c8b6da51dacc79622b110558ef6211a40e715a16b526f2da08216c99143570b8253ff2c5ad874400475d1feb44'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
