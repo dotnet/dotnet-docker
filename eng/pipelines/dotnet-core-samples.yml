@@ -12,3 +12,6 @@ variables:
 
 stages:
 - template: stages/build-test-publish-repo.yml
+  parameters:
+    internalProjectName: ${{ variables.internalProjectName }}
+    publicProjectName: ${{ variables.publicProjectName }}

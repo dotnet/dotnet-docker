@@ -9,8 +9,8 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 RUN `
     # Retrieve .NET SDK
-    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/5.0.402/dotnet-sdk-5.0.402-win-x64.zip; `
-    $dotnet_sha512 = 'bc6aacc194c10a1171a18ae2115887b6ffff2a501463a68a354390150afc3630cfb0c3606097c9f90c67709bcbc4dee27d94e045e79d1f046db5c25f8aa81ac8'; `
+    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/5.0.403/dotnet-sdk-5.0.403-win-x64.zip; `
+    $dotnet_sha512 = '4dae65d935d9a9cd022a38537f7678786517b82845dd010075fa2a1346d549cae80a1087f09668284e4aabc080673fe19b1607127e7ba29d0c40f037049eb101'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -38,7 +38,7 @@ RUN `
     Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
 # SDK image
-FROM $REPO:5.0.11-nanoserver-20H2
+FROM $REPO:5.0.12-nanoserver-20H2
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -46,7 +46,7 @@ ENV `
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
     # SDK version
-    DOTNET_SDK_VERSION=5.0.402 `
+    DOTNET_SDK_VERSION=5.0.403 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
