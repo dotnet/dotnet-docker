@@ -6,7 +6,7 @@ RUN tdnf install -y dnf
 # Install .NET's dependencies into a staging location
 RUN mkdir /staging \
     && dnf install -y --releasever=1.0 --installroot /staging \
-        ca-certificates-microsoft \
+        prebuilt-ca-certificates \
         glibc \
         icu \
         krb5 \
