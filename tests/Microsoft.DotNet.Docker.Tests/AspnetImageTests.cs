@@ -70,20 +70,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
         {
-            string versionEnvName = null;
-            if (imageData.Version.Major == 2 && DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                versionEnvName = "ASPNETCORE_VERSION";
-            }
-            else if (imageData.Version.Major >= 5)
-            {
-                versionEnvName = "ASPNET_VERSION";
-            }
-
-            if (versionEnvName != null)
+            if (imageData.Version.Major >= 5)
             {
                 string version = imageData.GetProductVersion(DotNetImageType.Aspnet, dockerHelper);
-                return new EnvironmentVariableInfo(versionEnvName, version);
+                return new EnvironmentVariableInfo("ASPNET_VERSION", version);
             }
 
             return null;
