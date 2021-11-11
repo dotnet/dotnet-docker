@@ -38,7 +38,7 @@ if (!(Test-Path $DotnetInstallScript)) {
     & "$PSScriptRoot/Invoke-WithRetry.ps1" "Invoke-WebRequest 'https://dot.net/v1/$DotnetInstallScript' -OutFile $InstallPath/$DotnetInstallScript"
 }
 
-$DotnetChannel = "5.0"
+$DotnetChannel = "Current"
 
 $InstallFailed = $false
 if ($IsRunningOnUnix) {
@@ -50,5 +50,8 @@ else {
     & $InstallPath/$DotnetInstallScript -Channel $DotnetChannel -Version "latest" -InstallDir $InstallPath
     $InstallFailed = (-not $?)
 }
+
+# See https://github.com/NuGet/NuGet.Client/pull/4259
+$Env:NUGET_EXPERIMENTAL_CHAIN_BUILD_RETRY_POLICY = "3,1000"
 
 if ($InstallFailed) { throw "Failed to install the .NET Core SDK" }
