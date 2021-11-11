@@ -40,6 +40,10 @@
     "monitor|6.0|product-version": "6.0.0",
     "monitor|6.0|sha": "ce7b9332555220ff415699a138b3b25eb781634d361de19d9795829c132fd2bea371dc1201bc1cfd38cc4f07bd018eb459d3e87d7d020c5d0e75e910f13f31e0",
 
+    "monitor|7.0|build-version": "7.0.0-alpha.1.21560.7",
+    "monitor|7.0|product-version": "7.0.0-alpha.1",
+    "monitor|7.0|sha": "56bf82e10f926ba880ef495af0d42dceea41fd510d6906202dca6e21bc1e23c363da310cc4b1a24b61c4315fd2f9a1940eab9b1aa593bcff0ba9785f1566969f",
+
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
     "powershell|3.1|build-version": "7.0.8",
