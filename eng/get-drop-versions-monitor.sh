@@ -12,6 +12,6 @@ curl -SLo dotnet-monitor.nupkg.buildversion https://aka.ms/dotnet/diagnostics/mo
 # Read version file and remove newlines
 monitorVer=$(tr -d '\r\n' < dotnet-monitor.nupkg.buildversion)
 
-rm dotnet-monitor.nupkg.version
+rm dotnet-monitor.nupkg.buildversion
 
 echo "##vso[task.setvariable variable=monitorVer]$monitorVer"
