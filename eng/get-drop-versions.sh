@@ -26,7 +26,7 @@ sdkVer=$(echo $sdkUrl | sed 's|.*/Sdk/\(.*\)/.*|\1|g')
 
 rm sdkversion
 
-curl -SLo versionDetails.xml https://raw.githubusercontent.com/dotnet/installer/$commitSha/eng/Version.Details.xml
+curl -fSLo versionDetails.xml https://raw.githubusercontent.com/dotnet/installer/$commitSha/eng/Version.Details.xml
 
 runtimeVer=$(xmllint --xpath "string(//ProductDependencies/Dependency[starts-with(@Name,'VS.Redist.Common.NetCore.SharedFramework.x64')]/@Version)" versionDetails.xml)
 aspnetVer=$(xmllint --xpath "string(//ProductDependencies/Dependency[starts-with(@Name,'VS.Redist.Common.AspNetCore.SharedFramework.x64')]/@Version)" versionDetails.xml)

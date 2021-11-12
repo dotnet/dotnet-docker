@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM {{ARCH_VERSIONED}}/buildpack-deps:{{OS_VERSION_BASE}}-curl as installer
 
 # Retrieve .NET
-RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["runtime|5.0|build-version"]}}/dotnet-runtime-{{VARIABLES["runtime|5.0|build-version"]}}-linux-{{ARCH_SHORT}}.tar.gz \
+RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["runtime|5.0|build-version"]}}/dotnet-runtime-{{VARIABLES["runtime|5.0|build-version"]}}-linux-{{ARCH_SHORT}}.tar.gz \
     && dotnet_sha512='{{VARIABLES[cat("runtime|5.0|linux|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
