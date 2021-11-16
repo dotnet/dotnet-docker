@@ -46,7 +46,7 @@
     "dotnet|3.1|product-version": "3.1.21",
     "dotnet|5.0|product-version": "5.0.12",
     "dotnet|6.0|product-version": "6.0.0",
-    "dotnet|7.0|product-version": "7.0.0-alpha.1",
+    "dotnet|7.0|product-version": "7.0.0",
 
     "monitor|6.0|build-version": "6.0.0",
     "monitor|6.0|product-version": "6.0.0",
@@ -176,8 +176,8 @@
     "sdk|6.0|linux|x64|sha": "cb0d174a79d6294c302261b645dba6a479da8f7cf6c1fe15ae6998bc09c5e0baec810822f9e0104e84b0efd51fdc0333306cb2a0a6fcdbaf515a8ad8cf1af25b",
     "sdk|6.0|win|x64|sha": "d2fa2f0d2b4550ac3408b924ab356add378af1d0f639623f0742e37f57b3f2b525d81f5d5c029303b6d95fed516b04a7b6c3a98f27f770fc8b4e76414cf41660",
 
-    "sdk|7.0|build-version": "7.0.100-alpha.1.21555.1",
-    "sdk|7.0|product-version": "7.0.100-alpha.1",
+    "sdk|7.0|build-version": "7.0.100-alpha.1.21558.2",
+    "sdk|7.0|product-version": "7.0.100",
     "sdk|7.0|linux-musl|arm|sha": "f56328769a419d70fd223fe0dfde3b669b2a1239434573f7106ff65ef18dc32741c5c3a30b4c01cf25ca2e12604fde3ab2375b192cc04e09ff0a67dbc41be2da",
     "sdk|7.0|linux-musl|arm64|sha": "5249e96dc085d464712ef6473eba0df3ef8fcb88a14644c4b8c2dbf23d2690e334d871d8a952329f9036da2e3f5e9f14a95b9f3b75d8ff760b87bd5dbcc528b0",
     "sdk|7.0|linux-musl|x64|sha": "ced370bd8945191b34dd66b613d3eba76358cce08c9b930b93d47800471db359e7d2af04c56112f53d32d71c4dda1b147da72992e77d9418d573688e5de8d330",

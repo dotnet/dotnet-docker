@@ -20,7 +20,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:7.0.0-alpha.1-cbl-mariner1.0-distroless-amd64
+FROM $REPO:7.0.0-cbl-mariner1.0-distroless-amd64
 
 ENV DOTNET_VERSION=7.0.0-alpha.1.21551.1
 

@@ -17,7 +17,7 @@ RUN aspnet_version='7.0.0-alpha.1.21551.8' \
 
 
 # ASP.NET Core image
-FROM $REPO:7.0.0-alpha.1-cbl-mariner1.0-distroless-amd64
+FROM $REPO:7.0.0-cbl-mariner1.0-distroless-amd64
 
 ENV \
     # ASP.NET Core version

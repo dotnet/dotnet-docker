@@ -21,7 +21,7 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/do
 
 
 # ASP.NET Core image
-FROM $REPO:7.0.0-alpha.1-nanoserver-1809
+FROM $REPO:7.0.0-nanoserver-1809
 
 ENV `
     # ASP.NET Core version

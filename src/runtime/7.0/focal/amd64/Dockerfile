@@ -13,7 +13,7 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runti
 
 
 # .NET runtime image
-FROM $REPO:7.0.0-alpha.1-focal-amd64
+FROM $REPO:7.0.0-focal-amd64
 
 ENV DOTNET_VERSION=7.0.0-alpha.1.21551.1
 

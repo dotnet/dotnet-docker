@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:7.0.0-alpha.1-windowsservercore-ltsc2022
+FROM $REPO:7.0.0-windowsservercore-ltsc2022
 
 ENV `
     # ASP.NET Core version

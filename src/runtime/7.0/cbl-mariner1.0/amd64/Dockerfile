@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:7.0.0-alpha.1-cbl-mariner1.0-amd64
+FROM $REPO:7.0.0-cbl-mariner1.0-amd64
 
 # Install .NET
 ENV DOTNET_VERSION=7.0.0-alpha.1.21551.1

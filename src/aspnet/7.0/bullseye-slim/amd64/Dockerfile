@@ -12,7 +12,7 @@ RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/a
 
 
 # ASP.NET Core image
-FROM $REPO:7.0.0-alpha.1-bullseye-slim-amd64
+FROM $REPO:7.0.0-bullseye-slim-amd64
 
 ENV \
     # ASP.NET Core version
