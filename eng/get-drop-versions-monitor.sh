@@ -7,7 +7,7 @@ set -u
 
 channel=$1
 
-curl -SLo dotnet-monitor.nupkg.version https://aka.ms/dotnet/diagnostics/monitor$channel/dotnet-monitor.nupkg.version
+curl -fSLo dotnet-monitor.nupkg.version https://aka.ms/dotnet/diagnostics/monitor$channel/dotnet-monitor.nupkg.version
 
 # Read version file and remove newlines
 monitorVer=$(tr -d '\r\n' < dotnet-monitor.nupkg.version)
