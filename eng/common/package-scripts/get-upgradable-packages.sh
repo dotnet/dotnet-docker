@@ -13,7 +13,7 @@ scriptDir="$(dirname $(realpath $0))"
 containerName="$(uuidgen)"
 containerOutputPath="/$containerName.txt"
 
-docker run --name $containerName -v $scriptDir:/scripts $imageTag /bin/sh -c "/scripts/get-upgradable-packages.container.sh $containerOutputPath $packagelist"
+docker run --name $containerName -v $scriptDir:/scripts --entrypoint /bin/sh $imageTag -c "/scripts/get-upgradable-packages.container.sh $containerOutputPath $packagelist"
 
 docker cp $containerName:$containerOutputPath $outputPath
 docker rm $containerName 1>/dev/null
