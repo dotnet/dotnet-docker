@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=7.0.100-alpha.1.21555.1 \
+    DOTNET_SDK_VERSION=7.0.100-alpha.1.21558.2 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Unset Logging__Console__FormatterName from aspnet base image
@@ -25,7 +25,7 @@ RUN tdnf install -y \
 
 # Install .NET SDK
 RUN curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-x64.rpm \
-    && dotnet_sha512='de38042ca968bdf6e7901d66ebb8cd7a48d3b9e2f46e216cffafeb9859873c2866fe76faa5bc99b96d544cdaac1273da3861df72a190e099000123878a7c1bfa' \
+    && dotnet_sha512='cb8b0e3e0b3c473db30d166431e6f4916d9bfedd14cd08479b03d5a66a5d205bd2b969792b3ced55bb490e67534918b1e5ff88afd931a61aa1439625d9285f43' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
     && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-x64.rpm \
