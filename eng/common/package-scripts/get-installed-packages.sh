@@ -6,4 +6,4 @@ imageTag=$1
 dockerfilePath=$2
 scriptDir=$(dirname $(realpath $0))
 
-docker run --rm -i $imageTag /bin/sh < $scriptDir/get-installed-packages.container.sh
+docker run --rm --entrypoint /bin/sh -i $imageTag < $scriptDir/get-installed-packages.container.sh
