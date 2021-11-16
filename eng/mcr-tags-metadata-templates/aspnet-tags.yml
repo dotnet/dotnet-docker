@@ -1,4 +1,10 @@
 $(McrTagsYmlRepo:aspnet)
+$(McrTagsYmlTagGroup:7.0-bullseye-slim-amd64)
+    customSubTableTitle: .NET 7 Preview Tags
+$(McrTagsYmlTagGroup:7.0-alpine3.15-amd64)
+    customSubTableTitle: .NET 7 Preview Tags
+$(McrTagsYmlTagGroup:7.0-focal-amd64)
+    customSubTableTitle: .NET 7 Preview Tags
 $(McrTagsYmlTagGroup:6.0-bullseye-slim-amd64)
 $(McrTagsYmlTagGroup:6.0-alpine3.14-amd64)
 $(McrTagsYmlTagGroup:6.0-focal-amd64)
@@ -11,6 +17,12 @@ $(McrTagsYmlTagGroup:3.1-buster-slim)
 $(McrTagsYmlTagGroup:3.1-alpine3.14)
 $(McrTagsYmlTagGroup:3.1-focal)
 $(McrTagsYmlTagGroup:3.1-bionic)
+$(McrTagsYmlTagGroup:7.0-bullseye-slim-arm64v8)
+    customSubTableTitle: .NET 7 Preview Tags
+$(McrTagsYmlTagGroup:7.0-alpine3.15-arm64v8)
+    customSubTableTitle: .NET 7 Preview Tags
+$(McrTagsYmlTagGroup:7.0-focal-arm64v8)
+    customSubTableTitle: .NET 7 Preview Tags
 $(McrTagsYmlTagGroup:6.0-bullseye-slim-arm64v8)
 $(McrTagsYmlTagGroup:6.0-alpine3.14-arm64v8)
 $(McrTagsYmlTagGroup:6.0-focal-arm64v8)
@@ -23,6 +35,12 @@ $(McrTagsYmlTagGroup:3.1-buster-slim-arm64v8)
 $(McrTagsYmlTagGroup:3.1-alpine3.14-arm64v8)
 $(McrTagsYmlTagGroup:3.1-focal-arm64v8)
 $(McrTagsYmlTagGroup:3.1-bionic-arm64v8)
+$(McrTagsYmlTagGroup:7.0-bullseye-slim-arm32v7)
+    customSubTableTitle: .NET 7 Preview Tags
+$(McrTagsYmlTagGroup:7.0-alpine3.15-arm32v7)
+    customSubTableTitle: .NET 7 Preview Tags
+$(McrTagsYmlTagGroup:7.0-focal-arm32v7)
+    customSubTableTitle: .NET 7 Preview Tags
 $(McrTagsYmlTagGroup:6.0-bullseye-slim-arm32v7)
 $(McrTagsYmlTagGroup:6.0-alpine3.14-arm32v7)
 $(McrTagsYmlTagGroup:6.0-focal-arm32v7)
@@ -34,6 +52,10 @@ $(McrTagsYmlTagGroup:3.1-bullseye-slim-arm32v7)
 $(McrTagsYmlTagGroup:3.1-buster-slim-arm32v7)
 $(McrTagsYmlTagGroup:3.1-focal-arm32v7)
 $(McrTagsYmlTagGroup:3.1-bionic-arm32v7)
+$(McrTagsYmlTagGroup:7.0-nanoserver-ltsc2022)
+    customSubTableTitle: .NET 7 Preview Tags
+$(McrTagsYmlTagGroup:7.0-windowsservercore-ltsc2022)
+    customSubTableTitle: .NET 7 Preview Tags
 $(McrTagsYmlTagGroup:6.0-nanoserver-ltsc2022)
 $(McrTagsYmlTagGroup:6.0-windowsservercore-ltsc2022)
 $(McrTagsYmlTagGroup:5.0-nanoserver-ltsc2022)
@@ -42,6 +64,10 @@ $(McrTagsYmlTagGroup:3.1-nanoserver-ltsc2022)
 $(McrTagsYmlTagGroup:6.0-nanoserver-20H2)
 $(McrTagsYmlTagGroup:5.0-nanoserver-20H2)
 $(McrTagsYmlTagGroup:3.1-nanoserver-20H2)
+$(McrTagsYmlTagGroup:7.0-nanoserver-1809)
+    customSubTableTitle: .NET 7 Preview Tags
+$(McrTagsYmlTagGroup:7.0-windowsservercore-ltsc2019)
+    customSubTableTitle: .NET 7 Preview Tags
 $(McrTagsYmlTagGroup:6.0-nanoserver-1809)
 $(McrTagsYmlTagGroup:6.0-windowsservercore-ltsc2019)
 $(McrTagsYmlTagGroup:5.0-nanoserver-1809)
