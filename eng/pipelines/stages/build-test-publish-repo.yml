@@ -13,6 +13,7 @@ stages:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+      buildMatrixType: platformVersionedOs
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
     ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
