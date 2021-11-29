@@ -50,23 +50,23 @@ try {
     $args = $OptionalImageBuilderArgs
 
     if ($Version) {
-        $args += " --version " + ($Version -join " --version ")
+        $args += ($Version | foreach { ' --version "{0}"' -f $_ })
     }
 
     if ($OS) {
-        $args += " --os-version " + ($OS -join " --os-version ")
+        $args += ($OS | foreach { ' --os-version "{0}"' -f $_ })
     }
 
     if ($Architecture) {
-        $args += " --architecture $Architecture"
+        $args += ' --architecture "{0}"' -f $Architecture
     }
 
     if ($Paths) {
-        $args += " --path " + ($Paths -join " --path ")
+        $args += ($Paths | foreach { ' --path "{0}"' -f $_ })
     }
 
     if ($Manifest) {
-        $args += " --manifest $Manifest"
+        $args += ' --manifest "{0}"' -f $Manifest
     }
 
     ./eng/common/Invoke-ImageBuilder.ps1 "build $args"
