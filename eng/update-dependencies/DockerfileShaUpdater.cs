@@ -384,7 +384,7 @@ namespace Dotnet.Docker
 
         private static async Task<IDictionary<string, string>> GetDotnetReleaseChecksums(string? version)
         {
-            string uri = $"https://dotnetcli.blob.core.windows.net/dotnet/checksums/{version}-sha.txt";
+            string uri = $"https://dotnetcli.azureedge.net/dotnet/checksums/{version}-sha.txt";
             if (s_releaseChecksumCache.TryGetValue(uri, out Dictionary<string, string>? checksumEntries))
             {
                 return checksumEntries;
