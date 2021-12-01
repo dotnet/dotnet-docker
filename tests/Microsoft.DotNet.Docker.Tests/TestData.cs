@@ -68,7 +68,6 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V6_0, OS = OS.Alpine315,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V7_0, OS = OS.BullseyeSlim,        Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, OS = OS.Focal,               Arch = Arch.Amd64 },
-            new ProductImageData { Version = V7_0, OS = OS.Alpine314,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, OS = OS.Alpine315,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, OS = OS.Mariner10,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, OS = OS.Mariner10Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner10 },
@@ -76,8 +75,6 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V7_0, OS = OS.BullseyeSlim,        Arch = Arch.Arm64 },
             new ProductImageData { Version = V7_0, OS = OS.Focal,               Arch = Arch.Arm },
             new ProductImageData { Version = V7_0, OS = OS.Focal,               Arch = Arch.Arm64 },
-            new ProductImageData { Version = V7_0, OS = OS.Alpine314,           Arch = Arch.Arm },
-            new ProductImageData { Version = V7_0, OS = OS.Alpine314,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V7_0, OS = OS.Alpine315,           Arch = Arch.Arm },
             new ProductImageData { Version = V7_0, OS = OS.Alpine315,           Arch = Arch.Arm64 },
         };
