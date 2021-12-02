@@ -32,7 +32,7 @@ checkForUpgradableVersionWithApt() {
     pkgVersion=$2
 
     echo "Finding latest version of package $pkgName"
-    local pkgInfo=$(apt policy $pkgName 2>/dev/null)
+    local pkgInfo=$(apt policy $pkgManagerArgs $pkgName 2>/dev/null)
     if [[ $pkgInfo == "" ]]; then
         writeError "Package '$pkgName' does not exist."
     fi
@@ -57,7 +57,7 @@ checkForUpgradableVersionWithApk() {
     pkgVersion=$2
 
     echo "Finding latest version of package $pkgName"
-    availableVersion=$(apk list $pkgName | tac | sed -n "1 s/$pkgName-\(\S*\).*/\1/p")
+    availableVersion=$(apk list $pkgManagerArgs $pkgName | tac | sed -n "1 s/$pkgName-\(\S*\).*/\1/p")
     if [[ $availableVersion == "" ]]; then
         writeError "Package '$pkgName' does not exist."
     fi
@@ -71,16 +71,17 @@ checkForUpgradableVersionWithApk() {
     fi
 }
 
-checkForUpgradableVersionWithTdnf() {
+checkForUpgradableVersionWithDnf() {
     pkgName=$1
     pkgVersion=$2
+    pkgManagerName=${3:-dnf}
 
     echo "Finding latest version of package $pkgName"
-    tdnf install -y $pkgName 1>/dev/null 2>/dev/null
+    $pkgManagerName install $pkgManagerArgs -y $pkgName 1>/dev/null 2>/dev/null
 
     # If the package exists
     if [[ $? == 0 ]]; then
-        local installedVersion=$(tdnf list installed $pkgName | tail -n +2 | sed -n 's/\S*\s*\(\S*\)\s*.*/\1/p')
+        local installedVersion=$($pkgManagerName list installed $pkgManagerArgs $pkgName | tail -n +2 | sed -n 's/\S*\s*\(\S*\)\s*.*/\1/p')
         # If a newer version of the package is available
         if [[ $installedVersion != $pkgVersion ]]; then
             addUpgradeablePackageVersion "$pkgName" "$pkgVersion" "$installedVersion"
@@ -88,6 +89,13 @@ checkForUpgradableVersionWithTdnf() {
     else
         writeError "Package '$pkgName' does not exist."
     fi
+}
+
+checkForUpgradableVersionWithTdnf() {
+    pkgName=$1
+    pkgVersion=$2
+
+    checkForUpgradableVersionWithDnf "$pkgName" "$pkgVersion" "tdnf"
 }
 
 outputPackagesToUpgrade() {
@@ -136,14 +144,18 @@ updatePackageCacheWithApk() {
     apk update 1>/dev/null
 }
 
+updatePackageCacheWithDnf() {
+    dnf makecache 1>/dev/null
+}
+
 updatePackageCacheWithTdnf() {
     tdnf makecache 1>/dev/null
 }
 
 outputPath="$1"
-args=( $@ )
-
-packages=( "${args[@]:1}" )
+pkgManagerArgs="$2"
+shift 2
+packages=( $@ )
 
 declare -A upgradablePackageVersions
 upgradablePackageVersions=()
@@ -152,6 +164,8 @@ if type apt > /dev/null 2>/dev/null; then
     pkgType="Apt"
 elif type apk > /dev/null 2>/dev/null; then
     pkgType="Apk"
+elif type dnf > /dev/null 2>/dev/null; then
+    pkgType="Dnf"
 elif type tdnf > /dev/null 2>/dev/null; then
     pkgType="Tdnf"
 else
@@ -172,6 +186,7 @@ updatePackageCacheWith$pkgType
 packageVersionRegex="(\S+)=(\S+)"
 for pkgName in "${packages[@]}"
 do
+    echo "Processing $pkgName"
     if [[ ! $pkgName =~ $packageVersionRegex ]]; then
         writeError "Package version info for '$pkgName' must be in the form of <pkg-name>=<pkg-version>"
     fi
