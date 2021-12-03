@@ -112,9 +112,6 @@ namespace Microsoft.DotNet.Docker.Tests
             // jobs in order to test the Windows Server Core samples.
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64" },
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-iis-x64" },
-
-            // Disabling the slim sample due to https://github.com/dotnet/dotnet-docker/issues/2938
-            //new SampleImageData { OS = OS.NanoServer1809, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64-slim" },
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-x64-slim" },
         };
 
