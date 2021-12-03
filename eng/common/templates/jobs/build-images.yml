@@ -65,6 +65,15 @@ jobs:
         echo "##vso[task.setvariable variable=testScriptPath]$testScriptPath"
         echo "##vso[task.setvariable variable=testResultsDirectory]$testResultsDirectory"
       displayName: Override Common Paths
+  - powershell: |
+      if ("${{ parameters.noCache }}" -eq "false") {
+        $baseContainerRepoPath = "/repo/$(buildRepoName)"
+      }
+      else {
+        $baseContainerRepoPath = "/repo"
+      }
+      echo "##vso[task.setvariable variable=baseContainerRepoPath]$baseContainerRepoPath"
+    displayName: Set Base Container Repo Path
   - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
   - ${{ parameters.customInitSteps }}
   - template: ../steps/set-image-info-path-var.yml
@@ -92,7 +101,7 @@ jobs:
       --architecture $(architecture)
       --retry
       --source-repo $(publicGitRepoUri)
-      --get-installed-pkgs-path /repo/dotnet-dotnet-docker/$(engCommonRelativePath)/package-scripts/get-installed-packages.sh
+      --get-installed-pkgs-path $(baseContainerRepoPath)/$(engCommonRelativePath)/package-scripts/get-installed-packages.sh
       $(manifestVariables)
       $(imageBuilderBuildArgs)
     displayName: Build Images
