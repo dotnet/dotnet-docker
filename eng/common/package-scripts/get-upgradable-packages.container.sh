@@ -13,6 +13,12 @@ ensureBashInstalledForApk() {
     apk add bash 1>/dev/null
 }
 
+ensureBashInstalledForDnf() {
+    echo "Ensuring bash is installed"
+    dnf makecache 1>/dev/null
+    dnf install -y bash 1>/dev/null
+}
+
 ensureBashInstalledForTdnf() {
     echo "Ensuring bash is installed"
     tdnf makecache 1>/dev/null
@@ -22,6 +28,11 @@ ensureBashInstalledForTdnf() {
 
 
 scriptDir=$(dirname $0)
+
+outputPath="$1"
+pkgManagerArgs="$2"
+shift 2
+packages=$@
 
 if type apt > /dev/null 2>/dev/null; then
     ensureBashInstalledForApt
@@ -35,9 +46,15 @@ if type apk > /dev/null 2>/dev/null; then
     exit 0
 fi
 
+if type dnf > /dev/null 2>/dev/null; then
+    ensureBashInstalledForDnf
+    $scriptDir/get-upgradable-packages.container.bash.sh $@
+    exit 0
+fi
+
 if type tdnf > /dev/null 2>/dev/null; then
     ensureBashInstalledForTdnf
-    $scriptDir/get-upgradable-packages.container.bash.sh $@
+    $scriptDir/get-upgradable-packages.container.bash.sh $outputPath "$pkgManagerArgs" $packages
     exit 0
 fi
 
