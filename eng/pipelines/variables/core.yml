@@ -1,4 +1,9 @@
 variables:
 - template: ../../common/templates/variables/dotnet/build-test-publish.yml
+
+- group: DotNetBuilds storage account read tokens
+- group: AzureDevOps-Artifact-Feeds-Pats
+- group: DotNet-MSRC-Storage # needed for .NET Core 3.1 internal builds
+
 - name: manifest
   value: manifest.json
