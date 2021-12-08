@@ -15,11 +15,9 @@ scriptDir="$(dirname $(realpath $0))"
 # that exist for the runtime and aspnet Dockerfiles. But since they don't install their own packages, the
 # runtime-deps Dockerfile can be used instead to query for the packages that are installed. So regardless of
 # which Dockerfile is used, the runtime-deps Dockerfile is used to query for the packages that are installed.
-# To always target the runtime-deps Dockerfile, "runtime" and "aspnet" are simply replaced with "runtime-deps".
-# In addition, 7.0 gets its runtime-deps from the 6.0 location. So this also updates the Dockerfile path to
-# point to the 6.0 location.
-dockerfilePath="$(echo $dockerfilePath | sed 's/\/runtime\//\/runtime-deps\//g')"
-dockerfilePath="$(echo $dockerfilePath | sed 's/\/aspnet\//\/runtime-deps\//g')"
+# To always target the runtime-deps Dockerfile, "runtime" and "aspnet" will be replaced with "runtime-deps"
+# by the base cbl-mariner-distroless script. To prepare for that change to the path, we need to replace
+# 7.0 with 6.0 in the path because 7.0 gets its runtime-deps from the 6.0 location.
 dockerfilePath="$(echo $dockerfilePath | sed 's/\/7.0\//\/6.0\//g')"
 
 $scriptDir/../get-installed-packages.sh $version $imageTag $dockerfilePath
