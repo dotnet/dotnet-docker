@@ -10,6 +10,8 @@ namespace Dotnet.Docker
 {
     public class Options
     {
+        public string BinarySasQueryString { get; }
+        public string ChecksumSasQueryString { get; }
         public bool ComputeChecksums { get; }
         public string DockerfileVersion { get; }
         public string ChannelName { get; }
@@ -23,9 +25,10 @@ namespace Dotnet.Docker
         public string VersionSourceName { get; }
         public bool UseStableBranding { get; }
         public bool UpdateOnly => GitHubEmail == null || GitHubPassword == null || GitHubUser == null;
+        public bool IsInternal => !string.IsNullOrEmpty(BinarySasQueryString) || !string.IsNullOrEmpty(ChecksumSasQueryString);
 
         public Options(string dockerfileVersion, string[] productVersion, string channelName, string versionSourceName, string email, string password, string user,
-            bool computeShas, bool stableBranding, string branch)
+            bool computeShas, bool stableBranding, string binarySas, string checksumSas, string branch)
         {
             DockerfileVersion = dockerfileVersion;
             ProductVersions = productVersion
@@ -38,6 +41,8 @@ namespace Dotnet.Docker
             GitHubUser = user;
             ComputeChecksums = computeShas;
             UseStableBranding = stableBranding;
+            BinarySasQueryString = binarySas;
+            ChecksumSasQueryString = checksumSas;
             Branch = branch;
 
             // Special case for handling the shared dotnet product version variables.
@@ -63,7 +68,9 @@ namespace Dotnet.Docker
                 new Option<string>("--user", "GitHub user used to make PR (if not specified, a PR will not be created)"),
                 new Option<bool>("--compute-shas", "Compute the checksum if a published checksum cannot be found"),
                 new Option<bool>("--stable-branding", "Use stable branding version numbers to compute paths"),
-                new Option<string>("--branch", () => "nightly", "Git branch being targeted for update"),
+                new Option<string>("--branch", () => "nightly", "SAS query string used to access files in blob storage"),
+				new Option<string>("--binary-sas", "SAS query string used to access binary files in blob storage"),
+                new Option<string>("--checksum-sas", "SAS query string used to access checksum files in blob storage"),
             };
     }
 }

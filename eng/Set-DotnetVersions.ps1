@@ -37,7 +37,15 @@ param(
 
     # When set, only prints out an Azure DevOps variable with the value of the args to pass to update-dependencies.
     [Switch]
-    $PrintArgsVariableOnly
+    $PrintArgsVariableOnly,
+
+    # SAS query string used to access files in the binary blob container
+    [string]
+    $BinarySasQueryString,
+
+    # SAS query string used to access files in the checksum blob container
+    [string]
+    $ChecksumSasQueryString
 )
 
 $updateDepsArgs = @($ProductVersion)
@@ -60,6 +68,14 @@ if ($MonitorVersion) {
 
 if ($ComputeShas) {
     $updateDepsArgs += "--compute-shas"
+}
+
+if ($BinarySasQueryString) {
+    $updateDepsArgs += "--binary-sas=$BinarySasQueryString"
+}
+
+if ($ChecksumSasQueryString) {
+    $updateDepsArgs += "--checksum-sas=$ChecksumSasQueryString"
 }
 
 if ($UseStableBranding) {
