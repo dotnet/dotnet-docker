@@ -90,5 +90,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
             Assert.Contains("Exit code: 127", ex.Message);
         }
+
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyNoSasToken(ProductImageData imageData)
+        {
+            base.VerifyCommonNoSasToken(imageData);
+        }
     }
 }

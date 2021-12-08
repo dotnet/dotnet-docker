@@ -3,6 +3,8 @@ ARG runtime_image
 
 FROM $sdk_image as build
 
+ARG NuGetFeedPassword
+
 EXPOSE 80
 
 WORKDIR app

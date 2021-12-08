@@ -151,11 +151,30 @@ namespace Microsoft.DotNet.Docker.Tests
                 buildArgs.AddRange(customBuildArgs);
             }
 
-            _dockerHelper.Build(
-                tag: tag,
-                target: stageTarget,
-                contextDir: contextDir,
-                buildArgs: buildArgs.ToArray());
+            const string NuGetFeedPasswordVar = "NuGetFeedPassword";
+
+            if (Config.IsInternal(_imageData.VersionString))
+            {
+                buildArgs.Add(NuGetFeedPasswordVar);
+                Environment.SetEnvironmentVariable(NuGetFeedPasswordVar, Config.NuGetFeedPassword);
+            }
+
+            try
+            {
+                _dockerHelper.Build(
+                    tag: tag,
+                    target: stageTarget,
+                    contextDir: contextDir,
+                    buildArgs: buildArgs.ToArray());
+            }
+            finally
+            {
+                if (Config.IsInternal(_imageData.VersionString))
+                {
+                    Environment.SetEnvironmentVariable(NuGetFeedPasswordVar, null);
+                }
+            }
+            
 
             return tag;
         }

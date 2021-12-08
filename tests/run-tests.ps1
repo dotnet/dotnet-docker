@@ -15,7 +15,9 @@ param(
     [switch]$PullImages,
     [string]$ImageInfoPath,
     [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor")]
-    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor")
+    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor"),
+    [securestring]$SasQueryString,
+    [securestring]$NuGetFeedPassword
 )
 
 function Log {
@@ -49,6 +51,9 @@ $activeOS = docker version -f "{{ .Server.Os }}"
 
 Push-Location "$PSScriptRoot\Microsoft.DotNet.Docker.Tests"
 
+# Store the original set of environment variables before we start modifying them
+$origEnvVars = Get-ChildItem env:
+
 Try {
     # Run Tests
     if ([string]::IsNullOrWhiteSpace($Architecture)) {
@@ -81,11 +86,19 @@ Try {
     $env:REPO_PREFIX = $RepoPrefix
     $env:IMAGE_INFO_PATH = $ImageInfoPath
     $env:SOURCE_REPO_ROOT = (Get-Item "$PSScriptRoot").Parent.FullName
-    $ENV:SOURCE_BRANCH = & $PSScriptRoot/../eng/Get-Branch.ps1
+    $env:SOURCE_BRANCH = & $PSScriptRoot/../eng/Get-Branch.ps1
 
     $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
     $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
     $env:DOTNET_MULTILEVEL_LOOKUP = '0'
+
+    if ($SasQueryString) {
+        $env:SAS_QUERY_STRING = ConvertFrom-SecureString $SasQueryString -AsPlainText
+    }
+    
+    if ($NuGetFeedPassword) {
+        $env:NUGET_FEED_PASSWORD = ConvertFrom-SecureString $NuGetFeedPassword -AsPlainText
+    }
 
     $testFilter = ""
     if ($TestCategories) {
@@ -96,7 +109,8 @@ Try {
             # Skip pre-build tests on Windows because of missing pre-reqs (https://github.com/dotnet/dotnet-docker/issues/2261)
             if ($_ -eq "pre-build" -and $activeOS -eq "windows") {
                 Write-Warning "Skipping pre-build tests for Windows containers"
-            } else {
+            }
+            else {
                 if ($testFilter) {
                     $testFilter += "|"
                 }
@@ -120,4 +134,10 @@ Try {
 }
 Finally {
     Pop-Location
+
+    # Delete any newly added environment variables
+    Get-ChildItem env: | Where-Object { $_.Name -notin ($origEnvVars | Select-Object -ExpandProperty Name) } | Remove-Item
+
+    # Restore the original values of any modified environment variables
+    $origEnvVars | ForEach-Object { Set-Item "env:$($_.Name)" $_.Value }
 }
