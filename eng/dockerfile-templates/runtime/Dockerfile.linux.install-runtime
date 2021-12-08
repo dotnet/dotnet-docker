@@ -3,32 +3,41 @@
         dest-dir: Destination directory to install .NET runtime
         add-symlink (optional): If set, adds a symlink to the dotnet executable
         use-local-version-var (optional): Whether to define a local variable for the .NET runtime version
-            instead of referencing the environment variable. ^
+            instead of referencing the environment variable.
+        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
+        url-suffix (optional): Suffix string to append the end of the URL. ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set varPlatform to when(isAlpine, "linux-musl", "linux") ^
-    set runtimeVersion to when(ARGS["use-local-version-var"], "$dotnet_version", "$DOTNET_VERSION") ^
+    set runtimeVersionDir to when(ARGS["use-local-version-var"],
+        "$dotnet_version",
+        when(ARGS["is-internal"],
+            VARIABLES[cat("runtime|", dotnetVersion"|build-version")],
+            "$DOTNET_VERSION")) ^
+    set runtimeVersionFile to when(ARGS["is-internal"],
+        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
+        runtimeVersionDir) ^
     set runtimeBaseUrl to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
-        "/Runtime/", runtimeVersion, "/") ^
+        "/Runtime/", runtimeVersionDir, "/") ^
     set rpms to [
         [
             "filename": "dotnet-host.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-host-", runtimeVersion, "-", ARCH_SHORT, ".rpm"),
+            "url": cat(runtimeBaseUrl, "dotnet-host-", runtimeVersionFile, "-", ARCH_SHORT, ".rpm", ARGS["url-suffix"]),
             "sha": VARIABLES[join(["runtime-host", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": "dotnet_sha512"
         ],
         [
             "filename": "dotnet-hostfxr.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-hostfxr-", runtimeVersion, "-", ARCH_SHORT, ".rpm"),
+            "url": cat(runtimeBaseUrl, "dotnet-hostfxr-", runtimeVersionFile, "-", ARCH_SHORT, ".rpm", ARGS["url-suffix"]),
             "sha": VARIABLES[join(["runtime-hostfxr", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": "dotnet_sha512"
         ],
         [
             "filename": "dotnet-runtime.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersion, "-", ARCH_SHORT, ".rpm"),
+            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", ARCH_SHORT, ".rpm", ARGS["url-suffix"]),
             "sha": VARIABLES[join(["runtime", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": "dotnet_sha512"
         ]
@@ -36,17 +45,18 @@
     set tarballs to [
         [
             "filename": "dotnet.tar.gz",
-            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersion, "-", varPlatform, "-", ARCH_SHORT, ".tar.gz"),
+            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", varPlatform, "-", ARCH_SHORT, ".tar.gz",
+                ARGS["url-suffix"]),
             "sha": VARIABLES[join(["runtime", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
             "sha-var-name": "dotnet_sha512"
         ]
     ] ^
-    set files to when(isFullMariner && ARCH_SHORT != "arm64", rpms, tarballs)
+    set files to when(isFullMariner && ARCH_SHORT != "arm64" && !ARGS["is-internal"], rpms, tarballs)
 }}RUN {{if ARGS["use-local-version-var"]:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion"|build-version")]}} \
     && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
     [
         "files": files,
         "install-dir": ARGS["dest-dir"],
-        "create-install-dir": !isFullMariner || ARCH_SHORT = "arm64"
+        "create-install-dir": !isFullMariner || ARCH_SHORT = "arm64" || ARGS["is-internal"]
     ], "    ")}}{{if ARGS["add-symlink"]: \
     && {{InsertTemplate("Dockerfile.linux.symlink")}}}}

@@ -1,22 +1,33 @@
 {{
     _ ARGS:
         - use-local-version-var (optional): Whether to define a local variable for the ASP.NET Core runtime version
-            instead of referencing the environment variable. ^
+            instead of referencing the environment variable.
+        - is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
+        - url-suffix (optional): Suffix string to append the end of the URL. ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isDistroless to find(OS_VERSION, "-distroless") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set filePlatform to when(isAlpine, "-linux-musl", when(isFullMariner && ARCH_SHORT != "arm64", "", "-linux")) ^
-    set varPlatform to when(isAlpine, "linux-musl", when(isFullMariner && ARCH_SHORT != "arm64", "linux-rpm", "linux")) ^
-    set fileExt to when(isFullMariner && ARCH_SHORT != "arm64", "rpm", "tar.gz") ^
-    set destDir to when(isAlpine || dotnetVersion = "3.1" || (isFullMariner && ARCH_SHORT = "arm64"),
+    set useRpm to (isFullMariner && !ARGS["is-internal"] && ARCH_SHORT != "arm64") ^
+    set filePlatform to when(useRpm, "", when(isAlpine, "-linux-musl", "-linux")) ^
+    set varPlatform to when(useRpm, "linux-rpm", when(isAlpine, "linux-musl", "linux")) ^
+    set fileExt to when(useRpm, "rpm", "tar.gz") ^
+    set destDir to when((isAlpine || dotnetVersion = "3.1" || (isFullMariner && ARCH_SHORT = "arm64")) && !ARGS["is-internal"],
         "/usr/share/dotnet",
         when(isDistroless, "/dotnet", "")) ^
-    set aspnetVersion to when(ARGS["use-local-version-var"], "$aspnetcore_version", "$ASPNET_VERSION") ^
+    set aspnetVersionDir to when(ARGS["use-local-version-var"],
+        "$aspnetcore_version",
+        when(ARGS["is-internal"],
+            VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")],
+            "$ASPNET_VERSION")) ^
+    set aspnetVersionFile to when(ARGS["is-internal"],
+        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
+        aspnetVersionDir) ^
     set url to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
-        "/aspnetcore/Runtime/", aspnetVersion, "/aspnetcore-runtime-", aspnetVersion, filePlatform, "-", ARCH_SHORT, ".", fileExt) ^
+        "/aspnetcore/Runtime/", aspnetVersionDir, "/aspnetcore-runtime-", aspnetVersionFile,
+        filePlatform, "-", ARCH_SHORT, ".", fileExt, ARGS["url-suffix"]) ^
     set files to [
         [
             "filename": cat("aspnetcore.", fileExt),

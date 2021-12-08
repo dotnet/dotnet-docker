@@ -6,6 +6,11 @@
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
     set isMariner to isFullMariner || isDistrolessMariner ^
+    set isInternal to
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
+            VARIABLES[cat("base-url|internal|", VARIABLES["branch"])] ||
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
+            VARIABLES[cat("base-url|internal|legacy|", VARIABLES["branch"])] ^
     set distrolessStagingDir to "/staging" ^
     set marinerRegistry to when(isMariner && find(OS_VERSION, "2.0") >= 0,
         "cblmariner2preview.azurecr.io",
@@ -60,7 +65,7 @@ RUN rm -rf {{distrolessStagingDir}}/etc/dnf \
 FROM {{marinerRegistry}}/distroless/minimal:{{OS_VERSION_NUMBER}}
 
 COPY --from=installer {{distrolessStagingDir}}/ /
-^elif isFullMariner && ARCH_SHORT != "arm64":
+^elif isFullMariner && ARCH_SHORT != "arm64" && !isInternal:
 # Install dotnet-runtime-deps package
 RUN dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
     && curl -fSL --output dotnet-runtime-deps.rpm {{VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])]}}/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-{{ARCH_SHORT}}.rpm \

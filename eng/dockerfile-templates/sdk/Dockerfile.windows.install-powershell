@@ -1,7 +1,10 @@
 {{
+    _ ARGS:
+        dotnet-is-internal (optional): Whether the Dockerfile is targeting an internal build of the .NET product. ^
+
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isNanoServer to find(OS_VERSION, "nanoserver") >= 0 ^
-    set rootDir to when(isNanoServer, "\", "$Env:ProgramFiles\") ^
+    set rootDir to when(isNanoServer || ARGS["dotnet-is-internal"], "\", "$Env:ProgramFiles\") ^
     set nupkgFile to "PowerShell.Windows.x64.$powershell_version.nupkg" ^
     set url to cat("https://pwshtool.blob.core.windows.net/tool/$powershell_version/", nupkgFile)
 }}# Install PowerShell global tool

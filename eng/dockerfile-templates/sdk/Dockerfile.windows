@@ -1,6 +1,11 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isSingleStage to find(OS_VERSION, "windowsservercore") >= 0 ^
+    set isInternal to
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
+            VARIABLES[cat("base-url|internal|", VARIABLES["branch"])] ||
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
+            VARIABLES[cat("base-url|internal|legacy|", VARIABLES["branch"])] ^
+    set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
     set aspnetBaseTag to cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION)
 }}# escape=`
 
@@ -24,10 +29,14 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 }}# Installer image
 FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
-
+{{if isInternal:
+ARG SAS_QUERY_STRING
+}}
 {{InsertTemplate("Dockerfile.windows.install-components",
     [
-        "use-local-version-var": "true"
+        "use-local-version-var": "true",
+        "dotnet-is-internal": isInternal,
+        "dotnet-url-suffix": when(isInternal, "$Env:SAS_QUERY_STRING", "")
     ])}}
 
 # SDK image

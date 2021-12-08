@@ -1,7 +1,9 @@
 {{
     _ ARGS:
         use-local-version-var (optional): Whether to define a local variable for the SDK version
-            instead of referencing the environment variable. ^
+            instead of referencing the environment variable.
+        dotnet-is-internal (optional): Whether the Dockerfile is targeting an internal build of the .NET product.
+        dotnet-url-suffix (optional): Suffix string to append the end of .NET URLs. ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
@@ -26,6 +28,7 @@
             ]
         ]
     ] ^
+    set useExtractGroups to (isServerCore && !ARGS["dotnet-is-internal"]) ^
     set getFormattedPath(path) to:{{
         return cat("'", path, "'")
     }}
@@ -37,14 +40,20 @@
         {{InsertTemplate("Dockerfile.windows.install-sdk",
             [
                 "use-local-version-var": ARGS["use-local-version-var"],
-                "sdk-extract-groups": when(isServerCore, sdkExtractGroups, [])
+                "sdk-extract-groups": when(useExtractGroups, sdkExtractGroups, []),
+                "is-internal": ARGS["dotnet-is-internal"],
+                "url-suffix": ARGS["dotnet-url-suffix"]
             ], "        ")}} `
         `
-        {{InsertTemplate("Dockerfile.windows.install-powershell", [], "        ")}}{{
+        {{InsertTemplate("Dockerfile.windows.install-powershell",
+            [
+                "dotnet-is-internal": ARGS["dotnet-is-internal"]
+            ],
+            "        ")}}{{
 if !(dotnetVersion = "3.1" || dotnetVersion = "5.0" || isServerCore): `
         `
         # Workaround for https://github.com/dotnet/sdk/issues/18410
-        \dotnet\dotnet build-server shutdown;}}{{if !isServerCore: `
+        \dotnet\dotnet build-server shutdown;}}{{if !useExtractGroups: `
         `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers{{
 for i, group in sdkExtractGroups:
