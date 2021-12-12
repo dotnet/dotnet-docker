@@ -7,7 +7,7 @@ COPY *.csproj .
 RUN dotnet restore -r linux-x64
 
 # dependencies vulnerability scan
-FROM aquasec/trivy AS trivy
+FROM ollijanatuinen/trivy AS trivy
 COPY --from=restore /source /source
 RUN trivy fs \
     --exit-code 1 \

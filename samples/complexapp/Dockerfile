@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS restore
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -8,7 +8,18 @@ COPY libfoo/*.csproj libfoo/
 COPY libbar/*.csproj libbar/
 RUN dotnet restore complexapp/complexapp.csproj
 
+# dependencies vulnerability scan
+FROM ollijanatuinen/trivy AS trivy
+COPY --from=restore /source /source
+RUN trivy fs \
+    --exit-code 1 \
+    --no-progress \
+    --ignore-unfixed \
+    --severity "HIGH,CRITICAL" \
+    --security-checks vuln /source
+
 # copy and build app and libraries
+FROM restore AS build
 COPY complexapp/ complexapp/
 COPY libfoo/ libfoo/
 COPY libbar/ libbar/

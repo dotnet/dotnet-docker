@@ -1,8 +1,19 @@
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:6.0-windowsservercore-ltsc2022 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-windowsservercore-ltsc2022 AS restore
 WORKDIR /source
 
+# dependencies vulnerability scan
+FROM ollijanatuinen/trivy AS trivy
+COPY --from=restore /source /source
+RUN trivy fs \
+    --exit-code 1 \
+    --no-progress \
+    --ignore-unfixed \
+    --severity "HIGH,CRITICAL" \
+    --security-checks vuln /source
+
 # copy csproj and restore as distinct layers
+FROM restore AS build
 COPY *.csproj .
 RUN dotnet restore -r win-x64
 

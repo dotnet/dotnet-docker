@@ -1,7 +1,7 @@
 # escape=`
 
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS restore
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -9,7 +9,18 @@ COPY *.sln .
 COPY aspnetapp/*.csproj ./aspnetapp/
 RUN dotnet restore -r win-x64 /p:PublishReadyToRun=true
 
+# dependencies vulnerability scan
+FROM ollijanatuinen/trivy AS trivy
+COPY --from=restore /source /source
+RUN trivy fs \
+    --exit-code 1 \
+    --no-progress \
+    --ignore-unfixed \
+    --severity "HIGH,CRITICAL" \
+    --security-checks vuln /source
+
 # copy everything else and build app
+FROM restore AS build
 COPY aspnetapp/. ./aspnetapp/
 WORKDIR /source/aspnetapp
 RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true

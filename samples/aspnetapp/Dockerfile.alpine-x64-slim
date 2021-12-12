@@ -8,7 +8,7 @@ COPY aspnetapp/*.csproj ./aspnetapp/
 RUN dotnet restore -r linux-musl-x64 /p:PublishReadyToRun=true
 
 # dependencies vulnerability scan
-FROM aquasec/trivy AS trivy
+FROM ollijanatuinen/trivy AS trivy
 COPY --from=restore /source /source
 RUN trivy fs \
     --exit-code 1 \
