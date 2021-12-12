@@ -1,12 +1,23 @@
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS restore
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
 RUN dotnet restore -r linux-musl-x64
 
+# dependencies vulnerability scan
+FROM aquasec/trivy AS trivy
+COPY --from=restore /source /source
+RUN trivy fs \
+    --exit-code 1 \
+    --no-progress \
+    --ignore-unfixed \
+    --severity "HIGH,CRITICAL" \
+    --security-checks vuln /source
+
 # copy and publish app and libraries
+FROM restore AS build
 COPY . .
 RUN dotnet publish -c release -o /app -r linux-musl-x64 --self-contained false --no-restore
 
