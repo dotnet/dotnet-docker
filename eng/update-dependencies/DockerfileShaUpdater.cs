@@ -39,7 +39,7 @@ namespace Dotnet.Docker
         private static readonly Dictionary<string, string[]> s_urls = new() {
             {"powershell", new string[] { "https://pwshtool.blob.core.windows.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" }},
 
-            {"monitor", new string[] { $"{DotnetBaseUrl}/diagnostics/monitor$CHANNEL_NAME/dotnet-monitor.$VERSION_FILE.nupkg" }},
+            {"monitor", new string[] { $"{DotnetBaseUrl}/diagnostics/monitor/$VERSION_DIR/dotnet-monitor.$VERSION_FILE.nupkg" }},
 
             {"runtime", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE$OPTIONAL_OS-$ARCH.$ARCHIVE_EXT" }},
             {"runtime-host", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-$ARCH.$ARCHIVE_EXT" }},
@@ -384,7 +384,7 @@ namespace Dotnet.Docker
 
         private static async Task<IDictionary<string, string>> GetDotnetReleaseChecksums(string? version)
         {
-            string uri = $"https://dotnetcli.blob.core.windows.net/dotnet/checksums/{version}-sha.txt";
+            string uri = $"https://dotnetcli.azureedge.net/dotnet/checksums/{version}-sha.txt";
             if (s_releaseChecksumCache.TryGetValue(uri, out Dictionary<string, string>? checksumEntries))
             {
                 return checksumEntries;
