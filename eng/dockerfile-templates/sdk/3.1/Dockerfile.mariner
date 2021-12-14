@@ -17,23 +17,23 @@ ENV \
 RUN dotnet_sdk_version={{VARIABLES["sdk|3.1|build-version"]}} \
     dotnet_version={{VARIABLES["runtime|3.1|build-version"]}} \
     aspnet_version={{VARIABLES["aspnet|3.1|build-version"]}} \
-    && curl -SL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-{{ARCH_SHORT}}.rpm \
+    && curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("sdk|3.1|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
-    && curl -SL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-apphost-pack-$dotnet_version-{{ARCH_SHORT}}.rpm \
+    && curl -fSL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-apphost-pack-$dotnet_version-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-apphost-pack|3.1|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
-    && curl -SL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/dotnet-targeting-pack-3.1.0-{{ARCH_SHORT}}.rpm \
+    && curl -fSL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["runtime|3.1|targeting-pack-version"]}}/dotnet-targeting-pack-{{VARIABLES["runtime|3.1|targeting-pack-version"]}}-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-targeting-pack|3.1|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
-    && curl -SL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/3.1.0/aspnetcore-targeting-pack-3.1.0.rpm \
+    && curl -fSL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{VARIABLES["aspnet|3.1|targeting-pack-version"]}}/aspnetcore-targeting-pack-{{VARIABLES["aspnet|3.1|targeting-pack-version"]}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("aspnet-runtime-targeting-pack|3.1|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
     \
-    && curl -SL --output netstandard-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-{{ARCH_SHORT}}.rpm \
+    && curl -fSL --output netstandard-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["runtime|3.1|targeting-pack-version"]}}/netstandard-targeting-pack-2.1.0-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("netstandard-targeting-pack-2.1.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  netstandard-targeting-pack.rpm" | sha512sum -c - \
     \
@@ -44,7 +44,7 @@ RUN dotnet_sdk_version={{VARIABLES["sdk|3.1|build-version"]}} \
 
 # Install PowerShell global tool
 RUN powershell_version={{VARIABLES["powershell|3.1|build-version"]}} \
-    && curl -SL --output PowerShell.Linux.{{ARCH_NUPKG}}.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.{{ARCH_NUPKG}}.$powershell_version.nupkg \
+    && curl -fSL --output PowerShell.Linux.{{ARCH_NUPKG}}.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.{{ARCH_NUPKG}}.$powershell_version.nupkg \
     && powershell_sha512='{{VARIABLES[cat("powershell|3.1|Linux|", ARCH_NUPKG, "|sha")]}}' \
     && echo "$powershell_sha512  PowerShell.Linux.{{ARCH_NUPKG}}.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \

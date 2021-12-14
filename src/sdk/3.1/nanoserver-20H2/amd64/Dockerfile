@@ -9,9 +9,9 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 RUN `
     # Retrieve .NET Core SDK
-    $dotnet_sdk_version = '3.1.415'; `
+    $dotnet_sdk_version = '3.1.416'; `
     Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-win-x64.zip; `
-    $dotnet_sha512 = '4b4a58a77d052a0a9b585feaefa782dce278bbb0f3de20c71f08762269bdbfe44e18ab8600295146c9b422cf7d9c131fd8b5f43025a15efbb219b4355801963d'; `
+    $dotnet_sha512 = '489442ea1285933ac8dbdacf4978905f9e57957346cbc1c581dab6a86617d47a007cf469863d19cb56b1655bcc7cc99261b18a1219c4d7b2c933d98f31684930'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -39,7 +39,7 @@ RUN `
     Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
 
 # SDK image
-FROM $REPO:3.1.21-nanoserver-20H2
+FROM $REPO:3.1.22-nanoserver-20H2
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image

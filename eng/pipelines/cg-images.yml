@@ -1,0 +1,33 @@
+trigger: none
+pr: none
+
+schedules:
+- cron: "0 12 * * Sun"
+  displayName: Weekend build
+  branches:
+    include:
+    - main
+    - nightly
+  always: true
+
+variables:
+- template: ../common/templates/variables/common.yml
+
+jobs:
+- job: ScanImages
+  pool:
+    vmImage: $(defaultLinuxAmd64PoolImage)
+  steps:
+  - template: ../common/templates/steps/init-docker-linux.yml
+  - script: >
+      $(runImageBuilderCmd) pullImages
+      --architecture '*'
+      --manifest 'manifest.json'
+      --output-var 'pulledImages'
+    displayName: Pull Images
+    name: PullImages
+  - task: ComponentGovernanceComponentDetection@0
+    inputs:
+      dockerImagesToScan: $(PullImages.pulledImages)
+    displayName: Detect Components
+  - template: ../common/templates/steps/cleanup-docker-linux.yml
