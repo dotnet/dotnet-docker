@@ -46,19 +46,20 @@ done
 
 imageTag=$1
 dockerfilePath=$2
-shift 3
+shift 2
 packagelist=$@
 
 scriptDir="$(dirname $(realpath $0))"
-containerName="container-$RANDOM"
+containerName="container$RANDOM"
 containerOutputPath="/$containerName.txt"
 
-scriptsWrapperImageTag="tag-$RANDOM"
+scriptsWrapperImageTag="tag$RANDOM"
 docker build -t $scriptsWrapperImageTag -f $scriptDir/Dockerfile.scripts --build-arg BASETAG=$imageTag $scriptDir 1>/dev/null 2>/dev/null
 
 docker run \
     --name $containerName \
     --entrypoint /bin/sh \
+    --user root \
     $scriptsWrapperImageTag \
     -c "/scripts/get-upgradable-packages.container.sh $containerOutputPath \"$pkgManagerArgs\" $packagelist"
 
