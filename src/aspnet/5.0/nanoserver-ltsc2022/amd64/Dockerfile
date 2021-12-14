@@ -8,8 +8,8 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2022-amd64 AS installer
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/5.0.12/aspnetcore-runtime-5.0.12-win-x64.zip; `
-    $aspnetcore_sha512 = 'c6b9938f029e4425ced6d9dd0612cfb0698045297eb257f0857bbf5b22481361fab3a19660e1063f41b6d13e9a367cb4d0d71fc23f84dd01c345b1f1aac647b8'; `
+RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/5.0.13/aspnetcore-runtime-5.0.13-win-x64.zip; `
+    $aspnetcore_sha512 = '480baa6a03e1b6a2d25afdd8da9cb0387a9be91a0d7c4ddda6cd7725a6d5805dcb35b65cd872871140da3442efae1ae53a0bf7b39c133049082ee6a3dffe627d'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
@@ -21,8 +21,8 @@ RUN Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/do
 
 
 # ASP.NET Core image
-FROM $REPO:5.0.12-nanoserver-ltsc2022
+FROM $REPO:5.0.13-nanoserver-ltsc2022
 
-ENV ASPNET_VERSION=5.0.12
+ENV ASPNET_VERSION=5.0.13
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
