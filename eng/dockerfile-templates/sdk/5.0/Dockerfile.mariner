@@ -29,15 +29,15 @@ RUN curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DO
     && dotnet_sha512='{{VARIABLES[cat("runtime-apphost-pack|5.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/5.0.0/dotnet-targeting-pack-5.0.0-{{ARCH_SHORT}}.rpm \
+    && curl -fSL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["runtime|5.0|targeting-pack-version"]}}/dotnet-targeting-pack-{{VARIABLES["runtime|5.0|targeting-pack-version"]}}-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-targeting-pack|5.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/5.0.0/aspnetcore-targeting-pack-5.0.0.rpm \
+    && curl -fSL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{VARIABLES["aspnet|5.0|targeting-pack-version"]}}/aspnetcore-targeting-pack-{{VARIABLES["aspnet|5.0|targeting-pack-version"]}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("aspnet-runtime-targeting-pack|5.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output netstandard-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-{{ARCH_SHORT}}.rpm \
+    && curl -fSL --output netstandard-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["runtime|3.1|targeting-pack-version"]}}/netstandard-targeting-pack-2.1.0-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("netstandard-targeting-pack-2.1.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  netstandard-targeting-pack.rpm" | sha512sum -c - \
     \
