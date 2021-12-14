@@ -4,15 +4,15 @@ FROM $REPO:3.1.22-cbl-mariner1.0
 # Install .NET Core
 RUN dotnet_version=3.1.22 \
     && curl -fSL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-host-$dotnet_version-x64.rpm \
-    && dotnet_sha512='7fa10ddbdf5cab7d418be0272f426a84ea978619bcb9591e40cd001aba077fdac8b2027b50810f4da4cba872d5dff6c42fb26e85ac5ec5c1d7507f3c58f01232' \
+    && dotnet_sha512='752fae0cb7f8f0c117c544de86560873c5250995dd897153cb9c01b9bfbf64bf84ec0fb0833dcabea5cdd6ffa295e7d1eb7ff3dcaf8e6148e3baddfff5c575ee' \
     && echo "$dotnet_sha512  dotnet-host.rpm" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-hostfxr.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-hostfxr-$dotnet_version-x64.rpm \
-    && dotnet_sha512='b875b999e619ba504ee42ff8d273210e560a1113ba46fcf5b627b69d9483f305a848fd7e92abf138d0b649023621120d6096454bdc7d2fd2eb910cc42ee6e01b' \
+    && dotnet_sha512='c1513a8f9d66d0e61503ccc03536472544477b0ba09d41613709e89b1b90305bce2e5e86ff63dee0fa06aaa4d70fb1e449f3b5c20d87af2b7cb6f76d1a108529' \
     && echo "$dotnet_sha512  dotnet-hostfxr.rpm" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-runtime.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-x64.rpm \
-    && dotnet_sha512='177fb052ede5d9183b7ae76e3a790b4faa3c87b0f41d1e8ce9825c690c7e6027e90e1cfc52df83270b9b0f8e288dca0ccfa554a5df7d74a53b496373107a0ec2' \
+    && dotnet_sha512='e3ceb3773dbbe4ec53970bbfbd85ea234952b5df6f55d24ec94249e5afab787ecfe1ee38f0f95d6235e45ab2edfd451faee9e552aaf6aaa01411f77542182cc9' \
     && echo "$dotnet_sha512  dotnet-runtime.rpm" | sha512sum -c - \
     \
     && rpm --install dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
