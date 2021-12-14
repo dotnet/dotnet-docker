@@ -8,7 +8,7 @@ jobs:
   steps:
   - template: ../common/templates/steps/init-docker-linux.yml
   - template: steps/set-public-source-branch-var.yml
-  - template: ../common/templates/steps/set-image-info-path-var
+  - template: ../common/templates/steps/set-image-info-path-var.yml
     parameters:
       publicSourceBranch: $(publicSourceBranch)
   - template: steps/set-publish-mcrdocs-args-var.yml
