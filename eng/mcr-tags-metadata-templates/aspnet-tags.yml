@@ -72,8 +72,6 @@ $(McrTagsYmlTagGroup:3.1-nanoserver-ltsc2022)
 $(McrTagsYmlTagGroup:6.0-nanoserver-20H2)
 $(McrTagsYmlTagGroup:5.0-nanoserver-20H2)
 $(McrTagsYmlTagGroup:3.1-nanoserver-20H2)
-$(McrTagsYmlTagGroup:5.0-nanoserver-2004)
-$(McrTagsYmlTagGroup:3.1-nanoserver-2004)
 $(McrTagsYmlTagGroup:7.0-nanoserver-1809)
     customSubTableTitle: .NET 7 Preview Tags
 $(McrTagsYmlTagGroup:7.0-windowsservercore-ltsc2019)
