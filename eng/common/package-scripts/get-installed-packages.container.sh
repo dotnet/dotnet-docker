@@ -34,31 +34,50 @@ if type apk > /dev/null 2>/dev/null; then
     exit 0
 fi
 
-# If package manager is dnf
-if type dnf > /dev/null 2>/dev/null; then
-    # Extract the package name and version out of the list of installed packages.
-    # Example output of "dnf list installed":
+formatRpmPackagesOutput() {
+    # Extract the RPM package name and version out of the list of installed packages.
+    # Example output:
     #   zstd-libs.x86_64   1.4.4-1.cm1   @System
+    # Because some package names can be very long, the output can be split across multiple lines if not formatted
+    # properly. To do this, the columns are piped with xargs to be formatted by the column command.
     # Regex consists of two capture groups:
-    #   1: Package name: all chars up until the first '.' character
+    #   1: Package name: all chars up until the last '.' character of the first column
     #   2: Package version: substring after the remaining arch text/whitespace and before the next whitespace
     # Output is the format of "RPM,<pkg-name>=<pkg-version>"
-    dnf list installed $pkgManagerArgs --quiet | tail -n +2 | sed -n 's/^\([^\.]*\)\S*\s*\(\S*\)\s*.*/RPM,\1=\2/p'
+    tail -n +2 | xargs -n3 | column -t | sed -n 's/^\(\S*\)\.\S*\s*\(\S*\)\s*.*/RPM,\1=\2/p'
+}
+commonRpmBasedPkgManagerArgs="list installed $pkgManagerArgs --quiet"
+
+# If package manager is dnf
+if type dnf > /dev/null 2>/dev/null; then
+    dnf $commonRpmBasedPkgManagerArgs | formatRpmPackagesOutput
     exit 0
 fi
 
 # If package manager is tdnf
 if type tdnf > /dev/null 2>/dev/null; then
-    # Extract the package name and version out of the list of installed packages.
-    # Example output of "tdnf list installed":
-    #   zstd-libs.x86_64   1.4.4-1.cm1   @System
-    # Regex consists of two capture groups:
-    #   1: Package name: all chars up until the first '.' character
-    #   2: Package version: substring after the remaining arch text/whitespace and before the next whitespace
-    # Output is the format of "RPM,<pkg-name>=<pkg-version>"
-    tdnf list installed $pkgManagerArgs --quiet | tail -n +2 | sed -n 's/^\([^\.]*\)\S*\s*\(\S*\)\s*.*/RPM,\1=\2/p'
+    tdnf $commonRpmBasedPkgManagerArgs | formatRpmPackagesOutput
     exit 0
 fi
 
-echo "Unsupported package manager. Current supported package managers: apt, apk, dnf, tdnf" >&2
+# If package manager is yum
+if type yum > /dev/null 2>/dev/null; then
+    yum $commonRpmBasedPkgManagerArgs | formatRpmPackagesOutput
+    exit 0
+fi
+
+# If package manager is zypper
+if type zypper > /dev/null 2>/dev/null; then
+    # Extract the package name and version out of the list of installed packages.
+    # Example output:
+    # i+ | glibc  | package | 2.26-lp152.26.9.1  | x86_64 | Main Update Repository
+    # Regex consists of two capture groups:
+    #   1: Package name: Skips the Status column and captures the characters surrounded by the vertical bars indicating the Name column.
+    #   2: Package version: The next column after the Type (package) column.
+    # Output is the format of "RPM,<pkg-name>=<pkg-version>"
+    zypper --quiet search --installed-only --type package --details 2>/dev/null | sed -n 's/^[^|]*|\s*\(\S*\)\s*|\s*package\s*|\s*\(\S*\).*/RPM,\1=\2/p' | sort
+    exit 0
+fi
+
+echo "Unsupported package manager. Current supported package managers: apt, apk, dnf, tdnf, yum, zypper" >&2
 exit 1

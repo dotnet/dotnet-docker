@@ -13,18 +13,18 @@ ensureBashInstalledForApk() {
     apk add bash 1>/dev/null
 }
 
-ensureBashInstalledForDnf() {
+ensureBashInstalledForRpmBasedPkgMgr() {
     echo "Ensuring bash is installed"
-    dnf makecache 1>/dev/null
-    dnf install -y bash 1>/dev/null
+    local pkgMgr=$1
+    $pkgMgr makecache 1>/dev/null
+    $pkgMgr install -y bash 1>/dev/null
 }
 
-ensureBashInstalledForTdnf() {
+ensureBashInstalledForZypper() {
     echo "Ensuring bash is installed"
-    tdnf makecache 1>/dev/null
-    tdnf install -y bash 1>/dev/null
+    zypper ref 1>/dev/null
+    zypper install -y bash 1>/dev/null
 }
-
 
 
 scriptDir=$(dirname $0)
@@ -36,27 +36,39 @@ packages=$@
 
 if type apt > /dev/null 2>/dev/null; then
     ensureBashInstalledForApt
-    $scriptDir/get-upgradable-packages.container.bash.sh $@
+    $scriptDir/get-upgradable-packages.container.bash.sh $outputPath "$pkgManagerArgs" $packages
     exit 0
 fi
 
 if type apk > /dev/null 2>/dev/null; then
     ensureBashInstalledForApk
-    $scriptDir/get-upgradable-packages.container.bash.sh $@
-    exit 0
-fi
-
-if type dnf > /dev/null 2>/dev/null; then
-    ensureBashInstalledForDnf
-    $scriptDir/get-upgradable-packages.container.bash.sh $@
-    exit 0
-fi
-
-if type tdnf > /dev/null 2>/dev/null; then
-    ensureBashInstalledForTdnf
     $scriptDir/get-upgradable-packages.container.bash.sh $outputPath "$pkgManagerArgs" $packages
     exit 0
 fi
 
-echo "Unsupported package manager. Current supported package managers: apt, apk, tdnf" >&2
+if type dnf > /dev/null 2>/dev/null; then
+    ensureBashInstalledForRpmBasedPkgMgr dnf
+    $scriptDir/get-upgradable-packages.container.bash.sh $outputPath "$pkgManagerArgs" $packages
+    exit 0
+fi
+
+if type tdnf > /dev/null 2>/dev/null; then
+    ensureBashInstalledForRpmBasedPkgMgr tdnf
+    $scriptDir/get-upgradable-packages.container.bash.sh $outputPath "$pkgManagerArgs" $packages
+    exit 0
+fi
+
+if type yum > /dev/null 2>/dev/null; then
+    ensureBashInstalledForRpmBasedPkgMgr yum
+    $scriptDir/get-upgradable-packages.container.bash.sh $outputPath "$pkgManagerArgs" $packages
+    exit 0
+fi
+
+if type zypper > /dev/null 2>/dev/null; then
+    ensureBashInstalledForZypper
+    $scriptDir/get-upgradable-packages.container.bash.sh $outputPath "$pkgManagerArgs" $packages
+    exit 0
+fi
+
+echo "Unsupported package manager. Current supported package managers: apt, apk, tdnf, yum, zypper" >&2
 exit 1
