@@ -4,7 +4,8 @@ variables:
 - template: variables/core.yml
 jobs:
 - job: UpdateReadmes
-  pool: $(defaultLinuxAmd64PoolImage)
+  pool:
+    vmImage: $(defaultLinuxAmd64PoolImage)
   steps:
   - template: ../common/templates/steps/init-docker-linux.yml
   - template: steps/set-public-source-branch-var.yml
