@@ -71,17 +71,18 @@ checkForUpgradableVersionWithApk() {
     fi
 }
 
-checkForUpgradableVersionWithDnf() {
+checkForUpgradableVersionWithCommonRpmBasedPkgMgr() {
     pkgName=$1
     pkgVersion=$2
-    pkgManagerName=${3:-dnf}
+    pkgManagerName=$3
+    headerLineCount=${4:-2}
 
     echo "Finding latest version of package $pkgName"
     $pkgManagerName install $pkgManagerArgs -y $pkgName 1>/dev/null 2>/dev/null
 
     # If the package exists
     if [[ $? == 0 ]]; then
-        local installedVersion=$($pkgManagerName list installed $pkgManagerArgs $pkgName | tail -n +2 | sed -n 's/\S*\s*\(\S*\)\s*.*/\1/p')
+        local installedVersion=$($pkgManagerName list installed $pkgManagerArgs $pkgName | tail -n +$headerLineCount | sed -n 's/\S*\s*\(\S*\)\s*.*/\1/p')
         # If a newer version of the package is available
         if [[ $installedVersion != $pkgVersion ]]; then
             addUpgradeablePackageVersion "$pkgName" "$pkgVersion" "$installedVersion"
@@ -91,11 +92,44 @@ checkForUpgradableVersionWithDnf() {
     fi
 }
 
+checkForUpgradableVersionWithDnf() {
+    pkgName=$1
+    pkgVersion=$2
+
+    checkForUpgradableVersionWithCommonRpmBasedPkgMgr "$pkgName" "$pkgVersion" "dnf"
+}
+
 checkForUpgradableVersionWithTdnf() {
     pkgName=$1
     pkgVersion=$2
 
-    checkForUpgradableVersionWithDnf "$pkgName" "$pkgVersion" "tdnf"
+    checkForUpgradableVersionWithCommonRpmBasedPkgMgr "$pkgName" "$pkgVersion" "tdnf"
+}
+
+checkForUpgradableVersionWithYum() {
+    pkgName=$1
+    pkgVersion=$2
+
+    checkForUpgradableVersionWithCommonRpmBasedPkgMgr "$pkgName" "$pkgVersion" "yum" 3
+}
+
+checkForUpgradableVersionWithZypper() {
+    pkgName=$1
+    pkgVersion=$2
+
+    echo "Finding latest version of package $pkgName"
+    availableVersion=$(zypper info $pkgManagerArgs $pkgName | sed -n 's/^Version\s*:\s*\(\S*\).*/\1/p')
+    if [[ $availableVersion == "" ]]; then
+        writeError "Package '$pkgName' does not exist."
+    fi
+
+    # If a newer version of the package is available
+    if [[ $availableVersion != $pkgVersion ]]; then
+        # If the package exists, add it to the list of upgradable packages
+        if [[ $availableVersion != "" ]]; then
+            addUpgradeablePackageVersion "$pkgName" "$pkgVersion" "$availableVersion"
+        fi
+    fi
 }
 
 outputPackagesToUpgrade() {
@@ -144,13 +178,28 @@ updatePackageCacheWithApk() {
     apk update 1>/dev/null
 }
 
+updatePackageCacheWithCommonRpmBasedPkgMgr() {
+    pkgMgr=$1
+    $1 makecache 1>/dev/null
+}
+
 updatePackageCacheWithDnf() {
-    dnf makecache 1>/dev/null
+    updatePackageCacheWithCommonRpmBasedPkgMgr dnf
 }
 
 updatePackageCacheWithTdnf() {
-    tdnf makecache 1>/dev/null
+    updatePackageCacheWithCommonRpmBasedPkgMgr tdnf
 }
+
+updatePackageCacheWithYum() {
+    updatePackageCacheWithCommonRpmBasedPkgMgr yum
+}
+
+updatePackageCacheWithZypper() {
+    zypper ref 1>/dev/null
+}
+
+
 
 outputPath="$1"
 pkgManagerArgs="$2"
@@ -168,8 +217,12 @@ elif type dnf > /dev/null 2>/dev/null; then
     pkgType="Dnf"
 elif type tdnf > /dev/null 2>/dev/null; then
     pkgType="Tdnf"
+elif type yum > /dev/null 2>/dev/null; then
+    pkgType="Yum"
+elif type zypper > /dev/null 2>/dev/null; then
+    pkgType="Zypper"
 else
-    writeError "Unsupported package manager. Current supported package managers: apt, apk, tdnf"
+    writeError "Unsupported package manager. Current supported package managers: apt, apk, tdnf, yum, zypper"
 fi
 
 if [[ $(type -t updatePackageCacheWith$pkgType) != "function" ]]; then

@@ -47,5 +47,6 @@ docker run \
     -i \
     -e PKG_MANAGER_ARGS="$pkgManagerArgs" \
     --entrypoint /bin/sh \
+    --user root \
     $imageTag \
     < $scriptDir/get-installed-packages.container.sh
