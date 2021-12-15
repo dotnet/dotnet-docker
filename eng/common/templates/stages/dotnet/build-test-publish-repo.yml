@@ -57,6 +57,5 @@ stages:
         - Agent.OSArchitecture -equals ARM64
     windows2016Pool: Docker-2016-${{ variables['System.TeamProject'] }}
     windows1809Pool: Docker-1809-${{ variables['System.TeamProject'] }}
-    windows2004Pool: Docker-2004-${{ variables['System.TeamProject'] }}
     windows20H2Pool: Docker-20H2-${{ variables['System.TeamProject'] }}
     windows2022Pool: Docker-2022-${{ variables['System.TeamProject'] }}
