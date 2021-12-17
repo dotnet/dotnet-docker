@@ -142,12 +142,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            // Disable until PowerShell has support for 7.0
-            if (imageData.Version.Major == 7)
-            {
-                return;
-            }
-
             if (!(imageData.Version.Major >= 5 ||
                 (imageData.Version.Major >= 3 &&
                     (imageData.SdkOS.StartsWith(OS.AlpinePrefix) || !DockerHelper.IsLinuxContainerModeEnabled))))
@@ -323,12 +317,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
             // Disable until PowerShell issue is fixed: https://github.com/PowerShell/PowerShell/issues/16532
             if (imageData.Version.Major == 6 && imageData.OS == "alpine3.15")
-            {
-                return;
-            }
-
-            // Disable until PowerShell supports 7.0
-            if (imageData.Version.Major == 7)
             {
                 return;
             }
