@@ -24,7 +24,25 @@ stages:
     publicProjectName: ${{ parameters.publicProjectName }}
     buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
     customBuildInitSteps: ${{ parameters.customBuildInitSteps }}
-    customPublishInitSteps: ${{ parameters.customPublishInitSteps }}
+    customPublishInitSteps:
+    - pwsh: |
+        # When reporting the repo name in the publish notification, we don't want to include
+        # the org part of the repo name (e.g. we want "dotnet-docker", not "dotnet-dotnet-docker").
+        # This also accounts for the different separators between AzDO and GitHub repo names.
+
+        $repoName = "$(Build.Repository.Name)"
+
+        $orgSeparatorIndex = $repoName.IndexOf("/")
+        if ($orgSeparatorIndex -eq -1) {
+          $orgSeparatorIndex = $repoName.IndexOf("-")
+        }
+
+        if ($orgSeparatorIndex -ge 0) {
+          $repoName = $repoName.Substring($orgSeparatorIndex + 1)
+        }
+        echo "##vso[task.setvariable variable=publishNotificationRepoName]$repoName"
+      displayName: "Set Custom Repo Name Var"
+    - ${{ parameters.customPublishInitSteps }}
     windowsAmdBuildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
     windowsAmdTestJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
     linuxAmdBuildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}

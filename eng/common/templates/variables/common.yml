@@ -17,6 +17,8 @@ variables:
   value: ""
 - name: ingestKustoImageInfo
   value: true
+- name: publishNotificationsEnabled
+  value: false
 - name: manifestVariables
   value: ""
 - name: mcrImageIngestionTimeout
