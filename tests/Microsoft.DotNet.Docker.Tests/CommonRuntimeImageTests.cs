@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -39,7 +40,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
             }
 
-            EnvironmentVariableInfo.Validate(variables, imageData.GetImage(ImageType, DockerHelper), imageData, DockerHelper);
+            string imageTag;
+            if (imageData.IsDistroless)
+            {
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash");
+            }
+            else
+            {
+                imageTag = imageData.GetImage(ImageType, DockerHelper);
+            }
+
+            EnvironmentVariableInfo.Validate(variables, imageTag, imageData, DockerHelper);
         }
 
         [LinuxImageTheory]
@@ -47,6 +58,30 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VerifyInsecureFiles(ProductImageData imageData)
         {
             base.VerifyCommonInsecureFiles(imageData);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
+        {
+            if (!imageData.IsDistroless)
+            {
+                OutputHelper.WriteLine("Skipping test for non-distroless platform.");
+                return;
+            }
+
+            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+
+            // Attempting to execute the container's shell should result in an exception.
+            // There should be no shell installed in distroless containers.
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() =>
+                DockerHelper.Run(
+                        image: imageTag,
+                        name: imageData.GetIdentifier($"env"),
+                        optionalRunArgs: $"--entrypoint /bin/sh")
+                );
+
+            Assert.Contains("Exit code: 127", ex.Message);
         }
     }
 }
