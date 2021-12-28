@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -13,6 +14,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.MapHealthChecks("/health");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
