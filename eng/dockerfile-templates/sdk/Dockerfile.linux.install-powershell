@@ -1,0 +1,18 @@
+{{
+    set isAlpine to ge(find(OS_VERSION, "alpine"), 0) }}{{
+    set nupkgName to cat("PowerShell.", ARGS["nupkg-platform"], ".$powershell_version.nupkg")
+}}# Install PowerShell global tool
+RUN powershell_version={{VARIABLES[cat("powershell|", ARGS["dotnet-version"], "|build-version")]}} \
+    && {{if isAlpine:wget -O^else:curl -fSL --output}} {{nupkgName}} https://pwshtool.blob.core.windows.net/tool/$powershell_version/{{nupkgName}} \
+    && powershell_sha512='{{VARIABLES[cat("powershell|", ARGS["dotnet-version"], "|", ARGS["sha-platform"], "|sha")]}}' \
+    && echo "$powershell_sha512  {{nupkgName}}" | sha512sum -c - \
+    && mkdir -p /usr/share/powershell \
+    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.{{ARGS["nupkg-platform"]}} \
+    && dotnet nuget locals all --clear \
+    && rm {{nupkgName}} \
+    && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
+    && chmod 755 /usr/share/powershell/pwsh \
+    # To reduce image size, remove the copy nupkg that nuget keeps.
+    && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm{{if isAlpine: \
+    # Add ncurses-terminfo-base to resolve psreadline dependency
+    && apk add --no-cache ncurses-terminfo-base}}
