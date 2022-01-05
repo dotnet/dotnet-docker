@@ -21,6 +21,15 @@ variables:
 - name: mcrDocsRepoInfo.email
   value: $(dotnetDockerBot.email)
 
+- name: publishNotificationsEnabled
+  value: true
+- name: gitHubNotificationsRepoInfo.org
+  value: dotnet
+- name: gitHubNotificationsRepoInfo.repo
+  value: dotnet-docker-internal
+- name: gitHubNotificationsRepoInfo.accessToken
+  value: $(BotAccount-dotnet-docker-bot-PAT)
+
 - name: gitHubVersionsRepoInfo.org
   value: dotnet
 - name: gitHubVersionsRepoInfo.repo

@@ -14,9 +14,15 @@ jobs:
       --registry-override '$(acr.server)'
       $(manifestVariables)
       $(imageBuilder.queueArgs)
+  - name: publishNotificationRepoName
+    value: $(Build.Repository.Name)
   - ${{ parameters.customPublishVariables }}
   steps:
   - template: ../steps/init-docker-linux.yml
+  - pwsh: |
+      $azdoOrgName = Split-Path -Leaf $Env:SYSTEM_COLLECTIONURI
+      echo "##vso[task.setvariable variable=azdoOrgName]$azdoOrgName"
+    displayName: Set Publish Variables
   - ${{ parameters.customInitSteps }}
   - template: ../steps/validate-branch.yml
     parameters:
@@ -115,4 +121,27 @@ jobs:
       $(imageBuilder.commonCmdArgs)
     displayName: Ingest Kusto Image Info
     condition: and(succeeded(), eq(variables['ingestKustoImageInfo'], 'true'))
+  - script: >
+      $(runImageBuilderCmd) postPublishNotification
+      '$(publishNotificationRepoName)'
+      '$(Build.SourceBranchName)'
+      '$(artifactsPath)/image-info.json'
+      $(Build.BuildId)
+      '$(System.AccessToken)'
+      '$(azdoOrgName)'
+      '$(System.TeamProject)'
+      '$(gitHubNotificationsRepoInfo.accessToken)'
+      '$(gitHubNotificationsRepoInfo.org)'
+      '$(gitHubNotificationsRepoInfo.repo)'
+      --task "Copy Images"
+      --task "Publish Manifest"
+      --task "Wait for Image Ingestion"
+      --task "Publish Readmes"
+      --task "Wait for MCR Doc Ingestion"
+      --task "Publish Image Info"
+      --task "Ingest Kusto Image Info"
+      $(dryRunArg)
+      $(imageBuilder.commonCmdArgs)
+    displayName: Post Publish Notification
+    condition: and(always(), eq(variables['publishNotificationsEnabled'], 'true'))
   - template: ../steps/cleanup-docker-linux.yml
