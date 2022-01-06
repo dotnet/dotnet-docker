@@ -1,9 +1,10 @@
 {{
     set isAlpine to ge(find(OS_VERSION, "alpine"), 0) }}{{
-    set nupkgName to cat("PowerShell.", ARGS["nupkg-platform"], ".$powershell_version.nupkg")
+    set nupkgName to cat("PowerShell.", ARGS["nupkg-platform"], ".$powershell_version.nupkg")}}{{
+    set url to cat("https://pwshtool.blob.core.windows.net/tool/$powershell_version/", nupkgName)
 }}# Install PowerShell global tool
 RUN powershell_version={{VARIABLES[cat("powershell|", ARGS["dotnet-version"], "|build-version")]}} \
-    && {{if isAlpine:wget -O^else:curl -fSL --output}} {{nupkgName}} https://pwshtool.blob.core.windows.net/tool/$powershell_version/{{nupkgName}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-file", ["out-file": nupkgName, "url": url])}} \
     && powershell_sha512='{{VARIABLES[cat("powershell|", ARGS["dotnet-version"], "|", ARGS["sha-platform"], "|sha")]}}' \
     && echo "$powershell_sha512  {{nupkgName}}" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
