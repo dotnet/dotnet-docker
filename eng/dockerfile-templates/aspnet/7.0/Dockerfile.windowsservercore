@@ -14,12 +14,5 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile aspnetcore.zip {{VARIABLES[cat("base-url|7.0|", VARIABLES["branch"])]}}/aspnetcore/Runtime/$Env:ASPNET_VERSION/aspnetcore-runtime-$Env:ASPNET_VERSION-win-x64.zip; `
-        $aspnetcore_sha512 = '{{VARIABLES["aspnet|7.0|win|x64|sha"]}}'; `
-        if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
-            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-            exit 1; `
-        }; `
-        `
-        tar -C $Env:ProgramFiles\dotnet -oxzf aspnetcore.zip ./shared/Microsoft.AspNetCore.App; `
-        Remove-Item -Force aspnetcore.zip
+        # Install ASP.NET Core Runtime
+        {{InsertTemplate("../Dockerfile.windows.install-aspnet", [], "        ")}}

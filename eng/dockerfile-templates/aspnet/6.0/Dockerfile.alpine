@@ -11,8 +11,4 @@ ENV \
     Logging__Console__FormatterName=Json
 
 # Install ASP.NET Core
-RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-{{ARCH_SHORT}}.tar.gz \
-    && aspnetcore_sha512='{{VARIABLES[cat("aspnet|6.0|linux-musl|", ARCH_SHORT, "|sha")]}}' \
-    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
-    && tar -ozxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
-    && rm aspnetcore.tar.gz
+{{InsertTemplate("../Dockerfile.linux.install-aspnet")}}

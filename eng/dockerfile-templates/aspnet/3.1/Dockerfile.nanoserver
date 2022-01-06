@@ -6,21 +6,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
 
 # Install ASP.NET Core Runtime
-RUN powershell -Command `
-        $ErrorActionPreference = 'Stop'; `
-        $ProgressPreference = 'SilentlyContinue'; `
-        `
-        $aspnetcore_version = '{{VARIABLES["aspnet|3.1|build-version"]}}'; `
-        Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
-        $aspnetcore_sha512 = '{{VARIABLES["aspnet|3.1|win|x64|sha"]}}'; `
-        if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
-            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-            exit 1; `
-        }; `
-        `
-        mkdir dotnet/shared/Microsoft.AspNetCore.App; `
-        tar -C dotnet -oxzf aspnetcore.zip ./shared/Microsoft.AspNetCore.App; `
-        Remove-Item -Force aspnetcore.zip
+RUN {{InsertTemplate("../Dockerfile.windows.install-aspnet", [], "    ")}}
 
 
 # ASP.NET Core image
