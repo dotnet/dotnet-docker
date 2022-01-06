@@ -2,18 +2,18 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:7.0.0-alpha.1-cbl-mariner1.0-amd64
 
 # Install .NET
-ENV DOTNET_VERSION=7.0.0-alpha.1.21567.1
+ENV DOTNET_VERSION=7.0.0-alpha.1.22053.15
 
-RUN curl -fSL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='bc1537240c31d4353dc1ff92e72e88d1f5fb0266245add09fa2f7294887737a4f64fca3a8944642520ed152327b99d9e885a5e0b189b5500475a51cada781d3d' \
+RUN curl -fSL --output dotnet-host.rpm https://dotnetbuilds.azureedge.net/public/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-x64.rpm \
+    && dotnet_sha512='f6df81b2d074072e6901ecddc5973a1546c4d924bf2b70f99ba99c6af8be105d3fa9e004bacec361bfa412a6818114e91f6d7fbc922c509df556d5d34e885ace' \
     && echo "$dotnet_sha512  dotnet-host.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output dotnet-hostfxr.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-hostfxr-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='f6d1958247b9b68acdb84c0f6c18bac17d820bed2b8a1c581d38ed80026dbce98eef693fc87bc70566a4829a387cb5f6d0c913d53c8e5934c6029fce4648028b' \
+    && curl -fSL --output dotnet-hostfxr.rpm https://dotnetbuilds.azureedge.net/public/Runtime/$DOTNET_VERSION/dotnet-hostfxr-$DOTNET_VERSION-x64.rpm \
+    && dotnet_sha512='44598c75291979d2950feb52dd14422419043cf0dc0b1bea4ff395adfabf372ea7f6047ab1070224cbdcfd4e5f86c1f385f83d3e2b034ede7545f7526604bc0a' \
     && echo "$dotnet_sha512  dotnet-hostfxr.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output dotnet-runtime.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='99a279a150c926127927c8e9f7be084820b8f523a3ba52810c94d1adcbe23eb12acdb8be9c21d0c2c98493a991a87415404e3d2b82261c51cf4991690eac2d62' \
+    && curl -fSL --output dotnet-runtime.rpm https://dotnetbuilds.azureedge.net/public/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-x64.rpm \
+    && dotnet_sha512='ed097ac87af33ede113e83fa00bb07904fa1ada7dfc979dab0c167d7c086dd1a695049bc0266fc5720ef506f56d6e3f2e806f5f536a57394fd5e1226b6425044' \
     && echo "$dotnet_sha512  dotnet-runtime.rpm" | sha512sum -c - \
     \
     && rpm --install dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
