@@ -1,4 +1,7 @@
-{{if ge(find(OS_VERSION, "nanoserver"), 0):{{set rootDir to "\" }}^else:{{set rootDir to "$Env:ProgramFiles\"}}}}# Install PowerShell global tool
+{{
+    _ ARGS:
+        dotnet-version: .NET Dockerfile version (e.g. 6.0)
+}}{{if ge(find(OS_VERSION, "nanoserver"), 0):{{set rootDir to "\" }}^else:{{set rootDir to "$Env:ProgramFiles\"}}}}# Install PowerShell global tool
 $powershell_version = '{{VARIABLES[cat("powershell|", ARGS["dotnet-version"], "|build-version")]}}'; `
 Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
 $powershell_sha512 = '{{VARIABLES[cat("powershell|", ARGS["dotnet-version"], "|Windows|x64|sha")]}}'; `
