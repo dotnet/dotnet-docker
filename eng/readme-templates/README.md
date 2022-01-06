@@ -35,6 +35,7 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
 # About {{if IS_PRODUCT_FAMILY:.NET^else:This Image}}
 
 {{InsertTemplate(join(filter(["About", SHORT_REPO, "md"], len), "."))}}
+
 Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
 
 # How to Use the Image{{if IS_PRODUCT_FAMILY:s}}
@@ -42,6 +43,7 @@ Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Dock
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
 {{InsertTemplate(join(filter(["Use", SHORT_REPO, "md"], len), "."))}}
+
 # Related Repos
 
 .NET:

@@ -32,7 +32,6 @@ The following samples show how to develop, build and test .NET applications with
 * [Test .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-tests-in-sdk-container.md)
 * [Run .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-in-sdk-container.md)
 
-
 # Related Repos
 
 .NET:
