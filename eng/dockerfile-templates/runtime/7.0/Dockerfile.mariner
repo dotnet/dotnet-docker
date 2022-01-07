@@ -4,15 +4,15 @@ FROM $REPO:{{VARIABLES["dotnet|7.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_
 # Install .NET
 ENV DOTNET_VERSION={{VARIABLES["runtime|7.0|build-version"]}}
 
-RUN curl -fSL --output dotnet-host.rpm https://dotnetbuilds.azureedge.net/public/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
+RUN curl -fSL --output dotnet-host.rpm {{VARIABLES["base-url|7.0"]}}/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-host|7.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet-host.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output dotnet-hostfxr.rpm https://dotnetbuilds.azureedge.net/public/Runtime/$DOTNET_VERSION/dotnet-hostfxr-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
+    && curl -fSL --output dotnet-hostfxr.rpm {{VARIABLES["base-url|7.0"]}}/Runtime/$DOTNET_VERSION/dotnet-hostfxr-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-hostfxr|7.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet-hostfxr.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output dotnet-runtime.rpm https://dotnetbuilds.azureedge.net/public/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
+    && curl -fSL --output dotnet-runtime.rpm {{VARIABLES["base-url|7.0"]}}/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime|7.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet-runtime.rpm" | sha512sum -c - \
     \
