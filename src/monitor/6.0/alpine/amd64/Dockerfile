@@ -31,6 +31,8 @@ ENV \
     # Default Filter
     DefaultProcess__Filters__0__Key=ProcessId \
     DefaultProcess__Filters__0__Value=1 \
+    # Use the environment variable to determine if we are in a sidecar scenario.
+    DOTNET_MONITOR_VERSION=6.0.1 \
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
