@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS install
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install ASP.NET Core Runtime
-RUN Invoke-WebRequest -OutFile aspnetcore.zip {{VARIABLES["base-url|7.0"]}}/aspnetcore/Runtime/{{VARIABLES["aspnet|7.0|build-version"]}}/aspnetcore-runtime-{{VARIABLES["aspnet|7.0|build-version"]}}-win-x64.zip; `
+RUN Invoke-WebRequest -OutFile aspnetcore.zip {{VARIABLES[cat("base-url|7.0|", VARIABLES["branch"])]}}/aspnetcore/Runtime/{{VARIABLES["aspnet|7.0|build-version"]}}/aspnetcore-runtime-{{VARIABLES["aspnet|7.0|build-version"]}}-win-x64.zip; `
     $aspnetcore_sha512 = '{{VARIABLES["aspnet|7.0|win|x64|sha"]}}'; `
     if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `

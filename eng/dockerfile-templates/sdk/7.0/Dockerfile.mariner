@@ -24,19 +24,19 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.rpm {{VARIABLES["base-url|7.0"]}}/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-{{ARCH_SHORT}}.rpm \
+RUN curl -fSL --output dotnet.rpm {{VARIABLES[cat("base-url|7.0|", VARIABLES["branch"])]}}/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("sdk|7.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output apphost.rpm {{VARIABLES["base-url|7.0"]}}/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
+    && curl -fSL --output apphost.rpm {{VARIABLES[cat("base-url|7.0|", VARIABLES["branch"])]}}/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-apphost-pack|7.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output targeting-pack.rpm {{VARIABLES["base-url|7.0"]}}/Runtime/$DOTNET_VERSION/dotnet-targeting-pack-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
+    && curl -fSL --output targeting-pack.rpm {{VARIABLES[cat("base-url|7.0|", VARIABLES["branch"])]}}/Runtime/$DOTNET_VERSION/dotnet-targeting-pack-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-targeting-pack|7.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output aspnetcore-targeting-pack.rpm {{VARIABLES["base-url|7.0"]}}/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-targeting-pack-$ASPNET_VERSION.rpm \
+    && curl -fSL --output aspnetcore-targeting-pack.rpm {{VARIABLES[cat("base-url|7.0|", VARIABLES["branch"])]}}/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-targeting-pack-$ASPNET_VERSION.rpm \
     && dotnet_sha512='{{VARIABLES[cat("aspnet-runtime-targeting-pack|7.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
     \

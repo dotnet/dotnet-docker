@@ -15,7 +15,7 @@ RUN tdnf install -y \
 
 # Install dotnet-runtime-deps package
 RUN dotnet_version={{VARIABLES["runtime|7.0|build-version"]}} \
-    && curl -fSL --output dotnet-runtime-deps.rpm {{VARIABLES["base-url|7.0"]}}/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-{{ARCH_SHORT}}.rpm \
+    && curl -fSL --output dotnet-runtime-deps.rpm {{VARIABLES[cat("base-url|7.0|", VARIABLES["branch"])]}}/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-deps-cm.1|7.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet-runtime-deps.rpm" | sha512sum -c - \
     && rpm --install dotnet-runtime-deps.rpm \
