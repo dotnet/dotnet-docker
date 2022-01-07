@@ -1,10 +1,11 @@
 {{
-    _ ARGS:
-        dotnet-version: .NET Dockerfile version (e.g. 6.0)
-}}{{if ge(find(OS_VERSION, "nanoserver"), 0):{{set rootDir to "\" }}^else:{{set rootDir to "$Env:ProgramFiles\"}}}}# Install PowerShell global tool
-$powershell_version = '{{VARIABLES[cat("powershell|", ARGS["dotnet-version"], "|build-version")]}}'; `
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") }}{{
+    set isNanoServer to ge(find(OS_VERSION, "nanoserver"), 0) }}{{
+    set rootDir to when(isNanoServer, "\", "$Env:ProgramFiles\")
+}}# Install PowerShell global tool
+$powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}}'; `
 Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-$powershell_sha512 = '{{VARIABLES[cat("powershell|", ARGS["dotnet-version"], "|Windows|x64|sha")]}}'; `
+$powershell_sha512 = '{{VARIABLES[cat("powershell|", dotnetVersion, "|Windows|x64|sha")]}}'; `
 if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
     Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
     exit 1; `

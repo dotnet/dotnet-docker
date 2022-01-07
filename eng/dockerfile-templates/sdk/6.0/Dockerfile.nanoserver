@@ -19,11 +19,7 @@ RUN `
     tar -C dotnet -oxzf dotnet.zip; `
     Remove-Item -Force dotnet.zip; `
     `
-    {{InsertTemplate("../Dockerfile.windows.install-powershell",
-        [
-            "dotnet-version": "6.0"
-        ],
-        "    ")}} `
+    {{InsertTemplate("../Dockerfile.windows.install-powershell", [], "    ")}} `
     `
     # Workaround for https://github.com/dotnet/sdk/issues/18410
     \dotnet\dotnet build-server shutdown; `

@@ -35,11 +35,7 @@ RUN powershell -Command "`
         tar -C $Env:ProgramFiles\dotnet -oxzf dotnet.zip ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt ./shared/Microsoft.WindowsDesktop.App; `
         Remove-Item -Force dotnet.zip; `
         `
-        {{InsertTemplate("../Dockerfile.windows.install-powershell",
-            [
-                "dotnet-version": "6.0"
-            ],
-            "        ")}}"
+        {{InsertTemplate("../Dockerfile.windows.install-powershell", [], "        ")}}"
 
 RUN setx /M PATH "%PATH%;C:\Program Files\powershell"
 

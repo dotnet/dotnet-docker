@@ -1,19 +1,17 @@
 {{
-    _ ARGS:
-        nupkg-platform: platform specifier for the PowerShell NuGet pkg filename (e.g. "Linux.Alpine")
-        sha-platform: platform specifier for the PowerShell NuGet pkg sha variable name (e.g. "Linux|x64")
-        dotnet-version: .NET Dockerfile version (e.g. 6.0)
-}}{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") }}{{
     set isAlpine to ge(find(OS_VERSION, "alpine"), 0) }}{{
-    set nupkgName to cat("PowerShell.", ARGS["nupkg-platform"], ".$powershell_version.nupkg")}}{{
+    set nupkgPlatform to when(isAlpine, "Linux.Alpine", cat("Linux.", ARCH_NUPKG)) }}{{
+    set shaPlatform to when(isAlpine, "Linux.Alpine", cat("Linux|", ARCH_NUPKG)) }}{{
+    set nupkgName to cat("PowerShell.", nupkgPlatform, ".$powershell_version.nupkg") }}{{
     set url to cat("https://pwshtool.blob.core.windows.net/tool/$powershell_version/", nupkgName)
 }}# Install PowerShell global tool
-RUN powershell_version={{VARIABLES[cat("powershell|", ARGS["dotnet-version"], "|build-version")]}} \
+RUN powershell_version={{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}} \
     && {{InsertTemplate("../Dockerfile.linux.download-file", ["out-file": nupkgName, "url": url])}} \
-    && powershell_sha512='{{VARIABLES[cat("powershell|", ARGS["dotnet-version"], "|", ARGS["sha-platform"], "|sha")]}}' \
+    && powershell_sha512='{{VARIABLES[cat("powershell|", dotnetVersion, "|", shaPlatform, "|sha")]}}' \
     && echo "$powershell_sha512  {{nupkgName}}" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
-    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.{{ARGS["nupkg-platform"]}} \
+    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.{{nupkgPlatform}} \
     && dotnet nuget locals all --clear \
     && rm {{nupkgName}} \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
