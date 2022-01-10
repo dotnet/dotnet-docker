@@ -4,8 +4,8 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM amd64/buildpack-deps:bullseye-curl as installer
 
 # Retrieve .NET
-RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/7.0.0-alpha.1.21567.1/dotnet-runtime-7.0.0-alpha.1.21567.1-linux-x64.tar.gz \
-    && dotnet_sha512='67a1451c805d07afb26e902be2f88cb9fd831c38ff865795b78534f12af952d252bdd34aaaa3fe98550067eebe91dc776abdf154dce196e8376c43beaafc1a78' \
+RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/7.0.0-alpha.1.22053.15/dotnet-runtime-7.0.0-alpha.1.22053.15-linux-x64.tar.gz \
+    && dotnet_sha512='fc8138f92840e0801db0d4d1cac6f7992103ead5f5466b5a6a72697fda5f181047a63ef58fc516090ef103279d1b6265a9ba0ef6eac468feeef37c44bc8ac57a' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -ozxf dotnet.tar.gz -C /dotnet \
@@ -15,7 +15,7 @@ RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runt
 # .NET runtime image
 FROM $REPO:7.0.0-alpha.1-bullseye-slim-amd64
 
-ENV DOTNET_VERSION=7.0.0-alpha.1.21567.1
+ENV DOTNET_VERSION=7.0.0-alpha.1.22053.15
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

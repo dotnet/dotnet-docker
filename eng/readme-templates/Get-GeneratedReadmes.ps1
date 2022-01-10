@@ -36,13 +36,7 @@ function Invoke-GenerateReadme {
 }
 
 if (!$Branch) {
-    $manifestJson = Get-Content ${repoRoot}/manifest.json | ConvertFrom-Json
-    if ($manifestJson.Repos[0].Name.Contains("nightly")) {
-        $Branch = "nightly"
-    }
-    else {
-        $Branch = "main"
-    }
+    $Branch = & $PSScriptRoot/../Get-Branch.ps1
 }
 
 Invoke-GenerateReadme "manifest.json" $Branch
