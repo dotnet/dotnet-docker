@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2022-amd64 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-# Retrieve .NET
+# Retrieve .NET Runtime
 RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Runtime/7.0.0-alpha.1.22053.15/dotnet-runtime-7.0.0-alpha.1.22053.15-win-x64.zip; `
     $dotnet_sha512 = 'e127581ea391612d0fac1046168914220e1197e961995ea8710b48e3e386db1e98d585005e25541f784a59aa07cbf1057fda98449e6b118302e7521bd1b41964'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `

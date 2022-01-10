@@ -3,7 +3,7 @@ FROM $REPO:6.0.1-cbl-mariner1.0-amd64
 
 ENV DOTNET_VERSION=6.0.1
 
-# Install .NET
+# Install .NET Runtime
 RUN curl -fSL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-x64.rpm \
     && dotnet_sha512='1cab3cd9148543d511eff5b8bc71cf86201120d29a5eaa5a84d129e38e6c24d994b71b18989f9d0676526ddc79547acafd21505595392c8b6aef45f23adbd27e' \
     && echo "$dotnet_sha512  dotnet-host.rpm" | sha512sum -c - \
