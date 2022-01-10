@@ -1,0 +1,6 @@
+{{
+    set isSingleStage to ge(find(OS_VERSION, "windowsservercore"), 0)
+}}# escape=`
+
+ARG REPO=mcr.microsoft.com/dotnet/runtime
+{{if isSingleStage:{{InsertTemplate("Dockerfile.windows.single-stage")}}^else:{{InsertTemplate("Dockerfile.windows.multi-stage")}}}}

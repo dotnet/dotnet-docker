@@ -1,0 +1,7 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isAlpine to ge(find(OS_VERSION, "alpine"), 0) ^
+    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
+    set isSingleStage to or(or(eq(dotnetVersion, "3.1"), isAlpine), isFullMariner)
+}}ARG REPO=mcr.microsoft.com/dotnet/runtime
+{{if isSingleStage:{{InsertTemplate("Dockerfile.linux.single-stage")}}^else:{{InsertTemplate("Dockerfile.linux.multi-stage")}}}}
