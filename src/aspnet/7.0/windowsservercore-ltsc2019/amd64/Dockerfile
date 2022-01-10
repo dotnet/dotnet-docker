@@ -5,7 +5,7 @@ FROM $REPO:7.0.0-alpha.1-windowsservercore-ltsc2019
 
 ENV `
     # ASP.NET Core version
-    ASPNET_VERSION=7.0.0-alpha.1.21567.15 `
+    ASPNET_VERSION=7.0.0-alpha.1.22057.17 `
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 

@@ -5,7 +5,7 @@ FROM $REPO:7.0.0-alpha.1-alpine3.15-amd64
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 # Install .NET
-ENV DOTNET_VERSION=7.0.0-alpha.1.21567.1
+ENV DOTNET_VERSION=7.0.0-alpha.1.22056.10
 
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-x64.tar.gz \
     && dotnet_sha512='8377bb6c254fc45b95ff75a4ce9bb2547141458c80749f60ee7416309fb6e50bb78f08809366f3c8e12382a2c1f60035824fcdaf34b8af8a29ecb783f7c8e190' \
