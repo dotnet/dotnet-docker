@@ -5,11 +5,11 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:ltsc2022-amd64 AS installer
 
+# Install ASP.NET Core Runtime
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        # Install ASP.NET Core Runtime
         $aspnetcore_version = '3.1.22'; `
         Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
         $aspnetcore_sha512 = '897d73a412ca5d72d7aed342bded314c2eef2b7d9b16690e1a6ca547c6707d6e7602b7bd7bc75ee9e29bcce2b3247b70ea0af802c3a3de66730d32a58b3fdfc5'; `
