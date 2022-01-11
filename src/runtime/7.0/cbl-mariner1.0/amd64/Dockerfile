@@ -1,9 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:7.0.0-alpha.1-cbl-mariner1.0-amd64
 
-# Install .NET
 ENV DOTNET_VERSION=7.0.0-alpha.1.22053.15
 
+# Install .NET Runtime
 RUN curl -fSL --output dotnet-host.rpm https://dotnetbuilds.azureedge.net/public/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-x64.rpm \
     && dotnet_sha512='f6df81b2d074072e6901ecddc5973a1546c4d924bf2b70f99ba99c6af8be105d3fa9e004bacec361bfa412a6818114e91f6d7fbc922c509df556d5d34e885ace' \
     && echo "$dotnet_sha512  dotnet-host.rpm" | sha512sum -c - \

@@ -10,7 +10,7 @@ ENV `
     # .NET Runtime version
     DOTNET_VERSION=6.0.1
 
-# Install .NET
+# Install .NET Runtime
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `

@@ -6,9 +6,9 @@ FROM cblmariner.azurecr.io/base/core:1.0 AS installer
 RUN tdnf install -y ca-certificates-microsoft \
     && tdnf clean all
 
-# Acquire ASP.NET Core
-RUN aspnet_version='7.0.0-alpha.1.22054.8' \
-    && wget -O aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnet_version/aspnetcore-runtime-$aspnet_version-linux-x64.tar.gz \
+# Retrieve ASP.NET Core
+RUN aspnetcore_version='7.0.0-alpha.1.22054.8' \
+    && curl -fSL --output aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
     && aspnetcore_sha512='5d70059032ce0e867d511ac86bd9e5b18e47551c7e134b12b7d5ef8116aa3ec49a742256412149095479394bee050e13970d30e5648e8aaf7e0f99be20844386' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \

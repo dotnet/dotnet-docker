@@ -1,9 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:{{VARIABLES["dotnet|6.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
-# Install .NET
 ENV DOTNET_VERSION={{VARIABLES["runtime|6.0|build-version"]}}
 
+# Install .NET Runtime
 RUN curl -fSL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \
     && dotnet_sha512='{{VARIABLES[cat("runtime-host|6.0|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet-host.rpm" | sha512sum -c - \
