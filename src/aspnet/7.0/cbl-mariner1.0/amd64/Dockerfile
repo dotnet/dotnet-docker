@@ -8,8 +8,8 @@ ENV \
     Logging__Console__FormatterName=Json
 
 # Install ASP.NET Core
-RUN curl -fSL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-x64.rpm \
-    && dotnet_sha512='af489a5701c3e0a911b2079adf169cf888cd460428bf219b0682a3be56ca92bf47ad2d43359cd38621ebd625bb5e9676af99fda4e67bb4bf846ebdf179521a3d' \
+RUN curl -fSL --output aspnetcore.rpm https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-x64.rpm \
+    && dotnet_sha512='3d16c625f46d891798d4f4cd1acc2d766bbfc6a403484cec0e8e6da9f3417513a947d832ab0153dc058d7a0c8d3354aa4ec0e6d2b3cca7585e8f485bb49c189d' \
     && echo "$dotnet_sha512  aspnetcore.rpm" | sha512sum -c - \
     && rpm --install aspnetcore.rpm \
     && rm aspnetcore.rpm
