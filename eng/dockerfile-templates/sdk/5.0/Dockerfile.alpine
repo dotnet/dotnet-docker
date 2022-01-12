@@ -32,9 +32,4 @@ RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
-{{InsertTemplate("../Dockerfile.linux.install-powershell",
-    [
-        "dotnet-version": "5.0",
-        "nupkg-platform": "Linux.Alpine",
-        "sha-platform": "Linux.Alpine"
-    ])}}
+{{InsertTemplate("../Dockerfile.linux.install-powershell")}}

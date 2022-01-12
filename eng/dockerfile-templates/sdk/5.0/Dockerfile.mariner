@@ -46,9 +46,4 @@ RUN curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DO
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
-{{InsertTemplate("../Dockerfile.linux.install-powershell",
-    [
-        "dotnet-version": "5.0",
-        "nupkg-platform": cat("Linux.", ARCH_NUPKG),
-        "sha-platform": cat("Linux|", ARCH_NUPKG)
-    ])}}
+{{InsertTemplate("../Dockerfile.linux.install-powershell")}}

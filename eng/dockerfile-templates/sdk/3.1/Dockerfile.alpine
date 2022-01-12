@@ -31,9 +31,4 @@ RUN dotnet_sdk_version={{VARIABLES["sdk|3.1|build-version"]}} \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
-{{InsertTemplate("../Dockerfile.linux.install-powershell",
-    [
-        "dotnet-version": "3.1",
-        "nupkg-platform": "Linux.Alpine",
-        "sha-platform": "Linux.Alpine"
-    ])}}
+{{InsertTemplate("../Dockerfile.linux.install-powershell")}}
