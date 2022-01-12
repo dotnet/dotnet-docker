@@ -1,6 +1,7 @@
 #!/usr/bin/env pwsh
 param(
-    [switch]$Validate
+    [switch]$Validate,
+    [string]$Branch
 )
 
 if ($Validate) {
@@ -17,6 +18,10 @@ $onDockerfilesGenerated = {
     }
 }
 
+if (!$Branch) {
+    $Branch = & $PSScriptRoot/../Get-Branch.ps1
+}
+
 & $PSScriptRoot/../common/Invoke-ImageBuilder.ps1 `
-    -ImageBuilderArgs "generateDockerfiles --architecture '*' --os-type '*'$customImageBuilderArgs" `
+    -ImageBuilderArgs "generateDockerfiles --architecture '*' --os-type '*'$customImageBuilderArgs --var branch=$Branch" `
     -OnCommandExecuted $onDockerfilesGenerated
