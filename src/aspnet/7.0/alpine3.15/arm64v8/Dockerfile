@@ -6,13 +6,13 @@ FROM $REPO:7.0.0-alpha.1-alpine3.15-arm64v8
 
 ENV \
     # ASP.NET Core version
-    ASPNET_VERSION=7.0.0-alpha.1.22054.8 \
+    ASPNET_VERSION=7.0.0-alpha.1.22057.17 \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
 # Install ASP.NET Core
 RUN wget -O aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-arm64.tar.gz \
-    && aspnetcore_sha512='933462a98e7f6549373bde051c97e47b6a974d72aa77c813ff8f45019471318b50966cca950b9fd48eeec4b427cde3433372bd521afc4850a5ffd4df627266c6' \
+    && aspnetcore_sha512='9ffa23348ef410288d647d2644c5f59ea7885fb6f21191da1d103417baee8069310b9b9c509c4a5f5854f61401c7b2d53fa08decaa2579d1b2401b0ba9ee89e6' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -ozxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
