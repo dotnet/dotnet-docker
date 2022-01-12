@@ -328,7 +328,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             // Disable until PowerShell issue is fixed: https://github.com/PowerShell/PowerShell/issues/16532
-            if (imageData.Version.Major == 6 && imageData.OS == "alpine3.15")
+            if (imageData.OS == "alpine3.15")
             {
                 return;
             }
