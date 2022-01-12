@@ -68,5 +68,7 @@ USER ContainerUser
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
 
+COPY --from=installer ["/powershell", "/Program Files/powershell"]
+
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
