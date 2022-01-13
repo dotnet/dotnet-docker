@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM amd64/buildpack-deps:focal-curl as installer
+FROM amd64/buildpack-deps:focal-curl AS installer
 
 # Retrieve .NET Runtime
 RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/5.0.13/dotnet-runtime-5.0.13-linux-x64.tar.gz \

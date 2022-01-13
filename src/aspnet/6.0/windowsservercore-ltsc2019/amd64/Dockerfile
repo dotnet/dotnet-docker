@@ -9,11 +9,11 @@ ENV `
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
+# Install ASP.NET Core Runtime
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        # Install ASP.NET Core Runtime
         Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$Env:ASPNET_VERSION/aspnetcore-runtime-$Env:ASPNET_VERSION-win-x64.zip; `
         $aspnetcore_sha512 = 'a5c5e6b7249101bb3cf309255ee0c33e509783406e64bd3c132afffc7895061a83c4760a1c15297ba0153beca53196b28f81eacb4552481f53d5d7c21b21a30b'; `
         if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `

@@ -3,20 +3,22 @@
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
 
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
-
 # Retrieve .NET Core Runtime
-RUN $dotnet_version = '{{VARIABLES["runtime|3.1|build-version"]}}'; `
-    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip; `
-    $dotnet_sha512 = '{{VARIABLES["runtime|3.1|win|x64|sha"]}}'; `
-    if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
-        Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-        exit 1; `
-    }; `
-    `
-    mkdir dotnet; `
-    tar -C dotnet -oxzf dotnet.zip; `
-    Remove-Item -Force dotnet.zip
+RUN powershell -Command `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        $dotnet_version = '{{VARIABLES["runtime|3.1|build-version"]}}'; `
+        Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip; `
+        $dotnet_sha512 = '{{VARIABLES["runtime|3.1|win|x64|sha"]}}'; `
+        if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
+            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            exit 1; `
+        }; `
+        `
+        mkdir dotnet; `
+        tar -C dotnet -oxzf dotnet.zip; `
+        Remove-Item -Force dotnet.zip
 
 
 # Runtime image

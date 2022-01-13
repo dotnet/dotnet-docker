@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM amd64/buildpack-deps:buster-curl as installer
+FROM amd64/buildpack-deps:buster-curl AS installer
 
 # Retrieve ASP.NET Core
 RUN curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/5.0.13/aspnetcore-runtime-5.0.13-linux-x64.tar.gz \
