@@ -20,18 +20,7 @@ RUN `
     tar -C dotnet -oxzf dotnet.zip; `
     Remove-Item -Force dotnet.zip; `
     `
-    # Install PowerShell global tool
-    $powershell_version = '{{VARIABLES["powershell|3.1|build-version"]}}'; `
-    Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-    $powershell_sha512 = '{{VARIABLES["powershell|3.1|Windows|x64|sha"]}}'; `
-    if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
-        Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-        exit 1; `
-    }; `
-    & \dotnet\dotnet tool install --add-source . --tool-path \powershell --version $powershell_version PowerShell.Windows.x64; `
-    & \dotnet\dotnet nuget locals all --clear; `
-    Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
-    Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force; `
+    {{InsertTemplate("../Dockerfile.windows.install-powershell", [], "    ")}} `
     `
     # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
     Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','templates','shared' -Path dotnet `
