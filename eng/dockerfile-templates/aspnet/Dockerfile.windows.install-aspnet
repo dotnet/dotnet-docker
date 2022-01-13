@@ -1,8 +1,8 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isServerCore to ge(find(OS_VERSION, "windowsservercore"), 0) ^
+    set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
     set dotnetDir to when(isServerCore, "$Env:ProgramFiles\dotnet", "dotnet") ^
-    set aspnetVersion to when(eq(dotnetVersion, "3.1"), "$aspnetcore_version", when(isServerCore, "$Env:ASPNET_VERSION", VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")])) ^
+    set aspnetVersion to when(dotnetVersion = "3.1", "$aspnetcore_version", when(isServerCore, "$Env:ASPNET_VERSION", VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")])) ^
     set url to cat(VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])], "/aspnetcore/Runtime/", aspnetVersion, "/aspnetcore-runtime-", aspnetVersion, "-win-x64.zip")
 }}# Install ASP.NET Core Runtime
 RUN powershell -Command `

@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS install
 
 # ASP.NET Core image
 FROM $REPO:{{VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]}}-{{OS_VERSION}}
-{{if ne(dotnetVersion, "3.1"):
+{{if dotnetVersion != "3.1":
 {{InsertTemplate("Dockerfile.env-vars")}}
 }}
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

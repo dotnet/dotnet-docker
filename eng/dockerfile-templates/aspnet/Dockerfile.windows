@@ -1,5 +1,5 @@
 {{
-    set isSingleStage to ge(find(OS_VERSION, "windowsservercore"), 0)
+    set isSingleStage to find(OS_VERSION, "windowsservercore") >= 0
 }}# escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/runtime

@@ -1,13 +1,13 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set archTagSuffix to when(or(ne(dotnetVersion, "3.1"), ne(ARCH_VERSIONED, "amd64")), ARCH_TAG_SUFFIX, "") ^
-    set isAlpine to ge(find(OS_VERSION, "alpine"), 0) ^
-    set dotnetSuffix to when(eq(dotnetVersion, "3.1"), " Core", "")
+    set archTagSuffix to when(dotnetVersion != "3.1" || ARCH_VERSIONED != "amd64", ARCH_TAG_SUFFIX, "") ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set dotnetSuffix to when(dotnetVersion = "3.1", " Core", "")
 }}FROM $REPO:{{VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]}}-{{OS_VERSION}}{{archTagSuffix}}
 {{if isAlpine:
 # .NET{{dotnetSuffix}} globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
-}}{{if ne(dotnetVersion, "3.1"):
+}}{{if dotnetVersion != "3.1":
 {{InsertTemplate("Dockerfile.env-vars")}}
 }}
 # Install ASP.NET Core
