@@ -7,9 +7,9 @@ RUN tdnf install -y ca-certificates-microsoft \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version='7.0.0-alpha.1.22057.17' \
+RUN aspnetcore_version='7.0.0-alpha.1.22062.12' \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='750a0bb2fcd6c1a522b6ff21e5f551a93752ea5a5de9ff0172b60bf24270c424de52802ec65ca7fb6753136c01a81a654d71b5ec5d2ae6977973ad503a404d71' \
+    && aspnetcore_sha512='8d95a88ee0c55d9326370d19d111eab45d016fc36270aa912836971664e3f73e5cc6fff88f141d898f90d1c9243bd13e9147a31e42a0cc73d8bd4b663f0b640d' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -ozxf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
@@ -21,7 +21,7 @@ FROM $REPO:7.0.0-alpha.1-cbl-mariner1.0-distroless-amd64
 
 ENV \
     # ASP.NET Core version
-    ASPNET_VERSION=7.0.0-alpha.1.22057.17 \
+    ASPNET_VERSION=7.0.0-alpha.1.22062.12 \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
