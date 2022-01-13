@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM arm32v7/buildpack-deps:bullseye-curl as installer
+FROM arm32v7/buildpack-deps:bullseye-curl AS installer
 
 # Retrieve ASP.NET Core
 RUN curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.1/aspnetcore-runtime-6.0.1-linux-arm.tar.gz \
