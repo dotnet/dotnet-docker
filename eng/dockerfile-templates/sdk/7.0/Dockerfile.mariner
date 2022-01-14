@@ -48,3 +48,5 @@ RUN curl -fSL --output dotnet.rpm {{VARIABLES[cat("base-url|7.0|", VARIABLES["br
     && rm dotnet.rpm apphost.rpm targeting-pack.rpm aspnetcore-targeting-pack.rpm netstandard-targeting-pack.rpm \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
+
+{{InsertTemplate("../Dockerfile.linux.install-powershell")}}

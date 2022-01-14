@@ -35,3 +35,19 @@ RUN wget -O dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/$DOTNET_
     && rm dotnet.tar.gz \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
+
+# Install PowerShell global tool
+RUN powershell_version=7.3.0-preview.1 \
+    && wget -O PowerShell.Linux.Alpine.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
+    && powershell_sha512='23b078659b2b42fa2fed59c3d57fdefb7e41b56cd724f0423743831567d008326193e0ad1f86c734e1adfdde9407dad40f2fc7ba3d363df28fb4cef7f47bebd9' \
+    && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c - \
+    && mkdir -p /usr/share/powershell \
+    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
+    && dotnet nuget locals all --clear \
+    && rm PowerShell.Linux.Alpine.$powershell_version.nupkg \
+    && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
+    && chmod 755 /usr/share/powershell/pwsh \
+    # To reduce image size, remove the copy nupkg that nuget keeps.
+    && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm \
+    # Add ncurses-terminfo-base to resolve psreadline dependency
+    && apk add --no-cache ncurses-terminfo-base

@@ -33,7 +33,20 @@ RUN powershell -Command "`
             exit 1; `
         }; `
         tar -C $Env:ProgramFiles\dotnet -oxzf dotnet.zip ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt ./shared/Microsoft.WindowsDesktop.App; `
-        Remove-Item -Force dotnet.zip;"
+        Remove-Item -Force dotnet.zip; `
+        `
+        # Install PowerShell global tool
+        $powershell_version = '7.3.0-preview.1'; `
+        Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
+        $powershell_sha512 = '9dcaace7382b8946bde8f8fcf177794962f881882e3cfd7e71fb4b64778872a471cefc3af5bf3cfc0de5af40602be85f67ec78ceaa57e049f5ad341ac4ec837d'; `
+        if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
+            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            exit 1; `
+        }; `
+        & $Env:ProgramFiles\dotnet\dotnet tool install --add-source . --tool-path $Env:ProgramFiles\powershell --version $powershell_version PowerShell.Windows.x64; `
+        & $Env:ProgramFiles\dotnet\dotnet nuget locals all --clear; `
+        Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
+        Remove-Item -Path $Env:ProgramFiles\powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force;"
 
 RUN setx /M PATH "%PATH%;C:\Program Files\powershell"
 

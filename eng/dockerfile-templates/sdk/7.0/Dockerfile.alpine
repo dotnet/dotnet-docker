@@ -34,4 +34,6 @@ RUN wget -O dotnet.tar.gz {{VARIABLES[cat("base-url|7.0|", VARIABLES["branch"])]
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz \
     # Trigger first run experience by running arbitrary cmd
-    && dotnet help
+    && dotnet help{{if ARCH_VERSIONED = "amd64":
+
+{{InsertTemplate("../Dockerfile.linux.install-powershell")}}}}

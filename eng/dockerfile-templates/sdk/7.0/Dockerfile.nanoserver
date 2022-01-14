@@ -19,6 +19,8 @@ RUN `
     tar -C dotnet -oxzf dotnet.zip; `
     Remove-Item -Force dotnet.zip; `
     `
+    {{InsertTemplate("../Dockerfile.windows.install-powershell", [], "    ")}} `
+    `
     # Workaround for https://github.com/dotnet/sdk/issues/18410
     \dotnet\dotnet build-server shutdown; `
     `
@@ -54,6 +56,8 @@ RUN setx /M PATH "%PATH%;C:\Program Files\powershell"
 USER ContainerUser
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
+
+COPY --from=installer ["/powershell", "/Program Files/powershell"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help

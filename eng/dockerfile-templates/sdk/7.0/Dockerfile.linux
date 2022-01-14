@@ -35,3 +35,5 @@ RUN curl -fSL --output dotnet.tar.gz {{VARIABLES[cat("base-url|7.0|", VARIABLES[
     && rm dotnet.tar.gz \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
+
+{{InsertTemplate("../Dockerfile.linux.install-powershell")}}
