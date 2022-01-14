@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM amd64/buildpack-deps:focal-curl as installer
+FROM amd64/buildpack-deps:focal-curl AS installer
 
 # Retrieve ASP.NET Core
 RUN curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.1/aspnetcore-runtime-6.0.1-linux-x64.tar.gz \
