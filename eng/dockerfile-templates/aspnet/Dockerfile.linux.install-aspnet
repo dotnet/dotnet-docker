@@ -1,0 +1,27 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
+    set isDistroless to find(OS_VERSION, "-distroless") >= 0 ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set filePlatform to when(isAlpine, "-linux-musl", when(isFullMariner, "", "-linux")) ^
+    set varPlatform to when(isAlpine, "linux-musl", when(isFullMariner, "linux-rpm", "linux")) ^
+    set fileExt to when(isFullMariner, "rpm", "tar.gz") ^
+    set tarballDestDir to when(isAlpine || dotnetVersion = "3.1", "/usr/share/dotnet", when(isDistroless, "/dotnet", "")) ^
+    set useLocalVersionVar to (dotnetVersion = "3.1" || isDistroless) ^
+    set aspnetVersion to when(useLocalVersionVar,
+        "$aspnetcore_version",
+        when(isAlpine || isFullMariner,
+            "$ASPNET_VERSION",
+            VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")])) ^
+    set url to cat(
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
+        "/aspnetcore/Runtime/", aspnetVersion, "/aspnetcore-runtime-", aspnetVersion, filePlatform, "-", ARCH_SHORT, ".", fileExt)
+}}RUN {{if useLocalVersionVar:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
+    && }}{{InsertTemplate("../Dockerfile.linux.download-file", ["out-file": cat("aspnetcore.", fileExt), "url": url])}} \
+    && aspnetcore_sha512='{{VARIABLES[join(["aspnet", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")]}}' \
+    && echo "$aspnetcore_sha512  aspnetcore.{{fileExt}}" | sha512sum -c - \{{if isDistroless:
+    && mkdir -p /dotnet \}}
+    && {{
+        if isFullMariner:rpm --install aspnetcore.{{fileExt}}^
+        else:tar -ozxf aspnetcore.{{fileExt}} {{if tarballDestDir != "":-C {{tarballDestDir}} }}./shared/Microsoft.AspNetCore.App}} \
+    && rm aspnetcore.{{fileExt}}

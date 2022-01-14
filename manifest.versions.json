@@ -46,6 +46,12 @@
     "aspnet|7.0|win|x64|sha": "46dce6bcce6b22954def0f4323365344d9275e0a8fe30f5f5845aeceb06578eabf37fbed4a8dadb7231fd2e06090ce6276e64a4e1a4631e0e3122205f76f7db1",
     "aspnet-runtime-targeting-pack|7.0|linux-rpm|x64|sha": "d63c77b9fa95f7c40851aeb1e35428728c7db2ec594fe6a3485fd6eaa6199fba3ba8f883a04da1e1e2473120eb50428cc7e60f5e09b8c3d46d0757392fd6280c",
 
+    "base-url|3.1|main": "https://dotnetcli.azureedge.net/dotnet",
+    "base-url|3.1|nightly": "https://dotnetcli.azureedge.net/dotnet",
+    "base-url|5.0|main": "https://dotnetcli.azureedge.net/dotnet",
+    "base-url|5.0|nightly": "https://dotnetcli.azureedge.net/dotnet",
+    "base-url|6.0|main": "https://dotnetcli.azureedge.net/dotnet",
+    "base-url|6.0|nightly": "https://dotnetcli.azureedge.net/dotnet",
     "base-url|7.0|main": "https://dotnetcli.azureedge.net/dotnet",
     "base-url|7.0|nightly": "https://dotnetbuilds.azureedge.net/public",
 

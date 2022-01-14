@@ -3,6 +3,6 @@
         out-file: name of the output file
         url: URL to download ^
 
-    set isAlpine to ge(find(OS_VERSION, "alpine"), 0) ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     if isAlpine:wget -O^else:curl -fSL --output}} {{ARGS["out-file"]}} {{ARGS["url"]
 }}

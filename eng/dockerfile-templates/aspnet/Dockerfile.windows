@@ -1,0 +1,32 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isSingleStage to find(OS_VERSION, "windowsservercore") >= 0 ^
+    set runtimeBaseTag to cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION)
+}}# escape=`
+
+ARG REPO=mcr.microsoft.com/dotnet/runtime
+{{if isSingleStage:{{
+
+    _ SINGLE STAGE
+
+}}FROM {{runtimeBaseTag}}
+
+{{InsertTemplate("Dockerfile.env-vars")}}
+
+{{InsertTemplate("Dockerfile.windows.install-aspnet")}}^else:
+{{
+
+    _ MULTI STAGE
+
+}}# Installer image
+FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
+
+{{InsertTemplate("Dockerfile.windows.install-aspnet")}}
+
+
+# ASP.NET Core image
+FROM {{runtimeBaseTag}}
+{{if dotnetVersion != "3.1":
+{{InsertTemplate("Dockerfile.env-vars")}}
+}}
+COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]}}
