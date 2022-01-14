@@ -34,7 +34,7 @@ RUN powershell -Command "`
         }; `
         tar -C $Env:ProgramFiles\dotnet -oxzf dotnet.zip ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt ./shared/Microsoft.WindowsDesktop.App; `
         Remove-Item -Force dotnet.zip; `
-    `
+        `
         # Install PowerShell global tool
         $powershell_version = '7.3.0-preview.1'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
