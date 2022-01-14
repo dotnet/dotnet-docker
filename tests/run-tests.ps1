@@ -81,6 +81,7 @@ Try {
     $env:REPO_PREFIX = $RepoPrefix
     $env:IMAGE_INFO_PATH = $ImageInfoPath
     $env:SOURCE_REPO_ROOT = (Get-Item "$PSScriptRoot").Parent.FullName
+    $ENV:SOURCE_BRANCH = & $PSScriptRoot/../eng/Get-Branch.ps1
 
     $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
     $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1

@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using SharpCompress.Common;
@@ -140,6 +141,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            // Disable until PowerShell issue is fixed: https://github.com/PowerShell/PowerShell/issues/16532
+            if (imageData.OS == "alpine3.15")
+            {
+                return;
+            }
+
             if (!(imageData.Version.Major >= 5 ||
                 (imageData.Version.Major >= 3 &&
                     (imageData.SdkOS.StartsWith(OS.AlpinePrefix) || !DockerHelper.IsLinuxContainerModeEnabled))))
@@ -266,33 +273,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private async Task<IEnumerable<SdkContentFileInfo>> GetExpectedSdkContentsAsync(ProductImageData imageData)
         {
-            string sdkVersion = imageData.GetProductVersion(ImageType, DockerHelper);
-
-            string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
-            if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
-            {
-                osType += "-musl";
-            }
-
-            string fileType = DockerHelper.IsLinuxContainerModeEnabled ? "tar.gz" : "zip";
-
-            string architecture = imageData.Arch switch
-            {
-                Arch.Amd64 => "x64",
-                Arch.Arm => "arm",
-                Arch.Arm64 => "arm64",
-                _ => throw new InvalidOperationException($"Unexpected architecture type: '{imageData.Arch}'"),
-            };
-
-            string sdkUrl =
-                $"https://dotnetcli.azureedge.net/dotnet/Sdk/{sdkVersion}/dotnet-sdk-{sdkVersion}-{osType}-{architecture}.{fileType}";
+            string sdkUrl = GetSdkUrl(imageData);
 
             if (!s_sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo> files))
             {
                 string sdkFile = Path.GetTempFileName();
 
-                using WebClient webClient = new WebClient();
-                await webClient.DownloadFileTaskAsync(new Uri(sdkUrl), sdkFile);
+                using HttpClient httpClient = new();
+                await httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
 
                 files = EnumerateArchiveContents(sdkFile)
                     .OrderBy(file => file.Path)
@@ -304,12 +292,48 @@ namespace Microsoft.DotNet.Docker.Tests
             return files;
         }
 
+        private string GetSdkUrl(ProductImageData imageData)
+        {
+            string sdkBuildVersion = Config.GetBuildVersion(ImageType, imageData.VersionString);
+            string sdkFileVersionLabel = sdkBuildVersion;
+
+            string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
+            if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
+            {
+                osType += "-musl";
+            }
+
+            string architecture = imageData.Arch switch
+            {
+                Arch.Amd64 => "x64",
+                Arch.Arm => "arm",
+                Arch.Arm64 => "arm64",
+                _ => throw new InvalidOperationException($"Unexpected architecture type: '{imageData.Arch}'"),
+            };
+
+            string fileType = DockerHelper.IsLinuxContainerModeEnabled ? "tar.gz" : "zip";
+
+            string baseUrl = "https://dotnetcli.azureedge.net/dotnet";
+            if (imageData.Version.Major >= 7)
+            {
+                baseUrl = Config.GetBaseUrl(imageData.VersionString);
+            }
+
+            return $"{baseUrl}/Sdk/{sdkBuildVersion}/dotnet-sdk-{sdkFileVersionLabel}-{osType}-{architecture}.{fileType}";
+        }
+
         private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
         {
             // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
             {
                 OutputHelper.WriteLine("PowerShell does not have Alpine arm images, skip testing");
+                return;
+            }
+
+            // Disable until PowerShell issue is fixed: https://github.com/PowerShell/PowerShell/issues/16532
+            if (imageData.OS == "alpine3.15")
+            {
                 return;
             }
 
