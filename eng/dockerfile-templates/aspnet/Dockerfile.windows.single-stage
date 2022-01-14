@@ -1,7 +1,0 @@
-{{
-    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".")
-}}FROM $REPO:{{VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]}}-{{OS_VERSION}}
-
-{{InsertTemplate("Dockerfile.env-vars")}}
-
-{{InsertTemplate("Dockerfile.windows.install-aspnet")}}
