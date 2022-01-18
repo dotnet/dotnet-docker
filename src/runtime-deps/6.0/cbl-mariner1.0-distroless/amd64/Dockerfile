@@ -1,19 +1,24 @@
 # Installer image
 FROM cblmariner.azurecr.io/base/core:1.0 AS installer
 
-RUN tdnf install -y dnf
+RUN tdnf install -y \
+        dnf \
+    && tdnf clean all
 
 # Install .NET's dependencies into a staging location
 RUN mkdir /staging \
     && dnf install -y --releasever=1.0 --installroot /staging \
         prebuilt-ca-certificates \
+        \
+        # .NET dependencies
         glibc \
         icu \
         krb5 \
         libgcc \
         libstdc++ \
         openssl-libs \
-        zlib
+        zlib \
+    && dnf clean all
 
 # Create a non-root user and group
 RUN groupadd \
