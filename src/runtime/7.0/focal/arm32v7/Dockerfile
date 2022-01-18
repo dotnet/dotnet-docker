@@ -4,8 +4,8 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm32v7/buildpack-deps:focal-curl AS installer
 
 # Retrieve .NET Runtime
-RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/7.0.0-alpha.1.22065.6/dotnet-runtime-7.0.0-alpha.1.22065.6-linux-arm.tar.gz \
-    && dotnet_sha512='4fcd36518a334b9d1cdddec3534e697aca0ef21453d4d636aa98058fd774d470f1ed367dab1fe79ebdecdb8dfed7a5edab2346f7b60ddcfdf507c544510c70a5' \
+RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/7.0.0-alpha.1.22066.4/dotnet-runtime-7.0.0-alpha.1.22066.4-linux-arm.tar.gz \
+    && dotnet_sha512='83198698b68e439c210ae141b278da6140196f6a06a070c259f36bb2d36cecb43c660b83817258c4f7643655e846fff8b9a742d1b4788bb95de965a40bd91d67' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -ozxf dotnet.tar.gz -C /dotnet \
@@ -15,7 +15,7 @@ RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/R
 # .NET runtime image
 FROM $REPO:7.0.0-alpha.1-focal-arm32v7
 
-ENV DOTNET_VERSION=7.0.0-alpha.1.22065.6
+ENV DOTNET_VERSION=7.0.0-alpha.1.22066.4
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
