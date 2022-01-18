@@ -4,11 +4,11 @@ FROM $REPO:7.0.0-alpha.1-alpine3.15-arm64v8
 # .NET globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
-ENV DOTNET_VERSION=7.0.0-alpha.1.22062.8
+ENV DOTNET_VERSION=7.0.0-alpha.1.22066.4
 
 # Install .NET Runtime
 RUN wget -O dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='333a8d094e7b0808aec3161afd359f1f62b5d6675f56c153483f836ff88edbc0adaca929187dfcfe2da6dd1c912980d69e3bdb835429a1d5c6e75c66f4bdc531' \
+    && dotnet_sha512='05cf85e5eb37b9b5242b00822f6aab9cc4fe898e64dafe15237514dffaa23f8a344707d2e64af8b323b4e43737ac915c1bbdf0bc9d62dd3ab0546190571292e8' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
