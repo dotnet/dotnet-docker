@@ -12,8 +12,7 @@
         cat("cblmariner.azurecr.io/base/core:", OS_VERSION_NUMBER),
         cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl")) ^
     set copyFromSrcPath to when(isDistrolessMariner, "/dotnet", "/shared/Microsoft.AspNetCore.App") ^
-    set copyFromDstPath to when(isDistrolessMariner, "/usr/share/dotnet", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App") ^
-    set dotnetSuffix to when(dotnetVersion = "3.1", " Core", "")
+    set copyFromDstPath to when(isDistrolessMariner, "/usr/share/dotnet", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App")
 }}ARG REPO=mcr.microsoft.com/dotnet/runtime{{if isSingleStage:
 {{
 
@@ -21,8 +20,7 @@
 
 }}FROM {{runtimeBaseTag}}
 {{if isAlpine:
-# .NET{{dotnetSuffix}} globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
-# by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
+{{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
 }}{{if dotnetVersion != "3.1":
 {{InsertTemplate("Dockerfile.env-vars")}}
 }}

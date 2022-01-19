@@ -16,11 +16,25 @@
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
         "/aspnetcore/Runtime/", aspnetVersion, "/aspnetcore-runtime-", aspnetVersion, filePlatform, "-", ARCH_SHORT, ".", fileExt)
 }}RUN {{if ARGS["use-local-version-var"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
-    && }}{{InsertTemplate("../Dockerfile.linux.download-file", ["out-file": cat("aspnetcore.", fileExt), "url": url])}} \
-    && aspnetcore_sha512='{{VARIABLES[join(["aspnet", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")]}}' \
-    && echo "$aspnetcore_sha512  aspnetcore.{{fileExt}}" | sha512sum -c - \{{if isDistroless:
+    && }}{{InsertTemplate("../Dockerfile.linux.download-file",
+        [
+            "out-file": cat("aspnetcore.", fileExt),
+            "url": url,
+            "sha": VARIABLES[join(["aspnet", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
+            "sha-var-name": "aspnetcore_sha512"
+        ])}} \{{if isDistroless:
     && mkdir -p /dotnet \}}
-    && {{
-        if isFullMariner:rpm --install aspnetcore.{{fileExt}}^
-        else:tar -oxzf aspnetcore.{{fileExt}} {{if tarballDestDir != "":-C {{tarballDestDir}} }}./shared/Microsoft.AspNetCore.App}} \
-    && rm aspnetcore.{{fileExt}}
+    && {{if
+        isFullMariner:{{
+            InsertTemplate("../Dockerfile.linux.install-rpms",
+                [
+                    "files": [cat("aspnetcore.", fileExt)]
+                ])
+        }}^
+        else:{{
+            InsertTemplate("../Dockerfile.linux.extract-tarball",
+                [
+                    "file": cat("aspnetcore.", fileExt),
+                    "dest-dir": tarballDestDir,
+                    "extract-paths": ["./shared/Microsoft.AspNetCore.App"]
+                ])}}}}

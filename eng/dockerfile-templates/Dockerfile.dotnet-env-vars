@@ -1,0 +1,11 @@
+{{
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
+    set lineContinuation to when(isWindows, "`", "\")
+}}ENV {{lineContinuation}}
+    # Configure web servers to bind to port 80 when present
+    ASPNETCORE_URLS=http://+:80 {{lineContinuation}}
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true{{if isAlpine: {{lineContinuation}}
+    # Set the invariant mode since icu-libs isn't included (see https://github.com/dotnet/announcements/issues/20)
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true}}

@@ -1,0 +1,1 @@
+RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"

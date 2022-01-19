@@ -1,0 +1,32 @@
+{{
+    _ ARGS:
+        - use-local-version-var (optional): Whether to define a local variable for the ASP.NET Core runtime version
+            instead of referencing the environment variable. ^
+
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
+    set dotnetDir to when(isServerCore, "$Env:ProgramFiles\dotnet", "dotnet") ^
+    set dotnetZipFile to "dotnet.zip" ^
+    set runtimeVersionVar to when(ARGS["use-local-version-var"], "$dotnet_version", "$Env:DOTNET_VERSION") ^
+    set url to cat(
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
+        "/Runtime/", runtimeVersionVar, "/dotnet-runtime-", runtimeVersionVar, "-win-x64.zip")
+}}RUN powershell -Command `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        {{if ARGS["use-local-version-var"]:$dotnet_version = '{{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}}'; `
+        }}{{InsertTemplate("../Dockerfile.windows.download-file",
+        [
+            "out-file": dotnetZipFile,
+            "url": url,
+            "sha": VARIABLES[cat("runtime|", dotnetVersion, "|win|x64|sha")],
+            "sha-var-name": "dotnet_sha512"
+        ], "        ")}} `
+        `
+        mkdir {{dotnetDir}}; `
+        {{InsertTemplate("../Dockerfile.windows.extract-zip",
+            [
+                "file": dotnetZipFile,
+                "dest-dir": dotnetDir
+            ])}}
