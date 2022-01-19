@@ -37,12 +37,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public async Task Execute()
         {
-            // TODO: Enable when https://github.com/dotnet/templating/issues/4098 is fixed
-            if (_imageData.Version.Major == 7)
-            {
-                return;
-            }
-
             string appDir = CreateTestAppWithSdkImage(_isWeb ? "web" : "console");
             List<string> tags = new List<string>();
             InjectCustomTestCode(appDir);
