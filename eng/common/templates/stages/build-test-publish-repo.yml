@@ -276,33 +276,31 @@ stages:
     dependsOn: Post_Build
   condition: "
     and(
-      not(canceled()),
-      and(
-        contains(variables['stages'], 'publish'),
+      contains(variables['stages'], 'publish'),
+      or(
         or(
+          and(
+            and(
+              contains(variables['stages'], 'build'),
+              succeeded('Post_Build')),
+            and(
+              contains(variables['stages'], 'test'),
+              in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
           or(
             and(
-              and(
-                contains(variables['stages'], 'build'),
-                succeeded('Post_Build')),
+              not(contains(variables['stages'], 'build')),
               and(
                 contains(variables['stages'], 'test'),
                 in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
-            or(
+            and(
+              not(contains(variables['stages'], 'test')),
               and(
-                not(contains(variables['stages'], 'build')),
-                and(
-                  contains(variables['stages'], 'test'),
-                  in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
-              and(
-                not(contains(variables['stages'], 'test')),
-                and(
-                  contains(variables['stages'], 'build'),
-                  succeeded('Post_Build'))))),
-          not(
-            or(
-              contains(variables['stages'], 'build'),
-              contains(variables['stages'], 'test'))))))"
+                contains(variables['stages'], 'build'),
+                succeeded('Post_Build'))))),
+        not(
+          or(
+            contains(variables['stages'], 'build'),
+            contains(variables['stages'], 'test')))))"
   jobs:
   - template: ../jobs/publish.yml
     parameters:
