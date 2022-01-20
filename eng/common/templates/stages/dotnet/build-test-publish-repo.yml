@@ -6,6 +6,7 @@ parameters:
   internalProjectName: null
   publicProjectName: null
   buildMatrixCustomBuildLegGroupArgs: ""
+  testMatrixCustomBuildLegGroupArgs: ""
   customBuildInitSteps: []
   customPublishInitSteps: []
   windowsAmdBuildJobTimeout: 60
@@ -23,6 +24,7 @@ stages:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
+    testMatrixCustomBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}
     customBuildInitSteps: ${{ parameters.customBuildInitSteps }}
     customPublishInitSteps:
     - pwsh: |
