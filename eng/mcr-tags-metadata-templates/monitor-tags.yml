@@ -1,4 +1,6 @@
 $(McrTagsYmlRepo:monitor)
 $(McrTagsYmlTagGroup:7.0-alpine-amd64)
-    customSubTableTitle: .NET Monitor 7.0 Preview Tags
+    customSubTableTitle: .NET Monitor Preview Tags
+$(McrTagsYmlTagGroup:6.1-alpine-amd64)
+    customSubTableTitle: .NET Monitor Preview Tags
 $(McrTagsYmlTagGroup:6.0-alpine-amd64)

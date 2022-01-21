@@ -5435,8 +5435,7 @@
             "$(monitor|6.0|product-version)-alpine": {},
             "6.0-alpine": {},
             "$(monitor|6.0|product-version)": {},
-            "6.0": {},
-            "latest": {}
+            "6.0": {}
           },
           "platforms": [
             {
@@ -5451,6 +5450,32 @@
               "tags": {
                 "$(monitor|6.0|product-version)-alpine-amd64": {},
                 "6.0-alpine-amd64": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|6.1|product-version)",
+          "sharedTags": {
+            "$(monitor|6.1|product-version)-alpine": {},
+            "6.1-alpine": {},
+            "$(monitor|6.1|product-version)": {},
+            "6.1": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "ASPNET_REPO": "$(Repo:aspnet)",
+                "SDK_REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/monitor/6.1/alpine/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/6.1/Dockerfile.alpine",
+              "os": "linux",
+              "osVersion": "alpine3.15",
+              "tags": {
+                "$(monitor|6.1|product-version)-alpine-amd64": {},
+                "6.1-alpine-amd64": {}
               }
             }
           ]
