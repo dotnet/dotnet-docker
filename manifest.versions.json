@@ -64,6 +64,10 @@
     "monitor|6.0|product-version": "6.0.1",
     "monitor|6.0|sha": "469f2ffc9f6cc350e1487a3186abcde64fe80994205664e85a1f021ae731155c04a669bd25d657982a726fd1cfde668663f1db21061926c442ae1f655395a144",
 
+    "monitor|6.1|build-version": "6.1.0-alpha.1.22070.5",
+    "monitor|6.1|product-version": "6.1.0-alpha.1",
+    "monitor|6.1|sha": "e0bf14f4280c50ce4c3b2d58d08bd4c1c4106b9044046e35b6b002a1bd3f09a742f5bca2bc2a3dd6745fe593670b5ee29222d126ee38b7117b28f2159a8bff8d",
+
     "monitor|7.0|build-version": "7.0.0-alpha.1.22069.6",
     "monitor|7.0|product-version": "7.0.0-alpha.1",
     "monitor|7.0|sha": "5c4bb8f80c33962133589e8fc425011d237179db5dd11edbe531cfcc7c695f755a8c08c09fc96a299d017bdb32ce5fcab0ed068b5f3f600c6fae935b8a91e644",
