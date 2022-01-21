@@ -46,6 +46,11 @@
     "dotnet|5.0|product-version": "5.0.13",
     "dotnet|6.0|product-version": "6.0.1",
 
+    "libicu|bionic": 60,
+    "libicu|bullseye-slim": 67,
+    "libicu|buster-slim": 63,
+    "libicu|focal": 66,
+
     "monitor|6.0|build-version": "6.0.1",
     "monitor|6.0|product-version": "6.0.1",
     "monitor|6.0|sha": "469f2ffc9f6cc350e1487a3186abcde64fe80994205664e85a1f021ae731155c04a669bd25d657982a726fd1cfde668663f1db21061926c442ae1f655395a144",

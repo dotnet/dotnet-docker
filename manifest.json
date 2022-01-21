@@ -40,7 +40,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/buster-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -59,7 +59,7 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/buster-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -79,7 +79,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/buster-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -103,7 +103,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/bullseye-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
@@ -119,7 +119,7 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/bullseye-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
@@ -136,7 +136,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/bullseye-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
@@ -152,7 +152,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/alpine3.14/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.14",
               "tags": {
@@ -173,7 +173,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/alpine3.14/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.14",
               "tags": {
@@ -194,7 +194,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/bionic/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -218,7 +218,7 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/bionic/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -243,7 +243,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/bionic/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bionic",
               "tags": {
@@ -267,7 +267,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -291,7 +291,7 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/focal/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -316,7 +316,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -340,7 +340,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/cbl-mariner1.0/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.mariner",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "cbl-mariner1.0",
               "tags": {
@@ -365,7 +365,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/buster-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -376,7 +376,7 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/buster-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -388,7 +388,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/buster-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "buster-slim",
               "tags": {
@@ -408,7 +408,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/bullseye-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
@@ -419,7 +419,7 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/bullseye-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
@@ -431,7 +431,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/bullseye-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
@@ -452,7 +452,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/alpine3.14/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.14",
               "tags": {
@@ -464,7 +464,7 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/5.0/alpine3.14/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.14",
               "tags": {
@@ -477,7 +477,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/alpine3.14/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.14",
               "tags": {
@@ -498,7 +498,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -509,7 +509,7 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/focal/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -521,7 +521,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -545,7 +545,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/5.0/cbl-mariner1.0/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/5.0/Dockerfile.mariner",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "cbl-mariner1.0",
               "tags": {
@@ -571,7 +571,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/bullseye-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
@@ -582,7 +582,7 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/bullseye-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
@@ -594,7 +594,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/bullseye-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
@@ -615,7 +615,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/alpine3.14/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.14",
               "tags": {
@@ -627,7 +627,7 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/5.0/alpine3.14/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.14",
               "tags": {
@@ -640,7 +640,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/alpine3.14/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.alpine",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.14",
               "tags": {
@@ -661,7 +661,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/3.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -672,7 +672,7 @@
             {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/focal/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -684,7 +684,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/3.1/focal/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/3.1/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "focal",
               "tags": {
@@ -708,7 +708,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/6.0/cbl-mariner1.0/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/6.0/Dockerfile.mariner",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "cbl-mariner1.0",
               "tags": {
@@ -735,7 +735,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/6.0/cbl-mariner1.0-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/6.0/Dockerfile.mariner-distroless",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "cbl-mariner1.0-distroless",
               "tags": {
