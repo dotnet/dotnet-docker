@@ -6,6 +6,8 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
 
 * `7.0` (Preview)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:7.0`
+* `6.1` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:6.1`
 * `6.0` (Current)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:6.0`
 

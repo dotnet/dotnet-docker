@@ -198,6 +198,7 @@
   },
   "dotnet/nightly/monitor": {
     "src/monitor/6.0/alpine/amd64": 109543092,
+    "src/monitor/6.1/alpine/amd64": 108128663,
     "src/monitor/7.0/alpine/amd64": 108132591
   }
 }
