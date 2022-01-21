@@ -17,6 +17,7 @@ stages:
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
     ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
+    testMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
 
     # Template paths must be relative to the YAML job that executes them
     customBuildInitSteps:
