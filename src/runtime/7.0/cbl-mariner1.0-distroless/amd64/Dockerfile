@@ -22,7 +22,9 @@ RUN mkdir /dotnet-symlink \
 # .NET runtime image
 FROM $REPO:7.0.0-alpha.1-cbl-mariner1.0-distroless-amd64
 
-ENV DOTNET_VERSION=7.0.0-alpha.1.22066.4
+ENV \
+    # .NET Runtime version
+    DOTNET_VERSION=7.0.0-alpha.1.22066.4
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]

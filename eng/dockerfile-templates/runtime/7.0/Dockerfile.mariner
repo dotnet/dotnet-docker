@@ -1,7 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:{{VARIABLES["dotnet|7.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
-ENV DOTNET_VERSION={{VARIABLES["runtime|7.0|build-version"]}}
+ENV \
+    # .NET Runtime version
+    DOTNET_VERSION={{VARIABLES["runtime|7.0|build-version"]}}
 
 # Install .NET Runtime
 RUN curl -fSL --output dotnet-host.rpm {{VARIABLES[cat("base-url|7.0|", VARIABLES["branch"])]}}/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-{{ARCH_SHORT}}.rpm \

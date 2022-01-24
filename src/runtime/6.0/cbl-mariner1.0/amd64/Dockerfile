@@ -1,7 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:6.0.1-cbl-mariner1.0-amd64
 
-ENV DOTNET_VERSION=6.0.1
+ENV \
+    # .NET Runtime version
+    DOTNET_VERSION=6.0.1
 
 # Install .NET Runtime
 RUN curl -fSL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-x64.rpm \

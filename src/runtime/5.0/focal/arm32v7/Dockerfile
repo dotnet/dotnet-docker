@@ -16,7 +16,9 @@ RUN dotnet_version=5.0.13 \
 # .NET runtime image
 FROM $REPO:5.0.13-focal-arm32v7
 
-ENV DOTNET_VERSION=5.0.13
+ENV \
+    # .NET Runtime version
+    DOTNET_VERSION=5.0.13
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

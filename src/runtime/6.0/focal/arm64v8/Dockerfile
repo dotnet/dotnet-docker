@@ -16,7 +16,9 @@ RUN dotnet_version=6.0.1 \
 # .NET runtime image
 FROM $REPO:6.0.1-focal-arm64v8
 
-ENV DOTNET_VERSION=6.0.1
+ENV \
+    # .NET Runtime version
+    DOTNET_VERSION=6.0.1
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
