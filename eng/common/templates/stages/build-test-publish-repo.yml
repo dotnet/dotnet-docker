@@ -83,9 +83,9 @@ stages:
       publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: ../jobs/build-images.yml
     parameters:
-      name: Linux_arm64v8
+      name: Linux_arm64
       pool: ${{ parameters.linuxArm64Pool }}
-      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm64v8']
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm64']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
@@ -96,22 +96,9 @@ stages:
       publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: ../jobs/build-images.yml
     parameters:
-      name: Linux_arm32v6
+      name: Linux_arm32
       pool: ${{ parameters.linuxArm32Pool }}
-      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm32v6']
-      dockerClientOS: linux
-      buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
-      customInitSteps: ${{ parameters.customBuildInitSteps }}
-      noCache: ${{ parameters.noCache }}
-      internalProjectName: ${{ parameters.internalProjectName }}
-      publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
-  - template: ../jobs/build-images.yml
-    parameters:
-      name: Linux_arm32v7
-      pool: ${{ parameters.linuxArm32Pool }}
-      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm32v7']
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm32']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
@@ -218,23 +205,16 @@ stages:
         internalProjectName: ${{ parameters.internalProjectName }}
     - template: ../jobs/test-images-linux-client.yml
       parameters:
-        name: Linux_arm64v8
+        name: Linux_arm64
         pool: ${{ parameters.linuxArm64Pool }}
-        matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm64v8']
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm64']
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
     - template: ../jobs/test-images-linux-client.yml
       parameters:
-        name: Linux_arm32v6
+        name: Linux_arm32
         pool: ${{ parameters.linuxArm32Pool }}
-        matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm32v6']
-        testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
-        internalProjectName: ${{ parameters.internalProjectName }}
-    - template: ../jobs/test-images-linux-client.yml
-      parameters:
-        name: Linux_arm32v7
-        pool: ${{ parameters.linuxArm32Pool }}
-        matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm32v7']
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm32']
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
     - template: ../jobs/test-images-windows-client.yml
