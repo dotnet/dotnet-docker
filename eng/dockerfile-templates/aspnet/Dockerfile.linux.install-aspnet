@@ -7,12 +7,8 @@
     set varPlatform to when(isAlpine, "linux-musl", when(isFullMariner, "linux-rpm", "linux")) ^
     set fileExt to when(isFullMariner, "rpm", "tar.gz") ^
     set tarballDestDir to when(isAlpine || dotnetVersion = "3.1", "/usr/share/dotnet", when(isDistroless, "/dotnet", "")) ^
-    set useLocalVersionVar to (dotnetVersion = "3.1" || isDistroless) ^
-    set aspnetVersion to when(useLocalVersionVar,
-        "$aspnetcore_version",
-        when(isAlpine || isFullMariner,
-            "$ASPNET_VERSION",
-            VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")])) ^
+    set useLocalVersionVar to (dotnetVersion = "3.1" || !isAlpine || isDistroless) ^
+    set aspnetVersion to when(useLocalVersionVar, "$aspnetcore_version", "$ASPNET_VERSION") ^
     set url to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
         "/aspnetcore/Runtime/", aspnetVersion, "/aspnetcore-runtime-", aspnetVersion, filePlatform, "-", ARCH_SHORT, ".", fileExt)

@@ -8,7 +8,8 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile dotnet.zip {{VARIABLES[cat("base-url|7.0|", VARIABLES["branch"])]}}/Runtime/{{VARIABLES["runtime|7.0|build-version"]}}/dotnet-runtime-{{VARIABLES["runtime|7.0|build-version"]}}-win-x64.zip; `
+        $dotnet_version = '{{VARIABLES["runtime|7.0|build-version"]}}'; `
+        Invoke-WebRequest -OutFile dotnet.zip {{VARIABLES[cat("base-url|7.0|", VARIABLES["branch"])]}}/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip; `
         $dotnet_sha512 = '{{VARIABLES["runtime|7.0|win|x64|sha"]}}'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
