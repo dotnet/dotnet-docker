@@ -1,5 +1,6 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
     set isNanoServer to find(OS_VERSION, "nanoserver") >= 0 ^
     set dotnetDir to when(isServerCore, "$Env:ProgramFiles\dotnet", "dotnet") ^
     set useLocalVersionVar to (dotnetVersion = "3.1" || isNanoServer) ^
