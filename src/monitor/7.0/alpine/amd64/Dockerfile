@@ -13,7 +13,7 @@ RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azure
     # To reduce image size, remove the copy of the nupkg under the tools.
     && find /app -print | grep -i '.*[.]nupkg$' | xargs rm \
     # To reduce image size, remove all non-net6.0 TFMs
-    && find /app -print | grep -i '.*/netcoreapp3[.]1$' | xargs rm -rf \
+    && find /app -print | grep -i '.*/net7[.]0$' | xargs rm -rf \
     && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
 
 
