@@ -17,7 +17,7 @@ RUN `
         exit 1; `
     }; `
     mkdir dotnet; `
-    tar -C dotnet -oxzf dotnet.zip; `
+    tar -oxzf dotnet.zip -C dotnet; `
     Remove-Item -Force dotnet.zip; `
     `
     {{InsertTemplate("../Dockerfile.windows.install-powershell", [], "    ")}} `

@@ -22,5 +22,5 @@ RUN powershell -Command `
         }; `
         `
         {{if isNanoServer:mkdir {{dotnetDir}}/shared/Microsoft.AspNetCore.App; `
-        }}tar -C {{dotnetDir}} -oxzf aspnetcore.zip ./shared/Microsoft.AspNetCore.App; `
+        }}tar -oxzf aspnetcore.zip -C {{dotnetDir}} ./shared/Microsoft.AspNetCore.App; `
         Remove-Item -Force aspnetcore.zip

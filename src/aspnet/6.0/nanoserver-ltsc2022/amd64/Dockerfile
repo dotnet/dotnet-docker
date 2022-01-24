@@ -19,7 +19,7 @@ RUN powershell -Command `
         }; `
         `
         mkdir dotnet/shared/Microsoft.AspNetCore.App; `
-        tar -C dotnet -oxzf aspnetcore.zip ./shared/Microsoft.AspNetCore.App; `
+        tar -oxzf aspnetcore.zip -C dotnet ./shared/Microsoft.AspNetCore.App; `
         Remove-Item -Force aspnetcore.zip
 
 
