@@ -2,7 +2,7 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:6.0.101-alpine3.15-amd64 AS installer
+FROM $SDK_REPO:7.0.100-alpha.1-alpine3.15-amd64 AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION=7.0.0-alpha.1.22076.3
@@ -12,13 +12,13 @@ RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azure
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net6.0 --no-cache \
     # To reduce image size, remove the copy of the nupkg under the tools.
     && find /app -print | grep -i '.*[.]nupkg$' | xargs rm \
-    # To reduce image size, remove all non-net6.0 TFMs
-    && find /app -print | grep -i '.*/netcoreapp3[.]1$' | xargs rm -rf \
+    # To reduce image size, remove all non-net7.0 TFMs (currently only net6.0 exists)
+    && find /app -print | grep -i '.*/net6[.]0' | xargs rm -rf \
     && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
 
 
 # Monitor image
-FROM $ASPNET_REPO:6.0.1-alpine3.15-amd64
+FROM $ASPNET_REPO:7.0.0-alpha.1-alpine3.15-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
