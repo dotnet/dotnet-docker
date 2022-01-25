@@ -16,9 +16,8 @@ RUN dotnet_version={{VARIABLES["runtime|6.0|build-version"]}} \
 # .NET runtime image
 FROM $REPO:{{VARIABLES["dotnet|6.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
-ENV \
-    # .NET Runtime version
-    DOTNET_VERSION={{VARIABLES["runtime|6.0|build-version"]}}
+# .NET Runtime version
+ENV DOTNET_VERSION={{VARIABLES["runtime|6.0|build-version"]}}
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

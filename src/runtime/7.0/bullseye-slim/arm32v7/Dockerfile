@@ -16,9 +16,8 @@ RUN dotnet_version=7.0.0-alpha.1.22066.4 \
 # .NET runtime image
 FROM $REPO:7.0.0-alpha.1-bullseye-slim-arm32v7
 
-ENV \
-    # .NET Runtime version
-    DOTNET_VERSION=7.0.0-alpha.1.22066.4
+# .NET Runtime version
+ENV DOTNET_VERSION=7.0.0-alpha.1.22066.4
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

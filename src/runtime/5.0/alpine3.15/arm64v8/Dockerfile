@@ -4,9 +4,8 @@ FROM $REPO:5.0.13-alpine3.15-arm64v8
 # .NET globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
-ENV \
-    # .NET Runtime version
-    DOTNET_VERSION=5.0.13
+# .NET Runtime version
+ENV DOTNET_VERSION=5.0.13
 
 # Install .NET Runtime
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-arm64.tar.gz \
