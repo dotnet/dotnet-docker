@@ -4,7 +4,8 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM {{ARCH_VERSIONED}}/buildpack-deps:{{OS_VERSION_BASE}}-curl AS installer
 
 # Retrieve .NET Runtime
-RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["runtime|6.0|build-version"]}}/dotnet-runtime-{{VARIABLES["runtime|6.0|build-version"]}}-linux-{{ARCH_SHORT}}.tar.gz \
+RUN dotnet_version={{VARIABLES["runtime|6.0|build-version"]}} \
+    && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-{{ARCH_SHORT}}.tar.gz \
     && dotnet_sha512='{{VARIABLES[cat("runtime|6.0|linux|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
@@ -15,6 +16,7 @@ RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runt
 # .NET runtime image
 FROM $REPO:{{VARIABLES["dotnet|6.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
+# .NET Runtime version
 ENV DOTNET_VERSION={{VARIABLES["runtime|6.0|build-version"]}}
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]

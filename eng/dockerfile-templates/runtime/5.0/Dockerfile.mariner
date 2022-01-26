@@ -1,6 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:{{VARIABLES["dotnet|5.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
+# .NET Runtime version
 ENV DOTNET_VERSION={{VARIABLES["runtime|5.0|build-version"]}}
 
 # Install .NET Runtime

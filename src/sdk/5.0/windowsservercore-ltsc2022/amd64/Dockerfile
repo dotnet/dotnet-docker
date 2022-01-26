@@ -28,7 +28,7 @@ RUN powershell -Command "`
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
         }; `
-        tar -C $Env:ProgramFiles\dotnet -oxzf dotnet.zip ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt ./shared/Microsoft.WindowsDesktop.App; `
+        tar -oxzf dotnet.zip -C $Env:ProgramFiles\dotnet ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt ./shared/Microsoft.WindowsDesktop.App; `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool

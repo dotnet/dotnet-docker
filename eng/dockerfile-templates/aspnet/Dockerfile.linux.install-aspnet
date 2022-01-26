@@ -1,4 +1,8 @@
 {{
+    _ ARGS:
+        - use-local-version-var (optional): Whether to define a local variable for the ASP.NET Core runtime version
+            instead of referencing the environment variable. ^
+
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isDistroless to find(OS_VERSION, "-distroless") >= 0 ^
@@ -7,16 +11,11 @@
     set varPlatform to when(isAlpine, "linux-musl", when(isFullMariner, "linux-rpm", "linux")) ^
     set fileExt to when(isFullMariner, "rpm", "tar.gz") ^
     set tarballDestDir to when(isAlpine || dotnetVersion = "3.1", "/usr/share/dotnet", when(isDistroless, "/dotnet", "")) ^
-    set useLocalVersionVar to (dotnetVersion = "3.1" || isDistroless) ^
-    set aspnetVersion to when(useLocalVersionVar,
-        "$aspnetcore_version",
-        when(isAlpine || isFullMariner,
-            "$ASPNET_VERSION",
-            VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")])) ^
+    set aspnetVersion to when(ARGS["use-local-version-var"], "$aspnetcore_version", "$ASPNET_VERSION") ^
     set url to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
         "/aspnetcore/Runtime/", aspnetVersion, "/aspnetcore-runtime-", aspnetVersion, filePlatform, "-", ARCH_SHORT, ".", fileExt)
-}}RUN {{if useLocalVersionVar:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
+}}RUN {{if ARGS["use-local-version-var"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
     && }}{{InsertTemplate("../Dockerfile.linux.download-file", ["out-file": cat("aspnetcore.", fileExt), "url": url])}} \
     && aspnetcore_sha512='{{VARIABLES[join(["aspnet", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")]}}' \
     && echo "$aspnetcore_sha512  aspnetcore.{{fileExt}}" | sha512sum -c - \{{if isDistroless:

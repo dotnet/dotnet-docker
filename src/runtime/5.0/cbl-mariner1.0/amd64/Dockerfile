@@ -1,6 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:5.0.13-cbl-mariner1.0-amd64
 
+# .NET Runtime version
 ENV DOTNET_VERSION=5.0.13
 
 # Install .NET Runtime

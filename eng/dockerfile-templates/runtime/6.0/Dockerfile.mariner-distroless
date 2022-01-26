@@ -12,7 +12,7 @@ RUN dotnet_version='{{VARIABLES["runtime|6.0|build-version"]}}' \
     && dotnet_sha512='{{VARIABLES[cat("runtime|6.0|linux|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
-    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
+    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
     && rm dotnet.tar.gz
 
 RUN mkdir /dotnet-symlink \
@@ -22,6 +22,7 @@ RUN mkdir /dotnet-symlink \
 # .NET runtime image
 FROM $REPO:{{VARIABLES["dotnet|6.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG_SUFFIX}}
 
+# .NET Runtime version
 ENV DOTNET_VERSION={{VARIABLES["runtime|6.0|build-version"]}}
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
