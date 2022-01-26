@@ -1,0 +1,59 @@
+{{
+    _ ARGS:
+        isSdk (optional): Indicates whether the dependencies are installed for an sdk Dockerfile
+        distroless-staging-dir (optional): Location of the staging directory for distroless installation ^
+
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
+    set dotnetDepsComment to cat("# .NET", when(dotnetVersion = "3.1", " Core", ""), " dependencies") ^
+    set pkgs to when(isAlpine,
+        [
+            "krb5-libs",
+            "libgcc",
+            "libintl",
+            "libssl1.1",
+            "libstdc++",
+            "zlib"
+        ],
+        when(isMariner,
+            [
+                "glibc",
+                "icu",
+                "krb5",
+                "libgcc",
+                "libstdc++",
+                "openssl-libs",
+                "zlib"
+            ],
+            [
+                "libc6",
+                "libgcc1",
+                "libgssapi-krb5-2",
+                cat("libicu", VARIABLES[cat("libicu|", OS_VERSION_BASE)]),
+                "libssl1.1",
+                "libstdc++6",
+                "zlib1g"
+            ])) ^
+        set certsPkgPrefix to when(isMariner,
+            [
+                when(dotnetVersion = "3.1" || dotnetVersion = "5.0", "ca-certificates", "prebuilt-ca-certificates"),
+                "",
+                dotnetDepsComment
+            ],
+            [
+                "ca-certificates",
+                "",
+                dotnetDepsComment
+            ]) ^
+    set pkgs to when(ARGS["isSdk"], pkgs, cat(certsPkgPrefix, pkgs))
+}}{{InsertTemplate("Dockerfile.linux.install-pkgs",
+    [
+        "pkgs": pkgs,
+        "noninteractive": (OS_VERSION = "focal"),
+        "pkg-mgr": when(isDistrolessMariner, "dnf", ""),
+        "pkg-mgr-opts": when(isDistrolessMariner,
+            cat(" --releasever=", OS_VERSION_NUMBER, " --installroot ", ARGS["distroless-staging-dir"]),
+            ""),
+    ])}}

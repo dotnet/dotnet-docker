@@ -62,8 +62,8 @@
     "dotnet|7.0|product-version": "7.0.0-preview.1",
 
     "libicu|bionic": 60,
-    "libicu|bullseye-slim": 67,
-    "libicu|buster-slim": 63,
+    "libicu|bullseye": 67,
+    "libicu|buster": 63,
     "libicu|focal": 66,
 
     "monitor|6.0|build-version": "6.0.2-servicing.22077.7",

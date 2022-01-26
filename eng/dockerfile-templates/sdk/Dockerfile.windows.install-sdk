@@ -1,0 +1,48 @@
+{{
+    _ ARGS:
+        use-local-version-var (optional): Whether to define a local variable for the SDK version
+            instead of referencing the environment variable.
+        sdk-extract-groups: Metadata groups describing the paths to be extracted from the SDK zip ^
+
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
+    set dotnetZipFile to "dotnet.zip" ^
+    set dotnetDir to when(isServerCore, "$Env:ProgramFiles\dotnet", "dotnet") ^
+    set sdkVersionVar to when(ARGS["use-local-version-var"], "$sdk_version", "$Env:DOTNET_SDK_VERSION") ^
+    set url to cat(
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
+        "/Sdk/", sdkVersionVar, "/dotnet-sdk-", sdkVersionVar, "-win-x64.zip") ^
+    
+    _ The sdk-extract-groups arg is an array of maps. We want to reduce that to just a single array of formatted
+        paths. The "for" keyword doesn't work here because we don't want to echo any output. Instead, we'll call
+        the map function to enumerate the array. For each group in the array, it'll format the paths of the groups
+        and append them to the sdkExtractPaths. The output of the map function isn't used; it's strictly a way to execute
+        arbitrary code for each item in the array. ^
+    set sdkExtractPaths to [] ^
+    set groupToFormattedPaths(extractGroup) to:{{
+        _ Since there's no string replace function, use regex to cause "dotnet" to be replaced with "." ^
+        set dir to cat(".", match(extractGroup.dir, "^(dotnet)?(.*)$")[2]) ^
+        set getFormattedPath(path) to:{{
+            _ Since there's no string replace function, use a split/join combo to replace "/" with "\" ^
+            set formattedPath to join(split(cat(dir, "/", path), "\"), "/") ^
+            return when(!(dir = "." && path = "shared"), formattedPath, "")
+        }} ^
+        set sdkExtractPaths to cat(sdkExtractPaths, filter(map(extractGroup.paths, getFormattedPath), len)) ^
+        return ""
+    }} ^
+    map(ARGS["sdk-extract-groups"], groupToFormattedPaths)
+}}{{if ARGS["use-local-version-var"]:{{sdkVersionVar}} = '{{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}}'; `
+}}{{InsertTemplate("../Dockerfile.windows.download-file",
+    [
+        "out-file": dotnetZipFile,
+        "url": url,
+        "sha": VARIABLES[cat("sdk|", dotnetVersion, "|win|x64|sha")],
+        "sha-var-name": "dotnet_sha512"
+    ])}}; `{{if !isServerCore:
+mkdir {{dotnetDir}}; `}}
+{{InsertTemplate("../Dockerfile.windows.extract-zip",
+    [
+        "file": dotnetZipFile,
+        "dest-dir": dotnetDir,
+        "extract-paths": sdkExtractPaths
+    ])}};

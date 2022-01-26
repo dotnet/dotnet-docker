@@ -12,7 +12,7 @@ $powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-ver
             "url": url,
             "sha": VARIABLES[cat("powershell|", dotnetVersion, "|Windows|x64|sha")],
             "sha-var-name": "powershell_sha512"
-        ],)}} `
+        ],)}}; `
 & {{rootDir}}dotnet\dotnet tool install --add-source . --tool-path {{rootDir}}powershell --version $powershell_version PowerShell.Windows.x64; `
 & {{rootDir}}dotnet\dotnet nuget locals all --clear; `
 Remove-Item -Force {{nupkgFile}}; `

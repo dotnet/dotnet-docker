@@ -1,0 +1,2 @@
+# Trigger first run experience by running arbitrary cmd
+RUN dotnet help

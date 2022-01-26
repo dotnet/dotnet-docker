@@ -16,45 +16,7 @@
                 when(isMariner,
                     "cblmariner.azurecr.io/base/core",
                     "<NOT-IMPLEMENTED>")))) ^
-    set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
-    set dotnetDepsComment to cat("# .NET", when(dotnetVersion = "3.1", " Core", ""), " dependencies") ^
-    set pkgs to when(isAlpine,
-        [
-            "ca-certificates",
-            "",
-            dotnetDepsComment,
-            "krb5-libs",
-            "libgcc",
-            "libintl",
-            "libssl1.1",
-            "libstdc++",
-            "zlib"
-        ],
-        when(isMariner,
-            [
-                when(dotnetVersion = "3.1" || dotnetVersion = "5.0", "ca-certificates", "prebuilt-ca-certificates"),
-                "",
-                dotnetDepsComment,
-                "glibc",
-                "icu",
-                "krb5",
-                "libgcc",
-                "libstdc++",
-                "openssl-libs",
-                "zlib"
-            ],
-            [
-                "ca-certificates",
-                "",
-                dotnetDepsComment,
-                "libc6",
-                "libgcc1",
-                "libgssapi-krb5-2",
-                cat("libicu", VARIABLES[cat("libicu|", OS_VERSION)]),
-                "libssl1.1",
-                "libstdc++6",
-                "zlib1g"
-            ]))
+    set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION)
 }}{{
     if isDistrolessMariner:# Installer image
 }}FROM {{baseImageRepo}}:{{baseImageTag}}{{if isDistrolessMariner: AS installer}}
@@ -65,16 +27,8 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 {{if isDistrolessMariner:# Install .NET's dependencies into a staging location
-}}RUN {{if isDistrolessMariner:mkdir /staging \
-    && }}{{InsertTemplate("../Dockerfile.linux.install-pkgs",
-    [
-        "pkgs": pkgs,
-        "noninteractive": (OS_VERSION = "focal"),
-        "pkg-mgr": when(isDistrolessMariner, "dnf", ""),
-        "pkg-mgr-opts": when(isDistrolessMariner,
-            cat(" --releasever=", OS_VERSION_NUMBER, " --installroot ", distrolessStagingDir),
-            ""),
-    ])}}
+}}RUN {{if isDistrolessMariner:mkdir {{distrolessStagingDir}} \
+    && }}{{InsertTemplate("../Dockerfile.linux.install-deps", ["distroless-staging-dir": distrolessStagingDir])}}
 {{ if isDistrolessMariner:
 # Create a non-root user and group
 RUN groupadd \

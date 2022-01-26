@@ -22,11 +22,11 @@
             "url": url,
             "sha": VARIABLES[cat("runtime|", dotnetVersion, "|win|x64|sha")],
             "sha-var-name": "dotnet_sha512"
-        ], "        ")}} `
+        ], "        ")}}; `
         `
         mkdir {{dotnetDir}}; `
         {{InsertTemplate("../Dockerfile.windows.extract-zip",
             [
                 "file": dotnetZipFile,
                 "dest-dir": dotnetDir
-            ])}}
+            ], "        ")}}
