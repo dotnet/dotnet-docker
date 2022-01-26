@@ -8,7 +8,7 @@ FROM $SDK_REPO:{{VARIABLES["sdk|7.0|product-version"]}}-{{OS_VERSION}}{{ARCH_TAG
 ENV DOTNET_MONITOR_VERSION={{VARIABLES["monitor|7.0|build-version"]}}
 RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
     && dotnetmonitor_sha512='{{VARIABLES["monitor|7.0|sha"]}}' \
-    && echo "$dotnetmonitor_sha512 dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
+    && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net7.0 --no-cache \
     # To reduce image size, remove the copy of the nupkg under the tools.
     && find /app -print | grep -i '.*[.]nupkg$' | xargs rm \
