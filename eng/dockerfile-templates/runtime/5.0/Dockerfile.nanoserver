@@ -8,7 +8,8 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/{{VARIABLES["runtime|5.0|build-version"]}}/dotnet-runtime-{{VARIABLES["runtime|5.0|build-version"]}}-win-x64.zip; `
+        $dotnet_version = '{{VARIABLES["runtime|5.0|build-version"]}}'; `
+        Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip; `
         $dotnet_sha512 = '{{VARIABLES["runtime|5.0|win|x64|sha"]}}'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -16,7 +17,7 @@ RUN powershell -Command `
         }; `
         `
         mkdir dotnet; `
-        tar -C dotnet -oxzf dotnet.zip; `
+        tar -oxzf dotnet.zip -C dotnet; `
         Remove-Item -Force dotnet.zip
 
 

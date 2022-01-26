@@ -6,7 +6,7 @@ RUN apt-get update \
         curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install .NET Core
+# Install .NET Core Runtime
 RUN dotnet_version={{VARIABLES["runtime|3.1|build-version"]}} \
     && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-{{ARCH_SHORT}}.tar.gz \
     && dotnet_sha512='{{VARIABLES[cat("runtime|3.1|linux|", ARCH_SHORT, "|sha")]}}' \
