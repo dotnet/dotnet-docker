@@ -22,5 +22,5 @@
     && mkdir -p /dotnet \}}
     && {{
         if isFullMariner:rpm --install aspnetcore.{{fileExt}}^
-        else:tar -ozxf aspnetcore.{{fileExt}} {{if tarballDestDir != "":-C {{tarballDestDir}} }}./shared/Microsoft.AspNetCore.App}} \
+        else:tar -oxzf aspnetcore.{{fileExt}} {{if tarballDestDir != "":-C {{tarballDestDir}} }}./shared/Microsoft.AspNetCore.App}} \
     && rm aspnetcore.{{fileExt}}

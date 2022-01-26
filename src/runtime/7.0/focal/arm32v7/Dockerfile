@@ -9,7 +9,7 @@ RUN dotnet_version=7.0.0-alpha.1.22066.4 \
     && dotnet_sha512='83198698b68e439c210ae141b278da6140196f6a06a070c259f36bb2d36cecb43c660b83817258c4f7643655e846fff8b9a742d1b4788bb95de965a40bd91d67' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
-    && tar -ozxf dotnet.tar.gz -C /dotnet \
+    && tar -oxzf dotnet.tar.gz -C /dotnet \
     && rm dotnet.tar.gz
 
 
