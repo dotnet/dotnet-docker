@@ -9,14 +9,15 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 RUN `
     # Retrieve .NET SDK
-    Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/7.0.100-preview.2.22075.5/dotnet-sdk-7.0.100-preview.2.22075.5-win-x64.zip; `
-    $dotnet_sha512 = '5ad2e1b9c921153300a07920819d1bf0a1511c261cca043358cf1cfa7fc731e0661dafd1e636fdcf59f909bd7e30e3bc56145c97f5d02c08cc880d6924a2205a'; `
+    $sdk_version = '7.0.100-preview.2.22076.7'; `
+    Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
+    $dotnet_sha512 = '985ae4b442b9c8454af5ac95eb5ae89c64f8d589966e79f520e71145bf7f4ea7b103f97e85aedd477345fd889871dec593adf2eb2711b9cea6a9e0eafbcf0be1'; `
     if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
         Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
         exit 1; `
     }; `
     mkdir dotnet; `
-    tar -C dotnet -oxzf dotnet.zip; `
+    tar -oxzf dotnet.zip -C dotnet; `
     Remove-Item -Force dotnet.zip; `
     `
     # Install PowerShell global tool
@@ -51,7 +52,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=7.0.100-preview.2.22075.5 `
+    DOTNET_SDK_VERSION=7.0.100-preview.2.22076.7 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Unset Logging__Console__FormatterName from aspnet base image

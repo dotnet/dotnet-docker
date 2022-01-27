@@ -12,7 +12,7 @@ RUN dotnet_version='7.0.0-preview.2.22074.8' \
     && dotnet_sha512='9e4b124d348b21d7a508d26fff9207ff062d1beb34c4990765bb84e36becc5a12df0f806017d49189c2a1af3299df41a49d47b45add1f0d23f081c9e1b79f147' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
-    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz \
+    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
     && rm dotnet.tar.gz
 
 RUN mkdir /dotnet-symlink \
@@ -22,6 +22,7 @@ RUN mkdir /dotnet-symlink \
 # .NET runtime image
 FROM $REPO:7.0.0-preview.2-cbl-mariner1.0-distroless-amd64
 
+# .NET Runtime version
 ENV DOTNET_VERSION=7.0.0-preview.2.22074.8
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]

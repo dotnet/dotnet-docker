@@ -23,7 +23,7 @@ RUN powershell -Command `
         }; `
         `
         mkdir $Env:ProgramFiles\dotnet; `
-        tar -C $Env:ProgramFiles\dotnet -oxzf dotnet.zip; `
+        tar -oxzf dotnet.zip -C $Env:ProgramFiles\dotnet; `
         Remove-Item -Force dotnet.zip
 
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"

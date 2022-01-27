@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:3.1.22-cbl-mariner1.0
 
-# Install .NET Core
+# Install .NET Core Runtime
 RUN dotnet_version=3.1.22 \
     && curl -fSL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-host-$dotnet_version-x64.rpm \
     && dotnet_sha512='752fae0cb7f8f0c117c544de86560873c5250995dd897153cb9c01b9bfbf64bf84ec0fb0833dcabea5cdd6ffa295e7d1eb7ff3dcaf8e6148e3baddfff5c575ee' \

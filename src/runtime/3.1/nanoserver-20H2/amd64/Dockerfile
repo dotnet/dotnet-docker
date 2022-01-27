@@ -17,7 +17,7 @@ RUN powershell -Command `
         }; `
         `
         mkdir dotnet; `
-        tar -C dotnet -oxzf dotnet.zip; `
+        tar -oxzf dotnet.zip -C dotnet; `
         Remove-Item -Force dotnet.zip
 
 
