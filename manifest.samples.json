@@ -118,7 +118,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:samples):dotnetapp-buster-slim-amd64"
@@ -141,7 +141,7 @@
               "variant": "v7",
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:samples):dotnetapp-buster-slim-arm32v7"
@@ -164,7 +164,7 @@
               "variant": "v8",
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:samples):dotnetapp-buster-slim-arm64v8"
@@ -185,7 +185,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:samples):dotnetapp-nanoserver-1809"
@@ -206,7 +206,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:samples):dotnetapp-nanoserver-20H2"
@@ -223,7 +223,7 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
+                  "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:samples):dotnetapp-nanoserver-ltsc2022"
