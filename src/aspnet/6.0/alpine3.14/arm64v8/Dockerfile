@@ -14,5 +14,5 @@ ENV \
 RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-arm64.tar.gz \
     && aspnetcore_sha512='7624ae6b63475c4861e1d48aa85151a8f1e506513fe3dfd3fb95ae9a1067a77ad8ddd3e44bf8d27baca62c9c2b3cb425dbaa8d8de346f45aecb5b40870f3334c' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
-    && tar -ozxf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
+    && tar -oxzf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
