@@ -12,7 +12,7 @@ RUN aspnetcore_version=7.0.0-alpha.1.22067.2 \
     && aspnetcore_sha512='2eba23aa5ec34f1891d52fadfabfd07e59678fdf01fdfa88e17d16da9468314eebf32e4235ddb182431b218d1feda241ce409012eadd55890d1b16515be660db' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
-    && tar -ozxf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
+    && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
 
 
