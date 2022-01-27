@@ -37,23 +37,33 @@ stages:
   condition: eq(variables['update-monitor-enabled'], 'true')
   dependsOn: [] # Allows it to run in parallel
   jobs:
-  - job: UpdateDependencies6
-    displayName: Update Dependencies (dotnet/dotnet-monitor 6.x)
+  - job: UpdateDependencies
+    displayName: Update Dependencies (dotnet/dotnet-monitor)
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
+    strategy:
+      matrix:
+        Update6:
+          MajorMinorVersion: 6.$(monitor6MinorVersion)
+          ChannelQuality: $(monitor6Quality)
+          StableBranding: $(monitor6StableBranding)
+        Update7:
+          MajorMinorVersion: 7.$(monitor7MinorVersion)
+          ChannelQuality: $(monitor7Quality)
+          StableBranding: $(monitor7StableBranding)
     steps:
-    - template: steps/update-dependencies-monitor.yml
-      parameters:
-        majorMinorVersion: 6.$(monitor6MinorVersion)
-        channelQuality: $(monitor6Quality)
-        stableBranding: $(monitor6StableBranding)
-  - job: UpdateDependencies7
-    displayName: Update Dependencies (dotnet/dotnet-monitor 7.x)
-    pool:
-      vmImage: $(defaultLinuxAmd64PoolImage)
-    steps:
-    - template: steps/update-dependencies-monitor.yml
-      parameters:
-        majorMinorVersion: 7.$(monitor7MinorVersion)
-        channelQuality: $(monitor7Quality)
-        stableBranding: $(monitor7StableBranding)
+    - script: $(engPath)/get-drop-versions-monitor.sh $(MajorMinorVersion)/$(ChannelQuality)
+      displayName: Get Versions
+    - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
+      displayName: Build Update Dependencies Tool
+    - script: >
+        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies
+        $(MajorMinorVersion)
+        --user $(dotnetDockerBot.userName)
+        --email $(dotnetDockerBot.email)
+        --password $(BotAccount-dotnet-docker-bot-PAT)
+        --product-version monitor=$(monitorVer)
+        --channel-name $(MajorMinorVersion)/$(ChannelQuality)
+        --stable-branding $(StableBranding)
+        --version-source-name dotnet/dotnet-monitor/$(MajorMinorVersion)
+      displayName: Run Update Dependencies
