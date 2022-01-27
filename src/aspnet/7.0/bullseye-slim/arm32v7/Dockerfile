@@ -4,20 +4,20 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm32v7/buildpack-deps:bullseye-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=7.0.0-alpha.1.22067.2 \
+RUN aspnetcore_version=7.0.0-preview.1.22071.6 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm.tar.gz \
-    && aspnetcore_sha512='dc6b68fa15dc4be7b4cc0e064ec2f9f4001a0282feea06e8ee32a2a4d787c14cc049d35a519a8488aac6284d1a9d1d69c6e2263790b213c22bfe7f956989d5d9' \
+    && aspnetcore_sha512='26352218d0fbba91fe4258477f7d51744e1ffa5b6b061136b5c69979196f6e3e04de8a81af7666018d55232e5c7c5231c1692e29479ba8cce968db2476734c7c' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
 
 
 # ASP.NET Core image
-FROM $REPO:7.0.0-alpha.1-bullseye-slim-arm32v7
+FROM $REPO:7.0.0-preview.1-bullseye-slim-arm32v7
 
 ENV \
     # ASP.NET Core version
-    ASPNET_VERSION=7.0.0-alpha.1.22067.2 \
+    ASPNET_VERSION=7.0.0-preview.1.22071.6 \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
