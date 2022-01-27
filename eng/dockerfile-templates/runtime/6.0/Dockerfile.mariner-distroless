@@ -7,7 +7,7 @@ RUN tdnf install -y ca-certificates-microsoft \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version='{{VARIABLES["runtime|6.0|build-version"]}}' \
+RUN dotnet_version={{VARIABLES["runtime|6.0|build-version"]}} \
     && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-{{ARCH_SHORT}}.tar.gz \
     && dotnet_sha512='{{VARIABLES[cat("runtime|6.0|linux|", ARCH_SHORT, "|sha")]}}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
