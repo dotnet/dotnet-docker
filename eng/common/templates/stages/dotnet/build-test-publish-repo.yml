@@ -12,8 +12,7 @@ parameters:
   windowsAmdBuildJobTimeout: 60
   windowsAmdTestJobTimeout: 60
   linuxAmdBuildJobTimeout: 60
-  linuxAmd64Pool:
-    vmImage: $(defaultLinuxAmd64PoolImage)
+  linuxAmd64Pool: ""
   buildMatrixType: platformDependencyGraph
   testMatrixType: platformVersionedOs
 
@@ -58,23 +57,31 @@ stages:
       customPublishVariables:
       - group: DotNet-AllOrgs-Darc-Pats
 
-    linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
+    linuxAmd64Pool:
+      ${{ if ne(parameters.linuxAmd64Pool, '') }}:
+        ${{ parameters.linuxAmd64Pool }}
+      ${{ elseif eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+        vmImage: $(defaultLinuxAmd64PoolImage)
+      ${{ elseif eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        name: NetCore1ESPool-Internal
+        demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
+    
     linuxArm64Pool:
-        ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-          name: DotNetCore-Docker-Public
-        ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-          name: DotNetCore-Docker
-        demands:
-        - Agent.OS -equals linux
-        - Agent.OSArchitecture -equals ARM64
+      ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+        name: DotNetCore-Docker-Public
+      ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        name: DotNetCore-Docker
+      demands:
+      - Agent.OS -equals linux
+      - Agent.OSArchitecture -equals ARM64
     linuxArm32Pool:
-        ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-          name: DotNetCore-Docker-Public
-        ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-          name: DotNetCore-Docker
-        demands:
-        - Agent.OS -equals linux
-        - Agent.OSArchitecture -equals ARM64
+      ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+        name: DotNetCore-Docker-Public
+      ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        name: DotNetCore-Docker
+      demands:
+      - Agent.OS -equals linux
+      - Agent.OSArchitecture -equals ARM64
     windows2016Pool: Docker-2016-${{ variables['System.TeamProject'] }}
     windows1809Pool: Docker-1809-${{ variables['System.TeamProject'] }}
     windows20H2Pool: Docker-20H2-${{ variables['System.TeamProject'] }}
