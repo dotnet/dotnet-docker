@@ -10,9 +10,9 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '7.0.0-alpha.1.22067.2'; `
+        $aspnetcore_version = '7.0.0-preview.1.22071.6'; `
         Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
-        $aspnetcore_sha512 = '72d5a173bd9afc39cda44af78a51436b9e9a387e9bbfbbe8460ff0f92c8ad0fb9aeb7efd02a0502a6b921704c4548e96d21935eb8b3dc87cab45208399281db5'; `
+        $aspnetcore_sha512 = '017993a31d766b6555c49b5f209d0598e07d194b6690eb9ca923a6a18ec4c73a4039bfe00184530557969c71b958f4383cef047ebac6ec6580d2e9748d4adf78'; `
         if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -24,11 +24,11 @@ RUN powershell -Command `
 
 
 # ASP.NET Core image
-FROM $REPO:7.0.0-alpha.1-nanoserver-ltsc2022
+FROM $REPO:7.0.0-preview.1-nanoserver-ltsc2022
 
 ENV `
     # ASP.NET Core version
-    ASPNET_VERSION=7.0.0-alpha.1.22067.2 `
+    ASPNET_VERSION=7.0.0-preview.1.22071.6 `
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
