@@ -112,7 +112,7 @@ RUN dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]
     && rpm --install dotnet-runtime-deps.rpm \
     && rm dotnet-runtime-deps.rpm
 }}
-{{InsertTemplate("../Dockerfile.dotnet-env-vars") ^
+{{InsertTemplate("../Dockerfile.common-dotnet-envs") ^
 if isDistrolessMariner:
 
 USER app}}

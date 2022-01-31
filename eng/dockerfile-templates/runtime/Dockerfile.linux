@@ -24,7 +24,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
         "pkgs": ["curl"]
     ])}}
 }}{{ if dotnetVersion != "3.1":
-{{InsertTemplate("Dockerfile.env-vars")}}
+{{InsertTemplate("Dockerfile.envs")}}
 }}
 # Install .NET{{when(dotnetVersion = "3.1", " Core", "")}} Runtime
 {{InsertTemplate("Dockerfile.linux.install-runtime",
@@ -61,7 +61,7 @@ RUN mkdir /dotnet-symlink \
 # .NET runtime image
 FROM {{runtimeDepsBaseTag}}
 
-{{InsertTemplate("Dockerfile.env-vars")}}
+{{InsertTemplate("Dockerfile.envs")}}
 {{ if isDistrolessMariner:
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]^

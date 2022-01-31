@@ -10,8 +10,8 @@
 
 }}FROM {{serverCoreBaseTag}}
 
-{{InsertTemplate("../Dockerfile.dotnet-env-vars")}} `
-    {{InsertTemplate("Dockerfile.env-vars", [], "    ")}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs")}} `
+    {{InsertTemplate("Dockerfile.envs", [], "    ")}}
 
 # Install .NET Runtime
 {{InsertTemplate("Dockerfile.windows.install-runtime")}}
@@ -31,8 +31,8 @@ FROM {{serverCoreBaseTag}} AS installer
 # Runtime image
 FROM mcr.microsoft.com/windows/nanoserver:{{OS_VERSION_NUMBER}}-amd64
 
-{{InsertTemplate("../Dockerfile.dotnet-env-vars")}}{{if dotnetVersion != "3.1": `
-    {{InsertTemplate("Dockerfile.env-vars", [], "    ")}}}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs")}}{{if dotnetVersion != "3.1": `
+    {{InsertTemplate("Dockerfile.envs", [], "    ")}}}}
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator

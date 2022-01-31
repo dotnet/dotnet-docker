@@ -11,7 +11,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 }}FROM {{runtimeBaseTag}}
 
-{{InsertTemplate("Dockerfile.env-vars")}}
+{{InsertTemplate("Dockerfile.envs")}}
 
 {{InsertTemplate("Dockerfile.windows.install-aspnet")}}^else:
 {{
@@ -27,6 +27,6 @@ FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS install
 # ASP.NET Core image
 FROM {{runtimeBaseTag}}
 {{if dotnetVersion != "3.1":
-{{InsertTemplate("Dockerfile.env-vars")}}
+{{InsertTemplate("Dockerfile.envs")}}
 }}
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]}}

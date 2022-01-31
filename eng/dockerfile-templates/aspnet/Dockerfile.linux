@@ -22,7 +22,7 @@
 {{if isAlpine:
 {{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
 }}{{if dotnetVersion != "3.1":
-{{InsertTemplate("Dockerfile.env-vars")}}
+{{InsertTemplate("Dockerfile.envs")}}
 }}
 # Install ASP.NET Core
 {{InsertTemplate("Dockerfile.linux.install-aspnet", ["use-local-version-var": dotnetVersion = "3.1"])}}^else:
@@ -44,6 +44,6 @@ RUN tdnf install -y ca-certificates-microsoft \
 # ASP.NET Core image
 FROM {{runtimeBaseTag}}
 
-{{InsertTemplate("Dockerfile.env-vars")}}
+{{InsertTemplate("Dockerfile.envs")}}
 
 COPY --from=installer ["{{copyFromSrcPath}}", "{{copyFromDstPath}}"]}}
