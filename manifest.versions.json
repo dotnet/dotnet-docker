@@ -65,13 +65,13 @@
     "libicu|buster-slim": 63,
     "libicu|focal": 66,
 
-    "monitor|6.0|build-version": "6.0.1",
-    "monitor|6.0|product-version": "6.0.1",
-    "monitor|6.0|sha": "469f2ffc9f6cc350e1487a3186abcde64fe80994205664e85a1f021ae731155c04a669bd25d657982a726fd1cfde668663f1db21061926c442ae1f655395a144",
+    "monitor|6.0|build-version": "6.0.2-servicing.22077.7",
+    "monitor|6.0|product-version": "6.0.2",
+    "monitor|6.0|sha": "3203e455fe4fa9e7b251ba957ddf286a3a3fcf1c88663315547d5f4f7df9ee1c1f164dfcc42edeebaf786bf1b893753c5a5339377b259798208d5f07c48f9a10",
 
-    "monitor|6.1|build-version": "6.1.0-alpha.1.22070.5",
-    "monitor|6.1|product-version": "6.1.0-alpha.1",
-    "monitor|6.1|sha": "e0bf14f4280c50ce4c3b2d58d08bd4c1c4106b9044046e35b6b002a1bd3f09a742f5bca2bc2a3dd6745fe593670b5ee29222d126ee38b7117b28f2159a8bff8d",
+    "monitor|6.1|build-version": "6.1.0-rtm.22077.8",
+    "monitor|6.1|product-version": "6.1.0",
+    "monitor|6.1|sha": "2d1d10e75be400e6ebab707731daa2ca2723a055b60129247504b6b0d28e63fbc2a23e4d9a7ba7b597d48d1438389acd29c475dda2796920816c7fe63214b1d7",
 
     "monitor|7.0|build-version": "7.0.0-alpha.1.22076.3",
     "monitor|7.0|product-version": "7.0.0-alpha.1",
