@@ -51,9 +51,9 @@
     "libicu|buster-slim": 63,
     "libicu|focal": 66,
 
-    "monitor|6.0|build-version": "6.0.1",
-    "monitor|6.0|product-version": "6.0.1",
-    "monitor|6.0|sha": "469f2ffc9f6cc350e1487a3186abcde64fe80994205664e85a1f021ae731155c04a669bd25d657982a726fd1cfde668663f1db21061926c442ae1f655395a144",
+    "monitor|6.0|build-version": "6.0.2-servicing.22077.7",
+    "monitor|6.0|product-version": "6.0.2",
+    "monitor|6.0|sha": "3203e455fe4fa9e7b251ba957ddf286a3a3fcf1c88663315547d5f4f7df9ee1c1f164dfcc42edeebaf786bf1b893753c5a5339377b259798208d5f07c48f9a10",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
