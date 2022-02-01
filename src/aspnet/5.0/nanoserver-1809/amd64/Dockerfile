@@ -26,6 +26,7 @@ RUN powershell -Command `
 # ASP.NET Core image
 FROM $REPO:5.0.13-nanoserver-1809
 
+# ASP.NET Core version
 ENV ASPNET_VERSION=5.0.13
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

@@ -15,10 +15,7 @@ RUN aspnetcore_version=7.0.0-preview.1.22071.6 \
 # ASP.NET Core image
 FROM $REPO:7.0.0-preview.1-bullseye-slim-arm32v7
 
-ENV \
-    # ASP.NET Core version
-    ASPNET_VERSION=7.0.0-preview.1.22071.6 \
-    # Set the default console formatter to JSON
-    Logging__Console__FormatterName=Json
+# ASP.NET Core version
+ENV ASPNET_VERSION=7.0.0-preview.1.22071.6
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]
