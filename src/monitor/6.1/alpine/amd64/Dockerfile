@@ -5,9 +5,9 @@ ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 FROM $SDK_REPO:6.0.101-alpine3.15-amd64 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=6.1.0-alpha.1.22070.5
-RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='e0bf14f4280c50ce4c3b2d58d08bd4c1c4106b9044046e35b6b002a1bd3f09a742f5bca2bc2a3dd6745fe593670b5ee29222d126ee38b7117b28f2159a8bff8d' \
+ENV DOTNET_MONITOR_VERSION=6.1.0
+RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/6.1.0-rtm.22077.8/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
+    && dotnetmonitor_sha512='2d1d10e75be400e6ebab707731daa2ca2723a055b60129247504b6b0d28e63fbc2a23e4d9a7ba7b597d48d1438389acd29c475dda2796920816c7fe63214b1d7' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net6.0 --no-cache \
     # To reduce image size, remove the copy of the nupkg under the tools.
