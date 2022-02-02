@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:7.0.0-alpha.1-focal-amd64
+FROM $REPO:7.0.0-preview.1-focal-amd64
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -9,11 +9,9 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=7.0.100-alpha.1.22069.1 \
+    DOTNET_SDK_VERSION=7.0.100-preview.1.22078.7 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
-    # Unset Logging__Console__FormatterName from aspnet base image
-    Logging__Console__FormatterName= \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
@@ -28,7 +26,7 @@ RUN apt-get update \
 
 # Install .NET SDK
 RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
-    && dotnet_sha512='85b41a5c8896de02920208b6f3b419ac09dd23562f40907409180b1dc2586345af2e60689bfa2079202d3c543a5bee740f61ac6b984f6fbe0a6c670d7b838613' \
+    && dotnet_sha512='8d2b50d25cb2f6dbf24a9e839992c588386b7f05f37cf1bfe81b81707d3aa730904f9a7a7c7c21135ec07442a25b57ea0b607cfe7d4c91abf1539f8e8c64de88' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
