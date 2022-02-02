@@ -14,10 +14,10 @@ ENV \
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-CBL-Mariner-1.0
 
 # Install .NET Core SDK
-RUN dotnet_sdk_version=3.1.416 \
+RUN sdk_version=3.1.416 \
     dotnet_version=3.1.22 \
     aspnet_version=3.1.22 \
-    && curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-x64.rpm \
+    && curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-x64.rpm \
     && dotnet_sha512='d19e5e5ca3c0b6dedc430de64453da417d73e737a810f10124b588eff8a9ce853a3b02befab2e9c5d1890cbf78bb9d3fd29d248b086dee163c87d19ff41826f4' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
