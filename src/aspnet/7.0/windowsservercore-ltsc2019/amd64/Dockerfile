@@ -3,11 +3,8 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:7.0.0-preview.1-windowsservercore-ltsc2019
 
-ENV `
-    # ASP.NET Core version
-    ASPNET_VERSION=7.0.0-preview.1.22077.2 `
-    # Set the default console formatter to JSON
-    Logging__Console__FormatterName=Json
+# ASP.NET Core version
+ENV ASPNET_VERSION=7.0.0-preview.1.22077.2
 
 # Install ASP.NET Core Runtime
 RUN powershell -Command `

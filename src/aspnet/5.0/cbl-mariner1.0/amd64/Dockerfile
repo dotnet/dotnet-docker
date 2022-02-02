@@ -1,6 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:5.0.13-cbl-mariner1.0-amd64
 
+# ASP.NET Core version
 ENV ASPNET_VERSION=5.0.13
 
 # Install ASP.NET Core

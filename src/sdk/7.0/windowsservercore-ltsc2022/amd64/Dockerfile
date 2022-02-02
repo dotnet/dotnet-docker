@@ -14,8 +14,6 @@ ENV `
     DOTNET_SDK_VERSION=7.0.100-preview.1.22078.7 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
-    # Unset Logging__Console__FormatterName from aspnet base image
-    Logging__Console__FormatterName= `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip `
     # PowerShell telemetry for docker image usage

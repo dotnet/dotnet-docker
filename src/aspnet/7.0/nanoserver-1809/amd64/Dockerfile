@@ -26,10 +26,7 @@ RUN powershell -Command `
 # ASP.NET Core image
 FROM $REPO:7.0.0-preview.1-nanoserver-1809
 
-ENV `
-    # ASP.NET Core version
-    ASPNET_VERSION=7.0.0-preview.1.22077.2 `
-    # Set the default console formatter to JSON
-    Logging__Console__FormatterName=Json
+# ASP.NET Core version
+ENV ASPNET_VERSION=7.0.0-preview.1.22077.2
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

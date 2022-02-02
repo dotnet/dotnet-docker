@@ -15,6 +15,7 @@ RUN aspnetcore_version=5.0.13 \
 # ASP.NET Core image
 FROM $REPO:5.0.13-focal-arm64v8
 
+# ASP.NET Core version
 ENV ASPNET_VERSION=5.0.13
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]
