@@ -17,7 +17,7 @@ ENV `
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-{{OS_ARCH_HYPHENATED}}
 
-RUN powershell -Command "`
+RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
@@ -31,7 +31,7 @@ RUN powershell -Command "`
         tar -oxzf dotnet.zip -C $Env:ProgramFiles\dotnet ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt ./shared/Microsoft.WindowsDesktop.App; `
         Remove-Item -Force dotnet.zip; `
         `
-        {{InsertTemplate("../Dockerfile.windows.install-powershell", [], "        ")}}"
+        {{InsertTemplate("../Dockerfile.windows.install-powershell", [], "        ")}}
 
 RUN setx /M PATH "%PATH%;C:\Program Files\powershell"
 

@@ -19,7 +19,7 @@ ENV `
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-WindowsServerCore-ltsc2022
 
-RUN powershell -Command "`
+RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
@@ -44,7 +44,7 @@ RUN powershell -Command "`
         & $Env:ProgramFiles\dotnet\dotnet tool install --add-source . --tool-path $Env:ProgramFiles\powershell --version $powershell_version PowerShell.Windows.x64; `
         & $Env:ProgramFiles\dotnet\dotnet nuget locals all --clear; `
         Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
-        Remove-Item -Path $Env:ProgramFiles\powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force;"
+        Remove-Item -Path $Env:ProgramFiles\powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force;
 
 RUN setx /M PATH "%PATH%;C:\Program Files\powershell"
 

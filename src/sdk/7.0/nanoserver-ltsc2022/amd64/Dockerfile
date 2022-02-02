@@ -5,7 +5,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:ltsc2022-amd64 AS installer
 
-RUN powershell -Command "`
+RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
