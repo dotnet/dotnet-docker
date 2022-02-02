@@ -78,6 +78,10 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.Version.Major >= 6)
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));
+            }
+
+            if (imageData.Version.Major == 6)
+            {
                 variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", string.Empty));
             }
 

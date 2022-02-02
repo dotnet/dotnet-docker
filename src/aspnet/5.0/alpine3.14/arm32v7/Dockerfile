@@ -4,6 +4,7 @@ FROM $REPO:5.0.13-alpine3.14-arm32v7
 # .NET globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
+# ASP.NET Core version
 ENV ASPNET_VERSION=5.0.13
 
 # Install ASP.NET Core
