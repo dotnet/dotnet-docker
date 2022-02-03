@@ -1,16 +1,19 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isNanoServer to find(OS_VERSION, "nanoserver") >= 0 ^
-    set rootDir to when(isNanoServer, "\", "$Env:ProgramFiles\")
+    set rootDir to when(isNanoServer, "\", "$Env:ProgramFiles\") ^
+    set nupkgFile to "PowerShell.Windows.x64.$powershell_version.nupkg" ^
+    set url to cat("https://pwshtool.blob.core.windows.net/tool/$powershell_version/", nupkgFile)
 }}# Install PowerShell global tool
 $powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}}'; `
-Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-$powershell_sha512 = '{{VARIABLES[cat("powershell|", dotnetVersion, "|Windows|x64|sha")]}}'; `
-if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
-    Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-    exit 1; `
-}; `
+{{InsertTemplate("../Dockerfile.windows.download-file",
+        [
+            "out-file": nupkgFile,
+            "url": url,
+            "sha": VARIABLES[cat("powershell|", dotnetVersion, "|Windows|x64|sha")],
+            "sha-var-name": "powershell_sha512"
+        ],)}} `
 & {{rootDir}}dotnet\dotnet tool install --add-source . --tool-path {{rootDir}}powershell --version $powershell_version PowerShell.Windows.x64; `
 & {{rootDir}}dotnet\dotnet nuget locals all --clear; `
-Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
-Remove-Item -Path {{rootDir}}powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force;
+Remove-Item -Force {{nupkgFile}}; `
+Remove-Item -Path {{rootDir}}powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\{{lcase(nupkgFile)}} -Force;

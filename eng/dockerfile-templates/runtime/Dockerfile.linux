@@ -1,0 +1,71 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
+    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
+    set isSingleStage to (dotnetVersion = "3.1" || isAlpine || isFullMariner) ^
+    set archTagSuffix to when(dotnetVersion != "3.1" || ARCH_VERSIONED != "amd64", ARCH_TAG_SUFFIX, "") ^
+    set runtimeDepsBaseTag to cat(
+        "$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix) ^
+    set installerImageTag to when(isDistrolessMariner,
+        cat("cblmariner.azurecr.io/base/core:", OS_VERSION_NUMBER),
+        cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl"))
+}}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps{{if isSingleStage:
+{{
+
+_ SINGLE STAGE
+
+}}FROM {{runtimeDepsBaseTag}}
+{{if isAlpine:
+{{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
+^elif dotnetVersion = "3.1" && !isFullMariner:
+RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
+    [
+        "pkgs": ["curl"]
+    ])}}
+}}{{ if dotnetVersion != "3.1":
+{{InsertTemplate("Dockerfile.envs")}}
+}}
+# Install .NET{{when(dotnetVersion = "3.1", " Core", "")}} Runtime
+{{InsertTemplate("Dockerfile.linux.install-runtime",
+    [
+        "dest-dir": "/usr/share/dotnet",
+        "add-symlink": "true",
+        "use-local-version-var": dotnetVersion = "3.1"
+    ])}}^
+else:{{
+
+_ MULTI STAGE
+
+}}
+
+# Installer image
+FROM {{installerImageTag}} AS installer
+{{ if isDistrolessMariner:
+RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
+    [
+        "pkgs": ["ca-certificates-microsoft"]
+    ])}}
+}}
+# Retrieve .NET Runtime
+{{InsertTemplate("Dockerfile.linux.install-runtime",
+    [
+        "dest-dir": when(isDistrolessMariner, "/usr/share/dotnet", "/dotnet"),
+        "use-local-version-var": "true"
+    ])}}
+{{ if isDistrolessMariner:
+RUN mkdir /dotnet-symlink \
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
+}}
+
+# .NET runtime image
+FROM {{runtimeDepsBaseTag}}
+
+{{InsertTemplate("Dockerfile.envs")}}
+{{ if isDistrolessMariner:
+COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/dotnet-symlink", "/usr/bin"]^
+else:
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
+
+RUN {{InsertTemplate("Dockerfile.linux.symlink")}}}}}}

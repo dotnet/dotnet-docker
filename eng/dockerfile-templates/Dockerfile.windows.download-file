@@ -1,0 +1,14 @@
+{{
+    _ Downloads a file and verifies its checksum
+
+    ARGS:
+        out-file: name of the output file
+        url: URL to download
+        sha: Expected checksum of the downloaded file
+        sha-var-name: Name of variable that stores the checksum
+}}Invoke-WebRequest -OutFile {{ARGS["out-file"]}} {{ARGS["url"]}}; `
+${{ARGS["sha-var-name"]}} = '{{ARGS["sha"]}}'; `
+if ((Get-FileHash {{ARGS["out-file"]}} -Algorithm sha512).Hash -ne ${{ARGS["sha-var-name"]}}) { `
+    Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+    exit 1; `
+};

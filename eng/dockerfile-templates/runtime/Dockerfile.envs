@@ -1,0 +1,4 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".")
+}}# .NET Runtime version
+{{if INDENT ="":ENV }}DOTNET_VERSION={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}}

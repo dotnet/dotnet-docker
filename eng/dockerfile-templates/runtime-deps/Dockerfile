@@ -112,12 +112,7 @@ RUN dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]
     && rpm --install dotnet-runtime-deps.rpm \
     && rm dotnet-runtime-deps.rpm
 }}
-ENV \
-    # Configure web servers to bind to port 80 when present
-    ASPNETCORE_URLS=http://+:80 \
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true{{if isAlpine: \
-    # Set the invariant mode since icu-libs isn't included (see https://github.com/dotnet/announcements/issues/20)
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true}}{{ if isDistrolessMariner:
+{{InsertTemplate("../Dockerfile.common-dotnet-envs") ^
+if isDistrolessMariner:
 
 USER app}}
