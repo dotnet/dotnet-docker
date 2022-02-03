@@ -40,7 +40,8 @@ RUN powershell -Command " `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
         Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
             | Remove-Item -Force -Recurse; `
-        Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse"
+        Get-ChildItem -Exclude 'Microsoft.WindowsDesktop.App' -Path dotnet\shared `
+            | Remove-Item -Force -Recurse"
 
 # SDK image
 FROM $REPO:6.0.1-nanoserver-1809
