@@ -5,7 +5,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
 
-RUN powershell -Command `
+RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
@@ -21,7 +21,7 @@ RUN powershell -Command `
         tar -oxzf dotnet.zip -C dotnet; `
         Remove-Item -Force dotnet.zip; `
         `
-        {{InsertTemplate("../Dockerfile.windows.install-powershell", [], "    ")}} `
+        {{InsertTemplate("../Dockerfile.windows.install-powershell", [], "        ")}} `
         `
         # Workaround for https://github.com/dotnet/sdk/issues/18410
         \dotnet\dotnet build-server shutdown; `
@@ -29,7 +29,7 @@ RUN powershell -Command `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
         Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
             | Remove-Item -Force -Recurse; `
-        Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
+        Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse"
 
 # SDK image
 FROM $REPO:{{VARIABLES["dotnet|7.0|product-version"]}}-{{OS_VERSION}}
