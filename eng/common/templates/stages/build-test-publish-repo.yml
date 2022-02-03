@@ -168,6 +168,8 @@ stages:
   condition: and(succeeded(), contains(variables['stages'], 'build'))
   jobs:
   - template: ../jobs/post-build.yml
+    parameters:
+      pool: ${{ parameters.linuxAmd64Pool }}
 
 ################################################################################
 # Test Images
