@@ -1,7 +1,9 @@
+parameters:
+  pool: {}
+
 jobs:
 - job: Build
-  pool:
-    vmImage: $(defaultLinuxAmd64PoolImage)
+  pool: ${{ parameters.pool }}
   steps:
   - template: ../steps/init-docker-linux.yml
   - template: ../steps/download-build-artifact.yml

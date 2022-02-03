@@ -7,9 +7,13 @@
     set url to cat("https://pwshtool.blob.core.windows.net/tool/$powershell_version/", nupkgName)
 }}# Install PowerShell global tool
 RUN powershell_version={{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}} \
-    && {{InsertTemplate("../Dockerfile.linux.download-file", ["out-file": nupkgName, "url": url])}} \
-    && powershell_sha512='{{VARIABLES[cat("powershell|", dotnetVersion, "|", shaPlatform, "|sha")]}}' \
-    && echo "$powershell_sha512  {{nupkgName}}" | sha512sum -c - \
+    && {{InsertTemplate("../Dockerfile.linux.download-file",
+        [
+            "out-file": nupkgName,
+            "url": url,
+            "sha": VARIABLES[join(["powershell", dotnetVersion, shaPlatform, "sha"], "|")],
+            "sha-var-name": "powershell_sha512"
+        ])}} \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.{{nupkgPlatform}} \
     && dotnet nuget locals all --clear \
