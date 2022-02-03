@@ -5,27 +5,28 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
 
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
-
-RUN `
-    # Retrieve .NET SDK
-    $sdk_version = '{{VARIABLES["sdk|5.0|build-version"]}}'; `
-    Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-    $dotnet_sha512 = '{{VARIABLES["sdk|5.0|win|x64|sha"]}}'; `
-    if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
-        Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-        exit 1; `
-    }; `
-    mkdir dotnet; `
-    tar -oxzf dotnet.zip -C dotnet; `
-    Remove-Item -Force dotnet.zip; `
-    `
-    {{InsertTemplate("../Dockerfile.windows.install-powershell", [], "    ")}} `
-    `
-    # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
-    Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','templates','shared' -Path dotnet `
-        | Remove-Item -Force -Recurse; `
-    Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse
+RUN powershell -Command " `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        # Retrieve .NET SDK
+        $sdk_version = '{{VARIABLES["sdk|5.0|build-version"]}}'; `
+        Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
+        $dotnet_sha512 = '{{VARIABLES["sdk|5.0|win|x64|sha"]}}'; `
+        if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
+            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            exit 1; `
+        }; `
+        mkdir dotnet; `
+        tar -oxzf dotnet.zip -C dotnet; `
+        Remove-Item -Force dotnet.zip; `
+        `
+        {{InsertTemplate("../Dockerfile.windows.install-powershell", [], "        ")}} `
+        `
+        # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
+        Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','templates','shared' -Path dotnet `
+            | Remove-Item -Force -Recurse; `
+        Get-ChildItem -Exclude Microsoft.WindowsDesktop.App -Path dotnet\shared | Remove-Item -Force -Recurse"
 
 # SDK image
 FROM $REPO:{{VARIABLES["dotnet|5.0|product-version"]}}-{{OS_VERSION}}
