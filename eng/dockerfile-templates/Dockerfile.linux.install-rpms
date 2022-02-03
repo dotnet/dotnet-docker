@@ -1,0 +1,9 @@
+{{
+    _ Installs and cleans up a set of RPM files
+
+    ARGS:
+        files: Set of files to install ^
+    
+    set fileList to join(ARGS["files"], " ")
+}}rpm --install {{fileList}} \
+    && rm {{fileList}}

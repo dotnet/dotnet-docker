@@ -1,0 +1,70 @@
+{{
+    _ ARGS:
+        dest-dir: Destination directory to install .NET runtime
+        add-symlink (optional): If set, adds a symlink to the dotnet executable
+        use-local-version-var (optional): Whether to define a local variable for the .NET runtime version
+            instead of referencing the environment variable. ^
+
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
+    set varPlatform to when(isAlpine, "linux-musl", "linux") ^
+    set runtimeVersion to when(ARGS["use-local-version-var"], "$dotnet_version", "$DOTNET_VERSION") ^
+    set runtimeBaseUrl to cat(
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
+        "/Runtime/", runtimeVersion, "/") ^
+    set rpms to [
+        [
+            "file": "dotnet-host.rpm",
+            "url": cat(runtimeBaseUrl, "dotnet-host-", runtimeVersion, "-", ARCH_SHORT, ".rpm"),
+            "sha": VARIABLES[join(["runtime-host", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
+            "sha-var-name": "dotnet_sha512"
+        ],
+        [
+            "file": "dotnet-hostfxr.rpm",
+            "url": cat(runtimeBaseUrl, "dotnet-hostfxr-", runtimeVersion, "-", ARCH_SHORT, ".rpm"),
+            "sha": VARIABLES[join(["runtime-hostfxr", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
+            "sha-var-name": "dotnet_sha512"
+        ],
+        [
+            "file": "dotnet-runtime.rpm",
+            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersion, "-", ARCH_SHORT, ".rpm"),
+            "sha": VARIABLES[join(["runtime", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
+            "sha-var-name": "dotnet_sha512"
+        ]
+    ] ^
+    set tarballs to [
+        [
+            "file": "dotnet.tar.gz",
+            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersion, "-", varPlatform, "-", ARCH_SHORT, ".tar.gz"),
+            "sha": VARIABLES[join(["runtime", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
+            "sha-var-name": "dotnet_sha512"
+        ]
+    ] ^
+    set downloadFiles to when(isFullMariner, rpms, tarballs) ^
+    set getDownloadFileName(downloadFile) to:{{
+        return downloadFile["file"]
+    }}
+}}RUN {{if ARGS["use-local-version-var"]:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion"|build-version")]}} \
+}}{{for i, downloadFile in downloadFiles:{{
+if ARGS["use-local-version-var"] || i > 0:    && }}{{InsertTemplate("../Dockerfile.linux.download-file",
+        [
+            "out-file": downloadFile["file"],
+            "url": downloadFile["url"],
+            "sha": downloadFile["sha"],
+            "sha-var-name": downloadFile["sha-var-name"]
+        ])}} \{{if len(downloadFiles) > 1:
+    \
+}}}}{{
+if isFullMariner:    && {{InsertTemplate("../Dockerfile.linux.install-rpms",
+            [
+                "files": map(downloadFiles, getDownloadFileName)
+            ])}}^
+        else:
+    && mkdir -p {{ARGS["dest-dir"]}} \{{for downloadFile in downloadFiles:
+    && {{InsertTemplate("../Dockerfile.linux.extract-tarball",
+        [
+            "file": downloadFile["file"],
+            "dest-dir": ARGS["dest-dir"]
+        ])}}{{if ARGS["add-symlink"]: \
+    && {{InsertTemplate("Dockerfile.linux.symlink")}}}}}}}}
