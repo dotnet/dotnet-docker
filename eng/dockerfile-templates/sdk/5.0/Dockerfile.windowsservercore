@@ -17,7 +17,7 @@ ENV `
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-{{OS_ARCH_HYPHENATED}}
 
-RUN powershell -Command "`
+RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
