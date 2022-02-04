@@ -36,6 +36,7 @@
     "aspnet-runtime-targeting-pack|6.0|linux-rpm|x64|sha": "1fc26f04cdb5509c6d02b9a628d0c7a9543af3c1971d02beff9ce52df9a367c54f82042a83db8355a7ed349ce187c914cf02983755257720b682589a1c6ff354",
 
     "aspnet|7.0|build-version": "7.0.0-preview.1.22081.6",
+    "aspnet|7.0|targeting-pack-version": "$(aspnet|7.0|build-version)",
     "aspnet|7.0|linux-musl|x64|sha": "ef72a8a547f81197a29e28a11b633c3f7b97ed780f339554b9ce8af8157cc7e3cdcbb51de8bc3070d888888b02eeb87d4d6942e3bbbfefab9b59e753a36a13f5",
     "aspnet|7.0|linux-musl|arm|sha": "9ebb4679e08b3d2f50cfa9c006a8f0f394e0529915fe5d775e11273da79b6f45a60133b8bc12d780d2166c644d553f763ab336993369a85413ca1b3e19188b19",
     "aspnet|7.0|linux-musl|arm64|sha": "e1834f562d1a715c27afe65185bf966288dffc1a8428c96b91e3032ad8b8564d6cd85aace1ccae6e38989b26519acdc01a39f82e5400857cd14ec30dbde67b7a",
@@ -155,6 +156,7 @@
     "runtime-targeting-pack|6.0|linux-rpm|x64|sha": "928e3c0c1a08d9150709fb821e04bd57445a0482c46c16ad4146b8ed21dad3340ce9bbd9fb2243763b3c463aa0119320e5faf44299e11895e68f46fcc1d490ed",
 
     "runtime|7.0|build-version": "7.0.0-preview.1.22076.8",
+    "runtime|7.0|targeting-pack-version": "$(runtime|7.0|build-version)",
     "runtime|7.0|linux-musl|x64|sha": "74cdf90223f293adc5fc884910be9f8c26f8d476269df5d86ad022c6449a9376f3bf2a8c251ddd3bda7f11a8be1ae6a0876e988ed445e0baeeaff8d4e9456948",
     "runtime|7.0|linux-musl|arm|sha": "db3a841fcebe667144a62c3e15347da2ab826e908fa5da7c693371645900df2a533af7bc36e6792466c65556938827baaa16a570988848fad06ae3aba5245f56",
     "runtime|7.0|linux-musl|arm64|sha": "642bee46020fc51b4710d542570cae2facbecddcd7ed36919ee11cd419fd1a933bbf489870594182ff40ed6fc273d6ee8721f40f4ab8ca447e21909e902b6f99",
