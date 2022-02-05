@@ -197,7 +197,8 @@
     "src/sdk/7.0/cbl-mariner1.0/amd64": 874993672
   },
   "dotnet/nightly/monitor": {
-    "src/monitor/6.0/alpine/amd64": 109543092,
-    "src/monitor/7.0/alpine/amd64": 108132591
+    "src/monitor/6.0/alpine/amd64": 107934342,
+    "src/monitor/6.1/alpine/amd64": 107919731,
+    "src/monitor/7.0/alpine/amd64": 108759306
   }
 }
