@@ -11,8 +11,8 @@
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
     set monitorSha to VARIABLES[cat("monitor|", monitorMajorMinor, "|sha")] ^
     set imageBaseTag to cat(VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
-    _ All .NET Monitor versions publish to the same storage account, thus use the latest storage account scheme. ^
-    _ However, the latest 6.0 release still uses dotnetcli storage account. ^
+    _ All .NET Monitor versions publish to the same storage account, thus use the latest storage account scheme.
+      However, the latest 6.0 release still uses dotnetcli storage account. ^
     set urlVersion to when(monitorMajorMinor != "6.0", "7.0", "6.0") ^
     set url to cat(VARIABLES[cat("base-url|", urlVersion ,"|", VARIABLES["branch"])])
 }}ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
