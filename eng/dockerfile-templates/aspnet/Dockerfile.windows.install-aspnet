@@ -1,0 +1,28 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
+    set dotnetDir to when(isServerCore, "$Env:ProgramFiles\dotnet", "dotnet") ^
+    set aspnetVersion to when(dotnetVersion = "3.1",
+        "$aspnetcore_version",
+        when(isServerCore,
+            "$Env:ASPNET_VERSION",
+            VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")])) ^
+    set url to cat(
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
+        "/aspnetcore/Runtime/", aspnetVersion, "/aspnetcore-runtime-", aspnetVersion, "-win-x64.zip")
+}}# Install ASP.NET Core Runtime
+RUN powershell -Command `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        {{if eq(dotnetVersion "3.1"):$aspnetcore_version = '{{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}}'; `
+        }}Invoke-WebRequest -OutFile aspnetcore.zip {{url}}; `
+        $aspnetcore_sha512 = '{{VARIABLES[cat("aspnet|", dotnetVersion, "|win|x64|sha")]}}'; `
+        if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
+            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            exit 1; `
+        }; `
+        `
+        {{if not(isServerCore):mkdir {{dotnetDir}}/shared/Microsoft.AspNetCore.App; `
+        }}tar -C {{dotnetDir}} -oxzf aspnetcore.zip ./shared/Microsoft.AspNetCore.App; `
+        Remove-Item -Force aspnetcore.zip

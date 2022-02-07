@@ -1,6 +1,6 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isAlpine to ge(find(OS_VERSION, "alpine"), 0) ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set nupkgPlatform to when(isAlpine, "Linux.Alpine", cat("Linux.", ARCH_NUPKG)) ^
     set shaPlatform to when(isAlpine, "Linux.Alpine", cat("Linux|", ARCH_NUPKG)) ^
     set nupkgName to cat("PowerShell.", nupkgPlatform, ".$powershell_version.nupkg") ^

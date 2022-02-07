@@ -1,6 +1,6 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isNanoServer to ge(find(OS_VERSION, "nanoserver"), 0) ^
+    set isNanoServer to find(OS_VERSION, "nanoserver") >= 0 ^
     set rootDir to when(isNanoServer, "\", "$Env:ProgramFiles\")
 }}# Install PowerShell global tool
 $powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}}'; `
