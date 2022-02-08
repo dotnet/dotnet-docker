@@ -5444,7 +5444,7 @@
                 "SDK_REPO": "$(Repo:sdk)"
               },
               "dockerfile": "src/monitor/6.0/alpine/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/6.0/Dockerfile.alpine",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.14",
               "tags": {
@@ -5470,7 +5470,7 @@
                 "SDK_REPO": "$(Repo:sdk)"
               },
               "dockerfile": "src/monitor/6.1/alpine/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/6.1/Dockerfile.alpine",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.15",
               "tags": {
@@ -5495,7 +5495,7 @@
                 "SDK_REPO": "$(Repo:sdk)"
               },
               "dockerfile": "src/monitor/7.0/alpine/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/7.0/Dockerfile.alpine",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.14",
               "tags": {

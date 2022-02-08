@@ -5,15 +5,23 @@ ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 FROM $SDK_REPO:6.0.102-alpine3.15-amd64 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=6.1.0-alpha.1.22070.5
-RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='e0bf14f4280c50ce4c3b2d58d08bd4c1c4106b9044046e35b6b002a1bd3f09a742f5bca2bc2a3dd6745fe593670b5ee29222d126ee38b7117b28f2159a8bff8d' \
+ENV DOTNET_MONITOR_VERSION=6.1.0
+RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/6.1.0-rtm.22105.1/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
+    && dotnetmonitor_sha512='f6a0609995bbc395cae5fd56cf39ae738a87b7ec034136ecea789239eb70125aad43ef7b75bb3d5a08ef618a4c89337d4cff32c2c44a271a77bafc8f05c0ecca' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net6.0 --no-cache \
-    # To reduce image size, remove the copy of the nupkg under the tools.
-    && find /app -print | grep -i '.*[.]nupkg$' | xargs rm \
     # To reduce image size, remove all non-net6.0 TFMs
-    && find /app -print | grep -i '.*/netcoreapp3[.]1$' | xargs rm -rf \
+    # To do this safely, we need to first find everything that dotnet tool installed named "dotnet-monitor".
+    # The /dotnet-monitor/ folder exists under .store which is not a stable constant to rely on. The result is multi stage search:
+    # 1. Find any files in /app
+    # 2. Match anything that is under a *folder* called 'dotnet-monitor'
+    # 3. Match anything from step 2 that isn't in a '/tools/net6.0' folder (/tools is the folder we use in a nuget file that is stable)
+    # 4. Delete everything from step 3
+    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -v -i '.*/tools/net6[.]0' | xargs rm -rf \
+    # To reduce image size further, remove the non-linux assemblies
+    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shims)/(win|osx)' | xargs rm -rf \
+    # Remove all the empty directories left by the previous step
+    && find /app -type d -empty -delete \
     && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
 
 
