@@ -11,7 +11,10 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public static class Config
     {
-        private static Lazy<JObject> Manifest { get; } = new Lazy<JObject>(() => LoadManifest());
+        private const string VariableGroupName = "variable";
+        private const string VariablePattern = $"\\$\\((?<{VariableGroupName}>[\\w:\\-.|]+)\\)";
+        private static Lazy<JObject> Manifest { get; } = new Lazy<JObject>(() => LoadManifest("manifest.json"));
+        private static Lazy<JObject> ManifestVersions { get; } = new Lazy<JObject>(() => LoadManifest("manifest.versions.json"));
 
         public static string SourceRepoRoot { get; } = Environment.GetEnvironmentVariable("SOURCE_REPO_ROOT") ?? string.Empty;
         public static bool IsHttpVerificationDisabled { get; } =
@@ -25,6 +28,8 @@ namespace Microsoft.DotNet.Docker.Tests
             Environment.GetEnvironmentVariable("REGISTRY") ?? (string)Manifest.Value["registry"];
         public static string Os { get; } =
             Environment.GetEnvironmentVariable("IMAGE_OS") ?? string.Empty;
+        public static string SourceBranch { get; } =
+            Environment.GetEnvironmentVariable("SOURCE_BRANCH") ?? string.Empty;
 
         private static bool GetIsNightlyRepo()
         {
@@ -32,11 +37,42 @@ namespace Microsoft.DotNet.Docker.Tests
             return repo.Contains("/nightly/");
         }
 
-        private static JObject LoadManifest()
+        private static JObject LoadManifest(string manifestFile)
         {
-            string manifestPath = Path.Combine(SourceRepoRoot, "manifest.json");
+            string manifestPath = Path.Combine(SourceRepoRoot, manifestFile);
             string manifestJson = File.ReadAllText(manifestPath);
             return JObject.Parse(manifestJson);
+        }
+
+        private static string GetVariableValue(string variableName, JObject variables) =>
+            ResolveVariables((string)variables[variableName], variables);
+
+        private static string ResolveVariables(string value, JObject variables)
+        {
+            MatchCollection matches = Regex.Matches(value, VariablePattern);
+            foreach (Match match in matches)
+            {
+                string variableName = match.Groups[VariableGroupName].Value;
+                string variableValue = GetVariableValue(variableName, variables);
+                value = value.Replace(match.Value, variableValue);
+            }
+
+            return value;
+        }
+
+        public static string GetBaseUrl(string dotnetVersion) =>
+            GetVariableValue($"base-url|{dotnetVersion}|{Config.SourceBranch}", (JObject)ManifestVersions.Value["variables"]);
+
+        public static string GetBuildVersion(DotNetImageType imageType, string dotnetVersion)
+        {
+            if (imageType == DotNetImageType.Runtime_Deps)
+            {
+                throw new NotSupportedException("Runtime deps has no associated build version");
+            }
+
+            return GetVariableValue(
+                $"{imageType.ToString().ToLower()}|{dotnetVersion}|build-version",
+                (JObject)ManifestVersions.Value["variables"]);
         }
 
         public static string GetFilterRegexPattern(string filter) =>

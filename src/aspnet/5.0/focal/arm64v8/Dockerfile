@@ -1,19 +1,21 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM arm64v8/buildpack-deps:focal-curl as installer
+FROM arm64v8/buildpack-deps:focal-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/5.0.13/aspnetcore-runtime-5.0.13-linux-arm64.tar.gz \
-    && aspnetcore_sha512='757ccf8a453d8cc9075a438d02bf95bb6d3738651100de8d4ae842a97dc10d8d7507597ec9d2806a3140d8000faec602748b4585b0a644816c74ebbf7ab98719' \
+RUN aspnetcore_version=5.0.14 \
+    && curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz \
+    && aspnetcore_sha512='a7f2e3525226d87ecd52c7ee0e702523cd148c7d619d4d3ffab3d4b14bcfa94909016008791aee9b2d6c84adc25d22acefa2a1a6fb7ac60ef0951ff4aa018a66' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
-    && tar -ozxf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
+    && tar -oxzf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
 
 
 # ASP.NET Core image
-FROM $REPO:5.0.13-focal-arm64v8
+FROM $REPO:5.0.14-focal-arm64v8
 
-ENV ASPNET_VERSION=5.0.13
+# ASP.NET Core version
+ENV ASPNET_VERSION=5.0.14
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]

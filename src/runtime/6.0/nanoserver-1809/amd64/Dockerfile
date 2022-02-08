@@ -3,19 +3,22 @@
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:1809-amd64 AS installer
 
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
-
 # Retrieve .NET Runtime
-RUN Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.1/dotnet-runtime-6.0.1-win-x64.zip; `
-    $dotnet_sha512 = '059ef7dffb1e421a764779f1e75eb804fb61e32a75855964e426d7e0e8d7dd171b26861b8655738bf887efcd17657cde1b6386cf844c55e63d9822527e83411d'; `
-    if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
-        Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-        exit 1; `
-    }; `
-    `
-    mkdir dotnet; `
-    tar -C dotnet -oxzf dotnet.zip; `
-    Remove-Item -Force dotnet.zip
+RUN powershell -Command `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        $dotnet_version = '6.0.2'; `
+        Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip; `
+        $dotnet_sha512 = 'db4ba997ec46cffc561a114e6d5b69944fcb0f427384a78474e9dba7c1793267cc8b3a63020e47d186f1bfce6e4d2b94f744da8b6d4b65d8028da5946ec18e44'; `
+        if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
+            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            exit 1; `
+        }; `
+        `
+        mkdir dotnet; `
+        tar -oxzf dotnet.zip -C dotnet; `
+        Remove-Item -Force dotnet.zip
 
 
 # Runtime image
@@ -27,7 +30,7 @@ ENV `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # .NET Runtime version
-    DOTNET_VERSION=6.0.1
+    DOTNET_VERSION=6.0.2
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator

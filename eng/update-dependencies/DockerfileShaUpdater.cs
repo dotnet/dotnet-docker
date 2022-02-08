@@ -22,70 +22,79 @@ namespace Dotnet.Docker
     /// </summary>
     public class DockerfileShaUpdater : FileRegexUpdater
     {
-        private const string ChecksumsHostName = "dotnetclichecksums.blob.core.windows.net";
+        private const string ReleaseDotnetBaseUrl = "https://dotnetcli.blob.core.windows.net/dotnet";
+        private const string ReleaseChecksumsBaseUrl = "https://dotnetclichecksums.blob.core.windows.net/dotnet";
+        private const string BuildsDotnetBaseUrl = "https://dotnetbuilds.blob.core.windows.net/public";
+        private const string BuildsChecksumsBaseUrl = "https://dotnetbuilds.blob.core.windows.net/public-checksums";
+
         private const string ShaVariableGroupName = "shaVariable";
         private const string ShaValueGroupName = "shaValue";
         private const string NetStandard21TargetingPack = "netstandard-targeting-pack-2.1.0";
-        private const string DotnetBaseUrl = "https://dotnetcli.azureedge.net/dotnet";
 
         private static readonly Dictionary<string, string> s_shaCache = new();
         private static readonly Dictionary<string, Dictionary<string, string>> s_releaseChecksumCache = new();
 
-        // Maps a product name to a set of one or more candidate URLs referencing the associated artifact. The order of the URLs
-        // should be in priority order with each subsequent URL being the fallback. This is primarily intended to support targeting
-        // pack RPMs because they only ship once for a given major/minor release and never again for servicing releases. However, during
-        // preview releases, they ship with each build. By making use of fallback URLs it allows support for either scenario, first checking
-        // for the build-specific location and then falling back to the overall major/minor release location.
-        private static readonly Dictionary<string, string[]> s_urls = new() {
-            {"powershell", new string[] { "https://pwshtool.blob.core.windows.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" }},
-
-            {"monitor", new string[] { $"{DotnetBaseUrl}/diagnostics/monitor/$VERSION_DIR/dotnet-monitor.$VERSION_FILE.nupkg" }},
-
-            {"runtime", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE$OPTIONAL_OS-$ARCH.$ARCHIVE_EXT" }},
-            {"runtime-host", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-$ARCH.$ARCHIVE_EXT" }},
-            {"runtime-hostfxr", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-hostfxr-$VERSION_FILE-$ARCH.$ARCHIVE_EXT" }},
-            {"runtime-targeting-pack", new string[]
-                {
-                    $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-targeting-pack-$VERSION_FILE-$ARCH.$ARCHIVE_EXT",
-                    $"{DotnetBaseUrl}/Runtime/$DF_VERSION.0/dotnet-targeting-pack-$DF_VERSION.0-$ARCH.$ARCHIVE_EXT"
-                }
-            },
-            {"runtime-apphost-pack", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-apphost-pack-$VERSION_FILE-$ARCH.$ARCHIVE_EXT" }},
-            {NetStandard21TargetingPack, new string[] { $"{DotnetBaseUrl}/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-$ARCH.$ARCHIVE_EXT" }},
-            {"runtime-deps-cm.1", new string[] { $"{DotnetBaseUrl}/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.1-$ARCH.$ARCHIVE_EXT" }},
-
-            {"aspnet", new string[] { $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE$OPTIONAL_OS-$ARCH.$ARCHIVE_EXT" }},
-            {"aspnet-runtime-targeting-pack", new string[]
-                {
-                    $"{DotnetBaseUrl}/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-targeting-pack-$VERSION_FILE.$ARCHIVE_EXT",
-                    $"{DotnetBaseUrl}/aspnetcore/Runtime/$DF_VERSION.0/aspnetcore-targeting-pack-$DF_VERSION.0.$ARCHIVE_EXT"
-                }
-            },
-
-            {"sdk", new string[] { $"{DotnetBaseUrl}/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE$OPTIONAL_OS-$ARCH.$ARCHIVE_EXT" }},
-            {"lzma", new string[] { $"{DotnetBaseUrl}/Sdk/$VERSION_DIR/nuGetPackagesArchive.lzma" }}
-        };
-
         private static HttpClient s_httpClient { get; } = new();
 
         private readonly string _productName;
-        private readonly string _dockerfileVersion;
+        private readonly Version _dockerfileVersion;
         private readonly string? _buildVersion;
         private readonly string _arch;
         private readonly string _os;
         private readonly Options _options;
         private readonly string _versions;
+        private readonly Dictionary<string, string[]> _urls;
 
         public DockerfileShaUpdater(
             string productName, string dockerfileVersion, string? buildVersion, string arch, string os, string versions, Options options)
         {
             _productName = productName;
-            _dockerfileVersion = dockerfileVersion;
+            _dockerfileVersion = new Version(dockerfileVersion);
             _buildVersion = buildVersion;
             _arch = arch;
             _os = os;
             _versions = versions;
             _options = options;
+
+            // Maps a product name to a set of one or more candidate URLs referencing the associated artifact. The order of the URLs
+            // should be in priority order with each subsequent URL being the fallback. This is primarily intended to support targeting
+            // pack RPMs because they only ship once for a given major/minor release and never again for servicing releases. However, during
+            // preview releases, they ship with each build. By making use of fallback URLs it allows support for either scenario, first checking
+            // for the build-specific location and then falling back to the overall major/minor release location.
+            _urls = new()
+            {
+                { "powershell", new string[] { "https://pwshtool.blob.core.windows.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" } },
+
+                { "monitor", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor.$VERSION_FILE.nupkg" } },
+
+                { "runtime", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE$OPTIONAL_OS-$ARCH.$ARCHIVE_EXT" } },
+                { "runtime-host", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-$ARCH.$ARCHIVE_EXT" } },
+                { "runtime-hostfxr", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-hostfxr-$VERSION_FILE-$ARCH.$ARCHIVE_EXT" } },
+                {
+                    "runtime-targeting-pack",
+                    new string[]
+                    {
+                        $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-targeting-pack-$VERSION_FILE-$ARCH.$ARCHIVE_EXT",
+                        $"$DOTNET_BASE_URL/Runtime/$DF_VERSION.0/dotnet-targeting-pack-$DF_VERSION.0-$ARCH.$ARCHIVE_EXT"
+                    }
+                },
+                { "runtime-apphost-pack", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-apphost-pack-$VERSION_FILE-$ARCH.$ARCHIVE_EXT" } },
+                { NetStandard21TargetingPack, new string[] { $"{ReleaseChecksumsBaseUrl}/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-$ARCH.$ARCHIVE_EXT" } },
+                { "runtime-deps-cm.1", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.1-$ARCH.$ARCHIVE_EXT" } },
+
+                { "aspnet", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE$OPTIONAL_OS-$ARCH.$ARCHIVE_EXT" } },
+                {
+                    "aspnet-runtime-targeting-pack",
+                    new string[]
+                    {
+                        $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-targeting-pack-$VERSION_FILE.$ARCHIVE_EXT",
+                        $"$DOTNET_BASE_URL/aspnetcore/Runtime/$DF_VERSION.0/aspnetcore-targeting-pack-$DF_VERSION.0.$ARCHIVE_EXT"
+                    }
+                },
+
+                { "sdk", new string[] { $"$DOTNET_BASE_URL/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE$OPTIONAL_OS-$ARCH.$ARCHIVE_EXT" } },
+                { "lzma", new string[] { $"$DOTNET_BASE_URL/Sdk/$VERSION_DIR/nuGetPackagesArchive.lzma" } }
+            };
         }
 
         public static IEnumerable<IDependencyUpdater> CreateUpdaters(
@@ -167,23 +176,35 @@ namespace Dotnet.Docker
 
             // Each product name has one or more candidate URLs from which to retrieve the artifact. Multiple candidate URLs
             // should be listed in priority order. Each subsequent URL listed is treated as a fallback.
-            string[] candidateUrls = s_urls[_productName];
-            for (int i = 0; i < candidateUrls.Length; i++)
+            string[] candidateUrls = _urls[_productName];
+
+            string[] baseUrls = new[] { BuildsDotnetBaseUrl, ReleaseDotnetBaseUrl };
+
+            for (int candidateUrlIndex = 0; candidateUrlIndex < candidateUrls.Length; candidateUrlIndex++)
             {
-                string downloadUrl = candidateUrls[i]
-                    .Replace("$ARCHIVE_EXT", archiveExt)
-                    .Replace("$VERSION_DIR", versionDir)
-                    .Replace("$VERSION_FILE", versionFile)
-                    .Replace("$CHANNEL_NAME", _options.ChannelName)
-                    .Replace("$OS", _os)
-                    .Replace("$OPTIONAL_OS", optionalOs)
-                    .Replace("$ARCH", _arch)
-                    .Replace("$DF_VERSION", _options.DockerfileVersion)
-                    .Replace("..", ".");
-                string? result = GetArtifactShaAsync(downloadUrl, errorOnNotFound: i == candidateUrls.Length - 1).Result;
-                if (result is not null)
+                for (int baseUrlIndex = 0; baseUrlIndex < baseUrls.Length; baseUrlIndex++)
                 {
-                    return result;
+                    string downloadUrl = candidateUrls[candidateUrlIndex]
+                        .Replace("$DOTNET_BASE_URL", baseUrls[baseUrlIndex])
+                        .Replace("$ARCHIVE_EXT", archiveExt)
+                        .Replace("$VERSION_DIR", versionDir)
+                        .Replace("$VERSION_FILE", versionFile)
+                        .Replace("$CHANNEL_NAME", _options.ChannelName)
+                        .Replace("$OS", _os)
+                        .Replace("$OPTIONAL_OS", optionalOs)
+                        .Replace("$ARCH", _arch)
+                        .Replace("$DF_VERSION", _options.DockerfileVersion)
+                        .Replace("..", ".");
+
+                    bool isLastUrlToCheck =
+                        candidateUrlIndex == candidateUrls.Length - 1 &&
+                        baseUrlIndex == baseUrls.Length - 1;
+
+                    string? result = GetArtifactShaAsync(downloadUrl, errorOnNotFound: isLastUrlToCheck).Result;
+                    if (result is not null)
+                    {
+                        return result;
+                    }
                 }
             }
 
@@ -227,7 +248,7 @@ namespace Dotnet.Docker
                 sha = await GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(downloadUrl)
                     ?? await GetDotNetReleaseChecksumsShaFromBuildVersionAsync(downloadUrl)
                     ?? await GetDotNetReleaseChecksumsShaFromPreviewVersionAsync(downloadUrl)
-                    ?? await GetDotNetCliChecksumsShaAsync(downloadUrl)
+                    ?? await GetDotNetBinaryStorageChecksumsShaAsync(downloadUrl)
                     ?? await ComputeChecksumShaAsync(downloadUrl);
 
                 if (sha != null)
@@ -289,16 +310,14 @@ namespace Dotnet.Docker
             return sha;
         }
 
-        private async Task<string?> GetDotNetCliChecksumsShaAsync(string productDownloadUrl)
+        private async Task<string?> GetDotNetBinaryStorageChecksumsShaAsync(string productDownloadUrl)
         {
             string? sha = null;
             string shaExt = _productName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ? ".sha" : ".sha512";
-
-            UriBuilder uriBuilder = new UriBuilder(productDownloadUrl)
-            {
-                Host = ChecksumsHostName
-            };
-            string shaUrl = uriBuilder.ToString() + shaExt;
+            string shaUrl = productDownloadUrl
+                .Replace(ReleaseDotnetBaseUrl, ReleaseChecksumsBaseUrl)
+                .Replace(BuildsDotnetBaseUrl, BuildsChecksumsBaseUrl)
+                + shaExt;
 
             Trace.TraceInformation($"Downloading '{shaUrl}'.");
             using (HttpResponseMessage response = await s_httpClient.GetAsync(shaUrl))
@@ -309,7 +328,7 @@ namespace Dotnet.Docker
                 }
                 else
                 {
-                    Trace.TraceInformation($"Failed to find `dotnetclichecksums` sha");
+                    Trace.TraceInformation($"Failed to find dotnet binary storage account sha");
                 }
             }
 
@@ -327,7 +346,7 @@ namespace Dotnet.Docker
             if (_productName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ||
                 _productName.Contains("aspnet", StringComparison.OrdinalIgnoreCase))
             {
-                version = GetBuildVersion("runtime", _dockerfileVersion, _versions, _options);
+                version = GetBuildVersion("runtime", _dockerfileVersion.ToString(), _versions, _options);
             }
 
             return version;
@@ -384,7 +403,7 @@ namespace Dotnet.Docker
 
         private static async Task<IDictionary<string, string>> GetDotnetReleaseChecksums(string? version)
         {
-            string uri = $"https://dotnetcli.azureedge.net/dotnet/checksums/{version}-sha.txt";
+            string uri = $"{ReleaseDotnetBaseUrl}/checksums/{version}-sha.txt";
             if (s_releaseChecksumCache.TryGetValue(uri, out Dictionary<string, string>? checksumEntries))
             {
                 return checksumEntries;

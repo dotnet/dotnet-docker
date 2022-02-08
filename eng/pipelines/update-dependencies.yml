@@ -41,19 +41,29 @@ stages:
     displayName: Update Dependencies (dotnet/dotnet-monitor)
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
+    strategy:
+      matrix:
+        Update6:
+          MajorMinorVersion: 6.$(monitor6MinorVersion)
+          ChannelQuality: $(monitor6Quality)
+          StableBranding: $(monitor6StableBranding)
+        Update7:
+          MajorMinorVersion: 7.$(monitor7MinorVersion)
+          ChannelQuality: $(monitor7Quality)
+          StableBranding: $(monitor7StableBranding)
     steps:
-    - script: $(engPath)/get-drop-versions-monitor.sh $(monitorChannel)
+    - script: $(engPath)/get-drop-versions-monitor.sh $(MajorMinorVersion)/$(ChannelQuality)
       displayName: Get Versions
     - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
       displayName: Build Update Dependencies Tool
     - script: >
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies
-        $(monitorDockerfileVersion)
+        $(MajorMinorVersion)
         --user $(dotnetDockerBot.userName)
         --email $(dotnetDockerBot.email)
         --password $(BotAccount-dotnet-docker-bot-PAT)
         --product-version monitor=$(monitorVer)
-        --channel-name $(monitorChannel)
-        --stable-branding $(monitorStableBranding)
-        --version-source-name dotnet/dotnet-monitor
+        --channel-name $(MajorMinorVersion)/$(ChannelQuality)
+        --stable-branding $(StableBranding)
+        --version-source-name dotnet/dotnet-monitor/$(MajorMinorVersion)
       displayName: Run Update Dependencies

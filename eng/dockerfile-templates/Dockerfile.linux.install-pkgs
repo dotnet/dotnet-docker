@@ -1,0 +1,31 @@
+{{
+    _ ARGS:
+        pkgs: list of packages to install
+        pkg-mgr (optional): package manager to use
+        pkg-mgr-opts (optional): additional options to pass to the package manager
+        noninteractive (optional): whether to use noninteractive mode ^
+    
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isDnf to ARGS["pkg-mgr"] = "dnf" ^
+    set isTdnf to ARGS["pkg-mgr"] = "tdnf" || (!isDnf && isMariner) ^
+    set isApk to ARGS["pkg-mgr"] = "apk" || isAlpine ^
+    set appendPkgSuffix(pkg, index) to:{{
+        _ Don't apply a space and continuation character after the package text if it's a comment or
+          the last of the Alpine packages ^
+        return find(pkg, "#") != 0 && !(isAlpine && index = len(ARGS["pkgs"]) - 1)
+    }}
+}}{{
+if isDnf:dnf install -y{{ARGS["pkg-mgr-opts"]}} \^
+elif isApk:apk add --no-cache{{ARGS["pkg-mgr-opts"]}} \^
+elif isTdnf:tdnf install -y{{ARGS["pkg-mgr-opts"]}} \^
+else:apt-get update \
+    &&{{if ARGS["noninteractive"]: DEBIAN_FRONTEND=noninteractive}} apt-get install -y --no-install-recommends{{ARGS["pkg-mgr-opts"]}} \}}{{
+    for index, pkg in ARGS["pkgs"]:
+        {{pkg}}{{if appendPkgSuffix(pkg, index):{{if pkg != "": }}\}}}}{{
+if isTdnf:
+    && tdnf clean all^
+elif isDnf:
+    && dnf clean all^
+elif !isApk:
+    && rm -rf /var/lib/apt/lists/*}}

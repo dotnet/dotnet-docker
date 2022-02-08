@@ -24,6 +24,13 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
+            if (imageData.IsDistroless)
+            {
+                OutputHelper.WriteLine(
+                    "Skipping test for distroless due to https://github.com/dotnet/dotnet-docker/issues/3448. Re-enable when fixed.");
+                return;
+            }
+
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper, isWeb: true);
             await verifier.Execute();
         }
@@ -45,7 +52,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
             }
 
-            if (imageData.Version.Major >= 6)
+            if (imageData.Version.Major == 6)
             {
                 variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", "Json"));
             }

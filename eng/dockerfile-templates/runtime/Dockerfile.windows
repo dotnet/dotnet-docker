@@ -1,0 +1,42 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isSingleStage to find(OS_VERSION, "windowsservercore") >= 0 ^
+    set serverCoreBaseTag to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64")
+}}# escape=`
+
+{{if isSingleStage:{{
+
+    _ SINGLE STAGE
+
+}}FROM {{serverCoreBaseTag}}
+
+{{InsertTemplate("../Dockerfile.common-dotnet-envs")}} `
+    {{InsertTemplate("Dockerfile.envs", [], "    ")}}
+
+# Install .NET Runtime
+{{InsertTemplate("Dockerfile.windows.install-runtime")}}
+
+{{InsertTemplate("Dockerfile.windows.set-path")}}^
+else:{{
+    
+    _ MULTI STAGE
+    
+}}# Installer image
+FROM {{serverCoreBaseTag}} AS installer
+
+# Retrieve .NET{{when(dotnetVersion = "3.1", " Core", "")}} Runtime
+{{InsertTemplate("Dockerfile.windows.install-runtime", ["use-local-version-var": "true"])}}
+
+
+# Runtime image
+FROM mcr.microsoft.com/windows/nanoserver:{{OS_VERSION_NUMBER}}-amd64
+
+{{InsertTemplate("../Dockerfile.common-dotnet-envs")}}{{if dotnetVersion != "3.1": `
+    {{InsertTemplate("Dockerfile.envs", [], "    ")}}}}
+
+# In order to set system PATH, ContainerAdministrator must be used
+USER ContainerAdministrator
+{{InsertTemplate("Dockerfile.windows.set-path")}}
+USER ContainerUser
+
+COPY --from=installer ["/dotnet", "/Program Files/dotnet"]}}

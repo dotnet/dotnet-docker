@@ -1,0 +1,49 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
+    set isSingleStage to (dotnetVersion = "3.1" || isAlpine || isFullMariner) ^
+    set archTagSuffix to when(dotnetVersion != "3.1" || ARCH_VERSIONED != "amd64", ARCH_TAG_SUFFIX, "") ^
+    set runtimeBaseTag to
+        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix) ^
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
+    set installerImageTag to when(isDistrolessMariner,
+        cat("cblmariner.azurecr.io/base/core:", OS_VERSION_NUMBER),
+        cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl")) ^
+    set copyFromSrcPath to when(isDistrolessMariner, "/dotnet", "/shared/Microsoft.AspNetCore.App") ^
+    set copyFromDstPath to when(isDistrolessMariner, "/usr/share/dotnet", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App")
+}}ARG REPO=mcr.microsoft.com/dotnet/runtime{{if isSingleStage:
+{{
+
+    _ SINGLE STAGE
+
+}}FROM {{runtimeBaseTag}}
+{{if isAlpine:
+{{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
+}}{{if dotnetVersion != "3.1":
+{{InsertTemplate("Dockerfile.envs")}}
+}}
+# Install ASP.NET Core
+{{InsertTemplate("Dockerfile.linux.install-aspnet", ["use-local-version-var": dotnetVersion = "3.1"])}}^else:
+{{
+
+    _ MULTI STAGE
+
+}}
+# Installer image
+FROM {{installerImageTag}} AS installer
+{{if isDistrolessMariner:
+RUN tdnf install -y ca-certificates-microsoft \
+    && tdnf clean all
+}}
+# Retrieve ASP.NET Core
+{{InsertTemplate("Dockerfile.linux.install-aspnet", ["use-local-version-var": "true"])}}
+
+
+# ASP.NET Core image
+FROM {{runtimeBaseTag}}
+
+{{InsertTemplate("Dockerfile.envs")}}
+
+COPY --from=installer ["{{copyFromSrcPath}}", "{{copyFromDstPath}}"]}}

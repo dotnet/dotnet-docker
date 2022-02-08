@@ -27,23 +27,9 @@ RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK
     && dotnet_sha512='{{VARIABLES["sdk|5.0|linux-musl|x64|sha"]}}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
-    && tar -C /usr/share/dotnet -oxzf dotnet.tar.gz ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
-# Install PowerShell global tool
-RUN powershell_version={{VARIABLES["powershell|5.0|build-version"]}} \
-    && wget -O PowerShell.Linux.Alpine.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha512='{{VARIABLES["powershell|5.0|Linux.Alpine|sha"]}}' \
-    && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c - \
-    && mkdir -p /usr/share/powershell \
-    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
-    && dotnet nuget locals all --clear \
-    && rm PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && chmod 755 /usr/share/powershell/pwsh \
-    && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
-    # To reduce image size, remove the copy nupkg that nuget keeps.
-    && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm \
-    # Add ncurses-terminfo-base to resolve psreadline dependency
-    && apk add --no-cache ncurses-terminfo-base
+{{InsertTemplate("../Dockerfile.linux.install-powershell")}}

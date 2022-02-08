@@ -1,0 +1,26 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set nupkgPlatform to when(isAlpine, "Linux.Alpine", cat("Linux.", ARCH_NUPKG)) ^
+    set shaPlatform to when(isAlpine, "Linux.Alpine", cat("Linux|", ARCH_NUPKG)) ^
+    set nupkgName to cat("PowerShell.", nupkgPlatform, ".$powershell_version.nupkg") ^
+    set url to cat("https://pwshtool.blob.core.windows.net/tool/$powershell_version/", nupkgName)
+}}# Install PowerShell global tool
+RUN powershell_version={{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-file",
+        [
+            "out-file": nupkgName,
+            "url": url,
+            "sha": VARIABLES[join(["powershell", dotnetVersion, shaPlatform, "sha"], "|")],
+            "sha-var-name": "powershell_sha512"
+        ])}} \
+    && mkdir -p /usr/share/powershell \
+    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.{{nupkgPlatform}} \
+    && dotnet nuget locals all --clear \
+    && rm {{nupkgName}} \
+    && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
+    && chmod 755 /usr/share/powershell/pwsh \
+    # To reduce image size, remove the copy nupkg that nuget keeps.
+    && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm{{if isAlpine: \
+    # Add ncurses-terminfo-base to resolve psreadline dependency
+    && apk add --no-cache ncurses-terminfo-base}}
