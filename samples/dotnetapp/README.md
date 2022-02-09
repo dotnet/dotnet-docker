@@ -164,7 +164,7 @@ dotnetapp           alpine-arm32        f85033da1b6f        20 hours ago        
 dotnetapp           debian-arm32        4f6ade8318d4        20 hours ago        165MB
 ```
 
-You can build ARM32 and ARM64 images on x64 machines, but you will not be able to run them. Docker relies on QEMU for this scenario, which isn't supported by .NET. You must test and run .NET imges on actual hardware for the given processor type. A common pattern for this situation is building on x64, [pushing images to a registry](push-image-to-acr.md), and then pulling the image from an ARM device.
+You can build ARM32 and ARM64 images on x64 machines, but you will not be able to run them. Docker relies on QEMU for this scenario, which isn't supported by .NET. You must test and run .NET images on actual hardware for the given processor type. A common pattern for this situation is building on x64, [pushing images to a registry](push-image-to-acr.md), and then pulling the image from an ARM device.
 
 ## Build an image optimized for startup performance
 
