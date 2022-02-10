@@ -1,11 +1,9 @@
 # Featured Tags
 
-* `7.0` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/monitor:7.0`
-* `6.1` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/monitor:6.1`
-* `6.0` (Current)
-  * `docker pull mcr.microsoft.com/dotnet/monitor:6.0`
+* `7` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/monitor:7`
+* `6` (Current)
+  * `docker pull mcr.microsoft.com/dotnet/monitor:6`
 
 # About This Image
 
@@ -47,13 +45,13 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
+6.1.0-alpine-amd64, 6.1-alpine-amd64, 6.1.0-alpine, 6.1-alpine, 6.1.0, 6.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.1/alpine/amd64/Dockerfile) | Alpine 3.15
 6.0.2-alpine-amd64, 6.0-alpine-amd64, 6.0.2-alpine, 6.0-alpine, 6.0.2, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.0/alpine/amd64/Dockerfile) | Alpine 3.14
 
 ##### .NET Monitor Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 7.0.0-preview.1-alpine-amd64, 7.0-alpine-amd64, 7.0.0-preview.1-alpine, 7.0-alpine, 7.0.0-preview.1, 7.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.0/alpine/amd64/Dockerfile) | Alpine 3.14
-6.1.0-alpine-amd64, 6.1-alpine-amd64, 6.1.0-alpine, 6.1-alpine, 6.1.0, 6.1, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.1/alpine/amd64/Dockerfile) | Alpine 3.15
 
 You can retrieve a list of all available tags for dotnet/monitor at https://mcr.microsoft.com/v2/dotnet/monitor/tags/list.
 <!--End of generated tags-->

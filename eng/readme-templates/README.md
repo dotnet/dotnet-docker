@@ -10,12 +10,10 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
   * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp`
 * `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
-^elif match(SHORT_REPO, "monitor"):* `7.0` (Preview)
-  * `docker pull {{FULL_REPO}}:7.0`
-* `6.1` (Preview)
-  * `docker pull {{FULL_REPO}}:6.1`
-* `6.0` (Current)
-  * `docker pull {{FULL_REPO}}:6.0`
+^elif match(SHORT_REPO, "monitor"):* `7` (Preview)
+  * `docker pull {{FULL_REPO}}:7`
+* `6` (Current)
+  * `docker pull {{FULL_REPO}}:6`
 ^else: * `7.0` (Preview)
   * `docker pull {{FULL_REPO}}:7.0`
 * `6.0` (Current, LTS)
