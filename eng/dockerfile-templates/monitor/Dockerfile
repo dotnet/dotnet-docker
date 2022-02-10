@@ -14,7 +14,9 @@
     _ All .NET Monitor versions publish to the same storage account, thus use the latest storage account scheme.
       However, the latest 6.0 release still uses dotnetcli storage account. ^
     set urlVersion to when(monitorMajorMinor != "6.0", "7.0", "6.0") ^
-    set url to cat(VARIABLES[cat("base-url|", urlVersion ,"|", VARIABLES["branch"])])
+    set url to cat(VARIABLES[cat("base-url|", urlVersion ,"|", VARIABLES["branch"])]) ^
+    _ Use the $DOTNET_MONITOR_VERSION variable for the version folder if the build and product versions are the same. ^
+    set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$DOTNET_MONITOR_VERSION')
 }}ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
@@ -23,7 +25,7 @@ FROM $SDK_REPO:{{installerBaseTag}} AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION={{monitorVersion}}
-RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg {{url}}/diagnostics/monitor/{{buildVersion}}/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
+RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg {{url}}/diagnostics/monitor/{{versionFolder}}/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
     && dotnetmonitor_sha512='{{monitorSha}}' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework {{targetFrameworkMoniker}} --no-cache \
