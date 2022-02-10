@@ -9,7 +9,6 @@
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
     set dotnetSuffix to when(dotnetVersion = "3.1", " Core", "") ^
-    set tarballFile to "dotnet.tar.gz" ^
     set installDir to "/usr/share/dotnet" ^
     set url to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
@@ -17,19 +16,20 @@
     set sdkVersionVar to when(ARGS["use-local-version-var"], "$sdk_version", "$DOTNET_SDK_VERSION") ^
     set runtimeVersionVar to when(ARGS["use-local-version-var"], "$dotnet_version", "$DOTNET_VERSION") ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
+    set commonShaVarName to "dotnet_sha512" ^
     set rpms to [
         [
             "filename": "dotnet.rpm",
             "url": cat(baseUrl, "/Sdk/", sdkVersionVar, "/dotnet-sdk-", sdkVersionVar, "-", ARCH_SHORT, ".rpm"),
             "sha": VARIABLES[join(["sdk", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_sha512"
+            "sha-var-name": commonShaVarName
         ],
         [
             "filename": "apphost.rpm",
             "url": cat(baseUrl, "/Runtime/", runtimeVersionVar, "/dotnet-apphost-pack-", runtimeVersionVar, "-",
                 ARCH_SHORT, ".rpm"),
             "sha": VARIABLES[join(["runtime-apphost-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_sha512"
+            "sha-var-name": commonShaVarName
         ],
         [
             "filename": "targeting-pack.rpm",
@@ -37,21 +37,21 @@
                 "/dotnet-targeting-pack-", VARIABLES[cat("runtime|", dotnetVersion, "|targeting-pack-version")],
                 "-", ARCH_SHORT, ".rpm"),
             "sha": VARIABLES[join(["runtime-targeting-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_sha512"
+            "sha-var-name": commonShaVarName
         ],
         [
             "filename": "aspnetcore-targeting-pack.rpm",
             "url": cat(baseUrl, "/aspnetcore/Runtime/", VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")],
                 "/aspnetcore-targeting-pack-", VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")], ".rpm"),
             "sha": VARIABLES[join(["aspnet-runtime-targeting-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_sha512"
+            "sha-var-name": commonShaVarName
         ],
         [
             "filename": "netstandard-targeting-pack.rpm",
             "url": cat("https://dotnetcli.azureedge.net/dotnet/Runtime/", VARIABLES["runtime|3.1|targeting-pack-version"],
                 "/netstandard-targeting-pack-2.1.0-", ARCH_SHORT, ".rpm"),
             "sha": VARIABLES[join(["netstandard-targeting-pack-2.1.0", "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_sha512"
+            "sha-var-name": commonShaVarName
         ]
     ] ^
     set tarballs to [
@@ -59,7 +59,7 @@
             "filename": "dotnet.tar.gz",
             "url": cat(baseUrl, "/Sdk/", sdkVersionVar, "/dotnet-sdk-", sdkVersionVar, "-", platform, "-", ARCH_SHORT, ".tar.gz"),
             "sha": VARIABLES[join(["sdk", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_sha512",
+            "sha-var-name": commonShaVarName,
             "extract-paths": when(ARGS["based-on-buildpack-deps"], [],
                 when(dotnetVersion = "3.1" || dotnetVersion = "5.0",
                     [
