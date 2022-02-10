@@ -70,9 +70,9 @@
     "monitor|6.0|product-version": "6.0.2",
     "monitor|6.0|sha": "3203e455fe4fa9e7b251ba957ddf286a3a3fcf1c88663315547d5f4f7df9ee1c1f164dfcc42edeebaf786bf1b893753c5a5339377b259798208d5f07c48f9a10",
 
-    "monitor|6.1|build-version": "6.1.0-rtm.22107.7",
+    "monitor|6.1|build-version": "6.1.0-rtm.22109.3",
     "monitor|6.1|product-version": "6.1.0",
-    "monitor|6.1|sha": "78fc9988ee14062276a0e5a2162b39cdc0bea4ca96de4f5c4824b2f74062f7945d8f127393966c850eb9e9baae302e40e227ac51a23ec234b03199575a07d34a",
+    "monitor|6.1|sha": "4e8d78c1bc5db20ec7d32c23272afa80fc7c5eb0904f2e769310d48952294ce08b07f08272218db7c8c165844063548b035e59b716a858fa127f6ad9f013d4c7",
 
     "monitor|7.0|build-version": "7.0.0-preview.1.22109.7",
     "monitor|7.0|product-version": "7.0.0-preview.1",
