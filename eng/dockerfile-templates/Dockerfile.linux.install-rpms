@@ -6,4 +6,4 @@
     
     set fileList to join(ARGS["files"], " ")
 }}rpm --install {{fileList}} \
-    && rm {{fileList}}
+&& rm {{fileList}}

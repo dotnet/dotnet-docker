@@ -1,0 +1,52 @@
+{{
+    _ ARGS:
+        use-local-version-var (optional): Whether to define a local variable for the SDK version
+            instead of referencing the environment variable. ^
+
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
+    set dotnetSuffix to when(dotnetVersion = "3.1", " Core", "") ^
+    set sdkExtractGroups to [
+        [
+            "dir": "dotnet",
+            "paths": filter([
+                "LICENSE.txt",
+                "ThirdPartyNotices.txt",
+                "packs",
+                "sdk",
+                when(!(dotnetVersion = "3.1" || dotnetVersion = "5.0"), "sdk-manifests", ""),
+                "templates",
+                "shared"
+            ], len)
+        ],
+        [
+            "dir": "dotnet\shared",
+            "paths": [
+                "Microsoft.WindowsDesktop.App"
+            ]
+        ]
+    ] ^
+    set getFormattedPath(path) to:{{
+        return cat("'", path, "'")
+    }}
+}}RUN powershell -Command " `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        # Retrieve .NET{{dotnetSuffix}} SDK
+        {{InsertTemplate("Dockerfile.windows.install-sdk",
+            [
+                "use-local-version-var": ARGS["use-local-version-var"],
+                "sdk-extract-groups": when(isServerCore, sdkExtractGroups, [])
+            ], "        ")}} `
+        `
+        {{InsertTemplate("Dockerfile.windows.install-powershell", [], "        ")}}{{
+if !(dotnetVersion = "3.1" || dotnetVersion = "5.0" || isServerCore): `
+        `
+        # Workaround for https://github.com/dotnet/sdk/issues/18410
+        \dotnet\dotnet build-server shutdown;}}{{if !isServerCore: `
+        `
+        # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers{{
+for i, group in sdkExtractGroups:
+        Get-ChildItem -Exclude {{join(map(group.paths, getFormattedPath), ",")}} -Path {{group.dir}} `
+            | Remove-Item -Force -Recurse{{if i < len(group.paths) - 1:; `}}}}}}"

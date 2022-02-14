@@ -30,7 +30,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 {{InsertTemplate("Dockerfile.linux.install-runtime",
     [
         "dest-dir": "/usr/share/dotnet",
-        "add-symlink": "true",
+        "add-symlink": !isFullMariner,
         "use-local-version-var": dotnetVersion = "3.1"
     ])}}^
 else:{{
