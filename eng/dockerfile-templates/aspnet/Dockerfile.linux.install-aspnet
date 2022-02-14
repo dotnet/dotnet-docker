@@ -10,31 +10,24 @@
     set filePlatform to when(isAlpine, "-linux-musl", when(isFullMariner, "", "-linux")) ^
     set varPlatform to when(isAlpine, "linux-musl", when(isFullMariner, "linux-rpm", "linux")) ^
     set fileExt to when(isFullMariner, "rpm", "tar.gz") ^
-    set tarballDestDir to when(isAlpine || dotnetVersion = "3.1", "/usr/share/dotnet", when(isDistroless, "/dotnet", "")) ^
+    set destDir to when(isAlpine || dotnetVersion = "3.1", "/usr/share/dotnet", when(isDistroless, "/dotnet", "")) ^
     set aspnetVersion to when(ARGS["use-local-version-var"], "$aspnetcore_version", "$ASPNET_VERSION") ^
     set url to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
-        "/aspnetcore/Runtime/", aspnetVersion, "/aspnetcore-runtime-", aspnetVersion, filePlatform, "-", ARCH_SHORT, ".", fileExt)
-}}RUN {{if ARGS["use-local-version-var"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
-    && }}{{InsertTemplate("../Dockerfile.linux.download-file",
+        "/aspnetcore/Runtime/", aspnetVersion, "/aspnetcore-runtime-", aspnetVersion, filePlatform, "-", ARCH_SHORT, ".", fileExt) ^
+    set files to [
         [
-            "out-file": cat("aspnetcore.", fileExt),
+            "filename": cat("aspnetcore.", fileExt),
             "url": url,
             "sha": VARIABLES[join(["aspnet", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "aspnetcore_sha512"
-        ])}} \{{if isDistroless:
-    && mkdir -p /dotnet \}}
-    && {{if
-        isFullMariner:{{
-            InsertTemplate("../Dockerfile.linux.install-rpms",
-                [
-                    "files": [cat("aspnetcore.", fileExt)]
-                ])
-        }}^
-        else:{{
-            InsertTemplate("../Dockerfile.linux.extract-tarball",
-                [
-                    "file": cat("aspnetcore.", fileExt),
-                    "dest-dir": tarballDestDir,
-                    "extract-paths": ["./shared/Microsoft.AspNetCore.App"]
-                ])}}}}
+            "sha-var-name": "aspnetcore_sha512",
+            "extract-paths": ["./shared/Microsoft.AspNetCore.App"]
+        ]
+    ]
+}}RUN {{if ARGS["use-local-version-var"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
+    && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
+        [
+            "files": files,
+            "install-dir": destDir
+            "create-install-dir": isDistroless
+        ], "    ")}}

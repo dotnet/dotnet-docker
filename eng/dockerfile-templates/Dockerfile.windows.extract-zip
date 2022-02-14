@@ -3,7 +3,7 @@
 
     ARGS:
         file: Zip to extract
-        extract-paths: Paths within the tarball to extract
+        extract-paths: Paths within the zip file to extract
         dest-dir: Destination directory
-}}tar -oxzf {{ARGS["file"]}}{{if ARGS["dest-dir"]: -C {{ARGS["dest-dir"]}}}}{{if ARGS["extract-paths"]: {{join(ARGS["extract-paths"])}}}}; `
-        Remove-Item -Force {{ARGS["file"]}}
+}}tar -oxzf {{ARGS["file"]}}{{if ARGS["dest-dir"]: -C {{ARGS["dest-dir"]}}}}{{if ARGS["extract-paths"]: {{join(ARGS["extract-paths"], " ")}}}}; `
+Remove-Item -Force {{ARGS["file"]}}

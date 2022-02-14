@@ -24,7 +24,7 @@ RUN powershell -Command `
             "url": url,
             "sha": VARIABLES[cat("aspnet|", dotnetVersion, "|win|x64|sha")],
             "sha-var-name": "aspnetcore_sha512"
-        ], "        ")}} `
+        ], "        ")}}; `
         `
         {{if not(isServerCore):mkdir {{dotnetDir}}/shared/Microsoft.AspNetCore.App; `
         }}{{InsertTemplate("../Dockerfile.windows.extract-zip",
@@ -34,4 +34,4 @@ RUN powershell -Command `
                 "extract-paths": [
                     "./shared/Microsoft.AspNetCore.App"
                 ]
-            ])}}
+            ], "        ")}}

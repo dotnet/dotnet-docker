@@ -1,0 +1,33 @@
+{{
+    _ ARGS:
+        files: Array of metadata describing the files to be downloaded and installed
+        install-dir: Directory to install the files
+        create-install-dir (optional): Whether to create the install directory ^
+    
+    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
+
+    set getFilename(file) to:{{
+        return file["filename"]
+    }}
+}}{{
+for i, file in ARGS["files"]:{{if i > 0:&& }}{{
+InsertTemplate("Dockerfile.linux.download-file",
+    [
+        "out-file": file["filename"],
+        "url": file["url"],
+        "sha": file["sha"],
+        "sha-var-name": file["sha-var-name"]
+    ])}} \
+{{if len(ARGS["files"]) > 1:\
+}}}}{{
+if isFullMariner:&& {{InsertTemplate("Dockerfile.linux.install-rpms",
+    [
+        "files": map(ARGS["files"], getFilename)
+    ])}}^
+else:{{if ARGS["create-install-dir"]:&& mkdir -p {{ARGS["install-dir"]}} \
+}}{{for file in ARGS["files"]:&& {{InsertTemplate("Dockerfile.linux.extract-tarball",
+    [
+        "file": file["filename"],
+        "dest-dir": ARGS["install-dir"],
+        "extract-paths": file["extract-paths"]
+    ])}}}}}}
