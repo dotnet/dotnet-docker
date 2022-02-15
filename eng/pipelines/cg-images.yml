@@ -15,13 +15,22 @@ variables:
 
 jobs:
 - job: ScanImages
+  displayName: Scan Images
   pool:
     vmImage: $(defaultLinuxAmd64PoolImage)
+  strategy:
+      matrix:
+        amd64:
+          arch: amd64
+        arm32:
+          arch: arm
+        arm64:
+          arch: arm64
   steps:
   - template: ../common/templates/steps/init-docker-linux.yml
   - script: >
       $(runImageBuilderCmd) pullImages
-      --architecture '*'
+      --architecture '$(arch)'
       --manifest 'manifest.json'
       --output-var 'pulledImages'
     displayName: Pull Images
