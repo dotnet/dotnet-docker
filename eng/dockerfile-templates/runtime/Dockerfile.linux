@@ -8,7 +8,10 @@
     set runtimeDepsBaseTag to cat(
         "$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix) ^
     set installerImageTag to when(isDistrolessMariner,
-        cat("cblmariner.azurecr.io/base/core:", OS_VERSION_NUMBER),
+        cat(
+            when(find(OS_VERSION, "2.0") >= 0, "cblmariner2preview.azurecr.io", "cblmariner.azurecr.io"),
+            "/base/core:",
+            OS_VERSION_NUMBER),
         cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl"))
 }}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps{{if isSingleStage:
 {{
@@ -30,7 +33,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 {{InsertTemplate("Dockerfile.linux.install-runtime",
     [
         "dest-dir": "/usr/share/dotnet",
-        "add-symlink": !isFullMariner,
+        "add-symlink": !isFullMariner || ARCH_SHORT = "arm64",
         "use-local-version-var": dotnetVersion = "3.1"
     ])}}^
 else:{{

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
@@ -76,6 +77,26 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
 
                 return rid;
+            }
+        }
+
+        public string OsVersion
+        {
+            get
+            {
+                const string PrefixGroup = "Prefix";
+                const string VersionGroup = "Version";
+                const string LtscPrefix = "ltsc";
+                string versionNumber = string.Empty;
+                Match match = Regex.Match(OS, @$"(-(?<{PrefixGroup}>[a-zA-Z_]*))?(?<{VersionGroup}>\d+.\d+)");
+
+                if (match.Groups[PrefixGroup].Success && match.Groups[PrefixGroup].Value == LtscPrefix)
+                {
+                    versionNumber = LtscPrefix;
+                }
+
+                versionNumber += match.Groups[VersionGroup].Value;
+                return versionNumber;
             }
         }
 

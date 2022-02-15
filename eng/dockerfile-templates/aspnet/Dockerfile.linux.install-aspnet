@@ -7,10 +7,12 @@
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isDistroless to find(OS_VERSION, "-distroless") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set filePlatform to when(isAlpine, "-linux-musl", when(isFullMariner, "", "-linux")) ^
-    set varPlatform to when(isAlpine, "linux-musl", when(isFullMariner, "linux-rpm", "linux")) ^
-    set fileExt to when(isFullMariner, "rpm", "tar.gz") ^
-    set destDir to when(isAlpine || dotnetVersion = "3.1", "/usr/share/dotnet", when(isDistroless, "/dotnet", "")) ^
+    set filePlatform to when(isAlpine, "-linux-musl", when(isFullMariner && ARCH_SHORT != "arm64", "", "-linux")) ^
+    set varPlatform to when(isAlpine, "linux-musl", when(isFullMariner && ARCH_SHORT != "arm64", "linux-rpm", "linux")) ^
+    set fileExt to when(isFullMariner && ARCH_SHORT != "arm64", "rpm", "tar.gz") ^
+    set destDir to when(isAlpine || dotnetVersion = "3.1" || (isFullMariner && ARCH_SHORT = "arm64"),
+        "/usr/share/dotnet",
+        when(isDistroless, "/dotnet", "")) ^
     set aspnetVersion to when(ARGS["use-local-version-var"], "$aspnetcore_version", "$ASPNET_VERSION") ^
     set url to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],

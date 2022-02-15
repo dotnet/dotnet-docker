@@ -9,7 +9,10 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
     set installerImageTag to when(isDistrolessMariner,
-        cat("cblmariner.azurecr.io/base/core:", OS_VERSION_NUMBER),
+        cat(
+            when(find(OS_VERSION, "2.0") >= 0, "cblmariner2preview.azurecr.io", "cblmariner.azurecr.io"),
+            "/base/core:",
+            OS_VERSION_NUMBER),
         cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl")) ^
     set copyFromSrcPath to when(isDistrolessMariner, "/dotnet", "/shared/Microsoft.AspNetCore.App") ^
     set copyFromDstPath to when(isDistrolessMariner, "/usr/share/dotnet", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App")
