@@ -5502,7 +5502,7 @@
               "dockerfile": "src/monitor/7.0/alpine/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
-              "osVersion": "alpine3.14",
+              "osVersion": "alpine3.15",
               "tags": {
                 "$(monitor|7.0|product-version)-alpine-amd64": {},
                 "7.0-alpine-amd64": {},
