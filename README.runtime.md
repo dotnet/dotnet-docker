@@ -1,7 +1,5 @@
 # Featured Tags
 
- * `7.0` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/runtime:7.0`
 * `6.0` (Current, LTS)
   * `docker pull mcr.microsoft.com/dotnet/runtime:6.0`
 

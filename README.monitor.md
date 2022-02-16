@@ -1,7 +1,5 @@
 # Featured Tags
 
-* `7` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/monitor:7`
 * `6` (Current)
   * `docker pull mcr.microsoft.com/dotnet/monitor:6`
 
