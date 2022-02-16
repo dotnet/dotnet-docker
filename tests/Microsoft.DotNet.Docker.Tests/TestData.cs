@@ -85,7 +85,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V7_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
         };
-        
+
         private static readonly SampleImageData[] s_linuxSampleTestData =
         {
             new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Amd64, IsPublished = true },
