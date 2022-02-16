@@ -14,7 +14,10 @@
     _ All .NET Monitor versions publish to the same storage account, thus use the latest storage account scheme.
       However, the latest 6.0 release still uses dotnetcli storage account. ^
     set urlVersion to when(monitorMajorMinor != "6.0", "7.0", "6.0") ^
-    set url to cat(VARIABLES[cat("base-url|", urlVersion ,"|", VARIABLES["branch"])]) ^
+    _ When build and product versions are the same and they are stable versions, use account from main branch e.g. dotnetcli
+      Otherwise, use the account that is associated with the current branch. ^
+    set urlBranch to when(find(monitorVersion, "-") >= 0 || buildVersion != monitorVersion, VARIABLES["branch"], "main") ^
+    set url to cat(VARIABLES[cat("base-url|", urlVersion ,"|", urlBranch)]) ^
     _ Use the $DOTNET_MONITOR_VERSION variable for the version folder if the build and product versions are the same. ^
     set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$DOTNET_MONITOR_VERSION')
 }}ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
