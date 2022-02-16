@@ -5472,7 +5472,7 @@
               "dockerfile": "src/monitor/6.1/alpine/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
-              "osVersion": "alpine3.15",
+              "osVersion": "alpine3.14",
               "tags": {
                 "$(monitor|6.1|product-version)-alpine-amd64": {},
                 "6.1-alpine-amd64": {}
