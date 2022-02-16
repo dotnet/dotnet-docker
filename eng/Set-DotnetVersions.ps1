@@ -23,6 +23,10 @@ param(
     [string]
     $RuntimeVersion,
 
+    # Build verison of the .NET Monitor tool
+    [string]
+    $MonitorVersion,
+
     # Compute the checksum if a published checksum cannot be found
     [Switch]
     $ComputeShas,
@@ -48,6 +52,10 @@ if ($AspnetVersion) {
 
 if ($RuntimeVersion) {
     $updateDepsArgs += @("--product-version", "runtime=$RuntimeVersion", "--product-version", "runtime-apphost-pack=$RuntimeVersion", "--product-version", "runtime-targeting-pack=$RuntimeVersion", "--product-version", "runtime-host=$RuntimeVersion", "--product-version", "runtime-hostfxr=$RuntimeVersion", "--product-version", "runtime-deps-cm.1=$RuntimeVersion", "--product-version", "netstandard-targeting-pack-2.1.0")
+}
+
+if ($MonitorVersion) {
+    $updateDepsArgs += @("--product-version", "monitor=$MonitorVersion")
 }
 
 if ($ComputeShas) {

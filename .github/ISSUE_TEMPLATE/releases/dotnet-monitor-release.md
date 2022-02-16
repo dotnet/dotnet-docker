@@ -12,7 +12,7 @@
       - [ ] Check for additional changes by diffing the main and nightly branches
       - [ ] &lt;add link to PR/commit&gt;
 1. - [ ] Run `update-dependencies` tool to update all the necessary files to reflect the specified .NET versions (run this command for each version being released):
-      - [ ] `dotnet run --project .\eng\update-dependencies\update-dependencies.csproj <major/minor version> --product-version monitor=<version> --channel-name <channel>`
+      - [ ] `./eng/Set-DotnetVersions.ps1 -ProductVersion <major/minor version> -MonitorVersion <version>`
 1. - [ ] Inspect generated changes for correctness
 1. - [ ] Commit generated changes
 1. - [ ] Create PR
