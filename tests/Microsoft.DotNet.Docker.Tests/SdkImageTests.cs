@@ -128,6 +128,12 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
+            if (imageData.Version.Major == 6 && !DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                OutputHelper.WriteLine("Disable this test for 6.0 on Windows due to a known issue in 6.0.200, https://github.com/dotnet/dotnet-docker/issues/3504");
+                return;
+            }
+
             // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
             {
