@@ -1,0 +1,49 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isBasedOnBuildpackDeps to (dotnetVersion = "3.1" && !(isAlpine || isMariner)) ^
+    set archTagSuffix to when(dotnetVersion != "3.1", ARCH_TAG_SUFFIX, "") ^
+    set baseImageTag to when(isBasedOnBuildpackDeps,
+        cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION, "-scm"),
+        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix)) ^
+    set pkgs to filter(when(isAlpine,
+        [
+            "curl",
+            "icu-libs",
+            "git"
+        ],
+        when(isMariner,
+            [
+                "git",
+                when(dotnetVersion = "3.1" || dotnetVersion = "5.0", "procps-ng", "")
+            ],
+            [
+                "curl",
+                "git",
+                when(dotnetVersion = "3.1" || dotnetVersion = "5.0", "procps", "")
+                "wget"
+            ])), len)
+}}{{if !isBasedOnBuildpackDeps:ARG REPO=mcr.microsoft.com/dotnet/aspnet
+}}FROM {{baseImageTag}}
+
+{{InsertTemplate("Dockerfile.envs", ["based-on-buildpack-deps": isBasedOnBuildpackDeps])}}
+{{if isAlpine && dotnetVersion = "3.1":
+# Add dependencies for disabling invariant mode (set in base image)
+RUN apk add --no-cache icu-libs
+}}{{if dotnetVersion != "3.1":
+RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
+[
+    "pkgs": pkgs
+])}}
+}}{{if isBasedOnBuildpackDeps:
+# Install .NET CLI dependencies
+RUN {{InsertTemplate("../Dockerfile.linux.install-deps", ["isSdk": "true"])}}
+}}
+{{InsertTemplate("Dockerfile.linux.install-sdk",
+    [
+        "based-on-buildpack-deps": isBasedOnBuildpackDeps,
+        "use-local-version-var": (dotnetVersion = "3.1")
+    ])}}{{if !isAlpine || ARCH_SHORT = "x64":
+
+{{InsertTemplate("Dockerfile.linux.install-powershell")}}}}

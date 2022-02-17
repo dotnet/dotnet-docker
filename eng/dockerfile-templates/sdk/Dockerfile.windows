@@ -1,0 +1,47 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isSingleStage to find(OS_VERSION, "windowsservercore") >= 0 ^
+    set aspnetBaseTag to cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION)
+}}# escape=`
+
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
+{{if isSingleStage:{{
+
+    _ SINGLE STAGE
+
+}}FROM {{aspnetBaseTag}}
+
+{{InsertTemplate("Dockerfile.envs")}}
+
+{{InsertTemplate("Dockerfile.windows.install-components")}}
+
+{{InsertTemplate("Dockerfile.windows.set-powershell-path")}}
+
+{{InsertTemplate("Dockerfile.windows.first-run")}}^else:
+{{
+
+    _ MULTI STAGE
+
+}}# Installer image
+FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
+
+{{InsertTemplate("Dockerfile.windows.install-components",
+    [
+        "use-local-version-var": "true"
+    ])}}
+
+# SDK image
+FROM {{aspnetBaseTag}}
+
+{{InsertTemplate("Dockerfile.envs")}}
+
+# In order to set system PATH, ContainerAdministrator must be used
+USER ContainerAdministrator
+{{InsertTemplate("Dockerfile.windows.set-powershell-path")}}
+USER ContainerUser
+
+COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
+
+COPY --from=installer ["/powershell", "/Program Files/powershell"]
+
+{{InsertTemplate("Dockerfile.windows.first-run")}}}}

@@ -1,0 +1,31 @@
+{{
+    _ ARGS
+        based-on-buildpack-deps: Indicates whether the associated Dockerfile is based on buildpack-deps ^
+    
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
+    set dotnetSuffix to when(dotnetVersion = "3.1", "Core", "") ^
+    set lineContinuation to when(isWindows, "`", "\")
+}}ENV {{lineContinuation}}{{ if !ARGS["based-on-buildpack-deps"]:
+    # Unset ASPNETCORE_URLS from aspnet base image
+    ASPNETCORE_URLS= {{lineContinuation}}}}
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false {{lineContinuation}}{{if dotnetVersion != "3.1" && dotnetVersion != "5.0":
+    # Do not show first run text
+    DOTNET_NOLOGO=true {{lineContinuation}}}}{{if dotnetVersion != "3.1":
+    # SDK version
+    DOTNET_SDK_VERSION={{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}} {{lineContinuation}}}}{{if isAlpine:
+    # Disable the invariant mode (set in base image)
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false {{lineContinuation}}}}{{if ARGS["based-on-buildpack-deps"]:
+    {{InsertTemplate("../Dockerfile.env.container")}} {{lineContinuation}}}}
+    # Enable correct mode for dotnet watch (only mode supported in a container)
+    DOTNET_USE_POLLING_FILE_WATCHER=true {{lineContinuation}}{{if dotnetVersion = "6.0":
+    # Unset Logging__Console__FormatterName from aspnet base image
+    Logging__Console__FormatterName= {{lineContinuation}}}}{{if isAlpine && dotnetVersion = "3.1":
+    LC_ALL=en_US.UTF-8 {{lineContinuation}}
+    LANG=en_US.UTF-8 {{lineContinuation}}}}
+    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
+    NUGET_XMLDOC_MODE=skip {{lineContinuation}}
+    # PowerShell telemetry for docker image usage
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-Dotnet{{dotnetSuffix}}SDK-{{OS_ARCH_HYPHENATED}}

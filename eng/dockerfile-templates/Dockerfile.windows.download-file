@@ -11,4 +11,4 @@ ${{ARGS["sha-var-name"]}} = '{{ARGS["sha"]}}'; `
 if ((Get-FileHash {{ARGS["out-file"]}} -Algorithm sha512).Hash -ne ${{ARGS["sha-var-name"]}}) { `
     Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
     exit 1; `
-};
+}
