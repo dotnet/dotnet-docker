@@ -4,7 +4,7 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
 
 # Featured Tags
 
- * `7.0` (Preview)
+* `7.0` (Preview)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:7.0`
 * `6.0` (Current, LTS)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:6.0`
