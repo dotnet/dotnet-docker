@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm64v8/buildpack-deps:bullseye-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=7.0.0-preview.1.22076.8 \
+RUN dotnet_version=7.0.0-preview.2.22116.9 \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
-    && dotnet_sha512='0675ac88a45cd102287094b90df0b60e2b5c0b56bc4518658ef60dd87a0868950043ad5b4824022b54f89adfd5e7c63d77a1cca98ee1c871cdef2d6ecb8130d7' \
+    && dotnet_sha512='122b2c636f2a3ecd0fc392274ba39b5751309e7baf963fdfb4a3c9e326cb35a43ae0429ebe5e8052b468b904fce2e27c70c43748adb4d4e78d0c44399fec294a' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -14,10 +14,10 @@ RUN dotnet_version=7.0.0-preview.1.22076.8 \
 
 
 # .NET runtime image
-FROM $REPO:7.0.0-preview.1-bullseye-slim-arm64v8
+FROM $REPO:7.0.0-preview.2-bullseye-slim-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=7.0.0-preview.1.22076.8
+ENV DOTNET_VERSION=7.0.0-preview.2.22116.9
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
