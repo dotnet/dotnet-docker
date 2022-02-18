@@ -90,9 +90,9 @@ namespace Microsoft.DotNet.Docker.Tests
         [Fact]
         public void VerifyComplexAppSample()
         {
-            if (Config.Os.StartsWith(OS.NanoServer20H2))
+            if (!DockerHelper.IsLinuxContainerModeEnabled)
             {
-                OutputHelper.WriteLine("Disable this test for 20H2 due to https://github.com/dotnet/dotnet-docker/issues/3510. Reenable when fixed.");
+                OutputHelper.WriteLine("Disable this test for Windows due to https://github.com/dotnet/dotnet-docker/issues/3510. Reenable when fixed.");
                 return;
             }
 
