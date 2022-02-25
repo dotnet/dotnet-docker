@@ -10,6 +10,7 @@ jobs:
 - job: ${{ parameters.name }}
   pool: ${{ parameters.pool }}
   steps:
+  - template: ../steps/retain-build.yml
   - template: ../steps/init-docker-linux.yml
   - template: ../steps/validate-branch.yml
     parameters:

@@ -1,0 +1,9 @@
+steps:
+- powershell: >
+    $(engCommonPath)/Retain-Build.ps1
+    -BuildId $(Build.BuildId)
+    -AzdoOrgUri '$(System.CollectionUri)'
+    -AzdoProject '$(System.TeamProject)'
+    -Token '$(System.AccessToken)'
+  displayName: Enable permanent build retention
+  condition: and(succeeded(), eq(variables.retainBuild, 'true'))
