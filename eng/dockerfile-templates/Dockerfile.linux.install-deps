@@ -38,7 +38,9 @@
             ])) ^
         set certsPkgPrefix to when(isMariner,
             [
-                when(dotnetVersion = "3.1" || dotnetVersion = "5.0", "ca-certificates", "prebuilt-ca-certificates"),
+                when(dotnetVersion = "3.1" || dotnetVersion = "5.0",
+                    "ca-certificates",
+                    when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates-microsoft")),
                 "",
                 dotnetDepsComment
             ],
