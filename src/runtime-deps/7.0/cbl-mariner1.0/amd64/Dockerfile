@@ -1,7 +1,7 @@
 FROM cblmariner.azurecr.io/base/core:1.0
 
 RUN tdnf install -y \
-        prebuilt-ca-certificates \
+        ca-certificates-microsoft \
         \
         # .NET dependencies
         glibc \
