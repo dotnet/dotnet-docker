@@ -79,8 +79,11 @@ jobs:
   - template: ../steps/set-image-info-path-var.yml
     parameters:
       publicSourceBranch: $(publicSourceBranch)
+  - powershell: echo "##vso[task.setvariable variable=imageBuilderBuildArgs]"
+    condition: eq(variables.imageBuilderBuildArgs, '')
+    displayName: Initialize Image Builder Build Args
   - powershell: |
-      $imageBuilderBuildArgs = "$(imageBuilder.queueArgs) --image-info-output-path $(artifactsPath)/$(legName)-image-info.json"
+      $imageBuilderBuildArgs = "$(imageBuilderBuildArgs) $(imageBuilder.queueArgs) --image-info-output-path $(artifactsPath)/$(legName)-image-info.json"
       if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}") {
         $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push --registry-creds ""$(acr.server)=$(acr.userName);$(acr.password)"""
       }
