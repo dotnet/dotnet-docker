@@ -18,6 +18,7 @@ jobs:
     value: $(Build.Repository.Name)
   - ${{ parameters.customPublishVariables }}
   steps:
+  - template: ../steps/retain-build.yml
   - template: ../steps/init-docker-linux.yml
   - pwsh: |
       $azdoOrgName = Split-Path -Leaf $Env:SYSTEM_COLLECTIONURI
