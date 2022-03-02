@@ -847,6 +847,9 @@
             },
             "6.0-cbl-mariner2.0": {
               "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -860,6 +863,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -875,6 +881,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -930,6 +939,9 @@
             },
             "6.0-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner-distroless": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -943,6 +955,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -971,6 +986,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -1135,6 +1153,9 @@
             },
             "7.0-cbl-mariner2.0": {
               "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -1148,6 +1169,9 @@
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -1164,6 +1188,9 @@
                 },
                 "7.0-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -1178,6 +1205,9 @@
             },
             "7.0-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner-distroless": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -1191,6 +1221,9 @@
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -1219,6 +1252,9 @@
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -2499,6 +2535,9 @@
             },
             "6.0-cbl-mariner2.0": {
               "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -2515,6 +2554,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -2533,6 +2575,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -2591,6 +2636,9 @@
             },
             "6.0-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner-distroless": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -2607,6 +2655,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -2638,6 +2689,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -2921,6 +2975,9 @@
             },
             "7.0-cbl-mariner2.0": {
               "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -2937,6 +2994,9 @@
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -2956,6 +3016,9 @@
                 },
                 "7.0-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -2969,6 +3032,9 @@
               "docType": "Undocumented"
             },
             "7.0-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -2986,6 +3052,9 @@
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -3017,6 +3086,9 @@
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -4360,6 +4432,9 @@
             },
             "6.0-cbl-mariner2.0": {
               "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -4376,6 +4451,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -4394,6 +4472,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -4452,6 +4533,9 @@
             },
             "6.0-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner-distroless": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -4468,6 +4552,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -4499,6 +4586,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -4794,6 +4884,9 @@
             },
             "7.0-cbl-mariner2.0": {
               "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -4810,6 +4903,9 @@
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -4829,6 +4925,9 @@
                 },
                 "7.0-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -4842,6 +4941,9 @@
               "docType": "Undocumented"
             },
             "7.0-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -4859,6 +4961,9 @@
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -4890,6 +4995,9 @@
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -6150,6 +6258,9 @@
             },
             "6.0-cbl-mariner2.0": {
               "docType": "Undocumented"
+            },
+            "6.0-cbl-mariner": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -6166,6 +6277,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -6184,6 +6298,9 @@
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "6.0-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -6466,6 +6583,9 @@
             },
             "7.0-cbl-mariner2.0": {
               "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -6482,6 +6602,9 @@
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -6500,6 +6623,9 @@
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
