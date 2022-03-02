@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm32v7/buildpack-deps:focal-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=7.0.0-preview.3.22117.6 \
+RUN aspnetcore_version=7.0.0-preview.2.22151.1 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm.tar.gz \
-    && aspnetcore_sha512='a5d95c2f801908ed335f4aec606d5867541d074037fcc4f31390a654d00a3c49b7798863757ac1c40fff23e2d59af1de070ba3279eddc58c9119cd13611afcaf' \
+    && aspnetcore_sha512='62dfd588eeabd40e0b403b4446d173963ed76e8469cbf26e06eb46ce753f5ed72ddd8500ae631deb6eed820ad7f008f0bbf2bc2b841b4b4e57f368f0e70a7a8a' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
@@ -16,6 +16,6 @@ RUN aspnetcore_version=7.0.0-preview.3.22117.6 \
 FROM $REPO:7.0.0-preview.2-focal-arm32v7
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=7.0.0-preview.3.22117.6
+ENV ASPNET_VERSION=7.0.0-preview.2.22151.1
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]
