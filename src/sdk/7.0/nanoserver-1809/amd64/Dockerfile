@@ -10,9 +10,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '7.0.100-preview.2.22151.13'; `
+        $sdk_version = '7.0.100-preview.2.22153.1'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '2da20c67f48b6099f9bef4dfbe81f8b07da6c34abaf605f1e2e3b8025dd3c982953f9dd218db5c5f3f276885f72142dd6f64ac00f01b738c2bc875037e08ef03'; `
+        $dotnet_sha512 = '1e75c9f2dc970d2eac42855793da25638149f4614e1ab79cb4aff0642f2675e2c51209156c72dfb6bf166e3378517af92a7bf146944d6946d8ada922b1e0fb16'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -54,7 +54,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=7.0.100-preview.2.22151.13 `
+    DOTNET_SDK_VERSION=7.0.100-preview.2.22153.1 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
