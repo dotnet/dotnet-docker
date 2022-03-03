@@ -41,12 +41,12 @@
             "sha-var-name": "dotnet_sha512"
         ]
     ] ^
-    set files to when(isFullMariner, rpms, tarballs)
+    set files to when(isFullMariner && ARCH_SHORT != "arm64", rpms, tarballs)
 }}RUN {{if ARGS["use-local-version-var"]:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion"|build-version")]}} \
     && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
     [
         "files": files,
         "install-dir": ARGS["dest-dir"],
-        "create-install-dir": !isFullMariner
+        "create-install-dir": !isFullMariner || ARCH_SHORT = "arm64"
     ], "    ")}}{{if ARGS["add-symlink"]: \
     && {{InsertTemplate("Dockerfile.linux.symlink")}}}}

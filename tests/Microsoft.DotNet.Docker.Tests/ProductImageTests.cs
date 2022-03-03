@@ -91,6 +91,12 @@ namespace Microsoft.DotNet.Docker.Tests
         protected void VerifyExpectedInstalledRpmPackages(
             ProductImageData imageData, IEnumerable<string> expectedPackages)
         {
+            if (imageData.Arch == Arch.Arm64)
+            {
+                OutputHelper.WriteLine("Skip test until Arm64 Dockerfiles install packages instead of tarballs");
+                return;
+            }
+
             foreach (string expectedPackage in expectedPackages)
             {
                 // Example package name: dotnet-runtime-6.0-6.0.0-0.1.preview.5.21270.12.x86_64
