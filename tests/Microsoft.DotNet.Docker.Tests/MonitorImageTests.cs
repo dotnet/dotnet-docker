@@ -31,6 +31,13 @@ namespace Microsoft.DotNet.Docker.Tests
         private const string File_DiagPort = Directory_Diag + "/port";
 
         /// <summary>
+        /// Command line that is the default command line presented in the image.
+        /// When specifying additional command arguments, these must be prepended to
+        /// maintain existing behavior.
+        /// </summary>
+        private const string Switch_DefaultImageCmd = "collect --urls https://+:52323 --metricUrls http://+:52325";
+
+        /// <summary>
         /// Command line switch to disable authentication. By default,
         /// dotnet-monitor requires authentication on the artifacts port.
         /// </summary>
@@ -286,7 +293,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 DockerHelper.Run(
                     image: monitorImageName,
                     name: monitorContainerName,
-                    command: GetMonitorAdditionalArgs(noAuthentication),
+                    command: GetMonitorAdditionalArgs(imageData, noAuthentication),
                     detach: true,
                     optionalRunArgs: runArgsBuilder.Build());
 
@@ -403,7 +410,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 DockerHelper.Run(
                     image: monitorImageName,
                     name: monitorContainerName,
-                    command: GetMonitorAdditionalArgs(noAuthentication),
+                    command: GetMonitorAdditionalArgs(monitorImageData, noAuthentication),
                     detach: true,
                     optionalRunArgs: monitorArgsBuilder.Build());
 
@@ -440,9 +447,19 @@ namespace Microsoft.DotNet.Docker.Tests
                 .First(d => d.IsPublished = true && d.Arch == imageData.Arch);
         }
 
-        private static string GetMonitorAdditionalArgs(bool noAuthentication)
+        private static string GetMonitorAdditionalArgs(MonitorImageData imageData, bool noAuthentication)
         {
-            return noAuthentication ? Switch_NoAuthentication : null;
+            string cmdsToAdd = noAuthentication ? Switch_NoAuthentication : null;
+
+            // When we are testing images after 7.0 (inclusive) we must prepend the existing default commands.
+            // This is required because of a breaking change to make it easier to use the docker image to execute
+            // other dotnet-monitor commands.
+            if (imageData.Version >= new Version(7, 0) && cmdsToAdd != null)
+            {
+                cmdsToAdd = $"{Switch_DefaultImageCmd} {cmdsToAdd}";
+            }
+
+            return cmdsToAdd;
         }
 
         private void GetNames(MonitorImageData imageData, out string imageName, out string containerName)

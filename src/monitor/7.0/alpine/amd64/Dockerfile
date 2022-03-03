@@ -50,5 +50,8 @@ ENV \
 
 RUN chmod 755 dotnet-monitor
 
+
+
+
 ENTRYPOINT [ "dotnet-monitor" ]
-CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
+CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ] 

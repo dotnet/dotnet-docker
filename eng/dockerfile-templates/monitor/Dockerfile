@@ -14,6 +14,10 @@
     _ All .NET Monitor versions publish to the same storage account, thus use the latest storage account scheme.
       However, the latest 6.0 release still uses dotnetcli storage account. ^
     set urlVersion to when(monitorMajorMinor != "6.0", "7.0", "6.0") ^
+    _ Using Entrypoint or Entrypoint + Cmd is tied to the dotnet-monitor version, however the existance of minor versions of 6.x make it easier to compare to dotnetMajorMinor. ^
+    _ This breaking change is intended to apply to all versions including 7.0 and after. ^
+    set fullEntrypoint to dotnetMajor = "6" ^
+    set splitEntrypointCmd to dotnetMajor != "6" ^
     _ When build and product versions are the same and they are stable versions, use account from main branch e.g. dotnetcli
       Otherwise, use the account that is associated with the current branch. ^
     set urlBranch to when(find(monitorVersion, "-") >= 0 || buildVersion != monitorVersion, VARIABLES["branch"], "main") ^
@@ -72,5 +76,9 @@ ENV \
 
 RUN chmod 755 dotnet-monitor
 
+{{if fullEntrypoint:
+ENTRYPOINT [ "dotnet-monitor", "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ] }}
+
+{{if splitEntrypointCmd:
 ENTRYPOINT [ "dotnet-monitor" ]
-CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
+CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ] }}
