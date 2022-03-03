@@ -18,15 +18,24 @@
             "zlib"
         ],
         when(isMariner,
-            [
-                "glibc",
-                "icu",
-                "krb5",
-                "libgcc",
-                "libstdc++",
-                "openssl-libs",
-                "zlib"
-            ],
+            when(isDistrolessMariner && find(OS_VERSION, "1.0") < 0,
+                [
+                    "glibc",
+                    "krb5",
+                    "libgcc",
+                    "libstdc++",
+                    "openssl-libs",
+                    "zlib"
+                ],
+                [
+                    "glibc",
+                    "icu",
+                    "krb5",
+                    "libgcc",
+                    "libstdc++",
+                    "openssl-libs",
+                    "zlib"
+                ]),
             [
                 "libc6",
                 "libgcc1",
