@@ -20,7 +20,7 @@ InsertTemplate("Dockerfile.linux.download-file",
     ])}} \
 {{if len(ARGS["files"]) > 1:\
 }}}}{{
-if isFullMariner:&& {{InsertTemplate("Dockerfile.linux.install-rpms",
+if isFullMariner && ARCH_SHORT != "arm64":&& {{InsertTemplate("Dockerfile.linux.install-rpms",
     [
         "files": map(ARGS["files"], getFilename)
     ])}}^

@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:7.0.0-preview.1-cbl-mariner1.0-amd64
+FROM $REPO:7.0.0-preview.1-cbl-mariner2.0-amd64
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=7.0.0-preview.1.22109.13

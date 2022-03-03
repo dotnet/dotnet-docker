@@ -79,7 +79,7 @@
                     ]))
         ]
     ] ^
-    set files to when(isFullMariner, rpms, tarballs)
+    set files to when(isFullMariner && ARCH_SHORT != "arm64", rpms, tarballs)
 }}# Install .NET{{dotnetSuffix}} SDK
 RUN {{if ARGS["use-local-version-var"]:sdk_version={{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}} \
 {{

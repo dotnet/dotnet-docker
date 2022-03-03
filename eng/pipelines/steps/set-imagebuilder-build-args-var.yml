@@ -1,0 +1,10 @@
+steps:
+- powershell: |
+    $imageBuilderBuildArgs = ""
+    # Disable platform checks for CBL-Mariner on ARM64 due to https://github.com/dotnet/dotnet-docker/issues/3520
+    if ("$(osVersions)".Contains("cbl-mariner") -and "$(architecture)" -eq "arm64") {
+      $imageBuilderBuildArgs += " --skip-platform-check"
+    }
+
+    echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
+  displayName: Set Custom ImageBuilder Build Args

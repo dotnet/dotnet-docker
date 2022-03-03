@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM cblmariner.azurecr.io/base/core:1.0 AS installer
+FROM cblmariner2preview.azurecr.io/base/core:2.0 AS installer
 
 RUN tdnf install -y ca-certificates-microsoft \
     && tdnf clean all
@@ -17,7 +17,7 @@ RUN aspnetcore_version=7.0.0-preview.1.22109.13 \
 
 
 # ASP.NET Core image
-FROM $REPO:7.0.0-preview.1-cbl-mariner1.0-distroless-amd64
+FROM $REPO:7.0.0-preview.1-cbl-mariner2.0-distroless-amd64
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=7.0.0-preview.1.22109.13

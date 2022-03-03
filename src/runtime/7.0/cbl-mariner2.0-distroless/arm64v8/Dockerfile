@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM cblmariner.azurecr.io/base/core:1.0 AS installer
+FROM cblmariner2preview.azurecr.io/base/core:2.0 AS installer
 
 RUN tdnf install -y \
         ca-certificates-microsoft \
@@ -9,8 +9,8 @@ RUN tdnf install -y \
 
 # Retrieve .NET Runtime
 RUN dotnet_version=7.0.0-preview.1.22076.8 \
-    && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='8d48436646071c371b862002fcdd24de07addd02ec878ab413cc6c98a5ff6da821f2175c637167462261ad5e47da0d2b83f465949e673462f0e147d62255651c' \
+    && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
+    && dotnet_sha512='0675ac88a45cd102287094b90df0b60e2b5c0b56bc4518658ef60dd87a0868950043ad5b4824022b54f89adfd5e7c63d77a1cca98ee1c871cdef2d6ecb8130d7' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
@@ -21,7 +21,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:7.0.0-preview.1-cbl-mariner1.0-distroless-amd64
+FROM $REPO:7.0.0-preview.1-cbl-mariner2.0-distroless-arm64v8
 
 # .NET Runtime version
 ENV DOTNET_VERSION=7.0.0-preview.1.22076.8

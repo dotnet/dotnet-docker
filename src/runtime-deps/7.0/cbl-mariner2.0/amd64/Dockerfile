@@ -1,4 +1,4 @@
-FROM cblmariner.azurecr.io/base/core:1.0
+FROM cblmariner2preview.azurecr.io/base/core:2.0
 
 RUN tdnf install -y \
         ca-certificates-microsoft \

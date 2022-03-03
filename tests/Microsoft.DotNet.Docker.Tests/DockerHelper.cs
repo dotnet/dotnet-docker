@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Xunit.Abstractions;
 
@@ -76,7 +77,8 @@ namespace Microsoft.DotNet.Docker.Tests
             Build(tag, dockerfile, null, TestArtifactsDir, false,
                 $"installer_image={installerImageTag}",
                 $"base_image={baseImageTag}",
-                $"\"required_packages={string.Join(" ", requiredPackages)}\"");
+                $"\"required_packages={string.Join(" ", requiredPackages)}\"",
+                $"os_version={imageData.OsVersion}");
             return tag;
         }
 

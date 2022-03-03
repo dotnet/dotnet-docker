@@ -70,6 +70,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            if (imageData.OS == OS.Mariner20Distroless)
+            {
+                OutputHelper.WriteLine("Temporarily disable due to bash being installed. See https://github.com/dotnet/dotnet-docker/issues/3526");
+                return;
+            }
+
             string imageTag = imageData.GetImage(ImageType, DockerHelper);
 
             // Attempting to execute the container's shell should result in an exception.

@@ -1018,51 +1018,82 @@
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
-            "$(dotnet|7.0|product-version)-cbl-mariner1.0": {
+            "$(dotnet|7.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "7.0-cbl-mariner1.0": {
+            "7.0-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner": {
               "docType": "Undocumented"
             }
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/7.0/cbl-mariner1.0/amd64",
+              "dockerfile": "src/runtime-deps/7.0/cbl-mariner2.0/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
-              "osVersion": "cbl-mariner1.0",
+              "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(dotnet|7.0|product-version)-cbl-mariner1.0-amd64": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "7.0-cbl-mariner1.0-amd64": {
+                "7.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/7.0/cbl-mariner2.0/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
             }
           ]
         },
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
-            "$(dotnet|7.0|product-version)-cbl-mariner1.0-distroless": {
+            "$(dotnet|7.0|product-version)-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
             },
-            "7.0-cbl-mariner1.0-distroless": {
+            "7.0-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/6.0/cbl-mariner1.0-distroless/amd64",
+              "dockerfile": "src/runtime-deps/7.0/cbl-mariner2.0-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
-              "osVersion": "cbl-mariner1.0-distroless",
+              "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|7.0|product-version)-cbl-mariner1.0-distroless-amd64": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "7.0-cbl-mariner1.0-distroless-amd64": {
+                "7.0-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -1071,13 +1102,45 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):7.0-cbl-mariner1.0-amd64"
+                    "$(Repo:sdk):7.0-cbl-mariner2.0-amd64"
                   ]
                 }
               ],
               "packageQueryOverrides": {
-                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.1.0.sh",
-                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.1.0.sh"
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.2.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.2.0.sh"
+              }
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/7.0/cbl-mariner2.0-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-cbl-mariner2.0-arm64v8"
+                  ]
+                }
+              ],
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.2.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.2.0.sh"
               }
             }
           ]
@@ -2635,10 +2698,13 @@
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
-            "$(dotnet|7.0|product-version)-cbl-mariner1.0": {
+            "$(dotnet|7.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "7.0-cbl-mariner1.0": {
+            "7.0-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner": {
               "docType": "Undocumented"
             }
           },
@@ -2647,28 +2713,56 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/7.0/cbl-mariner1.0/amd64",
+              "dockerfile": "src/runtime/7.0/cbl-mariner2.0/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner1.0",
+              "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(dotnet|7.0|product-version)-cbl-mariner1.0-amd64": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "7.0-cbl-mariner1.0-amd64": {
+                "7.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/7.0/cbl-mariner2.0/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
             }
           ]
         },
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
-            "$(dotnet|7.0|product-version)-cbl-mariner1.0-distroless": {
+            "$(dotnet|7.0|product-version)-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
             },
-            "7.0-cbl-mariner1.0-distroless": {
+            "7.0-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -2677,15 +2771,18 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/7.0/cbl-mariner1.0-distroless/amd64",
+              "dockerfile": "src/runtime/7.0/cbl-mariner2.0-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner1.0-distroless",
+              "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|7.0|product-version)-cbl-mariner1.0-distroless-amd64": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "7.0-cbl-mariner1.0-distroless-amd64": {
+                "7.0-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -2694,13 +2791,48 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):7.0-cbl-mariner1.0-amd64"
+                    "$(Repo:sdk):7.0-cbl-mariner2.0-amd64"
                   ]
                 }
               ],
               "packageQueryOverrides": {
-                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.1.0.sh",
-                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.1.0.sh"
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.2.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.2.0.sh"
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/7.0/cbl-mariner2.0-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-cbl-mariner2.0-arm64v8"
+                  ]
+                }
+              ],
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.2.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.2.0.sh"
               }
             }
           ]
@@ -4333,10 +4465,13 @@
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
-            "$(dotnet|7.0|product-version)-cbl-mariner1.0": {
+            "$(dotnet|7.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "7.0-cbl-mariner1.0": {
+            "7.0-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner": {
               "docType": "Undocumented"
             }
           },
@@ -4345,28 +4480,56 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/7.0/cbl-mariner1.0/amd64",
+              "dockerfile": "src/aspnet/7.0/cbl-mariner2.0/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner1.0",
+              "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(dotnet|7.0|product-version)-cbl-mariner1.0-amd64": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "7.0-cbl-mariner1.0-amd64": {
+                "7.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/7.0/cbl-mariner2.0/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
             }
           ]
         },
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
-            "$(dotnet|7.0|product-version)-cbl-mariner1.0-distroless": {
+            "$(dotnet|7.0|product-version)-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
             },
-            "7.0-cbl-mariner1.0-distroless": {
+            "7.0-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -4375,15 +4538,18 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/7.0/cbl-mariner1.0-distroless/amd64",
+              "dockerfile": "src/aspnet/7.0/cbl-mariner2.0-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner1.0-distroless",
+              "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|7.0|product-version)-cbl-mariner1.0-distroless-amd64": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "7.0-cbl-mariner1.0-distroless-amd64": {
+                "7.0-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -4392,13 +4558,48 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):7.0-cbl-mariner1.0-amd64"
+                    "$(Repo:sdk):7.0-cbl-mariner2.0-amd64"
                   ]
                 }
               ],
               "packageQueryOverrides": {
-                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.1.0.sh",
-                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.1.0.sh"
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.2.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.2.0.sh"
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/7.0/cbl-mariner2.0-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|7.0|product-version)-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-cbl-mariner2.0-arm64v8"
+                  ]
+                }
+              ],
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner-distroless/dotnet7/get-installed-packages.2.0.sh",
+                "getUpgradablePackagesPath": "eng/package-scripts/cbl-mariner-distroless/get-upgradable-packages.2.0.sh"
               }
             }
           ]
@@ -5905,10 +6106,13 @@
         {
           "productVersion": "$(sdk|7.0|product-version)",
           "sharedTags": {
-            "$(sdk|7.0|product-version)-cbl-mariner1.0": {
+            "$(sdk|7.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "7.0-cbl-mariner1.0": {
+            "7.0-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner": {
               "docType": "Undocumented"
             }
           },
@@ -5917,18 +6121,43 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/sdk/7.0/cbl-mariner1.0/amd64",
+              "dockerfile": "src/sdk/7.0/cbl-mariner2.0/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner1.0",
+              "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(sdk|7.0|product-version)-cbl-mariner1.0-amd64": {
+                "$(sdk|7.0|product-version)-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "7.0-cbl-mariner1.0-amd64": {
+                "7.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/7.0/cbl-mariner2.0/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(sdk|7.0|product-version)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
             }
           ]
         },

@@ -21,6 +21,7 @@ stages:
 
     # Template paths must be relative to the YAML job that executes them
     customBuildInitSteps:
+    - template: ../../../pipelines/steps/set-imagebuilder-build-args-var.yml
     - template: ../../../pipelines/steps/set-public-source-branch-var.yml
     customPublishInitSteps:
     - template: ../../../pipelines/steps/set-public-source-branch-var.yml
