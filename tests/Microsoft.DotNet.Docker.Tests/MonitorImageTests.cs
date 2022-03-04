@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
@@ -449,17 +450,35 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static string GetMonitorAdditionalArgs(MonitorImageData imageData, bool noAuthentication)
         {
-            string cmdsToAdd = noAuthentication ? Switch_NoAuthentication : null;
+            const char spaceChar = ' ';
 
-            // When we are testing images after 7.0 (inclusive) we must prepend the existing default commands.
-            // This is required because of a breaking change to make it easier to use the docker image to execute
-            // other dotnet-monitor commands.
-            if (imageData.Version >= new Version(7, 0) && cmdsToAdd != null)
+            // This determines if we are going to add the default args that are included in the entrypoint in images before 7.0
+            // This flag should be thought of as "We want to add anything to the commandline and are 7.0+".
+            // This is required for 7.0+ images when command line arguments are being appended because docker
+            // will treat the presence of any commandline args as overriding the entire CMD block in the DockerFile.
+            bool addDefaultArgs =
+                // We are version 7.0+, this will never apply to 6.x images
+                imageData.Version >= new Version(7, 0) &&
+                // We are adding anything to the command line. When additional flags are added to this method, `noAuthentication`
+                // should be replaced something like `(noAuthentication || myNewFlag || mySetting != Setting.Default)`
+                noAuthentication;
+
+            // Standard here is to have the built command line always end with a space, so it needs to start with one
+            StringBuilder builtCommandline = new StringBuilder(spaceChar);
+
+            if (addDefaultArgs)
             {
-                cmdsToAdd = $"{Switch_DefaultImageCmd} {cmdsToAdd}";
+                builtCommandline.AppendFormat("{0} ", Switch_DefaultImageCmd);
             }
 
-            return cmdsToAdd;
+            if (noAuthentication)
+            {
+                builtCommandline.AppendFormat("{0} ", Switch_NoAuthentication);
+            }
+
+            string cmdsResult = builtCommandline.ToString().Trim(spaceChar);
+
+            return cmdsResult;
         }
 
         private void GetNames(MonitorImageData imageData, out string imageName, out string containerName)
