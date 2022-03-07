@@ -147,12 +147,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            // Disable until PowerShell issue is fixed: https://github.com/PowerShell/PowerShell/issues/16532
-            if (imageData.OS == "alpine3.15")
-            {
-                return;
-            }
-
             if (!(imageData.Version.Major >= 5 ||
                 (imageData.Version.Major >= 3 &&
                     (imageData.SdkOS.StartsWith(OS.AlpinePrefix) || !DockerHelper.IsLinuxContainerModeEnabled))))
@@ -334,12 +328,6 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
             {
                 OutputHelper.WriteLine("PowerShell does not have Alpine arm images, skip testing");
-                return;
-            }
-
-            // Disable until PowerShell issue is fixed: https://github.com/PowerShell/PowerShell/issues/16532
-            if (imageData.OS == "alpine3.15")
-            {
                 return;
             }
 
