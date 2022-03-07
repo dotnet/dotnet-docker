@@ -96,7 +96,7 @@ _Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/
 
     1. When a new version of the OS is supported, it will initially be published with version-specific tags (e.g. `6.0-alpine3.14`). An [announcement](https://github.com/dotnet/dotnet-docker/issues?q=is%3Aopen+is%3Aissue+label%3Aannouncement) will be posted to let you know the new OS version is available. The floating tag will not yet be updated.
     1. Those who want to target that version of the OS will need to explicitly target a version-specific tag in order to evaluate the new OS version. Please [log an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose) if you encounter any problems.
-    1. One month after the initial publication of the version-specific tags, the floating tag (e.g. `6.0-alpine`) will be updated to be associated with the new OS version. This assumes there are no blocking issues.
+    1. One month after the initial publication of the version-specific tags, the floating tag (e.g. `6.0-alpine`) will be updated to be associated with the new OS version. This assumes there are no blocking issues. Another announcement will be posted at this time to indicate that the floating tag has been updated to the new version.
 
 1. `<Architecture>` - The architecture the image is based on. See [Supported Platforms](supported-platforms.md#architectures) for the list of supported architectures.
 
