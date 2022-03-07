@@ -2,6 +2,7 @@
     _ .NET major version matches the major version of dotnet-monitor ^
     set dotnetMajor to split(PRODUCT_VERSION, ".")[0] ^
     set dotnetMajorMinor to cat(dotnetMajor, ".0") ^
+    set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
     set targetFrameworkMoniker to cat("net", dotnetMajorMinor) ^
     set targetFrameworkMonikerRegex to cat("net", dotnetMajor, "[.]0") ^
     set installerBaseTag to cat(VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
@@ -72,4 +73,4 @@ ENV \
 
 RUN chmod 755 dotnet-monitor
 
-ENTRYPOINT [ "dotnet-monitor", "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
+{{InsertTemplate(cat("Dockerfile.entrypoint.monitorV", monitorMajor))}}
