@@ -37,10 +37,10 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.2-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.2, 6.0.2-bullseye-slim, 6.0, 6.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/amd64/Dockerfile) | Debian 11
-6.0.2-alpine3.15-amd64, 6.0-alpine3.15-amd64, 6.0.2-alpine3.15, 6.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/alpine3.15/amd64/Dockerfile) | Alpine 3.15
-6.0.2-alpine3.14-amd64, 6.0-alpine3.14-amd64, 6.0-alpine-amd64, 6.0.2-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/alpine3.14/amd64/Dockerfile) | Alpine 3.14
-6.0.2-focal-amd64, 6.0-focal-amd64, 6.0.2-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
+6.0.3-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.3, 6.0.3-bullseye-slim, 6.0, 6.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/amd64/Dockerfile) | Debian 11
+6.0.3-alpine3.15-amd64, 6.0-alpine3.15-amd64, 6.0.3-alpine3.15, 6.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/alpine3.15/amd64/Dockerfile) | Alpine 3.15
+6.0.3-alpine3.14-amd64, 6.0-alpine3.14-amd64, 6.0-alpine-amd64, 6.0.3-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/alpine3.14/amd64/Dockerfile) | Alpine 3.14
+6.0.3-focal-amd64, 6.0-focal-amd64, 6.0.3-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
 5.0.15-bullseye-slim-amd64, 5.0-bullseye-slim-amd64, 5.0.15-bullseye-slim, 5.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/amd64/Dockerfile) | Debian 11
 5.0.15-buster-slim-amd64, 5.0-buster-slim-amd64, 5.0.15, 5.0.15-buster-slim, 5.0, 5.0-buster-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/buster-slim/amd64/Dockerfile) | Debian 10
 5.0.15-alpine3.15-amd64, 5.0-alpine3.15-amd64, 5.0.15-alpine3.15, 5.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/alpine3.15/amd64/Dockerfile) | Alpine 3.15
@@ -63,10 +63,10 @@ Tags | Dockerfile | OS Version
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.2-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.2, 6.0.2-bullseye-slim, 6.0, 6.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/arm64v8/Dockerfile) | Debian 11
-6.0.2-alpine3.15-arm64v8, 6.0-alpine3.15-arm64v8, 6.0.2-alpine3.15, 6.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/alpine3.15/arm64v8/Dockerfile) | Alpine 3.15
-6.0.2-alpine3.14-arm64v8, 6.0-alpine3.14-arm64v8, 6.0-alpine-arm64v8, 6.0.2-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/alpine3.14/arm64v8/Dockerfile) | Alpine 3.14
-6.0.2-focal-arm64v8, 6.0-focal-arm64v8, 6.0.2-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+6.0.3-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.3, 6.0.3-bullseye-slim, 6.0, 6.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/arm64v8/Dockerfile) | Debian 11
+6.0.3-alpine3.15-arm64v8, 6.0-alpine3.15-arm64v8, 6.0.3-alpine3.15, 6.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/alpine3.15/arm64v8/Dockerfile) | Alpine 3.15
+6.0.3-alpine3.14-arm64v8, 6.0-alpine3.14-arm64v8, 6.0-alpine-arm64v8, 6.0.3-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/alpine3.14/arm64v8/Dockerfile) | Alpine 3.14
+6.0.3-focal-arm64v8, 6.0-focal-arm64v8, 6.0.3-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 5.0.15-bullseye-slim-arm64v8, 5.0-bullseye-slim-arm64v8, 5.0.15-bullseye-slim, 5.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/arm64v8/Dockerfile) | Debian 11
 5.0.15-buster-slim-arm64v8, 5.0-buster-slim-arm64v8, 5.0.15, 5.0.15-buster-slim, 5.0, 5.0-buster-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/buster-slim/arm64v8/Dockerfile) | Debian 10
 5.0.15-alpine3.15-arm64v8, 5.0-alpine3.15-arm64v8, 5.0.15-alpine3.15, 5.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/alpine3.15/arm64v8/Dockerfile) | Alpine 3.15
@@ -89,10 +89,10 @@ Tags | Dockerfile | OS Version
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.0.2-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.2, 6.0.2-bullseye-slim, 6.0, 6.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/arm32v7/Dockerfile) | Debian 11
-6.0.2-alpine3.15-arm32v7, 6.0-alpine3.15-arm32v7, 6.0.2-alpine3.15, 6.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/5.0/alpine3.15/arm32v7/Dockerfile) | Alpine 3.15
-6.0.2-alpine3.14-arm32v7, 6.0-alpine3.14-arm32v7, 6.0-alpine-arm32v7, 6.0.2-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/5.0/alpine3.14/arm32v7/Dockerfile) | Alpine 3.14
-6.0.2-focal-arm32v7, 6.0-focal-arm32v7, 6.0.2-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+6.0.3-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.3, 6.0.3-bullseye-slim, 6.0, 6.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/arm32v7/Dockerfile) | Debian 11
+6.0.3-alpine3.15-arm32v7, 6.0-alpine3.15-arm32v7, 6.0.3-alpine3.15, 6.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/5.0/alpine3.15/arm32v7/Dockerfile) | Alpine 3.15
+6.0.3-alpine3.14-arm32v7, 6.0-alpine3.14-arm32v7, 6.0-alpine-arm32v7, 6.0.3-alpine3.14, 6.0-alpine3.14, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/5.0/alpine3.14/arm32v7/Dockerfile) | Alpine 3.14
+6.0.3-focal-arm32v7, 6.0-focal-arm32v7, 6.0.3-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 5.0.15-bullseye-slim-arm32v7, 5.0-bullseye-slim-arm32v7, 5.0.15-bullseye-slim, 5.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/arm32v7/Dockerfile) | Debian 11
 5.0.15-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.15, 5.0.15-buster-slim, 5.0, 5.0-buster-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/buster-slim/arm32v7/Dockerfile) | Debian 10
 5.0.15-alpine3.15-arm32v7, 5.0-alpine3.15-arm32v7, 5.0.15-alpine3.15, 5.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/5.0/alpine3.15/arm32v7/Dockerfile) | Alpine 3.15
