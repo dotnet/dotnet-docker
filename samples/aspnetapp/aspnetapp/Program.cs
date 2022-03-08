@@ -16,6 +16,11 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.MapGet("/Environment", () =>
+{
+    return new EnvironmentInfo();
+});
+
 app.UseRouting();
 
 app.UseAuthorization();
