@@ -1,9 +1,9 @@
-FROM arm64v8/alpine:3.15
+FROM amd64/alpine:3.15
 
 RUN apk add --no-cache \
         ca-certificates \
         \
-        # .NET dependencies
+        # .NET Core dependencies
         krb5-libs \
         libgcc \
         libintl \
