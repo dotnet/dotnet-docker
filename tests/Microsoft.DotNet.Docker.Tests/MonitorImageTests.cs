@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
@@ -29,6 +30,13 @@ namespace Microsoft.DotNet.Docker.Tests
         private const string Directory_Tmp = "/tmp";
 
         private const string File_DiagPort = Directory_Diag + "/port";
+
+        /// <summary>
+        /// Command line that is the default command line presented in the image.
+        /// When specifying additional command arguments, these must be prepended to
+        /// maintain existing behavior.
+        /// </summary>
+        private const string Switch_DefaultImageCmd = "collect --urls https://+:52323 --metricUrls http://+:52325";
 
         /// <summary>
         /// Command line switch to disable authentication. By default,
@@ -286,7 +294,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 DockerHelper.Run(
                     image: monitorImageName,
                     name: monitorContainerName,
-                    command: GetMonitorAdditionalArgs(noAuthentication),
+                    command: GetMonitorAdditionalArgs(imageData, noAuthentication),
                     detach: true,
                     optionalRunArgs: runArgsBuilder.Build());
 
@@ -403,7 +411,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 DockerHelper.Run(
                     image: monitorImageName,
                     name: monitorContainerName,
-                    command: GetMonitorAdditionalArgs(noAuthentication),
+                    command: GetMonitorAdditionalArgs(monitorImageData, noAuthentication),
                     detach: true,
                     optionalRunArgs: monitorArgsBuilder.Build());
 
@@ -440,9 +448,37 @@ namespace Microsoft.DotNet.Docker.Tests
                 .First(d => d.IsPublished = true && d.Arch == imageData.Arch);
         }
 
-        private static string GetMonitorAdditionalArgs(bool noAuthentication)
+        private static string GetMonitorAdditionalArgs(MonitorImageData imageData, bool noAuthentication)
         {
-            return noAuthentication ? Switch_NoAuthentication : null;
+            const char spaceChar = ' ';
+
+            // This determines if we are going to add the default args that are included in the entrypoint in images before 7.0
+            // This flag should be thought of as "We want to add anything to the commandline and are 7.0+".
+            // This is required for 7.0+ images when command line arguments are being appended because docker
+            // will treat the presence of any commandline args as overriding the entire CMD block in the DockerFile.
+            bool addDefaultArgs =
+                // We are version 7.0+, this will never apply to 6.x images
+                imageData.Version >= new Version(7, 0) &&
+                // We are adding anything to the command line. When additional flags are added to this method, `noAuthentication`
+                // should be replaced something like `(noAuthentication || myNewFlag || mySetting != Setting.Default)`
+                noAuthentication;
+
+            // Standard here is to have the built command line always end with a space, so it needs to start with one
+            StringBuilder builtCommandline = new StringBuilder(spaceChar);
+
+            if (addDefaultArgs)
+            {
+                builtCommandline.AppendFormat("{0} ", Switch_DefaultImageCmd);
+            }
+
+            if (noAuthentication)
+            {
+                builtCommandline.AppendFormat("{0} ", Switch_NoAuthentication);
+            }
+
+            string cmdsResult = builtCommandline.ToString().Trim(spaceChar);
+
+            return cmdsResult;
         }
 
         private void GetNames(MonitorImageData imageData, out string imageName, out string containerName)

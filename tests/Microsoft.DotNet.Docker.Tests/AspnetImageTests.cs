@@ -24,13 +24,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
-            if (imageData.IsDistroless)
-            {
-                OutputHelper.WriteLine(
-                    "Skipping test for distroless due to https://github.com/dotnet/dotnet-docker/issues/3448. Re-enable when fixed.");
-                return;
-            }
-
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper, isWeb: true);
             await verifier.Execute();
         }
