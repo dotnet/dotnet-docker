@@ -134,8 +134,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
-            if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
+            // Disable this test for Arm-based Alpine until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
+            if (imageData.OS.Contains("alpine") && imageData.IsArm)
             {
                 return;
             }
@@ -324,8 +324,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
         {
-            // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
-            if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
+            // Disable this test for Arm-based Alpine until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
+            if (imageData.OS.Contains("alpine") && imageData.IsArm)
             {
                 OutputHelper.WriteLine("PowerShell does not have Alpine arm images, skip testing");
                 return;
