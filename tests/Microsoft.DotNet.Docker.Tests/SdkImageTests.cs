@@ -134,8 +134,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
-            if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
+            // Disable this test for Arm-based Alpine until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
+            if (imageData.OS.Contains("alpine") && imageData.IsArm)
             {
                 return;
             }
@@ -143,12 +143,6 @@ namespace Microsoft.DotNet.Docker.Tests
             // Skip test on CBL-Mariner. Since installation is done via RPM package, we just need to verify the package installation
             // was done (handled by VerifyPackageInstallation test). There's no need to check the actual contents of the package.
             if (imageData.OS.Contains("cbl-mariner"))
-            {
-                return;
-            }
-
-            // Disable until PowerShell issue is fixed: https://github.com/PowerShell/PowerShell/issues/16532
-            if (imageData.OS == "alpine3.15")
             {
                 return;
             }
@@ -330,16 +324,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
         {
-            // Disable this test for Arm-based Alpine on 6.0 until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
-            if (imageData.Version.Major == 6 && imageData.OS.Contains("alpine") && imageData.IsArm)
+            // Disable this test for Arm-based Alpine until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
+            if (imageData.OS.Contains("alpine") && imageData.IsArm)
             {
                 OutputHelper.WriteLine("PowerShell does not have Alpine arm images, skip testing");
-                return;
-            }
-
-            // Disable until PowerShell issue is fixed: https://github.com/PowerShell/PowerShell/issues/16532
-            if (imageData.OS == "alpine3.15")
-            {
                 return;
             }
 

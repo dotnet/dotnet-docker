@@ -37,19 +37,25 @@ _Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/
     1. Include Linux entries for Debian.
     1. Include Windows entries for each supported Nano Server version.
 
-1. `<Major.Minor.Patch .NET Version>-<OS>`
+1. `<Major.Minor.Patch .NET Version>-<OS version>`
 
     **Examples**
 
     * `6.0.0-focal`
     * `6.0.0-alpine3.14`
 
-1. `<Major.Minor .NET Version>-<OS>`
+1. `<Major.Minor .NET Version>-<OS version>`
 
     **Examples**
 
     * `6.0-focal`
     * `6.0-alpine3.14`
+
+1. `<Major.Minor .NET Version>-<OS name>`
+
+    **Examples**
+
+    * `6.0-alpine`
 
 1. `<Major.Minor.Patch .NET Version>`
 
@@ -81,10 +87,16 @@ _Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/
 
     * Tags which use this version format are considered _floating tags_. These tags are continuously updated to always reference the most recent .NET patch available for the specified `Major.Minor` release.
 
-1. `<OS>` - The name of the OS the image is based upon. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
+1. `<OS version>` - The version of the OS the image is based upon. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
 
     * The referenced image is automatically updated whenever a new OS patch is released. The OS release name doesn't support pinning to specific OS patches. If OS patch pinning is required then the image digest should be used (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
     * For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used versus version numbers.
+
+1. `<OS name>` - The name of the OS the image is based upon. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems. This tag does not include the version of the OS because it is a floating tag. It is updated to be associated with latest version of the OS as support is available. This type of tagging scheme is currently only provided for Alpine. This tag will be updated according to the policy below:
+
+    1. When a new version of the OS is supported, it will initially be published with version-specific tags (e.g. `6.0-alpine3.14`). An [announcement](https://github.com/dotnet/dotnet-docker/issues?q=is%3Aopen+is%3Aissue+label%3Aannouncement) will be posted to let you know the new OS version is available. The floating tag will not yet be updated.
+    1. Those who want to target that version of the OS will need to explicitly target a version-specific tag in order to evaluate the new OS version. Please [log an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose) if you encounter any problems.
+    1. One month after the initial publication of the version-specific tags, the floating tag (e.g. `6.0-alpine`) will be updated to be associated with the new OS version. This assumes there are no blocking issues. Another announcement will be posted at this time to indicate that the floating tag has been updated to the new version.
 
 1. `<Architecture>` - The architecture the image is based on. See [Supported Platforms](supported-platforms.md#architectures) for the list of supported architectures.
 
