@@ -70,18 +70,12 @@ stages:
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: DotNetCore-Docker-Public
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-        name: DotNetCore-Docker
-      demands:
-      - Agent.OS -equals linux
-      - Agent.OSArchitecture -equals ARM64
+        name: Docker-Linux-Arm-Internal
     linuxArm32Pool:
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: DotNetCore-Docker-Public
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-        name: DotNetCore-Docker
-      demands:
-      - Agent.OS -equals linux
-      - Agent.OSArchitecture -equals ARM64
+        name: Docker-Linux-Arm-Internal
     windows2016Pool: Docker-2016-${{ variables['System.TeamProject'] }}
     windows1809Pool: Docker-1809-${{ variables['System.TeamProject'] }}
     windows20H2Pool: Docker-20H2-${{ variables['System.TeamProject'] }}
