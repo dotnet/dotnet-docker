@@ -25,6 +25,7 @@ jobs:
   variables:
     imageBuilderDockerRunExtraOptions: $(build.imageBuilderDockerRunExtraOptions)
     versionsRepoPath: versions
+    sbomDirectory: $(Build.ArtifactStagingDirectory)/sbom
     ${{ if eq(parameters.noCache, false) }}:
       versionsBasePath: $(versionsRepoPath)/
       pipelineDisabledCache: false
@@ -95,7 +96,7 @@ jobs:
 
       echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
     displayName: Set Image Builder Build Args
-  - script: >
+  - powershell: >
       $(runImageBuilderCmd) build
       --manifest $(manifest)
       $(imageBuilderPaths)
@@ -105,14 +106,54 @@ jobs:
       --retry
       --source-repo $(publicGitRepoUri)
       --get-installed-pkgs-path $(baseContainerRepoPath)/$(engCommonRelativePath)/package-scripts/get-installed-packages.sh
+      --digests-out-var 'builtImages'
       $(manifestVariables)
       $(imageBuilderBuildArgs)
+    name: BuildImages
     displayName: Build Images
   - publish: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
     artifact: $(legName)-image-info-$(System.JobAttempt)
     displayName: Publish Image Info File Artifact
+  - ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+      # Define the task here to load it into the agent so that we can invoke the tool manually
+    - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+      inputs:
+        BuildDropPath: $(Build.ArtifactStagingDirectory)
+      displayName: Load Manifest Generator
+      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''), eq(variables.architecture, 'amd64'))
+    - powershell: |
+        $images = "$(BuildImages.builtImages)"
+        if (-not $images) { return 0 }
+        $taskDir = $(Get-ChildItem -Recurse -Directory -Filter "ManifestGeneratorTask*" -Path '$(Agent.WorkFolder)').FullName
+        $manifestToolDllPath = $(Get-ChildItem -Recurse -File -Filter "Microsoft.ManifestTool.dll" -Path $taskDir).FullName
+        $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "dotnet-*" -Path $taskDir).FullName
+
+        # Call the manifest tool for each image to produce seperate SBOMs
+        # Manifest tool docs: https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/secure-supply-chain/custom-sbom-generation-workflows
+        $images -Split ',' | ForEach-Object {
+          echo "Generating SBOM for $_";
+          $formattedImageName = $_.Replace('$(acr.server)/$(stagingRepoPrefix)', "").Replace('/', '_').Replace(':', '_');
+          $sbomChildDir = "$(sbomDirectory)/$formattedImageName";
+          New-Item -Type Directory -Path $sbomChildDir > $null;
+          & "$dotnetDir/dotnet" "$manifestToolDllPath" `
+            Generate `
+            -BuildDropPath '$(Build.ArtifactStagingDirectory)' `
+            -BuildComponentPath '$(Agent.BuildDirectory)' `
+            -PackageName '.NET' `
+            -PackageVersion '$(Build.BuildNumber)' `
+            -ManifestDirPath $sbomChildDir `
+            -DockerImagesToScan $_ `
+            -Verbosity Information 
+        }
+      displayName: Generate SBOMs
+      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''), eq(variables.architecture, 'amd64'))
   - ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
       parameters:
         condition: ne(variables.testScriptPath, '')
   - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
+  - ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+    - publish: $(sbomDirectory)
+      artifact: $(legName)-sboms
+      displayName: Publish SBOM
+      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''), eq(variables.architecture, 'amd64'))

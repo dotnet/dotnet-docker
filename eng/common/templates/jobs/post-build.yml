@@ -4,14 +4,31 @@ parameters:
 jobs:
 - job: Build
   pool: ${{ parameters.pool }}
+  variables:
+    imageInfosSubDir: "/image-infos"
+    sbomSubDir: "/sbom"
   steps:
   - template: ../steps/init-docker-linux.yml
   - template: ../steps/download-build-artifact.yml
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
-  - pwsh: |
+  - powershell: |
+      # Move all image-info artifacts to their own directory
+      New-Item -ItemType Directory -Path $(Build.ArtifactStagingDirectory)$(imageInfosSubDir)
+      Get-ChildItem -Directory -Filter "*-image-info-*" $(Build.ArtifactStagingDirectory) |
+        Move-Item -Verbose -Destination $(Build.ArtifactStagingDirectory)$(imageInfosSubDir)
+    displayName: Collect Image Info Files
+  - powershell: |
+      # Move the contents of all the SBOM artifact directories to a single location
+      New-Item -ItemType Directory -Path $(Build.ArtifactStagingDirectory)$(sbomSubDir)
+      Get-ChildItem -Directory -Filter "*-sboms" $(Build.ArtifactStagingDirectory) |
+        ForEach-Object {
+          Get-ChildItem $_ -Directory | Move-Item -Verbose -Destination $(Build.ArtifactStagingDirectory)$(sbomSubDir)
+        }
+    displayName: Consolidate SBOMs to Single Directory
+  - powershell: |
       # Deletes the artifacts from all the unsuccessful jobs
-      Get-ChildItem $(Build.ArtifactStagingDirectory) -Directory |
+      Get-ChildItem $(Build.ArtifactStagingDirectory)$(imageInfosSubDir) -Directory |
           ForEach-Object {
               [pscustomobject]@{
                   # Parse the artifact name to separate the base of the name from the job attempt number 
@@ -32,10 +49,13 @@ jobs:
   - script: >
       $(runImageBuilderCmd) mergeImageInfo
       --manifest $(manifest)
-      $(artifactsPath)
-      $(artifactsPath)/image-info.json
+      $(artifactsPath)$(imageInfosSubDir)
+      $(artifactsPath)$(imageInfosSubDir)/image-info.json
       $(manifestVariables)
     displayName: Merge Image Info Files
-  - publish: $(Build.ArtifactStagingDirectory)/image-info.json
+  - publish: $(Build.ArtifactStagingDirectory)$(sbomSubDir)
+    artifact: sboms
+    displayName: Publish SBOM Artifact
+  - publish: $(Build.ArtifactStagingDirectory)$(imageInfosSubDir)/image-info.json
     artifact: image-info
     displayName: Publish Image Info File Artifact
