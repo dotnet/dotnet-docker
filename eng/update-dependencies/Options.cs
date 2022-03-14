@@ -16,7 +16,7 @@ namespace Dotnet.Docker
         public string GitHubEmail { get; }
         public string GitHubPassword { get; }
         public string GitHubProject => "dotnet-docker";
-        public string GitHubUpstreamBranch => "nightly";
+        public string Branch { get; }
         public string GitHubUpstreamOwner => "dotnet";
         public string GitHubUser { get; }
         public IDictionary<string, string?> ProductVersions { get; set; } = new Dictionary<string, string?>();
@@ -25,7 +25,7 @@ namespace Dotnet.Docker
         public bool UpdateOnly => GitHubEmail == null || GitHubPassword == null || GitHubUser == null;
 
         public Options(string dockerfileVersion, string[] productVersion, string channelName, string versionSourceName, string email, string password, string user,
-            bool computeShas, bool stableBranding)
+            bool computeShas, bool stableBranding, string branch)
         {
             DockerfileVersion = dockerfileVersion;
             ProductVersions = productVersion
@@ -38,6 +38,7 @@ namespace Dotnet.Docker
             GitHubUser = user;
             ComputeChecksums = computeShas;
             UseStableBranding = stableBranding;
+            Branch = branch;
 
             // Special case for handling the shared dotnet product version variables.
             if (ProductVersions.ContainsKey("runtime"))
@@ -61,7 +62,8 @@ namespace Dotnet.Docker
                 new Option<string>("--password", "GitHub password used to make PR (if not specified, a PR will not be created)"),
                 new Option<string>("--user", "GitHub user used to make PR (if not specified, a PR will not be created)"),
                 new Option<bool>("--compute-shas", "Compute the checksum if a published checksum cannot be found"),
-                new Option<bool>("--stable-branding", "Use stable branding version numbers to compute paths")
+                new Option<bool>("--stable-branding", "Use stable branding version numbers to compute paths"),
+                new Option<string>("--branch", () => "nightly", "Git branch being targeted for update"),
             };
     }
 }

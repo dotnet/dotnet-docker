@@ -66,6 +66,9 @@ if ($UseStableBranding) {
     $updateDepsArgs += "--stable-branding"
 }
 
+$branch = & $PSScriptRoot/Get-Branch.ps1
+$updateDepsArgs += "--branch=$branch"
+
 if ($PrintArgsVariableOnly) {
     Write-Host "##vso[task.setvariable variable=updateDepsArgs]$updateDepsArgs"
 }
