@@ -125,15 +125,15 @@ namespace Dotnet.Docker
             GitHubAuth gitHubAuth = new GitHubAuth(Options.GitHubPassword, Options.GitHubUser, Options.GitHubEmail);
             PullRequestCreator prCreator = new PullRequestCreator(gitHubAuth, Options.GitHubUser);
 
-            string branchSuffix = $"UpdateDependencies-{Options.GitHubUpstreamBranch}-From-{versionSourceNameForBranch}";
+            string branchSuffix = $"UpdateDependencies-{Options.Branch}-From-{versionSourceNameForBranch}";
             PullRequestOptions prOptions = new PullRequestOptions()
             {
                 BranchNamingStrategy = new SingleBranchNamingStrategy(branchSuffix)
             };
 
-            string commitMessage = $"[{Options.GitHubUpstreamBranch}] Update dependencies from {Options.VersionSourceName}";
+            string commitMessage = $"[{Options.Branch}] Update dependencies from {Options.VersionSourceName}";
             GitHubProject upstreamProject = new GitHubProject(Options.GitHubProject, Options.GitHubUpstreamOwner);
-            GitHubBranch upstreamBranch = new GitHubBranch(Options.GitHubUpstreamBranch, upstreamProject);
+            GitHubBranch upstreamBranch = new GitHubBranch(Options.Branch, upstreamProject);
 
             using (GitHubClient client = new GitHubClient(gitHubAuth))
             {
