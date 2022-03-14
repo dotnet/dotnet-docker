@@ -10,7 +10,7 @@ RUN powershell -Command `
         `
         $dotnet_version = '7.0.0-preview.2.22152.2'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip; `
-        $dotnet_sha512 = 'b2ab3bbe6608a3eec469edf44891f326ff0deb850fa72475c75d2e81e7a8c7952391554b3983d7ec98a83141652329852b14fc112f63f2419cabc53c8e9c15dd'; `
+        $dotnet_sha512 = 'bbd8c05cca3072664ac3921f1f96d01793dc8baadeeac826949a9b285268e0eba0951968b264368ab9a34a2922a02ff2ba6162209c30df673782413d40420a78'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
