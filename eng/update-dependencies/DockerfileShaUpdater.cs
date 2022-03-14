@@ -366,9 +366,19 @@ namespace Dotnet.Docker
             return Task.FromResult<string?>(null);
         }
 
-        private static async Task<string?> GetDotNetReleaseChecksumsShaAsync(
+        private async Task<string?> GetDotNetReleaseChecksumsShaAsync(
             string productDownloadUrl, string? version)
         {
+            // Only use the release checksums file for the main branch (where official releases reside). This is because the release
+            // checksums file contains checksums for the official release files which will be signed. The same corresponding build in
+            // the nightly branch, for example, will not be signed due to the difference in the blob container being targeted between
+            // the two branches. So in the nightly branch, we wouldn't use the release checksums file and instead use the other means
+            // of retrieving the checksums.
+            if (_options.Branch != "main")
+            {
+                return null;
+            }
+
             IDictionary<string, string> checksumEntries = await GetDotnetReleaseChecksums(version);
 
             string installerFileName = productDownloadUrl.Substring(productDownloadUrl.LastIndexOf('/') + 1);
