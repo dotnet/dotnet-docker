@@ -3,11 +3,12 @@ ARG base_image
 
 FROM $installer_image AS installer
 
+ARG os_version
 ARG required_packages
 
 RUN tdnf install -y dnf
 RUN mkdir /staging \
-    && dnf install -y --releasever=1.0 --installroot /staging $(echo $required_packages)
+    && dnf install -y --releasever=$os_version --installroot /staging $(echo $required_packages)
 
 
 FROM $base_image AS base
