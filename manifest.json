@@ -6784,6 +6784,43 @@
               }
             }
           ]
+        },
+        {
+          "productVersion": "$(monitor|7.0|product-version)",
+          "sharedTags": {
+            "$(monitor|7.0|product-version)-cbl-mariner": {
+              "docType": "Undocumented"
+            },
+            "7.0-cbl-mariner": {
+              "docType": "Undocumented"
+            },
+            "7-cbl-mariner": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "ASPNET_REPO": "$(Repo:aspnet)",
+                "SDK_REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/monitor/7.0/cbl-mariner/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(dotnet|7.0|product-version)-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.0-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            }
+          ]
         }
       ]
     }

@@ -1,5 +1,6 @@
 {{
     _ .NET major version matches the major version of dotnet-monitor ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set dotnetMajor to split(PRODUCT_VERSION, ".")[0] ^
     set dotnetMajorMinor to cat(dotnetMajor, ".0") ^
     set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
@@ -29,7 +30,7 @@ FROM $SDK_REPO:{{installerBaseTag}} AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION={{monitorVersion}}
-RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg {{url}}/diagnostics/monitor/{{versionFolder}}/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
+RUN {{if isAlpine:wget -O^else:curl -fSL --output}} dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg {{url}}/diagnostics/monitor/{{versionFolder}}/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
     && dotnetmonitor_sha512='{{monitorSha}}' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework {{targetFrameworkMoniker}} --no-cache \

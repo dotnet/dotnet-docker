@@ -220,6 +220,7 @@
     "src/monitor/6.0/alpine/amd64": 107934342,
     "src/monitor/6.1/alpine/amd64": 107919731,
     "src/monitor/6.2/alpine/amd64": 107698176,
-    "src/monitor/7.0/alpine/amd64": 108759306
+    "src/monitor/7.0/alpine/amd64": 108759306,
+    "src/monitor/7.0/cbl-mariner/amd64": 351879133
   }
 }

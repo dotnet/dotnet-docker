@@ -20,6 +20,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string StretchSlim = "stretch-slim";
 
         // Mariner
+        public const string Mariner = "cbl-mariner";
         public const string Mariner10 = "cbl-mariner1.0";
         public const string Mariner10Distroless = "cbl-mariner1.0-distroless";
         public const string Mariner20 = "cbl-mariner2.0";
