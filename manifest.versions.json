@@ -74,6 +74,10 @@
     "monitor|6.1|product-version": "6.1.0",
     "monitor|6.1|sha": "4e8d78c1bc5db20ec7d32c23272afa80fc7c5eb0904f2e769310d48952294ce08b07f08272218db7c8c165844063548b035e59b716a858fa127f6ad9f013d4c7",
 
+    "monitor|6.2|build-version": "6.2.0-alpha.1.22168.1",
+    "monitor|6.2|product-version": "6.2.0-alpha.1",
+    "monitor|6.2|sha": "a72a176ccac58c055033dbe67a6de5e2be6d6bdb65700fea68e6eaf7c7d07f9219ead6660fcf3b1f4a6bf49b82d770bb94a77359485b53602c2a38fbcfb20508",
+
     "monitor|7.0|build-version": "7.0.0-preview.3.22161.5",
     "monitor|7.0|product-version": "7.0.0-preview.3",
     "monitor|7.0|sha": "317c907235b94243cb729623f4d134956edc168c2d63bd1d2b73a488fa25ae03990cfc40f6418262e403cfbf5d9fc07a6b6509d39a495f5812712797d757adac",
