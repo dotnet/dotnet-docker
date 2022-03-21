@@ -141,6 +141,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             new MonitorImageData { Version = V6_0, RuntimeVersion = V6_0, OS = OS.Alpine314, OSTag = OS.Alpine, Arch = Arch.Amd64 },
             new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Alpine314, OSTag = OS.Alpine, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Alpine315, OSTag = OS.Alpine, Arch = Arch.Amd64 },
             new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Alpine315, OSTag = OS.Alpine, Arch = Arch.Amd64 },
         };
 
