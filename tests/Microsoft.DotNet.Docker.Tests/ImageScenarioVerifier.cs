@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
@@ -242,7 +243,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static async Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null)
+        public static async Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null, AuthenticationHeaderValue authorizationHeader = null)
         {
             int retries = 30;
 
@@ -253,6 +254,11 @@ namespace Microsoft.DotNet.Docker.Tests
 
             using (HttpClient client = new HttpClient())
             {
+                if (null != authorizationHeader)
+                {
+                    client.DefaultRequestHeaders.Authorization = authorizationHeader;
+                }
+
                 while (retries > 0)
                 {
                     retries--;
@@ -292,14 +298,15 @@ namespace Microsoft.DotNet.Docker.Tests
             throw new TimeoutException($"Timed out attempting to access the endpoint {url} on container {containerName}");
         }
 
-        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null)
+        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null)
         {
             (await GetHttpResponseFromContainerAsync(
                 containerName,
                 dockerHelper,
                 outputHelper,
                 containerPort,
-                pathAndQuery)).Dispose();
+                pathAndQuery,
+                validateCallback)).Dispose();
         }
     }
 }
