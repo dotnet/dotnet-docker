@@ -7,9 +7,9 @@
     set targetFrameworkMonikerRegex to cat("net", dotnetMajor, "[.]0") ^
     set installerBaseTag to cat(VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set monitorVersionVariable to when(monitorMajorMinor != "7.0", "product-version", "build-version") ^
-    set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
+    set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
+    set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
     set monitorSha to VARIABLES[cat("monitor|", monitorMajorMinor, "|sha")] ^
     set imageBaseTag to cat(VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     _ All .NET Monitor versions publish to the same storage account, thus use the latest storage account scheme.
