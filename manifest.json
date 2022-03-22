@@ -6809,7 +6809,7 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(dotnet|7.0|product-version)-cbl-mariner-amd64": {
+                "$(monitor|7.0|product-version)-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 },
                 "7.0-cbl-mariner-amd64": {
