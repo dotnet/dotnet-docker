@@ -48,7 +48,7 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.1.0-alpine-amd64, 6.1-alpine-amd64, 6-alpine-amd64, 6.1.0-alpine, 6.1-alpine, 6-alpine, 6.1.0, 6.1, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.1/alpine/amd64/Dockerfile) | Alpine 3.14
+6.1.1-alpine-amd64, 6.1-alpine-amd64, 6-alpine-amd64, 6.1.1-alpine, 6.1-alpine, 6-alpine, 6.1.1, 6.1, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.1/alpine/amd64/Dockerfile) | Alpine 3.14
 6.0.2-alpine-amd64, 6.0-alpine-amd64, 6.0.2-alpine, 6.0-alpine, 6.0.2, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.0/alpine/amd64/Dockerfile) | Alpine 3.14
 
 ##### .NET Monitor Preview Tags
