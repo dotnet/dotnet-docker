@@ -10,7 +10,6 @@
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
     set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
     set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
-    set monitorSha to VARIABLES[cat("monitor|", monitorMajorMinor, "|sha")] ^
     set imageBaseTag to cat(VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     _ All .NET Monitor versions publish to the same storage account, thus use the latest storage account scheme.
       However, the latest 6.0 release still uses dotnetcli storage account. ^
@@ -18,7 +17,6 @@
     _ When build and product versions are the same and they are stable versions, use account from main branch e.g. dotnetcli
       Otherwise, use the account that is associated with the current branch. ^
     set urlBranch to when(find(monitorVersion, "-") >= 0 || buildVersion != monitorVersion, VARIABLES["branch"], "main") ^
-    set url to cat(VARIABLES[cat("base-url|", urlVersion ,"|", urlBranch)]) ^
     _ Use the $DOTNET_MONITOR_VERSION variable for the version folder if the build and product versions are the same. ^
     set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$DOTNET_MONITOR_VERSION')
 }}ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
@@ -29,9 +27,13 @@ FROM $SDK_REPO:{{installerBaseTag}} AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION={{monitorVersion}}
-RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg {{url}}/diagnostics/monitor/{{versionFolder}}/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='{{monitorSha}}' \
-    && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
+RUN {{InsertTemplate("../Dockerfile.linux.download-file",
+        [
+            "out-file": "dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg",
+            "url": cat(VARIABLES[cat("base-url|", urlVersion ,"|", urlBranch)], "/diagnostics/monitor/", versionFolder, "/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg"),
+            "sha": VARIABLES[cat("monitor|", monitorMajorMinor, "|sha")],
+            "sha-var-name": "dotnetmonitor_sha512"
+        ], "    ")}} \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework {{targetFrameworkMoniker}} --no-cache \
     # To reduce image size, remove all non-{{targetFrameworkMoniker}} TFMs
     # To do this safely, we need to first find everything that dotnet tool installed named "dotnet-monitor".
