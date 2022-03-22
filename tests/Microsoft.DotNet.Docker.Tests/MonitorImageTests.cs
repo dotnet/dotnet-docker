@@ -150,13 +150,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (!Config.IsHttpVerificationDisabled)
                     {
                         // Verify processes returns 401 (Unauthorized) since authentication was not configured.
-                        (await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                        await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(
                             containerName,
                             DockerHelper,
                             OutputHelper,
                             DefaultArtifactsPort,
                             UrlPath_Processes,
-                            m => VerifyStatusCode(m, HttpStatusCode.Unauthorized))).Dispose();
+                            m => VerifyStatusCode(m, HttpStatusCode.Unauthorized));
                     }
                 },
                 builder =>
@@ -223,13 +223,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (!Config.IsHttpVerificationDisabled)
                     {
                         // Verify processes returns 401 (Unauthorized) since authentication was not provided.
-                        (await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                        await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(
                             containerName,
                             DockerHelper,
                             OutputHelper,
                             DefaultArtifactsPort,
                             UrlPath_Processes,
-                            m => VerifyStatusCode(m, HttpStatusCode.Unauthorized))).Dispose();
+                            m => VerifyStatusCode(m, HttpStatusCode.Unauthorized));
 
                         // Verify processes is accessible using authorization header
                         using HttpResponseMessage processesMessage =

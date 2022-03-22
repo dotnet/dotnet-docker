@@ -298,14 +298,15 @@ namespace Microsoft.DotNet.Docker.Tests
             throw new TimeoutException($"Timed out attempting to access the endpoint {url} on container {containerName}");
         }
 
-        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null)
+        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null)
         {
             (await GetHttpResponseFromContainerAsync(
                 containerName,
                 dockerHelper,
                 outputHelper,
                 containerPort,
-                pathAndQuery)).Dispose();
+                pathAndQuery,
+                validateCallback)).Dispose();
         }
     }
 }
