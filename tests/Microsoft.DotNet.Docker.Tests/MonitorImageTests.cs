@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -57,6 +58,13 @@ namespace Microsoft.DotNet.Docker.Tests
         public static IEnumerable<object[]> GetImageData()
         {
             return TestData.GetMonitorImageData()
+                .Select(imageData => new object[] { imageData });
+        }
+
+        public static IEnumerable<object[]> GetImageDataSupportingMachineJsonKeyGeneration()
+        {
+            return TestData.GetMonitorImageData()
+                .Where(imageData => imageData.Version >= ImageVersion.V6_1)
                 .Select(imageData => new object[] { imageData });
         }
 
@@ -132,7 +140,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// </summary>
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public Task VerifyMonitorNoHttps(MonitorImageData imageData)
+        public Task VerifyMonitorNoHttpsUnconfiguredAuth(MonitorImageData imageData)
         {
             return VerifyMonitorAsync(
                 imageData,
@@ -141,15 +149,15 @@ namespace Microsoft.DotNet.Docker.Tests
                 {
                     if (!Config.IsHttpVerificationDisabled)
                     {
-                        // Verify processes returns 401 (Unauthorized) since authentication was not provided.
+                        // Verify processes returns 401 (Unauthorized) since authentication was not configured.
                         using HttpResponseMessage processesMessage =
-                        await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
-                            containerName,
-                            DockerHelper,
-                            OutputHelper,
-                            DefaultArtifactsPort,
-                            UrlPath_Processes,
-                            m => VerifyStatusCode(m, HttpStatusCode.Unauthorized));
+                            await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                                containerName,
+                                DockerHelper,
+                                OutputHelper,
+                                DefaultArtifactsPort,
+                                UrlPath_Processes,
+                                m => VerifyStatusCode(m, HttpStatusCode.Unauthorized));
                     }
                 },
                 builder =>
@@ -195,6 +203,55 @@ namespace Microsoft.DotNet.Docker.Tests
                     // Reset and expose the artifacts port over http (not secure)
                     builder.MonitorUrl(DefaultArtifactsPort);
                 });
+        }
+
+        /// <summary>
+        /// Tests that the image can run without https enabled and that the artifacts ports
+        /// are accessible with valid authorization header.
+        /// </summary>
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageDataSupportingMachineJsonKeyGeneration))]
+        public Task VerifyMonitorNoHttpsWithAuth(MonitorImageData imageData)
+        {
+            GenerateKeyOutput output = GenerateKey(imageData);
+            AuthenticationHeaderValue authorizationHeader = AuthenticationHeaderValue.Parse(output.AuthorizationHeader);
+
+            return VerifyMonitorAsync(
+                imageData,
+                noAuthentication: false,
+                async containerName =>
+                {
+                    if (!Config.IsHttpVerificationDisabled)
+                    {
+                        // Verify processes returns 401 (Unauthorized) since authentication was not provided.
+                        using HttpResponseMessage processesMessageUnauthorized =
+                            await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                                containerName,
+                                DockerHelper,
+                                OutputHelper,
+                                DefaultArtifactsPort,
+                                UrlPath_Processes,
+                                m => VerifyStatusCode(m, HttpStatusCode.Unauthorized));
+
+                        // Verify processes is accessible using authorization header
+                        using HttpResponseMessage processesMessageSuccess =
+                            await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                                containerName,
+                                DockerHelper,
+                                OutputHelper,
+                                DefaultArtifactsPort,
+                                UrlPath_Processes,
+                                authorizationHeader: authorizationHeader);
+                    }
+                },
+                builder =>
+                {
+                    // Reset and expose the artifacts port over http (not secure)
+                    builder.MonitorUrl(DefaultArtifactsPort);
+                    // Configuration authentication
+                    builder.MonitorApiKey(output.Authentication.MonitorApiKey);
+                },
+                authorizationHeader);
         }
 
         /// <summary>
@@ -278,7 +335,9 @@ namespace Microsoft.DotNet.Docker.Tests
             MonitorImageData imageData,
             bool noAuthentication,
             Func<string, Task> verifyContainerAsync = null,
-            Action<DockerRunArgsBuilder> runArgsCallback = null)
+            Action<DockerRunArgsBuilder> runArgsCallback = null,
+            AuthenticationHeaderValue authorizationHeader = null
+            )
         {
             GetNames(imageData, out string monitorImageName, out string monitorContainerName);
             try
@@ -307,7 +366,8 @@ namespace Microsoft.DotNet.Docker.Tests
                             DockerHelper,
                             OutputHelper,
                             DefaultMetricsPort,
-                            UrlPath_Metrics);
+                            UrlPath_Metrics,
+                            authorizationHeader: authorizationHeader);
 
                     string metricsContent = await metricsMessage.Content.ReadAsStringAsync();
 
@@ -510,11 +570,41 @@ namespace Microsoft.DotNet.Docker.Tests
                 return JsonDocument.Parse(stream).RootElement;
             }
         }
+
+        private GenerateKeyOutput GenerateKey(MonitorImageData imageData)
+        {
+            GetNames(imageData, out string monitorImageName, out string monitorContainerName);
+            try
+            {
+                DockerRunArgsBuilder runArgsBuilder = DockerRunArgsBuilder.Create()
+                    .Entrypoint("dotnet-monitor");
+
+                string json = DockerHelper.Run(
+                    image: monitorImageName,
+                    name: monitorContainerName,
+                    command: "generatekey -o machinejson",
+                    optionalRunArgs: runArgsBuilder.Build());
+
+                GenerateKeyOutput output = JsonSerializer.Deserialize<GenerateKeyOutput>(json);
+
+                Assert.NotNull(output?.Authentication?.MonitorApiKey?.PublicKey);
+                Assert.NotNull(output?.Authentication?.MonitorApiKey?.Subject);
+                Assert.NotNull(output?.AuthorizationHeader);
+
+                return output;
+            }
+            finally
+            {
+                DockerHelper.DeleteContainer(monitorContainerName);
+            }
+        }
     }
 
     internal static class MonitorDockerRunArgsBuilderExtensions
     {
         // dotnet-monitor variables
+        internal const string EnvVar_Authentication_MonitorApiKey_PublicKey = "DotnetMonitor_Authentication__MonitorApiKey__PublicKey";
+        internal const string EnvVar_Authentication_MonitorApiKey_Subject = "DotnetMonitor_Authentication__MonitorApiKey__Subject";
         internal const string EnvVar_DiagnosticPort_ConnectionMode = "DotnetMonitor_DiagnosticPort__ConnectionMode";
         internal const string EnvVar_DiagnosticPort_EndpointName = "DotnetMonitor_DiagnosticPort__EndpointName";
         internal const string EnvVar_Metrics_Enabled = "DotnetMonitor_Metrics__Enabled";
@@ -522,6 +612,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
         // runtime variables
         internal const string EnvVar_DiagnosticPorts = "DOTNET_DiagnosticPorts";
+
+        public static DockerRunArgsBuilder MonitorApiKey(this DockerRunArgsBuilder builder, MonitorApiKeyOptions options)
+        {
+            return builder
+                .EnvironmentVariable(EnvVar_Authentication_MonitorApiKey_PublicKey, options.PublicKey)
+                .EnvironmentVariable(EnvVar_Authentication_MonitorApiKey_Subject, options.Subject);
+        }
 
         /// <summary>
         /// Disables the metrics endpoint in dotnet-monitor.
@@ -564,5 +661,27 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             return $"http://*:{port}";
         }
+    }
+
+    /// <summary>
+    /// Represents the structured output of a "dotnet-monitor generatekey -o machinejson" invocation.
+    /// </summary>
+    internal sealed class GenerateKeyOutput
+    {
+        public AuthenticationOptions Authentication { get; set; }
+
+        public string AuthorizationHeader { get; set; }
+    }
+
+    internal sealed class AuthenticationOptions
+    {
+        public MonitorApiKeyOptions MonitorApiKey { get; set; }
+    }
+
+    internal sealed class MonitorApiKeyOptions
+    {
+        public string PublicKey { get; set; }
+
+        public string Subject { get; set; }
     }
 }
