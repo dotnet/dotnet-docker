@@ -150,14 +150,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (!Config.IsHttpVerificationDisabled)
                     {
                         // Verify processes returns 401 (Unauthorized) since authentication was not configured.
-                        using HttpResponseMessage processesMessage =
-                            await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
-                                containerName,
-                                DockerHelper,
-                                OutputHelper,
-                                DefaultArtifactsPort,
-                                UrlPath_Processes,
-                                m => VerifyStatusCode(m, HttpStatusCode.Unauthorized));
+                        (await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                            containerName,
+                            DockerHelper,
+                            OutputHelper,
+                            DefaultArtifactsPort,
+                            UrlPath_Processes,
+                            m => VerifyStatusCode(m, HttpStatusCode.Unauthorized))).Dispose();
                     }
                 },
                 builder =>
@@ -224,17 +223,16 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (!Config.IsHttpVerificationDisabled)
                     {
                         // Verify processes returns 401 (Unauthorized) since authentication was not provided.
-                        using HttpResponseMessage processesMessageUnauthorized =
-                            await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
-                                containerName,
-                                DockerHelper,
-                                OutputHelper,
-                                DefaultArtifactsPort,
-                                UrlPath_Processes,
-                                m => VerifyStatusCode(m, HttpStatusCode.Unauthorized));
+                        (await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                            containerName,
+                            DockerHelper,
+                            OutputHelper,
+                            DefaultArtifactsPort,
+                            UrlPath_Processes,
+                            m => VerifyStatusCode(m, HttpStatusCode.Unauthorized))).Dispose();
 
                         // Verify processes is accessible using authorization header
-                        using HttpResponseMessage processesMessageSuccess =
+                        using HttpResponseMessage processesMessage =
                             await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
                                 containerName,
                                 DockerHelper,
@@ -242,6 +240,12 @@ namespace Microsoft.DotNet.Docker.Tests
                                 DefaultArtifactsPort,
                                 UrlPath_Processes,
                                 authorizationHeader: authorizationHeader);
+
+                        JsonElement rootElement = GetContentAsJsonElement(processesMessage);
+
+                        // Verify returns an empty array (should not detect any processes)
+                        Assert.Equal(JsonValueKind.Array, rootElement.ValueKind);
+                        Assert.Equal(0, rootElement.GetArrayLength());
                     }
                 },
                 builder =>
