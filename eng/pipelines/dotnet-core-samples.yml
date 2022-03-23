@@ -4,8 +4,9 @@ pr: none
 resources:
   repositories:
   - repository: InternalVersionsRepo
-    type: git
-    name: internal/dotnet-versions
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
 
 variables:
 - template: variables/samples.yml

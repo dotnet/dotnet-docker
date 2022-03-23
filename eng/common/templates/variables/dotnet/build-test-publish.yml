@@ -45,19 +45,6 @@ variables:
 - name: gitHubVersionsRepoInfo.email
   value: $(dotnetDockerBot.email)
 
-- name: azdoVersionsRepoInfo.org
-  value: dnceng
-- name: azdoVersionsRepoInfo.project
-  value: ${{ variables.internalProjectName }}
-- name: azdoVersionsRepoInfo.repo
-  value: dotnet-versions
-- name: azdoVersionsRepoInfo.branch
-  value: main
-- name: azdoVersionsRepoInfo.path
-  value: ${{ variables.commonVersionsImageInfoPath }}
-- name: azdoVersionsRepoInfo.accessToken
-  value: $(dn-bot-devdiv-dnceng-rw-code-pat)
-
 - name: kusto.servicePrincipalPassword
   value: $(app-DotnetDockerTelemetryIngestion-client-secret)
 - name: mcrStatus.servicePrincipalPassword
