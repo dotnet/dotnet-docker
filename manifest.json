@@ -6708,8 +6708,10 @@
           "sharedTags": {
             "$(monitor|6.1|product-version)-alpine": {},
             "6.1-alpine": {},
+            "6-alpine": {},
             "$(monitor|6.1|product-version)": {},
-            "6.1": {}
+            "6.1": {},
+            "6": {}
           },
           "platforms": [
             {
@@ -6723,7 +6725,8 @@
               "osVersion": "alpine3.15",
               "tags": {
                 "$(monitor|6.1|product-version)-alpine-amd64": {},
-                "6.1-alpine-amd64": {}
+                "6.1-alpine-amd64": {},
+                "6-alpine-amd64": {}
               }
             }
           ]
@@ -6770,10 +6773,8 @@
           "sharedTags": {
             "$(monitor|6.2|product-version)-alpine": {},
             "6.2-alpine": {},
-            "6-alpine": {},
             "$(monitor|6.2|product-version)": {},
-            "6.2": {},
-            "6": {}
+            "6.2": {}
           },
           "platforms": [
             {
@@ -6787,8 +6788,7 @@
               "osVersion": "alpine3.15",
               "tags": {
                 "$(monitor|6.2|product-version)-alpine-amd64": {},
-                "6.2-alpine-amd64": {},
-                "6-alpine-amd64": {}
+                "6.2-alpine-amd64": {}
               }
             }
           ]
