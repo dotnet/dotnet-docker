@@ -93,16 +93,10 @@ jobs:
       '$(gitHubVersionsRepoInfo.userName)'
       '$(gitHubVersionsRepoInfo.email)'
       '$(gitHubVersionsRepoInfo.accessToken)'
-      '$(azdoVersionsRepoInfo.accessToken)'
-      '$(azdoVersionsRepoInfo.org)'
-      '$(azdoVersionsRepoInfo.project)'
       --git-owner '$(gitHubVersionsRepoInfo.org)'
       --git-repo '$(gitHubVersionsRepoInfo.repo)'
       --git-branch '$(gitHubVersionsRepoInfo.branch)'
       --git-path '$(gitHubImageInfoVersionsPath)'
-      --azdo-repo '$(azdoVersionsRepoInfo.repo)'
-      --azdo-branch '$(azdoVersionsRepoInfo.branch)'
-      --azdo-path '$(azdoImageInfoVersionsPath)'
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Image Info
