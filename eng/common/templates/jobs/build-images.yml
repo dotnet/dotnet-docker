@@ -120,13 +120,13 @@ jobs:
       inputs:
         BuildDropPath: $(Build.ArtifactStagingDirectory)
       displayName: Load Manifest Generator
-      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''), eq(variables.architecture, 'amd64'))
+      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
     - powershell: |
         $images = "$(BuildImages.builtImages)"
         if (-not $images) { return 0 }
         $taskDir = $(Get-ChildItem -Recurse -Directory -Filter "ManifestGeneratorTask*" -Path '$(Agent.WorkFolder)').FullName
         $manifestToolDllPath = $(Get-ChildItem -Recurse -File -Filter "Microsoft.ManifestTool.dll" -Path $taskDir).FullName
-        $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "dotnet-*" -Path $taskDir).FullName
+        $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "sbom-dotnet-*" -Path '$(Agent.ToolsDirectory)').FullName
 
         # Call the manifest tool for each image to produce seperate SBOMs
         # Manifest tool docs: https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/secure-supply-chain/custom-sbom-generation-workflows
@@ -146,7 +146,7 @@ jobs:
             -Verbosity Information 
         }
       displayName: Generate SBOMs
-      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''), eq(variables.architecture, 'amd64'))
+      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
   - ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
       parameters:
@@ -156,4 +156,4 @@ jobs:
     - publish: $(sbomDirectory)
       artifact: $(legName)-sboms
       displayName: Publish SBOM
-      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''), eq(variables.architecture, 'amd64'))
+      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
