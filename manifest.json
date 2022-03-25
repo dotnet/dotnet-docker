@@ -6735,12 +6735,18 @@
           "productVersion": "$(monitor|6.1|product-version)",
           "sharedTags": {
             "$(monitor|6.1|product-version)-cbl-mariner": {
+                "docType": "Undocumented"
+            },
+            "$(monitor|6.1|product-version)-cbl-mariner1.0": {
               "docType": "Undocumented"
             },
             "6.1-cbl-mariner": {
+                "docType": "Undocumented"
+            },
+            "6.1-cbl-mariner1.0": {
               "docType": "Undocumented"
             },
-            "6-cbl-mariner": {
+            "6-cbl-mariner1.0": {
               "docType": "Undocumented"
             }
           },
@@ -6756,12 +6762,18 @@
               "osVersion": "cbl-mariner1.0",
               "tags": {
                 "$(monitor|6.1|product-version)-cbl-mariner-amd64": {
+                    "docType": "Undocumented"
+                },
+                "$(monitor|6.1|product-version)-cbl-mariner1.0-amd64": {
                   "docType": "Undocumented"
                 },
                 "6.1-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 },
-                "6-cbl-mariner-amd64": {
+                "6.1-cbl-mariner1.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6-cbl-mariner1.0-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -6769,7 +6781,7 @@
           ]
         },
         {
-          "productVersion": "$(monitor|6.2|product-version)",
+        "productVersion": "$(monitor|6.2|product-version)",
           "sharedTags": {
             "$(monitor|6.2|product-version)-alpine": {},
             "6.2-alpine": {},
@@ -6789,6 +6801,55 @@
               "tags": {
                 "$(monitor|6.2|product-version)-alpine-amd64": {},
                 "6.2-alpine-amd64": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|6.2|product-version)",
+          "sharedTags": {
+            "$(monitor|6.2|product-version)-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "$(monitor|6.2|product-version)-cbl-mariner": {
+              "docType": "Undocumented"
+            },
+            "6.2-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "6.2-cbl-mariner": {
+              "docType": "Undocumented"
+            },
+            "6-cbl-mariner2.0": {
+                "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "ASPNET_REPO": "$(Repo:aspnet)",
+                "SDK_REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/monitor/6.2/cbl-mariner/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(monitor|6.2|product-version)-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6.2|product-version)-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.2-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6.2-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             }
           ]
