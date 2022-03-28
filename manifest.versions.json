@@ -84,6 +84,7 @@
     "libicu|bullseye": 67,
     "libicu|buster": 63,
     "libicu|focal": 66,
+    "libicu|jammy": 67,
 
     "monitor|6.0|build-version": "6.0.2-servicing.22077.7",
     "monitor|6.0|product-version": "6.0.2",
