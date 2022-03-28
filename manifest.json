@@ -6735,10 +6735,10 @@
           "productVersion": "$(monitor|6.1|product-version)",
           "sharedTags": {
             "$(monitor|6.1|product-version)-cbl-mariner": {
-                "docType": "Undocumented"
+              "docType": "Undocumented"
             },
             "6.1-cbl-mariner": {
-                "docType": "Undocumented"
+              "docType": "Undocumented"
             },
             "6-cbl-mariner": {
               "docType": "Undocumented"
@@ -6756,7 +6756,7 @@
               "osVersion": "cbl-mariner1.0",
               "tags": {
                 "$(monitor|6.1|product-version)-cbl-mariner-amd64": {
-                    "docType": "Undocumented"
+                  "docType": "Undocumented"
                 },
                 "6.1-cbl-mariner-amd64": {
                   "docType": "Undocumented"
