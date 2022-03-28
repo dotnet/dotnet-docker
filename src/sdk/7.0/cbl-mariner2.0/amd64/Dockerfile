@@ -34,7 +34,7 @@ RUN curl -fSL --output dotnet.rpm https://dotnetbuilds.azureedge.net/public/Sdk/
     && dotnet_sha512='b2ecc4d8539e33f52a718c24a8e22c9dd63d0c653fbb8129b49c8b07302826d14f5fe00012a7d8aaa0e6c3bcedd66a6428f14196801fcb0d21aa3029667e89e9' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output aspnetcore-targeting-pack.rpm https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/7.0.0-preview.3.22174.3/aspnetcore-targeting-pack-7.0.0-preview.3.22174.3x64.rpm \
+    && curl -fSL --output aspnetcore-targeting-pack.rpm https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/7.0.0-preview.3.22174.3/aspnetcore-targeting-pack-7.0.0-preview.3.22174.3-x64.rpm \
     && dotnet_sha512='ec88fed9df0319f0cce27640c3df403951c02ecd05f4ebe96475b584b9533467b5766f97b9108c68c103ffd8380b03a418cce3a6bda70a1def74b8ea09808376' \
     && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
     \
