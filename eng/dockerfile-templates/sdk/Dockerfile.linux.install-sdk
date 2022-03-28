@@ -42,7 +42,8 @@
         [
             "filename": "aspnetcore-targeting-pack.rpm",
             "url": cat(baseUrl, "/aspnetcore/Runtime/", VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")],
-                "/aspnetcore-targeting-pack-", VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")], ".rpm"),
+                "/aspnetcore-targeting-pack-", VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")],
+                when(dotnetVersion = "3.1" || dotnetVersion = "5.0" || dotnetVersion = "6.0", "", ARCH_SHORT), ".rpm"),
             "sha": VARIABLES[join(["aspnet-runtime-targeting-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": commonShaVarName
         ],
