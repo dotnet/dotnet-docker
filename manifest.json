@@ -6781,7 +6781,7 @@
           ]
         },
         {
-        "productVersion": "$(monitor|6.2|product-version)",
+          "productVersion": "$(monitor|6.2|product-version)",
           "sharedTags": {
             "$(monitor|6.2|product-version)-alpine": {},
             "6.2-alpine": {},
