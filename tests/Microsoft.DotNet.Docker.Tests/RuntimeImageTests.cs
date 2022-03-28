@@ -24,6 +24,13 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
+            if (imageData.IsArm && imageData.OS == OS.Jammy)
+            {
+                OutputHelper.WriteLine(
+                    "Skipping test due to https://github.com/dotnet/runtime/issues/66310. Re-enable when fixed.");
+                return;
+            }
+
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper);
             await verifier.Execute();
         }
