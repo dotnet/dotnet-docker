@@ -233,6 +233,7 @@
     "src/monitor/6.1/alpine/amd64": 107919731,
     "src/monitor/6.1/cbl-mariner/amd64": 329811976,
     "src/monitor/6.2/alpine/amd64": 107698176,
+    "src/monitor/6.2/alpine/arm64v8": 118521282,
     "src/monitor/6.2/cbl-mariner/amd64": 350489871,
     "src/monitor/7.0/alpine/amd64": 114588203,
     "src/monitor/7.0/cbl-mariner/amd64": 351879133
