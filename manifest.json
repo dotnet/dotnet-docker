@@ -6946,6 +6946,22 @@
                 "6.2-alpine-amd64": {},
                 "6-alpine-amd64": {}
               }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "ASPNET_REPO": "$(Repo:aspnet)",
+                "SDK_REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/monitor/6.2/alpine/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "os": "linux",
+              "osVersion": "alpine3.15",
+              "tags": {
+                "$(monitor|6.2|product-version)-alpine-arm64v8": {},
+                "6.2-alpine-arm64v8": {}
+              },
+              "variant": "v8"
             }
           ]
         },
