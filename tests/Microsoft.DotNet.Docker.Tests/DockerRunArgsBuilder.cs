@@ -27,6 +27,15 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         /// <summary>
+        /// Sets the entrypoint of the container.
+        /// </summary>
+        public DockerRunArgsBuilder Entrypoint(string entrypoint)
+        {
+            _builder.AppendFormat(CultureInfo.InvariantCulture, "--entrypoint {0} ", entrypoint);
+            return this;
+        }
+
+        /// <summary>
         /// Sets the named environment variable with the specified value.
         /// </summary>
         public DockerRunArgsBuilder EnvironmentVariable(string name, string value)

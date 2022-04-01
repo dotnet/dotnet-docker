@@ -33,21 +33,23 @@ else {
     $DotnetInstallScript = "dotnet-install.ps1"
 }
 
-if (!(Test-Path $DotnetInstallScript)) {
+$DotnetInstallScriptPath = Join-Path -Path $InstallPath -ChildPath $DotnetInstallScript
+
+if (!(Test-Path $DotnetInstallScriptPath)) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;
-    & "$PSScriptRoot/Invoke-WithRetry.ps1" "Invoke-WebRequest 'https://dot.net/v1/$DotnetInstallScript' -OutFile $InstallPath/$DotnetInstallScript"
+    & "$PSScriptRoot/Invoke-WithRetry.ps1" "Invoke-WebRequest 'https://dot.net/v1/$DotnetInstallScript' -OutFile $DotnetInstallScriptPath"
 }
 
 $DotnetChannel = "Current"
 
 $InstallFailed = $false
 if ($IsRunningOnUnix) {
-    & chmod +x $InstallPath/$DotnetInstallScript
-    & $InstallPath/$DotnetInstallScript --channel $DotnetChannel --version "latest" --install-dir $InstallPath
+    & chmod +x $DotnetInstallScriptPath
+    & $DotnetInstallScriptPath --channel $DotnetChannel --version "latest" --install-dir $InstallPath
     $InstallFailed = ($LASTEXITCODE -ne 0)
 }
 else {
-    & $InstallPath/$DotnetInstallScript -Channel $DotnetChannel -Version "latest" -InstallDir $InstallPath
+    & $DotnetInstallScriptPath -Channel $DotnetChannel -Version "latest" -InstallDir $InstallPath
     $InstallFailed = (-not $?)
 }
 

@@ -12,9 +12,11 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
 ^elif match(SHORT_REPO, "monitor"):{{if VARIABLES["branch"] = "nightly":* `7` (Preview)
   * `docker pull {{FULL_REPO}}:7`
-}}* `6` (Current)
+* `6` (Preview)
   * `docker pull {{FULL_REPO}}:6`
-^else:{{if VARIABLES["branch"] = "nightly":* `7.0` (Preview)
+^else:* `6` (Current)
+  * `docker pull {{FULL_REPO}}:6`
+}}^else:{{if VARIABLES["branch"] = "nightly":* `7.0` (Preview)
   * `docker pull {{FULL_REPO}}:7.0`
 }}* `6.0` (Current, LTS)
   * `docker pull {{FULL_REPO}}:6.0`

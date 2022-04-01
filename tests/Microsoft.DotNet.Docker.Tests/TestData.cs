@@ -49,6 +49,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V5_0, OS = OS.Alpine315,           Arch = Arch.Arm64,   SdkOS = OS.BusterSlim },
             new ProductImageData { Version = V6_0, OS = OS.BullseyeSlim,        Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Amd64 },
+            new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine314,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine315,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Mariner10,           Arch = Arch.Amd64 },
@@ -61,12 +62,14 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V6_0, OS = OS.BullseyeSlim,        Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Arm },
             new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Arm64 },
+            new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Arm },
+            new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine314,           Arch = Arch.Arm },
             new ProductImageData { Version = V6_0, OS = OS.Alpine314,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine315,           Arch = Arch.Arm },
             new ProductImageData { Version = V6_0, OS = OS.Alpine315,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V7_0, OS = OS.BullseyeSlim,        Arch = Arch.Amd64 },
-            new ProductImageData { Version = V7_0, OS = OS.Focal,               Arch = Arch.Amd64 },
+            new ProductImageData { Version = V7_0, OS = OS.Jammy,               Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, OS = OS.Alpine315,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, OS = OS.Mariner20,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20 },
@@ -74,8 +77,8 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V7_0, OS = OS.Mariner20Distroless, Arch = Arch.Arm64,   SdkOS = OS.Mariner20 },
             new ProductImageData { Version = V7_0, OS = OS.BullseyeSlim,        Arch = Arch.Arm },
             new ProductImageData { Version = V7_0, OS = OS.BullseyeSlim,        Arch = Arch.Arm64 },
-            new ProductImageData { Version = V7_0, OS = OS.Focal,               Arch = Arch.Arm },
-            new ProductImageData { Version = V7_0, OS = OS.Focal,               Arch = Arch.Arm64 },
+            new ProductImageData { Version = V7_0, OS = OS.Jammy,               Arch = Arch.Arm },
+            new ProductImageData { Version = V7_0, OS = OS.Jammy,               Arch = Arch.Arm64 },
             new ProductImageData { Version = V7_0, OS = OS.Alpine315,           Arch = Arch.Arm },
             new ProductImageData { Version = V7_0, OS = OS.Alpine315,           Arch = Arch.Arm64 },
         };
@@ -139,9 +142,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly MonitorImageData[] s_linuxMonitorTestData =
         {
-            new MonitorImageData { Version = V6_0, RuntimeVersion = V6_0, OS = OS.Alpine314, OSTag = OS.Alpine, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Alpine314, OSTag = OS.Alpine, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_0, RuntimeVersion = V6_0, OS = OS.Alpine315, OSTag = OS.Alpine, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Alpine315, OSTag = OS.Alpine, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Mariner10, OSTag = OS.Mariner, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Alpine315, OSTag = OS.Alpine, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Alpine315, OSTag = OS.Alpine, Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Amd64 },
             new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Alpine315, OSTag = OS.Alpine, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Alpine315, OSTag = OS.Alpine, Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Amd64 },
         };
 
         private static readonly MonitorImageData[] s_windowsMonitorTestData =
