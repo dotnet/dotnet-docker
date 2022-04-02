@@ -7054,7 +7054,8 @@
                 "6.2-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
-              }
+              },
+              "variant": "v8"
             }
           ]
         },
@@ -7159,7 +7160,8 @@
                 "7-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
-              }
+              },
+              "variant": "v8"
             }
           ]
         }
