@@ -11,9 +11,6 @@
     set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
     set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
     set imageBaseTag to cat(VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
-    _ All .NET Monitor versions publish to the same storage account, thus use the latest storage account scheme.
-      However, the latest 6.0 release still uses dotnetcli storage account. ^
-    set urlVersion to when(monitorMajorMinor != "6.0", "7.0", "6.0") ^
     _ When build and product versions are the same and they are stable versions, use account from main branch e.g. dotnetcli
       Otherwise, use the account that is associated with the current branch. ^
     set urlBranch to when(find(monitorVersion, "-") >= 0 || buildVersion != monitorVersion, VARIABLES["branch"], "main") ^
@@ -30,7 +27,7 @@ ENV DOTNET_MONITOR_VERSION={{monitorVersion}}
 RUN {{InsertTemplate("../Dockerfile.linux.download-file",
         [
             "out-file": "dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg",
-            "url": cat(VARIABLES[cat("base-url|", urlVersion ,"|", urlBranch)], "/diagnostics/monitor/", versionFolder, "/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg"),
+            "url": cat(VARIABLES[cat("base-url|", monitorMajorMinor, "-monitor|", urlBranch)], "/diagnostics/monitor/", versionFolder, "/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg"),
             "sha": VARIABLES[cat("monitor|", monitorMajorMinor, "|sha")],
             "sha-var-name": "dotnetmonitor_sha512"
         ], "    ")}} \
