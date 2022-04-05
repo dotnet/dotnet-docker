@@ -71,9 +71,9 @@
     "monitor|6.0|product-version": "6.0.2",
     "monitor|6.0|sha": "3203e455fe4fa9e7b251ba957ddf286a3a3fcf1c88663315547d5f4f7df9ee1c1f164dfcc42edeebaf786bf1b893753c5a5339377b259798208d5f07c48f9a10",
 
-    "monitor|6.1|build-version": "6.1.1-servicing.22167.3",
+    "monitor|6.1|build-version": "6.1.1-servicing.22204.5",
     "monitor|6.1|product-version": "6.1.1",
-    "monitor|6.1|sha": "e8ee7583ba7c26a8fe38f1df9b347e348a2b7f071f59be82c43a14ec581e3c1991a9a31b5ad06accac0de3fc433bbbdd43e9ef0aa52385ceb5e1e15bd934155c",
+    "monitor|6.1|sha": "94dae789f43304656198751d183389502b8076913ac0924d3269f74463b4d2b90c7514658dad910a39ccc6e1d1f9e5cd7f7bd036a807588c08c389b5aba6b5ce",
 
     "monitor|6.2|build-version": "6.2.0-alpha.1.22168.1",
     "monitor|6.2|product-version": "6.2.0-alpha.1",
