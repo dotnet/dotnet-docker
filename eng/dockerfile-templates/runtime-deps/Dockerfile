@@ -24,10 +24,19 @@
                 when(isMariner,
                     cat(marinerRegistry, "/base/core"),
                     "<NOT-IMPLEMENTED>")))) ^
-    set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION)
+    set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
+    set isSingleStage to !isDistrolessMariner && !(isFullMariner && isInternal && ARCH_SHORT != "arm64") ^
+    set urlSuffix to when(isInternal, "SAS_QUERY_STRING", "") ^
+    set rpmFilename to "dotnet-runtime-deps.rpm"
 }}{{
-    if isDistrolessMariner:# Installer image
-}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if isDistrolessMariner: AS installer}}
+    if !isSingleStage:# Installer image
+}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isFullMariner && ARCH_SHORT != "arm64":
+
+RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
+    [
+        "url-suffix": urlSuffix,
+        "filename": rpmFilename
+    ], "    ")}}}}
 {{ if isDistrolessMariner:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
@@ -65,14 +74,23 @@ RUN rm -rf {{distrolessStagingDir}}/etc/dnf \
 FROM {{marinerRegistry}}/distroless/minimal:{{OS_VERSION_NUMBER}}
 
 COPY --from=installer {{distrolessStagingDir}}/ /
-^elif isFullMariner && ARCH_SHORT != "arm64" && !isInternal:
-# Install dotnet-runtime-deps package
-RUN dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
-    && curl -fSL --output dotnet-runtime-deps.rpm {{VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])]}}/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-{{ARCH_SHORT}}.rpm \
-    && dotnet_sha512='{{VARIABLES[cat("runtime-deps-cm.1|", dotnetVersion, "|linux-rpm|", ARCH_SHORT, "|sha")]}}' \
-    && echo "$dotnet_sha512  dotnet-runtime-deps.rpm" | sha512sum -c - \
-    && rpm --install dotnet-runtime-deps.rpm \
-    && rm dotnet-runtime-deps.rpm
+^elif isFullMariner && ARCH_SHORT != "arm64":
+{{if isInternal:{{InsertTemplate("../Dockerfile.linux.copy-files",
+[
+    "files": [
+        [
+            "filename": rpmFilename
+        ]
+    ],
+    "srcStage": "installer",
+    "destination": ""
+])}}
+}}{{InsertTemplate("Dockerfile.install-runtime-deps-pkg",
+    [
+        "skip-download": isInternal
+        "url-suffix": urlSuffix,
+        "filename": rpmFilename
+    ])}}
 }}
 {{InsertTemplate("../Dockerfile.common-dotnet-envs") ^
 if isDistrolessMariner:

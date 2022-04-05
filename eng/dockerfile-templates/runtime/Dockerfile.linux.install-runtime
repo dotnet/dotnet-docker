@@ -1,11 +1,13 @@
 {{
     _ ARGS:
         dest-dir: Destination directory to install .NET runtime
+        install-method: Method of installation. Can be "download", "download-and-install", or "copy-and-install"
         add-symlink (optional): If set, adds a symlink to the dotnet executable
         use-local-version-var (optional): Whether to define a local variable for the .NET runtime version
             instead of referencing the environment variable.
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
-        url-suffix (optional): Suffix string to append the end of the URL. ^
+        url-suffix (optional): Suffix string to append the end of the URL.
+        installer-stage (optional): Name of the Dockerfile stage responsible for installation ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
@@ -51,12 +53,25 @@
             "sha-var-name": "dotnet_sha512"
         ]
     ] ^
-    set files to when(isFullMariner && ARCH_SHORT != "arm64" && !ARGS["is-internal"], rpms, tarballs)
-}}RUN {{if ARGS["use-local-version-var"]:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion"|build-version")]}} \
-    && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
+    set files to when(isFullMariner && ARCH_SHORT != "arm64", rpms, tarballs) ^
+    set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
+    set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
+    set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
+}}{{
+if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
     [
         "files": files,
-        "install-dir": ARGS["dest-dir"],
-        "create-install-dir": !isFullMariner || ARCH_SHORT = "arm64" || ARGS["is-internal"]
-    ], "    ")}}{{if ARGS["add-symlink"]: \
+        "srcStage": ARGS["installer-stage"],
+        "destination": ""
+    ])
+}}
+}}RUN {{if ARGS["use-local-version-var"]:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
+    && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
+        [
+            "files": files,
+            "skip-download": !downloadEnabled,
+            "skip-install": !installEnabled,
+            "install-dir": ARGS["dest-dir"],
+            "create-install-dir": !isFullMariner || ARCH_SHORT = "arm64" || ARGS["is-internal"]
+        ], "    ")}}{{if ARGS["add-symlink"]: \
     && {{InsertTemplate("Dockerfile.linux.symlink")}}}}

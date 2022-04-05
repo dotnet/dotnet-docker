@@ -1,15 +1,17 @@
 {{
     _ ARGS:
+        - install-method: Method of installation. Can be "download", "download-and-install", or "copy-and-install"
         - use-local-version-var (optional): Whether to define a local variable for the ASP.NET Core runtime version
             instead of referencing the environment variable.
         - is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
-        - url-suffix (optional): Suffix string to append the end of the URL. ^
+        - url-suffix (optional): Suffix string to append the end of the URL.
+        - installer-stage (optional): Name of the Dockerfile stage responsible for installation ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isDistroless to find(OS_VERSION, "-distroless") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set useRpm to (isFullMariner && !ARGS["is-internal"] && ARCH_SHORT != "arm64") ^
+    set useRpm to (isFullMariner && ARCH_SHORT != "arm64") ^
     set filePlatform to when(useRpm, "", when(isAlpine, "-linux-musl", "-linux")) ^
     set varPlatform to when(useRpm, "linux-rpm", when(isAlpine, "linux-musl", "linux")) ^
     set fileExt to when(useRpm, "rpm", "tar.gz") ^
@@ -36,11 +38,24 @@
             "sha-var-name": "aspnetcore_sha512",
             "extract-paths": ["./shared/Microsoft.AspNetCore.App"]
         ]
-    ]
+    ] ^
+    set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
+    set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
+    set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
+}}{{
+if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
+    [
+        "files": files,
+        "srcStage": ARGS["installer-stage"],
+        "destination": ""
+    ])
+}}
 }}RUN {{if ARGS["use-local-version-var"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
     && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
         [
             "files": files,
+            "skip-download": !downloadEnabled,
+            "skip-install": !installEnabled,
             "install-dir": destDir
             "create-install-dir": isDistroless
         ], "    ")}}

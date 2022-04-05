@@ -2,6 +2,7 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isInternal to
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
             VARIABLES[cat("base-url|internal|", VARIABLES["branch"])] ||
@@ -33,18 +34,22 @@
                 "wget"
             ])), len)
 }}{{if !isBasedOnBuildpackDeps:ARG REPO=mcr.microsoft.com/dotnet/aspnet
-}}{{if isInternal:FROM {{internalInstallerBase}} AS installer
+}}{{if isInternal:# Installer image
+FROM {{internalInstallerBase}} AS installer
 
 ARG SAS_QUERY_STRING
 
 {{InsertTemplate("Dockerfile.linux.install-sdk",
     [
+        "install-method": when(isFullMariner, "download", "download-and-install"),
         "based-on-buildpack-deps": "true",
         "use-local-version-var": (dotnetVersion = "3.1"),
         "is-internal": isInternal,
         "url-suffix": "$SAS_QUERY_STRING"
     ])}}
 
+
+# .NET SDK image
 }}FROM {{baseImageTag}}
 
 {{InsertTemplate("Dockerfile.envs", ["based-on-buildpack-deps": isBasedOnBuildpackDeps])}}
@@ -60,11 +65,20 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # Install .NET CLI dependencies
 RUN {{InsertTemplate("../Dockerfile.linux.install-deps", ["isSdk": "true"])}}
 }}
-{{if isInternal:COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+{{if isInternal:{{
+if isFullMariner:{{InsertTemplate("Dockerfile.linux.install-sdk",
+    [
+        "install-method": "copy-and-install",
+        "is-internal": isInternal,
+        "url-suffix": "$SAS_QUERY_STRING",
+        "installer-stage": "installer"
+    ])}}^
+else:COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 
-{{InsertTemplate("Dockerfile.linux.first-run")}}^
+{{InsertTemplate("Dockerfile.linux.first-run")}}}}^
 else:{{InsertTemplate("Dockerfile.linux.install-sdk",
     [
+        "install-method": "download-and-install",
         "based-on-buildpack-deps": isBasedOnBuildpackDeps,
         "use-local-version-var": (dotnetVersion = "3.1")
     ])}}}}{{if !isAlpine || ARCH_SHORT = "x64":

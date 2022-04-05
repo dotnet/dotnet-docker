@@ -35,7 +35,11 @@
 {{InsertTemplate("Dockerfile.envs")}}
 }}
 # Install ASP.NET Core
-{{InsertTemplate("Dockerfile.linux.install-aspnet", ["use-local-version-var": dotnetVersion = "3.1"])}}^else:
+{{InsertTemplate("Dockerfile.linux.install-aspnet",
+    [
+        "install-method": "download-and-install",
+        "use-local-version-var": dotnetVersion = "3.1"
+    ])}}^else:
 {{
 
     _ MULTI STAGE
@@ -52,6 +56,7 @@ RUN tdnf install -y ca-certificates-microsoft \
 # Retrieve ASP.NET Core
 {{InsertTemplate("Dockerfile.linux.install-aspnet",
     [
+        "install-method": when(isInternal && isFullMariner, "download", "download-and-install"),
         "use-local-version-var": "true",
         "is-internal": isInternal,
         "url-suffix": when(isInternal, "$SAS_QUERY_STRING", "")
@@ -62,5 +67,12 @@ RUN tdnf install -y ca-certificates-microsoft \
 FROM {{runtimeBaseTag}}
 
 {{InsertTemplate("Dockerfile.envs")}}
-
-COPY --from=installer ["{{copyFromSrcPath}}", "{{copyFromDstPath}}"]}}
+{{if isInternal && isFullMariner:
+{{InsertTemplate("Dockerfile.linux.install-aspnet",
+    [
+        "install-method": "copy-and-install",
+        "is-internal": isInternal,
+        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
+        "installer-stage": "installer"
+    ])}}^else:
+COPY --from=installer ["{{copyFromSrcPath}}", "{{copyFromDstPath}}"]}}}}

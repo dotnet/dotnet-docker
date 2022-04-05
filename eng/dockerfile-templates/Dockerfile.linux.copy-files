@@ -1,0 +1,8 @@
+{{
+    _ ARGS:
+        files: Array of metadata describing the files to be downloaded and installed
+        srcStage: Dockerfile stage to copy files from
+        destination: Destination directory to copy files to
+}}{{
+for file in ARGS["files"]:COPY --from={{ARGS["srcStage"]}} /{{file["filename"]}} {{ARGS["destination"]}}/{{file["filename"]}}
+}}

@@ -1,10 +1,12 @@
 {{
     _ ARGS
+        install-method: Method of installation. Can be "download", "download-and-install", or "copy-and-install"
         based-on-buildpack-deps: Indicates whether the associated Dockerfile is based on buildpack-deps
         use-local-version-var: Whether to define a local variable for the .NET SDK version instead of
             referencing the environment variable.
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
-        url-suffix (optional): Suffix string to append the end of the URL. ^
+        url-suffix (optional): Suffix string to append the end of the URL.
+        installer-stage (optional): Name of the Dockerfile stage responsible for installation ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
@@ -91,17 +93,30 @@
                     ]))
         ]
     ] ^
-    set files to when(isFullMariner && ARCH_SHORT != "arm64" && !ARGS["is-internal"], rpms, tarballs)
+    set files to when(isFullMariner && ARCH_SHORT != "arm64", rpms, tarballs) ^
+    set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
+    set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
+    set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
+}}{{
+if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
+    [
+        "files": files,
+        "srcStage": ARGS["installer-stage"],
+        "destination": ""
+    ])
+}}
 }}# Install .NET{{dotnetSuffix}} SDK
 RUN {{if ARGS["use-local-version-var"]:sdk_version={{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}} \
 {{
 if isFullMariner:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
     aspnet_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
 }}}}{{if ARGS["use-local-version-var"]:    && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
-[
-    "files": files,
-    "install-dir": installDir,
-    "create-install-dir": !isFullMariner
-], "    ")}}{{if !ARGS["is-internal"]:{{if ARGS["based-on-buildpack-deps"]: \
+    [
+        "files": files,
+        "skip-download": !downloadEnabled,
+        "skip-install": !installEnabled,
+        "install-dir": installDir,
+        "create-install-dir": !isFullMariner
+    ], "    ")}}{{if !ARGS["is-internal"] || isFullMariner:{{if ARGS["based-on-buildpack-deps"]: \
     && ln -s {{installDir}}/dotnet /usr/bin/dotnet}} \
     {{InsertTemplate("Dockerfile.linux.first-run", ["append-cmd": "true"], "    ")}}}}

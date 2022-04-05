@@ -1,0 +1,15 @@
+{{
+    _ ARGS:
+        skip-download (optional): Skip downloading the RPM
+        url-suffix (optional): Suffix string to append the end of the URL.
+        filename: Name of the file to install
+}}# Install dotnet-runtime-deps package
+RUN {{if !ARGS["skip-download"]:{{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
+        [
+            "url-suffix": ARGS["url-suffix"],
+            "filename": ARGS["filename"]
+        ], "    ")}} \
+    && }}{{InsertTemplate("../Dockerfile.linux.install-rpms",
+        [
+            "files": [ARGS["filename"]]
+        ], "    ")}}

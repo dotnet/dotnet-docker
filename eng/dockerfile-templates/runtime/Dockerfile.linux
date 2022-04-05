@@ -39,6 +39,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # Install .NET{{when(dotnetVersion = "3.1", " Core", "")}} Runtime
 {{InsertTemplate("Dockerfile.linux.install-runtime",
     [
+        "install-method": "download-and-install",
         "dest-dir": "/usr/share/dotnet",
         "add-symlink": !isFullMariner || ARCH_SHORT = "arm64",
         "use-local-version-var": dotnetVersion = "3.1"
@@ -62,24 +63,33 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # Retrieve .NET Runtime
 {{InsertTemplate("Dockerfile.linux.install-runtime",
     [
+        "install-method": when(isInternal && isFullMariner, "download", "download-and-install"),
         "dest-dir": when(isDistrolessMariner, "/usr/share/dotnet", "/dotnet"),
         "use-local-version-var": "true",
         "is-internal": isInternal,
         "url-suffix": when(isInternal, "$SAS_QUERY_STRING", "")
-    ])}}
-{{ if isDistrolessMariner:
+    ])}}{{ if isDistrolessMariner:
+
 RUN mkdir /dotnet-symlink \
-    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
-}}
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet}}
+
 
 # .NET runtime image
 FROM {{runtimeDepsBaseTag}}
 
 {{InsertTemplate("Dockerfile.envs")}}
-{{ if isDistrolessMariner:
+{{ if isInternal && isFullMariner:
+{{InsertTemplate("Dockerfile.linux.install-runtime",
+    [
+        "install-method": "copy-and-install",
+        "dest-dir": when(isDistrolessMariner, "/usr/share/dotnet", "/dotnet"),
+        "is-internal": isInternal,
+        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
+        "installer-stage": "installer"
+    ])}}}}{{ if isDistrolessMariner:
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]^
-else:
+elif !(isInternal && isFullMariner):
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 RUN {{InsertTemplate("Dockerfile.linux.symlink")}}}}}}
