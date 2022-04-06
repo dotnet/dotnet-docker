@@ -84,7 +84,13 @@
     "libicu|bullseye": 67,
     "libicu|buster": 63,
     "libicu|focal": 66,
-    "libicu|jammy": 67,
+    "libicu|jammy": 70,
+
+    "libssl|bionic": "1.1",
+    "libssl|bullseye": "1.1",
+    "libssl|buster": "1.1",
+    "libssl|focal": "1.1",
+    "libssl|jammy": "3",
 
     "monitor|6.0|build-version": "6.0.2-servicing.22077.7",
     "monitor|6.0|product-version": "6.0.2",

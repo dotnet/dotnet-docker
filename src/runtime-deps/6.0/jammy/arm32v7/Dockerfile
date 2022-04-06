@@ -8,8 +8,8 @@ RUN apt-get update \
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
-        libicu67 \
-        libssl1.1 \
+        libicu70 \
+        libssl3 \
         libstdc++6 \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
