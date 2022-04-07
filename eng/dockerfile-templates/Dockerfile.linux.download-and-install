@@ -1,33 +1,19 @@
 {{
     _ ARGS:
         files: Array of metadata describing the files to be downloaded and installed
-        install-dir: Directory to install the files
-        create-install-dir (optional): Whether to create the install directory ^
-    
-    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
-
-    set getFilename(file) to:{{
-        return file["filename"]
-    }}
-}}{{
-for i, file in ARGS["files"]:{{if i > 0:&& }}{{
-InsertTemplate("Dockerfile.linux.download-file",
+        skip-download (optional): Whether to skip the download
+        skip-install (optional): Whether to skip installation
+        install-dir (optional): Directory to install the files
+        create-install-dir (optional): Whether to create the install directory
+}}{{if !ARGS["skip-download"]:{{InsertTemplate("Dockerfile.linux.download-files",
     [
-        "out-file": file["filename"],
-        "url": file["url"],
-        "sha": file["sha"],
-        "sha-var-name": file["sha-var-name"]
-    ])}} \
-{{if len(ARGS["files"]) > 1:\
-}}}}{{
-if isFullMariner && ARCH_SHORT != "arm64":&& {{InsertTemplate("Dockerfile.linux.install-rpms",
+        "files": ARGS["files"]
+    ])}}}}{{
+if !ARGS["skip-install"]:{{if !ARGS["skip-download"]: \{{if len(ARGS["files"]) > 1:
+\}}
+&& }}{{InsertTemplate("Dockerfile.linux.install-files",
     [
-        "files": map(ARGS["files"], getFilename)
-    ])}}^
-else:{{if ARGS["create-install-dir"]:&& mkdir -p {{ARGS["install-dir"]}} \
-}}{{for file in ARGS["files"]:&& {{InsertTemplate("Dockerfile.linux.extract-tarball",
-    [
-        "file": file["filename"],
-        "dest-dir": ARGS["install-dir"],
-        "extract-paths": file["extract-paths"]
-    ])}}}}}}
+        "files": ARGS["files"],
+        "install-dir": ARGS["install-dir"]
+        "create-install-dir": ARGS["create-install-dir"]
+    ])}}}}

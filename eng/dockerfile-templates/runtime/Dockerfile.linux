@@ -3,7 +3,12 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
-    set isSingleStage to (dotnetVersion = "3.1" || isAlpine || isFullMariner) ^
+    set isInternal to
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
+            VARIABLES[cat("base-url|internal|", VARIABLES["branch"])] ||
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
+            VARIABLES[cat("base-url|internal|legacy|", VARIABLES["branch"])] ^
+    set isSingleStage to (dotnetVersion = "3.1" || isAlpine || isFullMariner) && !isInternal ^
     set archTagSuffix to when(dotnetVersion != "3.1" || ARCH_VERSIONED != "amd64", ARCH_TAG_SUFFIX, "") ^
     set runtimeDepsBaseTag to cat(
         "$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix) ^
@@ -12,7 +17,9 @@
             when(find(OS_VERSION, "2.0") >= 0, "cblmariner2preview.azurecr.io", "cblmariner.azurecr.io"),
             "/base/core:",
             OS_VERSION_NUMBER),
-        cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl"))
+        when(isAlpine || isFullMariner,
+            runtimeDepsBaseTag,
+            cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl")))
 }}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps{{if isSingleStage:
 {{
 
@@ -32,6 +39,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # Install .NET{{when(dotnetVersion = "3.1", " Core", "")}} Runtime
 {{InsertTemplate("Dockerfile.linux.install-runtime",
     [
+        "install-method": "download-and-install",
         "dest-dir": "/usr/share/dotnet",
         "add-symlink": !isFullMariner || ARCH_SHORT = "arm64",
         "use-local-version-var": dotnetVersion = "3.1"
@@ -44,7 +52,9 @@ _ MULTI STAGE
 
 # Installer image
 FROM {{installerImageTag}} AS installer
-{{ if isDistrolessMariner:
+{{if isInternal:
+ARG SAS_QUERY_STRING
+}}{{ if isDistrolessMariner:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "pkgs": ["ca-certificates-microsoft"]
@@ -53,22 +63,33 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # Retrieve .NET Runtime
 {{InsertTemplate("Dockerfile.linux.install-runtime",
     [
+        "install-method": when(isInternal && isFullMariner, "download", "download-and-install"),
         "dest-dir": when(isDistrolessMariner, "/usr/share/dotnet", "/dotnet"),
-        "use-local-version-var": "true"
-    ])}}
-{{ if isDistrolessMariner:
+        "use-local-version-var": "true",
+        "is-internal": isInternal,
+        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", "")
+    ])}}{{ if isDistrolessMariner:
+
 RUN mkdir /dotnet-symlink \
-    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
-}}
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet}}
+
 
 # .NET runtime image
 FROM {{runtimeDepsBaseTag}}
 
 {{InsertTemplate("Dockerfile.envs")}}
-{{ if isDistrolessMariner:
+{{ if isInternal && isFullMariner:
+{{InsertTemplate("Dockerfile.linux.install-runtime",
+    [
+        "install-method": "copy-and-install",
+        "dest-dir": when(isDistrolessMariner, "/usr/share/dotnet", "/dotnet"),
+        "is-internal": isInternal,
+        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
+        "installer-stage": "installer"
+    ])}}}}{{ if isDistrolessMariner:
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]^
-else:
+elif !(isInternal && isFullMariner):
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 RUN {{InsertTemplate("Dockerfile.linux.symlink")}}}}}}

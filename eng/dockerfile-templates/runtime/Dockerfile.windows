@@ -1,7 +1,14 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isSingleStage to find(OS_VERSION, "windowsservercore") >= 0 ^
-    set serverCoreBaseTag to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64")
+    set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
+    set isInternal to
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
+            VARIABLES[cat("base-url|internal|", VARIABLES["branch"])] ||
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
+            VARIABLES[cat("base-url|internal|legacy|", VARIABLES["branch"])] ^
+    set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
+    set serverCoreBaseTag to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64") ^
+    set finalStageBaseRepo to when(isInternal && isServerCore, "servercore", "nanoserver")
 }}# escape=`
 
 {{if isSingleStage:{{
@@ -18,18 +25,25 @@
 
 {{InsertTemplate("Dockerfile.windows.set-path")}}^
 else:{{
-    
+
     _ MULTI STAGE
     
 }}# Installer image
 FROM {{serverCoreBaseTag}} AS installer
-
+{{if isInternal:
+ARG SAS_QUERY_STRING
+}}
 # Retrieve .NET{{when(dotnetVersion = "3.1", " Core", "")}} Runtime
-{{InsertTemplate("Dockerfile.windows.install-runtime", ["use-local-version-var": "true"])}}
+{{InsertTemplate("Dockerfile.windows.install-runtime",
+    [
+        "use-local-version-var": "true",
+        "url-suffix": when(isInternal, "$Env:SAS_QUERY_STRING", ""),
+        "is-internal": isInternal
+    ])}}
 
 
 # Runtime image
-FROM mcr.microsoft.com/windows/nanoserver:{{OS_VERSION_NUMBER}}-amd64
+FROM mcr.microsoft.com/windows/{{finalStageBaseRepo}}:{{OS_VERSION_NUMBER}}-amd64
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}}{{if dotnetVersion != "3.1": `
     {{InsertTemplate("Dockerfile.envs", [], "    ")}}}}
