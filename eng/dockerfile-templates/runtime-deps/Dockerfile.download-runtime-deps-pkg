@@ -1,0 +1,14 @@
+{{
+    _ ARGS:
+        url-suffix (optional): Suffix string to append the end of the URL.
+        filename: Name of the file to download ^
+    
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".")
+}}dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
+&& {{InsertTemplate("../Dockerfile.linux.download-file",
+    [
+        "out-file": ARGS["filename"],
+        "url": cat(VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])], "/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-", ARCH_SHORT, ".rpm", ARGS["url-suffix"]),
+        "sha": VARIABLES[cat("runtime-deps-cm.1|", dotnetVersion, "|linux-rpm|", ARCH_SHORT, "|sha")],
+        "sha-var-name": "dotnet_sha512"
+    ])}}
