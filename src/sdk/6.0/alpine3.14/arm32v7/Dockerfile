@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:6.0.3-alpine3.14-arm32v7
+FROM $REPO:6.0.4-alpine3.14-arm32v7
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=6.0.201 \
+    DOTNET_SDK_VERSION=6.0.202 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -28,7 +28,7 @@ RUN apk add --no-cache \
 
 # Install .NET SDK
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-arm.tar.gz \
-    && dotnet_sha512='80a7a34c1b0696c5ab9fb52920982fd529e93c09b1c1fc0222ddaae569ea488cdcff380fdede516a25a165b195d52c162733082af122b5c07191a900e5ca1e86' \
+    && dotnet_sha512='03517eca1a996755d80e3ad4bab49f37cea63fa1924a5c8b1a35de9c49e7e37fa8f0c40dfa79c5b3b46e9f586d97f508806005b7f9b28d25bf4f49d65901dc19' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
