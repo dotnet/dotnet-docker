@@ -52,7 +52,7 @@
     "src/sdk/6.0/windowsservercore-ltsc2019/amd64": 6286084693,
     "src/sdk/6.0/windowsservercore-ltsc2022/amd64": 5556352529,
     "src/sdk/7.0/nanoserver-1809/amd64": 975012837,
-    "src/sdk/7.0/nanoserver-ltsc2022/amd64": 1005128696,
+    "src/sdk/7.0/nanoserver-ltsc2022/amd64": 1058152303,
     "src/sdk/7.0/windowsservercore-ltsc2019/amd64": 6429570443,
     "src/sdk/7.0/windowsservercore-ltsc2022/amd64": 5629364231
   }
