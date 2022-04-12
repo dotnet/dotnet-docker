@@ -22,11 +22,11 @@ RUN tdnf install -y \
 
 # Install .NET SDK
 RUN curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-x64.rpm \
-    && dotnet_sha512='3d6c5c1b3c913244988684bcf8c64fc928ef0eb6c9afeffea976a3f19643d59f1286ae2d8b6fdc95f6fb81c021f4174f898aaa92bca5988c33fd87092389ca8d' \
+    && dotnet_sha512='fffb8474ddd70429450452543324c3cde040b1e8d565e00779c87521d708488f89b2b3a12c33b5c8712556a4f8f5e7606596d862cb4018fad8a229164d6750e7' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
     && curl -fSL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='49aa9cb4536b227a1850f3e1629daa1f251d538f6e96cd807e0f4f8fcbb89b1da1ca2f71881eca23fd35dd0c809862676ca44059ff7f54101fb34503765890b2' \
+    && dotnet_sha512='53cefc750cb0c538dfe793c72a2e127b4f33e733b0fc5e6db23c0601e9d4460f56d81c05324fea95352d91256b85d871c8ea83ac3a661d99f3dc0d18776b4cb2' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
     && curl -fSL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/5.0.0/dotnet-targeting-pack-5.0.0-x64.rpm \

@@ -6,15 +6,15 @@ ENV DOTNET_VERSION=5.0.16
 
 # Install .NET Runtime
 RUN curl -fSL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='34e90a72d9fe83a2f9fc6f15d332557dabdc808366c94cc9661b84fc1bc8515c54bad791ab254c4f8970640ee4e6914c23534c01a5eaab25ecf240113f1b18cd' \
+    && dotnet_sha512='95c3445413515ff6dd8d03000994506b6a960a4109983cf8f5d1eab9839beb93ecdd315680fb08add4bae7b3c25b6f44542166d6bb487489f107dcd45244c92b' \
     && echo "$dotnet_sha512  dotnet-host.rpm" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-hostfxr.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-hostfxr-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='96923af17f854c37fe2bf49cb324d0fc186f3e672671b0e5158c1bdbcbd844d0fc2eb3b3e4eb7b5c27eddeedbfcea590de96a3b23e58b793b20d2a44f1126b7e' \
+    && dotnet_sha512='1564bd0ccb6f2d4fdd89a8755694237632c796ac392fd4d04ffe48741c26bafa32d4bd9d8fec9823c9494e414c1c670b507adc705bf35958afdfe9b93a66aa4d' \
     && echo "$dotnet_sha512  dotnet-hostfxr.rpm" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-runtime.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='dd2cd7a709a237a0ef118aa0170c5c00d1845f14e2bb9d40503a602aa24f15ca05f0c55ec4c5c5f3b3d89073888c390ae473dbdf487ca37ea742dfae68aa2aa1' \
+    && dotnet_sha512='ca0be9b03fbb289ca69e3b25df075e074c39ced9e34bff33a99a45b070b0c7057e10f661b32115f3d184dda4b2b157e8276b0b6c3f9c2c5b4ee9697788b421b2' \
     && echo "$dotnet_sha512  dotnet-runtime.rpm" | sha512sum -c - \
     \
     && rpm --install dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
