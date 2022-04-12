@@ -4,20 +4,20 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm32v7/buildpack-deps:bullseye-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=6.0.3 \
+RUN aspnetcore_version=6.0.4 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm.tar.gz \
-    && aspnetcore_sha512='7d3ca660a6a64c79d5c49c1ced1123dd2aed1cb6b8067627e640d81737f0a946ccfe3d5169d6cc797b6ec17821ed465a66620cdb1eb43470b403efcb9734a430' \
+    && aspnetcore_sha512='944bb52352ff7ba79867466117eaf6909847080574d15629c7149b27a4d1685ec2eb024e2dccc2e5ad2251b6143d2bc3c1597ecd668691ae719903887158062d' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
 
 
 # ASP.NET Core image
-FROM $REPO:6.0.3-bullseye-slim-arm32v7
+FROM $REPO:6.0.4-bullseye-slim-arm32v7
 
 ENV \
     # ASP.NET Core version
-    ASPNET_VERSION=6.0.3 \
+    ASPNET_VERSION=6.0.4 \
     # Set the default console formatter to JSON
     Logging__Console__FormatterName=Json
 
