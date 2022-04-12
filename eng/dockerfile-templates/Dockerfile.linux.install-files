@@ -1,0 +1,23 @@
+{{
+    _ ARGS:
+        files: Array of metadata describing the files to be downloaded and installed
+        install-dir: Directory to install the files
+        create-install-dir (optional): Whether to create the install directory ^
+    
+    set getFilename(file) to:{{
+        return file["filename"]
+    }}
+}}{{
+for file in ARGS["files"]:{{
+    set hasRpm to find(file["filename"], ".rpm") >= 0}}}}{{
+if hasRpm:{{InsertTemplate("Dockerfile.linux.install-rpms",
+    [
+        "files": map(ARGS["files"], getFilename)
+    ])}}^
+else:{{if ARGS["create-install-dir"]:mkdir -p {{ARGS["install-dir"]}} \
+}}{{for i, file in ARGS["files"]:{{if i > 0 || ARGS["create-install-dir"]:&& }}{{InsertTemplate("Dockerfile.linux.extract-tarball",
+    [
+        "file": file["filename"],
+        "dest-dir": ARGS["install-dir"],
+        "extract-paths": file["extract-paths"]
+    ])}}}}}}

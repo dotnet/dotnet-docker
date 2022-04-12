@@ -1,0 +1,15 @@
+{{
+    _ ARGS:
+        files: Array of metadata describing the files to be downloaded and installed
+}}{{
+for i, file in ARGS["files"]:{{if i > 0:&& }}{{
+set isLastFile to (i = len(ARGS["files"]) - 1) ^
+InsertTemplate("Dockerfile.linux.download-file",
+    [
+        "out-file": file["filename"],
+        "url": file["url"],
+        "sha": file["sha"],
+        "sha-var-name": file["sha-var-name"]
+    ])}}{{if !isLastFile: \}}{{if len(ARGS["files"]) > 1 && !isLastFile:
+\
+}}}}

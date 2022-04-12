@@ -2,16 +2,26 @@
     _ ARGS:
         use-local-version-var (optional): Whether to define a local variable for the SDK version
             instead of referencing the environment variable.
-        sdk-extract-groups: Metadata groups describing the paths to be extracted from the SDK zip ^
+        sdk-extract-groups: Metadata groups describing the paths to be extracted from the SDK zip.
+        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
+        url-suffix (optional): Suffix string to append the end of the URL. ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
     set dotnetZipFile to "dotnet.zip" ^
-    set dotnetDir to when(isServerCore, "$Env:ProgramFiles\dotnet", "dotnet") ^
-    set sdkVersionVar to when(ARGS["use-local-version-var"], "$sdk_version", "$Env:DOTNET_SDK_VERSION") ^
+    set useProgramFilesDir to (isServerCore && !ARGS["is-internal"]) ^
+    set dotnetDir to when(useProgramFilesDir, "$Env:ProgramFiles\dotnet", "dotnet") ^
+    set sdkVersionDir to when(ARGS["use-local-version-var"],
+        "$sdk_version",
+        when(ARGS["is-internal"],
+            VARIABLES[cat("sdk|", dotnetVersion, "|build-version")],
+            "$Env:DOTNET_SDK_VERSION")) ^
+    set sdkVersionFile to when(ARGS["is-internal"],
+        VARIABLES[cat("sdk|", dotnetVersion, "|product-version")],
+        sdkVersionDir) ^
     set url to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
-        "/Sdk/", sdkVersionVar, "/dotnet-sdk-", sdkVersionVar, "-win-x64.zip") ^
+        "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-win-x64.zip", ARGS["url-suffix"]) ^
     
     _ The sdk-extract-groups arg is an array of maps. We want to reduce that to just a single array of formatted
         paths. The "for" keyword doesn't work here because we don't want to echo any output. Instead, we'll call
@@ -31,14 +41,14 @@
         return ""
     }} ^
     map(ARGS["sdk-extract-groups"], groupToFormattedPaths)
-}}{{if ARGS["use-local-version-var"]:{{sdkVersionVar}} = '{{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}}'; `
+}}{{if ARGS["use-local-version-var"]:{{sdkVersionDir}} = '{{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}}'; `
 }}{{InsertTemplate("../Dockerfile.windows.download-file",
     [
         "out-file": dotnetZipFile,
         "url": url,
         "sha": VARIABLES[cat("sdk|", dotnetVersion, "|win|x64|sha")],
         "sha-var-name": "dotnet_sha512"
-    ])}}; `{{if !isServerCore:
+    ])}}; `{{if !useProgramFilesDir:
 mkdir {{dotnetDir}}; `}}
 {{InsertTemplate("../Dockerfile.windows.extract-zip",
     [
