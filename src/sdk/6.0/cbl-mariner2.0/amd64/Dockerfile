@@ -32,7 +32,7 @@ RUN curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DO
     && dotnet_sha512='dc0014fa2d4d1621ef48199faf6a479e922b496fbe942e959801f45f0fbb8d34cd44c506634b2b17e3cf18ddd0fd24fb9685b62f3281c16d810df1fb394eb3e4' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.3/dotnet-targeting-pack-6.0.3-x64.rpm \
+    && curl -fSL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.4/dotnet-targeting-pack-6.0.4-x64.rpm \
     && dotnet_sha512='f1898d7c7d1bb458d8a723e7e8924c76aaf7817731347247029d29a70d8c40959248a13dc78a3f7b38bb90f6a465d8f32f746c8f8258efd6677f99cff5b6b429' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
