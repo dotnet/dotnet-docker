@@ -10,12 +10,10 @@
     set monitorVersionVariable to when(monitorMajorMinor != "7.0", "product-version", "build-version") ^
     set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
-    set monitorSha to VARIABLES[cat("monitor|", monitorMajorMinor, "|sha")] ^
     set imageBaseTag to cat(VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     _ When build and product versions are the same and they are stable versions, use account from main branch e.g. dotnetcli
       Otherwise, use the account that is associated with the current branch. ^
     set urlBranch to when(find(monitorVersion, "-") >= 0 || buildVersion != monitorVersion, VARIABLES["branch"], "main") ^
-    set url to cat(VARIABLES[cat("base-url|", urlVersion ,"|", urlBranch)]) ^
     _ Use the $DOTNET_MONITOR_VERSION variable for the version folder if the build and product versions are the same. ^
     set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$DOTNET_MONITOR_VERSION')
 }}ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet

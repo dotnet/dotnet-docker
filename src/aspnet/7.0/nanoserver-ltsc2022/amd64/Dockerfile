@@ -10,9 +10,9 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '7.0.0-preview.2.22153.2'; `
+        $aspnetcore_version = '7.0.0-preview.3.22178.4'; `
         Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
-        $aspnetcore_sha512 = '7f720e796573e4d5c14ba3491663364b98a61eab6691c4cc19c1492a16814e1ba23d6a702fd69837b591c051c5c94db1dfeeec13adf73688daa5b2421ef8188e'; `
+        $aspnetcore_sha512 = 'f126538ed56f2ee5e551e44ed7c745c14182ce8445d73288861a7ba48650d129f9f315c126e207b027f4517ad55e49c4a283ac918dbc819e2fab8bfdea6202f0'; `
         if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -24,9 +24,9 @@ RUN powershell -Command `
 
 
 # ASP.NET Core image
-FROM $REPO:7.0.0-preview.2-nanoserver-ltsc2022
+FROM $REPO:7.0.0-preview.3-nanoserver-ltsc2022
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=7.0.0-preview.2.22153.2
+ENV ASPNET_VERSION=7.0.0-preview.3.22178.4
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
