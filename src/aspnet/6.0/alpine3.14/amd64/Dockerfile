@@ -4,11 +4,8 @@ FROM $REPO:6.0.4-alpine3.14-amd64
 # .NET globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
-ENV \
-    # ASP.NET Core version
-    ASPNET_VERSION=6.0.4 \
-    # Set the default console formatter to JSON
-    Logging__Console__FormatterName=Json
+# ASP.NET Core version
+ENV ASPNET_VERSION=6.0.4
 
 # Install ASP.NET Core
 RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-x64.tar.gz \

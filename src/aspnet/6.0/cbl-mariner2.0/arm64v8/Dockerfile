@@ -1,11 +1,8 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:6.0.4-cbl-mariner2.0-arm64v8
 
-ENV \
-    # ASP.NET Core version
-    ASPNET_VERSION=6.0.4 \
-    # Set the default console formatter to JSON
-    Logging__Console__FormatterName=Json
+# ASP.NET Core version
+ENV ASPNET_VERSION=6.0.4
 
 # Install ASP.NET Core
 RUN curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-arm64.tar.gz \

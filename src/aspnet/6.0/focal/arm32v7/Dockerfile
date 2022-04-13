@@ -15,10 +15,7 @@ RUN aspnetcore_version=6.0.4 \
 # ASP.NET Core image
 FROM $REPO:6.0.4-focal-arm32v7
 
-ENV \
-    # ASP.NET Core version
-    ASPNET_VERSION=6.0.4 \
-    # Set the default console formatter to JSON
-    Logging__Console__FormatterName=Json
+# ASP.NET Core version
+ENV ASPNET_VERSION=6.0.4
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]
