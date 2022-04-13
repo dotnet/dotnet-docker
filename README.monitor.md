@@ -49,7 +49,7 @@ Tags | Dockerfile | OS Version
 ##### .NET Monitor Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-7.0.0-preview.2-alpine-amd64, 7.0-alpine-amd64, 7-alpine-amd64, 7.0.0-preview.2-alpine, 7.0-alpine, 7-alpine, 7.0.0-preview.2, 7.0, 7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.0/alpine/amd64/Dockerfile) | Alpine 3.15
+7.0.0-preview.3-alpine-amd64, 7.0-alpine-amd64, 7-alpine-amd64, 7.0.0-preview.3-alpine, 7.0-alpine, 7-alpine, 7.0.0-preview.3, 7.0, 7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.0/alpine/amd64/Dockerfile) | Alpine 3.15
 
 ## Linux arm64 Tags
 ##### .NET Monitor Preview Tags
