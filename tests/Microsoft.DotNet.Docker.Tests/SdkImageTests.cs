@@ -81,11 +81,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));
             }
 
-            if (imageData.Version.Major == 6)
-            {
-                variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", string.Empty));
-            }
-
             if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
