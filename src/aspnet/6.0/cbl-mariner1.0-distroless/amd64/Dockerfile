@@ -19,10 +19,7 @@ RUN aspnetcore_version=6.0.4 \
 # ASP.NET Core image
 FROM $REPO:6.0.4-cbl-mariner1.0-distroless-amd64
 
-ENV \
-    # ASP.NET Core version
-    ASPNET_VERSION=6.0.4 \
-    # Set the default console formatter to JSON
-    Logging__Console__FormatterName=Json
+# ASP.NET Core version
+ENV ASPNET_VERSION=6.0.4
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]

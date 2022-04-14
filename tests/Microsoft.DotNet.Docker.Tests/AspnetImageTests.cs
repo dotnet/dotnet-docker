@@ -59,11 +59,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
             }
 
-            if (imageData.Version.Major == 6)
-            {
-                variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", "Json"));
-            }
-
             base.VerifyCommonEnvironmentVariables(imageData, variables);
         }
 
