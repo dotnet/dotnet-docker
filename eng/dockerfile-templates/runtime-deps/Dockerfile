@@ -50,10 +50,10 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # Create a non-root user and group
 RUN groupadd \
         --system \
-        --gid=1000 \
+        --gid={{if find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
         app \
     && adduser \
-        --uid 1000 \
+        --uid {{if find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
         --gid app \
         --shell /bin/false \
         --no-create-home \
