@@ -49,5 +49,3 @@ variables:
   value: $(app-DotnetDockerTelemetryIngestion-client-secret)
 - name: mcrStatus.servicePrincipalPassword
   value: $(app-DotnetDockerMcrStatusApi-client-secret)
-- name: acr.password
-  value: $(BotAccount-dotnet-docker-acr-bot-password)
