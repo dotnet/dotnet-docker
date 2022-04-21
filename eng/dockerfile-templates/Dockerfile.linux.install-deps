@@ -32,7 +32,7 @@
                 "libgcc1",
                 "libgssapi-krb5-2",
                 cat("libicu", VARIABLES[cat("libicu|", OS_VERSION_BASE)]),
-                "libssl1.1",
+                cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
                 "libstdc++6",
                 "zlib1g"
             ])) ^

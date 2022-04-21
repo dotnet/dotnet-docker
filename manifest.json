@@ -816,6 +816,37 @@
         {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
+            "$(dotnet|6.0|product-version)-jammy": {},
+            "6.0-jammy": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/6.0/jammy/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-amd64": {},
+                "6.0-jammy-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/6.0/jammy/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-arm64v8": {},
+                "6.0-jammy-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
             "$(dotnet|6.0|product-version)-cbl-mariner1.0": {
               "docType": "Undocumented"
             },
@@ -980,16 +1011,6 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/3.1/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "$(dotnet|7.0|product-version)-focal-amd64": {},
-                "7.0-focal-amd64": {}
-              }
-            },
-            {
               "architecture": "arm",
               "dockerfile": "src/runtime-deps/3.1/focal/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
@@ -1000,16 +1021,35 @@
                 "7.0-focal-arm32v7": {}
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|7.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|7.0|product-version)-jammy": {},
+            "7.0-jammy": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/6.0/jammy/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-amd64": {},
+                "7.0-jammy-amd64": {}
+              }
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/3.1/focal/arm64v8",
+              "dockerfile": "src/runtime-deps/6.0/jammy/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
-              "osVersion": "focal",
+              "osVersion": "jammy",
               "tags": {
-                "$(dotnet|7.0|product-version)-focal-arm64v8": {},
-                "7.0-focal-arm64v8": {}
+                "$(dotnet|7.0|product-version)-jammy-arm64v8": {},
+                "7.0-jammy-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2371,6 +2411,43 @@
         {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
+            "$(dotnet|6.0|product-version)-jammy": {},
+            "6.0-jammy": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/jammy/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-amd64": {},
+                "6.0-jammy-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/jammy/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-arm64v8": {},
+                "6.0-jammy-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
             "$(dotnet|6.0|product-version)-cbl-mariner1.0": {
               "docType": "Undocumented"
             },
@@ -2651,19 +2728,6 @@
           },
           "platforms": [
             {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "src/runtime/7.0/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "$(dotnet|7.0|product-version)-focal-amd64": {},
-                "7.0-focal-amd64": {}
-              }
-            },
-            {
               "architecture": "arm",
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
@@ -2677,19 +2741,41 @@
                 "7.0-focal-arm32v7": {}
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|7.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|7.0|product-version)-jammy": {},
+            "7.0-jammy": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/7.0/jammy/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-amd64": {},
+                "7.0-jammy-amd64": {}
+              }
             },
             {
               "architecture": "arm64",
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/7.0/focal/arm64v8",
+              "dockerfile": "src/runtime/7.0/jammy/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "focal",
+              "osVersion": "jammy",
               "tags": {
-                "$(dotnet|7.0|product-version)-focal-arm64v8": {},
-                "7.0-focal-arm64v8": {}
+                "$(dotnet|7.0|product-version)-jammy-arm64v8": {},
+                "7.0-jammy-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -4126,6 +4212,43 @@
         {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
+            "$(dotnet|6.0|product-version)-jammy": {},
+            "6.0-jammy": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/6.0/jammy/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-amd64": {},
+                "6.0-jammy-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/6.0/jammy/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-arm64v8": {},
+                "6.0-jammy-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
             "$(dotnet|6.0|product-version)-cbl-mariner1.0": {
               "docType": "Undocumented"
             },
@@ -4418,19 +4541,6 @@
           },
           "platforms": [
             {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/7.0/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "$(dotnet|7.0|product-version)-focal-amd64": {},
-                "7.0-focal-amd64": {}
-              }
-            },
-            {
               "architecture": "arm",
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
@@ -4444,19 +4554,41 @@
                 "7.0-focal-arm32v7": {}
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|7.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|7.0|product-version)-jammy": {},
+            "7.0-jammy": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/7.0/jammy/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-amd64": {},
+                "7.0-jammy-amd64": {}
+              }
             },
             {
               "architecture": "arm64",
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/7.0/focal/arm64v8",
+              "dockerfile": "src/aspnet/7.0/jammy/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "focal",
+              "osVersion": "jammy",
               "tags": {
-                "$(dotnet|7.0|product-version)-focal-arm64v8": {},
-                "7.0-focal-arm64v8": {}
+                "$(dotnet|7.0|product-version)-jammy-arm64v8": {},
+                "7.0-jammy-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5810,6 +5942,43 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
+            "$(sdk|6.0|product-version)-jammy": {},
+            "6.0-jammy": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/6.0/jammy/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(sdk|6.0|product-version)-jammy-amd64": {},
+                "6.0-jammy-amd64": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "architecture": "arm64",
+              "dockerfile": "src/sdk/6.0/jammy/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(sdk|6.0|product-version)-jammy-arm64v8": {},
+                "6.0-jammy-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|6.0|product-version)",
+          "sharedTags": {
             "$(sdk|6.0|product-version)-cbl-mariner1.0": {
               "docType": "Undocumented"
             },
@@ -6062,19 +6231,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/sdk/7.0/focal/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "focal",
-              "tags": {
-                "$(sdk|7.0|product-version)-focal-amd64": {},
-                "7.0-focal-amd64": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
               "architecture": "arm",
               "dockerfile": "src/sdk/7.0/focal/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
@@ -6085,19 +6241,41 @@
                 "7.0-focal-arm32v7": {}
               },
               "variant": "v7"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|7.0|product-version)",
+          "sharedTags": {
+            "$(sdk|7.0|product-version)-jammy": {},
+            "7.0-jammy": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/7.0/jammy/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(sdk|7.0|product-version)-jammy-amd64": {},
+                "7.0-jammy-amd64": {}
+              }
             },
             {
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
               "architecture": "arm64",
-              "dockerfile": "src/sdk/7.0/focal/arm64v8",
+              "dockerfile": "src/sdk/7.0/jammy/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "focal",
+              "osVersion": "jammy",
               "tags": {
-                "$(sdk|7.0|product-version)-focal-arm64v8": {},
-                "7.0-focal-arm64v8": {}
+                "$(sdk|7.0|product-version)-jammy-arm64v8": {},
+                "7.0-jammy-arm64v8": {}
               },
               "variant": "v8"
             }
