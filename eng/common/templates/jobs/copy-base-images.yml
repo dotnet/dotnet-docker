@@ -19,7 +19,7 @@ jobs:
       '$(acr.servicePrincipalTenant)'
       '$(acr.subscription)'
       '$(acr.resourceGroup)'
-      $(mirrorRegistryCreds)
+      $(dockerHubRegistryCreds)
       --repo-prefix $(mirrorRepoPrefix)
       --registry-override '$(acr.server)'
       --os-type 'linux'

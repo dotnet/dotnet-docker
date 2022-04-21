@@ -4,10 +4,12 @@ variables:
   value: public
 - name: internalProjectName
   value: internal
-- name: mirrorRegistryCreds
+- name: dockerHubRegistryCreds
   value: --registry-creds 'docker.io=$(dotnetDockerHubBot.userName);$(BotAccount-dotnet-dockerhub-bot-PAT)'
 - name: acr.servicePrincipalPassword
   value: $(app-dotnetdockerbuild-client-secret)
+- name: acr.password
+  value: $(BotAccount-dotnet-docker-acr-bot-password)
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - group: DotNet-Docker-Common
