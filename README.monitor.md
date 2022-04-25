@@ -9,7 +9,7 @@ This image contains the .NET Monitor tool.
 
 Use this image as a sidecar container to collect diagnostic information from other containers running .NET Core 3.1 or later processes.
 
-Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
+Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
 # How to Use the Image
 
