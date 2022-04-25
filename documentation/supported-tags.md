@@ -134,4 +134,4 @@ Unsupported tags will be preserved to prevent breaking any references to it. See
 
 ## Policy Changes
 
-In the event that a change is needed to the tagging patterns used, all tags for the previous pattern will continue to be supported for their original lifetime. They will however be removed from the documentation. [Announcements](https://github.com/dotnet/dotnet-docker/labels/announcement) will be posted when any tagging policy changes are made.
+In the event that a change is needed to the tagging patterns used, all tags for the previous pattern will continue to be supported for their original lifetime. They will however be removed from the documentation. [Announcements](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) will be posted when any tagging policy changes are made.
