@@ -15,8 +15,7 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set installerImageTag to when(isDistrolessMariner,
         cat(
-            when(find(OS_VERSION, "2.0") >= 0, "cblmariner2preview.azurecr.io", "cblmariner.azurecr.io"),
-            "/base/core:",
+            "cblmariner.azurecr.io/base/core:",
             OS_VERSION_NUMBER),
         when(isAlpine || isFullMariner,
             runtimeBaseTag,

@@ -12,9 +12,7 @@
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
             VARIABLES[cat("base-url|internal|legacy|", VARIABLES["branch"])] ^
     set distrolessStagingDir to "/staging" ^
-    set marinerRegistry to when(isMariner && find(OS_VERSION, "2.0") >= 0,
-        "cblmariner2preview.azurecr.io",
-        "cblmariner.azurecr.io") ^
+    set marinerRegistry to "cblmariner.azurecr.io" ^
     set baseImageRepo to when(isAlpine,
         cat(ARCH_VERSIONED, "/alpine"),
         when(isDebian,

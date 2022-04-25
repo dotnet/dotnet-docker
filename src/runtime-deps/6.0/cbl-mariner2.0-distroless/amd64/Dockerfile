@@ -1,5 +1,5 @@
 # Installer image
-FROM cblmariner2preview.azurecr.io/base/core:2.0 AS installer
+FROM cblmariner.azurecr.io/base/core:2.0 AS installer
 
 RUN tdnf install -y \
         dnf \
@@ -43,7 +43,7 @@ RUN rm -rf /staging/etc/dnf \
 
 
 # .NET runtime-deps image
-FROM cblmariner2preview.azurecr.io/distroless/minimal:2.0
+FROM cblmariner.azurecr.io/distroless/minimal:2.0
 
 COPY --from=installer /staging/ /
 
