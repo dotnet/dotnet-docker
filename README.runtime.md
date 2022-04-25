@@ -178,9 +178,13 @@ You can retrieve a list of all available tags for dotnet/runtime at https://mcr.
 
 For tags contained in the old dotnet/core/runtime repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core/runtime/tags/list.
 
+*Tags not listed in the table above should be considered unsupported.*
+
 # Support
 
-See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/microsoft-support.md) for the support lifecycle.
+See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/microsoft-support.md) for the support lifecycle.
+
+See detailed support information for .NET containers on [OS platforms](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md) and [tags](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md).
 
 # Image Update Policy
 

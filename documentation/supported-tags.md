@@ -105,7 +105,7 @@ _Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/
 
 ## Tag Listing
 
-Each [Docker Hub repository](https://hub.docker.com/_/microsoft-dotnet) contains a detailed listing of all supported tags. The listing is broken apart by OS platform (e.g. `Linux amd64 Tags` or `Nano Server 2022 amd64 Tags`). Each row represents a single image and contains all of the tags that reference it. For example the following entry represents the 6.0 runtime Bullseye image which is referenced by seven tags:
+Each [Docker Hub repository](https://hub.docker.com/_/microsoft-dotnet) contains a detailed listing of all supported tags. Any tag not included in the listing should be considered unsupported. The listing is broken apart by OS platform (e.g. `Linux amd64 Tags` or `Nano Server 2022 amd64 Tags`). Each row represents a single image and contains all of the tags that reference it. For example the following entry represents the 6.0 runtime Bullseye image which is referenced by seven tags:
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
@@ -113,7 +113,17 @@ Tags | Dockerfile | OS Version
 
 ## Tag Lifecycle
 
-Each tag will be supported for the lifetime of the .NET and OS version referenced by the tag. Once either either of these reaches EOL, the tag will be considered unsupported, will no longer be updated and will be removed from the [Tag Listing](#tag-listing). Unsupported tags will be preserved to prevent breaking any references to it. See [Microsoft support for .NET](https://github.com/dotnet/core/blob/master/microsoft-support.md) for additional details.
+Each tag will be supported for the lifetime of the .NET and OS version referenced by the tag, unless further restricted according to [platform support policy](supported-platforms.md).
+
+When an OS version reaches EOL, its tags will no longer be maintained.
+
+When a .NET version reaches EOL, its tags will continue to be maintained until the next .NET servicing date (.NET servicing dates are on ["Patch Tuesday"](https://www.microsoft.com/msrc/faqs-security-update-guide)). The maintenance consists of rebuilds due to base image updates or security fixes to Linux packages installed by .NET.
+
+> Example: The last .NET patch update for .NET 5 is on May 10, 2022. Tags for .NET 5 will continue to be maintained until the next .NET servicing date on June 14, 2022. Within that time period, an update to the Debian 10 base image, for example, will cause the .NET 5 Debian 10 tags to be updated with rebuilt images. Any update to a dependent base image after June 14, 2022 will not result in the .NET 5 tags to be updated.
+
+Once a tag is no longer maintained, it will be considered unsupported, will no longer be updated and will be removed from the [Tag Listing](#tag-listing).
+
+Unsupported tags will be preserved to prevent breaking any references to it. See [Microsoft support for .NET](https://github.com/dotnet/core/blob/master/microsoft-support.md) for additional details.
 
 ### Examples
 

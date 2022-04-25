@@ -71,7 +71,9 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 # Support
 
-See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/microsoft-support.md) for the support lifecycle.
+See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/microsoft-support.md) for the support lifecycle.
+
+See detailed support information for .NET containers on [OS platforms](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md) and [tags](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md).
 
 # Image Update Policy
 

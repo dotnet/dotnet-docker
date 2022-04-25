@@ -87,9 +87,13 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 {{if SHORT_REPO != "monitor":For tags contained in the old dotnet/core{{if (PARENT_REPO = "nightly"):-nightly}}/{{SHORT_REPO}} repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core{{if (PARENT_REPO = "nightly"):-nightly}}/{{SHORT_REPO}}/tags/list.
 
-}}}}# Support
+}}*Tags not listed in the table above should be considered unsupported.*
 
-See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/master/microsoft-support.md) for the support lifecycle.
+}}# Support
+
+See [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/microsoft-support.md) for the support lifecycle.
+
+See detailed support information for .NET containers on [OS platforms](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md) and [tags](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md).
 
 # Image Update Policy
 
