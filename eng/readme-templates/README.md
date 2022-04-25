@@ -40,7 +40,7 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
 
 {{InsertTemplate(join(filter(["About", SHORT_REPO, "md"], len), "."))}}
 
-Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
+Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
 # How to Use the Image{{if IS_PRODUCT_FAMILY:s}}
 

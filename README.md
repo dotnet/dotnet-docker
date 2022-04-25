@@ -24,7 +24,7 @@ You are invited to [contribute new features](https://github.com/dotnet/core/blob
 
 > https://docs.microsoft.com/dotnet/core/
 
-Watch [dotnet/announcements](https://github.com/dotnet/announcements/labels/Docker) for Docker-related .NET announcements.
+Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
 # How to Use the Images
 
