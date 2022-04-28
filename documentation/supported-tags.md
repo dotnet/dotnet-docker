@@ -117,9 +117,9 @@ Each tag will be supported for the lifetime of the .NET and OS version reference
 
 When an OS version reaches EOL, its tags will no longer be maintained.
 
-When a .NET version reaches EOL, its tags will continue to be maintained until the next .NET servicing date (.NET servicing dates are on ["Patch Tuesday"](https://www.microsoft.com/msrc/faqs-security-update-guide)). The maintenance consists of rebuilds due to base image updates or security fixes to Linux packages installed by .NET.
+When a .NET version reaches EOL, its tags will continue to be maintained until the next .NET servicing date (typically on "Update Tuesday", the 2nd Tuesday of the month). The maintenance consists of rebuilds due to base image updates or security fixes to Linux packages installed by .NET.
 
-> Example: The last .NET patch update for .NET 5 is on May 10, 2022. Tags for .NET 5 will continue to be maintained until the next .NET servicing date on June 14, 2022. Within that time period, an update to the Debian 10 base image, for example, will cause the .NET 5 Debian 10 tags to be updated with rebuilt images. Any update to a dependent base image after June 14, 2022 will not result in the .NET 5 tags to be updated.
+> Example: The last .NET patch update for .NET 5 is on May 10, 2022. Maintenance of .NET 5 tags would continue until the next .NET servicing date on June 14, 2022. Within that time period, an update to the Debian 10 base image, for example, would cause the .NET 5 Debian 10 tags to be updated with rebuilt images. Any update to a dependent base image after June 14, 2022 would not result in the .NET 5 tags being updated.
 
 Once a tag is no longer maintained, it will be considered unsupported, will no longer be updated and will be removed from the [Tag Listing](#tag-listing).
 
