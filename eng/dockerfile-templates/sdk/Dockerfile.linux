@@ -3,11 +3,8 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
-    set isInternal to
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
-            VARIABLES[cat("base-url|internal|", VARIABLES["branch"])] ||
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
-            VARIABLES[cat("base-url|internal|legacy|", VARIABLES["branch"])] ^
+    set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
+    set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set isBasedOnBuildpackDeps to (dotnetVersion = "3.1" && !(isAlpine || isMariner)) ^
     set archTagSuffix to when(dotnetVersion != "3.1", ARCH_TAG_SUFFIX, "") ^
     set baseImageTag to when(isBasedOnBuildpackDeps,

@@ -1,11 +1,8 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
-    set isInternal to
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
-            VARIABLES[cat("base-url|internal|", VARIABLES["branch"])] ||
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
-            VARIABLES[cat("base-url|internal|legacy|", VARIABLES["branch"])] ^
+    set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
+    set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
     set serverCoreBaseTag to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64") ^
     set finalStageBaseRepo to when(isInternal && isServerCore, "servercore", "nanoserver")
