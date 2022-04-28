@@ -66,8 +66,6 @@
     "base-url|7.0|main": "$(base-url|public|main)",
     "base-url|7.0|nightly": "$(base-url|public|nightly)",
 
-    "base-url|6.0-monitor|main": "$(base-url|public|legacy|main)",
-    "base-url|6.0-monitor|nightly": "$(base-url|public|legacy|nightly)",
     "base-url|6.1-monitor|main": "$(base-url|public|main)",
     "base-url|6.1-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|6.2-monitor|main": "$(base-url|public|main)",
