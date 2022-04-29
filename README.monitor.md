@@ -1,7 +1,3 @@
-The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
-
-See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with official releases of [.NET](https://github.com/dotnet/core).
-
 # Featured Tags
 
 * `7` (Preview)
@@ -9,7 +5,11 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
 * `6` (Preview)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:6`
 
-# About This Image
+# About
+
+The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
+
+See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with official releases of [.NET](https://github.com/dotnet/core).
 
 This image contains the .NET Monitor tool.
 
@@ -17,7 +17,7 @@ Use this image as a sidecar container to collect diagnostic information from oth
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-# How to Use the Image
+# Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
@@ -64,7 +64,6 @@ Tags | Dockerfile | OS Version
 6.2.0-alpha.1-alpine-arm64v8, 6.2-alpine-arm64v8, 6.2.0-alpha.1-alpine, 6.2-alpine, 6.2.0-alpha.1, 6.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.2/alpine/arm64v8/Dockerfile) | Alpine 3.15
 
 You can retrieve a list of all available tags for dotnet/nightly/monitor at https://mcr.microsoft.com/v2/dotnet/nightly/monitor/tags/list.
-<!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
 
