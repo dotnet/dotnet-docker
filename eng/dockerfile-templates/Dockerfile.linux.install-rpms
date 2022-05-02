@@ -4,6 +4,8 @@
     ARGS:
         files: Set of files to install ^
     
-    set fileList to join(ARGS["files"], " ")
-}}rpm --install {{fileList}} \
+    set fileList to join(ARGS["files"], " ") ^
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set useTdnf to isMariner && find(OS_VERSION, "1.0") < 0
+}}{{if useTdnf:tdnf install -y^else:rpm --install}} {{fileList}} \
 && rm {{fileList}}

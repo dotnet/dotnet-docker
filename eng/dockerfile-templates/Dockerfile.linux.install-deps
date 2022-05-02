@@ -63,7 +63,7 @@
     [
         "pkgs": pkgs,
         "noninteractive": (OS_VERSION = "focal"),
-        "pkg-mgr": when(isDistrolessMariner, "dnf", ""),
+        "pkg-mgr": when(isDistrolessMariner, when (find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf"), ""),
         "pkg-mgr-opts": when(isDistrolessMariner,
             cat(" --releasever=", OS_VERSION_NUMBER, " --installroot ", ARGS["distroless-staging-dir"]),
             ""),

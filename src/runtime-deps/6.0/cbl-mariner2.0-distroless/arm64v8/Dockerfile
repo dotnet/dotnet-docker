@@ -1,13 +1,9 @@
 # Installer image
 FROM cblmariner.azurecr.io/base/core:2.0 AS installer
 
-RUN tdnf install -y \
-        dnf \
-    && tdnf clean all
-
 # Install .NET's dependencies into a staging location
 RUN mkdir /staging \
-    && dnf install -y --releasever=2.0 --installroot /staging \
+    && tdnf install -y --releasever=2.0 --installroot /staging \
         prebuilt-ca-certificates \
         \
         # .NET dependencies
@@ -17,10 +13,12 @@ RUN mkdir /staging \
         libstdc++ \
         openssl-libs \
         zlib \
-    && dnf clean all
+    && tdnf clean all
 
 # Create a non-root user and group
-RUN groupadd \
+RUN tdnf install -y shadow-utils \
+    && tdnf clean all \
+    && groupadd \
         --system \
         --gid=101 \
         app \

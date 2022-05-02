@@ -35,7 +35,7 @@ RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
         "url-suffix": urlSuffix,
         "filename": rpmFilename
     ], "    ")}}}}
-{{ if isDistrolessMariner:
+{{ if isDistrolessMariner && find(OS_VERSION, "1.0") >= 0:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "pkgs": ["dnf"]
@@ -46,7 +46,9 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     && }}{{InsertTemplate("../Dockerfile.linux.install-deps", ["distroless-staging-dir": distrolessStagingDir])}}
 {{ if isDistrolessMariner:
 # Create a non-root user and group
-RUN groupadd \
+RUN {{if find(OS_VERSION, "1.0") < 0:tdnf install -y shadow-utils \
+    && tdnf clean all \
+    && }}groupadd \
         --system \
         --gid={{if find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
         app \
