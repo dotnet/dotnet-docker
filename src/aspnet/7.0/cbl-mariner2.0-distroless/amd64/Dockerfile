@@ -7,9 +7,9 @@ RUN tdnf install -y ca-certificates-microsoft \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=7.0.0-preview.4.22227.2 \
+RUN aspnetcore_version=7.0.0-preview.4.22251.1 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='1bcef1a3130f28961256f88580089d9cef0460986dc63dba91b3510612d0ef1e46815a89d57ca5af769f1b1c9776ae5f974b1ffaf34ab0e736f9cf76c965d91f' \
+    && aspnetcore_sha512='09e9d7dd6c3fdee25706a7799c7007e3c3d5cbe84492a233ed979c24139cfb1a9e14bccb336fb463010be00fbc2276e3b69b08a07352d26a72cfdf4c4a33f64f' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
@@ -20,6 +20,6 @@ RUN aspnetcore_version=7.0.0-preview.4.22227.2 \
 FROM $REPO:7.0.0-preview.4-cbl-mariner2.0-distroless-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=7.0.0-preview.4.22227.2
+ENV ASPNET_VERSION=7.0.0-preview.4.22251.1
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
