@@ -6,11 +6,8 @@
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
     set isMariner to isFullMariner || isDistrolessMariner ^
-    set isInternal to
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
-            VARIABLES[cat("base-url|internal|", VARIABLES["branch"])] ||
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
-            VARIABLES[cat("base-url|internal|legacy|", VARIABLES["branch"])] ^
+    set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
+    set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set distrolessStagingDir to "/staging" ^
     set marinerRepo to "mcr.microsoft.com/cbl-mariner" ^
     set baseImageRepo to when(isAlpine,
