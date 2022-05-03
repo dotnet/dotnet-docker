@@ -900,6 +900,9 @@
                 "6.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
+              },
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
               }
             },
             {
@@ -919,7 +922,10 @@
                   "docType": "Undocumented"
                 }
               },
-              "variant": "v8"
+              "variant": "v8",
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
+              }
             }
           ]
         },
@@ -1214,6 +1220,9 @@
                 "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
+              },
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
               }
             },
             {
@@ -1233,7 +1242,10 @@
                   "docType": "Undocumented"
                 }
               },
-              "variant": "v8"
+              "variant": "v8",
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
+              }
             }
           ]
         },
@@ -2637,6 +2649,9 @@
                 "6.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
+              },
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
               }
             },
             {
@@ -2659,7 +2674,10 @@
                   "docType": "Undocumented"
                 }
               },
-              "variant": "v8"
+              "variant": "v8",
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
+              }
             }
           ]
         },
@@ -3085,6 +3103,9 @@
                 "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
+              },
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
               }
             },
             {
@@ -3107,7 +3128,10 @@
                   "docType": "Undocumented"
                 }
               },
-              "variant": "v8"
+              "variant": "v8",
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
+              }
             }
           ]
         },
@@ -4580,6 +4604,9 @@
                 "6.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
+              },
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
               }
             },
             {
@@ -4602,7 +4629,10 @@
                   "docType": "Undocumented"
                 }
               },
-              "variant": "v8"
+              "variant": "v8",
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
+              }
             }
           ]
         },
@@ -5040,6 +5070,9 @@
                 "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
+              },
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
               }
             },
             {
@@ -5062,7 +5095,10 @@
                   "docType": "Undocumented"
                 }
               },
-              "variant": "v8"
+              "variant": "v8",
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
+              }
             }
           ]
         },
@@ -6452,6 +6488,9 @@
                 "6.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
+              },
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
               }
             },
             {
@@ -6474,7 +6513,10 @@
                   "docType": "Undocumented"
                 }
               },
-              "variant": "v8"
+              "variant": "v8",
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
+              }
             }
           ]
         },
@@ -6785,6 +6827,9 @@
                 "7.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
+              },
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
               }
             },
             {
@@ -6807,7 +6852,10 @@
                   "docType": "Undocumented"
                 }
               },
-              "variant": "v8"
+              "variant": "v8",
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
+              }
             }
           ]
         },
@@ -7025,6 +7073,9 @@
                 "7-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
+              },
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
               }
             }
           ]
