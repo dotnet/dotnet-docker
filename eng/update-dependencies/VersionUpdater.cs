@@ -100,7 +100,9 @@ namespace Dotnet.Docker
         }
 
         private static Regex GetVersionVariableRegex(string versionVariableName) =>
-            new Regex($"\"{Regex.Escape(versionVariableName)}\": \"(?<{s_versionGroupName}>[\\d]+.[\\d]+.[\\d]+(-[\\w]+(.[\\d]+)*)?)\"");
+            ManifestHelper.GetManifestVariableRegex(
+                versionVariableName,
+                $"(?<{s_versionGroupName}>[\\d]+.[\\d]+.[\\d]+(-[\\w]+(.[\\d]+)*)?)");
 
         private static string GetVersionVariableName(VersionType versionType, string productName, string dockerfileVersion) =>
             $"{productName}|{dockerfileVersion}|{versionType.ToString().ToLowerInvariant()}-version";

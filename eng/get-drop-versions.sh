@@ -6,12 +6,22 @@ set -e
 set -u
 
 channel=$1
+useInternalBuild=$2
+blobStorageSasQueryString=$3
+azdoVersionsRepoInfoAccessToken=$4
 
 sudo apt-get update && \
     sudo apt-get install -y --no-install-recommends libxml2-utils
 
+if [ "$useInternalBuild" = "true" ]; then
+    channel="internal/$channel"
+    queryString="$blobStorageSasQueryString"
+else
+    queryString=""
+fi
+
 # Download the SDK and resolve the redirected URL
-sdkUrl=$(curl -w %{url_effective} -sSLo sdk.zip https://aka.ms/dotnet/$channel/dotnet-sdk-win-x64.zip)
+sdkUrl=$(curl -w %{url_effective} -sSLo sdk.zip https://aka.ms/dotnet/$channel/dotnet-sdk-win-x64.zip$queryString)
 
 unzip -p sdk.zip "sdk/*/.version" > sdkversion
 
@@ -26,13 +36,47 @@ sdkVer=$(echo $sdkUrl | sed 's|.*/Sdk/\(.*\)/.*|\1|g')
 
 rm sdkversion
 
-curl -fSLo versionDetails.xml https://raw.githubusercontent.com/dotnet/installer/$commitSha/eng/Version.Details.xml
+if [ -z "$sdkVer" ]; then
+    echo "Unable to resolve the SDK version" >&2
+    exit 1
+fi
 
-runtimeVer=$(xmllint --xpath "string(//ProductDependencies/Dependency[starts-with(@Name,'VS.Redist.Common.NetCore.SharedFramework.x64')]/@Version)" versionDetails.xml)
-aspnetVer=$(xmllint --xpath "string(//ProductDependencies/Dependency[starts-with(@Name,'VS.Redist.Common.AspNetCore.SharedFramework.x64')]/@Version)" versionDetails.xml)
+versionDetailsPath="eng/Version.Details.xml"
+if [ "$useInternalBuild" = "true" ]; then
+    dotnetInstallerRepoId="c20f712b-f093-40de-9013-d6b084c1ff30"
+    versionDetailsUrl="https://dev.azure.com/dnceng/internal/_apis/git/repositories/$dotnetInstallerRepoId/items?scopePath=/$versionDetailsPath&api-version=6.0&version=$commitSha&versionType=commit"
+    requestUserArgs="-u :$azdoVersionsRepoInfoAccessToken"
+else
+    versionDetailsUrl="https://raw.githubusercontent.com/dotnet/installer/$commitSha/$versionDetailsPath"
+    requestUserArgs=""
+fi
+
+curl $requestUserArgs -fSLo versionDetails.xml $versionDetailsUrl
+
+getDependencyVersion() {
+    local dependencyName=$1
+    xmllint --xpath "string(//ProductDependencies/Dependency[starts-with(@Name,'$dependencyName')]/@Version)" versionDetails.xml
+}
+
+runtimeVer=$(getDependencyVersion "VS.Redist.Common.NetCore.SharedFramework.x64")
+if [ -z "$runtimeVer" ]; then
+    runtimeVer=$(getDependencyVersion "Microsoft.NETCore.App.Internal")
+fi
+
+aspnetVer=$(getDependencyVersion "VS.Redist.Common.AspNetCore.SharedFramework.x64")
 
 rm sdk.zip
 rm versionDetails.xml
+
+if [ -z "$runtimeVer" ]; then
+    echo "Unable to resolve the runtime version" >&2
+    exit 1
+fi
+
+if [ -z "$aspnetVer" ]; then
+    echo "Unable to resolve the ASP.NET Core runtime version" >&2
+    exit 1
+fi
 
 echo "##vso[task.setvariable variable=sdkVer]$sdkVer"
 echo "##vso[task.setvariable variable=runtimeVer]$runtimeVer"
