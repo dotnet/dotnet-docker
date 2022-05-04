@@ -68,12 +68,12 @@ namespace Microsoft.DotNet.Docker.Tests
         private IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)
         {
             // Get list of installed RPM packages
-            string command = $"bash -c \"rpm -qa | sort\"";
+            string command = $"bash -c \"{(imageData.OS == OS.Mariner10Distroless ? "rpm -qa" : "tdnf list installed")} | sort\"";
 
             string imageTag;
             if (imageData.IsDistroless)
             {
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash", "rpm");
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash", imageData.OS == OS.Mariner10Distroless ? "rpm": "tdnf");
             }
             else
             {
@@ -99,18 +99,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             foreach (string expectedPackage in expectedPackages)
             {
-                // Example package name: dotnet-runtime-6.0-6.0.0-0.1.preview.5.21270.12.x86_64
-                string prefix;
-                if (expectedPackage.EndsWith(imageData.VersionString))
-                {
-                    prefix = $"{expectedPackage}-{imageData.VersionString}.";
-                }
-                else
-                {
-                    prefix = expectedPackage;
-                }
-
-                bool installed = GetInstalledRpmPackages(imageData).Any(pkg => pkg.StartsWith(prefix));
+                bool installed = GetInstalledRpmPackages(imageData).Any(pkg => pkg.StartsWith(expectedPackage));
                 Assert.True(installed, $"Package '{expectedPackage}' is not installed.");
             }
         }

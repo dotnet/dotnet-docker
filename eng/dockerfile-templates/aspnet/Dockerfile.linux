@@ -15,8 +15,7 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set installerImageTag to when(isDistrolessMariner,
         cat(
-            when(find(OS_VERSION, "2.0") >= 0, "cblmariner2preview.azurecr.io", "cblmariner.azurecr.io"),
-            "/base/core:",
+            "cblmariner.azurecr.io/base/core:",
             OS_VERSION_NUMBER),
         when(isAlpine || isFullMariner,
             runtimeBaseTag,
@@ -50,8 +49,7 @@ FROM {{installerImageTag}} AS installer
 {{if isInternal:
 ARG SAS_QUERY_STRING
 }}{{if isDistrolessMariner:
-RUN tdnf install -y ca-certificates-microsoft \
-    && tdnf clean all
+{{InsertTemplate("../Dockerfile.linux.distroless-mariner-installer-prereqs")}}
 }}
 # Retrieve ASP.NET Core
 {{InsertTemplate("Dockerfile.linux.install-aspnet",

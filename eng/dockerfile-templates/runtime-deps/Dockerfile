@@ -12,9 +12,7 @@
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
             VARIABLES[cat("base-url|internal|legacy|", VARIABLES["branch"])] ^
     set distrolessStagingDir to "/staging" ^
-    set marinerRegistry to when(isMariner && find(OS_VERSION, "2.0") >= 0,
-        "cblmariner2preview.azurecr.io",
-        "cblmariner.azurecr.io") ^
+    set marinerRegistry to "cblmariner.azurecr.io" ^
     set baseImageRepo to when(isAlpine,
         cat(ARCH_VERSIONED, "/alpine"),
         when(isDebian,
@@ -37,7 +35,7 @@ RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
         "url-suffix": urlSuffix,
         "filename": rpmFilename
     ], "    ")}}}}
-{{ if isDistrolessMariner:
+{{ if isDistrolessMariner && find(OS_VERSION, "1.0") >= 0:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "pkgs": ["dnf"]
@@ -48,12 +46,14 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     && }}{{InsertTemplate("../Dockerfile.linux.install-deps", ["distroless-staging-dir": distrolessStagingDir])}}
 {{ if isDistrolessMariner:
 # Create a non-root user and group
-RUN groupadd \
+RUN {{if find(OS_VERSION, "1.0") < 0:tdnf install -y shadow-utils \
+    && tdnf clean all \
+    && }}groupadd \
         --system \
-        --gid=1000 \
+        --gid={{if find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
         app \
     && adduser \
-        --uid 1000 \
+        --uid {{if find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
         --gid app \
         --shell /bin/false \
         --no-create-home \
