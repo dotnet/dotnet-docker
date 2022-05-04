@@ -7120,7 +7120,10 @@
                   "docType": "Undocumented"
                 }
               },
-              "variant": "v8"
+              "variant": "v8",
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
+              }
             }
           ]
         }
