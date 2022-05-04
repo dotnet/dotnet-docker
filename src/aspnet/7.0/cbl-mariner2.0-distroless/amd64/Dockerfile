@@ -1,9 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM cblmariner2preview.azurecr.io/base/core:2.0 AS installer
+FROM cblmariner.azurecr.io/base/core:2.0 AS installer
 
-RUN tdnf install -y ca-certificates-microsoft \
+RUN tdnf install -y \
+        ca-certificates-microsoft \
+        gzip \
+        tar \
     && tdnf clean all
 
 # Retrieve ASP.NET Core

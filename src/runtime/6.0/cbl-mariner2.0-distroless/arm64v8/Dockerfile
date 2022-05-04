@@ -1,10 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM cblmariner2preview.azurecr.io/base/core:2.0 AS installer
+FROM cblmariner.azurecr.io/base/core:2.0 AS installer
 
 RUN tdnf install -y \
         ca-certificates-microsoft \
+        gzip \
+        tar \
     && tdnf clean all
 
 # Retrieve .NET Runtime

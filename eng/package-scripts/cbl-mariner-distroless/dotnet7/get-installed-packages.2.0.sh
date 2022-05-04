@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
 
-scriptDir=$(dirname $(realpath $0))
-$scriptDir/get-installed-packages.sh 2.0 $@
+# CBL-Mariner 2.0 doesn't contain the necessary commands to execute the script, so
+# this will be a no-op instead.
+# See https://github.com/dotnet/dotnet-docker/issues/1455#issuecomment-1116135242
+
+echo "RPM,placeholder=0.0"
