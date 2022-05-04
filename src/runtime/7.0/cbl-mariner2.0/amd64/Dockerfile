@@ -17,5 +17,5 @@ RUN curl -fSL --output dotnet-host.rpm https://dotnetbuilds.azureedge.net/public
     && dotnet_sha512='a6d7c2cd107eaaa7f5680d648713c6fc48639755f51832b2fa16bd1533bbdfeeaf1d8ff098840050b537a600292c56fa3844b866ff5acd6e888f89876249943d' \
     && echo "$dotnet_sha512  dotnet-runtime.rpm" | sha512sum -c - \
     \
-    && rpm --install dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
+    && tdnf install -y dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
     && rm dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm

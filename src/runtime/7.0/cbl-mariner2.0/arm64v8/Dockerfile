@@ -1,6 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:7.0.0-preview.4-cbl-mariner2.0-arm64v8
 
+RUN tdnf install -y \
+        ca-certificates-microsoft \
+        gzip \
+        tar \
+    && tdnf clean all
+
 # .NET Runtime version
 ENV DOTNET_VERSION=7.0.0-preview.4.22229.4
 
