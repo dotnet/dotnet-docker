@@ -8,6 +8,7 @@ using System.CommandLine.Invocation;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LibGit2Sharp;
 using Microsoft.DotNet.VersionTools;
@@ -20,10 +21,11 @@ namespace Dotnet.Docker
 {
     public static class UpdateDependencies
     {
+        public const string ManifestFilename = "manifest.json";
         public const string VersionsFilename = "manifest.versions.json";
 
         private static Options Options { get; set; }
-        private static string RepoRoot { get; } = Directory.GetCurrentDirectory();
+        public static string RepoRoot { get; } = Directory.GetCurrentDirectory();
 
         public static Task Main(string[] args)
         {
@@ -291,6 +293,9 @@ namespace Dotnet.Docker
         {
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
+
+            yield return new NuGetConfigUpdater(RepoRoot, Options);
+            yield return new BaseUrlUpdater(RepoRoot, Options);
             foreach (string productName in Options.ProductVersions.Keys)
             {
                 yield return new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot, Options);
