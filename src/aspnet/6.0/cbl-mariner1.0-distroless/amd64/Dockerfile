@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM cblmariner.azurecr.io/base/core:1.0 AS installer
+FROM mcr.microsoft.com/cbl-mariner/base/core:1.0 AS installer
 
 RUN tdnf install -y \
         ca-certificates-microsoft \

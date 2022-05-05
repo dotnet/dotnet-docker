@@ -14,7 +14,7 @@
         "$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix) ^
     set installerImageTag to when(isDistrolessMariner,
         cat(
-            "cblmariner.azurecr.io/base/core:",
+            "mcr.microsoft.com/cbl-mariner/base/core:",
             OS_VERSION_NUMBER),
         when(isAlpine || isFullMariner,
             runtimeDepsBaseTag,

@@ -12,7 +12,7 @@
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] =
             VARIABLES[cat("base-url|internal|legacy|", VARIABLES["branch"])] ^
     set distrolessStagingDir to "/staging" ^
-    set marinerRegistry to "cblmariner.azurecr.io" ^
+    set marinerRepo to "mcr.microsoft.com/cbl-mariner" ^
     set baseImageRepo to when(isAlpine,
         cat(ARCH_VERSIONED, "/alpine"),
         when(isDebian,
@@ -20,7 +20,7 @@
             when(isUbuntu,
                 cat(ARCH_VERSIONED, "/ubuntu"),
                 when(isMariner,
-                    cat(marinerRegistry, "/base/core"),
+                    cat(marinerRepo, "/base/core"),
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
     set isSingleStage to !isDistrolessMariner && !(isFullMariner && isInternal && ARCH_SHORT != "arm64") ^
@@ -71,7 +71,7 @@ RUN rm -rf {{distrolessStagingDir}}/etc/dnf \
 
 
 # .NET runtime-deps image
-FROM {{marinerRegistry}}/distroless/minimal:{{OS_VERSION_NUMBER}}
+FROM {{marinerRepo}}/distroless/minimal:{{OS_VERSION_NUMBER}}
 
 COPY --from=installer {{distrolessStagingDir}}/ /
 ^elif isFullMariner && ARCH_SHORT != "arm64":
