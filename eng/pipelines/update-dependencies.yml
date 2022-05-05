@@ -18,7 +18,7 @@ stages:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - script: $(engPath)/get-drop-versions.sh $(channel)
+    - script: $(engPath)/get-drop-versions.sh $(channel) false "" ""
       displayName: Get Versions
     - powershell: $(engPath)/Set-DotnetVersions.ps1 $(dockerfileVersion) -RuntimeVersion $(runtimeVer) -AspnetVersion $(aspnetVer) -SdkVersion $(sdkVer) -ComputeShas -PrintArgsVariableOnly
       displayName: Get update-dependencies args
