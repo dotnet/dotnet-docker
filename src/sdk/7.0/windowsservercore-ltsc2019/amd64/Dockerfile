@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:7.0.0-preview.3-windowsservercore-ltsc2019
+FROM $REPO:7.0.0-preview.4-windowsservercore-ltsc2019
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -11,7 +11,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=7.0.100-preview.3.22179.4 `
+    DOTNET_SDK_VERSION=7.0.100-preview.4.22252.9 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -25,7 +25,7 @@ RUN powershell -Command " `
         `
         # Retrieve .NET SDK
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-        $dotnet_sha512 = '7c73e80a358e4a027ab9450d94edaf74d4f3650b7b74fbb5612e6a66645cdff23da406c791d3e4ce954b5d50ead4681a322bb20a6041268f3e05850e4e7c07c6'; `
+        $dotnet_sha512 = '6063d0fca37ce0fcb397c4095189d554428f8cd5c6e58d6cde83959e805eb1f1d6af7619fb15518671d8147a1742eea666d5617913936f1422fa5df27fa14714'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
