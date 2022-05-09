@@ -4,6 +4,7 @@ ARG runtime_deps_image
 
 FROM $sdk_image as build
 
+ARG rid
 ARG NuGetFeedPassword
 
 EXPOSE 80
@@ -11,7 +12,7 @@ EXPOSE 80
 WORKDIR app
 COPY NuGet.config .
 COPY *.csproj .
-RUN dotnet restore
+RUN dotnet restore -r $rid
 
 COPY . .
 RUN dotnet build --no-restore

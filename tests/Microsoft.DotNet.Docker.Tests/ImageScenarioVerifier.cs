@@ -44,17 +44,23 @@ namespace Microsoft.DotNet.Docker.Tests
 
             try
             {
+                // Need to include the RID for all build stages because they all rely on "dotnet restore". We should
+                // always provide RID when running restore because it's RID-dependent. If we don't then a call to the
+                // publish command with a different RID than the default would end up restoring images. This is not
+                // what we'd want and plus it would fail in that case if it was targeting a private NuGet feed because
+                // the password isn't necessarily provided in that stage.
+                string customBuildArgs = $"rid={_imageData.Rid}";
                 if (!_imageData.HasCustomSdk)
                 {
                     // Use `sdk` image to build and run test app
-                    string buildTag = BuildTestAppImage("build", appDir);
+                    string buildTag = BuildTestAppImage("build", appDir, customBuildArgs);
                     tags.Add(buildTag);
                     string dotnetRunArgs = _isWeb ? " --urls http://0.0.0.0:80" : string.Empty;
-                    await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}");
+                    await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}", customBuildArgs);
                 }
 
                 // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnet` image
-                string fxDepTag = BuildTestAppImage("fx_dependent_app", appDir);
+                string fxDepTag = BuildTestAppImage("fx_dependent_app", appDir, customBuildArgs);
                 tags.Add(fxDepTag);
                 bool runAsAdmin = _isWeb && !DockerHelper.IsLinuxContainerModeEnabled;
                 await RunTestAppImage(fxDepTag, runAsAdmin: runAsAdmin);
@@ -62,7 +68,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
                     // Use `sdk` image to publish self contained app and run with `runtime-deps` image
-                    string selfContainedTag = BuildTestAppImage("self_contained_app", appDir, customBuildArgs: $"rid={_imageData.Rid}");
+                    string selfContainedTag = BuildTestAppImage("self_contained_app", appDir, customBuildArgs);
                     tags.Add(selfContainedTag);
                     await RunTestAppImage(selfContainedTag, runAsAdmin: runAsAdmin);
                 }
