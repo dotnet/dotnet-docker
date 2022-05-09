@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:3.1.24-bionic
+FROM $REPO:3.1.25-bionic
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -7,9 +7,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install .NET Core Runtime
-RUN dotnet_version=3.1.24 \
+RUN dotnet_version=3.1.25 \
     && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='78a5f277fbf21ea6c656f62f6c9bd19e07b425f19e804e32881364b004f121a04d042647faef23806ecbeed98a0568197d89f558b9c8f204bafcce5ea4621352' \
+    && dotnet_sha512='e5155a0d26837b53bfc9275bfcd69eb7400bd8b2004be69e339f62ce36b6333f1f2da8d391bb98e4cb3630a20b68a0a0f4e6f8d1558a4cb0a53da796a71c214c' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
