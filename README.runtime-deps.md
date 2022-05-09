@@ -94,6 +94,7 @@ Tags | Dockerfile | OS Version
 6.0.4-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.4, 6.0.4-bullseye-slim, 6.0, 6.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/arm32v7/Dockerfile) | Debian 11
 6.0.4-alpine3.15-arm32v7, 6.0-alpine3.15-arm32v7, 6.0-alpine-arm32v7, 6.0.4-alpine3.15, 6.0-alpine3.15, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/5.0/alpine3.15/arm32v7/Dockerfile) | Alpine 3.15
 6.0.4-alpine3.14-arm32v7, 6.0-alpine3.14-arm32v7, 6.0.4-alpine3.14, 6.0-alpine3.14 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/5.0/alpine3.14/arm32v7/Dockerfile) | Alpine 3.14
+6.0.4-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.4-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.4-focal-arm32v7, 6.0-focal-arm32v7, 6.0.4-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 5.0.16-bullseye-slim-arm32v7, 5.0-bullseye-slim-arm32v7, 5.0.16-bullseye-slim, 5.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/arm32v7/Dockerfile) | Debian 11
 5.0.16-buster-slim-arm32v7, 5.0-buster-slim-arm32v7, 5.0.16, 5.0.16-buster-slim, 5.0, 5.0-buster-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/buster-slim/arm32v7/Dockerfile) | Debian 10
@@ -110,7 +111,7 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 7.0.0-preview.3-bullseye-slim-arm32v7, 7.0-bullseye-slim-arm32v7, 7.0.0-preview.3, 7.0.0-preview.3-bullseye-slim, 7.0, 7.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/bullseye-slim/arm32v7/Dockerfile) | Debian 11
 7.0.0-preview.3-alpine3.15-arm32v7, 7.0-alpine3.15-arm32v7, 7.0-alpine-arm32v7, 7.0.0-preview.3-alpine3.15, 7.0-alpine3.15, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/5.0/alpine3.15/arm32v7/Dockerfile) | Alpine 3.15
-7.0.0-preview.3-focal-arm32v7, 7.0-focal-arm32v7, 7.0.0-preview.3-focal, 7.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/3.1/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+7.0.0-preview.3-jammy-arm32v7, 7.0-jammy-arm32v7, 7.0.0-preview.3-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
 You can retrieve a list of all available tags for dotnet/runtime-deps at https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list.
 <!--End of generated tags-->

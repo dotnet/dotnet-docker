@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM arm32v7/buildpack-deps:focal-curl AS installer
+FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=7.0.0-preview.3.22175.4 \
@@ -14,7 +14,7 @@ RUN dotnet_version=7.0.0-preview.3.22175.4 \
 
 
 # .NET runtime image
-FROM $REPO:7.0.0-preview.3-focal-arm32v7
+FROM $REPO:7.0.0-preview.3-jammy-arm32v7
 
 # .NET Runtime version
 ENV DOTNET_VERSION=7.0.0-preview.3.22175.4
