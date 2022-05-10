@@ -10,9 +10,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET Core SDK
-        $sdk_version = '3.1.418'; `
+        $sdk_version = '3.1.419'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = 'dc8193daab7229e3728c3958060c902e58407218bfaf7b35f984f32713584a6b933df3e03cf36f3fd152d778f4e072ee9dd8d7d7c7429804b72d50bfbc319a0c'; `
+        $dotnet_sha512 = '6fb9d6aeed88e8c9499230dbcd0bf5783c6741d0b5837867449057adfe300cc068caab9303361789441a079acd92b9cb7c73154187ece7fc4b210e2dfdbbca70'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -22,9 +22,9 @@ RUN powershell -Command " `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.0.9'; `
+        $powershell_version = '7.0.10'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = '8f484ea8614daefadb674af1195b4928001f0a75d3bf7030403dfb0ba314a6b71e9a20529bf2e6f59fd5a9123209a6ce1943208a0b58f4364043afa027b4c7c1'; `
+        $powershell_sha512 = 'd7629fa6086eb02893f284d032eb0eff957617ad99465fb3970e212ef512e0188edb02a9ec34944b3bd1d3755b79ce9c7cdd6cb968933904a9f4ce9e20f3fa16'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -41,7 +41,7 @@ RUN powershell -Command " `
             | Remove-Item -Force -Recurse"
 
 # SDK image
-FROM $REPO:3.1.24-nanoserver-ltsc2022
+FROM $REPO:3.1.25-nanoserver-ltsc2022
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image

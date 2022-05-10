@@ -20,9 +20,7 @@
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false {{lineContinuation}}}}{{if ARGS["based-on-buildpack-deps"]:
     {{InsertTemplate("../Dockerfile.env.container")}} {{lineContinuation}}}}
     # Enable correct mode for dotnet watch (only mode supported in a container)
-    DOTNET_USE_POLLING_FILE_WATCHER=true {{lineContinuation}}{{if dotnetVersion = "6.0":
-    # Unset Logging__Console__FormatterName from aspnet base image
-    Logging__Console__FormatterName= {{lineContinuation}}}}{{if isAlpine && dotnetVersion = "3.1":
+    DOTNET_USE_POLLING_FILE_WATCHER=true {{lineContinuation}}{{if isAlpine && dotnetVersion = "3.1":
     LC_ALL=en_US.UTF-8 {{lineContinuation}}
     LANG=en_US.UTF-8 {{lineContinuation}}}}
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

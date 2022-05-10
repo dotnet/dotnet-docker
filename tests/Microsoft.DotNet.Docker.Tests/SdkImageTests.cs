@@ -81,11 +81,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));
             }
 
-            if (imageData.Version.Major == 6)
-            {
-                variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", string.Empty));
-            }
-
             if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
@@ -128,12 +123,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            if (imageData.Version.Major == 6 && !DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                OutputHelper.WriteLine("Disable this test for 6.0 on Windows due to a known issue in 6.0.200, https://github.com/dotnet/dotnet-docker/issues/3504");
-                return;
-            }
-
             // Disable this test for Arm-based Alpine until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.OS.Contains("alpine") && imageData.IsArm)
             {
