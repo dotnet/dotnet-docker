@@ -23,15 +23,18 @@ public static class ManifestHelper
     /// <param name="manifestVariables">JSON object of the variables from the manifest.</param>
     /// <param name="options">Configured options from the app.</param>
     public static string GetBaseUrl(JObject manifestVariables, Options options) =>
-        GetVariableValue(GetBaseUrlVariableName(options.DockerfileVersion, options.Branch), manifestVariables);
+        GetVariableValue(GetBaseUrlVariableName(options.DockerfileVersion, options.Branch, options.VersionSourceName), manifestVariables);
 
     /// <summary>
     /// Consstructs the name of the base URL variable.
     /// </summary>
     /// <param name="dockerfileVersion">Dockerfile version.</param>
     /// <param name="branch">Name of the branch.</param>
-    public static string GetBaseUrlVariableName(string dockerfileVersion, string branch) =>
-        $"base-url|{dockerfileVersion}|{branch}";
+    public static string GetBaseUrlVariableName(string dockerfileVersion, string branch, string versionSourceName)
+    {
+        string version = versionSourceName.Contains("dotnet-monitor") ? $"{dockerfileVersion}-monitor" : dockerfileVersion;
+        return $"base-url|{version}|{branch}";
+    }
 
     /// <summary>
     /// Gets the value of a manifest variable.
