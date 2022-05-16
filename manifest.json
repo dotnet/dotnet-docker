@@ -6986,6 +6986,9 @@
                 "6-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
+              },
+              "packageQueryOverrides": {
+                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
               }
             }
           ]
