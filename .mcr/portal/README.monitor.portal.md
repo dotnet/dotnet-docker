@@ -38,7 +38,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-## Container sample: Run the tool
+### Container sample: Run the tool
 
 You can run a container with a pre-built [.NET Docker Image](https://hub.docker.com/_/microsoft-dotnet-monitor/), based on the dotnet-monitor global tool.
 
