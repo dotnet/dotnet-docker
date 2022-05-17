@@ -1,6 +1,7 @@
-The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
+**IMPORTANT**
+**The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
 
-See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with official releases of [.NET](https://github.com/dotnet/core).
+**See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with official releases of [.NET](https://github.com/dotnet/core).**
 
 # Featured Tags
 
@@ -9,13 +10,13 @@ See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with officia
 * `6.0` (Current, LTS)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:6.0`
 
-# About This Image
+# About
 
 This image contains the native dependencies needed by .NET. It does not include .NET. It is for [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-# How to Use the Image
+# Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
@@ -119,7 +120,6 @@ Tags | Dockerfile | OS Version
 7.0.0-preview.4-jammy-arm32v7, 7.0-jammy-arm32v7, 7.0.0-preview.4-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
 You can retrieve a list of all available tags for dotnet/nightly/runtime-deps at https://mcr.microsoft.com/v2/dotnet/nightly/runtime-deps/tags/list.
-<!--End of generated tags-->
 
 For tags contained in the old dotnet/core-nightly/runtime-deps repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core-nightly/runtime-deps/tags/list.
 
