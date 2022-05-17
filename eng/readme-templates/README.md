@@ -1,6 +1,6 @@
 {{
   set headerArgs to [ "top-header": "#" ]
-}}{{InsertTemplate("Announcement.md")}}{{
+}}{{InsertTemplate("Announcement.md", [ "trailing-line-break": "true"])}}{{
 if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", headerArgs)}}
 }}{{if IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main":# Featured Repos
 

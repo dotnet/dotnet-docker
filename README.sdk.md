@@ -11,6 +11,7 @@
   * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:6.0`
 
 # About
+
 This image contains the .NET SDK which is comprised of three parts:
 
 1. .NET CLI

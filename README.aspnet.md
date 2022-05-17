@@ -11,6 +11,7 @@
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:6.0`
 
 # About
+
 This image contains the ASP.NET Core and .NET runtimes and libraries and is optimized for running ASP.NET Core apps in production.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
