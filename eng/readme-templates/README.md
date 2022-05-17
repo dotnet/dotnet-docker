@@ -1,8 +1,8 @@
 {{
   set headerArgs to [ "top-header": "#" ]
-}}{{if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", headerArgs)}}
-}}{{if IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main":
-# Featured Repos
+}}{{InsertTemplate("Announcement.md")}}{{
+if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", headerArgs)}}
+}}{{if IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main":# Featured Repos
 
 * [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
 * [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime

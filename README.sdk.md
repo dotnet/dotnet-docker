@@ -1,3 +1,8 @@
+**IMPORTANT**
+**The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
+
+**See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with official releases of [.NET](https://github.com/dotnet/core).**
+
 # Featured Tags
 
 * `7.0` (Preview)
@@ -6,11 +11,6 @@
   * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:6.0`
 
 # About
-
-The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
-
-See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with official releases of [.NET](https://github.com/dotnet/core).
-
 This image contains the .NET SDK which is comprised of three parts:
 
 1. .NET CLI

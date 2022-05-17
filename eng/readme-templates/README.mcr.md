@@ -1,5 +1,5 @@
 {{
-  set headerArgs to [ "top-header": "##" ]
+  set headerArgs to [ "top-header": "##", "is-mcr": "true" ]
 }}{{InsertTemplate("About.md", headerArgs)}}
 
 {{InsertTemplate("FeaturedTags.md", headerArgs)}}
