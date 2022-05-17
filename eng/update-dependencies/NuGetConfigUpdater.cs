@@ -35,25 +35,25 @@ internal class NuGetConfigUpdater : IDependencyUpdater
     public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos)
     {
         string existingContent = File.ReadAllText(_configPath);
-        IDependencyInfo sdkInfo = dependencyInfos
-            .First(info => info.SimpleName == "sdk");
-
-        string newContent = GetUpdatedNuGetConfigContent(sdkInfo.SimpleVersion);
-
-        if (newContent != existingContent)
+        IDependencyInfo? sdkInfo = dependencyInfos
+            .FirstOrDefault(info => info.SimpleName == "sdk");
+        if (sdkInfo is not null)
         {
-            return new[]
+            string newContent = GetUpdatedNuGetConfigContent(sdkInfo.SimpleVersion);
+
+            if (newContent != existingContent)
             {
-                new DependencyUpdateTask(
-                    () => File.WriteAllText(_configPath, newContent),
-                    new[] { sdkInfo },
-                    Enumerable.Empty<string>())
-            };
+                return new[]
+                {
+                    new DependencyUpdateTask(
+                        () => File.WriteAllText(_configPath, newContent),
+                        new[] { sdkInfo },
+                        Enumerable.Empty<string>())
+                };
+            }
         }
-        else
-        {
-            return Enumerable.Empty<DependencyUpdateTask>();
-        }
+
+        return Enumerable.Empty<DependencyUpdateTask>();
     }
 
     /// <summary>
