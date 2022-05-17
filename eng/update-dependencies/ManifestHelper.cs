@@ -32,7 +32,7 @@ public static class ManifestHelper
     /// <param name="branch">Name of the branch.</param>
     public static string GetBaseUrlVariableName(string dockerfileVersion, string branch, string versionSourceName)
     {
-        string version = versionSourceName.Contains("dotnet-monitor") ? $"{dockerfileVersion}-monitor" : dockerfileVersion;
+        string version = versionSourceName?.Contains("dotnet-monitor") == true ? $"{dockerfileVersion}-monitor" : dockerfileVersion;
         return $"base-url|{version}|{branch}";
     }
 
