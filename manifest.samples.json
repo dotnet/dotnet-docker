@@ -4,16 +4,8 @@
     {
       "id": "samples",
       "name": "dotnet/samples",
-      "readmes": [
-        {
-          "path": "README.samples.md",
-          "templatePath": "eng/readme-templates/README.md"
-        },
-        {
-          "path": ".mcr/portal/README.samples.portal.md",
-          "templatePath": "eng/readme-templates/README.mcr.md"
-        }
-      ],
+      "readme": "README.samples.md",
+      "readmeTemplate": "eng/readme-templates/README.md",
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/samples-tags.yml",
       "images": [
         {

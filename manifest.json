@@ -1,8 +1,6 @@
 {
-  "readme": {
-    "path": "README.md",
-    "templatePath": "eng/readme-templates/README.md"
-  },
+  "readme": "README.md",
+  "readmeTemplate": "eng/readme-templates/README.md",
   "registry": "mcr.microsoft.com",
   "variables": {
     "syndicatedRuntimeDepsRepo": "dotnet/core-nightly/runtime-deps",
@@ -17,16 +15,8 @@
     {
       "id": "runtime-deps",
       "name": "dotnet/nightly/runtime-deps",
-      "readmes": [
-        {
-          "path": "README.runtime-deps.md",
-          "templatePath": "eng/readme-templates/README.md"
-        },
-        {
-          "path": ".mcr/portal/README.runtime-deps.portal.md",
-          "templatePath": "eng/readme-templates/README.mcr.md"
-        }
-      ],
+      "readme": "README.runtime-deps.md",
+      "readmeTemplate": "eng/readme-templates/README.md",
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/runtime-deps-tags.yml",
       "images": [
         {
@@ -1345,16 +1335,8 @@
     {
       "id": "runtime",
       "name": "dotnet/nightly/runtime",
-      "readmes": [
-        {
-          "path": "README.runtime.md",
-          "templatePath": "eng/readme-templates/README.md"
-        },
-        {
-          "path": ".mcr/portal/README.runtime.portal.md",
-          "templatePath": "eng/readme-templates/README.mcr.md"
-        }
-      ],
+      "readme": "README.runtime.md",
+      "readmeTemplate": "eng/readme-templates/README.md",
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/runtime-tags.yml",
       "images": [
         {
@@ -3281,16 +3263,8 @@
     {
       "id": "aspnet",
       "name": "dotnet/nightly/aspnet",
-      "readmes": [
-        {
-          "path": "README.aspnet.md",
-          "templatePath": "eng/readme-templates/README.md"
-        },
-        {
-          "path": ".mcr/portal/README.aspnet.portal.md",
-          "templatePath": "eng/readme-templates/README.mcr.md"
-        }
-      ],
+      "readme": "README.aspnet.md",
+      "readmeTemplate": "eng/readme-templates/README.md",
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/aspnet-tags.yml",
       "images": [
         {
@@ -5268,16 +5242,8 @@
     {
       "id": "sdk",
       "name": "dotnet/nightly/sdk",
-      "readmes": [
-        {
-          "path": "README.sdk.md",
-          "templatePath": "eng/readme-templates/README.md"
-        },
-        {
-          "path": ".mcr/portal/README.sdk.portal.md",
-          "templatePath": "eng/readme-templates/README.mcr.md"
-        }
-      ],
+      "readme": "README.sdk.md",
+      "readmeTemplate": "eng/readme-templates/README.md",
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/sdk-tags.yml",
       "images": [
         {
@@ -6955,16 +6921,8 @@
     {
       "id": "monitor",
       "name": "dotnet/nightly/monitor",
-      "readmes": [
-        {
-          "path": "README.monitor.md",
-          "templatePath": "eng/readme-templates/README.md"
-        },
-        {
-          "path": ".mcr/portal/README.monitor.portal.md",
-          "templatePath": "eng/readme-templates/README.mcr.md"
-        }
-      ],
+      "readme": "README.monitor.md",
+      "readmeTemplate": "eng/readme-templates/README.md",
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/monitor-tags.yml",
       "images": [
         {

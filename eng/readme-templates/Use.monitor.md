@@ -1,7 +1,4 @@
-{{
-    _ ARGS:
-      top-header: The string to use as the top-level header.
-}}{{ARGS["top-header"]}}# Container sample: Run the tool
+## Container sample: Run the tool
 
 You can run a container with a pre-built [.NET Docker Image](https://hub.docker.com/_/microsoft-dotnet-monitor/), based on the dotnet-monitor global tool.
 
