@@ -230,7 +230,7 @@
   },
   "dotnet/nightly/monitor": {
     "src/monitor/6.1/alpine/amd64": 107919731,
-    "src/monitor/6.1/cbl-mariner/amd64": 329811976,
+    "src/monitor/6.1/cbl-mariner/amd64": 219565678,
     "src/monitor/6.2/alpine/amd64": 107698176,
     "src/monitor/6.2/alpine/arm64v8": 118521282,
     "src/monitor/6.2/cbl-mariner/amd64": 220058031,
