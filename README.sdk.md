@@ -3,7 +3,7 @@
 * `6.0` (Current, LTS)
   * `docker pull mcr.microsoft.com/dotnet/sdk:6.0`
 
-# About This Image
+# About
 
 This image contains the .NET SDK which is comprised of three parts:
 
@@ -15,7 +15,7 @@ Use this image for your development process (developing, building and testing ap
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-# How to Use the Image
+# Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
@@ -178,7 +178,6 @@ Tag | Dockerfile
 7.0.100-preview.4-windowsservercore-ltsc2019, 7.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/sdk at https://mcr.microsoft.com/v2/dotnet/sdk/tags/list.
-<!--End of generated tags-->
 
 For tags contained in the old dotnet/core/sdk repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core/sdk/tags/list.
 
