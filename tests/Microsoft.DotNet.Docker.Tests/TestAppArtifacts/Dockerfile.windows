@@ -11,7 +11,7 @@ EXPOSE 80
 WORKDIR app
 COPY NuGet.config .
 COPY *.csproj .
-RUN dotnet restore -r $rid
+RUN dotnet restore -r %rid%
 
 COPY . .
 RUN dotnet build --no-restore
