@@ -5,13 +5,13 @@
 * `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
 
-# About This Image
+# About
 
 These images contain sample .NET and ASP.NET Core applications.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-# How to Use the Image
+# Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 

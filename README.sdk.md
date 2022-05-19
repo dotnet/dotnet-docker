@@ -3,7 +3,7 @@
 * `6.0` (Current, LTS)
   * `docker pull mcr.microsoft.com/dotnet/sdk:6.0`
 
-# About This Image
+# About
 
 This image contains the .NET SDK which is comprised of three parts:
 
@@ -15,7 +15,7 @@ Use this image for your development process (developing, building and testing ap
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-# How to Use the Image
+# Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
