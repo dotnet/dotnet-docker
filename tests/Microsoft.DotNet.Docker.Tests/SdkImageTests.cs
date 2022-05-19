@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -48,6 +47,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
+        public void VerifyNoSasToken(ProductImageData imageData)
+        {
+            base.VerifyCommonNoSasToken(imageData);
+        }
+
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new()
@@ -67,7 +73,10 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.Version.Major >= 5)
             {
                 string version = imageData.GetProductVersion(ImageType, DockerHelper);
-                variables.Add(new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version));
+                variables.Add(new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version)
+                {
+                    IsProductVersion = true
+                });
             }
 
             if (imageData.Version.Major >= 5)
@@ -81,7 +90,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));
             }
 
-            if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
+            if (imageData.SdkOS.StartsWith(OS.Alpine))
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
 
@@ -138,7 +147,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (!(imageData.Version.Major >= 5 ||
                 (imageData.Version.Major >= 3 &&
-                    (imageData.SdkOS.StartsWith(OS.AlpinePrefix) || !DockerHelper.IsLinuxContainerModeEnabled))))
+                    (imageData.SdkOS.StartsWith(OS.Alpine) || !DockerHelper.IsLinuxContainerModeEnabled))))
             {
                 return;
             }
@@ -283,11 +292,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private string GetSdkUrl(ProductImageData imageData)
         {
+            bool isInternal = Config.IsInternal(imageData.VersionString);
             string sdkBuildVersion = Config.GetBuildVersion(ImageType, imageData.VersionString);
-            string sdkFileVersionLabel = sdkBuildVersion;
+            string sdkFileVersionLabel = isInternal ? imageData.GetProductVersion(ImageType, DockerHelper) : sdkBuildVersion;
 
             string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
-            if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
+            if (imageData.SdkOS.StartsWith(OS.Alpine))
             {
                 osType += "-musl";
             }
@@ -301,14 +311,14 @@ namespace Microsoft.DotNet.Docker.Tests
             };
 
             string fileType = DockerHelper.IsLinuxContainerModeEnabled ? "tar.gz" : "zip";
-
-            string baseUrl = "https://dotnetcli.azureedge.net/dotnet";
-            if (imageData.Version.Major >= 7)
+            string baseUrl = Config.GetBaseUrl(imageData.VersionString);
+            string url = $"{baseUrl}/Sdk/{sdkBuildVersion}/dotnet-sdk-{sdkFileVersionLabel}-{osType}-{architecture}.{fileType}";
+            if (isInternal)
             {
-                baseUrl = Config.GetBaseUrl(imageData.VersionString);
+                url += Config.SasQueryString;
             }
 
-            return $"{baseUrl}/Sdk/{sdkBuildVersion}/dotnet-sdk-{sdkFileVersionLabel}-{osType}-{architecture}.{fileType}";
+            return url;
         }
 
         private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
