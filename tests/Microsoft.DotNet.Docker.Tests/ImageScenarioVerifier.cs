@@ -56,7 +56,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     string buildTag = BuildTestAppImage("build", appDir, customBuildArgs);
                     tags.Add(buildTag);
                     string dotnetRunArgs = _isWeb ? " --urls http://0.0.0.0:80" : string.Empty;
-                    await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}", customBuildArgs);
+                    await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}");
                 }
 
                 // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnet` image
