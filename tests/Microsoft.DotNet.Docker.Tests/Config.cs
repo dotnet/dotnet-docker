@@ -30,6 +30,16 @@ namespace Microsoft.DotNet.Docker.Tests
             Environment.GetEnvironmentVariable("IMAGE_OS") ?? string.Empty;
         public static string SourceBranch { get; } =
             Environment.GetEnvironmentVariable("SOURCE_BRANCH") ?? string.Empty;
+        public static string SasQueryString { get; } =
+            Environment.GetEnvironmentVariable("SAS_QUERY_STRING") ?? string.Empty;
+        public static string NuGetFeedPassword { get; } =
+            Environment.GetEnvironmentVariable("NUGET_FEED_PASSWORD") ?? string.Empty;
+
+        public static bool IsInternal(string dotnetVersion)
+        {
+            string versionBaseUrl = GetBaseUrl(dotnetVersion);
+            return versionBaseUrl.Contains("msrc") || versionBaseUrl.Contains("internal");
+        }
 
         private static bool GetIsNightlyRepo()
         {
