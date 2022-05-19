@@ -44,7 +44,7 @@ namespace Microsoft.DotNet.Docker.Tests
             Assert.NotEqual("0", userId);
         }
 
-        [DotNetTheory]
+        [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyPackageInstallation(ProductImageData imageData)
         {
@@ -56,6 +56,13 @@ namespace Microsoft.DotNet.Docker.Tests
             VerifyExpectedInstalledRpmPackages(
                 imageData,
                 GetExpectedRpmPackagesInstalled(imageData));
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyNoSasToken(ProductImageData imageData)
+        {
+            base.VerifyCommonNoSasToken(imageData);
         }
 
         internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>

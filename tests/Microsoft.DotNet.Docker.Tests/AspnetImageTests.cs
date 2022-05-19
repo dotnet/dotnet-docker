@@ -77,6 +77,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
         }
 
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyNoSasToken(ProductImageData imageData)
+        {
+            base.VerifyCommonNoSasToken(imageData);
+        }
+
         public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
         {
             if (imageData.Version.Major >= 5)
