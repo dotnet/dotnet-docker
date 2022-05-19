@@ -42,38 +42,25 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string Rid
         {
-            get {
+            get
+            {
                 string rid;
 
-                if (Arch == Arch.Arm)
+                if (OS.StartsWith(Tests.OS.NanoServer) || OS.StartsWith(Tests.OS.ServerCore))
                 {
-                    if (OS.StartsWith(Tests.OS.AlpinePrefix))
-                    {
-                        rid = "linux-musl-arm";
-                    }
-                    else
-                    {
-                        rid = "linux-arm";
-                    }
-                }
-                else if (Arch == Arch.Arm64)
-                {
-                    if (OS.StartsWith(Tests.OS.AlpinePrefix))
-                    {
-                        rid = "linux-musl-arm64";
-                    }
-                    else
-                    {
-                        rid = "linux-arm64";
-                    }
-                }
-                else if (OS.StartsWith(Tests.OS.AlpinePrefix))
-                {
-                    rid = "linux-musl-x64";
+                    rid = "win-x64";
                 }
                 else
                 {
-                    rid = "linux-x64";
+                    string arch = Arch switch
+                    {
+                        Arch.Arm => "arm",
+                        Arch.Arm64 => "arm64",
+                        Arch.Amd64 => "x64",
+                        _ => throw new NotImplementedException()
+                    };
+                    string modifier = OS.StartsWith(Tests.OS.Alpine) ? "musl-" : "";
+                    rid = $"linux-{modifier}{arch}";
                 }
 
                 return rid;

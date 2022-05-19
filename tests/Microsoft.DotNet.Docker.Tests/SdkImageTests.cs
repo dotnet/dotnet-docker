@@ -90,7 +90,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));
             }
 
-            if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
+            if (imageData.SdkOS.StartsWith(OS.Alpine))
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
 
@@ -147,7 +147,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (!(imageData.Version.Major >= 5 ||
                 (imageData.Version.Major >= 3 &&
-                    (imageData.SdkOS.StartsWith(OS.AlpinePrefix) || !DockerHelper.IsLinuxContainerModeEnabled))))
+                    (imageData.SdkOS.StartsWith(OS.Alpine) || !DockerHelper.IsLinuxContainerModeEnabled))))
             {
                 return;
             }
@@ -297,7 +297,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string sdkFileVersionLabel = isInternal ? imageData.GetProductVersion(ImageType, DockerHelper) : sdkBuildVersion;
 
             string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
-            if (imageData.SdkOS.StartsWith(OS.AlpinePrefix))
+            if (imageData.SdkOS.StartsWith(OS.Alpine))
             {
                 osType += "-musl";
             }
