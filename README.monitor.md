@@ -57,6 +57,7 @@ Tags | Dockerfile | OS Version
 7.0.0-preview.4-alpine-arm64v8, 7.0-alpine-arm64v8, 7-alpine-arm64v8, 7.0.0-preview.4-alpine, 7.0-alpine, 7-alpine, 7.0.0-preview.4, 7.0, 7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.0/alpine/arm64v8/Dockerfile) | Alpine 3.15
 
 You can retrieve a list of all available tags for dotnet/monitor at https://mcr.microsoft.com/v2/dotnet/monitor/tags/list.
+<!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
 
