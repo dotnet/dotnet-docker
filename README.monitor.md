@@ -65,6 +65,7 @@ Tags | Dockerfile | OS Version
 6.2.0-alpha.1-alpine-arm64v8, 6.2-alpine-arm64v8, 6.2.0-alpha.1-alpine, 6.2-alpine, 6.2.0-alpha.1, 6.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.2/alpine/arm64v8/Dockerfile) | Alpine 3.15
 
 You can retrieve a list of all available tags for dotnet/nightly/monitor at https://mcr.microsoft.com/v2/dotnet/nightly/monitor/tags/list.
+<!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
 
