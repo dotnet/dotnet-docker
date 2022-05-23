@@ -1,29 +1,32 @@
 {{
-  set headerArgs to [ "top-header": "#" ]
-}}{{InsertTemplate("Announcement.md", [ "trailing-line-break": "true"])}}{{
-if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", headerArgs)}}
+  set commonArgs to [
+    "top-header": "#"
+    "readme-host": "dockerhub"
+  ]
+}}{{InsertTemplate("Announcement.md", union(commonArgs, [ "trailing-line-break": "true" ]))}}{{
+if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 }}{{if IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main":# Featured Repos
 
-* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
-* [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
-* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
-* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
-* [dotnet/monitor](https://hub.docker.com/_/microsoft-dotnet-monitor/): .NET Monitor Tool
-* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
+* [dotnet/sdk]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/sdk" ])}}): .NET SDK
+* [dotnet/aspnet]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/aspnet" ])}}): ASP.NET Core Runtime
+* [dotnet/runtime]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/runtime" ])}}): .NET Runtime
+* [dotnet/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/runtime-deps" ])}}): .NET Runtime Dependencies
+* [dotnet/monitor]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/monitor" ])}}): .NET Monitor Tool
+* [dotnet/samples]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/samples" ])}}): .NET Samples
 ^elif IS_PRODUCT_FAMILY && VARIABLES["branch"] = "nightly"
 :# Featured Repos
 
-* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
-* [dotnet/nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
-* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
-* [dotnet/nightly/monitor](https://hub.docker.com/_/microsoft-dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
+* [dotnet/nightly/sdk]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/nightly/sdk" ])}}): .NET SDK (Preview)
+* [dotnet/nightly/aspnet]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/nightly/aspnet" ])}}): ASP.NET Core Runtime (Preview)
+* [dotnet/nightly/runtime]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/nightly/runtime" ])}}): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/nightly/runtime-deps" ])}}): .NET Runtime Dependencies (Preview)
+* [dotnet/nightly/monitor]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/nightly/monitor" ])}}): .NET Monitor Tool (Preview)
 }}
-{{InsertTemplate("About.md", headerArgs)}}
+{{InsertTemplate("About.md", commonArgs)}}
 
-{{InsertTemplate("Use.md", headerArgs)}}
+{{InsertTemplate("Use.md", commonArgs)}}
 
-{{InsertTemplate("RelatedRepos.md", headerArgs)}}
+{{InsertTemplate("RelatedRepos.md", commonArgs)}}
 {{if !IS_PRODUCT_FAMILY:
 # Full Tag Listing
 <!--End of generated tags-->
@@ -31,4 +34,4 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", headerArgs)}}
 
 }}*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
 }}
-{{InsertTemplate("Support.md", headerArgs)}}
+{{InsertTemplate("Support.md", commonArgs)}}
