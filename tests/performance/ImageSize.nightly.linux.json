@@ -23,14 +23,14 @@
     "src/runtime-deps/6.0/cbl-mariner1.0/amd64": 229251169,
     "src/runtime-deps/6.0/cbl-mariner1.0-distroless/amd64": 63825551,
     "src/runtime-deps/6.0/cbl-mariner2.0/amd64": 117182974,
-    "src/runtime-deps/6.0/cbl-mariner2.0/arm64v8": 235008327,
+    "src/runtime-deps/6.0/cbl-mariner2.0/arm64v8": 101425521,
     "src/runtime-deps/6.0/cbl-mariner2.0-distroless/amd64": 34587577,
-    "src/runtime-deps/6.0/cbl-mariner2.0-distroless/arm64v8": 23735961,
+    "src/runtime-deps/6.0/cbl-mariner2.0-distroless/arm64v8": 30541634,
     "src/runtime-deps/6.0/jammy/amd64": 118850628,
     "src/runtime-deps/6.0/jammy/arm32v7": 92396848,
     "src/runtime-deps/6.0/jammy/arm64v8": 109539947,
     "src/runtime-deps/7.0/cbl-mariner2.0/amd64": 117182974,
-    "src/runtime-deps/7.0/cbl-mariner2.0/arm64v8": 251424217
+    "src/runtime-deps/7.0/cbl-mariner2.0/arm64v8": 101425521
   },
   "dotnet/nightly/runtime": {
     "src/runtime/3.1/bullseye-slim/amd64": 198162495,
@@ -84,9 +84,9 @@
     "src/runtime/6.0/cbl-mariner1.0/amd64": 293523435,
     "src/runtime/6.0/cbl-mariner1.0-distroless/amd64": 134433667,
     "src/runtime/6.0/cbl-mariner2.0/amd64": 189431351,
-    "src/runtime/6.0/cbl-mariner2.0/arm64v8": 312795102,
+    "src/runtime/6.0/cbl-mariner2.0/arm64v8": 186072374,
     "src/runtime/6.0/cbl-mariner2.0-distroless/amd64": 105222146,
-    "src/runtime/6.0/cbl-mariner2.0-distroless/arm64v8": 101544245,
+    "src/runtime/6.0/cbl-mariner2.0-distroless/arm64v8": 108352990,
     "src/runtime/7.0/bullseye-slim/amd64": 188948418,
     "src/runtime/7.0/bullseye-slim/arm32v7": 156704885,
     "src/runtime/7.0/bullseye-slim/arm64v8": 190089155,
@@ -97,9 +97,9 @@
     "src/runtime/7.0/jammy/arm32v7": 157591907,
     "src/runtime/7.0/jammy/arm64v8": 188159362,
     "src/runtime/7.0/cbl-mariner2.0/amd64": 190125327,
-    "src/runtime/7.0/cbl-mariner2.0/arm64v8": 329695396,
+    "src/runtime/7.0/cbl-mariner2.0/arm64v8": 186533221,
     "src/runtime/7.0/cbl-mariner2.0-distroless/amd64": 105916122,
-    "src/runtime/7.0/cbl-mariner2.0-distroless/arm64v8": 102007140
+    "src/runtime/7.0/cbl-mariner2.0-distroless/arm64v8": 108813837
   },
   "dotnet/nightly/aspnet": {
     "src/aspnet/3.1/bullseye-slim/amd64": 216031293,
@@ -153,9 +153,9 @@
     "src/aspnet/6.0/cbl-mariner1.0/amd64": 317380163,
     "src/aspnet/6.0/cbl-mariner1.0-distroless/amd64": 154685826,
     "src/aspnet/6.0/cbl-mariner2.0/amd64": 211355703,
-    "src/aspnet/6.0/cbl-mariner2.0/arm64v8": 335534473,
+    "src/aspnet/6.0/cbl-mariner2.0/arm64v8": 208839490,
     "src/aspnet/6.0/cbl-mariner2.0-distroless/amd64": 125491714,
-    "src/aspnet/6.0/cbl-mariner2.0-distroless/arm64v8": 124300095,
+    "src/aspnet/6.0/cbl-mariner2.0-distroless/arm64v8": 131120106,
     "src/aspnet/7.0/bullseye-slim/amd64": 209108403,
     "src/aspnet/7.0/bullseye-slim/arm32v7": 178193510,
     "src/aspnet/7.0/bullseye-slim/arm64v8": 212762558,
@@ -166,9 +166,9 @@
     "src/aspnet/7.0/jammy/arm32v7": 179416414,
     "src/aspnet/7.0/jammy/arm64v8": 211166087,
     "src/aspnet/7.0/cbl-mariner2.0/amd64": 212464906,
-    "src/aspnet/7.0/cbl-mariner2.0/arm64v8": 336633443,
+    "src/aspnet/7.0/cbl-mariner2.0/arm64v8": 209765738,
     "src/aspnet/7.0/cbl-mariner2.0-distroless/amd64": 126605013,
-    "src/aspnet/7.0/cbl-mariner2.0-distroless/arm64v8": 125238633
+    "src/aspnet/7.0/cbl-mariner2.0-distroless/arm64v8": 132046354
   },
   "dotnet/nightly/sdk": {
     "src/sdk/3.1/bullseye/amd64": 723914836,
@@ -197,7 +197,7 @@
     "src/sdk/5.0/focal/amd64": 646583460,
     "src/sdk/5.0/focal/arm32v7": 564440607,
     "src/sdk/5.0/focal/arm64v8": 637793431,
-    "src/sdk/5.0/cbl-mariner1.0/amd64": 785492419,
+    "src/sdk/5.0/cbl-mariner1.0/amd64": 825222362,
     "src/sdk/6.0/bullseye-slim/amd64": 711281821,
     "src/sdk/6.0/bullseye-slim/arm32v7": 658997899,
     "src/sdk/6.0/bullseye-slim/arm64v8": 730190475,
@@ -234,10 +234,10 @@
     "src/monitor/6.2/alpine/amd64": 107698176,
     "src/monitor/6.2/alpine/arm64v8": 118521282,
     "src/monitor/6.2/cbl-mariner/amd64": 220058031,
-    "src/monitor/6.2/cbl-mariner/arm64v8": 350873324,
+    "src/monitor/6.2/cbl-mariner/arm64v8": 217457652,
     "src/monitor/7.0/alpine/amd64": 109210745,
     "src/monitor/7.0/alpine/arm64v8": 119985095,
     "src/monitor/7.0/cbl-mariner/amd64": 220741666,
-    "src/monitor/7.0/cbl-mariner/arm64v8": 352262165
+    "src/monitor/7.0/cbl-mariner/arm64v8": 218645560
   }
 }
