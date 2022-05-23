@@ -61,7 +61,8 @@ The following samples show how to develop, build and test .NET applications with
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 6.0.300-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.300-bullseye-slim, 6.0-bullseye-slim, 6.0.300, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
-6.0.300-alpine3.15-amd64, 6.0-alpine3.15-amd64, 6.0-alpine-amd64, 6.0.300-alpine3.15, 6.0-alpine3.15, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.15/amd64/Dockerfile) | Alpine 3.15
+6.0.300-alpine3.16-amd64, 6.0-alpine3.16-amd64, 6.0-alpine-amd64, 6.0.300-alpine3.16, 6.0-alpine3.16, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.16/amd64/Dockerfile) | Alpine 3.16
+6.0.300-alpine3.15-amd64, 6.0-alpine3.15-amd64, 6.0.300-alpine3.15, 6.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.15/amd64/Dockerfile) | Alpine 3.15
 6.0.300-alpine3.14-amd64, 6.0-alpine3.14-amd64, 6.0.300-alpine3.14, 6.0-alpine3.14 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.14/amd64/Dockerfile) | Alpine 3.14
 6.0.300-jammy-amd64, 6.0-jammy-amd64, 6.0.300-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 6.0.300-focal-amd64, 6.0-focal-amd64, 6.0.300-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
@@ -72,7 +73,8 @@ Tags | Dockerfile | OS Version
 5.0.408-focal-amd64, 5.0-focal-amd64, 5.0.408-focal, 5.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/5.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.419-bullseye, 3.1-bullseye | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/bullseye/amd64/Dockerfile) | Debian 11
 3.1.419-buster, 3.1-buster, 3.1.419, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/buster/amd64/Dockerfile) | Debian 10
-3.1.419-alpine3.15, 3.1-alpine3.15, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/alpine3.15/amd64/Dockerfile) | Alpine 3.15
+3.1.419-alpine3.16, 3.1-alpine3.16, 3.1-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/alpine3.16/amd64/Dockerfile) | Alpine 3.16
+3.1.419-alpine3.15, 3.1-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/alpine3.15/amd64/Dockerfile) | Alpine 3.15
 3.1.419-alpine3.14, 3.1-alpine3.14 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/alpine3.14/amd64/Dockerfile) | Alpine 3.14
 3.1.419-focal, 3.1-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/focal/amd64/Dockerfile) | Ubuntu 20.04
 3.1.419-bionic, 3.1-bionic | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/3.1/bionic/amd64/Dockerfile) | Ubuntu 18.04
@@ -81,14 +83,15 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 7.0.100-preview.4-bullseye-slim-amd64, 7.0-bullseye-slim-amd64, 7.0.100-preview.4-bullseye-slim, 7.0-bullseye-slim, 7.0.100-preview.4, 7.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/bullseye-slim/amd64/Dockerfile) | Debian 11
-7.0.100-preview.4-alpine3.15-amd64, 7.0-alpine3.15-amd64, 7.0-alpine-amd64, 7.0.100-preview.4-alpine3.15, 7.0-alpine3.15, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/alpine3.15/amd64/Dockerfile) | Alpine 3.15
+7.0.100-preview.4-alpine3.16-amd64, 7.0-alpine3.16-amd64, 7.0-alpine-amd64, 7.0.100-preview.4-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/alpine3.16/amd64/Dockerfile) | Alpine 3.16
 7.0.100-preview.4-jammy-amd64, 7.0-jammy-amd64, 7.0.100-preview.4-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 6.0.300-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.300-bullseye-slim, 6.0-bullseye-slim, 6.0.300, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
-6.0.300-alpine3.15-arm64v8, 6.0-alpine3.15-arm64v8, 6.0-alpine-arm64v8, 6.0.300-alpine3.15, 6.0-alpine3.15, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.15/arm64v8/Dockerfile) | Alpine 3.15
+6.0.300-alpine3.16-arm64v8, 6.0-alpine3.16-arm64v8, 6.0-alpine-arm64v8, 6.0.300-alpine3.16, 6.0-alpine3.16, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.16/arm64v8/Dockerfile) | Alpine 3.16
+6.0.300-alpine3.15-arm64v8, 6.0-alpine3.15-arm64v8, 6.0.300-alpine3.15, 6.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.15/arm64v8/Dockerfile) | Alpine 3.15
 6.0.300-alpine3.14-arm64v8, 6.0-alpine3.14-arm64v8, 6.0.300-alpine3.14, 6.0-alpine3.14 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.14/arm64v8/Dockerfile) | Alpine 3.14
 6.0.300-jammy-arm64v8, 6.0-jammy-arm64v8, 6.0.300-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 6.0.300-focal-arm64v8, 6.0-focal-arm64v8, 6.0.300-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
@@ -104,14 +107,15 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 7.0.100-preview.4-bullseye-slim-arm64v8, 7.0-bullseye-slim-arm64v8, 7.0.100-preview.4-bullseye-slim, 7.0-bullseye-slim, 7.0.100-preview.4, 7.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
-7.0.100-preview.4-alpine3.15-arm64v8, 7.0-alpine3.15-arm64v8, 7.0-alpine-arm64v8, 7.0.100-preview.4-alpine3.15, 7.0-alpine3.15, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/alpine3.15/arm64v8/Dockerfile) | Alpine 3.15
+7.0.100-preview.4-alpine3.16-arm64v8, 7.0-alpine3.16-arm64v8, 7.0-alpine-arm64v8, 7.0.100-preview.4-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/alpine3.16/arm64v8/Dockerfile) | Alpine 3.16
 7.0.100-preview.4-jammy-arm64v8, 7.0-jammy-arm64v8, 7.0.100-preview.4-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 6.0.300-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.300-bullseye-slim, 6.0-bullseye-slim, 6.0.300, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
-6.0.300-alpine3.15-arm32v7, 6.0-alpine3.15-arm32v7, 6.0-alpine-arm32v7, 6.0.300-alpine3.15, 6.0-alpine3.15, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.15/arm32v7/Dockerfile) | Alpine 3.15
+6.0.300-alpine3.16-arm32v7, 6.0-alpine3.16-arm32v7, 6.0-alpine-arm32v7, 6.0.300-alpine3.16, 6.0-alpine3.16, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.16/arm32v7/Dockerfile) | Alpine 3.16
+6.0.300-alpine3.15-arm32v7, 6.0-alpine3.15-arm32v7, 6.0.300-alpine3.15, 6.0-alpine3.15 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.15/arm32v7/Dockerfile) | Alpine 3.15
 6.0.300-alpine3.14-arm32v7, 6.0-alpine3.14-arm32v7, 6.0.300-alpine3.14, 6.0-alpine3.14 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/alpine3.14/arm32v7/Dockerfile) | Alpine 3.14
 6.0.300-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.300-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.300-focal-arm32v7, 6.0-focal-arm32v7, 6.0.300-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
@@ -127,7 +131,7 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 7.0.100-preview.4-bullseye-slim-arm32v7, 7.0-bullseye-slim-arm32v7, 7.0.100-preview.4-bullseye-slim, 7.0-bullseye-slim, 7.0.100-preview.4, 7.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
-7.0.100-preview.4-alpine3.15-arm32v7, 7.0-alpine3.15-arm32v7, 7.0-alpine-arm32v7, 7.0.100-preview.4-alpine3.15, 7.0-alpine3.15, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/alpine3.15/arm32v7/Dockerfile) | Alpine 3.15
+7.0.100-preview.4-alpine3.16-arm32v7, 7.0-alpine3.16-arm32v7, 7.0-alpine-arm32v7, 7.0.100-preview.4-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/alpine3.16/arm32v7/Dockerfile) | Alpine 3.16
 7.0.100-preview.4-jammy-arm32v7, 7.0-jammy-arm32v7, 7.0.100-preview.4-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
 ## Nano Server 2022 amd64 Tags
