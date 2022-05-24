@@ -246,14 +246,14 @@
     "src/sdk/7.0/cbl-mariner2.0/arm64v8": 1122410785
   },
   "dotnet/nightly/monitor": {
-    "src/monitor/6.1/alpine/amd64": 107919731,
+    "src/monitor/6.1/alpine/amd64": 107899527,
     "src/monitor/6.1/cbl-mariner/amd64": 219565678,
-    "src/monitor/6.2/alpine/amd64": 107698176,
-    "src/monitor/6.2/alpine/arm64v8": 118521282,
+    "src/monitor/6.2/alpine/amd64": 108549128,
+    "src/monitor/6.2/alpine/arm64v8": 119150710,
     "src/monitor/6.2/cbl-mariner/amd64": 220058031,
     "src/monitor/6.2/cbl-mariner/arm64v8": 350873324,
-    "src/monitor/7.0/alpine/amd64": 109210745,
-    "src/monitor/7.0/alpine/arm64v8": 119985095,
+    "src/monitor/7.0/alpine/amd64": 109862926,
+    "src/monitor/7.0/alpine/arm64v8": 120343892,
     "src/monitor/7.0/cbl-mariner/amd64": 220741666,
     "src/monitor/7.0/cbl-mariner/arm64v8": 352262165
   }
