@@ -1,11 +1,11 @@
 {{
-  set headerArgs to [ "top-header": "##", "is-mcr": "true" ]
-}}{{InsertTemplate("About.md", headerArgs)}}
+  set commonArgs to [ "top-header": "##", "readme-host": "mar" ]
+}}{{InsertTemplate("About.md", commonArgs)}}
 
-{{InsertTemplate("FeaturedTags.md", headerArgs)}}
+{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 
-{{InsertTemplate("RelatedRepos.md", headerArgs)}}
+{{InsertTemplate("RelatedRepos.md", commonArgs)}}
 
-{{InsertTemplate("Use.md", headerArgs)}}
+{{InsertTemplate("Use.md", commonArgs)}}
 
-{{InsertTemplate("Support.md", headerArgs)}}
+{{InsertTemplate("Support.md", commonArgs)}}
