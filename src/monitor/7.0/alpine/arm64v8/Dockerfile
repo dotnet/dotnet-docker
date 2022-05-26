@@ -5,9 +5,9 @@ ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 FROM $SDK_REPO:7.0.100-preview.4-alpine3.16-arm64v8 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=7.0.0-preview.5.22272.2
+ENV DOTNET_MONITOR_VERSION=7.0.0-preview.5.22275.4
 RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='a90963939b84d121684803aebdaf3d194c0e45c23048b336868f896fa350cbdc90adc592d68e414d85669223fa2f0b8f427b8b44edb3d42657139c15fc3416b9' \
+    && dotnetmonitor_sha512='54a2733f5fdab8ffe7367e50416d1f786a528c25ed89dac7eacde6d480f8eb43b546799b2e017ed256ae9050860df153aab8b8c9fe979f891f42d305bf4c53eb' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net7.0 --no-cache \
     # To reduce image size, remove all non-net7.0 TFMs
