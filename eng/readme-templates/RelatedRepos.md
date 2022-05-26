@@ -6,7 +6,7 @@
 
 .NET:
 
-{{if (!IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly")
+{{if (!IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly") && ARGS["readme-host"] = "dockerhub"
     :* [dotnet]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet", "is-product-family": "true" ])}}): .NET
 }}{{if (PARENT_REPO = "dotnet" && SHORT_REPO != "sdk")
     :* [dotnet/sdk]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/sdk" ])}}): .NET SDK

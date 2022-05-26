@@ -15,7 +15,6 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 .NET:
 
-* [dotnet](https://mcr.microsoft.com/catalog/search=dotnet): .NET
 * [dotnet/sdk](https://mcr.microsoft.com/product/dotnet/sdk/about): .NET SDK
 * [dotnet/aspnet](https://mcr.microsoft.com/product/dotnet/aspnet/about): ASP.NET Core Runtime
 * [dotnet/runtime](https://mcr.microsoft.com/product/dotnet/runtime/about): .NET Runtime
@@ -24,7 +23,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 .NET Framework:
 
-* [dotnet/framework](https://mcr.microsoft.com/catalog/search=dotnet/framework): .NET Framework, ASP.NET and WCF
+* [dotnet/framework](https://mcr.microsoft.com/catalog?search=dotnet/framework): .NET Framework, ASP.NET and WCF
 * [dotnet/framework/samples](https://mcr.microsoft.com/product/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
 
 ## Usage
