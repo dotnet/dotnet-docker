@@ -1,42 +1,50 @@
 ## About
 
 **IMPORTANT**
+
 **The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
 
-**See [dotnet](https://hub.docker.com/_/microsoft-dotnet/) for images with official releases of [.NET](https://github.com/dotnet/core).**
+**See [dotnet](https://mcr.microsoft.com/product/dotnet/runtime/about) for images with official releases of [.NET](https://github.com/dotnet/core).**
 
-This image contains the native dependencies needed by .NET. It does not include .NET. It is for [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
+This image contains the .NET runtimes and libraries and is optimized for running .NET apps in production.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
 ## Featured Tags
 
 * `7.0` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:7.0`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime:7.0`
 * `6.0` (Current, LTS)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:6.0`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime:6.0`
 
 ## Related Repos
 
 .NET:
 
-* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
-* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
-* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
-* [dotnet/nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
-* [dotnet/nightly/monitor](https://hub.docker.com/_/microsoft-dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
+* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
+* [dotnet/nightly/sdk](https://mcr.microsoft.com/product/dotnet/nightly/sdk/about): .NET SDK (Preview)
+* [dotnet/nightly/aspnet](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
+* [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
 
 .NET Framework:
 
-* [dotnet/framework](https://hub.docker.com/_/microsoft-dotnet-framework/): .NET Framework, ASP.NET and WCF
-* [dotnet/framework/samples](https://hub.docker.com/_/microsoft-dotnet-framework-samples/): .NET Framework, ASP.NET and WCF Samples
+* [dotnet/framework](https://mcr.microsoft.com/catalog?search=dotnet/framework): .NET Framework, ASP.NET and WCF
+* [dotnet/framework/samples](https://mcr.microsoft.com/product/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
 
 ## Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-* [.NET self-contained Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/dotnet-docker-selfcontained.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.debian-x64-selfcontained) builds and runs an application as a self-contained application.
+### Container sample: Run a simple application
+
+You can quickly run a container with a pre-built [.NET Docker image](https://mcr.microsoft.com/product/dotnet/samples/about), based on the [.NET console sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/README.md).
+
+Type the following command to run a sample console application:
+
+```console
+docker run --rm mcr.microsoft.com/dotnet/samples
+```
 
 ## Support
 
