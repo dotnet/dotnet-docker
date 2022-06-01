@@ -89,10 +89,8 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         {
             pkgSourceCreds?.Remove();
 
-            pkgSourceCreds = GetOrCreateXObject(
-                pkgSourceCreds,
-                configuration,
-                () => new XElement("packageSourceCredentials"));
+            pkgSourceCreds = new XElement("packageSourceCredentials");
+            configuration.Add(pkgSourceCreds);
 
             XElement pkgSrc = GetOrCreateXObject(
                 pkgSourceCreds.Element(pkgSrcName),
@@ -119,10 +117,12 @@ internal class NuGetConfigUpdater : IDependencyUpdater
 
             RemoveAllInternalPackageSources(pkgSources);
 
+            string project = _options.DockerfileVersion != "3.1" ? "/internal" : string.Empty;
+
             UpdateAddElement(
                 pkgSources,
                 pkgSrcName,
-                $"https://pkgs.dev.azure.com/dnceng/internal/_packaging/{sdkVersion}-shipping/nuget/v3/index.json");
+                $"https://pkgs.dev.azure.com/dnceng{project}/_packaging/{sdkVersion}-shipping/nuget/v3/index.json");
         }
         else
         {
