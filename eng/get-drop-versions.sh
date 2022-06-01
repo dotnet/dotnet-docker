@@ -32,7 +32,10 @@ commitSha=${commitSha%?} # Remove last character (newline)
 # Example URL: https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-rtm.21522.1/dotnet-sdk-6.0.100-win-x64.zip
 #   The sed command below extracts the 6.0.100-rtm.21522.1 from the URL
 # We don't want the version contained in the SDK's .version file because that may be a stable branding version
-sdkVer=$(echo $sdkUrl | sed 's|.*/Sdk/\(.*\)/.*|\1|g')
+# The sed command doesn't support non-greedy matching so we have to be careful with the trailing slash after
+# the version because there may be more than one slash if a SAS token is present. To handle this, we just look
+# for the beginning of the filename with starts with "dotnet".
+sdkVer=$(echo $sdkUrl | sed 's|.*/Sdk/\(.*\)/dotnet.*|\1|g')
 
 rm sdkversion
 
