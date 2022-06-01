@@ -21,16 +21,19 @@
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
     set isSingleStage to !isDistrolessMariner && !(isFullMariner && isInternal && ARCH_SHORT != "arm64") ^
-    set urlSuffix to when(isInternal, "SAS_QUERY_STRING", "") ^
+    set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm"
 }}{{
     if !isSingleStage:# Installer image
 }}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isFullMariner && ARCH_SHORT != "arm64":
 
+ARG SAS_QUERY_STRING
+
 RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
     [
         "url-suffix": urlSuffix,
-        "filename": rpmFilename
+        "filename": rpmFilename,
+        "is-internal": isInternal
     ], "    ")}}}}
 {{ if isDistrolessMariner && find(OS_VERSION, "1.0") >= 0:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
@@ -39,6 +42,8 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 {{if isDistrolessMariner:# Install .NET's dependencies into a staging location
+^elif isMariner && isInternal:FROM {{baseImageRepo}}:{{baseImageTag}}
+
 }}RUN {{if isDistrolessMariner:mkdir {{distrolessStagingDir}} \
     && }}{{InsertTemplate("../Dockerfile.linux.install-deps", ["distroless-staging-dir": distrolessStagingDir])}}
 {{ if isDistrolessMariner:
