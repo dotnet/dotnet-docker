@@ -2,12 +2,12 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:7.0.100-preview.4-cbl-mariner2.0-amd64 AS installer
+FROM $SDK_REPO:7.0.100-preview.5-cbl-mariner2.0-amd64 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=7.0.0-preview.5.22275.4
+ENV DOTNET_MONITOR_VERSION=7.0.0-preview.5.22281.2
 RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='54a2733f5fdab8ffe7367e50416d1f786a528c25ed89dac7eacde6d480f8eb43b546799b2e017ed256ae9050860df153aab8b8c9fe979f891f42d305bf4c53eb' \
+    && dotnetmonitor_sha512='cff5275d5c60d4796563aa3e1b26caeb720b3a1282c40129e19fb1cb036da46115e0569fb810cb3ad68918f0d1acaf71e1a0b1741b9953708c0caaa9a7024cf6' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net7.0 --no-cache \
     # To reduce image size, remove all non-net7.0 TFMs
@@ -26,7 +26,7 @@ RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotn
 
 
 # Monitor image
-FROM $ASPNET_REPO:7.0.0-preview.4-cbl-mariner2.0-amd64
+FROM $ASPNET_REPO:7.0.0-preview.5-cbl-mariner2.0-amd64
 
 WORKDIR /app
 COPY --from=installer /app .

@@ -159,7 +159,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             const string NuGetFeedPasswordVar = "NuGetFeedPassword";
 
-            if (Config.IsInternal(_imageData.VersionString))
+            if (!string.IsNullOrEmpty(Config.NuGetFeedPassword))
             {
                 buildArgs.Add(NuGetFeedPasswordVar);
                 Environment.SetEnvironmentVariable(NuGetFeedPasswordVar, Config.NuGetFeedPassword);
@@ -175,7 +175,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             finally
             {
-                if (Config.IsInternal(_imageData.VersionString))
+                if (!string.IsNullOrEmpty(Config.NuGetFeedPassword))
                 {
                     Environment.SetEnvironmentVariable(NuGetFeedPasswordVar, null);
                 }
