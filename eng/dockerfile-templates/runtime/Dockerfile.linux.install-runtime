@@ -16,7 +16,7 @@
     set runtimeVersionDir to when(ARGS["use-local-version-var"],
         "$dotnet_version",
         when(ARGS["is-internal"],
-            VARIABLES[cat("runtime|", dotnetVersion"|build-version")],
+            VARIABLES[cat("runtime|", dotnetVersion, "|build-version")],
             "$DOTNET_VERSION")) ^
     set runtimeVersionFile to when(ARGS["is-internal"],
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
