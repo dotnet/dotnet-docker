@@ -8,11 +8,11 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # .NET Runtime version
-ENV DOTNET_VERSION=7.0.0-preview.5.22272.3
+ENV DOTNET_VERSION=7.0.0-preview.5.22301.12
 
 # Install .NET Runtime
 RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-arm64.tar.gz \
-    && dotnet_sha512='e8e2d3d6e34fd9700adf2365582d55b33492340c0ae068f1cc481a1bba9beb6dd8a6f6c2b03925614a26b099380446a7ae4aa4cb2f8ffb0a5f3273c369f82b67' \
+    && dotnet_sha512='0751be17efa3191e6c9dd3bf0b7f1f8fd21028282b9eacf6786c6f61c7898199d15ad4719686e0437e4ecdd0c2d85830344732afb5e2f4579e89aa410f75ee4f' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
