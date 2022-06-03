@@ -3,7 +3,7 @@
 * `6` (Current)
   * `docker pull mcr.microsoft.com/dotnet/monitor:6`
 
-# About This Image
+# About
 
 This image contains the .NET Monitor tool.
 
@@ -11,7 +11,7 @@ Use this image as a sidecar container to collect diagnostic information from oth
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-# How to Use the Image
+# Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
@@ -44,7 +44,6 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 6.1.1-alpine-amd64, 6.1-alpine-amd64, 6-alpine-amd64, 6.1.1-alpine, 6.1-alpine, 6-alpine, 6.1.1, 6.1, 6, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.1/alpine/amd64/Dockerfile) | Alpine 3.15
-6.0.2-alpine-amd64, 6.0-alpine-amd64, 6.0.2-alpine, 6.0-alpine, 6.0.2, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.0/alpine/amd64/Dockerfile) | Alpine 3.15
 
 ##### .NET Monitor Preview Tags
 Tags | Dockerfile | OS Version

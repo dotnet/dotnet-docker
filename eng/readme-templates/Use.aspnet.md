@@ -1,6 +1,10 @@
-## Container sample: Run a web application
+{{
+    _ ARGS:
+      top-header: The string to use as the top-level header.
+      readme-host: Moniker of the site that will host the readme
+}}{{ARGS["top-header"]}}# Container sample: Run a web application
 
-You can quickly run a container with a pre-built [.NET Docker image](https://hub.docker.com/_/microsoft-dotnet-samples/), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Docker image]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/samples"])}}), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md).
 
 Type the following command to run a sample web application:
 

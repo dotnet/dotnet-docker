@@ -12,17 +12,29 @@ if ($Validate) {
 
 $repoRoot = (Get-Item "$PSScriptRoot").Parent.Parent.FullName
 
+function CopyReadme([string]$containerName, [string]$readmeRelativePath) {
+    $readmeDir = Split-Path $readmeRelativePath -Parent
+    Exec "docker cp ${containerName}:/repo/$readmeRelativePath $repoRoot/$readmeDir"
+}
+
 $onDockerfilesGenerated = {
     param($ContainerName)
 
     if (-Not $Validate) {
-        Exec "docker cp ${ContainerName}:/repo/README.aspnet.md $repoRoot"
-        Exec "docker cp ${ContainerName}:/repo/README.md $repoRoot"
-        Exec "docker cp ${ContainerName}:/repo/README.monitor.md $repoRoot"
-        Exec "docker cp ${ContainerName}:/repo/README.runtime-deps.md $repoRoot"
-        Exec "docker cp ${ContainerName}:/repo/README.runtime.md $repoRoot"
-        Exec "docker cp ${ContainerName}:/repo/README.samples.md $repoRoot"
-        Exec "docker cp ${ContainerName}:/repo/README.sdk.md $repoRoot"
+        CopyReadme $ContainerName "README.aspnet.md"
+        CopyReadme $ContainerName "README.md"
+        CopyReadme $ContainerName "README.monitor.md"
+        CopyReadme $ContainerName "README.runtime-deps.md"
+        CopyReadme $ContainerName "README.runtime.md"
+        CopyReadme $ContainerName "README.samples.md"
+        CopyReadme $ContainerName "README.sdk.md"
+
+        CopyReadme $ContainerName ".mar/portal/README.aspnet.portal.md"
+        CopyReadme $ContainerName ".mar/portal/README.monitor.portal.md"
+        CopyReadme $ContainerName ".mar/portal/README.runtime-deps.portal.md"
+        CopyReadme $ContainerName ".mar/portal/README.runtime.portal.md"
+        CopyReadme $ContainerName ".mar/portal/README.samples.portal.md"
+        CopyReadme $ContainerName ".mar/portal/README.sdk.portal.md"
     }
 }
 

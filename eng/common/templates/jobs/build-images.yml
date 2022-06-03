@@ -105,7 +105,6 @@ jobs:
       --architecture $(architecture)
       --retry
       --source-repo $(publicGitRepoUri)
-      --get-installed-pkgs-path $(baseContainerRepoPath)/$(engCommonRelativePath)/package-scripts/get-installed-packages.sh
       --digests-out-var 'builtImages'
       $(manifestVariables)
       $(imageBuilderBuildArgs)
