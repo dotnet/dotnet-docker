@@ -1,14 +1,18 @@
 {{
     _ ARGS:
         url-suffix (optional): Suffix string to append the end of the URL.
-        filename: Name of the file to download ^
+        filename: Name of the file to download
+        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product. ^
     
-    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".")
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set runtimeVersionFile to when(ARGS["is-internal"],
+        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
+        "$dotnet_version")
 }}dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
 && {{InsertTemplate("../Dockerfile.linux.download-file",
     [
         "out-file": ARGS["filename"],
-        "url": cat(VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])], "/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-", ARCH_SHORT, ".rpm", ARGS["url-suffix"]),
+        "url": cat(VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])], "/Runtime/$dotnet_version/dotnet-runtime-deps-", runtimeVersionFile, "-cm.1-", ARCH_SHORT, ".rpm", ARGS["url-suffix"]),
         "sha": VARIABLES[cat("runtime-deps-cm.1|", dotnetVersion, "|linux-rpm|", ARCH_SHORT, "|sha")],
         "sha-var-name": "dotnet_sha512"
     ])}}
