@@ -5,6 +5,7 @@ parameters:
   testJobTimeout: 60
   preBuildValidation: false
   internalProjectName: null
+  customInitSteps: []
 
 jobs:
 - job: ${{ parameters.name }}
@@ -22,3 +23,4 @@ jobs:
     parameters:
       preBuildValidation: ${{ parameters.preBuildValidation }}
       internalProjectName: ${{ parameters.internalProjectName }}
+      customInitSteps: ${{ parameters.customInitSteps }}

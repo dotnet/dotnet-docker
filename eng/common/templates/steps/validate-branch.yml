@@ -3,11 +3,12 @@ parameters:
 
 steps:
 - ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-  - script: |
-      if [[ "$OFFICIALBRANCHES" != *\'$SOURCEBRANCH\'* && \
-            "$PUBLISHREPOPREFIX" == "$OFFICIALREPOPREFIX" && \
-            "$OVERRIDEOFFICIALBRANCHVALIDATION" != "true" ]]; then
-          echo "##vso[task.logissue type=error]Official builds must be done from an official branch: $OFFICIALBRANCHES"
-          exit 1
-      fi
+  - powershell: |
+      if (-not "$(officialBranches)".Split(',').Contains("$(sourceBranch)") `
+          -and "$(officialBranches)".Split(',').Contains("$(publishRepoPrefix)") `
+          -and "$(overrideOfficialBranchValidation)" -ne "true")
+      {
+        echo "##vso[task.logissue type=error]Official builds must be done from an official branch: $(officialBranches)"
+        exit 1
+      }
     displayName: Validate Branch
