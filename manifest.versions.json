@@ -11,18 +11,6 @@
     "aspnet|3.1|win|x64|sha": "7ca3cfaf814b12fbfc65a0faa1f858dece790fb08f814f99c5e1f062ead7a75db6e13e035aaa0d5d9a07a487b84496ecda23f9e4cc92fca4dd1143fda89cc898",
     "aspnet-runtime-targeting-pack|3.1|linux-rpm|x64|sha": "fdab7122896ff3602d8a25c0b283996973ef0cf4f4d0f9eba429d3a93b2441ebe0e0d0b499b97bb28c43cfb386501cc617ca7ed7c949dd3e45c61db0d5879fd4",
 
-    "aspnet|5.0|build-version": "5.0.17",
-    "aspnet|5.0|targeting-pack-version": "5.0.0",
-    "aspnet|5.0|linux-musl|x64|sha": "7df763553f6438c51f23542412830686fef82b56f1e3330fa2dfd86b894eff7d830b5ff51468cfe6e88d2eceebc0a0a2352c8762f65a0ffc6ca9f5b02863b7a6",
-    "aspnet|5.0|linux-musl|arm|sha": "80223218db8d272d67f7627da7c3f7a9b06518a2e44f9c6d12f2438b9ea024ec91fb42426b3b5672204c643c122b786f0f0f8682c671eca6635d9644811e0ff7",
-    "aspnet|5.0|linux-musl|arm64|sha": "26f8a30e246c5527f03023e203e44dea1842e23ac587bc9872e6e60bd5ac98f57f7962d7d46c816690cb42263e9deedd896d0d3ad538a2d9dd17a06ba6f47fbb",
-    "aspnet|5.0|linux-rpm|x64|sha": "29cd45a43067a971604ef866334f5484a49af42af6f46960384abaf908989f6eaf042a0456161dd28e96920c5ef022ff757b859e0233eaa8632862220dd2e927",
-    "aspnet|5.0|linux|arm|sha": "466e5600e52551e31ef30b326a6a98e569edaca4d5fd7772a5d1f02a847e6192dc3f9aab4632aa27e63d85e4c53081139ecab4ffca65e9820a72a84916fd5065",
-    "aspnet|5.0|linux|x64|sha": "d8e87804e9e86273c6512785bd5a6f0e834ff3f4bbebc11c4fcdf16ab4fdfabd0d981a756955267c1aa9bbeec596de3728ce9b2e6415d2d80daef0d999a5df6d",
-    "aspnet|5.0|linux|arm64|sha": "ac1a9d89f1b730dfdca9c2e48373ef21f8f9316014eefbe6b11516f8195d3b3efc4e482883774b74ea2ff1cb77174a2cb471bd1157ab5b7d71621e3026c38e9b",
-    "aspnet|5.0|win|x64|sha": "ffa1ac15c489acde822981b4c9fdf69eb0e55dcb3e1bd3d9c23cceafba88388a4420f6b9ac01e5758c6162993ffa3a76350f0b50afffe9ad10eae74adffcbe0a",
-    "aspnet-runtime-targeting-pack|5.0|linux-rpm|x64|sha": "350a7fdb18a79fe7de2a83b3fe92a0f9d7f3e78f0ee96216e553e7c0b247923bad58e028534cd51d0ad11091bae50dd74c3ec426127f7fe59396c4260bf120c1",
-
     "aspnet|6.0|build-version": "6.0.5",
     "aspnet|6.0|targeting-pack-version": "$(aspnet|6.0|build-version)",
     "aspnet|6.0|linux-musl|x64|sha": "b9f07997e5a930e096772a182fcb8f44826cf5fdaf4a5f8d5a9eba4f157373c694a50f57ee1b799fb0e6d4c4d8389cb45409d928e3fc5ea6f56303a190e1941a",
@@ -64,8 +52,6 @@
 
     "base-url|3.1|main": "$(base-url|public|maintenance-legacy|main)",
     "base-url|3.1|nightly": "$(base-url|public|maintenance-legacy|nightly)",
-    "base-url|5.0|main": "$(base-url|public|maintenance-legacy|main)",
-    "base-url|5.0|nightly": "$(base-url|public|maintenance-legacy|nightly)",
     "base-url|6.0|main": "$(base-url|public|maintenance|main)",
     "base-url|6.0|nightly": "$(base-url|public|maintenance|nightly)",
     "base-url|7.0|main": "$(base-url|public|main)",
@@ -79,7 +65,6 @@
     "base-url|7.0-monitor|nightly": "$(base-url|public|nightly)",
 
     "dotnet|3.1|product-version": "3.1.25",
-    "dotnet|5.0|product-version": "5.0.17",
     "dotnet|6.0|product-version": "6.0.5",
     "dotnet|7.0|product-version": "7.0.0-preview.5",
 
@@ -116,13 +101,6 @@
     "powershell|3.1|Linux|x64|sha": "8a193dce4d92a784ef64fe2ee3542b51aa9bd2c7bda78659d8e446664fe81d80eec7f8ce5c6a7033d46af7e4a193769a05f53349b5179c8b37132eb0b575e5ed",
     "powershell|3.1|Windows|x64|sha": "64e6d1f49589164094ba4402cdf8ce9d1d021e7605024b14be0a3bdafea8ac0cef6e6b0b2b69a38106a9bd3e072aff89a5bef2f2bad627b57bf2a0ba00e507a1",
 
-    "powershell|5.0|build-version": "7.1.7",
-    "powershell|5.0|Linux.Alpine|sha": "360c61dcf3a9736cc896dac5938f6e911b51436b029f6f554d3b5caee3cd939b0f8b21899d4b5f6ddf39cf9790225d3a59b7312c498c2cdb3d904a34dca94364",
-    "powershell|5.0|Linux|arm32|sha": "87185e7b33f5d15f457ea58a1de2d64eab91938068ebf3fc57723d41a80705e6775241643f7d07f2f58b4e2d660c1ce5306dd1d7461a42ff3520937942b6261b",
-    "powershell|5.0|Linux|arm64|sha": "5463c94713133e5339a35cbad35aaf33c968db05a4ed880c275cd8e1f9ec27dbb3f29a6bbbda1abd22d0c430865c8b44d821f9608f7c0fa63974bce11c4fc2bb",
-    "powershell|5.0|Linux|x64|sha": "a4114ee432a86bb40d16a8d12c485441bc10d1bb3076117a26ca9eadf2822353e08e333c56c37351a6bc874521eafb77cc741425d8eea31b5fd38fde5c9cec1b",
-    "powershell|5.0|Windows|x64|sha": "098d163f1a6394b6ddbb79d5f40a43b26378f580b28a209e1151f685b6b5f24cbc36046c3110ad84308b517c359c76dd0f8a5a48cf12e02cf65aa0a981c9aa04",
-
     "powershell|6.0|build-version": "7.2.4",
     "powershell|6.0|Linux.Alpine|sha": "cf1c0fe24287b8d101f21fba8a3519e19ebbf405fbe8f21eca5378c61d8142c00afbb7ef782c62dfe4ccec671eb0aeb0e72c9c125cb8d8d3bce1fa7f061ea573",
     "powershell|6.0|Linux|arm32|sha": "fed27d051367721d5d4bfb301af0fdb42cd08b32fbc9e46235e8c2b006b682833bc047653ad6435a8a1b2bb66b426243796d077c398f7a152921b97576eea507",
@@ -151,22 +129,6 @@
     "runtime-host|3.1|linux-rpm|x64|sha": "dc73fe235bb2afc2c9dd4f51e939c103405b506b4e8a09c5060b3d60138dedc6cb530e8976271b4118ee2d08740f3be3e332833d8fc64d504e111c8c9d375204",
     "runtime-hostfxr|3.1|linux-rpm|x64|sha": "49e02a80a9a717cc5ddd03ac25a390ff218c4214c7972f88dd64bfc1505dababe0d500b2ac1b7570031f9f4a8aa3ce3a4f399c026c185ba1d954767d5695644a",
     "runtime-targeting-pack|3.1|linux-rpm|x64|sha": "9111ef4a0083c1fbd969f5adfca8f7b0a2e90eada94771c68ca4d00d34756fb280de153ecce4ad3da4b16698b7add4848f5b6ec24b89a144c2a119a42fb27c85",
-
-    "runtime|5.0|build-version": "5.0.17",
-    "runtime|5.0|targeting-pack-version": "5.0.0",
-    "runtime|5.0|linux-musl|x64|sha": "e40ef40ebc7394cc7ef9eb9ce26b16a73bf99d597d98df009a06fff5d4fcec307e094ef6e780e8a2169351d9a93c92c18f20975fd1c6d75669218a29257fb6df",
-    "runtime|5.0|linux-musl|arm|sha": "ce5a53f465d91d7c1d0fb29bca2e17aeadd31b493dc94233f3807d41df939e739f6339a94719561ec40d2cfcbafba01e64e125b91ecd7c32afc9cebb4a3bcc29",
-    "runtime|5.0|linux-musl|arm64|sha": "1c1495bf4a53a6d9b2be4c4b181946c3c5abd57ae6e10964924e3d650afba5e2986e555371b8134d0315a4054fc7d473ab4c8cc137f9e0569e8c67e46c4f559b",
-    "runtime|5.0|linux-rpm|x64|sha": "8382275602230bb82114e8eb7af0ddf9d0c5151756946dae178ddd29ec98ea225afbaab25f8008ddce83750dd2a304805794b6cbff8e4aa7be1dbcdd5589edbe",
-    "runtime|5.0|linux|arm|sha": "b91bec9749838f31f0aa04d8f9c3ebbbb4dcce4ee4ceb30cfd1b901534bbe2c187ae9ed7bd0de64405c4fae99df839836fe68b9d9a2493d52301d7b16d6f3ba6",
-    "runtime|5.0|linux|x64|sha": "a9c4784930a977abbc42aff1337dda06ec588c1ec4769a59f9fcab4d5df4fc9efe65f8e61e5433db078f67a94ea2dfe870c32c482a50d4c16283ffacacff4261",
-    "runtime|5.0|linux|arm64|sha": "99cb11871924d3abedcc9c8079c54bc0c550203c7cbe4e349ed70d4355f40e4620b68d90b797e6461d898c06bed6953580e2cd4ad01483e5de107ca5a3409610",
-    "runtime|5.0|win|x64|sha": "424df2b535f73c40aea164623a8a8f549bd18f89406eb2cb84289cb4cfceb3450db7762c5582756263d79ed628a574730e708d87dc906fd2c00d29f64942c782",
-    "runtime-apphost-pack|5.0|linux-rpm|x64|sha": "9c9614cbeac2beae509855eb06cd484444809755c9c11b5ce4c9ca0239e6395d75ac07d9dec77bcbc0eb5164f9929a29b76d39e6b6dcfcd9ac99efbedeef3f51",
-    "runtime-deps-cm.1|5.0|linux-rpm|x64|sha": "529cde1437824cc1c85803c2c48bc582daae35b9c2cbb40d2849a89bc19f88ebd55e8a18b2d53f320f1f38fd4334f66f1dee943e595c8bc73fb0ee7cea1a7e72",
-    "runtime-host|5.0|linux-rpm|x64|sha": "5edc730160255ba0054e533d67a0273dbcb0e80ae95a524b48ba52c3082274a2c051c2792669ad4f2b67a71aa6e6ba02ee5e11a2eefcc849dee026a64ad04996",
-    "runtime-hostfxr|5.0|linux-rpm|x64|sha": "ab348ff65f06d86e749ed4dce2ca00578b6f027afb18ff89957d5fffcbd10260d88c89b258db38abcb573ef6f972df75b214106d6757687ba6e4d6bad20ef9a3",
-    "runtime-targeting-pack|5.0|linux-rpm|x64|sha": "cabeb2f82acbcb391c101087be7dedb0e65149782922cb07dba5231e360f4b2e08873b444c774f73925d81c975af51b76799d2b394c19b384d46c301d7710c3e",
 
     "runtime|6.0|build-version": "6.0.5",
     "runtime|6.0|targeting-pack-version": "$(runtime|6.0|build-version)",
@@ -208,15 +170,6 @@
     "sdk|3.1|linux|arm64|sha": "94f398c09b53c10dc3e4ed1f624eee19b18770734956ebb0cb4ac9d789c1a79a891c1934e7c4c3a2bed5326ee1a0417ee89816695ab2436b3db7076328a40b77",
     "sdk|3.1|linux|x64|sha": "957d9561b346226806270a969a302217dec2a5e4853225d73fbf85f20f6107137ac5678a6ffdf5c170a72f5ef93e3defe3218970bc20d97a4f880d5c7577376f",
     "sdk|3.1|win|x64|sha": "6fb9d6aeed88e8c9499230dbcd0bf5783c6741d0b5837867449057adfe300cc068caab9303361789441a079acd92b9cb7c73154187ece7fc4b210e2dfdbbca70",
-
-    "sdk|5.0|build-version": "5.0.408",
-    "sdk|5.0|product-version": "5.0.408",
-    "sdk|5.0|linux-musl|x64|sha": "40514b07e90fff4911633d807a7eab4139c3755a6e2ddf92999f011445f0cfa99014b8953cdc249d62ea2f8a3b9e93708c3a6ff598f38b106c340b0955615c52",
-    "sdk|5.0|linux-rpm|x64|sha": "d259d12acd6907f6f68dc55e370944dde9e1796afc3351897d188d6070d1566dd0771f66292c9eaf5ee10088f5b9aa98a18c49d7d1c92cdfb6515f8c8e29fa45",
-    "sdk|5.0|linux|arm|sha": "4f12b2c6cc242666450eb5f892430a956ff34b2ab30aa63ee444565327fbad569152506e153a550b4a45cad6d8346f37ca7bcca68e9d46540c7f170e24b26296",
-    "sdk|5.0|linux|arm64|sha": "50f23d7aca91051d8b7c37f1a76b1eb51e6fe73e017d98558d757a6b9699e4237d401ce81515c1601b8c21eb62fee4e0b4f0bbed8967eefa3ceba75fc242f01b",
-    "sdk|5.0|linux|x64|sha": "abbf22c420df2d8398d1616efa3d31e1b8f96130697746c45ad68668676d12e65ec3b4dd75f28a5dc7607da58b6e369693c0e658def15ce2431303c28e99db55",
-    "sdk|5.0|win|x64|sha": "3845485401695b325d9afee67e33c6b3a45902476e408dd74ebc8815ad2c4f4b5d70a6b993e87ff587d0d9b0e5a3d66eaf3dd6bf715b0012ffee70501a716485",
 
     "sdk|6.0|build-version": "6.0.300",
     "sdk|6.0|product-version": "6.0.300",

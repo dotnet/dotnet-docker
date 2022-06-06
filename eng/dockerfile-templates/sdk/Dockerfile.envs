@@ -11,7 +11,7 @@
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= {{lineContinuation}}}}
     # Do not generate certificate
-    DOTNET_GENERATE_ASPNET_CERTIFICATE=false {{lineContinuation}}{{if dotnetVersion != "3.1" && dotnetVersion != "5.0":
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false {{lineContinuation}}{{if dotnetVersion != "3.1":
     # Do not show first run text
     DOTNET_NOLOGO=true {{lineContinuation}}}}{{if dotnetVersion != "3.1":
     # SDK version
