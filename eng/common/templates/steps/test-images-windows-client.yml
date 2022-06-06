@@ -1,6 +1,7 @@
 parameters:
   internalProjectName: null
   condition: true
+  customInitSteps: []
 
 steps:
 - ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
@@ -13,6 +14,7 @@ steps:
       "cmd /c 'docker login -u $(acr.userName) --password $(acr.password) $(acr.server) 2>&1'"
     displayName: Docker login
     condition: and(succeeded(), ${{ parameters.condition }})
+- ${{ parameters.customInitSteps }}
 - powershell: |
     if ("${{ variables['System.TeamProject'] }}" -eq "${{ parameters.internalProjectName }}") {
       $optionalTestArgs="$optionalTestArgs -PullImages -Registry $env:ACR_SERVER -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
@@ -32,6 +34,7 @@ steps:
       targetPath: $(Build.ArtifactStagingDirectory)
       condition: ${{ parameters.condition }}
 - powershell: >
+    $(test.init);
     $(testScriptPath)
     -Version '$(productVersion)'
     -OS '$(osVariant)'

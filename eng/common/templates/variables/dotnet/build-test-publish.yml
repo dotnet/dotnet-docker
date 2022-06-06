@@ -11,8 +11,8 @@ variables:
   value: ./tests/run-tests.ps1
 - name: testResultsDirectory
   value: tests/Microsoft.DotNet.Docker.Tests/TestResults/
-- name: officialRepoPrefix
-  value: public/
+- name: officialRepoPrefixes
+  value: public/,private/internal/
 
 - name: mcrDocsRepoInfo.accessToken
   value: $(BotAccount-dotnet-docker-bot-PAT)

@@ -2,6 +2,7 @@ parameters:
   preBuildValidation: false
   internalProjectName: null
   condition: true
+  customInitSteps: []
 
 steps:
 - template: init-docker-linux.yml
@@ -10,6 +11,7 @@ steps:
     setupTestRunner: true
     cleanupDocker: ${{ eq(variables['System.TeamProject'], parameters.internalProjectName) }}
     condition: ${{ parameters.condition }}
+- ${{ parameters.customInitSteps }}
 - script: |
     echo "##vso[task.setvariable variable=testRunner.container]testrunner-$(Build.BuildId)-$(System.JobId)"
 
@@ -48,12 +50,16 @@ steps:
       parameters:
         targetPath: $(Build.ArtifactStagingDirectory)
         condition: ${{ parameters.condition }}
-- script: >
-    docker exec $(testRunner.container) pwsh
+- powershell: >
+    $(test.init);
+    docker exec
+    $(testRunner.options)
+    $(testRunner.container)
+    pwsh
     -File $(testScriptPath)
-    -Version '$(productVersion)'
-    -OS '$(osVariant)'
-    -Architecture '$(architecture)'
+    -Version '"$(productVersion)"'
+    -OS '"$(osVariant)"'
+    -Architecture '"$(architecture)"'
     $(optionalTestArgs)
   displayName: Test Images
   condition: and(succeeded(), ${{ parameters.condition }})
