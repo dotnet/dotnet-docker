@@ -10,7 +10,7 @@
           "templatePath": "eng/readme-templates/README.md"
         },
         {
-          "path": ".mcr/portal/README.samples.portal.md",
+          "path": ".mar/portal/README.samples.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],

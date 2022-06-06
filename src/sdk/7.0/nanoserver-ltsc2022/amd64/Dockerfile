@@ -10,9 +10,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '7.0.100-preview.4.22252.9'; `
+        $sdk_version = '7.0.100-preview.5.22302.10'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '59fdf74d66d0c94fe575a4d319993495cc3844173dfb5987ae16eb7b1965ba61b189d60e3ab43b0df4b8c63c8328cda8a5fcdacfdc5d64e52074cf9db6858925'; `
+        $dotnet_sha512 = '84a4e8aa5f603f718571a1ec60d7700ceac078253549e40d00b4279275b50ce7b56694e555436b30531b231a790bf3a3fff2442ca356c8bca699e2da46576d48'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -22,9 +22,9 @@ RUN powershell -Command " `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.3.0-preview.3'; `
+        $powershell_version = '7.3.0-preview.4'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = 'dadb4ff115c06533e78df4ea7ce4e1c53980a9606740c5bdf0e0596aeab6646b6733863bdbd8f758337cb63eadcc8ce89dabdb9694d4c84fdcac8602febb9591'; `
+        $powershell_sha512 = '07025629fd53eb4dba7a15f9387fd42d9bf3ff9d0bb7d8d61cf0584db1c602f741dda3c84af330a3c0ecc810270a0e658e1fd2dd18115606a4f02777b6ca68f5'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -44,7 +44,7 @@ RUN powershell -Command " `
             | Remove-Item -Force -Recurse"
 
 # SDK image
-FROM $REPO:7.0.0-preview.4-nanoserver-ltsc2022
+FROM $REPO:7.0.0-preview.5-nanoserver-ltsc2022
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -54,7 +54,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=7.0.100-preview.4.22252.9 `
+    DOTNET_SDK_VERSION=7.0.100-preview.5.22302.10 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
