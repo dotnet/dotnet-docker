@@ -99,6 +99,7 @@ jobs:
       --git-path '$(gitHubImageInfoVersionsPath)'
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
+    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
     displayName: Publish Image Info
   - script: >
       $(runImageBuilderCmd) ingestKustoImageInfo
