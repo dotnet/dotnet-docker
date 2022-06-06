@@ -8,6 +8,7 @@ parameters:
   buildMatrixCustomBuildLegGroupArgs: ""
   testMatrixCustomBuildLegGroupArgs: ""
   customBuildInitSteps: []
+  customTestInitSteps: []
   customPublishInitSteps: []
   windowsAmdBuildJobTimeout: 60
   windowsAmdTestJobTimeout: 60
@@ -25,6 +26,7 @@ stages:
     buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
     testMatrixCustomBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}
     customBuildInitSteps: ${{ parameters.customBuildInitSteps }}
+    customTestInitSteps: ${{ parameters.customTestInitSteps }}
     customPublishInitSteps:
     - pwsh: |
         # When reporting the repo name in the publish notification, we don't want to include

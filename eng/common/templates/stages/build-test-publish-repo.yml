@@ -4,6 +4,7 @@ parameters:
   buildMatrixCustomBuildLegGroupArgs: ""
   testMatrixCustomBuildLegGroupArgs: ""
   customBuildInitSteps: []
+  customTestInitSteps: []
   customPublishInitSteps: []
   customPublishVariables: []
   
@@ -53,6 +54,7 @@ stages:
       testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
       preBuildValidation: true
       internalProjectName: ${{ parameters.internalProjectName }}
+      customInitSteps: ${{ parameters.customTestInitSteps }}
   - template: ../jobs/copy-base-images.yml
     parameters:
       name: CopyBaseImages
@@ -205,6 +207,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxAmd64']
         testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
     - template: ../jobs/test-images-linux-client.yml
       parameters:
         name: Linux_arm64
@@ -212,6 +215,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm64']
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
     - template: ../jobs/test-images-linux-client.yml
       parameters:
         name: Linux_arm32
@@ -219,6 +223,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm32']
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows1809_amd64
@@ -226,6 +231,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows1809Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows20H2_amd64
@@ -233,6 +239,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows20H2Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: Windows2022_amd64
@@ -240,6 +247,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2022Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
     - template: ../jobs/test-images-windows-client.yml
       parameters:
         name: WindowsLtsc2016_amd64
@@ -247,6 +255,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2016Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
 
 ################################################################################
 # Publish Images

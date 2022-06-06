@@ -5,6 +5,10 @@ variables:
   value: build-staging/$(sourceBuildId)/
 - name: publishReadme
   value: true
+- name: publishImageInfo
+  value: true
+- name: ingestKustoImageInfo
+  value: true
 - name: skipComponentGovernanceDetection
   value: true
 - name: build.imageBuilderDockerRunExtraOptions
@@ -15,8 +19,6 @@ variables:
   value: 2
 - name: imageInfoVariant
   value: ""
-- name: ingestKustoImageInfo
-  value: true
 - name: publishNotificationsEnabled
   value: false
 - name: manifestVariables
@@ -26,12 +28,16 @@ variables:
 - name: mcrDocIngestionTimeout
   value: "00:05:00"
 - name: officialBranches
-  # list multiple branches as "'branch1', 'branch2', etc."
-  value: "'main'"
+  # comma-delimited list of branch names
+  value: main
 - name: mirrorRepoPrefix
   value: 'mirror/'
 - name: cgBuildGrepArgs
   value: "''"
+- name: test.init
+  value: ""
+- name: testRunner.options
+  value: ""
 
 - name: defaultLinuxAmd64PoolImage
   value: ubuntu-latest
