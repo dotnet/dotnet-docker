@@ -5,9 +5,9 @@ ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 FROM $SDK_REPO:7.0.100-preview.5-cbl-mariner2.0-arm64v8 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=7.0.0-preview.5.22302.3
+ENV DOTNET_MONITOR_VERSION=7.0.0-preview.5.22304.2
 RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='d2db376c80be42a40685b326f8669634e877ae3be039aee15ccfe8cbf6da816c510960c66f96acb325dfef226ac8407a947eea381419c8f7e4e07887d68042e1' \
+    && dotnetmonitor_sha512='f92f4da6eead781f2318841947825cd2ed498164be20b7d1fae8e370448bdad284ef0fcd5dbde3cf52bd6e25772c5d64618d0284578e90e39a05bab4ee469f39' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net7.0 --no-cache \
     # To reduce image size, remove all non-net7.0 TFMs
