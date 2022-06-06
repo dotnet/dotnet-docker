@@ -22,12 +22,12 @@
         when(isMariner,
             [
                 "git",
-                when(dotnetVersion = "3.1" || dotnetVersion = "5.0", "procps-ng", "")
+                when(dotnetVersion = "3.1", "procps-ng", "")
             ],
             [
                 "curl",
                 "git",
-                when(dotnetVersion = "3.1" || dotnetVersion = "5.0", "procps", "")
+                when(dotnetVersion = "3.1", "procps", "")
                 "wget"
             ])), len)
 }}{{if !isBasedOnBuildpackDeps:ARG REPO=mcr.microsoft.com/dotnet/aspnet
