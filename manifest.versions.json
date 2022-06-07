@@ -84,8 +84,8 @@
     "monitor|6.1|product-version": "6.1.1",
     "monitor|6.1|sha": "94dae789f43304656198751d183389502b8076913ac0924d3269f74463b4d2b90c7514658dad910a39ccc6e1d1f9e5cd7f7bd036a807588c08c389b5aba6b5ce",
 
-    "monitor|6.2|build-version": "6.2.0-alpha.1.22276.3",
-    "monitor|6.2|product-version": "6.2.0-alpha.1",
+    "monitor|6.2|build-version": "6.2.0-rtm.22306.2",
+    "monitor|6.2|product-version": "6.2.0",
     "monitor|6.2|sha": "dafad94b5a56952ce0ec421e859ebae2f70f80c02b253c36d56496ca932fe07a285ac761d74ce26d5876c9b9ba5f2ad97a70c781e52b97003e0de2c391fe6b24",
 
     "monitor|7.0|build-version": "7.0.0-preview.5.22304.2",
