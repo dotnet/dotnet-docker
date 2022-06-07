@@ -2,7 +2,7 @@
 
 You can use Docker to run your unit tests in an isolated environment using the [.NET SDK Docker image](https://hub.docker.com/_/microsoft-dotnet-sdk/). This is useful if your development and production environments don't match, like, for example, Windows and Linux, respectively. There are multiple ways to run unit tests in containers, which are demonstrated in this document.
 
-[Building in an SDK container](build-in-sdk-container.md) is a similar scenario and relies on similar patterns. [Building and testing multiple projects with Docker](https://github.com/dotnet/dotnet-docker/blob/samples/samples/complexapp/README.md) sample offers additional test patterns that you may want to adopt.
+[Building in an SDK container](build-in-sdk-container.md) is a similar scenario and relies on similar patterns. [Building and testing multiple projects with Docker](https://github.com/dotnet/dotnet-docker/blob/main/samples/complexapp/README.md) sample offers additional test patterns that you may want to adopt.
 
 This document uses the [tests](complexapp/tests) that are part of [complexapp](complexapp). The instructions assume that you are in the [complexapp](complexapp) directory.
 
