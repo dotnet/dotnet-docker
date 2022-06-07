@@ -50,20 +50,25 @@ param(
 
 $updateDepsArgs = @($ProductVersion)
 
+$versionSourceName = "";
 if ($SdkVersion) {
     $updateDepsArgs += @("--product-version", "sdk=$SdkVersion")
+    $versionSourceName = "dotnet/installer"
 }
 
 if ($AspnetVersion) {
     $updateDepsArgs += @("--product-version", "aspnet=$AspnetVersion", "--product-version", "aspnet-runtime-targeting-pack=$AspnetVersion")
+    $versionSourceName = "dotnet/installer"
 }
 
 if ($RuntimeVersion) {
     $updateDepsArgs += @("--product-version", "runtime=$RuntimeVersion", "--product-version", "runtime-apphost-pack=$RuntimeVersion", "--product-version", "runtime-targeting-pack=$RuntimeVersion", "--product-version", "runtime-host=$RuntimeVersion", "--product-version", "runtime-hostfxr=$RuntimeVersion", "--product-version", "runtime-deps-cm.1=$RuntimeVersion", "--product-version", "netstandard-targeting-pack-2.1.0")
+    $versionSourceName = "dotnet/installer"
 }
 
 if ($MonitorVersion) {
     $updateDepsArgs += @("--product-version", "monitor=$MonitorVersion")
+    $versionSourceName = "dotnet/dotnet-monitor"
 }
 
 if ($ComputeShas) {
@@ -80,6 +85,10 @@ if ($ChecksumSasQueryString) {
 
 if ($UseStableBranding) {
     $updateDepsArgs += "--stable-branding"
+}
+
+if ($versionSourceName) {
+    $updateDepsArgs += "--version-source-name=$versionSourceName"
 }
 
 $branch = & $PSScriptRoot/Get-Branch.ps1
