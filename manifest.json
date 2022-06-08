@@ -5732,9 +5732,6 @@
             },
             "6.1-cbl-mariner": {
               "docType": "Undocumented"
-            },
-            "6-cbl-mariner": {
-              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -5753,13 +5750,7 @@
                 },
                 "6.1-cbl-mariner-amd64": {
                   "docType": "Undocumented"
-                },
-                "6-cbl-mariner-amd64": {
-                  "docType": "Undocumented"
                 }
-              },
-              "packageQueryOverrides": {
-                "getInstalledPackagesPath": "eng/package-scripts/cbl-mariner/get-installed-packages.sh"
               }
             }
           ]
@@ -5816,6 +5807,9 @@
             },
             "6.2-cbl-mariner": {
               "docType": "Undocumented"
+            },
+            "6-cbl-mariner": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -5833,6 +5827,9 @@
                   "docType": "Undocumented"
                 },
                 "6.2-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                },
+                "6-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
