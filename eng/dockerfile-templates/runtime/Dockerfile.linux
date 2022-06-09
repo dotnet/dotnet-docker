@@ -29,7 +29,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "pkgs": ["curl"]
     ])}}
-}}{{ if isFullMariner && find(OS_VERSION, "1.0") < 0 && ARCH_SHORT = "arm64":
+}}{{ if isFullMariner && find(OS_VERSION, "1.0") < 0 && ARCH_SHORT = "arm64" && dotnetVersion = "6.0":
 {{InsertTemplate("../Dockerfile.linux.distroless-mariner-installer-prereqs")}}
 }}{{ if dotnetVersion != "3.1":
 {{InsertTemplate("Dockerfile.envs")}}
@@ -39,7 +39,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "install-method": "download-and-install",
         "dest-dir": "/usr/share/dotnet",
-        "add-symlink": !isFullMariner || ARCH_SHORT = "arm64",
+        "add-symlink": !isFullMariner || (ARCH_SHORT = "arm64" && dotnetVersion = "6.0"),
         "use-local-version-var": dotnetVersion = "3.1"
     ])}}^
 else:{{
