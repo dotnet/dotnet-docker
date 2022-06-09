@@ -8,7 +8,6 @@ using System.CommandLine.Invocation;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LibGit2Sharp;
 using Microsoft.DotNet.VersionTools;
@@ -16,6 +15,9 @@ using Microsoft.DotNet.VersionTools.Automation;
 using Microsoft.DotNet.VersionTools.Automation.GitHubApi;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
+using Microsoft.TeamFoundation.SourceControl.WebApi;
+using Microsoft.VisualStudio.Services.Common;
+using Microsoft.VisualStudio.Services.WebApi;
 
 namespace Dotnet.Docker
 {
@@ -121,19 +123,101 @@ namespace Dotnet.Docker
 
         private static async Task CreatePullRequestAsync()
         {
+            string commitMessage = $"[{Options.Branch}] Update dependencies from {Options.VersionSourceName}";
+
             // Replace slashes with hyphens for use in naming the branch
             string versionSourceNameForBranch = Options.VersionSourceName.Replace("/", "-");
-
-            GitHubAuth gitHubAuth = new GitHubAuth(Options.GitHubPassword, Options.GitHubUser, Options.GitHubEmail);
-            PullRequestCreator prCreator = new PullRequestCreator(gitHubAuth, Options.GitHubUser);
-
             string branchSuffix = $"UpdateDependencies-{Options.Branch}-From-{versionSourceNameForBranch}";
-            PullRequestOptions prOptions = new PullRequestOptions()
+            PullRequestOptions prOptions = new()
             {
                 BranchNamingStrategy = new SingleBranchNamingStrategy(branchSuffix)
             };
 
-            string commitMessage = $"[{Options.Branch}] Update dependencies from {Options.VersionSourceName}";
+            if (Options.IsInternal)
+            {
+                await CreateAzdoPullRequest(commitMessage, prOptions);
+            }
+            else
+            {
+                await CreateGitHubPullRequest(commitMessage, prOptions, branchSuffix);
+            }
+        }
+
+        private static async Task CreateAzdoPullRequest(string commitMessage, PullRequestOptions prOptions)
+        {
+            using Repository repo = new(@"c:\repos\dotnet-docker-nightly");
+            //using Repository repo = new(RepoRoot);
+
+            // Commit the existing changes
+            Commands.Stage(repo, "*");
+            Signature signature = new(Options.User, Options.Email, DateTimeOffset.Now);
+            repo.Commit(commitMessage, signature, signature);
+
+            PushOptions pushOptions = new()
+            {
+                CredentialsProvider = (url, user, credTypes) => new UsernamePasswordCredentials
+                {
+                    Username = Options.Password, // it doesn't make sense but a PAT needs to be set as username
+                    Password = string.Empty
+                }
+            };
+
+            // Create a remote to AzDO
+            string remoteName = GetUniqueName(
+                repo.Network.Remotes.Select(remote => remote.Name).ToList(),
+                Options.AzdoOrganization);
+            Remote remote = repo.Network.Remotes.Add(
+                remoteName,
+                $"https://dev.azure.com/{Options.AzdoOrganization}/{Options.AzdoProject}/_git/{Options.AzdoRepo}");
+
+            try
+            {
+                string branch = $"{Options.Branch}-internal";
+
+                // Push the commit to AzDO
+                string username = Options.Email.Substring(0, Options.Email.IndexOf('@'));
+                string remoteBranch = prOptions.BranchNamingStrategy.Prefix($"users/{username}/{branch}");
+                string pushRefSpec = $@"refs/heads/{remoteBranch}";
+                repo.Network.Push(remote, "HEAD", pushRefSpec, pushOptions);
+
+                // Create the pull request
+                GitPullRequest pullRequest = new()
+                {
+                    Title = commitMessage,
+                    SourceRefName = pushRefSpec,
+                    TargetRefName = $"refs/heads/{branch}"
+                };
+
+                using VssConnection connection = new(
+                    new Uri($"https://dev.azure.com/{Options.AzdoOrganization}"),
+                    new VssBasicCredential(string.Empty, Options.Password));
+
+                GitHttpClient client = connection.GetClient<GitHttpClient>();
+                await client.CreatePullRequestAsync(pullRequest, Options.AzdoProject, Options.AzdoRepo);
+            }
+            finally
+            {
+                // Clean up the AzDO remote that was created
+                repo.Network.Remotes.Remove(remote.Name);
+            }
+        }
+
+        private static string GetUniqueName(IEnumerable<string> existingNames, string suggestedName, int? index = null)
+        {
+            string name = suggestedName + index?.ToString();
+            if (existingNames.Any(val => val == name))
+            {
+                return GetUniqueName(existingNames, suggestedName, index is null ? 1 : ++index);
+            }
+
+            return name;
+        }
+
+        private static async Task CreateGitHubPullRequest(string commitMessage, PullRequestOptions prOptions, string branchSuffix)
+        {
+            GitHubAuth gitHubAuth = new GitHubAuth(Options.Password, Options.User, Options.Email);
+            PullRequestCreator prCreator = new PullRequestCreator(gitHubAuth, Options.User);
+            
             GitHubProject upstreamProject = new GitHubProject(Options.GitHubProject, Options.GitHubUpstreamOwner);
             GitHubBranch upstreamBranch = new GitHubBranch(Options.Branch, upstreamProject);
 
@@ -156,12 +240,12 @@ namespace Dotnet.Docker
                 }
                 else
                 {
-                    UpdateExistingPullRequest(gitHubAuth, prOptions, commitMessage, upstreamBranch);
+                    UpdateExistingGitHubPullRequest(gitHubAuth, prOptions, commitMessage, upstreamBranch);
                 }
             }
         }
 
-        private static void UpdateExistingPullRequest(
+        private static void UpdateExistingGitHubPullRequest(
             GitHubAuth gitHubAuth, PullRequestOptions prOptions, string commitMessage, GitHubBranch upstreamBranch)
         {
             // PullRequestCreator ends up force-pushing updates to an existing PR which is not great when the logic
@@ -202,7 +286,7 @@ namespace Dotnet.Docker
                 {
                     Commands.Stage(repo, "*");
 
-                    Signature signature = new Signature(Options.GitHubUser, Options.GitHubEmail, DateTimeOffset.Now);
+                    Signature signature = new Signature(Options.User, Options.Email, DateTimeOffset.Now);
                     repo.Commit(commitMessage, signature, signature);
 
                     Branch branch = repo.Branches[$"origin/{branchName}"];
@@ -211,7 +295,7 @@ namespace Dotnet.Docker
                     {
                         CredentialsProvider = (url, user, credTypes) => new UsernamePasswordCredentials
                         {
-                            Username = Options.GitHubPassword,
+                            Username = Options.Password,
                             Password = string.Empty
                         }
                     };

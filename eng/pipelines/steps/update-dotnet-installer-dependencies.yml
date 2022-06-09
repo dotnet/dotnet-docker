@@ -1,0 +1,14 @@
+parameters:
+  useInternalBuild: false
+
+steps:
+- script: $(engPath)/get-drop-versions.sh $(channel) ${{parameters.useInternalBuild}} "$(dotnetbuilds-internal-container-read-token)" "$(dn-bot-devdiv-dnceng-rw-code-pat)"
+  displayName: Get Versions
+- powershell: $(engPath)/Set-DotnetVersions.ps1 $(dockerfileVersion) -RuntimeVersion $(runtimeVer) -AspnetVersion $(aspnetVer) -SdkVersion $(sdkVer) -ComputeShas -PrintArgsVariableOnly
+  displayName: Get update-dependencies args
+- template: update-dependencies.yml
+  parameters:
+    # The updateDepsArgs variable gets set by the Set-DotnetVersions.ps1 script
+    customArgs: "$(updateDepsArgs) --org dnceng --project $(System.TeamProject) --repo $(Build.Repository.Name)"
+    stableBranding: $(dotnetStableBranding)
+    versionSourceName: dotnet/installer
