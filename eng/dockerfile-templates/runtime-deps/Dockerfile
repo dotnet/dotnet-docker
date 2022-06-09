@@ -20,12 +20,12 @@
                     cat(marinerRepo, "/base/core"),
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
-    set isSingleStage to !isDistrolessMariner && !(isFullMariner && isInternal && ARCH_SHORT != "arm64") ^
+    set isSingleStage to !isDistrolessMariner && !(isFullMariner && isInternal && (ARCH_SHORT != "arm64" || dotnetVersion = "7.0")) ^
     set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm"
 }}{{
     if !isSingleStage:# Installer image
-}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isFullMariner && ARCH_SHORT != "arm64":
+}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isFullMariner && (ARCH_SHORT != "arm64" || dotnetVersion = "7.0"):
 
 ARG SAS_QUERY_STRING
 
@@ -78,7 +78,7 @@ RUN rm -rf {{distrolessStagingDir}}/etc/tdnf \
 FROM {{marinerRepo}}/distroless/minimal:{{OS_VERSION_NUMBER}}
 
 COPY --from=installer {{distrolessStagingDir}}/ /
-^elif isFullMariner && ARCH_SHORT != "arm64":
+^elif isFullMariner && (ARCH_SHORT != "arm64" || dotnetVersion = "7.0"):
 {{if isInternal:{{InsertTemplate("../Dockerfile.linux.copy-files",
 [
     "files": [

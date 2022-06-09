@@ -11,11 +11,11 @@
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isDistroless to find(OS_VERSION, "-distroless") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set useRpm to (isFullMariner && ARCH_SHORT != "arm64") ^
+    set useRpm to (isFullMariner && (ARCH_SHORT != "arm64" || dotnetVersion = "7.0")) ^
     set filePlatform to when(useRpm, "", when(isAlpine, "-linux-musl", "-linux")) ^
     set varPlatform to when(useRpm, "linux-rpm", when(isAlpine, "linux-musl", "linux")) ^
     set fileExt to when(useRpm, "rpm", "tar.gz") ^
-    set destDir to when((isAlpine || dotnetVersion = "3.1" || (isFullMariner && ARCH_SHORT = "arm64")) && !ARGS["is-internal"],
+    set destDir to when((isAlpine || dotnetVersion = "3.1" || (isFullMariner && ARCH_SHORT = "arm64" && dotnetVersion = "6.0")) && !ARGS["is-internal"],
         "/usr/share/dotnet",
         when(isDistroless, "/dotnet", "")) ^
     set aspnetVersionDir to when(ARGS["use-local-version-var"],
@@ -26,10 +26,11 @@
     set aspnetVersionFile to when(ARGS["is-internal"],
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         aspnetVersionDir) ^
+    set fileArch to when(useRpm && ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set url to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
         "/aspnetcore/Runtime/", aspnetVersionDir, "/aspnetcore-runtime-", aspnetVersionFile,
-        filePlatform, "-", ARCH_SHORT, ".", fileExt, ARGS["url-suffix"]) ^
+        filePlatform, "-", fileArch, ".", fileExt, ARGS["url-suffix"]) ^
     set files to [
         [
             "filename": cat("aspnetcore.", fileExt),

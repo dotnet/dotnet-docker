@@ -5,14 +5,17 @@
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product. ^
     
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set marinerVersionRegexMatch to match(OS_VERSION, "^cbl-mariner(\d+)\.\d+$") ^
+    set marinerMajorVersion to marinerVersionRegexMatch[1] ^
     set runtimeVersionFile to when(ARGS["is-internal"],
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
-        "$dotnet_version")
+        "$dotnet_version") ^
+    set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT)
 }}dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
 && {{InsertTemplate("../Dockerfile.linux.download-file",
     [
         "out-file": ARGS["filename"],
-        "url": cat(VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])], "/Runtime/$dotnet_version/dotnet-runtime-deps-", runtimeVersionFile, "-cm.1-", ARCH_SHORT, ".rpm", ARGS["url-suffix"]),
-        "sha": VARIABLES[cat("runtime-deps-cm.1|", dotnetVersion, "|linux-rpm|", ARCH_SHORT, "|sha")],
+        "url": cat(VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])], "/Runtime/$dotnet_version/dotnet-runtime-deps-", runtimeVersionFile, "-cm.", marinerMajorVersion, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
+        "sha": VARIABLES[cat("runtime-deps-cm.", marinerMajorVersion, "|", dotnetVersion, "|linux-rpm|", ARCH_SHORT, "|sha")],
         "sha-var-name": "dotnet_sha512"
     ])}}
