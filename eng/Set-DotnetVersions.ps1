@@ -97,7 +97,7 @@ if ($versionSourceName) {
 }
 
 $branch = & $PSScriptRoot/Get-Branch.ps1
-$updateDepsArgs += "--branch=$branch"
+$updateDepsArgs += "--source-branch=$branch"
 
 if ($PrintArgsVariableOnly) {
     Write-Host "##vso[task.setvariable variable=updateDepsArgs]$updateDepsArgs"
