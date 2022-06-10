@@ -12,18 +12,22 @@ param(
     $ProductVersion,
 
     # Build version of the SDK
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetInstaller')]
     [string]
     $SdkVersion,
 
     # Build version of ASP.NET Core
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetInstaller')]
     [string]
     $AspnetVersion,
 
     # Build version of the .NET runtime
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetInstaller')]
     [string]
     $RuntimeVersion,
 
     # Build verison of the .NET Monitor tool
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetMonitor')]
     [string]
     $MonitorVersion,
 
@@ -80,6 +84,16 @@ if ($ChecksumSasQueryString) {
 
 if ($UseStableBranding) {
     $updateDepsArgs += "--stable-branding"
+}
+
+$versionSourceName = switch ($PSCmdlet.ParameterSetName) {
+    "DotnetInstaller" { "dotnet/installer" }
+    "DotnetMonitor" { "dotnet/dotnet-monitor" }
+    default { Write-Error -Message "Unknown version source" -ErrorAction Stop }
+}
+
+if ($versionSourceName) {
+    $updateDepsArgs += "--version-source-name=$versionSourceName"
 }
 
 $branch = & $PSScriptRoot/Get-Branch.ps1
