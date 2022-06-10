@@ -7,7 +7,7 @@ ARG rid
 ARG NuGetFeedPassword
 ARG port
 
-EXPOSE %port%
+EXPOSE $port
 
 WORKDIR app
 COPY NuGet.config .
@@ -26,7 +26,7 @@ FROM $runtime_image AS fx_dependent_app
 
 ARG port
 
-EXPOSE %port%
+EXPOSE $port
 WORKDIR /app
 COPY --from=publish_fx_dependent /app/out ./
 ENTRYPOINT ["dotnet", "app.dll"]
