@@ -12,18 +12,22 @@ param(
     $ProductVersion,
 
     # Build version of the SDK
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetInstaller')]
     [string]
     $SdkVersion,
 
     # Build version of ASP.NET Core
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetInstaller')]
     [string]
     $AspnetVersion,
 
     # Build version of the .NET runtime
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetInstaller')]
     [string]
     $RuntimeVersion,
 
     # Build verison of the .NET Monitor tool
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetMonitor')]
     [string]
     $MonitorVersion,
 
@@ -53,22 +57,18 @@ $updateDepsArgs = @($ProductVersion)
 $versionSourceName = "";
 if ($SdkVersion) {
     $updateDepsArgs += @("--product-version", "sdk=$SdkVersion")
-    $versionSourceName = "dotnet/installer"
 }
 
 if ($AspnetVersion) {
     $updateDepsArgs += @("--product-version", "aspnet=$AspnetVersion", "--product-version", "aspnet-runtime-targeting-pack=$AspnetVersion")
-    $versionSourceName = "dotnet/installer"
 }
 
 if ($RuntimeVersion) {
     $updateDepsArgs += @("--product-version", "runtime=$RuntimeVersion", "--product-version", "runtime-apphost-pack=$RuntimeVersion", "--product-version", "runtime-targeting-pack=$RuntimeVersion", "--product-version", "runtime-host=$RuntimeVersion", "--product-version", "runtime-hostfxr=$RuntimeVersion", "--product-version", "runtime-deps-cm.1=$RuntimeVersion", "--product-version", "netstandard-targeting-pack-2.1.0")
-    $versionSourceName = "dotnet/installer"
 }
 
 if ($MonitorVersion) {
     $updateDepsArgs += @("--product-version", "monitor=$MonitorVersion")
-    $versionSourceName = "dotnet/dotnet-monitor"
 }
 
 if ($ComputeShas) {
@@ -85,6 +85,12 @@ if ($ChecksumSasQueryString) {
 
 if ($UseStableBranding) {
     $updateDepsArgs += "--stable-branding"
+}
+
+$versionSourceName = switch ($PSCmdlet.ParameterSetName) {
+    "DotnetInstaller" { "dotnet/installer" }
+    "DotnetMonitor" { "dotnet/dotnet-monitor" }
+    default { Write-Error -Message "Unknown version source" -ErrorAction Stop }
 }
 
 if ($versionSourceName) {
