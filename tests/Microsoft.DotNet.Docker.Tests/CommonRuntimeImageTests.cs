@@ -28,7 +28,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
             variables.AddRange(GetCommonEnvironmentVariables());
-            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:80"));
+            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", $"http://+:{imageData.DefaultPort}"));
 
             if (customVariables != null)
             {

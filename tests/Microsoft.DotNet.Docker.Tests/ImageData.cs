@@ -40,6 +40,8 @@ namespace Microsoft.DotNet.Docker.Tests
             });
         }
 
+        public int DefaultPort => IsDistroless ? 8080 : 80;
+
         public string Rid
         {
             get
