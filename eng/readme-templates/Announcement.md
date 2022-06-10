@@ -3,7 +3,7 @@
       leading-line-break: Indicates whether to include a leading line break
       trailing-line-break: Indicates whether to include a trailing line break
       readme-host: Moniker of the site that will host the readme ^
-    set nonNightlyRepo to join(split(REPO, "/nightly"), "")
+    set nonNightlyRepo to when(IS_PRODUCT_FAMILY, "dotnet", join(split(REPO, "/nightly"), ""))
 }}{{if match(PARENT_REPO, "nightly") || VARIABLES["branch"] = "nightly"
 :{{if ARGS["leading-line-break"]:
 }}**IMPORTANT**
