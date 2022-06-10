@@ -54,7 +54,6 @@ param(
 
 $updateDepsArgs = @($ProductVersion)
 
-$versionSourceName = "";
 if ($SdkVersion) {
     $updateDepsArgs += @("--product-version", "sdk=$SdkVersion")
 }
