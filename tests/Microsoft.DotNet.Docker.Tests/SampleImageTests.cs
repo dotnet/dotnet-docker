@@ -71,11 +71,11 @@ namespace Microsoft.DotNet.Docker.Tests
                         image: image,
                         name: containerName,
                         detach: true,
-                        optionalRunArgs: "-p 80");
+                        optionalRunArgs: $"-p {imageData.DefaultPort}");
 
                     if (!Config.IsHttpVerificationDisabled)
                     {
-                        await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(containerName, DockerHelper, OutputHelper);
+                        await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(containerName, DockerHelper, OutputHelper, imageData.DefaultPort);
                     }
 
                     ValidateEnvironmentVariables(imageData, image, SampleImageType.Aspnetapp);
