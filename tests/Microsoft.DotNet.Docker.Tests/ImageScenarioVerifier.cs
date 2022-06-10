@@ -55,7 +55,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     // Use `sdk` image to build and run test app
                     string buildTag = BuildTestAppImage("build", appDir, customBuildArgs);
                     tags.Add(buildTag);
-                    string dotnetRunArgs = _isWeb ? " --urls http://0.0.0.0:80" : string.Empty;
+                    string dotnetRunArgs = _isWeb ? $" --urls http://0.0.0.0:{_imageData.DefaultPort}" : string.Empty;
                     await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}");
                 }
 
@@ -139,13 +139,13 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string tag = _imageData.GetIdentifier(stageTarget);
 
-            List<string> buildArgs = new List<string>
-            {
-                $"sdk_image={_imageData.GetImage(DotNetImageType.SDK, _dockerHelper)}"
-            };
-
             DotNetImageType runtimeImageType = _isWeb ? DotNetImageType.Aspnet : DotNetImageType.Runtime;
-            buildArgs.Add($"runtime_image={_imageData.GetImage(runtimeImageType, _dockerHelper)}");
+            List<string> buildArgs = new()
+            {
+                $"sdk_image={_imageData.GetImage(DotNetImageType.SDK, _dockerHelper)}",
+                $"runtime_image={_imageData.GetImage(runtimeImageType, _dockerHelper)}",
+                $"port={_imageData.DefaultPort}"
+            };
 
             if (DockerHelper.IsLinuxContainerModeEnabled)
             {
@@ -180,7 +180,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     Environment.SetEnvironmentVariable(NuGetFeedPasswordVar, null);
                 }
             }
-            
 
             return tag;
         }
@@ -253,13 +252,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     image: image,
                     name: containerName,
                     detach: _isWeb,
-                    optionalRunArgs: _isWeb ? "-p 80" : string.Empty,
+                    optionalRunArgs: _isWeb ? $"-p {_imageData.DefaultPort}" : string.Empty,
                     runAsUser: runAsAdmin ? "ContainerAdministrator" : null,
                     command: command);
 
                 if (_isWeb && !Config.IsHttpVerificationDisabled)
                 {
-                    await VerifyHttpResponseFromContainerAsync(containerName, _dockerHelper, _outputHelper);
+                    await VerifyHttpResponseFromContainerAsync(containerName, _dockerHelper, _outputHelper, _imageData.DefaultPort);
                 }
             }
             finally
@@ -268,7 +267,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static async Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null, AuthenticationHeaderValue authorizationHeader = null)
+        public static async Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null, AuthenticationHeaderValue authorizationHeader = null)
         {
             int retries = 30;
 
@@ -323,7 +322,7 @@ namespace Microsoft.DotNet.Docker.Tests
             throw new TimeoutException($"Timed out attempting to access the endpoint {url} on container {containerName}");
         }
 
-        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null)
+        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null)
         {
             (await GetHttpResponseFromContainerAsync(
                 containerName,

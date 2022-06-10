@@ -6,8 +6,9 @@ FROM $sdk_image as build
 
 ARG rid
 ARG NuGetFeedPassword
+ARG port
 
-EXPOSE 80
+EXPOSE $port
 
 WORKDIR app
 COPY NuGet.config .
@@ -23,7 +24,10 @@ RUN dotnet publish --no-restore -c Release -o out
 
 
 FROM $runtime_image AS fx_dependent_app
-EXPOSE 80
+
+ARG port
+
+EXPOSE $port
 WORKDIR /app
 COPY --from=publish_fx_dependent /app/out ./
 ENTRYPOINT ["dotnet", "app.dll"]
@@ -35,7 +39,10 @@ RUN dotnet publish -r $rid -c Release -o out
 
 
 FROM $runtime_deps_image AS self_contained_app
-EXPOSE 80
+
+ARG port
+
+EXPOSE $port
 WORKDIR /app
 COPY --from=publish_self_contained /app/out ./
 ENTRYPOINT ["./app"]
