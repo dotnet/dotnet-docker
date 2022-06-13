@@ -92,9 +92,9 @@
     "monitor|6.2|product-version": "6.2.0",
     "monitor|6.2|sha": "1e06afa71563de44aff836d06b3e9ef34b5e64418766f42ee588337117bf390c45d4df6f31b048db7db108d2cc44651947628fe22ab3f629fb78652a5fc9f5f5",
 
-    "monitor|7.0|build-version": "7.0.0-preview.4.22227.4",
-    "monitor|7.0|product-version": "7.0.0-preview.4",
-    "monitor|7.0|sha": "a68842ea2c3f6289aa9fba0276666f4786e9c4b7f6270935eab5cba29fc96818156bec472eb1d9ab6bdd52d75d80def5919f81428037bfa31a0b049d81dc962a",
+    "monitor|7.0|build-version": "7.0.0-preview.5.22306.5",
+    "monitor|7.0|product-version": "7.0.0-preview.5",
+    "monitor|7.0|sha": "494558f2b955845bb6ae5e5517384b1bdffe5d71b9d5597964645a1749b060fcbb126860c2a42b45631e79890b50fca4ecc2c8fe890ca1f2c4552f924047888c",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
