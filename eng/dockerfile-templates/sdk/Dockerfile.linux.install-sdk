@@ -108,7 +108,7 @@
                     ]))
         ]
     ] ^
-    set files to when(isFullMariner && (ARCH_SHORT != "arm64" || dotnetVersion = "7.0"), rpms, tarballs) ^
+    set files to when(isFullMariner, rpms, tarballs) ^
     set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
     set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
     set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
