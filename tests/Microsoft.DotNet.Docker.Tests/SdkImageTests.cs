@@ -132,12 +132,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            if (imageData.OS == OS.Alpine316)
-            {
-                OutputHelper.WriteLine("Test disabled until https://github.com/dotnet/dotnet-docker/issues/3793 is fixed");
-                return;
-            }
-
             // Disable this test for Arm-based Alpine until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.OS.Contains("alpine") && imageData.IsArm)
             {
@@ -329,12 +323,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
         {
-            if (imageData.OS == OS.Alpine316)
-            {
-                OutputHelper.WriteLine("Test disabled until https://github.com/dotnet/dotnet-docker/issues/3793 is fixed");
-                return;
-            }
-
             // Disable this test for Arm-based Alpine until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.OS.Contains("alpine") && imageData.IsArm)
             {
