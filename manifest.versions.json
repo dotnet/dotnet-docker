@@ -84,9 +84,9 @@
     "libssl|focal": "1.1",
     "libssl|jammy": "3",
 
-    "monitor|6.1|build-version": "6.1.1",
-    "monitor|6.1|product-version": "6.1.1",
-    "monitor|6.1|sha": "94dae789f43304656198751d183389502b8076913ac0924d3269f74463b4d2b90c7514658dad910a39ccc6e1d1f9e5cd7f7bd036a807588c08c389b5aba6b5ce",
+    "monitor|6.1|build-version": "6.1.2",
+    "monitor|6.1|product-version": "6.1.2",
+    "monitor|6.1|sha": "40e4a452c337b5c6fe50e48880bfc7ea92d058de1bb698d76ddf8f3f3fe9f36f6db3e2be3589895b81620e7cf7e10939c0bbc930a75f5d36ef35d04388369b6b",
 
     "monitor|6.2|build-version": "6.2.0-alpha.1.22168.1",
     "monitor|6.2|product-version": "6.2.0-alpha.1",
