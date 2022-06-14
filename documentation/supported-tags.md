@@ -30,7 +30,7 @@ _Simple Tags_ reference an image for a single platform (e.g. `Windows x64` or `L
 
 ## Shared Tags
 
-_Shared Tags_ reference images for [multiple platforms](https://blog.docker.com/2017/09/docker-official-images-now-multi-platform/). The .NET shared tags have the following characteristics:
+_Shared Tags_ reference images for [multiple platforms](https://www.docker.com/blog/docker-official-images-now-multi-platform/). The .NET shared tags have the following characteristics:
 
 * Include entries for all [supported architectures](supported-platforms.md#architectures).
 * When no OS is specified:

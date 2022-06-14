@@ -54,7 +54,7 @@
             "sha-var-name": "dotnet_sha512"
         ]
     ] ^
-    set files to when(isFullMariner && (ARCH_SHORT != "arm64" || dotnetVersion = "7.0"), rpms, tarballs) ^
+    set files to when(isFullMariner, rpms, tarballs) ^
     set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
     set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
     set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
@@ -73,6 +73,6 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
             "skip-download": !downloadEnabled,
             "skip-install": !installEnabled,
             "install-dir": ARGS["dest-dir"],
-            "create-install-dir": !isFullMariner || (ARCH_SHORT = "arm64" && dotnetVersion = "6.0") || ARGS["is-internal"]
+            "create-install-dir": !isFullMariner || ARGS["is-internal"]
         ], "    ")}}{{if ARGS["add-symlink"]: \
     && {{InsertTemplate("Dockerfile.linux.symlink")}}}}
