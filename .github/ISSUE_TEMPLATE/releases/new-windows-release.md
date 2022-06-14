@@ -4,7 +4,7 @@ Windows version: &lt;version&gt;
 
 ## Main Branch Tasks
 
-1. - [ ] Ensure a ["New Windows Release" issue](https://github.com/dotnet/docker-tools/blob/.github/ISSUE_TEMPLATE/releases/new-windows-release.md) exists for docker-tools repo
+1. - [ ] Ensure a ["New Windows Release" issue](https://github.com/dotnet/docker-tools/blob/main/.github/ISSUE_TEMPLATE/releases/new-windows-release.md) exists for docker-tools repo
 1. - [ ] Copy the Dockerfiles of the most recent published Windows version for all supported .NET versions and place them in a version-specific folder under their respective variants (runtime, aspnet, sdk)
 1. - [ ] Modify the Dockerfiles as appropriate for any specific changes related to the new Windows version
 1. - [ ] Update [manifest.json](https://github.com/dotnet/dotnet-docker/blob/nightly/manifest.json) to reference the new set of Dockerfiles with the appropriate tags

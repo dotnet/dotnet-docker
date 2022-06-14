@@ -5760,10 +5760,10 @@
           "sharedTags": {
             "$(monitor|6.2|product-version)-alpine": {},
             "6.2-alpine": {},
-            "6-alpine": {},         
+            "6-alpine": {},
             "$(monitor|6.2|product-version)": {},
             "6.2": {},
-            "6": {}            
+            "6": {}
           },
           "platforms": [
             {
@@ -5778,7 +5778,7 @@
               "tags": {
                 "$(monitor|6.2|product-version)-alpine-amd64": {},
                 "6.2-alpine-amd64": {},
-                "6-alpine-amd64": {}                
+                "6-alpine-amd64": {}
               }
             },
             {
