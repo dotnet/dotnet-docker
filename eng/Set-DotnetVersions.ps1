@@ -7,7 +7,7 @@ Updates dependencies for the specified .NET version.
 [cmdletbinding()]
 param(
     # The major/minor version of the product (e.g. 6.0).
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $true, Position = 0)]
     [string]
     $ProductVersion,
 
