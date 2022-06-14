@@ -28,14 +28,14 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
             variables.AddRange(GetCommonEnvironmentVariables());
-            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:80"));
+            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", $"http://+:{imageData.DefaultPort}"));
 
             if (customVariables != null)
             {
                 variables.AddRange(customVariables);
             }
 
-            if (imageData.OS.StartsWith(OS.AlpinePrefix) ||
+            if (imageData.OS.StartsWith(OS.Alpine) ||
                 (imageData.IsDistroless && imageData.OS != OS.Mariner10Distroless))
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));

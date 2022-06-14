@@ -34,9 +34,11 @@ RUN tdnf install -y shadow-utils \
     && cp /etc/group /staging/etc/group
 
 # Clean up staging
-RUN rm -rf /staging/etc/dnf \
+RUN rm -rf /staging/etc/tdnf \
     && rm -rf /staging/run/* \
-    && rm -rf /staging/var/cache/dnf \
+    && rm -rf /staging/var/cache/tdnf \
+    && rm -rf /staging/usr/share/doc \
+    && rm -rf /staging/usr/share/man \
     && find /staging/var/log -type f -size +0 -delete
 
 
@@ -46,8 +48,8 @@ FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0
 COPY --from=installer /staging/ /
 
 ENV \
-    # Configure web servers to bind to port 80 when present
-    ASPNETCORE_URLS=http://+:80 \
+    # Configure web servers to bind to port 8080 when present
+    ASPNETCORE_URLS=http://+:8080 \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)

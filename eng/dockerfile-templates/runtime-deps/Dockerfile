@@ -20,17 +20,20 @@
                     cat(marinerRepo, "/base/core"),
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
-    set isSingleStage to !isDistrolessMariner && !(isFullMariner && isInternal && ARCH_SHORT != "arm64") ^
-    set urlSuffix to when(isInternal, "SAS_QUERY_STRING", "") ^
+    set isSingleStage to !isDistrolessMariner && !(isFullMariner && isInternal) ^
+    set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm"
 }}{{
     if !isSingleStage:# Installer image
-}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isFullMariner && ARCH_SHORT != "arm64":
+}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isFullMariner:
+
+ARG SAS_QUERY_STRING
 
 RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
     [
         "url-suffix": urlSuffix,
-        "filename": rpmFilename
+        "filename": rpmFilename,
+        "is-internal": isInternal
     ], "    ")}}}}
 {{ if isDistrolessMariner && find(OS_VERSION, "1.0") >= 0:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
@@ -39,6 +42,8 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 {{if isDistrolessMariner:# Install .NET's dependencies into a staging location
+^elif isMariner && isInternal:FROM {{baseImageRepo}}:{{baseImageTag}}
+
 }}RUN {{if isDistrolessMariner:mkdir {{distrolessStagingDir}} \
     && }}{{InsertTemplate("../Dockerfile.linux.install-deps", ["distroless-staging-dir": distrolessStagingDir])}}
 {{ if isDistrolessMariner:
@@ -61,9 +66,11 @@ RUN {{if find(OS_VERSION, "1.0") < 0:tdnf install -y shadow-utils \
     && cp /etc/group {{distrolessStagingDir}}/etc/group
 
 # Clean up staging
-RUN rm -rf {{distrolessStagingDir}}/etc/dnf \
+RUN rm -rf {{distrolessStagingDir}}/etc/tdnf \
     && rm -rf {{distrolessStagingDir}}/run/* \
-    && rm -rf {{distrolessStagingDir}}/var/cache/dnf \
+    && rm -rf {{distrolessStagingDir}}/var/cache/tdnf \
+    && rm -rf {{distrolessStagingDir}}/usr/share/doc \
+    && rm -rf {{distrolessStagingDir}}/usr/share/man \
     && find {{distrolessStagingDir}}/var/log -type f -size +0 -delete
 
 
@@ -71,7 +78,7 @@ RUN rm -rf {{distrolessStagingDir}}/etc/dnf \
 FROM {{marinerRepo}}/distroless/minimal:{{OS_VERSION_NUMBER}}
 
 COPY --from=installer {{distrolessStagingDir}}/ /
-^elif isFullMariner && ARCH_SHORT != "arm64":
+^elif isFullMariner:
 {{if isInternal:{{InsertTemplate("../Dockerfile.linux.copy-files",
 [
     "files": [

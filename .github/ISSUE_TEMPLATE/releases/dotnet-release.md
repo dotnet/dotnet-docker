@@ -15,7 +15,7 @@ _The set of .NET versions that are being released as a unit._
       - [ ] Check for additional changes by diffing the main and nightly branches
       - [ ] &lt;add link to PR/commit&gt;
 1. - [ ] Check whether a change has been made to a Dockerfile that is shared by multiple .NET versions. If a change has been made and the .NET versions that share that file are not being released at the same time, define a separate Dockerfile to isolate the change to the .NET version that's being released. Conversely, after a shared Dockerfile has diverged in such a way, it should be combined again into a shared Dockerfile when the other other .NET version is released. Shared Dockerfiles to check:
-      - [ ] 3.1 runtime-deps shared with 5.0, 6.0, and 7.0
+      - [ ] 3.1 runtime-deps shared with 6.0, and 7.0
 1. - [ ] Wait for .NET archive files (.zip, .tar.gz) to be available at blob storage location
 1. - [ ] Run `update-dependencies` tool to update all the necessary files to reflect the specified .NET versions (run this command for each version being released):
       - [ ] `./eng/Set-DotnetVersions.ps1 -ProductVersion <major/minor version> -SdkVersion <sdk> -RuntimeVersion <runtime> -AspnetVersion <aspnet>`

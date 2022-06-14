@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:7.0.0-preview.4-cbl-mariner2.0-arm64v8
+FROM $REPO:7.0.0-preview.5-cbl-mariner2.0-arm64v8
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=7.0.100-preview.4.22252.9 \
+    DOTNET_SDK_VERSION=7.0.100-preview.5.22307.18 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -22,18 +22,31 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm64.tar.gz \
-    && dotnet_sha512='a04fbd748c6694e71fb6f3f378a3ef8c8c014d5546e1285825e804e8e8a6677e6d75dd9c0c88f44df8e34ee55103bd1039f21caf294e23d916eb42cc202f469c' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz \
+RUN curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-aarch64.rpm \
+    && dotnet_sha512='e3175f965e8d8eebaa48a67f83df2db2be5825e759bb7d9d51622aad0282ef69f503bdb110e730cc2da5a1ac157caaf66e6ecb1603cc9f2737b6cc6e567bf82b' \
+    && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
+    \
+    && curl -fSL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-aarch64.rpm \
+    && dotnet_sha512='ba01cc7067c7e6cd09e24d916d6716e5d6a6d568206072788212c61315f84bfe1ac60b32060fdc9cce83734b3c893f00b78c641be3bfe2ec9d884877040e9524' \
+    && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
+    \
+    && curl -fSL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/7.0.0-preview.5.22301.12/dotnet-targeting-pack-7.0.0-preview.5.22301.12-aarch64.rpm \
+    && dotnet_sha512='f2b911081e4354f2d1557d2a5122f8e8fad75f6371827bd2fda17d7f3e9fe368848003c69e238754a1f7ff1edc0aec60caa054713877f3b33e35f68ee0cbb0d2' \
+    && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
+    \
+    && curl -fSL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/7.0.0-preview.5.22303.8/aspnetcore-targeting-pack-7.0.0-preview.5.22303.8-aarch64.rpm \
+    && dotnet_sha512='5f24d83ab85eda5dee1148c150a45c9886bd6b843464ed8529591c1b50a71bc589d502811057aa2b00ebd3a03373ae384ec594e14d81f0dfadeed896df0c4a91' \
+    && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
+    \
+    && tdnf install -y dotnet.rpm apphost.rpm targeting-pack.rpm aspnetcore-targeting-pack.rpm \
+    && rm dotnet.rpm apphost.rpm targeting-pack.rpm aspnetcore-targeting-pack.rpm \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.3.0-preview.3 \
+RUN powershell_version=7.3.0-preview.4 \
     && curl -fSL --output PowerShell.Linux.arm64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
-    && powershell_sha512='3a8d58d61dba40c023a688694055fa7d729e5a57a51f6be1049fba8c52e8ab815fe01f9693629720d196af7638711207d7e86ad869974916efdaa54b66f49376' \
+    && powershell_sha512='eeada27da95c4cba9cfc4d3f9c2533700cc43a25b3c08783f6ed23563d07215715ceb66a3f69ae4c946ef44556c08111da189484789f7b0ea1f9ac2a2a9e7835' \
     && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm64 \

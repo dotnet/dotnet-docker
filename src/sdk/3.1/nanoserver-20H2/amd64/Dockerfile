@@ -10,9 +10,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET Core SDK
-        $sdk_version = '3.1.419'; `
+        $sdk_version = '3.1.420'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '6fb9d6aeed88e8c9499230dbcd0bf5783c6741d0b5837867449057adfe300cc068caab9303361789441a079acd92b9cb7c73154187ece7fc4b210e2dfdbbca70'; `
+        $dotnet_sha512 = 'ccb5418be598f8a58493609a058a04a5b9181ac6fdf9b9b51772646ecbe2ae58e19fe76d2fc8a10c401460259458b658684a4bf4604b6cf28c4ac4eb4e9b0d3c'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -22,9 +22,9 @@ RUN powershell -Command " `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.0.10'; `
+        $powershell_version = '7.0.11'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = 'd7629fa6086eb02893f284d032eb0eff957617ad99465fb3970e212ef512e0188edb02a9ec34944b3bd1d3755b79ce9c7cdd6cb968933904a9f4ce9e20f3fa16'; `
+        $powershell_sha512 = '64e6d1f49589164094ba4402cdf8ce9d1d021e7605024b14be0a3bdafea8ac0cef6e6b0b2b69a38106a9bd3e072aff89a5bef2f2bad627b57bf2a0ba00e507a1'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -41,7 +41,7 @@ RUN powershell -Command " `
             | Remove-Item -Force -Recurse"
 
 # SDK image
-FROM $REPO:3.1.25-nanoserver-20H2
+FROM $REPO:3.1.26-nanoserver-20H2
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image

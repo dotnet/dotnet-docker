@@ -44,17 +44,23 @@ namespace Microsoft.DotNet.Docker.Tests
 
             try
             {
+                // Need to include the RID for all build stages because they all rely on "dotnet restore". We should
+                // always provide RID when running restore because it's RID-dependent. If we don't then a call to the
+                // publish command with a different RID than the default would end up restoring images. This is not
+                // what we'd want and plus it would fail in that case if it was targeting a private NuGet feed because
+                // the password isn't necessarily provided in that stage.
+                string customBuildArgs = $"rid={_imageData.Rid}";
                 if (!_imageData.HasCustomSdk)
                 {
                     // Use `sdk` image to build and run test app
-                    string buildTag = BuildTestAppImage("build", appDir);
+                    string buildTag = BuildTestAppImage("build", appDir, customBuildArgs);
                     tags.Add(buildTag);
-                    string dotnetRunArgs = _isWeb ? " --urls http://0.0.0.0:80" : string.Empty;
+                    string dotnetRunArgs = _isWeb ? $" --urls http://0.0.0.0:{_imageData.DefaultPort}" : string.Empty;
                     await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}");
                 }
 
                 // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnet` image
-                string fxDepTag = BuildTestAppImage("fx_dependent_app", appDir);
+                string fxDepTag = BuildTestAppImage("fx_dependent_app", appDir, customBuildArgs);
                 tags.Add(fxDepTag);
                 bool runAsAdmin = _isWeb && !DockerHelper.IsLinuxContainerModeEnabled;
                 await RunTestAppImage(fxDepTag, runAsAdmin: runAsAdmin);
@@ -62,7 +68,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
                     // Use `sdk` image to publish self contained app and run with `runtime-deps` image
-                    string selfContainedTag = BuildTestAppImage("self_contained_app", appDir, customBuildArgs: $"rid={_imageData.Rid}");
+                    string selfContainedTag = BuildTestAppImage("self_contained_app", appDir, customBuildArgs);
                     tags.Add(selfContainedTag);
                     await RunTestAppImage(selfContainedTag, runAsAdmin: runAsAdmin);
                 }
@@ -133,13 +139,13 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string tag = _imageData.GetIdentifier(stageTarget);
 
-            List<string> buildArgs = new List<string>
-            {
-                $"sdk_image={_imageData.GetImage(DotNetImageType.SDK, _dockerHelper)}"
-            };
-
             DotNetImageType runtimeImageType = _isWeb ? DotNetImageType.Aspnet : DotNetImageType.Runtime;
-            buildArgs.Add($"runtime_image={_imageData.GetImage(runtimeImageType, _dockerHelper)}");
+            List<string> buildArgs = new()
+            {
+                $"sdk_image={_imageData.GetImage(DotNetImageType.SDK, _dockerHelper)}",
+                $"runtime_image={_imageData.GetImage(runtimeImageType, _dockerHelper)}",
+                $"port={_imageData.DefaultPort}"
+            };
 
             if (DockerHelper.IsLinuxContainerModeEnabled)
             {
@@ -151,11 +157,29 @@ namespace Microsoft.DotNet.Docker.Tests
                 buildArgs.AddRange(customBuildArgs);
             }
 
-            _dockerHelper.Build(
-                tag: tag,
-                target: stageTarget,
-                contextDir: contextDir,
-                buildArgs: buildArgs.ToArray());
+            const string NuGetFeedPasswordVar = "NuGetFeedPassword";
+
+            if (!string.IsNullOrEmpty(Config.NuGetFeedPassword))
+            {
+                buildArgs.Add(NuGetFeedPasswordVar);
+                Environment.SetEnvironmentVariable(NuGetFeedPasswordVar, Config.NuGetFeedPassword);
+            }
+
+            try
+            {
+                _dockerHelper.Build(
+                    tag: tag,
+                    target: stageTarget,
+                    contextDir: contextDir,
+                    buildArgs: buildArgs.ToArray());
+            }
+            finally
+            {
+                if (!string.IsNullOrEmpty(Config.NuGetFeedPassword))
+                {
+                    Environment.SetEnvironmentVariable(NuGetFeedPasswordVar, null);
+                }
+            }
 
             return tag;
         }
@@ -228,13 +252,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     image: image,
                     name: containerName,
                     detach: _isWeb,
-                    optionalRunArgs: _isWeb ? "-p 80" : string.Empty,
+                    optionalRunArgs: _isWeb ? $"-p {_imageData.DefaultPort}" : string.Empty,
                     runAsUser: runAsAdmin ? "ContainerAdministrator" : null,
                     command: command);
 
                 if (_isWeb && !Config.IsHttpVerificationDisabled)
                 {
-                    await VerifyHttpResponseFromContainerAsync(containerName, _dockerHelper, _outputHelper);
+                    await VerifyHttpResponseFromContainerAsync(containerName, _dockerHelper, _outputHelper, _imageData.DefaultPort);
                 }
             }
             finally
@@ -243,7 +267,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public static async Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null, AuthenticationHeaderValue authorizationHeader = null)
+        public static async Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null, AuthenticationHeaderValue authorizationHeader = null)
         {
             int retries = 30;
 
@@ -298,7 +322,7 @@ namespace Microsoft.DotNet.Docker.Tests
             throw new TimeoutException($"Timed out attempting to access the endpoint {url} on container {containerName}");
         }
 
-        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort = 80, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null)
+        public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null)
         {
             (await GetHttpResponseFromContainerAsync(
                 containerName,

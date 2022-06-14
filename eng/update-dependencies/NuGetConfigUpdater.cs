@@ -21,39 +21,54 @@ internal class NuGetConfigUpdater : IDependencyUpdater
     private const string PkgSrcSuffix = "_internal";
     private readonly string _repoRoot;
     private readonly Options _options;
+    private readonly string _configPath;
 
     public NuGetConfigUpdater(string repoRoot, Options options)
     {
         _repoRoot = repoRoot;
         _options = options;
+
+        string configSuffix = (_options.Branch == "nightly" ? ".nightly" : string.Empty);
+        _configPath = Path.Combine(_repoRoot, $"tests/Microsoft.DotNet.Docker.Tests/TestAppArtifacts/NuGet.config{configSuffix}");
     }
 
-    public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos) =>
-        dependencyInfos
-            .Where(info => info.SimpleName == "sdk")
-            .Select(info => new DependencyUpdateTask(
-                () => UpdateNuGetConfigFile(info.SimpleVersion),
-                new[] { info },
-                Enumerable.Empty<string>()));
-        
+    public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos)
+    {
+        string existingContent = File.ReadAllText(_configPath);
+        IDependencyInfo? sdkInfo = dependencyInfos
+            .FirstOrDefault(info => info.SimpleName == "sdk");
+        if (sdkInfo is not null)
+        {
+            string newContent = GetUpdatedNuGetConfigContent(sdkInfo.SimpleVersion);
+
+            if (newContent != existingContent)
+            {
+                return new[]
+                {
+                    new DependencyUpdateTask(
+                        () => File.WriteAllText(_configPath, newContent),
+                        new[] { sdkInfo },
+                        Enumerable.Empty<string>())
+                };
+            }
+        }
+
+        return Enumerable.Empty<DependencyUpdateTask>();
+    }
 
     /// <summary>
     /// Updates the NuGet.config file to include a URL to the internal package feed of the specified version.
     /// </summary>
-    /// <param name="sdkVersion"></param>
-    private void UpdateNuGetConfigFile(string sdkVersion)
+    private string GetUpdatedNuGetConfigContent(string sdkVersion)
     {
-        string configSuffix = (_options.Branch == "nightly" ? ".nightly" : string.Empty);
-        string configPath = Path.Combine(_repoRoot, $"tests/Microsoft.DotNet.Docker.Tests/TestAppArtifacts/NuGet.config{configSuffix}");
         string pkgSrcName = $"dotnet{_options.DockerfileVersion.Replace(".", "_")}{PkgSrcSuffix}";
 
-        XDocument doc = XDocument.Load(configPath);
+        XDocument doc = XDocument.Load(_configPath);
 
         XElement configuration = doc.Root!;
         UpdatePackageSources(sdkVersion, pkgSrcName, configuration);
         UpdatePackageSourceCredentials(pkgSrcName, configuration);
-
-        File.WriteAllText(configPath, ToStringWithDeclaration(doc) + Environment.NewLine);
+        return ToStringWithDeclaration(doc) + Environment.NewLine;
     }
 
     private static string ToStringWithDeclaration(XDocument doc)
@@ -74,10 +89,8 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         {
             pkgSourceCreds?.Remove();
 
-            pkgSourceCreds = GetOrCreateXObject(
-                pkgSourceCreds,
-                configuration,
-                () => new XElement("packageSourceCredentials"));
+            pkgSourceCreds = new XElement("packageSourceCredentials");
+            configuration.Add(pkgSourceCreds);
 
             XElement pkgSrc = GetOrCreateXObject(
                 pkgSourceCreds.Element(pkgSrcName),
@@ -104,10 +117,12 @@ internal class NuGetConfigUpdater : IDependencyUpdater
 
             RemoveAllInternalPackageSources(pkgSources);
 
+            string project = _options.DockerfileVersion != "3.1" ? "/internal" : string.Empty;
+
             UpdateAddElement(
                 pkgSources,
                 pkgSrcName,
-                $"https://pkgs.dev.azure.com/dnceng/internal/_packaging/{sdkVersion}-shipping/nuget/v3/index.json");
+                $"https://pkgs.dev.azure.com/dnceng{project}/_packaging/{sdkVersion}-shipping/nuget/v3/index.json");
         }
         else
         {

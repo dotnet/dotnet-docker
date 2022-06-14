@@ -208,6 +208,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public void Pull(string image) => ExecuteWithLogging($"pull {image}", autoRetry: true);
 
+        public string GetHistory(string image) =>
+            ExecuteWithLogging($"history --no-trunc --format \"{{{{ .CreatedBy }}}}\" {image}");
+
         private static bool ResourceExists(string type, string filterArg)
         {
             string output = Execute($"{type} ls -a -q {filterArg}", true);

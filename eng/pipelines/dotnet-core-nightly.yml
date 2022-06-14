@@ -20,7 +20,8 @@ resources:
 variables:
 - template: variables/core.yml
 - name: officialBranches
-  value: "'nightly'"
+  # comma-delimited list of branch names
+  value: nightly
 
 stages:
 - template: stages/build-test-publish-repo.yml

@@ -16,7 +16,7 @@
                 "ThirdPartyNotices.txt",
                 "packs",
                 "sdk",
-                when(!(dotnetVersion = "3.1" || dotnetVersion = "5.0"), "sdk-manifests", ""),
+                when(!(dotnetVersion = "3.1"), "sdk-manifests", ""),
                 "templates",
                 "shared"
             ], len)
@@ -50,7 +50,7 @@
                 "dotnet-is-internal": ARGS["dotnet-is-internal"]
             ],
             "        ")}}{{
-if !(dotnetVersion = "3.1" || dotnetVersion = "5.0" || isServerCore): `
+if !(dotnetVersion = "3.1" || isServerCore): `
         `
         # Workaround for https://github.com/dotnet/sdk/issues/18410
         \dotnet\dotnet build-server shutdown;}}{{if !useExtractGroups: `

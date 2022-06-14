@@ -16,7 +16,7 @@
     set runtimeVersionDir to when(ARGS["use-local-version-var"],
         "$dotnet_version",
         when(ARGS["is-internal"],
-            VARIABLES[cat("runtime|", dotnetVersion"|build-version")],
+            VARIABLES[cat("runtime|", dotnetVersion, "|build-version")],
             "$DOTNET_VERSION")) ^
     set runtimeVersionFile to when(ARGS["is-internal"],
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
@@ -24,22 +24,23 @@
     set runtimeBaseUrl to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
         "/Runtime/", runtimeVersionDir, "/") ^
+    set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set rpms to [
         [
             "filename": "dotnet-host.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-host-", runtimeVersionFile, "-", ARCH_SHORT, ".rpm", ARGS["url-suffix"]),
+            "url": cat(runtimeBaseUrl, "dotnet-host-", runtimeVersionFile, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
             "sha": VARIABLES[join(["runtime-host", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": "dotnet_sha512"
         ],
         [
             "filename": "dotnet-hostfxr.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-hostfxr-", runtimeVersionFile, "-", ARCH_SHORT, ".rpm", ARGS["url-suffix"]),
+            "url": cat(runtimeBaseUrl, "dotnet-hostfxr-", runtimeVersionFile, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
             "sha": VARIABLES[join(["runtime-hostfxr", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": "dotnet_sha512"
         ],
         [
             "filename": "dotnet-runtime.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", ARCH_SHORT, ".rpm", ARGS["url-suffix"]),
+            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
             "sha": VARIABLES[join(["runtime", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": "dotnet_sha512"
         ]
@@ -53,7 +54,7 @@
             "sha-var-name": "dotnet_sha512"
         ]
     ] ^
-    set files to when(isFullMariner && ARCH_SHORT != "arm64", rpms, tarballs) ^
+    set files to when(isFullMariner, rpms, tarballs) ^
     set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
     set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
     set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
@@ -72,6 +73,6 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
             "skip-download": !downloadEnabled,
             "skip-install": !installEnabled,
             "install-dir": ARGS["dest-dir"],
-            "create-install-dir": !isFullMariner || ARCH_SHORT = "arm64" || ARGS["is-internal"]
+            "create-install-dir": !isFullMariner || ARGS["is-internal"]
         ], "    ")}}{{if ARGS["add-symlink"]: \
     && {{InsertTemplate("Dockerfile.linux.symlink")}}}}

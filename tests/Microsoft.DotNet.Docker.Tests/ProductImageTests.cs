@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -21,6 +22,17 @@ namespace Microsoft.DotNet.Docker.Tests
         protected DockerHelper DockerHelper { get; }
         protected ITestOutputHelper OutputHelper { get; }
         protected abstract DotNetImageType ImageType { get; }
+
+        /// <summary>
+        /// Verifies that a SAS token isn't accidentally leaked through the Docker history of the image.
+        /// </summary>
+        protected void VerifyCommonNoSasToken(ProductImageData imageData)
+        {
+            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+            string historyContents = DockerHelper.GetHistory(imageTag);
+            Match match = Regex.Match(historyContents, @"=\?(sig|\S+&sig)=\S+");
+            Assert.False(match.Success, $"A SAS token was detected in the Docker history of '{imageTag}'.");
+        }
 
         protected void VerifyCommonInsecureFiles(ProductImageData imageData)
         {

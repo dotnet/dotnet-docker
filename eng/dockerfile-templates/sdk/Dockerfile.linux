@@ -22,12 +22,12 @@
         when(isMariner,
             [
                 "git",
-                when(dotnetVersion = "3.1" || dotnetVersion = "5.0", "procps-ng", "")
+                when(dotnetVersion = "3.1", "procps-ng", "")
             ],
             [
                 "curl",
                 "git",
-                when(dotnetVersion = "3.1" || dotnetVersion = "5.0", "procps", "")
+                when(dotnetVersion = "3.1", "procps", "")
                 "wget"
             ])), len)
 }}{{if !isBasedOnBuildpackDeps:ARG REPO=mcr.microsoft.com/dotnet/aspnet
@@ -39,7 +39,7 @@ ARG SAS_QUERY_STRING
 {{InsertTemplate("Dockerfile.linux.install-sdk",
     [
         "install-method": when(isFullMariner, "download", "download-and-install"),
-        "based-on-buildpack-deps": "true",
+        "based-on-buildpack-deps": isBasedOnBuildpackDeps,
         "use-local-version-var": (dotnetVersion = "3.1"),
         "is-internal": isInternal,
         "url-suffix": "$SAS_QUERY_STRING"
@@ -70,7 +70,10 @@ if isFullMariner:{{InsertTemplate("Dockerfile.linux.install-sdk",
         "url-suffix": "$SAS_QUERY_STRING",
         "installer-stage": "installer"
     ])}}^
-else:COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+else:COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]{{
+if isBasedOnBuildpackDeps:
+
+RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet}}
 
 {{InsertTemplate("Dockerfile.linux.first-run")}}}}^
 else:{{InsertTemplate("Dockerfile.linux.install-sdk",
