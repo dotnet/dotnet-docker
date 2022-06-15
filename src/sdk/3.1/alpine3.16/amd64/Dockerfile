@@ -18,7 +18,7 @@ ENV \
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Alpine-3.16
 
 # Add dependencies for disabling invariant mode (set in base image)
-RUN apk add --no-cache icu-libs
+RUN apk add --no-cache icu-data-full icu-libs
 
 # Install .NET Core SDK
 RUN sdk_version=3.1.420 \

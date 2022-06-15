@@ -14,11 +14,18 @@
         baseImageTag,
         cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl")) ^
     set pkgs to filter(when(isAlpine,
-        [
-            "curl",
-            "icu-libs",
-            "git"
-        ],
+        when(find(OS_VERSION, "3.14") < 0 && find(OS_VERSION, "3.15") < 0,
+            [
+                "curl",
+                "icu-data-full",
+                "icu-libs",
+                "git"
+            ],
+            [
+                "curl",
+                "icu-libs",
+                "git"
+            ]),
         when(isMariner,
             [
                 "git",
@@ -52,7 +59,7 @@ ARG SAS_QUERY_STRING
 {{InsertTemplate("Dockerfile.envs", ["based-on-buildpack-deps": isBasedOnBuildpackDeps])}}
 {{if isAlpine && dotnetVersion = "3.1":
 # Add dependencies for disabling invariant mode (set in base image)
-RUN apk add --no-cache icu-libs
+RUN apk add --no-cache{{if find(OS_VERSION, "3.14") < 0 && find(OS_VERSION, "3.15") < 0: icu-data-full}} icu-libs
 }}{{if dotnetVersion != "3.1":
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 [
