@@ -21,7 +21,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:6.0.6-cbl-mariner1.0-distroless-amd64
+FROM $REPO:6.0.6-1-cbl-mariner1.0-distroless-amd64
 
 # .NET Runtime version
 ENV DOTNET_VERSION=6.0.6
