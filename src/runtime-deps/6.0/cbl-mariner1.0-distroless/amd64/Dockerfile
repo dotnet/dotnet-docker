@@ -37,9 +37,9 @@ RUN groupadd \
     && cp /etc/group /staging/etc/group
 
 # Clean up staging
-RUN rm -rf /staging/etc/tdnf \
+RUN rm -rf /staging/etc/dnf \
     && rm -rf /staging/run/* \
-    && rm -rf /staging/var/cache/tdnf \
+    && rm -rf /staging/var/cache/dnf \
     && rm -rf /staging/usr/share/doc \
     && rm -rf /staging/usr/share/man \
     && find /staging/var/log -type f -size +0 -delete

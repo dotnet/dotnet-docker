@@ -8,7 +8,7 @@
     set isSingleStage to (dotnetVersion = "3.1" || isAlpine || isFullMariner) && !isInternal ^
     set archTagSuffix to when(dotnetVersion != "3.1" || ARCH_VERSIONED != "amd64", ARCH_TAG_SUFFIX, "") ^
     set runtimeDepsBaseTag to cat(
-        "$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix) ^
+        "$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", when(OS_VERSION = "cbl-mariner1.0-distroless", "1-", "")OS_VERSION, archTagSuffix) ^
     set installerImageTag to when(isDistrolessMariner,
         cat(
             "mcr.microsoft.com/cbl-mariner/base/core:",
