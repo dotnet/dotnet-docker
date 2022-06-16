@@ -9,13 +9,20 @@ ARG port
 
 EXPOSE $port
 
-WORKDIR app
+WORKDIR /source
 COPY NuGet.config .
-COPY *.csproj .
+WORKDIR /source/app
+COPY app/*.csproj .
 RUN dotnet restore -r %rid%
 
-COPY . .
+COPY app/ .
 RUN dotnet build --no-restore
+
+
+FROM build AS test
+WORKDIR /source/tests
+COPY tests/ .
+ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 
 FROM build as publish_fx_dependent
@@ -28,5 +35,5 @@ ARG port
 
 EXPOSE $port
 WORKDIR /app
-COPY --from=publish_fx_dependent /app/out ./
+COPY --from=publish_fx_dependent /source/app/out ./
 ENTRYPOINT ["dotnet", "app.dll"]

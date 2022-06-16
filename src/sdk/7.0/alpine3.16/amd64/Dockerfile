@@ -21,6 +21,7 @@ ENV \
 
 RUN apk add --no-cache \
         curl \
+        icu-data-full \
         icu-libs \
         git
 

@@ -4601,7 +4601,7 @@
               "os": "linux",
               "osVersion": "alpine3.16",
               "tags": {
-                "$(sdk|3.1|product-version)-alpine3.16": {},
+                "$(sdk|3.1|product-version)-1-alpine3.16": {},
                 "3.1-alpine3.16": {},
                 "3.1-alpine": {
                   "syndication": {
@@ -5077,7 +5077,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-alpine3.16": {},
+            "$(sdk|6.0|product-version)-1-alpine3.16": {},
             "6.0-alpine3.16": {},
             "6.0-alpine": {}
           },
@@ -5091,7 +5091,7 @@
               "os": "linux",
               "osVersion": "alpine3.16",
               "tags": {
-                "$(sdk|6.0|product-version)-alpine3.16-amd64": {},
+                "$(sdk|6.0|product-version)-1-alpine3.16-amd64": {},
                 "6.0-alpine3.16-amd64": {},
                 "6.0-alpine-amd64": {}
               }
@@ -5106,7 +5106,7 @@
               "os": "linux",
               "osVersion": "alpine3.16",
               "tags": {
-                "$(sdk|6.0|product-version)-alpine3.16-arm32v7": {},
+                "$(sdk|6.0|product-version)-1-alpine3.16-arm32v7": {},
                 "6.0-alpine3.16-arm32v7": {},
                 "6.0-alpine-arm32v7": {}
               },
@@ -5122,7 +5122,7 @@
               "os": "linux",
               "osVersion": "alpine3.16",
               "tags": {
-                "$(sdk|6.0|product-version)-alpine3.16-arm64v8": {},
+                "$(sdk|6.0|product-version)-1-alpine3.16-arm64v8": {},
                 "6.0-alpine3.16-arm64v8": {},
                 "6.0-alpine-arm64v8": {}
               },
@@ -5483,7 +5483,7 @@
         {
           "productVersion": "$(sdk|7.0|product-version)",
           "sharedTags": {
-            "$(sdk|7.0|product-version)-alpine3.16": {},
+            "$(sdk|7.0|product-version)-1-alpine3.16": {},
             "7.0-alpine3.16": {},
             "7.0-alpine": {}
           },
@@ -5497,7 +5497,7 @@
               "os": "linux",
               "osVersion": "alpine3.16",
               "tags": {
-                "$(sdk|7.0|product-version)-alpine3.16-amd64": {},
+                "$(sdk|7.0|product-version)-1-alpine3.16-amd64": {},
                 "7.0-alpine3.16-amd64": {},
                 "7.0-alpine-amd64": {}
               }
@@ -5512,7 +5512,7 @@
               "os": "linux",
               "osVersion": "alpine3.16",
               "tags": {
-                "$(sdk|7.0|product-version)-alpine3.16-arm32v7": {},
+                "$(sdk|7.0|product-version)-1-alpine3.16-arm32v7": {},
                 "7.0-alpine3.16-arm32v7": {},
                 "7.0-alpine-arm32v7": {}
               },
@@ -5528,7 +5528,7 @@
               "os": "linux",
               "osVersion": "alpine3.16",
               "tags": {
-                "$(sdk|7.0|product-version)-alpine3.16-arm64v8": {},
+                "$(sdk|7.0|product-version)-1-alpine3.16-arm64v8": {},
                 "7.0-alpine3.16-arm64v8": {},
                 "7.0-alpine-arm64v8": {}
               },
