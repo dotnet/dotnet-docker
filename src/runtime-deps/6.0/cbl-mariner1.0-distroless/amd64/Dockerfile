@@ -27,7 +27,7 @@ RUN groupadd \
         app \
     && adduser \
         --uid 1000 \
-        --gid app \
+        --gid 101 \
         --shell /bin/false \
         --no-create-home \
         --system \

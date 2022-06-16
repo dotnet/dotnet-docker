@@ -30,6 +30,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string Bionic = "bionic";
         public const string Focal = "focal";
         public const string Jammy = "jammy";
+        public const string JammyChiseled = "jammy-chiseled";
 
         // Windows
         public const string NanoServer = "nanoserver";

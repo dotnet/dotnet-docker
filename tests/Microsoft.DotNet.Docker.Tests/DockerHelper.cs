@@ -65,7 +65,9 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string dockerfile = Path.Combine(TestArtifactsDir, "Dockerfile.distroless");
             string distrolessImageTag = imageData.GetImage(imageType, this);
-            string baseImageTag = distrolessImageTag.Replace("-distroless", string.Empty);
+            string baseImageTag = distrolessImageTag
+                .Replace("-distroless", string.Empty)
+                .Replace("-chiseled", string.Empty);
 
             string tag = imageData.GetIdentifier("distroless-helper");
             Build(tag, dockerfile, null, TestArtifactsDir, false,
