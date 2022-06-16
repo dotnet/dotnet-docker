@@ -5,7 +5,7 @@
     set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
     set targetFrameworkMoniker to cat("net", dotnetMajorMinor) ^
     set targetFrameworkMonikerRegex to cat("net", dotnetMajor, "[.]0") ^
-    set installerBaseTag to cat(VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+    set installerBaseTag to cat(VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")], "-", when(OS_VERSION = "alpine3.16", "1-", ""), OS_VERSION, ARCH_TAG_SUFFIX) ^
     set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
     set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^

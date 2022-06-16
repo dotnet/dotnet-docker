@@ -38,9 +38,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public async Task Execute()
         {
-            string appDir = CreateTestAppWithSdkImage(_isWeb ? "web" : "console");
+            string solutionDir = CreateTestSolutionWithSdkImage(_isWeb ? "web" : "console");
             List<string> tags = new List<string>();
-            InjectCustomTestCode(appDir);
+            InjectCustomTestCode(Path.Combine(solutionDir, "app"));
 
             try
             {
@@ -53,14 +53,23 @@ namespace Microsoft.DotNet.Docker.Tests
                 if (!_imageData.HasCustomSdk)
                 {
                     // Use `sdk` image to build and run test app
-                    string buildTag = BuildTestAppImage("build", appDir, customBuildArgs);
+                    string buildTag = BuildTestAppImage("build", solutionDir, customBuildArgs);
                     tags.Add(buildTag);
                     string dotnetRunArgs = _isWeb ? $" --urls http://0.0.0.0:{_imageData.DefaultPort}" : string.Empty;
                     await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}");
                 }
 
+                // Running a scenario of unit testing within the sdk container is identical between a console app and web app,
+                // so we only want to execute it for one of those app types.
+                if (!_isWeb)
+                {
+                    string unitTestTag = BuildTestAppImage("test", solutionDir, customBuildArgs);
+                    tags.Add(unitTestTag);
+                    await RunTestAppImage(unitTestTag, runAsAdmin: false);
+                }
+
                 // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnet` image
-                string fxDepTag = BuildTestAppImage("fx_dependent_app", appDir, customBuildArgs);
+                string fxDepTag = BuildTestAppImage("fx_dependent_app", solutionDir, customBuildArgs);
                 tags.Add(fxDepTag);
                 bool runAsAdmin = _isWeb && !DockerHelper.IsLinuxContainerModeEnabled;
                 await RunTestAppImage(fxDepTag, runAsAdmin: runAsAdmin);
@@ -68,7 +77,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
                     // Use `sdk` image to publish self contained app and run with `runtime-deps` image
-                    string selfContainedTag = BuildTestAppImage("self_contained_app", appDir, customBuildArgs);
+                    string selfContainedTag = BuildTestAppImage("self_contained_app", solutionDir, customBuildArgs);
                     tags.Add(selfContainedTag);
                     await RunTestAppImage(selfContainedTag, runAsAdmin: runAsAdmin);
                 }
@@ -76,7 +85,7 @@ namespace Microsoft.DotNet.Docker.Tests
             finally
             {
                 tags.ForEach(tag => _dockerHelper.DeleteImage(tag));
-                Directory.Delete(appDir, true);
+                Directory.Delete(solutionDir, true);
             }
         }
 
@@ -184,37 +193,25 @@ namespace Microsoft.DotNet.Docker.Tests
             return tag;
         }
 
-        private string CreateTestAppWithSdkImage(string appType)
+        private string CreateTestSolutionWithSdkImage(string appType)
         {
-            string appDir = Path.Combine(Directory.GetCurrentDirectory(), $"{appType}App{DateTime.Now.ToFileTime()}");
-            string containerName = _imageData.GetIdentifier($"create-{appType}");
+            string solutionDir = Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), $"{appType}App{DateTime.Now.ToFileTime()}")).FullName;
+            string appProjectContainerName = _imageData.GetIdentifier($"create-{appType}");
+            string testProjectContainerName = _imageData.GetIdentifier("create-test");
 
             try
             {
-                string targetFramework;
-                if (_imageData.Version.Major < 5)
-                {
-                    targetFramework = $"netcoreapp{_imageData.Version}";
-                }
-                else
-                {
-                    targetFramework = $"net{_imageData.Version}";
-                }
+                CreateProjectWithSdkImage(appType, Path.Combine(solutionDir, "app"), appProjectContainerName);
 
-                _dockerHelper.Run(
-                    image: _imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
-                    name: containerName,
-                    command: $"dotnet new {appType} --framework {targetFramework} --no-restore",
-                    workdir: "/app",
-                    skipAutoCleanup: true);
-
-                _dockerHelper.Copy($"{containerName}:/app", appDir);
+                string testDirectory = Path.Combine(solutionDir, "tests");
+                CreateProjectWithSdkImage("xunit", testDirectory, testProjectContainerName);
+                File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, "UnitTests.cs"), Path.Combine(testDirectory, "UnitTests.cs"));
 
                 string sourceDockerfileName = $"Dockerfile.{DockerHelper.DockerOS.ToLower()}";
 
                 File.Copy(
                     Path.Combine(DockerHelper.TestArtifactsDir, sourceDockerfileName),
-                    Path.Combine(appDir, "Dockerfile"));
+                    Path.Combine(solutionDir, "Dockerfile"));
 
                 string nuGetConfigFileName = "NuGet.config";
                 if (Config.IsNightlyRepo)
@@ -222,24 +219,49 @@ namespace Microsoft.DotNet.Docker.Tests
                     nuGetConfigFileName += ".nightly";
                 }
 
-                File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, nuGetConfigFileName), Path.Combine(appDir, "NuGet.config"));
-                File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, ".dockerignore"), Path.Combine(appDir, ".dockerignore"));
+                File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, nuGetConfigFileName), Path.Combine(solutionDir, "NuGet.config"));
+                File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, ".dockerignore"), Path.Combine(solutionDir, ".dockerignore"));
             }
             catch (Exception)
             {
-                if (Directory.Exists(appDir))
+                if (Directory.Exists(solutionDir))
                 {
-                    Directory.Delete(appDir, true);
+                    Directory.Delete(solutionDir, true);
                 }
 
                 throw;
             }
             finally
             {
-                _dockerHelper.DeleteContainer(containerName);
+                _dockerHelper.DeleteContainer(appProjectContainerName);
+                _dockerHelper.DeleteContainer(testProjectContainerName);
             }
 
-            return appDir;
+            return solutionDir;
+        }
+
+        private void CreateProjectWithSdkImage(string templateName, string destinationPath, string containerName)
+        {
+            string targetFramework;
+            if (_imageData.Version.ToString() == "3.1")
+            {
+                targetFramework = $"netcoreapp{_imageData.Version}";
+            }
+            else
+            {
+                targetFramework = $"net{_imageData.Version}";
+            }
+
+            const string ProjectContainerDir = "/app";
+
+            _dockerHelper.Run(
+                image: _imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
+                name: containerName,
+                command: $"dotnet new {templateName} --framework {targetFramework} --no-restore",
+                workdir: ProjectContainerDir,
+                skipAutoCleanup: true);
+
+            _dockerHelper.Copy($"{containerName}:{ProjectContainerDir}", destinationPath);
         }
 
         private async Task RunTestAppImage(string image, bool runAsAdmin = false, string command = null)
