@@ -20,4 +20,8 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="TestAppArtifacts\UnitTests.cs" />
+  </ItemGroup>
+
 </Project>
