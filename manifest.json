@@ -774,7 +774,7 @@
         {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
-            "$(dotnet|6.0|product-version)-1-cbl-mariner1.0-distroless": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless": {
               "docType": "Undocumented"
             },
             "6.0-cbl-mariner1.0-distroless": {
@@ -788,7 +788,7 @@
               "os": "linux",
               "osVersion": "cbl-mariner1.0-distroless",
               "tags": {
-                "$(dotnet|6.0|product-version)-1-cbl-mariner1.0-distroless-amd64": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner1.0-distroless-amd64": {
@@ -2166,7 +2166,7 @@
         {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
-            "$(dotnet|6.0|product-version)-1-cbl-mariner1.0-distroless": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless": {
               "docType": "Undocumented"
             },
             "6.0-cbl-mariner1.0-distroless": {
@@ -2183,7 +2183,7 @@
               "os": "linux",
               "osVersion": "cbl-mariner1.0-distroless",
               "tags": {
-                "$(dotnet|6.0|product-version)-1-cbl-mariner1.0-distroless-amd64": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner1.0-distroless-amd64": {
@@ -3746,7 +3746,7 @@
         {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
-            "$(dotnet|6.0|product-version)-1-cbl-mariner1.0-distroless": {
+            "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless": {
               "docType": "Undocumented"
             },
             "6.0-cbl-mariner1.0-distroless": {
@@ -3763,7 +3763,7 @@
               "os": "linux",
               "osVersion": "cbl-mariner1.0-distroless",
               "tags": {
-                "$(dotnet|6.0|product-version)-1-cbl-mariner1.0-distroless-amd64": {
+                "$(dotnet|6.0|product-version)-cbl-mariner1.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner1.0-distroless-amd64": {

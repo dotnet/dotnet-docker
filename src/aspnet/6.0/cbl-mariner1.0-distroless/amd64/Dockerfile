@@ -18,7 +18,7 @@ RUN aspnetcore_version=6.0.6 \
 
 
 # ASP.NET Core image
-FROM $REPO:6.0.6-1-cbl-mariner1.0-distroless-amd64
+FROM $REPO:6.0.6-cbl-mariner1.0-distroless-amd64
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=6.0.6
