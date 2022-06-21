@@ -35,9 +35,9 @@ RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/S
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.3.0-preview.4 \
+RUN powershell_version=7.3.0-preview.5 \
     && curl -fSL --output PowerShell.Linux.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='4b77c67657d94d96db020b806a813128e4ad053029b3fc88b0625ebbf2e92902b3ead949b30543d0e584b3f168153305829090e8e6ee7a5680995054c40f20e2' \
+    && powershell_sha512='1929e2b28176e606fe82ff8a4d146b8fdc33918b8d4fea10a769264d66a7eabc327f9c351d44672e6fd4cc0aaafffd984887b2fdc4f68490f9a7537e24b575d9' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \
