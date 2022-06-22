@@ -2,22 +2,22 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:7.0.100-preview.5-cbl-mariner2.0-arm64v8 AS installer
+FROM $SDK_REPO:6.0.301-cbl-mariner2.0-amd64 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=7.0.0-preview.6.22321.2
-RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='d423097c360e9d037a50cca3912b029a532ea4d3950d6456d07443f96fa86487ede98ac7a6ba8c8df35efbeb2e08842f00f30fad8eb18a5328861144937924f8' \
+ENV DOTNET_MONITOR_VERSION=6.2.0
+RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/6.2.0-rtm.22306.2/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
+    && dotnetmonitor_sha512='1e06afa71563de44aff836d06b3e9ef34b5e64418766f42ee588337117bf390c45d4df6f31b048db7db108d2cc44651947628fe22ab3f629fb78652a5fc9f5f5' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
-    && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net7.0 --no-cache \
-    # To reduce image size, remove all non-net7.0 TFMs
+    && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net6.0 --no-cache \
+    # To reduce image size, remove all non-net6.0 TFMs
     # To do this safely, we need to first find everything that dotnet tool installed named "dotnet-monitor".
     # The /dotnet-monitor/ folder exists under .store which is not a stable constant to rely on. The result is multi stage search:
     # 1. Find any files in /app
     # 2. Match anything that is under a *folder* called 'dotnet-monitor'
-    # 3. Match anything from step 2 that isn't in a '/tools/net7.0' folder (/tools is the folder we use in a nuget file that is stable)
+    # 3. Match anything from step 2 that isn't in a '/tools/net6.0' folder (/tools is the folder we use in a nuget file that is stable)
     # 4. Delete everything from step 3
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -v -i '.*/tools/net7[.]0' | xargs rm -rf \
+    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -v -i '.*/tools/net6[.]0' | xargs rm -rf \
     # To reduce image size further, remove the non-linux assemblies
     && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shims)/(win|osx)' | xargs rm -rf \
     # Remove all the empty directories left by the previous step
@@ -28,7 +28,7 @@ RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotn
 
 
 # Monitor image
-FROM $ASPNET_REPO:7.0.0-preview.5-cbl-mariner2.0-arm64v8
+FROM $ASPNET_REPO:6.0.6-cbl-mariner2.0-distroless-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
@@ -50,5 +50,4 @@ ENV \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
 
-ENTRYPOINT [ "dotnet-monitor" ]
-CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
+ENTRYPOINT [ "dotnet-monitor", "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
