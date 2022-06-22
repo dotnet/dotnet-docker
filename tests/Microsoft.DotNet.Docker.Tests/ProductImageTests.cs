@@ -42,17 +42,19 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            string worldWritableDirectoriesWithoutStickyBitCmd = @"find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \)";
-            string worldWritableFilesCmd = "find / -xdev -type f -perm -o+w";
+            string rootFsPath = imageData.IsDistroless ? "/rootfs" : "/";
+
+            string worldWritableDirectoriesWithoutStickyBitCmd = $@"find {rootFsPath} -xdev -type d \( -perm -0002 -a ! -perm -1000 \)";
+            string worldWritableFilesCmd = $"find {rootFsPath} -xdev -type f -perm -o+w";
             string noUserOrGroupFilesCmd;
             if (imageData.OS.Contains("alpine"))
             {
                 // BusyBox in Alpine doesn't support the more convenient -nouser and -nogroup options for the find command
-                noUserOrGroupFilesCmd = @"find / -xdev -exec stat -c %U-%n {} \+ | { grep ^UNKNOWN || true; }";
+                noUserOrGroupFilesCmd = $@"find {rootFsPath} -xdev -exec stat -c %U-%n {{}} \+ | {{ grep ^UNKNOWN || true; }}";
             }
             else
             {
-                noUserOrGroupFilesCmd = @"find / -xdev \( -nouser -o -nogroup \)";
+                noUserOrGroupFilesCmd = $@"find {rootFsPath} -xdev \( -nouser -o -nogroup \)";
             }
 
             string command = $"/bin/sh -c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd} && {noUserOrGroupFilesCmd}\"";
@@ -60,7 +62,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageTag;
             if (imageData.IsDistroless)
             {
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash", "findutils");
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootFsPath);
             }
             else
             {
@@ -79,13 +81,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)
         {
+            string rootPath = imageData.IsDistroless ? "/rootfs" : "/";
             // Get list of installed RPM packages
-            string command = $"bash -c \"{(imageData.OS == OS.Mariner10Distroless ? "rpm -qa" : "tdnf list installed")} | sort\"";
+            string command = $"bash -c \"rpm -qa -r {rootPath} | sort\"";
 
             string imageTag;
             if (imageData.IsDistroless)
             {
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash", imageData.OS == OS.Mariner10Distroless ? "rpm": "tdnf");
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath);
             }
             else
             {

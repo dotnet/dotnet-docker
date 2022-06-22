@@ -26,22 +26,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyDistrolessRunsAsNonRootUser(ProductImageData imageData)
+        public void VerifyDefaultUser(ProductImageData imageData)
         {
-            if (!imageData.IsDistroless)
-            {
-                return;
-            }
-
-            string command = $"bash -c \"echo $EUID\"";
-
-            string imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash");
-
-            string userId = DockerHelper.Run(
-                image: imageTag,
-                command: command,
-                name: imageData.GetIdentifier("NonRootUser"));
-            Assert.NotEqual("0", userId);
+            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+            string actualUser = DockerHelper.GetImageUser(imageTag);
+            string expectedUser = imageData.IsDistroless ? "app" : string.Empty;
+            Assert.Equal(expectedUser, actualUser);
         }
 
         [LinuxImageTheory]
