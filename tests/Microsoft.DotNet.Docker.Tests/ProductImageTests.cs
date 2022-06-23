@@ -83,7 +83,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string imageTag = imageData.GetImage(ImageType, DockerHelper);
             string actualUser = DockerHelper.GetImageUser(imageTag);
-            string expectedUser = imageData.IsDistroless ? "app" : string.Empty;
+            string expectedUser = imageData.IsDistroless && ImageType != DotNetImageType.SDK ? "app" : string.Empty;
             Assert.Equal(expectedUser, actualUser);
         }
 
