@@ -7,6 +7,7 @@
 [cmdletbinding()]
 param(
     [string]$Version,
+    [string]$RuntimeVersion,
     [string]$Architecture,
     [string]$OS,
     [string]$Registry,
@@ -82,6 +83,7 @@ Try {
     $env:IMAGE_ARCH = $Architecture
     $env:IMAGE_OS = $OS
     $env:IMAGE_VERSION = $Version
+    $env:RUNTIME_VERSION = $RuntimeVersion
     $env:REGISTRY = $Registry
     $env:REPO_PREFIX = $RepoPrefix
     $env:IMAGE_INFO_PATH = $ImageInfoPath

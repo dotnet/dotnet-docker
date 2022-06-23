@@ -150,6 +150,7 @@ jobs:
     - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
       parameters:
         condition: ne(variables.testScriptPath, '')
+        isTestStage: false
   - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
   - ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
     - publish: $(sbomDirectory)

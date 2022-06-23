@@ -1,6 +1,7 @@
 parameters:
   preBuildValidation: false
   internalProjectName: null
+  isTestStage: true
   condition: true
   customInitSteps: []
 
@@ -14,6 +15,16 @@ steps:
 - ${{ parameters.customInitSteps }}
 - script: |
     echo "##vso[task.setvariable variable=testRunner.container]testrunner-$(Build.BuildId)-$(System.JobId)"
+
+    # Test stage groups images by product version whereas
+    # build stage groups images by runtime version.
+    versionArgName=""
+    if [ "${{ parameters.isTestStage }}" == "true" ]; then
+      versionArgName='Version'
+    else
+      versionArgName='RuntimeVersion'
+    fi
+    echo "##vso[task.setvariable variable=versionArgName]$versionArgName"
 
     optionalTestArgs=""
     if [ "${{ parameters.preBuildValidation }}" == "true" ]; then
@@ -57,7 +68,7 @@ steps:
     $(testRunner.container)
     pwsh
     -File $(testScriptPath)
-    -Version '"$(productVersion)"'
+    -$(versionArgName) '"$(productVersion)"'
     -OS '"$(osVariant)"'
     -Architecture '"$(architecture)"'
     $(optionalTestArgs)

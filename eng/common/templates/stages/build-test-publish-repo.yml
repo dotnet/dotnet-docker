@@ -55,6 +55,7 @@ stages:
       preBuildValidation: true
       internalProjectName: ${{ parameters.internalProjectName }}
       customInitSteps: ${{ parameters.customTestInitSteps }}
+      isTestStage: false
   - template: ../jobs/copy-base-images.yml
     parameters:
       name: CopyBaseImages
