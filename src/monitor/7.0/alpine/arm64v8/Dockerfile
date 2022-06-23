@@ -22,8 +22,6 @@ RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.az
     && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shims)/(win|osx)' | xargs rm -rf \
     # Remove all the empty directories left by the previous step
     && find /app -type d -empty -delete \
-    # Allow other users to run the tool
-    && chmod 755 /app/dotnet-monitor \
     && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
 
 
@@ -49,6 +47,8 @@ ENV \
     Logging__Console__FormatterOptions__UseUtcTimestamp=true \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
+
+RUN chmod 755 dotnet-monitor
 
 ENTRYPOINT [ "dotnet-monitor" ]
 CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
