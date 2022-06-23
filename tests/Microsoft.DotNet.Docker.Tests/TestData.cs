@@ -165,7 +165,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static IEnumerable<MonitorImageData> GetMonitorImageData()
         {
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxMonitorTestData : s_windowsMonitorTestData)
-                .FilterMonitorImagesByRuntimeVersion()
+                .FilterImagesByVersion()
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<MonitorImageData>();
@@ -179,12 +179,12 @@ namespace Microsoft.DotNet.Docker.Tests
                     || Regex.IsMatch(imageData.VersionString, versionFilterPattern, RegexOptions.IgnoreCase));
         }
 
-        public static IEnumerable<ImageData> FilterMonitorImagesByRuntimeVersion(this IEnumerable<MonitorImageData> imageData)
+        public static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<MonitorImageData> imageData)
         {
             string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION");
             return imageData
                 .Where(imageData => versionFilterPattern == null
-                    || Regex.IsMatch(imageData.RuntimeVersionString, versionFilterPattern, RegexOptions.IgnoreCase));
+                    || Regex.IsMatch(imageData.VersionString, versionFilterPattern, RegexOptions.IgnoreCase));
         }
 
         public static IEnumerable<ImageData> FilterImagesByArch(this IEnumerable<ImageData> imageData)

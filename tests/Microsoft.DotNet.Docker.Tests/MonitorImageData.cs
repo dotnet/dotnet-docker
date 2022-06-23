@@ -9,7 +9,6 @@ namespace Microsoft.DotNet.Docker.Tests
     public class MonitorImageData : ImageData
     {
         public Version RuntimeVersion { get; set; }
-        public string RuntimeVersionString => RuntimeVersion.ToString(2);
         public Version Version { get; set; }
         public string VersionString => Version.ToString(2);
         public string OSTag { get; set; }
