@@ -21,7 +21,7 @@ namespace Microsoft.DotNet.Docker.Tests
         // Mariner
         public const string Mariner = "cbl-mariner";
 
-        public const string MarinerDistroless = "cbl-mariner-distroless";
+        public const string MarinerDistroless = $"{Mariner}-distroless";
         public const string Mariner10 = $"{Mariner}1.0";
         public const string Mariner10Distroless = $"{Mariner10}-distroless";
         public const string Mariner20 = $"{Mariner}2.0";
