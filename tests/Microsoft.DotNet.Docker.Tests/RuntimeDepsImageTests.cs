@@ -26,16 +26,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyDefaultUser(ProductImageData imageData)
-        {
-            string imageTag = imageData.GetImage(ImageType, DockerHelper);
-            string actualUser = DockerHelper.GetImageUser(imageTag);
-            string expectedUser = imageData.IsDistroless ? "app" : string.Empty;
-            Assert.Equal(expectedUser, actualUser);
-        }
-
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
         public void VerifyPackageInstallation(ProductImageData imageData)
         {
             if (!imageData.OS.Contains("cbl-mariner") || imageData.IsDistroless)

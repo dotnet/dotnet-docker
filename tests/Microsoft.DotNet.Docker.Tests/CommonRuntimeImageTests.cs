@@ -82,5 +82,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
             Assert.Contains("Exit code: 127", ex.Message);
         }
+
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyDefaultUser(ProductImageData imageData)
+        {
+            VerifyCommonDefaultUser(imageData);
+        }
     }
 }

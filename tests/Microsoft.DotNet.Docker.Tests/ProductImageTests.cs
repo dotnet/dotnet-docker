@@ -79,6 +79,14 @@ namespace Microsoft.DotNet.Docker.Tests
             Assert.Empty(output);
         }
 
+        protected void VerifyCommonDefaultUser(ProductImageData imageData)
+        {
+            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+            string actualUser = DockerHelper.GetImageUser(imageTag);
+            string expectedUser = imageData.IsDistroless ? "app" : string.Empty;
+            Assert.Equal(expectedUser, actualUser);
+        }
+
         private IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)
         {
             string rootPath = imageData.IsDistroless ? "/rootfs" : "/";

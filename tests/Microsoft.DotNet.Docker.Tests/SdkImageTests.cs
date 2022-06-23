@@ -224,6 +224,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Concat(AspnetImageTests.GetExpectedRpmPackagesInstalled(imageData)));
         }
 
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyDefaultUser(ProductImageData imageData)
+        {
+            VerifyCommonDefaultUser(imageData);
+        }
+
         private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
         {
             string dotnetPath;
