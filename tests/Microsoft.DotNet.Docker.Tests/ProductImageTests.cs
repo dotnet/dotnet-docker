@@ -83,7 +83,23 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string imageTag = imageData.GetImage(ImageType, DockerHelper);
             string actualUser = DockerHelper.GetImageUser(imageTag);
-            string expectedUser = imageData.IsDistroless && ImageType != DotNetImageType.SDK ? "app" : string.Empty;
+
+            string expectedUser;
+            if (imageData.IsDistroless && ImageType != DotNetImageType.SDK)
+            {
+                expectedUser = "app";
+            }
+            // For Windows, only Nano Server defines a user, which seems wrong.
+            // I've logged https://dev.azure.com/microsoft/OS/_workitems/edit/40146885 for this.
+            else if (imageData.OS.StartsWith(OS.NanoServer))
+            {
+                expectedUser = "ContainerUser";
+            }
+            else
+            {
+                expectedUser = string.Empty;
+            }
+
             Assert.Equal(expectedUser, actualUser);
         }
 
