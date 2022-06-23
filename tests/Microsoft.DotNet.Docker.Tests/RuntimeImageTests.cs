@@ -71,6 +71,13 @@ namespace Microsoft.DotNet.Docker.Tests
             base.VerifyCommonNoSasToken(imageData);
         }
 
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyDefaultUser(ProductImageData imageData)
+        {
+            VerifyCommonDefaultUser(imageData);
+        }
+
         public static EnvironmentVariableInfo GetRuntimeVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
         {
             string version = imageData.GetProductVersion(DotNetImageType.Runtime, dockerHelper);

@@ -45,6 +45,13 @@ namespace Microsoft.DotNet.Docker.Tests
             base.VerifyCommonNoSasToken(imageData);
         }
 
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyDefaultUser(ProductImageData imageData)
+        {
+            VerifyCommonDefaultUser(imageData);
+        }
+
         internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>
             new string[]
                 {
