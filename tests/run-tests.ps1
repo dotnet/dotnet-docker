@@ -79,13 +79,14 @@ Try {
         $OS += "*"
     }
 
-    # PR builds group image build and test by runtime version.
-    # CI builds group image build by the same criteria but run tests in separate jobs that are grouped by image version.
+    # Public builds group image build and test by runtime version.
+    # Internal builds group image build by the same criteria but run tests in separate jobs that are grouped by image version.
     # The distinction is not apparent for images such as 'runtime', 'aspnet', and 'sdk' because
     # their major.minor versions for the image and the product are the same.
     # However, other images such as 'monitor' can have a product version that is distinct from the runtime version.
-    # Thus, filter images by runtime version in PR builds and by image version in non-PR builds.
-    if ($env:BUILD_REASON -eq 'PullRequest') {
+    # Thus, filter images by runtime version in public builds and by image version in internal builds.
+    # The default case (where the environment variable is not available) should filter on image version.
+    if ($env:SYSTEM_TEAMPROJECT -eq "public") {
         $env:RUNTIME_VERSION = $Version
     } else {
         $env:IMAGE_VERSION = $Version
