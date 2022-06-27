@@ -60,6 +60,11 @@ stages:
               # test step.
               $testInit='$Env:SAS_QUERY_STRING=' + "'$sasQueryString'" + '; $Env:NUGET_FEED_PASSWORD=''$(dn-bot-dnceng-artifact-feeds-rw)'''
           }
+
+          # Forward build reason for consumption by test script
+          if ($env:BUILD_REASON) {
+            $testRunnerOptions="$testRunnerOptions -e BUILD_REASON='$env:BUILD_REASON'"
+          }
         }
         
         echo "##vso[task.setvariable variable=testRunner.options]$testRunnerOptions"

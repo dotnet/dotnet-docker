@@ -85,7 +85,7 @@ Try {
     # their major.minor versions for the image and the product are the same.
     # However, other images such as 'monitor' can have a product version that is distinct from the runtime version.
     # Thus, filter images by runtime version in PR builds and by image version in non-PR builds.
-    if (($env:BUILD_REASON -eq 'PullRequest') -or ($env:SYSTEM_PULLREQUEST_PULLREQUESTID)) {
+    if ($env:BUILD_REASON -eq 'PullRequest') {
         $env:RUNTIME_VERSION = $Version
     } else {
         $env:IMAGE_VERSION = $Version
