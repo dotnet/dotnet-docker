@@ -58,12 +58,16 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             List<EnvironmentVariableInfo> variables = new()
             {
-                new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty),
                 new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
                 new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
                 new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip")
             };
             variables.AddRange(GetCommonEnvironmentVariables());
+
+            if (imageData.Version.Major > 3 || imageData.SdkOS.StartsWith(OS.Alpine) || !DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty));
+            }
 
             if (imageData.Version.Major >= 3)
             {
@@ -218,6 +222,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     $"netstandard-targeting-pack-2.1"
                 }
                 .Concat(AspnetImageTests.GetExpectedRpmPackagesInstalled(imageData)));
+        }
+
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyDefaultUser(ProductImageData imageData)
+        {
+            VerifyCommonDefaultUser(imageData);
         }
 
         private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)

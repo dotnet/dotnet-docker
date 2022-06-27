@@ -1,0 +1,9 @@
+ARG base_image
+ARG distroless_image
+
+FROM $distroless_image AS distroless
+
+FROM $base_image
+
+ARG root_destination
+COPY --from=distroless / $root_destination

@@ -3,11 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -56,29 +58,20 @@ namespace Microsoft.DotNet.Docker.Tests
         /// </summary>
         /// <remarks>
         /// Because distroless containers do not contain a shell, and potentially other packages necessary for testing,
-        /// this helper image adds the necessary packages to a distroless image.
+        /// this helper image stores the entire root of the distroless filesystem at the specified destination path within
+        /// the built container image.
         /// </remarks>
-        public string BuildDistrolessHelper(DotNetImageType imageType, ProductImageData imageData, params string[] requiredPackages)
+        public string BuildDistrolessHelper(DotNetImageType imageType, ProductImageData imageData, string rootDestination)
         {
-            string dockerfile;
-            if (imageData.OS.Contains("mariner"))
-            {
-                dockerfile = Path.Combine(TestArtifactsDir, "Dockerfile.cbl-mariner-distroless");
-            }
-            else
-            {
-                throw new NotImplementedException($"Distroless helper not implemented for OS '{imageData.OS}'");
-            }
-
-            string baseImageTag = imageData.GetImage(imageType, this);
-            string installerImageTag = baseImageTag.Replace("-distroless", string.Empty);
+            string dockerfile = Path.Combine(TestArtifactsDir, "Dockerfile.distroless");
+            string distrolessImageTag = imageData.GetImage(imageType, this);
+            string baseImageTag = distrolessImageTag.Replace("-distroless", string.Empty);
 
             string tag = imageData.GetIdentifier("distroless-helper");
             Build(tag, dockerfile, null, TestArtifactsDir, false,
-                $"installer_image={installerImageTag}",
+                $"distroless_image={distrolessImageTag}",
                 $"base_image={baseImageTag}",
-                $"\"required_packages={string.Join(" ", requiredPackages)}\"",
-                $"os_version={imageData.OsVersion}");
+                $"root_destination={rootDestination}");
             return tag;
         }
 
@@ -183,6 +176,18 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static string GetDockerOS() => Execute("version -f \"{{ .Server.Os }}\"");
         private static string GetDockerArch() => Execute("version -f \"{{ .Server.Arch }}\"");
+
+        public string GetImageUser(string image) => ExecuteWithLogging($"inspect -f \"{{{{ .Config.User }}}}\" {image}");
+
+        public IDictionary<string, string> GetEnvironmentVariables(string image)
+{
+            string envVarsStr = ExecuteWithLogging($"inspect -f \"{{{{json .Config.Env }}}}\" {image}");
+            JArray envVarsArray = (JArray)JsonConvert.DeserializeObject(envVarsStr);
+            return envVarsArray
+                .ToDictionary(
+                    item => item.ToString().Split('=')[0],
+                    item => item.ToString().Split('=')[1]);
+        }
 
         public string GetContainerAddress(string container)
         {

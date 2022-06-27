@@ -41,15 +41,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
             }
 
-            string imageTag;
-            if (imageData.IsDistroless)
-            {
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash");
-            }
-            else
-            {
-                imageTag = imageData.GetImage(ImageType, DockerHelper);
-            }
+            string imageTag = imageData.GetImage(ImageType, DockerHelper);
 
             EnvironmentVariableInfo.Validate(variables, imageTag, imageData, DockerHelper);
         }
