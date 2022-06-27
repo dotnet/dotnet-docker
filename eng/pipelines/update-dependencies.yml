@@ -31,7 +31,6 @@ stages:
         --email $(dotnetDockerBot.email)
         --password $(BotAccount-dotnet-docker-bot-PAT)
         --stable-branding $(dotnetStableBranding)
-        --version-source-name dotnet/installer
       displayName: Run Update Dependencies
 - stage: Monitor
   condition: eq(variables['update-monitor-enabled'], 'true')
