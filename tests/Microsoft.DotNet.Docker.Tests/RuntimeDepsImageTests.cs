@@ -26,26 +26,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyDistrolessRunsAsNonRootUser(ProductImageData imageData)
-        {
-            if (!imageData.IsDistroless)
-            {
-                return;
-            }
-
-            string command = $"bash -c \"echo $EUID\"";
-
-            string imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash");
-
-            string userId = DockerHelper.Run(
-                image: imageTag,
-                command: command,
-                name: imageData.GetIdentifier("NonRootUser"));
-            Assert.NotEqual("0", userId);
-        }
-
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
         public void VerifyPackageInstallation(ProductImageData imageData)
         {
             if (!imageData.OS.Contains("cbl-mariner") || imageData.IsDistroless)
@@ -63,6 +43,13 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VerifyNoSasToken(ProductImageData imageData)
         {
             base.VerifyCommonNoSasToken(imageData);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyDefaultUser(ProductImageData imageData)
+        {
+            VerifyCommonDefaultUser(imageData);
         }
 
         internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>
