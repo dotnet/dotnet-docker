@@ -7,7 +7,6 @@
 [cmdletbinding()]
 param(
     [string]$Version,
-    [string]$RuntimeVersion,
     [string]$Architecture,
     [string]$OS,
     [string]$Registry,
@@ -80,10 +79,20 @@ Try {
         $OS += "*"
     }
 
+    # PR builds group image build and test by runtime version.
+    # CI builds group image build by the same criteria but run tests in separate jobs that are grouped by image version.
+    # The distinction is not apparent for images such as 'runtime', 'aspnet', and 'sdk' because
+    # their major.minor versions for the image and the product are the same.
+    # However, other images such as 'monitor' can have a product version that is distinct from the runtime version.
+    # Thus, filter images by runtime version in PR builds and by image version in non-PR builds.
+    if ($env:BUILD_REASON -eq 'PullRequest') {
+        $env:RUNTIME_VERSION = $Version
+    } else {
+        $env:IMAGE_VERSION = $Version
+    }
+
     $env:IMAGE_ARCH = $Architecture
     $env:IMAGE_OS = $OS
-    $env:IMAGE_VERSION = $Version
-    $env:RUNTIME_VERSION = $RuntimeVersion
     $env:REGISTRY = $Registry
     $env:REPO_PREFIX = $RepoPrefix
     $env:IMAGE_INFO_PATH = $ImageInfoPath

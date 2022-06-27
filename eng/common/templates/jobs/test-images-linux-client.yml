@@ -5,7 +5,6 @@ parameters:
   testJobTimeout: 60
   preBuildValidation: false
   internalProjectName: null
-  isTestStage: true
   customInitSteps: []
 
 jobs:
@@ -25,4 +24,3 @@ jobs:
       preBuildValidation: ${{ parameters.preBuildValidation }}
       internalProjectName: ${{ parameters.internalProjectName }}
       customInitSteps: ${{ parameters.customInitSteps }}
-      isTestStage: ${{ parameters.isTestStage }}
