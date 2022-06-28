@@ -37,20 +37,16 @@ stages:
         }
         echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
       displayName: Set Custom Build Variables
-    - ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-      - powershell: |
-          $testRunnerOptions=""
+    - powershell: |
+        # Forward team project name for consumption by test script
+        $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT'"
 
-          # Forward team project name for consumption by test script
-          if ($env:SYSTEM_TEAMPROJECT) {
-            $testRunnerOptions="$testRunnerOptions -e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT'"
-          }
-
-          echo "##vso[task.setvariable variable=testRunner.options]$testRunnerOptions"
-        displayName: Set Custom Test Variables
+        echo "##vso[task.setvariable variable=testRunner.options]$testRunnerOptions"
+      displayName: Set Custom Test Variables
     customTestInitSteps:
     - powershell: |
-        $testRunnerOptions=""
+        # Forward team project name for consumption by test script
+        $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT'"
         $testInit=""
 
         if ("$(publishRepoPrefix)".Contains("/internal/")) {
@@ -62,7 +58,7 @@ stages:
           }
 
           if ($Env:AGENT_OS -eq 'Linux') {
-            $testRunnerOptions="-e SAS_QUERY_STRING='$sasQueryString' -e NUGET_FEED_PASSWORD='$(dn-bot-dnceng-artifact-feeds-rw)'"
+            $testRunnerOptions="$testRunnerOptions -e SAS_QUERY_STRING='$sasQueryString' -e NUGET_FEED_PASSWORD='$(dn-bot-dnceng-artifact-feeds-rw)'"
           }
 
           if ($Env:AGENT_OS -eq 'Windows_NT') {
@@ -70,11 +66,6 @@ stages:
               # variables to be resolved in this script. We're generating the script here to be executed by the
               # test step.
               $testInit='$Env:SAS_QUERY_STRING=' + "'$sasQueryString'" + '; $Env:NUGET_FEED_PASSWORD=''$(dn-bot-dnceng-artifact-feeds-rw)'''
-          }
-
-          # Forward team project name for consumption by test script
-          if ($env:SYSTEM_TEAMPROJECT) {
-            $testRunnerOptions="$testRunnerOptions -e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT'"
           }
         }
         
