@@ -37,9 +37,16 @@ stages:
         }
         echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
       displayName: Set Custom Build Variables
+    - powershell: |
+        # Forward team project name for consumption by test script
+        $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT'"
+
+        echo "##vso[task.setvariable variable=testRunner.options]$testRunnerOptions"
+      displayName: Set Custom Test Variables
     customTestInitSteps:
     - powershell: |
-        $testRunnerOptions=""
+        # Forward team project name for consumption by test script
+        $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT'"
         $testInit=""
 
         if ("$(publishRepoPrefix)".Contains("/internal/")) {
@@ -51,7 +58,7 @@ stages:
           }
 
           if ($Env:AGENT_OS -eq 'Linux') {
-            $testRunnerOptions="-e SAS_QUERY_STRING='$sasQueryString' -e NUGET_FEED_PASSWORD='$(dn-bot-dnceng-artifact-feeds-rw)'"
+            $testRunnerOptions="$testRunnerOptions -e SAS_QUERY_STRING='$sasQueryString' -e NUGET_FEED_PASSWORD='$(dn-bot-dnceng-artifact-feeds-rw)'"
           }
 
           if ($Env:AGENT_OS -eq 'Windows_NT') {

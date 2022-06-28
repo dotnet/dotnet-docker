@@ -7,12 +7,12 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class ProductImageData : ImageData
+    public class ProductImageData : VersionedImageData
     {
         private string _sdkOS;
 
-        public Version Version { get; set; }
-        public string VersionString => Version.ToString(2);
+        public override Version RuntimeVersion => Version;
+
         public bool HasCustomSdk => _sdkOS != null;
 
         public string SdkOS

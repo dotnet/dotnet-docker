@@ -146,6 +146,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxTestData : s_windowsTestData)
                 .FilterImagesByVersion()
+                .FilterImagesByRuntimeVersion()
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<ProductImageData>();
@@ -165,13 +166,14 @@ namespace Microsoft.DotNet.Docker.Tests
         public static IEnumerable<MonitorImageData> GetMonitorImageData()
         {
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxMonitorTestData : s_windowsMonitorTestData)
-                .FilterMonitorImagesByRuntimeVersion()
+                .FilterImagesByVersion()
+                .FilterImagesByRuntimeVersion()
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<MonitorImageData>();
         }
 
-        public static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<ProductImageData> imageData)
+        public static IEnumerable<VersionedImageData> FilterImagesByVersion(this IEnumerable<VersionedImageData> imageData)
         {
             string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION");
             return imageData
@@ -179,12 +181,12 @@ namespace Microsoft.DotNet.Docker.Tests
                     || Regex.IsMatch(imageData.VersionString, versionFilterPattern, RegexOptions.IgnoreCase));
         }
 
-        public static IEnumerable<ImageData> FilterMonitorImagesByRuntimeVersion(this IEnumerable<MonitorImageData> imageData)
+        public static IEnumerable<VersionedImageData> FilterImagesByRuntimeVersion(this IEnumerable<VersionedImageData> imageData)
         {
-            string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION");
+            string runtimeVersionFilterPattern = GetFilterRegexPattern("RUNTIME_VERSION");
             return imageData
-                .Where(imageData => versionFilterPattern == null
-                    || Regex.IsMatch(imageData.RuntimeVersionString, versionFilterPattern, RegexOptions.IgnoreCase));
+                .Where(imageData => runtimeVersionFilterPattern == null
+                    || Regex.IsMatch(imageData.RuntimeVersionString, runtimeVersionFilterPattern, RegexOptions.IgnoreCase));
         }
 
         public static IEnumerable<ImageData> FilterImagesByArch(this IEnumerable<ImageData> imageData)
