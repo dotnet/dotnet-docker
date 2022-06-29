@@ -38,7 +38,7 @@ RUN curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DO
     && dotnet_sha512='5f24d83ab85eda5dee1148c150a45c9886bd6b843464ed8529591c1b50a71bc589d502811057aa2b00ebd3a03373ae384ec594e14d81f0dfadeed896df0c4a91' \
     && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
     \
-    && tdnf install -y dotnet.rpm apphost.rpm targeting-pack.rpm aspnetcore-targeting-pack.rpm \
+    && tdnf install -y --disablerepo=* dotnet.rpm apphost.rpm targeting-pack.rpm aspnetcore-targeting-pack.rpm \
     && rm dotnet.rpm apphost.rpm targeting-pack.rpm aspnetcore-targeting-pack.rpm \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
