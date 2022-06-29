@@ -5,7 +5,9 @@
     set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
     set targetFrameworkMoniker to cat("net", dotnetMajorMinor) ^
     set targetFrameworkMonikerRegex to cat("net", dotnetMajor, "[.]0") ^
-    set installerBaseTag to cat(VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
+    set sdkDistro to when(isDistrolessMariner, cat("cbl-mariner", OS_VERSION_NUMBER), OS_VERSION) ^
+    set installerBaseTag to cat(VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")], "-", sdkDistro, ARCH_TAG_SUFFIX) ^
     set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
     set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
@@ -44,6 +46,8 @@ RUN {{InsertTemplate("../Dockerfile.linux.download-file",
     && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shims)/(win|osx)' | xargs rm -rf \
     # Remove all the empty directories left by the previous step
     && find /app -type d -empty -delete \
+    # Allow other users to run the tool
+    && chmod 755 /app/dotnet-monitor \
     && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
 
 
@@ -69,7 +73,5 @@ ENV \
     Logging__Console__FormatterOptions__UseUtcTimestamp=true \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
-
-RUN chmod 755 dotnet-monitor
 
 {{InsertTemplate(cat("Dockerfile.entrypoint.monitorV", monitorMajor))}}
