@@ -81,7 +81,10 @@ FROM {{runtimeDepsBaseTag}}
         "installer-stage": "installer"
     ])}}}}{{ if isDistrolessMariner:
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
-COPY --from=installer ["/dotnet-symlink", "/usr/bin"]^
+COPY --from=installer ["/dotnet-symlink", "/usr/bin"]{{ if dotnetVersion != "3.1" && dotnetVersion != "6.0":
+
+ENTRYPOINT ["/usr/bin/dotnet"]
+CMD ["--info"]}}^
 elif !(isInternal && isFullMariner):
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
