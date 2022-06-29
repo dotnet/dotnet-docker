@@ -126,16 +126,20 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly MonitorImageData[] s_linuxMonitorTestData =
         {
-            new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Alpine316, OSTag = OS.Alpine, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Alpine316, OSTag = OS.Alpine, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Alpine316, OSTag = OS.Alpine, Arch = Arch.Arm64 },
-            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Arm64 },
-            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Alpine316, OSTag = OS.Alpine, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Alpine316, OSTag = OS.Alpine, Arch = Arch.Arm64 },
-            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Alpine316,           OSTag = OS.Alpine,            Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Alpine316,           OSTag = OS.Alpine,            Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Alpine316,           OSTag = OS.Alpine,            Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Alpine316,           OSTag = OS.Alpine,            Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Alpine316,           OSTag = OS.Alpine,            Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64 },
         };
 
         private static readonly MonitorImageData[] s_windowsMonitorTestData =

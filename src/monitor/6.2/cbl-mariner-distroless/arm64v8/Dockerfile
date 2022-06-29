@@ -2,11 +2,11 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:6.0.301-alpine3.16-arm64v8 AS installer
+FROM $SDK_REPO:6.0.301-cbl-mariner2.0-arm64v8 AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION=6.2.0
-RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
+RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
     && dotnetmonitor_sha512='1e06afa71563de44aff836d06b3e9ef34b5e64418766f42ee588337117bf390c45d4df6f31b048db7db108d2cc44651947628fe22ab3f629fb78652a5fc9f5f5' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net6.0 --no-cache \
@@ -28,7 +28,7 @@ RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azure
 
 
 # Monitor image
-FROM $ASPNET_REPO:6.0.6-alpine3.16-arm64v8
+FROM $ASPNET_REPO:6.0.6-cbl-mariner2.0-distroless-arm64v8
 
 WORKDIR /app
 COPY --from=installer /app .
