@@ -90,12 +90,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [Fact]
         public void VerifyComplexAppSample()
         {
-            if (!DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                OutputHelper.WriteLine("Disable this test for Windows due to https://github.com/dotnet/dotnet-docker/issues/3510. Reenable when fixed.");
-                return;
-            }
-
             string appTag = SampleImageData.GetImageName("complexapp-local-app");
             string testTag = SampleImageData.GetImageName("complexapp-local-test");
             string sampleFolder = Path.Combine(s_samplesPath, "complexapp");
