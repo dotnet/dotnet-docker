@@ -203,10 +203,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static IEnumerable<ImageData> FilterImagesByOs(this IEnumerable<ImageData> imageData)
         {
-            string osFilterPattern = GetFilterRegexPattern("IMAGE_OS");
+            IEnumerable<string> osFilterPatterns = Config.OsNames
+                .Select(osName => Config.GetFilterRegexPattern(osName));
+
             return imageData
-                .Where(imageData => osFilterPattern == null
-                    || Regex.IsMatch(imageData.OS, osFilterPattern, RegexOptions.IgnoreCase));
+                .Where(imageData => !osFilterPatterns.Any()
+                    || osFilterPatterns.Any(osFilterPattern => Regex.IsMatch(imageData.OS, osFilterPattern, RegexOptions.IgnoreCase)));
         }
 
         private static string GetFilterRegexPattern(string filterEnvName)
