@@ -33,11 +33,12 @@ steps:
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
       condition: ${{ parameters.condition }}
+- template: parse-os-versions.yml
 - powershell: >
     $(test.init);
     $(testScriptPath)
     -Version '$(productVersion)'
-    -OS '$(osVariant)'
+    -OSVersions $(osVersionsArrayInitStr)
     $(optionalTestArgs)
   displayName: Test Images
   condition: and(succeeded(), ${{ parameters.condition }})
@@ -55,7 +56,7 @@ steps:
     testResultsFiles: '$(testResultsDirectory)/**/*.trx'
     mergeTestResults: true
     publishRunAttachments: true
-    testRunTitle: $(productVersion) $(osVariant) amd64
+    testRunTitle: $(productVersion) $(osVersionsDisplayName) amd64
 - ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
   - template: cleanup-docker-windows.yml
     parameters:
