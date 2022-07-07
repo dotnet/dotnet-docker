@@ -26,8 +26,8 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string RepoPrefix { get; } = Environment.GetEnvironmentVariable("REPO_PREFIX") ?? string.Empty;
         public static string Registry { get; } =
             Environment.GetEnvironmentVariable("REGISTRY") ?? (string)Manifest.Value["registry"];
-        public static string Os { get; } =
-            Environment.GetEnvironmentVariable("IMAGE_OS") ?? string.Empty;
+        public static string[] OsNames { get; } =
+            (Environment.GetEnvironmentVariable("IMAGE_OS_NAMES") ?? string.Empty).Split(",", StringSplitOptions.RemoveEmptyEntries);
         public static string SourceBranch { get; } =
             Environment.GetEnvironmentVariable("SOURCE_BRANCH") ?? string.Empty;
         public static string SasQueryString { get; } =
