@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:6.0.5-cbl-mariner2.0-arm64v8
+FROM $REPO:6.0.7-cbl-mariner2.0-arm64v8
 
 RUN tdnf install -y \
         ca-certificates-microsoft \
@@ -8,7 +8,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # .NET Runtime version
-ENV DOTNET_VERSION=6.0.5
+ENV DOTNET_VERSION=6.0.7-servicing.22322.2
 
 # Install .NET Runtime
 RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-arm64.tar.gz \

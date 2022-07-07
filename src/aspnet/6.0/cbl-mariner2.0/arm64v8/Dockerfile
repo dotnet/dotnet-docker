@@ -1,8 +1,8 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:6.0.5-cbl-mariner2.0-arm64v8
+FROM $REPO:6.0.7-cbl-mariner2.0-arm64v8
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=6.0.5
+ENV ASPNET_VERSION=6.0.7-servicing.22322.5
 
 # Install ASP.NET Core
 RUN curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-arm64.tar.gz \

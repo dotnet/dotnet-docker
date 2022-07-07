@@ -8,7 +8,7 @@ ENV `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # .NET Runtime version
-    DOTNET_VERSION=6.0.5
+    DOTNET_VERSION=6.0.7-servicing.22322.2
 
 # Install .NET Runtime
 RUN powershell -Command `
