@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -10,16 +11,19 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         public SkippableTheoryAttribute(params string[] skippedOperatingSystems)
         {
-            if (!string.IsNullOrEmpty(Config.Os) && Config.Os != "*")
+            if (Config.OsNames.Any() && !Config.OsNames.Any(osName => osName != "*"))
             {
-                string osPattern =
-                    Config.Os != null ? Config.GetFilterRegexPattern(Config.Os) : null;
-                foreach (string skippedOperatingSystem in skippedOperatingSystems)
+                foreach (string osName in Config.OsNames)
                 {
-                    if (Regex.IsMatch(skippedOperatingSystem, osPattern, RegexOptions.IgnoreCase))
+                    string osPattern =
+                        osName != null ? Config.GetFilterRegexPattern(osName) : null;
+                    foreach (string skippedOperatingSystem in skippedOperatingSystems)
                     {
-                        Skip = $"{skippedOperatingSystem} is unsupported";
-                        break;
+                        if (Regex.IsMatch(skippedOperatingSystem, osPattern, RegexOptions.IgnoreCase))
+                        {
+                            Skip = $"{skippedOperatingSystem} is unsupported";
+                            break;
+                        }
                     }
                 }
             }
