@@ -1,10 +1,10 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:6.0.5-windowsservercore-ltsc2022
+FROM $REPO:6.0.7-windowsservercore-ltsc2022
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=6.0.5
+ENV ASPNET_VERSION=6.0.7-servicing.22322.5
 
 # Install ASP.NET Core Runtime
 RUN powershell -Command `

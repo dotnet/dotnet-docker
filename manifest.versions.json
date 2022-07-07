@@ -11,7 +11,7 @@
     "aspnet|3.1|win|x64|sha": "7ca3cfaf814b12fbfc65a0faa1f858dece790fb08f814f99c5e1f062ead7a75db6e13e035aaa0d5d9a07a487b84496ecda23f9e4cc92fca4dd1143fda89cc898",
     "aspnet-runtime-targeting-pack|3.1|linux-rpm|x64|sha": "fdab7122896ff3602d8a25c0b283996973ef0cf4f4d0f9eba429d3a93b2441ebe0e0d0b499b97bb28c43cfb386501cc617ca7ed7c949dd3e45c61db0d5879fd4",
 
-    "aspnet|6.0|build-version": "6.0.5",
+    "aspnet|6.0|build-version": "6.0.7-servicing.22322.5",
     "aspnet|6.0|targeting-pack-version": "$(aspnet|6.0|build-version)",
     "aspnet|6.0|linux-musl|x64|sha": "b9f07997e5a930e096772a182fcb8f44826cf5fdaf4a5f8d5a9eba4f157373c694a50f57ee1b799fb0e6d4c4d8389cb45409d928e3fc5ea6f56303a190e1941a",
     "aspnet|6.0|linux-musl|arm|sha": "5985538ec6d0071d850a1b003808feec72281e6b89dcf13595dfe541ad982833615761057491675cb6084fe181c2a14cb66fbe2ca54bb8d5d6ba52336b3c1d2c",
@@ -65,7 +65,7 @@
     "base-url|7.0-monitor|nightly": "$(base-url|public|nightly)",
 
     "dotnet|3.1|product-version": "3.1.25",
-    "dotnet|6.0|product-version": "6.0.5",
+    "dotnet|6.0|product-version": "6.0.7",
     "dotnet|7.0|product-version": "7.0.0-preview.5",
 
     "libicu|bionic": 60,
@@ -130,7 +130,7 @@
     "runtime-hostfxr|3.1|linux-rpm|x64|sha": "49e02a80a9a717cc5ddd03ac25a390ff218c4214c7972f88dd64bfc1505dababe0d500b2ac1b7570031f9f4a8aa3ce3a4f399c026c185ba1d954767d5695644a",
     "runtime-targeting-pack|3.1|linux-rpm|x64|sha": "9111ef4a0083c1fbd969f5adfca8f7b0a2e90eada94771c68ca4d00d34756fb280de153ecce4ad3da4b16698b7add4848f5b6ec24b89a144c2a119a42fb27c85",
 
-    "runtime|6.0|build-version": "6.0.5",
+    "runtime|6.0|build-version": "6.0.7-servicing.22322.2",
     "runtime|6.0|targeting-pack-version": "$(runtime|6.0|build-version)",
     "runtime|6.0|linux-musl|x64|sha": "de0224c5cb933ff557d19c4293a7a3591a54ae1b5d2de1f663195a1cab34c89986999fd63d43fe6d31fc5ad467d5f5cbd15636fa672c34303fc7eddb1708db7f",
     "runtime|6.0|linux-musl|arm|sha": "bcbbaa72b6bcc667d735f42107181eb8943f0138d0093cac78a5ee24b167a1577b5224f0ec399057eea84bcddecb810f22cd307687176c3e2db3796b2b25fd8b",
@@ -144,7 +144,7 @@
     "runtime-deps-cm.1|6.0|linux-rpm|x64|sha": "ec973c8c381efb1aa8489e7f77c2a496897ed2fa6b9b8f8992a7d35569a3d9c30174327684b62a1b4c2dfa032702b9fcc12c84a9c42dbf0b55b710069f473927",
     "runtime-host|6.0|linux-rpm|x64|sha": "24bd2fe3ec4620929eca877aa5d5fd6335891027e2cce1180a4294bdb167f3d25801953fc25f203ca8711502e4d11e1ff8e5a6e6451d845faea2573c0b0b1c72",
     "runtime-hostfxr|6.0|linux-rpm|x64|sha": "8ed43a4240b2263107a30b58ac325dca9f203023053948b7a2d29c3bbd9f79b80130645ed88dec66a5d5e7b1b2dc972aef0efb0a720c3f27a87164dd052ae04a",
-    "runtime-targeting-pack|6.0|linux-rpm|x64|sha": "8083c8195a814ef590414376adcabad6ca0a0ec08b70af0c2a504e6d992d55cdca12af170871805fea41fc14d9f18a7ad878b44e859e56c86f095f3b4c9b5b63",
+    "runtime-targeting-pack|6.0|linux-rpm|x64|sha": "d66a3f413d80503f92bdf9b74defbb35c08e06d4ce5279ee8f473aa59bc2cbab74b431d44af21dbe6af5b5b9f667d08ba19378e53e776023bc74625e59d58a46",
 
     "runtime|7.0|build-version": "7.0.0-preview.5.22301.12",
     "runtime|7.0|targeting-pack-version": "$(runtime|7.0|build-version)",
@@ -171,8 +171,8 @@
     "sdk|3.1|linux|x64|sha": "957d9561b346226806270a969a302217dec2a5e4853225d73fbf85f20f6107137ac5678a6ffdf5c170a72f5ef93e3defe3218970bc20d97a4f880d5c7577376f",
     "sdk|3.1|win|x64|sha": "6fb9d6aeed88e8c9499230dbcd0bf5783c6741d0b5837867449057adfe300cc068caab9303361789441a079acd92b9cb7c73154187ece7fc4b210e2dfdbbca70",
 
-    "sdk|6.0|build-version": "6.0.300",
-    "sdk|6.0|product-version": "6.0.300",
+    "sdk|6.0|build-version": "6.0.302-servicing.22323.16",
+    "sdk|6.0|product-version": "6.0.302",
     "sdk|6.0|linux-musl|arm|sha": "515762d63d070e5a0b01a442dfdfa9df02b683b2624ceba81617da4cb21141df47a469c50457962bb5ad6801eb529ca1bf845fc713357192b09201d6db349619",
     "sdk|6.0|linux-musl|arm64|sha": "4213881a029f6624011e3ae1082d4bb43783cbffac0a2bdc1865cf1a802884c416b9b7faee17099d689d0d18a2a1c1a03b9bdd0c42de27b721e05d872e4affc4",
     "sdk|6.0|linux-musl|x64|sha": "c7a443e8e037be1b10d803f083832d7ac329006798c45d40d02a316009c886070c1ffc2033bdbe816df66e3840bfd7977f2f9a61e28235857a69c552a8d9c2fd",
