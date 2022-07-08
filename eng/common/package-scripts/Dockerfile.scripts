@@ -1,3 +1,0 @@
-ARG BASETAG
-FROM $BASETAG
-COPY . /scripts
