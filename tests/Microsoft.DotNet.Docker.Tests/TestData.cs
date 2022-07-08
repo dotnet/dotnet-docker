@@ -18,7 +18,6 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V3_1, OS = OS.BusterSlim,          Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Bionic,              Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Focal,               Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.Alpine314,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Alpine315,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Alpine316,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.BullseyeSlim,        Arch = Arch.Arm },
@@ -29,14 +28,12 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V3_1, OS = OS.BusterSlim,          Arch = Arch.Arm64 },
             new ProductImageData { Version = V3_1, OS = OS.Bionic,              Arch = Arch.Arm64 },
             new ProductImageData { Version = V3_1, OS = OS.Focal,               Arch = Arch.Arm64 },
-            new ProductImageData { Version = V3_1, OS = OS.Alpine314,           Arch = Arch.Arm64,   SdkOS = OS.Buster },
             new ProductImageData { Version = V3_1, OS = OS.Alpine315,           Arch = Arch.Arm64,   SdkOS = OS.Buster },
             new ProductImageData { Version = V3_1, OS = OS.Alpine316,           Arch = Arch.Arm64,   SdkOS = OS.Buster },
             new ProductImageData { Version = V3_1, OS = OS.Mariner10,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.BullseyeSlim,        Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.Alpine314,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine315,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine316,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Mariner10,           Arch = Arch.Amd64 },
@@ -51,8 +48,6 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Arm },
             new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Arm64 },
-            new ProductImageData { Version = V6_0, OS = OS.Alpine314,           Arch = Arch.Arm },
-            new ProductImageData { Version = V6_0, OS = OS.Alpine314,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine315,           Arch = Arch.Arm },
             new ProductImageData { Version = V6_0, OS = OS.Alpine315,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine316,           Arch = Arch.Arm },
@@ -203,10 +198,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static IEnumerable<ImageData> FilterImagesByOs(this IEnumerable<ImageData> imageData)
         {
-            string osFilterPattern = GetFilterRegexPattern("IMAGE_OS");
+            IEnumerable<string> osFilterPatterns = Config.OsNames
+                .Select(osName => Config.GetFilterRegexPattern(osName));
+
             return imageData
-                .Where(imageData => osFilterPattern == null
-                    || Regex.IsMatch(imageData.OS, osFilterPattern, RegexOptions.IgnoreCase));
+                .Where(imageData => !osFilterPatterns.Any()
+                    || osFilterPatterns.Any(osFilterPattern => Regex.IsMatch(imageData.OS, osFilterPattern, RegexOptions.IgnoreCase)));
         }
 
         private static string GetFilterRegexPattern(string filterEnvName)

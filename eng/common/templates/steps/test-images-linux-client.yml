@@ -50,17 +50,18 @@ steps:
       parameters:
         targetPath: $(Build.ArtifactStagingDirectory)
         condition: ${{ parameters.condition }}
+- template: parse-os-versions.yml
 - powershell: >
     $(test.init);
     docker exec
     $(testRunner.options)
     $(testRunner.container)
     pwsh
-    -File $(testScriptPath)
-    -Version '"$(productVersion)"'
-    -OS '"$(osVariant)"'
-    -Architecture '"$(architecture)"'
-    $(optionalTestArgs)
+    -Command "$(testScriptPath)
+    -Version '$(productVersion)'
+    -OSVersions $(osVersionsArrayInitStr)
+    -Architecture '$(architecture)'
+    $(optionalTestArgs)"
   displayName: Test Images
   condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
@@ -86,7 +87,7 @@ steps:
     mergeTestResults: true
     publishRunAttachments: true
     ${{ if eq(parameters.preBuildValidation, 'false') }}:
-      testRunTitle: $(productVersion) $(osVariant) $(architecture)
+      testRunTitle: $(productVersion) $(osVersionsDisplayName) $(architecture)
     ${{ if eq(parameters.preBuildValidation, 'true') }}:
       testRunTitle: Pre-Build Validation
 - script: docker rm -f $(testRunner.container)

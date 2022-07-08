@@ -54,7 +54,16 @@ stages:
       testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
       preBuildValidation: true
       internalProjectName: ${{ parameters.internalProjectName }}
-      customInitSteps: ${{ parameters.customTestInitSteps }}
+      customInitSteps:
+        - ${{ parameters.customTestInitSteps }}
+        # These variables are normally set by the matrix. Since this test job is not generated
+        # by a matrix, we need to set them manually. They can be set to empty values since their
+        # values aren't actually used for the pre-build tests.
+        - powershell: |
+            echo "##vso[task.setvariable variable=productVersion]"
+            echo "##vso[task.setvariable variable=osVersions]"
+            echo "##vso[task.setvariable variable=architecture]"
+          displayName: Initialize Test Variables
   - template: ../jobs/copy-base-images.yml
     parameters:
       name: CopyBaseImages
