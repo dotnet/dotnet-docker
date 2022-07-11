@@ -59,7 +59,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             return imageType switch
             {
-                DotNetImageType.SDK => dockerHelper.Run(imageName, containerName, FormatDotnetCommand("--version")),
+                DotNetImageType.SDK => dockerHelper.Run(imageName, containerName, "dotnet --version"),
                 DotNetImageType.Runtime => GetRuntimeVersion(imageName, containerName, "Microsoft.NETCore.App", dockerHelper),
                 DotNetImageType.Aspnet => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
                 _ => throw new NotSupportedException($"Unsupported image type '{imageType}'"),
