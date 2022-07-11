@@ -57,7 +57,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 noUserOrGroupFilesCmd = $@"find {rootFsPath} -xdev \( -nouser -o -nogroup \)";
             }
 
-            string command = $"/bin/sh -c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd} && {noUserOrGroupFilesCmd}\"";
+            string command = $"-c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd} && {noUserOrGroupFilesCmd}\"";
 
             string imageTag;
             if (imageData.IsDistroless)
@@ -70,11 +70,12 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             string output = DockerHelper.Run(
-                    image: imageTag,
-                    name: imageData.GetIdentifier($"InsecureFiles-{ImageType}"),
-                    command: command,
-                    runAsUser: "root"
-                );
+                image: imageTag,
+                name: imageData.GetIdentifier($"InsecureFiles-{ImageType}"),
+                command: command,
+                runAsUser: "root",
+                optionalRunArgs: "--entrypoint /bin/sh"
+            );
 
             Assert.Empty(output);
         }
@@ -107,7 +108,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string rootPath = imageData.IsDistroless ? "/rootfs" : "/";
             // Get list of installed RPM packages
-            string command = $"bash -c \"rpm -qa -r {rootPath} | sort\"";
+            string command = $"-c \"rpm -qa -r {rootPath} | sort\"";
 
             string imageTag;
             if (imageData.IsDistroless)
@@ -122,7 +123,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string installedPackages = DockerHelper.Run(
                 image: imageTag,
                 command: command,
-                name: imageData.GetIdentifier("PackageInstallation"));
+                name: imageData.GetIdentifier("PackageInstallation"),
+                optionalRunArgs: "--entrypoint /bin/sh");
 
             return installedPackages.Split(Environment.NewLine);
         }
