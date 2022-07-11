@@ -21,15 +21,15 @@
     "src/runtime-deps/6.0/alpine3.16/arm32v7": 6988294,
     "src/runtime-deps/6.0/cbl-mariner1.0/amd64": 229251169,
     "src/runtime-deps/6.0/cbl-mariner1.0-distroless/amd64": 63825551,
-    "src/runtime-deps/6.0/cbl-mariner2.0/amd64": 117182974,
-    "src/runtime-deps/6.0/cbl-mariner2.0/arm64v8": 113639067,
+    "src/runtime-deps/6.0/cbl-mariner2.0/amd64": 107608523,
+    "src/runtime-deps/6.0/cbl-mariner2.0/arm64v8": 101990930,
     "src/runtime-deps/6.0/cbl-mariner2.0-distroless/amd64": 25570883,
     "src/runtime-deps/6.0/cbl-mariner2.0-distroless/arm64v8": 22586819,
     "src/runtime-deps/6.0/jammy/amd64": 118850628,
     "src/runtime-deps/6.0/jammy/arm32v7": 92396848,
     "src/runtime-deps/6.0/jammy/arm64v8": 109539947,
-    "src/runtime-deps/7.0/cbl-mariner2.0/amd64": 117182974,
-    "src/runtime-deps/7.0/cbl-mariner2.0/arm64v8": 113631221
+    "src/runtime-deps/7.0/cbl-mariner2.0/amd64": 107608523,
+    "src/runtime-deps/7.0/cbl-mariner2.0/arm64v8": 101990930
   },
   "dotnet/nightly/runtime": {
     "src/runtime/3.1/bullseye-slim/amd64": 198162495,
@@ -66,7 +66,7 @@
     "src/runtime/6.0/jammy/arm64v8": 187344442,
     "src/runtime/6.0/cbl-mariner1.0/amd64": 293523435,
     "src/runtime/6.0/cbl-mariner1.0-distroless/amd64": 134433667,
-    "src/runtime/6.0/cbl-mariner2.0/amd64": 189431351,
+    "src/runtime/6.0/cbl-mariner2.0/amd64": 179930793,
     "src/runtime/6.0/cbl-mariner2.0/arm64v8": 186072374,
     "src/runtime/6.0/cbl-mariner2.0-distroless/amd64": 96206476,
     "src/runtime/6.0/cbl-mariner2.0-distroless/arm64v8": 100398175,
@@ -169,8 +169,8 @@
     "src/sdk/6.0/jammy/arm32v7": 671052647,
     "src/sdk/6.0/jammy/arm64v8": 728850594,
     "src/sdk/6.0/cbl-mariner1.0/amd64": 888550600,
-    "src/sdk/6.0/cbl-mariner2.0/amd64": 1147000560,
-    "src/sdk/6.0/cbl-mariner2.0/arm64v8": 1118137587,
+    "src/sdk/6.0/cbl-mariner2.0/amd64": 1060142321,
+    "src/sdk/6.0/cbl-mariner2.0/arm64v8": 1042690553,
     "src/sdk/7.0/bullseye-slim/amd64": 776238295,
     "src/sdk/7.0/bullseye-slim/arm32v7": 719341335,
     "src/sdk/7.0/bullseye-slim/arm64v8": 798856900,
@@ -180,8 +180,8 @@
     "src/sdk/7.0/jammy/amd64": 730544508,
     "src/sdk/7.0/jammy/arm32v7": 722423439,
     "src/sdk/7.0/jammy/arm64v8": 746949416,
-    "src/sdk/7.0/cbl-mariner2.0/amd64": 1153542224,
-    "src/sdk/7.0/cbl-mariner2.0/arm64v8": 1122410785
+    "src/sdk/7.0/cbl-mariner2.0/amd64": 1078836148,
+    "src/sdk/7.0/cbl-mariner2.0/arm64v8": 1062704610
   },
   "dotnet/nightly/monitor": {
     "src/monitor/6.1/alpine/amd64": 107899527,
