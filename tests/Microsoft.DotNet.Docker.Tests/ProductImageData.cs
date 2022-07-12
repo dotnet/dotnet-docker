@@ -7,12 +7,12 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class ProductImageData : ImageData
+    public class ProductImageData : VersionedImageData
     {
         private string _sdkOS;
 
-        public Version Version { get; set; }
-        public string VersionString => Version.ToString(2);
+        public override Version RuntimeVersion => Version;
+
         public bool HasCustomSdk => _sdkOS != null;
 
         public string SdkOS
@@ -70,10 +70,18 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             const string versionGroupName = "Version";
 
-            string runtimeListing = dockerHelper.Run(imageName, containerName, "dotnet --list-runtimes");
+            string runtimeListing = dockerHelper.Run(imageName, containerName, FormatDotnetCommand("--list-runtimes"));
             Regex versionRegex = new Regex($"{runtimeName} (?<{versionGroupName}>[^\\s]+) ");
             Match match = versionRegex.Match(runtimeListing);
             return match.Success ? match.Groups[versionGroupName].Value : string.Empty;
+        }
+
+        private string FormatDotnetCommand(string command)
+        {
+            // For distroless, dotnet will be the default entrypoint so we don't need to specify "dotnet" in the command.
+            // See https://github.com/dotnet/dotnet-docker/issues/3866
+            string executable = !IsDistroless || OS == Tests.OS.Mariner10Distroless || Version.Major <= 6 ? "dotnet " : string.Empty;
+            return executable + command;
         }
 
         private string GetTagName(DotNetImageType imageType)

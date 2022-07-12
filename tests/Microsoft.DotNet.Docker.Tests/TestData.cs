@@ -18,7 +18,6 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V3_1, OS = OS.BusterSlim,          Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Bionic,              Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Focal,               Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.Alpine314,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Alpine315,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.Alpine316,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.BullseyeSlim,        Arch = Arch.Arm },
@@ -29,14 +28,12 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V3_1, OS = OS.BusterSlim,          Arch = Arch.Arm64 },
             new ProductImageData { Version = V3_1, OS = OS.Bionic,              Arch = Arch.Arm64 },
             new ProductImageData { Version = V3_1, OS = OS.Focal,               Arch = Arch.Arm64 },
-            new ProductImageData { Version = V3_1, OS = OS.Alpine314,           Arch = Arch.Arm64,   SdkOS = OS.Buster },
             new ProductImageData { Version = V3_1, OS = OS.Alpine315,           Arch = Arch.Arm64,   SdkOS = OS.Buster },
             new ProductImageData { Version = V3_1, OS = OS.Alpine316,           Arch = Arch.Arm64,   SdkOS = OS.Buster },
             new ProductImageData { Version = V3_1, OS = OS.Mariner10,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.BullseyeSlim,        Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.Alpine314,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine315,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine316,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Mariner10,           Arch = Arch.Amd64 },
@@ -51,8 +48,6 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Arm },
             new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Arm64 },
-            new ProductImageData { Version = V6_0, OS = OS.Alpine314,           Arch = Arch.Arm },
-            new ProductImageData { Version = V6_0, OS = OS.Alpine314,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine315,           Arch = Arch.Arm },
             new ProductImageData { Version = V6_0, OS = OS.Alpine315,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine316,           Arch = Arch.Arm },
@@ -126,16 +121,20 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly MonitorImageData[] s_linuxMonitorTestData =
         {
-            new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Alpine316, OSTag = OS.Alpine, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Alpine316, OSTag = OS.Alpine, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Alpine316, OSTag = OS.Alpine, Arch = Arch.Arm64 },
-            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Arm64 },
-            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Alpine316, OSTag = OS.Alpine, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Alpine316, OSTag = OS.Alpine, Arch = Arch.Arm64 },
-            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Amd64 },
-            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20, OSTag = OS.Mariner, Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Alpine316,           OSTag = OS.Alpine,            Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_1, RuntimeVersion = V6_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Alpine316,           OSTag = OS.Alpine,            Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Alpine316,           OSTag = OS.Alpine,            Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V6_2, RuntimeVersion = V6_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Alpine316,           OSTag = OS.Alpine,            Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Alpine316,           OSTag = OS.Alpine,            Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Arm64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64 },
+            new MonitorImageData { Version = V7_0, RuntimeVersion = V7_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64 },
         };
 
         private static readonly MonitorImageData[] s_windowsMonitorTestData =
@@ -146,6 +145,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxTestData : s_windowsTestData)
                 .FilterImagesByVersion()
+                .FilterImagesByRuntimeVersion()
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<ProductImageData>();
@@ -165,13 +165,14 @@ namespace Microsoft.DotNet.Docker.Tests
         public static IEnumerable<MonitorImageData> GetMonitorImageData()
         {
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxMonitorTestData : s_windowsMonitorTestData)
-                .FilterMonitorImagesByRuntimeVersion()
+                .FilterImagesByVersion()
+                .FilterImagesByRuntimeVersion()
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<MonitorImageData>();
         }
 
-        public static IEnumerable<ImageData> FilterImagesByVersion(this IEnumerable<ProductImageData> imageData)
+        public static IEnumerable<VersionedImageData> FilterImagesByVersion(this IEnumerable<VersionedImageData> imageData)
         {
             string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION");
             return imageData
@@ -179,12 +180,12 @@ namespace Microsoft.DotNet.Docker.Tests
                     || Regex.IsMatch(imageData.VersionString, versionFilterPattern, RegexOptions.IgnoreCase));
         }
 
-        public static IEnumerable<ImageData> FilterMonitorImagesByRuntimeVersion(this IEnumerable<MonitorImageData> imageData)
+        public static IEnumerable<VersionedImageData> FilterImagesByRuntimeVersion(this IEnumerable<VersionedImageData> imageData)
         {
-            string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION");
+            string runtimeVersionFilterPattern = GetFilterRegexPattern("RUNTIME_VERSION");
             return imageData
-                .Where(imageData => versionFilterPattern == null
-                    || Regex.IsMatch(imageData.RuntimeVersionString, versionFilterPattern, RegexOptions.IgnoreCase));
+                .Where(imageData => runtimeVersionFilterPattern == null
+                    || Regex.IsMatch(imageData.RuntimeVersionString, runtimeVersionFilterPattern, RegexOptions.IgnoreCase));
         }
 
         public static IEnumerable<ImageData> FilterImagesByArch(this IEnumerable<ImageData> imageData)
@@ -197,10 +198,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static IEnumerable<ImageData> FilterImagesByOs(this IEnumerable<ImageData> imageData)
         {
-            string osFilterPattern = GetFilterRegexPattern("IMAGE_OS");
+            IEnumerable<string> osFilterPatterns = Config.OsNames
+                .Select(osName => Config.GetFilterRegexPattern(osName));
+
             return imageData
-                .Where(imageData => osFilterPattern == null
-                    || Regex.IsMatch(imageData.OS, osFilterPattern, RegexOptions.IgnoreCase));
+                .Where(imageData => !osFilterPatterns.Any()
+                    || osFilterPatterns.Any(osFilterPattern => Regex.IsMatch(imageData.OS, osFilterPattern, RegexOptions.IgnoreCase)));
         }
 
         private static string GetFilterRegexPattern(string filterEnvName)

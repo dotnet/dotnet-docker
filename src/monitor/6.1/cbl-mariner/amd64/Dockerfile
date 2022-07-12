@@ -2,12 +2,12 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:6.0.301-cbl-mariner2.0-amd64 AS installer
+FROM $SDK_REPO:6.0.302-cbl-mariner2.0-amd64 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=6.1.2
+ENV DOTNET_MONITOR_VERSION=6.1.3
 RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='40e4a452c337b5c6fe50e48880bfc7ea92d058de1bb698d76ddf8f3f3fe9f36f6db3e2be3589895b81620e7cf7e10939c0bbc930a75f5d36ef35d04388369b6b' \
+    && dotnetmonitor_sha512='eb330355e6ec489ae13cd51b18ad89e7bbe6614a6bd539c69b65f83a8b706b4bda39c6d60d7ed31704122c4a1c8d31b91b01ebc9733e5522544ad7a024486f3a' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net6.0 --no-cache \
     # To reduce image size, remove all non-net6.0 TFMs
@@ -22,11 +22,13 @@ RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotn
     && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shims)/(win|osx)' | xargs rm -rf \
     # Remove all the empty directories left by the previous step
     && find /app -type d -empty -delete \
+    # Allow other users to run the tool
+    && chmod 755 /app/dotnet-monitor \
     && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
 
 
 # Monitor image
-FROM $ASPNET_REPO:6.0.6-cbl-mariner2.0-amd64
+FROM $ASPNET_REPO:6.0.7-cbl-mariner2.0-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
@@ -47,7 +49,5 @@ ENV \
     Logging__Console__FormatterOptions__UseUtcTimestamp=true \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
-
-RUN chmod 755 dotnet-monitor
 
 ENTRYPOINT [ "dotnet-monitor", "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]

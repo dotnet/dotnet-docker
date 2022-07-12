@@ -42,25 +42,27 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            string worldWritableDirectoriesWithoutStickyBitCmd = @"find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \)";
-            string worldWritableFilesCmd = "find / -xdev -type f -perm -o+w";
+            string rootFsPath = imageData.IsDistroless ? "/rootfs" : "/";
+
+            string worldWritableDirectoriesWithoutStickyBitCmd = $@"find {rootFsPath} -xdev -type d \( -perm -0002 -a ! -perm -1000 \)";
+            string worldWritableFilesCmd = $"find {rootFsPath} -xdev -type f -perm -o+w";
             string noUserOrGroupFilesCmd;
             if (imageData.OS.Contains("alpine"))
             {
                 // BusyBox in Alpine doesn't support the more convenient -nouser and -nogroup options for the find command
-                noUserOrGroupFilesCmd = @"find / -xdev -exec stat -c %U-%n {} \+ | { grep ^UNKNOWN || true; }";
+                noUserOrGroupFilesCmd = $@"find {rootFsPath} -xdev -exec stat -c %U-%n {{}} \+ | {{ grep ^UNKNOWN || true; }}";
             }
             else
             {
-                noUserOrGroupFilesCmd = @"find / -xdev \( -nouser -o -nogroup \)";
+                noUserOrGroupFilesCmd = $@"find {rootFsPath} -xdev \( -nouser -o -nogroup \)";
             }
 
-            string command = $"/bin/sh -c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd} && {noUserOrGroupFilesCmd}\"";
+            string command = $"-c \"{worldWritableDirectoriesWithoutStickyBitCmd} && {worldWritableFilesCmd} && {noUserOrGroupFilesCmd}\"";
 
             string imageTag;
             if (imageData.IsDistroless)
             {
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash", "findutils");
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootFsPath);
             }
             else
             {
@@ -68,24 +70,50 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             string output = DockerHelper.Run(
-                    image: imageTag,
-                    name: imageData.GetIdentifier($"InsecureFiles-{ImageType}"),
-                    command: command,
-                    runAsUser: "root"
-                );
+                image: imageTag,
+                name: imageData.GetIdentifier($"InsecureFiles-{ImageType}"),
+                command: command,
+                runAsUser: "root",
+                optionalRunArgs: "--entrypoint /bin/sh"
+            );
 
             Assert.Empty(output);
         }
 
+        protected void VerifyCommonDefaultUser(ProductImageData imageData)
+        {
+            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+            string actualUser = DockerHelper.GetImageUser(imageTag);
+
+            string expectedUser;
+            if (imageData.IsDistroless && ImageType != DotNetImageType.SDK)
+            {
+                expectedUser = "app";
+            }
+            // For Windows, only Nano Server defines a user, which seems wrong.
+            // I've logged https://dev.azure.com/microsoft/OS/_workitems/edit/40146885 for this.
+            else if (imageData.OS.StartsWith(OS.NanoServer))
+            {
+                expectedUser = "ContainerUser";
+            }
+            else
+            {
+                expectedUser = string.Empty;
+            }
+
+            Assert.Equal(expectedUser, actualUser);
+        }
+
         private IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)
         {
+            string rootPath = imageData.IsDistroless ? "/rootfs" : "/";
             // Get list of installed RPM packages
-            string command = $"bash -c \"{(imageData.OS == OS.Mariner10Distroless ? "rpm -qa" : "tdnf list installed")} | sort\"";
+            string command = $"-c \"rpm -qa -r {rootPath} | sort\"";
 
             string imageTag;
             if (imageData.IsDistroless)
             {
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, "bash", imageData.OS == OS.Mariner10Distroless ? "rpm": "tdnf");
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath);
             }
             else
             {
@@ -95,7 +123,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string installedPackages = DockerHelper.Run(
                 image: imageTag,
                 command: command,
-                name: imageData.GetIdentifier("PackageInstallation"));
+                name: imageData.GetIdentifier("PackageInstallation"),
+                optionalRunArgs: "--entrypoint /bin/sh");
 
             return installedPackages.Split(Environment.NewLine);
         }

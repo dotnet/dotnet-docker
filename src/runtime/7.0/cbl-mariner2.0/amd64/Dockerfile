@@ -1,21 +1,21 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:7.0.0-preview.5-cbl-mariner2.0-amd64
+FROM $REPO:7.0.0-preview.6-cbl-mariner2.0-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=7.0.0-preview.5.22301.12
+ENV DOTNET_VERSION=7.0.0-preview.6.22324.4
 
 # Install .NET Runtime
 RUN curl -fSL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-host-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='7f242a194d58a149e5b0a45577d5fa1a42134fe46e99e4e96227c19a848c2399a896f951c292e75c186dabc75818741ef7fcb651e084efcbb0c4fa134c012184' \
+    && dotnet_sha512='57dbb5444c3d3e697d427db9a5be2e27b50e34cf3deef0c1871b9793f852378472280dfc486e23fb66c5006478eed9ef8080b511d0101b4fc6e484ea24358c23' \
     && echo "$dotnet_sha512  dotnet-host.rpm" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-hostfxr.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-hostfxr-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='3d2743aaf0aef04c6968a7193b1a3475692707338adfcee01b82d61e9bf370730c2a20c4ef8ad4696824c2d910b85e9c90ee6f320c6e1a6f82e3c6ca541e699e' \
+    && dotnet_sha512='8ea7ee9aac6c1e9a04275eb623ef387f22fa80e41879ff6b282e19c93a5b602729a4fa05fc424f0c60294a8789b906e51ccdeaa75f65a8a044db9d1ea942017a' \
     && echo "$dotnet_sha512  dotnet-hostfxr.rpm" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-runtime.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-x64.rpm \
-    && dotnet_sha512='7151e5f3afd41c01d91af7e4fd946ecd848bbd96f4eb24cde3eaf912d7b0a75c2fb831e90fbb5839006d384f9e1afe9517bec4ecf7023862275775f0b890a71a' \
+    && dotnet_sha512='f3b315013c794c0979357f1a25aea614985600e4d0d35a2bd114e13ab0732876a4800f58b466d079a290482c4cd5e5f257a642923044785d4a16bfd8068a7070' \
     && echo "$dotnet_sha512  dotnet-runtime.rpm" | sha512sum -c - \
     \
-    && tdnf install -y dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
+    && tdnf install -y --disablerepo=* dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \
     && rm dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm

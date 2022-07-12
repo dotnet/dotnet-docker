@@ -87,6 +87,14 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (monitorImageData.Arch != sampleImageData.Arch)
                         continue;
 
+                    // Distroless .NET Monitor images must be tested with distroless samples because
+                    // the default user of the .NET Monitor image is a non-root user. If .NET Monitor
+                    // is running as non-root and the sample is running as root, .NET Monitor will fail
+                    // to communicate with the sample application or fail to start up due to lack of
+                    // permissions to create the diagnostic port.
+                    if (monitorImageData.IsDistroless != sampleImageData.IsDistroless)
+                        continue;
+
                     data.Add(new object[] { monitorImageData, sampleImageData });
                 }
             }

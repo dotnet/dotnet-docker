@@ -6,12 +6,16 @@ using System;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class MonitorImageData : ImageData
+    public class MonitorImageData : VersionedImageData
     {
-        public Version RuntimeVersion { get; set; }
-        public string RuntimeVersionString => RuntimeVersion.ToString(2);
-        public Version Version { get; set; }
-        public string VersionString => Version.ToString(2);
+        private Version _runtimeVersion;
+
+        public override Version RuntimeVersion
+        {
+            get => _runtimeVersion;
+            set => _runtimeVersion = value;
+        }
+
         public string OSTag { get; set; }
 
         public string GetImage(DockerHelper dockerHelper)

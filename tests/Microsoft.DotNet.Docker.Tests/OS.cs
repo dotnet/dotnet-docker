@@ -8,7 +8,6 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         // Alpine
         public const string Alpine = "alpine";
-        public const string Alpine314 = $"{Alpine}3.14";
         public const string Alpine315 = $"{Alpine}3.15";
         public const string Alpine316 = $"{Alpine}3.16";
 
@@ -20,6 +19,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         // Mariner
         public const string Mariner = "cbl-mariner";
+
+        public const string MarinerDistroless = $"{Mariner}-distroless";
         public const string Mariner10 = $"{Mariner}1.0";
         public const string Mariner10Distroless = $"{Mariner10}-distroless";
         public const string Mariner20 = $"{Mariner}2.0";

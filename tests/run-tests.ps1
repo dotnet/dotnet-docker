@@ -8,7 +8,7 @@
 param(
     [string]$Version,
     [string]$Architecture,
-    [string]$OS,
+    [string[]]$OSVersions,
     [string]$Registry,
     [string]$RepoPrefix,
     [switch]$DisableHttpVerification,
@@ -74,14 +74,21 @@ Try {
         $env:PULL_IMAGES = $null
     }
 
-    # By default, account for the OS having a -slim variant, except for mariner which has a -distroless variant that needs to be tested separately.
-    if (-not $OS.Contains("mariner")) {
-        $OS += "*"
+    # Public builds group image build and test by runtime version.
+    # Internal builds group image build by the same criteria but run tests in separate jobs that are grouped by image version.
+    # The distinction is not apparent for images such as 'runtime', 'aspnet', and 'sdk' because
+    # their major.minor versions for the image and the product are the same.
+    # However, other images such as 'monitor' can have a product version that is distinct from the runtime version.
+    # Thus, filter images by runtime version in public builds and by image version in internal builds.
+    # The default case (where the environment variable is not available) should filter on image version.
+    if ($env:SYSTEM_TEAMPROJECT -eq "public") {
+        $env:RUNTIME_VERSION = $Version
+    } else {
+        $env:IMAGE_VERSION = $Version
     }
 
     $env:IMAGE_ARCH = $Architecture
-    $env:IMAGE_OS = $OS
-    $env:IMAGE_VERSION = $Version
+    $env:IMAGE_OS_NAMES = $($OSVersions -Join ",")
     $env:REGISTRY = $Registry
     $env:REPO_PREFIX = $RepoPrefix
     $env:IMAGE_INFO_PATH = $ImageInfoPath

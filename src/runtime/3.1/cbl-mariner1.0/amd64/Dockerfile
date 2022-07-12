@@ -1,18 +1,18 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:3.1.26-cbl-mariner1.0
+FROM $REPO:3.1.27-cbl-mariner1.0
 
 # Install .NET Core Runtime
-RUN dotnet_version=3.1.26 \
+RUN dotnet_version=3.1.27 \
     && curl -fSL --output dotnet-host.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-host-$dotnet_version-x64.rpm \
-    && dotnet_sha512='bac55ff96b4514c8ad4b8e9d40420d43e2331b7c81b972341e316b395ae93bee2cffa3664fe917c3fdb954db9abe5fba1aa4af80015415cef986b40de6b3d850' \
+    && dotnet_sha512='eea7b97ae7c8856b17f3d3666710fdc60650d7ed087738819c6947854bbec9e40b24b883837cc2835f1c3bce61b650265cdbcab2fcf6a04cbad2543a605e711c' \
     && echo "$dotnet_sha512  dotnet-host.rpm" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-hostfxr.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-hostfxr-$dotnet_version-x64.rpm \
-    && dotnet_sha512='8f630235bcd2ad3f9b58e3f5a0f29055067eed88c6d0aa01b1927a2a18190fe2a30cb339f2922408a1ed1c37d8eb8d45bd267891b676e70d77fe1696ff0a26ba' \
+    && dotnet_sha512='cb06091c2a8e2f5d99368a7eb80ed54ab7159adc8c0e4c9bd1d925e8e87ae6dde22b14209821cbb00b320f154b7c3628b2f51c02f02908421879f000ce7843da' \
     && echo "$dotnet_sha512  dotnet-hostfxr.rpm" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-runtime.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-x64.rpm \
-    && dotnet_sha512='aa73bc2d56ed806ac0fddcfa51c25af7e2ceb236dacfc0de3f5557da5da571f870e452dcc8ccb092ad170fcdd489ea5b15c8af2af761cf27d1cee6e6d3811459' \
+    && dotnet_sha512='1f52fd35ea6e9eb176e255fa161642bd1071f6f5f12c78a119ca58b0f618604823f2b4377a1a4bee7aa77f9be48b8410b405812a81fd89b92bfe935982895f57' \
     && echo "$dotnet_sha512  dotnet-runtime.rpm" | sha512sum -c - \
     \
     && rpm --install dotnet-host.rpm dotnet-hostfxr.rpm dotnet-runtime.rpm \

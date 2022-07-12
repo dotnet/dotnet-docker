@@ -24,13 +24,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
-            if (imageData.IsDistroless)
-            {
-                OutputHelper.WriteLine(
-                    "Skipping test for distroless due to https://github.com/dotnet/dotnet-docker/issues/3448. Re-enable when fixed.");
-                return;
-            }
-
             if (imageData.IsArm && imageData.OS == OS.Jammy)
             {
                 OutputHelper.WriteLine(
@@ -82,6 +75,13 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VerifyNoSasToken(ProductImageData imageData)
         {
             base.VerifyCommonNoSasToken(imageData);
+        }
+
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyDefaultUser(ProductImageData imageData)
+        {
+            VerifyCommonDefaultUser(imageData);
         }
 
         public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)

@@ -2,12 +2,12 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:7.0.100-preview.5-1-alpine3.16-amd64 AS installer
+FROM $SDK_REPO:7.0.100-preview.6-alpine3.16-amd64 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=7.0.0-preview.5.22306.5
+ENV DOTNET_MONITOR_VERSION=7.0.0-preview.6.22330.7
 RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='494558f2b955845bb6ae5e5517384b1bdffe5d71b9d5597964645a1749b060fcbb126860c2a42b45631e79890b50fca4ecc2c8fe890ca1f2c4552f924047888c' \
+    && dotnetmonitor_sha512='3bb79ff137671436907e2d6984201f7811d41863e047e674e44f8af4885fc9f3131ff475e92cd00c71c6425fedfb4c87cf4bd9e41efa1cce567cbd4385d75119' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net7.0 --no-cache \
     # To reduce image size, remove all non-net7.0 TFMs
@@ -22,11 +22,13 @@ RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azure
     && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shims)/(win|osx)' | xargs rm -rf \
     # Remove all the empty directories left by the previous step
     && find /app -type d -empty -delete \
+    # Allow other users to run the tool
+    && chmod 755 /app/dotnet-monitor \
     && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
 
 
 # Monitor image
-FROM $ASPNET_REPO:7.0.0-preview.5-alpine3.16-amd64
+FROM $ASPNET_REPO:7.0.0-preview.6-alpine3.16-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
@@ -47,8 +49,6 @@ ENV \
     Logging__Console__FormatterOptions__UseUtcTimestamp=true \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
-
-RUN chmod 755 dotnet-monitor
 
 ENTRYPOINT [ "dotnet-monitor" ]
 CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
