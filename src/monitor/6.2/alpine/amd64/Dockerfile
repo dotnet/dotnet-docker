@@ -6,7 +6,7 @@ FROM $SDK_REPO:6.0.302-alpine3.16-amd64 AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION=6.2.1
-RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
+RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/6.2.1-servicing.22330.6/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
     && dotnetmonitor_sha512='e6b3c7a31baa4aa49882efcb84b7e34991a1158971a67d0ba9c20f1934e2727074efb41e78a7954e127292371f1ad5dbe8a8a052cee9746f410cd2df751dc789' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net6.0 --no-cache \
