@@ -129,6 +129,7 @@ jobs:
       '$(gitHubNotificationsRepoInfo.accessToken)'
       '$(gitHubNotificationsRepoInfo.org)'
       '$(gitHubNotificationsRepoInfo.repo)'
+      --repo-prefix '$(publishRepoPrefix)'
       --task "Copy Images"
       --task "Publish Manifest"
       --task "Wait for Image Ingestion"
