@@ -232,9 +232,10 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyGitInstallation(ProductImageData imageData)
         {
-            if (!DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major <= 6)
+            if ((DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major == 3) ||
+                (!DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major <= 6))
             {
-                OutputHelper.WriteLine("Git is not installed on Windows containers older than .NET 7");
+                OutputHelper.WriteLine("Git is not installed on Linux in .NET Core 3.1 nor on Windows containers older than .NET 7");
                 return;
             }
 
