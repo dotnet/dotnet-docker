@@ -10,9 +10,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '7.0.100-preview.6.22352.1'; `
+        $sdk_version = '7.0.100-preview.7.22369.1'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '56cbea7765318acb02a3483536643bf8e00489ed81b2cccf1895936933256a659520cdf9eacd2af067007dda3752c9dfec0ab2b6a5b2734bcd34dde158c7c1b0'; `
+        $dotnet_sha512 = '0ad4e3114072e23970cc1b3fcfddd95bd972327ae829820b7edb4107ac987790c5904281b229a66c1035f30cb25dfeafbe88a05eb0685609466a66332b358ff2'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -44,7 +44,7 @@ RUN powershell -Command " `
             | Remove-Item -Force -Recurse"
 
 # SDK image
-FROM $REPO:7.0.0-preview.6-nanoserver-1809
+FROM $REPO:7.0.0-preview.7-nanoserver-1809
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -54,7 +54,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=7.0.100-preview.6.22352.1 `
+    DOTNET_SDK_VERSION=7.0.100-preview.7.22369.1 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
