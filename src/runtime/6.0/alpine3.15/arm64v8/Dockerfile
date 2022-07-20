@@ -5,7 +5,7 @@ FROM $REPO:6.0.7-alpine3.15-arm64v8
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 # .NET Runtime version
-ENV DOTNET_VERSION=6.0.7
+ENV DOTNET_VERSION=6.0.7-servicing.22322.2
 
 # Install .NET Runtime
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-arm64.tar.gz \

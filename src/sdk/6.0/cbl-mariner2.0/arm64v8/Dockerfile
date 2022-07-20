@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=6.0.302 \
+    DOTNET_SDK_VERSION=6.0.400-rtm.22364.21 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -30,11 +30,11 @@ RUN curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DO
     && dotnet_sha512='7958426ec7b3a458a509adf2e26f427ad968f263d5e7d0002b6748cfa95fb81a68792562492d54cac3d23d23805ce1d8cb203254f67b0889095bc8fe9c6d52c7' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.7/dotnet-targeting-pack-6.0.7-aarch64.rpm \
+    && curl -fSL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/6.0.7-servicing.22322.2/dotnet-targeting-pack-6.0.7-servicing.22322.2-aarch64.rpm \
     && dotnet_sha512='1bedc3d17394027dbe769995c1a8e3faef66cf77d207c1afe326c92805f85d84b4f435502fa79f882d51687f6c7babac8cf055dade5c526c3ac5b0622fa92536' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.7/aspnetcore-targeting-pack-6.0.7-aarch64.rpm \
+    && curl -fSL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/6.0.7-servicing.22322.5/aspnetcore-targeting-pack-6.0.7-servicing.22322.5-aarch64.rpm \
     && dotnet_sha512='10945a974fecad41a405a90112fb9b4232bd020019c1b12bc314205dba8a3c662ae1df71e7e9fa05b07a5b4859e4a07288f712f5833830b56e51d5733c0fcbcf' \
     && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
     \

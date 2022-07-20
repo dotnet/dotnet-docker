@@ -2,7 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:6.0.7-cbl-mariner2.0-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=6.0.7
+ENV ASPNET_VERSION=6.0.7-servicing.22322.5
 
 # Install ASP.NET Core
 RUN curl -fSL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-x64.rpm \
