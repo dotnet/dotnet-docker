@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:6.0.7-windowsservercore-ltsc2019
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=6.0.7-servicing.22322.5
+ENV ASPNET_VERSION=6.0.7
 
 # Install ASP.NET Core Runtime
 RUN powershell -Command `
