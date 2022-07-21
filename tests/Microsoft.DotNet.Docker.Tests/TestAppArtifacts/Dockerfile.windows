@@ -20,9 +20,17 @@ RUN dotnet build --no-restore
 
 
 FROM build AS test
+
+ARG rid
+ARG NuGetFeedPassword
+
 WORKDIR /source/tests
+
+COPY tests/*.csproj .
+RUN dotnet restore -r %rid%
+
 COPY tests/ .
-ENTRYPOINT ["dotnet", "test", "--logger:trx"]
+ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore"]
 
 
 FROM build as publish_fx_dependent
