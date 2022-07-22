@@ -28,7 +28,7 @@
             ]
         ]
     ] ^
-    set useExtractGroups to (isServerCore && !ARGS["dotnet-is-internal"]) ^
+    set isSingleStage to (isServerCore && !ARGS["dotnet-is-internal"]) ^
     set getFormattedPath(path) to:{{
         return cat("'", path, "'")
     }}
@@ -49,7 +49,7 @@ RUN powershell -Command " `
         {{InsertTemplate("../Dockerfile.windows.extract-zip",
             [
                 "file": "mingit.zip",
-                "dest-dir": "$Env:ProgramFiles\MinGit"
+                "dest-dir": when(isSingleStage, "$Env:ProgramFiles\MinGit", "MinGit")
             ], "        ")}}"
 
 }}RUN powershell -Command " `
@@ -60,7 +60,7 @@ RUN powershell -Command " `
         {{InsertTemplate("Dockerfile.windows.install-sdk",
             [
                 "use-local-version-var": ARGS["use-local-version-var"],
-                "sdk-extract-groups": when(useExtractGroups, sdkExtractGroups, []),
+                "sdk-extract-groups": when(isSingleStage, sdkExtractGroups, []),
                 "is-internal": ARGS["dotnet-is-internal"],
                 "url-suffix": ARGS["dotnet-url-suffix"]
             ], "        ")}} `
@@ -73,7 +73,7 @@ RUN powershell -Command " `
 if !(dotnetVersion = "3.1" || isServerCore): `
         `
         # Workaround for https://github.com/dotnet/sdk/issues/18410
-        \dotnet\dotnet build-server shutdown;}}{{if !useExtractGroups: `
+        \dotnet\dotnet build-server shutdown;}}{{if !isSingleStage: `
         `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers{{
 for i, group in sdkExtractGroups:

@@ -17,7 +17,7 @@ RUN powershell -Command " `
             exit 1; `
         }; `
         mkdir $Env:ProgramFiles\MinGit; `
-        tar -oxzf mingit.zip -C $Env:ProgramFiles\MinGit; `
+        tar -oxzf mingit.zip -C MinGit; `
         Remove-Item -Force mingit.zip"
 
 RUN powershell -Command " `
@@ -84,7 +84,7 @@ USER ContainerUser
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
 COPY --from=installer ["/powershell", "/Program Files/powershell"]
-COPY --from=installer ["/Program Files/MinGit", "/Program Files/MinGit"]
+COPY --from=installer ["/MinGit", "/Program Files/MinGit"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
