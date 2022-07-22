@@ -19,8 +19,12 @@ RUN dotnet build -c release --no-restore
 # target entrypoint with: docker build --target test
 FROM build AS test
 WORKDIR /source/tests
+
+COPY tests/*.csproj .
+RUN dotnet restore tests.csproj
+
 COPY tests/ .
-ENTRYPOINT ["dotnet", "test", "--logger:trx"]
+ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore"]
 
 FROM build AS publish
 RUN dotnet publish -c release --no-build -o /app
