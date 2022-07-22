@@ -8,7 +8,7 @@ ARG RID=alpine.3.14-x64
 
 # copy csproj and restore as distinct layers
 COPY eng/update-dependencies/*.csproj ./
-COPY eng/update-dependencies/NuGet.config ./
+COPY NuGet.config ./
 RUN dotnet restore -r $RID
 
 # copy everything else and build
