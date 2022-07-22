@@ -242,7 +242,7 @@ namespace Microsoft.DotNet.Docker.Tests
             DockerHelper.Run(
                 image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
                 name: imageData.GetIdentifier($"git"),
-                command: "git clone https://github.com/dotnet/dotnet-docker.git"
+                command: "git version"
             );
         }
 
