@@ -17,7 +17,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 {{InsertTemplate("Dockerfile.windows.install-components")}}
 
-{{InsertTemplate("Dockerfile.windows.set-powershell-path")}}
+{{InsertTemplate("../Dockerfile.windows.set-path", [ "path": "C:\Program Files\powershell;C:\Program Files\MinGit\cmd"])}}
 
 {{InsertTemplate("Dockerfile.windows.first-run")}}^else:
 {{
@@ -41,13 +41,10 @@ FROM {{aspnetBaseTag}}
 
 {{InsertTemplate("Dockerfile.envs")}}
 
-# In order to set system PATH, ContainerAdministrator must be used
-USER ContainerAdministrator
-{{InsertTemplate("Dockerfile.windows.set-powershell-path")}}
-USER ContainerUser
+{{InsertTemplate("../Dockerfile.windows.set-path", [ "path": "C:\Program Files\powershell;C:\Program Files\MinGit\cmd"])}}
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
-
-COPY --from=installer ["/powershell", "/Program Files/powershell"]
+COPY --from=installer ["/powershell", "/Program Files/powershell"]{{ if dotnetVersion != "3.1" && dotnetVersion != "6.0":
+COPY --from=installer ["/MinGit", "/Program Files/MinGit"]}}
 
 {{InsertTemplate("Dockerfile.windows.first-run")}}}}

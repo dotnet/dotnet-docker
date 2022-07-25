@@ -20,7 +20,7 @@
 # Install .NET Runtime
 {{InsertTemplate("Dockerfile.windows.install-runtime")}}
 
-{{InsertTemplate("Dockerfile.windows.set-path")}}^
+{{InsertTemplate("../Dockerfile.windows.set-path", [ "path": "C:\Program Files\dotnet"])}}^
 else:{{
 
     _ MULTI STAGE
@@ -45,9 +45,6 @@ FROM mcr.microsoft.com/windows/{{finalStageBaseRepo}}:{{OS_VERSION_NUMBER}}-amd6
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}}{{if dotnetVersion != "3.1": `
     {{InsertTemplate("Dockerfile.envs", [], "    ")}}}}
 
-# In order to set system PATH, ContainerAdministrator must be used
-USER ContainerAdministrator
-{{InsertTemplate("Dockerfile.windows.set-path")}}
-USER ContainerUser
+{{InsertTemplate("../Dockerfile.windows.set-path", [ "path": "C:\Program Files\dotnet"])}}
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]}}

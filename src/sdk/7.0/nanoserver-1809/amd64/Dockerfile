@@ -5,14 +5,29 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM mcr.microsoft.com/windows/servercore:1809-amd64 AS installer
 
+# Download MinGit
+RUN powershell -Command " `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.37.1.windows.1/MinGit-2.37.1-64-bit.zip; `
+        $mingit_sha256 = 'edacf2d5c39555c25a396e0b9d27182ab5587259dc2e824b4490996b373f9300'; `
+        if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
+            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            exit 1; `
+        }; `
+        mkdir MinGit; `
+        tar -oxzf mingit.zip -C MinGit; `
+        Remove-Item -Force mingit.zip"
+
 RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '7.0.100-preview.6.22352.1'; `
+        $sdk_version = '7.0.100-preview.7.22370.3'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '56cbea7765318acb02a3483536643bf8e00489ed81b2cccf1895936933256a659520cdf9eacd2af067007dda3752c9dfec0ab2b6a5b2734bcd34dde158c7c1b0'; `
+        $dotnet_sha512 = '718f03d42eb459136c0c6cee6b9206c4aee5f6696f46d82a333010fa8f60d448c1f58c2884ede375c40d3c63feffc6c2997ac1926dc999401ee7ee8deb14ed54'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -22,9 +37,9 @@ RUN powershell -Command " `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.3.0-preview.5'; `
+        $powershell_version = '7.3.0-preview.6'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = 'fff36152710b746c4c3df623e2eae6ef425df5ab61230e6711f3fb50ad6b7a84d912798567e1b8719e7bf51819de6be5262976a87af06434a184f3284b029ae5'; `
+        $powershell_sha512 = '3f6a2096e4b1aa5c35a158e6cff675b0c1d0c905dca382ba6200f46f371bc7718e53c56ab916bed1aaa96acac039d3ba201cadc338d70f93fe778dad60abec78'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -44,7 +59,7 @@ RUN powershell -Command " `
             | Remove-Item -Force -Recurse"
 
 # SDK image
-FROM $REPO:7.0.0-preview.6-nanoserver-1809
+FROM $REPO:7.0.0-preview.7-nanoserver-1809
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -54,7 +69,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=7.0.100-preview.6.22352.1 `
+    DOTNET_SDK_VERSION=7.0.100-preview.7.22370.3 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -64,12 +79,12 @@ ENV `
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
-RUN setx /M PATH "%PATH%;C:\Program Files\powershell"
+RUN setx /M PATH "%PATH%;C:\Program Files\powershell;C:\Program Files\MinGit\cmd"
 USER ContainerUser
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
-
 COPY --from=installer ["/powershell", "/Program Files/powershell"]
+COPY --from=installer ["/MinGit", "/Program Files/MinGit"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help

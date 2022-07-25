@@ -18,6 +18,7 @@ using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
 using Microsoft.TeamFoundation.SourceControl.WebApi;
 using Microsoft.VisualStudio.Services.Common;
 using Microsoft.VisualStudio.Services.WebApi;
+using Newtonsoft.Json.Linq;
 
 namespace Dotnet.Docker
 {
@@ -69,7 +70,7 @@ namespace Dotnet.Docker
                 IEnumerable<IDependencyInfo> buildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
                     .ToArray();
-                DependencyUpdateResults updateResults = UpdateFiles(buildInfos);
+                DependencyUpdateResults updateResults = await UpdateFilesAsync(buildInfos);
 
                 if (errorTraceListener.Errors.Any())
                 {
@@ -102,9 +103,9 @@ namespace Dotnet.Docker
             Environment.Exit(0);
         }
 
-        private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)
+        private static async Task<DependencyUpdateResults> UpdateFilesAsync(IEnumerable<IDependencyInfo> buildInfos)
         {
-            IEnumerable<IDependencyUpdater> updaters = GetUpdaters();
+            IEnumerable<IDependencyUpdater> updaters = await GetUpdatersAsync();
 
             return DependencyUpdateUtils.Update(updaters, buildInfos);
         }
@@ -401,26 +402,36 @@ namespace Dotnet.Docker
             }
         }
 
-        private static IEnumerable<IDependencyUpdater> GetUpdaters()
+        private static async Task<IEnumerable<IDependencyUpdater>> GetUpdatersAsync()
         {
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
 
-            yield return new NuGetConfigUpdater(RepoRoot, Options);
-            yield return new BaseUrlUpdater(RepoRoot, Options);
+            JObject release = await MinGitHelper.GetLatestMinGitReleaseAsync();
+
+            List<IDependencyUpdater> updaters = new()
+            {
+                new NuGetConfigUpdater(RepoRoot, Options),
+                new BaseUrlUpdater(RepoRoot, Options),
+                new MinGitUrlUpdater(RepoRoot, release),
+                new MinGitShaUpdater(RepoRoot, release)
+            };
+            
             foreach (string productName in Options.ProductVersions.Keys)
             {
-                yield return new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot, Options);
-                yield return new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, RepoRoot, Options);
+                updaters.Add(new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot, Options));
+                updaters.Add(new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, RepoRoot, Options));
 
                 foreach (IDependencyUpdater shaUpdater in DockerfileShaUpdater.CreateUpdaters(productName, Options.DockerfileVersion, RepoRoot, Options))
                 {
-                    yield return shaUpdater;
+                    updaters.Add(shaUpdater);
                 }
             }
 
-            yield return ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot);
-            yield return ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot);
+            updaters.Add(ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot));
+            updaters.Add(ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot));
+
+            return updaters;
         }
     }
 }

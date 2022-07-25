@@ -136,12 +136,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            if (imageData.OS == OS.Alpine316)
-            {
-                OutputHelper.WriteLine("Test disabled until https://github.com/dotnet/dotnet-docker/issues/3793 is fixed");
-                return;
-            }
-
             // Disable this test for Arm-based Alpine until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.OS.Contains("alpine") && imageData.IsArm)
             {
@@ -229,6 +223,27 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VerifyDefaultUser(ProductImageData imageData)
         {
             VerifyCommonDefaultUser(imageData);
+        }
+
+        /// <summary>
+        /// Verifies that a git command can be executed without failure.
+        /// </summary>
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyGitInstallation(ProductImageData imageData)
+        {
+            if ((DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major == 3) ||
+                (!DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major <= 6))
+            {
+                OutputHelper.WriteLine("Git is not installed on Linux in .NET Core 3.1 nor on Windows containers older than .NET 7");
+                return;
+            }
+
+            DockerHelper.Run(
+                image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
+                name: imageData.GetIdentifier($"git"),
+                command: "git version"
+            );
         }
 
         private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
@@ -340,12 +355,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
         {
-            if (imageData.OS == OS.Alpine316)
-            {
-                OutputHelper.WriteLine("Test disabled until https://github.com/dotnet/dotnet-docker/issues/3793 is fixed");
-                return;
-            }
-
             // Disable this test for Arm-based Alpine until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
             if (imageData.OS.Contains("alpine") && imageData.IsArm)
             {
