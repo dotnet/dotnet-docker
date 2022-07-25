@@ -225,6 +225,27 @@ namespace Microsoft.DotNet.Docker.Tests
             VerifyCommonDefaultUser(imageData);
         }
 
+        /// <summary>
+        /// Verifies that a git command can be executed without failure.
+        /// </summary>
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyGitInstallation(ProductImageData imageData)
+        {
+            if ((DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major == 3) ||
+                (!DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major <= 6))
+            {
+                OutputHelper.WriteLine("Git is not installed on Linux in .NET Core 3.1 nor on Windows containers older than .NET 7");
+                return;
+            }
+
+            DockerHelper.Run(
+                image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
+                name: imageData.GetIdentifier($"git"),
+                command: "git version"
+            );
+        }
+
         private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
         {
             string dotnetPath;

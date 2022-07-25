@@ -28,10 +28,31 @@
             ]
         ]
     ] ^
-    set useExtractGroups to (isServerCore && !ARGS["dotnet-is-internal"]) ^
+    set isSingleStage to (isServerCore && !ARGS["dotnet-is-internal"]) ^
     set getFormattedPath(path) to:{{
         return cat("'", path, "'")
-    }}
+    }} ^
+    set mingitDir to when(isSingleStage, "$Env:ProgramFiles\MinGit", "MinGit")
+}}{{ if dotnetVersion != "3.1" && dotnetVersion != "6.0":# Download MinGit
+RUN powershell -Command " `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        {{InsertTemplate("../Dockerfile.windows.download-file",
+            [
+                "out-file": "mingit.zip",
+                "url": VARIABLES[cat("mingit|", ARCH_SHORT, "|url")],
+                "sha": VARIABLES[cat("mingit|", ARCH_SHORT, "|sha")],
+                "sha-var-name": "mingit_sha256",
+                "hash-algorithm": "sha256"
+            ], "        ")}}; `
+        mkdir {{ mingitDir }}; `
+        {{InsertTemplate("../Dockerfile.windows.extract-zip",
+            [
+                "file": "mingit.zip",
+                "dest-dir": mingitDir
+            ], "        ")}}"
+
 }}RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
@@ -40,7 +61,7 @@
         {{InsertTemplate("Dockerfile.windows.install-sdk",
             [
                 "use-local-version-var": ARGS["use-local-version-var"],
-                "sdk-extract-groups": when(useExtractGroups, sdkExtractGroups, []),
+                "sdk-extract-groups": when(isSingleStage, sdkExtractGroups, []),
                 "is-internal": ARGS["dotnet-is-internal"],
                 "url-suffix": ARGS["dotnet-url-suffix"]
             ], "        ")}} `
@@ -53,7 +74,7 @@
 if !(dotnetVersion = "3.1" || isServerCore): `
         `
         # Workaround for https://github.com/dotnet/sdk/issues/18410
-        \dotnet\dotnet build-server shutdown;}}{{if !useExtractGroups: `
+        \dotnet\dotnet build-server shutdown;}}{{if !isSingleStage: `
         `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers{{
 for i, group in sdkExtractGroups:

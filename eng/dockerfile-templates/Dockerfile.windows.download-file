@@ -6,9 +6,12 @@
         url: URL to download
         sha: Expected checksum of the downloaded file
         sha-var-name: Name of variable that stores the checksum
+        hash-algorithm: Algorithm type to use to get the checksum. Defaults to sha512 ^
+
+    set hashAlgorithm to when(ARGS["hash-algorithm"], ARGS["hash-algorithm"], "sha512")
 }}Invoke-WebRequest -OutFile {{ARGS["out-file"]}} {{ARGS["url"]}}; `
 ${{ARGS["sha-var-name"]}} = '{{ARGS["sha"]}}'; `
-if ((Get-FileHash {{ARGS["out-file"]}} -Algorithm sha512).Hash -ne ${{ARGS["sha-var-name"]}}) { `
+if ((Get-FileHash {{ARGS["out-file"]}} -Algorithm {{hashAlgorithm}}).Hash -ne ${{ARGS["sha-var-name"]}}) { `
     Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
     exit 1; `
 }
