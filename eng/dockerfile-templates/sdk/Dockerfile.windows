@@ -17,7 +17,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 {{InsertTemplate("Dockerfile.windows.install-components")}}
 
-{{InsertTemplate("Dockerfile.windows.set-powershell-path")}}
+{{InsertTemplate("../Dockerfile.windows.set-path", [ "path": "C:\Program Files\powershell"])}}
 
 {{InsertTemplate("Dockerfile.windows.first-run")}}^else:
 {{
@@ -41,10 +41,7 @@ FROM {{aspnetBaseTag}}
 
 {{InsertTemplate("Dockerfile.envs")}}
 
-# In order to set system PATH, ContainerAdministrator must be used
-USER ContainerAdministrator
-{{InsertTemplate("Dockerfile.windows.set-powershell-path")}}
-USER ContainerUser
+{{InsertTemplate("../Dockerfile.windows.set-path", [ "path": "C:\Program Files\powershell"])}}
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
 
