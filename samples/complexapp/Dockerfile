@@ -24,6 +24,8 @@ COPY tests/*.csproj .
 RUN dotnet restore tests.csproj
 
 COPY tests/ .
+RUN dotnet build --no-restore
+
 ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore"]
 
 FROM build AS publish
