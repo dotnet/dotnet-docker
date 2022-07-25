@@ -1,0 +1,10 @@
+{{
+    _ Appends a path to the PATH environment variable.
+    ARGS:
+        path: Path to append to the PATH environment variable ^
+
+    set isNanoServer to find(OS_VERSION, "nanoserver") >= 0
+}}{{ if isNanoServer:# In order to set system PATH, ContainerAdministrator must be used
+USER ContainerAdministrator
+}}RUN setx /M PATH "%PATH%;{{ARGS["path"]}}"{{ if isNanoServer:
+USER ContainerUser}}
