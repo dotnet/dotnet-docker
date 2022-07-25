@@ -16,7 +16,7 @@ RUN powershell -Command " `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
         }; `
-        mkdir $Env:ProgramFiles\MinGit; `
+        mkdir MinGit; `
         tar -oxzf mingit.zip -C MinGit; `
         Remove-Item -Force mingit.zip"
 

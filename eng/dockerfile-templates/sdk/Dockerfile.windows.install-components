@@ -31,7 +31,8 @@
     set isSingleStage to (isServerCore && !ARGS["dotnet-is-internal"]) ^
     set getFormattedPath(path) to:{{
         return cat("'", path, "'")
-    }}
+    }} ^
+    set mingitDir to when(isSingleStage, "$Env:ProgramFiles\MinGit", "MinGit")
 }}{{ if dotnetVersion != "3.1" && dotnetVersion != "6.0":# Download MinGit
 RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
@@ -45,11 +46,11 @@ RUN powershell -Command " `
                 "sha-var-name": "mingit_sha256",
                 "hash-algorithm": "sha256"
             ], "        ")}}; `
-        mkdir $Env:ProgramFiles\MinGit; `
+        mkdir {{ mingitDir }}; `
         {{InsertTemplate("../Dockerfile.windows.extract-zip",
             [
                 "file": "mingit.zip",
-                "dest-dir": when(isSingleStage, "$Env:ProgramFiles\MinGit", "MinGit")
+                "dest-dir": mingitDir
             ], "        ")}}"
 
 }}RUN powershell -Command " `
