@@ -41,6 +41,8 @@ ENV \
     # Default Filter
     DefaultProcess__Filters__0__Key=ProcessId \
     DefaultProcess__Filters__0__Value=1 \
+    # Remove Unix Domain Socket before starting diagnostic port server
+    DiagnosticPort__DeleteEndpointOnStartup=true \
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
