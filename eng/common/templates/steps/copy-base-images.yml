@@ -1,0 +1,25 @@
+parameters:
+  additionalOptions: null
+  publicProjectName: null
+  continueOnError: false
+  
+steps:
+- ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+  - template: ../steps/set-dry-run.yml
+- script: >
+    $(runImageBuilderCmd)
+    copyBaseImages
+    '$(acr.servicePrincipalName)'
+    '$(acr.servicePrincipalPassword)'
+    '$(acr.servicePrincipalTenant)'
+    '$(acr.subscription)'
+    '$(acr.resourceGroup)'
+    $(dockerHubRegistryCreds)
+    --repo-prefix $(mirrorRepoPrefix)
+    --registry-override '$(acr.server)'
+    --os-type 'linux'
+    --architecture '*'
+    $DRYRUNARG
+    ${{ parameters.additionalOptions }}
+  displayName: Copy Base Images
+  continueOnError: ${{ parameters.continueOnError }}
