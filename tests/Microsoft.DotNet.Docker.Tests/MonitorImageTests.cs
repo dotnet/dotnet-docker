@@ -119,7 +119,7 @@ namespace Microsoft.DotNet.Docker.Tests
             variables.Add(new EnvironmentVariableInfo("DefaultProcess__Filters__0__Key", "ProcessId"));
             variables.Add(new EnvironmentVariableInfo("DefaultProcess__Filters__0__Value", "1"));
             // Existing (orphaned) diagnostic port should be delete before starting server
-            if (imageData.Version >= ImageVersion.V6_2)
+            if (imageData.Version > ImageVersion.V6_1)
             {
                 variables.Add(new EnvironmentVariableInfo("DiagnosticPort__DeleteEndpointOnStartup", "true"));
             }
