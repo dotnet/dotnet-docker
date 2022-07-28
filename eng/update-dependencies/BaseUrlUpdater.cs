@@ -23,7 +23,7 @@ internal class BaseUrlUpdater : FileRegexUpdater
         Path = System.IO.Path.Combine(repoRoot, UpdateDependencies.VersionsFilename);
         VersionGroupName = BaseUrlGroupName;
         Regex = ManifestHelper.GetManifestVariableRegex(
-            ManifestHelper.GetBaseUrlVariableName(options.DockerfileVersion, options.Branch, options.VersionSourceName),
+            ManifestHelper.GetBaseUrlVariableName(options.DockerfileVersion, options.SourceBranch, options.VersionSourceName),
             $"(?<{BaseUrlGroupName}>.+)");
         _options = options;
 
@@ -34,7 +34,7 @@ internal class BaseUrlUpdater : FileRegexUpdater
     {
         usedDependencyInfos = Enumerable.Empty<IDependencyInfo>();
 
-        string baseUrlVersionVarName = ManifestHelper.GetBaseUrlVariableName(_options.DockerfileVersion, _options.Branch, _options.VersionSourceName);
+        string baseUrlVersionVarName = ManifestHelper.GetBaseUrlVariableName(_options.DockerfileVersion, _options.SourceBranch, _options.VersionSourceName);
         string unresolvedBaseUrl = _manifestVariables[baseUrlVersionVarName].ToString();
 
         if (_options.IsInternal)

@@ -20,8 +20,12 @@ else
     queryString=""
 fi
 
+akaMsUrl="https://aka.ms/dotnet/$channel/dotnet-sdk-win-x64.zip$queryString"
+
+echo "Downloading SDK from $akaMsUrl"
+
 # Download the SDK and resolve the redirected URL
-sdkUrl=$(curl -w %{url_effective} -sSLo sdk.zip https://aka.ms/dotnet/$channel/dotnet-sdk-win-x64.zip$queryString)
+sdkUrl=$(curl -w %{url_effective} -sSLo sdk.zip $akaMsUrl)
 
 unzip -p sdk.zip "sdk/*/.version" > sdkversion
 
