@@ -20,10 +20,9 @@ RUN dotnet publish -c Release -o out --no-restore
 # runtime image
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine
 
-# install git and Docker
+# install Docker
 RUN apk add --no-cache \
-        docker \
-        git
+        docker
 
 # copy update-dependencies
 WORKDIR /update-dependencies
