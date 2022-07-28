@@ -28,6 +28,6 @@ stages:
         git config user.name "$(dotnetDockerBot.email)"
         git merge -s ours origin/internal/release/$(Build.SourceBranchName)
       displayName: Configure Branch
-    - template: steps/update-dotnet-installer-dependencies.yml
+    - template: steps/update-dotnet-dependencies.yml
       parameters:
         useInternalBuild: true
