@@ -26,7 +26,7 @@ RUN dotnet restore tests.csproj
 COPY tests/ .
 RUN dotnet build --no-restore
 
-ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore"]
+ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore", "--no-build"]
 
 FROM build AS publish
 RUN dotnet publish -c release --no-build -o /app
