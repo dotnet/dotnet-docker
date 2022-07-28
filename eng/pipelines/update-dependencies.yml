@@ -18,7 +18,7 @@ stages:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - template: steps/update-dotnet-installer-dependencies.yml
+    - template: steps/update-dotnet-dependencies.yml
 - stage: Monitor
   condition: eq(variables['update-monitor-enabled'], 'true')
   dependsOn: [] # Allows it to run in parallel
