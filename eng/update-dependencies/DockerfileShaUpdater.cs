@@ -398,7 +398,7 @@ namespace Dotnet.Docker
             // the nightly branch, for example, will not be signed due to the difference in the blob container being targeted between
             // the two branches. So in the nightly branch, we wouldn't use the release checksums file and instead use the other means
             // of retrieving the checksums.
-            if (_options.Branch != "main")
+            if (_options.SourceBranch != "main")
             {
                 return null;
             }

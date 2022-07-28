@@ -1,0 +1,21 @@
+parameters:
+  customArgs: ""
+  stableBranding: false
+  useInternalBuild: false
+
+steps:
+- script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
+  displayName: Build Update Dependencies Tool
+- script: >
+    if [ "${{ parameters.useInternalBuild }}" == "true" ]; then
+      pat="$(dn-bot-devdiv-dnceng-rw-code-pat)"
+    else
+      pat="$(BotAccount-dotnet-docker-bot-PAT)"
+    fi &&
+    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies \
+      ${{parameters.customArgs}} \
+      --user $(dotnetDockerBot.userName) \
+      --email $(dotnetDockerBot.email) \
+      --password $pat \
+      --stable-branding ${{parameters.stableBranding}}
+  displayName: Run Update Dependencies
