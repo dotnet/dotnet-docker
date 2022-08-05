@@ -3,6 +3,7 @@ parameters:
   testMatrixType: platformVersionedOs
   buildMatrixCustomBuildLegGroupArgs: ""
   testMatrixCustomBuildLegGroupArgs: ""
+  customCopyBaseImagesInitSteps: []
   customBuildInitSteps: []
   customTestInitSteps: []
   customPublishInitSteps: []
@@ -70,6 +71,7 @@ stages:
       pool: ${{ parameters.linuxAmd64Pool }}
       additionalOptions: "--manifest '$(manifest)' $(manifestVariables)"
       publicProjectName: ${{ parameters.publicProjectName }}
+      customInitSteps: ${{ parameters.customCopyBaseImagesInitSteps}}
   - template: ../jobs/generate-matrix.yml
     parameters:
       matrixType: ${{ parameters.buildMatrixType }}
