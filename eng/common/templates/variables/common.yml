@@ -38,6 +38,8 @@ variables:
   value: ""
 - name: testRunner.options
   value: ""
+- name: customCopyBaseImagesArgs
+  value: ""
 
 - name: defaultLinuxAmd64PoolImage
   value: ubuntu-latest
