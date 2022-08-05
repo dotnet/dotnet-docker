@@ -84,7 +84,13 @@ jobs:
     condition: eq(variables.imageBuilderBuildArgs, '')
     displayName: Initialize Image Builder Build Args
   - powershell: |
-      $imageBuilderBuildArgs = "$(imageBuilderBuildArgs) $(imageBuilder.queueArgs) --image-info-output-path $(artifactsPath)/$(legName)-image-info.json"
+      # Reference the existing imageBuilderBuildArgs variable as an environment variable rather than injecting it directly
+      # with the $(imageBuilderBuildArgs) syntax. This is to avoid issues where the string may contain single quotes $ chars
+      # which really mess up assigning to a variable. It would require assigning the string with single quotes but also needing
+      # to escape the single quotes that are in the string which would need to be done outside the context of PowerShell. Since
+      # all we need is for that value to be in a PowerShell variable, we can get that by the fact that AzDO automatically creates
+      # the environment variable for us.
+      $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(artifactsPath)/$(legName)-image-info.json"
       if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}") {
         $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push --registry-creds ""$(acr.server)=$(acr.userName);$(acr.password)"""
       }
