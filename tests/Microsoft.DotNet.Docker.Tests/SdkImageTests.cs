@@ -89,6 +89,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
             }
 
+            if (imageData.Version.Major == 6 && DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                variables.Add(new EnvironmentVariableInfo("DOTNET_NUGET_SIGNATURE_VERIFICATION", "true"));
+            }
+
             if (imageData.Version.Major >= 6)
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));

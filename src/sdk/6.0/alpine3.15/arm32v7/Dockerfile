@@ -8,6 +8,8 @@ ENV \
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false \
     # Do not show first run text
     DOTNET_NOLOGO=true \
+    # Enable validation for signed NuGet packages
+    DOTNET_NUGET_SIGNATURE_VERIFICATION=true \
     # SDK version
     DOTNET_SDK_VERSION=6.0.302 \
     # Disable the invariant mode (set in base image)
