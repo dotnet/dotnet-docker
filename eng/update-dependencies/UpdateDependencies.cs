@@ -8,7 +8,6 @@ using System.CommandLine.Invocation;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LibGit2Sharp;
 using Microsoft.DotNet.VersionTools;
@@ -16,6 +15,10 @@ using Microsoft.DotNet.VersionTools.Automation;
 using Microsoft.DotNet.VersionTools.Automation.GitHubApi;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
+using Microsoft.TeamFoundation.SourceControl.WebApi;
+using Microsoft.VisualStudio.Services.Common;
+using Microsoft.VisualStudio.Services.WebApi;
+using Newtonsoft.Json.Linq;
 
 namespace Dotnet.Docker
 {
@@ -67,7 +70,18 @@ namespace Dotnet.Docker
                 IEnumerable<IDependencyInfo> buildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
                     .ToArray();
-                DependencyUpdateResults updateResults = UpdateFiles(buildInfos);
+                DependencyUpdateResults updateResults = await UpdateFilesAsync(buildInfos);
+
+                if (errorTraceListener.Errors.Any())
+                {
+                    string errors = string.Join(Environment.NewLine, errorTraceListener.Errors);
+                    Console.Error.WriteLine("Failed to update dependencies due to the following errors:");
+                    Console.Error.WriteLine(errors);
+                    Console.Error.WriteLine();
+                    Console.Error.WriteLine("You may need to use the --compute-shas option if checksum files are missing.");
+                    Environment.Exit(1);
+                }
+
                 if (updateResults.ChangesDetected())
                 {
                     if (Options.UpdateOnly)
@@ -79,16 +93,6 @@ namespace Dotnet.Docker
                         await CreatePullRequestAsync();
                     }
                 }
-
-                if (errorTraceListener.Errors.Any())
-                {
-                    string errors = string.Join(Environment.NewLine, errorTraceListener.Errors);
-                    Console.Error.WriteLine("Failed to update dependencies due to the following errors:");
-                    Console.Error.WriteLine(errors);
-                    Console.Error.WriteLine();
-                    Console.Error.WriteLine("You may need to use the --compute-shas option if checksum files are missing.");
-                    Environment.Exit(1);
-                }
             }
             catch (Exception e)
             {
@@ -99,9 +103,9 @@ namespace Dotnet.Docker
             Environment.Exit(0);
         }
 
-        private static DependencyUpdateResults UpdateFiles(IEnumerable<IDependencyInfo> buildInfos)
+        private static async Task<DependencyUpdateResults> UpdateFilesAsync(IEnumerable<IDependencyInfo> buildInfos)
         {
-            IEnumerable<IDependencyUpdater> updaters = GetUpdaters();
+            IEnumerable<IDependencyUpdater> updaters = await GetUpdatersAsync();
 
             return DependencyUpdateUtils.Update(updaters, buildInfos);
         }
@@ -121,21 +125,130 @@ namespace Dotnet.Docker
 
         private static async Task CreatePullRequestAsync()
         {
+            string commitMessage = $"[{Options.TargetBranch}] Update dependencies from {Options.VersionSourceName}";
+
             // Replace slashes with hyphens for use in naming the branch
             string versionSourceNameForBranch = Options.VersionSourceName.Replace("/", "-");
-
-            GitHubAuth gitHubAuth = new GitHubAuth(Options.GitHubPassword, Options.GitHubUser, Options.GitHubEmail);
-            PullRequestCreator prCreator = new PullRequestCreator(gitHubAuth, Options.GitHubUser);
-
-            string branchSuffix = $"UpdateDependencies-{Options.Branch}-From-{versionSourceNameForBranch}";
-            PullRequestOptions prOptions = new PullRequestOptions()
+            string branchSuffix = $"UpdateDependencies-{Options.TargetBranch}-From-{versionSourceNameForBranch}";
+            PullRequestOptions prOptions = new()
             {
                 BranchNamingStrategy = new SingleBranchNamingStrategy(branchSuffix)
             };
 
-            string commitMessage = $"[{Options.Branch}] Update dependencies from {Options.VersionSourceName}";
+            if (Options.IsInternal)
+            {
+                await CreateAzdoPullRequest(commitMessage, prOptions);
+            }
+            else
+            {
+                await CreateGitHubPullRequest(commitMessage, prOptions, branchSuffix);
+            }
+        }
+
+        private static async Task CreateAzdoPullRequest(string commitMessage, PullRequestOptions prOptions)
+        {
+            using Repository repo = new(RepoRoot);
+
+            // Commit the existing changes
+            Commands.Stage(repo, "*");
+            Signature signature = new(Options.User, Options.Email, DateTimeOffset.Now);
+            repo.Commit(commitMessage, signature, signature);
+
+            PushOptions pushOptions = new()
+            {
+                CredentialsProvider = (url, user, credTypes) => new UsernamePasswordCredentials
+                {
+                    Username = Options.Password, // it doesn't make sense but a PAT needs to be set as username
+                    Password = string.Empty
+                }
+            };
+
+            // Create a remote to AzDO
+            string remoteName = GetUniqueName(
+                repo.Network.Remotes.Select(remote => remote.Name).ToList(),
+                Options.AzdoOrganization);
+            Remote remote = repo.Network.Remotes.Add(
+                remoteName,
+                $"https://dev.azure.com/{Options.AzdoOrganization}/{Options.AzdoProject}/_git/{Options.AzdoRepo}");
+
+            try
+            {
+                // Push the commit to AzDO
+                string username = Options.Email.Substring(0, Options.Email.IndexOf('@'));
+                string remoteBranch = prOptions.BranchNamingStrategy.Prefix($"users/{username}/{Options.TargetBranch}");
+                string pushRefSpec = $@"refs/heads/{remoteBranch}";
+
+                Trace.WriteLine($"Pushing to {remoteBranch}");
+
+                // Force push
+                repo.Network.Push(remote, "+HEAD", pushRefSpec, pushOptions);
+
+                using VssConnection connection = new(
+                    new Uri($"https://dev.azure.com/{Options.AzdoOrganization}"),
+                    new VssBasicCredential(string.Empty, Options.Password));
+
+                GitHttpClient client = connection.GetClient<GitHttpClient>();
+
+                string targetBranch = $"refs/heads/{Options.TargetBranch}";
+                List<GitPullRequest> activePrs = await client.GetPullRequestsByProjectAsync(
+                    Options.AzdoProject,
+                    new GitPullRequestSearchCriteria
+                    {
+                        TargetRefName = targetBranch,
+                        Status = PullRequestStatus.Active
+                    });
+
+                string prTitle = commitMessage;
+
+                GitPullRequest existingPr = activePrs
+                    .FirstOrDefault(pr => pr.Repository.Name == Options.AzdoRepo && pr.Title == prTitle);
+                if (existingPr is null)
+                {
+                    // Create the pull request
+                    GitPullRequest pullRequest = new()
+                    {
+                        Title = prTitle,
+                        SourceRefName = pushRefSpec,
+                        TargetRefName = targetBranch
+                    };
+
+                    GitPullRequest pr = await client.CreatePullRequestAsync(pullRequest, Options.AzdoProject, Options.AzdoRepo);
+                    Trace.WriteLine($"Created pull request: {GetGitPullRequestWebLink(pr)}");
+                }
+                else
+                {
+                    Trace.WriteLine($"Updated existing PR: {GetGitPullRequestWebLink(existingPr)}");
+                }
+            }
+            finally
+            {
+                // Clean up the AzDO remote that was created
+                repo.Network.Remotes.Remove(remote.Name);
+            }
+        }
+
+        // Normally the web link would be available within GitPullRequest.Links property but that's not populated 
+        private static string GetGitPullRequestWebLink(GitPullRequest pr) =>
+            $"https://dev.azure.com/{Options.AzdoOrganization}/{Options.AzdoProject}/_git/{Options.AzdoRepo}/pullrequest/{pr.PullRequestId}";
+
+        private static string GetUniqueName(IEnumerable<string> existingNames, string suggestedName, int? index = null)
+        {
+            string name = suggestedName + index?.ToString();
+            if (existingNames.Any(val => val == name))
+            {
+                return GetUniqueName(existingNames, suggestedName, index is null ? 1 : ++index);
+            }
+
+            return name;
+        }
+
+        private static async Task CreateGitHubPullRequest(string commitMessage, PullRequestOptions prOptions, string branchSuffix)
+        {
+            GitHubAuth gitHubAuth = new GitHubAuth(Options.Password, Options.User, Options.Email);
+            PullRequestCreator prCreator = new PullRequestCreator(gitHubAuth, Options.User);
+            
             GitHubProject upstreamProject = new GitHubProject(Options.GitHubProject, Options.GitHubUpstreamOwner);
-            GitHubBranch upstreamBranch = new GitHubBranch(Options.Branch, upstreamProject);
+            GitHubBranch upstreamBranch = new GitHubBranch(Options.TargetBranch, upstreamProject);
 
             using (GitHubClient client = new GitHubClient(gitHubAuth))
             {
@@ -156,12 +269,12 @@ namespace Dotnet.Docker
                 }
                 else
                 {
-                    UpdateExistingPullRequest(gitHubAuth, prOptions, commitMessage, upstreamBranch);
+                    UpdateExistingGitHubPullRequest(gitHubAuth, prOptions, commitMessage, upstreamBranch);
                 }
             }
         }
 
-        private static void UpdateExistingPullRequest(
+        private static void UpdateExistingGitHubPullRequest(
             GitHubAuth gitHubAuth, PullRequestOptions prOptions, string commitMessage, GitHubBranch upstreamBranch)
         {
             // PullRequestCreator ends up force-pushing updates to an existing PR which is not great when the logic
@@ -202,7 +315,7 @@ namespace Dotnet.Docker
                 {
                     Commands.Stage(repo, "*");
 
-                    Signature signature = new Signature(Options.GitHubUser, Options.GitHubEmail, DateTimeOffset.Now);
+                    Signature signature = new Signature(Options.User, Options.Email, DateTimeOffset.Now);
                     repo.Commit(commitMessage, signature, signature);
 
                     Branch branch = repo.Branches[$"origin/{branchName}"];
@@ -211,7 +324,7 @@ namespace Dotnet.Docker
                     {
                         CredentialsProvider = (url, user, credTypes) => new UsernamePasswordCredentials
                         {
-                            Username = Options.GitHubPassword,
+                            Username = Options.Password,
                             Password = string.Empty
                         }
                     };
@@ -289,26 +402,36 @@ namespace Dotnet.Docker
             }
         }
 
-        private static IEnumerable<IDependencyUpdater> GetUpdaters()
+        private static async Task<IEnumerable<IDependencyUpdater>> GetUpdatersAsync()
         {
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
 
-            yield return new NuGetConfigUpdater(RepoRoot, Options);
-            yield return new BaseUrlUpdater(RepoRoot, Options);
+            JObject release = await MinGitHelper.GetLatestMinGitReleaseAsync();
+
+            List<IDependencyUpdater> updaters = new()
+            {
+                new NuGetConfigUpdater(RepoRoot, Options),
+                new BaseUrlUpdater(RepoRoot, Options),
+                new MinGitUrlUpdater(RepoRoot, release),
+                new MinGitShaUpdater(RepoRoot, release)
+            };
+            
             foreach (string productName in Options.ProductVersions.Keys)
             {
-                yield return new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot, Options);
-                yield return new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, RepoRoot, Options);
+                updaters.Add(new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot, Options));
+                updaters.Add(new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, RepoRoot, Options));
 
                 foreach (IDependencyUpdater shaUpdater in DockerfileShaUpdater.CreateUpdaters(productName, Options.DockerfileVersion, RepoRoot, Options))
                 {
-                    yield return shaUpdater;
+                    updaters.Add(shaUpdater);
                 }
             }
 
-            yield return ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot);
-            yield return ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot);
+            updaters.Add(ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot));
+            updaters.Add(ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot));
+
+            return updaters;
         }
     }
 }

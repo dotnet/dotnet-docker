@@ -23,7 +23,7 @@ public static class ManifestHelper
     /// <param name="manifestVariables">JSON object of the variables from the manifest.</param>
     /// <param name="options">Configured options from the app.</param>
     public static string GetBaseUrl(JObject manifestVariables, Options options) =>
-        GetVariableValue(GetBaseUrlVariableName(options.DockerfileVersion, options.Branch, options.VersionSourceName), manifestVariables);
+        GetVariableValue(GetBaseUrlVariableName(options.DockerfileVersion, options.SourceBranch, options.VersionSourceName), manifestVariables);
 
     /// <summary>
     /// Consstructs the name of the base URL variable.

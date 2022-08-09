@@ -17,7 +17,8 @@
       Otherwise, use the account that is associated with the current branch. ^
     set urlBranch to when(find(monitorVersion, "-") >= 0 || buildVersion != monitorVersion, VARIABLES["branch"], "main") ^
     _ Use the $DOTNET_MONITOR_VERSION variable for the version folder if the build and product versions are the same. ^
-    set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$DOTNET_MONITOR_VERSION')
+    set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$DOTNET_MONITOR_VERSION') ^
+    set supportsEndpointDeletion to monitorMajorMinor != "6.1"
 }}ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
@@ -64,7 +65,9 @@ ENV \
     COMPlus_EnableDiagnostics=0 \
     # Default Filter
     DefaultProcess__Filters__0__Key=ProcessId \
-    DefaultProcess__Filters__0__Value=1 \
+    DefaultProcess__Filters__0__Value=1 \{{if supportsEndpointDeletion:
+    # Remove Unix Domain Socket before starting diagnostic port server
+    DiagnosticPort__DeleteEndpointOnStartup=true \}}
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)

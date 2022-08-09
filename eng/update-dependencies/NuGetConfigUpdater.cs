@@ -28,7 +28,7 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         _repoRoot = repoRoot;
         _options = options;
 
-        string configSuffix = (_options.Branch == "nightly" ? ".nightly" : string.Empty);
+        string configSuffix = (_options.SourceBranch == "nightly" ? ".nightly" : string.Empty);
         _configPath = Path.Combine(_repoRoot, $"tests/Microsoft.DotNet.Docker.Tests/TestAppArtifacts/NuGet.config{configSuffix}");
     }
 

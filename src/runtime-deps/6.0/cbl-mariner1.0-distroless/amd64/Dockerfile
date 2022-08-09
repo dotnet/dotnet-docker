@@ -40,6 +40,7 @@ RUN groupadd \
 RUN rm -rf /staging/etc/dnf \
     && rm -rf /staging/run/* \
     && rm -rf /staging/var/cache/dnf \
+    && rm -rf /staging/var/lib/rpm \
     && rm -rf /staging/usr/share/doc \
     && rm -rf /staging/usr/share/man \
     && find /staging/var/log -type f -size +0 -delete

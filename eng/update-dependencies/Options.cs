@@ -15,20 +15,24 @@ namespace Dotnet.Docker
         public bool ComputeChecksums { get; }
         public string DockerfileVersion { get; }
         public string ChannelName { get; }
-        public string GitHubEmail { get; }
-        public string GitHubPassword { get; }
+        public string Email { get; }
+        public string Password { get; }
         public string GitHubProject => "dotnet-docker";
-        public string Branch { get; }
+        public string SourceBranch { get; }
+        public string TargetBranch { get; }
         public string GitHubUpstreamOwner => "dotnet";
-        public string GitHubUser { get; }
+        public string User { get; }
+        public string AzdoOrganization { get; }
+        public string AzdoProject { get; }
+        public string AzdoRepo { get; }
         public IDictionary<string, string?> ProductVersions { get; set; } = new Dictionary<string, string?>();
         public string VersionSourceName { get; }
         public bool UseStableBranding { get; }
-        public bool UpdateOnly => GitHubEmail == null || GitHubPassword == null || GitHubUser == null;
+        public bool UpdateOnly => Email == null || Password == null || User == null || TargetBranch == null;
         public bool IsInternal => !string.IsNullOrEmpty(BinarySasQueryString) || !string.IsNullOrEmpty(ChecksumSasQueryString);
 
         public Options(string dockerfileVersion, string[] productVersion, string channelName, string versionSourceName, string email, string password, string user,
-            bool computeShas, bool stableBranding, string binarySas, string checksumSas, string branch)
+            bool computeShas, bool stableBranding, string binarySas, string checksumSas, string sourceBranch, string targetBranch, string org, string project, string repo)
         {
             DockerfileVersion = dockerfileVersion;
             ProductVersions = productVersion
@@ -36,14 +40,21 @@ namespace Dotnet.Docker
                 .ToDictionary(split => split[0].ToLower(), split => split.Skip(1).FirstOrDefault());
             ChannelName = channelName;
             VersionSourceName = versionSourceName;
-            GitHubEmail = email;
-            GitHubPassword = password;
-            GitHubUser = user;
+            Email = email;
+            Password = password;
+            User = user;
             ComputeChecksums = computeShas;
             UseStableBranding = stableBranding;
             BinarySasQueryString = binarySas;
             ChecksumSasQueryString = checksumSas;
-            Branch = branch;
+            SourceBranch = sourceBranch;
+
+            // Default TargetBranch to SourceBranch if it's not explicitly provided
+            TargetBranch = string.IsNullOrEmpty(targetBranch) ? sourceBranch : targetBranch;
+
+            AzdoOrganization = org;
+            AzdoProject = project;
+            AzdoRepo = repo;
 
             // Special case for handling the shared dotnet product version variables.
             if (ProductVersions.ContainsKey("runtime"))
@@ -63,14 +74,18 @@ namespace Dotnet.Docker
                 new Option<string[]>("--product-version", "Product versions to update (<product-name>=<version>)"),
                 new Option<string>("--channel-name", "The name of the channel from which to find product files."),
                 new Option<string>("--version-source-name", "The name of the source from which the version information was acquired."),
-                new Option<string>("--email", "GitHub email used to make PR (if not specified, a PR will not be created)"),
-                new Option<string>("--password", "GitHub password used to make PR (if not specified, a PR will not be created)"),
-                new Option<string>("--user", "GitHub user used to make PR (if not specified, a PR will not be created)"),
+                new Option<string>("--email", "GitHub or AzDO email used to make PR (if not specified, a PR will not be created)"),
+                new Option<string>("--password", "GitHub or AzDO password used to make PR (if not specified, a PR will not be created)"),
+                new Option<string>("--user", "GitHub or AzDO user used to make PR (if not specified, a PR will not be created)"),
                 new Option<bool>("--compute-shas", "Compute the checksum if a published checksum cannot be found"),
                 new Option<bool>("--stable-branding", "Use stable branding version numbers to compute paths"),
-                new Option<string>("--branch", () => "nightly", "SAS query string used to access files in blob storage"),
-				new Option<string>("--binary-sas", "SAS query string used to access binary files in blob storage"),
+                new Option<string>("--source-branch", () => "nightly", "Branch where the Dockerfiles are hosted"),
+                new Option<string>("--target-branch", "Target branch of the generated PR (defaults to value of source-branch)"),
+                new Option<string>("--binary-sas", "SAS query string used to access binary files in blob storage"),
                 new Option<string>("--checksum-sas", "SAS query string used to access checksum files in blob storage"),
+                new Option<string>("--org", "Name of the AzDO organization"),
+                new Option<string>("--project", "Name of the AzDO project"),
+                new Option<string>("--repo", "Name of the AzDO repo"),
             };
     }
 }
