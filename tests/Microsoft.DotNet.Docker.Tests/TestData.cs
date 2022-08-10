@@ -69,10 +69,8 @@ namespace Microsoft.DotNet.Docker.Tests
         private static readonly ProductImageData[] s_windowsTestData =
         {
             new ProductImageData { Version = V3_1, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
-            new ProductImageData { Version = V3_1, OS = OS.NanoServer20H2,     Arch = Arch.Amd64 },
             new ProductImageData { Version = V3_1, OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.NanoServer20H2,     Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
@@ -104,7 +102,6 @@ namespace Microsoft.DotNet.Docker.Tests
         private static readonly SampleImageData[] s_windowsSampleTestData =
         {
             new SampleImageData { OS = OS.NanoServer1809,     Arch = Arch.Amd64, IsPublished = true },
-            new SampleImageData { OS = OS.NanoServer20H2,     Arch = Arch.Amd64, IsPublished = true },
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, IsPublished = true },
 
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-x64" },
