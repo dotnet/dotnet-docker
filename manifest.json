@@ -1182,28 +1182,6 @@
               }
             },
             {
-              "dockerfile": "src/runtime/3.1/nanoserver-20H2/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-20H2",
-              "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-20H2": {},
-                "3.1-nanoserver-20H2": {},
-                "$(dotnet|3.1|product-version)-nanoserver-2009": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedRuntimeRepo)"
-                  }
-                },
-                "3.1-nanoserver-2009": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedRuntimeRepo)"
-                  }
-                }
-              }
-            },
-            {
               "dockerfile": "src/runtime/3.1/nanoserver-ltsc2022/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
               "os": "windows",
@@ -1621,16 +1599,6 @@
               "tags": {
                 "$(dotnet|6.0|product-version)-nanoserver-1809": {},
                 "6.0-nanoserver-1809": {}
-              }
-            },
-            {
-              "dockerfile": "src/runtime/6.0/nanoserver-20H2/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-20H2",
-              "tags": {
-                "$(dotnet|6.0|product-version)-nanoserver-20H2": {},
-                "6.0-nanoserver-20H2": {}
               }
             },
             {
@@ -2651,31 +2619,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/3.1/nanoserver-20H2/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-20H2",
-              "tags": {
-                "$(dotnet|3.1|product-version)-nanoserver-20H2": {},
-                "3.1-nanoserver-20H2": {},
-                "$(dotnet|3.1|product-version)-nanoserver-2009": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedAspnetRepo)"
-                  }
-                },
-                "3.1-nanoserver-2009": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedAspnetRepo)"
-                  }
-                }
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
               "dockerfile": "src/aspnet/3.1/nanoserver-ltsc2022/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
               "os": "windows",
@@ -3096,19 +3039,6 @@
               "tags": {
                 "$(dotnet|6.0|product-version)-nanoserver-1809": {},
                 "6.0-nanoserver-1809": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/6.0/nanoserver-20H2/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-20H2",
-              "tags": {
-                "$(dotnet|6.0|product-version)-nanoserver-20H2": {},
-                "6.0-nanoserver-20H2": {}
               }
             },
             {
@@ -4168,31 +4098,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/sdk/3.1/nanoserver-20H2/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-20H2",
-              "tags": {
-                "$(sdk|3.1|product-version)-nanoserver-20H2": {},
-                "3.1-nanoserver-20H2": {},
-                "$(sdk|3.1|product-version)-nanoserver-2009": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedSdkRepo)"
-                  }
-                },
-                "3.1-nanoserver-2009": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedSdkRepo)"
-                  }
-                }
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
               "dockerfile": "src/sdk/3.1/nanoserver-ltsc2022/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
               "os": "windows",
@@ -4604,19 +4509,6 @@
               "tags": {
                 "$(sdk|6.0|product-version)-nanoserver-1809": {},
                 "6.0-nanoserver-1809": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/sdk/6.0/nanoserver-20H2/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-20H2",
-              "tags": {
-                "$(sdk|6.0|product-version)-nanoserver-20H2": {},
-                "6.0-nanoserver-20H2": {}
               }
             },
             {
