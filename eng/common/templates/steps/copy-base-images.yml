@@ -15,6 +15,7 @@ steps:
     '$(acr.subscription)'
     '$(acr.resourceGroup)'
     $(dockerHubRegistryCreds)
+    $(customCopyBaseImagesArgs)
     --repo-prefix $(mirrorRepoPrefix)
     --registry-override '$(acr.server)'
     --os-type 'linux'

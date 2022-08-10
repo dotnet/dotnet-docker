@@ -48,7 +48,10 @@ namespace Dotnet.Docker
             BinarySasQueryString = binarySas;
             ChecksumSasQueryString = checksumSas;
             SourceBranch = sourceBranch;
-            TargetBranch = targetBranch;
+
+            // Default TargetBranch to SourceBranch if it's not explicitly provided
+            TargetBranch = string.IsNullOrEmpty(targetBranch) ? sourceBranch : targetBranch;
+
             AzdoOrganization = org;
             AzdoProject = project;
             AzdoRepo = repo;
@@ -77,7 +80,7 @@ namespace Dotnet.Docker
                 new Option<bool>("--compute-shas", "Compute the checksum if a published checksum cannot be found"),
                 new Option<bool>("--stable-branding", "Use stable branding version numbers to compute paths"),
                 new Option<string>("--source-branch", () => "nightly", "Branch where the Dockerfiles are hosted"),
-                new Option<string>("--target-branch", "Target branch of the generated PR"),
+                new Option<string>("--target-branch", "Target branch of the generated PR (defaults to value of source-branch)"),
                 new Option<string>("--binary-sas", "SAS query string used to access binary files in blob storage"),
                 new Option<string>("--checksum-sas", "SAS query string used to access checksum files in blob storage"),
                 new Option<string>("--org", "Name of the AzDO organization"),

@@ -7,6 +7,7 @@ parameters:
   publicProjectName: null
   buildMatrixCustomBuildLegGroupArgs: ""
   testMatrixCustomBuildLegGroupArgs: ""
+  customCopyBaseImagesInitSteps: []
   customBuildInitSteps: []
   customTestInitSteps: []
   customPublishInitSteps: []
@@ -25,6 +26,7 @@ stages:
     publicProjectName: ${{ parameters.publicProjectName }}
     buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
     testMatrixCustomBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}
+    customCopyBaseImagesInitSteps: ${{ parameters.customCopyBaseImagesInitSteps}}
     customBuildInitSteps: ${{ parameters.customBuildInitSteps }}
     customTestInitSteps: ${{ parameters.customTestInitSteps }}
     customPublishInitSteps:

@@ -2,7 +2,10 @@ steps:
 - powershell: |
     $imageBuilderBuildArgs = $env:IMAGEBUILDERBUILDARGS
     # Disable platform checks for CBL-Mariner on ARM64 due to https://github.com/dotnet/dotnet-docker/issues/3520
-    if (("$(osVersions)".Contains("cbl-mariner") -or "$(osVersions)".Contains("jammy-chiseled")) -and "$(architecture)" -eq "arm64") {
+    # Similar issue with Ubuntu images in ACR missing the arch variant metadata
+    $isUbuntu = "$(osVersions)".Contains("bionic") -or "$(osVersions)".Contains("focal") -or "$(osVersions)".Contains("jammy")
+    if (("$(osVersions)".Contains("cbl-mariner") -and "$(architecture)" -eq "arm64") -or
+        ($isUbuntu -and "$(architecture)".Contains("arm"))) {
       $imageBuilderBuildArgs += " --skip-platform-check"
     }
 

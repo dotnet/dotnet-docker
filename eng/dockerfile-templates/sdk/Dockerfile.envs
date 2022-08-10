@@ -13,7 +13,9 @@
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false {{lineContinuation}}{{if dotnetVersion != "3.1":
     # Do not show first run text
-    DOTNET_NOLOGO=true {{lineContinuation}}}}{{if dotnetVersion != "3.1":
+    DOTNET_NOLOGO=true {{lineContinuation}}}}{{if !isWindows && dotnetVersion = "6.0":
+    # Enable validation for signed NuGet packages
+    DOTNET_NUGET_SIGNATURE_VERIFICATION=true {{lineContinuation}}}}{{if dotnetVersion != "3.1":
     # SDK version
     DOTNET_SDK_VERSION={{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}} {{lineContinuation}}}}{{if isAlpine:
     # Disable the invariant mode (set in base image)

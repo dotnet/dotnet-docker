@@ -59,6 +59,7 @@ RUN {{if find(OS_VERSION, "1.0") < 0:tdnf install -y shadow-utils \
 RUN rm -rf {{distrolessStagingDir}}/etc/{{when(find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf")}} \
     && rm -rf {{distrolessStagingDir}}/run/* \
     && rm -rf {{distrolessStagingDir}}/var/cache/{{when(find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf")}} \
+    && rm -rf {{distrolessStagingDir}}/var/lib/rpm \
     && rm -rf {{distrolessStagingDir}}/usr/share/doc \
     && rm -rf {{distrolessStagingDir}}/usr/share/man \
     && find {{distrolessStagingDir}}/var/log -type f -size +0 -delete

@@ -3,12 +3,14 @@ parameters:
   pool: {}
   additionalOptions: null
   publicProjectName: null
+  customInitSteps: []
   
 jobs:
 - job: ${{ parameters.name }}
   pool: ${{ parameters.pool }}
   steps:
   - template: ../steps/init-docker-linux.yml
+  - ${{ parameters.customInitSteps }}
   - template: ../steps/copy-base-images.yml
     parameters:
       additionalOptions: ${{ parameters.additionalOptions }}
