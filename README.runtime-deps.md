@@ -59,9 +59,9 @@ Tags | Dockerfile | OS Version
 ##### .NET 7 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-7.0.0-preview.7-bullseye-slim-amd64, 7.0-bullseye-slim-amd64, 7.0.0-preview.7, 7.0.0-preview.7-bullseye-slim, 7.0, 7.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/bullseye-slim/amd64/Dockerfile) | Debian 11
-7.0.0-preview.7-alpine3.16-amd64, 7.0-alpine3.16-amd64, 7.0-alpine-amd64, 7.0.0-preview.7-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/alpine3.16/amd64/Dockerfile) | Alpine 3.16
-7.0.0-preview.7-jammy-amd64, 7.0-jammy-amd64, 7.0.0-preview.7-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+7.0.0-rc.1-bullseye-slim-amd64, 7.0-bullseye-slim-amd64, 7.0.0-rc.1, 7.0.0-rc.1-bullseye-slim, 7.0, 7.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/bullseye-slim/amd64/Dockerfile) | Debian 11
+7.0.0-rc.1-alpine3.16-amd64, 7.0-alpine3.16-amd64, 7.0-alpine-amd64, 7.0.0-rc.1-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/alpine3.16/amd64/Dockerfile) | Alpine 3.16
+7.0.0-rc.1-jammy-amd64, 7.0-jammy-amd64, 7.0.0-rc.1-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -81,9 +81,9 @@ Tags | Dockerfile | OS Version
 ##### .NET 7 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-7.0.0-preview.7-bullseye-slim-arm64v8, 7.0-bullseye-slim-arm64v8, 7.0.0-preview.7, 7.0.0-preview.7-bullseye-slim, 7.0, 7.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/bullseye-slim/arm64v8/Dockerfile) | Debian 11
-7.0.0-preview.7-alpine3.16-arm64v8, 7.0-alpine3.16-arm64v8, 7.0-alpine-arm64v8, 7.0.0-preview.7-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/alpine3.16/arm64v8/Dockerfile) | Alpine 3.16
-7.0.0-preview.7-jammy-arm64v8, 7.0-jammy-arm64v8, 7.0.0-preview.7-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+7.0.0-rc.1-bullseye-slim-arm64v8, 7.0-bullseye-slim-arm64v8, 7.0.0-rc.1, 7.0.0-rc.1-bullseye-slim, 7.0, 7.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/bullseye-slim/arm64v8/Dockerfile) | Debian 11
+7.0.0-rc.1-alpine3.16-arm64v8, 7.0-alpine3.16-arm64v8, 7.0-alpine-arm64v8, 7.0.0-rc.1-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/alpine3.16/arm64v8/Dockerfile) | Alpine 3.16
+7.0.0-rc.1-jammy-arm64v8, 7.0-jammy-arm64v8, 7.0.0-rc.1-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -101,9 +101,9 @@ Tags | Dockerfile | OS Version
 ##### .NET 7 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-7.0.0-preview.7-bullseye-slim-arm32v7, 7.0-bullseye-slim-arm32v7, 7.0.0-preview.7, 7.0.0-preview.7-bullseye-slim, 7.0, 7.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/bullseye-slim/arm32v7/Dockerfile) | Debian 11
-7.0.0-preview.7-alpine3.16-arm32v7, 7.0-alpine3.16-arm32v7, 7.0-alpine-arm32v7, 7.0.0-preview.7-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/alpine3.16/arm32v7/Dockerfile) | Alpine 3.16
-7.0.0-preview.7-jammy-arm32v7, 7.0-jammy-arm32v7, 7.0.0-preview.7-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+7.0.0-rc.1-bullseye-slim-arm32v7, 7.0-bullseye-slim-arm32v7, 7.0.0-rc.1, 7.0.0-rc.1-bullseye-slim, 7.0, 7.0-bullseye-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/3.1/bullseye-slim/arm32v7/Dockerfile) | Debian 11
+7.0.0-rc.1-alpine3.16-arm32v7, 7.0-alpine3.16-arm32v7, 7.0-alpine-arm32v7, 7.0.0-rc.1-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/alpine3.16/arm32v7/Dockerfile) | Alpine 3.16
+7.0.0-rc.1-jammy-arm32v7, 7.0-jammy-arm32v7, 7.0.0-rc.1-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
 You can retrieve a list of all available tags for dotnet/nightly/runtime-deps at https://mcr.microsoft.com/v2/dotnet/nightly/runtime-deps/tags/list.
 <!--End of generated tags-->
