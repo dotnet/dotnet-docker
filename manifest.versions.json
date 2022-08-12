@@ -84,8 +84,8 @@
     "libssl|focal": "1.1",
     "libssl|jammy": "3",
 
-    "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.37.1.windows.1/MinGit-2.37.1-64-bit.zip",
-    "mingit|x64|sha": "edacf2d5c39555c25a396e0b9d27182ab5587259dc2e824b4490996b373f9300",
+    "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.37.2.windows.2/MinGit-2.37.2.2-64-bit.zip",
+    "mingit|x64|sha": "12b7c2c8cb9db03fd8c81e618aab196a366d919b2dc0dcd5a062738a07960a05",
 
     "monitor|6.1|build-version": "6.1.4",
     "monitor|6.1|product-version": "6.1.4",
@@ -95,9 +95,9 @@
     "monitor|6.2|product-version": "6.2.2",
     "monitor|6.2|sha": "5d5df17e81ed66e644dc7323e89caee10f7eadbf62a28e0443e9fe12df1c5283fce2ebf6bc4dc2e5004c3c9e044101fc131ff293f382f15a32c91a6e159619d7",
 
-    "monitor|7.0|build-version": "7.0.0-preview.8.22410.3",
+    "monitor|7.0|build-version": "7.0.0-preview.8.22411.3",
     "monitor|7.0|product-version": "7.0.0-preview.8",
-    "monitor|7.0|sha": "73782418e44e0902e9519a7be8cbd4bfb060ac9dfd9e0f8caa8a1863ffe67c9ae960a46595a60ec3890dfb86a595a953f239e0787125d59363c0e747517fb82e",
+    "monitor|7.0|sha": "a0c42e31381d12e60bbc0e9841fa843240d61fa37e2b94657229c9b62edc0e039a4528ae5e3e356203739d1d663ebcc7a8523c3d76bf8a01926a2fea0ff9c9bc",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
