@@ -16,4 +16,7 @@ FROM mcr.microsoft.com/windows/nanoserver:ltsc2022
 WORKDIR /app
 COPY --from=build /app .
 
+# Enable detection of running in a container
+ENV DOTNET_RUNNING_IN_CONTAINER=true
+
 ENTRYPOINT ["dotnetapp"]
