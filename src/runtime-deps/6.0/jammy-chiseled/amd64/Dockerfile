@@ -1,7 +1,8 @@
 FROM amd64/golang:1.18 as chisel
 RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel
 WORKDIR /opt/chisel
-RUN go build ./cmd/chisel
+RUN go generate internal/deb/version.go \
+    && go build ./cmd/chisel
 
 
 FROM amd64/ubuntu:jammy as builder
