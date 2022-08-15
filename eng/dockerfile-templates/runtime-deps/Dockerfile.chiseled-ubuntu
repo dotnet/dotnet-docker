@@ -13,13 +13,12 @@ FROM {{ARCH_VERSIONED}}/ubuntu:{{osVersionBase}} as builder
 RUN apt-get update && \
     apt-get install -y ca-certificates
 
-COPY --from=chisel /opt/chisel/chisel /usr/bin/
-
 RUN {{InsertTemplate("Dockerfile.linux.distroless-user", [], "    ")}} \
     && mkdir -p "/rootfs/etc" \
     && tail -1 < /etc/passwd > "/rootfs/etc/passwd" \
     && tail -1 < /etc/group > "/rootfs/etc/group"
 
+COPY --from=chisel /opt/chisel/chisel /usr/bin/
 RUN chisel cut --release "ubuntu-{{osVersionNumber}}" --root /rootfs \
         base-files_base \
         ca-certificates_data \

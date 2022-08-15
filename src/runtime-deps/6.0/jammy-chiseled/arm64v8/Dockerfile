@@ -10,8 +10,6 @@ FROM arm64v8/ubuntu:jammy as builder
 RUN apt-get update && \
     apt-get install -y ca-certificates
 
-COPY --from=chisel /opt/chisel/chisel /usr/bin/
-
 RUN groupadd \
         --system \
         --gid=101 \
@@ -27,6 +25,7 @@ RUN groupadd \
     && tail -1 < /etc/passwd > "/rootfs/etc/passwd" \
     && tail -1 < /etc/group > "/rootfs/etc/group"
 
+COPY --from=chisel /opt/chisel/chisel /usr/bin/
 RUN chisel cut --release "ubuntu-22.04" --root /rootfs \
         base-files_base \
         ca-certificates_data \
