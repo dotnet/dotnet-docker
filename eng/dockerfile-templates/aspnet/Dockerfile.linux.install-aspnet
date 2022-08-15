@@ -9,7 +9,7 @@
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
-    set isDistroless to find(OS_VERSION, "-distroless") >= 0 ^
+    set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set useRpm to isFullMariner ^
     set filePlatform to when(useRpm, "", when(isAlpine, "-linux-musl", "-linux")) ^
