@@ -38,7 +38,6 @@ RUN chisel cut --release "ubuntu-22.04" --root /rootfs \
 
 
 FROM scratch
-ARG ROOTFS
 COPY --from=builder /rootfs /
 ENV \
     # Configure web servers to bind to port 8080 when present
