@@ -22,7 +22,11 @@ steps:
     $(engPath)/Set-DotnetVersions.ps1 @args
   displayName: Get update-dependencies args
 - powershell: |
-    $targetBranch = "internal/release/" + $(& $(engPath)/Get-Branch.ps1)
+    $branchPrefix = ""
+    if ("${{ parameters.useInternalBuild }}" -eq "true") {
+      $branchPrefix = "internal/release/"
+    }
+    $targetBranch = $branchPrefix + $(& $(engPath)/Get-Branch.ps1)
     echo "##vso[task.setvariable variable=targetBranch]$targetBranch"
   displayName: Set Target Branch Var
 - template: update-dependencies.yml
