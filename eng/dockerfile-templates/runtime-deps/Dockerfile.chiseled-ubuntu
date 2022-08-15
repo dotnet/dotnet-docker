@@ -30,6 +30,9 @@ RUN chisel cut --release "ubuntu-{{osVersionNumber}}" --root /rootfs \
 
 
 FROM scratch
+
 COPY --from=builder /rootfs /
+
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}}
+
 USER app

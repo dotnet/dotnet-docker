@@ -37,7 +37,9 @@ RUN chisel cut --release "ubuntu-22.04" --root /rootfs \
 
 
 FROM scratch
+
 COPY --from=builder /rootfs /
+
 ENV \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_URLS=http://+:8080 \
@@ -45,4 +47,5 @@ ENV \
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+
 USER app
