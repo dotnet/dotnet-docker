@@ -1,0 +1,38 @@
+{{
+    set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
+    set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1]
+}}FROM {{ARCH_VERSIONED}}/golang:1.18 as chisel
+RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel
+WORKDIR /opt/chisel
+RUN go generate internal/deb/version.go \
+    && go build ./cmd/chisel
+
+
+FROM {{ARCH_VERSIONED}}/ubuntu:{{osVersionBase}} as builder
+
+RUN apt-get update && \
+    apt-get install -y ca-certificates
+
+RUN {{InsertTemplate("Dockerfile.linux.distroless-user", [], "    ")}} \
+    && mkdir -p "/rootfs/etc" \
+    && tail -1 < /etc/passwd > "/rootfs/etc/passwd" \
+    && tail -1 < /etc/group > "/rootfs/etc/group"
+
+COPY --from=chisel /opt/chisel/chisel /usr/bin/
+RUN chisel cut --release "ubuntu-{{osVersionNumber}}" --root /rootfs \
+        base-files_base \
+        ca-certificates_data \
+        libc6_libs \
+        libgcc-s1_libs \
+        libssl3_libs \
+        libstdc++6_libs \
+        zlib1g_libs
+
+
+FROM scratch
+
+COPY --from=builder /rootfs /
+
+{{InsertTemplate("../Dockerfile.common-dotnet-envs")}}
+
+USER app

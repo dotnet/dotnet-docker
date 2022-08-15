@@ -50,17 +50,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # Create a non-root user and group
 RUN {{if find(OS_VERSION, "1.0") < 0:tdnf install -y shadow-utils \
     && tdnf clean all \
-    && }}groupadd \
-        --system \
-        --gid={{if find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
-        app \
-    && adduser \
-        --uid {{if find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
-        --gid app \
-        --shell /bin/false \
-        --no-create-home \
-        --system \
-        app \
+    && }}{{InsertTemplate("Dockerfile.linux.distroless-user", [], "    ")}} \
     # Copy user/group info to staging
     && cp /etc/passwd {{distrolessStagingDir}}/etc/passwd \
     && cp /etc/group {{distrolessStagingDir}}/etc/group

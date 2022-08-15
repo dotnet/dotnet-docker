@@ -1,0 +1,15 @@
+{{
+    _ Configures the app user and group for distroless containers ^
+
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0
+}}groupadd \
+    --system \
+    --gid={{if isMariner && find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
+    app \
+&& adduser \
+    --uid {{if isMariner && find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
+    --gid {{if isMariner && find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
+    --shell /bin/false \
+    --no-create-home \
+    --system \
+    app

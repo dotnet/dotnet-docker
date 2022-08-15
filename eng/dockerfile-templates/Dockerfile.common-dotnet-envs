@@ -3,12 +3,12 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
-    set isDistroless to find(OS_VERSION, "distroless") >= 0 ^
+    set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set lineContinuation to when(isWindows, "`", "\") ^
     set port to when(isDistroless, "8080", "80")
 }}ENV {{lineContinuation}}
     # Configure web servers to bind to port {{port}} when present
     ASPNETCORE_URLS=http://+:{{port}} {{lineContinuation}}
-    {{InsertTemplate("Dockerfile.env.container")}}{{if isAlpine || (isMariner && isDistroless && find(OS_VERSION, "1.0") < 0): {{lineContinuation}}
+    {{InsertTemplate("Dockerfile.env.container")}}{{if isAlpine || (isDistroless && !(isMariner && find(OS_VERSION, "1.0") > 0)): {{lineContinuation}}
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true}}
