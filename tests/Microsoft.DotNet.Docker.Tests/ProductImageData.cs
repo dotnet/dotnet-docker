@@ -80,7 +80,10 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             // For distroless, dotnet will be the default entrypoint so we don't need to specify "dotnet" in the command.
             // See https://github.com/dotnet/dotnet-docker/issues/3866
-            string executable = !IsDistroless || OS == Tests.OS.Mariner10Distroless || Version.Major <= 6 ? "dotnet " : string.Empty;
+            string executable = !IsDistroless ||
+                (OS.Contains(Tests.OS.Mariner) && (OS == Tests.OS.Mariner10Distroless || Version.Major <= 6)) ?
+                    "dotnet " :
+                    string.Empty;
             return executable + command;
         }
 
