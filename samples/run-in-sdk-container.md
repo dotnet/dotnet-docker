@@ -37,7 +37,7 @@ a8"    `Y42 a8"     "8a  42    42P'   `"8a a8P_____42   42
 "8a,   ,d42 "8a,   ,a8"  42,   42       42 "8b,   ,aa   42,
  `"8bbdP"Y8  `"YbbdP"'   "Y428 42       42  `"Ybbd8"'   "Y428
 
-.NET 7.0.0-preview.7.22375.6
+.NET 7.0.0
 Debian GNU/Linux 11 (bullseye)
 
 OSArchitecture: Arm64
