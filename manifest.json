@@ -4769,7 +4769,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)": {},
+            "$(sdk|6.0|product-version)-1": {},
             "6.0": {}
           },
           "platforms": [
@@ -4782,7 +4782,7 @@
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-bullseye-slim-amd64": {},
+                "$(sdk|6.0|product-version)-1-bullseye-slim-amd64": {},
                 "6.0-bullseye-slim-amd64": {}
               }
             },
@@ -4796,7 +4796,7 @@
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-bullseye-slim-arm32v7": {},
+                "$(sdk|6.0|product-version)-1-bullseye-slim-arm32v7": {},
                 "6.0-bullseye-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -4811,7 +4811,7 @@
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-bullseye-slim-arm64v8": {},
+                "$(sdk|6.0|product-version)-1-bullseye-slim-arm64v8": {},
                 "6.0-bullseye-slim-arm64v8": {}
               },
               "variant": "v8"
@@ -4848,7 +4848,7 @@
           "id": "bullseye-slim",
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-bullseye-slim": {},
+            "$(sdk|6.0|product-version)-1-bullseye-slim": {},
             "6.0-bullseye-slim": {}
           },
           "platforms": [
@@ -4891,7 +4891,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-alpine3.15": {},
+            "$(sdk|6.0|product-version)-1-alpine3.15": {},
             "6.0-alpine3.15": {}
           },
           "platforms": [
@@ -4904,7 +4904,7 @@
               "os": "linux",
               "osVersion": "alpine3.15",
               "tags": {
-                "$(sdk|6.0|product-version)-alpine3.15-amd64": {},
+                "$(sdk|6.0|product-version)-1-alpine3.15-amd64": {},
                 "6.0-alpine3.15-amd64": {}
               }
             },
@@ -4918,7 +4918,7 @@
               "os": "linux",
               "osVersion": "alpine3.15",
               "tags": {
-                "$(sdk|6.0|product-version)-alpine3.15-arm32v7": {},
+                "$(sdk|6.0|product-version)-1-alpine3.15-arm32v7": {},
                 "6.0-alpine3.15-arm32v7": {}
               },
               "variant": "v7"
@@ -4933,7 +4933,7 @@
               "os": "linux",
               "osVersion": "alpine3.15",
               "tags": {
-                "$(sdk|6.0|product-version)-alpine3.15-arm64v8": {},
+                "$(sdk|6.0|product-version)-1-alpine3.15-arm64v8": {},
                 "6.0-alpine3.15-arm64v8": {}
               },
               "variant": "v8"
@@ -4943,7 +4943,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-alpine3.16": {},
+            "$(sdk|6.0|product-version)-1-alpine3.16": {},
             "6.0-alpine3.16": {},
             "6.0-alpine": {}
           },
@@ -4957,7 +4957,7 @@
               "os": "linux",
               "osVersion": "alpine3.16",
               "tags": {
-                "$(sdk|6.0|product-version)-alpine3.16-amd64": {},
+                "$(sdk|6.0|product-version)-1-alpine3.16-amd64": {},
                 "6.0-alpine3.16-amd64": {},
                 "6.0-alpine-amd64": {}
               }
@@ -4972,7 +4972,7 @@
               "os": "linux",
               "osVersion": "alpine3.16",
               "tags": {
-                "$(sdk|6.0|product-version)-alpine3.16-arm32v7": {},
+                "$(sdk|6.0|product-version)-1-alpine3.16-arm32v7": {},
                 "6.0-alpine3.16-arm32v7": {},
                 "6.0-alpine-arm32v7": {}
               },
@@ -4988,7 +4988,7 @@
               "os": "linux",
               "osVersion": "alpine3.16",
               "tags": {
-                "$(sdk|6.0|product-version)-alpine3.16-arm64v8": {},
+                "$(sdk|6.0|product-version)-1-alpine3.16-arm64v8": {},
                 "6.0-alpine3.16-arm64v8": {},
                 "6.0-alpine-arm64v8": {}
               },
@@ -4999,7 +4999,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-focal": {},
+            "$(sdk|6.0|product-version)-1-focal": {},
             "6.0-focal": {}
           },
           "platforms": [
@@ -5012,7 +5012,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|6.0|product-version)-focal-amd64": {},
+                "$(sdk|6.0|product-version)-1-focal-amd64": {},
                 "6.0-focal-amd64": {}
               }
             },
@@ -5026,7 +5026,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|6.0|product-version)-focal-arm32v7": {},
+                "$(sdk|6.0|product-version)-1-focal-arm32v7": {},
                 "6.0-focal-arm32v7": {}
               },
               "variant": "v7"
@@ -5041,7 +5041,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|6.0|product-version)-focal-arm64v8": {},
+                "$(sdk|6.0|product-version)-1-focal-arm64v8": {},
                 "6.0-focal-arm64v8": {}
               },
               "variant": "v8"
@@ -5051,7 +5051,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-jammy": {},
+            "$(sdk|6.0|product-version)-1-jammy": {},
             "6.0-jammy": {}
           },
           "platforms": [
@@ -5064,7 +5064,7 @@
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
-                "$(sdk|6.0|product-version)-jammy-amd64": {},
+                "$(sdk|6.0|product-version)-1-jammy-amd64": {},
                 "6.0-jammy-amd64": {}
               }
             },
@@ -5078,7 +5078,7 @@
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
-                "$(sdk|6.0|product-version)-jammy-arm32v7": {},
+                "$(sdk|6.0|product-version)-1-jammy-arm32v7": {},
                 "6.0-jammy-arm32v7": {}
               },
               "variant": "v7"
@@ -5093,7 +5093,7 @@
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
-                "$(sdk|6.0|product-version)-jammy-arm64v8": {},
+                "$(sdk|6.0|product-version)-1-jammy-arm64v8": {},
                 "6.0-jammy-arm64v8": {}
               },
               "variant": "v8"
@@ -5103,7 +5103,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-cbl-mariner1.0": {
+            "$(sdk|6.0|product-version)-1-cbl-mariner1.0": {
               "docType": "Undocumented"
             },
             "6.0-cbl-mariner1.0": {
@@ -5120,7 +5120,7 @@
               "os": "linux",
               "osVersion": "cbl-mariner1.0",
               "tags": {
-                "$(sdk|6.0|product-version)-cbl-mariner1.0-amd64": {
+                "$(sdk|6.0|product-version)-1-cbl-mariner1.0-amd64": {
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner1.0-amd64": {
@@ -5133,7 +5133,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-cbl-mariner2.0": {
+            "$(sdk|6.0|product-version)-1-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
             "6.0-cbl-mariner2.0": {
@@ -5153,7 +5153,7 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(sdk|6.0|product-version)-cbl-mariner2.0-amd64": {
+                "$(sdk|6.0|product-version)-1-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-amd64": {
@@ -5174,7 +5174,7 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(sdk|6.0|product-version)-cbl-mariner2.0-arm64v8": {
+                "$(sdk|6.0|product-version)-1-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
                 },
                 "6.0-cbl-mariner2.0-arm64v8": {
