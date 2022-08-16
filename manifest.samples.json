@@ -85,18 +85,6 @@
             {
               "dockerfile": "samples/dotnetapp",
               "os": "windows",
-              "osVersion": "nanoserver-20H2",
-              "tags": {
-                "dotnetapp-nanoserver-20H2": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
-              }
-            },
-            {
-              "dockerfile": "samples/dotnetapp",
-              "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
                 "dotnetapp-nanoserver-ltsc2022": {}
@@ -197,27 +185,6 @@
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:samples):dotnetapp-nanoserver-1809"
-                  ]
-                }
-              ]
-            },
-            {
-              "dockerfile": "samples/aspnetapp",
-              "os": "windows",
-              "osVersion": "nanoserver-20H2",
-              "tags": {
-                "aspnetapp-nanoserver-20H2": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:samples):dotnetapp-nanoserver-20H2"
                   ]
                 }
               ]
