@@ -22,7 +22,7 @@ The instructions volume mount certificates into containers. You can add certific
 
 Use the following instructions, for your operating system configuration.
 
-You need the [.NET Core 2.1 SDK or newer](https://www.microsoft.com/net/download) for some of the instructions.
+You need the [.NET 6 SDK or newer](https://dotnet.microsoft.com/download) for some of the instructions.
 
 ### Windows using Linux containers
 

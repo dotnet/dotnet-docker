@@ -29,7 +29,7 @@ curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-do
 You can run `dotnet test` within a .NET SDK container using the following pattern, with `docker run` and volume mounting.  This initial example is demonstrated on Windows with PowerShell (in Linux container mode). Instructions for all OSes follow.
 
 ```console
-> docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:6.0 dotnet test
+> docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:7.0 dotnet test
   Determining projects to restore...
   Restored /app/libbar/libbar.csproj (in 3.95 sec).
   Restored /app/libfoo/libfoo.csproj (in 3.95 sec).
@@ -58,7 +58,7 @@ The following instructions demonstrate this scenario in various configurations, 
 ### Linux or macOS
 
 ```console
-docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/sdk:6.0 dotnet test --logger:trx
+docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/sdk:7.0 dotnet test --logger:trx
 ```
 
 ### Windows using Linux containers
@@ -66,7 +66,7 @@ docker run --rm -v $(pwd):/app -w /app/tests mcr.microsoft.com/dotnet/sdk:6.0 do
 This example uses PowerShell.
 
 ```console
-docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:6.0 dotnet test --logger:trx
+docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:7.0 dotnet test --logger:trx
 ```
 
 ### Windows using Windows containers
@@ -74,7 +74,7 @@ docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:6.0 do
 This example uses PowerShell.
 
 ```console
-docker run --rm -v ${pwd}:C:\app -w C:\app\tests mcr.microsoft.com/dotnet/sdk:6.0 dotnet test --logger:trx
+docker run --rm -v ${pwd}:C:\app -w C:\app\tests mcr.microsoft.com/dotnet/sdk:7.0 dotnet test --logger:trx
 ```
 
 ## More Samples
