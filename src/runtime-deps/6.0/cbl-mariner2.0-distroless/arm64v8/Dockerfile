@@ -24,7 +24,7 @@ RUN tdnf install -y shadow-utils \
         app \
     && adduser \
         --uid 101 \
-        --gid app \
+        --gid 101 \
         --shell /bin/false \
         --no-create-home \
         --system \
