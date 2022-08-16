@@ -1,22 +1,19 @@
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY *.sln .
-COPY aspnetapp/*.csproj ./aspnetapp/
-RUN dotnet restore -r win-x64
+COPY aspnetapp/*.csproj .
+RUN dotnet restore  -r win-x64
 
 # copy everything else and build app
-COPY aspnetapp/. ./aspnetapp/
-WORKDIR /source/aspnetapp
-RUN dotnet publish -c release -o /app -r win-x64 --self-contained false --no-restore
+COPY aspnetapp/. .
+RUN dotnet publish -c Release -o /app -r win-x64 --self-contained false --no-restore
 
 # final stage/image
-# Relies on 6.0 multi-arch tag to pick the same Windows version as the host. 
+# Relies on 7.0 multi-arch tag to pick the same Windows version as the host. 
 # Alternatively, a release specific tag can be used, like: `6.0-nanoserver-ltsc2022`
-# Other versions are 20H2 and 1809 (in place of the `ltsc2022` substring above)
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /app ./
 ENTRYPOINT ["aspnetapp"]

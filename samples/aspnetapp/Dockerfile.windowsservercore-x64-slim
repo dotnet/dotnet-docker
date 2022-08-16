@@ -1,21 +1,18 @@
 # escape=`
 
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:6.0-windowsservercore-ltsc2022 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0-windowsservercore-ltsc2022 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY *.sln .
-COPY aspnetapp/*.csproj ./aspnetapp/
+COPY aspnetapp/*.csproj .
 RUN dotnet restore -r win-x64 /p:PublishReadyToRun=true
 
 # copy everything else and build app
-COPY aspnetapp/. ./aspnetapp/
-WORKDIR /source/aspnetapp
-RUN dotnet publish -c release -o /app -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true
+COPY aspnetapp/. .
+RUN dotnet publish -c Release -o /app -r win-x64 --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true
 
 # final stage/image
-# Uses the ltsc2022 release; 20H2, ltsc2019 and ltsc2016 are other choices
 FROM mcr.microsoft.com/windows/servercore:ltsc2022 AS runtime
 WORKDIR /app
 COPY --from=build /app ./

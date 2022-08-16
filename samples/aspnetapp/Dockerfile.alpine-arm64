@@ -1,21 +1,20 @@
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY *.sln .
-COPY aspnetapp/*.csproj ./aspnetapp/
+COPY aspnetapp/*.csproj .
 RUN dotnet restore -r linux-musl-arm64
 
 # copy everything else and build app
-COPY aspnetapp/. ./aspnetapp/
-WORKDIR /source/aspnetapp
-RUN dotnet publish -c release -o /app -r linux-musl-arm64 --self-contained false --no-restore
+COPY aspnetapp/. .
+RUN dotnet publish -c Release -o /app -r linux-musl-arm64 --self-contained false --no-restore
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine-arm64v8
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine-arm64v8
 WORKDIR /app
-COPY --from=build /app ./
+COPY --from=build /app .
+ENTRYPOINT ["./aspnetapp"]
 
 # See: https://github.com/dotnet/announcements/issues/20
 # Uncomment to enable globalization APIs (or delete)
@@ -24,5 +23,3 @@ COPY --from=build /app ./
 #     LC_ALL=en_US.UTF-8 \
 #     LANG=en_US.UTF-8
 # RUN apk add --no-cache icu-libs
-
-ENTRYPOINT ["./aspnetapp"]
