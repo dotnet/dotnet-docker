@@ -24,3 +24,6 @@ ENV DOTNET_VERSION=6.0.8
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
+
+ENTRYPOINT ["/usr/bin/dotnet"]
+CMD ["--info"]
