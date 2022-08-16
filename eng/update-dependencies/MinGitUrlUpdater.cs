@@ -2,9 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.DotNet.VersionTools.Dependencies;
 using Newtonsoft.Json.Linq;
 
 #nullable enable
@@ -13,24 +11,19 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Updates the MinGit version in the manifest.versions.json file.
 /// </summary>
-internal class MinGitUrlUpdater : FileRegexUpdater
+internal class MinGitUrlUpdater : MinGitUpdater
 {
-    private const string UrlGroupName = "Url";
-    private readonly JObject _latestMinGitRelease;
-
     public MinGitUrlUpdater(string repoRoot, JObject latestMinGitRelease)
+        : base(
+            repoRoot,
+            latestMinGitRelease,
+            "mingit|x64|url")
     {
-        Path = System.IO.Path.Combine(repoRoot, UpdateDependencies.VersionsFilename);
-        VersionGroupName = UrlGroupName;
-        Regex = ManifestHelper.GetManifestVariableRegex("mingit|x64|url", @$"(?<{UrlGroupName}>\S*)");
-        _latestMinGitRelease = latestMinGitRelease;
     }
 
-    protected override string TryGetDesiredValue(IEnumerable<IDependencyInfo> dependencyInfos, out IEnumerable<IDependencyInfo> usedDependencyInfos)
+    protected override string GetValue()
     {
-        usedDependencyInfos = Enumerable.Empty<IDependencyInfo>();
-
-        JObject mingitAsset = GetMinGitAsset(_latestMinGitRelease);
+        JObject mingitAsset = GetMinGitAsset(LatestMinGitRelease);
         return mingitAsset.GetRequiredToken<JValue>("browser_download_url").ToString();
     }
 
