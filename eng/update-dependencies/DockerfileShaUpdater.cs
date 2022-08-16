@@ -41,7 +41,7 @@ namespace Dotnet.Docker
         private readonly Options _options;
         private readonly string _versions;
         private readonly Dictionary<string, string[]> _urls;
-        private readonly JObject _manifestVariables;
+        private readonly Lazy<JObject> _manifestVariables;
 
         public DockerfileShaUpdater(
             string productName, string dockerfileVersion, string? buildVersion, string arch, string os, string versions, Options options)
@@ -99,7 +99,17 @@ namespace Dotnet.Docker
                 { "lzma", new string[] { $"$DOTNET_BASE_URL/Sdk/$VERSION_DIR/nuGetPackagesArchive.lzma" } }
             };
 
-            _manifestVariables = (JObject)ManifestHelper.LoadManifest(UpdateDependencies.VersionsFilename)["variables"];
+            _manifestVariables = new Lazy<JObject>(
+                () =>
+                {
+                    const string VariablesProperty = "variables";
+                    JToken? variables = ManifestHelper.LoadManifest(UpdateDependencies.VersionsFilename)[VariablesProperty];
+                    if (variables is null)
+                    {
+                        throw new InvalidOperationException($"'{VariablesProperty}' property missing in '{UpdateDependencies.VersionsFilename}'");
+                    }
+                    return (JObject)variables;
+                });
         }
 
         private string GetRpmArchFormat() => _arch == "arm64" ? "aarch64" : "$ARCH";
@@ -191,7 +201,7 @@ namespace Dotnet.Docker
 
             for (int candidateUrlIndex = 0; candidateUrlIndex < candidateUrls.Length; candidateUrlIndex++)
             {
-                string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables, _options);
+                string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Value, _options);
                 string downloadUrl = candidateUrls[candidateUrlIndex]
                     .Replace("$DOTNET_BASE_URL", baseUrl)
                     .Replace("$ARCHIVE_EXT", archiveExt)
