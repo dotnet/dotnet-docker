@@ -134,12 +134,6 @@ Tag | Dockerfile
 ---------| ---------------
 7.0.100-preview.7-windowsservercore-ltsc2022, 7.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
-## Nano Server, version 20H2 amd64 Tags
-Tag | Dockerfile
----------| ---------------
-6.0.400-nanoserver-20H2, 6.0-nanoserver-20H2, 6.0.400, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-20H2/amd64/Dockerfile)
-3.1.422-nanoserver-20H2, 3.1-nanoserver-20H2, 3.1.422, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/nanoserver-20H2/amd64/Dockerfile)
-
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
