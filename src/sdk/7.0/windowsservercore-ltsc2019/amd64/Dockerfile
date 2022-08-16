@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:7.0.0-preview.7-windowsservercore-ltsc2019
+FROM $REPO:7.0.0-rc.1-windowsservercore-ltsc2019
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -11,7 +11,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=7.0.100-preview.7.22377.5 `
+    DOTNET_SDK_VERSION=7.0.100-rc.1.22416.2 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -24,8 +24,8 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.37.1.windows.1/MinGit-2.37.1-64-bit.zip; `
-        $mingit_sha256 = 'edacf2d5c39555c25a396e0b9d27182ab5587259dc2e824b4490996b373f9300'; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.37.2.windows.2/MinGit-2.37.2.2-64-bit.zip; `
+        $mingit_sha256 = '12b7c2c8cb9db03fd8c81e618aab196a366d919b2dc0dcd5a062738a07960a05'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -40,7 +40,7 @@ RUN powershell -Command " `
         `
         # Retrieve .NET SDK
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-        $dotnet_sha512 = 'b1a27e8a2b25ee6ba16fba54b52d4d23ce8a95bc13b3bfd5d3cb32926f82f5032396400598dc21c2fc1a12dd486afb992b3ecd5a1c4fa411327b3cbc595e4ace'; `
+        $dotnet_sha512 = '7dad0d79ea259e3e96ef102c84ed5322e79b90eb130acac8cb0743fadb7ec506bdd9176058c7dd7d4cee255916a3c1480a774916c5aa55e8e7863a7e406ab660'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
