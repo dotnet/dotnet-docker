@@ -2,7 +2,7 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:6.0.400-cbl-mariner2.0-amd64 AS installer
+FROM $SDK_REPO:6.0.400-1-cbl-mariner2.0-amd64 AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION=6.2.2
