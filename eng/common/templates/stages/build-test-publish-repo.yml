@@ -35,8 +35,6 @@ parameters:
     vmImage: $(defaultWindows2016PoolImage)
   windows1809Pool:
     vmImage: $(defaultWindows1809PoolImage)
-  windows20H2Pool:
-    vmImage: $(defaultWindows20H2PoolImage)
   windows2022Pool:
     vmImage: $(defaultWindows2022PoolImage)
 
@@ -125,19 +123,6 @@ stages:
       name: Windows1809_amd64
       pool: ${{ parameters.windows1809Pool }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows1809Amd64']
-      dockerClientOS: windows
-      buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
-      customInitSteps: ${{ parameters.customBuildInitSteps }}
-      noCache: ${{ parameters.noCache }}
-      internalProjectName: ${{ parameters.internalProjectName }}
-      publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
-  - template: ../jobs/build-images.yml
-    parameters:
-      name: Windows20H2_amd64
-      pool: ${{ parameters.windows20H2Pool }}
-      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows20H2Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
@@ -240,14 +225,6 @@ stages:
         name: Windows1809_amd64
         pool: ${{ parameters.windows1809Pool }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows1809Amd64']
-        testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
-        internalProjectName: ${{ parameters.internalProjectName }}
-        customInitSteps: ${{ parameters.customTestInitSteps }}
-    - template: ../jobs/test-images-windows-client.yml
-      parameters:
-        name: Windows20H2_amd64
-        pool: ${{ parameters.windows20H2Pool }}
-        matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows20H2Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
