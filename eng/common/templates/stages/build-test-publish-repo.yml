@@ -172,7 +172,7 @@ stages:
 ################################################################################
 # Test Images
 ################################################################################
-- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
   - stage: Test
     dependsOn: Post_Build
     condition: "
@@ -249,9 +249,9 @@ stages:
 # Publish Images
 ################################################################################
 - stage: Publish
-  ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+  ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
     dependsOn: Test
-  ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+  ${{ else }}:
     dependsOn: Post_Build
   condition: "
     and(
