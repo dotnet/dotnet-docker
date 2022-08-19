@@ -12,10 +12,10 @@ stages:
     noCache: ${{ parameters.noCache }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
-    ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+    ${{ if or(eq(variables['System.TeamProject'], parameters.publicProjectName), and(eq(variables['System.TeamProject'], parameters.internalProjectName), eq(variables['Build.Reason'], 'PullRequest'))) }}:
       buildMatrixType: platformVersionedOs
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
-    ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+    ${{ elseif eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
     testMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
 
