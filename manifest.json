@@ -758,7 +758,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/6.0/cbl-mariner1.0-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
               "os": "linux",
               "osVersion": "cbl-mariner1.0-distroless",
               "tags": {
@@ -797,7 +797,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/6.0/cbl-mariner2.0-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -824,7 +824,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/6.0/cbl-mariner2.0-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -1104,7 +1104,7 @@
           "platforms": [
             {
               "dockerfile": "src/runtime-deps/6.0/cbl-mariner2.0-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -1131,7 +1131,7 @@
             {
               "architecture": "arm64",
               "dockerfile": "src/runtime-deps/6.0/cbl-mariner2.0-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
