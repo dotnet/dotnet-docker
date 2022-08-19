@@ -4,7 +4,7 @@ parameters:
   customInitSteps: []
 
 steps:
-- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
   - template: init-docker-windows.yml
     parameters:
       setupImageBuilder: false
@@ -16,7 +16,7 @@ steps:
     condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ parameters.customInitSteps }}
 - powershell: |
-    if ("${{ variables['System.TeamProject'] }}" -eq "${{ parameters.internalProjectName }}") {
+    if ("${{ variables['System.TeamProject'] }}" -eq "${{ parameters.internalProjectName }}" -and "${{ variables['Build.Reason'] }}" -ne "PullRequest") {
       $optionalTestArgs="$optionalTestArgs -PullImages -Registry $env:ACR_SERVER -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
     } 
     if ($env:REPOTESTARGS) {
@@ -28,7 +28,7 @@ steps:
 - powershell: Get-ChildItem -Path tests -r | Where {$_.Extension -match "trx"} | Remove-Item
   displayName: Cleanup Old Test Results
   condition: and(succeeded(), ${{ parameters.condition }})
-- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
   - template: ../steps/download-build-artifact.yml
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
@@ -42,7 +42,7 @@ steps:
     $(optionalTestArgs)
   displayName: Test Images
   condition: and(succeeded(), ${{ parameters.condition }})
-- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
   - script: docker logout $(acr.server)
     displayName: Docker logout
     condition: and(always(), ${{ parameters.condition }})
@@ -57,7 +57,7 @@ steps:
     mergeTestResults: true
     publishRunAttachments: true
     testRunTitle: $(productVersion) $(osVersionsDisplayName) amd64
-- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
   - template: cleanup-docker-windows.yml
     parameters:
       condition: ${{ parameters.condition }}

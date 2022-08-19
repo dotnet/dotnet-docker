@@ -4,7 +4,7 @@ parameters:
   continueOnError: false
   
 steps:
-- ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+- ${{ if or(eq(variables['System.TeamProject'], parameters.publicProjectName), eq(variables['Build.Reason'], 'PullRequest')) }}:
   - template: ../steps/set-dry-run.yml
 - script: >
     $(runImageBuilderCmd)

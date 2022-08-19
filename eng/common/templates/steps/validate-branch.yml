@@ -2,7 +2,7 @@ parameters:
   internalProjectName: null
 
 steps:
-- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
   - powershell: |
       if (-not "$(officialBranches)".Split(',').Contains("$(sourceBranch)") `
           -and "$(officialBranches)".Split(',').Contains("$(publishRepoPrefix)") `
