@@ -242,9 +242,14 @@ namespace Microsoft.DotNet.Docker.Tests
                 $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg} {optionalRunArgs} {image} {command}");
         }
 
-        public string CreateVolume(string name)
+        public string CreateTmpfsVolume(string name, bool ownedByDistrolessUser = false)
         {
-            return ExecuteWithLogging($"volume create {name}");
+            string optionalArgs = string.Empty;
+            if (ownedByDistrolessUser)
+            {
+                optionalArgs += " --opt o=uid=101";
+            }
+            return ExecuteWithLogging($"volume create --driver local --opt type=tmpfs --opt device=tmpfs{optionalArgs} {name}");
         }
 
         public string DeleteVolume(string name)
