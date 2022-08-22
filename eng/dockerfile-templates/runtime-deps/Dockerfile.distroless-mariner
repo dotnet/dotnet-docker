@@ -1,0 +1,42 @@
+{{
+    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
+    set distrolessStagingDir to "/staging" ^
+    set marinerRepo to "mcr.microsoft.com/cbl-mariner"
+}}# Installer image
+FROM {{marinerRepo}}/base/core:{{OS_VERSION_NUMBER}} AS installer
+{{ if find(OS_VERSION, "1.0") >= 0:
+RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
+    [
+        "pkgs": ["dnf"]
+    ])}}
+}}
+# Install .NET's dependencies into a staging location
+RUN mkdir {{distrolessStagingDir}} \
+    && {{InsertTemplate("../Dockerfile.linux.install-deps", ["distroless-staging-dir": distrolessStagingDir])}}
+{{ if isDistrolessMariner:
+# Create a non-root user and group
+RUN {{if find(OS_VERSION, "1.0") < 0:tdnf install -y shadow-utils \
+    && tdnf clean all \
+    && }}{{InsertTemplate("Dockerfile.linux.distroless-user", [], "    ")}} \
+    # Copy user/group info to staging
+    && cp /etc/passwd {{distrolessStagingDir}}/etc/passwd \
+    && cp /etc/group {{distrolessStagingDir}}/etc/group
+
+# Clean up staging
+RUN rm -rf {{distrolessStagingDir}}/etc/{{when(find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf")}} \
+    && rm -rf {{distrolessStagingDir}}/run/* \
+    && rm -rf {{distrolessStagingDir}}/var/cache/{{when(find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf")}} \
+    && rm -rf {{distrolessStagingDir}}/var/lib/rpm \
+    && rm -rf {{distrolessStagingDir}}/usr/share/doc \
+    && rm -rf {{distrolessStagingDir}}/usr/share/man \
+    && find {{distrolessStagingDir}}/var/log -type f -size +0 -delete
+
+
+# .NET runtime-deps image
+FROM {{marinerRepo}}/distroless/minimal:{{OS_VERSION_NUMBER}}
+
+COPY --from=installer {{distrolessStagingDir}}/ /}}
+
+{{InsertTemplate("../Dockerfile.common-dotnet-envs")}}
+
+USER app
