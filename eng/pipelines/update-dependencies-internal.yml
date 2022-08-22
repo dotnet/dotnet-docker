@@ -1,12 +1,6 @@
 trigger: none
 pr: none
-schedules:
-- cron: "0 13 * * Mon-Fri"
-  displayName: M-F daily build
-  branches:
-    include:
-    - nightly
-  always: true
+
 variables:
 - template: ../common/templates/variables/dotnet/common.yml
 - group: DotNetBuilds storage account read tokens
