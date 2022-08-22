@@ -1,24 +1,19 @@
 # escape=`
 
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:6.0-windowsservercore-ltsc2022 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0-windowsservercore-ltsc2022 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY *.sln .
-COPY aspnetapp/*.csproj ./aspnetapp/
-RUN dotnet restore
+COPY aspnetapp/*.csproj .
+RUN dotnet restore -r win-x64
 
 # copy everything else and build app
-COPY aspnetapp/. ./aspnetapp/
-WORKDIR /source/aspnetapp
-RUN dotnet publish -c release -o /app --no-restore
+COPY aspnetapp/. .
+RUN dotnet publish -c Release -o /app -r win-x64 --self-contained false --no-restore
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-windowsservercore-ltsc2022
-
-# Only needed for this sample because the sample project is targeting .NET 5
-ENV DOTNET_ROLL_FORWARD=LatestMajor
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-windowsservercore-ltsc2022
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
@@ -41,7 +36,7 @@ RUN powershell -Command `
         Remove-Item -Force -Recurse $Env:Temp\*
 
 WORKDIR /inetpub/wwwroot
-COPY --from=build /app ./
+COPY --from=build /app .
 
 EXPOSE 80
 
