@@ -60,7 +60,8 @@ WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {totalAvailableMem
 // cgroup information
 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && 
     Directory.Exists("/sys/fs/cgroup/cpu") &&
-    Directory.Exists("/sys/fs/cgroup/memory"))
+    Directory.Exists("/sys/fs/cgroup/memory") &&
+    File.Exists("sys/fs/cgroup/cpu/cpu.cfs_quota_us"))
 {
     // get cpu cgroup information
     string cpuquota = File.ReadAllLines("/sys/fs/cgroup/cpu/cpu.cfs_quota_us")[0];
