@@ -131,7 +131,16 @@ jobs:
         if (-not $images) { return 0 }
         $taskDir = $(Get-ChildItem -Recurse -Directory -Filter "ManifestGeneratorTask*" -Path '$(Agent.WorkFolder)').FullName
         $manifestToolDllPath = $(Get-ChildItem -Recurse -File -Filter "Microsoft.ManifestTool.dll" -Path $taskDir).FullName
-        $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "dotnet-*" -Path $taskDir).FullName
+        $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "*dotnet-*" -Path "$(Agent.ToolsDirectory)").FullName
+
+        # If the manifest tool installed its own version of .NET use that; otherwise it's reusing an existing install of .NET
+        # which is executable by default.
+        if ($dotnetDir) {
+          $dotnetPath = "$dotnetDir/dotnet"
+        }
+        else {
+          $dotnetPath = "dotnet"
+        }
 
         # Call the manifest tool for each image to produce seperate SBOMs
         # Manifest tool docs: https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/secure-supply-chain/custom-sbom-generation-workflows
@@ -140,7 +149,7 @@ jobs:
           $formattedImageName = $_.Replace('$(acr.server)/$(stagingRepoPrefix)', "").Replace('/', '_').Replace(':', '_');
           $sbomChildDir = "$(sbomDirectory)/$formattedImageName";
           New-Item -Type Directory -Path $sbomChildDir > $null;
-          & "$dotnetDir/dotnet" "$manifestToolDllPath" `
+          & $dotnetPath "$manifestToolDllPath" `
             Generate `
             -BuildDropPath '$(Build.ArtifactStagingDirectory)' `
             -BuildComponentPath '$(Agent.BuildDirectory)' `
