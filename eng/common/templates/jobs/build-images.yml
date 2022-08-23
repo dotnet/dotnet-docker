@@ -129,9 +129,27 @@ jobs:
     - powershell: |
         $images = "$(BuildImages.builtImages)"
         if (-not $images) { return 0 }
-        $taskDir = $(Get-ChildItem -Recurse -Directory -Filter "ManifestGeneratorTask*" -Path '$(Agent.WorkFolder)').FullName
+        # There can be leftover versions of the task left on the agent if it's not fresh. So find the latest version.
+        $taskDir = $(Get-ChildItem -Recurse -Directory -Filter "ManifestGeneratorTask*" -Path '$(Agent.WorkFolder)')[-1].FullName
         $manifestToolDllPath = $(Get-ChildItem -Recurse -File -Filter "Microsoft.ManifestTool.dll" -Path $taskDir).FullName
+
+        # Check whether the manifest task installed its own version of .NET.
+        # To be more robust, we'll handle varying implementations that it's had.
+        # First check for a dotnet folder in the task location
         $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "dotnet-*" -Path $taskDir).FullName
+        if (-not $dotnetDir) {
+          # If it's not there, check in the agent tools location
+          $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "*dotnet-*" -Path "$(Agent.ToolsDirectory)").FullName
+        }
+
+        # If the manifest task installed its own version of .NET use that; otherwise it's reusing an existing install of .NET
+        # which is executable by default.
+        if ($dotnetDir) {
+          $dotnetPath = "$dotnetDir/dotnet"
+        }
+        else {
+          $dotnetPath = "dotnet"
+        }
 
         # Call the manifest tool for each image to produce seperate SBOMs
         # Manifest tool docs: https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/secure-supply-chain/custom-sbom-generation-workflows
@@ -140,7 +158,7 @@ jobs:
           $formattedImageName = $_.Replace('$(acr.server)/$(stagingRepoPrefix)', "").Replace('/', '_').Replace(':', '_');
           $sbomChildDir = "$(sbomDirectory)/$formattedImageName";
           New-Item -Type Directory -Path $sbomChildDir > $null;
-          & "$dotnetDir/dotnet" "$manifestToolDllPath" `
+          & $dotnetPath "$manifestToolDllPath" `
             Generate `
             -BuildDropPath '$(Build.ArtifactStagingDirectory)' `
             -BuildComponentPath '$(Agent.BuildDirectory)' `
