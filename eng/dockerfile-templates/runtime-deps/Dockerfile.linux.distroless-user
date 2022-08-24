@@ -1,6 +1,9 @@
 {{
-    _ Configures the app user and group for distroless containers ^
-
+    _ Configures the app user and group for distroless containers
+    _ ARGS:
+        staging-dir: Path to the distroless staging directory
+        create-dir (optional): Indicates whether the etc directory should be created in staging
+        exclusive (optional): Indicates whether the app user is the only user and all other users are removed ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0
 }}groupadd \
     --system \
@@ -12,4 +15,12 @@
     --shell /bin/false \
     --no-create-home \
     --system \
-    app
+    app \{{
+if ARGS["exclusive"]:{{if ARGS["create-dir"]:
+&& mkdir -p "{{ARGS["staging-dir"]}}/etc" \}}
+&& tail -1 < /etc/passwd > "{{ARGS["staging-dir"]}}/etc/passwd" \
+&& tail -1 < /etc/group > "{{ARGS["staging-dir"]}}/etc/group"^
+else:
+# Copy user/group info to staging
+&& cp /etc/passwd {{ARGS["staging-dir"]}}/etc/passwd \
+&& cp /etc/group {{ARGS["staging-dir"]}}/etc/group}}

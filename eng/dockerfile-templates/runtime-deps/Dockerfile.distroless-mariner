@@ -1,7 +1,8 @@
 {{
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
     set distrolessStagingDir to "/staging" ^
-    set marinerRepo to "mcr.microsoft.com/cbl-mariner"
+    set marinerRepo to "mcr.microsoft.com/cbl-mariner" ^
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".")
 }}# Installer image
 FROM {{marinerRepo}}/base/core:{{OS_VERSION_NUMBER}} AS installer
 {{ if find(OS_VERSION, "1.0") >= 0:
@@ -17,10 +18,12 @@ RUN mkdir {{distrolessStagingDir}} \
 # Create a non-root user and group
 RUN {{if find(OS_VERSION, "1.0") < 0:tdnf install -y shadow-utils \
     && tdnf clean all \
-    && }}{{InsertTemplate("Dockerfile.linux.distroless-user", [], "    ")}} \
-    # Copy user/group info to staging
-    && cp /etc/passwd {{distrolessStagingDir}}/etc/passwd \
-    && cp /etc/group {{distrolessStagingDir}}/etc/group
+    && }}{{InsertTemplate("Dockerfile.linux.distroless-user",
+        [
+            "staging-dir": distrolessStagingDir
+            "exclusive": dotnetVersion != "6.0"
+        ],
+        "    ")}}
 
 # Clean up staging
 RUN rm -rf {{distrolessStagingDir}}/etc/{{when(find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf")}} \
