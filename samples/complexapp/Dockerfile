@@ -1,11 +1,14 @@
 # https://hub.docker.com/_/microsoft-dotnet
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS prepare-restore-files
+ENV PATH="${PATH}:/root/.dotnet/tools"
+RUN dotnet tool install --global --no-cache dotnet-subset --version 0.1.0 --add-source  http://10.24.0.172:5555/v3/index.json
+WORKDIR /source
+COPY . .
+RUN dotnet subset restore complexapp/complexapp.csproj --root-directory /source --output restore_subset/
+
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /source
-
-# copy csproj and restore as distinct layers
-COPY complexapp/*.csproj complexapp/
-COPY libfoo/*.csproj libfoo/
-COPY libbar/*.csproj libbar/
+COPY --from=prepare-restore-files /source/restore_subset .
 RUN dotnet restore complexapp/complexapp.csproj
 
 # copy and build app and libraries
