@@ -45,8 +45,7 @@ function GetSdkInfo() {
     # Extract .version file from SDK zip
     $zipFile = [IO.Compression.ZipFile]::OpenRead("$tempDir/$sdkFile")
     try {
-        $zipEntries = $zipFile.Entries | Where-Object { $_.FullName -like "sdk/*/.version" }
-        $zipEntries | ForEach-Object {
+        $zipFile.Entries | Where-Object { $_.FullName -like "sdk/*/.version" } | ForEach-Object {
             [IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$tempDir/$($_.Name)")
         }
     }
@@ -108,9 +107,6 @@ try {
     $versionDetails = GetVersionDetails $sdkInfo.CommitSha
 
     $runtimeVersion = GetDependencyVersion "VS.Redist.Common.NetCore.SharedFramework.x64" $versionDetails
-    if (-not $runtimeVersion) {
-        $runtimeVersion = GetDependencyVersion "Microsoft.NETCore.App.Internal" $versionDetails
-    }
 
     $aspnetVersion = GetDependencyVersion "VS.Redist.Common.AspNetCore.SharedFramework.x64" $versionDetails
 
