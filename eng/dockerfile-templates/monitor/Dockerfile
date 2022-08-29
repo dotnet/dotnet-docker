@@ -7,7 +7,7 @@
     set targetFrameworkMonikerRegex to cat("net", dotnetMajor, "[.]0") ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
-    set sdkDistro to when(isDistroless, when(isMariner, cat("cbl-mariner", OS_VERSION_NUMBER), "jammy"), OS_VERSION) ^
+    set sdkDistro to when(isDistroless, when(isMariner, cat("cbl-mariner", OS_VERSION_NUMBER), split(OS_VERSION, "-")[0]), OS_VERSION) ^
     set installerBaseTag to cat(VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")], "-", sdkDistro, ARCH_TAG_SUFFIX) ^
     set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
