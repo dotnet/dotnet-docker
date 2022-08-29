@@ -38,7 +38,7 @@ stages:
           ChannelQuality: $(monitor7Quality)
           StableBranding: $(monitor7StableBranding)
     steps:
-    - script: $(engPath)/get-drop-versions-monitor.sh $(MajorMinorVersion)/$(ChannelQuality)
+    - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -Channel $(MajorMinorVersion)/$(ChannelQuality)
       displayName: Get Versions
     - template: steps/update-dependencies.yml
       parameters:
