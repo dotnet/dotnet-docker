@@ -1,0 +1,50 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - internal/release/nightly
+  paths:
+    include:
+    - manifest.json
+    - manifest.versions.json
+    - src/*
+pr: none
+
+parameters:
+- name: isTest
+  displayName: Is Test Pipeline Run
+  type: boolean
+  default: false
+
+resources:
+  repositories:
+  - repository: InternalVersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+
+variables:
+- template: variables/core.yml
+- name: officialBranches
+  # comma-delimited list of branch names
+  value: internal/release/nightly
+- name: ingestKustoImageInfo
+  value: false
+- name: publishReadme
+  value: false
+- ${{ if parameters.isTest }}:
+  - name: publishRepoPrefix
+    value: test/private/internal/
+- ${{ else }}:
+  - name: publishRepoPrefix
+    value: private/internal/
+- name: publishImageInfo
+  value: false
+- name: noCache
+  value: true  
+
+stages:
+- template: stages/build-test-publish-repo.yml
+  parameters:
+    internalProjectName: ${{ variables.internalProjectName }}
+    publicProjectName: ${{ variables.publicProjectName }}
