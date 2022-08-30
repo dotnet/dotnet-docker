@@ -5669,6 +5669,48 @@
         {
           "productVersion": "$(monitor|6.2|product-version)",
           "sharedTags": {
+            "$(monitor|6.2|product-version)-jammy-chiseled": {},
+            "6.2-jammy-chiseled": {},
+            "6-jammy-chiseled": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "ASPNET_REPO": "$(Repo:aspnet)",
+                "SDK_REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/monitor/6.2/jammy-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|6.2|product-version)-jammy-chiseled-amd64": {},
+                "6.2-jammy-chiseled-amd64": {},
+                "6-jammy-chiseled-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "ASPNET_REPO": "$(Repo:aspnet)",
+                "SDK_REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/monitor/6.2/jammy-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|6.2|product-version)-jammy-chiseled-arm64v8": {},
+                "6.2-jammy-chiseled-arm64v8": {},
+                "6-jammy-chiseled-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|6.2|product-version)",
+          "sharedTags": {
             "$(monitor|6.2|product-version)-cbl-mariner": {
               "docType": "Undocumented"
             },
@@ -5824,6 +5866,48 @@
                 "$(monitor|7.0|product-version)-alpine-arm64v8": {},
                 "7.0-alpine-arm64v8": {},
                 "7-alpine-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|7.0|product-version)",
+          "sharedTags": {
+            "$(monitor|7.0|product-version)-jammy-chiseled": {},
+            "7.0-jammy-chiseled": {},
+            "7-jammy-chiseled": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "ASPNET_REPO": "$(Repo:aspnet)",
+                "SDK_REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/monitor/7.0/jammy-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|7.0|product-version)-jammy-chiseled-amd64": {},
+                "7.0-jammy-chiseled-amd64": {},
+                "7-jammy-chiseled-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "ASPNET_REPO": "$(Repo:aspnet)",
+                "SDK_REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/monitor/7.0/jammy-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|7.0|product-version)-jammy-chiseled-arm64v8": {},
+                "7.0-jammy-chiseled-arm64v8": {},
+                "7-jammy-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
