@@ -40,8 +40,8 @@ param(
     $UseStableBranding,
 
     # When set, only prints out an Azure DevOps variable with the value of the args to pass to update-dependencies.
-    [Switch]
-    $PrintArgsVariableOnly,
+    [string]
+    $AzdoVariableName,
 
     # SAS query string used to access files in the binary blob container
     [string]
@@ -99,8 +99,8 @@ if ($versionSourceName) {
 $branch = & $PSScriptRoot/Get-Branch.ps1
 $updateDepsArgs += "--source-branch=$branch"
 
-if ($PrintArgsVariableOnly) {
-    Write-Host "##vso[task.setvariable variable=updateDepsArgs]$updateDepsArgs"
+if ($AzdoVariableName) {
+    Write-Host "##vso[task.setvariable variable=$AzdoVariableName]$updateDepsArgs"
 }
 else {
     & dotnet run --project $PSScriptRoot/update-dependencies/update-dependencies.csproj @updateDepsArgs

@@ -1,21 +1,33 @@
 parameters:
-  customArgs: ""
+  # The customArgsArray parameter is used to specify the configuration for multiple Dockerfile versions.
+  # This allows for a single PR to be generated for different internal .NET build versions.
+  # This is required in order to publish a single set of internal images when the PR is merged.
+  customArgsArray: ""
+
   stableBranding: false
   useInternalBuild: false
 
 steps:
 - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
   displayName: Build Update Dependencies Tool
-- script: >
-    if [ "${{ parameters.useInternalBuild }}" == "true" ]; then
-      pat="$(dn-bot-devdiv-dnceng-rw-code-pat)"
-    else
-      pat="$(BotAccount-dotnet-docker-bot-PAT)"
-    fi &&
-    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies \
-      ${{parameters.customArgs}} \
-      --user $(dotnetDockerBot.userName) \
-      --email $(dotnetDockerBot.email) \
-      --password $pat \
-      --stable-branding ${{parameters.stableBranding}}
+- powershell: |
+    if ("${{ parameters.useInternalBuild }}" -eq "true") {
+      $pat="$(dn-bot-devdiv-dnceng-rw-code-pat)"
+    } else {
+      $pat="$(BotAccount-dotnet-docker-bot-PAT)"
+    }
+
+    $credArgs = "--user $(dotnetDockerBot.userName) --email $(dotnetDockerBot.email) --password $pat"
+
+    # Execute update-deps for each of the items in the customArgsArray, representing different Dockerfile versions
+    $customArgsArray = '${{ parameters.customArgsArray }}' | ConvertFrom-Json
+    foreach ($customArgs in $customArgsArray) {
+      # If this is the last iteration, include the credentials to cause a PR to be generated
+      if ($customArgs -eq $customArgsArray[-1]) {
+        $customArgs += " $credArgs"
+      }
+
+      $command = "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies $customArgs"
+      Invoke-Expression $command
+    }
   displayName: Run Update Dependencies
