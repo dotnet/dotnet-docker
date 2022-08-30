@@ -22,17 +22,20 @@
         when(ARGS["is-internal"],
             VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]
             "$DOTNET_SDK_VERSION")) ^
-    set sdkVersionFile to when(ARGS["is-internal"],
+    set isInternalStableBranding to ARGS["is-internal"] &&
+        (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
+        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
+    set sdkVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("sdk|", dotnetVersion, "|product-version")],
         sdkVersionDir) ^
     set runtimeVersionDir to when(ARGS["use-local-version-var"], "$dotnet_version", "$DOTNET_VERSION") ^
-    set runtimeVersionFile to when(ARGS["is-internal"],
+    set runtimeVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         runtimeVersionDir) ^
-    set runtimeTargetingPackVersionFile to when(ARGS["is-internal"],
+    set runtimeTargetingPackVersionFile to when(isInternalStableBranding,
         split(VARIABLES[cat("runtime|", dotnetVersion, "|targeting-pack-version")], "-")[0],
         VARIABLES[cat("runtime|", dotnetVersion, "|targeting-pack-version")]) ^
-    set aspnetTargetingPackVersionFile to when(ARGS["is-internal"],
+    set aspnetTargetingPackVersionFile to when(isInternalStableBranding,
         split(VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")], "-")[0],
         VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")]) ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^

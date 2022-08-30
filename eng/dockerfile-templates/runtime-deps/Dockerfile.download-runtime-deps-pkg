@@ -7,7 +7,10 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set marinerVersionRegexMatch to match(OS_VERSION, "^cbl-mariner(\d+)\.\d+$") ^
     set marinerMajorVersion to marinerVersionRegexMatch[1] ^
-    set runtimeVersionFile to when(ARGS["is-internal"],
+    set isInternalStableBranding to ARGS["is-internal"] &&
+        (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
+        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
+    set runtimeVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         "$dotnet_version") ^
     set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT)

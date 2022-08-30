@@ -12,7 +12,10 @@
     set dotnetDir to when(useProgramFilesDir, "$Env:ProgramFiles\dotnet", "dotnet") ^
     set aspnetCoreZipFile to "aspnetcore.zip" ^
     set aspnetVersion to when(ARGS["use-local-version-var"], "$aspnetcore_version", "$Env:ASPNET_VERSION") ^
-    set aspnetVersionFile to when(ARGS["is-internal"],
+    set isInternalStableBranding to ARGS["is-internal"] &&
+        (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
+        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
+    set aspnetVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         aspnetVersion) ^
     set url to cat(
