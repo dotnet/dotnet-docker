@@ -71,7 +71,7 @@ RUN powershell -Command " `
                 "dotnet-is-internal": ARGS["dotnet-is-internal"]
             ],
             "        ")}}{{
-if !(dotnetVersion = "3.1" || isServerCore): `
+if !(dotnetVersion = "3.1" || isServerCore) || ARGS["dotnet-is-internal"]: `
         `
         # Workaround for https://github.com/dotnet/sdk/issues/18410
         \dotnet\dotnet build-server shutdown;}}{{if !isSingleStage: `
