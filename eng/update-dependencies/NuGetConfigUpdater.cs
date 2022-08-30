@@ -87,17 +87,17 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         XElement? pkgSourceCreds = configuration.Element("packageSourceCredentials");
         if (_options.IsInternal)
         {
-            pkgSourceCreds?.Remove();
+            pkgSourceCreds = GetOrCreateXObject(
+                pkgSourceCreds,
+                configuration,
+                () => new XElement("packageSourceCredentials"));
 
-            pkgSourceCreds = new XElement("packageSourceCredentials");
-            configuration.Add(pkgSourceCreds);
-
-            XElement pkgSrc = GetOrCreateXObject(
+            XElement pkgSrcCredsEntry = GetOrCreateXObject(
                 pkgSourceCreds.Element(pkgSrcName),
                 pkgSourceCreds,
                 () => new XElement(pkgSrcName));
-            UpdateAddElement(pkgSrc, "Username", "dotnet");
-            UpdateAddElement(pkgSrc, "ClearTextPassword", "%NuGetFeedPassword%");
+            UpdateAddElement(pkgSrcCredsEntry, "Username", "dotnet");
+            UpdateAddElement(pkgSrcCredsEntry, "ClearTextPassword", "%NuGetFeedPassword%");
         }
         else
         {
@@ -114,8 +114,6 @@ internal class NuGetConfigUpdater : IDependencyUpdater
                 pkgSources,
                 configuration,
                 () => new XElement("packageSources"));
-
-            RemoveAllInternalPackageSources(pkgSources);
 
             string project = _options.DockerfileVersion != "3.1" ? "/internal" : string.Empty;
 
