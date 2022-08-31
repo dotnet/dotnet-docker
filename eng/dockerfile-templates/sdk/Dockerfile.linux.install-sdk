@@ -37,8 +37,8 @@
         VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")]) ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set legacyBaseUrl to VARIABLES[cat("base-url|public|maintenance-legacy|", VARIABLES["branch"])] ^
-    set targetingPackBaseUrl to when(dotnetVersion = "3.1" || dotnetVersion = "5.0", legacyBaseUrl, baseUrl) ^
-    set targetingPackUrlSuffix to when(dotnetVersion = "3.1" || dotnetVersion = "5.0", "", ARGS["url-suffix"]) ^
+    set targetingPackBaseUrl to when(dotnetVersion = "3.1", legacyBaseUrl, baseUrl) ^
+    set targetingPackUrlSuffix to when(dotnetVersion = "3.1", "", ARGS["url-suffix"]) ^
     set commonShaVarName to "dotnet_sha512" ^
     set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set rpms to [
