@@ -34,10 +34,10 @@ variables:
   value: false
 - ${{ if parameters.isTest }}:
   - name: publishRepoPrefix
-    value: test/private/internal/
+    value: test/internal/private/
 - ${{ else }}:
   - name: publishRepoPrefix
-    value: private/internal/
+    value: internal/private/
 - name: publishImageInfo
   value: false
 - name: noCache
