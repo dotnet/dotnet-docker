@@ -18,7 +18,10 @@
         when(ARGS["is-internal"],
             VARIABLES[cat("runtime|", dotnetVersion, "|build-version")],
             "$DOTNET_VERSION")) ^
-    set runtimeVersionFile to when(ARGS["is-internal"],
+    set isInternalStableBranding to ARGS["is-internal"] &&
+        (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
+        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
+    set runtimeVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         runtimeVersionDir) ^
     set runtimeBaseUrl to cat(
