@@ -4,7 +4,7 @@ steps:
     $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT'"
     $testInit=""
 
-    if ("$(publishRepoPrefix)".Contains("/internal/")) {
+    if ("$(publishRepoPrefix)".Contains("internal/")) {
       if ("$env:ENABLEINTERNAL3_1" -eq "true") {
         $sasQueryString = "$(dotnetclimsrc-read-sas-token)"
       }

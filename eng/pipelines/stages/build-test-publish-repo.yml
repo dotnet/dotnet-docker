@@ -31,7 +31,7 @@ stages:
     - template: ../../../pipelines/steps/set-public-source-branch-var.yml
     - powershell: |
         $imageBuilderBuildArgs = "$(imageBuilderBuildArgs)"
-        if ("$(publishRepoPrefix)".Contains("/internal/")) {
+        if ("$(publishRepoPrefix)".Contains("internal/")) {
           if ("$env:ENABLEINTERNAL3_1" -eq "true") {
             $sasQueryString = "$(dotnetclimsrc-read-sas-token)"
           }
