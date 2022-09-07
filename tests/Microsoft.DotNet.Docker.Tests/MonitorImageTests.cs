@@ -61,13 +61,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageData => new object[] { imageData });
         }
 
-        public static IEnumerable<object[]> GetImageDataSupportingMachineJsonKeyGeneration()
-        {
-            return TestData.GetMonitorImageData()
-                .Where(imageData => imageData.Version >= ImageVersion.V6_1)
-                .Select(imageData => new object[] { imageData });
-        }
-
         /// <summary>
         /// Gets each dotnet-monitor image paired with each sample aspnetcore image of the same architecture.
         /// Allows for testing volume mounts and diagnostic port usage among different distros.
@@ -139,10 +132,7 @@ namespace Microsoft.DotNet.Docker.Tests
             variables.Add(new EnvironmentVariableInfo("DefaultProcess__Filters__0__Key", "ProcessId"));
             variables.Add(new EnvironmentVariableInfo("DefaultProcess__Filters__0__Value", "1"));
             // Existing (orphaned) diagnostic port should be delete before starting server
-            if (imageData.Version > ImageVersion.V6_1)
-            {
-                variables.Add(new EnvironmentVariableInfo("DiagnosticPort__DeleteEndpointOnStartup", "true"));
-            }
+            variables.Add(new EnvironmentVariableInfo("DiagnosticPort__DeleteEndpointOnStartup", "true"));
             // Console logger format should be JSON and output UTC timestamps without timezone information
             variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", "json"));
             variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterOptions__TimestampFormat", "yyyy-MM-ddTHH:mm:ss.fffffffZ"));
@@ -242,7 +232,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// are accessible with valid authorization header.
         /// </summary>
         [LinuxImageTheory]
-        [MemberData(nameof(GetImageDataSupportingMachineJsonKeyGeneration))]
+        [MemberData(nameof(GetImageData))]
         public Task VerifyMonitorNoHttpsWithAuth(MonitorImageData imageData)
         {
             GenerateKeyOutput output = GenerateKey(imageData);

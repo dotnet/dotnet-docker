@@ -13,4 +13,3 @@ $(McrTagsYmlTagGroup:6.2-jammy-chiseled-amd64)
     customSubTableTitle: .NET Monitor Preview Tags
 $(McrTagsYmlTagGroup:6.2-jammy-chiseled-arm64v8)
     customSubTableTitle: .NET Monitor Preview Tags
-$(McrTagsYmlTagGroup:6.1-alpine-amd64)
