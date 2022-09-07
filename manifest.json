@@ -5312,7 +5312,8 @@
             "6-alpine": {},
             "$(monitor|6.2|product-version)": {},
             "6.2": {},
-            "6": {}
+            "6": {},
+            "latest": {}
           },
           "platforms": [
             {
