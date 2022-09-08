@@ -61,8 +61,6 @@
     "base-url|7.0|main": "$(base-url|public|main)",
     "base-url|7.0|nightly": "$(base-url|public|nightly)",
 
-    "base-url|6.1-monitor|main": "$(base-url|public|main)",
-    "base-url|6.1-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|6.2-monitor|main": "$(base-url|public|main)",
     "base-url|6.2-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|7.0-monitor|main": "$(base-url|public|main)",
@@ -86,10 +84,6 @@
 
     "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.37.1.windows.1/MinGit-2.37.1-64-bit.zip",
     "mingit|x64|sha": "edacf2d5c39555c25a396e0b9d27182ab5587259dc2e824b4490996b373f9300",
-
-    "monitor|6.1|build-version": "6.1.4",
-    "monitor|6.1|product-version": "6.1.4",
-    "monitor|6.1|sha": "a7001675cf63b5e2ee923ca9a36233f4f01be7ad0e043b83ac214af8c0b3b6090711dc5eafb7999fec51f3fb07acfb7649757a24823034ee448587d23de98448",
 
     "monitor|6.2|build-version": "6.2.2",
     "monitor|6.2|product-version": "6.2.2",

@@ -5249,62 +5249,6 @@
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/monitor-tags.yml",
       "images": [
         {
-          "productVersion": "$(monitor|6.1|product-version)",
-          "sharedTags": {
-            "$(monitor|6.1|product-version)-alpine": {},
-            "6.1-alpine": {},
-            "$(monitor|6.1|product-version)": {},
-            "6.1": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/monitor/6.1/alpine/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
-              "os": "linux",
-              "osVersion": "alpine3.16",
-              "tags": {
-                "$(monitor|6.1|product-version)-alpine-amd64": {},
-                "6.1-alpine-amd64": {}
-              }
-            }
-          ]
-        },
-        {
-          "productVersion": "$(monitor|6.1|product-version)",
-          "sharedTags": {
-            "$(monitor|6.1|product-version)-cbl-mariner": {
-              "docType": "Undocumented"
-            },
-            "6.1-cbl-mariner": {
-              "docType": "Undocumented"
-            }
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/monitor/6.1/cbl-mariner/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
-              "os": "linux",
-              "osVersion": "cbl-mariner2.0",
-              "tags": {
-                "$(monitor|6.1|product-version)-cbl-mariner-amd64": {
-                  "docType": "Undocumented"
-                },
-                "6.1-cbl-mariner-amd64": {
-                  "docType": "Undocumented"
-                }
-              }
-            }
-          ]
-        },
-        {
           "productVersion": "$(monitor|6.2|product-version)",
           "sharedTags": {
             "$(monitor|6.2|product-version)-alpine": {},
