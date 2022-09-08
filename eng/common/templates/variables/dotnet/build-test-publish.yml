@@ -12,7 +12,7 @@ variables:
 - name: testResultsDirectory
   value: tests/Microsoft.DotNet.Docker.Tests/TestResults/
 - name: officialRepoPrefixes
-  value: public/,private/internal/
+  value: public/,internal/private/
 
 - name: mcrDocsRepoInfo.accessToken
   value: $(BotAccount-dotnet-docker-bot-PAT)

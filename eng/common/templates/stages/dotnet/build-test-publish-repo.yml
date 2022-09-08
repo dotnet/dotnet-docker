@@ -72,14 +72,29 @@ stages:
     
     linuxArm64Pool:
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-        name: DotNetCore-Docker-Public
+        name: DotNetCoreDocker-Public
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         name: Docker-Linux-Arm-Internal
     linuxArm32Pool:
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-        name: DotNetCore-Docker-Public
+        name: DotNetCoreDocker-Public
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         name: Docker-Linux-Arm-Internal
-    windows2016Pool: Docker-2016-${{ variables['System.TeamProject'] }}
-    windows1809Pool: Docker-1809-${{ variables['System.TeamProject'] }}
-    windows2022Pool: Docker-2022-${{ variables['System.TeamProject'] }}
+    
+    windows2016Pool:
+      ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+        name: Docker2016-Public
+      ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        name: Docker-2016-Internal
+    
+    windows1809Pool:
+      ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+        name: Docker1809-Public
+      ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        name: Docker-1809-Internal
+    
+    windows2022Pool:
+      ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+        name: Docker2022-Public
+      ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        name: Docker-2022-Internal
