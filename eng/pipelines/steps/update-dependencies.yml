@@ -4,7 +4,6 @@ parameters:
   # This is required in order to publish a single set of internal images when the PR is merged.
   customArgsArray: ""
 
-  stableBranding: false
   useInternalBuild: false
 
 steps:

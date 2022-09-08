@@ -74,5 +74,4 @@ steps:
 - template: update-dependencies.yml
   parameters:
     customArgsArray: "$(customArgsArray)"
-    stableBranding: $(dotnetStableBranding)
     useInternalBuild: ${{ parameters.useInternalBuild }}
