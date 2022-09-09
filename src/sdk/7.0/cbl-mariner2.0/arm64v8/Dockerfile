@@ -19,6 +19,7 @@ ENV \
 
 RUN tdnf install -y \
         git \
+        tar \
     && tdnf clean all
 
 # Install .NET SDK
