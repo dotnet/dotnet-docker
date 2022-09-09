@@ -12,6 +12,7 @@ steps:
     '$(mcrStatus.servicePrincipalPassword)'
     '$(mcrStatus.servicePrincipalTenant)'
     --manifest '$(manifest)'
+    --repo-prefix '$(publishRepoPrefix)'
     --min-queue-time '${{ parameters.minQueueTime }}'
     --timeout '$(mcrImageIngestionTimeout)'
     $(manifestVariables)

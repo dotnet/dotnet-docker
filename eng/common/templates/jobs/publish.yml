@@ -16,6 +16,11 @@ jobs:
       $(imageBuilder.queueArgs)
   - name: publishNotificationRepoName
     value: $(Build.Repository.Name)
+  - name: branchName
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/') }}:
+      value: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
+      value: $[ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') ]
   - ${{ parameters.customPublishVariables }}
   steps:
   - template: ../steps/retain-build.yml
@@ -120,7 +125,7 @@ jobs:
   - script: >
       $(runImageBuilderCmd) postPublishNotification
       '$(publishNotificationRepoName)'
-      '$(Build.SourceBranchName)'
+      '$(branchName)'
       '$(artifactsPath)/image-info.json'
       $(Build.BuildId)
       '$(System.AccessToken)'
