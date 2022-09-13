@@ -1,8 +1,10 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
-    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
+    set isMariner to find(OS_VERSION, "mariner") >= 0 ^
+    set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
+    set isFullMariner to isMariner && !isDistroless ^
+    set isDistrolessMariner to isMariner && isDistroless ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set isSingleStage to (dotnetVersion = "3.1" || isAlpine || isFullMariner) && !isInternal ^
@@ -10,15 +12,14 @@
     set runtimeBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix) ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
     set installerImageTag to when(isDistrolessMariner,
-        cat(
-            "mcr.microsoft.com/cbl-mariner/base/core:",
-            OS_VERSION_NUMBER),
+        cat("mcr.microsoft.com/cbl-mariner/base/core:", OS_VERSION_NUMBER),
         when(isAlpine || isFullMariner,
             runtimeBaseTag,
-            cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl"))) ^
-    set copyFromSrcPath to when(isDistrolessMariner, "/dotnet", "/shared/Microsoft.AspNetCore.App") ^
-    set copyFromDstPath to when(isDistrolessMariner, "/usr/share/dotnet", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App")
+            cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))) ^
+    set copyFromSrcPath to when(isDistroless, "/dotnet", "/shared/Microsoft.AspNetCore.App") ^
+    set copyFromDstPath to when(isDistroless, "/usr/share/dotnet", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App")
 }}ARG REPO=mcr.microsoft.com/dotnet/runtime{{if isSingleStage:
 {{
 

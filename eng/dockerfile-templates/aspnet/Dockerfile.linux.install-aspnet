@@ -9,7 +9,7 @@
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
-    set isDistroless to find(OS_VERSION, "-distroless") >= 0 ^
+    set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set useRpm to isFullMariner ^
     set filePlatform to when(useRpm, "", when(isAlpine, "-linux-musl", "-linux")) ^
@@ -23,7 +23,10 @@
         when(ARGS["is-internal"],
             VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")],
             "$ASPNET_VERSION")) ^
-    set aspnetVersionFile to when(ARGS["is-internal"],
+    set isInternalStableBranding to ARGS["is-internal"] &&
+        (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
+        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
+    set aspnetVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         aspnetVersionDir) ^
     set fileArch to when(useRpm && ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^

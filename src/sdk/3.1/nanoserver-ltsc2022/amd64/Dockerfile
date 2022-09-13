@@ -10,9 +10,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET Core SDK
-        $sdk_version = '3.1.422'; `
+        $sdk_version = '3.1.423'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '07d13dd458dcfbfbc31a4cea3eb28b77aa25385a1eeb5e28af031fa2098564a811372679cf4d725445e6d43315b609582732c238b894dccab489713fc0056c56'; `
+        $dotnet_sha512 = 'b2b2ad620f0463a2c3d55e0d3d619bfca9965d59fee0e61bbd6e609d16ee28114b67f026ba9721e95c2eba63c58d6051aff5be3c496a7a9aead5cb504013ef4d'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -22,9 +22,9 @@ RUN powershell -Command " `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.0.11'; `
+        $powershell_version = '7.0.12'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = '64e6d1f49589164094ba4402cdf8ce9d1d021e7605024b14be0a3bdafea8ac0cef6e6b0b2b69a38106a9bd3e072aff89a5bef2f2bad627b57bf2a0ba00e507a1'; `
+        $powershell_sha512 = '32d122d17e4719d27b2c8bf8bd42cc1a626c7d98102b892c6f16da47c148db20d59ba21b5c8ea2bcdb090d7b9f56d0568bfe1e80b76b714a92be880376e6553f'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -41,7 +41,7 @@ RUN powershell -Command " `
             | Remove-Item -Force -Recurse"
 
 # SDK image
-FROM $REPO:3.1.28-nanoserver-ltsc2022
+FROM $REPO:3.1.29-nanoserver-ltsc2022
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image

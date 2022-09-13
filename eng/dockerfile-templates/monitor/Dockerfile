@@ -7,7 +7,7 @@
     set targetFrameworkMonikerRegex to cat("net", dotnetMajor, "[.]0") ^
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
     set sdkDistro to when(isDistrolessMariner, cat("cbl-mariner", OS_VERSION_NUMBER), OS_VERSION) ^
-    set installerBaseTag to cat(VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")], when(dotnetMajor = "6", "-1", ""), "-", sdkDistro, ARCH_TAG_SUFFIX) ^
+    set installerBaseTag to cat(VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")], "-", sdkDistro, ARCH_TAG_SUFFIX) ^
     set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
     set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
@@ -17,8 +17,7 @@
       Otherwise, use the account that is associated with the current branch. ^
     set urlBranch to when(find(monitorVersion, "-") >= 0 || buildVersion != monitorVersion, VARIABLES["branch"], "main") ^
     _ Use the $DOTNET_MONITOR_VERSION variable for the version folder if the build and product versions are the same. ^
-    set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$DOTNET_MONITOR_VERSION') ^
-    set supportsEndpointDeletion to monitorMajorMinor != "6.1"
+    set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$DOTNET_MONITOR_VERSION')
 }}ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
@@ -65,9 +64,9 @@ ENV \
     COMPlus_EnableDiagnostics=0 \
     # Default Filter
     DefaultProcess__Filters__0__Key=ProcessId \
-    DefaultProcess__Filters__0__Value=1 \{{if supportsEndpointDeletion:
+    DefaultProcess__Filters__0__Value=1 \
     # Remove Unix Domain Socket before starting diagnostic port server
-    DiagnosticPort__DeleteEndpointOnStartup=true \}}
+    DiagnosticPort__DeleteEndpointOnStartup=true \
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)

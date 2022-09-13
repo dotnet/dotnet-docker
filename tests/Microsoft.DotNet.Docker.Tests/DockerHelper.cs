@@ -65,7 +65,9 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string dockerfile = Path.Combine(TestArtifactsDir, "Dockerfile.distroless");
             string distrolessImageTag = imageData.GetImage(imageType, this);
-            string baseImageTag = distrolessImageTag.Replace("-distroless", string.Empty);
+            string baseImageTag = distrolessImageTag
+                .Replace("-distroless", string.Empty)
+                .Replace("-chiseled", string.Empty);
 
             string tag = imageData.GetIdentifier("distroless-helper");
             Build(tag, dockerfile, null, TestArtifactsDir, false,
@@ -240,9 +242,24 @@ namespace Microsoft.DotNet.Docker.Tests
                 $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg} {optionalRunArgs} {image} {command}");
         }
 
-        public string CreateVolume(string name)
+        /// <summary>
+        /// Creates a file system volume that is backed by memory instead of disk.
+        /// </summary>
+        public string CreateTmpfsVolume(string name, bool ownedByDistrolessUser = false)
         {
-            return ExecuteWithLogging($"volume create {name}");
+            // Create volume using the local driver (the default driver),
+            // which accepts options similar to the 'mount' command.
+            //
+            // Additional options are specified to:
+            // - make this volume an in-memory file system with a unique device name (type=tmpfs, device={guid}}).
+            // - to set the owner of the root of the file system (o=uid=101).
+            string optionalArgs = string.Empty;
+            if (ownedByDistrolessUser)
+            {
+                optionalArgs += " --opt o=uid=101";
+            }
+            string device = Guid.NewGuid().ToString("D");
+            return ExecuteWithLogging($"volume create --opt type=tmpfs --opt device={device}{optionalArgs} {name}");
         }
 
         public string DeleteVolume(string name)

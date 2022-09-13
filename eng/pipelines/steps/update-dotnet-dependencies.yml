@@ -2,7 +2,18 @@ parameters:
   useInternalBuild: false
 
 steps:
-- script: $(engPath)/get-drop-versions.sh $(channel) ${{parameters.useInternalBuild}} "$(dotnetbuilds-internal-container-read-token)" "$(dn-bot-devdiv-dnceng-rw-code-pat)"
+- pwsh: |
+    $args = @{
+      Channel = "$(channel)"
+    }
+
+    if ("${{ parameters.useInternalBuild }}" -eq "true") {
+      $args["UseInternalBuild"] = $true
+      $args["BlobStorageSasQueryString"] = "$(dotnetbuilds-internal-container-read-token)"
+      $args["AzdoVersionsRepoInfoAccessToken"] = "$(dn-bot-devdiv-dnceng-rw-code-pat)"
+    }
+
+    $(engPath)/Get-DropVersions.ps1 @args
   displayName: Get Versions
 - powershell: |
     $args = @{
@@ -22,7 +33,11 @@ steps:
     $(engPath)/Set-DotnetVersions.ps1 @args
   displayName: Get update-dependencies args
 - powershell: |
-    $targetBranch = "internal/release/" + $(& $(engPath)/Get-Branch.ps1)
+    $branchPrefix = ""
+    if ("${{ parameters.useInternalBuild }}" -eq "true") {
+      $branchPrefix = "internal/release/"
+    }
+    $targetBranch = $branchPrefix + $(& $(engPath)/Get-Branch.ps1)
     echo "##vso[task.setvariable variable=targetBranch]$targetBranch"
   displayName: Set Target Branch Var
 - template: update-dependencies.yml

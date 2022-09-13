@@ -3,13 +3,9 @@
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
-    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
-    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
-    set isMariner to isFullMariner || isDistrolessMariner ^
+    set isMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
-    set distrolessStagingDir to "/staging" ^
-    set marinerRepo to "mcr.microsoft.com/cbl-mariner" ^
     set baseImageRepo to when(isAlpine,
         cat(ARCH_VERSIONED, "/alpine"),
         when(isDebian,
@@ -17,15 +13,15 @@
             when(isUbuntu,
                 cat(ARCH_VERSIONED, "/ubuntu"),
                 when(isMariner,
-                    cat(marinerRepo, "/base/core"),
+                    "mcr.microsoft.com/cbl-mariner/base/core",
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
-    set isSingleStage to !isDistrolessMariner && !(isFullMariner && isInternal) ^
+    set isSingleStage to !(isMariner && isInternal) ^
     set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm"
 }}{{
     if !isSingleStage:# Installer image
-}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isFullMariner:
+}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isMariner:
 
 ARG SAS_QUERY_STRING
 
@@ -35,51 +31,10 @@ RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
         "filename": rpmFilename,
         "is-internal": isInternal
     ], "    ")}}}}
-{{ if isDistrolessMariner && find(OS_VERSION, "1.0") >= 0:
-RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
-    [
-        "pkgs": ["dnf"]
-    ])}}
+{{if isMariner && isInternal:FROM {{baseImageRepo}}:{{baseImageTag}}
 }}
-{{if isDistrolessMariner:# Install .NET's dependencies into a staging location
-^elif isMariner && isInternal:FROM {{baseImageRepo}}:{{baseImageTag}}
-
-}}RUN {{if isDistrolessMariner:mkdir {{distrolessStagingDir}} \
-    && }}{{InsertTemplate("../Dockerfile.linux.install-deps", ["distroless-staging-dir": distrolessStagingDir])}}
-{{ if isDistrolessMariner:
-# Create a non-root user and group
-RUN {{if find(OS_VERSION, "1.0") < 0:tdnf install -y shadow-utils \
-    && tdnf clean all \
-    && }}groupadd \
-        --system \
-        --gid={{if find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
-        app \
-    && adduser \
-        --uid {{if find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
-        --gid app \
-        --shell /bin/false \
-        --no-create-home \
-        --system \
-        app \
-    # Copy user/group info to staging
-    && cp /etc/passwd {{distrolessStagingDir}}/etc/passwd \
-    && cp /etc/group {{distrolessStagingDir}}/etc/group
-
-# Clean up staging
-RUN rm -rf {{distrolessStagingDir}}/etc/{{when(find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf")}} \
-    && rm -rf {{distrolessStagingDir}}/run/* \
-    && rm -rf {{distrolessStagingDir}}/var/cache/{{when(find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf")}} \
-    && rm -rf {{distrolessStagingDir}}/var/lib/rpm \
-    && rm -rf {{distrolessStagingDir}}/usr/share/doc \
-    && rm -rf {{distrolessStagingDir}}/usr/share/man \
-    && find {{distrolessStagingDir}}/var/log -type f -size +0 -delete
-
-
-# .NET runtime-deps image
-FROM {{marinerRepo}}/distroless/minimal:{{OS_VERSION_NUMBER}}
-
-COPY --from=installer {{distrolessStagingDir}}/ /
-^elif isFullMariner:
+RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}
+{{ if isMariner:
 {{if isInternal:{{InsertTemplate("../Dockerfile.linux.copy-files",
 [
     "files": [
@@ -97,7 +52,4 @@ COPY --from=installer {{distrolessStagingDir}}/ /
         "filename": rpmFilename
     ])}}
 }}
-{{InsertTemplate("../Dockerfile.common-dotnet-envs") ^
-if isDistrolessMariner:
-
-USER app}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs")}}

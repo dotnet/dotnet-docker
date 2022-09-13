@@ -61,18 +61,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageData => new object[] { imageData });
         }
 
-        public static IEnumerable<object[]> GetImageDataSupportingMachineJsonKeyGeneration()
-        {
-            return TestData.GetMonitorImageData()
-                .Where(imageData => imageData.Version >= ImageVersion.V6_1)
-                .Select(imageData => new object[] { imageData });
-        }
-
         /// <summary>
         /// Gets each dotnet-monitor image paired with each sample aspnetcore image of the same architecture.
         /// Allows for testing volume mounts and diagnostic port usage among different distros.
         /// </summary>
-        public static IEnumerable<object[]> GetScenarioData()
+        private static IEnumerable<object[]> GetScenarioData(bool isConnectMode)
         {
             IList<object[]> data = new List<object[]>();
             foreach (MonitorImageData monitorImageData in TestData.GetMonitorImageData())
@@ -87,18 +80,38 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (monitorImageData.Arch != sampleImageData.Arch)
                         continue;
 
-                    // Distroless .NET Monitor images must be tested with distroless samples because
-                    // the default user of the .NET Monitor image is a non-root user. If .NET Monitor
-                    // is running as non-root and the sample is running as root, .NET Monitor will fail
-                    // to communicate with the sample application or fail to start up due to lack of
-                    // permissions to create the diagnostic port.
-                    if (monitorImageData.IsDistroless != sampleImageData.IsDistroless)
-                        continue;
+                    if (isConnectMode)
+                    {
+                        // The dotnet-monitor process is only able to connect to the other container process' diagnostic port
+                        // if it is running as the same user or is running as root. If the target application container is
+                        // running as root, then the dotnet-monitor must be running as root, which is not the case for distroless.
+                        if (monitorImageData.IsDistroless && !sampleImageData.IsDistroless)
+                            continue;
+                    }
+                    else
+                    {
+                        // In listen mode, if the dotnet-monitor container is non-distroless, then it has a communication
+                        // pipe that is established as root. This requires that the target application container to be running
+                        // as root in order for it to connect to the pipe. If dotnet-monitor is distroless, then either
+                        // distroless (as long as it is the same user) or non-distroless will be able to communicate with it.
+                        if (!monitorImageData.IsDistroless && sampleImageData.IsDistroless)
+                            continue;
+                    }
 
                     data.Add(new object[] { monitorImageData, sampleImageData });
                 }
             }
             return data;
+        }
+
+        public static IEnumerable<object[]> GetConnectModeScenarioData()
+        {
+            return GetScenarioData(isConnectMode: true);
+        }
+
+        public static IEnumerable<object[]> GetListenModeScenarioData()
+        {
+            return GetScenarioData(isConnectMode: false);
         }
 
         /// <summary>
@@ -119,10 +132,7 @@ namespace Microsoft.DotNet.Docker.Tests
             variables.Add(new EnvironmentVariableInfo("DefaultProcess__Filters__0__Key", "ProcessId"));
             variables.Add(new EnvironmentVariableInfo("DefaultProcess__Filters__0__Value", "1"));
             // Existing (orphaned) diagnostic port should be delete before starting server
-            if (imageData.Version > ImageVersion.V6_1)
-            {
-                variables.Add(new EnvironmentVariableInfo("DiagnosticPort__DeleteEndpointOnStartup", "true"));
-            }
+            variables.Add(new EnvironmentVariableInfo("DiagnosticPort__DeleteEndpointOnStartup", "true"));
             // Console logger format should be JSON and output UTC timestamps without timezone information
             variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", "json"));
             variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterOptions__TimestampFormat", "yyyy-MM-ddTHH:mm:ss.fffffffZ"));
@@ -222,7 +232,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// are accessible with valid authorization header.
         /// </summary>
         [LinuxImageTheory]
-        [MemberData(nameof(GetImageDataSupportingMachineJsonKeyGeneration))]
+        [MemberData(nameof(GetImageData))]
         public Task VerifyMonitorNoHttpsWithAuth(MonitorImageData imageData)
         {
             GenerateKeyOutput output = GenerateKey(imageData);
@@ -276,7 +286,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// in another container via mounting the /tmp directory.
         /// </summary>
         [LinuxImageTheory]
-        [MemberData(nameof(GetScenarioData))]
+        [MemberData(nameof(GetConnectModeScenarioData))]
         public Task VerifyConnectMode(MonitorImageData imageData, SampleImageData sampleData)
         {
             return VerifyScenarioAsync(
@@ -311,7 +321,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// in other containers by having them connect to the diagnostic port listener.
         /// </summary>
         [LinuxImageTheory]
-        [MemberData(nameof(GetScenarioData))]
+        [MemberData(nameof(GetListenModeScenarioData))]
         public Task VerifyListenMode(MonitorImageData imageData, SampleImageData sampleData)
         {
             return VerifyScenarioAsync(
@@ -441,10 +451,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
             try
             {
+                bool allowDistrolessUserToUseVolume = monitorImageData.IsDistroless || sampleImageData.IsDistroless;
+
                 // Create a volume for the two containers to share the /tmp directory.
                 if (shareTmpVolume)
                 {
-                    tmpVolumeName = DockerHelper.CreateVolume(UniqueName("tmpvol"));
+                    tmpVolumeName = DockerHelper.CreateTmpfsVolume(UniqueName("tmpvol"), allowDistrolessUserToUseVolume);
 
                     monitorArgsBuilder.VolumeMount(tmpVolumeName, Directory_Tmp);
 
@@ -456,7 +468,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 // process can connect to the dotnet-monitor process.
                 if (listenDiagPortVolume)
                 {
-                    diagPortVolumeName = DockerHelper.CreateVolume(UniqueName("diagportvol"));
+                    diagPortVolumeName = DockerHelper.CreateTmpfsVolume(UniqueName("diagportvol"), allowDistrolessUserToUseVolume);
 
                     monitorArgsBuilder.VolumeMount(diagPortVolumeName, Directory_Diag);
                     monitorArgsBuilder.MonitorListen(File_DiagPort);

@@ -246,6 +246,24 @@ namespace Microsoft.DotNet.Docker.Tests
             );
         }
 
+        /// <summary>
+        /// Verifies that a tar command can be executed without failure.
+        /// </summary>
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyTarInstallation(ProductImageData imageData)
+        {
+            if (imageData.Version.Major != 7)
+            {
+                // tar should exist in the SDK for both Linux and Windows. The --version option works in either OS
+                DockerHelper.Run(
+                    image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
+                    name: imageData.GetIdentifier("tar"),
+                    command: "tar --version"
+                );
+            }
+        }
+
         private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
         {
             string dotnetPath;
