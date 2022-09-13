@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:3.1.28-alpine3.16
+FROM $REPO:3.1.29-alpine3.16
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -23,9 +23,9 @@ RUN apk add --no-cache \
         icu-libs
 
 # Install .NET Core SDK
-RUN sdk_version=3.1.422 \
+RUN sdk_version=3.1.423 \
     && wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-linux-musl-x64.tar.gz \
-    && dotnet_sha512='8ac9004d6d6f8c679746de18ee24ac99d1a0d2a3da2fa490adc75462da70c057fd1375debc0d5fd2369aa82bafd8f65d02df04ac497199d13cd71682db09ebd0' \
+    && dotnet_sha512='e3e887c029535c7566437e5e6bb3a2cac44cdf103c247ac528e02c535b3efd860ee9bbd0ef9c570daac91e4012ddc84dca509e1ce23ab293ed7c744edbc9107b' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \

@@ -2,7 +2,7 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:6.0.400-jammy-amd64 AS installer
+FROM $SDK_REPO:6.0.401-jammy-amd64 AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION=6.2.2
@@ -28,7 +28,7 @@ RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotn
 
 
 # Monitor image
-FROM $ASPNET_REPO:6.0.8-jammy-chiseled-amd64
+FROM $ASPNET_REPO:6.0.9-jammy-chiseled-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
