@@ -15,4 +15,7 @@ param(
 $url = "https://aka.ms/dotnet/diagnostics/monitor$Channel/dotnet-monitor.nupkg.buildversion"
 $monitorVersion = $(Invoke-RestMethod $url).Trim()
 
+$stableBranding = & $PSScriptRoot/Get-IsStableBranding.ps1 -Version $monitorVersion
+
 Write-Output "##vso[task.setvariable variable=monitorVer]$monitorVersion"
+Write-Output "##vso[task.setvariable variable=stableBranding]$stableBranding"
