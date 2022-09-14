@@ -11,7 +11,7 @@ variables:
 - template: ../common/templates/variables/dotnet/common.yml
 stages:
 - stage: DotNet
-  condition: eq(variables['update-dotnet-enabled'], 'true')
+  condition: and(not(canceled()), eq(variables['update-dotnet-enabled'], 'true'))
   jobs:
   - job: UpdateDependencies
     displayName: Update Dependencies (dotnet/installer)
@@ -20,7 +20,7 @@ stages:
     steps:
     - template: steps/update-dotnet-dependencies.yml
 - stage: Monitor
-  condition: eq(variables['update-monitor-enabled'], 'true')
+  condition: and(not(canceled()), eq(variables['update-monitor-enabled'], 'true'))
   dependsOn: [] # Allows it to run in parallel
   jobs:
   - job: UpdateDependencies
@@ -32,15 +32,18 @@ stages:
         Update6:
           MajorMinorVersion: 6.$(monitor6MinorVersion)
           ChannelQuality: $(monitor6Quality)
-          StableBranding: $(monitor6StableBranding)
         Update7:
           MajorMinorVersion: 7.$(monitor7MinorVersion)
           ChannelQuality: $(monitor7Quality)
-          StableBranding: $(monitor7StableBranding)
     steps:
     - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -Channel $(MajorMinorVersion)/$(ChannelQuality)
       displayName: Get Versions
+    - powershell: |
+        $customArgs = "$(MajorMinorVersion) --product-version monitor=$(monitorVer) --channel-name $(MajorMinorVersion)/$(ChannelQuality) --version-source-name dotnet/dotnet-monitor/$(MajorMinorVersion) --stable-branding=$(stableBranding)"
+        
+        $customArgsArray = @($customArgs)
+        echo "##vso[task.setvariable variable=customArgsArray]$($customArgsArray | ConvertTo-Json -Compress -AsArray)"
+      displayName: Set Custom Args
     - template: steps/update-dependencies.yml
       parameters:
-        customArgs: "$(MajorMinorVersion) --product-version monitor=$(monitorVer) --channel-name $(MajorMinorVersion)/$(ChannelQuality) --version-source-name dotnet/dotnet-monitor/$(MajorMinorVersion)"
-        stableBranding: $(StableBranding)
+        customArgsArray: $(customArgsArray)

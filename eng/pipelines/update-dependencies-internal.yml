@@ -7,7 +7,7 @@ variables:
 - group: DotNet-AllOrgs-Darc-Pats
 stages:
 - stage: DotNet
-  condition: eq(variables['update-dotnet-enabled'], 'true')
+  condition: and(not(canceled()), eq(variables['update-dotnet-enabled'], 'true'))
   jobs:
   - job: UpdateDependencies
     displayName: Update Dependencies (dotnet/installer)
@@ -25,3 +25,4 @@ stages:
     - template: steps/update-dotnet-dependencies.yml
       parameters:
         useInternalBuild: true
+        sdkVersions: $(sdkVersions)
