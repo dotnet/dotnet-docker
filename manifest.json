@@ -5280,7 +5280,7 @@
                 "ASPNET_REPO": "$(Repo:aspnet)",
                 "SDK_REPO": "$(Repo:sdk)"
               },
-              "dockerfile": "src/monitor/6.2/jammy-chiseled/amd64",
+              "dockerfile": "src/monitor/6.2/ubuntu-chiseled/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
               "osVersion": "jammy-chiseled",
@@ -5296,7 +5296,7 @@
                 "ASPNET_REPO": "$(Repo:aspnet)",
                 "SDK_REPO": "$(Repo:sdk)"
               },
-              "dockerfile": "src/monitor/6.2/jammy-chiseled/arm64v8",
+              "dockerfile": "src/monitor/6.2/ubuntu-chiseled/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
               "osVersion": "jammy-chiseled",
@@ -5485,7 +5485,7 @@
                 "ASPNET_REPO": "$(Repo:aspnet)",
                 "SDK_REPO": "$(Repo:sdk)"
               },
-              "dockerfile": "src/monitor/7.0/jammy-chiseled/amd64",
+              "dockerfile": "src/monitor/7.0/ubuntu-chiseled/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
               "osVersion": "jammy-chiseled",
@@ -5501,7 +5501,7 @@
                 "ASPNET_REPO": "$(Repo:aspnet)",
                 "SDK_REPO": "$(Repo:sdk)"
               },
-              "dockerfile": "src/monitor/7.0/jammy-chiseled/arm64v8",
+              "dockerfile": "src/monitor/7.0/ubuntu-chiseled/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
               "osVersion": "jammy-chiseled",
