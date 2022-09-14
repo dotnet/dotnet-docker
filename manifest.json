@@ -930,7 +930,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/6.0/cbl-mariner2.0-distroless/amd64",
+              "dockerfile": "src/runtime-deps/7.0/cbl-mariner2.0-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
@@ -957,7 +957,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/6.0/cbl-mariner2.0-distroless/arm64v8",
+              "dockerfile": "src/runtime-deps/7.0/cbl-mariner2.0-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
