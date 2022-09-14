@@ -46,7 +46,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 return;
             }
-
+            
             base.VerifyCommonInsecureFiles(imageData);
         }
 

@@ -5,11 +5,11 @@ FROM $REPO:7.0.0-rc.1-alpine3.16-arm32v7
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=7.0.0-rc.1.22411.3
+ENV ASPNET_VERSION=7.0.0-rc.1.22427.2
 
 # Install ASP.NET Core
-RUN wget -O aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-arm.tar.gz \
-    && aspnetcore_sha512='5b9b72b23a31c4757c85bc497d205208620bfdd1554e065a76f3ae3179278723c94dc5c774e2cf38cc8abe9cba3a144ae6e8448208df0756fbe1e2278afd0298' \
+RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-arm.tar.gz \
+    && aspnetcore_sha512='7c6bc446a455c42be6ecc8e1057bfd4eddb02591c46e605e6ef3519a51df6b0dd870bc28cd3473e472341e9535b584ff82937395f72ae97b2e0d8acb7f6fc0af' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
