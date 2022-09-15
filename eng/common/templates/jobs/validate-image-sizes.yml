@@ -39,10 +39,7 @@ jobs:
       dockerClientOS: linux
       validationMode: integrity
 - job: WindowsPerfTests
-  ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-    pool: Docker2022-Public
-  ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-    pool: Docker-2022-Internal
+  pool: Docker-2022-${{ variables['System.TeamProject'] }}
   workspace:
     clean: all
   steps:
