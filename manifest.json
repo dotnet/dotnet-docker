@@ -5270,9 +5270,9 @@
         {
           "productVersion": "$(monitor|6.2|product-version)",
           "sharedTags": {
-            "$(monitor|6.2|product-version)-jammy-chiseled": {},
-            "6.2-jammy-chiseled": {},
-            "6-jammy-chiseled": {}
+            "$(monitor|6.2|product-version)-ubuntu-chiseled": {},
+            "6.2-ubuntu-chiseled": {},
+            "6-ubuntu-chiseled": {}
           },
           "platforms": [
             {
@@ -5280,14 +5280,14 @@
                 "ASPNET_REPO": "$(Repo:aspnet)",
                 "SDK_REPO": "$(Repo:sdk)"
               },
-              "dockerfile": "src/monitor/6.2/jammy-chiseled/amd64",
+              "dockerfile": "src/monitor/6.2/ubuntu-chiseled/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
-                "$(monitor|6.2|product-version)-jammy-chiseled-amd64": {},
-                "6.2-jammy-chiseled-amd64": {},
-                "6-jammy-chiseled-amd64": {}
+                "$(monitor|6.2|product-version)-ubuntu-chiseled-amd64": {},
+                "6.2-ubuntu-chiseled-amd64": {},
+                "6-ubuntu-chiseled-amd64": {}
               }
             },
             {
@@ -5296,14 +5296,14 @@
                 "ASPNET_REPO": "$(Repo:aspnet)",
                 "SDK_REPO": "$(Repo:sdk)"
               },
-              "dockerfile": "src/monitor/6.2/jammy-chiseled/arm64v8",
+              "dockerfile": "src/monitor/6.2/ubuntu-chiseled/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
-                "$(monitor|6.2|product-version)-jammy-chiseled-arm64v8": {},
-                "6.2-jammy-chiseled-arm64v8": {},
-                "6-jammy-chiseled-arm64v8": {}
+                "$(monitor|6.2|product-version)-ubuntu-chiseled-arm64v8": {},
+                "6.2-ubuntu-chiseled-arm64v8": {},
+                "6-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5475,9 +5475,9 @@
         {
           "productVersion": "$(monitor|7.0|product-version)",
           "sharedTags": {
-            "$(monitor|7.0|product-version)-jammy-chiseled": {},
-            "7.0-jammy-chiseled": {},
-            "7-jammy-chiseled": {}
+            "$(monitor|7.0|product-version)-ubuntu-chiseled": {},
+            "7.0-ubuntu-chiseled": {},
+            "7-ubuntu-chiseled": {}
           },
           "platforms": [
             {
@@ -5485,14 +5485,14 @@
                 "ASPNET_REPO": "$(Repo:aspnet)",
                 "SDK_REPO": "$(Repo:sdk)"
               },
-              "dockerfile": "src/monitor/7.0/jammy-chiseled/amd64",
+              "dockerfile": "src/monitor/7.0/ubuntu-chiseled/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
-                "$(monitor|7.0|product-version)-jammy-chiseled-amd64": {},
-                "7.0-jammy-chiseled-amd64": {},
-                "7-jammy-chiseled-amd64": {}
+                "$(monitor|7.0|product-version)-ubuntu-chiseled-amd64": {},
+                "7.0-ubuntu-chiseled-amd64": {},
+                "7-ubuntu-chiseled-amd64": {}
               }
             },
             {
@@ -5501,14 +5501,14 @@
                 "ASPNET_REPO": "$(Repo:aspnet)",
                 "SDK_REPO": "$(Repo:sdk)"
               },
-              "dockerfile": "src/monitor/7.0/jammy-chiseled/arm64v8",
+              "dockerfile": "src/monitor/7.0/ubuntu-chiseled/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
-                "$(monitor|7.0|product-version)-jammy-chiseled-arm64v8": {},
-                "7.0-jammy-chiseled-arm64v8": {},
-                "7-jammy-chiseled-arm64v8": {}
+                "$(monitor|7.0|product-version)-ubuntu-chiseled-arm64v8": {},
+                "7.0-ubuntu-chiseled-arm64v8": {},
+                "7-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
