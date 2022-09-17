@@ -44,7 +44,13 @@ RUN {{InsertTemplate("../Dockerfile.linux.download-file",
     # 4. Delete everything from step 3
     && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -v -i '.*/tools/{{targetFrameworkMonikerRegex}}' | xargs rm -rf \
     # To reduce image size further, remove the non-linux assemblies
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shims)/(win|osx)' | xargs rm -rf \
+    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(win|osx)' | xargs rm -rf \
+    # To reduce image size further, remove linux assemblies that do not match the {{ARCH_SHORT}} architecture{{if ARCH_SHORT != "x64":
+    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(linux-x64|linux-musl-x64)' | xargs rm -rf \}}{{if ARCH_SHORT != "arm64":
+    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(linux-arm64|linux-musl-arm64)' | xargs rm -rf \}}
+    # To reduce image size further, remove symbol files
+    && find /app -type f -name *.pdb | xargs rm -rf \
+    && find /app -type f -name *.dbg | xargs rm -rf \
     # Remove all the empty directories left by the previous step
     && find /app -type d -empty -delete \
     # Allow other users to run the tool
