@@ -23,8 +23,7 @@ RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.az
     # To reduce image size further, remove linux assemblies that do not match the x64 architecture
     && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(linux-arm64|linux-musl-arm64)' | xargs rm -rf \
     # To reduce image size further, remove symbol files
-    && find /app -type f -name *.pdb | xargs rm -rf \
-    && find /app -type f -name *.dbg | xargs rm -rf \
+    && find /app -type f -name *.pdb -or -name *.dbg | xargs rm -rf \
     # Remove all the empty directories left by the previous step
     && find /app -type d -empty -delete \
     # Allow other users to run the tool
