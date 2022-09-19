@@ -1,0 +1,15 @@
+# Common variables intended for pipelines that target internal .NET builds
+
+variables:
+- template: core.yml
+
+# Since the images published by the pipeline are only available internally, configure variables so that image info
+# is published to an internal repo.
+- name: gitHubVersionsRepoInfo.org
+  value: dotnet
+- name: gitHubVersionsRepoInfo.repo
+  value: dotnet-docker-internal
+- name: gitHubVersionsRepoInfo.branch
+  value: main
+- name: gitHubVersionsRepoInfo.path
+  value: image-infos
