@@ -42,11 +42,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyInsecureFiles(ProductImageData imageData)
         {
-            if (imageData.Version.Major == 7)
-            {
-                return;
-            }
-            
             base.VerifyCommonInsecureFiles(imageData);
         }
 
