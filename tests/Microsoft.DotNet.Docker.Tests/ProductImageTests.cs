@@ -77,7 +77,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 optionalRunArgs: "--entrypoint /bin/sh"
             );
 
-            Assert.Empty(output);
+            IEnumerable<string> lines = output
+                .ReplaceLineEndings()
+                .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
+                // Writable files in the /tmp/.dotnet directory are allowed for global mutexes
+                .Where(line => !line.StartsWith("/tmp/.dotnet"));
+
+            Assert.Empty(lines);
         }
 
         protected void VerifyCommonDefaultUser(ProductImageData imageData)
