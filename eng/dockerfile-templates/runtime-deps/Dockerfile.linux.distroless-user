@@ -4,6 +4,7 @@
         staging-dir: Path to the distroless staging directory
         create-dir (optional): Indicates whether the etc directory should be created in staging
         exclusive (optional): Indicates whether the app user is the only user and all other users are removed ^
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0
 }}groupadd \
     --system \
@@ -12,10 +13,12 @@
 && adduser \
     --uid {{if isMariner && find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
     --gid {{if isMariner && find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
-    --shell /bin/false \
-    --no-create-home \
+    --shell /bin/false \{{if dotnetVersion = "6.0" && isMariner:
+    --no-create-home \}}
     --system \
     app \{{
+if dotnetVersion != "6.0" || !isMariner:
+&& mkdir -p "{{ARGS["staging-dir"]}}/home/app" \}}{{
 if ARGS["exclusive"]:{{if ARGS["create-dir"]:
 && mkdir -p "{{ARGS["staging-dir"]}}/etc" \}}
 && tail -1 < /etc/passwd > "{{ARGS["staging-dir"]}}/etc/passwd" \

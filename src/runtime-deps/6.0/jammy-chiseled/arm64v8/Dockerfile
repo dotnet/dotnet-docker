@@ -18,9 +18,9 @@ RUN groupadd \
         --uid 101 \
         --gid 101 \
         --shell /bin/false \
-        --no-create-home \
         --system \
         app \
+    && mkdir -p "/rootfs/home/app" \
     && mkdir -p "/rootfs/etc" \
     && tail -1 < /etc/passwd > "/rootfs/etc/passwd" \
     && tail -1 < /etc/group > "/rootfs/etc/group"

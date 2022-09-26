@@ -26,9 +26,9 @@ RUN tdnf install -y shadow-utils \
         --uid 101 \
         --gid 101 \
         --shell /bin/false \
-        --no-create-home \
         --system \
         app \
+    && mkdir -p "/staging/home/app" \
     && tail -1 < /etc/passwd > "/staging/etc/passwd" \
     && tail -1 < /etc/group > "/staging/etc/group"
 
