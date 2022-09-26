@@ -81,7 +81,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 .ReplaceLineEndings()
                 .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
                 // Writable files in the /tmp/.dotnet directory are allowed for global mutexes
-                .Where(line => !line.StartsWith("/tmp/.dotnet"));
+                .Where(line => !line.StartsWith($"{rootFsPath}tmp/.dotnet"));
 
             Assert.Empty(lines);
         }
