@@ -77,11 +77,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 optionalRunArgs: "--entrypoint /bin/sh"
             );
 
+            string rootFsPathWithTrailingSlash = rootFsPath;
+            if (!rootFsPathWithTrailingSlash.EndsWith("/"))
+            {
+                rootFsPathWithTrailingSlash += "/";
+            }
+
             IEnumerable<string> lines = output
                 .ReplaceLineEndings()
                 .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
                 // Writable files in the /tmp/.dotnet directory are allowed for global mutexes
-                .Where(line => !line.StartsWith($"{rootFsPath}tmp/.dotnet"));
+                .Where(line => !line.StartsWith($"{rootFsPathWithTrailingSlash}tmp/.dotnet"));
 
             Assert.Empty(lines);
         }
