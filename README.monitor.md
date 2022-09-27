@@ -50,8 +50,8 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.3.0-alpha.1-alpine-amd64, 6.3-alpine-amd64, 6-alpine-amd64, 6.3.0-alpha.1-alpine, 6.3-alpine, 6-alpine, 6.3.0-alpha.1, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/alpine/amd64/Dockerfile) | Alpine 3.16
-6.3.0-alpha.1-ubuntu-chiseled-amd64, 6.3-ubuntu-chiseled-amd64, 6-ubuntu-chiseled-amd64, 6.3.0-alpha.1-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+6.3.0-alpine-amd64, 6.3-alpine-amd64, 6-alpine-amd64, 6.3.0-alpine, 6.3-alpine, 6-alpine, 6.3.0, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/alpine/amd64/Dockerfile) | Alpine 3.16
+6.3.0-ubuntu-chiseled-amd64, 6.3-ubuntu-chiseled-amd64, 6-ubuntu-chiseled-amd64, 6.3.0-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 6.2.2-alpine-amd64, 6.2-alpine-amd64, 6.2.2-alpine, 6.2-alpine, 6.2.2, 6.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.2/alpine/amd64/Dockerfile) | Alpine 3.16
 
 ##### .NET Monitor Preview Tags
@@ -63,8 +63,8 @@ Tags | Dockerfile | OS Version
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-6.3.0-alpha.1-alpine-arm64v8, 6.3-alpine-arm64v8, 6.3.0-alpha.1-alpine, 6.3-alpine, 6-alpine, 6.3.0-alpha.1, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/alpine/arm64v8/Dockerfile) | Alpine 3.16
-6.3.0-alpha.1-ubuntu-chiseled-arm64v8, 6.3-ubuntu-chiseled-arm64v8, 6-ubuntu-chiseled-arm64v8, 6.3.0-alpha.1-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+6.3.0-alpine-arm64v8, 6.3-alpine-arm64v8, 6.3.0-alpine, 6.3-alpine, 6-alpine, 6.3.0, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/alpine/arm64v8/Dockerfile) | Alpine 3.16
+6.3.0-ubuntu-chiseled-arm64v8, 6.3-ubuntu-chiseled-arm64v8, 6-ubuntu-chiseled-arm64v8, 6.3.0-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 6.2.2-alpine-arm64v8, 6.2-alpine-arm64v8, 6.2.2-alpine, 6.2-alpine, 6.2.2, 6.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.2/alpine/arm64v8/Dockerfile) | Alpine 3.16
 
 ##### .NET Monitor Preview Tags
