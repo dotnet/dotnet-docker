@@ -33,6 +33,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static IEnumerable<object[]> GetImageData()
         {
             return TestData.GetImageData()
+                .Where(imageData => !imageData.IsDistroless)
                 // Filter the image data down to the distinct SDK OSes
                 .Distinct(new SdkImageDataEqualityComparer())
                 .Select(imageData => new object[] { imageData });
