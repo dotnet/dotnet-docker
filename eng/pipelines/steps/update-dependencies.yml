@@ -9,6 +9,8 @@ parameters:
 steps:
 - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
   displayName: Build Update Dependencies Tool
+- script: docker run --name update-dependencies -d -t --entrypoint /bin/sh -v /var/run/docker.sock:/var/run/docker.sock update-dependencies
+  displayName: Create Update Dependencies container
 - powershell: |
     if ("${{ parameters.useInternalBuild }}" -eq "true") {
       $pat="$(dn-bot-devdiv-dnceng-rw-code-pat)"
@@ -28,7 +30,10 @@ steps:
         $customArgs += " $credArgs"
       }
 
-      $command = "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies $customArgs"
+      $command = "docker exec update-dependencies update-dependencies $customArgs"
       Invoke-Expression $command
     }
   displayName: Run Update Dependencies
+- script: docker rm -f update-dependencies
+  displayName: Remove Update Dependencies container
+  condition: always()
