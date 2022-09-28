@@ -32,4 +32,6 @@ COPY --from=build-env /update-dependencies/out ./
 WORKDIR /repo
 COPY . ./
 
+RUN ln -s /update-dependencies/update-dependencies /usr/local/bin/update-dependencies
+
 ENTRYPOINT ["/update-dependencies/update-dependencies"]
