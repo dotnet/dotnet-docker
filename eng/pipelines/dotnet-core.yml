@@ -16,3 +16,6 @@ stages:
   parameters:
     internalProjectName: ${{ variables.internalProjectName }}
     publicProjectName: ${{ variables.publicProjectName }}
+    linuxAmd64Pool:
+      name: NetCore1ESPool-Svc-Internal
+      demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
