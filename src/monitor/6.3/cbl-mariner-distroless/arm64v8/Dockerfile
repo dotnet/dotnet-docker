@@ -6,8 +6,8 @@ FROM $SDK_REPO:6.0.401-cbl-mariner2.0-arm64v8 AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION=6.3.0
-RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/6.3.0-rtm.22476.3/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='e69d43fc27fad99c273ed94b68ff0e64ce328a79c5fe95751154ee4788837a24b5ee805bdbcd0a165a788bba0481bb6b7628ddbd70f1f98fe5a6a9745aef2790' \
+RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/6.3.0-rtm.22479.7/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
+    && dotnetmonitor_sha512='d31780f4adab2ce7e4073d4dc3570cca80ae4d2e4f73a714bb485a8e3ed3601deec6eb6612731854e7da00f2b5e28593e7055ef457568ac8dc60f60807390a25' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net6.0 --no-cache \
     # To reduce image size, remove all non-net6.0 TFMs
