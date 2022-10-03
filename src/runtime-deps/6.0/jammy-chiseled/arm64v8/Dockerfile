@@ -41,7 +41,7 @@ FROM scratch
 COPY --from=builder /rootfs /
 
 # Workaround for https://github.com/moby/moby/issues/38710
-COPY --from=installer --chown=101:101 /rootfs/home/app /home/app
+COPY --from=builder --chown=101:101 /rootfs/home/app /home/app
 
 ENV \
     # Configure web servers to bind to port 8080 when present
