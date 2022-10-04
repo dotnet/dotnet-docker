@@ -94,7 +94,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 "e2fsprogs-libs",
                 "filesystem",
                 "glibc",
-                "gpg-pubkey",
                 "krb5",
                 "libgcc",
                 "libstdc++",
