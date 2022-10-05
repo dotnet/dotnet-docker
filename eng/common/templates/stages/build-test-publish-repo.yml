@@ -67,7 +67,7 @@ stages:
     parameters:
       name: CopyBaseImages
       pool: ${{ parameters.linuxAmd64Pool }}
-      additionalOptions: "--manifest '$(manifest)' $(manifestVariables)"
+      additionalOptions: "--manifest '$(manifest)' $(imageBuilder.pathArgs) $(manifestVariables)"
       publicProjectName: ${{ parameters.publicProjectName }}
       customInitSteps: ${{ parameters.customCopyBaseImagesInitSteps}}
   - template: ../jobs/generate-matrix.yml
