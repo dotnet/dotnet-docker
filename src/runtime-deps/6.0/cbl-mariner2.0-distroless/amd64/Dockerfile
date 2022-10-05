@@ -1,5 +1,14 @@
+# Base distroless image
+FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0 AS base
+
+
 # Installer image
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
+
+RUN tdnf install -y \
+        gawk \
+        shadow-utils \
+    && tdnf clean all
 
 # Install .NET's dependencies into a staging location
 RUN mkdir /staging \
@@ -13,12 +22,19 @@ RUN mkdir /staging \
         libstdc++ \
         openssl-libs \
         zlib \
-    && tdnf clean all
+    && tdnf clean all --releasever=2.0 --installroot /staging
+
+# Generate RPM manifest file by appending to the original manifest file from base distroless image
+COPY --from=base /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
+RUN tmpManifestPath="/tmp/rpmmanifest" \
+    && rpm --query --all --queryformat "%{NAME}\t%{VERSION}-%{RELEASE}\t%{INSTALLTIME}\t%{BUILDTIME}\t%{VENDOR}\t%{EPOCH}\t%{SIZE}\t%{ARCH}\t%{EPOCHNUM}\t%{SOURCERPM}\n" --root /staging | grep -v gpg-pubkey >> $tmpManifestPath \
+    && mkdir -p /staging/var/lib/rpmmanifest \
+    # Remove duplicates that match on the first field (package name)
+    && tac $tmpManifestPath | gawk '!x[$1]++' | sort > /staging/var/lib/rpmmanifest/container-manifest-2
+
 
 # Create a non-root user and group
-RUN tdnf install -y shadow-utils \
-    && tdnf clean all \
-    && groupadd \
+RUN groupadd \
         --system \
         --gid=101 \
         app \
@@ -44,7 +60,7 @@ RUN rm -rf /staging/etc/tdnf \
 
 
 # .NET runtime-deps image
-FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0
+FROM base
 
 COPY --from=installer /staging/ /
 
