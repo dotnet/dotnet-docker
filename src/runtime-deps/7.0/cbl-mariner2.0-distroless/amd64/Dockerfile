@@ -45,8 +45,9 @@ RUN groupadd \
         --system \
         app \
     && mkdir -p "/staging/home/app" \
-    && tail -1 < /etc/passwd > "/staging/etc/passwd" \
-    && tail -1 < /etc/group > "/staging/etc/group"
+    && rootOrAppRegex='^\(root\|app\):' \
+    && cat /etc/passwd | grep $rootOrAppRegex > "/staging/etc/passwd" \
+    && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
 
 # Clean up staging
 RUN rm -rf /staging/etc/tdnf \

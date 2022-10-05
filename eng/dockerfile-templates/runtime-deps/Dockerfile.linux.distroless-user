@@ -21,8 +21,9 @@ if dotnetVersion != "6.0" || !isMariner:
 && mkdir -p "{{ARGS["staging-dir"]}}/home/app" \}}{{
 if ARGS["exclusive"]:{{if ARGS["create-dir"]:
 && mkdir -p "{{ARGS["staging-dir"]}}/etc" \}}
-&& tail -1 < /etc/passwd > "{{ARGS["staging-dir"]}}/etc/passwd" \
-&& tail -1 < /etc/group > "{{ARGS["staging-dir"]}}/etc/group"^
+&& rootOrAppRegex='@^\(root\|app\):' \
+&& cat /etc/passwd | grep $rootOrAppRegex > "{{ARGS["staging-dir"]}}/etc/passwd" \
+&& cat /etc/group | grep $rootOrAppRegex > "{{ARGS["staging-dir"]}}/etc/group"^
 else:
 # Copy user/group info to staging
 && cp /etc/passwd {{ARGS["staging-dir"]}}/etc/passwd \

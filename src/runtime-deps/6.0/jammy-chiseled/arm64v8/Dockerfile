@@ -22,8 +22,9 @@ RUN groupadd \
         app \
     && mkdir -p "/rootfs/home/app" \
     && mkdir -p "/rootfs/etc" \
-    && tail -1 < /etc/passwd > "/rootfs/etc/passwd" \
-    && tail -1 < /etc/group > "/rootfs/etc/group"
+    && rootOrAppRegex='^\(root\|app\):' \
+    && cat /etc/passwd | grep $rootOrAppRegex > "/rootfs/etc/passwd" \
+    && cat /etc/group | grep $rootOrAppRegex > "/rootfs/etc/group"
 
 COPY --from=chisel /opt/chisel/chisel /usr/bin/
 RUN chisel cut --release "ubuntu-22.04" --root /rootfs \
