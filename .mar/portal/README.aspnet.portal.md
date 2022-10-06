@@ -12,9 +12,9 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `7.0` (Preview)
+* `7.0` (RC)
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:7.0`
-* `6.0` (Current, LTS)
+* `6.0` (LTS)
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:6.0`
 
 ## Related Repos
