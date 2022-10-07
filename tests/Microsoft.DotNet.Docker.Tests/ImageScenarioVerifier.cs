@@ -23,6 +23,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private readonly ProductImageData _imageData;
         private readonly bool _isWeb;
         private readonly ITestOutputHelper _outputHelper;
+        private readonly string _adminUser = DockerHelper.IsLinuxContainerModeEnabled ? "root" : "ContainerAdministrator";
 
         public ImageScenarioVerifier(
             ProductImageData imageData,
@@ -73,6 +74,14 @@ namespace Microsoft.DotNet.Docker.Tests
                 tags.Add(fxDepTag);
                 bool runAsAdmin = _isWeb && !DockerHelper.IsLinuxContainerModeEnabled;
                 await RunTestAppImage(fxDepTag, runAsAdmin: runAsAdmin);
+
+                // For distroless, run another test that explicitly runs the container as a root user to verify
+                // the root user is defined.
+                if (!runAsAdmin && DockerHelper.IsLinuxContainerModeEnabled && _imageData.IsDistroless &&
+                    (!_imageData.OS.StartsWith(OS.Mariner) || _imageData.Version.Major > 6))
+                {
+                    await RunTestAppImage(fxDepTag, runAsAdmin: true);
+                }
 
                 if (DockerHelper.IsLinuxContainerModeEnabled)
                 {
@@ -275,7 +284,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     name: containerName,
                     detach: _isWeb,
                     optionalRunArgs: _isWeb ? $"-p {_imageData.DefaultPort}" : string.Empty,
-                    runAsUser: runAsAdmin ? "ContainerAdministrator" : null,
+                    runAsUser: runAsAdmin ? _adminUser : null,
                     command: command);
 
                 if (_isWeb && !Config.IsHttpVerificationDisabled)
