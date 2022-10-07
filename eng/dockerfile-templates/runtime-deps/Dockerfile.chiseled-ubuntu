@@ -1,6 +1,9 @@
 {{
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
-    set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1]
+    set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
+    set username to "app" ^
+    set uid to 101 ^
+    set gid to uid
 }}FROM {{ARCH_VERSIONED}}/golang:1.18 as chisel
 RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel
 WORKDIR /opt/chisel
@@ -17,7 +20,11 @@ RUN {{InsertTemplate("Dockerfile.linux.distroless-user",
     [
         "staging-dir": "/rootfs",
         "exclusive": "true",
-        "create-dir": "true"
+        "create-dir": "true",
+        "name": username,
+        "uid": uid,
+        "gid": gid,
+        "create-home": "true"
     ],
     "    ")}}
 
@@ -35,6 +42,9 @@ RUN chisel cut --release "ubuntu-{{osVersionNumber}}" --root /rootfs \
 FROM scratch
 
 COPY --from=builder /rootfs /
+
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=builder --chown={{uid}}:{{gid}} /rootfs/home/{{username}} /home/{{username}}
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}}
 
