@@ -3,22 +3,26 @@
     _ ARGS:
         staging-dir: Path to the distroless staging directory
         create-dir (optional): Indicates whether the etc directory should be created in staging
-        exclusive (optional): Indicates whether the app user is the only user and all other users are removed ^
+        exclusive (optional): Indicates whether the app user is the only user and all other users are removed
+        name: Name of the user/group to create
+        uid: ID of the user to be created
+        gid: ID of the group to be created
+        create-home (optional): Indicates whether a home directory should be created for the user ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0
 }}groupadd \
     --system \
-    --gid={{if isMariner && find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
-    app \
+    --gid={{ARGS["gid"]}} \
+    {{ARGS["name"]}} \
 && adduser \
-    --uid {{if isMariner && find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
-    --gid {{if isMariner && find(OS_VERSION, "1.0") >= 0:1000^else:101}} \
-    --shell /bin/false \{{if dotnetVersion = "6.0" && isMariner:
+    --uid {{ARGS["uid"]}} \
+    --gid {{ARGS["gid"]}} \
+    --shell /bin/false \{{if !ARGS["create-home"]:
     --no-create-home \}}
     --system \
-    app \{{
-if dotnetVersion != "6.0" || !isMariner:
-&& mkdir -p "{{ARGS["staging-dir"]}}/home/app" \}}{{
+    {{ARGS["name"]}} \{{
+if ARGS["create-home"]:
+&& install -d -m 0755 -o {{ARGS["uid"]}} -g {{ARGS["gid"]}} "{{ARGS["staging-dir"]}}/home/{{ARGS["name"]}}" \}}{{
 if ARGS["exclusive"]:{{if ARGS["create-dir"]:
 && mkdir -p "{{ARGS["staging-dir"]}}/etc" \}}
 && tail -1 < /etc/passwd > "{{ARGS["staging-dir"]}}/etc/passwd" \

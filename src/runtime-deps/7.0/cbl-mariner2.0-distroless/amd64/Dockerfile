@@ -40,7 +40,7 @@ RUN groupadd \
         --shell /bin/false \
         --system \
         app \
-    && mkdir -p "/staging/home/app" \
+    && install -d -m 0755 -o 101 -g 101 "/staging/home/app" \
     && tail -1 < /etc/passwd > "/staging/etc/passwd" \
     && tail -1 < /etc/group > "/staging/etc/group"
 
@@ -58,6 +58,9 @@ RUN rm -rf /staging/etc/tdnf \
 FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0
 
 COPY --from=installer /staging/ /
+
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=installer --chown=101:101 /staging/home/app /home/app
 
 ENV \
     # Configure web servers to bind to port 8080 when present
