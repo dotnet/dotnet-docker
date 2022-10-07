@@ -1,7 +1,3 @@
-# Base distroless image
-FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0 AS base
-
-
 # Installer image
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
@@ -25,7 +21,7 @@ RUN mkdir /staging \
     && tdnf clean all --releasever=2.0 --installroot /staging
 
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
-COPY --from=base /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
+COPY --from=mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0 /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
 RUN tmpManifestPath="/tmp/rpmmanifest" \
     && rpm --query --all --queryformat "%{NAME}\t%{VERSION}-%{RELEASE}\t%{INSTALLTIME}\t%{BUILDTIME}\t%{VENDOR}\t%{EPOCH}\t%{SIZE}\t%{ARCH}\t%{EPOCHNUM}\t%{SOURCERPM}\n" --root /staging | grep -v gpg-pubkey >> $tmpManifestPath \
     && mkdir -p /staging/var/lib/rpmmanifest \
@@ -44,7 +40,7 @@ RUN groupadd \
         --shell /bin/false \
         --system \
         app \
-    && mkdir -p "/staging/home/app" \
+    && install -d -m 0755 -o 101 -g 101 "/staging/home/app" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/staging/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
@@ -60,9 +56,12 @@ RUN rm -rf /staging/etc/tdnf \
 
 
 # .NET runtime-deps image
-FROM base
+FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0
 
 COPY --from=installer /staging/ /
+
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=installer --chown=101:101 /staging/home/app /home/app
 
 ENV \
     # Configure web servers to bind to port 8080 when present

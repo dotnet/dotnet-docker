@@ -20,7 +20,7 @@ RUN groupadd \
         --shell /bin/false \
         --system \
         app \
-    && mkdir -p "/rootfs/home/app" \
+    && install -d -m 0755 -o 101 -g 101 "/rootfs/home/app" \
     && mkdir -p "/rootfs/etc" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/rootfs/etc/passwd" \
@@ -40,6 +40,9 @@ RUN chisel cut --release "ubuntu-22.04" --root /rootfs \
 FROM scratch
 
 COPY --from=builder /rootfs /
+
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=builder --chown=101:101 /rootfs/home/app /home/app
 
 ENV \
     # Configure web servers to bind to port 8080 when present

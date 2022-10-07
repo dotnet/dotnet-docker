@@ -98,7 +98,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private static void InjectCustomTestCode(string appDir)
+        private void InjectCustomTestCode(string appDir)
         {
             string programFilePath = Path.Combine(appDir, "Program.cs");
 
@@ -125,8 +125,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     builder.Append(usingDir.ToFullString());
                 }
 
+                // Verify a web request succeeds
+                builder.AppendLine("System.Console.WriteLine(\"Verifying a web request succeeds\");");
                 builder.AppendLine("var response = await new System.Net.Http.HttpClient().GetAsync(\"https://www.microsoft.com\");");
                 builder.AppendLine("response.EnsureSuccessStatusCode();");
+
+                // Verify write access is allowed to the user directory
+                builder.AppendLine(GetUserDirectoryWriteAccessValidationCode());
 
                 foreach (SyntaxNode otherNode in otherNodes)
                 {
@@ -138,9 +143,13 @@ namespace Microsoft.DotNet.Docker.Tests
             else
             {
                 StatementSyntax testHttpsConnectivityStatement = SyntaxFactory.ParseStatement(
+                    // Verify a web request succeeds
+                    "System.Console.WriteLine(\"Verifying a web request succeeds\");" +
                     "var task = new System.Net.Http.HttpClient().GetAsync(\"https://www.microsoft.com\");" +
                     "task.Wait();" +
-                    "task.Result.EnsureSuccessStatusCode();");
+                    "task.Result.EnsureSuccessStatusCode();" +
+                    // Verify write access is allowed to the user directory
+                    GetUserDirectoryWriteAccessValidationCode());
 
                 MethodDeclarationSyntax newMainMethod = mainMethod.InsertNodesBefore(
                     mainMethod.Body.ChildNodes().First(),
@@ -151,6 +160,19 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             
             File.WriteAllText(programFilePath, newContent);
+        }
+
+        private string GetUserDirectoryWriteAccessValidationCode()
+        {
+            if (_imageData.IsDistroless && _imageData.Version.Major == 6 && _imageData.OS.StartsWith(OS.Mariner))
+            {
+                return string.Empty;
+            }
+
+            string userDirEnvVarName = DockerHelper.IsLinuxContainerModeEnabled ? "HOME" : "USERPROFILE";
+            return
+                "System.Console.WriteLine(\"Verifying write access to user directory\");" +
+                $"System.IO.File.WriteAllText(System.Environment.GetEnvironmentVariable(\"{userDirEnvVarName}\") + \"/test.txt\", \"test\");";
         }
 
         private string BuildTestAppImage(string stageTarget, string contextDir, params string[] customBuildArgs)
