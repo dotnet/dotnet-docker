@@ -2,12 +2,7 @@
     set distrolessStagingDir to "/staging" ^
     set marinerRepo to "mcr.microsoft.com/cbl-mariner" ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set baseImage to cat(marinerRepo, "/distroless/minimal:", OS_VERSION_NUMBER) ^
-    set finalStageBase to when(find(OS_VERSION, "1.0") < 0, "base", baseImage)
-}}{{ if find(OS_VERSION, "1.0") < 0:# Base distroless image
-FROM {{baseImage}} AS base
-
-
+    set baseImage to cat(marinerRepo, "/distroless/minimal:", OS_VERSION_NUMBER)
 }}# Installer image
 FROM {{marinerRepo}}/base/core:{{OS_VERSION_NUMBER}} AS installer
 {{ if find(OS_VERSION, "1.0") >= 0:
@@ -25,7 +20,7 @@ RUN mkdir {{distrolessStagingDir}} \
     && {{InsertTemplate("../Dockerfile.linux.install-deps", ["distroless-staging-dir": distrolessStagingDir])}}
 {{if find(OS_VERSION, "1.0") < 0:
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
-COPY --from=base /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
+COPY --from={{baseImage}} /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
 RUN tmpManifestPath="/tmp/rpmmanifest" \
     && rpm --query --all --queryformat "%{NAME}\t%{VERSION}-%{RELEASE}\t%{INSTALLTIME}\t%{BUILDTIME}\t%{VENDOR}\t%{EPOCH}\t%{SIZE}\t%{ARCH}\t%{EPOCHNUM}\t%{SOURCERPM}\n" --root /staging | grep -v gpg-pubkey >> $tmpManifestPath \
     && mkdir -p /staging/var/lib/rpmmanifest \
@@ -52,7 +47,7 @@ RUN rm -rf {{distrolessStagingDir}}/etc/{{when(find(OS_VERSION, "1.0") >= 0, "dn
 
 
 # .NET runtime-deps image
-FROM {{finalStageBase}}
+FROM {{baseImage}}
 
 COPY --from=installer {{distrolessStagingDir}}/ /
 

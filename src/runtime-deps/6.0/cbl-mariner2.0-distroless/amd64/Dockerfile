@@ -1,7 +1,3 @@
-# Base distroless image
-FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0 AS base
-
-
 # Installer image
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
@@ -25,7 +21,7 @@ RUN mkdir /staging \
     && tdnf clean all --releasever=2.0 --installroot /staging
 
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
-COPY --from=base /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
+COPY --from=mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0 /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
 RUN tmpManifestPath="/tmp/rpmmanifest" \
     && rpm --query --all --queryformat "%{NAME}\t%{VERSION}-%{RELEASE}\t%{INSTALLTIME}\t%{BUILDTIME}\t%{VENDOR}\t%{EPOCH}\t%{SIZE}\t%{ARCH}\t%{EPOCHNUM}\t%{SOURCERPM}\n" --root /staging | grep -v gpg-pubkey >> $tmpManifestPath \
     && mkdir -p /staging/var/lib/rpmmanifest \
@@ -60,7 +56,7 @@ RUN rm -rf /staging/etc/tdnf \
 
 
 # .NET runtime-deps image
-FROM base
+FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0
 
 COPY --from=installer /staging/ /
 
