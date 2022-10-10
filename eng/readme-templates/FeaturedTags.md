@@ -10,7 +10,7 @@
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`^
 elif match(SHORT_REPO, "monitor"):* `7` (RC)
   * `docker pull {{FULL_REPO}}:7`
-* `6` (Standard Support)
+* `6` (LTS)
   * `docker pull {{FULL_REPO}}:6`^
 else:* `7.0` (RC)
   * `docker pull {{FULL_REPO}}:7.0`

@@ -8,7 +8,7 @@
 
 * `7` (RC)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:7`
-* `6` (Standard Support)
+* `6` (LTS)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:6`
 
 # About
