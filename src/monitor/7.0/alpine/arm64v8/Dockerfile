@@ -2,7 +2,7 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:7.0.100-rc.1-alpine3.16-arm64v8 AS installer
+FROM $SDK_REPO:7.0.100-rc.2-alpine3.16-arm64v8 AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION=7.0.0-preview.8.22457.4
@@ -32,7 +32,7 @@ RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azure
 
 
 # Monitor image
-FROM $ASPNET_REPO:7.0.0-rc.1-alpine3.16-arm64v8
+FROM $ASPNET_REPO:7.0.0-rc.2-alpine3.16-arm64v8
 
 WORKDIR /app
 COPY --from=installer /app .
