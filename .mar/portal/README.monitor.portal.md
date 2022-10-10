@@ -14,9 +14,9 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `7` (Preview)
+* `7` (RC)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:7`
-* `6` (Preview)
+* `6` (LTS)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:6`
 
 ## Related Repos
