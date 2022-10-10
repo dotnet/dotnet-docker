@@ -91,9 +91,9 @@
     "monitor|6.2|product-version": "6.2.2",
     "monitor|6.2|sha": "5d5df17e81ed66e644dc7323e89caee10f7eadbf62a28e0443e9fe12df1c5283fce2ebf6bc4dc2e5004c3c9e044101fc131ff293f382f15a32c91a6e159619d7",
 
-    "monitor|6.3|build-version": "6.3.0-alpha.1.22472.4",
-    "monitor|6.3|product-version": "6.3.0-alpha.1",
-    "monitor|6.3|sha": "74845a2ff5d9aa4750c3a8433d1fa7078954c94d459221528187bfd43dfeca2101b055311b9bbbb9b135a063e367a9b1048e9150d1dc14320049d441b9e556e0",
+    "monitor|6.3|build-version": "6.3.0",
+    "monitor|6.3|product-version": "6.3.0",
+    "monitor|6.3|sha": "d31780f4adab2ce7e4073d4dc3570cca80ae4d2e4f73a714bb485a8e3ed3601deec6eb6612731854e7da00f2b5e28593e7055ef457568ac8dc60f60807390a25",
 
     "monitor|7.0|build-version": "7.0.0-preview.8.22457.4",
     "monitor|7.0|product-version": "7.0.0-preview.8",
