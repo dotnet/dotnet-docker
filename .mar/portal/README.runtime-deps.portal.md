@@ -6,7 +6,9 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `6.0` (Current, LTS)
+* `7.0` (RC)
+  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:7.0`
+* `6.0` (LTS)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:6.0`
 
 ## Related Repos
