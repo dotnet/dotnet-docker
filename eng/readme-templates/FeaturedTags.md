@@ -8,13 +8,11 @@
   * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp`
 * `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`^
-elif match(SHORT_REPO, "monitor"):{{if VARIABLES["branch"] = "nightly":* `7` (Preview)
+elif match(SHORT_REPO, "monitor"):* `7` (RC)
   * `docker pull {{FULL_REPO}}:7`
-* `6` (Preview)
+* `6` (LTS)
   * `docker pull {{FULL_REPO}}:6`^
-else:* `6` (Current)
-  * `docker pull {{FULL_REPO}}:6`}}^
-else:{{if VARIABLES["branch"] = "nightly":* `7.0` (Preview)
+else:* `7.0` (RC)
   * `docker pull {{FULL_REPO}}:7.0`
-}}* `6.0` (Current, LTS)
+* `6.0` (LTS)
   * `docker pull {{FULL_REPO}}:6.0`}}

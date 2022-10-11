@@ -1,21 +1,39 @@
 parameters:
-  customArgs: ""
-  stableBranding: false
+  # The customArgsArray parameter is used to specify the configuration for multiple Dockerfile versions.
+  # This allows for a single PR to be generated for different internal .NET build versions.
+  # This is required in order to publish a single set of internal images when the PR is merged.
+  customArgsArray: ""
+
   useInternalBuild: false
 
 steps:
 - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
   displayName: Build Update Dependencies Tool
-- script: >
-    if [ "${{ parameters.useInternalBuild }}" == "true" ]; then
-      pat="$(dn-bot-devdiv-dnceng-rw-code-pat)"
-    else
-      pat="$(BotAccount-dotnet-docker-bot-PAT)"
-    fi &&
-    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock update-dependencies \
-      ${{parameters.customArgs}} \
-      --user $(dotnetDockerBot.userName) \
-      --email $(dotnetDockerBot.email) \
-      --password $pat \
-      --stable-branding ${{parameters.stableBranding}}
+- script: docker run --name update-dependencies -d -t --entrypoint /bin/sh -v /var/run/docker.sock:/var/run/docker.sock update-dependencies
+  displayName: Create Update Dependencies container
+- powershell: |
+    if ("${{ parameters.useInternalBuild }}" -eq "true") {
+      $pat="$(dn-bot-devdiv-dnceng-rw-code-pat)"
+    } else {
+      $pat="$(BotAccount-dotnet-docker-bot-PAT)"
+    }
+
+    $credArgs = "--user $(dotnetDockerBot.userName) --email $(dotnetDockerBot.email) --password $pat"
+
+    # Execute update-deps for each of the items in the customArgsArray, representing different Dockerfile versions
+    # Ensure that the value is treated as an array by wrapping it in an array literal. This deals with the quirk of
+    # how PowerShell treats a single item as a string instead of an array.
+    $customArgsArray = @('${{ parameters.customArgsArray }}' | ConvertFrom-Json)
+    foreach ($customArgs in $customArgsArray) {
+      # If this is the last iteration, include the credentials to cause a PR to be generated
+      if ($customArgs -eq $customArgsArray[-1]) {
+        $customArgs += " $credArgs"
+      }
+
+      $command = "docker exec update-dependencies update-dependencies $customArgs"
+      Invoke-Expression $command
+    }
   displayName: Run Update Dependencies
+- script: docker rm -f update-dependencies
+  displayName: Remove Update Dependencies container
+  condition: always()

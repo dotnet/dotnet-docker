@@ -1,10 +1,20 @@
 parameters:
   useInternalBuild: false
 
+  # Comma-delimited list of SDK versions to target (overrides the use of channel var to determine latest version)
+  sdkVersions: ""
+
 steps:
-- pwsh: |
-    $args = @{
-      Channel = "$(channel)"
+- powershell: |
+    if ("${{ parameters.sdkVersions }}" -ne "") {
+      $args = @{
+        SdkVersions = "${{ parameters.sdkVersions }}" -split ","
+      }
+    }
+    else {
+      $args = @{
+        Channel = "$(channel)"
+      }
     }
 
     if ("${{ parameters.useInternalBuild }}" -eq "true") {
@@ -16,21 +26,29 @@ steps:
     $(engPath)/Get-DropVersions.ps1 @args
   displayName: Get Versions
 - powershell: |
-    $args = @{
-      ProductVersion = "$(dockerfileVersion)"
-      RuntimeVersion = "$(runtimeVer)"
-      AspnetVersion = "$(aspnetVer)"
-      SdkVersion = "$(sdkVer)"
-      ComputeShas = $true
-      PrintArgsVariableOnly = $true
-    }
+    $versionInfos = '$(versionInfos)' | ConvertFrom-Json
 
-    if ("${{ parameters.useInternalBuild }}" -eq "true") {
-      $args["BinarySasQueryString"] = '"$(dotnetbuilds-internal-container-read-token)"'
-      $args["ChecksumSasQueryString"] = '"$(dotnetbuilds-internal-checksums-container-read-token)"'
-    }
+    $index=0
+    foreach ($versionInfo in $versionInfos) {
+      $args = @{
+        ProductVersion = $versionInfo.DockerfileVersion
+        RuntimeVersion = $versionInfo.RuntimeVersion
+        AspnetVersion = $versionInfo.AspnetVersion
+        SdkVersion = $versionInfo.SdkVersion
+        ComputeShas = $true
+        AzdoVariableName = "updateDepsArgs-$index"
+        UseStableBranding = $versionInfo.StableBranding
+      }
 
-    $(engPath)/Set-DotnetVersions.ps1 @args
+      if ("${{ parameters.useInternalBuild }}" -eq "true") {
+        $args["BinarySasQueryString"] = '"$(dotnetbuilds-internal-container-read-token)"'
+        $args["ChecksumSasQueryString"] = '"$(dotnetbuilds-internal-checksums-container-read-token)"'
+      }
+
+      Write-Host "Executing Set-DotnetVersions.ps1 for $($versionInfo.DockerfileVersion)"
+      $(engPath)/Set-DotnetVersions.ps1 @args
+      $index++
+    }
   displayName: Get update-dependencies args
 - powershell: |
     $branchPrefix = ""
@@ -38,11 +56,22 @@ steps:
       $branchPrefix = "internal/release/"
     }
     $targetBranch = $branchPrefix + $(& $(engPath)/Get-Branch.ps1)
-    echo "##vso[task.setvariable variable=targetBranch]$targetBranch"
-  displayName: Set Target Branch Var
+
+    $customArgsArray = @()
+    $index=0
+
+    # Grab the variables that were set by the multiple calls to Set-DotnetVersions.ps1 and
+    # add them to an array. This allows us to pass args for multiple Dockerfile versions.
+    while ([Environment]::GetEnvironmentVariable("UPDATEDEPSARGS-$index") -ne $null) {
+      $updateDepsArgs = [Environment]::GetEnvironmentVariable("UPDATEDEPSARGS-$index")
+      $updateDepsArgs = "$updateDepsArgs --org dnceng --project $(System.TeamProject) --repo $(Build.Repository.Name) --target-branch $targetBranch"
+      $customArgsArray += $updateDepsArgs
+      $index++
+    }
+    
+    echo "##vso[task.setvariable variable=customArgsArray]$($customArgsArray | ConvertTo-Json -Compress -AsArray)"
+  displayName: Set Custom Args
 - template: update-dependencies.yml
   parameters:
-    # The updateDepsArgs variable gets set by the Set-DotnetVersions.ps1 script
-    customArgs: "$(updateDepsArgs) --org dnceng --project $(System.TeamProject) --repo $(Build.Repository.Name) --target-branch $(targetBranch)"
-    stableBranding: $(dotnetStableBranding)
+    customArgsArray: "$(customArgsArray)"
     useInternalBuild: ${{ parameters.useInternalBuild }}

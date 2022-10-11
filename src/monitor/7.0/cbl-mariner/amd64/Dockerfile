@@ -2,12 +2,12 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:7.0.100-rc.1-cbl-mariner2.0-amd64 AS installer
+FROM $SDK_REPO:7.0.100-rc.2-cbl-mariner2.0-amd64 AS installer
 
 # Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=7.0.0-preview.8.22457.4
+ENV DOTNET_MONITOR_VERSION=7.0.0-rc.1.22479.8
 RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='525961b17612d42ee8e9f1a19e298b360e2945373a86d2ed2a769ab05e13d7be4c5cc8cb301257469be5a8baa9baeba657a5404abf8e82ba715eaf29d0f99cf2' \
+    && dotnetmonitor_sha512='f380573fc90385b3fa0d18cf0a662581553aa7f0e645484d09c7a1c3a6aff9b0e7def77e4bf56b8f9393b5fb6d91f47d785f3c298b9b7fd1f91669a762698503' \
     && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
     && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net7.0 --no-cache \
     # To reduce image size, remove all non-net7.0 TFMs
@@ -19,7 +19,11 @@ RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotn
     # 4. Delete everything from step 3
     && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -v -i '.*/tools/net7[.]0' | xargs rm -rf \
     # To reduce image size further, remove the non-linux assemblies
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shims)/(win|osx)' | xargs rm -rf \
+    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(win|osx)' | xargs rm -rf \
+    # To reduce image size further, remove linux assemblies that do not match the x64 architecture
+    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(linux-arm64|linux-musl-arm64)' | xargs rm -rf \
+    # To reduce image size further, remove symbol files
+    && find /app -type f \( -name *.pdb -o -name *.dbg \) -print | xargs rm -rf \
     # Remove all the empty directories left by the previous step
     && find /app -type d -empty -delete \
     # Allow other users to run the tool
@@ -28,7 +32,7 @@ RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotn
 
 
 # Monitor image
-FROM $ASPNET_REPO:7.0.0-rc.1-cbl-mariner2.0-amd64
+FROM $ASPNET_REPO:7.0.0-rc.2-cbl-mariner2.0-amd64
 
 WORKDIR /app
 COPY --from=installer /app .

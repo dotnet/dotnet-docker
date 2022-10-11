@@ -232,14 +232,16 @@ namespace Microsoft.DotNet.Docker.Tests
             string optionalRunArgs = null,
             bool detach = false,
             string runAsUser = null,
-            bool skipAutoCleanup = false)
+            bool skipAutoCleanup = false,
+            bool useMountedDockerSocket = false)
         {
             string cleanupArg = skipAutoCleanup ? string.Empty : " --rm";
             string detachArg = detach ? " -d -t" : string.Empty;
             string userArg = runAsUser != null ? $" -u {runAsUser}" : string.Empty;
             string workdirArg = workdir == null ? string.Empty : $" -w {workdir}";
+            string mountedDockerSocketArg = useMountedDockerSocket ? " -v /var/run/docker.sock:/var/run/docker.sock" : string.Empty;
             return ExecuteWithLogging(
-                $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg} {optionalRunArgs} {image} {command}");
+                $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg}{mountedDockerSocketArg} {optionalRunArgs} {image} {command}");
         }
 
         /// <summary>

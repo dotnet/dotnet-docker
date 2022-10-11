@@ -33,6 +33,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static IEnumerable<object[]> GetImageData()
         {
             return TestData.GetImageData()
+                .Where(imageData => !imageData.IsDistroless)
                 // Filter the image data down to the distinct SDK OSes
                 .Distinct(new SdkImageDataEqualityComparer())
                 .Select(imageData => new object[] { imageData });
@@ -42,11 +43,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyInsecureFiles(ProductImageData imageData)
         {
-            if (imageData.Version.Major == 7)
-            {
-                return;
-            }
-            
             base.VerifyCommonInsecureFiles(imageData);
         }
 

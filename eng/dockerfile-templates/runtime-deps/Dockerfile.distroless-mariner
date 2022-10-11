@@ -1,27 +1,46 @@
 {{
-    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
     set distrolessStagingDir to "/staging" ^
     set marinerRepo to "mcr.microsoft.com/cbl-mariner" ^
-    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".")
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set baseImage to cat(marinerRepo, "/distroless/minimal:", OS_VERSION_NUMBER) ^
+    set username to "app" ^
+    set uid to when(find(OS_VERSION, "1.0") >= 0, 1000, 101) ^
+    set gid to uid ^
+    set createUserHome to dotnetVersion != "6.0"
 }}# Installer image
 FROM {{marinerRepo}}/base/core:{{OS_VERSION_NUMBER}} AS installer
 {{ if find(OS_VERSION, "1.0") >= 0:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "pkgs": ["dnf"]
-    ])}}
-}}
+    ])}}^else:
+RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
+    [
+        "pkgs": ["gawk", "shadow-utils"]
+    ])}}}}
+
 # Install .NET's dependencies into a staging location
 RUN mkdir {{distrolessStagingDir}} \
     && {{InsertTemplate("../Dockerfile.linux.install-deps", ["distroless-staging-dir": distrolessStagingDir])}}
-{{ if isDistrolessMariner:
+{{if find(OS_VERSION, "1.0") < 0:
+# Generate RPM manifest file by appending to the original manifest file from base distroless image
+COPY --from={{baseImage}} /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
+RUN tmpManifestPath="/tmp/rpmmanifest" \
+    && rpm --query --all --queryformat "%{NAME}\t%{VERSION}-%{RELEASE}\t%{INSTALLTIME}\t%{BUILDTIME}\t%{VENDOR}\t%{EPOCH}\t%{SIZE}\t%{ARCH}\t%{EPOCHNUM}\t%{SOURCERPM}\n" --root /staging | grep -v gpg-pubkey >> $tmpManifestPath \
+    && mkdir -p /staging/var/lib/rpmmanifest \
+    # Remove duplicates that match on the first field (package name)
+    && tac $tmpManifestPath | gawk '!x[$1]++' | sort > /staging/var/lib/rpmmanifest/container-manifest-2
+
+}}
 # Create a non-root user and group
-RUN {{if find(OS_VERSION, "1.0") < 0:tdnf install -y shadow-utils \
-    && tdnf clean all \
-    && }}{{InsertTemplate("Dockerfile.linux.distroless-user",
+RUN {{InsertTemplate("Dockerfile.linux.distroless-user",
         [
-            "staging-dir": distrolessStagingDir
-            "exclusive": dotnetVersion != "6.0"
+            "staging-dir": distrolessStagingDir,
+            "exclusive": dotnetVersion != "6.0",
+            "name": username,
+            "uid": uid,
+            "gid": gid,
+            "create-home": createUserHome
         ],
         "    ")}}
 
@@ -36,9 +55,12 @@ RUN rm -rf {{distrolessStagingDir}}/etc/{{when(find(OS_VERSION, "1.0") >= 0, "dn
 
 
 # .NET runtime-deps image
-FROM {{marinerRepo}}/distroless/minimal:{{OS_VERSION_NUMBER}}
+FROM {{baseImage}}
 
-COPY --from=installer {{distrolessStagingDir}}/ /}}
+COPY --from=installer {{distrolessStagingDir}}/ /{{if createUserHome:
+
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=installer --chown={{uid}}:{{gid}} {{distrolessStagingDir}}/home/{{username}} /home/{{username}}}}
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}}
 

@@ -8,7 +8,9 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `6` (Current)
+* `7` (RC)
+  * `docker pull mcr.microsoft.com/dotnet/monitor:7`
+* `6` (LTS)
   * `docker pull mcr.microsoft.com/dotnet/monitor:6`
 
 ## Related Repos

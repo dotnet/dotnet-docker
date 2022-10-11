@@ -10,10 +10,10 @@ resources:
   - repository: InternalVersionsRepo
     type: github
     endpoint: dotnet
-    name: dotnet/versions
+    name: dotnet/dotnet-docker-internal
 
 variables:
-- template: variables/core.yml
+- template: variables/internal-core.yml
 
 stages:
 - template: stages/build-test-publish-repo.yml

@@ -77,7 +77,23 @@ namespace Microsoft.DotNet.Docker.Tests
                 optionalRunArgs: "--entrypoint /bin/sh"
             );
 
-            Assert.Empty(output);
+            string rootFsPathWithTrailingSlash = rootFsPath;
+            if (!rootFsPathWithTrailingSlash.EndsWith("/"))
+            {
+                rootFsPathWithTrailingSlash += "/";
+            }
+
+            IEnumerable<string> lines = output
+                .ReplaceLineEndings()
+                .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
+                // Writable files in the /tmp/.dotnet directory are allowed for global mutexes
+                .Where(line => !line.StartsWith($"{rootFsPathWithTrailingSlash}tmp/.dotnet"))
+                // Exclude the non-root user's home directory. It will show up as a directory without a user or group
+                // because we're not examining the distroless container directly, but rather copying its contents into
+                // a container with a shell but doesn't have the non-root user defined.
+                .Where(line => !imageData.IsDistroless || line != $"{rootFsPathWithTrailingSlash}home/app");
+
+            Assert.Empty(lines);
         }
 
         protected void VerifyCommonDefaultUser(ProductImageData imageData)

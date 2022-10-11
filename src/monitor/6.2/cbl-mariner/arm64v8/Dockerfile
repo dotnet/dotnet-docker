@@ -2,7 +2,7 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:6.0.401-cbl-mariner2.0-arm64v8 AS installer
+FROM $SDK_REPO:6.0.402-cbl-mariner2.0-arm64v8 AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION=6.2.2
@@ -19,7 +19,11 @@ RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotn
     # 4. Delete everything from step 3
     && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -v -i '.*/tools/net6[.]0' | xargs rm -rf \
     # To reduce image size further, remove the non-linux assemblies
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shims)/(win|osx)' | xargs rm -rf \
+    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(win|osx)' | xargs rm -rf \
+    # To reduce image size further, remove linux assemblies that do not match the arm64 architecture
+    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(linux-x64|linux-musl-x64)' | xargs rm -rf \
+    # To reduce image size further, remove symbol files
+    && find /app -type f \( -name *.pdb -o -name *.dbg \) -print | xargs rm -rf \
     # Remove all the empty directories left by the previous step
     && find /app -type d -empty -delete \
     # Allow other users to run the tool
@@ -28,7 +32,7 @@ RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotn
 
 
 # Monitor image
-FROM $ASPNET_REPO:6.0.9-cbl-mariner2.0-arm64v8
+FROM $ASPNET_REPO:6.0.10-cbl-mariner2.0-arm64v8
 
 WORKDIR /app
 COPY --from=installer /app .

@@ -18,7 +18,7 @@ RUN mkdir /staging \
         libstdc++ \
         openssl-libs \
         zlib \
-    && dnf clean all
+    && dnf clean all --releasever=1.0 --installroot /staging
 
 # Create a non-root user and group
 RUN groupadd \

@@ -21,10 +21,10 @@ resources:
   - repository: InternalVersionsRepo
     type: github
     endpoint: dotnet
-    name: dotnet/versions
+    name: dotnet/dotnet-docker-internal
 
 variables:
-- template: variables/core.yml
+- template: variables/internal-core.yml
 - name: officialBranches
   # comma-delimited list of branch names
   value: internal/release/nightly
@@ -38,10 +38,6 @@ variables:
 - ${{ else }}:
   - name: publishRepoPrefix
     value: internal/private/
-- name: publishImageInfo
-  value: false
-- name: noCache
-  value: true  
 
 stages:
 - template: stages/build-test-publish-repo.yml

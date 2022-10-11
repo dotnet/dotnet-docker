@@ -24,8 +24,8 @@ else:apt-get update \
     for index, pkg in ARGS["pkgs"]:
         {{pkg}}{{if appendPkgSuffix(pkg, index):{{if pkg != "": }}\}}}}{{
 if isTdnf:
-    && tdnf clean all^
+    && tdnf clean all{{ARGS["pkg-mgr-opts"]}}^
 elif isDnf:
-    && dnf clean all^
+    && dnf clean all{{ARGS["pkg-mgr-opts"]}}^
 elif !isApk:
     && rm -rf /var/lib/apt/lists/*}}
