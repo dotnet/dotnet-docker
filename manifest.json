@@ -5404,7 +5404,8 @@
               "osVersion": "alpine3.16",
               "tags": {
                 "$(monitor|6.3|product-version)-alpine-arm64v8": {},
-                "6.3-alpine-arm64v8": {}
+                "6.3-alpine-arm64v8": {},
+                "6-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5502,6 +5503,9 @@
                   "docType": "Undocumented"
                 },
                 "6.3-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "6-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
