@@ -24,6 +24,7 @@ namespace Dotnet.Docker
     public class DockerfileShaUpdater : FileRegexUpdater
     {
         private const string ReleaseDotnetBaseUrl = $"https://dotnetcli.blob.core.windows.net/dotnet";
+        private const string ReleaseDotnetBaseCdnUrl = $"https://dotnetcli.azureedge.net/dotnet";
 
         private const string ShaVariableGroupName = "shaVariable";
         private const string ShaValueGroupName = "shaValue";
@@ -403,12 +404,13 @@ namespace Dotnet.Docker
         private async Task<string?> GetDotNetReleaseChecksumsShaAsync(
             string productDownloadUrl, string? version)
         {
-            // Only use the release checksums file for the main branch (where official releases reside). This is because the release
-            // checksums file contains checksums for the official release files which will be signed. The same corresponding build in
-            // the nightly branch, for example, will not be signed due to the difference in the blob container being targeted between
-            // the two branches. So in the nightly branch, we wouldn't use the release checksums file and instead use the other means
-            // of retrieving the checksums.
-            if (_options.SourceBranch != "main")
+            // Only use the release checksums file for base URLs that target the release blob storage. This is because the
+            // release checksums file contains checksums for the official release files which will be signed. The same
+            // corresponding build in the daily build location, for example, will not be signed due. So when we're targeting
+            // the daily build location, we wouldn't use the release checksums file and instead use the other means of
+            // retrieving the checksums.
+            string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Value, _options);
+            if (baseUrl != ReleaseDotnetBaseUrl && baseUrl != ReleaseDotnetBaseCdnUrl)
             {
                 return null;
             }
