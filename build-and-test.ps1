@@ -47,7 +47,7 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
     # Build the sample images
     & ./eng/common/build.ps1 `
         -Version $Version `
-        -OSVersions @($OS) `
+        -OS @($OS) `
         -Architecture $Architecture `
         -Paths $Paths `
         -OptionalImageBuilderArgs $OptionalImageBuilderArgs `
