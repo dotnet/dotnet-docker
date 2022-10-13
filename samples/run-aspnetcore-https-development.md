@@ -2,7 +2,7 @@
 
 ASP.NET Core uses [HTTPS by default](https://docs.microsoft.com/aspnet/core/security/enforcing-ssl). [HTTPS](https://en.wikipedia.org/wiki/HTTPS) relies on [certificates](https://en.wikipedia.org/wiki/Public_key_certificate) for trust, identity, and encryption.
 
-This document demonstrates how to develop ASP.NET Core applications with HTTPS in Docker containers. It is recommended to try the [ASP.NET Core Docker Sample](README.md) first, which is simpler because the container only exposes HTTP. This more basic tutorial will help you validate that you have the sample working correctly, before adding the complication of certificates.
+This document demonstrates how to develop ASP.NET Core applications with HTTPS in Docker containers. It's recommended to try the [ASP.NET Core Docker Sample](README.md) first, which is simpler because the container only exposes HTTP. This more basic tutorial will help you validate that you have the sample working correctly, before adding the complication of certificates.
 
 See [Hosting ASP.NET Core Images with Docker over HTTPS](host-aspnetcore-https.md) for production scenarios.
 
@@ -24,11 +24,11 @@ You can also [download the repository as a zip](https://github.com/dotnet/dotnet
 
 ASP.NET Core uses [self-signed development certificates](https://en.wikipedia.org/wiki/Self-signed_certificate) for development. Self-signed certificates are easy and free to create.
 
-The instructions volume mount certificates into containers. You can add certificates into container images with a `COPY` command in a Dockerfile. This approach is not recommended. It makes it harder to use the same image for testing with dev certificates and hosting with production certificates. There is also a  significant risk of certificate disclosure if certificates are made part of container images.
+The instructions volume mount certificates into containers. You can add certificates into container images with a `COPY` command in a Dockerfile. This approach isn't recommended. It makes it harder to use the same image for testing with dev certificates and hosting with production certificates. There's also a  significant risk of certificate disclosure if certificates are made part of container images.
 
 ## Application Secrets
 
-These instructions assume that your project is configured for [application secrets](https://docs.microsoft.com/aspnet/core/security/app-secrets). The primary requirement is a [UserSecretsId](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/aspnetapp/aspnetapp.csproj#L5) element in your project file. If you are using the ASP.NET Core sample in this repo, you don't need to do anything. It is already correctly configured. If you are using your own project file, add an `UserSecretsId` element.
+These instructions assume that your project is configured for [application secrets](https://docs.microsoft.com/aspnet/core/security/app-secrets). The primary requirement is a [UserSecretsId](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/aspnetapp/aspnetapp.csproj#L5) element in your project file. If you're using the ASP.NET Core sample in this repo, you don't need to do anything. It's already correctly configured. If you're using your own project file, add an `UserSecretsId` element.
 
 You can add the element manually or use Visual Studio to do it for you. The following image demonstrates the experience in Visual Studio.
 
@@ -46,7 +46,7 @@ Use the following instructions, for your operating system configuration. The com
 
 ![Developer Tools -- Delete cookie](https://user-images.githubusercontent.com/2608468/40246148-875fee5a-5a7c-11e8-9728-7da89a491014.png)
 
-Further, if you're loading SSL certificates and trimming assemblies as part of the publish, you'll also need to update the project file for the sample.  Please see details for how you can [support SSL certificates](https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained#support-for-ssl-certificates).
+Further, if you're loading SSL certificates and trimming assemblies as part of the publish, you'll also need to update the project file for the sample.  See details for how you can [support SSL certificates](https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained#support-for-ssl-certificates).
 
 ### Windows using Linux containers
 
