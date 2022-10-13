@@ -61,20 +61,20 @@ cd samples\aspnetapp
 Generate cert and configure local machine:
 
 ```console
-dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p crypticpassword
+dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p <CREDENTIAL_PLACEHOLDER>
 dotnet dev-certs https --trust
 ```
 
 > Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
 
-> Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
+> Note: `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
 
 > Note: If console returns "A valid HTTPS certificate is already present.", a trusted certificate already exists in your store. It can be exported using MMC Console.
 
 Configure application secrets, for the certificate:
 
 ```console
-dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "crypticpassword"
+dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
 > Note: The password must match the password used for the certificate.
@@ -102,18 +102,18 @@ cd samples\aspnetapp
 Generate cert and configure local machine:
 
 ```console
-dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p crypticpassword
+dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p <CREDENTIAL_PLACEHOLDER>
 dotnet dev-certs https --trust
 ```
 
 > Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
 
-> Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
+> Note: `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
 
 Configure application secrets, for the certificate:
 
 ```console
-dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "crypticpassword"
+dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
 > Note: The password must match the password used for the certificate.
@@ -141,19 +141,19 @@ cd samples\aspnetapp
 Generate cert and configure local machine:
 
 ```console
-dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p crypticpassword
+dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p <CREDENTIAL_PLACEHOLDER>
 ```
 
 > Note: `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. It is likely that you need to trust the certificate in your browser.
 
 > Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
 
-> Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
+> Note: `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
 
 Configure application secrets, for the certificate:
 
 ```console
-dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "crypticpassword"
+dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
 Build a container image:
@@ -165,7 +165,7 @@ docker build --pull -t aspnetapp .
 Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
-docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -e ASPNETCORE_Kestrel__Certificates__Development__Password="crypticpassword" -v ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
+docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -e ASPNETCORE_Kestrel__Certificates__Development__Password="<CREDENTIAL_PLACEHOLDER>" -v ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser.
@@ -183,20 +183,20 @@ cd samples\aspnetapp
 Generate cert and configure local machine:
 
 ```console
-dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p crypticpassword
+dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p <CREDENTIAL_PLACEHOLDER>
 dotnet dev-certs https --trust
 ```
 
 > Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
 
-> Note: `crypticpassword` is used as a stand-in for a password of your own choosing.
+> Note: `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
 
 > Note: If console returns "A valid HTTPS certificate is already present.", a trusted certificate already exists in your store. It can be exported using MMC Console.
 
 Configure application secrets, for the certificate:
 
 ```console
-dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "crypticpassword"
+dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
 > Note: The password must match the password used for the certificate.
@@ -216,3 +216,4 @@ docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://
 After the application starts, navigate to `http://localhost:8000` in your web browser.
 
 > In the case of using https, be sure to check the certificate you're using is trusted on the host. You can start with navigating to https://localhost:8001 in the browser. If you're looking to test https with a domain name (e.g. https://contoso.com:8001), the certificate would also need the appropiate Subject Alternative Name included, and the DNS settings on the host would need to be updated. In the case of using the generated dev certificate, the trusted certificate will be issued from localhost and will not have the SAN added.
+
