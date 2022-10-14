@@ -47,14 +47,14 @@ ENV \
     DefaultProcess__Filters__0__Value=1 \
     # Remove Unix Domain Socket before starting diagnostic port server
     DiagnosticPort__DeleteEndpointOnStartup=true \
+    # Server GC mode
+    DOTNET_gcServer=1 \
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
     Logging__Console__FormatterOptions__TimestampFormat=yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z' \
     # Logging: Write timestamps using UTC offset (+0:00)
     Logging__Console__FormatterOptions__UseUtcTimestamp=true \
-    # Server GC mode
-    DOTNET_gcServer=1 \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
 
