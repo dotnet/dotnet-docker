@@ -79,6 +79,8 @@ ENV \
     Logging__Console__FormatterOptions__TimestampFormat=yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z' \
     # Logging: Write timestamps using UTC offset (+0:00)
     Logging__Console__FormatterOptions__UseUtcTimestamp=true \
+    # Server GC mode
+    DOTNET_gcServer=1 \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
 
