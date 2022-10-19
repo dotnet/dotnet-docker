@@ -2,9 +2,7 @@ variables:
 - template: ../../common/templates/variables/dotnet/build-test-publish.yml
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-  - group: DotNetBuilds storage account read tokens
   - group: AzureDevOps-Artifact-Feeds-Pats
-  - group: DotNet-MSRC-Storage # needed for .NET Core 3.1 internal builds
 
 - name: manifest
   value: manifest.json
