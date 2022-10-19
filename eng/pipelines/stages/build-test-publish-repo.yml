@@ -34,13 +34,7 @@ stages:
     - powershell: |
         $imageBuilderBuildArgs = "$(imageBuilderBuildArgs)"
         if ("$(publishRepoPrefix)".Contains("internal/")) {
-          if ("$env:ENABLEINTERNAL3_1" -eq "true") {
-            $sasQueryString = "$(dotnetclimsrc-read-sas-token)"
-          }
-          else {
-            $sasQueryString = "$(dotnetbuilds-internal-container-read-token)"
-          }
-          
+          $sasQueryString = "$(dotnetstage-account-sas-read-token)"
           $imageBuilderBuildArgs += " --build-arg SAS_QUERY_STRING='$sasQueryString'"
         }
         echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"

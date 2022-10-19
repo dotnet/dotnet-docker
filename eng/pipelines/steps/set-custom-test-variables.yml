@@ -5,12 +5,7 @@ steps:
     $testInit=""
 
     if ("$(publishRepoPrefix)".Contains("internal/")) {
-      if ("$env:ENABLEINTERNAL3_1" -eq "true") {
-        $sasQueryString = "$(dotnetclimsrc-read-sas-token)"
-      }
-      else {
-        $sasQueryString = "$(dotnetbuilds-internal-container-read-token)"
-      }
+      $sasQueryString = "$(dotnetstage-account-sas-read-token)"
 
       if ($Env:AGENT_OS -eq 'Linux') {
         $testRunnerOptions="$testRunnerOptions -e SAS_QUERY_STRING='$sasQueryString' -e NUGET_FEED_PASSWORD='$(dn-bot-dnceng-artifact-feeds-rw)'"
