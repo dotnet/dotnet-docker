@@ -6,7 +6,8 @@
             referencing the environment variable.
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
         url-suffix (optional): Suffix string to append the end of the URL.
-        installer-stage (optional): Name of the Dockerfile stage responsible for installation ^
+        installer-stage (optional): Name of the Dockerfile stage responsible for installation
+        is-rpm-install (optional): Whether to install RPM versus tarball ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
@@ -111,7 +112,7 @@
                     ]))
         ]
     ] ^
-    set files to when(isFullMariner, rpms, tarballs) ^
+    set files to when(ARGS["is-rpm-install"], rpms, tarballs) ^
     set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
     set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
     set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
@@ -135,6 +136,6 @@ if isFullMariner:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "
         "skip-install": !installEnabled,
         "install-dir": installDir,
         "create-install-dir": !isFullMariner
-    ], "    ")}}{{if !ARGS["is-internal"] || (isFullMariner && installEnabled):{{if ARGS["based-on-buildpack-deps"]: \
+    ], "    ")}}{{if !ARGS["is-internal"] || (ARGS["is-rpm-install"] && installEnabled):{{if ARGS["based-on-buildpack-deps"]: \
     && ln -s {{installDir}}/dotnet /usr/bin/dotnet}} \
     {{InsertTemplate("Dockerfile.linux.first-run", ["append-cmd": "true"], "    ")}}}}

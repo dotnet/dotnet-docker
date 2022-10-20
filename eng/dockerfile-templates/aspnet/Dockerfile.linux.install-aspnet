@@ -5,17 +5,17 @@
             instead of referencing the environment variable.
         - is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
         - url-suffix (optional): Suffix string to append the end of the URL.
-        - installer-stage (optional): Name of the Dockerfile stage responsible for installation ^
+        - installer-stage (optional): Name of the Dockerfile stage responsible for installation
+        - is-rpm-install (optional): Whether to install RPM versus tarball ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set useRpm to isFullMariner ^
-    set filePlatform to when(useRpm, "", when(isAlpine, "-linux-musl", "-linux")) ^
-    set varPlatform to when(useRpm, "linux-rpm", when(isAlpine, "linux-musl", "linux")) ^
-    set fileExt to when(useRpm, "rpm", "tar.gz") ^
-    set destDir to when((isAlpine || dotnetVersion = "3.1" || isFullMariner) && !ARGS["is-internal"],
+    set filePlatform to when(ARGS["is-rpm-install"], "", when(isAlpine, "-linux-musl", "-linux")) ^
+    set varPlatform to when(ARGS["is-rpm-install"], "linux-rpm", when(isAlpine, "linux-musl", "linux")) ^
+    set fileExt to when(ARGS["is-rpm-install"], "rpm", "tar.gz") ^
+    set destDir to when((isAlpine || dotnetVersion = "3.1" || ARGS["is-rpm-install"]) && !ARGS["is-internal"],
         "/usr/share/dotnet",
         when(isDistroless, "/dotnet", "")) ^
     set aspnetVersionDir to when(ARGS["use-local-version-var"],
@@ -29,7 +29,7 @@
     set aspnetVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         aspnetVersionDir) ^
-    set fileArch to when(useRpm && ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
+    set fileArch to when(ARGS["is-rpm-install"] && ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set url to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
         "/aspnetcore/Runtime/", aspnetVersionDir, "/aspnetcore-runtime-", aspnetVersionFile,

@@ -23,24 +23,11 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-aarch64.rpm \
-    && dotnet_sha512='3971b8307375803db19911fe9123f60770e2f3a68852e1596058d5c7ce89e11aafb97ae9c7a5792484af1c473b35d0506ef1a22d24dcb5008aac3540b8801897' \
-    && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
-    \
-    && curl -fSL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-aarch64.rpm \
-    && dotnet_sha512='47ef401ddcfc098f07829cddeac714bdbff17ff48ab34adb8ecda0f7477d240e1ade0191286eb4cb1e32761a6ac34de4d200983df3633a14e1cf2797fd799ddb' \
-    && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
-    \
-    && curl -fSL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/7.0.0-rc.2.22472.3/dotnet-targeting-pack-7.0.0-rc.2.22472.3-aarch64.rpm \
-    && dotnet_sha512='86a38e25498a6f247bb276acebbf4d52cde207c5337b249578e81ec8e75a5739744409217cebe4aff16a6c1d0f170b2db2ba248de16e6ff1334b7d527178f01c' \
-    && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
-    \
-    && curl -fSL --output aspnetcore-targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/7.0.0-rc.2.22476.2/aspnetcore-targeting-pack-7.0.0-rc.2.22476.2-aarch64.rpm \
-    && dotnet_sha512='f852f930b64c44e9fdc68474809265b5d50ecaacdd6dd04e65ec93407fa3728c6a89e94bccaddada253d8b0228978bfc8c6a68a434f5649104f7f164aa38a999' \
-    && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
-    \
-    && tdnf install -y --disablerepo=* dotnet.rpm apphost.rpm targeting-pack.rpm aspnetcore-targeting-pack.rpm \
-    && rm dotnet.rpm apphost.rpm targeting-pack.rpm aspnetcore-targeting-pack.rpm \
+RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm64.tar.gz \
+    && dotnet_sha512='bd5f6fc2bc6783bcf71b4a5c274b2e710336fc031c2577f5ccdb9be2679ce8b15e40fb8e631e2dd18b2359396107fe44d867d341f6fc5daae165f8f238adee17' \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm dotnet.tar.gz \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 

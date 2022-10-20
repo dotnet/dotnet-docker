@@ -7,7 +7,8 @@
     set isDistrolessMariner to isMariner && isDistroless ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
-    set isSingleStage to (dotnetVersion = "3.1" || isAlpine || isFullMariner) && !isInternal ^
+    set isRpmInstall to isFullMariner && (dotnetVersion = "3.1" || dotnetVersion = "6.0") ^
+    set isSingleStage to (dotnetVersion = "3.1" || isAlpine || isRpmInstall) && !isInternal ^
     set archTagSuffix to when(dotnetVersion != "3.1" || ARCH_VERSIONED != "amd64", ARCH_TAG_SUFFIX, "") ^
     set runtimeDepsBaseTag to cat(
         "$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix) ^
@@ -25,7 +26,7 @@ _ SINGLE STAGE
 }}FROM {{runtimeDepsBaseTag}}
 {{if isAlpine:
 {{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
-^elif dotnetVersion = "3.1" && !isFullMariner:
+^elif (dotnetVersion = "3.1" && !isFullMariner):
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "pkgs": ["curl"]
@@ -38,8 +39,9 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "install-method": "download-and-install",
         "dest-dir": "/usr/share/dotnet",
-        "add-symlink": !isFullMariner,
-        "use-local-version-var": dotnetVersion = "3.1"
+        "add-symlink": !isRpmInstall,
+        "use-local-version-var": dotnetVersion = "3.1",
+        "is-rpm-install": isRpmInstall
     ])}}^
 else:{{
 
@@ -53,15 +55,21 @@ FROM {{installerImageTag}} AS installer
 ARG SAS_QUERY_STRING
 }}{{ if isDistrolessMariner:
 {{InsertTemplate("../Dockerfile.linux.distroless-mariner-installer-prereqs")}}
+^elif isFullMariner && !isRpmInstall:
+RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
+    [
+        "pkgs": ["tar"]
+    ])}}
 }}
 # Retrieve .NET Runtime
 {{InsertTemplate("Dockerfile.linux.install-runtime",
     [
-        "install-method": when(isInternal && isFullMariner, "download", "download-and-install"),
+        "install-method": when(isInternal && isRpmInstall, "download", "download-and-install"),
         "dest-dir": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
         "use-local-version-var": "true",
         "is-internal": isInternal,
-        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", "")
+        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
+        "is-rpm-install": isRpmInstall
     ])}}{{ if isDistroless:
 
 RUN mkdir /dotnet-symlink \
@@ -72,21 +80,22 @@ RUN mkdir /dotnet-symlink \
 FROM {{runtimeDepsBaseTag}}
 
 {{InsertTemplate("Dockerfile.envs")}}
-{{ if isInternal && isFullMariner:
+{{ if isInternal && isRpmInstall:
 {{InsertTemplate("Dockerfile.linux.install-runtime",
     [
         "install-method": "copy-and-install",
         "dest-dir": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
         "is-internal": isInternal,
         "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
-        "installer-stage": "installer"
+        "installer-stage": "installer",
+        "is-rpm-install": isRpmInstall
     ])}}}}{{ if isDistroless:
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]{{ if !isMariner || (dotnetVersion != "3.1" && dotnetVersion != "6.0"):
 
 ENTRYPOINT ["/usr/bin/dotnet"]
 CMD ["--info"]}}^
-elif !(isInternal && isFullMariner):
+elif !(isInternal && isRpmInstall):
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 RUN {{InsertTemplate("Dockerfile.linux.symlink")}}}}}}
