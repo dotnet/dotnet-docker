@@ -41,18 +41,12 @@
 
     "base-url|public|main": "https://dotnetcli.azureedge.net/dotnet",
     "base-url|public|nightly": "https://dotnetbuilds.azureedge.net/public",
-    "base-url|internal|main": "https://dotnetclimsrc.blob.core.windows.net/dotnet",
-    "base-url|internal|nightly": "https://dotnetstage.blob.core.windows.net/internal",
 
     "base-url|public|maintenance|main": "$(base-url|public|main)",
     "base-url|public|maintenance|nightly": "https://dotnetcli.azureedge.net/dotnet",
-    "base-url|internal|maintenance|main": "https://dotnetstage.blob.core.windows.net/internal",
-    "base-url|internal|maintenance|nightly": "https://dotnetstage.blob.core.windows.net/internal",
 
     "base-url|public|maintenance-legacy|main": "$(base-url|public|maintenance|main)",
     "base-url|public|maintenance-legacy|nightly": "$(base-url|public|maintenance|nightly)",
-    "base-url|internal|maintenance-legacy|main": "$(base-url|internal|main)",
-    "base-url|internal|maintenance-legacy|nightly": "https://dotnetclimsrc.blob.core.windows.net/dotnet",
 
     "base-url|3.1|main": "$(base-url|public|maintenance-legacy|main)",
     "base-url|3.1|nightly": "$(base-url|public|maintenance-legacy|nightly)",
