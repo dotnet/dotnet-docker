@@ -1,4 +1,4 @@
-FROM amd64/ubuntu:jammy
+FROM ubuntu.azurecr.io/ubuntu:jammy
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

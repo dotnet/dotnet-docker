@@ -11,7 +11,7 @@
         when(isDebian,
             cat(ARCH_VERSIONED, "/debian"),
             when(isUbuntu,
-                cat(ARCH_VERSIONED, "/ubuntu"),
+                "ubuntu.azurecr.io/ubuntu",
                 when(isMariner,
                     "mcr.microsoft.com/cbl-mariner/base/core",
                     "<NOT-IMPLEMENTED>")))) ^
