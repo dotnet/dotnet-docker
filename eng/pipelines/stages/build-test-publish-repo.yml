@@ -22,12 +22,6 @@ stages:
     testMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
 
     # Template paths must be relative to the YAML job that executes them
-
-    customCopyBaseImagesInitSteps:
-    - template: ../../../pipelines/steps/set-base-image-override-options.yml
-      parameters:
-        variableName: customCopyBaseImagesArgs
-
     customBuildInitSteps:
     - template: ../../../pipelines/steps/set-imagebuilder-build-args-var.yml
     - template: ../../../pipelines/steps/set-public-source-branch-var.yml
@@ -40,9 +34,6 @@ stages:
         echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
       displayName: Set Custom Build Variables
     - template: ../../../pipelines/steps/set-custom-test-variables.yml
-    - template: ../../../pipelines/steps/set-base-image-override-options.yml
-      parameters:
-        variableName: imageBuilderBuildArgs
     customTestInitSteps:
     - template: ../../../pipelines/steps/set-custom-test-variables.yml
     customPublishInitSteps:
