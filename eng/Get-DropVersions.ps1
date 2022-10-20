@@ -56,8 +56,10 @@ function GetCommitSha([string]$sdkVersion, [string]$queryString, [switch]$useSta
 
     $zipFile = "dotnet-sdk-$sdkStableVersion-win-x64.zip"
 
+    $containerVersion = $sdkVersion.Replace(".", "-")
+
     if ($UseInternalBuild) {
-        $sdkUrl = "https://dotnetstage.blob.core.windows.net/internal/Sdk/$sdkVersion/$zipFile$queryString"
+        $sdkUrl = "https://dotnetstage.blob.core.windows.net/$containerVersion-internal/Sdk/$sdkVersion/$zipFile$queryString"
     }
     else {
         $sdkUrl = "https://dotnetbuilds.blob.core.windows.net/public/Sdk/$sdkVersion/$zipFile"

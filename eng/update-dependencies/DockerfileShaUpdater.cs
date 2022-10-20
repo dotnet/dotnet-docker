@@ -329,7 +329,7 @@ namespace Dotnet.Docker
 
         private static bool IsInternalUrl(string url)
         {
-            return url.Contains("msrc") || url.Contains("/internal");
+            return url.Contains("internal");
         }
 
         private static string ApplySasQueryStringIfNecessary(string url, string sasQueryString)
