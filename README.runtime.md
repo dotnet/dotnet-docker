@@ -1,8 +1,8 @@
 # Featured Tags
 
-* `7.0` (RC)
+* `7.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime:7.0`
-* `6.0` (LTS)
+* `6.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime:6.0`
 
 # About
