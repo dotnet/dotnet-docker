@@ -6,9 +6,9 @@
 
 # Featured Tags
 
-* `7` (RC)
+* `7` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:7`
-* `6` (LTS)
+* `6` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:6`
 
 # About

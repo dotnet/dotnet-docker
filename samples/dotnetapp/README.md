@@ -34,7 +34,7 @@ dotnetapp           latest              baee380605f4        14 seconds ago      
 The logic to build the image is described in the [Dockerfile](Dockerfile), which follows.
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -46,13 +46,13 @@ COPY . .
 RUN dotnet publish -c Release -o /app --no-restore
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/runtime:6.0
+FROM mcr.microsoft.com/dotnet/runtime:7.0
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```
 
-The `sdk:6.0` and `runtime:6.0` tags are both multi-arch tags that will result in an image that is compatible for the given chip and OS. These simple tags (only contain a version number) are great to get started with Docker because they adapt to your environment. We recommend using an OS-specific tag for the runtime for production applications to ensure that you always get the OS you expect. This level of specification isn't needed for the SDK in most cases.
+The `sdk:7.0` and `runtime:7.0` tags are both multi-arch tags that will result in an image that is compatible for the given chip and OS. These simple tags (only contain a version number) are great to get started with Docker because they adapt to your environment. We recommend using an OS-specific tag for the runtime for production applications to ensure that you always get the OS you expect. This level of specification isn't needed for the SDK in most cases.
 
 This Dockerfile copies and restores the project file as the first step so that the results of those commands can be cached for subsequent builds since project file edits are less common than source code edits. Editing a `.cs` file, for example, does not invalidate the layer created by copying and restoring project file, which makes subsequent docker builds much faster.
 
@@ -60,7 +60,7 @@ This Dockerfile copies and restores the project file as the first step so that t
 
 ## Build an image for Alpine, Debian or Ubuntu
 
-.NET multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `6.0`, as opposed to a distro-specific tag like `6.0-alpine`.
+.NET multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `7.0`, as opposed to a distro-specific tag like `7.0-alpine`.
 
 This sample includes Dockerfile examples that explicitly target Alpine, Debian and Ubuntu. Docker makes it easy to use alternate Dockerfiles by using the `-f` argument.
 
@@ -132,12 +132,12 @@ docker images dotnetapp
 The `Dockerfile.nanoserver-x64` Dockerfile targets a version-specific tag, which will result in a Nano Server version that targets a specific Windows version (and will only work on Windows hosts of the same version or higher). You can update the following the tag to a different version, as needed.
 
 ```console
-FROM mcr.microsoft.com/dotnet/runtime:6.0-nanoserver-ltsc2022
+FROM mcr.microsoft.com/dotnet/runtime:7.0-nanoserver-ltsc2022
 ```
 
 ## Build an image for ARM32 and ARM64
 
-By default, distro-specific .NET tags target x64, such as `6.0-alpine` or `6.0-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that for Alpine, .NET is only supported on ARM64 and x64, and not ARM32.
+By default, distro-specific .NET tags target x64, such as `7.0-alpine` or `7.0-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that for Alpine, .NET is only supported on ARM64 and x64, and not ARM32.
 
 > Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
 
