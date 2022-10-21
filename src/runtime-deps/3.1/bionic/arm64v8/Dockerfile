@@ -1,4 +1,4 @@
-FROM arm64v8/ubuntu:bionic
+FROM ubuntu.azurecr.io/ubuntu:bionic
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
