@@ -1,12 +1,25 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
+
+# Installer image
+FROM $REPO:7.0.0-rc.2-cbl-mariner2.0-arm64v8 AS installer
+
+RUN tdnf install -y \
+        tar \
+    && tdnf clean all
+
+# Retrieve ASP.NET Core
+RUN aspnetcore_version=7.0.0-rc.2.22476.2 \
+    && curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz \
+    && aspnetcore_sha512='24fb13ed26a44d6fba86a2058839026ec81868143a5b7af7857b75a004b0c64eea9a3e544f9e0774b761f9c911608ac74237b2d63ba6799718d12915d5d32df4' \
+    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
+    && tar -oxzf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
+    && rm aspnetcore.tar.gz
+
+
+# ASP.NET Core image
 FROM $REPO:7.0.0-rc.2-cbl-mariner2.0-arm64v8
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=7.0.0-rc.2.22476.2
 
-# Install ASP.NET Core
-RUN curl -fSL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-aarch64.rpm \
-    && aspnetcore_sha512='7c0c28f581d2aa8be3a329eb938efea0a0922bc7d68daf0e7f8cc8ff299b6d5f3a138c9162df9f07067905c7737ed8a1a213b3e33d401b98efbe2eabfb80b757' \
-    && echo "$aspnetcore_sha512  aspnetcore.rpm" | sha512sum -c - \
-    && tdnf install -y --disablerepo=* aspnetcore.rpm \
-    && rm aspnetcore.rpm
+COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]

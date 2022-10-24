@@ -7,7 +7,8 @@
     set isDistrolessMariner to isMariner && isDistroless ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
-    set isSingleStage to (dotnetVersion = "3.1" || isAlpine || isFullMariner) && !isInternal ^
+    set isRpmInstall to isFullMariner && (dotnetVersion = "3.1" || dotnetVersion = "6.0") ^
+    set isSingleStage to (dotnetVersion = "3.1" || isAlpine || isRpmInstall) && !isInternal ^
     set archTagSuffix to when(dotnetVersion != "3.1" || ARCH_VERSIONED != "amd64", ARCH_TAG_SUFFIX, "") ^
     set runtimeBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix) ^
@@ -35,7 +36,8 @@
 {{InsertTemplate("Dockerfile.linux.install-aspnet",
     [
         "install-method": "download-and-install",
-        "use-local-version-var": dotnetVersion = "3.1"
+        "use-local-version-var": dotnetVersion = "3.1",
+        "is-rpm-install": isRpmInstall
     ])}}^else:
 {{
 
@@ -48,14 +50,20 @@ FROM {{installerImageTag}} AS installer
 ARG SAS_QUERY_STRING
 }}{{if isDistrolessMariner:
 {{InsertTemplate("../Dockerfile.linux.distroless-mariner-installer-prereqs")}}
+^elif isFullMariner && !isRpmInstall:
+RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
+    [
+        "pkgs": ["tar"]
+    ])}}
 }}
 # Retrieve ASP.NET Core
 {{InsertTemplate("Dockerfile.linux.install-aspnet",
     [
-        "install-method": when(isInternal && isFullMariner, "download", "download-and-install"),
+        "install-method": when(isInternal && isRpmInstall, "download", "download-and-install"),
         "use-local-version-var": "true",
         "is-internal": isInternal,
-        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", "")
+        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
+        "is-rpm-install": isRpmInstall
     ])}}
 
 
@@ -63,12 +71,13 @@ ARG SAS_QUERY_STRING
 FROM {{runtimeBaseTag}}
 
 {{InsertTemplate("Dockerfile.envs")}}
-{{if isInternal && isFullMariner:
+{{if isInternal && isRpmInstall:
 {{InsertTemplate("Dockerfile.linux.install-aspnet",
     [
         "install-method": "copy-and-install",
         "is-internal": isInternal,
         "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
-        "installer-stage": "installer"
+        "installer-stage": "installer",
+        "is-rpm-install": isRpmInstall
     ])}}^else:
 COPY --from=installer ["{{copyFromSrcPath}}", "{{copyFromDstPath}}"]}}}}

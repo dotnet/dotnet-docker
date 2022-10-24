@@ -5,6 +5,7 @@
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
+    set isRpmInstall to isFullMariner && (dotnetVersion = "3.1" || dotnetVersion = "6.0") ^
     set isBasedOnBuildpackDeps to (dotnetVersion = "3.1" && !(isAlpine || isMariner)) ^
     set archTagSuffix to when(dotnetVersion != "3.1", ARCH_TAG_SUFFIX, "") ^
     set baseImageTag to when(isBasedOnBuildpackDeps,
@@ -37,14 +38,20 @@
 FROM {{internalInstallerBase}} AS installer
 
 ARG SAS_QUERY_STRING
-
+{{if isFullMariner && !isRpmInstall:
+RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
+    [
+        "pkgs": ["tar"]
+    ])}}
+}}
 {{InsertTemplate("Dockerfile.linux.install-sdk",
     [
-        "install-method": when(isFullMariner, "download", "download-and-install"),
+        "install-method": when(isRpmInstall, "download", "download-and-install"),
         "based-on-buildpack-deps": isBasedOnBuildpackDeps,
         "use-local-version-var": (dotnetVersion = "3.1"),
         "is-internal": isInternal,
-        "url-suffix": "$SAS_QUERY_STRING"
+        "url-suffix": "$SAS_QUERY_STRING",
+        "is-rpm-install": isRpmInstall
     ])}}
 
 
@@ -67,12 +74,13 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 RUN {{InsertTemplate("../Dockerfile.linux.install-deps", ["isSdk": "true"])}}
 }}
 {{if isInternal:{{
-if isFullMariner:{{InsertTemplate("Dockerfile.linux.install-sdk",
+if isRpmInstall:{{InsertTemplate("Dockerfile.linux.install-sdk",
     [
         "install-method": "copy-and-install",
         "is-internal": isInternal,
         "url-suffix": "$SAS_QUERY_STRING",
-        "installer-stage": "installer"
+        "installer-stage": "installer",
+        "is-rpm-install": isRpmInstall
     ])}}^
 else:COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]{{
 if isBasedOnBuildpackDeps:
@@ -84,7 +92,8 @@ else:{{InsertTemplate("Dockerfile.linux.install-sdk",
     [
         "install-method": "download-and-install",
         "based-on-buildpack-deps": isBasedOnBuildpackDeps,
-        "use-local-version-var": (dotnetVersion = "3.1")
+        "use-local-version-var": (dotnetVersion = "3.1"),
+        "is-rpm-install": isRpmInstall
     ])}}}}{{if !isAlpine || ARCH_SHORT = "x64":
 
 {{InsertTemplate("Dockerfile.linux.install-powershell")}}}}
