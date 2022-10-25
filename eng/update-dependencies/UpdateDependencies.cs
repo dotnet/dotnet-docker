@@ -123,13 +123,14 @@ namespace Dotnet.Docker
                 Enumerable.Empty<string>());
         }
 
+        // Replace slashes with hyphens for use in naming the branch
+        private static string FormatBranchName(string branchName) => branchName.Replace('/', '-');
+
         private static async Task CreatePullRequestAsync()
         {
             string commitMessage = $"[{Options.TargetBranch}] Update dependencies from {Options.VersionSourceName}";
 
-            // Replace slashes with hyphens for use in naming the branch
-            string versionSourceNameForBranch = Options.VersionSourceName.Replace("/", "-");
-            string branchSuffix = $"UpdateDependencies-{Options.TargetBranch}-From-{versionSourceNameForBranch}";
+            string branchSuffix = FormatBranchName($"UpdateDependencies-{Options.TargetBranch}-From-{Options.VersionSourceName}");
             PullRequestOptions prOptions = new()
             {
                 BranchNamingStrategy = new SingleBranchNamingStrategy(branchSuffix)
@@ -175,7 +176,7 @@ namespace Dotnet.Docker
             {
                 // Push the commit to AzDO
                 string username = Options.Email.Substring(0, Options.Email.IndexOf('@'));
-                string remoteBranch = prOptions.BranchNamingStrategy.Prefix($"users/{username}/{Options.TargetBranch}");
+                string remoteBranch = prOptions.BranchNamingStrategy.Prefix($"users/{username}/{FormatBranchName(Options.TargetBranch)}");
                 string pushRefSpec = $@"refs/heads/{remoteBranch}";
 
                 Trace.WriteLine($"Pushing to {remoteBranch}");
