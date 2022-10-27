@@ -40,6 +40,32 @@ namespace Microsoft.DotNet.Docker.Tests
             });
         }
 
+        public string Platform
+        {
+            get
+            {
+                string os = IsWindows ? "windows" : "linux";
+                string arch = Arch.ToString().ToLowerInvariant();
+                if (ArchVariant.Length > 0)
+                {
+                    arch += $"/{ArchVariant}";
+                }
+
+                return $"{os}/{arch}";
+            }
+        }
+
+        public string ArchVariant =>
+            Arch switch
+            {
+                Arch.Amd64 => string.Empty,
+                Arch.Arm => "v7",
+                Arch.Arm64 => "v8",
+                _ => throw new NotImplementedException()
+            };
+
+        public bool IsWindows => OS.StartsWith(Tests.OS.NanoServer) || OS.StartsWith(Tests.OS.ServerCore);
+
         public int DefaultPort => IsDistroless ? 8080 : 80;
 
         public string Rid
@@ -48,7 +74,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 string rid;
 
-                if (OS.StartsWith(Tests.OS.NanoServer) || OS.StartsWith(Tests.OS.ServerCore))
+                if (IsWindows)
                 {
                     rid = "win-x64";
                 }

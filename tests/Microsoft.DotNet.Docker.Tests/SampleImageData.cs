@@ -18,7 +18,14 @@ namespace Microsoft.DotNet.Docker.Tests
         public string GetImage(SampleImageType imageType, DockerHelper dockerHelper, bool allowPull = false)
         {
             string tagPrefix = Enum.GetName(typeof(SampleImageType), imageType).ToLowerInvariant();
-            string tag = GetTagName(tagPrefix, OS);
+
+            string os = OS;
+            if (os == Tests.OS.Alpine)
+            {
+                os += "-slim";
+            }
+
+            string tag = GetTagName(tagPrefix, os);
             if (!IsPublished)
             {
                 tag += "-local";

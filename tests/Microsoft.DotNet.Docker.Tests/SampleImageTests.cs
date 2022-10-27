@@ -156,7 +156,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     string sampleFolder = Path.Combine(s_samplesPath, imageType);
                     string dockerfilePath = $"{sampleFolder}/Dockerfile.{imageData.DockerfileSuffix}";
 
-                    DockerHelper.Build(image, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages);
+                    DockerHelper.Build(image, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages, platform: imageData.Platform);
                 }
 
                 string containerName = imageData.GetIdentifier($"sample-{imageType}");

@@ -33,7 +33,7 @@
             {
               "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine",
               "tags": {
                 "dotnetapp-alpine-slim-amd64": {
                   "syndication": {
@@ -46,7 +46,7 @@
               "architecture": "arm",
               "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine",
               "tags": {
                 "dotnetapp-alpine-slim-arm32v7": {
                   "syndication": {
@@ -60,7 +60,7 @@
               "architecture": "arm64",
               "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine",
               "tags": {
                 "dotnetapp-alpine-slim-arm64v8": {
                   "syndication": {
@@ -104,7 +104,7 @@
             {
               "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine",
               "tags": {
                 "aspnetapp-alpine-slim-amd64": {
                   "syndication": {
@@ -126,7 +126,7 @@
               "architecture": "arm",
               "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine",
               "tags": {
                 "aspnetapp-alpine-slim-arm32v7": {
                   "syndication": {
@@ -149,7 +149,7 @@
               "architecture": "arm64",
               "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine",
               "tags": {
                 "aspnetapp-alpine-slim-arm64v8": {
                   "syndication": {
