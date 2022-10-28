@@ -580,7 +580,8 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             // Need to allow pulling of the sample image since these are not built in the same pipeline
             // as the other images; otherwise, these tests will fail due to lack of sample image.
-            imageName = imageData.GetImage(SampleImageType.Aspnetapp, DockerHelper, allowPull: true);
+            string tag = imageData.GetTagNameBase(SampleImageType.Aspnetapp);
+            imageName = imageData.GetImage(tag, DockerHelper, allowPull: true);
             containerName = imageData.GetIdentifier("monitortest-sample");
         }
 
