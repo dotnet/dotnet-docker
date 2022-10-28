@@ -78,9 +78,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
             string tag = imageData.GetIdentifier("distroless-helper");
             Build(tag, dockerfile, null, TestArtifactsDir, false,
-                $"distroless_image={distrolessImageTag}",
-                $"base_image={baseImageTag}",
-                $"root_destination={rootDestination}");
+                buildArgs: new string[]
+                {
+                    $"distroless_image={distrolessImageTag}",
+                    $"base_image={baseImageTag}",
+                    $"root_destination={rootDestination}"
+                });
             return tag;
         }
 
