@@ -31,7 +31,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-x64-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -40,7 +40,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-arm32-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -50,7 +50,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-arm64-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -90,7 +90,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-x64-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -108,7 +108,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-arm32-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -127,7 +127,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-arm64-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
