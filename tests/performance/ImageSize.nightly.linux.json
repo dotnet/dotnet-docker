@@ -79,7 +79,7 @@
     "src/runtime/7.0/jammy-chiseled/arm64v8": 90314984,
     "src/runtime/7.0/jammy/arm32v7": 157591907,
     "src/runtime/7.0/jammy/arm64v8": 188159362,
-    "src/runtime/7.0/cbl-mariner2.0/amd64": 190125327,
+    "src/runtime/7.0/cbl-mariner2.0/amd64": 179427754,
     "src/runtime/7.0/cbl-mariner2.0/arm64v8": 186533221,
     "src/runtime/7.0/cbl-mariner2.0-distroless/amd64": 97052752,
     "src/runtime/7.0/cbl-mariner2.0-distroless/arm64v8": 101324424
@@ -131,7 +131,7 @@
     "src/aspnet/7.0/jammy/arm64v8": 211166087,
     "src/aspnet/7.0/jammy-chiseled/amd64": 105207640,
     "src/aspnet/7.0/jammy-chiseled/arm64v8": 114259490,
-    "src/aspnet/7.0/cbl-mariner2.0/amd64": 212464906,
+    "src/aspnet/7.0/cbl-mariner2.0/amd64": 201232361,
     "src/aspnet/7.0/cbl-mariner2.0/arm64v8": 209765738,
     "src/aspnet/7.0/cbl-mariner2.0-distroless/amd64": 117842508,
     "src/aspnet/7.0/cbl-mariner2.0-distroless/arm64v8": 124668046
@@ -198,7 +198,7 @@
     "src/monitor/7.0/ubuntu-chiseled/amd64": 118580459,
     "src/monitor/7.0/ubuntu-chiseled/arm64v8": 127632309,
     "src/monitor/7.0/cbl-mariner/amd64": 220741666,
-    "src/monitor/7.0/cbl-mariner/arm64v8": 229878449,
+    "src/monitor/7.0/cbl-mariner/arm64v8": 217293451,
     "src/monitor/7.0/cbl-mariner-distroless/amd64": 126119268,
     "src/monitor/7.0/cbl-mariner-distroless/arm64v8": 133547868
   }
