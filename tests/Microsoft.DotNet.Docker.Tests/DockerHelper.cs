@@ -35,6 +35,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string target = null,
             string contextDir = ".",
             bool pull = false,
+            string platform = null,
             params string[] buildArgs)
         {
             string buildArgsOption = string.Empty;
@@ -46,11 +47,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
             }
 
+            string platformOption = string.Empty;
+            if (platform is not null)
+            {
+                platformOption = $" --platform {platform}";
+            }
+
             string targetArg = target == null ? string.Empty : $" --target {target}";
             string dockerfileArg = dockerfile == null ? string.Empty : $" -f {dockerfile}";
             string pullArg = pull ? " --pull" : string.Empty;
 
-            ExecuteWithLogging($"build -t {tag}{targetArg}{buildArgsOption}{dockerfileArg}{pullArg} {contextDir}");
+            ExecuteWithLogging($"build -t {tag}{targetArg}{buildArgsOption}{dockerfileArg}{pullArg}{platformOption} {contextDir}");
         }
 
         /// <summary>
@@ -71,9 +78,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
             string tag = imageData.GetIdentifier("distroless-helper");
             Build(tag, dockerfile, null, TestArtifactsDir, false,
-                $"distroless_image={distrolessImageTag}",
-                $"base_image={baseImageTag}",
-                $"root_destination={rootDestination}");
+                buildArgs: new string[]
+                {
+                    $"distroless_image={distrolessImageTag}",
+                    $"base_image={baseImageTag}",
+                    $"root_destination={rootDestination}"
+                });
             return tag;
         }
 

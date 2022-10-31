@@ -17,26 +17,38 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string GetImage(SampleImageType imageType, DockerHelper dockerHelper, bool allowPull = false)
         {
-            string tagPrefix = Enum.GetName(typeof(SampleImageType), imageType).ToLowerInvariant();
-            string tag = GetTagName(tagPrefix, OS);
+            string tagPrefix = GetTagNameBase(imageType);
+            string os = OS;
+            if (os == Tests.OS.Alpine)
+            {
+                os += "-slim";
+            }
+
+            string tag = GetTagName(tagPrefix, os);
             if (!IsPublished)
             {
                 tag += "-local";
             }
 
+            return GetImage(tag, dockerHelper, allowPull);
+        }
+
+        public string GetImage(string tag, DockerHelper dockerHelper, bool allowPull = false)
+        {
             string imageName = GetImageName(tag);
 
             if (IsPublished)
             {
                 PullImageIfNecessary(imageName, dockerHelper, allowPull);
             }
-            
+
             return imageName;
         }
 
-        public static string GetImageName(string tag)
-        {
-            return GetImageName(tag, "samples", string.Empty);
-        }
+        public string GetTagNameBase(SampleImageType imageType) =>
+            Enum.GetName(typeof(SampleImageType), imageType).ToLowerInvariant();
+
+        public static string GetImageName(string tag) =>
+            GetImageName(tag, "samples", string.Empty);
     }
 }
