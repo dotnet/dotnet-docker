@@ -54,15 +54,18 @@ function GetCommitSha([string]$sdkVersion, [string]$queryString, [switch]$useSta
         $sdkStableVersion = $sdkVersion
     }
 
+    $zipFile = "dotnet-sdk-$sdkStableVersion-win-x64.zip"
+
+    $containerVersion = $sdkVersion.Replace(".", "-")
+
     if ($UseInternalBuild) {
-        $blobContainer = "internal"
+        $sdkUrl = "https://dotnetstage.blob.core.windows.net/$containerVersion-internal/Sdk/$sdkVersion/$zipFile$queryString"
     }
     else {
-        $blobContainer = "public"
+        $sdkUrl = "https://dotnetbuilds.blob.core.windows.net/public/Sdk/$sdkVersion/$zipFile"
     }
-    
+
     # Download the SDK
-    $sdkUrl = "https://dotnetbuilds.blob.core.windows.net/$blobContainer/Sdk/$sdkVersion/dotnet-sdk-$sdkStableVersion-win-x64.zip$queryString"
     Write-Host "Downloading SDK from $sdkUrl"
     $sdkOutPath = "$tempDir/sdk.zip"
     Invoke-WebRequest -Uri $sdkUrl -OutFile $sdkOutPath

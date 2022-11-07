@@ -2,6 +2,7 @@
 
 variables:
 - template: core.yml
+- group: DncEng-Partners-Tokens
 
 # Since the images published by the pipeline are only available internally, configure variables so that image info
 # is published to an internal repo.

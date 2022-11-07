@@ -77,21 +77,24 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly SampleImageData[] s_linuxSampleTestData =
         {
-            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Amd64, IsPublished = true },
-            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm,   IsPublished = true },
-            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm64, IsPublished = true },
+            new SampleImageData { OS = OS.Alpine,       Arch = Arch.Amd64, DockerfileSuffix = "alpine-slim", IsPublished = true },
+            new SampleImageData { OS = OS.Alpine,       Arch = Arch.Arm,   DockerfileSuffix = "alpine-slim", IsPublished = true },
+            new SampleImageData { OS = OS.Alpine,       Arch = Arch.Arm64, DockerfileSuffix = "alpine-slim", IsPublished = true },
 
-            new SampleImageData { OS = OS.Alpine,     Arch = Arch.Arm64, DockerfileSuffix = "alpine-arm64" },
-            new SampleImageData { OS = OS.Alpine,     Arch = Arch.Amd64, DockerfileSuffix = "alpine-x64" },
-            new SampleImageData { OS = OS.Alpine,     Arch = Arch.Amd64, DockerfileSuffix = "alpine-x64-slim" },
-            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm,   DockerfileSuffix = "debian-arm32" },
-            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Arm64, DockerfileSuffix = "debian-arm64" },
-            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Amd64, DockerfileSuffix = "debian-x64" },
-            new SampleImageData { OS = OS.BusterSlim, Arch = Arch.Amd64, DockerfileSuffix = "debian-x64-slim" },
-            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Arm,   DockerfileSuffix = "ubuntu-arm32" },
-            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Arm64, DockerfileSuffix = "ubuntu-arm64" },
-            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Amd64, DockerfileSuffix = "ubuntu-x64" },
-            new SampleImageData { OS = OS.Bionic,     Arch = Arch.Amd64, DockerfileSuffix = "ubuntu-x64-slim" },
+            new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Amd64 },
+            new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Arm },
+            new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Arm64 },
+            new SampleImageData { OS = OS.Alpine,       Arch = Arch.Arm64, DockerfileSuffix = "alpine-arm64" },
+            new SampleImageData { OS = OS.Alpine,       Arch = Arch.Amd64, DockerfileSuffix = "alpine-x64" },
+            new SampleImageData { OS = OS.Alpine,       Arch = Arch.Amd64, DockerfileSuffix = "alpine-x64-slim" },
+            new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Arm,   DockerfileSuffix = "debian-arm32" },
+            new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Arm64, DockerfileSuffix = "debian-arm64" },
+            new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Amd64, DockerfileSuffix = "debian-x64" },
+            new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Amd64, DockerfileSuffix = "debian-x64-slim" },
+            new SampleImageData { OS = OS.Jammy,        Arch = Arch.Arm,   DockerfileSuffix = "ubuntu-arm32" },
+            new SampleImageData { OS = OS.Jammy,        Arch = Arch.Arm64, DockerfileSuffix = "ubuntu-arm64" },
+            new SampleImageData { OS = OS.Jammy,        Arch = Arch.Amd64, DockerfileSuffix = "ubuntu-x64" },
+            new SampleImageData { OS = OS.Jammy,        Arch = Arch.Amd64, DockerfileSuffix = "ubuntu-x64-slim" },
         };
 
         private static readonly SampleImageData[] s_windowsSampleTestData =

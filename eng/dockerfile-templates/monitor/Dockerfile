@@ -5,8 +5,9 @@
     set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
     set targetFrameworkMoniker to cat("net", dotnetMajorMinor) ^
     set targetFrameworkMonikerRegex to cat("net", dotnetMajor, "[.]0") ^
-    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
-    set sdkDistro to when(isDistrolessMariner, cat("cbl-mariner", OS_VERSION_NUMBER), OS_VERSION) ^
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
+    set sdkDistro to when(isDistroless, when(isMariner, cat("cbl-mariner", OS_VERSION_NUMBER), split(OS_VERSION, "-")[0]), OS_VERSION) ^
     set installerBaseTag to cat(VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")], "-", sdkDistro, ARCH_TAG_SUFFIX) ^
     set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
@@ -71,7 +72,9 @@ ENV \
     DefaultProcess__Filters__0__Key=ProcessId \
     DefaultProcess__Filters__0__Value=1 \
     # Remove Unix Domain Socket before starting diagnostic port server
-    DiagnosticPort__DeleteEndpointOnStartup=true \
+    DiagnosticPort__DeleteEndpointOnStartup=true \{{ if dotnetMajor = "7":
+    # Server GC mode
+    DOTNET_gcServer=1 \}}
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)

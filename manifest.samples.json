@@ -31,42 +31,30 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/dotnetapp",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-x64-slim",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "alpine",
               "tags": {
-                "dotnetapp-buster-slim-amd64": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
+                "dotnetapp-alpine-slim-amd64": {}
               }
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile.debian-arm32",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-arm32-slim",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "alpine",
               "tags": {
-                "dotnetapp-buster-slim-arm32v7": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
+                "dotnetapp-alpine-slim-arm32v7": {}
               },
               "variant": "v7"
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/dotnetapp",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-arm64-slim",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "alpine",
               "tags": {
-                "dotnetapp-buster-slim-arm64v8": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
+                "dotnetapp-alpine-slim-arm64v8": {}
               },
               "variant": "v8"
             },
@@ -102,37 +90,29 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/aspnetapp",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-x64-slim",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "alpine",
               "tags": {
-                "aspnetapp-buster-slim-amd64": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
+                "aspnetapp-alpine-slim-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-buster-slim-amd64"
+                    "$(Repo:samples):dotnetapp-alpine-slim-amd64"
                   ]
                 }
               ]
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile.debian-arm32",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-arm32-slim",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "alpine",
               "tags": {
-                "aspnetapp-buster-slim-arm32v7": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
+                "aspnetapp-alpine-slim-arm32v7": {}
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -140,22 +120,18 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-buster-slim-arm32v7"
+                    "$(Repo:samples):dotnetapp-alpine-slim-arm32v7"
                   ]
                 }
               ]
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/aspnetapp",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-arm64-slim",
               "os": "linux",
-              "osVersion": "buster",
+              "osVersion": "alpine",
               "tags": {
-                "aspnetapp-buster-slim-arm64v8": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
+                "aspnetapp-alpine-slim-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -163,7 +139,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-buster-slim-arm64v8"
+                    "$(Repo:samples):dotnetapp-alpine-slim-arm64v8"
                   ]
                 }
               ]

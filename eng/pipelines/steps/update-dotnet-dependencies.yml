@@ -19,7 +19,7 @@ steps:
 
     if ("${{ parameters.useInternalBuild }}" -eq "true") {
       $args["UseInternalBuild"] = $true
-      $args["BlobStorageSasQueryString"] = "$(dotnetbuilds-internal-container-read-token)"
+      $args["BlobStorageSasQueryString"] = "$(dotnetstage-account-sas-read-token)"
       $args["AzdoVersionsRepoInfoAccessToken"] = "$(dn-bot-devdiv-dnceng-rw-code-pat)"
     }
 
@@ -41,8 +41,8 @@ steps:
       }
 
       if ("${{ parameters.useInternalBuild }}" -eq "true") {
-        $args["BinarySasQueryString"] = '"$(dotnetbuilds-internal-container-read-token)"'
-        $args["ChecksumSasQueryString"] = '"$(dotnetbuilds-internal-checksums-container-read-token)"'
+        $args["ChecksumSasQueryString"] = '"$(dotnetchecksumsstage-account-sas-read-token)"'
+        $args["BinarySasQueryString"] = '"$(dotnetstage-account-sas-read-token)"'
       }
 
       Write-Host "Executing Set-DotnetVersions.ps1 for $($versionInfo.DockerfileVersion)"

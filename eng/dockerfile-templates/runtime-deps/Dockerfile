@@ -16,12 +16,13 @@
                     "mcr.microsoft.com/cbl-mariner/base/core",
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
-    set isSingleStage to !(isMariner && isInternal) ^
+    set isRpmInstall to isMariner && (dotnetVersion = "3.1" || dotnetVersion = "6.0") ^
+    set isSingleStage to !(isRpmInstall && isInternal) ^
     set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm"
 }}{{
     if !isSingleStage:# Installer image
-}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isMariner:
+}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isRpmInstall:
 
 ARG SAS_QUERY_STRING
 
@@ -31,10 +32,10 @@ RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
         "filename": rpmFilename,
         "is-internal": isInternal
     ], "    ")}}}}
-{{if isMariner && isInternal:FROM {{baseImageRepo}}:{{baseImageTag}}
+{{if isRpmInstall && isInternal:FROM {{baseImageRepo}}:{{baseImageTag}}
 }}
 RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}
-{{ if isMariner:
+{{ if isRpmInstall:
 {{if isInternal:{{InsertTemplate("../Dockerfile.linux.copy-files",
 [
     "files": [

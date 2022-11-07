@@ -36,15 +36,15 @@ You can run `dotnet test` within a .NET SDK container using the following patter
   Restored /app/tests/tests.csproj (in 8.25 sec).
   libfoo -> /app/libfoo/bin/Debug/netstandard2.0/libfoo.dll
   libbar -> /app/libbar/bin/Debug/netstandard2.0/libbar.dll
-  tests -> /app/tests/bin/Debug/net6.0/tests.dll
-Test run for /app/tests/bin/Debug/net6.0/tests.dll (.NETCoreApp,Version=v6.0)
+  tests -> /app/tests/bin/Debug/net7.0/tests.dll
+Test run for /app/tests/bin/Debug/net7.0/tests.dll (.NETCoreApp,Version=v7.0)
 Microsoft (R) Test Execution Command Line Tool Version 16.8.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
 
 Starting test execution, please wait...
 A total of 1 test files matched the specified pattern.
 
-Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 2 ms - /app/tests/bin/Debug/net6.0/tests.dll (net6.0)
+Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 2 ms - /app/tests/bin/Debug/net7.0/tests.dll (net7.0)
  ```
 
 In this example, the tests (and any other required code) are [volume mounted](https://docs.docker.com/engine/admin/volumes/volumes/) into the countainer, and `dotnet test` is run from the `tests` directory (`-w` sets the working directory). Test results can be read from the console or from logs, which can be written to disk with the `--logger:trx` flag.

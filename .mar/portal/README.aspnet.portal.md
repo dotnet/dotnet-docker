@@ -6,9 +6,9 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `7.0` (RC)
+* `7.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/aspnet:7.0`
-* `6.0` (LTS)
+* `6.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/aspnet:6.0`
 
 ## Related Repos

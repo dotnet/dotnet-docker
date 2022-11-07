@@ -7,7 +7,8 @@
             instead of referencing the environment variable.
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
         url-suffix (optional): Suffix string to append the end of the URL.
-        installer-stage (optional): Name of the Dockerfile stage responsible for installation ^
+        installer-stage (optional): Name of the Dockerfile stage responsible for installation
+        is-rpm-install (optional): Whether to install RPM versus tarball ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
@@ -57,7 +58,7 @@
             "sha-var-name": "dotnet_sha512"
         ]
     ] ^
-    set files to when(isFullMariner, rpms, tarballs) ^
+    set files to when(ARGS["is-rpm-install"], rpms, tarballs) ^
     set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
     set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
     set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
@@ -76,6 +77,6 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
             "skip-download": !downloadEnabled,
             "skip-install": !installEnabled,
             "install-dir": ARGS["dest-dir"],
-            "create-install-dir": !isFullMariner || ARGS["is-internal"]
+            "create-install-dir": !ARGS["is-rpm-install"] || ARGS["is-internal"]
         ], "    ")}}{{if ARGS["add-symlink"]: \
     && {{InsertTemplate("Dockerfile.linux.symlink")}}}}

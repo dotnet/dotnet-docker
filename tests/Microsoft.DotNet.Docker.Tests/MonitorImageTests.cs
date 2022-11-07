@@ -133,6 +133,11 @@ namespace Microsoft.DotNet.Docker.Tests
             variables.Add(new EnvironmentVariableInfo("DefaultProcess__Filters__0__Value", "1"));
             // Existing (orphaned) diagnostic port should be delete before starting server
             variables.Add(new EnvironmentVariableInfo("DiagnosticPort__DeleteEndpointOnStartup", "true"));
+            if (imageData.Version.Major == 7)
+            {
+                // GC mode should be set to Server
+                variables.Add(new EnvironmentVariableInfo("DOTNET_gcServer", "1"));
+            }
             // Console logger format should be JSON and output UTC timestamps without timezone information
             variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", "json"));
             variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterOptions__TimestampFormat", "yyyy-MM-ddTHH:mm:ss.fffffffZ"));
@@ -580,7 +585,8 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             // Need to allow pulling of the sample image since these are not built in the same pipeline
             // as the other images; otherwise, these tests will fail due to lack of sample image.
-            imageName = imageData.GetImage(SampleImageType.Aspnetapp, DockerHelper, allowPull: true);
+            string tag = imageData.GetTagNameBase(SampleImageType.Aspnetapp);
+            imageName = imageData.GetImage(tag, DockerHelper, allowPull: true);
             containerName = imageData.GetIdentifier("monitortest-sample");
         }
 
