@@ -370,8 +370,7 @@
             "$(dotnet|6.0|product-version)": {},
             "$(dotnet|6.0|product-version)-bullseye-slim": {},
             "6.0": {},
-            "6.0-bullseye-slim": {},
-            "latest": {}
+            "6.0-bullseye-slim": {}
           },
           "platforms": [
             {
@@ -734,7 +733,8 @@
             "$(dotnet|7.0|product-version)": {},
             "$(dotnet|7.0|product-version)-bullseye-slim": {},
             "7.0": {},
-            "7.0-bullseye-slim": {}
+            "7.0-bullseye-slim": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -1423,8 +1423,7 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)": {},
-            "6.0": {},
-            "latest": {}
+            "6.0": {}
           },
           "platforms": [
             {
@@ -1933,7 +1932,8 @@
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
             "$(dotnet|7.0|product-version)": {},
-            "7.0": {}
+            "7.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -2761,8 +2761,7 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)": {},
-            "6.0": {},
-            "latest": {}
+            "6.0": {}
           },
           "platforms": [
             {
@@ -3283,7 +3282,8 @@
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
             "$(dotnet|7.0|product-version)": {},
-            "7.0": {}
+            "7.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -4161,8 +4161,7 @@
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
             "$(sdk|6.0|product-version)": {},
-            "6.0": {},
-            "latest": {}
+            "6.0": {}
           },
           "platforms": [
             {
@@ -4568,7 +4567,8 @@
           "productVersion": "$(sdk|7.0|product-version)",
           "sharedTags": {
             "$(sdk|7.0|product-version)": {},
-            "7.0": {}
+            "7.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -5056,8 +5056,7 @@
             "6-alpine": {},
             "$(monitor|6.3|product-version)": {},
             "6.3": {},
-            "6": {},
-            "latest": {}
+            "6": {}
           },
           "platforms": [
             {
@@ -5222,7 +5221,8 @@
             "7-alpine": {},
             "$(monitor|7.0|product-version)": {},
             "7.0": {},
-            "7": {}
+            "7": {},
+            "latest": {}
           },
           "platforms": [
             {

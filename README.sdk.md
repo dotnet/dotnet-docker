@@ -56,10 +56,10 @@ The following samples show how to develop, build and test .NET applications with
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-7.0.100-rc.2-bullseye-slim-amd64, 7.0-bullseye-slim-amd64, 7.0.100-rc.2-bullseye-slim, 7.0-bullseye-slim, 7.0.100-rc.2, 7.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/bullseye-slim/amd64/Dockerfile) | Debian 11
+7.0.100-rc.2-bullseye-slim-amd64, 7.0-bullseye-slim-amd64, 7.0.100-rc.2-bullseye-slim, 7.0-bullseye-slim, 7.0.100-rc.2, 7.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/bullseye-slim/amd64/Dockerfile) | Debian 11
 7.0.100-rc.2-alpine3.16-amd64, 7.0-alpine3.16-amd64, 7.0-alpine-amd64, 7.0.100-rc.2-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/alpine3.16/amd64/Dockerfile) | Alpine 3.16
 7.0.100-rc.2-jammy-amd64, 7.0-jammy-amd64, 7.0.100-rc.2-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-6.0.402-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.402-bullseye-slim, 6.0-bullseye-slim, 6.0.402, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
+6.0.402-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.402-bullseye-slim, 6.0-bullseye-slim, 6.0.402, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
 6.0.402-alpine3.16-amd64, 6.0-alpine3.16-amd64, 6.0-alpine-amd64, 6.0.402-alpine3.16, 6.0-alpine3.16, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.16/amd64/Dockerfile) | Alpine 3.16
 6.0.402-jammy-amd64, 6.0-jammy-amd64, 6.0.402-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 6.0.402-focal-amd64, 6.0-focal-amd64, 6.0.402-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
@@ -72,10 +72,10 @@ Tags | Dockerfile | OS Version
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-7.0.100-rc.2-bullseye-slim-arm64v8, 7.0-bullseye-slim-arm64v8, 7.0.100-rc.2-bullseye-slim, 7.0-bullseye-slim, 7.0.100-rc.2, 7.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
+7.0.100-rc.2-bullseye-slim-arm64v8, 7.0-bullseye-slim-arm64v8, 7.0.100-rc.2-bullseye-slim, 7.0-bullseye-slim, 7.0.100-rc.2, 7.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
 7.0.100-rc.2-alpine3.16-arm64v8, 7.0-alpine3.16-arm64v8, 7.0-alpine-arm64v8, 7.0.100-rc.2-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/alpine3.16/arm64v8/Dockerfile) | Alpine 3.16
 7.0.100-rc.2-jammy-arm64v8, 7.0-jammy-arm64v8, 7.0.100-rc.2-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-6.0.402-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.402-bullseye-slim, 6.0-bullseye-slim, 6.0.402, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
+6.0.402-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.402-bullseye-slim, 6.0-bullseye-slim, 6.0.402, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
 6.0.402-alpine3.16-arm64v8, 6.0-alpine3.16-arm64v8, 6.0-alpine-arm64v8, 6.0.402-alpine3.16, 6.0-alpine3.16, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.16/arm64v8/Dockerfile) | Alpine 3.16
 6.0.402-jammy-arm64v8, 6.0-jammy-arm64v8, 6.0.402-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 6.0.402-focal-arm64v8, 6.0-focal-arm64v8, 6.0.402-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
@@ -87,10 +87,10 @@ Tags | Dockerfile | OS Version
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-7.0.100-rc.2-bullseye-slim-arm32v7, 7.0-bullseye-slim-arm32v7, 7.0.100-rc.2-bullseye-slim, 7.0-bullseye-slim, 7.0.100-rc.2, 7.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
+7.0.100-rc.2-bullseye-slim-arm32v7, 7.0-bullseye-slim-arm32v7, 7.0.100-rc.2-bullseye-slim, 7.0-bullseye-slim, 7.0.100-rc.2, 7.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
 7.0.100-rc.2-alpine3.16-arm32v7, 7.0-alpine3.16-arm32v7, 7.0-alpine-arm32v7, 7.0.100-rc.2-alpine3.16, 7.0-alpine3.16, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/alpine3.16/arm32v7/Dockerfile) | Alpine 3.16
 7.0.100-rc.2-jammy-arm32v7, 7.0-jammy-arm32v7, 7.0.100-rc.2-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
-6.0.402-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.402-bullseye-slim, 6.0-bullseye-slim, 6.0.402, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
+6.0.402-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.402-bullseye-slim, 6.0-bullseye-slim, 6.0.402, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
 6.0.402-alpine3.16-arm32v7, 6.0-alpine3.16-arm32v7, 6.0-alpine-arm32v7, 6.0.402-alpine3.16, 6.0-alpine3.16, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.16/arm32v7/Dockerfile) | Alpine 3.16
 6.0.402-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.402-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.402-focal-arm32v7, 6.0-focal-arm32v7, 6.0.402-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
@@ -102,8 +102,8 @@ Tags | Dockerfile | OS Version
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-7.0.100-rc.2-nanoserver-ltsc2022, 7.0-nanoserver-ltsc2022, 7.0.100-rc.2, 7.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/nanoserver-ltsc2022/amd64/Dockerfile)
-6.0.402-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.402, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
+7.0.100-rc.2-nanoserver-ltsc2022, 7.0-nanoserver-ltsc2022, 7.0.100-rc.2, 7.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/nanoserver-ltsc2022/amd64/Dockerfile)
+6.0.402-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.402, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
 3.1.424-nanoserver-ltsc2022, 3.1-nanoserver-ltsc2022, 3.1.424, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ## Windows Server Core 2022 amd64 Tags
@@ -115,8 +115,8 @@ Tag | Dockerfile
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-7.0.100-rc.2-nanoserver-1809, 7.0-nanoserver-1809, 7.0.100-rc.2, 7.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/nanoserver-1809/amd64/Dockerfile)
-6.0.402-nanoserver-1809, 6.0-nanoserver-1809, 6.0.402, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-1809/amd64/Dockerfile)
+7.0.100-rc.2-nanoserver-1809, 7.0-nanoserver-1809, 7.0.100-rc.2, 7.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/7.0/nanoserver-1809/amd64/Dockerfile)
+6.0.402-nanoserver-1809, 6.0-nanoserver-1809, 6.0.402, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-1809/amd64/Dockerfile)
 3.1.424-nanoserver-1809, 3.1-nanoserver-1809, 3.1.424, 3.1 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/3.1/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server Core 2019 amd64 Tags
