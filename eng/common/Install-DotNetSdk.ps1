@@ -40,14 +40,16 @@ if (!(Test-Path $DotnetInstallScriptPath)) {
     & "$PSScriptRoot/Invoke-WithRetry.ps1" "Invoke-WebRequest 'https://dot.net/v1/$DotnetInstallScript' -OutFile $DotnetInstallScriptPath"
 }
 
+$DotnetChannel = "6.0"
+
 $InstallFailed = $false
 if ($IsRunningOnUnix) {
     & chmod +x $DotnetInstallScriptPath
-    & $DotnetInstallScriptPath --version "latest" --install-dir $InstallPath
+    & $DotnetInstallScriptPath --channel $DotnetChannel --install-dir $InstallPath
     $InstallFailed = ($LASTEXITCODE -ne 0)
 }
 else {
-    & $DotnetInstallScriptPath -Version "latest" -InstallDir $InstallPath
+    & $DotnetInstallScriptPath -Channel $DotnetChannel -InstallDir $InstallPath
     $InstallFailed = (-not $?)
 }
 
