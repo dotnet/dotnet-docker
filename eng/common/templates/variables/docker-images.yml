@@ -1,15 +1,6 @@
 variables:
-  # This variable is updated by automation to reference the latest version of Image Builder
-  imageNames.imageBuilderName: mcr.microsoft.com/dotnet-buildtools/image-builder:2034095
-  # This variable is referenced by the pipeline when it needs the name of the Image Builder image.
-  # It's defined separately from the imageNames.imageBuilderName variable so that it can be overridden
-  # by the pipeline without possibly causing a cyclic dependency. For example, an overriding pipeline
-  # may want to base the name of the Image Builder image from the original value of the variable. If
-  # there wasn't a separate variable for the name, you couldn't set imageNames.imageBuilder to
-  # $(imageNames.imageBuilder)-<suffix>, for example, because that would create a cyclic dependency. But
-  # you can set imageNames.imageBuilder to $(imageNames.imageBuilderName)-<suffix>.
+  imageNames.imageBuilderName: mcr.microsoft.com/dotnet-buildtools/image-builder:2040493
   imageNames.imageBuilder: $(imageNames.imageBuilderName)
-
   imageNames.imageBuilder.withrepo: imagebuilder-withrepo:$(Build.BuildId)-$(System.JobId)
   imageNames.testRunner: mcr.microsoft.com/dotnet-buildtools/prereqs:debian-buster-slim-docker-testrunner-974165
   imageNames.testRunner.withrepo: testrunner-withrepo:$(Build.BuildId)-$(System.JobId)
