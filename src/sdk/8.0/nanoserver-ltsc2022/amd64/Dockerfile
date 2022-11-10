@@ -34,20 +34,7 @@ RUN powershell -Command " `
         }; `
         mkdir dotnet; `
         tar -oxzf dotnet.zip -C dotnet; `
-        Remove-Item -Force dotnet.zip; `
-        `
-        # Install PowerShell global tool
-        $powershell_version = ''; `
-        Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = ''; `
-        if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
-            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-            exit 1; `
-        }; `
-        & \dotnet\dotnet tool install --add-source . --tool-path \powershell --version $powershell_version PowerShell.Windows.x64; `
-        & \dotnet\dotnet nuget locals all --clear; `
-        Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
-        Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force; `
+        Remove-Item -Force dotnet.zip; ` `
         `
         # Workaround for https://github.com/dotnet/sdk/issues/18410
         \dotnet\dotnet build-server shutdown; `
@@ -83,7 +70,6 @@ RUN setx /M PATH "%PATH%;C:\Program Files\powershell;C:\Program Files\MinGit\cmd
 USER ContainerUser
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
-COPY --from=installer ["/powershell", "/Program Files/powershell"]
 COPY --from=installer ["/MinGit", "/Program Files/MinGit"]
 
 # Trigger first run experience by running arbitrary cmd
