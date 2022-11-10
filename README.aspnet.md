@@ -74,7 +74,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-alpha.1-bullseye-slim-amd64, 8.0-preview-bullseye-slim-amd64, 8.0.0-alpha.1-bullseye-slim, 8.0-preview-bullseye-slim, 8.0.0-alpha.1, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bullseye-slim/amd64/Dockerfile) | Debian 11
+8.0.0-alpha.1-bullseye-slim-amd64, 8.0-preview-bullseye-slim-amd64, 8.0.0-alpha.1-bullseye-slim, 8.0-preview-bullseye-slim, 8.0.0-alpha.1, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bullseye-slim/amd64/Dockerfile) | Debian 11
 8.0.0-alpha.1-alpine3.16-amd64, 8.0-preview-alpine3.16-amd64, 8.0-preview-alpine-amd64, 8.0.0-alpha.1-alpine3.16, 8.0-preview-alpine3.16, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/alpine3.16/amd64/Dockerfile) | Alpine 3.16
 8.0.0-alpha.1-jammy-amd64, 8.0-preview-jammy-amd64, 8.0.0-alpha.1-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 8.0.0-alpha.1-jammy-chiseled-amd64, 8.0-preview-jammy-chiseled-amd64, 8.0.0-alpha.1-jammy-chiseled, 8.0-preview-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
@@ -100,7 +100,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-alpha.1-bullseye-slim-arm64v8, 8.0-preview-bullseye-slim-arm64v8, 8.0.0-alpha.1-bullseye-slim, 8.0-preview-bullseye-slim, 8.0.0-alpha.1, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
+8.0.0-alpha.1-bullseye-slim-arm64v8, 8.0-preview-bullseye-slim-arm64v8, 8.0.0-alpha.1-bullseye-slim, 8.0-preview-bullseye-slim, 8.0.0-alpha.1, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
 8.0.0-alpha.1-alpine3.16-arm64v8, 8.0-preview-alpine3.16-arm64v8, 8.0-preview-alpine-arm64v8, 8.0.0-alpha.1-alpine3.16, 8.0-preview-alpine3.16, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/alpine3.16/arm64v8/Dockerfile) | Alpine 3.16
 8.0.0-alpha.1-jammy-arm64v8, 8.0-preview-jammy-arm64v8, 8.0.0-alpha.1-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.0-alpha.1-jammy-chiseled-arm64v8, 8.0-preview-jammy-chiseled-arm64v8, 8.0.0-alpha.1-jammy-chiseled, 8.0-preview-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
@@ -123,7 +123,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-alpha.1-bullseye-slim-arm32v7, 8.0-preview-bullseye-slim-arm32v7, 8.0.0-alpha.1-bullseye-slim, 8.0-preview-bullseye-slim, 8.0.0-alpha.1, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
+8.0.0-alpha.1-bullseye-slim-arm32v7, 8.0-preview-bullseye-slim-arm32v7, 8.0.0-alpha.1-bullseye-slim, 8.0-preview-bullseye-slim, 8.0.0-alpha.1, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
 8.0.0-alpha.1-alpine3.16-arm32v7, 8.0-preview-alpine3.16-arm32v7, 8.0-preview-alpine-arm32v7, 8.0.0-alpha.1-alpine3.16, 8.0-preview-alpine3.16, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/alpine3.16/arm32v7/Dockerfile) | Alpine 3.16
 8.0.0-alpha.1-jammy-arm32v7, 8.0-preview-jammy-arm32v7, 8.0.0-alpha.1-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
@@ -137,7 +137,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.0-alpha.1-nanoserver-ltsc2022, 8.0-preview-nanoserver-ltsc2022, 8.0.0-alpha.1, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
+8.0.0-alpha.1-nanoserver-ltsc2022, 8.0-preview-nanoserver-ltsc2022, 8.0.0-alpha.1, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ## Windows Server Core 2022 amd64 Tags
 Tag | Dockerfile
@@ -160,7 +160,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.0-alpha.1-nanoserver-1809, 8.0-preview-nanoserver-1809, 8.0.0-alpha.1, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/nanoserver-1809/amd64/Dockerfile)
+8.0.0-alpha.1-nanoserver-1809, 8.0-preview-nanoserver-1809, 8.0.0-alpha.1, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server Core 2019 amd64 Tags
 Tag | Dockerfile

@@ -4749,7 +4749,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)": {},
-            "8.0-preview": {}
+            "8.0-preview": {},
+            "latest": {}
           },
           "platforms": [
             {
