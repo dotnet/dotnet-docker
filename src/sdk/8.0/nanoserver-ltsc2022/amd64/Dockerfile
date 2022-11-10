@@ -34,7 +34,7 @@ RUN powershell -Command " `
         }; `
         mkdir dotnet; `
         tar -oxzf dotnet.zip -C dotnet; `
-        Remove-Item -Force dotnet.zip; ` `
+        Remove-Item -Force dotnet.zip; `
         `
         # Workaround for https://github.com/dotnet/sdk/issues/18410
         \dotnet\dotnet build-server shutdown; `

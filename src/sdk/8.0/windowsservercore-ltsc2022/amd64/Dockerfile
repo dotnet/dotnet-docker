@@ -46,7 +46,7 @@ RUN powershell -Command " `
             exit 1; `
         }; `
         tar -oxzf dotnet.zip -C $Env:ProgramFiles\dotnet ./LICENSE.txt ./ThirdPartyNotices.txt ./packs ./sdk ./sdk-manifests ./templates ./shared/Microsoft.WindowsDesktop.App; `
-        Remove-Item -Force dotnet.zip; `"
+        Remove-Item -Force dotnet.zip;"
 
 RUN setx /M PATH "%PATH%;C:\Program Files\powershell;C:\Program Files\MinGit\cmd"
 
