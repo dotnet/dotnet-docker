@@ -36,8 +36,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected void VerifyCommonInsecureFiles(ProductImageData imageData)
         {
-            if (imageData.Version < new Version("3.1") ||
-                (imageData.OS.Contains("alpine") && imageData.IsArm))
+            if (imageData.OS.Contains("alpine") && imageData.IsArm)
             {
                 return;
             }

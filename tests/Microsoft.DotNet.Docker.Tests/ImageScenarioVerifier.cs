@@ -39,6 +39,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public async Task Execute()
         {
+            if (_imageData.Version.Major == 8)
+            {
+                _outputHelper.WriteLine("Skipping until SDK project templates support .NET 8");
+                return;
+            }
+
             string solutionDir = CreateTestSolutionWithSdkImage(_isWeb ? "web" : "console");
             List<string> tags = new List<string>();
             InjectCustomTestCode(Path.Combine(solutionDir, "app"));

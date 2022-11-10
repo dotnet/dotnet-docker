@@ -94,6 +94,6 @@ else:{{InsertTemplate("Dockerfile.linux.install-sdk",
         "based-on-buildpack-deps": isBasedOnBuildpackDeps,
         "use-local-version-var": (dotnetVersion = "3.1"),
         "is-rpm-install": isRpmInstall
-    ])}}}}{{if !isAlpine || ARCH_SHORT = "x64":
+    ])}}}}{{if (!isAlpine || ARCH_SHORT = "x64") && dotnetVersion != "8.0":
 
 {{InsertTemplate("Dockerfile.linux.install-powershell")}}}}

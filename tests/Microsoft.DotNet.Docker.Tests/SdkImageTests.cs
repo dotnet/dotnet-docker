@@ -30,6 +30,25 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected override DotNetImageType ImageType => DotNetImageType.SDK;
 
+        private bool IsPowerShellSupported(ProductImageData imageData, out string reason)
+        {
+            if (imageData.OS.Contains("alpine") && imageData.IsArm)
+            {
+                // PowerShell needs support for Arm-based Alpine (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
+                reason = "PowerShell does not have Alpine arm images, skip testing";
+                return false;
+            }
+
+            if (imageData.Version.Major == 8)
+            {
+                reason = "PowerShell doesn't have .NET 8 support yet";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+
         public static IEnumerable<object[]> GetImageData()
         {
             return TestData.GetImageData()
@@ -137,9 +156,9 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            // Disable this test for Arm-based Alpine until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
-            if (imageData.OS.Contains("alpine") && imageData.IsArm)
+            if (!IsPowerShellSupported(imageData, out string powerShellReason))
             {
+                OutputHelper.WriteLine(powerShellReason);
                 return;
             }
 
@@ -371,10 +390,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
         {
-            // Disable this test for Arm-based Alpine until PowerShell has support (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
-            if (imageData.OS.Contains("alpine") && imageData.IsArm)
+            if (!IsPowerShellSupported(imageData, out string powershellReason))
             {
-                OutputHelper.WriteLine("PowerShell does not have Alpine arm images, skip testing");
+                OutputHelper.WriteLine(powershellReason);
                 return;
             }
 
