@@ -20,8 +20,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected override DotNetImageType ImageType => DotNetImageType.Runtime;
 
+        public static IEnumerable<object[]> GetRuntimeImageData() => GetImageData(DotNetImageType.Runtime);
+
         [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
+        [MemberData(nameof(GetRuntimeImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
             if (imageData.IsArm && imageData.OS == OS.Jammy)
@@ -36,7 +38,7 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
+        [MemberData(nameof(GetRuntimeImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
@@ -50,7 +52,7 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
+        [MemberData(nameof(GetRuntimeImageData))]
         public void VerifyPackageInstallation(ProductImageData imageData)
         {
             if (!imageData.OS.Contains("cbl-mariner") || imageData.IsDistroless || imageData.Version.Major > 6)
@@ -64,15 +66,29 @@ namespace Microsoft.DotNet.Docker.Tests
                     .Concat(RuntimeDepsImageTests.GetExpectedRpmPackagesInstalled(imageData)));
         }
 
+        [LinuxImageTheory]
+        [MemberData(nameof(GetRuntimeImageData))]
+        public void VerifyInsecureFiles(ProductImageData imageData)
+        {
+            base.VerifyCommonInsecureFiles(imageData);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetRuntimeImageData))]
+        public void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
+        {
+            base.VerifyCommonShellNotInstalledForDistroless(imageData);
+        }
+
         [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
+        [MemberData(nameof(GetRuntimeImageData))]
         public void VerifyNoSasToken(ProductImageData imageData)
         {
             base.VerifyCommonNoSasToken(imageData);
         }
 
         [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
+        [MemberData(nameof(GetRuntimeImageData))]
         public void VerifyDefaultUser(ProductImageData imageData)
         {
             VerifyCommonDefaultUser(imageData);

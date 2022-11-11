@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -21,15 +22,17 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected override DotNetImageType ImageType => DotNetImageType.Runtime_Deps;
 
+        public static IEnumerable<object[]> GetRuntimeDepsImageData() => GetImageData(DotNetImageType.Runtime_Deps);
+
         [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
+        [MemberData(nameof(GetRuntimeDepsImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
             base.VerifyCommonEnvironmentVariables(imageData);
         }
 
         [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
+        [MemberData(nameof(GetRuntimeDepsImageData))]
         public void VerifyPackageInstallation(ProductImageData imageData)
         {
             if (!imageData.OS.Contains("cbl-mariner") || imageData.IsDistroless || imageData.Version.Major > 6)
@@ -43,14 +46,28 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
+        [MemberData(nameof(GetRuntimeDepsImageData))]
+        public void VerifyInsecureFiles(ProductImageData imageData)
+        {
+            base.VerifyCommonInsecureFiles(imageData);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetRuntimeDepsImageData))]
+        public void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
+        {
+            base.VerifyCommonShellNotInstalledForDistroless(imageData);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetRuntimeDepsImageData))]
         public void VerifyNoSasToken(ProductImageData imageData)
         {
             base.VerifyCommonNoSasToken(imageData);
         }
 
         [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
+        [MemberData(nameof(GetRuntimeDepsImageData))]
         public void VerifyDefaultUser(ProductImageData imageData)
         {
             VerifyCommonDefaultUser(imageData);
@@ -60,7 +77,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// Verifies that the packages installed in distroless images are scannable by security tools.
         /// </summary>
         [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
+        [MemberData(nameof(GetRuntimeDepsImageData))]
         public void VerifyDistrolessPackages(ProductImageData imageData)
         {
             if (!imageData.IsDistroless)

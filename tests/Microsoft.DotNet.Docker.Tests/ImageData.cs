@@ -147,21 +147,22 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected virtual string GetArchTagSuffix()
         {
-            if (Arch == Arch.Amd64 && DockerHelper.IsLinuxContainerModeEnabled)
+            if (Arch == Arch.Amd64 && !DockerHelper.IsLinuxContainerModeEnabled)
             {
-                return "-amd64";
-            }
-            else if (Arch == Arch.Arm)
-            {
-                return "-arm32v7";
-            }
-            else if (Arch == Arch.Arm64)
-            {
-                return "-arm64v8";
+                return string.Empty;
             }
 
-            return string.Empty;
+            return $"-{GetArchLabel()}";
         }
+
+        protected string GetArchLabel() =>
+            Arch switch
+            {
+                Arch.Amd64 => "amd64",
+                Arch.Arm => "arm32v7",
+                Arch.Arm64 => "arm64v8",
+                _ => throw new NotSupportedException()
+            };
 
         private static string GetRegistryName(string repo, string tag)
         {
