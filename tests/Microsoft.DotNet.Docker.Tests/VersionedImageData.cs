@@ -8,14 +8,14 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public abstract class VersionedImageData : ImageData
     {
-        public virtual Version RuntimeVersion
+        public virtual ImageVersion RuntimeVersion
         {
             get => throw new NotImplementedException();
             set => throw new NotSupportedException();
         }
 
-        public string RuntimeVersionString => RuntimeVersion.ToString(2);
-        public Version Version { get; set; }
-        public string VersionString => Version.ToString(2);
+        public string RuntimeVersionString => RuntimeVersion.ToString();
+        public ImageVersion Version { get; set; }
+        public string VersionString => Version.ToString();
     }
 }

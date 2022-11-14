@@ -64,13 +64,13 @@ RUN powershell -Command " `
                 "sdk-extract-groups": when(isSingleStage, sdkExtractGroups, []),
                 "is-internal": ARGS["dotnet-is-internal"],
                 "url-suffix": ARGS["dotnet-url-suffix"]
-            ], "        ")}} `
+            ], "        ")}}{{if dotnetVersion != "8.0": `
         `
         {{InsertTemplate("Dockerfile.windows.install-powershell",
             [
                 "dotnet-is-internal": ARGS["dotnet-is-internal"]
             ],
-            "        ")}}{{
+            "        ")}}}}{{
 if dotnetVersion != "3.1" && !isSingleStage: `
         `
         # Workaround for https://github.com/dotnet/sdk/issues/18410
