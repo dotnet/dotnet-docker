@@ -6,12 +6,28 @@ using System;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public static class ImageVersion
+    public readonly struct ImageVersion
     {
-        public static readonly Version V3_1 = new Version(3, 1);
-        public static readonly Version V6_0 = new Version(6, 0);
-        public static readonly Version V6_2 = new Version(6, 2);
-        public static readonly Version V6_3 = new Version(6, 3);
-        public static readonly Version V7_0 = new Version(7, 0);
+        private readonly Version _version;
+
+        public static readonly ImageVersion V3_1 = new(new Version(3, 1), isPreview: false);
+        public static readonly ImageVersion V6_0 = new(new Version(6, 0), isPreview: false);
+        public static readonly ImageVersion V6_2 = new(new Version(6, 2), isPreview: false);
+        public static readonly ImageVersion V6_3 = new(new Version(6, 3), isPreview: false);
+        public static readonly ImageVersion V7_0 = new(new Version(7, 0), isPreview: false);
+
+        public ImageVersion(Version version, bool isPreview)
+        {
+            _version = version;
+            IsPreview = isPreview;
+        }
+
+        public int Major => _version.Major;
+
+        public bool IsPreview { get; }
+
+        public override string ToString() => _version.ToString();
+
+        public string GetTagName() => ToString() + (IsPreview ? "-preview" : string.Empty);
     }
 }

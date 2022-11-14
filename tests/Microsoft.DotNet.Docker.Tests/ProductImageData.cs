@@ -105,7 +105,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private string GetTagName(DotNetImageType imageType)
         {
-            Version imageVersion;
+            ImageVersion imageVersion;
             string os;
             switch (imageType)
             {
@@ -124,7 +124,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     throw new NotSupportedException($"Unsupported image type '{imageType}'");
             }
 
-            return GetTagName(imageVersion.ToString(2), os);
+            return GetTagName(imageVersion.GetTagName(), os);
         }
 
         protected override string GetArchTagSuffix()

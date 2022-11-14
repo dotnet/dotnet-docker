@@ -582,7 +582,7 @@ namespace Microsoft.DotNet.Docker.Tests
             // will treat the presence of any commandline args as overriding the entire CMD block in the DockerFile.
             bool addDefaultArgs =
                 // We are version 7.0+, this will never apply to 6.x images
-                imageData.Version >= new Version(7, 0) &&
+                imageData.Version.Major >= 7 &&
                 // We are adding anything to the command line. When additional flags are added to this method, `noAuthentication`
                 // should be replaced something like `(noAuthentication || myNewFlag || mySetting != Setting.Default)`
                 noAuthentication;
