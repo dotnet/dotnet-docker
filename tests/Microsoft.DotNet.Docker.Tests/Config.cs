@@ -35,7 +35,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string NuGetFeedPassword { get; } =
             Environment.GetEnvironmentVariable("NUGET_FEED_PASSWORD") ?? string.Empty;
         public static string[] Paths { get; } =
-        Environment.GetEnvironmentVariable("DOCKERFILE_PATHS")?
+            Environment.GetEnvironmentVariable("DOCKERFILE_PATHS")?
                 .Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
         public static bool IsInternal(string dotnetVersion)
