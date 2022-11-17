@@ -2,7 +2,7 @@
     _ ARGS:
       top-header: The string to use as the top-level header.
       readme-host: Moniker of the site that will host the readme
-}}{{ARGS["top-header"]}} Related Repos
+}}{{ARGS["top-header"]}} Related Repositories
 
 .NET:
 

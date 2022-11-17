@@ -25,7 +25,7 @@ Type the following command to run a sample console application:
 docker run --rm mcr.microsoft.com/dotnet/samples
 ```
 
-# Related Repos
+# Related Repositories
 
 .NET:
 
