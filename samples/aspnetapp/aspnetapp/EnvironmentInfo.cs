@@ -12,20 +12,20 @@ public struct EnvironmentInfo
             return;
         }
 
-        string[] memoryLimits = new string[] 
+        string[] memoryLimitPaths = new string[] 
         {
             "/sys/fs/cgroup/memory.max",
             "/sys/fs/cgroup/memory/memory.limit_in_bytes",
         };
 
-        string[] currentMemory = new string[] 
+        string[] currentMemoryPaths = new string[] 
         {
             "/sys/fs/cgroup/memory.current",
             "/sys/fs/cgroup/memory/memory.usage_in_bytes",
         };
 
-        MemoryLimit = GetBestValue(memoryLimits);
-        MemoryUsage = GetBestValue(currentMemory);
+        MemoryLimit = GetBestValue(memoryLimitPaths);
+        MemoryUsage = GetBestValue(currentMemoryPaths);
     }
 
     public string RuntimeVersion => RuntimeInformation.FrameworkDescription;

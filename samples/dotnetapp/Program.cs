@@ -50,38 +50,36 @@ const long Mebi = 1024 * 1024;
 const long Gibi = Mebi * 1024;
 GCMemoryInfo gcInfo = GC.GetGCMemoryInfo();
 long totalMemoryBytes = gcInfo.TotalAvailableMemoryBytes;
-string totalAvailableMemory = GetInBestUnit(totalMemoryBytes);
 
 // Environment information
 WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
 WriteLine($"{nameof(Environment.ProcessorCount)}: {Environment.ProcessorCount}");
-WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {totalAvailableMemory}");
+WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {totalMemoryBytes} ({GetInBestUnit(totalMemoryBytes)})");
+
+string[] memoryLimitPaths = new string[] 
+{
+    "/sys/fs/cgroup/memory.max",
+    "/sys/fs/cgroup/memory/memory.limit_in_bytes",
+};
+
+string[] currentMemoryPaths = new string[] 
+{
+    "/sys/fs/cgroup/memory.current",
+    "/sys/fs/cgroup/memory/memory.usage_in_bytes",
+};
 
 // cgroup information
-if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && 
-    Directory.Exists("/sys/fs/cgroup/cpu") &&
-    Directory.Exists("/sys/fs/cgroup/memory") &&
-    File.Exists("sys/fs/cgroup/cpu/cpu.cfs_quota_us"))
+if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
 {
-    // get cpu cgroup information
-    string cpuquota = File.ReadAllLines("/sys/fs/cgroup/cpu/cpu.cfs_quota_us")[0];
-    if (int.TryParse(cpuquota, out int quota) &&
-        quota > 0)
-    {
-        WriteLine($"cfs_quota_us: {quota}");
-    }
-
     // get memory cgroup information
-    string usageBytes = File.ReadAllLines("/sys/fs/cgroup/memory/memory.usage_in_bytes")[0];
-    string limitBytes = File.ReadAllLines("/sys/fs/cgroup/memory/memory.limit_in_bytes")[0];
-    if (long.TryParse(usageBytes, out long usage) &&
-        long.TryParse(limitBytes, out long limit) &&
-        // above this size is unlikely to be an intentionally constrained cgroup
-        limit < 10 * Gibi)
+    long memoryLimit = GetBestValue(memoryLimitPaths);
+    long currentMemory = GetBestValue(currentMemoryPaths);
+
+    if (memoryLimit > 0)
     {
-        WriteLine($"usage_in_bytes: {usageBytes} {GetInBestUnit(usage)}");
-        WriteLine($"limit_in_bytes: {limitBytes} {GetInBestUnit(limit)}");
-        WriteLine($"GC Hard limit %:  {decimal.Divide(totalMemoryBytes,limit) * 100}");
+        WriteLine($"cgroup memory limit: {memoryLimit} ({GetInBestUnit(memoryLimit)})");
+        WriteLine($"cgroup memory usage: {currentMemory} ({GetInBestUnit(currentMemory)})");
+        WriteLine($"GC Hard limit %:  {decimal.Divide(totalMemoryBytes,memoryLimit) * 100}");
     }
 }
 
@@ -101,4 +99,24 @@ string GetInBestUnit(long size)
         decimal gibibytes = Decimal.Divide(size, Gibi);
         return $"{gibibytes:F} GiB";
     }
+}
+
+long GetBestValue(string[] paths)
+{
+    string value = string.Empty;
+    foreach(string path in paths)
+    {
+        if (Path.Exists(path))
+        {
+            value = File.ReadAllText(path);
+            break;
+        }
+    }
+
+    if (int.TryParse(value, out int result))
+    {
+        return result;
+    }
+
+    return 0;
 }
