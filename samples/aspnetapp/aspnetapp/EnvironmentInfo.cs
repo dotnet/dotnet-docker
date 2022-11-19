@@ -1,32 +1,59 @@
 using System.Runtime.InteropServices;
 
-public class EnvironmentInfo
+public struct EnvironmentInfo
 {
     public EnvironmentInfo()
     {
-        RuntimeVersion = RuntimeInformation.FrameworkDescription;
-        OSVersion = RuntimeInformation.OSDescription;
-        OSArchitecture = RuntimeInformation.OSArchitecture.ToString();
-        ProcessorCount = Environment.ProcessorCount;
         GCMemoryInfo gcInfo = GC.GetGCMemoryInfo();
         TotalAvailableMemoryBytes = gcInfo.TotalAvailableMemoryBytes;
-        bool hasCgroup = RuntimeInformation.OSDescription.StartsWith("Linux") && Directory.Exists("/sys/fs/cgroup/memory");
 
-        if (hasCgroup)
+        if (!RuntimeInformation.OSDescription.StartsWith("Linux"))
         {
-            string limit = System.IO.File.ReadAllLines("/sys/fs/cgroup/memory/memory.limit_in_bytes")[0];
-            string usage = System.IO.File.ReadAllLines("/sys/fs/cgroup/memory/memory.usage_in_bytes")[0];
-            MemoryLimit = long.Parse(limit);
-            MemoryUsage = long.Parse(usage);
+            return;
         }
+
+        string[] memoryLimits = new string[] 
+        {
+            "/sys/fs/cgroup/memory.max",
+            "/sys/fs/cgroup/memory/memory.limit_in_bytes",
+        };
+
+        string[] currentMemory = new string[] 
+        {
+            "/sys/fs/cgroup/memory.current",
+            "/sys/fs/cgroup/memory/memory.usage_in_bytes",
+        };
+
+        MemoryLimit = GetBestValue(memoryLimits);
+        MemoryUsage = GetBestValue(currentMemory);
     }
 
-    public string RuntimeVersion { get; set; }
-    public string OSVersion { get; set; }
-    public string OSArchitecture { get; set; }
-    public int ProcessorCount { get; set; }
-    public long TotalAvailableMemoryBytes {get; set;}
-    public long MemoryLimit {get; set;}
-    public long MemoryUsage {get; set;}
+    public string RuntimeVersion => RuntimeInformation.FrameworkDescription;
+    public string OSVersion => RuntimeInformation.OSDescription;
+    public string OSArchitecture => RuntimeInformation.OSArchitecture.ToString();
+    public string User => Environment.UserName;
+    public int ProcessorCount => Environment.ProcessorCount;
+    public long TotalAvailableMemoryBytes { get; init; }
+    public long MemoryLimit { get; init; }
+    public long MemoryUsage { get; init; }
 
+    private long GetBestValue(string[] paths)
+    {
+        string value = string.Empty;
+        foreach(string path in paths)
+        {
+            if (Path.Exists(path))
+            {
+                value = File.ReadAllText(path);
+                break;
+            }
+        }
+
+        if (int.TryParse(value, out int result))
+        {
+            return result;
+        }
+
+        return 0;
+    }
 }
