@@ -7,18 +7,17 @@ using static System.Console;
 // Variant of https://github.com/dotnet/core/tree/main/samples/dotnet-runtimeinfo
 // Ascii text: https://ascii.co.uk/text (Univers font)
 
-string nl = Environment.NewLine;
+WriteLine($"""
+         88                                                    
+         88              ,d                             ,d     
+         88              88                             88     
+ ,adPPYb,88  ,adPPYba, MM88MMM 8b,dPPYba,   ,adPPYba, MM88MMM  
+a8"    `Y88 a8"     "8a  88    88P'   `"8a a8P_____88   88     
+8b       88 8b       d8  88    88       88 8PP!!!!!!!   88     
+"8a,   ,d88 "8a,   ,a8"  88,   88       88 "8b,   ,aa   88,    
+ `"8bbdP"Y8  `"YbbdP"'   "Y888 88       88  `"Ybbd8"'   "Y888  
 
-WriteLine(
-$"         42{nl}" +
-$"         42              ,d                             ,d{nl}" +
-$"         42              42                             42{nl}" +
-$" ,adPPYb,42  ,adPPYba, MM42MMM 8b,dPPYba,   ,adPPYba, MM42MMM{nl}" +
-$"a8\"    `Y42 a8\"     \"8a  42    42P\'   `\"8a a8P_____42   42{nl}" +
-$"8b       42 8b       d8  42    42       42 8PP\"\"\"\"\"\"\"   42{nl}" +
-$"\"8a,   ,d42 \"8a,   ,a8\"  42,   42       42 \"8b,   ,aa   42,{nl}" +
-$" `\"8bbdP\"Y8  `\"YbbdP\"\'   \"Y428 42       42  `\"Ybbd8\"\'   \"Y428{nl}");
-
+""");
 
 // .NET information
 WriteLine(RuntimeInformation.FrameworkDescription);
