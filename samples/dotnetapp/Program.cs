@@ -80,7 +80,7 @@ if (OperatingSystem.IsLinux())
     {
         WriteLine($"cgroup memory limit: {memoryLimit} ({GetInBestUnit(memoryLimit)})");
         WriteLine($"cgroup memory usage: {currentMemory} ({GetInBestUnit(currentMemory)})");
-        WriteLine($"GC Hard limit %:  {(double)totalMemoryBytes/memoryLimit * 100:N0}");
+        WriteLine($"GC Hard limit %: {(double)totalMemoryBytes/memoryLimit * 100:N0}");
     }
 }
 
