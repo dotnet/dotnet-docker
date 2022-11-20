@@ -7,7 +7,7 @@ using static System.Console;
 // Variant of https://github.com/dotnet/core/tree/main/samples/dotnet-runtimeinfo
 // Ascii text: https://ascii.co.uk/text (Univers font)
 
-WriteLine($"""
+WriteLine("""
          88                                                    
          88              ,d                             ,d     
          88              88                             88     
