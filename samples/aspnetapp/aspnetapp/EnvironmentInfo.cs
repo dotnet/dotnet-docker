@@ -7,7 +7,7 @@ public struct EnvironmentInfo
         GCMemoryInfo gcInfo = GC.GetGCMemoryInfo();
         TotalAvailableMemoryBytes = gcInfo.TotalAvailableMemoryBytes;
 
-        if (!RuntimeInformation.OSDescription.StartsWith("Linux"))
+        if (!OperatingSystem.IsLinux())
         {
             return;
         }
@@ -37,10 +37,10 @@ public struct EnvironmentInfo
     public long MemoryLimit { get; init; }
     public long MemoryUsage { get; init; }
 
-    private long GetBestValue(string[] paths)
+    private static long GetBestValue(string[] paths)
     {
         string value = string.Empty;
-        foreach(string path in paths)
+        foreach (string path in paths)
         {
             if (Path.Exists(path))
             {

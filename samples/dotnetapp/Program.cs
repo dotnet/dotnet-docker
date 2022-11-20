@@ -70,7 +70,7 @@ string[] currentMemoryPaths = new string[]
 };
 
 // cgroup information
-if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+if (OperatingSystem.IsLinux())
 {
     // get memory cgroup information
     long memoryLimit = GetBestValue(memoryLimitPaths);
@@ -80,7 +80,7 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
     {
         WriteLine($"cgroup memory limit: {memoryLimit} ({GetInBestUnit(memoryLimit)})");
         WriteLine($"cgroup memory usage: {currentMemory} ({GetInBestUnit(currentMemory)})");
-        WriteLine($"GC Hard limit %:  {decimal.Divide(totalMemoryBytes,memoryLimit) * 100}");
+        WriteLine($"GC Hard limit %:  {(double)totalMemoryBytes/memoryLimit * 100:N0}");
     }
 }
 
@@ -105,7 +105,7 @@ string GetInBestUnit(long size)
 long GetBestValue(string[] paths)
 {
     string value = string.Empty;
-    foreach(string path in paths)
+    foreach (string path in paths)
     {
         if (Path.Exists(path))
         {
