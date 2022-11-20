@@ -92,12 +92,12 @@ string GetInBestUnit(long size)
     }
     else if (size < Gibi)
     {
-        decimal mebibytes = Decimal.Divide(size, Mebi);
+        double mebibytes = (double)(size / Mebi);
         return $"{mebibytes:F} MiB";
     }
     else
     {
-        decimal gibibytes = Decimal.Divide(size, Gibi);
+        double gibibytes = (double)(size / Gibi);
         return $"{gibibytes:F} GiB";
     }
 }
