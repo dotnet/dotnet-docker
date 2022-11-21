@@ -1,5 +1,6 @@
 variables:
-  imageNames.imageBuilder: mcr.microsoft.com/dotnet-buildtools/image-builder:2017609
+  imageNames.imageBuilderName: mcr.microsoft.com/dotnet-buildtools/image-builder:2044697
+  imageNames.imageBuilder: $(imageNames.imageBuilderName)
   imageNames.imageBuilder.withrepo: imagebuilder-withrepo:$(Build.BuildId)-$(System.JobId)
   imageNames.testRunner: mcr.microsoft.com/dotnet-buildtools/prereqs:debian-buster-slim-docker-testrunner-974165
   imageNames.testRunner.withrepo: testrunner-withrepo:$(Build.BuildId)-$(System.JobId)

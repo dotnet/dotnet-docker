@@ -17,7 +17,7 @@ steps:
 - ${{ parameters.customInitSteps }}
 - powershell: |
     if ("${{ variables['System.TeamProject'] }}" -eq "${{ parameters.internalProjectName }}" -and "${{ variables['Build.Reason'] }}" -ne "PullRequest") {
-      $optionalTestArgs="$optionalTestArgs -PullImages -Registry $env:ACR_SERVER -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info/image-info.json"
+      $optionalTestArgs="$optionalTestArgs -PullImages -Registry $env:ACR_SERVER -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info.json"
     } 
     if ($env:REPOTESTARGS) {
       $optionalTestArgs += " $env:REPOTESTARGS"
@@ -32,12 +32,13 @@ steps:
   - template: ../steps/download-build-artifact.yml
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
+      artifactName: image-info
       condition: ${{ parameters.condition }}
-- template: parse-os-versions.yml
+- template: parse-test-arg-arrays.yml
 - powershell: >
     $(test.init);
     $(testScriptPath)
-    -Version '$(productVersion)'
+    -Paths $(imageBuilderPathsArrayInitStr)
     -OSVersions $(osVersionsArrayInitStr)
     $(optionalTestArgs)
   displayName: Test Images
