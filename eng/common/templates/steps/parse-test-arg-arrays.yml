@@ -1,0 +1,15 @@
+steps:
+- powershell: |
+    # Formats the OS versions in a compact human-readable form (e.g. "os1/os2")
+    $osVersionsDisplayName = '$(osVersions)' -Replace '--os-version ', '' -Replace ' ', '/'
+
+    # Defines a PowerShell snippet in string-form that can be used to initialize an array of the OS versions
+    $osVersionsArrayInitStr = "@('" + $($osVersionsDisplayName -Replace "/", "', '") + "')"
+    
+    echo "##vso[task.setvariable variable=osVersionsDisplayName]$osVersionsDisplayName"
+    echo "##vso[task.setvariable variable=osVersionsArrayInitStr]$osVersionsArrayInitStr"
+
+    # Defines a PowerShell snippet in string-form that can be used to initialize an array of the image builder paths
+    $pathInitStr = "@('" + $('$(imageBuilderPaths)' -Replace '--path', '' -Replace " ", "', '") + "')"
+    echo "##vso[task.setvariable variable=imageBuilderPathsArrayInitStr]$pathInitStr"
+  displayName: Parse Test Arg Arrays
