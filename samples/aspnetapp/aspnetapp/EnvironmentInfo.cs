@@ -33,9 +33,9 @@ public struct EnvironmentInfo
     public string OSArchitecture => RuntimeInformation.OSArchitecture.ToString();
     public string User => Environment.UserName;
     public int ProcessorCount => Environment.ProcessorCount;
-    public long TotalAvailableMemoryBytes { get; init; }
-    public long MemoryLimit { get; init; }
-    public long MemoryUsage { get; init; }
+    public long TotalAvailableMemoryBytes { get; }
+    public long MemoryLimit { get; }
+    public long MemoryUsage { get; }
 
     private static long GetBestValue(string[] paths)
     {
