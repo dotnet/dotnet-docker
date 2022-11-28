@@ -17,9 +17,9 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         }
 
-        public static IEnumerable<object[]> GetImageData()
+        public static IEnumerable<object[]> GetImageData(DotNetImageType imageType)
         {
-            return TestData.GetImageData()
+            return TestData.GetImageData(imageType)
                 .Select(imageData => new object[] { imageData });
         }
 
@@ -46,16 +46,7 @@ namespace Microsoft.DotNet.Docker.Tests
             EnvironmentVariableInfo.Validate(variables, imageTag, imageData, DockerHelper);
         }
 
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyInsecureFiles(ProductImageData imageData)
-        {
-            base.VerifyCommonInsecureFiles(imageData);
-        }
-
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
+        public void VerifyCommonShellNotInstalledForDistroless(ProductImageData imageData)
         {
             if (!imageData.IsDistroless)
             {
