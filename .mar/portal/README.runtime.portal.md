@@ -11,7 +11,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 * `6.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime:6.0`
 
-## Related Repos
+## Related Repositories
 
 .NET:
 

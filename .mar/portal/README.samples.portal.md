@@ -11,7 +11,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 * `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
 
-## Related Repos
+## Related Repositories
 
 .NET:
 
