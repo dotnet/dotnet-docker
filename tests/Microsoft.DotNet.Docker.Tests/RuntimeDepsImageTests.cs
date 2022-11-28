@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -20,6 +21,8 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         protected override DotNetImageType ImageType => DotNetImageType.Runtime_Deps;
+
+        public static IEnumerable<object[]> GetImageData() => GetImageData(DotNetImageType.Runtime_Deps);
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
@@ -40,6 +43,20 @@ namespace Microsoft.DotNet.Docker.Tests
             VerifyExpectedInstalledRpmPackages(
                 imageData,
                 GetExpectedRpmPackagesInstalled(imageData));
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyInsecureFiles(ProductImageData imageData)
+        {
+            base.VerifyCommonInsecureFiles(imageData);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
+        {
+            base.VerifyCommonShellNotInstalledForDistroless(imageData);
         }
 
         [LinuxImageTheory]

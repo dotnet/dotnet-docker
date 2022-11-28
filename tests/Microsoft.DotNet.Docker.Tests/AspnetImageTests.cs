@@ -20,6 +20,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected override DotNetImageType ImageType => DotNetImageType.Aspnet;
 
+        public static IEnumerable<object[]> GetImageData() => GetImageData(DotNetImageType.Aspnet);
+
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
@@ -68,6 +70,20 @@ namespace Microsoft.DotNet.Docker.Tests
                 imageData,
                 GetExpectedRpmPackagesInstalled(imageData)
                     .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyInsecureFiles(ProductImageData imageData)
+        {
+            base.VerifyCommonInsecureFiles(imageData);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
+        {
+            base.VerifyCommonShellNotInstalledForDistroless(imageData);
         }
 
         [DotNetTheory]
