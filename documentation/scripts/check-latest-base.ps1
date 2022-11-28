@@ -72,9 +72,9 @@ if ($imageConfig.Os -ne $baseImageConfig.Os -or $imageConfig.Architecture -ne $b
 
 Write-Host
 Write-Host "Comparing image layers..."
-$lastLayer = $baseImageConfig.RootFS.Layers[-1]
-
-if ($imageConfig.RootFS.Layers -contains $lastLayer) {
+$baseLayerCount = $baseImageConfig.RootFS.Layers.Length
+$layerDiffs = Compare-Object $baseImageConfig.RootFS.Layers $imageConfig.RootFS.Layers[0..$($baseLayerCount - 1)]
+if (-not $layerDiffs) {
     $result = $true
 }
 else {
