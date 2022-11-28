@@ -9,6 +9,7 @@ namespace Microsoft.DotNet.Docker.Tests
         // Alpine
         public const string Alpine = "alpine";
         public const string Alpine316 = $"{Alpine}3.16";
+        public const string Alpine317 = $"{Alpine}3.17";
 
         // Debian
         public const string Bullseye = "bullseye";
