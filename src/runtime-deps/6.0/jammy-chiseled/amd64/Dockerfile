@@ -29,6 +29,7 @@ RUN groupadd \
 COPY --from=chisel /opt/chisel/chisel /usr/bin/
 RUN chisel cut --release "ubuntu-22.04" --root /rootfs \
         base-files_base \
+        base-files_release-info \
         ca-certificates_data \
         libc6_libs \
         libgcc-s1_libs \
