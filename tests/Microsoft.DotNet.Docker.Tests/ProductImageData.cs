@@ -7,11 +7,10 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class ProductImageData : VersionedImageData
+    public class ProductImageData : ImageData
     {
         private string _sdkOS;
-
-        public override ImageVersion RuntimeVersion => Version;
+        private string _osTag;
 
         public bool HasCustomSdk => _sdkOS != null;
 
@@ -34,18 +33,35 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _sdkOS = value; }
         }
 
+        public string OSTag
+        {
+            get
+            {
+                if (_osTag is not null)
+                {
+                    return _osTag;
+                }
+
+                return OS;
+            }
+            set { _osTag = value; }
+        }
+
+        public ImageVersion Version { get; set; }
+        public string VersionString => Version.ToString();
+
+        public string GetDockerfilePath(DotNetImageType imageType) =>
+            $"src/{GetVariantName(imageType)}/{Version}/{OSTag}/{GetArchLabel()}";
+
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
 
-        public string GetProductImageName(string tag, string variantName)
-        {
-            return GetImageName(tag, variantName);
-        }
+        public static string GetVariantName(DotNetImageType imageType) =>
+            Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
 
         public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
         {
-            string variantName = Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
             string tag = GetTagName(imageType);
-            string imageName = GetProductImageName(tag, variantName);
+            string imageName = GetImageName(tag, GetVariantName(imageType));
 
             PullImageIfNecessary(imageName, dockerHelper);
 
@@ -96,8 +112,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 case DotNetImageType.Runtime:
                 case DotNetImageType.Aspnet:
                 case DotNetImageType.Runtime_Deps:
+                case DotNetImageType.Monitor:
                     imageVersion = Version;
-                    os = OS;
+                    os = OSTag;
                     break;
                 case DotNetImageType.SDK:
                     imageVersion = Version;

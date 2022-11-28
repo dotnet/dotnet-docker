@@ -154,7 +154,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 if (!imageData.IsPublished)
                 {
                     string sampleFolder = Path.Combine(s_samplesPath, imageType);
-                    string dockerfilePath = $"{sampleFolder}/Dockerfile.{imageData.DockerfileSuffix}";
+                    string dockerfilePath = $"{sampleFolder}/Dockerfile";
+                    if (!string.IsNullOrEmpty(imageData.DockerfileSuffix))
+                    {
+                        dockerfilePath += $".{imageData.DockerfileSuffix}";
+                    }
 
                     DockerHelper.Build(image, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages, platform: imageData.Platform);
                 }

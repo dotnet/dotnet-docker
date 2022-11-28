@@ -6,17 +6,31 @@
 
 [cmdletbinding()]
 param(
-    [string]$Version,
+    [Parameter(ParameterSetName = "Version")]
+    [string]$Version = "*",
+    
+    [Parameter(ParameterSetName = "Paths")]
+    [string[]]$Paths = @(),
+
     [string]$Architecture,
+
     [string[]]$OSVersions,
+
     [string]$Registry,
+
     [string]$RepoPrefix,
+
     [switch]$DisableHttpVerification,
+
     [switch]$PullImages,
+
     [string]$ImageInfoPath,
+
     [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor")]
     [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor"),
+
     [securestring]$SasQueryString,
+    
     [securestring]$NuGetFeedPassword
 )
 
@@ -34,6 +48,12 @@ function Exec {
     if ($LASTEXITCODE -ne 0) {
         throw "Failed: '$Cmd'"
     }
+}
+
+function GetPath {
+    param ([string] $osVersion)
+
+    return "src/*/$Version/$osVersion/$Architecture"
 }
 
 Set-StrictMode -Version Latest
@@ -60,6 +80,17 @@ Try {
         $Architecture = "amd64"
     }
 
+    if ($PSCmdlet.ParameterSetName -eq "Version") {
+        if ($OSVersions -and $OSVersions.Count -gt 0) {
+            foreach ($osVersion in $OSVersions) {
+                $Paths += $(GetPath $osVersion)
+            }
+        }
+        else {
+            $Paths += GetPath "*"
+        }
+    }
+
     if ($DisableHttpVerification) {
         $env:DISABLE_HTTP_VERIFICATION = 1
     }
@@ -74,19 +105,7 @@ Try {
         $env:PULL_IMAGES = $null
     }
 
-    # Public builds group image build and test by runtime version.
-    # Internal builds group image build by the same criteria but run tests in separate jobs that are grouped by image version.
-    # The distinction is not apparent for images such as 'runtime', 'aspnet', and 'sdk' because
-    # their major.minor versions for the image and the product are the same.
-    # However, other images such as 'monitor' can have a product version that is distinct from the runtime version.
-    # Thus, filter images by runtime version in public builds and by image version in internal builds.
-    # The default case (where the environment variable is not available) should filter on image version.
-    if ($env:SYSTEM_TEAMPROJECT -eq "public") {
-        $env:RUNTIME_VERSION = $Version
-    } else {
-        $env:IMAGE_VERSION = $Version
-    }
-
+    $env:DOCKERFILE_PATHS = $($Paths -Join ",")
     $env:IMAGE_ARCH = $Architecture
     $env:IMAGE_OS_NAMES = $($OSVersions -Join ",")
     $env:REGISTRY = $Registry

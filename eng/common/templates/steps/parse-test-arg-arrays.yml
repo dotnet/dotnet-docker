@@ -4,8 +4,12 @@ steps:
     $osVersionsDisplayName = '$(osVersions)' -Replace '--os-version ', '' -Replace ' ', '/'
 
     # Defines a PowerShell snippet in string-form that can be used to initialize an array of the OS versions
-    $osVersionsArrayInitStr="@('" + $($osVersionsDisplayName -Replace "/", "', '") + "')"
+    $osVersionsArrayInitStr = "@('" + $($osVersionsDisplayName -Replace "/", "', '") + "')"
     
     echo "##vso[task.setvariable variable=osVersionsDisplayName]$osVersionsDisplayName"
     echo "##vso[task.setvariable variable=osVersionsArrayInitStr]$osVersionsArrayInitStr"
-  displayName: Parse OS Versions
+
+    # Defines a PowerShell snippet in string-form that can be used to initialize an array of the image builder paths
+    $pathInitStr = "@('" + $('$(imageBuilderPaths)' -Replace '--path', '' -Replace " ", "', '") + "')"
+    echo "##vso[task.setvariable variable=imageBuilderPathsArrayInitStr]$pathInitStr"
+  displayName: Parse Test Arg Arrays
