@@ -100,7 +100,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 SyftImage, "distroless-packages", $"packages docker:{imageName} -o json", useMountedDockerSocket: true);
 
             string[] expectedPackages;
-            if (imageData.OS.Contains(OS.MarinerDistroless))
+            if (imageData.OS.Contains(OS.Mariner))
             {
                 expectedPackages = new[]
                 {
