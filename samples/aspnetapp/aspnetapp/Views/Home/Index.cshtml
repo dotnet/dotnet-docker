@@ -2,26 +2,12 @@
 @using System.IO
 @using System.Diagnostics
 @{
-    ViewData["Title"] = "Home page";
-    var hostName = System.Net.Dns.GetHostName();
+    ViewData["Title"] = "Welcome to .NET";
+    string hostName = System.Net.Dns.GetHostName();
     var ipList = await System.Net.Dns.GetHostAddressesAsync(hostName);
-
+    EnvironmentInfo env = new();
     const long Mebi = 1024 * 1024;
     const long Gibi = Mebi * 1024;
-    GCMemoryInfo gcInfo = GC.GetGCMemoryInfo();
-    string totalAvailableMemory = GetInBestUnit(gcInfo.TotalAvailableMemoryBytes);
-
-    bool cgroup = RuntimeInformation.OSDescription.StartsWith("Linux") && Directory.Exists("/sys/fs/cgroup/memory");
-    string memoryUsage = string.Empty;
-    string memoryLimit = string.Empty;
-
-    if (cgroup)
-    {
-        string usage = System.IO.File.ReadAllLines("/sys/fs/cgroup/memory/memory.usage_in_bytes")[0];
-        string limit = System.IO.File.ReadAllLines("/sys/fs/cgroup/memory/memory.limit_in_bytes")[0];
-        memoryUsage = GetInBestUnit(long.Parse(usage));
-        memoryLimit = GetInBestUnit(long.Parse(limit));
-    }
 }
 
 <div class="text-center">
@@ -51,20 +37,24 @@
             <td>@(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") is null ? "false" : "true")</td>
         </tr>
         <tr>
-            <td>Memory, total available GC memory</td>
-            <td>@totalAvailableMemory</td>
+            <td>User</td>
+            <td>@(Environment.UserName)</td>
         </tr>
-        @if (cgroup)
+        @if (env.MemoryLimit > 0)
         {
             <tr>
-                <td>cgroup memory usage</td>
-                <td>@memoryUsage</td>
+                <td>cgroup memory limit</td>
+                <td>@env.MemoryLimit (@GetInBestUnit(env.MemoryLimit))</td>
             </tr>
             <tr>
-                <td>cgroup memory limit</td>
-                <td>@memoryLimit</td>
+                <td>cgroup memory usage</td>
+                <td>@env.MemoryUsage (@GetInBestUnit(env.MemoryUsage))</td>
             </tr>
         }
+        <tr>
+            <td>Memory, total available GC memory</td>
+            <td>@env.TotalAvailableMemoryBytes (@GetInBestUnit(env.TotalAvailableMemoryBytes))</td>
+        </tr>
         <tr>
             <td>Host name</td>
             <td>@hostName</td>
@@ -94,13 +84,13 @@
         }
         else if (size < Gibi)
         {
-            decimal mebibytes = Decimal.Divide(size, Mebi);
-            return $"{mebibytes:F} MiB";
+            double mebibytes = (double)size / Mebi;
+            return $"{mebibytes:N2} MiB";
         }
         else
         {
-            decimal gibibytes = Decimal.Divide(size, Gibi);
-            return $"{gibibytes:F} GiB";
+            double gibibytes = (double)size / Gibi;
+            return $"{gibibytes:N2} GiB";
         }
     }
 }

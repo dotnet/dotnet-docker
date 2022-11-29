@@ -7,18 +7,17 @@ using static System.Console;
 // Variant of https://github.com/dotnet/core/tree/main/samples/dotnet-runtimeinfo
 // Ascii text: https://ascii.co.uk/text (Univers font)
 
-string nl = Environment.NewLine;
+WriteLine("""
+         42                                                    
+         42              ,d                             ,d     
+         42              42                             42     
+ ,adPPYb,42  ,adPPYba, MM42MMM 8b,dPPYba,   ,adPPYba, MM42MMM  
+a8"    `Y42 a8"     "8a  42    42P'   `"8a a8P_____42   42     
+8b       42 8b       d8  42    42       42 8PP!!!!!!!   42     
+"8a,   ,d42 "8a,   ,a8"  42,   42       42 "8b,   ,aa   42,    
+ `"8bbdP"Y8  `"YbbdP"'   "Y428 42       42  `"Ybbd8"'   "Y428  
 
-WriteLine(
-$"         42{nl}" +
-$"         42              ,d                             ,d{nl}" +
-$"         42              42                             42{nl}" +
-$" ,adPPYb,42  ,adPPYba, MM42MMM 8b,dPPYba,   ,adPPYba, MM42MMM{nl}" +
-$"a8\"    `Y42 a8\"     \"8a  42    42P\'   `\"8a a8P_____42   42{nl}" +
-$"8b       42 8b       d8  42    42       42 8PP\"\"\"\"\"\"\"   42{nl}" +
-$"\"8a,   ,d42 \"8a,   ,a8\"  42,   42       42 \"8b,   ,aa   42,{nl}" +
-$" `\"8bbdP\"Y8  `\"YbbdP\"\'   \"Y428 42       42  `\"Ybbd8\"\'   \"Y428{nl}");
-
+""");
 
 // .NET information
 WriteLine(RuntimeInformation.FrameworkDescription);
@@ -50,38 +49,37 @@ const long Mebi = 1024 * 1024;
 const long Gibi = Mebi * 1024;
 GCMemoryInfo gcInfo = GC.GetGCMemoryInfo();
 long totalMemoryBytes = gcInfo.TotalAvailableMemoryBytes;
-string totalAvailableMemory = GetInBestUnit(totalMemoryBytes);
 
 // Environment information
+WriteLine($"{nameof(Environment.UserName)}: {Environment.UserName}");
 WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
 WriteLine($"{nameof(Environment.ProcessorCount)}: {Environment.ProcessorCount}");
-WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {totalAvailableMemory}");
+WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {totalMemoryBytes} ({GetInBestUnit(totalMemoryBytes)})");
+
+string[] memoryLimitPaths = new string[] 
+{
+    "/sys/fs/cgroup/memory.max",
+    "/sys/fs/cgroup/memory/memory.limit_in_bytes",
+};
+
+string[] currentMemoryPaths = new string[] 
+{
+    "/sys/fs/cgroup/memory.current",
+    "/sys/fs/cgroup/memory/memory.usage_in_bytes",
+};
 
 // cgroup information
-if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && 
-    Directory.Exists("/sys/fs/cgroup/cpu") &&
-    Directory.Exists("/sys/fs/cgroup/memory") &&
-    File.Exists("sys/fs/cgroup/cpu/cpu.cfs_quota_us"))
+if (OperatingSystem.IsLinux())
 {
-    // get cpu cgroup information
-    string cpuquota = File.ReadAllLines("/sys/fs/cgroup/cpu/cpu.cfs_quota_us")[0];
-    if (int.TryParse(cpuquota, out int quota) &&
-        quota > 0)
-    {
-        WriteLine($"cfs_quota_us: {quota}");
-    }
-
     // get memory cgroup information
-    string usageBytes = File.ReadAllLines("/sys/fs/cgroup/memory/memory.usage_in_bytes")[0];
-    string limitBytes = File.ReadAllLines("/sys/fs/cgroup/memory/memory.limit_in_bytes")[0];
-    if (long.TryParse(usageBytes, out long usage) &&
-        long.TryParse(limitBytes, out long limit) &&
-        // above this size is unlikely to be an intentionally constrained cgroup
-        limit < 10 * Gibi)
+    long memoryLimit = GetBestValue(memoryLimitPaths);
+    long currentMemory = GetBestValue(currentMemoryPaths);
+
+    if (memoryLimit > 0)
     {
-        WriteLine($"usage_in_bytes: {usageBytes} {GetInBestUnit(usage)}");
-        WriteLine($"limit_in_bytes: {limitBytes} {GetInBestUnit(limit)}");
-        WriteLine($"GC Hard limit %:  {decimal.Divide(totalMemoryBytes,limit) * 100}");
+        WriteLine($"cgroup memory limit: {memoryLimit} ({GetInBestUnit(memoryLimit)})");
+        WriteLine($"cgroup memory usage: {currentMemory} ({GetInBestUnit(currentMemory)})");
+        WriteLine($"GC Hard limit %: {(double)totalMemoryBytes/memoryLimit * 100:N0}");
     }
 }
 
@@ -93,12 +91,32 @@ string GetInBestUnit(long size)
     }
     else if (size < Gibi)
     {
-        decimal mebibytes = Decimal.Divide(size, Mebi);
+        double mebibytes = (double)(size / Mebi);
         return $"{mebibytes:F} MiB";
     }
     else
     {
-        decimal gibibytes = Decimal.Divide(size, Gibi);
+        double gibibytes = (double)(size / Gibi);
         return $"{gibibytes:F} GiB";
     }
+}
+
+long GetBestValue(string[] paths)
+{
+    string value = string.Empty;
+    foreach (string path in paths)
+    {
+        if (Path.Exists(path))
+        {
+            value = File.ReadAllText(path);
+            break;
+        }
+    }
+
+    if (int.TryParse(value, out int result))
+    {
+        return result;
+    }
+
+    return 0;
 }
