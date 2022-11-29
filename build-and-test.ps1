@@ -25,7 +25,7 @@ param(
 )
 
 if (($Mode -eq "BuildAndTest" -or $Mode -eq "Test") -and $TestCategories.Contains("pre-build")) {
-    & ./tests/run-tests.ps1 -TestCategories "pre-build"
+    & ./tests/run-tests.ps1 -TestCategories "pre-build" -Version "*"
 }
 
 if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {

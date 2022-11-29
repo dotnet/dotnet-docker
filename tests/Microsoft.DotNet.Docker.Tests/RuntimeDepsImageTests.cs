@@ -92,12 +92,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            if (imageData.OS == OS.JammyChiseled)
-            {
-                OutputHelper.WriteLine("Scanning support not implemented for Chiseled Ubuntu images.");
-                return;
-            }
-
             const string SyftImage = "anchore/syft";
             DockerHelper.Pull(SyftImage);
 
@@ -105,22 +99,35 @@ namespace Microsoft.DotNet.Docker.Tests
             string output = DockerHelper.Run(
                 SyftImage, "distroless-packages", $"packages docker:{imageName} -o json", useMountedDockerSocket: true);
 
-            string[] expectedPackages = new[]
+            string[] expectedPackages;
+            if (imageData.OS.Contains(OS.Mariner))
             {
-                "distroless-packages-minimal",
-                "e2fsprogs-libs",
-                "filesystem",
-                "glibc",
-                "krb5",
-                "libgcc",
-                "libstdc++",
-                "mariner-release",
-                "openssl",
-                "openssl-libs",
-                "prebuilt-ca-certificates",
-                "tzdata",
-                "zlib"
-            };
+                expectedPackages = new[]
+                {
+                    "distroless-packages-minimal",
+                    "e2fsprogs-libs",
+                    "filesystem",
+                    "glibc",
+                    "krb5",
+                    "libgcc",
+                    "libstdc++",
+                    "mariner-release",
+                    "openssl",
+                    "openssl-libs",
+                    "prebuilt-ca-certificates",
+                    "tzdata",
+                    "zlib"
+                };
+            }
+            else if (imageData.OS == OS.JammyChiseled)
+            {
+                OutputHelper.WriteLine("Package scanning support not implemented for Chiseled Ubuntu images.");
+                expectedPackages = Array.Empty<string>();
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
 
             JsonNode node = JsonNode.Parse(output);
             if (node is null)
@@ -133,6 +140,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 .ToArray();
 
             Assert.Equal(expectedPackages, actualPackages);
+
+            // Verify the OS release info is available
+            JsonObject distro = (JsonObject)node["distro"];
+            Assert.NotEmpty((string)distro["version"]);
         }
 
         internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>
