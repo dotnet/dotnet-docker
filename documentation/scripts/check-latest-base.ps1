@@ -2,39 +2,57 @@
 
 <#
 .SYNOPSIS
-Checks whether a given image is based on the latest version of a .NET base image tag.
+Checks whether a given image is based on the latest version of a .NET image tag.
 #>
 [cmdletbinding()]
 param(
-    # The image to be checked on whether it is based on the latest version of a .NET base image tag.
+    # The image to be checked on whether it is based on the latest version of a .NET image tag.
     [Parameter(Mandatory = $true)]
     [string]
-    $ImageTag,
+    $ImageDigest,
 
-    # The .NET base image tag to be checked against.
+    # The .NET image tag to be checked against.
     [Parameter(Mandatory = $true)]
     [string]
-    $DotNetBaseImageTag
+    $DotNetImageTag
 )
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 2.0
 
-Write-Host "Pulling $ImageTag..."
-docker pull $ImageTag
+if (-not $ImageDigest.Contains("@sha256:")) {
+    Write-Error "The value '$ImageDigest' must be a fully-qualified image digest, not an image tag. This ensures that the image is not subject to change from when it was scanned."
+    return
+}
 
-$imageConfig = $(docker inspect $ImageTag | ConvertFrom-Json)
+Write-Host "Pulling $ImageDigest..."
+docker pull $ImageDigest
+if (-not $?) {
+    Write-Error "Failed to pull $ImageDigest"
+    return
+}
+
+$imageConfig = $(docker inspect $ImageDigest | ConvertFrom-Json)
+if (-not $?) {
+    Write-Error "Failed to get configuration of $ImageDigest"
+    return
+}
 
 Write-Host
-Write-Host "Getting manifest of $DotNetBaseImageTag..."
-$baseTagManifest = $(docker manifest inspect $DotNetBaseImageTag | ConvertFrom-Json)
+Write-Host "Getting manifest of $DotNetImageTag..."
+$baseTagManifest = $(docker manifest inspect $DotNetImageTag | ConvertFrom-Json)
+if (-not $?) {
+    Write-Error "Failed to get manifest of $DotNetImageTag"
+    return
+}
+
 $mediaType = $baseTagManifest.mediaType
 
 $basePullImage = ""
 
 if ($mediaType.Contains("list")) {
     Write-Host
-    Write-Host "Resolving multi-arch tag $DotNetBaseImageTag to matching platform..."
+    Write-Host "Resolving multi-arch tag $DotNetImageTag to matching platform..."
 
     $baseImageDigest = $baseTagManifest.manifests
         | Where-Object { $_.platform.Architecture -eq $imageConfig.Architecture -and $_.platform.Os -eq $imageConfig.Os }
@@ -46,22 +64,31 @@ if ($mediaType.Contains("list")) {
     }
 
     # If the image name contains a tag separater, replace the tag with the digest; otherwise, append the digest
-    $colonIndex = $DotNetBaseImageTag.IndexOf(":")
+    $colonIndex = $DotNetImageTag.IndexOf(":")
     if ($colonIndex -ge 0) {
-        $basePullImage = $DotNetBaseImageTag.Substring(0, $colonIndex) + "@$baseImageDigest"
+        $basePullImage = $DotNetImageTag.Substring(0, $colonIndex) + "@$baseImageDigest"
     }
     else {
-        $basePullImage = "$DotNetBaseImageTag@$baseImageDigest"
+        $basePullImage = "$DotNetImageTag@$baseImageDigest"
     }
 }
 else {
-    $basePullImage = $DotNetBaseImageTag
+    $basePullImage = $DotNetImageTag
 }
 
 Write-Host
 Write-Host "Pulling $basePullImage..."
 docker pull $basePullImage
+if (-not $?) {
+    Write-Error "Failed to pull $basePullImage"
+    return
+}
+
 $baseImageConfig = $(docker inspect $basePullImage | ConvertFrom-Json)
+if (-not $?) {
+    Write-Error "Failed to get configuration of $basePullImage"
+    return
+}
 
 # Validate that the base image is the same platform as the specified image to check
 if ($imageConfig.Os -ne $baseImageConfig.Os -or $imageConfig.Architecture -ne $baseImageConfig.Architecture) {

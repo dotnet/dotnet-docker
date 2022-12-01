@@ -27,6 +27,10 @@ param(
 )
 
 $manifest = docker manifest inspect $ImageTag | ConvertFrom-Json
+if (-not $?) {
+    Write-Error "Failed to get manifest of $ImageTag"
+    return
+}
 
 if ($manifest.config.digest) {
     Write-Output $manifest.config.digest

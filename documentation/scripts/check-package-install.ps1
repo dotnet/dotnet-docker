@@ -22,6 +22,10 @@ Set-StrictMode -Version 2.0
 
 Write-Host "Scanning $ImageName..."
 $scan = $(docker run --rm anchore/syft packages $ImageName -q --output json | ConvertFrom-Json)
+if (-not $?) {
+    Write-Error "Failed to scan packages of $ImageName"
+    return
+}
 
 $matchingPackage = $($scan.artifacts | Where-Object { $_.name -eq $PackageName })
 
