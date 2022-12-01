@@ -9,7 +9,7 @@
 
           imageBuilder.pathArgs: --path '*nanoserver*' --path '*windowsservercore*'
 1. - [ ] Confirm successful run of dotnet-docker pipeline
-1. - [ ] Queue build of [dotnet-docker-nightly pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=359) (internal MSFT link) with the following parameters:
+1. - [ ] Run [dotnet-docker-nightly pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=359) (internal MSFT link) with the following parameters:
 
           imageBuilder.pathArgs: --path '*nanoserver*' --path '*windowsservercore*'
 1. - [ ] Confirm successful run of dotnet-docker-nightly pipeline
