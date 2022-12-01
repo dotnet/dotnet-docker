@@ -21,7 +21,7 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 2.0
 
 Write-Host "Scanning $ImageName..."
-$scan = $(syft packages $ImageName --output json | ConvertFrom-Json)
+$scan = $(docker run --rm anchore/syft packages $ImageName -q --output json | ConvertFrom-Json)
 
 $matchingPackage = $($scan.artifacts | Where-Object { $_.name -eq $PackageName })
 
