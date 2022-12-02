@@ -104,9 +104,9 @@
     "monitor|6.2|product-version": "6.2.2",
     "monitor|6.2|sha": "5d5df17e81ed66e644dc7323e89caee10f7eadbf62a28e0443e9fe12df1c5283fce2ebf6bc4dc2e5004c3c9e044101fc131ff293f382f15a32c91a6e159619d7",
 
-    "monitor|6.3|build-version": "6.3.0-rtm.22479.7",
-    "monitor|6.3|product-version": "6.3.0",
-    "monitor|6.3|sha": "d31780f4adab2ce7e4073d4dc3570cca80ae4d2e4f73a714bb485a8e3ed3601deec6eb6612731854e7da00f2b5e28593e7055ef457568ac8dc60f60807390a25",
+    "monitor|6.3|build-version": "6.3.1-servicing.22601.6",
+    "monitor|6.3|product-version": "6.3.1",
+    "monitor|6.3|sha": "52e3ec332662ae33611229098e4ad9383708e7ac53e0e678330fd1d437615b0c4f2cdf71ecc17ed147499c1c9e6099d3a15634c6b65ea3fbef541684c1809e71",
 
     "monitor|7.0|build-version": "7.0.0",
     "monitor|7.0|product-version": "7.0.0",
