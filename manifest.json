@@ -7166,7 +7166,7 @@
               "dockerfile": "src/monitor/6.2/alpine/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine3.17",
               "tags": {
                 "$(monitor|6.2|product-version)-alpine-amd64": {},
                 "6.2-alpine-amd64": {}
@@ -7181,7 +7181,7 @@
               "dockerfile": "src/monitor/6.2/alpine/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine3.17",
               "tags": {
                 "$(monitor|6.2|product-version)-alpine-arm64v8": {},
                 "6.2-alpine-arm64v8": {}
@@ -7311,7 +7311,7 @@
               "dockerfile": "src/monitor/6.3/alpine/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine3.17",
               "tags": {
                 "$(monitor|6.3|product-version)-alpine-amd64": {},
                 "6.3-alpine-amd64": {},
@@ -7327,7 +7327,7 @@
               "dockerfile": "src/monitor/6.3/alpine/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine3.17",
               "tags": {
                 "$(monitor|6.3|product-version)-alpine-arm64v8": {},
                 "6.3-alpine-arm64v8": {},
@@ -7519,7 +7519,7 @@
               "dockerfile": "src/monitor/7.0/alpine/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine3.17",
               "tags": {
                 "$(monitor|7.0|product-version)-alpine-amd64": {},
                 "7.0-alpine-amd64": {},
@@ -7535,7 +7535,7 @@
               "dockerfile": "src/monitor/7.0/alpine/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
               "os": "linux",
-              "osVersion": "alpine3.16",
+              "osVersion": "alpine3.17",
               "tags": {
                 "$(monitor|7.0|product-version)-alpine-arm64v8": {},
                 "7.0-alpine-arm64v8": {},
