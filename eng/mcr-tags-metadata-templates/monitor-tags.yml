@@ -1,4 +1,8 @@
 $(McrTagsYmlRepo:monitor)
+$(McrTagsYmlTagGroup:8.0-preview-ubuntu-chiseled-amd64)
+    customSubTableTitle: .NET Monitor 8 Preview Tags
+$(McrTagsYmlTagGroup:8.0-preview-ubuntu-chiseled-arm64v8)
+    customSubTableTitle: .NET Monitor 8 Preview Tags
 $(McrTagsYmlTagGroup:7.0-alpine-amd64)
 $(McrTagsYmlTagGroup:7.0-alpine-arm64v8)
 $(McrTagsYmlTagGroup:7.0-ubuntu-chiseled-amd64)

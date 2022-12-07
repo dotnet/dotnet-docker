@@ -167,6 +167,10 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V7_0, VersionFamily = V7_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V7_0, VersionFamily = V7_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, VersionFamily = V7_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64 },
+            new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.JammyChiseled,       OSTag = OS.UbuntuChiseled,    Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.JammyChiseled,       OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64 },
+            new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64 },
         };
 
         private static readonly ProductImageData[] s_windowsMonitorTestData =
