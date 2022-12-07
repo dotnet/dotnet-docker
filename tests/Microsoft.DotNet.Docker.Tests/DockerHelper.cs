@@ -72,7 +72,19 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string dockerfile = Path.Combine(TestArtifactsDir, "Dockerfile.distroless");
             string distrolessImageTag = imageData.GetImage(imageType, this);
-            string baseImageTag = distrolessImageTag
+
+            // Use the runtime-deps image as the target of the filesyste copy.
+            // Not all images are versioned the same as the mainline .NET products.
+            // Use the version family (e.g. the .NET product family version) as the
+            // version of the runtime-deps image get the correct image.
+            ProductImageData runtimeDepsImageData = new()
+            {
+                Version = imageData.VersionFamily,
+                OS = imageData.OS,
+                Arch = imageData.Arch
+            };
+            string baseImageTag = runtimeDepsImageData
+                .GetImage(DotNetImageType.Runtime_Deps, this)
                 .Replace("-distroless", string.Empty)
                 .Replace("-chiseled", string.Empty);
 

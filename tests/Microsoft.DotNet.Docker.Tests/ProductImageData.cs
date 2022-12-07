@@ -11,6 +11,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private string _sdkOS;
         private string _osTag;
+        private ImageVersion? _versionFamily;
 
         public bool HasCustomSdk => _sdkOS != null;
 
@@ -48,6 +49,13 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         public ImageVersion Version { get; set; }
+
+        public ImageVersion VersionFamily
+        {
+            get { return _versionFamily.GetValueOrDefault(Version); }
+            set { _versionFamily = value; }
+        }
+
         public string VersionString => Version.ToString();
 
         public string GetDockerfilePath(DotNetImageType imageType) =>
