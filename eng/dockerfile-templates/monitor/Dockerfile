@@ -7,13 +7,17 @@
     set targetFrameworkMonikerRegex to cat("net", dotnetMajor, "[.]0") ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
+    set sdkProductVersion to VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")] ^
+    set sdkTagVersion to when(find(sdkProductVersion, '-rc') >= 0 || find(sdkProductVersion, '-') = -1, dotnetMajorMinor, cat(dotnetMajorMinor, "-preview")) ^
     set sdkDistro to when(isDistroless, when(isMariner, cat("cbl-mariner", OS_VERSION_NUMBER), split(OS_VERSION, "-")[0]), OS_VERSION) ^
-    set installerBaseTag to cat(VARIABLES[cat("sdk|", dotnetMajorMinor, "|product-version")], "-", sdkDistro, ARCH_TAG_SUFFIX) ^
+    set installerBaseTag to cat(sdkTagVersion, "-", sdkDistro, ARCH_TAG_SUFFIX) ^
     set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
     set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
     set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
-    set imageBaseTag to cat(VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+    set aspnetProductVersion to VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")] ^
+    set aspnetTagVersion to when(find(aspnetProductVersion, '-rc') >= 0 || find(aspnetProductVersion, '-') = -1, dotnetMajorMinor, cat(dotnetMajorMinor, "-preview")) ^
+    set imageBaseTag to cat(aspnetTagVersion, "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     _ When build and product versions are the same and they are stable versions, use account from main branch e.g. dotnetcli
       Otherwise, use the account that is associated with the current branch. ^
     set urlBranch to when(find(monitorVersion, "-") >= 0 || buildVersion != monitorVersion, VARIABLES["branch"], "main") ^

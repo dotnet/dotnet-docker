@@ -2,7 +2,7 @@ ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
 ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
 
 # Installer image
-FROM $SDK_REPO:8.0.100-alpha.1-cbl-mariner2.0-arm64v8 AS installer
+FROM $SDK_REPO:8.0-preview-cbl-mariner-arm64v8 AS installer
 
 # Install .NET Monitor
 ENV DOTNET_MONITOR_VERSION=8.0.0-alpha.1.22606.5
@@ -32,7 +32,7 @@ RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotn
 
 
 # Monitor image
-FROM $ASPNET_REPO:8.0.0-alpha.1-cbl-mariner2.0-distroless-arm64v8
+FROM $ASPNET_REPO:8.0-preview-cbl-mariner-distroless-arm64v8
 
 WORKDIR /app
 COPY --from=installer /app .
