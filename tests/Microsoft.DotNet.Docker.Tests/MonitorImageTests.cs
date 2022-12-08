@@ -113,13 +113,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetMonitorImageData))]
         public void VerifyInsecureFiles(ProductImageData imageData)
         {
-            if (imageData.OSTag == OS.UbuntuChiseled)
-            {
-                OutputHelper.WriteLine(
-                    "Skip testing for Chiseled Ubuntu because there isn't a non-distroless version of the image to use as a helper to run the necessary commands");
-                return;
-            }
-
             base.VerifyCommonInsecureFiles(imageData);
         }
 
