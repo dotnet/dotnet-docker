@@ -14,7 +14,6 @@ namespace Dotnet.Docker
         public string ChecksumSasQueryString { get; }
         public bool ComputeChecksums { get; }
         public string DockerfileVersion { get; }
-        public string ChannelName { get; }
         public string Email { get; }
         public string Password { get; }
         public string GitHubProject => "dotnet-docker";
@@ -31,14 +30,13 @@ namespace Dotnet.Docker
         public bool UpdateOnly => Email == null || Password == null || User == null || TargetBranch == null;
         public bool IsInternal => !string.IsNullOrEmpty(BinarySasQueryString) || !string.IsNullOrEmpty(ChecksumSasQueryString);
 
-        public Options(string dockerfileVersion, string[] productVersion, string channelName, string versionSourceName, string email, string password, string user,
+        public Options(string dockerfileVersion, string[] productVersion, string versionSourceName, string email, string password, string user,
             bool computeShas, bool stableBranding, string binarySas, string checksumSas, string sourceBranch, string targetBranch, string org, string project, string repo)
         {
             DockerfileVersion = dockerfileVersion;
             ProductVersions = productVersion
                 .Select(pair => pair.Split(new char[] { '=' }, 2))
                 .ToDictionary(split => split[0].ToLower(), split => split.Skip(1).FirstOrDefault());
-            ChannelName = channelName;
             VersionSourceName = versionSourceName;
             Email = email;
             Password = password;
@@ -72,7 +70,6 @@ namespace Dotnet.Docker
             {
                 new Argument<string>("dockerfile-version", "Version of the Dockerfiles to update"),
                 new Option<string[]>("--product-version", "Product versions to update (<product-name>=<version>)"),
-                new Option<string>("--channel-name", "The name of the channel from which to find product files."),
                 new Option<string>("--version-source-name", "The name of the source from which the version information was acquired."),
                 new Option<string>("--email", "GitHub or AzDO email used to make PR (if not specified, a PR will not be created)"),
                 new Option<string>("--password", "GitHub or AzDO password used to make PR (if not specified, a PR will not be created)"),

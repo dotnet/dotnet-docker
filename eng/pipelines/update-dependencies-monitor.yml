@@ -31,7 +31,7 @@ stages:
     - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -Channel $(MajorMinorVersion)/$(ChannelQuality)
       displayName: Get Versions
     - powershell: |
-        $customArgs = "$(MajorMinorVersion) --product-version monitor=$(monitorVer) --channel-name $(MajorMinorVersion)/$(ChannelQuality) --version-source-name dotnet/dotnet-monitor/$(MajorMinorVersion) --stable-branding=$(stableBranding)"
+        $customArgs = "$(MajorMinorVersion) --product-version monitor=$(monitorVer) --version-source-name dotnet/dotnet-monitor/$(MajorMinorVersion) --stable-branding=$(stableBranding)"
         
         $customArgsArray = @($customArgs)
         echo "##vso[task.setvariable variable=customArgsArray]$($customArgsArray | ConvertTo-Json -Compress -AsArray)"
