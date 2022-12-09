@@ -82,10 +82,10 @@ The following examples illustrate how to run `update-dependencies`:
     > ./eng/Set-DotnetVersions.ps1 -ProductVersion 3.1 -SdkVersion 3.1.302 -RuntimeVersion 3.1.6 -AspnetVersion 3.1.6
     ```
 
-- Update the .NET Monitor version
+- Update the .NET Monitor version (uses a helper script for running update-dependencies)
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\update-dependencies.csproj 6.0 --product-version monitor=6.0.0-rc.1.21515.7 --channel-name 6.0/rc.1
+    > ./eng/Set-DotnetVersions.ps1 -ProductVersion 6.0 -MonitorVersion 6.0.0-rc.1.21515.7
     ```
 
 - Update the PowerShell version used in the 6.0 images
