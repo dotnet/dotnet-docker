@@ -115,7 +115,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     "openssl",
                     "openssl-libs",
                     "prebuilt-ca-certificates",
-                    "prebuilt-ca-certificates-base",
+                    "tzdata",
                     "zlib"
                 };
             }
