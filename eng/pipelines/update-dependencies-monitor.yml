@@ -26,7 +26,7 @@ stages:
           ChannelQuality: $(monitor7Quality)
         Update8:
           MajorMinorVersion: 8.$(monitor8MinorVersion)
-          ChanellQuality: $(monitor8Quality)
+          ChannelQuality: $(monitor8Quality)
     steps:
     - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -Channel $(MajorMinorVersion)/$(ChannelQuality)
       displayName: Get Versions
