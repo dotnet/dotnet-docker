@@ -15,6 +15,10 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 2.0
 
+function hasProperty($object, $propertyName) {
+    return $null -ne $object.psobject.Properties[$propertyName]
+}
+
 # Parse the fully-qualified image tag into its components
 $components = $ImageTag -split '/'
 
@@ -45,11 +49,11 @@ $imageInfo = Invoke-RestMethod -Uri "https://raw.githubusercontent.com/dotnet/ve
 foreach ($repo in $imageInfo.repos) {
     if ($repo.repo -eq "dotnet/$imageType") {
         foreach ($image in $repo.images) {
-            if ($image.manifest.sharedTags -contains $tag) {
+            if ((hasProperty $image "manifest") -and $image.manifest.sharedTags -contains $tag) {
                 return $true
             }
             foreach ($platform in $image.platforms) {
-                if ($platform.simpleTags -contains $tag) {
+                if ((hasProperty $platform "simpleTags") -and $platform.simpleTags -contains $tag) {
                     return $true
                 }
             }
