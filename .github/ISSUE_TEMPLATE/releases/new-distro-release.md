@@ -29,4 +29,5 @@ Distro: &lt;name/version&gt;
 ## Main Branch Tasks
 
 1. - [ ] After the product teams have signed off on the new distro, merge these changes to the main branch as part of the [release process](dotnet-release.md) for the next .NET release
+      - [ ] For Alpine, follow the [policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md) to only update the floating `alpine` tag one month after the release of the new Alpine version. Since nightly will already have the floating tag updated, the initial release of the new Alpine version to main will need to account for this and keep it set to the older version for one month.
 1. - [ ] Create an announcement (example: [Alpine 3.10](https://github.com/dotnet/dotnet-docker/issues/1418)) unless the new distro is added only for pre-release versions in which the announcement would be incorporated in the pre-release notes.
