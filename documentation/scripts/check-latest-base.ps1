@@ -54,9 +54,9 @@ if ($mediaType.Contains("list")) {
     Write-Host
     Write-Host "Resolving multi-arch tag $DotNetImageTag to matching platform..."
 
-    $baseImageDigest = $baseTagManifest.manifests
-        | Where-Object { $_.platform.Architecture -eq $imageConfig.Architecture -and $_.platform.Os -eq $imageConfig.Os }
-        | Select-Object -ExpandProperty digest
+    $baseImageDigest = $baseTagManifest.manifests |
+        Where-Object { $_.platform.Architecture -eq $imageConfig.Architecture -and $_.platform.Os -eq $imageConfig.Os } |
+        Select-Object -ExpandProperty digest
 
     if (-not $baseImageDigest) {
         Write-Error "ERROR: Could not find a matching platform for the given image."
