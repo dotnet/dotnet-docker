@@ -156,7 +156,7 @@ namespace Microsoft.DotNet.Docker.Tests
             variables.Add(new EnvironmentVariableInfo("DefaultProcess__Filters__0__Value", "1"));
             // Existing (orphaned) diagnostic port should be delete before starting server
             variables.Add(new EnvironmentVariableInfo("DiagnosticPort__DeleteEndpointOnStartup", "true"));
-            if (imageData.Version.Major == 7)
+            if (imageData.Version.ToString() != "6.2")
             {
                 // GC mode should be set to Server
                 variables.Add(new EnvironmentVariableInfo("DOTNET_gcServer", "1"));
