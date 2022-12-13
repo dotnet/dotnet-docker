@@ -13,7 +13,7 @@
             "krb5-libs",
             "libgcc",
             "libintl",
-            "libssl1.1",
+            cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
             "libstdc++",
             "zlib"
         ],

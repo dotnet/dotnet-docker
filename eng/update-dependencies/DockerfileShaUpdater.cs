@@ -208,7 +208,6 @@ namespace Dotnet.Docker
                     .Replace("$ARCHIVE_EXT", archiveExt)
                     .Replace("$VERSION_DIR", versionDir)
                     .Replace("$VERSION_FILE", versionFile)
-                    .Replace("$CHANNEL_NAME", _options.ChannelName)
                     .Replace("$OS", _os)
                     .Replace("$OPTIONAL_OS", optionalOs)
                     .Replace("$ARCH", _arch)

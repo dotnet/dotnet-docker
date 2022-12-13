@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:3.1.31-cbl-mariner1.0
+FROM $REPO:3.1.32-cbl-mariner1.0
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -14,15 +14,15 @@ ENV \
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-CBL-Mariner-1.0
 
 # Install .NET Core SDK
-RUN sdk_version=3.1.425 \
-    dotnet_version=3.1.31 \
-    aspnet_version=3.1.31 \
+RUN sdk_version=3.1.426 \
+    dotnet_version=3.1.32 \
+    aspnet_version=3.1.32 \
     && curl -fSL --output dotnet.rpm https://dotnetcli.azureedge.net/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-x64.rpm \
-    && dotnet_sha512='326b8e72f70ae0410eada27dc69e7e62e998b1a58a0fe77fed38ca46a4978b73750bac19ece8b7450675250e150ac807a4a5d3a432b71e5c9cd8cd8ced17e477' \
+    && dotnet_sha512='2190b9028cc1b4eff8ce292e57c4b1a4441a36ead2e9bc5e81363f77399ecc5165af638922712b6385e71665a787d679532a5b275a692fac55f8d2fdd2131bad' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
     && curl -fSL --output apphost.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-apphost-pack-$dotnet_version-x64.rpm \
-    && dotnet_sha512='897dd69ec12be83c73dc9a9168c07379dd008f09654374f743ca26f56ab255bb3e674f26635d62bfcbf3a2682203924c3cf9688ab9410159f2ab0f29341e3340' \
+    && dotnet_sha512='fe01d7354b71f56ed6ec387315d5292e88fd950b21a64ace2eacd054d56bbb949e9663483f06a4ebd8fab95d36bd7185ef11654e58135d3849830f52abe53744' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
     && curl -fSL --output targeting-pack.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/dotnet-targeting-pack-3.1.0-x64.rpm \

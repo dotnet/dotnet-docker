@@ -72,7 +72,7 @@ ENV \
     DefaultProcess__Filters__0__Key=ProcessId \
     DefaultProcess__Filters__0__Value=1 \
     # Remove Unix Domain Socket before starting diagnostic port server
-    DiagnosticPort__DeleteEndpointOnStartup=true \{{ if dotnetMajor = "7":
+    DiagnosticPort__DeleteEndpointOnStartup=true \{{ if dotnetMajor != "6":
     # Server GC mode
     DOTNET_gcServer=1 \}}
     # Logging: JSON format so that analytic platforms can get discrete entry information

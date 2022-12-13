@@ -113,13 +113,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetMonitorImageData))]
         public void VerifyInsecureFiles(ProductImageData imageData)
         {
-            if (imageData.OSTag == OS.UbuntuChiseled)
-            {
-                OutputHelper.WriteLine(
-                    "Skip testing for Chiseled Ubuntu because there isn't a non-distroless version of the image to use as a helper to run the necessary commands");
-                return;
-            }
-
             base.VerifyCommonInsecureFiles(imageData);
         }
 
@@ -163,7 +156,7 @@ namespace Microsoft.DotNet.Docker.Tests
             variables.Add(new EnvironmentVariableInfo("DefaultProcess__Filters__0__Value", "1"));
             // Existing (orphaned) diagnostic port should be delete before starting server
             variables.Add(new EnvironmentVariableInfo("DiagnosticPort__DeleteEndpointOnStartup", "true"));
-            if (imageData.Version.Major == 7)
+            if (imageData.Version.Major != 6)
             {
                 // GC mode should be set to Server
                 variables.Add(new EnvironmentVariableInfo("DOTNET_gcServer", "1"));
@@ -582,7 +575,7 @@ namespace Microsoft.DotNet.Docker.Tests
             // will treat the presence of any commandline args as overriding the entire CMD block in the DockerFile.
             bool addDefaultArgs =
                 // We are version 7.0+, this will never apply to 6.x images
-                imageData.Version >= new Version(7, 0) &&
+                imageData.Version.Major >= 7 &&
                 // We are adding anything to the command line. When additional flags are added to this method, `noAuthentication`
                 // should be replaced something like `(noAuthentication || myNewFlag || mySetting != Setting.Default)`
                 noAuthentication;
