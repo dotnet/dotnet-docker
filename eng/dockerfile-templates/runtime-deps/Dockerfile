@@ -16,7 +16,7 @@
                     "mcr.microsoft.com/cbl-mariner/base/core",
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
-    set isRpmInstall to isMariner && (dotnetVersion = "3.1" || dotnetVersion = "6.0") ^
+    set isRpmInstall to isMariner && dotnetVersion = "6.0" ^
     set isSingleStage to !(isRpmInstall && isInternal) ^
     set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm"

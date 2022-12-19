@@ -41,17 +41,15 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
+            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>
+            {
+                RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper)
+            };
 
             EnvironmentVariableInfo aspnetVersionVariableInfo = GetAspnetVersionVariableInfo(imageData, DockerHelper);
             if (aspnetVersionVariableInfo != null)
             {
                 variables.Add(aspnetVersionVariableInfo);
-            }
-
-            if (imageData.Version.Major >= 5)
-            {
-                variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
             }
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);
@@ -102,16 +100,11 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
         {
-            if (imageData.Version.Major >= 5)
+            string version = imageData.GetProductVersion(DotNetImageType.Aspnet, dockerHelper);
+            return new EnvironmentVariableInfo("ASPNET_VERSION", version)
             {
-                string version = imageData.GetProductVersion(DotNetImageType.Aspnet, dockerHelper);
-                return new EnvironmentVariableInfo("ASPNET_VERSION", version)
-                {
-                    IsProductVersion = true
-                };
-            }
-
-            return null;
+                IsProductVersion = true
+            };
         }
 
         internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>

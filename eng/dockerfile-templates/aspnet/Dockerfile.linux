@@ -7,11 +7,10 @@
     set isDistrolessMariner to isMariner && isDistroless ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
-    set isRpmInstall to isFullMariner && (dotnetVersion = "3.1" || dotnetVersion = "6.0") ^
-    set isSingleStage to (dotnetVersion = "3.1" || isAlpine || isRpmInstall) && !isInternal ^
-    set archTagSuffix to when(dotnetVersion != "3.1" || ARCH_VERSIONED != "amd64", ARCH_TAG_SUFFIX, "") ^
+    set isRpmInstall to isFullMariner && dotnetVersion = "6.0" ^
+    set isSingleStage to (isAlpine || isRpmInstall) && !isInternal ^
     set runtimeBaseTag to
-        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix) ^
+        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
     set installerImageTag to when(isDistrolessMariner,
@@ -29,14 +28,13 @@
 }}FROM {{runtimeBaseTag}}
 {{if isAlpine:
 {{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
-}}{{if dotnetVersion != "3.1":
-{{InsertTemplate("Dockerfile.envs")}}
 }}
+{{InsertTemplate("Dockerfile.envs")}}
+
 # Install ASP.NET Core
 {{InsertTemplate("Dockerfile.linux.install-aspnet",
     [
         "install-method": "download-and-install",
-        "use-local-version-var": dotnetVersion = "3.1",
         "is-rpm-install": isRpmInstall
     ])}}^else:
 {{

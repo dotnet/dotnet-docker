@@ -18,10 +18,10 @@ The [`build-and-test.ps1`](https://github.com/dotnet/dotnet-docker/blob/main/bui
     > ./build-and-test.ps1 -Version 6.0
     ```
 
-- Build the 3.1 Nano Server 1809 images
+- Build the 6.0 Nano Server 1809 images
 
     ``` console
-    > ./build-and-test.ps1 -Version 3.1 -OS nanoserver-1809 -Mode Build
+    > ./build-and-test.ps1 -Version 6.0 -OS nanoserver-1809 -Mode Build
     ```
 
 - Build and test the samples
@@ -30,10 +30,10 @@ The [`build-and-test.ps1`](https://github.com/dotnet/dotnet-docker/blob/main/bui
     > ./build-and-test.ps1 -Path *samples* -TestCategories sample
     ```
 
-- Test the 6.0 Alpine 3.14 images for the current architecture (e.g. x64, arm, arm64).
+- Test the 6.0 Ubuntu Jammy images for the current architecture (e.g. x64, arm, arm64).
 
     ``` console
-    > ./build-and-test.ps1 -Version 6.0 -OS alpine3.14 -Mode Test
+    > ./build-and-test.ps1 -Version 6.0 -OS jammy -Mode Test
     ```
 
 ### Editing Dockerfiles
@@ -76,20 +76,20 @@ Updating the product versions (e.g. .NET runtime, ASP.NET runtime, PowerShell, e
 
 The following examples illustrate how to run `update-dependencies`:
 
-- Update the 3.1 product versions (uses a helper script for running update-dependencies)
+- Update the 6.0 product versions (uses a helper script for running update-dependencies)
 
     ``` console
-    > ./eng/Set-DotnetVersions.ps1 -ProductVersion 3.1 -SdkVersion 3.1.302 -RuntimeVersion 3.1.6 -AspnetVersion 3.1.6
+    > ./eng/Set-DotnetVersions.ps1 -ProductVersion 6.0 -SdkVersion 6.0.404 -RuntimeVersion 6.0.12 -AspnetVersion 6.0.12
     ```
 
 - Update the .NET Monitor version (uses a helper script for running update-dependencies)
 
     ``` console
-    > ./eng/Set-DotnetVersions.ps1 -ProductVersion 6.0 -MonitorVersion 6.0.0-rc.1.21515.7
+    > ./eng/Set-DotnetVersions.ps1 -ProductVersion 6.3 -MonitorVersion 6.3.1
     ```
 
 - Update the PowerShell version used in the 6.0 images
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- 6.0 --product-version powershell=7.1.0-preview.4 --compute-shas
+    > dotnet run --project .\eng\update-dependencies\ -- 6.0 --product-version powershell=7.2.7 --compute-shas
     ```

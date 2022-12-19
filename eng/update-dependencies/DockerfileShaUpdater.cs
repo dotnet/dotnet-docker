@@ -74,9 +74,7 @@ namespace Dotnet.Docker
                     new string[]
                     {
                         $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-targeting-pack-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT",
-                        $"$DOTNET_BASE_URL/Runtime/$DF_VERSION.0/dotnet-targeting-pack-$DF_VERSION.0-{GetRpmArchFormat()}.$ARCHIVE_EXT",
-                        // Fallback for legacy targeting pack versions (not needed for > 3.1)
-                        $"https://dotnetcli.blob.core.windows.net/dotnet/Runtime/$DF_VERSION.0/dotnet-targeting-pack-$DF_VERSION.0-{GetRpmArchFormat()}.$ARCHIVE_EXT"
+                        $"$DOTNET_BASE_URL/Runtime/$DF_VERSION.0/dotnet-targeting-pack-$DF_VERSION.0-{GetRpmArchFormat()}.$ARCHIVE_EXT"
                     }
                 },
                 { "runtime-apphost-pack", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-apphost-pack-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
@@ -90,9 +88,7 @@ namespace Dotnet.Docker
                     new string[]
                     {
                         $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-targeting-pack-$VERSION_FILE{GetAspnetTargetingPackArchFormat()}.$ARCHIVE_EXT",
-                        $"$DOTNET_BASE_URL/aspnetcore/Runtime/$DF_VERSION.0/aspnetcore-targeting-pack-$DF_VERSION.0{GetAspnetTargetingPackArchFormat()}.$ARCHIVE_EXT",
-                        // Fallback for legacy targeting pack versions (not needed for > 3.1)
-                        $"https://dotnetcli.blob.core.windows.net/dotnet/aspnetcore/Runtime/$DF_VERSION.0/aspnetcore-targeting-pack-$DF_VERSION.0{GetAspnetTargetingPackArchFormat()}.$ARCHIVE_EXT"
+                        $"$DOTNET_BASE_URL/aspnetcore/Runtime/$DF_VERSION.0/aspnetcore-targeting-pack-$DF_VERSION.0{GetAspnetTargetingPackArchFormat()}.$ARCHIVE_EXT"
                     }
                 },
 
@@ -115,7 +111,7 @@ namespace Dotnet.Docker
 
         private string GetRpmArchFormat() => _arch == "arm64" ? "aarch64" : "$ARCH";
 
-        private string GetAspnetTargetingPackArchFormat() => _dockerfileVersion.Major <= 5 ? string.Empty : $"-{GetRpmArchFormat()}";
+        private string GetAspnetTargetingPackArchFormat() => $"-{GetRpmArchFormat()}";
 
         private string GetRuntimeSdkArchFormat() => _os.Contains("rpm") ? GetRpmArchFormat() : "$ARCH";
 

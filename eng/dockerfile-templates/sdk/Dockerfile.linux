@@ -5,12 +5,8 @@
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
-    set isRpmInstall to isFullMariner && (dotnetVersion = "3.1" || dotnetVersion = "6.0") ^
-    set isBasedOnBuildpackDeps to (dotnetVersion = "3.1" && !(isAlpine || isMariner)) ^
-    set archTagSuffix to when(dotnetVersion != "3.1", ARCH_TAG_SUFFIX, "") ^
-    set baseImageTag to when(isBasedOnBuildpackDeps,
-        cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-scm"),
-        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, archTagSuffix)) ^
+    set isRpmInstall to isFullMariner && dotnetVersion = "6.0" ^
+    set baseImageTag to cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set internalInstallerBase to when(isAlpine || isMariner,
         baseImageTag,
         cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl")) ^
@@ -24,17 +20,15 @@
         when(isMariner,
             [
                 "git",
-                when(dotnetVersion = "3.1", "procps-ng", ""),
                 when(find(OS_VERSION, "1.0") < 0, "tar", "")
             ],
             [
                 "curl",
                 "git",
-                when(dotnetVersion = "3.1", "procps", "")
                 "wget"
             ])), len)
-}}{{if !isBasedOnBuildpackDeps:ARG REPO=mcr.microsoft.com/dotnet/aspnet
-}}{{if isInternal:# Installer image
+}}ARG REPO=mcr.microsoft.com/dotnet/aspnet
+{{if isInternal:# Installer image
 FROM {{internalInstallerBase}} AS installer
 
 ARG SAS_QUERY_STRING
@@ -47,8 +41,6 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 {{InsertTemplate("Dockerfile.linux.install-sdk",
     [
         "install-method": when(isRpmInstall, "download", "download-and-install"),
-        "based-on-buildpack-deps": isBasedOnBuildpackDeps,
-        "use-local-version-var": (dotnetVersion = "3.1"),
         "is-internal": isInternal,
         "url-suffix": "$SAS_QUERY_STRING",
         "is-rpm-install": isRpmInstall
@@ -58,21 +50,13 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # .NET SDK image
 }}FROM {{baseImageTag}}
 
-{{InsertTemplate("Dockerfile.envs", ["based-on-buildpack-deps": isBasedOnBuildpackDeps])}}
-{{if isAlpine && dotnetVersion = "3.1":
-# Add dependencies for disabling invariant mode (set in base image)
-RUN apk add --no-cache \
-        icu-data-full \
-        icu-libs
-}}{{if dotnetVersion != "3.1":
+{{InsertTemplate("Dockerfile.envs")}}
+
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 [
     "pkgs": pkgs
 ])}}
-}}{{if isBasedOnBuildpackDeps:
-# Install .NET CLI dependencies
-RUN {{InsertTemplate("../Dockerfile.linux.install-deps", ["isSdk": "true"])}}
-}}
+
 {{if isInternal:{{
 if isRpmInstall:{{InsertTemplate("Dockerfile.linux.install-sdk",
     [
@@ -82,17 +66,12 @@ if isRpmInstall:{{InsertTemplate("Dockerfile.linux.install-sdk",
         "installer-stage": "installer",
         "is-rpm-install": isRpmInstall
     ])}}^
-else:COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]{{
-if isBasedOnBuildpackDeps:
-
-RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet}}
+else:COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 
 {{InsertTemplate("Dockerfile.linux.first-run")}}}}^
 else:{{InsertTemplate("Dockerfile.linux.install-sdk",
     [
         "install-method": "download-and-install",
-        "based-on-buildpack-deps": isBasedOnBuildpackDeps,
-        "use-local-version-var": (dotnetVersion = "3.1"),
         "is-rpm-install": isRpmInstall
     ])}}}}{{if (!isAlpine || ARCH_SHORT = "x64") && dotnetVersion != "8.0":
 
