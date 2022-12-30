@@ -36,9 +36,6 @@ RUN powershell -Command " `
         tar -oxzf dotnet.zip -C dotnet; `
         Remove-Item -Force dotnet.zip; `
         `
-        # Workaround for https://github.com/dotnet/sdk/issues/18410
-        \dotnet\dotnet build-server shutdown; `
-        `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
         Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
             | Remove-Item -Force -Recurse; `
