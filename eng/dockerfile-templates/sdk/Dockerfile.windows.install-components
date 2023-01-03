@@ -70,11 +70,7 @@ RUN powershell -Command " `
             [
                 "dotnet-is-internal": ARGS["dotnet-is-internal"]
             ],
-            "        ")}}}}{{
-if dotnetVersion != "3.1" && !isSingleStage: `
-        `
-        # Workaround for https://github.com/dotnet/sdk/issues/18410
-        \dotnet\dotnet build-server shutdown;}}{{if !isSingleStage: `
+            "        ")}}}}{{if !isSingleStage: `
         `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers{{
 for i, group in sdkExtractGroups:
