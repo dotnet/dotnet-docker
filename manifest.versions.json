@@ -82,8 +82,8 @@
     "libssl|focal": "1.1",
     "libssl|jammy": "3",
 
-    "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.39.0.windows.1/MinGit-2.39.0-64-bit.zip",
-    "mingit|x64|sha": "ae6863d7b7641ecf73f61edadbc7d1ff8259d08eccb4b9f006bb443d90910c25",
+    "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.39.0.windows.2/MinGit-2.39.0.2-64-bit.zip",
+    "mingit|x64|sha": "771e7bef1b672e3f63b18b8c4a62d626c8f47c41390a745f313758c0b6ae4d63",
 
     "monitor|6.2|build-version": "6.2.2-servicing.22401.2",
     "monitor|6.2|product-version": "6.2.2",
@@ -97,9 +97,9 @@
     "monitor|7.0|product-version": "7.0.1",
     "monitor|7.0|sha": "c316a859eb8d024c765b024bfb4a92b6aedfb5cc02d0751f73e826e2bc20f2ab5c1ed8c4d6b481b6b757fc58d35423668f9087f9d4cfb1acd7ab8dced1412c03",
 
-    "monitor|8.0|build-version": "8.0.0-alpha.1.22617.1",
+    "monitor|8.0|build-version": "8.0.0-alpha.1.23051.1",
     "monitor|8.0|product-version": "8.0.0-alpha.1",
-    "monitor|8.0|sha": "e5877869f4c56e2719b2640ee9637e07a5c7a59644d4d8d2b9a3d68d04dd87e9b42739c2b11302007e86d89d3fed409a4a55ceaeab197901c612d0e330e4e5e9",
+    "monitor|8.0|sha": "c293ef7906f7bafe0a9c0e399f827eb9d9d2bd12035f4e87f551b2b46dca1967f5379f629db0e76e4bf3f4ed7e9fcf04312119d2d5580409ee0280dd376a6fe2",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
@@ -210,16 +210,16 @@
     "sdk|7.0|linux|x64|sha": "cf289ad0e661c38dcda7f415b3078a224e8347528448429d62c0f354ee951f4e7bef9cceaf3db02fb52b5dd7be987b7a4327ca33fb9239b667dc1c41c678095c",
     "sdk|7.0|win|x64|sha": "f7083e2fef2f5c93c7d899cdf047f5c88626603ad0fdddf1f176820b74a32e3fcfb2402aef49406765ac8f160b5b48a714f09db2cce0ed04575f71dc6a49eaed",
 
-    "sdk|8.0|build-version": "8.0.100-alpha.1.22616.7",
+    "sdk|8.0|build-version": "8.0.100-alpha.1.22622.3",
     "sdk|8.0|product-version": "8.0.100-alpha.1",
-    "sdk|8.0|linux-musl|arm|sha": "3d9fcce88df217bd64b6f477c1fd8f55cba830548fe094d6750ef2dfee3b13ca526fee4c0b28e7be1721f03eebd4f0336bd4c8ae7de73a345911d3798258acdc",
-    "sdk|8.0|linux-musl|arm64|sha": "f4260e43632c527134d361388671e5828a0e3f9d9d77d686612c3e53b230e0db5f779e373843b86a36a2fd6d40c9cb1a59d63619cd3ceae8bc8935067a215127",
-    "sdk|8.0|linux-musl|x64|sha": "c32b5a7af9aa0bd86793663989fe022005bf10bbac5a42b66bc19346c776f313244b4d9bafdd833754b0dd10372097c84f13463da9e29aae66ab92d46ed1c192",
-    "sdk|8.0|linux-rpm|x64|sha": "783535b27c1d03d2103a04e3aa2db9868db86e84a290197ac91abe2c1c95ce1b25753cb1462874115af1e8d4a8710c9d5dd8b43026d708f252ade895d8ce847f",
-    "sdk|8.0|linux-rpm|arm64|sha": "386b8a07fb5aaab082e15bbff0289665d7bee44014cd9edc5da4a0ddd899de6c95e2d3627198d92b988b3453e1988b98d653dd9b6b91c0c68f216a42eac0ba24",
-    "sdk|8.0|linux|arm|sha": "2b1065973f2b8f9d7901f1ee41bc6fa6a5a919d6cba30a70bdf7e79333fb572622e5bc576631ff65177fe826e896d9f20ef717087bfa30b04d5beeb7ea2ef7b2",
-    "sdk|8.0|linux|arm64|sha": "0ce0df496fb164d3f9a563a4d4c931541a4b3f2f692dbe0714b3e97400b9771c8ff463e97126123da6e45786f45c7f4af000202cb5704fd8a10c914563205002",
-    "sdk|8.0|linux|x64|sha": "65f06ff7f1576242163762ee6c2fdd2e004947ef8d6dbc17405846743917b199fb3874b4f8d763e2a631c6cc0406d7bfd76576e6d57cfce01ea6287fcdd9a2af",
-    "sdk|8.0|win|x64|sha": "604cfb8e7ee8a8fa925879ccfeff6306473cde7f55e6c6c612f81ef03b703f3ba81cf8643f5fe4d0f5c9a14f3fbb9a026a9e1826e3d5efa8fae2f15dfdf6f234"
+    "sdk|8.0|linux-musl|arm|sha": "7b770ffa35701a6fee52ccec1470ad4724ce50dcc36c580dc249a90d2125e70a1ec10bbea8158ce479c6b8a20a035588446342cf868f1f6095c875c4b7f0311e",
+    "sdk|8.0|linux-musl|arm64|sha": "6523a35cf56ba8e4977f67723e1d4361518d669775f44a0608e967f79439bd0f91b73afae14523143d6fd14488843e08f4ec99f12dfdd0d9d2c5fb200995b375",
+    "sdk|8.0|linux-musl|x64|sha": "4c4ea1f686890c75ff015a67b6393d6f17359e1498ea49aadbae3831a15210f4d97e4a782ab76f1abebb796304791643701eb60706fc268841c69b0459eb4563",
+    "sdk|8.0|linux-rpm|x64|sha": "36e9df9871da341216018b55a98d0a1353895f490c82b5f9516395a6d7a4f18e1a8d66c484d6c59ff29137062f816aadb1c5b21ebc74da9a56e81bc0e1c3b116",
+    "sdk|8.0|linux-rpm|arm64|sha": "5adccb5d9d9b3dc7eb4d413d5d8035840998581e57d0a20f3e9cafa39ec44483ac037b90c1effaa2869554e240863e46355f9b068e7ab9bee65642db5bec2c1a",
+    "sdk|8.0|linux|arm|sha": "3dc6f9c4ce188f783c9035cd8d3ec25d9db530926ee89628cd5a28e6119f50a50ef8c4359e9f61b75c44644b0e297339d22a41c98eb29d68f1e095956a470cfb",
+    "sdk|8.0|linux|arm64|sha": "c8c3f62baff265be5bb0a50faa0a923939f1a6a89cf21a05800db0daa3520cf7848f06923d0cd930fa649fecd6504cfd56b63c1c172d0b73da73c9ae4b393408",
+    "sdk|8.0|linux|x64|sha": "9a3d6a143fe22421b8c33168de6f309db2c01850d962fd9b8f68ee8de4cf0b82782f0be5a1c1ef1fe6c559c03f15d16f0822288725dd1bf953549a231c25643d",
+    "sdk|8.0|win|x64|sha": "ab93cd8cdb700bd4f51e313495b7fc007f7294d17e395678342696ec3b9a55e5d057d9ecca9b75b7fa68b0eff588902e4026b62297fb1175b824a15cd04dfa01"
   }
 }

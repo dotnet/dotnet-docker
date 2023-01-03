@@ -10,8 +10,8 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.39.0.windows.1/MinGit-2.39.0-64-bit.zip; `
-        $mingit_sha256 = 'ae6863d7b7641ecf73f61edadbc7d1ff8259d08eccb4b9f006bb443d90910c25'; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.39.0.windows.2/MinGit-2.39.0.2-64-bit.zip; `
+        $mingit_sha256 = '771e7bef1b672e3f63b18b8c4a62d626c8f47c41390a745f313758c0b6ae4d63'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -48,9 +48,6 @@ RUN powershell -Command " `
         & \dotnet\dotnet nuget locals all --clear; `
         Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
         Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force; `
-        `
-        # Workaround for https://github.com/dotnet/sdk/issues/18410
-        \dotnet\dotnet build-server shutdown; `
         `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
         Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
