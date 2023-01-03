@@ -7,7 +7,6 @@
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
-    set dotnetSuffix to when(dotnetVersion = "3.1", " Core", "") ^
     set sdkExtractGroups to [
         [
             "dir": "dotnet",
@@ -16,7 +15,7 @@
                 "ThirdPartyNotices.txt",
                 "packs",
                 "sdk",
-                when(!(dotnetVersion = "3.1"), "sdk-manifests", ""),
+                "sdk-manifests",
                 "templates",
                 "shared"
             ], len)
@@ -33,7 +32,7 @@
         return cat("'", path, "'")
     }} ^
     set mingitDir to when(isSingleStage, "$Env:ProgramFiles\MinGit", "MinGit")
-}}{{ if dotnetVersion != "3.1" && dotnetVersion != "6.0":# Download MinGit
+}}{{ if dotnetVersion != "6.0":# Download MinGit
 RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
@@ -57,7 +56,7 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        # Retrieve .NET{{dotnetSuffix}} SDK
+        # Retrieve .NET SDK
         {{InsertTemplate("Dockerfile.windows.install-sdk",
             [
                 "use-local-version-var": ARGS["use-local-version-var"],

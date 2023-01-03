@@ -30,7 +30,7 @@ FROM {{serverCoreBaseTag}} AS installer
 {{if isInternal:
 ARG SAS_QUERY_STRING
 }}
-# Retrieve .NET{{when(dotnetVersion = "3.1", " Core", "")}} Runtime
+# Retrieve .NET Runtime
 {{InsertTemplate("Dockerfile.windows.install-runtime",
     [
         "use-local-version-var": "true",
@@ -42,8 +42,8 @@ ARG SAS_QUERY_STRING
 # Runtime image
 FROM mcr.microsoft.com/windows/{{finalStageBaseRepo}}:{{OS_VERSION_NUMBER}}-amd64
 
-{{InsertTemplate("../Dockerfile.common-dotnet-envs")}}{{if dotnetVersion != "3.1": `
-    {{InsertTemplate("Dockerfile.envs", [], "    ")}}}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs")}} `
+    {{InsertTemplate("Dockerfile.envs", [], "    ")}}
 
 {{InsertTemplate("../Dockerfile.windows.set-path", [ "path": "C:\Program Files\dotnet"])}}
 

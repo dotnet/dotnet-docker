@@ -76,53 +76,32 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
+            string version = imageData.GetProductVersion(ImageType, DockerHelper);
+
             List<EnvironmentVariableInfo> variables = new()
             {
                 new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
                 new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
-                new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip")
+                new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"),
+                new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true),
+                new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version)
+                {
+                    IsProductVersion = true
+                },
+                AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper),
+                RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper),
+                new EnvironmentVariableInfo("DOTNET_NOLOGO", "true")
             };
             variables.AddRange(GetCommonEnvironmentVariables());
 
-            if (imageData.Version.Major > 3 || imageData.SdkOS.StartsWith(OS.Alpine) || !DockerHelper.IsLinuxContainerModeEnabled)
+            if (imageData.SdkOS.StartsWith(OS.Alpine) || !DockerHelper.IsLinuxContainerModeEnabled)
             {
                 variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty));
-            }
-
-            if (imageData.Version.Major >= 3)
-            {
-                variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
-            }
-
-            if (imageData.Version.Major >= 5)
-            {
-                string version = imageData.GetProductVersion(ImageType, DockerHelper);
-                variables.Add(new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version)
-                {
-                    IsProductVersion = true
-                });
-            }
-
-            if (imageData.Version.Major >= 5)
-            {
-                variables.Add(AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper));
-                variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper));
-            }
-
-            if (imageData.Version.Major >= 6)
-            {
-                variables.Add(new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"));
             }
 
             if (imageData.SdkOS.StartsWith(OS.Alpine))
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
-
-                if (imageData.Version.Major < 5)
-                {
-                    variables.Add(new EnvironmentVariableInfo("LC_ALL", "en_US.UTF-8"));
-                    variables.Add(new EnvironmentVariableInfo("LANG", "en_US.UTF-8"));
-                }
             }
 
             EnvironmentVariableInfo.Validate(variables, imageData.GetImage(DotNetImageType.SDK, DockerHelper), imageData, DockerHelper);
@@ -169,9 +148,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            if (!(imageData.Version.Major >= 5 ||
-                (imageData.Version.Major >= 3 &&
-                    (imageData.SdkOS.StartsWith(OS.Alpine) || !DockerHelper.IsLinuxContainerModeEnabled))))
+            if (!imageData.SdkOS.StartsWith(OS.Alpine) && DockerHelper.IsLinuxContainerModeEnabled)
             {
                 return;
             }
@@ -252,10 +229,9 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyGitInstallation(ProductImageData imageData)
         {
-            if ((DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major == 3) ||
-                (!DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major <= 6))
+            if (!DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major == 6)
             {
-                OutputHelper.WriteLine("Git is not installed on Linux in .NET Core 3.1 nor on Windows containers older than .NET 7");
+                OutputHelper.WriteLine("Git is not installed on Windows containers older than .NET 7");
                 return;
             }
 

@@ -82,18 +82,3 @@ $ docker run --rm mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim /bin/sh -c "fin
 ./usr/share/dotnet/sdk/6.0.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
 ./usr/share/powershell/.store/powershell.linux.x64/7.2.0-preview.10/powershell.linux.x64/7.2.0-preview.10/tools/net6.0/any/ThirdPartyNotices.txt
 ```
-
-Note: In .NET Core 3.1, the SDK image is based on [`buildpack-deps`](https://hub.docker.com/_/buildpack-deps), which includes components that we distribute but do not use (like Python). Python also provides third party notice files, via `buildpack-deps`. You will see those if you use the following (unfiltered) pattern:
-
-```console
-$ docker run --rm mcr.microsoft.com/dotnet/sdk:3.1 /bin/sh -c "find . | grep -i third"
-./usr/share/powershell/.store/powershell.linux.x64/7.0.7/powershell.linux.x64/7.0.7/tools/netcoreapp3.1/any/ThirdPartyNotices.txt
-./usr/share/dotnet/ThirdPartyNotices.txt
-./usr/share/dotnet/sdk/3.1.414/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
-./usr/share/dotnet/shared/Microsoft.AspNetCore.App/3.1.20/THIRD-PARTY-NOTICES.txt
-./usr/lib/python2.7/dist-packages/mercurial/thirdparty
-./usr/lib/python2.7/dist-packages/mercurial/thirdparty/cbor
-./usr/lib/python2.7/dist-packages/mercurial/thirdparty/cbor/__init__.py
-./usr/lib/python2.7/dist-packages/mercurial/thirdparty/cbor/cbor2
-...
-```

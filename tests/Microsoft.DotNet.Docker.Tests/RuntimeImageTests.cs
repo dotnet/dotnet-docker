@@ -41,12 +41,10 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
-
-            if (imageData.Version.Major >= 5)
+            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>
             {
-                variables.Add(GetRuntimeVersionVariableInfo(imageData, DockerHelper));
-            }
+                GetRuntimeVersionVariableInfo(imageData, DockerHelper)
+            };
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);
         }
