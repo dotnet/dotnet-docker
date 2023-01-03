@@ -1,7 +1,6 @@
 {{
     _ ARGS
         install-method: Method of installation. Can be "download", "download-and-install", or "copy-and-install"
-        based-on-buildpack-deps: Indicates whether the associated Dockerfile is based on buildpack-deps
         use-local-version-var: Whether to define a local variable for the .NET SDK version instead of
             referencing the environment variable.
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
@@ -13,7 +12,6 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
-    set dotnetSuffix to when(dotnetVersion = "3.1", " Core", "") ^
     set installDir to "/usr/share/dotnet" ^
     set url to cat(
         VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
@@ -40,9 +38,6 @@
         split(VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")], "-")[0],
         VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")]) ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
-    set legacyBaseUrl to VARIABLES[cat("base-url|public|maintenance-legacy|", VARIABLES["branch"])] ^
-    set targetingPackBaseUrl to when(dotnetVersion = "3.1", legacyBaseUrl, baseUrl) ^
-    set targetingPackUrlSuffix to when(dotnetVersion = "3.1", "", ARGS["url-suffix"]) ^
     set commonShaVarName to "dotnet_sha512" ^
     set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set rpms to [
@@ -62,17 +57,16 @@
         ],
         [
             "filename": "targeting-pack.rpm",
-            "url": cat(targetingPackBaseUrl, "/Runtime/", VARIABLES[cat("runtime|", dotnetVersion, "|targeting-pack-version")],
+            "url": cat(baseUrl, "/Runtime/", VARIABLES[cat("runtime|", dotnetVersion, "|targeting-pack-version")],
                 "/dotnet-targeting-pack-", runtimeTargetingPackVersionFile,
-                "-", rpmFileArch, ".rpm", targetingPackUrlSuffix),
+                "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
             "sha": VARIABLES[join(["runtime-targeting-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": commonShaVarName
         ],
         [
             "filename": "aspnetcore-targeting-pack.rpm",
-            "url": cat(targetingPackBaseUrl, "/aspnetcore/Runtime/", VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")],
-                "/aspnetcore-targeting-pack-", aspnetTargetingPackVersionFile,
-                when(dotnetVersion = "3.1", "", cat("-", rpmFileArch)), ".rpm", targetingPackUrlSuffix),
+            "url": cat(baseUrl, "/aspnetcore/Runtime/", VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")],
+                "/aspnetcore-targeting-pack-", aspnetTargetingPackVersionFile, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
             "sha": VARIABLES[join(["aspnet-runtime-targeting-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": commonShaVarName
         ]
@@ -80,8 +74,7 @@
     set rpms to when(ARCH_SHORT != "arm64",
         cat(rpms, [[
             "filename": "netstandard-targeting-pack.rpm",
-            "url": cat("https://dotnetcli.azureedge.net/dotnet/Runtime/", VARIABLES["runtime|3.1|targeting-pack-version"],
-                "/netstandard-targeting-pack-2.1.0-", ARCH_SHORT, ".rpm"),
+            "url": cat("https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-", ARCH_SHORT, ".rpm"),
             "sha": VARIABLES[join(["netstandard-targeting-pack-2.1.0", "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": commonShaVarName
         ]]),
@@ -93,23 +86,14 @@
                 ARGS["url-suffix"]),
             "sha": VARIABLES[join(["sdk", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")],
             "sha-var-name": commonShaVarName,
-            "extract-paths": when(ARGS["based-on-buildpack-deps"], [],
-                when(dotnetVersion = "3.1",
-                    [
-                        "./packs",
-                        "./sdk",
-                        "./templates",
-                        "./LICENSE.txt",
-                        "./ThirdPartyNotices.txt"
-                    ],
-                    [
-                        "./packs",
-                        "./sdk",
-                        "./sdk-manifests",
-                        "./templates",
-                        "./LICENSE.txt",
-                        "./ThirdPartyNotices.txt"
-                    ]))
+            "extract-paths": [
+                "./packs",
+                "./sdk",
+                "./sdk-manifests",
+                "./templates",
+                "./LICENSE.txt",
+                "./ThirdPartyNotices.txt"
+            ]
         ]
     ] ^
     set files to when(ARGS["is-rpm-install"], rpms, tarballs) ^
@@ -124,7 +108,7 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
         "destination": ""
     ])
 }}
-}}# Install .NET{{dotnetSuffix}} SDK
+}}# Install .NET SDK
 RUN {{if ARGS["use-local-version-var"]:sdk_version={{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}} \
 {{
 if isFullMariner:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
@@ -136,6 +120,5 @@ if isFullMariner:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "
         "skip-install": !installEnabled,
         "install-dir": installDir,
         "create-install-dir": !isFullMariner
-    ], "    ")}}{{if !ARGS["is-internal"] || (ARGS["is-rpm-install"] && installEnabled):{{if ARGS["based-on-buildpack-deps"]: \
-    && ln -s {{installDir}}/dotnet /usr/bin/dotnet}} \
+    ], "    ")}}{{if !ARGS["is-internal"] || (ARGS["is-rpm-install"] && installEnabled): \
     {{InsertTemplate("Dockerfile.linux.first-run", ["append-cmd": "true"], "    ")}}}}

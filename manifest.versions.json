@@ -1,16 +1,5 @@
 {
   "variables": {
-    "aspnet|3.1|build-version": "3.1.32",
-    "aspnet|3.1|targeting-pack-version": "3.1.0",
-    "aspnet|3.1|linux-musl|arm64|sha": "3d4baee2ca9e064c6f53ba1d89c099273a245c0fa3f6406485b2d6ed0e0526df2e28d0f69ede1c5855d8eb6b2401c1d862b0a622e2ec7cc8ec671266d9563f2f",
-    "aspnet|3.1|linux-musl|x64|sha": "d67edf1ed7817c002e1f444baf3a48b71d6f3328ed3f63287d744445665db846f63d24f4f8dd97f99d85f9d5f28fd0d1f1b8efa0c88ed7545a3ee9cfc491f7d0",
-    "aspnet|3.1|linux-rpm|x64|sha": "da6d3d12e9ea014fe786835d8e37ae9c8f33d3026dbf2c3fc95c011c6357dff9272bc5d62b9d929d38180dbe37ff7f9a9b051ffb72312591e5475a7ef4a42737",
-    "aspnet|3.1|linux|arm|sha": "f984a6bf0d0c917fc74bee1d03af79a7e6ca6ce3bd722b14c0cf82641fdadb2d48014ea30989239f5082e4320668172409ee8a99c4acf7d9db155405187d7578",
-    "aspnet|3.1|linux|arm64|sha": "34b9ec241cd0047cb23f0b8416d3a009476e511c3dd5854636c11cfd078117faf095f32f06e7c97d810af94fde43621117414f983d3b2041ad40260f50dc330d",
-    "aspnet|3.1|linux|x64|sha": "0aa2aceda3d0b9f6bf02456d4e4b917c221c4f18eff30c8b6418e7514681baa9bb9ccc6b8c78949a92664922db4fb2b2a0dac9da11f775aaef618d9c491bb319",
-    "aspnet|3.1|win|x64|sha": "89c6612c302cb28d8c45c39bac6d01edbf72fb90ada9434d5ec2e9ff95f1bb956cb2e841fe57fc7b6baa94c133022e5f94cecaba587696a77e5fd4f0d762a0a1",
-    "aspnet-runtime-targeting-pack|3.1|linux-rpm|x64|sha": "fdab7122896ff3602d8a25c0b283996973ef0cf4f4d0f9eba429d3a93b2441ebe0e0d0b499b97bb28c43cfb386501cc617ca7ed7c949dd3e45c61db0d5879fd4",
-
     "aspnet|6.0|build-version": "6.0.12",
     "aspnet|6.0|targeting-pack-version": "$(aspnet|6.0|build-version)",
     "aspnet|6.0|linux-musl|x64|sha": "081f1cddb00d8c86877d594ba09d38a2af51184bb253c33a57ed0893c828a44a1d68c2c244ed6f846f4732c2903aa576a3d3caa5c30ed03c6d2aa59f332e5ac2",
@@ -59,11 +48,6 @@
     "base-url|public|maintenance|main": "$(base-url|public|main)",
     "base-url|public|maintenance|nightly": "https://dotnetcli.azureedge.net/dotnet",
 
-    "base-url|public|maintenance-legacy|main": "$(base-url|public|maintenance|main)",
-    "base-url|public|maintenance-legacy|nightly": "$(base-url|public|maintenance|nightly)",
-
-    "base-url|3.1|main": "$(base-url|public|maintenance-legacy|main)",
-    "base-url|3.1|nightly": "$(base-url|public|maintenance-legacy|nightly)",
     "base-url|6.0|main": "$(base-url|public|maintenance|main)",
     "base-url|6.0|nightly": "$(base-url|public|maintenance|nightly)",
     "base-url|7.0|main": "$(base-url|public|maintenance|main)",
@@ -80,7 +64,6 @@
     "base-url|8.0-monitor|main": "$(base-url|public|main)",
     "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
 
-    "dotnet|3.1|product-version": "3.1.32",
     "dotnet|6.0|product-version": "6.0.12",
     "dotnet|7.0|product-version": "7.0.1",
     "dotnet|8.0|product-version": "8.0.0-alpha.1",
@@ -120,13 +103,6 @@
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
-    "powershell|3.1|build-version": "7.0.13",
-    "powershell|3.1|Linux.Alpine|sha": "17124dc581327143de70728d6571929ec2c876ebdb9c3475edeef52fceb7fc4a339035c188d60ce5dcfe011cc889ef6220ba98c16b0a67cd95d568bedf7ee9f3",
-    "powershell|3.1|Linux|arm32|sha": "6145c6f31feab5182bffd9095cbb89ea19808523c6c03d0ffceebd17386170703f17227ecd409f72456978d0be458b15e205803789bbad68ba53d9a89116dfcf",
-    "powershell|3.1|Linux|arm64|sha": "b768a5d1c0ba572687d383bb6c87e8438fbd9837acd53caf513b7dad5658a144bcf32f9d73ecec4c4e9ccca45d7061bbb3a3b7fca7f470482f7c5a77c6cbf5dd",
-    "powershell|3.1|Linux|x64|sha": "c667ff1765950b089349f60260ee8eb8b8e500236f4570d09c33dde02792b7599fc8b12b20e636c8788c3d15ed371cbf20a04ad5e3cb397351404e14ab471f2f",
-    "powershell|3.1|Windows|x64|sha": "008fece9e9e0d1ba79a5459edbec84d63eb9eeacf5d385a4a4e7cf15a34cd45cc651ce98859568266c606b6f1e824e808fb4ec0ee6a16666ba8bda5a1422dfca",
-
     "powershell|6.0|build-version": "7.2.8",
     "powershell|6.0|Linux.Alpine|sha": "29a884efcfa5f9c3734959602224be76ad265e1b8947d655959bdca897197b947021786322ab482dd1da55c4487ba3fba2aa3386fdcf611df1871d7e662c2844",
     "powershell|6.0|Linux|arm32|sha": "2b87e8e17782d79a43f70b4fc1d62ab09d23fb364d2f7443e756057b7cdd7d66f5c61ab35f2a416fa0d455d6cf0e91b16284eeeba5e16a5abd67f95169f3e3ce",
@@ -140,21 +116,6 @@
     "powershell|7.0|Linux|arm64|sha": "271f24e9dbcb2b505bb9a484fd5aa013f795eccfb88663e3e326451dbe40211b3d99006003697c341443b7d86fc52859962da7fcc694e3d6d001888c466a0236",
     "powershell|7.0|Linux|x64|sha": "7fad3c38f08e8799e5bd257d8baea6e5fbd3fb81812f66bd6d6b288a091c94aedf4f01613893dabd7763aea8c0116f2feea25808e4b22b2e1e25b3bd8cc5ff1f",
     "powershell|7.0|Windows|x64|sha": "1ebf84206e55ba61d1d10ceb042ca6c841da59f66731d54e945a8a3e190792a3fec23f23a01482ab95690cab9084a96e902772959f0035326a249ebdaf5e5332",
-
-    "runtime|3.1|build-version": "3.1.32",
-    "runtime|3.1|targeting-pack-version": "3.1.0",
-    "runtime|3.1|linux-musl|arm64|sha": "c6699ddb9297340c2c9539fcc9eeb8b898397c26f2ca2f6162605bbbf54e3e8957148d93ef353f79ceb76c37ccfd8f7648383be64b6112de757312689de3cebf",
-    "runtime|3.1|linux-musl|x64|sha": "2f66b0d2c4cb7aa87298650afde34c78008de1abf59f5432aa68d21b97ed81b2189933fa690388f856c6bbf1f979afc97536867866cc878af25884d7f2a33575",
-    "runtime|3.1|linux-rpm|x64|sha": "7da987a078374bdbd704acce731698797e80c6ca8affdf7ddb027f075cc09da96dd5095156ca32179d4739db608c4b692b1991ed2e51a24d9aae3c643ccaf043",
-    "runtime|3.1|linux|arm|sha": "eaa5e439e9a70ca72a1de731e4b2b7b97e59c8d60bc694e0a08c8da6246aaecc3498dc14729c83140039a285a8cda8fcd334bdc81e507d97c2f92b9dffcf0140",
-    "runtime|3.1|linux|arm64|sha": "ff311df0db488f3b5cc03c7f6724f8442de7e60fa0a503ec8f536361ce7a357ad26d09d2499d68c50ebdfa751a5520bba4aaa77a38b191c892d5a018561ce422",
-    "runtime|3.1|linux|x64|sha": "a1de9bbc3d2e3a4f5f52b7742c678b182a58a724d36232997511e390027044d60144a7e010a29d6ee016ec91f2911daef28ac5712a827fff8bdde73314b7e002",
-    "runtime|3.1|win|x64|sha": "72a3feb6784c5c69cb464ad4a8678e719615bd1e4e9a7c3cf5c1f67a4f01e08c073424532772f1e320d05f63c01079c6a089be45f4777abe035f14ffbf06f38b",
-    "runtime-apphost-pack|3.1|linux-rpm|x64|sha": "fe01d7354b71f56ed6ec387315d5292e88fd950b21a64ace2eacd054d56bbb949e9663483f06a4ebd8fab95d36bd7185ef11654e58135d3849830f52abe53744",
-    "runtime-deps-cm.1|3.1|linux-rpm|x64|sha": "2d0990683ae41866d9155f71b6a8ac7ac0de1ee6f7d97aacc6eb068040c5f36ffcc67caaaf4edd2159610c6118f0da15df0e068e3aafe0d6b9528f3f792e12d8",
-    "runtime-host|3.1|linux-rpm|x64|sha": "bb226ffd7f3483e6cca8c7fe1909a5b47e8eb4ded5aefa00d4578bbe1ca3f08a1b963d1addcc6beff92acdba658691804536db35b51d3ab146dbab4c020f8821",
-    "runtime-hostfxr|3.1|linux-rpm|x64|sha": "75c2bdf665a814977f48f1926f7fc72ff0cc32d459fc55d7a328726d919d0d8c4669582fb46fac359dbdb308819c7f8b6a9646c16abe568a5b001593ccda9171",
-    "runtime-targeting-pack|3.1|linux-rpm|x64|sha": "9111ef4a0083c1fbd969f5adfca8f7b0a2e90eada94771c68ca4d00d34756fb280de153ecce4ad3da4b16698b7add4848f5b6ec24b89a144c2a119a42fb27c85",
 
     "runtime|6.0|build-version": "6.0.12",
     "runtime|6.0|targeting-pack-version": "$(runtime|6.0|build-version)",
@@ -224,15 +185,6 @@
     "runtime-hostfxr|8.0|linux-rpm|arm64|sha": "741a1947ed58514ec7d8f9fa29007ee1cfddf741a1acb633dcd8e6e7b90f599b25ab1a602940afea4142e8c92012e7ff967a312e1d1900723a871d1c46191534",
     "runtime-targeting-pack|8.0|linux-rpm|x64|sha": "09a79761151227f7ea66959b5fe4b5ad16d91d5d1dc94455d4e5add765537eb868e8091b366b3a01ae263fede65338beff963753f57f0a9d559e0dfd9450faa1",
     "runtime-targeting-pack|8.0|linux-rpm|arm64|sha": "3335dd2100429f0aa3174437835407907a963286ac5f00c39b2b5a2b51c758c9b90e9395d68986b04359e49306a5dc6d72b9efd657acb3c70d8c4aa80d5a2f01",
-
-    "sdk|3.1|build-version": "3.1.426",
-    "sdk|3.1|product-version": "3.1.426",
-    "sdk|3.1|linux-musl|x64|sha": "2854eaeb79b29fce1ae31f2253adb2d8f199b7d5a988fc8c90130afe3df6668893d87c14a86932254bdbaec64a553d7b996bbd6868ba7858e3a2cb28c5e9576d",
-    "sdk|3.1|linux-rpm|x64|sha": "2190b9028cc1b4eff8ce292e57c4b1a4441a36ead2e9bc5e81363f77399ecc5165af638922712b6385e71665a787d679532a5b275a692fac55f8d2fdd2131bad",
-    "sdk|3.1|linux|arm|sha": "dd357fa62f486cc9c3855230753b34c070d06c8d3e887753866886dda3c931533c780e02f94fe8e73e66ef504e11dd7fb63a004f5914beeccb36b4ce48f50914",
-    "sdk|3.1|linux|arm64|sha": "300e154fba3123644910bbb89a6e61f67569677efa359aa110871cbbb62afad059709dc362f0af27ece0b9a30bc3e6ef57c3cb7c6f75377b20d48636605f30f7",
-    "sdk|3.1|linux|x64|sha": "6c3f9541557feb5d5b93f5c10b28264878948e8540f2b8bb7fb966c32bd38191e6b310dcb5f87a4a8f7c67a7046fa932cde3cce9dc8341c1365ae6c9fcc481ec",
-    "sdk|3.1|win|x64|sha": "ca5c60898318d2cf9786013edd45508f44fba45c2a8814752ba53094ca7b78b3d94874e765655e310b4efd2b604d42807ef6e16c6281d877495d513bfb5c1261",
 
     "sdk|6.0|build-version": "6.0.404",
     "sdk|6.0|product-version": "6.0.404",
