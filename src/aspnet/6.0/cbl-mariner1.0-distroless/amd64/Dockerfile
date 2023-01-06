@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM mcr.microsoft.com/cbl-mariner/base/core:1.0 AS installer
 
 RUN tdnf install -y \
-        ca-certificates-microsoft \
+        ca-certificates \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
