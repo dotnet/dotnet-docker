@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
 RUN tdnf install -y \
-        ca-certificates-microsoft \
+        ca-certificates \
         gzip \
         tar \
     && tdnf clean all
