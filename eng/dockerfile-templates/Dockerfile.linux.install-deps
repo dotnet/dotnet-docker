@@ -47,7 +47,7 @@
             ])) ^
         set certsPkgPrefix to when(isMariner,
             [
-                when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates-microsoft"),
+                when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates"),
                 "",
                 dotnetDepsComment
             ],
