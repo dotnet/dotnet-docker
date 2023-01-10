@@ -1,12 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:6.0.12-cbl-mariner2.0-arm64v8
+FROM $REPO:6.0.13-cbl-mariner2.0-arm64v8
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=6.0.12
+ENV ASPNET_VERSION=6.0.13
 
 # Install ASP.NET Core
 RUN curl -fSL --output aspnetcore.rpm https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-aarch64.rpm \
-    && aspnetcore_sha512='74ca4d91f60afba8c37b561ef7f45db6d87efd2a6ca0a8431be10882c433529ac6a6c82080b6c38f62e96d5531297c021b0a5ffaf578d145aa3510c8063f8b7c' \
+    && aspnetcore_sha512='83c5cee13c67bd25928bae801c9b97c3eb79ca53e744e5b4abc539e8a6b23c97a9ac181dca307ebc797a45dcefb9a8f345633636b11b1e7730deaf09091274b8' \
     && echo "$aspnetcore_sha512  aspnetcore.rpm" | sha512sum -c - \
     && tdnf install -y --disablerepo=* aspnetcore.rpm \
     && rm aspnetcore.rpm
