@@ -279,16 +279,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void CreateProjectWithSdkImage(string templateName, string destinationPath, string containerName)
         {
-            string targetFramework;
-            if (_imageData.Version.ToString() == "3.1")
-            {
-                targetFramework = $"netcoreapp{_imageData.Version}";
-            }
-            else
-            {
-                targetFramework = $"net{_imageData.Version}";
-            }
-
+            string targetFramework = $"net{_imageData.Version}";
             const string ProjectContainerDir = "/app";
 
             _dockerHelper.Run(

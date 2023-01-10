@@ -10,9 +10,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '6.0.404'; `
+        $sdk_version = '6.0.405'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = 'af6cf26ca940605c354f537635a24f7f8b82200171bccfeefa993c51d56039f0a0e298fba9bcc44a569f8c612e681fe14de5778c892d43b1c7d69d38bd98893d'; `
+        $dotnet_sha512 = 'dde215d2021a5b099d464667cd1e9b200ebc38249e29df9129cc5f9cae657471ffb8fb2238d7d7c4d1385a2bf73cc63944404ce65715099e983552865195b005'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -22,9 +22,9 @@ RUN powershell -Command " `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.2.7'; `
+        $powershell_version = '7.2.8'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = '3b3ce6c307169fa73b8a3120c851ebe0614ebba7b4099fbf20954eb4e41556ef686828317fed56f5995ffe83754dbc775062555579b26f339399d50e6b99dac3'; `
+        $powershell_sha512 = 'a962df01bccb6828ee30ef864355d45ed4afc534659df9c714f6baa5992ad7f5472b94a5f6675f75c8d24853e5f3728745a8426cc4fb3175e32786d0a693338b'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -34,9 +34,6 @@ RUN powershell -Command " `
         Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
         Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force; `
         `
-        # Workaround for https://github.com/dotnet/sdk/issues/18410
-        \dotnet\dotnet build-server shutdown; `
-        `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
         Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
             | Remove-Item -Force -Recurse; `
@@ -44,7 +41,7 @@ RUN powershell -Command " `
             | Remove-Item -Force -Recurse"
 
 # SDK image
-FROM $REPO:6.0.12-nanoserver-ltsc2022
+FROM $REPO:6.0.13-nanoserver-ltsc2022
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -54,7 +51,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=6.0.404 `
+    DOTNET_SDK_VERSION=6.0.405 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

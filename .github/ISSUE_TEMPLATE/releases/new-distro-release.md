@@ -11,7 +11,7 @@ Distro: &lt;name/version&gt;
 1. - [ ] Copy the Dockerfiles of the most recent version of that distro (or author new ones for an entirely new distro) and place them in a version-specific folder under their respective variants (runtime-deps, runtime, aspnet, sdk). Note: not all variants have a corresponding runtime-deps image.
 1. - [ ] Modify the Dockerfiles as appropriate for any specific changes related to the new distro version
 1. - [ ] Update [manifest.json](https://github.com/dotnet/dotnet-docker/blob/nightly/manifest.json) to reference the new set of Dockerfiles with the appropriate tags
-      - [ ] Move any distro-specific floating tags to the newer version (e.g. `3.1-alpine`)
+      - [ ] Move any distro-specific floating tags to the newer version (e.g. `6.0-alpine`)
 1. - [ ] Update the [test data](https://github.com/dotnet/dotnet-docker/blob/nightly/tests/Microsoft.DotNet.Docker.Tests/TestData.cs) to include the new distro version
 1. - [ ] Update the [tags metadata templates](https://github.com/dotnet/dotnet-docker/tree/main/eng/mcr-tags-metadata-templates) to include the new distro version
 1. - [ ] Run the command to update the READMEs: `.\eng\readme-templates\Get-GeneratedReadmes.ps1`

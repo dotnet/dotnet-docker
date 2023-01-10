@@ -7,7 +7,7 @@
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
-    set dotnetDepsComment to cat("# .NET", when(dotnetVersion = "3.1", " Core", ""), " dependencies") ^
+    set dotnetDepsComment to "# .NET dependencies" ^
     set pkgs to when(isAlpine,
         [
             "krb5-libs",
@@ -47,9 +47,7 @@
             ])) ^
         set certsPkgPrefix to when(isMariner,
             [
-                when(dotnetVersion = "3.1",
-                    "ca-certificates",
-                    when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates-microsoft")),
+                when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates"),
                 "",
                 dotnetDepsComment
             ],

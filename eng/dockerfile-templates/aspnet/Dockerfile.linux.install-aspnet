@@ -15,7 +15,7 @@
     set filePlatform to when(ARGS["is-rpm-install"], "", when(isAlpine, "-linux-musl", "-linux")) ^
     set varPlatform to when(ARGS["is-rpm-install"], "linux-rpm", when(isAlpine, "linux-musl", "linux")) ^
     set fileExt to when(ARGS["is-rpm-install"], "rpm", "tar.gz") ^
-    set destDir to when((isAlpine || dotnetVersion = "3.1" || ARGS["is-rpm-install"]) && !ARGS["is-internal"],
+    set destDir to when((isAlpine || ARGS["is-rpm-install"]) && !ARGS["is-internal"],
         "/usr/share/dotnet",
         when(isDistroless, "/dotnet", "")) ^
     set aspnetVersionDir to when(ARGS["use-local-version-var"],

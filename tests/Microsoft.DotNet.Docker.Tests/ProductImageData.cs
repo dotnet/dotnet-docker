@@ -24,12 +24,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     return _sdkOS;
                 }
 
-                if (Version.Major >= 5)
-                {
-                    return OS;
-                }
-
-                return OS.TrimEnd(Tests.OS.SlimSuffix);
+                return OS;
             }
             set { _sdkOS = value; }
         }
@@ -105,7 +100,7 @@ namespace Microsoft.DotNet.Docker.Tests
             // For distroless, dotnet will be the default entrypoint so we don't need to specify "dotnet" in the command.
             // See https://github.com/dotnet/dotnet-docker/issues/3866
             string executable = !IsDistroless ||
-                (OS.Contains(Tests.OS.Mariner) && (OS == Tests.OS.Mariner10Distroless || Version.Major <= 6)) ?
+                (OS.Contains(Tests.OS.Mariner) && (OS == Tests.OS.Mariner10Distroless || Version.Major == 6)) ?
                     "dotnet " :
                     string.Empty;
             return executable + command;
@@ -133,16 +128,6 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             return GetTagName(imageVersion.GetTagName(), os);
-        }
-
-        protected override string GetArchTagSuffix()
-        {
-            if (Arch == Arch.Amd64 && Version.Major < 5)
-            {
-                return string.Empty;
-            }
-
-            return base.GetArchTagSuffix();
         }
     }
 }

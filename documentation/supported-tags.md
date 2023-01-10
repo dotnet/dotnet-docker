@@ -12,11 +12,11 @@ _Simple Tags_ reference an image for a single platform (e.g. `Windows x64` or `L
 
     **Examples**
 
-    * `6.0.0-focal-amd64`
-    * `6.0.0-focal-arm64v8`
-    * `3.1.18-nanoserver-1809`
-    * `3.1.18-alpine3.14`
-    * `3.1.18-buster-slim-arm32v7`
+    * `6.0.12-focal-amd64`
+    * `6.0.12-focal-arm64v8`
+    * `6.0.12-nanoserver-1809`
+    * `6.0.12-alpine3.16`
+    * `6.0.12-bullseye-slim-arm32v7`
 
 1. `<Major.Minor .NET Version>-<OS>-<Architecture>`
 
@@ -24,9 +24,9 @@ _Simple Tags_ reference an image for a single platform (e.g. `Windows x64` or `L
 
     * `6.0-focal-arm64v8`
     * `6.0-focal-amd64`
-    * `3.1-nanoserver-1809`
-    * `3.1-alpine3.14`
-    * `3.1-buster-slim-arm32v7`
+    * `6.0-nanoserver-1809`
+    * `6.0-alpine3.16`
+    * `6.0-bullseye-slim-arm32v7`
 
 ## Shared Tags
 
@@ -61,15 +61,13 @@ _Shared Tags_ reference images for [multiple platforms](https://www.docker.com/b
 
     **Examples**
 
-    * `6.0.0`
-    * `3.1.20`
+    * `6.0.12`
 
 1. `<Major.Minor .NET Version>`
 
     **Examples**
 
     * `6.0`
-    * `3.1`
 
 1. `latest`
 
@@ -101,7 +99,6 @@ _Shared Tags_ reference images for [multiple platforms](https://www.docker.com/b
 1. `<Architecture>` - The architecture the image is based on. See [Supported Platforms](supported-platforms.md#architectures) for the list of supported architectures.
 
     * For Windows, `amd64` is the only architecture supported and is excluded from the tag name.
-    * For .NET Core 3.1, `amd64` is the implied default if no architecture is specified.
 
 ## Tag Listing
 
