@@ -1,5 +1,5 @@
 # build image
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build-env
 
 WORKDIR /update-dependencies
 
@@ -18,7 +18,7 @@ RUN dotnet publish -c Release -o out --no-restore
 
 
 # runtime image
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
 # install Docker
 RUN apk add --no-cache \
