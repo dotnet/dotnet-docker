@@ -16,17 +16,6 @@ stages:
     displayName: Update Dependencies (dotnet/dotnet-monitor)
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
-    strategy:
-      matrix:
-        Update6:
-          MajorMinorVersion: 6.$(monitor6MinorVersion)
-          ChannelQuality: $(monitor6Quality)
-        Update7:
-          MajorMinorVersion: 7.$(monitor7MinorVersion)
-          ChannelQuality: $(monitor7Quality)
-        Update8:
-          MajorMinorVersion: 8.$(monitor8MinorVersion)
-          ChannelQuality: $(monitor8Quality)
     steps:
     - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -Channel $(MajorMinorVersion)/$(ChannelQuality)
       displayName: Get Versions
