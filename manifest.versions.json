@@ -55,8 +55,6 @@
     "base-url|8.0|main": "$(base-url|public|main)",
     "base-url|8.0|nightly": "$(base-url|public|nightly)",
 
-    "base-url|6.2-monitor|main": "$(base-url|public|main)",
-    "base-url|6.2-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|6.3-monitor|main": "$(base-url|public|main)",
     "base-url|6.3-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|7.0-monitor|main": "$(base-url|public|main)",
@@ -84,10 +82,6 @@
 
     "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.39.0.windows.2/MinGit-2.39.0.2-64-bit.zip",
     "mingit|x64|sha": "771e7bef1b672e3f63b18b8c4a62d626c8f47c41390a745f313758c0b6ae4d63",
-
-    "monitor|6.2|build-version": "6.2.2-servicing.22401.2",
-    "monitor|6.2|product-version": "6.2.2",
-    "monitor|6.2|sha": "5d5df17e81ed66e644dc7323e89caee10f7eadbf62a28e0443e9fe12df1c5283fce2ebf6bc4dc2e5004c3c9e044101fc131ff293f382f15a32c91a6e159619d7",
 
     "monitor|6.3|build-version": "6.3.1-servicing.22601.6",
     "monitor|6.3|product-version": "6.3.1",
