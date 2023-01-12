@@ -1,5 +1,5 @@
 $(McrTagsYmlRepo:runtime-deps)
-$(McrTagsYmlTagGroup:8.0-preview-bullseye-slim-amd64)
+$(McrTagsYmlTagGroup:8.0-preview-bookworm-slim-amd64)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-alpine3.17-amd64)
     customSubTableTitle: .NET 8 Preview Tags
@@ -18,7 +18,7 @@ $(McrTagsYmlTagGroup:6.0-alpine3.16-amd64)
 $(McrTagsYmlTagGroup:6.0-jammy-amd64)
 $(McrTagsYmlTagGroup:6.0-jammy-chiseled-amd64)
 $(McrTagsYmlTagGroup:6.0-focal-amd64)
-$(McrTagsYmlTagGroup:8.0-preview-bullseye-slim-arm64v8)
+$(McrTagsYmlTagGroup:8.0-preview-bookworm-slim-arm64v8)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-alpine3.17-arm64v8)
     customSubTableTitle: .NET 8 Preview Tags
@@ -37,7 +37,7 @@ $(McrTagsYmlTagGroup:6.0-alpine3.16-arm64v8)
 $(McrTagsYmlTagGroup:6.0-jammy-arm64v8)
 $(McrTagsYmlTagGroup:6.0-jammy-chiseled-arm64v8)
 $(McrTagsYmlTagGroup:6.0-focal-arm64v8)
-$(McrTagsYmlTagGroup:8.0-preview-bullseye-slim-arm32v7)
+$(McrTagsYmlTagGroup:8.0-preview-bookworm-slim-arm32v7)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-alpine3.17-arm32v7)
     customSubTableTitle: .NET 8 Preview Tags
