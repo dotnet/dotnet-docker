@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM arm64v8/buildpack-deps:bullseye-curl AS installer
+FROM arm64v8/buildpack-deps:bookworm-curl AS installer
 
 # Retrieve ASP.NET Core
 RUN aspnetcore_version=8.0.0-alpha.1.23068.1 \
@@ -13,7 +13,7 @@ RUN aspnetcore_version=8.0.0-alpha.1.23068.1 \
 
 
 # ASP.NET Core image
-FROM $REPO:8.0.0-alpha.1-bullseye-slim-arm64v8
+FROM $REPO:8.0.0-alpha.1-bookworm-slim-arm64v8
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=8.0.0-alpha.1.23068.1
