@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:8.0.0-alpha.1-bullseye-slim-amd64
+FROM $REPO:8.0.0-alpha.1-bookworm-slim-amd64
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
