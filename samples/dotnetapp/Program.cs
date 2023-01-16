@@ -72,7 +72,7 @@ string[] currentMemoryPaths = new string[]
 
 // cgroup information
 if (OperatingSystem.IsLinux() &&
-    GetBestValue(memoryLimitPaths, out long memoryLimit, out string? bestPath) &&
+    GetBestValue(memoryLimitPaths, out long memoryLimit, out string? bestMemoryLimitPath) &&
     memoryLimit > 0)
 {
     // get memory cgroup information
