@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using static System.Console;
 
@@ -59,6 +59,8 @@ WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {totalMemoryBytes}
 string[] memoryLimitPaths = new string[] 
 {
     "/sys/fs/cgroup/memory.max",
+    "/sys/fs/cgroup/memory.high",
+    "/sys/fs/cgroup/memory.low",
     "/sys/fs/cgroup/memory/memory.limit_in_bytes",
 };
 
@@ -69,18 +71,17 @@ string[] currentMemoryPaths = new string[]
 };
 
 // cgroup information
-if (OperatingSystem.IsLinux())
+if (OperatingSystem.IsLinux() &&
+    GetBestValue(memoryLimitPaths, out long memoryLimit, out string? bestMemoryLimitPath) &&
+    memoryLimit > 0)
 {
     // get memory cgroup information
-    long memoryLimit = GetBestValue(memoryLimitPaths);
-    long currentMemory = GetBestValue(currentMemoryPaths);
+    GetBestValue(currentMemoryPaths, out long currentMemory, out string? memoryPath);
 
-    if (memoryLimit > 0)
-    {
-        WriteLine($"cgroup memory limit: {memoryLimit} ({GetInBestUnit(memoryLimit)})");
-        WriteLine($"cgroup memory usage: {currentMemory} ({GetInBestUnit(currentMemory)})");
-        WriteLine($"GC Hard limit %: {(double)totalMemoryBytes/memoryLimit * 100:N0}");
-    }
+    WriteLine($"cgroup memory constraint: {bestMemoryLimitPath}");
+    WriteLine($"cgroup memory limit: {memoryLimit} ({GetInBestUnit(memoryLimit)})");
+    WriteLine($"cgroup memory usage: {currentMemory} ({GetInBestUnit(currentMemory)})");
+    WriteLine($"GC Hard limit %: {(double)totalMemoryBytes/memoryLimit * 100:N0}");
 }
 
 string GetInBestUnit(long size)
@@ -101,22 +102,19 @@ string GetInBestUnit(long size)
     }
 }
 
-long GetBestValue(string[] paths)
+bool GetBestValue(string[] paths, out long limit, [NotNullWhen(true)] out string? bestPath)
 {
-    string value = string.Empty;
     foreach (string path in paths)
     {
-        if (Path.Exists(path))
+        if (Path.Exists(path) &&
+            long.TryParse(File.ReadAllText(path), out limit))
         {
-            value = File.ReadAllText(path);
-            break;
+            bestPath = path;
+            return true;
         }
     }
 
-    if (int.TryParse(value, out int result))
-    {
-        return result;
-    }
-
-    return 0;
+    bestPath = null;
+    limit = 0;
+    return false;
 }
