@@ -78,7 +78,7 @@ if (OperatingSystem.IsLinux() &&
     // get memory cgroup information
     GetBestValue(currentMemoryPaths, out long currentMemory, out string? memoryPath);
 
-    WriteLine($"cgroup memory constraint: {bestPath}");
+    WriteLine($"cgroup memory constraint: {bestMemoryLimitPath}");
     WriteLine($"cgroup memory limit: {memoryLimit} ({GetInBestUnit(memoryLimit)})");
     WriteLine($"cgroup memory usage: {currentMemory} ({GetInBestUnit(currentMemory)})");
     WriteLine($"GC Hard limit %: {(double)totalMemoryBytes/memoryLimit * 100:N0}");
