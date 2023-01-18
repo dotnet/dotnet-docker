@@ -1,41 +1,26 @@
-ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
-ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM $SDK_REPO:7.0.102-cbl-mariner2.0-arm64v8 AS installer
+FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
-# Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=7.0.1
-RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/7.0.1-servicing.22601.8/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='c316a859eb8d024c765b024bfb4a92b6aedfb5cc02d0751f73e826e2bc20f2ab5c1ed8c4d6b481b6b757fc58d35423668f9087f9d4cfb1acd7ab8dced1412c03' \
-    && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
-    && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net7.0 --no-cache \
-    # To reduce image size, remove all non-net7.0 TFMs
-    # To do this safely, we need to first find everything that dotnet tool installed named "dotnet-monitor".
-    # The /dotnet-monitor/ folder exists under .store which is not a stable constant to rely on. The result is multi stage search:
-    # 1. Find any files in /app
-    # 2. Match anything that is under a *folder* called 'dotnet-monitor'
-    # 3. Match anything from step 2 that isn't in a '/tools/net7.0' folder (/tools is the folder we use in a nuget file that is stable)
-    # 4. Delete everything from step 3
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -v -i '.*/tools/net7[.]0' | xargs rm -rf \
-    # To reduce image size further, remove the non-linux assemblies
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(win|osx)' | xargs rm -rf \
-    # To reduce image size further, remove linux assemblies that do not match the arm64 architecture
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(linux-x64|linux-musl-x64)' | xargs rm -rf \
-    # To reduce image size further, remove symbol files
-    && find /app -type f \( -name *.pdb -o -name *.dbg \) -print | xargs rm -rf \
-    # Remove all the empty directories left by the previous step
-    && find /app -type d -empty -delete \
-    # Allow other users to run the tool
-    && chmod 755 /app/dotnet-monitor \
-    && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
+RUN tdnf install -y \
+        ca-certificates \
+        gzip \
+        tar \
+    && tdnf clean all
+
+# Retrieve .NET Monitor
+RUN dotnet_monitor_version=7.0.2 \
+    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-arm64.tar.gz \
+    && dotnet_monitor_sha512='a81d9f46798a5092c1a037ffea30724a5deacc87cfc6fabc261e68407fb226c0addba55e0e20c93ceae890b0463e10bb381c45997631fd5e76fd6c668140fa0e' \
+    && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
+    && mkdir -p /app \
+    && tar -oxzf dotnet-monitor.tar.gz -C /app \
+    && rm dotnet-monitor.tar.gz
 
 
-# Monitor image
-FROM $ASPNET_REPO:7.0.2-cbl-mariner2.0-distroless-arm64v8
-
-WORKDIR /app
-COPY --from=installer /app .
+# .NET Monitor image
+FROM $REPO:7.0.2-cbl-mariner2.0-distroless-arm64v8
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -54,9 +39,10 @@ ENV \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
     Logging__Console__FormatterOptions__TimestampFormat=yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z' \
     # Logging: Write timestamps using UTC offset (+0:00)
-    Logging__Console__FormatterOptions__UseUtcTimestamp=true \
-    # Add dotnet-monitor path to front of PATH for easier, prioritized execution
-    PATH="/app:${PATH}"
+    Logging__Console__FormatterOptions__UseUtcTimestamp=true
 
-ENTRYPOINT [ "dotnet-monitor" ]
+WORKDIR /app
+COPY --from=installer /app .
+
+ENTRYPOINT [ "dotnet", "./dotnet-monitor.dll" ]
 CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]

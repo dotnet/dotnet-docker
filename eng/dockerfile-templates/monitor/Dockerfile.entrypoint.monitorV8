@@ -1,2 +1,2 @@
-ENTRYPOINT [ "dotnet-monitor" ]
+ENTRYPOINT [ "dotnet", "./dotnet-monitor.dll" ]
 CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]

@@ -85,17 +85,24 @@
     "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.39.1.windows.1/MinGit-2.39.1-64-bit.zip",
     "mingit|x64|sha": "000649846ec6e28e8f76d4a0d02f02b3dd1ba19914385f7dead1c5cde25b3bad",
 
-    "monitor|6.3|build-version": "6.3.1-servicing.22601.6",
-    "monitor|6.3|product-version": "6.3.1",
-    "monitor|6.3|sha": "52e3ec332662ae33611229098e4ad9383708e7ac53e0e678330fd1d437615b0c4f2cdf71ecc17ed147499c1c9e6099d3a15634c6b65ea3fbef541684c1809e71",
+    "monitor|6.3|build-version": "6.3.2-servicing.23074.15",
+    "monitor|6.3|linux-musl|x64|sha": "583968ea8b084f6084a68438f3b081e0511194d99a8a37769bcdaf26652036f590e18840b46f85e5a7c24aea453b7fb8e3949fc3c5e792caea46bbd383f45e90",
+    "monitor|6.3|linux-musl|arm64|sha": "457c252e299f633668481ac6e6c68f98cc2c02f883cdd4d40e046685302d40f73c80805a90a9060525bc5565b1d1e3f0c6a7ab8f50ee3fc130d43942f4d13129",
+    "monitor|6.3|linux|x64|sha": "a4704692cf27f7d83b45a7418f001ec9827efac14f9768d515f55d10ee801dae052f607a2c8f02e6f7ed4276c2b8bcd111bd7f6f0fe283208646c30ab9b360e9",
+    "monitor|6.3|linux|arm64|sha": "1eeaf743d224e4c784bc718c9b11e69b37f88a2eced889d90f90779515e0d032ebaa0b0d24ea9cda03a8ae98bcaf2b408cf1127090fd36f7fb4c1cb559104b60",
+    "monitor|6.3|product-version": "6.3.2",
 
-    "monitor|7.0|build-version": "7.0.1-servicing.22601.8",
-    "monitor|7.0|product-version": "7.0.1",
-    "monitor|7.0|sha": "c316a859eb8d024c765b024bfb4a92b6aedfb5cc02d0751f73e826e2bc20f2ab5c1ed8c4d6b481b6b757fc58d35423668f9087f9d4cfb1acd7ab8dced1412c03",
+    "monitor|7.0|build-version": "7.0.2-servicing.23074.13",
+    "monitor|7.0|linux-musl|x64|sha": "d0f4ea82f87ca24f9d859ae2f6f056a3d06d9b3047c33805e414edd3a9310ca5f460dff657eddb800730a37daf9612830808be603d36c47824088e66588e5bec",
+    "monitor|7.0|linux-musl|arm64|sha": "4288d4b7ffa83f5313d247c29571ffd4a388a7a8d82bced1e4c172d82385c68064dd2581b3f5a29b666599cf9896c4c6e556f25dab7febe6d65683a5199a4f08",
+    "monitor|7.0|linux|x64|sha": "1ddf1ccf8f53200f1ad3c8be7020740b4fb2e94b3f121b3d9e1a290d059d4c723b43f954882f017d99bb517db4984e751ba7fe4fb7b4d407c92201596f20de88",
+    "monitor|7.0|linux|arm64|sha": "a81d9f46798a5092c1a037ffea30724a5deacc87cfc6fabc261e68407fb226c0addba55e0e20c93ceae890b0463e10bb381c45997631fd5e76fd6c668140fa0e",
+    "monitor|7.0|product-version": "7.0.2",
 
-    "monitor|8.0|build-version": "8.0.0-alpha.1.23073.2",
+    "monitor|8.0|build-version": "8.0.0-alpha.1.23074.11",
+    "monitor|8.0|linux|x64|sha": "6f27a21564ca23af4d1b8228b62296c466b342568f5ca7ff6b6666e62356609eec404cade864b30bbd8faa33b1598974e0bb65f7c61f6bce3e2c3b23eeb929d5",
+    "monitor|8.0|linux|arm64|sha": "d971dbfa3ade967fdb45a318336b15a49215909f7b71f73267feebb6e6c5246092af1a6c7898cb026f74bfdf5a099d26312dd4ac0d8f4cc592126d0c281b417c",
     "monitor|8.0|product-version": "8.0.0-alpha.1",
-    "monitor|8.0|sha": "a08f502abde7a642aa2014669b220e5cc1565f0e77243fd84702a837627ab57d1e46563fde3cfd5bec254984800f00512ebf20134cb7254e1635f23f9d289a97",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 

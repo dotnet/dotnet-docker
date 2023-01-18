@@ -1,1 +1,1 @@
-ENTRYPOINT [ "dotnet-monitor", "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
+ENTRYPOINT [ "dotnet", "./dotnet-monitor.dll", "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
