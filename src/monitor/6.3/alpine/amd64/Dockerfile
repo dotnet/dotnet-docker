@@ -1,41 +1,7 @@
-ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
-ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
-
-# Installer image
-FROM $SDK_REPO:6.0.405-alpine3.17-amd64 AS installer
-
-# Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=6.3.2
-RUN wget -O dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/6.3.2-servicing.23081.2/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='675c7353a5a86af3a1613df7484eade3e6d04aab12dac5acc154f8a658abf40d3a91b9fb78c14d94bceec1ce2116ee93bef7792f5078266052375b98d9ef5eeb' \
-    && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
-    && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net6.0 --no-cache \
-    # To reduce image size, remove all non-net6.0 TFMs
-    # To do this safely, we need to first find everything that dotnet tool installed named "dotnet-monitor".
-    # The /dotnet-monitor/ folder exists under .store which is not a stable constant to rely on. The result is multi stage search:
-    # 1. Find any files in /app
-    # 2. Match anything that is under a *folder* called 'dotnet-monitor'
-    # 3. Match anything from step 2 that isn't in a '/tools/net6.0' folder (/tools is the folder we use in a nuget file that is stable)
-    # 4. Delete everything from step 3
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -v -i '.*/tools/net6[.]0' | xargs rm -rf \
-    # To reduce image size further, remove the non-linux assemblies
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(win|osx)' | xargs rm -rf \
-    # To reduce image size further, remove linux assemblies that do not match the x64 architecture
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(linux-arm64|linux-musl-arm64)' | xargs rm -rf \
-    # To reduce image size further, remove symbol files
-    && find /app -type f \( -name *.pdb -o -name *.dbg \) -print | xargs rm -rf \
-    # Remove all the empty directories left by the previous step
-    && find /app -type d -empty -delete \
-    # Allow other users to run the tool
-    && chmod 755 /app/dotnet-monitor \
-    && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
-
-
-# Monitor image
-FROM $ASPNET_REPO:6.0.13-alpine3.17-amd64
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
+FROM $REPO:6.0.13-alpine3.17-amd64
 
 WORKDIR /app
-COPY --from=installer /app .
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -55,5 +21,14 @@ ENV \
     Logging__Console__FormatterOptions__UseUtcTimestamp=true \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
+
+# Install .NET Monitor
+RUN dotnet_monitor_version=6.3.2 \
+    && wget -O dotnet-monitor.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/6.3.2-servicing.23081.2/dotnet-monitor-$dotnet_monitor_version-linux-musl-x64.tar.gz \
+    && dotnet_monitor_sha512='dae26f4741dfa74d7dec7b9154c337963bf21a45e7b0745367da3379e5276a5492ad71046a2783fca5dc61d6fe63ee4a463288d001b3e0d1850fcbf80899a73c' \
+    && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
+    && mkdir -p /app \
+    && tar -oxzf dotnet-monitor.tar.gz -C /app \
+    && rm dotnet-monitor.tar.gz
 
 ENTRYPOINT [ "dotnet-monitor", "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]

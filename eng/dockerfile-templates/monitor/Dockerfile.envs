@@ -1,9 +1,7 @@
-ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:6.0.13-cbl-mariner2.0-amd64
-
-WORKDIR /app
-
-ENV \
+{{
+    _ .NET major version matches the major version of dotnet-monitor ^
+    set dotnetMajor to split(PRODUCT_VERSION, ".")[0]
+}}ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \
     # Disable debugger and profiler diagnostics to avoid diagnosing self.
@@ -12,7 +10,9 @@ ENV \
     DefaultProcess__Filters__0__Key=ProcessId \
     DefaultProcess__Filters__0__Value=1 \
     # Remove Unix Domain Socket before starting diagnostic port server
-    DiagnosticPort__DeleteEndpointOnStartup=true \
+    DiagnosticPort__DeleteEndpointOnStartup=true \{{ if dotnetMajor != "6":
+    # Server GC mode
+    DOTNET_gcServer=1 \}}
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
@@ -21,14 +21,3 @@ ENV \
     Logging__Console__FormatterOptions__UseUtcTimestamp=true \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
-
-# Install .NET Monitor
-RUN dotnet_monitor_version=6.3.2 \
-    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/6.3.2-servicing.23081.2/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
-    && dotnet_monitor_sha512='0235193bd2d5338625be189ccf6079b10b4d73a79ed2befba54c0aeacf091e75d91c7892010ed3bbc01f7ef58a9ce6a4359d7a213bb0121eeee34f8920c7ec6a' \
-    && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
-    && mkdir -p /app \
-    && tar -oxzf dotnet-monitor.tar.gz -C /app \
-    && rm dotnet-monitor.tar.gz
-
-ENTRYPOINT [ "dotnet-monitor", "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
