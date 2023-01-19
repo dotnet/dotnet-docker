@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm32v7/buildpack-deps:bullseye-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=8.0.0-alpha.1.23067.9 \
+RUN aspnetcore_version=8.0.0-alpha.1.23068.1 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm.tar.gz \
-    && aspnetcore_sha512='2fe65cb0882bbed968fa684471b808671f694adebaf7f4f740b503b0758fde100a4eade9438e893e9c76425b1f558259fb64b88f68fa18e96939f95fddb29a05' \
+    && aspnetcore_sha512='5a1e2459a65c4223c1539bef3ae1bd545df44136ac572b027632b870946430f8def7dca2b93862859ef9c5d80922f410ac4a4d5f980b3e38d2ec4e5184d71853' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
@@ -16,6 +16,6 @@ RUN aspnetcore_version=8.0.0-alpha.1.23067.9 \
 FROM $REPO:8.0.0-alpha.1-bullseye-slim-arm32v7
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.0-alpha.1.23067.9
+ENV ASPNET_VERSION=8.0.0-alpha.1.23068.1
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]
