@@ -112,6 +112,11 @@ jobs:
       --retry
       --source-repo $(publicGitRepoUri)
       --digests-out-var 'builtImages'
+      --acr-subscription '$(acr.subscription)'
+      --acr-resource-group '$(acr.resourceGroup)'
+      --acr-client-id '$(acr.servicePrincipalName)'
+      --acr-password '$(acr.servicePrincipalPassword)'
+      --acr-tenant '$(acr.servicePrincipalTenant)'
       $(manifestVariables)
       $(imageBuilderBuildArgs)
     name: BuildImages
