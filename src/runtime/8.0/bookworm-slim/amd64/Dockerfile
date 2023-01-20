@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM amd64/buildpack-deps:bullseye-curl AS installer
+FROM amd64/buildpack-deps:bookworm-curl AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=8.0.0-alpha.1.23067.11 \
@@ -14,7 +14,7 @@ RUN dotnet_version=8.0.0-alpha.1.23067.11 \
 
 
 # .NET runtime image
-FROM $REPO:8.0.0-alpha.1-bullseye-slim-amd64
+FROM $REPO:8.0.0-alpha.1-bookworm-slim-amd64
 
 # .NET Runtime version
 ENV DOTNET_VERSION=8.0.0-alpha.1.23067.11
