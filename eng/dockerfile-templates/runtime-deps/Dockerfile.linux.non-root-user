@@ -6,13 +6,14 @@
         gid: ID of the group to be created
         create-home (optional): Indicates whether a home directory should be created for the user ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
-    set isAlpine to find(OS_VERSION, "alpine") >= 0
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0
 }}{{if isAlpine:addgroup^else:groupadd}} \
     --system \
     --gid {{ARGS["gid"]}} \
     {{ARGS["name"]}} \
-&& adduser \
+&& {{if isDebian:useradd^else:adduser}} \
     --uid {{ARGS["uid"]}} \
     {{if isAlpine:--ingroup {{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \
     --shell /bin/false \

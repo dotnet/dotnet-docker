@@ -10,6 +10,7 @@ RUN tdnf install -y \
         libgcc \
         libstdc++ \
         openssl-libs \
+        shadow-utils \
         zlib \
     && tdnf clean all
 
