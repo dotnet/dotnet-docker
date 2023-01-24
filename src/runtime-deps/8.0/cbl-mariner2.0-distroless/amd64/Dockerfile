@@ -41,9 +41,10 @@ RUN groupadd \
         --system \
         --no-create-home \
         app \
-    # Copy user/group info to staging
-    && cp /etc/passwd /staging/etc/passwd \
-    && cp /etc/group /staging/etc/group
+    && install -d -m 0755 -o 101 -g 101 "/staging/home/app" \
+    && rootOrAppRegex='^\(root\|app\):' \
+    && cat /etc/passwd | grep $rootOrAppRegex > "/staging/etc/passwd" \
+    && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
 
 # Clean up staging
 RUN rm -rf /staging/etc/tdnf \
@@ -60,9 +61,13 @@ FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0
 
 COPY --from=installer /staging/ /
 
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=installer --chown=101:101 /staging/home/app /home/app
+
 ENV \
-    # Configure web servers to bind to port 8080 when present
-    ASPNETCORE_URLS=http://+:8080 \
+    # Configure web servers to bind to port 8080/8443 when present
+    ASPNETCORE_HTTP_PORTS=8080 \
+    ASPNETCORE_HTTPS_PORTS=8443 \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)

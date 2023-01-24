@@ -1,27 +1,24 @@
-FROM arm32v7/debian:bookworm-slim
+FROM arm64v8/alpine:3.17
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+RUN apk add --no-cache \
         ca-certificates \
         \
         # .NET dependencies
-        libc6 \
-        libgcc1 \
-        libgssapi-krb5-2 \
-        libicu72 \
+        krb5-libs \
+        libgcc \
+        libintl \
         libssl3 \
-        libstdc++6 \
-        zlib1g \
-    && rm -rf /var/lib/apt/lists/*
+        libstdc++ \
+        zlib
 
 # Create a non-root user and group
-RUN groupadd \
+RUN addgroup \
         --system \
         --gid 101 \
         app \
     && adduser \
         --uid 101 \
-        --gid 101 \
+        --ingroup app \
         --shell /bin/false \
         --system \
         app
@@ -31,4 +28,6 @@ ENV \
     ASPNETCORE_HTTP_PORTS=8080 \
     ASPNETCORE_HTTPS_PORTS=8443 \
     # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true
+    DOTNET_RUNNING_IN_CONTAINER=true \
+    # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true

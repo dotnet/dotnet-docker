@@ -1,18 +1,17 @@
-FROM arm32v7/debian:bookworm-slim
+FROM mcr.microsoft.com/cbl-mariner/base/core:2.0
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+RUN tdnf install -y \
         ca-certificates \
         \
         # .NET dependencies
-        libc6 \
-        libgcc1 \
-        libgssapi-krb5-2 \
-        libicu72 \
-        libssl3 \
-        libstdc++6 \
-        zlib1g \
-    && rm -rf /var/lib/apt/lists/*
+        glibc \
+        icu \
+        krb5 \
+        libgcc \
+        libstdc++ \
+        openssl-libs \
+        zlib \
+    && tdnf clean all
 
 # Create a non-root user and group
 RUN groupadd \

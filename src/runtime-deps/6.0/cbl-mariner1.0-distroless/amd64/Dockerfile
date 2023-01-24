@@ -23,14 +23,14 @@ RUN mkdir /staging \
 # Create a non-root user and group
 RUN groupadd \
         --system \
-        --gid=1000 \
+        --gid 1000 \
         app \
     && adduser \
         --uid 1000 \
         --gid 1000 \
         --shell /bin/false \
-        --no-create-home \
         --system \
+        --no-create-home \
         app \
     # Copy user/group info to staging
     && cp /etc/passwd /staging/etc/passwd \

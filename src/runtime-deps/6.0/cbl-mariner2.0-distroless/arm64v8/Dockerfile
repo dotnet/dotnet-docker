@@ -32,14 +32,14 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
 # Create a non-root user and group
 RUN groupadd \
         --system \
-        --gid=101 \
+        --gid 101 \
         app \
     && adduser \
         --uid 101 \
         --gid 101 \
         --shell /bin/false \
-        --no-create-home \
         --system \
+        --no-create-home \
         app \
     # Copy user/group info to staging
     && cp /etc/passwd /staging/etc/passwd \

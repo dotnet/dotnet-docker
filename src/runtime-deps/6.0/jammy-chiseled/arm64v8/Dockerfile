@@ -12,13 +12,14 @@ RUN apt-get update && \
 
 RUN groupadd \
         --system \
-        --gid=101 \
+        --gid 101 \
         app \
     && adduser \
         --uid 101 \
         --gid 101 \
         --shell /bin/false \
         --system \
+        --no-create-home \
         app \
     && install -d -m 0755 -o 101 -g 101 "/rootfs/home/app" \
     && mkdir -p "/rootfs/etc" \
