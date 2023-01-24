@@ -9,26 +9,22 @@
         gid: ID of the group to be created
         create-home (optional): Indicates whether a home directory should be created for the user ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0
-}}groupadd \
-    --system \
-    --gid={{ARGS["gid"]}} \
-    {{ARGS["name"]}} \
-&& adduser \
-    --uid {{ARGS["uid"]}} \
-    --gid {{ARGS["gid"]}} \
-    --shell /bin/false \{{if !ARGS["create-home"]:
-    --no-create-home \}}
-    --system \
-    {{ARGS["name"]}} \{{
-if ARGS["create-home"]:
-&& install -d -m 0755 -o {{ARGS["uid"]}} -g {{ARGS["gid"]}} "{{ARGS["staging-dir"]}}/home/{{ARGS["name"]}}" \}}{{
-if ARGS["exclusive"]:{{if ARGS["create-dir"]:
-&& mkdir -p "{{ARGS["staging-dir"]}}/etc" \}}
-&& rootOrAppRegex='@^\(root\|app\):' \
-&& cat /etc/passwd | grep $rootOrAppRegex > "{{ARGS["staging-dir"]}}/etc/passwd" \
-&& cat /etc/group | grep $rootOrAppRegex > "{{ARGS["staging-dir"]}}/etc/group"^
-else:
-# Copy user/group info to staging
-&& cp /etc/passwd {{ARGS["staging-dir"]}}/etc/passwd \
-&& cp /etc/group {{ARGS["staging-dir"]}}/etc/group}}
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0
+}}RUN {{InsertTemplate("Dockerfile.linux.non-root-user",
+[
+    "name": ARGS["name"],
+    "uid": ARGS["uid"],
+    "gid": ARGS["gid"],
+    "create-home": ARGS[["create-home"]]
+],"    ")}} \{{if ARGS["create-home"]:
+    && install -d -m 0755 -o {{ARGS["uid"]}} -g {{ARGS["gid"]}} "{{ARGS["staging-dir"]}}/home/{{ARGS["name"]}}" \}}{{
+    if ARGS["exclusive"]:{{if ARGS["create-dir"]:
+    && mkdir -p "{{ARGS["staging-dir"]}}/etc" \}}
+    && rootOrAppRegex='@^\(root\|app\):' \
+    && cat /etc/passwd | grep $rootOrAppRegex > "{{ARGS["staging-dir"]}}/etc/passwd" \
+    && cat /etc/group | grep $rootOrAppRegex > "{{ARGS["staging-dir"]}}/etc/group"^
+    else:
+    # Copy user/group info to staging
+    && cp /etc/passwd {{ARGS["staging-dir"]}}/etc/passwd \
+    && cp /etc/group {{ARGS["staging-dir"]}}/etc/group}}

@@ -19,7 +19,10 @@
     set isRpmInstall to isMariner && dotnetVersion = "6.0" ^
     set isSingleStage to !(isRpmInstall && isInternal) ^
     set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
-    set rpmFilename to "dotnet-runtime-deps.rpm"
+    set rpmFilename to "dotnet-runtime-deps.rpm" ^
+    set username to "app" ^
+    set uid to 101 ^
+    set gid to uid
 }}{{
     if !isSingleStage:# Installer image
 }}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isRpmInstall:
@@ -52,5 +55,16 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}
         "url-suffix": urlSuffix,
         "filename": rpmFilename
     ])}}
+}}{{if dotnetVersion = "8.0":
+# Create a non-root user and group
+RUN {{InsertTemplate("Dockerfile.linux.non-root-user",
+        [
+            "staging-dir": distrolessStagingDir,
+            "exclusive": "false",
+            "name": username,
+            "uid": uid,
+            "gid": gid,
+            "create-home": "false"
+        ],"    ")}}
 }}
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}}

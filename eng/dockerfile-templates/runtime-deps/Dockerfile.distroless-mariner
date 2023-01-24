@@ -33,7 +33,7 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
 
 }}
 # Create a non-root user and group
-RUN {{InsertTemplate("Dockerfile.linux.distroless-user",
+{{InsertTemplate("Dockerfile.linux.distroless-user",
         [
             "staging-dir": distrolessStagingDir,
             "exclusive": dotnetVersion != "6.0",
@@ -41,8 +41,7 @@ RUN {{InsertTemplate("Dockerfile.linux.distroless-user",
             "uid": uid,
             "gid": gid,
             "create-home": createUserHome
-        ],
-        "    ")}}
+        ])}}
 
 # Clean up staging
 RUN rm -rf {{distrolessStagingDir}}/etc/{{when(find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf")}} \

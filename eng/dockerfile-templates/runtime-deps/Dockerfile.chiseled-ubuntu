@@ -16,8 +16,7 @@ FROM {{ARCH_VERSIONED}}/ubuntu:{{osVersionBase}} as builder
 RUN apt-get update && \
     apt-get install -y ca-certificates
 
-RUN {{InsertTemplate("Dockerfile.linux.distroless-user",
-    [
+{{InsertTemplate("Dockerfile.linux.distroless-user", [
         "staging-dir": "/rootfs",
         "exclusive": "true",
         "create-dir": "true",
@@ -25,8 +24,7 @@ RUN {{InsertTemplate("Dockerfile.linux.distroless-user",
         "uid": uid,
         "gid": gid,
         "create-home": "true"
-    ],
-    "    ")}}
+    ])}}
 
 COPY --from=chisel /opt/chisel/chisel /usr/bin/
 RUN chisel cut --release "ubuntu-{{osVersionNumber}}" --root /rootfs \

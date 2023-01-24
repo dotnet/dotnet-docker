@@ -1,0 +1,21 @@
+{{
+    _ Configures a non-root user
+    _ ARGS:
+        name: Name of the user/group to create
+        uid: ID of the user to be created
+        gid: ID of the group to be created
+        create-home (optional): Indicates whether a home directory should be created for the user ^
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0
+}}{{if isAlpine:addgroup^else:groupadd}} \
+    --system \
+    --gid {{ARGS["gid"]}} \
+    {{ARGS["name"]}} \
+&& adduser \
+    --uid {{ARGS["uid"]}} \
+    {{if isAlpine:--ingroup {{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \
+    --shell /bin/false \
+    --system \{{if !ARGS["create-home"]:
+    --no-create-home \}}
+    {{ARGS["name"]}}
