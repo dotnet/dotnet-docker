@@ -51,7 +51,7 @@ app.MapGet("/Delay/{value}", async (int value) =>
     {
     }
     
-    return new DelayValue(value);
+    return new {Delay = value};
 });
 
 app.Run();
