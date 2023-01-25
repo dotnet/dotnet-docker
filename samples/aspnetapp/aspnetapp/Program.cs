@@ -26,9 +26,31 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+CancellationTokenSource cancellation = new();
+app.Lifetime.ApplicationStopping.Register( () =>
+{
+    cancellation.Cancel();
+});
+
 app.MapGet("/Environment", () =>
 {
     return new EnvironmentInfo();
+});
+
+// This demonstrates how to integrade cancellation
+// to support graceful container shutdown via SIGTERM
+app.MapGet("/Delay/{value}", async (int value) =>
+{
+    try
+    {
+        await Task.Delay(value, cancellation.Token);
+    }
+    catch(TaskCanceledException)
+    {
+    }
+    
+    return new DelayValue(value);
 });
 
 app.Run();
