@@ -38,8 +38,9 @@ app.MapGet("/Environment", () =>
     return new EnvironmentInfo();
 });
 
-// This demonstrates how to integrade cancellation
-// to support graceful container shutdown via SIGTERM
+// This API demonstrates how to use task cancellation
+// to support graceful container shutdown via SIGTERM.
+// The method itself is an example and not useful.
 app.MapGet("/Delay/{value}", async (int value) =>
 {
     try
