@@ -14,6 +14,7 @@ RUN dotnet publish -c Release -o /app --use-current-runtime --no-restore /p:Publ
 FROM mcr.microsoft.com/dotnet/runtime-deps:7.0-alpine
 WORKDIR /app
 COPY --from=build /app .
+
 # This port needs to match the port being used
 HEALTHCHECK CMD wget http://localhost:80/healthz
 ENTRYPOINT ["./aspnetapp"]
