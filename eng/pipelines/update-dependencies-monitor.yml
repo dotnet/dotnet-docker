@@ -2,7 +2,7 @@ resources:
   pipelines:
     - pipeline: dotnet-monitor
       source: dotnet-dotnet-monitor
-      branch: main # Default used by the schedule or manual invocations. Triggers it will use triggering branch instead.
+      branch: main # Default used by the schedule or manual invocations. When triggered it will use triggering branch instead.
       tags:
       - real signed
       trigger:
