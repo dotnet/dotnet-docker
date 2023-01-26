@@ -10,9 +10,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=8.0.0-alpha.1.23069.2 \
+RUN aspnetcore_version=8.0.0-alpha.1.23075.1 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='7a9d45ccdafa68c04f29347522eda8876f89f64d57e1079344208fa3e3aef13d720cefdb9d14215b33d60c122ba8989700cb1526e247fe62f7e6f7c25f2dffb3' \
+    && aspnetcore_sha512='d33e285c0902df38b57e5645f21d1a80dfac26d5d008eade043423c73f6e6c0ea1caa52db6b08ff250efd39466731c8825590c459773b03615a1df117da6c8f5' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
@@ -23,6 +23,6 @@ RUN aspnetcore_version=8.0.0-alpha.1.23069.2 \
 FROM $REPO:8.0.0-alpha.1-cbl-mariner2.0-distroless-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.0-alpha.1.23069.2
+ENV ASPNET_VERSION=8.0.0-alpha.1.23075.1
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
