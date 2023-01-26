@@ -12,11 +12,6 @@ RUN dotnet publish -c Release -o /app --use-current-runtime --self-contained fal
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
-RUN apt-get update \ 
-    && apt-get install -y --no-install-recommends curl \
-    && rm -rf /var/lib/apt/lists/*
-# This port needs to match the port being used
-HEALTHCHECK CMD curl http://localhost:80/healthz
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnet", "aspnetapp.dll"]
