@@ -90,7 +90,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-x64-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -108,7 +108,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-arm32-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -127,7 +127,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-arm64-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -145,7 +145,7 @@
               ]
             },
             {
-              "dockerfile": "samples/aspnetapp",
+              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver-slim",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -166,7 +166,7 @@
               ]
             },
             {
-              "dockerfile": "samples/aspnetapp",
+              "dockerfile": "samples/etapp/Dockerfile.nanoserver-slim",
               "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
