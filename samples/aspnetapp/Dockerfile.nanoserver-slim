@@ -16,7 +16,7 @@ RUN dotnet publish -c Release -o /app --use-current-runtime --no-restore /p:Publ
 FROM mcr.microsoft.com/windows/nanoserver:ltsc2022
 WORKDIR /app
 COPY --from=build /app .
-HEALTHCHECK CMD curl http://localhost:80/healthz
+HEALTHCHECK CMD curl -sf --show-error http://localhost:80/healthz || exit 1
 ENV `
     # Configure web servers to bind to port 80 when present
     ASPNETCORE_URLS=http://+:80 `

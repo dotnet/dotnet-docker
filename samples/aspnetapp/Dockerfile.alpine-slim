@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=build /app .
 
 # This port needs to match the port being used
-HEALTHCHECK CMD wget http://localhost:80/healthz
+HEALTHCHECK CMD wget -qO- -t1 http://localhost:80/healthz
 ENTRYPOINT ["./aspnetapp"]
 
 # See: https://github.com/dotnet/announcements/issues/20
