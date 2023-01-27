@@ -166,7 +166,7 @@
               ]
             },
             {
-              "dockerfile": "samples/etapp/Dockerfile.nanoserver-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver-slim",
               "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
