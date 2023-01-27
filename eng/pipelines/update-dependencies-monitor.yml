@@ -36,7 +36,7 @@ stages:
     - download: dotnet-monitor
       artifact: Build_Info
       displayName: "Download Build Info (Branch: $(resources.pipeline.dotnet-monitor.sourceBranch))"
-    - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -BuildVersionFilePath "$(Pipeline.Workspace)/dotnet-monitor/Build_Info/buildversion"
+    - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -BuildVersionFilePath "$(Pipeline.Workspace)/dotnet-monitor/Build_Info/dotnet-monitor.nupkg.buildversion"
       displayName: Get Versions
     - powershell: |
         $customArgs = "$(monitorMajorMinorVersion) --product-version monitor=$(monitorVer) --version-source-name dotnet/dotnet-monitor/$(monitorMajorMinorVersion) --stable-branding=$(stableBranding)"
