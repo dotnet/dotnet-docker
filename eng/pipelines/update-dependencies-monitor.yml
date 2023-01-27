@@ -1,3 +1,19 @@
+resources:
+  pipelines:
+    - pipeline: dotnet-monitor
+      source: dotnet-dotnet-monitor
+      branch: main # Default used by the schedule or manual invocations. When triggered it will use triggering branch instead.
+      tags:
+      - real signed
+      trigger:
+        branches:
+          include:
+          - release/*
+          - internal/release/*
+        tags:
+        - update-docker
+        - real signed
+        - MonitorRelease
 trigger: none
 pr: none
 schedules:
@@ -17,11 +33,14 @@ stages:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -Channel $(MajorMinorVersion)/$(ChannelQuality)
+    - download: dotnet-monitor
+      artifact: Build_Info
+      displayName: "Download Build Info (Branch: $(resources.pipeline.dotnet-monitor.sourceBranch))"
+    - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -BuildVersionFilePath "$(Pipeline.Workspace)/dotnet-monitor/Build_Info/dotnet-monitor.nupkg.buildversion"
       displayName: Get Versions
     - powershell: |
-        $customArgs = "$(MajorMinorVersion) --product-version monitor=$(monitorVer) --version-source-name dotnet/dotnet-monitor/$(MajorMinorVersion) --stable-branding=$(stableBranding)"
-        
+        $customArgs = "$(monitorMajorMinorVersion) --product-version monitor=$(monitorVer) --version-source-name dotnet/dotnet-monitor/$(monitorMajorMinorVersion) --stable-branding=$(stableBranding)"
+
         $customArgsArray = @($customArgs)
         echo "##vso[task.setvariable variable=customArgsArray]$($customArgsArray | ConvertTo-Json -Compress -AsArray)"
       displayName: Set Custom Args
