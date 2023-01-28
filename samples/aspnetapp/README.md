@@ -107,6 +107,21 @@ $ docker inspect b143cf4ac0d1 | jq .[-1].State.Health
 }
 ```
 
+The same thing can be accomplished with PowerShell.
+
+```powershell
+> $healthLog = docker inspect 92648775bce8 | ConvertFrom-Json
+> $healthLog[0].State.Health.Log
+
+Start                             End                               ExitCode Output
+-----                             ---                               -------- ------
+2023-01-28T10:14:54.589686-08:00  2023-01-28T10:14:54.6137922-08:00        0 Healthy
+2023-01-28T10:15:24.6264335-08:00 2023-01-28T10:15:24.6602762-08:00        0 Healthy
+2023-01-28T10:15:54.6766598-08:00 2023-01-28T10:15:54.703489-08:00         0 Healthy
+2023-01-28T10:16:24.7192354-08:00 2023-01-28T10:16:24.74409-08:00          0 Healthy
+2023-01-28T10:16:54.7499988-08:00 2023-01-28T10:16:54.7750448-08:00        0 Healthy
+```
+
 ## Build an image for Alpine, Debian or Ubuntu
 
 .NET multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `6.0`, as opposed to a distro-specific tag like `6.0-alpine`.
