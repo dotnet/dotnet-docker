@@ -81,7 +81,7 @@ CONTAINER ID   IMAGE       COMMAND         CREATED         STATUS               
 b143cf4ac0d1   aspnetapp   "./aspnetapp"   8 seconds ago   Up 7 seconds (health: starting)   0.0.0.0:8000->80/tcp   fervent_lichterman
 ```
 
-After a while, you will see that the app is no longer "starting".
+After 30s, the status should transition to "healthy" from "health: starting".
 
 You can also look at health status with `docker inspect`. The following pattern uses `jq`, which makes it much easier to drill in on the interesting data.
 
