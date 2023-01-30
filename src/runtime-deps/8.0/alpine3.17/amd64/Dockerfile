@@ -26,7 +26,6 @@ RUN addgroup \
 ENV \
     # Configure web servers to bind to port 8080/8443 when present
     ASPNETCORE_HTTP_PORTS=8080 \
-    ASPNETCORE_HTTPS_PORTS=8443 \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
