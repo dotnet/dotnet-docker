@@ -1,5 +1,6 @@
 # escape=`
 
+ARG TAG=ltsc2022
 # https://hub.docker.com/_/microsoft-dotnet
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /source
@@ -13,7 +14,7 @@ COPY aspnetapp/. .
 RUN dotnet publish -c Release -o /app --use-current-runtime --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true
 
 # final stage/image
-FROM mcr.microsoft.com/windows/nanoserver:ltsc2022
+FROM mcr.microsoft.com/windows/nanoserver:$TAG
 WORKDIR /app
 COPY --from=build /app .
 HEALTHCHECK CMD curl -sf --show-error http://localhost:80/healthz || exit 1
