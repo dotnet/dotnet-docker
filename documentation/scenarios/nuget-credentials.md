@@ -219,7 +219,7 @@ Passing the access token to the `docker build` command in this manner can be use
 
 ### Azure Pipelines
 
-In Azure DevOps [NugetAuthenticate](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/nuget-authenticate-v1?view=azure-pipelines) task can be used to obtain VSS access token required for the feed. It creates two environment variables (VSS_NUGET_URI_PREFIXES and VSS_NUGET_ACCESSTOKEN) that can be used instead of personal PAT (Personal Access Token).
+In Azure Pipelines, the [NuGetAuthenticate](https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/nuget-authenticate-v1?view=azure-pipelines) task can be used to obtain the VSS access token required for the feed. It creates two environment variables (`VSS_NUGET_URI_PREFIXES` and `VSS_NUGET_ACCESSTOKEN`) that can be used instead of a PAT (Personal Access Token).
 
 ```yaml
     steps:
