@@ -169,6 +169,9 @@
               ]
             },
             {
+              "buildArgs": {
+                "TAG": "ltsc2022"
+              },
               "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver-slim",
               "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
