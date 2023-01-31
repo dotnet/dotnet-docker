@@ -217,7 +217,7 @@ docker build --build-arg FEED_ACCESSTOKEN .
 
 Passing the access token to the `docker build` command in this manner can be useful in automated scenarios when that value is stored as an environment variable on the Docker host machine or can be retrieved from an external secrets storage location and passed to the `docker build` command.
 
-### Azure Devops builds
+### Azure Pipelines
 
 In Azure DevOps [NugetAuthenticate](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/nuget-authenticate-v1?view=azure-pipelines) task can be used to obtain VSS access token required for the feed. It creates two environment variables (VSS_NUGET_URI_PREFIXES and VSS_NUGET_ACCESSTOKEN) that can be used instead of personal PAT (Personal Access Token).
 
