@@ -19,4 +19,5 @@
     --shell /bin/false \
     --system \{{if !ARGS["create-home"]:
     --no-create-home \}}
-    {{ARGS["name"]}}
+    {{ARGS["name"]}} \
+&& chown -R {{ARGS["name"]}}: /tmp

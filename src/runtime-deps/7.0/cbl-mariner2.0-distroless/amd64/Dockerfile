@@ -41,6 +41,7 @@ RUN groupadd \
         --system \
         --no-create-home \
         app \
+    && chown -R app: /tmp \
     && install -d -m 0755 -o 101 -g 101 "/staging/home/app" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/staging/etc/passwd" \

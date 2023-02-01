@@ -24,6 +24,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private readonly bool _isWeb;
         private readonly ITestOutputHelper _outputHelper;
         private readonly string _adminUser = DockerHelper.IsLinuxContainerModeEnabled ? "root" : "ContainerAdministrator";
+        private readonly string _nonRootUser = DockerHelper.IsLinuxContainerModeEnabled ? "app" : "ContainerUser";
 
         public ImageScenarioVerifier(
             ProductImageData imageData,
@@ -56,15 +57,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     // Use `sdk` image to build and run test app
                     string buildTag = BuildTestAppImage("build", solutionDir, customBuildArgs);
                     tags.Add(buildTag);
-                    string dotnetRunArgs = string.Empty;
-                    // if (_isWeb)
-                    // {
-                        // dotnetRunArgs = _imageData.Version.Major >= 8 ? $" --http_ports {_imageData.DefaultPort}" : $" --urls http://0.0.0.0:{_imageData.DefaultPort}";
-                        // dotnetRunArgs = $" --http_ports \"{_imageData.DefaultPort}\"";
-                    // }
-                    await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}");
-                    // check for  DockerHelper.IsLinuxContainerModeEnabled
-                    // if so, then run the same thing as app
+                    await RunTestAppImage(buildTag, command: $"dotnet run");
+
+                    // Test non-root user scenario on .NET 8.0+
+                    if (DockerHelper.IsLinuxContainerModeEnabled && _imageData.Version.Major >= 8)
+                    {
+                        await RunTestAppImage(buildTag, user: _nonRootUser, command: $"dotnet run");
+                    }
                 }
 
                 // Running a scenario of unit testing within the sdk container is identical between a console app and web app,
@@ -73,21 +72,21 @@ namespace Microsoft.DotNet.Docker.Tests
                 {
                     string unitTestTag = BuildTestAppImage("test", solutionDir, customBuildArgs);
                     tags.Add(unitTestTag);
-                    await RunTestAppImage(unitTestTag, runAsAdmin: false);
+                    await RunTestAppImage(unitTestTag);
                 }
 
                 // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnet` image
                 string fxDepTag = BuildTestAppImage("fx_dependent_app", solutionDir, customBuildArgs);
                 tags.Add(fxDepTag);
-                bool runAsAdmin = _isWeb && !DockerHelper.IsLinuxContainerModeEnabled;
-                await RunTestAppImage(fxDepTag, runAsAdmin: runAsAdmin);
+                string fxDepUser = (_isWeb && !DockerHelper.IsLinuxContainerModeEnabled) ? _adminUser : null;
+                await RunTestAppImage(fxDepTag, user: fxDepUser);
 
                 // For distroless, run another test that explicitly runs the container as a root user to verify
                 // the root user is defined.
-                if (!runAsAdmin && DockerHelper.IsLinuxContainerModeEnabled && _imageData.IsDistroless &&
+                if (!_isWeb && DockerHelper.IsLinuxContainerModeEnabled && _imageData.IsDistroless &&
                     (!_imageData.OS.StartsWith(OS.Mariner) || _imageData.Version.Major > 6))
                 {
-                    await RunTestAppImage(fxDepTag, runAsAdmin: true);
+                    await RunTestAppImage(fxDepTag, user: _adminUser);
                 }
 
                 if (DockerHelper.IsLinuxContainerModeEnabled)
@@ -95,7 +94,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     // Use `sdk` image to publish self contained app and run with `runtime-deps` image
                     string selfContainedTag = BuildTestAppImage("self_contained_app", solutionDir, customBuildArgs);
                     tags.Add(selfContainedTag);
-                    await RunTestAppImage(selfContainedTag, runAsAdmin: runAsAdmin);
+                    await RunTestAppImage(selfContainedTag, user: _adminUser);
                 }
             }
             finally
@@ -306,7 +305,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
 // pass in user instead of boolean for runAsAdmin
 // pass admin by default, can pass in app as a special case for testing non-root
-        private async Task RunTestAppImage(string image, bool runAsAdmin = false, string command = null)
+        private async Task RunTestAppImage(string image, string user = null, string command = null)
         {
             string containerName = _imageData.GetIdentifier("app-run");
 
@@ -317,7 +316,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     name: containerName,
                     detach: _isWeb,
                     optionalRunArgs: _isWeb ? $"-p {_imageData.DefaultPort}" : string.Empty,
-                    runAsUser: runAsAdmin ? _adminUser : null,
+                    runAsUser: user,
                     command: command);
 
                 if (_isWeb && !Config.IsHttpVerificationDisabled)
