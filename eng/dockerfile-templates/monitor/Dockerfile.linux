@@ -40,7 +40,10 @@ WORKDIR /app
 # Installer image
 FROM {{installerImageTag}} AS installer
 {{if isMariner:
-{{InsertTemplate("../Dockerfile.linux.distroless-mariner-installer-prereqs")}}
+RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
+    [
+        "pkgs": ["tar"]
+    ])}}
 }}
 # Retrieve .NET Monitor
 {{InsertTemplate("Dockerfile.linux.install-monitor")}}
