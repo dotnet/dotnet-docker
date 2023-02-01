@@ -4,6 +4,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:6.0.13-cbl-mariner2.0-arm64v8 AS installer
 
 RUN tdnf install -y \
+        ca-certificates \
+        gzip \
         tar \
     && tdnf clean all
 
