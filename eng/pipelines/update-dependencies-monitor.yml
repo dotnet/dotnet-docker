@@ -1,28 +1,18 @@
 resources:
   pipelines:
-    - pipeline: dotnet-monitor
-      source: dotnet-dotnet-monitor
-      branch: main # Default used by the schedule or manual invocations. When triggered it will use triggering branch instead.
+  - pipeline: dotnet-monitor
+    source: dotnet-dotnet-monitor
+    trigger:
+      branches:
+        include:
+        - main
+        - release/*
+        - internal/release/*
       tags:
+      - update-docker
       - real signed
-      trigger:
-        branches:
-          include:
-          - release/*
-          - internal/release/*
-        tags:
-        - update-docker
-        - real signed
-        - MonitorRelease
 trigger: none
 pr: none
-schedules:
-- cron: "0 13 * * Mon-Fri"
-  displayName: M-F daily build
-  branches:
-    include:
-    - nightly
-  always: true
 variables:
 - template: ../common/templates/variables/dotnet/common.yml
 stages:
