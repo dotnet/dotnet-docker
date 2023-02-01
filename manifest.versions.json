@@ -85,9 +85,9 @@
     "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.39.1.windows.1/MinGit-2.39.1-64-bit.zip",
     "mingit|x64|sha": "000649846ec6e28e8f76d4a0d02f02b3dd1ba19914385f7dead1c5cde25b3bad",
 
-    "monitor|6.3|build-version": "6.3.1-servicing.22601.6",
-    "monitor|6.3|product-version": "6.3.1",
-    "monitor|6.3|sha": "52e3ec332662ae33611229098e4ad9383708e7ac53e0e678330fd1d437615b0c4f2cdf71ecc17ed147499c1c9e6099d3a15634c6b65ea3fbef541684c1809e71",
+    "monitor|6.3|build-version": "6.3.2-servicing.23081.2",
+    "monitor|6.3|product-version": "6.3.2",
+    "monitor|6.3|sha": "675c7353a5a86af3a1613df7484eade3e6d04aab12dac5acc154f8a658abf40d3a91b9fb78c14d94bceec1ce2116ee93bef7792f5078266052375b98d9ef5eeb",
 
     "monitor|7.0|build-version": "7.0.2-servicing.23081.7",
     "monitor|7.0|product-version": "7.0.2",
