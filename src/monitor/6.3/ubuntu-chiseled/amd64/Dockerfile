@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM amd64/buildpack-deps:jammy-curl AS installer
+FROM $REPO:6.0.13-jammy-amd64 AS installer
 
 # Retrieve .NET Monitor
 RUN dotnet_monitor_version=6.3.2 \

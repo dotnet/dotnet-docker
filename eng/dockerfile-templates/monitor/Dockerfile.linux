@@ -5,16 +5,18 @@
     set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isMariner to find(OS_VERSION, "mariner") >= 0 ^
-    set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
+    set isDistroless to find(OS_VERSION, "distroless") >= 0 ^
+    set isChiseled to find(OS_VERSION, "chiseled") >= 0 ^
+    set installerOsVersion to when(isDistroless
+        join(split(OS_VERSION, "-distroless"), ""),
+        when(isChiseled,
+            join(split(OS_VERSION, "-chiseled"), ""),
+            OS_VERSION)) ^
     set isSingleStage to isAlpine ^
     set aspnetBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
-    set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
-    set installerImageTag to when(isMariner,
-        cat("mcr.microsoft.com/cbl-mariner/base/core:", OS_VERSION_NUMBER),
-        when(isAlpine,
-            aspnetBaseTag,
-            cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")))
+    set installerImageTag to
+        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", installerOsVersion, ARCH_TAG_SUFFIX)
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet{{if isSingleStage:
 {{
 

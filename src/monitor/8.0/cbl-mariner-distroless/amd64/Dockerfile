@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
+FROM $REPO:8.0.0-alpha.1-cbl-mariner2.0-amd64 AS installer
 
 RUN tdnf install -y \
         ca-certificates \
