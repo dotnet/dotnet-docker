@@ -6,8 +6,6 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isMariner to find(OS_VERSION, "mariner") >= 0 ^
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
-    set isFullMariner to isMariner && !isDistroless ^
-    set isDistrolessMariner to isMariner && isDistroless ^
     set isSingleStage to isAlpine ^
     set aspnetBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
@@ -39,13 +37,8 @@ WORKDIR /app
 }}
 # Installer image
 FROM {{installerImageTag}} AS installer
-{{if isDistrolessMariner:
+{{if isMariner:
 {{InsertTemplate("../Dockerfile.linux.distroless-mariner-installer-prereqs")}}
-^elif isFullMariner:
-RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
-    [
-        "pkgs": ["tar"]
-    ])}}
 }}
 # Retrieve .NET Monitor
 {{InsertTemplate("Dockerfile.linux.install-monitor")}}

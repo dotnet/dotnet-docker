@@ -4,6 +4,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
 RUN tdnf install -y \
+        ca-certificates \
+        gzip \
         tar \
     && tdnf clean all
 
