@@ -8,13 +8,13 @@
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isFullMariner to isMariner && !isDistroless ^
     set isDistrolessMariner to isMariner && isDistroless ^
-    set isSingleStage to !isDistroless ^
+    set isSingleStage to isAlpine ^
     set aspnetBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
-    set installerImageTag to when(isDistrolessMariner,
+    set installerImageTag to when(isMariner,
         cat("mcr.microsoft.com/cbl-mariner/base/core:", OS_VERSION_NUMBER),
-        when(isAlpine || isFullMariner,
+        when(isAlpine,
             aspnetBaseTag,
             cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")))
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet{{if isSingleStage:

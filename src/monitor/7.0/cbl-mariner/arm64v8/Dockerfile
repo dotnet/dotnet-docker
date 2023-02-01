@@ -1,7 +1,27 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
+
+# Installer image
+FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
+
+RUN tdnf install -y \
+        tar \
+    && tdnf clean all
+
+# Retrieve .NET Monitor
+RUN dotnet_monitor_version=7.0.2 \
+    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/7.0.2-servicing.23081.7/dotnet-monitor-$dotnet_monitor_version-linux-arm64.tar.gz \
+    && dotnet_monitor_sha512='42c5f7d37b9d7e5658cbfd4c8f3e43d64d310b52d29fc6f933f8a00f71df86d7b3305da96cdd0802572bd5c436176e360cf5da1654f6b87d47350a1657f29fdf' \
+    && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
+    && mkdir -p /app \
+    && tar -oxzf dotnet-monitor.tar.gz -C /app \
+    && rm dotnet-monitor.tar.gz
+
+
+# .NET Monitor image
 FROM $REPO:7.0.2-cbl-mariner2.0-arm64v8
 
 WORKDIR /app
+COPY --from=installer /app .
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -23,15 +43,6 @@ ENV \
     Logging__Console__FormatterOptions__UseUtcTimestamp=true \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
-
-# Install .NET Monitor
-RUN dotnet_monitor_version=7.0.2 \
-    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/7.0.2-servicing.23081.7/dotnet-monitor-$dotnet_monitor_version-linux-arm64.tar.gz \
-    && dotnet_monitor_sha512='42c5f7d37b9d7e5658cbfd4c8f3e43d64d310b52d29fc6f933f8a00f71df86d7b3305da96cdd0802572bd5c436176e360cf5da1654f6b87d47350a1657f29fdf' \
-    && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
-    && mkdir -p /app \
-    && tar -oxzf dotnet-monitor.tar.gz -C /app \
-    && rm dotnet-monitor.tar.gz
 
 ENTRYPOINT [ "dotnet-monitor" ]
 CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
