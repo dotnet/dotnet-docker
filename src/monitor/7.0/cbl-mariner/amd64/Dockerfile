@@ -1,38 +1,26 @@
-ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
-ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM $SDK_REPO:7.0.102-cbl-mariner2.0-amd64 AS installer
+FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
-# Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=7.0.1
-RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='c316a859eb8d024c765b024bfb4a92b6aedfb5cc02d0751f73e826e2bc20f2ab5c1ed8c4d6b481b6b757fc58d35423668f9087f9d4cfb1acd7ab8dced1412c03' \
-    && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
-    && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net7.0 --no-cache \
-    # To reduce image size, remove all non-net7.0 TFMs
-    # To do this safely, we need to first find everything that dotnet tool installed named "dotnet-monitor".
-    # The /dotnet-monitor/ folder exists under .store which is not a stable constant to rely on. The result is multi stage search:
-    # 1. Find any files in /app
-    # 2. Match anything that is under a *folder* called 'dotnet-monitor'
-    # 3. Match anything from step 2 that isn't in a '/tools/net7.0' folder (/tools is the folder we use in a nuget file that is stable)
-    # 4. Delete everything from step 3
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -v -i '.*/tools/net7[.]0' | xargs rm -rf \
-    # To reduce image size further, remove the non-linux assemblies
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(win|osx)' | xargs rm -rf \
-    # To reduce image size further, remove linux assemblies that do not match the x64 architecture
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(linux-arm64|linux-musl-arm64)' | xargs rm -rf \
-    # To reduce image size further, remove symbol files
-    && find /app -type f \( -name *.pdb -o -name *.dbg \) -print | xargs rm -rf \
-    # Remove all the empty directories left by the previous step
-    && find /app -type d -empty -delete \
-    # Allow other users to run the tool
-    && chmod 755 /app/dotnet-monitor \
-    && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
+RUN tdnf install -y \
+        ca-certificates \
+        gzip \
+        tar \
+    && tdnf clean all
+
+# Retrieve .NET Monitor
+RUN dotnet_monitor_version=7.0.1 \
+    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
+    && dotnet_monitor_sha512='6b007b54b3fe65926bd86e5e17946da5b03aa09dc560321b9b0812ac77e897d68d8f8d6505eb0ed47586ea474512976df013a8453c1ad12b580cf8ae5f596265' \
+    && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
+    && mkdir -p /app \
+    && tar -oxzf dotnet-monitor.tar.gz -C /app \
+    && rm dotnet-monitor.tar.gz
 
 
-# Monitor image
-FROM $ASPNET_REPO:7.0.2-cbl-mariner2.0-amd64
+# .NET Monitor image
+FROM $REPO:7.0.2-cbl-mariner2.0-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
