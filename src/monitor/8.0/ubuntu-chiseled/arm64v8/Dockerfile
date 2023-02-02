@@ -1,38 +1,20 @@
-ARG ASPNET_REPO=mcr.microsoft.com/dotnet/aspnet
-ARG SDK_REPO=mcr.microsoft.com/dotnet/sdk
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM $SDK_REPO:8.0.100-preview.1-jammy-arm64v8 AS installer
+FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
-# Install .NET Monitor
-ENV DOTNET_MONITOR_VERSION=8.0.0-alpha.1.23081.9
-RUN curl -fSL --output dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$DOTNET_MONITOR_VERSION/dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg \
-    && dotnetmonitor_sha512='45c68b693fb4cecf841cbec30d6626015da4b0e007f18a8cc1226a59d75570e45f18e71ab04a1dafd9754430effbe3334c238443b62b5d2f4873a026ad3e7b23' \
-    && echo "$dotnetmonitor_sha512  dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg" | sha512sum -c - \
-    && dotnet tool install dotnet-monitor --tool-path /app --add-source / --version $DOTNET_MONITOR_VERSION --framework net8.0 --no-cache \
-    # To reduce image size, remove all non-net8.0 TFMs
-    # To do this safely, we need to first find everything that dotnet tool installed named "dotnet-monitor".
-    # The /dotnet-monitor/ folder exists under .store which is not a stable constant to rely on. The result is multi stage search:
-    # 1. Find any files in /app
-    # 2. Match anything that is under a *folder* called 'dotnet-monitor'
-    # 3. Match anything from step 2 that isn't in a '/tools/net8.0' folder (/tools is the folder we use in a nuget file that is stable)
-    # 4. Delete everything from step 3
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -v -i '.*/tools/net8[.]0' | xargs rm -rf \
-    # To reduce image size further, remove the non-linux assemblies
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(win|osx)' | xargs rm -rf \
-    # To reduce image size further, remove linux assemblies that do not match the arm64 architecture
-    && find /app -type f -print | grep -i '.*/dotnet-monitor/.*' | grep -i -E '/(runtimes|shared|shims)/(linux-x64|linux-musl-x64)' | xargs rm -rf \
-    # To reduce image size further, remove symbol files
-    && find /app -type f \( -name *.pdb -o -name *.dbg \) -print | xargs rm -rf \
-    # Remove all the empty directories left by the previous step
-    && find /app -type d -empty -delete \
-    # Allow other users to run the tool
-    && chmod 755 /app/dotnet-monitor \
-    && rm dotnet-monitor.$DOTNET_MONITOR_VERSION.nupkg
+# Retrieve .NET Monitor
+RUN dotnet_monitor_version=8.0.0-alpha.1.23081.9 \
+    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-arm64.tar.gz \
+    && dotnet_monitor_sha512='42501407b9d1099ebc37337359ae158af450b3d02f17fabe0d49ab946501f027d7b4be7ce4f021586d747147a274c35571a50f2c90863ce378eacebf20ac7848' \
+    && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
+    && mkdir -p /app \
+    && tar -oxzf dotnet-monitor.tar.gz -C /app \
+    && rm dotnet-monitor.tar.gz
 
 
-# Monitor image
-FROM $ASPNET_REPO:8.0.0-preview.1-jammy-chiseled-arm64v8
+# .NET Monitor image
+FROM $REPO:8.0.0-preview.1-jammy-chiseled-arm64v8
 
 WORKDIR /app
 COPY --from=installer /app .
