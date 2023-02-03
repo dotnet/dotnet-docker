@@ -1,0 +1,20 @@
+# https://hub.docker.com/_/microsoft-dotnet
+ARG RID=linux-x64
+ARG ARCH=amd64
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+ARG RID
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY aspnetapp/*.csproj .
+RUN dotnet restore -r $RID
+
+# copy everything else and build app
+COPY aspnetapp/. .
+RUN dotnet publish -c Release -o /app -r $RID --self-contained false --no-restore
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-bullseye-slim-$ARCH
+WORKDIR /app
+COPY --from=build /app .
+ENTRYPOINT ["./aspnetapp"]
