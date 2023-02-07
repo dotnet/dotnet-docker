@@ -16,8 +16,8 @@
 && {{if isDebian:useradd^else:adduser}} \
     --uid {{ARGS["uid"]}} \
     {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \
-    --shell /bin/false \
-    --system \{{if !ARGS["create-home"]:
+    --shell /bin/false \{{if !ARGS["create-home"]:
     --no-create-home \^elif isDebian:
     --create-home \}}
+    --system \
     {{ARGS["name"]}}

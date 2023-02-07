@@ -38,8 +38,8 @@ RUN groupadd \
         --uid 101 \
         --gid 101 \
         --shell /bin/false \
-        --system \
         --no-create-home \
+        --system \
         app \
     # Copy user/group info to staging
     && cp /etc/passwd /staging/etc/passwd \

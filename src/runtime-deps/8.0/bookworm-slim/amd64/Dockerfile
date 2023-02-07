@@ -23,8 +23,8 @@ RUN groupadd \
         --uid 101 \
         --gid 101 \
         --shell /bin/false \
-        --system \
         --create-home \
+        --system \
         app
 
 ENV \
