@@ -59,7 +59,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     // Use `sdk` image to build and run test app
                     string buildTag = BuildTestAppImage("build", solutionDir, customBuildArgs);
                     tags.Add(buildTag);
-                    await RunTestAppImage(buildTag, command: $"dotnet run");
+                    string dotnetRunArgs = _isWeb && _imageData.Version.Major < 8 ? $" --urls http://0.0.0.0:{_imageData.DefaultPort}" : string.Empty;
+                    await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}");
                 }
 
                 // Running a scenario of unit testing within the sdk container is identical between a console app and web app,
@@ -74,7 +75,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnet` image
                 string fxDepTag = BuildTestAppImage("fx_dependent_app", solutionDir, customBuildArgs);
                 tags.Add(fxDepTag);
-                // if we're a webapp on windows
+                // If we're a web app on Windows, use the ContainerAdministrator account
                 string fxDepUser = (_isWeb && !DockerHelper.IsLinuxContainerModeEnabled) ? _adminUser : null;
                 await RunTestAppImage(fxDepTag, user: fxDepUser);
 
@@ -106,7 +107,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             finally
             {
-                // tags.ForEach(tag => _dockerHelper.DeleteImage(tag));
+                tags.ForEach(tag => _dockerHelper.DeleteImage(tag));
                 Directory.Delete(solutionDir, true);
             }
         }
@@ -310,8 +311,6 @@ namespace Microsoft.DotNet.Docker.Tests
             _dockerHelper.Copy($"{containerName}:{ProjectContainerDir}", destinationPath);
         }
 
-// pass in user instead of boolean for runAsAdmin
-// pass admin by default, can pass in app as a special case for testing non-root
         private async Task RunTestAppImage(string image, string user = null, string command = null)
         {
             string containerName = _imageData.GetIdentifier("app-run");
@@ -339,7 +338,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static async Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null, AuthenticationHeaderValue authorizationHeader = null)
         {
-            int retries = 4;
+            int retries = 30;
 
             // Can't use localhost when running inside containers or Windows.
             string url = !Config.IsRunningInContainer && DockerHelper.IsLinuxContainerModeEnabled

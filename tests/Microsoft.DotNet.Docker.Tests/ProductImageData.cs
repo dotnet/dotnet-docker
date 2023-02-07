@@ -53,10 +53,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string VersionString => Version.ToString();
 
-        public override int DefaultPort
-        {
-            get => (IsDistroless | Version.Major >= 8) ? 8080 : 80;
-        }
+        public override int DefaultPort => (IsDistroless | Version.Major >= 8) ? 8080 : 80;
 
         public string GetDockerfilePath(DotNetImageType imageType) =>
             $"src/{GetVariantName(imageType)}/{Version}/{OSTag}/{GetArchLabel()}";
