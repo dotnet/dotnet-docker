@@ -5526,11 +5526,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/6.3/alpine/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
@@ -5542,11 +5541,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/6.3/alpine/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
@@ -5568,11 +5566,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/6.3/ubuntu-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -5584,11 +5581,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/6.3/ubuntu-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -5616,11 +5612,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/6.3/cbl-mariner/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
@@ -5638,11 +5633,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/6.3/cbl-mariner/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
@@ -5676,11 +5670,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/6.3/cbl-mariner-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -5698,11 +5691,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/6.3/cbl-mariner-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -5733,11 +5725,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/7.0/alpine/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
@@ -5749,11 +5740,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/7.0/alpine/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
@@ -5775,11 +5765,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/7.0/ubuntu-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -5791,11 +5780,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/7.0/ubuntu-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -5823,11 +5811,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/7.0/cbl-mariner/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
@@ -5845,11 +5832,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/7.0/cbl-mariner/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
@@ -5883,11 +5869,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/7.0/cbl-mariner-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -5905,11 +5890,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/7.0/cbl-mariner-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -5941,11 +5925,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/8.0/ubuntu-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -5957,11 +5940,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/8.0/ubuntu-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -5989,11 +5971,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/8.0/cbl-mariner-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -6011,11 +5992,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "ASPNET_REPO": "$(Repo:aspnet)",
-                "SDK_REPO": "$(Repo:sdk)"
+                "REPO": "$(Repo:aspnet)"
               },
               "dockerfile": "src/monitor/8.0/cbl-mariner-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
