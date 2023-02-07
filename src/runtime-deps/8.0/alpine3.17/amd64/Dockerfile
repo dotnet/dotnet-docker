@@ -21,8 +21,7 @@ RUN addgroup \
         --ingroup app \
         --shell /bin/false \
         --system \
-        app \
-    && chown -R app: /tmp
+        app
 
 ENV \
     # Configure web servers to bind to port 8080/8443 when present

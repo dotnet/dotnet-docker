@@ -32,7 +32,6 @@ RUN groupadd \
         --system \
         --no-create-home \
         app \
-    && chown -R app: /tmp \
     # Copy user/group info to staging
     && cp /etc/passwd /staging/etc/passwd \
     && cp /etc/group /staging/etc/group

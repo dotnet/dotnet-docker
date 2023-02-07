@@ -4,5 +4,4 @@
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".")
 }}# Trigger first run experience by running arbitrary cmd
-{{if ARGS["append-cmd"]:&&^else:RUN}} dotnet help{{if dotnetVersion = "8.0": \
-&& rm -rf /tmp/*}}
+{{if ARGS["append-cmd"]:&&^else:RUN}} dotnet help

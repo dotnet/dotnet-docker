@@ -259,12 +259,11 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string cleanupArg = skipAutoCleanup ? string.Empty : " --rm";
             string detachArg = detach ? " -d -t" : string.Empty;
-            string skipFTEArg = " -e DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1";
             string userArg = runAsUser != null ? $" -u {runAsUser}" : string.Empty;
             string workdirArg = workdir == null ? string.Empty : $" -w {workdir}";
             string mountedDockerSocketArg = useMountedDockerSocket ? " -v /var/run/docker.sock:/var/run/docker.sock" : string.Empty;
             return ExecuteWithLogging(
-                $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg}{skipFTEArg}{mountedDockerSocketArg} {optionalRunArgs} {image} {command}");
+                $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg}{mountedDockerSocketArg} {optionalRunArgs} {image} {command}");
         }
 
         /// <summary>

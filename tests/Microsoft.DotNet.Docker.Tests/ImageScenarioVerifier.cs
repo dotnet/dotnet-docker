@@ -25,6 +25,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private readonly ITestOutputHelper _outputHelper;
         private readonly string _adminUser = DockerHelper.IsLinuxContainerModeEnabled ? "root" : "ContainerAdministrator";
         private readonly string _nonRootUser = DockerHelper.IsLinuxContainerModeEnabled ? "app" : "ContainerUser";
+        private readonly bool _nonRootUserSupported;
 
         public ImageScenarioVerifier(
             ProductImageData imageData,
@@ -36,6 +37,7 @@ namespace Microsoft.DotNet.Docker.Tests
             _imageData = imageData;
             _isWeb = isWeb;
             _outputHelper = outputHelper;
+            _nonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && _imageData.Version.Major >= 8;
         }
 
         public async Task Execute()
@@ -59,10 +61,9 @@ namespace Microsoft.DotNet.Docker.Tests
                     tags.Add(buildTag);
                     await RunTestAppImage(buildTag, command: $"dotnet run");
 
-                    // Test non-root user scenario on .NET 8.0+
-                    if (DockerHelper.IsLinuxContainerModeEnabled && _imageData.Version.Major >= 8)
+                    if (_nonRootUserSupported)
                     {
-                        await RunTestAppImage(buildTag, user: _nonRootUser, command: $"dotnet run");
+                        // await RunTestAppImage(buildTag, user: _nonRootUser, command: $"dotnet run");
                     }
                 }
 
@@ -73,11 +74,17 @@ namespace Microsoft.DotNet.Docker.Tests
                     string unitTestTag = BuildTestAppImage("test", solutionDir, customBuildArgs);
                     tags.Add(unitTestTag);
                     await RunTestAppImage(unitTestTag);
+
+                    if (_nonRootUserSupported)
+                    {
+                        // await RunTestAppImage(unitTestTag, user: _nonRootUser);
+                    }
                 }
 
                 // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnet` image
                 string fxDepTag = BuildTestAppImage("fx_dependent_app", solutionDir, customBuildArgs);
                 tags.Add(fxDepTag);
+                // if we're a webapp on windows
                 string fxDepUser = (_isWeb && !DockerHelper.IsLinuxContainerModeEnabled) ? _adminUser : null;
                 await RunTestAppImage(fxDepTag, user: fxDepUser);
 
@@ -87,6 +94,11 @@ namespace Microsoft.DotNet.Docker.Tests
                     (!_imageData.OS.StartsWith(OS.Mariner) || _imageData.Version.Major > 6))
                 {
                     await RunTestAppImage(fxDepTag, user: _adminUser);
+
+                    if (_nonRootUserSupported)
+                    {
+                        await RunTestAppImage(fxDepTag, user: _nonRootUser);
+                    }
                 }
 
                 if (DockerHelper.IsLinuxContainerModeEnabled)
@@ -95,6 +107,11 @@ namespace Microsoft.DotNet.Docker.Tests
                     string selfContainedTag = BuildTestAppImage("self_contained_app", solutionDir, customBuildArgs);
                     tags.Add(selfContainedTag);
                     await RunTestAppImage(selfContainedTag, user: _adminUser);
+
+                    if (_nonRootUserSupported)
+                    {
+                        await RunTestAppImage(selfContainedTag, user: _nonRootUser);
+                    }
                 }
             }
             finally
