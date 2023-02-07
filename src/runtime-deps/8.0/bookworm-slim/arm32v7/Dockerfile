@@ -24,6 +24,7 @@ RUN groupadd \
         --gid 101 \
         --shell /bin/false \
         --system \
+        --create-home \
         app
 
 ENV \

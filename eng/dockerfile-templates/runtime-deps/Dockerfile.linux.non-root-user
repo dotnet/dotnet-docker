@@ -18,5 +18,6 @@
     {{if isAlpine:--ingroup {{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \
     --shell /bin/false \
     --system \{{if !ARGS["create-home"]:
-    --no-create-home \}}
+    --no-create-home \^elif isDebian:
+    --create-home \}}
     {{ARGS["name"]}}
