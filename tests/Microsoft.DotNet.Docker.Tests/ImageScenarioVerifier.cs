@@ -85,11 +85,11 @@ namespace Microsoft.DotNet.Docker.Tests
                     (!_imageData.OS.StartsWith(OS.Mariner) || _imageData.Version.Major > 6))
                 {
                     await RunTestAppImage(fxDepTag, user: _adminUser);
-
-                    if (_nonRootUserSupported)
-                    {
-                        await RunTestAppImage(fxDepTag, user: _nonRootUser);
-                    }
+                }
+                // For non-distroless, which uses the root user by default, run the test as the non-root user
+                else if (_nonRootUserSupported && !_imageData.IsDistroless)
+                {
+                    await RunTestAppImage(fxDepTag, user: _nonRootUser);
                 }
 
                 if (DockerHelper.IsLinuxContainerModeEnabled)
