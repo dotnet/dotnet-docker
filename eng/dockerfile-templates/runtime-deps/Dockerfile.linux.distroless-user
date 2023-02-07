@@ -16,7 +16,7 @@
     "name": ARGS["name"],
     "uid": ARGS["uid"],
     "gid": ARGS["gid"],
-    "create-home": ARGS[["create-home"]]
+    "create-home": ARGS["create-home"]
 ],"    ")}} \{{if ARGS["create-home"]:
     && install -d -m 0755 -o {{ARGS["uid"]}} -g {{ARGS["gid"]}} "{{ARGS["staging-dir"]}}/home/{{ARGS["name"]}}" \}}{{
     if ARGS["exclusive"]:{{if ARGS["create-dir"]:

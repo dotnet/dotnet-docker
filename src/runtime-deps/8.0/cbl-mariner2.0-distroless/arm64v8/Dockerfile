@@ -38,7 +38,6 @@ RUN groupadd \
         --uid 101 \
         --gid 101 \
         --shell /bin/false \
-        --no-create-home \
         --system \
         app \
     && install -d -m 0755 -o 101 -g 101 "/staging/home/app" \
