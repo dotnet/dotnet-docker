@@ -22,8 +22,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
         public string OS { get; set; }
         public bool IsDistroless => OS.Contains("distroless") || OS.Contains("chiseled");
-        // public int DefaultPort { get; }
-        // public int DefaultHTTPSPort { get; }
+        public virtual int DefaultPort => IsDistroless ? 8080 : 80;
 
         private static readonly Lazy<JObject> s_imageInfoData;
 
@@ -67,9 +66,6 @@ namespace Microsoft.DotNet.Docker.Tests
             };
 
         public bool IsWindows => OS.StartsWith(Tests.OS.NanoServer) || OS.StartsWith(Tests.OS.ServerCore);
-
-        public virtual int DefaultPort => IsDistroless ? 8080 : 80;
-        public virtual int DefaultHTTPSPort => 443;
 
         public string Rid
         {

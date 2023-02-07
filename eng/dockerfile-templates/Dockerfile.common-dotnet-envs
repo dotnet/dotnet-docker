@@ -6,11 +6,10 @@
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set lineContinuation to when(isWindows, "`", "\") ^
     set port to when(isDistroless, "8080", "80") ^
-    set httpPort to "8080" ^
-    set httpsPort to "8443"
+    set httpPort to "8080"
 }}ENV {{lineContinuation}}
     {{if dotnetVersion != "8.0":# Configure web servers to bind to port {{port}} when present
-    ASPNETCORE_URLS=http://+:{{port}} {{lineContinuation}}^else:# Configure web servers to bind to port {{httpPort}}/{{httpsPort}} when present
+    ASPNETCORE_URLS=http://+:{{port}} {{lineContinuation}}^else:# Configure web servers to bind to port {{httpPort}} when present
     ASPNETCORE_HTTP_PORTS={{httpPort}} {{lineContinuation}}}}
     {{InsertTemplate("Dockerfile.env.container")}}{{if isAlpine || (isDistroless && !(isMariner && find(OS_VERSION, "1.0") > 0)): {{lineContinuation}}
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)

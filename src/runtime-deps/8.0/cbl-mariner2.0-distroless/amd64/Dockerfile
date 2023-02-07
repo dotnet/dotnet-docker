@@ -65,7 +65,7 @@ COPY --from=installer /staging/ /
 COPY --from=installer --chown=101:101 /staging/home/app /home/app
 
 ENV \
-    # Configure web servers to bind to port 8080/8443 when present
+    # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true \

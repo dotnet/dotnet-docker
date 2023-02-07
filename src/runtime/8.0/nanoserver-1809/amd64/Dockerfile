@@ -25,7 +25,7 @@ RUN powershell -Command `
 FROM mcr.microsoft.com/windows/nanoserver:1809-amd64
 
 ENV `
-    # Configure web servers to bind to port 8080/8443 when present
+    # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `

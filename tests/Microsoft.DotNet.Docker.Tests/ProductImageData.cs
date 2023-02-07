@@ -58,11 +58,6 @@ namespace Microsoft.DotNet.Docker.Tests
             get => (IsDistroless | Version.Major >= 8) ? 8080 : 80;
         }
 
-        public override int DefaultHTTPSPort
-        {
-            get => (IsDistroless | Version.Major >= 8) ? 8443 : 443;
-        }
-
         public string GetDockerfilePath(DotNetImageType imageType) =>
             $"src/{GetVariantName(imageType)}/{Version}/{OSTag}/{GetArchLabel()}";
 
