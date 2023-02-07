@@ -55,16 +55,14 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}
         "url-suffix": urlSuffix,
         "filename": rpmFilename
     ])}}
-}}{{if dotnetVersion = "8.0":
+}}{{if dotnetVersion != "6.0" && dotnetVersion != "7.0":
 # Create a non-root user and group
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user",
         [
-            "staging-dir": distrolessStagingDir,
-            "exclusive": "false",
             "name": username,
             "uid": uid,
             "gid": gid,
-            "create-home": "false"
+            "create-home": "true"
         ],"    ")}}
 }}
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}}
