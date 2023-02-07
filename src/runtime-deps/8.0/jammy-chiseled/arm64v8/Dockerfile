@@ -12,7 +12,7 @@ RUN apt-get update && \
 
 RUN groupadd \
         --system \
-        --gid 101 \
+        --gid=101 \
         app \
     && adduser \
         --uid 101 \

@@ -11,11 +11,11 @@
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0
 }}{{if isAlpine:addgroup^else:groupadd}} \
     --system \
-    --gid {{ARGS["gid"]}} \
+    --gid={{ARGS["gid"]}} \
     {{ARGS["name"]}} \
 && {{if isDebian:useradd^else:adduser}} \
     --uid {{ARGS["uid"]}} \
-    {{if isAlpine:--ingroup {{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \
+    {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \
     --shell /bin/false \
     --system \{{if !ARGS["create-home"]:
     --no-create-home \^elif isDebian:

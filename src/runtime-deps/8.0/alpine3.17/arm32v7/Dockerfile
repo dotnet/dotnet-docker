@@ -14,11 +14,11 @@ RUN apk add --no-cache \
 # Create a non-root user and group
 RUN addgroup \
         --system \
-        --gid 101 \
+        --gid=101 \
         app \
     && adduser \
         --uid 101 \
-        --ingroup app \
+        --ingroup=app \
         --shell /bin/false \
         --system \
         app

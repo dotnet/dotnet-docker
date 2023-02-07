@@ -23,7 +23,7 @@ RUN mkdir /staging \
 # Create a non-root user and group
 RUN groupadd \
         --system \
-        --gid 1000 \
+        --gid=1000 \
         app \
     && adduser \
         --uid 1000 \

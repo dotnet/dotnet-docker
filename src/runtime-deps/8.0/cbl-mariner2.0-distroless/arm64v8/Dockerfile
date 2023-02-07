@@ -32,7 +32,7 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
 # Create a non-root user and group
 RUN groupadd \
         --system \
-        --gid 101 \
+        --gid=101 \
         app \
     && adduser \
         --uid 101 \
