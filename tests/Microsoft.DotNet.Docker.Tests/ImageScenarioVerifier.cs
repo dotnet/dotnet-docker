@@ -60,11 +60,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     string buildTag = BuildTestAppImage("build", solutionDir, customBuildArgs);
                     tags.Add(buildTag);
                     await RunTestAppImage(buildTag, command: $"dotnet run");
-
-                    if (_nonRootUserSupported)
-                    {
-                        // await RunTestAppImage(buildTag, user: _nonRootUser, command: $"dotnet run");
-                    }
                 }
 
                 // Running a scenario of unit testing within the sdk container is identical between a console app and web app,
@@ -74,11 +69,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     string unitTestTag = BuildTestAppImage("test", solutionDir, customBuildArgs);
                     tags.Add(unitTestTag);
                     await RunTestAppImage(unitTestTag);
-
-                    if (_nonRootUserSupported)
-                    {
-                        // await RunTestAppImage(unitTestTag, user: _nonRootUser);
-                    }
                 }
 
                 // Use `sdk` image to publish FX dependent app and run with `runtime` or `aspnet` image
