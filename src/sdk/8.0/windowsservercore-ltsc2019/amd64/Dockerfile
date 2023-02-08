@@ -40,7 +40,7 @@ RUN powershell -Command " `
         `
         # Retrieve .NET SDK
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-        $dotnet_sha512 = '44a091efc327156b8e0829f5cf16e50ba620715ac18e80399941326a33447eab222ff275c883f9263711d2cdfd94eedb4902733cc92ec9d1d910c3fb4209733d'; `
+        $dotnet_sha512 = 'a5066f4f9cb5de4738913b86f7db7a448b516f740da72cb37f0b073fb72f0c4bb28144d04df3063ee94c965806347ddcee9667d1e4ddb1262aef6450b14ac82b'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
