@@ -29,7 +29,6 @@
                     "openssl-libs",
                     "zlib"
                 ],
-                when(dotnetVersion = "8.0",
                 [
                     "glibc",
                     "icu",
@@ -38,16 +37,7 @@
                     "libstdc++",
                     "openssl-libs",
                     "zlib"
-                ],
-                [
-                    "glibc",
-                    "icu",
-                    "krb5",
-                    "libgcc",
-                    "libstdc++",
-                    "openssl-libs",
-                    "zlib"
-                ])),
+                ]),
             [
                 "libc6",
                 "libgcc1",
