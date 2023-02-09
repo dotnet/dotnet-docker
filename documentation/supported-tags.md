@@ -23,7 +23,7 @@ Examples:
 - `6.0.12-jammy-amd64`
 - `6.0.12-jammy-arm64v8`
 - `6.0.12-nanoserver-1809`
-- `7.0.2-alpine3.17`
+- `7.0.2-alpine3.17-arm64v8`
 - `7.0.2-bullseye-slim-arm32v7`
 
 ### `<Major.Minor .NET Version>-<OS>-<Architecture>`
@@ -33,7 +33,7 @@ Examples:
 - `6.0-jammy-arm64v8`
 - `6.0-jammy-amd64`
 - `6.0-nanoserver-1809`
-- `7.0-alpine3.17`
+- `7.0-alpine3.17-arm64v8`
 - `7.0-bullseye-slim-arm32v7`
 
 ## Multi-platform images
