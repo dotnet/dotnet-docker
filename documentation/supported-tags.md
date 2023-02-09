@@ -4,12 +4,12 @@ This document describes the tagging patterns and policies that are used for the 
 
 Complete tag list:
 
-- [runtime-deps](../README.runtime-deps.md)
-- [runtime](../README.runtime.md)
-- [aspnet](../README.aspnet.md)
-- [sdk](../README.sdk.md)
-- [monitor](../README.monitor.md)
-- [samples](../README.samples.md)
+- [runtime-deps](../README.runtime-deps.md#full-tag-listing)
+- [runtime](../README.runtime.md#full-tag-listing)
+- [aspnet](../README.aspnet.md#full-tag-listing)
+- [sdk](../README.sdk.md#full-tag-listing)
+- [monitor](../README.monitor.md#full-tag-listing)
+- [samples](../README.samples.md#full-tag-listing)
 - [Microsoft Artifact Registry](https://mcr.microsoft.com/en-us/catalog?search=dotnet/)
 
 ## Single-platform Tags
