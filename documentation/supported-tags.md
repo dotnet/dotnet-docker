@@ -10,25 +10,25 @@ Please [log an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose)
 
 These tags reference an image for a single platform (e.g. "Linux Arm64" or "Windows x64").
 
-1. `<Major.Minor.Patch .NET Version>-<OS>-<Architecture>`
+### `<Major.Minor.Patch .NET Version>-<OS>-<Architecture>`
 
-    **Examples**
+**Examples**
 
-    * `6.0.12-jammy-amd64`
-    * `6.0.12-jammy-arm64v8`
-    * `6.0.12-nanoserver-1809`
-    * `7.0.2-alpine3.17`
-    * `7.0.2-bullseye-slim-arm32v7`
+* `6.0.12-jammy-amd64`
+* `6.0.12-jammy-arm64v8`
+* `6.0.12-nanoserver-1809`
+* `7.0.2-alpine3.17`
+* `7.0.2-bullseye-slim-arm32v7`
 
-1. `<Major.Minor .NET Version>-<OS>-<Architecture>`
+### `<Major.Minor .NET Version>-<OS>-<Architecture>`
 
-    **Examples**
+**Examples**
 
-    * `6.0-jammy-arm64v8`
-    * `6.0-jammy-amd64`
-    * `6.0-nanoserver-1809`
-    * `7.0-alpine3.17`
-    * `7.0-bullseye-slim-arm32v7`
+* `6.0-jammy-arm64v8`
+* `6.0-jammy-amd64`
+* `6.0-nanoserver-1809`
+* `7.0-alpine3.17`
+* `7.0-bullseye-slim-arm32v7`
 
 ## Multi-platform images
 
@@ -36,37 +36,37 @@ These tags reference images for [multiple platforms](https://www.docker.com/blog
 
 ### `<Major.Minor.Patch .NET Version>-<OS version>`
 
-    **Examples**
+**Examples**
 
-    * `6.0.12-jammy`
-    * `7.0.2-alpine3.17`
+* `6.0.12-jammy`
+* `7.0.2-alpine3.17`
 
 ### `<Major.Minor .NET Version>-<OS version>`
 
-    **Examples**
+**Examples**
 
-    * `6.0-alpine3.17`
-    * `7.0-jammy`
+* `6.0-alpine3.17`
+* `7.0-jammy`
 
 ### `<Major.Minor .NET Version>-<OS name>`
 
-    **Examples**
+**Examples**
 
-    * `6.0-alpine`
+* `6.0-alpine`
 
 ### `<Major.Minor.Patch .NET Version>`
 
-    **Examples**
+**Examples**
 
-    * `6.0.12`
-    * `7.0.2`
+* `6.0.12`
+* `7.0.2`
 
 ### `<Major.Minor .NET Version>`
 
-    **Examples**
+**Examples**
 
-    * `6.0`
-    * `7.0`
+* `6.0`
+* `7.0`
 
 ### `latest`
 
@@ -81,12 +81,14 @@ Notes:
 
 The following policies are used for the tag patterns we use.
 
-### `<Major.Minor.Patch .NET Version>` - This tag pattern references an image with a specific `Major.Minor.Patch` .NET version.
+### `<Major.Minor.Patch .NET Version>`
 
-    **Examples**
+This tag pattern references an image with a specific `Major.Minor.Patch` .NET version.
 
-    * `6.0.12`
-    * `7.0.2-alpine3.17`
+**Examples**
+
+* `6.0.12`
+* `7.0.2-alpine3.17`
 
 Notes:
 
@@ -95,12 +97,14 @@ Notes:
 * The .NET components within the image will not be updated.
 * In the rare event that .NET components are updated before the next regular .NET service release, then a new image with a `-1` tag will be created. The same practice will repeat itself if necessary (with `-2` and then `-3` tags).
 
-### `<Major.Minor .NET Version>` - This tag pattern references an image with a specific `Major.Minor` .NET version, but floats on patch updates.
+### `<Major.Minor .NET Version>`
 
-    **Examples**
+This tag pattern references an image with a specific `Major.Minor` .NET version, but floats on patch updates.
 
-    * `6.0`
-    * `7.0-alpine3.17`
+**Examples**
+
+* `6.0`
+* `7.0-alpine3.17`
 
 Notes:
 
@@ -108,12 +112,14 @@ Notes:
 * They are updated in response to base image updates (like a Debian base image) for the supported life of the .NET release.
 * The .NET components within the image will be updated.
 
-### `<OS version>` - This tag pattern references an image with a specific OS version, but floats on OS patch updates. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
+### `<OS version>`
 
-    **Examples**
+This tag pattern references an image with a specific OS version, but floats on OS patch updates. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
 
-    * `6.0-jammy`
-    * `7.0-alpine3.17`
+**Examples**
+
+* `6.0-jammy`
+* `7.0-alpine3.17`
 
 Notes:
 
@@ -121,12 +127,14 @@ Notes:
 *  Digest pinning is required to request a specific patch of an operating system (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
 * For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used versus version numbers.
 
-### `alpine` - This tag pattern floats to the latest version of Alpine.
+### `alpine`
 
-    **Examples**
+This tag pattern floats to the latest version of Alpine.
 
-    * `6.0-alpine`
-    * `7.0-alpine`
+**Examples**
+
+* `6.0-alpine`
+* `7.0-alpine`
 
 Notes:
 
@@ -135,12 +143,14 @@ Notes:
 * One month later, the floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version.
 * Another announcement will be posted at this time.
 
-### `<Architecture>` - The architecture the image is based on. See [Supported Platforms](supported-platforms.md#architectures) for the list of supported architectures.
+### `<Architecture>`
 
-    **Examples**
+This tag pattern references an image with a specific architecture. See [Supported Platforms](supported-platforms.md#architectures) for the list of supported architectures.
 
-    * `6.0-jammy-amd64`
-    * `7.0-alpine-arm64v8`
+**Examples**
+
+* `6.0-jammy-amd64`
+* `7.0-alpine-arm64v8`
 
 Notes:
 
