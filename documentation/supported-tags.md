@@ -1,55 +1,52 @@
-# Supported Tags
+# .NET Container Tags -- Patterns and Policies
 
-This document describes the supported tags for the official .NET Docker images.
+This document describes the tagging patterns and policies that are used for the official .NET container images. .NET tags are intended to closely match the tagging patterns used by [Official Images on Docker Hub](https://hub.docker.com/search?q=&type=image&image_filter=official).
 
-The .NET team strives to align image tagging practices with the tagging practices utilized by the [Official Images on Docker Hub](https://hub.docker.com/search?q=&type=image&image_filter=official).
+For a complete list of supported .NET container tags, see [Microsoft Container Registry](https://mcr.microsoft.com/en-us/catalog?search=dotnet/).
 
-## Simple Tags
+Please [log an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose) if you encounter problems using .NET images or applying these tagging patterns.
 
-_Simple Tags_ reference an image for a single platform (e.g. `Windows x64` or `Linux ARMv8 64-bit`).
+## Single-platform Tags
+
+These tags reference an image for a single platform (e.g. "Linux Arm64" or "Windows x64").
 
 1. `<Major.Minor.Patch .NET Version>-<OS>-<Architecture>`
 
     **Examples**
 
-    * `6.0.12-focal-amd64`
-    * `6.0.12-focal-arm64v8`
+    * `6.0.12-jammy-amd64`
+    * `6.0.12-jammy-arm64v8`
     * `6.0.12-nanoserver-1809`
-    * `6.0.12-alpine3.16`
-    * `6.0.12-bullseye-slim-arm32v7`
+    * `7.0.2-alpine3.17`
+    * `7.0.2-bullseye-slim-arm32v7`
 
 1. `<Major.Minor .NET Version>-<OS>-<Architecture>`
 
     **Examples**
 
-    * `6.0-focal-arm64v8`
-    * `6.0-focal-amd64`
+    * `6.0-jammy-arm64v8`
+    * `6.0-jammy-amd64`
     * `6.0-nanoserver-1809`
-    * `6.0-alpine3.16`
-    * `6.0-bullseye-slim-arm32v7`
+    * `7.0-alpine3.17`
+    * `7.0-bullseye-slim-arm32v7`
 
-## Shared Tags
+## Multi-platform images
 
-_Shared Tags_ reference images for [multiple platforms](https://www.docker.com/blog/docker-official-images-now-multi-platform/). The .NET shared tags have the following characteristics:
-
-* Include entries for all [supported architectures](supported-platforms.md#architectures).
-* When no OS is specified:
-    1. Include Linux entries for Debian.
-    1. Include Windows entries for each supported Nano Server version.
+These tags reference images for [multiple platforms](https://www.docker.com/blog/docker-official-images-now-multi-platform/) (e.g. Arm64 and x64 and Linux and/or Windows).
 
 1. `<Major.Minor.Patch .NET Version>-<OS version>`
 
     **Examples**
 
-    * `6.0.0-focal`
-    * `6.0.0-alpine3.14`
+    * `6.0.12-jammy`
+    * `7.0.2-alpine3.17`
 
 1. `<Major.Minor .NET Version>-<OS version>`
 
     **Examples**
 
-    * `6.0-focal`
-    * `6.0-alpine3.14`
+    * `6.0-alpine3.17`
+    * `7.0-jammy`
 
 1. `<Major.Minor .NET Version>-<OS name>`
 
@@ -62,72 +59,100 @@ _Shared Tags_ reference images for [multiple platforms](https://www.docker.com/b
     **Examples**
 
     * `6.0.12`
+    * `7.0.2`
 
 1. `<Major.Minor .NET Version>`
 
     **Examples**
 
     * `6.0`
+    * `7.0`
 
 1. `latest`
 
-    * [dotnet/](https://hub.docker.com/_/microsoft-dotnet) - `latest` will reference the `<Major.Minor.Patch Version>` image for the most recent GA release.
-    * [dotnet/nightly/](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) - `latest` will reference the `<Major.Minor.Patch Version>` image for the most recent release. This implies `latest` will at times reference prerelease versions. In the event when there are multiple active prerelease versions (e.g. 3.1 preview 3 and 5.0 preview 1), `latest` will reference the lower prerelease version (e.g. 3.1 preview 3) until the point when the lower version (e.g. 3.1) is released. Once this happens, `latest` will reference the higher version (e.g. 5.0 preview 1).
+Notes:
 
-## Tag Parts
+* Includes all [supported architectures](supported-platforms.md#architectures).
+* Includes Debian for Linux, unless specified (like `6.0-alpine`).
+* Includes each supported Nano Server version for OS-agnostic tags (like `7.0` and `latest`)
+* The `latest` tag references the latest stable release while in the `nightly` branch, it may references the latest preview release.
 
-1. `<Major.Minor.Patch .NET Version>` - The `Major.Minor.Patch` number of the .NET version included in the image.
+## Tag and image policies
 
-    * Tags which use this version format are considered _fixed tags_. The .NET related contents of the referenced images are guaranteed to not change.
-    * In the event servicing of the .NET contents of the image is required outside of a regular .NET service release, a `-n` suffix will be added to the .NET version number where n is an incremental count (e.g. [6.0.0-1](https://github.com/dotnet/dotnet-docker/pull/2516)).
+1. `<Major.Minor.Patch .NET Version>` - This tag pattern references an image with a specific `Major.Minor.Patch` .NET version.
 
-1. `<Major.Minor .NET Version>` - The `Major.Minor` number of the .NET version included in the image.
+    **Examples**
 
-    * Tags which use this version format are considered _floating tags_. These tags are continuously updated to always reference the most recent .NET patch available for the specified `Major.Minor` release.
+    * `6.0.12`
+    * `7.0.2-alpine3.17`
 
-1. `<OS version>` - The version of the OS the image is based upon. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
+Notes:
 
-    * The referenced image is automatically updated whenever a new OS patch is released. The OS release name doesn't support pinning to specific OS patches. If OS patch pinning is required then the image digest should be used (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
+    * These tags are considered _fixed tags_ since they reference a specific .NET patch version.
+    * They are updated in response to base image updates (like a Debian base image) for the supported life of the image (typically one month).
+    * The .NET components within the image will not be updated.
+    * In the rare event that .NET components are updated before the next regular .NET service release, then a new image with a `-1` tag will be created. The same practice will repeat itself if necessary (with `-2` and then `-3` tags).
+
+1. `<Major.Minor .NET Version>` - This tag pattern references an image with a specific `Major.Minor` .NET version, but floats on patch updates.
+
+    **Examples**
+
+    * `6.0`
+    * `7.0-alpine3.17`
+
+Notes:
+
+    * These tags are considered _floating tags_ since they do not reference a specific patch version.
+    * They are updated in response to base image updates (like a Debian base image) for the supported life of the .NET release.
+    * The .NET components within the image will be updated.
+
+1. `<OS version>` - This tag pattern references an image with a specific OS version, but floats on OS patch updates. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
+
+    **Examples**
+
+    * `6.0-jammy`
+    * `7.0-alpine3.17`
+
+Notes:
+
+    * These tags are updated in response to base image updates (like an Ubuntu base image) for the supported life of the .NET release.
+    *  Digest pinning is required to request a specific patch of an operating system (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
     * For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used versus version numbers.
 
-1. `<OS name>` - The name of the OS the image is based upon. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems. This tag does not include the version of the OS because it is a floating tag. It is updated to be associated with latest version of the OS as support is available. This type of tagging scheme is currently only provided for Alpine. This tag will be updated according to the policy below:
+1. `alpine` - This tag pattern floats to the latest version of Alpine.
 
-    1. When a new version of the OS is supported, it will initially be published with version-specific tags (e.g. `6.0-alpine3.14`). An [announcement](https://github.com/dotnet/dotnet-docker/issues?q=is%3Aopen+is%3Aissue+label%3Aannouncement) will be posted to let you know the new OS version is available. The floating tag will not yet be updated.
-    1. Those who want to target that version of the OS will need to explicitly target a version-specific tag in order to evaluate the new OS version. Please [log an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose) if you encounter any problems.
-    1. One month after the initial publication of the version-specific tags, the floating tag (e.g. `6.0-alpine`) will be updated to be associated with the new OS version. This assumes there are no blocking issues. Another announcement will be posted at this time to indicate that the floating tag has been updated to the new version.
+    **Examples**
+
+    * `6.0-alpine`
+    * `7.0-alpine`
+
+Notes:
+
+    * When a new version of Alpine is supported, it will initially be published only with version-specific tags (e.g. `6.0-alpine3.17`), with an [announcement](https://github.com/dotnet/dotnet-docker/issues?q=is%3Aopen+is%3Aissue+label%3Aannouncement).
+    * The new version-specific tag needs to be used initially.
+    * One month later, the floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version.
+    * Another announcement will be posted at this time.
 
 1. `<Architecture>` - The architecture the image is based on. See [Supported Platforms](supported-platforms.md#architectures) for the list of supported architectures.
 
+    **Examples**
+
+    * `6.0-jammy-amd64`
+    * `7.0-alpine-arm64v8`
+
+Notes:
+
     * For Windows, `amd64` is the only architecture supported and is excluded from the tag name.
-
-## Tag Listing
-
-Each [Docker Hub repository](https://hub.docker.com/_/microsoft-dotnet) contains a detailed listing of all supported tags. Any tag not included in the listing should be considered unsupported. The listing is broken apart by OS platform (e.g. `Linux amd64 Tags` or `Nano Server 2022 amd64 Tags`). Each row represents a single image and contains all of the tags that reference it. For example the following entry represents the 6.0 runtime Bullseye image which is referenced by seven tags:
-
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-6.0.0-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.0-bullseye-slim, 6.0-bullseye-slim, 6.0.0, 6.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
 
 ## Tag Lifecycle
 
 Each tag will be supported for the lifetime of the .NET and OS version referenced by the tag, unless further restricted according to [platform support policy](supported-platforms.md).
 
-When an OS version reaches EOL, its tags will no longer be maintained.
+When an OS version reaches End-of-Life (EOL), its tags will no longer be maintained.
 
-When a .NET version reaches EOL, its tags will continue to be maintained until the next .NET servicing date (typically on "Update Tuesday", the 2nd Tuesday of the month). The maintenance consists of rebuilds due to base image updates or security fixes to Linux packages installed by .NET.
+When a .NET version reaches EOL, its tags will continue to be maintained (rebuilt for base image updates) until the next .NET servicing date (typically on "Patch Tuesday", the 2nd Tuesday of the month). 
 
-> Example: The last .NET patch update for .NET 5 is on May 10, 2022. Maintenance of .NET 5 tags would continue until the next .NET servicing date on June 14, 2022. Within that time period, an update to the Debian 10 base image, for example, would cause the .NET 5 Debian 10 tags to be updated with rebuilt images. Any update to a dependent base image after June 14, 2022 would not result in the .NET 5 tags being updated.
-
-Once a tag is no longer maintained, it will be considered unsupported, will no longer be updated and will be removed from the [Tag Listing](#tag-listing).
-
-Unsupported tags will be preserved to prevent breaking any references to it. See [Microsoft support for .NET](https://github.com/dotnet/core/blob/master/microsoft-support.md) for additional details.
-
-### Examples
-
-* `6.0` - Will be supported for the lifetime of the .NET 6.0 release.
-* `6.0.0` - Will be supported for the lifetime of the 6.0.0 servicing release.
-* `6.0-windowservercore-ltsc2019` - Will be supported for the lifetime of the .NET 6.0 and Windows Server Core LTSC 2019 releases, whichever is shorter.
-* `6.0-focal` - Will be supported for the lifetime of the .NET 6.0 and Ubuntu Focal release, whichever is shorter.
+Once a tag is no longer maintained, it will be considered unsupported, will no longer be updated. Unsupported tags will be preserved to prevent breaking any references to it.
 
 ## Policy Changes
 
