@@ -145,7 +145,7 @@ Examples:
 Notes:
 
 - When a new version of Alpine is supported, it will initially be published only with version-specific tags (e.g. `6.0-alpine3.17`), with an [announcement](https://github.com/dotnet/dotnet-docker/issues?q=is%3Aopen+is%3Aissue+label%3Aannouncement).
-- The new version-specific tag needs to be used initially.
+- A version-specific tag needs to be used if you want to use the new Alpine version immediately.
 - One month later, the floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version.
 - Another announcement will be posted at this time.
 
