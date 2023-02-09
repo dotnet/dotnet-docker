@@ -13,6 +13,7 @@ RUN tdnf install -y \
         openssl-libs \
         zlib \
     && tdnf clean all \
+    # Create a non-root user and group
     && groupadd \
         --system \
         --gid=101 \
@@ -21,6 +22,7 @@ RUN tdnf install -y \
         --uid 101 \
         --gid 101 \
         --shell /bin/false \
+        --create-home \
         --system \
         app \
     && tdnf remove -y \

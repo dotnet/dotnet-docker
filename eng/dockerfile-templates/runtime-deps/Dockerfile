@@ -21,6 +21,7 @@
     set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm" ^
     set utilPkgs to when(isMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0", ["shadow-utils"], []) ^
+    set nonRootComment to "# Create a non-root user and group" ^
     set username to "app" ^
     set uid to 101 ^
     set gid to uid
@@ -61,12 +62,14 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-deps",
         "url-suffix": urlSuffix,
         "filename": rpmFilename
     ])}}
-}}{{if dotnetVersion != "6.0" && dotnetVersion != "7.0":{{InsertTemplate("Dockerfile.linux.non-root-user",
+}}{{if dotnetVersion != "6.0" && dotnetVersion != "7.0":{{if isMariner:    {{nonRootComment}}
+    && ^else:
+{{nonRootComment}}
+RUN }}{{InsertTemplate("Dockerfile.linux.non-root-user",
         [
             "name": username,
             "uid": uid,
             "gid": gid,
-            "create-home": "true",
             "append-cmd": len(utilPkgs) > 0,
             "continue-cmd": len(utilPkgs) > 0
         ],"    ")}}

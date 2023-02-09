@@ -16,7 +16,7 @@ FROM {{ARCH_VERSIONED}}/ubuntu:{{osVersionBase}} as builder
 RUN apt-get update && \
     apt-get install -y ca-certificates
 
-{{InsertTemplate("Dockerfile.linux.distroless-user", [
+RUN {{InsertTemplate("Dockerfile.linux.distroless-user", [
         "staging-dir": "/rootfs",
         "exclusive": "true",
         "create-dir": "true",

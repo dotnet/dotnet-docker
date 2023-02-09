@@ -13,6 +13,8 @@ RUN apt-get update \
         libstdc++6 \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
+
+# Create a non-root user and group
 RUN groupadd \
         --system \
         --gid=101 \
