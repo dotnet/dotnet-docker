@@ -34,41 +34,41 @@ These tags reference an image for a single platform (e.g. "Linux Arm64" or "Wind
 
 These tags reference images for [multiple platforms](https://www.docker.com/blog/docker-official-images-now-multi-platform/) (e.g. Arm64 and x64 and Linux and/or Windows).
 
-1. `<Major.Minor.Patch .NET Version>-<OS version>`
+### `<Major.Minor.Patch .NET Version>-<OS version>`
 
     **Examples**
 
     * `6.0.12-jammy`
     * `7.0.2-alpine3.17`
 
-1. `<Major.Minor .NET Version>-<OS version>`
+### `<Major.Minor .NET Version>-<OS version>`
 
     **Examples**
 
     * `6.0-alpine3.17`
     * `7.0-jammy`
 
-1. `<Major.Minor .NET Version>-<OS name>`
+### `<Major.Minor .NET Version>-<OS name>`
 
     **Examples**
 
     * `6.0-alpine`
 
-1. `<Major.Minor.Patch .NET Version>`
+### `<Major.Minor.Patch .NET Version>`
 
     **Examples**
 
     * `6.0.12`
     * `7.0.2`
 
-1. `<Major.Minor .NET Version>`
+### `<Major.Minor .NET Version>`
 
     **Examples**
 
     * `6.0`
     * `7.0`
 
-1. `latest`
+### `latest`
 
 Notes:
 
@@ -79,7 +79,9 @@ Notes:
 
 ## Tag and image policies
 
-1. `<Major.Minor.Patch .NET Version>` - This tag pattern references an image with a specific `Major.Minor.Patch` .NET version.
+The following policies are used for the tag patterns we use.
+
+### `<Major.Minor.Patch .NET Version>` - This tag pattern references an image with a specific `Major.Minor.Patch` .NET version.
 
     **Examples**
 
@@ -93,7 +95,7 @@ Notes:
 * The .NET components within the image will not be updated.
 * In the rare event that .NET components are updated before the next regular .NET service release, then a new image with a `-1` tag will be created. The same practice will repeat itself if necessary (with `-2` and then `-3` tags).
 
-1. `<Major.Minor .NET Version>` - This tag pattern references an image with a specific `Major.Minor` .NET version, but floats on patch updates.
+### `<Major.Minor .NET Version>` - This tag pattern references an image with a specific `Major.Minor` .NET version, but floats on patch updates.
 
     **Examples**
 
@@ -106,7 +108,7 @@ Notes:
 * They are updated in response to base image updates (like a Debian base image) for the supported life of the .NET release.
 * The .NET components within the image will be updated.
 
-1. `<OS version>` - This tag pattern references an image with a specific OS version, but floats on OS patch updates. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
+### `<OS version>` - This tag pattern references an image with a specific OS version, but floats on OS patch updates. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
 
     **Examples**
 
@@ -119,7 +121,7 @@ Notes:
 *  Digest pinning is required to request a specific patch of an operating system (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
 * For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used versus version numbers.
 
-1. `alpine` - This tag pattern floats to the latest version of Alpine.
+### `alpine` - This tag pattern floats to the latest version of Alpine.
 
     **Examples**
 
@@ -133,7 +135,7 @@ Notes:
 * One month later, the floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version.
 * Another announcement will be posted at this time.
 
-1. `<Architecture>` - The architecture the image is based on. See [Supported Platforms](supported-platforms.md#architectures) for the list of supported architectures.
+### `<Architecture>` - The architecture the image is based on. See [Supported Platforms](supported-platforms.md#architectures) for the list of supported architectures.
 
     **Examples**
 
