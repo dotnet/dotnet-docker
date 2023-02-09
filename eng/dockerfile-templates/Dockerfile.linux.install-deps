@@ -1,6 +1,5 @@
 {{
     _ ARGS:
-        isSdk (optional): Indicates whether the dependencies are installed for an sdk Dockerfile
         distroless-staging-dir (optional): Location of the staging directory for distroless installation
         additionalPkgs (optional): Additional packages to install ^
 
@@ -46,19 +45,9 @@
                 "libstdc++6",
                 "zlib1g"
             ])) ^
-        set certsPkgPrefix to when(isMariner,
-            [
-                when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates"),
-                "",
-                dotnetDepsComment
-            ],
-            [
-                "ca-certificates",
-                "",
-                dotnetDepsComment
-            ]) ^
-    set pkgs to when(ARGS["isSdk"], pkgs, cat(certsPkgPrefix, pkgs)) ^
-    set pkgs to when(defined(ARGS["additionalPkgs"]), cat(ARGS["additionalPkgs"], pkgs), pkgs)
+    set certsPkg to when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates") ^
+    set additionalPkgs to when(defined(ARGS["additionalPkgs"]), sort(cat(ARGS["additionalPkgs"], [certsPkg])), [certsPkg]) ^
+    set pkgs to cat(additionalPkgs, ["", dotnetDepsComment], pkgs)
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",
     [
         "pkgs": pkgs,

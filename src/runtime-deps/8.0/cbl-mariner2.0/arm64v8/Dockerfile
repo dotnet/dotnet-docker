@@ -1,8 +1,8 @@
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0
 
 RUN tdnf install -y \
-        shadow-utils \
         ca-certificates \
+        shadow-utils \
         \
         # .NET dependencies
         glibc \
