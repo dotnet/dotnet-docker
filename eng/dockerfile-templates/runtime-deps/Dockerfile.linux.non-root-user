@@ -4,12 +4,15 @@
         name: Name of the user/group to create
         uid: ID of the user to be created
         gid: ID of the group to be created
-        create-home (optional): Indicates whether a home directory should be created for the user ^
+        create-home (optional): Indicates whether a home directory should be created for the user 
+        append-cmd (optional): Indicates whether to append the command to an existing command
+        continue-cmd (optional): Whether to append the line continuation character at the end of the commands
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
-    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0
-}}{{if isAlpine:addgroup^else:groupadd}} \
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set nonRootComment to "# Create a non-root user and group"
+}}{{if ARGS["append-cmd"]:    && ^else:RUN }}{{if isAlpine:addgroup^else:groupadd}} \
     --system \
     --gid={{ARGS["gid"]}} \
     {{ARGS["name"]}} \
@@ -20,4 +23,4 @@
     --no-create-home \^elif isDebian:
     --create-home \}}
     --system \
-    {{ARGS["name"]}}
+    {{ARGS["name"]}}{{if ARGS["continue-cmd"]: \}}

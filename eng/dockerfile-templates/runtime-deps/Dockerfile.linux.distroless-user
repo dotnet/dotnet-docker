@@ -11,7 +11,7 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0
-}}RUN {{InsertTemplate("Dockerfile.linux.non-root-user",
+}}{{InsertTemplate("Dockerfile.linux.non-root-user",
 [
     "name": ARGS["name"],
     "uid": ARGS["uid"],
