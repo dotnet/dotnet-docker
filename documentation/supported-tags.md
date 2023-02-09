@@ -10,7 +10,7 @@ Complete tag list:
 - [sdk](../README.sdk.md)
 - [monitor](../README.monitor.md)
 - [samples](../README.samples.md)
-- [Microsoft Container Registry](https://mcr.microsoft.com/en-us/catalog?search=dotnet/).
+- [Microsoft Artifact Registry](https://mcr.microsoft.com/en-us/catalog?search=dotnet/)
 
 ## Single-platform Tags
 
@@ -81,7 +81,7 @@ Notes:
 - Includes all [supported architectures](supported-platforms.md#architectures).
 - Includes Debian for Linux, unless specified (like `6.0-alpine`).
 - Includes each supported Nano Server version for OS-agnostic tags (like `7.0` and `latest`)
-- The `latest` tag references the latest stable release while in the `nightly` branch, it may references the latest preview release.
+- The `latest` tag references the latest stable release. In the `nightly` image repo, it may reference the latest preview release.
 
 ## Tag and image policies
 
@@ -170,7 +170,7 @@ When an OS version reaches End-of-Life (EOL), its tags will no longer be maintai
 
 When a .NET version reaches EOL, its tags will continue to be maintained (rebuilt for base image updates) until the next .NET servicing date (typically on "Patch Tuesday", the 2nd Tuesday of the month).
 
-Once a tag is no longer maintained, it will be considered unsupported, will no longer be updated. Unsupported tags will be preserved to prevent breaking any references to it.
+Once a tag is no longer maintained, it will be considered unsupported, will no longer be updated. Unsupported tags will continue to exist in the container registry to prevent breaking any references to it.
 
 ## Policy Changes
 
