@@ -20,7 +20,6 @@ RUN addgroup \
         --uid 101 \
         --ingroup=app \
         --shell /bin/false \
-        --create-home \
         --system \
         app
 

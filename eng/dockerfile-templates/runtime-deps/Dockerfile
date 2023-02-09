@@ -42,9 +42,8 @@ RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
 RUN {{InsertTemplate("../Dockerfile.linux.install-deps",
     [
         "additionalPkgs": utilPkgs,
-        "continue-cmd": len(utilPkgs) > 0,
         "no-clean": len(utilPkgs) > 0
-    ])}}
+    ])}}{{if len(utilPkgs) > 0: \}}
 {{ if isRpmInstall:
 {{if isInternal:{{InsertTemplate("../Dockerfile.linux.copy-files",
 [
@@ -70,13 +69,12 @@ RUN }}{{InsertTemplate("Dockerfile.linux.non-root-user",
             "name": username,
             "uid": uid,
             "gid": gid,
-            "append-cmd": len(utilPkgs) > 0,
-            "continue-cmd": len(utilPkgs) > 0
-        ],"    ")}}
-}}{{if len(utilPkgs) > 0:{{InsertTemplate("../Dockerfile.linux.remove-pkgs",
+            "append-cmd": len(utilPkgs) > 0
+        ],"    ")}}{{if isMariner: \
+    && ^else:
+}}}}{{if len(utilPkgs) > 0:{{InsertTemplate("../Dockerfile.linux.remove-pkgs",
     [
-        "pkgs": utilPkgs,
-        "append-cmd": "true"
+        "pkgs": utilPkgs
     ]
 )}}}}
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}}

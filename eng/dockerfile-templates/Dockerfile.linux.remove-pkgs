@@ -4,15 +4,14 @@
         pkg-mgr (optional): package manager to use
         pkg-mgr-opts (optional): additional options to pass to the package manager
         noninteractive (optional): whether to use noninteractive mode
-        no-clean (optional): skip package manager cleanup after install
-        append-cmd (optional): Indicates whether to append the command to an existing command ^
+        no-clean (optional): skip package manager cleanup after install ^
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isDnf to ARGS["pkg-mgr"] = "dnf" ^
     set isTdnf to ARGS["pkg-mgr"] = "tdnf" || (!isDnf && isMariner) ^
     set isApk to ARGS["pkg-mgr"] = "apk" || isAlpine
-}}{{if ARGS["append-cmd"]:    && ^else:RUN }}{{
+}}{{
 if isDnf:dnf remove -y{{ARGS["pkg-mgr-opts"]}} \^
 elif isApk:apk del{{ARGS["pkg-mgr-opts"]}} \^
 elif isTdnf:tdnf remove -y{{ARGS["pkg-mgr-opts"]}} \^
