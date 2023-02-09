@@ -88,10 +88,10 @@ Notes:
 
 Notes:
 
-    * These tags are considered _fixed tags_ since they reference a specific .NET patch version.
-    * They are updated in response to base image updates (like a Debian base image) for the supported life of the image (typically one month).
-    * The .NET components within the image will not be updated.
-    * In the rare event that .NET components are updated before the next regular .NET service release, then a new image with a `-1` tag will be created. The same practice will repeat itself if necessary (with `-2` and then `-3` tags).
+* These tags are considered _fixed tags_ since they reference a specific .NET patch version.
+* They are updated in response to base image updates (like a Debian base image) for the supported life of the image (typically one month).
+* The .NET components within the image will not be updated.
+* In the rare event that .NET components are updated before the next regular .NET service release, then a new image with a `-1` tag will be created. The same practice will repeat itself if necessary (with `-2` and then `-3` tags).
 
 1. `<Major.Minor .NET Version>` - This tag pattern references an image with a specific `Major.Minor` .NET version, but floats on patch updates.
 
@@ -102,9 +102,9 @@ Notes:
 
 Notes:
 
-    * These tags are considered _floating tags_ since they do not reference a specific patch version.
-    * They are updated in response to base image updates (like a Debian base image) for the supported life of the .NET release.
-    * The .NET components within the image will be updated.
+* These tags are considered _floating tags_ since they do not reference a specific patch version.
+* They are updated in response to base image updates (like a Debian base image) for the supported life of the .NET release.
+* The .NET components within the image will be updated.
 
 1. `<OS version>` - This tag pattern references an image with a specific OS version, but floats on OS patch updates. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
 
@@ -115,9 +115,9 @@ Notes:
 
 Notes:
 
-    * These tags are updated in response to base image updates (like an Ubuntu base image) for the supported life of the .NET release.
-    *  Digest pinning is required to request a specific patch of an operating system (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
-    * For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used versus version numbers.
+* These tags are updated in response to base image updates (like an Ubuntu base image) for the supported life of the .NET release.
+*  Digest pinning is required to request a specific patch of an operating system (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
+* For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used versus version numbers.
 
 1. `alpine` - This tag pattern floats to the latest version of Alpine.
 
@@ -128,10 +128,10 @@ Notes:
 
 Notes:
 
-    * When a new version of Alpine is supported, it will initially be published only with version-specific tags (e.g. `6.0-alpine3.17`), with an [announcement](https://github.com/dotnet/dotnet-docker/issues?q=is%3Aopen+is%3Aissue+label%3Aannouncement).
-    * The new version-specific tag needs to be used initially.
-    * One month later, the floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version.
-    * Another announcement will be posted at this time.
+* When a new version of Alpine is supported, it will initially be published only with version-specific tags (e.g. `6.0-alpine3.17`), with an [announcement](https://github.com/dotnet/dotnet-docker/issues?q=is%3Aopen+is%3Aissue+label%3Aannouncement).
+* The new version-specific tag needs to be used initially.
+* One month later, the floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version.
+* Another announcement will be posted at this time.
 
 1. `<Architecture>` - The architecture the image is based on. See [Supported Platforms](supported-platforms.md#architectures) for the list of supported architectures.
 
@@ -142,7 +142,7 @@ Notes:
 
 Notes:
 
-    * For Windows, `amd64` is the only architecture supported and is excluded from the tag name.
+* For Windows, `amd64` is the only architecture supported and is excluded from the tag name.
 
 ## Tag Lifecycle
 
