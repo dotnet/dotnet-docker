@@ -25,7 +25,6 @@ RUN tdnf install -y \
         app \
     && tdnf remove -y \
         shadow-utils \
-    && tdnf autoremove \
     && tdnf clean all
 
 ENV \
