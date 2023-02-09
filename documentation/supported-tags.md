@@ -1,10 +1,16 @@
 # .NET Container Tags -- Patterns and Policies
 
-This document describes the tagging patterns and policies that are used for the official .NET container images. .NET tags are intended to closely match the tagging patterns used by [Official Images on Docker Hub](https://hub.docker.com/search?q=&type=image&image_filter=official).
+This document describes the tagging patterns and policies that are used for the official .NET container images. .NET tags are intended to closely match the tagging patterns used by [Official Images on Docker Hub](https://hub.docker.com/search?q=&type=image&image_filter=official). Please [log an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose) if you encounter problems using .NET images or applying these tagging patterns.
 
-For a complete list of supported .NET container tags, see [Microsoft Container Registry](https://mcr.microsoft.com/en-us/catalog?search=dotnet/).
+Complete tag list:
 
-Please [log an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose) if you encounter problems using .NET images or applying these tagging patterns.
+- [runtime-deps](../README.runtime-deps.md)
+- [runtime](../README.runtime.md)
+- [aspnet](../README.aspnet.md)
+- [sdk](../README.sdk.md)
+- [monitor](../README.monitor.md)
+- [samples](../README.samples.md)
+- [Microsoft Container Registry](https://mcr.microsoft.com/en-us/catalog?search=dotnet/).
 
 ## Single-platform Tags
 
@@ -36,7 +42,7 @@ These tags reference images for [multiple platforms](https://www.docker.com/blog
 
 ### `<Major.Minor.Patch .NET Version>-<OS version>`
 
-Examples:
+Examples:    
 
 * `6.0.12-jammy`
 * `7.0.2-alpine3.17`
