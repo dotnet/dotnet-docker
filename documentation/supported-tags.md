@@ -12,7 +12,7 @@ These tags reference an image for a single platform (e.g. "Linux Arm64" or "Wind
 
 ### `<Major.Minor.Patch .NET Version>-<OS>-<Architecture>`
 
-**Examples**
+Examples:
 
 * `6.0.12-jammy-amd64`
 * `6.0.12-jammy-arm64v8`
@@ -22,7 +22,7 @@ These tags reference an image for a single platform (e.g. "Linux Arm64" or "Wind
 
 ### `<Major.Minor .NET Version>-<OS>-<Architecture>`
 
-**Examples**
+Examples:
 
 * `6.0-jammy-arm64v8`
 * `6.0-jammy-amd64`
@@ -36,34 +36,34 @@ These tags reference images for [multiple platforms](https://www.docker.com/blog
 
 ### `<Major.Minor.Patch .NET Version>-<OS version>`
 
-**Examples**
+Examples:
 
 * `6.0.12-jammy`
 * `7.0.2-alpine3.17`
 
 ### `<Major.Minor .NET Version>-<OS version>`
 
-**Examples**
+Examples:
 
 * `6.0-alpine3.17`
 * `7.0-jammy`
 
 ### `<Major.Minor .NET Version>-<OS name>`
 
-**Examples**
+Examples:
 
 * `6.0-alpine`
 
 ### `<Major.Minor.Patch .NET Version>`
 
-**Examples**
+Examples:
 
 * `6.0.12`
 * `7.0.2`
 
 ### `<Major.Minor .NET Version>`
 
-**Examples**
+Examples:
 
 * `6.0`
 * `7.0`
@@ -85,7 +85,7 @@ The following policies are used for the tag patterns we use.
 
 This tag pattern references an image with a specific `Major.Minor.Patch` .NET version.
 
-**Examples**
+Examples:
 
 * `6.0.12`
 * `7.0.2-alpine3.17`
@@ -101,7 +101,7 @@ Notes:
 
 This tag pattern references an image with a specific `Major.Minor` .NET version, but floats on patch updates.
 
-**Examples**
+Examples:
 
 * `6.0`
 * `7.0-alpine3.17`
@@ -116,7 +116,7 @@ Notes:
 
 This tag pattern references an image with a specific OS version, but floats on OS patch updates. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
 
-**Examples**
+Examples:
 
 * `6.0-jammy`
 * `7.0-alpine3.17`
@@ -131,7 +131,7 @@ Notes:
 
 This tag pattern floats to the latest version of Alpine.
 
-**Examples**
+Examples:
 
 * `6.0-alpine`
 * `7.0-alpine`
@@ -147,7 +147,7 @@ Notes:
 
 This tag pattern references an image with a specific architecture. See [Supported Platforms](supported-platforms.md#architectures) for the list of supported architectures.
 
-**Examples**
+Examples:
 
 * `6.0-jammy-amd64`
 * `7.0-alpine-arm64v8`
