@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0
 
 RUN tdnf install -y \
+        shadow-utils \
         ca-certificates \
         \
         # .NET dependencies
@@ -10,12 +11,9 @@ RUN tdnf install -y \
         libgcc \
         libstdc++ \
         openssl-libs \
-        shadow-utils \
         zlib \
-    && tdnf clean all
-
-# Create a non-root user and group
-RUN groupadd \
+    && tdnf clean all \
+    && groupadd \
         --system \
         --gid=101 \
         app \
@@ -24,7 +22,11 @@ RUN groupadd \
         --gid 101 \
         --shell /bin/false \
         --system \
-        app
+        app \
+    && tdnf remove -y \
+        shadow-utils \
+    && tdnf autoremove \
+    && tdnf clean all
 
 ENV \
     # Configure web servers to bind to port 8080 when present

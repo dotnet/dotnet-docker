@@ -10,8 +10,6 @@ RUN apk add --no-cache \
         libssl3 \
         libstdc++ \
         zlib
-
-# Create a non-root user and group
 RUN addgroup \
         --system \
         --gid=101 \
