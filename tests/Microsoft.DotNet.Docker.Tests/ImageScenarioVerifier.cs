@@ -37,7 +37,7 @@ namespace Microsoft.DotNet.Docker.Tests
             _imageData = imageData;
             _isWeb = isWeb;
             _outputHelper = outputHelper;
-            _nonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && _imageData.Version.Major >= 8;
+            _nonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && _imageData.Version.Major != 6 && _imageData.Version.Major != 7;
         }
 
         public async Task Execute()
@@ -59,8 +59,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     // Use `sdk` image to build and run test app
                     string buildTag = BuildTestAppImage("build", solutionDir, customBuildArgs);
                     tags.Add(buildTag);
-                    string dotnetRunArgs = _isWeb && _imageData.Version.Major < 8 ? $" --urls http://0.0.0.0:{_imageData.DefaultPort}" : string.Empty;
-                    await RunTestAppImage(buildTag, command: $"dotnet run{dotnetRunArgs}");
+                    string dotnetRunArgs = _isWeb && (_imageData.Version.Major == 6 || _imageData.Version.Major == 7) ? $" --urls http://0.0.0.0:{_imageData.DefaultPort}" : string.Empty;
+                    await RunTestAppImage(buildTag, command: $"dotnet run");
                 }
 
                 // Running a scenario of unit testing within the sdk container is identical between a console app and web app,
