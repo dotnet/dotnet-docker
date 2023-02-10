@@ -104,11 +104,11 @@ Notes:
 - The `latest` tag references the latest stable release. 
 - In the `nightly` image repo, it may reference the latest preview release.
 
-## Policies
+## Tag policies
 
 The following policies are used for the tag patterns we use.
 
-### Fix version tags
+### Fixed version tags
 
 "Fixed version" tags reference an image with a specific `Major.Minor.Patch` .NET version.
 
