@@ -12,6 +12,8 @@ Complete tag lists:
 - [samples](../README.samples.md#full-tag-listing)
 - [Microsoft Artifact Registry](https://mcr.microsoft.com/en-us/catalog?search=dotnet/)
 
+The terms "fixed version" and "floating version" are used throughout. They are defined in [Tag policies](#tag-policies).
+
 ## Single-platform tags
 
 These tags reference an image for a single platform (e.g. "Linux Arm64" or "Windows x64").
@@ -77,6 +79,12 @@ Examples:
 - `6.0-alpine`
 - `7.0-alpine`
 
+Notes:
+
+- New versions of Alpine will be published with version-specific tags (e.g. `6.0-alpine3.17`).
+- Floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version a month later.
+- Tag changes will be [announced](https://github.com/dotnet/dotnet-docker/issues?q=is%3Aopen+is%3Aissue+label%3Aannouncement) so that users know when the tags they want are available.
+
 ### `<Major.Minor.Patch .NET Version>`
 
 These "fixed version" tags reference an image with a specific `Major.Minor.Patch` .NET version, while operating system and architecture will be chosen based on the requesting environment.
@@ -138,22 +146,6 @@ Notes:
 - These tags are considered _floating tags_ since they do not reference a specific .NET patch version.
 - They are updated in response to base image updates (like a Debian base image) for the supported life of the .NET release.
 - The .NET components within the image will be updated, which typically occurs on Patch Tuesday.
-
-### Floating Alpine tags
-
-The floating `alpine` tag references an image that includes the latest Alpine version,
-
-Examples:
-
-- `6.0-alpine`
-- `7.0-alpine`
-
-Notes:
-
-- When a new version of Alpine is supported, it will initially be published only with version-specific tags (e.g. `6.0-alpine3.17`), with an [announcement](https://github.com/dotnet/dotnet-docker/issues?q=is%3Aopen+is%3Aissue+label%3Aannouncement).
-- A version-specific tag needs to be used if you want to use the new Alpine version immediately.
-- One month later, the floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version.
-- Another announcement will be posted at this time.
 
 ### OS tags and base image updates
 
