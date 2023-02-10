@@ -137,7 +137,7 @@ Notes:
 
 - These tags are considered _floating tags_ since they do not reference a specific .NET patch version.
 - They are updated in response to base image updates (like a Debian base image) for the supported life of the .NET release.
-- The .NET components within the image will be updated.
+- The .NET components within the image will be updated, which typically occurs on Patch Tuesday.
 
 ### Floating Alpine tags
 
