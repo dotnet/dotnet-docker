@@ -139,21 +139,6 @@ Notes:
 - They are updated in response to base image updates (like a Debian base image) for the supported life of the .NET release.
 - The .NET components within the image will be updated.
 
-### OS update policies
-
-Version-specific operating system tags reference an image with a specific OS version, but floats on OS patch updates. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
-
-Examples:
-
-- `6.0-jammy`
-- `7.0-alpine3.17`
-
-Notes:
-
-- These tags are updated in response to base image updates (like an Ubuntu base image) for the supported life of the .NET release.
-- Digest pinning is required to request a specific patch of an operating system (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
-- For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used versus version numbers.
-
 ### Floating Alpine tags
 
 The floating `alpine` tag references an image that includes the latest Alpine version,
@@ -169,6 +154,21 @@ Notes:
 - A version-specific tag needs to be used if you want to use the new Alpine version immediately.
 - One month later, the floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version.
 - Another announcement will be posted at this time.
+
+### OS tags and base image updates
+
+Version-specific operating system tags reference an image with a specific OS version, but floats on OS patch updates. See [Supported Platforms](supported-platforms.md#operating-systems) for the list of supported operating systems.
+
+Examples:
+
+- `6.0-jammy`
+- `7.0-alpine3.17`
+
+Notes:
+
+- These tags are updated in response to base image updates (like an Ubuntu base image) for the supported life of the .NET release.
+- Digest pinning is required to request a specific patch of an operating system (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
+- For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used versus version numbers.
 
 ### Windows tags
 
