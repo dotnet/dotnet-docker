@@ -10,18 +10,9 @@ RUN dotnet restore -r linux-musl-arm /p:PublishReadyToRun=true
 COPY aspnetapp/. .
 RUN dotnet publish -c Release -o /app -r linux-musl-arm --self-contained true --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true
 
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime-deps:7.0-alpine-arm32v7
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["./aspnetapp"]
-
-# See: https://github.com/dotnet/announcements/issues/20
-# Uncomment to enable globalization APIs (or delete)
-# ENV \
-#     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
-#     LC_ALL=en_US.UTF-8 \
-#     LANG=en_US.UTF-8
-# RUN apk add --no-cache \
-#     icu-data-full \
-#     icu-libs

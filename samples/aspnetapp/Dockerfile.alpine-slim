@@ -10,6 +10,7 @@ RUN dotnet restore --use-current-runtime /p:PublishReadyToRun=true
 COPY aspnetapp/. .
 RUN dotnet publish -c Release -o /app --use-current-runtime --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true
 
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime-deps:7.0-alpine
 WORKDIR /app
@@ -18,13 +19,3 @@ COPY --from=build /app .
 # This port needs to match the port being used
 HEALTHCHECK CMD wget -qO- -t1 http://localhost:80/healthz || exit 1
 ENTRYPOINT ["./aspnetapp"]
-
-# See: https://github.com/dotnet/announcements/issues/20
-# Uncomment to enable globalization APIs (or delete)
-# ENV \
-#     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
-#     LC_ALL=en_US.UTF-8 \
-#     LANG=en_US.UTF-8
-# RUN apk add --no-cache \
-#     icu-data-full \
-#     icu-libs

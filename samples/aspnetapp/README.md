@@ -190,9 +190,9 @@ docker build -t aspnetapp -f .\Dockerfile.windowsservercore-iis-x64 .
 docker run --rm -it -p:8080:80 aspnetapp
 ```
 
-## Build an image for ARM32 and ARM64
+## Build an image for Arm32 and Arm64
 
-By default, distro-specific .NET tags target x64, such as `6.0-alpine` or `6.0-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that .NET is only supported on Alpine on ARM64 and x64, and not ARM32.
+By default, distro-specific .NET tags target x64, such as `6.0-alpine` or `6.0-jammy`. You need to use an architecture-specific tag if you want to target Arm. Note that .NET is only supported on Alpine on ARM64 and x64, and not Arm32.
 
 Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
 
@@ -217,7 +217,7 @@ aspnetapp           alpine-arm32        f99fda7e1807        8 seconds ago       
 
 You can build ARM32 and ARM64 images on ARM or x64 machines. It may be preferred to build on x64 to take advantage of higher performance, and the ability to take advantage of CI/CD services.
 
-You won't be able to run .NET ARM64 images on x64 machines. Docker relies on QEMU to run ARM64 images on X64, but [QEMU isn't supported by .NET](https://github.com/dotnet/coreclr/issues/12972). You must test and run .NET images on actual hardware for the given processor type.
+You won't be able to run .NET ARM64 images on x64 machines. Docker relies on QEMU to run ARM64 images on X64, but [QEMU isn't supported by .NET](../build-for-a-platform.md). You must test and run .NET images on actual hardware for the given processor type.
 
 ## Optimizing for startup performance
 
