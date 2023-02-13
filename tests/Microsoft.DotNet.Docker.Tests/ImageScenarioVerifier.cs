@@ -37,7 +37,7 @@ namespace Microsoft.DotNet.Docker.Tests
             _imageData = imageData;
             _isWeb = isWeb;
             _outputHelper = outputHelper;
-            _nonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && _imageData.Version.Major != 6 && _imageData.Version.Major != 7;
+            _nonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && _imageData.Version.Major >= 7;
         }
 
         public async Task Execute()
@@ -59,7 +59,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     // Use `sdk` image to build and run test app
                     string buildTag = BuildTestAppImage("build", solutionDir, customBuildArgs);
                     tags.Add(buildTag);
-                    string dotnetRunArgs = _isWeb && (_imageData.Version.Major == 6 || _imageData.Version.Major == 7) ? $" --urls http://0.0.0.0:{_imageData.DefaultPort}" : string.Empty;
+                    string dotnetRunArgs = _isWeb && _imageData.Version.Major <= 7 ? $" --urls http://0.0.0.0:{_imageData.DefaultPort}" : string.Empty;
                     await RunTestAppImage(buildTag, command: $"dotnet run");
                 }
 
@@ -338,7 +338,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static async Task<HttpResponseMessage> GetHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null, AuthenticationHeaderValue authorizationHeader = null)
         {
-            int retries = 30;
+            int retries = 32;
 
             // Can't use localhost when running inside containers or Windows.
             string url = !Config.IsRunningInContainer && DockerHelper.IsLinuxContainerModeEnabled
