@@ -2,7 +2,6 @@ FROM mcr.microsoft.com/cbl-mariner/base/core:2.0
 
 RUN tdnf install -y \
         ca-certificates \
-        shadow-utils \
         \
         # .NET dependencies
         glibc \
@@ -12,7 +11,11 @@ RUN tdnf install -y \
         libstdc++ \
         openssl-libs \
         zlib \
-    # Create a non-root user and group
+    && tdnf clean all
+
+# Create a non-root user and group
+RUN tdnf install -y \
+        shadow-utils \
     && groupadd \
         --system \
         --gid=101 \

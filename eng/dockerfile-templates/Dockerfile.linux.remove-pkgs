@@ -16,15 +16,14 @@ if isDnf:dnf remove -y{{ARGS["pkg-mgr-opts"]}} \^
 elif isApk:apk del{{ARGS["pkg-mgr-opts"]}} \^
 elif isTdnf:tdnf remove -y{{ARGS["pkg-mgr-opts"]}} \^
 else:apt-get remove \
-    &&{{if ARGS["noninteractive"]: DEBIAN_FRONTEND=noninteractive}} apt-get install -y --no-install-recommends{{ARGS["pkg-mgr-opts"]}} \}}{{
-    for index, pkg in ARGS["pkgs"]:
-        {{pkg}} \}}{{if !no-clean:{{
+&&{{if ARGS["noninteractive"]: DEBIAN_FRONTEND=noninteractive}} apt-get remove -y {{ARGS["pkg-mgr-opts"]}} \}}{{
+for index, pkg in ARGS["pkgs"]:
+    {{pkg}} \}}{{if !no-clean:{{
 if isTdnf:
-    && tdnf clean all{{ARGS["pkg-mgr-opts"]}}^
+&& tdnf clean all{{ARGS["pkg-mgr-opts"]}}^
 elif isDnf:
-    && dnf autoremove{{ARGS["pkg-mgr-opts"]}} \
-    && dnf clean all{{ARGS["pkg-mgr-opts"]}}^
+&& dnf autoremove{{ARGS["pkg-mgr-opts"]}} \
+&& dnf clean all{{ARGS["pkg-mgr-opts"]}}^
 elif !isApk:
-    && apt-get autoremove \
-    && rm -rf /var/lib/apt/lists/*}}
-}}
+&& apt-get autoremove \
+&& rm -rf /var/lib/apt/lists/*}}}}
