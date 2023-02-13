@@ -16,62 +16,69 @@ $ docker run --rm app
 Hello, World!
 
 ****Print baseline timezones**
-Utc: (UTC) Coordinated Universal Time; 2/13/2023 12:19:40 AM
-Local: (UTC-08:00) Pacific Time (Los Angeles); 2/12/2023 4:19:40 PM
+Utc: (UTC) Coordinated Universal Time; 02/13/2023 00:33:38
+Local: (UTC-08:00) Pacific Time (Los Angeles); 02/12/2023 16:33:38
 
 ****Print specific timezone**
 Home timezone: America/Los_Angeles
-DateTime at home: 2/12/2023 4:19:40 PM
+DateTime at home: 02/12/2023 16:33:38
 
 ****Culture-specific dates**
-Current: 2/13/2023
+Current: 02/13/2023
 English (United States) -- en-US:
-2/13/2023 12:19:40 AM
+2/13/2023 12:33:38 AM
 2/13/2023
-12:19 AM
+12:33 AM
 English (Canada) -- en-CA:
-2023-02-13 12:19:40 a.m.
+2023-02-13 12:33:38 a.m.
 2023-02-13
-12:19 a.m.
+12:33 a.m.
 French (Canada) -- fr-CA:
-2023-02-13 00 h 19 min 40 s
+2023-02-13 00 h 33 min 38 s
 2023-02-13
-00 h 19
+00 h 33
 Croatian (Croatia) -- hr-HR:
-13. 02. 2023. 00:19:40
+13. 02. 2023. 00:33:38
 13. 02. 2023.
-00:19
+00:33
 jp (Japan) -- jp-JP:
-2/13/2023 00:19:40
+2/13/2023 12:33:38 AM
 2/13/2023
-00:19
+12:33 AM
 Korean (South Korea) -- ko-KR:
-2023. 2. 13. 오전 12:19:40
+2023. 2. 13. 오전 12:33:38
 2023. 2. 13.
-오전 12:19
+오전 12:33
 Portuguese (Brazil) -- pt-BR:
-13/02/2023 00:19:40
+13/02/2023 00:33:38
 13/02/2023
-00:19
+00:33
 Chinese (China) -- zh-CN:
-2023/2/13 00:19:40
+2023/2/13 上午12:33:38
 2023/2/13
-00:19
+上午12:33
 
 ****Culture-specific currency:**
-Current: $1,337.00
+Current: ¤1,337.00
 en-US: $1,337.00
 en-CA: $1,337.00
 fr-CA: 1 337,00 $
-hr-HR: 1.337,00 kn
-jp-JP: ¥1,337
+hr-HR: 1.337,00 HRK
+jp-JP: ¥ 1337
 ko-KR: ₩1,337
 pt-BR: R$ 1.337,00
 zh-CN: ¥1,337.00
 
 ****Japanese calendar**
-8/18/2019
+08/18/2019
 01/08/18
 平成元年8月18日
 平成元年8月18日
+
+****String comparison**
+Comparison results: `0` mean equal, `-1` is less than and `1` is greater
+Test: compare i to (Turkish) İ
+First test should be equal and second test not
+0
+-1
 ```

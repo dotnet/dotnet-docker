@@ -10,16 +10,15 @@ DateTime now = DateTime.Now;
 // Accessing UTC and Local time will always work
 PrintHeader("Print baseline timezones");
 WriteLine($"{nameof(TimeZoneInfo.Utc)}: {TimeZoneInfo.Utc}; {nowUtc}");
-// Local will match UTC unless `/etc/timezone` is set
+// Local will match UTC unless `/etc/timezone` is set to another timezone
 // This is demonstrated in the Dockerfile
 WriteLine($"{nameof(TimeZoneInfo.Local)}: {TimeZoneInfo.Local}; {now}");
 
 // Code after this point:
-// Requires ICU be installed
-// will not with Globalization invariant mode
+// Requires ICU and tzdata be installed
+// Will not work with Globalization invariant mode
 // https://aka.ms/GlobalizationInvariantMode
 
-// This code requires tzdata
 PrintHeader("Print specific timezone");
 string home = "America/Los_Angeles";
 var tz = TimeZoneInfo.FindSystemTimeZoneById(home);

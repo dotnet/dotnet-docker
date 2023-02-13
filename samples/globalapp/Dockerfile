@@ -16,7 +16,7 @@ RUN dotnet publish -c Release -o /app --use-current-runtime --self-contained fal
 FROM mcr.microsoft.com/dotnet/runtime:$TAG
 RUN TZ="America/Los_Angeles" && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # For Ubuntu
-RUN apt update && DEBIAN_FRONTEND=noninteractive && apt install -y tzdata
+# RUN apt update && DEBIAN_FRONTEND=noninteractive && apt install -y tzdata
 # For Alpine
 # ENV \
 #     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
