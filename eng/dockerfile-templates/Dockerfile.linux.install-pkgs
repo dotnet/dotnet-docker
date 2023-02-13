@@ -23,7 +23,7 @@ elif isTdnf:tdnf install -y{{ARGS["pkg-mgr-opts"]}} \^
 else:apt-get update \
     &&{{if ARGS["noninteractive"]: DEBIAN_FRONTEND=noninteractive}} apt-get install -y --no-install-recommends{{ARGS["pkg-mgr-opts"]}} \}}{{
     for index, pkg in ARGS["pkgs"]:
-        {{pkg}}{{if appendPkgSuffix(pkg, index):{{if pkg != "": }}\}}}}{{if !no-clean:{{
+        {{pkg}}{{if appendPkgSuffix(pkg, index):{{if pkg != "": }}\}}}}{{if !ARGS["no-clean"]:{{
 if isTdnf:
     && tdnf clean all{{ARGS["pkg-mgr-opts"]}}^
 elif isDnf:

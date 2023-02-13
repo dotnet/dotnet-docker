@@ -43,7 +43,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-deps",
     [
         "additionalPkgs": utilPkgs,
         "no-clean": len(utilPkgs) > 0
-    ])}}{{if len(utilPkgs) > 0: \}}
+    ])}}
 {{ if isRpmInstall:
 {{if isInternal:{{InsertTemplate("../Dockerfile.linux.copy-files",
 [
