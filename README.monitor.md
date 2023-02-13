@@ -45,13 +45,13 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-7.0.1-alpine-amd64, 7.0-alpine-amd64, 7-alpine-amd64, 7.0.1-alpine, 7.0-alpine, 7-alpine, 7.0.1, 7.0, 7, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.0/alpine/amd64/Dockerfile) | Alpine 3.17
+7.0.2-alpine-amd64, 7.0-alpine-amd64, 7-alpine-amd64, 7.0.2-alpine, 7.0-alpine, 7-alpine, 7.0.2, 7.0, 7, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.0/alpine/amd64/Dockerfile) | Alpine 3.17
 6.3.2-alpine-amd64, 6.3-alpine-amd64, 6-alpine-amd64, 6.3.2-alpine, 6.3-alpine, 6-alpine, 6.3.2, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.3/alpine/amd64/Dockerfile) | Alpine 3.17
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-7.0.1-alpine-arm64v8, 7.0-alpine-arm64v8, 7-alpine-arm64v8, 7.0.1-alpine, 7.0-alpine, 7-alpine, 7.0.1, 7.0, 7, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.0/alpine/arm64v8/Dockerfile) | Alpine 3.17
+7.0.2-alpine-arm64v8, 7.0-alpine-arm64v8, 7-alpine-arm64v8, 7.0.2-alpine, 7.0-alpine, 7-alpine, 7.0.2, 7.0, 7, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.0/alpine/arm64v8/Dockerfile) | Alpine 3.17
 6.3.2-alpine-arm64v8, 6.3-alpine-arm64v8, 6-alpine-arm64v8, 6.3.2-alpine, 6.3-alpine, 6-alpine, 6.3.2, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.3/alpine/arm64v8/Dockerfile) | Alpine 3.17
 
 You can retrieve a list of all available tags for dotnet/monitor at https://mcr.microsoft.com/v2/dotnet/monitor/tags/list.
