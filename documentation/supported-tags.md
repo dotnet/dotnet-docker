@@ -83,7 +83,7 @@ Notes:
 
 - New versions of Alpine will be published with version-specific tags (e.g. `6.0-alpine3.17`).
 - Floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version a month later.
-- Tag changes will be [announced](https://github.com/dotnet/dotnet-docker/issues?q=is%3Aopen+is%3Aissue+label%3Aannouncement) so that users know when the tags they want are available.
+- Tag changes will be [announced](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) so that users know when the tags they want are available.
 
 ### `<Major.Minor.Patch .NET Version>`
 
