@@ -89,5 +89,15 @@ var date89 = new DateTime(1989, 8, 18);
 jaJP.DateTimeFormat.Calendar = cal;
 CultureInfo.CurrentCulture = jaJP;
 
-Console.WriteLine($"{date89:ggy年M月d日}");
-Console.WriteLine($"{date89:ggy'年'M'月'd'日'}");
+WriteLine($"{date89:ggy年M月d日}");
+WriteLine($"{date89:ggy'年'M'月'd'日'}");
+
+PrintHeader("String comparison");
+WriteLine("Comparison results: `0` mean equal, `-1` is less than and `1` is greater");
+WriteLine("Test: compare i to (Turkish) \u0130");
+WriteLine("First test should be equal and second test not");
+CompareInfo turkishCompare = new CultureInfo("tr-TR").CompareInfo;
+WriteLine(turkishCompare.Compare("i", "\u0130", CompareOptions.IgnoreCase)); // print 0 as "i" is equal to Turkish I "\u0130".
+
+CompareInfo englishCompare = new CultureInfo("en-US").CompareInfo;
+WriteLine(englishCompare.Compare("i", "\u0130", CompareOptions.IgnoreCase)); // print -1 as "i" is not equal to Turkish I "\u0130" in non-Turkish cultures.
