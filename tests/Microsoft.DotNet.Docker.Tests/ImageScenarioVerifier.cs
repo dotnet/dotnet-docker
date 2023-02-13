@@ -60,7 +60,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     string buildTag = BuildTestAppImage("build", solutionDir, customBuildArgs);
                     tags.Add(buildTag);
                     string dotnetRunArgs = _isWeb && _imageData.Version.Major <= 7 ? $" --urls http://0.0.0.0:{_imageData.DefaultPort}" : string.Empty;
-                    await RunTestAppImage(buildTag, command: $"dotnet run");
+                    await RunTestAppImage(buildTag, command: $"dotnet run ${dotnetRunArgs}");
                 }
 
                 // Running a scenario of unit testing within the sdk container is identical between a console app and web app,
