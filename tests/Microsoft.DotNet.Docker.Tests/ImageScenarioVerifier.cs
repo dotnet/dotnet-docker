@@ -37,7 +37,7 @@ namespace Microsoft.DotNet.Docker.Tests
             _imageData = imageData;
             _isWeb = isWeb;
             _outputHelper = outputHelper;
-            _nonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && _imageData.Version.Major >= 7;
+            _nonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && _imageData.Version.Major > 7;
         }
 
         public async Task Execute()
