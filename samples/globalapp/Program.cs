@@ -75,7 +75,7 @@ void PrintHeader(string title)
 }
 
 // https://devblogs.microsoft.com/dotnet/handling-a-new-era-in-the-japanese-calendar-in-net/
-// Test a calendar
+// Test Japanese calendar
 PrintHeader("Japanese calendar");
 var cal = new JapaneseCalendar();
 var jaJP = new CultureInfo("ja-JP");
