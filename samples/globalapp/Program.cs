@@ -5,7 +5,7 @@ using static System.Console;
 WriteLine("Hello, World!");
 
 DateTime nowUtc = DateTime.UtcNow;
-DateTime now = DateTime.UtcNow;
+DateTime now = DateTime.Now;
 
 // Accessing UTC and Local time will always work
 PrintHeader("Print baseline timezones");
@@ -29,9 +29,11 @@ WriteLine($"DateTime at home: {nowAtHome}");
 
 CultureInfo[] cultures =
 {
-    new CultureInfo("en-us"),
-    new CultureInfo("en-ca"),
+    new CultureInfo("en-US"),
+    new CultureInfo("en-CA"),
+    new CultureInfo("fr-CA"),
     new CultureInfo("hr-HR"),
+    new CultureInfo("jp-JP"),
     new CultureInfo("ko-KR"),
     new CultureInfo("pt-BR"),
     new CultureInfo("zh-CN")
@@ -71,3 +73,21 @@ void PrintHeader(string title)
     WriteLine();
     WriteLine($"****{title}**");
 }
+
+// https://devblogs.microsoft.com/dotnet/handling-a-new-era-in-the-japanese-calendar-in-net/
+// Test a calendar
+PrintHeader("Japanese calendar");
+var cal = new JapaneseCalendar();
+var jaJP = new CultureInfo("ja-JP");
+jaJP.DateTimeFormat.Calendar = cal;
+
+var date = cal.ToDateTime(31, 8, 18, 0, 0, 0, 0, 4);
+WriteLine($"{date:d}");
+WriteLine($"{date.ToString("d", jaJP)}");
+
+var date89 = new DateTime(1989, 8, 18);
+jaJP.DateTimeFormat.Calendar = cal;
+CultureInfo.CurrentCulture = jaJP;
+
+Console.WriteLine($"{date89:ggy年M月d日}");
+Console.WriteLine($"{date89:ggy'年'M'月'd'日'}");
