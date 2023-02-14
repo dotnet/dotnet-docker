@@ -8,7 +8,7 @@ The behavior of these APIs is affected by:
 - The value of [globalization invariant mode](https://aka.ms/GlobalizationInvariantMode).
 - The value (or absence) of `/etc/timezone`
 
-> The recommended way to configure tzdata and timezones in containers is to set the container timezone to UTC and pass the host system's timezone information to the container at runtime using environment variables. This can be achieved by setting the environment variable TZ to the timezone you want to use, for example, TZ=America/New_York. This will ensure that the container uses the correct timezone information without requiring additional setup or configuration. Additionally, you can use tools like NTP or Chrony to synchronize the system time of the container with the host's clock for accurate timekeeping.
+> The recommended way to configure tzdata and timezones in containers is to set the container timezone to UTC and pass the host system's timezone information to the container at runtime using environment variables. This can be achieved by setting the environment variable TZ to [the timezone you want to use](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), for example, TZ=America/New_York. This will ensure that the container uses the correct timezone information without requiring additional setup or configuration. Additionally, you can use tools like NTP or Chrony to synchronize the system time of the container with the host's clock for accurate timekeeping.
 
 Credit to ChatGPT, per prompt "What is the correct way to configure tzdata and timezones in containers?"
 
