@@ -91,4 +91,4 @@ America/Los_Angeles
 docker run --rm -it -e TZ=$(cat /etc/timezone) app
 ```
 
-This approach enables a container image to be launched with different timezone information, as opposed to setting the information as part of `docker build`.
+This approach enables a container image to be launched matching the host, as opposed to setting the information as part of `docker build`.
