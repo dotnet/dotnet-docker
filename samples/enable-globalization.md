@@ -1,6 +1,6 @@
 # Enabling (or disabling) globalization functionality
 
-.NET includes various [globalization](https://learn.microsoft.com/en-us/dotnet/core/extensions/globalization-and-localization) capabilities, including support for processing natural language text, calendars, currency, and timezones. The .NET implementations for these capabilities comes primarily from operating system libraries, such as [International Components for Unicode (ICU)](https://icu.unicode.org/) and [tzdata](https://en.wikipedia.org/wiki/Tz_database). In some cases, this libraries and their accompanying databases are always available and in other cases it is desired that they be absent because they may be considered prohibitively large.
+.NET includes various [globalization](https://learn.microsoft.com/dotnet/core/extensions/globalization-and-localization) capabilities, including support for processing natural language text, calendars, currency, and time zones. The .NET implementations for these capabilities comes primarily from operating system libraries, such as [International Components for Unicode (ICU)](https://icu.unicode.org/) and [tzdata](https://wikipedia.org/wiki/Tz_database). In some cases, these libraries and their accompanying databases are always available and in other cases it is desired that they be absent because they may be considered prohibitively large.
 
 The .NET team has various policies for making these libraries available in containers and for configuring the .NET product to use them (or not).
 
@@ -25,7 +25,7 @@ Some users want to add ICU to one of the image types that doesn't include it. It
 
 ### Alpine images
 
-ICU can be added to a .NET Alpine image by adding the following statements to the final stage within a `Dockerfile`, as demonstrated in [Dockerfile.alpine-icu](aspnetapp/Dockerfile.alpine-icu). This Dockerfile fragment adds and configures ICU and disables Globalization invariant mode.
+ICU can be added to a .NET Alpine image by adding the following instructions to the final stage within a `Dockerfile`, as demonstrated in [Dockerfile.alpine-icu](aspnetapp/Dockerfile.alpine-icu). This Dockerfile fragment adds and configures ICU and disables Globalization invariant mode.
 
 ```Dockerfile
 ENV \
@@ -43,7 +43,7 @@ ICU can be added to an Ubuntu chiseled image, as demonstrated by https://github.
 
 ## Tzdata
 
-Tzdata provides data about timezones. It is needed in applications that deal with time.
+Tzdata provides data about time zones. It is needed in applications that deal with time.
 
 .NET container images that include tzdata:
 
