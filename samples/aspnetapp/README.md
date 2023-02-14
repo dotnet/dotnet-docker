@@ -8,15 +8,32 @@ The instructions assume that you have cloned this repo, have [Docker](https://ww
 
 ## Try a pre-built version of the sample
 
-If want to skip ahead, you can try a pre-built version with the following command and access it in your web browser at `http://localhost:8000`.
+If you want to skip ahead, you can try a pre-built version with the following command and access it in your web browser at `http://localhost:8000`.
 
 ```console
 docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
+You can also call an endpoint that the app exposes:
+
+```bash
+$ curl http://localhost:8000/Environment
+{"runtimeVersion":".NET 7.0.2","osVersion":"Linux 5.15.79.1-microsoft-standard-WSL2 #1 SMP Wed Nov 23 01:01:46 UTC 2022","osArchitecture":"X64","user":"root","processorCount":16,"totalAvailableMemoryBytes":67430023168,"memoryLimit":9223372036854771712,"memoryUsage":100577280}
+```
+
+You can see the app running via `docker ps`.
+
+```bash
+$ docker ps
+CONTAINER ID   IMAGE                                        COMMAND         CREATED          STATUS                    PORTS                  NAMES
+d79edc6bfcb6   mcr.microsoft.com/dotnet/samples:aspnetapp   "./aspnetapp"   35 seconds ago   Up 34 seconds (healthy)   0.0.0.0:8080->80/tcp   nice_curran
+```
+
+You may notice that the sample includes a [health check](https://docs.docker.com/engine/reference/builder/#healthcheck), which is indicated in the "STATUS" column.
+
 ## Build an ASP.NET Core image
 
-You can build and run a .NET-based container image using the following instructions:
+You can build and run an image using the following instructions:
 
 ```console
 docker build --pull -t aspnetapp .
@@ -33,9 +50,9 @@ Now listening on: http://[::]:80
 Application started. Press Ctrl+C to shut down.
 ```
 
-After the application starts, navigate to `http://localhost:8000` in your web browser.
-
 > Note: The `-p` argument maps port 8000 on your local machine to port 80 in the container (the form of the port mapping is `host:container`). See the [Docker run reference](https://docs.docker.com/engine/reference/commandline/run/) for more information on command-line parameters. In some cases, you might see an error because the host port you select is already in use. Choose a different port in that case.
+
+After the application starts, navigate to `http://localhost:8000` in your web browser.
 
 You can also view the ASP.NET Core site running in the container on another machine. This is particularly useful if you are wanting to view an application running on an ARM device like a Raspberry Pi on your network. In that scenario, you might view the site at a local IP address such as `http://192.168.1.18:8000`.
 
@@ -45,35 +62,64 @@ We recommend that you do not use `--rm` in production. It cleans up container re
 
 > Note: See [Establishing docker environment](../establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
 
-## Build an image for Windows Nano Server
+## Build an image with `HEALTHCHECK`
 
-The following example demonstrates targeting Windows Nano Server (x64) explicitly (you must have [Windows containers enabled](https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers)):
+The sample uses [ASP.NET Core Health Check middleware](https://learn.microsoft.com/aspnet/core/host-and-deploy/health-checks). You can direct Docker, Kubernetes, or other systems to use the ASP.NET Core `healthz` endpoint.
 
-```console
-docker build --pull -t aspnetapp:nanoserver -f Dockerfile.nanoserver-x64 .
-docker run --rm -it -p 8000:80 aspnetapp:nanoserver
+The [`HEALTHCHECK`](https://docs.docker.com/engine/reference/builder/#healthcheck) directive is implemented in the [`Dockerfile.alpine-slim`](Dockerfile.alpine-slim) and [`Dockerfile.nanoserver`](Dockerfile.nanoserver-slim). You can build those via the same pattern.
+
+```bash
+$ docker build --pull -t aspnetapp -f Dockerfile.alpine-slim .
+$ docker run --rm -it -p 8000:80 aspnetapp
 ```
 
-You can view in the app in your browser in the same way as demonstrated earlier.
+In another terminal:
 
-You can use `docker images` to see the images you've built:
-
-```console
-> docker images aspnetapp
-REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-aspnetapp           latest              b2f0ecb7bdf9        About an hour ago   353MB
-aspnetapp           nanoserver          d4b7586827f2        About an hour ago   353MB
+```bash
+$ docker ps
+CONTAINER ID   IMAGE       COMMAND         CREATED         STATUS                            PORTS                  NAMES
+b143cf4ac0d1   aspnetapp   "./aspnetapp"   8 seconds ago   Up 7 seconds (health: starting)   0.0.0.0:8000->80/tcp   fervent_lichterman
 ```
 
-## Build an image for Windows Server Core
+After 30s, the status should transition to "healthy" from "health: starting".
 
-The instructions for Windows Server Core are very similar to Windows Nano Server. There are three different sample Dockerfile files provided for Windows Server Core, which can all be used with the same approach as the Nano Server ones.
+You can also look at health status with `docker inspect`. The following pattern uses `jq`, which makes it much easier to drill in on the interesting data.
 
-In addition, one of the samples enables using IIS as the Web Server instead of Kestrel. The following example demonstrates using that Dockerfile.
+```bash
+$ docker inspect b143cf4ac0d1 | jq .[-1].State.Health
+{
+  "Status": "healthy",
+  "FailingStreak": 0,
+  "Log": [
+    {
+      "Start": "2023-01-26T23:39:06.424631566Z",
+      "End": "2023-01-26T23:39:06.589344994Z",
+      "ExitCode": 0,
+      "Output": "Healthy"
+    },
+    {
+      "Start": "2023-01-26T23:39:36.597795818Z",
+      "End": "2023-01-26T23:39:36.70857373Z",
+      "ExitCode": 0,
+      "Output": "Healthy"
+    }
+  ]
+}
+```
 
-```console
-docker build -t aspnetapp -f .\Dockerfile.windowsservercore-iis-x64 .
-docker run --rm -it -p:8080:80 aspnetapp
+The same thing can be accomplished with PowerShell.
+
+```powershell
+> $healthLog = docker inspect 92648775bce8 | ConvertFrom-Json
+> $healthLog[0].State.Health.Log
+
+Start                             End                               ExitCode Output
+-----                             ---                               -------- ------
+2023-01-28T10:14:54.589686-08:00  2023-01-28T10:14:54.6137922-08:00        0 Healthy
+2023-01-28T10:15:24.6264335-08:00 2023-01-28T10:15:24.6602762-08:00        0 Healthy
+2023-01-28T10:15:54.6766598-08:00 2023-01-28T10:15:54.703489-08:00         0 Healthy
+2023-01-28T10:16:24.7192354-08:00 2023-01-28T10:16:24.74409-08:00          0 Healthy
+2023-01-28T10:16:54.7499988-08:00 2023-01-28T10:16:54.7750448-08:00        0 Healthy
 ```
 
 ## Build an image for Alpine, Debian or Ubuntu
@@ -112,6 +158,37 @@ aspnetapp           latest              8c5d1952e3b7        10 hours ago        
 ```
 
 You can run these images in the same way as is done above, with Alpine.
+
+## Build an image for Windows Nano Server
+
+The following example demonstrates targeting Windows Nano Server (x64) explicitly (you must have [Windows containers enabled](https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers)):
+
+```console
+docker build --pull -t aspnetapp:nanoserver -f Dockerfile.nanoserver-x64 .
+docker run --rm -it -p 8000:80 aspnetapp:nanoserver
+```
+
+You can view in the app in your browser in the same way as demonstrated earlier.
+
+You can use `docker images` to see the images you've built:
+
+```console
+> docker images aspnetapp
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+aspnetapp           latest              b2f0ecb7bdf9        About an hour ago   353MB
+aspnetapp           nanoserver          d4b7586827f2        About an hour ago   353MB
+```
+
+## Build an image for Windows Server Core
+
+The instructions for Windows Server Core are very similar to Windows Nano Server. There are three different sample Dockerfile files provided for Windows Server Core, which can all be used with the same approach as the Nano Server ones.
+
+In addition, one of the samples enables using IIS as the Web Server instead of Kestrel. The following example demonstrates using that Dockerfile.
+
+```console
+docker build -t aspnetapp -f .\Dockerfile.windowsservercore-iis-x64 .
+docker run --rm -it -p:8080:80 aspnetapp
+```
 
 ## Build an image for ARM32 and ARM64
 
