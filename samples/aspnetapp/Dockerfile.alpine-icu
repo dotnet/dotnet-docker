@@ -1,6 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
 
-ARG TARGETARCH
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -11,6 +10,7 @@ RUN dotnet restore --use-current-runtime
 COPY aspnetapp/. .
 RUN dotnet publish --use-current-runtime -c Release --self-contained false --no-restore -o /app
 
+# To enable globalization support, see
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine

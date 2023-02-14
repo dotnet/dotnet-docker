@@ -10,6 +10,7 @@ RUN dotnet restore -r linux-musl-arm
 COPY aspnetapp/. .
 RUN dotnet publish -c Release -o /app -r linux-musl-arm --self-contained false --no-restore
 
+# To enable globalization support, see
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine-arm32v7

@@ -60,7 +60,11 @@ In production, you will typically start your container with `docker run -d`. Thi
 
 We recommend that you do not use `--rm` in production. It cleans up container resources, preventing you from collecting logs that may have been captured in a container that has either stopped or crashed.
 
-> Note: See [Establishing docker environment](../establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
+Notes:
+
+- See [Establishing docker environment](../establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
+- See [Building for a platform](../build-for-a-platform.md) for instructions on how to target specific platforms.
+- See [Enable globalization](../enable-globalization.md) for instructions on how to install system globalization libraries.
 
 ## Build an image with `HEALTHCHECK`
 
@@ -189,35 +193,6 @@ In addition, one of the samples enables using IIS as the Web Server instead of K
 docker build -t aspnetapp -f .\Dockerfile.windowsservercore-iis-x64 .
 docker run --rm -it -p:8080:80 aspnetapp
 ```
-
-## Build an image for Arm32 and Arm64
-
-By default, distro-specific .NET tags target x64, such as `6.0-alpine` or `6.0-jammy`. You need to use an architecture-specific tag if you want to target Arm. Note that .NET is only supported on Alpine on ARM64 and x64, and not Arm32.
-
-Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
-
-The following example demonstrates targeting architectures explicitly on Linux, for ARM32 and ARM64.
-
-```console
-docker build --pull -t aspnetapp:alpine-arm32 -f Dockerfile.alpine-arm32 .
-docker build --pull -t aspnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
-docker build --pull -t aspnetapp:debian-arm32 -f Dockerfile.debian-arm32 .
-docker build --pull -t aspnetapp:debian-arm64 -f Dockerfile.debian-arm64 .
-```
-
-You can use `docker images` to see a listing of the images you've built, as you can see in the following example.
-
-```console
-% docker images aspnetapp | grep arm
-aspnetapp           debian-arm64        8bf21dd704cf        14 seconds ago       223MB
-aspnetapp           debian-arm32        29a8bfa90a03        About a minute ago   190MB
-aspnetapp           alpine-arm64        8ec6bf841319        2 minutes ago        125MB
-aspnetapp           alpine-arm32        f99fda7e1807        8 seconds ago        98.9MB
-```
-
-You can build ARM32 and ARM64 images on ARM or x64 machines. It may be preferred to build on x64 to take advantage of higher performance, and the ability to take advantage of CI/CD services.
-
-You won't be able to run .NET ARM64 images on x64 machines. Docker relies on QEMU to run ARM64 images on X64, but [QEMU isn't supported by .NET](../build-for-a-platform.md). You must test and run .NET images on actual hardware for the given processor type.
 
 ## Optimizing for startup performance
 
