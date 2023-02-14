@@ -10,7 +10,7 @@ DateTime now = DateTime.Now;
 // Accessing UTC and Local time will always work
 PrintHeader("Print baseline timezones");
 WriteLine($"{nameof(TimeZoneInfo.Utc)}: {TimeZoneInfo.Utc}; {nowUtc}");
-// Local will match UTC unless `/etc/timezone` is set to another timezone
+// Local will match UTC unless `$TZ` or `/etc/timezone` is set to another timezone
 // This is demonstrated in the Dockerfile
 WriteLine($"{nameof(TimeZoneInfo.Local)}: {TimeZoneInfo.Local}; {now}");
 
