@@ -1,7 +1,7 @@
 {{
     _ ARGS:
-        distroless-staging-dir (optional): Location of the staging directory for distroless installation
-        additionalPkgs (optional): Additional packages to install ^
+        isSdk (optional): Indicates whether the dependencies are installed for an sdk Dockerfile
+        distroless-staging-dir (optional): Location of the staging directory for distroless installation ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
@@ -45,9 +45,18 @@
                 "libstdc++6",
                 "zlib1g"
             ])) ^
-    set certsPkg to when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates") ^
-    set additionalPkgs to when(defined(ARGS["additionalPkgs"]), sort(cat(ARGS["additionalPkgs"], [certsPkg])), [certsPkg]) ^
-    set pkgs to cat(additionalPkgs, ["", dotnetDepsComment], pkgs)
+        set certsPkgPrefix to when(isMariner,
+            [
+                when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates"),
+                "",
+                dotnetDepsComment
+            ],
+            [
+                "ca-certificates",
+                "",
+                dotnetDepsComment
+            ]) ^
+    set pkgs to when(ARGS["isSdk"], pkgs, cat(certsPkgPrefix, pkgs))
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",
     [
         "pkgs": pkgs,
@@ -55,5 +64,5 @@
         "pkg-mgr": when(isDistrolessMariner, when (find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf"), ""),
         "pkg-mgr-opts": when(isDistrolessMariner,
             cat(" --releasever=", OS_VERSION_NUMBER, " --installroot ", ARGS["distroless-staging-dir"]),
-            "")
+            ""),
     ])}}
