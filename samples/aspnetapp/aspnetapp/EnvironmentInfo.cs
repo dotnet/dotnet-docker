@@ -15,6 +15,8 @@ public struct EnvironmentInfo
         string[] memoryLimitPaths = new string[] 
         {
             "/sys/fs/cgroup/memory.max",
+            "/sys/fs/cgroup/memory.high",
+            "/sys/fs/cgroup/memory.low",
             "/sys/fs/cgroup/memory/memory.limit_in_bytes",
         };
 
@@ -42,16 +44,11 @@ public struct EnvironmentInfo
         string value = string.Empty;
         foreach (string path in paths)
         {
-            if (Path.Exists(path))
+            if (Path.Exists(path) &&
+                long.TryParse(File.ReadAllText(path), out long result))
             {
-                value = File.ReadAllText(path);
-                break;
+                return result;
             }
-        }
-
-        if (int.TryParse(value, out int result))
-        {
-            return result;
         }
 
         return 0;
