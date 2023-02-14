@@ -4,6 +4,8 @@
 
 The .NET team has various policies for making these libraries available in containers and for configuring the .NET product to use them (or not).
 
+The [globalapp](globalapp/README.md) samples demonstrates using globalization capabilities in containers.
+
 ## ICU
 
 In many scenarios, globalization support with ICU is required, for example, to correctly sort a list of strings (particularly characters outside the [ASCII](https://en.wikipedia.org/wiki/ASCII) range). Other applications may not be oriented around natural language or other global concepts, and would prefer to optimize for container size. .NET container images have been curated to offer options for both of these scenarios.
@@ -19,7 +21,7 @@ In many scenarios, globalization support with ICU is required, for example, to c
 - Alpine `aspnet`, `monitor`, `runtime`, `runtime-deps` images
 - Ubuntu chiseled images
 
-Images that do not include ICU enable [Globalization Invariant Mode](https://github.com/dotnet/runtime/blob/main/docs/design/features/globalization-invariant-mode.md), which provides more basic globalization behaviors in absence of using ICU.
+Images that do not include ICU enable [Globalization Invariant Mode](https://aka.ms/dotnet/globalization/invariant), which provides more basic globalization behaviors in absence of using ICU.
 
 Some users want to add ICU to one of the image types that doesn't include it. It is counter-productive to remove ICU from an image that already includes it.
 
@@ -43,46 +45,50 @@ ICU can be added to an Ubuntu chiseled image, as demonstrated by https://github.
 
 ## Tzdata
 
-Tzdata provides data about time zones. It is needed in applications that deal with time.
+Tzdata provides data for applications that rely on timezone information. Applications that solely use `DateTime.UtcNow` don't need this library.
 
-.NET container images that include tzdata:
+The following code uses `tzdata`:
 
-- Debian images
-
-.NET container images that do not include ICU:
-
-- Alpine images
-- Ubuntu images
-- Ubuntu chiseled images
-
-If you want tzdata, you can install it. There is no similar "invariant" mode to consider.
-
-You can run the following test to determine if `tzdata` is installed correctly.
-
-```bash
-~ # cat /etc/timezone
-America/Los_Angeles
-~ # date
-Sat Feb 11 18:40:16 PST 2023
-~ #
+```csharp
+DateTime nowUtc = DateTime.UtcNow;
+DateTime now = DateTime.Now;
+var homeZone = TimeZoneInfo.Local;
+string home = "America/Los_Angeles";
+var tz = TimeZoneInfo.FindSystemTimeZoneById(home);
 ```
 
-If those values seem correct, then they are. If no timezone is provided, then system defaults to UTC.
+With `tzdata` installed and `/etc/timezone` configured to a specific timezone (other than UTC), `DateTime.UtcNow` and `DateTime.Now` will return values for different timezones, `TimeZoneInfo.Local` will return the value set in `/etc/timezone`, and the call to `TimeZoneInfo.FindSystemTimeZoneById` will succeed.
+
+Without `tzdata` installed, `DateTime.UtcNow` and `DateTime.Now` will return the same value, `TimeZoneInfo.Local` will return a value for UTC, and the call to `TimeZoneInfo.FindSystemTimeZoneById` will fail resulting in an exception.
+
+.NET container images do not install `tzdata`, however, Debian images contain it (at the time of writing). If you rely on this library, you need to install it.
 
 ### Alpine
 
-You can install data by `apk add tzdata`. If you want to also set the timezone, use the following approach (with the appropriate timezone).
+Install `tzdata`:
 
 ```bash
-TZ="America/Los_Angeles" && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && apk add tzdata
+apk add tzdata
 ```
 
 ### Ubuntu
 
-You can install `tzdata` but need to be aware that it prompts. The [following approach](https://dev.to/setevoy/docker-configure-tzdata-and-timezone-during-build-20bk) resolves that.
+Install `tzdata`:
 
 ```bash
-apt update && DEBIAN_FRONTEND=noninteractive && TZ="America/Los_Angeles" && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && apt install -y tzdata
+apt update && DEBIAN_FRONTEND=noninteractive && apt install -y tzdata
 ```
 
 You may need to go through the interactive experience once to find the appropriate `TZ` string. It will be recorded in `/etc/timezone`.
+
+### Launching a container with timezone information
+
+The best practice is to pass timezone information into a container via environment variable.
+
+```bash
+$ cat /etc/timezone
+America/Los_Angeles
+docker run --rm -it -e TZ=$(cat /etc/timezone) app
+```
+
+This approach enables a container image to be launched with different timezone information, as opposed to setting the information as part of `docker build`.
