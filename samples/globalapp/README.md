@@ -8,77 +8,84 @@ The behavior of these APIs is affected by:
 - The value of [globalization invariant mode](https://aka.ms/GlobalizationInvariantMode).
 - The value (or absence) of `/etc/timezone`
 
-Assuming a correctly configured environment, the app produces the following output:
+Per ChatGPT:
+
+> The recommended way to configure tzdata and timezones in containers is to set the container timezone to UTC and pass the host system's timezone information to the container at runtime using environment variables. This can be achieved by setting the environment variable TZ to the timezone you want to use, for example, TZ=America/New_York. This will ensure that the container uses the correct timezone information without requiring additional setup or configuration. Additionally, you can use tools like NTP or Chrony to synchronize the system time of the container with the host's clock for accurate timekeeping.
+
+The app produces the following output:
 
 ```bash
 $ docker build --pull -t app .
-$ docker run --rm app
+$ cat /etc/timezone
+America/Los_Angeles
+$ docker run --rm -it -e TZ=$(cat /etc/timezone) app
 Hello, World!
 
 ****Print baseline timezones**
-Utc: (UTC) Coordinated Universal Time; 02/13/2023 00:33:38
-Local: (UTC-08:00) Pacific Time (Los Angeles); 02/12/2023 16:33:38
+Utc: (UTC) Coordinated Universal Time; 2/14/2023 12:09:26AM
+Local: (UTC-08:00) Pacific Time (Los Angeles); 2/13/2023 4:09:26PM
 
 ****Print specific timezone**
 Home timezone: America/Los_Angeles
-DateTime at home: 02/12/2023 16:33:38
+DateTime at home: 2/13/2023 4:09:26PM
 
 ****Culture-specific dates**
-Current: 02/13/2023
+Current: 2/14/2023
 English (United States) -- en-US:
-2/13/2023 12:33:38 AM
-2/13/2023
-12:33 AM
+2/14/2023 12:09:26AM
+2/14/2023
+12:09AM
 English (Canada) -- en-CA:
-2023-02-13 12:33:38 a.m.
-2023-02-13
-12:33 a.m.
+2/14/2023 12:09:26a.m.
+2/14/2023
+12:09a.m.
 French (Canada) -- fr-CA:
-2023-02-13 00 h 33 min 38 s
-2023-02-13
-00 h 33
+2023-02-14 00 h 09 min 26 s
+2023-02-14
+00 h 09
 Croatian (Croatia) -- hr-HR:
-13. 02. 2023. 00:33:38
-13. 02. 2023.
-00:33
+14. 02. 2023. 00:09:26
+14. 02. 2023.
+00:09
 jp (Japan) -- jp-JP:
-2/13/2023 12:33:38 AM
-2/13/2023
-12:33 AM
+2/14/2023 00:09:26
+2/14/2023
+00:09
 Korean (South Korea) -- ko-KR:
-2023. 2. 13. 오전 12:33:38
-2023. 2. 13.
-오전 12:33
+2023. 2. 14. 오전 12:09:26
+2023. 2. 14.
+오전 12:09
 Portuguese (Brazil) -- pt-BR:
-13/02/2023 00:33:38
-13/02/2023
-00:33
+14/02/2023 00:09:26
+14/02/2023
+00:09
 Chinese (China) -- zh-CN:
-2023/2/13 上午12:33:38
-2023/2/13
-上午12:33
+2023/2/14 00:09:26
+2023/2/14
+00:09
 
 ****Culture-specific currency:**
-Current: ¤1,337.00
+Current: $1,337.00
 en-US: $1,337.00
 en-CA: $1,337.00
 fr-CA: 1 337,00 $
-hr-HR: 1.337,00 HRK
-jp-JP: ¥ 1337
+hr-HR: 1.337,00 €
+jp-JP: ¥1,337
 ko-KR: ₩1,337
 pt-BR: R$ 1.337,00
 zh-CN: ¥1,337.00
 
 ****Japanese calendar**
-08/18/2019
+8/18/2019
 01/08/18
 平成元年8月18日
 平成元年8月18日
 
 ****String comparison**
 Comparison results: `0` mean equal, `-1` is less than and `1` is greater
-Test: compare i to (Turkish) İ
-First test should be equal and second test not
+Test: compare i to (Turkish) İ; first test should be equal and second not
 0
 -1
+Test: compare Å Å; should be equal
+0
 ```

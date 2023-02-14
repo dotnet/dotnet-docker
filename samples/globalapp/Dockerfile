@@ -1,6 +1,6 @@
-ARG TAG=7.0
+# ARG TAG=7.0
 # ARG TAG=7.0-jammy
-# ARG TAG=7.0-alpine
+ARG TAG=7.0-alpine
 FROM mcr.microsoft.com/dotnet/sdk:$TAG AS build
 WORKDIR /source
 
@@ -14,18 +14,17 @@ RUN dotnet publish -c Release -o /app --use-current-runtime --self-contained fal
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:$TAG
-RUN TZ="America/Los_Angeles" && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # For Ubuntu
 # RUN apt update && DEBIAN_FRONTEND=noninteractive && apt install -y tzdata
 # For Alpine
-# ENV \
-#     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
-#     LC_ALL=en_US.UTF-8 \
-#     LANG=en_US.UTF-8
-# RUN apk add --no-cache \
-#     icu-data-full \
-#     icu-libs \
-#     tzdata
+ENV \
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
+    LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8
+RUN apk add --no-cache \
+    icu-data-full \
+    icu-libs \
+    tzdata
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["./globalapp"]

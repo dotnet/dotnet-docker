@@ -93,10 +93,13 @@ WriteLine($"{date89:ggy'年'M'月'd'日'}");
 
 PrintHeader("String comparison");
 WriteLine("Comparison results: `0` mean equal, `-1` is less than and `1` is greater");
-WriteLine("Test: compare i to (Turkish) \u0130");
-WriteLine("First test should be equal and second test not");
 CompareInfo turkishCompare = new CultureInfo("tr-TR").CompareInfo;
-WriteLine(turkishCompare.Compare("i", "\u0130", CompareOptions.IgnoreCase)); // print 0 as "i" is equal to Turkish I "\u0130".
-
 CompareInfo englishCompare = new CultureInfo("en-US").CompareInfo;
+
+WriteLine("Test: compare i to (Turkish) \u0130; first test should be equal and second not");
+WriteLine(turkishCompare.Compare("i", "\u0130", CompareOptions.IgnoreCase)); // print 0 as "i" is equal to Turkish I "\u0130".
 WriteLine(englishCompare.Compare("i", "\u0130", CompareOptions.IgnoreCase)); // print -1 as "i" is not equal to Turkish I "\u0130" in non-Turkish cultures.
+
+// Å LATIN CAPITAL LETTER A WITH RING ABOVE is equal to 'A'  + '\u030A'  
+WriteLine("Test: compare \u00C5 A\u030A; should be equal");
+WriteLine(englishCompare.Compare("\u00C5", "A\u030A"));
