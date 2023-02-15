@@ -94,11 +94,6 @@ namespace Microsoft.DotNet.Docker.Tests
             };
             variables.AddRange(GetCommonEnvironmentVariables());
 
-            if (imageData.SdkOS.StartsWith(OS.Alpine) || !DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty));
-            }
-
             if (imageData.SdkOS.StartsWith(OS.Alpine))
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));

@@ -1,0 +1,29 @@
+{{
+    _ ARGS:
+        pkgs: list of packages to remove
+        pkg-mgr (optional): package manager to use
+        pkg-mgr-opts (optional): additional options to pass to the package manager
+        noninteractive (optional): whether to use noninteractive mode
+        no-clean (optional): skip package manager cleanup after install ^
+
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isDnf to ARGS["pkg-mgr"] = "dnf" ^
+    set isTdnf to ARGS["pkg-mgr"] = "tdnf" || (!isDnf && isMariner) ^
+    set isApk to ARGS["pkg-mgr"] = "apk" || isAlpine
+}}{{
+if isDnf:dnf remove -y{{ARGS["pkg-mgr-opts"]}} \^
+elif isApk:apk del{{ARGS["pkg-mgr-opts"]}} \^
+elif isTdnf:tdnf remove -y{{ARGS["pkg-mgr-opts"]}} \^
+else:apt-get remove \
+&&{{if ARGS["noninteractive"]: DEBIAN_FRONTEND=noninteractive}} apt-get remove -y {{ARGS["pkg-mgr-opts"]}} \}}{{
+for index, pkg in ARGS["pkgs"]:
+    {{pkg}} \}}{{if !no-clean:{{
+if isTdnf:
+&& tdnf clean all{{ARGS["pkg-mgr-opts"]}}^
+elif isDnf:
+&& dnf autoremove{{ARGS["pkg-mgr-opts"]}} \
+&& dnf clean all{{ARGS["pkg-mgr-opts"]}}^
+elif !isApk:
+&& apt-get autoremove \
+&& rm -rf /var/lib/apt/lists/*}}}}

@@ -40,9 +40,8 @@ RUN {{InsertTemplate("Dockerfile.linux.distroless-user",
             "name": username,
             "uid": uid,
             "gid": gid,
-            "create-home": createUserHome
-        ],
-        "    ")}}
+            "no-create-home": !createUserHome
+        ])}}
 
 # Clean up staging
 RUN rm -rf {{distrolessStagingDir}}/etc/{{when(find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf")}} \
