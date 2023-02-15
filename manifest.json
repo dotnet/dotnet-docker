@@ -790,7 +790,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/6.0/alpine3.17/amd64",
+              "dockerfile": "src/runtime-deps/8.0/alpine3.17/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.17",
@@ -802,7 +802,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "src/runtime-deps/6.0/alpine3.17/arm32v7",
+              "dockerfile": "src/runtime-deps/8.0/alpine3.17/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.17",
@@ -815,7 +815,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/6.0/alpine3.17/arm64v8",
+              "dockerfile": "src/runtime-deps/8.0/alpine3.17/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.17",
@@ -836,7 +836,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/6.0/jammy/amd64",
+              "dockerfile": "src/runtime-deps/8.0/jammy/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "jammy",
@@ -847,7 +847,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "src/runtime-deps/6.0/jammy/arm32v7",
+              "dockerfile": "src/runtime-deps/8.0/jammy/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "jammy",
@@ -859,7 +859,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/6.0/jammy/arm64v8",
+              "dockerfile": "src/runtime-deps/8.0/jammy/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "jammy",
@@ -935,7 +935,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/7.0/cbl-mariner2.0/amd64",
+              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
@@ -953,7 +953,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/7.0/cbl-mariner2.0/arm64v8",
+              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
@@ -987,7 +987,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/7.0/cbl-mariner2.0-distroless/amd64",
+              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
@@ -1014,7 +1014,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/7.0/cbl-mariner2.0-distroless/arm64v8",
+              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",

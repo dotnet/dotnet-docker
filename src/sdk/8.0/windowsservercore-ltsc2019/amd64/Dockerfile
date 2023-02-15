@@ -4,8 +4,6 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:8.0.0-preview.1-windowsservercore-ltsc2019
 
 ENV `
-    # Unset ASPNETCORE_URLS from aspnet base image
-    ASPNETCORE_URLS= `
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
     # Do not show first run text

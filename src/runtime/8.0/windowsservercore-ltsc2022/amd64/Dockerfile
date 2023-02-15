@@ -3,8 +3,8 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2022-amd64
 
 ENV `
-    # Configure web servers to bind to port 80 when present
-    ASPNETCORE_URLS=http://+:80 `
+    # Configure web servers to bind to port 8080 when present
+    ASPNETCORE_HTTP_PORTS=8080 `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # .NET Runtime version

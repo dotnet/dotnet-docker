@@ -19,7 +19,11 @@
     set isRpmInstall to isMariner && dotnetVersion = "6.0" ^
     set isSingleStage to !(isRpmInstall && isInternal) ^
     set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
-    set rpmFilename to "dotnet-runtime-deps.rpm"
+    set rpmFilename to "dotnet-runtime-deps.rpm" ^
+    set utilPkgs to when(isMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0", ["shadow-utils"], []) ^
+    set username to "app" ^
+    set uid to 101 ^
+    set gid to uid
 }}{{
     if !isSingleStage:# Installer image
 }}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isRpmInstall:
@@ -51,6 +55,15 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}
         "skip-download": isInternal
         "url-suffix": urlSuffix,
         "filename": rpmFilename
+    ])}}
+}}{{if dotnetVersion != "6.0" && dotnetVersion != "7.0":
+# Create a non-root user and group
+RUN {{InsertTemplate("Dockerfile.linux.non-root-user",
+    [
+        "name": username,
+        "uid": uid,
+        "gid": gid,
+        "append-cmd": len(utilPkgs) > 0
     ])}}
 }}
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}}
