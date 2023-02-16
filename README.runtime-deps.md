@@ -49,6 +49,14 @@ Tags | Dockerfile | OS Version
 6.0.14-jammy-amd64, 6.0-jammy-amd64, 6.0.14-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 6.0.14-focal-amd64, 6.0-focal-amd64, 6.0.14-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
+##### .NET 8 Preview Tags
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+8.0.0-preview.1-bookworm-slim-amd64, 8.0-preview-bookworm-slim-amd64, 8.0.0-preview.1, 8.0.0-preview.1-bookworm-slim, 8.0-preview, 8.0-preview-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.0-preview.1-alpine3.17-amd64, 8.0-preview-alpine3.17-amd64, 8.0-preview-alpine-amd64, 8.0.0-preview.1-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/amd64/Dockerfile) | Alpine 3.17
+8.0.0-preview.1-jammy-amd64, 8.0-preview-jammy-amd64, 8.0.0-preview.1-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+8.0.0-preview.1-jammy-chiseled-amd64, 8.0-preview-jammy-chiseled-amd64, 8.0.0-preview.1-jammy-chiseled, 8.0-preview-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
@@ -62,6 +70,14 @@ Tags | Dockerfile | OS Version
 6.0.14-jammy-arm64v8, 6.0-jammy-arm64v8, 6.0.14-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 6.0.14-focal-arm64v8, 6.0-focal-arm64v8, 6.0.14-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
+##### .NET 8 Preview Tags
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+8.0.0-preview.1-bookworm-slim-arm64v8, 8.0-preview-bookworm-slim-arm64v8, 8.0.0-preview.1, 8.0.0-preview.1-bookworm-slim, 8.0-preview, 8.0-preview-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.0-preview.1-alpine3.17-arm64v8, 8.0-preview-alpine3.17-arm64v8, 8.0-preview-alpine-arm64v8, 8.0.0-preview.1-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/arm64v8/Dockerfile) | Alpine 3.17
+8.0.0-preview.1-jammy-arm64v8, 8.0-preview-jammy-arm64v8, 8.0.0-preview.1-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.0-preview.1-jammy-chiseled-arm64v8, 8.0-preview-jammy-chiseled-arm64v8, 8.0.0-preview.1-jammy-chiseled, 8.0-preview-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
@@ -74,6 +90,13 @@ Tags | Dockerfile | OS Version
 6.0.14-alpine3.16-arm32v7, 6.0-alpine3.16-arm32v7, 6.0.14-alpine3.16, 6.0-alpine3.16 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.16/arm32v7/Dockerfile) | Alpine 3.16
 6.0.14-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.14-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.14-focal-arm32v7, 6.0-focal-arm32v7, 6.0.14-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+
+##### .NET 8 Preview Tags
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+8.0.0-preview.1-bookworm-slim-arm32v7, 8.0-preview-bookworm-slim-arm32v7, 8.0.0-preview.1, 8.0.0-preview.1-bookworm-slim, 8.0-preview, 8.0-preview-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.0-preview.1-alpine3.17-arm32v7, 8.0-preview-alpine3.17-arm32v7, 8.0-preview-alpine-arm32v7, 8.0.0-preview.1-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/arm32v7/Dockerfile) | Alpine 3.17
+8.0.0-preview.1-jammy-arm32v7, 8.0-preview-jammy-arm32v7, 8.0.0-preview.1-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
 You can retrieve a list of all available tags for dotnet/runtime-deps at https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list.
 <!--End of generated tags-->

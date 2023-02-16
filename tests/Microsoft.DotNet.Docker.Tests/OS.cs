@@ -12,6 +12,8 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string Alpine317 = $"{Alpine}3.17";
 
         // Debian
+        public const string Bookworm = "bookworm";
+        public const string BookwormSlim = $"{Bookworm}{SlimSuffix}";
         public const string Bullseye = "bullseye";
         public const string BullseyeSlim = $"{Bullseye}{SlimSuffix}";
         public const string Buster = "buster";
