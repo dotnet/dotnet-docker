@@ -46,7 +46,7 @@ ICU can be added to an Ubuntu chiseled image, as demonstrated by https://github.
 
 ## Tzdata
 
-Tzdata provides data for applications that rely on timezone information. Applications that solely use `DateTime.UtcNow` don't need this library.
+Tzdata provides data for applications that rely on timezone information. Applications that solely use `DateTime.UtcNow` for recording time don't need this library.
 
 The following code uses `tzdata`:
 
@@ -62,25 +62,23 @@ With `tzdata` installed and the timezone configured (via the `TZ` environment va
 
 Without `tzdata` installed, `DateTime.UtcNow` and `DateTime.Now` will return the same value, `TimeZoneInfo.Local` will return a value for UTC, and the call to `TimeZoneInfo.FindSystemTimeZoneById` will fail resulting in an exception.
 
-.NET container images do not install `tzdata`, however, Debian images contain it (at the time of writing). If you rely on this library, you need to install it.
+.NET container images do not install `tzdata`, however, Debian images contain it (at the time of writing). If you rely on this library, you need to install it by adding the following instructions to the final stage within a `Dockerfile`, depending on the distro you use.
 
 ### Alpine
 
-Install `tzdata`:
+`tzdata` can be added to a .NET Alpine image with the following `Dockerfile` fragment.
 
 ```bash
-apk add --no-cache tzdata
+RUN apk add --no-cache tzdata
 ```
 
 ### Ubuntu
 
-Install `tzdata`:
+`tzdata` can be added to a .NET Ubuntu image with the following `Dockerfile` fragment.
 
 ```bash
 apt update && DEBIAN_FRONTEND=noninteractive && apt install -y tzdata && rm -rf /var/lib/apt/lists/*
 ```
-
-You may need to go through the interactive experience once to find the appropriate `TZ` string. It will be recorded in `/etc/timezone`.
 
 ### Launching a container with timezone information
 

@@ -31,26 +31,26 @@ docker build -t app .
 
 It can be built on any supported operating system and architecture. For example, if built on an Apple M1 machine, Docker will produce a `linux/arm64` image.
 
-For Linux containers on an x64 machine:
+You can inspect an image with `docker inspect` to determine OS and architecture target.
 
 ```bash
-$ docker inspect app | jq .[0].Architecture
-"amd64"
-$ docker inspect app | jq .[0].Os
-"linux"
-$ docker inspect app | jq .[0].OsVersion
-null
+$ docker inspect app -f "{{.Os}}\{{.Architecture}}"
+linux\amd64
 ```
 
-For Windows Containers on an x64 machine:
+You can also do this with base images (that you have pulled):
 
-```powershell
-> $inspect = docker inspect app | ConvertFromJson
-> $inspect[0].Architecture
-amd64
-> $inspect[0].Os
-windows
-> $inspect[0].OsVersion
+```bash
+$ docker inspect mcr.microsoft.com/dotnet/runtime:6.0 -f "{{.Os}}\{{.Architecture}}"
+linux\amd64
+```
+
+Windows Containers include extra version information:
+
+```bash
+> docker inspect app -f "{{.Os}}\{{.Architecture}}"
+windows\amd64
+> docker inspect app -f "{{.OsVersion}}"
 10.0.17763.4010
 ```
 
