@@ -25,7 +25,7 @@ A machine configured to UTC will produce the following:
 Etc/UTC
 ```
 
-The app produces the following output, for "America/Los_Angeles" timezone:
+The app produces the following output, for the "America/Los_Angeles" timezone:
 
 ```bash
 $ docker build --pull -t app .
