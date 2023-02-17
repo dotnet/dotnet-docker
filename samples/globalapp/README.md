@@ -9,15 +9,27 @@ The behavior of these APIs is affected by:
 - The value (or absence) of the `TZ` environment variable.
 - The value (or absence) of `/etc/timezone`
 
-The recommended way to configure tzdata and timezones is to set the container timezone by passing the host system's timezone information to the container at runtime using the `TZ` environment variables.
+The recommended way to configure tzdata and timezones is to set the container timezone by using the `TZ` environment variables, as is demonstrated below.
 
-The app produces the following output:
+```bash
+$ docker run --rm -it -e TZ="Etc/UTC" app
+$ docker run --rm -it -e TZ=$(cat /etc/timezone) app
+```
+
+The first approach passes the `Etc/UTC` timezone directly, while the second approach passes the host timezone to the container.
+
+A machine configured to UTC will produce the following:
+
+```bash
+# cat /etc/timezone
+Etc/UTC
+```
+
+The app produces the following output, for "America/Los_Angeles" timezone:
 
 ```bash
 $ docker build --pull -t app .
-$ cat /etc/timezone
-America/Los_Angeles
-$ docker run --rm -it -e TZ=$(cat /etc/timezone) app
+$ docker run --rm -it -e TZ="America/Los_Angeles" app
 Hello, World!
 
 ****Print baseline timezones**
