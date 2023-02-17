@@ -8,6 +8,8 @@ The following samples and guidance demonstrate how to use .NET and Docker for de
 * [Build an ASP.NET Core Docker image](aspnetapp/README.md)
 * [Build and test a multi-project solution](complexapp/README.md)
 * [Building a globalization aware (or unaware) image](globalapp/README.md)
+* [Build for a platform](build-for-a-platform.md)
+* [Enable (or disable) globalization](enable-globalization.md)
 
 ## Development guidance
 

@@ -1,0 +1,27 @@
+{{
+    set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
+    set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
+    set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
+    _ When build and product versions are the same and they are stable versions, use account from main branch e.g. dotnetcli
+      Otherwise, use the account that is associated with the current branch. ^
+    set urlBranch to when(find(monitorVersion, "-") >= 0 || buildVersion != monitorVersion, VARIABLES["branch"], "main") ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set varPlatform to when(isAlpine, "linux-musl", "linux") ^
+    set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$dotnet_monitor_version') ^
+    set monitorBaseUrl to cat(VARIABLES[cat("base-url|", monitorMajorMinor, "-monitor|", urlBranch)], "/diagnostics/monitor/", versionFolder, "/") ^
+    set files to [
+        [
+            "filename": "dotnet-monitor.tar.gz",
+            "url": cat(monitorBaseUrl, "dotnet-monitor-$dotnet_monitor_version-", varPlatform, "-", ARCH_SHORT, ".tar.gz"),
+            "sha": VARIABLES[join(["monitor", monitorMajorMinor, varPlatform, ARCH_SHORT, "sha"], "|")],
+            "sha-var-name": "dotnet_monitor_sha512"
+        ]
+    ]
+}}RUN dotnet_monitor_version={{monitorVersion}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-and-install",
+        [
+            "files": files,
+            "install-dir": "/app",
+            "create-install-dir": "true"
+        ], "    ")}}
