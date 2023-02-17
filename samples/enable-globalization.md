@@ -57,7 +57,7 @@ string home = "America/Los_Angeles";
 var tz = TimeZoneInfo.FindSystemTimeZoneById(home);
 ```
 
-With `tzdata` installed and `/etc/timezone` configured to a specific timezone (other than UTC), `DateTime.UtcNow` and `DateTime.Now` will return values for different timezones, `TimeZoneInfo.Local` will return the value set in `/etc/timezone`, and the call to `TimeZoneInfo.FindSystemTimeZoneById` will succeed.
+With `tzdata` installed and the timezone configured (via the `TZ` environment variable or writing a value to  `/etc/timezone`), `DateTime.UtcNow` and `DateTime.Now` will return the correct values (which will be same if the timezone is `Etc/UTC`), `TimeZoneInfo.Local` will return the value set in `/etc/timezone`, and the call to `TimeZoneInfo.FindSystemTimeZoneById` will succeed.
 
 Without `tzdata` installed, `DateTime.UtcNow` and `DateTime.Now` will return the same value, `TimeZoneInfo.Local` will return a value for UTC, and the call to `TimeZoneInfo.FindSystemTimeZoneById` will fail resulting in an exception.
 
@@ -86,9 +86,15 @@ You may need to go through the interactive experience once to find the appropria
 The best practice is to pass timezone information into a container via environment variable.
 
 ```bash
+docker run --rm -it -e TZ="Etc/UTC" app
+```
+
+Alternatively, the host timezone can be used:
+
+```bash
 $ cat /etc/timezone
 America/Los_Angeles
 docker run --rm -it -e TZ=$(cat /etc/timezone) app
 ```
 
-This approach enables a container image to be launched matching the host, as opposed to setting the information as part of `docker build`.
+This approach enables a container image to be launched with a specific timezone (at launch), as opposed to setting the timezone in the image as part of `docker build`.

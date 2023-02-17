@@ -10,7 +10,7 @@ RUN dotnet restore --use-current-runtime
 COPY aspnetapp/. .
 RUN dotnet publish --use-current-runtime -c Release --self-contained false --no-restore -o /app
 
-# To enable globalization support, see
+# To learn about globalization:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine

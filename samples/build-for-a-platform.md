@@ -14,7 +14,7 @@ Notes:
 
 ## Dockerfiles that build everywhere
 
-The default scenario is using multi-arch tags, which will work in multiple environments.
+The default scenario is using multi-platform tags, which will work in multiple environments.
 
 For example, using `FROM` statements like the following:
 
@@ -29,7 +29,30 @@ The [Dockerfile](aspnetapp/Dockerfile) example demonstrates this case, and can b
 docker build -t app .
 ```
 
-It can be built on any supported operating system and architecture. For example, if built on an Apple M1 machine, Docker will produce a `linux/arm64` image, while on a Windows x64 machine, it will produce a `linux/amd64` image.
+It can be built on any supported operating system and architecture. For example, if built on an Apple M1 machine, Docker will produce a `linux/arm64` image.
+
+For Linux containers on an x64 machine:
+
+```bash
+$ docker inspect app | jq .[0].Architecture
+"amd64"
+$ docker inspect app | jq .[0].Os
+"linux"
+$ docker inspect app | jq .[0].OsVersion
+null
+```
+
+For Windows Containers on an x64 machine:
+
+```powershell
+> $inspect = docker inspect app | ConvertFromJson
+> $inspect[0].Architecture
+amd64
+> $inspect[0].Os
+windows
+> $inspect[0].OsVersion
+10.0.17763.4010
+```
 
 This model works very well given a homogenous compute environment. For example, it works well if dev, CI, and prod machines are all x64. However, it doesn't as well in heterogenous environments, like if dev machines are Arm64 and prod machines are x64. This is because Docker defaults to the native architecture, but that means that resulting images might not match.
 
@@ -52,7 +75,7 @@ This pattern results in, for example, x64 images always being used. Those images
 
 ## Conditionalize Dockerfile with `--platform`
 
-The `--platform` argument is the best way to specify the desired architecture. The `--platform` argument doesn't switch Docker to a special mode, but specifies the platform to request for multi-arch tags. Single-architecture tags are unaffected by this argument. That approach enables users to lock some tags to a platform, if desired, and to enable other tags to be affected by the platform switch.
+The `--platform` argument is the best way to specify the desired architecture. The `--platform` argument doesn't switch Docker to a special mode, but specifies the platform to request for multi-platform tags. Single-architecture tags are unaffected by this argument. That approach enables users to lock some tags to a platform, if desired, and to enable other tags to be affected by the platform switch.
 
 In addition, Docker [Buildkit exposes multiple environment variables](https://github.com/dotnet/dotnet-docker/pull/4387#issuecomment-1416565213) that can be used to further conditionalize behavior. These environment variables can be controlled with the pattern demonstrated in [Dockerfile](https://github.com/mthalman/dredge/blob/main/src/Valleysoft.Dredge/Dockerfile). As mentioned, .NET doesn't support being run in emulation. The pattern in that Dockerfile results in the SDK always being run natively while the final image is affected by the `--platform` switch. This model also has the best performance since the bulk of computation is run natively.
 
@@ -62,6 +85,6 @@ Note: We are enabling the following model in a future release: https://github.co
 
 Docker Desktop uses [QEMU](https://www.qemu.org/) for emulation, for example running x64 code on an Arm64 machine. [.NET doesn't support being run in QEMU](https://github.com/dotnet/core/blob/main/release-notes/7.0/supported-os.md#qemu). That means that the SDK needs to always be run natively, to enable [multi-stage build](https://docs.docker.com/build/building/multi-stage/). Multi-stage build is used by all of our samples.
 
-As a result, we need a reliable pattern that enables produces multiple variants of images on one machine, but that doesn't use emulation.
+As a result, we need a reliable pattern that can produce multiple variants of images on one machine, but that doesn't use emulation. That's what this document describes.
 
 Context: https://gitlab.com/qemu-project/qemu/-/issues/249 
