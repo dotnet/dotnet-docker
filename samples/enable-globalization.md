@@ -34,6 +34,7 @@ ENV \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
+
 RUN apk add --no-cache \
     icu-data-full \
     icu-libs
@@ -68,7 +69,7 @@ Without `tzdata` installed, `DateTime.UtcNow` and `DateTime.Now` will return the
 Install `tzdata`:
 
 ```bash
-apk add tzdata
+apk add --no-cache tzdata
 ```
 
 ### Ubuntu
@@ -76,7 +77,7 @@ apk add tzdata
 Install `tzdata`:
 
 ```bash
-apt update && DEBIAN_FRONTEND=noninteractive && apt install -y tzdata
+apt update && DEBIAN_FRONTEND=noninteractive && apt install -y tzdata && rm -rf /var/lib/apt/lists/*
 ```
 
 You may need to go through the interactive experience once to find the appropriate `TZ` string. It will be recorded in `/etc/timezone`.
@@ -94,7 +95,7 @@ Alternatively, the host timezone can be used:
 ```bash
 $ cat /etc/timezone
 America/Los_Angeles
-docker run --rm -it -e TZ=$(cat /etc/timezone) app
+$ docker run --rm -it -e TZ=$(cat /etc/timezone) app
 ```
 
 This approach enables a container image to be launched with a specific timezone (at launch), as opposed to setting the timezone in the image as part of `docker build`.
