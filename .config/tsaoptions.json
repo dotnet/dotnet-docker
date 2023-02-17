@@ -5,6 +5,6 @@
     "areaPath": "DevDiv\\NET Fundamentals\\.NET Acquisition\\Docker",
     "iterationPath": "DevDiv",
     "notificationAliases": [ "dotnetADTeam@microsoft.com" ],
-    "repositoryName":"dotnet-dotnet-docker",
-    "codebaseName": "dotnet-dotnet-docker"
+    "repositoryName":"dotnet-docker",
+    "codebaseName": "dotnet-docker"
 }
