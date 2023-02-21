@@ -56,7 +56,11 @@ The `sdk:7.0` and `runtime:7.0` tags are both multi-arch tags that will result i
 
 This Dockerfile copies and restores the project file as the first step so that the results of those commands can be cached for subsequent builds since project file edits are less common than source code edits. Editing a `.cs` file, for example, does not invalidate the layer created by copying and restoring project file, which makes subsequent docker builds much faster.
 
-> Note: See [Establishing docker environment](../establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
+Notes:
+
+- See [Establishing docker environment](../establishing-docker-environment.md) for more information on correctly configuring Dockerfiles and `docker build` commands.
+- See [Building for a platform](../build-for-a-platform.md) for instructions on how to target specific platforms.
+- See [Enable globalization](../enable-globalization.md) for instructions on how to install system globalization libraries.
 
 ## Build an image for Alpine, Debian or Ubuntu
 
@@ -134,37 +138,6 @@ The `Dockerfile.nanoserver-x64` Dockerfile targets a version-specific tag, which
 ```console
 FROM mcr.microsoft.com/dotnet/runtime:7.0-nanoserver-ltsc2022
 ```
-
-## Build an image for ARM32 and ARM64
-
-By default, distro-specific .NET tags target x64, such as `7.0-alpine` or `7.0-focal`. You need to use an architecture-specific tag if you want to target ARM. Note that for Alpine, .NET is only supported on ARM64 and x64, and not ARM32.
-
-> Note: Docker documentation sometimes refers to ARM32 as `armhf` and ARM64 as `aarch64`.
-
-The following example demonstrates targeting architectures explictly on Linux, for ARM32 and ARM64.
-
-```console
-docker build --pull -t dotnetapp:debian-arm32 -f Dockerfile.debian-arm32 .
-docker build --pull -t dotnetapp:ubuntu-arm32 -f Dockerfile.ubuntu-arm32 .
-docker build --pull -t dotnetapp:alpine-arm32 -f Dockerfile.alpine-arm32 .
-docker build --pull -t dotnetapp:debian-arm64 -f Dockerfile.debian-arm64 .
-docker build --pull -t dotnetapp:ubuntu-arm64 -f Dockerfile.ubuntu-arm64 .
-docker build --pull -t dotnetapp:alpine-arm64 -f Dockerfile.alpine-arm64 .
-```
-
-You can use `docker images` to see a listing of the images you've built, as you can see in the following example.
-
-```console
-% docker images dotnetapp | grep arm
-dotnetapp           ubuntu-arm64        3be8a7da7148        14 seconds ago      193MB
-dotnetapp           alpine-arm64        09a1d1bfd477        20 hours ago        99.5MB
-dotnetapp           debian-arm64        fa5efe51d9ef        20 hours ago        197MB
-dotnetapp           ubuntu-arm32        ea8ac73f8a72        20 hours ago        165MB
-dotnetapp           alpine-arm32        f85033da1b6f        20 hours ago        74.2MB
-dotnetapp           debian-arm32        4f6ade8318d4        20 hours ago        165MB
-```
-
-You can build ARM32 and ARM64 images on x64 machines, but you will not be able to run them. Docker relies on QEMU for this scenario, which isn't supported by .NET. You must test and run .NET images on actual hardware for the given processor type. A common pattern for this situation is building on x64, [pushing images to a registry](push-image-to-acr.md), and then pulling the image from an ARM device.
 
 ## Build an image optimized for startup performance
 
