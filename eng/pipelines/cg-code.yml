@@ -5,7 +5,16 @@ trigger:
     - nightly
 pr: none
 
+parameters:
+- name: TSAEnabled
+  displayName: Publish CodeQL results to TSA
+  type: boolean
+  default: true
+
 variables:
+- template: ../common/templates/variables/codeql.yml
+  parameters:
+    TSAEnabled: ${{ parameters.TSAEnabled }}
 - template: ../common/templates/variables/common.yml
 - name: cgBuildGrepArgs
   value: -v -e 'samples/' -e 'tests/'
