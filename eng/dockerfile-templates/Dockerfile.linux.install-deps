@@ -45,17 +45,17 @@
                 "libstdc++6",
                 "zlib1g"
             ])) ^
-        set certsPkgPrefix to when(isMariner,
-            [
-                when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates"),
-                "",
-                dotnetDepsComment
-            ],
-            [
-                "ca-certificates",
-                "",
-                dotnetDepsComment
-            ]) ^
+    set certsPkgPrefix to when(isMariner,
+        [
+            when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates"),
+            "",
+            dotnetDepsComment
+        ],
+        [
+            "ca-certificates",
+            "",
+            dotnetDepsComment
+        ]) ^
     set pkgs to when(ARGS["isSdk"], pkgs, cat(certsPkgPrefix, pkgs))
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",
     [

@@ -51,6 +51,21 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V7_0, OS = OS.Alpine317,           Arch = Arch.Arm },
             new ProductImageData { Version = V7_0, OS = OS.Alpine316,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V7_0, OS = OS.Alpine317,           Arch = Arch.Arm64 },
+            new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,        Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Amd64,   SdkOS = OS.Jammy },
+            new ProductImageData { Version = V8_0, OS = OS.Alpine317,           Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, OS = OS.Mariner20,           Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20 },
+            new ProductImageData { Version = V8_0, OS = OS.Mariner20,           Arch = Arch.Arm64 },
+            new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Arm64,   SdkOS = OS.Mariner20 },
+            new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,        Arch = Arch.Arm },
+            new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,        Arch = Arch.Arm64 },
+            new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Arm },
+            new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Arm64 },
+            new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Jammy },
+            new ProductImageData { Version = V8_0, OS = OS.Alpine317,           Arch = Arch.Arm },
+            new ProductImageData { Version = V8_0, OS = OS.Alpine317,           Arch = Arch.Arm64 },
         };
         private static readonly ProductImageData[] s_windowsTestData =
         {
@@ -62,6 +77,10 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V7_0, OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
         };
 
         private static readonly SampleImageData[] s_linuxSampleTestData =
@@ -117,6 +136,10 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V7_0, VersionFamily = V7_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V7_0, VersionFamily = V7_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64 },
             new ProductImageData { Version = V7_0, VersionFamily = V7_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64 },
+            new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.JammyChiseled,       OSTag = OS.UbuntuChiseled,    Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.JammyChiseled,       OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64 },
+            new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64 },
         };
 
         private static readonly ProductImageData[] s_windowsMonitorTestData =

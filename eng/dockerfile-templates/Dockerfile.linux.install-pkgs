@@ -3,7 +3,8 @@
         pkgs: list of packages to install
         pkg-mgr (optional): package manager to use
         pkg-mgr-opts (optional): additional options to pass to the package manager
-        noninteractive (optional): whether to use noninteractive mode ^
+        noninteractive (optional): whether to use noninteractive mode
+        no-clean (optional): skip package manager cleanup after install ^
     
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
@@ -22,10 +23,10 @@ elif isTdnf:tdnf install -y{{ARGS["pkg-mgr-opts"]}} \^
 else:apt-get update \
     &&{{if ARGS["noninteractive"]: DEBIAN_FRONTEND=noninteractive}} apt-get install -y --no-install-recommends{{ARGS["pkg-mgr-opts"]}} \}}{{
     for index, pkg in ARGS["pkgs"]:
-        {{pkg}}{{if appendPkgSuffix(pkg, index):{{if pkg != "": }}\}}}}{{
+        {{pkg}}{{if appendPkgSuffix(pkg, index):{{if pkg != "": }}\}}}}{{if !ARGS["no-clean"]:{{
 if isTdnf:
     && tdnf clean all{{ARGS["pkg-mgr-opts"]}}^
 elif isDnf:
     && dnf clean all{{ARGS["pkg-mgr-opts"]}}^
 elif !isApk:
-    && rm -rf /var/lib/apt/lists/*}}
+    && rm -rf /var/lib/apt/lists/*}}}}

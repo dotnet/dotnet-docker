@@ -147,8 +147,12 @@ namespace Microsoft.DotNet.Docker.Tests
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
             variables.AddRange(ProductImageTests.GetCommonEnvironmentVariables());
 
-            // ASPNETCORE_URLS has been unset to allow the default URL binding to occur.
-            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty));
+            if (imageData.Version.Major <= 7) {
+                // ASPNETCORE_URLS has been unset to allow the default URL binding to occur.
+                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty));
+            } else {
+                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", string.Empty));
+            }
             // Diagnostics should be disabled
             variables.Add(new EnvironmentVariableInfo("COMPlus_EnableDiagnostics", "0"));
             // DefaultProcess filter should select a process with a process ID of 1
