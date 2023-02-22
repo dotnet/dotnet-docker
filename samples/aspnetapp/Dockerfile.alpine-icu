@@ -1,3 +1,5 @@
+# To learn about .NET container tags:
+# https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md
 FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
 
 WORKDIR /source
@@ -10,11 +12,11 @@ RUN dotnet restore --use-current-runtime
 COPY aspnetapp/. .
 RUN dotnet publish --use-current-runtime -c Release --self-contained false --no-restore -o /app
 
-# To learn about globalization:
+# To enable timezones:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine
-
+HEALTHCHECK CMD wget -qO- -t1 http://localhost:80/healthz || exit 1
 ENV \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     LC_ALL=en_US.UTF-8 \

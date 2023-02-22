@@ -6,11 +6,9 @@ The `complexapp` sample is intended to act as a [very simple](complexapp/Program
 
 Simpler workflows are provided at [.NET Docker samples](../README.md).
 
-The instructions assume that you have cloned this repo, have [Docker](https://www.docker.com/products/docker) installed, and have a command prompt open within the `samples/complexapp` directory within the repo.
-
 ## Building an image including multiple projects
 
-The most common way to build images is using following pattern:
+You can build an image using the following instructions (if you've cloned this repo):
 
 ```console
 docker build -t tag .

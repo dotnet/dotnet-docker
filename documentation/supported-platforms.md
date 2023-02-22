@@ -1,4 +1,4 @@
-# Supported Platform
+# Supported Platforms
 
 This document describes the platforms (OS and architectures) supported by the official .NET Docker images.
 
@@ -28,5 +28,5 @@ The official .NET images support Nano Server as well as LTS versions of Windows 
 .NET images are provided for the following architectures.
 
 - Linux/Windows x86-64 (amd64)
-- Linux ARMv7 32-bit (arm32v7)
-- Linux ARMv8 64-bit (arm64v8)
+- Linux Armv7 32-bit (arm32v7)
+- Linux Armv8 64-bit (arm64v8)

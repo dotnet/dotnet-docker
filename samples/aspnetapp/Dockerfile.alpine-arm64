@@ -1,16 +1,17 @@
-# https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
+# To learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY aspnetapp/*.csproj .
-RUN dotnet restore -r linux-musl-arm64
+RUN dotnet restore -a arm64
 
 # copy everything else and build app
 COPY aspnetapp/. .
-RUN dotnet publish -c Release -o /app -r linux-musl-arm64 --self-contained false --no-restore
+RUN dotnet publish -a arm64 --self-contained false --no-restore -o /app
 
-# To enable globalization:
+# To enable globalization and timezones:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine-arm64v8

@@ -9,30 +9,17 @@
 
 # About
 
-[.NET](https://docs.microsoft.com/dotnet/core/) is a general purpose development platform maintained by Microsoft and the .NET community on [GitHub](https://github.com/dotnet/core). It is cross-platform, supports Windows, macOS, and Linux, and can be used in device, cloud, and embedded/IoT scenarios.
+[.NET](https://docs.microsoft.com/dotnet/core/) is a [general purpose development platform](https://devblogs.microsoft.com/dotnet/why-dotnet/) maintained by Microsoft and the .NET community on [GitHub](https://github.com/dotnet/core). It is cross-platform, supports Windows, macOS, and Linux, and can be used in device, cloud, and embedded/IoT scenarios.
 
-.NET has several capabilities that make development productive, including automatic memory management, (runtime) generic types, reflection, [asynchronous constructs](https://learn.microsoft.com/dotnet/csharp/async), concurrency, and native interop. Millions of developers take advantage of these capabilities to efficiently build high-quality applications.
-
-You can use C# or F# to write .NET apps.
-
-- [C#](https://docs.microsoft.com/dotnet/csharp/) is powerful, type-safe, and object-oriented while retaining the expressiveness and elegance of C-style languages. Anyone familiar with C and similar languages will find it straightforward to write in C#.
-- [F#](https://docs.microsoft.com/dotnet/fsharp/) is a cross-platform, open-source, functional programming language for .NET. It also includes object-oriented and imperative programming.
-
-[.NET](https://github.com/dotnet/core) is open source (MIT and Apache 2 licenses) and was contributed to the [.NET Foundation](http://dotnetfoundation.org) by Microsoft in 2014. It can be freely adopted by individuals and companies, including for personal, academic or commercial purposes. Multiple companies use .NET as part of apps, tools, new platforms and hosting services.
-
-You are invited to [contribute new features](https://github.com/dotnet/core/blob/master/CONTRIBUTING.md), fixes, or updates, large or small; we are always thrilled to receive pull requests, and do our best to process them as fast as we can.
-
-> https://docs.microsoft.com/dotnet/core/
-
-Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
+.NET container images are maintained at [dotnet/dotnet-docker](https://github.com/dotnet/dotnet-docker), including [samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) and [documentation](https://github.com/dotnet/dotnet-docker/tree/main/documentation/README.md). The team communicates important changes with regular [announcements](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements).
 
 # Usage
 
-The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
+The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together.
 
 ## Container sample: Run a simple application
 
-Enter the following command to run a console app in a container with a pre-built [.NET Docker image](https://hub.docker.com/_/microsoft-dotnet-samples/):
+The following example runs a [.NET console app container image](https://hub.docker.com/_/microsoft-dotnet-samples/):
 
 ```console
 docker run --rm mcr.microsoft.com/dotnet/samples
@@ -40,7 +27,7 @@ docker run --rm mcr.microsoft.com/dotnet/samples
 
 ## Container sample: Run a web app
 
-Enter the following command to run a console app in a container with a pre-built [.NET Docker image](https://hub.docker.com/_/microsoft-dotnet-samples/):
+The following example runs an [ASP.NET Core container image](https://hub.docker.com/_/microsoft-dotnet-samples/):
 
 ```console
 docker run -it --rm -p 8000:80 --name aspnetcore_sample mcr.microsoft.com/dotnet/samples:aspnetapp
@@ -67,23 +54,17 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 # Support
 
-## Lifecycle
-
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/microsoft-support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
-
-## Image Update Policy
-
-* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:ltsc2022, buildpack-deps:bionic-scm, etc.).
-* We publish .NET images as part of releasing new versions of .NET including major/minor and servicing.
+* [.NET Container Tags -- Patterns and Policies](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 
 ## Feedback
 
 * [File an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose)
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/)
 
-# License
+## License
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 * [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)

@@ -1,4 +1,4 @@
-# Enabling (or disabling) globalization functionality
+# Enabling (or disabling) globalization and timezone functionality
 
 .NET includes various [globalization](https://learn.microsoft.com/dotnet/core/extensions/globalization-and-localization) capabilities, including support for processing natural language text, calendars, currency, and time zones. The .NET implementations for these capabilities comes primarily from operating system libraries, such as [International Components for Unicode (ICU)](https://icu.unicode.org/) and [tzdata](https://wikipedia.org/wiki/Tz_database). In some cases, these libraries and their accompanying databases are always available and in other cases it is desired that they be absent because they may be considered prohibitively large.
 

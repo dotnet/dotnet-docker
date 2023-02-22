@@ -1,14 +1,15 @@
-# https://hub.docker.com/_/microsoft-dotnet
+# To learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 FROM mcr.microsoft.com/dotnet/sdk:7.0-windowsservercore-ltsc2022 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
-RUN dotnet restore -r win-x64
+RUN dotnet restore --use-current-runtime
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c Release -o /app -r win-x64 --self-contained false --no-restore
+RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o /app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:7.0-windowsservercore-ltsc2022

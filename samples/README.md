@@ -1,36 +1,37 @@
-# .NET Docker samples
+# .NET container samples
 
-The following samples and guidance demonstrate how to use .NET and Docker for development, testing and production. You can use the samples as the basis of your own Docker images or just to learn.
+The following samples and guidance demonstrate how to use .NET and Docker for development, testing and production. You can equally use the samples for learning about containers or as the basis of your own container images.
 
 ## Building images
 
-* [Build a .NET Docker image](dotnetapp/README.md)
-* [Build an ASP.NET Core Docker image](aspnetapp/README.md)
-* [Build and test a multi-project solution](complexapp/README.md)
-* [Building a globalization aware (or unaware) image](globalapp/README.md)
+* [Build a .NET container image](dotnetapp/README.md)
+* [Build an ASP.NET Core container image](aspnetapp/README.md)
+* [Building a globalization and timezone aware (or unaware) image](globalapp/README.md)
+* [Container best practices](container-best-practices.md)
 * [Build for a platform](build-for-a-platform.md)
-* [Enable (or disable) globalization](enable-globalization.md)
 
 ## Development guidance
 
-* [Establishing a Docker environment](establishing-docker-environment.md)
-* [Selecting .NET image tags](selecting-tags.md)
+* [Selecting .NET image tags](../documentation/supported-tags.md)
+* [Enable (or disable) globalization](enable-globalization.md)
+* [Build and test a multi-project solution](complexapp/README.md)
 * [Run test in a container](run-tests-in-sdk-container.md)
 * [Build in an SDK container](build-in-sdk-container.md)
 * [Run applications in an SDK container](run-in-sdk-container.md)
-* [Run ASP.NET Core Applications in development with Docker and HTTPS](run-aspnetcore-https-development.md)
+* [Run ASP.NET Core Applications in development with container and HTTPS](run-aspnetcore-https-development.md)
 * [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md)
 
 ## Hosting guidance
 
-* [Host ASP.NET Core Images with Docker and HTTPS](host-aspnetcore-https.md)
-* [Push Docker Images to Azure Container Registry](push-image-to-acr.md)
-* [Push Docker Images to Docker Hub](push-image-to-dockerhub.md)
+* [Host ASP.NET Core Images with container and HTTPS](host-aspnetcore-https.md)
+* [Push container Images to Azure Container Registry](push-image-to-acr.md)
+* [Push container Images to Docker Hub](push-image-to-dockerhub.md)
 * [Deploy ASP.NET Core Applications to Azure Container Instances](deploy-container-to-aci.md)
 
-## Scenario guidance
+## Other documentation
 
-You can find tips and tricks, best practices, and samples of commonly used technology in the [.NET Docker scenarios documentation](../documentation/scenarios/README.md).
+* [.NET Container documentation](../documentation/README.md).
+* [Introduction to .NET and Docker](https://learn.microsoft.com/dotnet/core/docker/)]
 
 ## Try pre-built images
 

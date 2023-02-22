@@ -2,6 +2,10 @@
 
 This [app](Program.cs) is intended for testing .NET APIs that use globalization APIs and concepts. The behavior of these APIs varies depending on how a container (or other environment) is configured. The [Dockerfile](Dockerfile) is intended to aid testing and isn't itself an example of a production Dockerfile.
 
+See [.NET Docker Samples](../README.md) for more samples.
+
+## Configuration
+
 The behavior of these APIs is affected by:
 
 - Presence of `icu` and `tzdata` packages.
@@ -24,6 +28,8 @@ A machine configured to UTC will produce the following:
 # cat /etc/timezone
 Etc/UTC
 ```
+
+## Running the app
 
 The app produces the following output, for the "America/Los_Angeles" timezone:
 
