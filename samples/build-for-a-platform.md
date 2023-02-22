@@ -85,6 +85,8 @@ This `FROM` statement implicitly relies on the value of `$TARGETPLATFORM` to req
 
 Our approach results in always running the SDK natively and then relying on the `--platform` value to pick the architecture of the final tag. We also use this information to correctly build the app for a specific architecture (which can be an important optimization).
 
+This pattern requires the .NET 7.0.300 SDK. The various combinations of `-a` and `$TARGETARCH` were previously not supported.
+
 ## Inspecting container images
 
 You can inspect an image with `docker inspect` to determine OS and architecture target.

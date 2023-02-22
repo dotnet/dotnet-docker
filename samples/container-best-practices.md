@@ -154,6 +154,28 @@ COPY --from=build /app .
 ENTRYPOINT ["./aspnetapp"]
 ```
 
+This pattern requires the .NET 7.0.300 SDK. The various combinations of `-a` and `$TARGETARCH` were previously not supported.
+
+## Producing production-ready assets
+
+The sample Dockerfiles do not set the configuration via the `dotnet` CLI, but rely on the `PublishRelease` setting in the [project files](dotnetapp/dotnetapp.csproj). This setting is new as of .NET 7.0.200. It is supported for both .NET 6 and .NET 7 projects.
+
+In past .NET versions, the following pattern would be used to produce release assets:
+
+```bash
+dotnet publish -c Release
+```
+
+That is no longer needed. With .NET 7.0.200, the following setting can be used in a project file. With .NET 8, `PublishRelease=true` is the default, which means that the project file setting is not required.
+
+```xml
+<PropertyGroup>
+  <PublishRelease>true</PublishRelease>
+</PropertyGroup>
+```
+
+
+
 ## Docker in production
 
 There are multiple choices for production, like Docker, Docker Compose, and Kubernetes. The following guidance applies to running Docker.
