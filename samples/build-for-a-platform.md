@@ -75,7 +75,7 @@ RUN dotnet restore -a $TARGETARCH
 RUN dotnet publish -a $TARGETARCH --self-contained false --no-restore -o /app
 ```
 
-These SDK commands use the `$TARGETARCH` environment variable for specificying the architecture to use.
+These SDK commands use the `$TARGETARCH` environment variable for specifying the architecture to use.
 
 ```dockerfile
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine
