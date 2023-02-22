@@ -14,6 +14,7 @@ RUN dotnet publish --use-current-runtime -c Release --self-contained false --no-
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-preview-alpine
+# These ENVs are only needed because the sample uses .NET 7
 ENV DOTNET_ROLL_FORWARD=Major
 ENV DOTNET_ROLL_FORWARD_PRE_RELEASE=1
 WORKDIR /app
