@@ -13,14 +13,22 @@ The behavior of these APIs is affected by:
 - The value (or absence) of the `TZ` environment variable.
 - The value (or absence) of `/etc/timezone`
 
-The recommended way to configure tzdata and timezones is to set the container timezone by using the `TZ` environment variables, as is demonstrated below.
+The recommended way to configure [tzdata](https://en.wikipedia.org/wiki/Tz_database) and [timezones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) is to set the container timezone by using the `TZ` environment variables, as is demonstrated below.
 
 ```bash
-$ docker run --rm -it -e TZ="Etc/UTC" app
-$ docker run --rm -it -e TZ=$(cat /etc/timezone) app
+$ docker run --rm debian date
+Wed Feb 22 03:08:10 UTC 2023
+$ docker run --rm -e TZ="Etc/UTC" debian date
+Wed Feb 22 03:08:13 UTC 2023
+$ docker run --rm -e TZ=$"America/New_York" debian date
+Tue Feb 21 22:08:16 EST 2023
+$ docker run --rm -e TZ=$"America/Los_Angeles" debian date
+Tue Feb 21 19:08:39 PST 2023
+$ docker run --rm -e TZ=$(cat /etc/timezone) debian date
+Tue Feb 21 19:08:44 PST 2023
 ```
 
-The first approach passes the `Etc/UTC` timezone directly, while the second approach passes the host timezone to the container.
+The first approach uses the default timezone, which is [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time). The other examples pass specific timezones, including UTC. The last pattern passes the timezone of the host.
 
 A machine configured to UTC will produce the following:
 
