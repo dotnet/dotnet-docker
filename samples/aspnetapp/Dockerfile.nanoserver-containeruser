@@ -1,0 +1,20 @@
+# https://hub.docker.com/_/microsoft-dotnet
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY aspnetapp/*.csproj .
+RUN dotnet restore  -r win-x64
+
+# copy everything else and build app
+COPY aspnetapp/. .
+RUN dotnet publish -c Release -o /app -r win-x64 --self-contained false --no-restore
+
+# final stage/image
+# Relies on 7.0 multi-arch tag to pick the same Windows version as the host. 
+# Alternatively, a release specific tag can be used, like: `7.0-nanoserver-ltsc2022`
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /app
+COPY --from=build /app ./
+USER ContainerUser
+ENTRYPOINT ["aspnetapp"]
