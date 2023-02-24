@@ -82,7 +82,7 @@
     "src/runtime/7.0/jammy/amd64": 190455240,
     "src/runtime/7.0/jammy-chiseled/amd64": 84417884,
     "src/runtime/7.0/jammy-chiseled/arm64v8": 90314984,
-    "src/runtime/7.0/jammy-chiseled/arm32v8": 90314984,
+    "src/runtime/7.0/jammy-chiseled/arm32v7": 90314984,
     "src/runtime/7.0/jammy/arm32v7": 157591907,
     "src/runtime/7.0/jammy/arm64v8": 188159362,
     "src/runtime/7.0/cbl-mariner2.0/amd64": 179427754,
