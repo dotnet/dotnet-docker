@@ -122,12 +122,12 @@
     "powershell|6.0|Linux|x64|sha": "3376b937529f7f6e35cadad67357cd67cc15b4775ff9aa56b9b8e35bc7f9e56f50df21fcca30aecaf23bca4d4999afc5e3d00eb990f891f71d750bc6eb2996a4",
     "powershell|6.0|Windows|x64|sha": "ec187d4a11d0bfe64631d67e30aa85b15690e724717703261bf719b8c6583ac498efd5f686ca9c1ea5e7b02fd9fb0b196368522f4e08bf7df6072fee32722aab",
 
-    "powershell|7.0|build-version": "7.3.2",
-    "powershell|7.0|Linux.Alpine|sha": "baa2dc80603c345ee25c78a313eb607992a77800016ba6e2ff1d1516f9e89a3277296c1db7b9bf141d46fa7627ba5b74f17c2d6ed9e8bf12316986979a4850a4",
-    "powershell|7.0|Linux|arm32|sha": "318a726ba3a054d114387b25e7ebe70a25c65be1a388c23fb782186f0902a7ca40fe79e948e228c075b99dfa4ecc54cb3f463ca0903cbf582566e6831cbc9a8f",
-    "powershell|7.0|Linux|arm64|sha": "269c9e7dbbfd67a77c447b0176da1f19b0c1a393298c2b75732d650eec5c736c3e427fe4ead09c75d73aa918f415e1cf09054038ebf209e3e262b744e3f9b8e7",
-    "powershell|7.0|Linux|x64|sha": "acffa5e173e65d31bc874695cd273745930fbacf85bea290f161bb62b98217833a47ceb6e54643cb666b04df2e8923cd8acc28dc79528151bda6adc4652c2fea",
-    "powershell|7.0|Windows|x64|sha": "cc3234109dd39fe3905f5ef7995aed5e7c40bae762c6a85578ac55cb9c8f1ce0dfae16cb53613d16f4deb9f10543cf427534ab0a6059b5efc44f8fe83c8a6a25",
+    "powershell|7.0|build-version": "7.3.3",
+    "powershell|7.0|Linux.Alpine|sha": "c0a3407425e3245ee45cdb4fc6e1a09dac5d287e352ddb15d2c172f3ec24ebfd584b01a1eb186424a1d4066a02c599febd859714e715ce6f25db81877cfa2733",
+    "powershell|7.0|Linux|arm32|sha": "74d09e6e18b397565c40fdad679fbf84b6ef870c34236df180e0ac2849b1a886fbee36e07ed9dc3ac229222ccd8301232f5f6f631a3a9c7551b40d2c8338f7c8",
+    "powershell|7.0|Linux|arm64|sha": "27e60486cd354c5551ec35479b2517abddfa6e7d9b87fcfbc15ec150f4c51019b6313988b5703bc5d1e924223a22c81367cc34c447d318f3abb71b37f6fa57ac",
+    "powershell|7.0|Linux|x64|sha": "edffce0e9f0172fa09c0a87ae417f9143ca7d858ac1678aec31e8fa64019749d017d9fe764cce59b980c8176e6b80966225bd90fb05ad2ff4cb57576b7c70311",
+    "powershell|7.0|Windows|x64|sha": "cb8c8f34bb6b7fdb9e7dc448c7d71e974c61780cdf418b23a0463b65352f1c6f8d29781f21fce577c1bf861343c185aa4fbbb6f39c5cf1525440100ec1024a49",
 
     "runtime|6.0|build-version": "6.0.14",
     "runtime|6.0|targeting-pack-version": "$(runtime|6.0|build-version)",
