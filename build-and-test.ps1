@@ -65,6 +65,9 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
 }
 if ($Mode -eq "BuildAndTest" -or $Mode -eq "Test") {
 
+    $VersionParts = $Version.Split('.')
+    $TestVersion = $VersionParts[0] + "." + $VersionParts[1]
+
     $localTestCategories = $TestCategories
 
     if ($Version -ne "*" -and $TestCategories.Contains("sample")) {
@@ -73,7 +76,7 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Test") {
     }
 
     & ./tests/run-tests.ps1 `
-        -Version $Version `
+        -Version $TestVersion `
         -OSVersions @($OS) `
         -Architecture $Architecture `
         -TestCategories $localTestCategories
