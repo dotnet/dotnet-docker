@@ -30,7 +30,7 @@ if ($Version -notmatch '^\d+\.\d+(\.[\d*])?$') {
 }
 
 # If we call the script with a format like "8.0", add the trailing ".*" that ImageBuilder expects
-if ($Version -notmatch '\.\*') {
+if ($Version.Split('.').Count -lt 3) {
     $Version += ".*"
 }
 
