@@ -1,18 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
-
-RUN tdnf install -y \
-        ca-certificates \
-        gzip \
-        tar \
-    && tdnf clean all
+FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor
-RUN dotnet_monitor_version=8.0.0-preview.2.23123.4 \
+RUN dotnet_monitor_version=7.1.0-alpha.1.23121.6 \
     && curl -fSL --output dotnet-monitor.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-arm64.tar.gz \
-    && dotnet_monitor_sha512='e6791b427daf86dcd745b71a8df6d0622c3c863511365e057ed4445776752739a318bdb87838d00ebc3cecd19fca6d13cdff4b1f9e20131170077ff01f72cead' \
+    && dotnet_monitor_sha512='521c2a1d8ed1d82cbf0e1e247d831540ac575be76f3122e997a61aa6c7264f87995c246cf765e7500a873f2851c4b06a6c744ca43ee26bf9f40bd6c2816423fc' \
     && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor.tar.gz -C /app \
@@ -20,14 +14,14 @@ RUN dotnet_monitor_version=8.0.0-preview.2.23123.4 \
 
 
 # .NET Monitor image
-FROM $REPO:8.0.0-preview.1-cbl-mariner2.0-distroless-arm64v8
+FROM $REPO:7.0.3-jammy-chiseled-arm64v8
 
 WORKDIR /app
 COPY --from=installer /app .
 
 ENV \
-    # Unset ASPNETCORE_HTTP_PORTS from aspnet base image
-    ASPNETCORE_HTTP_PORTS= \
+    # Unset ASPNETCORE_URLS from aspnet base image
+    ASPNETCORE_URLS= \
     # Disable debugger and profiler diagnostics to avoid diagnosing self.
     COMPlus_EnableDiagnostics=0 \
     # Default Filter

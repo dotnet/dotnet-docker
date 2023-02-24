@@ -59,6 +59,8 @@
     "base-url|6.3-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|7.0-monitor|main": "$(base-url|public|main)",
     "base-url|7.0-monitor|nightly": "$(base-url|public|nightly)",
+    "base-url|7.1-monitor|main": "$(base-url|public|main)",
+    "base-url|7.1-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|8.0-monitor|main": "$(base-url|public|main)",
     "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
 
@@ -99,9 +101,16 @@
     "monitor|7.0|linux|arm64|sha": "7d8343294db860e79d4d676254a5962db2c864cdc8454f678b80dfd1ad34d4fc03211063b5e4e3c83701ec9c365c70939ab47e0c94ed9f9effd14d8545333a9d",
     "monitor|7.0|product-version": "7.0.2",
 
-    "monitor|8.0|build-version": "8.0.0-preview.2.23122.6",
-    "monitor|8.0|linux|x64|sha": "807d9df76b0c5b1d3a71c65a337f740d842d6e158d199f37fcef11e8242b29c0be1b612610623b3d2a1f5190f79d0349b76fb2f199f9b6b37eb9fe0d44306a13",
-    "monitor|8.0|linux|arm64|sha": "c025fbb4225f3f4c72303829f52a5ba4a45d88562066290168eaab920ac18f8cafd6176f8a1cc2b49789d35459f56b0a9d98abb5a2e48d89ffd229e8fbbc87ca",
+    "monitor|7.1|build-version": "7.1.0-alpha.1.23121.6",
+    "monitor|7.1|linux-musl|x64|sha": "29e6a13e6730c3f326dc455429f6be3225dafb3e294d8c2de5d4eb429bb07aee9a37008a91dc5440ea6c228e046ad91056b2177d2e98bddc0eb72188555957b6",
+    "monitor|7.1|linux-musl|arm64|sha": "e5448ee199ad4806e7b6f4f40d958549c2fba2eccfc2a304ae49382c318b47a3356e6b976e5278f7a450c48d626019cc91cdb4218afc3cb61ff3603ab93aa66a",
+    "monitor|7.1|linux|x64|sha": "55a713ab556bd0ee30b07af8482c1b9d4d2dc50026e248fb1430cbf1a31280fe07fd040f1121b80ceedafd1a3fa3efb1743bb7de7282c8ea915888bc1082af81",
+    "monitor|7.1|linux|arm64|sha": "521c2a1d8ed1d82cbf0e1e247d831540ac575be76f3122e997a61aa6c7264f87995c246cf765e7500a873f2851c4b06a6c744ca43ee26bf9f40bd6c2816423fc",
+    "monitor|7.1|product-version": "7.1.0-alpha.1",
+
+    "monitor|8.0|build-version": "8.0.0-preview.2.23123.4",
+    "monitor|8.0|linux|x64|sha": "c213125cc6ed3fe4124463e138c7c62c58bd45d233a3293500994802df54e29dc092456573772646b6fef7dad38e26d873cddb97ede5fddf1cd1bef990cedb8b",
+    "monitor|8.0|linux|arm64|sha": "e6791b427daf86dcd745b71a8df6d0622c3c863511365e057ed4445776752739a318bdb87838d00ebc3cecd19fca6d13cdff4b1f9e20131170077ff01f72cead",
     "monitor|8.0|product-version": "8.0.0-preview.2",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
