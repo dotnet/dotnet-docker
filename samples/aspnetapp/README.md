@@ -126,6 +126,15 @@ Start                             End                               ExitCode Out
 2023-01-28T10:16:54.7499988-08:00 2023-01-28T10:16:54.7750448-08:00        0 Healthy
 ```
 
+## Build non-root images
+
+.NET 8 images include a non-root user, `app`. You can use the `USER` instruction to set this user and then your images will be non-root.
+
+The following Dockerfiles demonstrate this use case:
+
+- [Dockerfile.alpine-non-root](Dockerfile.alpine-non-root)
+- [Dockerfile.windowsservercore-containeruser](Dockerfile.windowsservercore-containeruser)
+
 ## Build an image for Alpine, Debian or Ubuntu
 
 .NET multi-platform tags result in Debian-based images, for Linux. For example, you will pull a Debian-based image if you use a simple version-based tag, such as `6.0`, as opposed to a distro-specific tag like `6.0-alpine`.
