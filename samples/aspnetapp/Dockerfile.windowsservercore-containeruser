@@ -11,8 +11,6 @@ COPY aspnetapp/. .
 RUN dotnet publish -c Release -o /app -r win-x64 --self-contained false --no-restore
 
 # final stage/image
-# Relies on 7.0 multi-arch tag to pick the same Windows version as the host. 
-# Alternatively, a release specific tag can be used, like: `7.0-nanoserver-ltsc2022`
 # .NET 8 tag includes `-preview`
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-preview-windowsservercore-ltsc2022
 # These ENVs are only needed because the sample uses .NET 7
