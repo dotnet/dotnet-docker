@@ -24,6 +24,16 @@ param(
     [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor")
 )
 
+if ($Version -notmatch '^\d+\.\d+(\.[\d*])?|\*$') {
+    Write-Error "Error: Input version is not in the expected format of X.Y or X.Y.*"
+    exit 1
+
+    # If we call the script with a format like "8.0", add the trailing ".*" that ImageBuilder expects
+    if ($Version.Split('.').Count -lt 3) {
+        $Version += ".*"
+    }
+}
+
 if (($Mode -eq "BuildAndTest" -or $Mode -eq "Test") -and $TestCategories.Contains("pre-build")) {
     & ./tests/run-tests.ps1 -TestCategories "pre-build" -Version "*"
 }
