@@ -63,6 +63,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,        Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Arm },
             new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Arm64 },
+            new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm,     SdkOS = OS.Jammy },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Jammy },
             new ProductImageData { Version = V8_0, OS = OS.Alpine317,           Arch = Arch.Arm },
             new ProductImageData { Version = V8_0, OS = OS.Alpine317,           Arch = Arch.Arm64 },

@@ -105,6 +105,7 @@ Tags | Dockerfile | OS Version
 8.0.0-preview.2-bookworm-slim-arm32v7, 8.0-preview-bookworm-slim-arm32v7, 8.0.0-preview.2-bookworm-slim, 8.0-preview-bookworm-slim, 8.0.0-preview.2, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.0-preview.2-alpine3.17-arm32v7, 8.0-preview-alpine3.17-arm32v7, 8.0-preview-alpine-arm32v7, 8.0.0-preview.2-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/8.0/alpine3.17/arm32v7/Dockerfile) | Alpine 3.17
 8.0.0-preview.2-jammy-arm32v7, 8.0-preview-jammy-arm32v7, 8.0.0-preview.2-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+8.0.0-preview.2-jammy-chiseled-arm32v7, 8.0-preview-jammy-chiseled-arm32v7, 8.0.0-preview.2-jammy-chiseled, 8.0-preview-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
 
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
