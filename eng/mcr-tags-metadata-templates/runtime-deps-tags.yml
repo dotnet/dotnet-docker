@@ -43,12 +43,16 @@ $(McrTagsYmlTagGroup:8.0-preview-alpine3.17-arm32v7)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-jammy-arm32v7)
     customSubTableTitle: .NET 8 Preview Tags
+$(McrTagsYmlTagGroup:8.0-preview-jammy-chiseled-arm32v7)
+    customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:7.0-bullseye-slim-arm32v7)
 $(McrTagsYmlTagGroup:7.0-alpine3.17-arm32v7)
 $(McrTagsYmlTagGroup:7.0-alpine3.16-arm32v7)
 $(McrTagsYmlTagGroup:7.0-jammy-arm32v7)
+$(McrTagsYmlTagGroup:7.0-jammy-chiseled-arm32v7)
 $(McrTagsYmlTagGroup:6.0-bullseye-slim-arm32v7)
 $(McrTagsYmlTagGroup:6.0-alpine3.17-arm32v7)
 $(McrTagsYmlTagGroup:6.0-alpine3.16-arm32v7)
 $(McrTagsYmlTagGroup:6.0-jammy-arm32v7)
+$(McrTagsYmlTagGroup:6.0-jammy-chiseled-arm32v7)
 $(McrTagsYmlTagGroup:6.0-focal-arm32v7)
