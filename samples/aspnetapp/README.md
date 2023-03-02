@@ -130,10 +130,12 @@ Start                             End                               ExitCode Out
 
 .NET 8 images include a non-root user, `app`. You can use the `USER` instruction to set this user and then your images will be non-root.
 
-The following Dockerfiles demonstrate this use case:
+The following Dockerfiles demonstrate the non-root use case:
 
 - [Dockerfile.alpine-non-root](Dockerfile.alpine-non-root)
 - [Dockerfile.windowsservercore-containeruser](Dockerfile.windowsservercore-containeruser)
+
+Note: The Windows example uses the existing `ContainerUser` user, so also works with prior .NET versions.
 
 ## Build an image for Alpine, Debian or Ubuntu
 
