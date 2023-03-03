@@ -10,9 +10,12 @@ RUN dotnet restore  -r win-x64
 COPY aspnetapp/. .
 RUN dotnet publish -c Release -o /app -r win-x64 --self-contained false --no-restore
 
+
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-windowsservercore-ltsc2022
+
 WORKDIR /app
 COPY --from=build /app ./
+
 USER ContainerUser
 ENTRYPOINT ["aspnetapp"]
