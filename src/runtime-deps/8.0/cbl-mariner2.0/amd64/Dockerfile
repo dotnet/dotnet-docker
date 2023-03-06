@@ -18,11 +18,11 @@ RUN tdnf install -y \
         shadow-utils \
     && groupadd \
         --system \
-        --gid=101 \
+        --gid=64198 \
         app \
     && adduser \
-        --uid 101 \
-        --gid 101 \
+        --uid 64198 \
+        --gid 64198 \
         --shell /bin/false \
         --create-home \
         --system \
