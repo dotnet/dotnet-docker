@@ -22,7 +22,6 @@ RUN groupadd \
     && adduser \
         --uid 101 \
         --gid 101 \
-        --shell /bin/false \
         --system \
         app
 
