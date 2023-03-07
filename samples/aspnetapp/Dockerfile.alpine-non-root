@@ -1,0 +1,28 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
+
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY aspnetapp/*.csproj .
+RUN dotnet restore --use-current-runtime
+
+# copy everything else and build app
+COPY aspnetapp/. .
+RUN dotnet publish --use-current-runtime -c Release --self-contained false --no-restore -o /app
+
+
+# To enable globalization:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
+# final stage/image
+# .NET 8 tag includes `-preview`
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-preview-alpine
+
+# These ENVs are only needed because the sample uses .NET 7
+ENV DOTNET_ROLL_FORWARD=Major
+ENV DOTNET_ROLL_FORWARD_PRE_RELEASE=1
+
+WORKDIR /app
+COPY --from=build /app .
+
+USER app
+ENTRYPOINT ["./aspnetapp"]
