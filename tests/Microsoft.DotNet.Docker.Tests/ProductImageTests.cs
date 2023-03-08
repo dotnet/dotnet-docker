@@ -118,22 +118,25 @@ namespace Microsoft.DotNet.Docker.Tests
 
             Assert.Equal(expectedUser, actualUser);
 
+            VerifyNonRootUID(imageData);
+        }
+
+        protected void VerifyNonRootUID(ProductImageData imageData)
+        {
             if (((imageData.Version.Major == 6 || imageData.Version.Major == 7) && (!imageData.IsDistroless || imageData.OS.StartsWith(OS.Mariner)))
                 || imageData.IsWindows)
             {
-                OutputHelper.WriteLine("UID check is only relevant to .NET 8.0+ and distroless images besides CBL Mariner.");
+                OutputHelper.WriteLine("UID check is only relevant for Linux images running .NET versions >= 8.0 and distroless images besides CBL Mariner.");
                 return;
             }
 
-            string rootPath;
+            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+            string rootPath = "/";
+
             if (imageData.IsDistroless)
             {
                 rootPath = "/rootfs/";
                 imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath);
-            }
-            else
-            {
-                rootPath = "/";
             }
 
             string command = $"-c \"grep '^app' {rootPath}etc/passwd | cut -d: -f3\"";
