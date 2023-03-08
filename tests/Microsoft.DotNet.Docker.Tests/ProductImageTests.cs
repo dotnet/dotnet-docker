@@ -118,7 +118,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
             Assert.Equal(expectedUser, actualUser);
 
-            if ((imageData.Version.Major == 6 || imageData.Version.Major == 7) && (!imageData.IsDistroless || imageData.OS.StartsWith(OS.Mariner)))
+            if (((imageData.Version.Major == 6 || imageData.Version.Major == 7) && (!imageData.IsDistroless || imageData.OS.StartsWith(OS.Mariner)))
+                || imageData.IsWindows)
             {
                 OutputHelper.WriteLine("UID check is only relevant to .NET 8.0+ and distroless images besides CBL Mariner.");
                 return;
