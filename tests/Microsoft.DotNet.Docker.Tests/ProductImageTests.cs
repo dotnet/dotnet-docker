@@ -18,7 +18,7 @@ namespace Microsoft.DotNet.Docker.Tests
             DockerHelper = new DockerHelper(outputHelper);
             OutputHelper = outputHelper;
         }
-        
+
         protected DockerHelper DockerHelper { get; }
         protected ITestOutputHelper OutputHelper { get; }
         protected abstract DotNetImageType ImageType { get; }
@@ -117,6 +117,45 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             Assert.Equal(expectedUser, actualUser);
+        }
+
+        /// <summary>
+        /// Verifies that we use a sufficiently high UID for non-root users.
+        /// See https://github.com/dotnet/dotnet-docker/issues/4451
+        /// </summary>
+        protected void VerifyCommonNonRootUID(ProductImageData imageData)
+        {
+            if ((imageData.Version.Major == 6 || imageData.Version.Major == 7) && imageData.OS.StartsWith(OS.Mariner))
+            {
+                return;
+            }
+
+            string rootPath = imageData.IsDistroless ? "/rootfs" : "/";
+            string command = $"-c \"grep '^app' {rootPath}etc/passwd | cut -d: -f3\"";
+
+            string imageTag = imageData.IsDistroless
+                ? DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath)
+                : imageData.GetImage(ImageType, DockerHelper);
+
+            // if (imageData.IsDistroless)
+            // {
+            //     imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath);
+            // }
+            // else
+            // {
+            //     imageTag = imageData.GetImage(ImageType, DockerHelper);
+            // }
+
+            string uidString = DockerHelper.Run(
+                image: imageTag,
+                command: command,
+                name: imageData.GetIdentifier($"VerifyUID-{ImageType}"),
+                optionalRunArgs: $"--entrypoint /bin/sh"
+            );
+
+            int uid = int.Parse(uidString);
+
+            Assert.True(uid > 10000);
         }
 
         private IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)
