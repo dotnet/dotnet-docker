@@ -73,17 +73,6 @@ namespace Microsoft.DotNet.Docker.Tests
             VerifyCommonDefaultUser(imageData);
         }
 
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyNonRootUID(ProductImageData imageData)
-        {
-            if ((imageData.Version.Major == 6 || imageData.Version.Major == 7) && !imageData.OS.Contains(OS.JammyChiseled))
-            {
-                OutputHelper.WriteLine("This test is only relevant to .NET 8.0+ and Ubuntu Chiseled images.");
-            }
-            VerifyCommonNonRootUID(imageData);
-        }
-
         /// <summary>
         /// Verifies that the packages installed in distroless images are scannable by security tools.
         /// </summary>

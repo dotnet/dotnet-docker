@@ -117,25 +117,25 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             Assert.Equal(expectedUser, actualUser);
-        }
 
-        /// <summary>
-        /// Verifies that we use a sufficiently high UID for non-root users.
-        /// See https://github.com/dotnet/dotnet-docker/issues/4451
-        /// </summary>
-        protected void VerifyCommonNonRootUID(ProductImageData imageData)
-        {
             if ((imageData.Version.Major == 6 || imageData.Version.Major == 7) && imageData.OS.StartsWith(OS.Mariner))
             {
+                OutputHelper.WriteLine("UID check is only relevant to .NET 8.0+ and distroless images besides CBL Mariner.");
                 return;
             }
 
-            string rootPath = imageData.IsDistroless ? "/rootfs/" : "/";
-            string command = $"-c \"grep '^app' {rootPath}etc/passwd | cut -d: -f3\"";
+            string rootPath;
+            if (imageData.IsDistroless)
+            {
+                rootPath = "/rootfs/";
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath);
+            }
+            else
+            {
+                rootPath = "/";
+            }
 
-            string imageTag = imageData.IsDistroless
-                ? DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath)
-                : imageData.GetImage(ImageType, DockerHelper);
+            string command = $"-c \"grep '^app' {rootPath}etc/passwd | cut -d: -f3\"";
 
             string uidString = DockerHelper.Run(
                 image: imageTag,
