@@ -130,21 +130,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            string rootPath = imageData.IsDistroless ? "/rootfs" : "/";
+            string rootPath = imageData.IsDistroless ? "/rootfs/" : "/";
             string command = $"-c \"grep '^app' {rootPath}etc/passwd | cut -d: -f3\"";
 
             string imageTag = imageData.IsDistroless
                 ? DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath)
                 : imageData.GetImage(ImageType, DockerHelper);
-
-            // if (imageData.IsDistroless)
-            // {
-            //     imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath);
-            // }
-            // else
-            // {
-            //     imageTag = imageData.GetImage(ImageType, DockerHelper);
-            // }
 
             string uidString = DockerHelper.Run(
                 image: imageTag,
