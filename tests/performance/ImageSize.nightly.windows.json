@@ -2,43 +2,43 @@
   "dotnet/nightly/runtime": {
     "src/runtime/6.0/nanoserver-1809/amd64": 339178589,
     "src/runtime/6.0/nanoserver-ltsc2022/amd64": 369353141,
-    "src/runtime/6.0/windowsservercore-ltsc2019/amd64": 3860194200,
-    "src/runtime/6.0/windowsservercore-ltsc2022/amd64": 3177910658,
+    "src/runtime/6.0/windowsservercore-ltsc2019/amd64": 4503271180,
+    "src/runtime/6.0/windowsservercore-ltsc2022/amd64": 3943838372,
     "src/runtime/7.0/nanoserver-1809/amd64": 328470826,
     "src/runtime/7.0/nanoserver-ltsc2022/amd64": 367604122,
-    "src/runtime/7.0/windowsservercore-ltsc2019/amd64": 3861883201,
-    "src/runtime/7.0/windowsservercore-ltsc2022/amd64": 3179472275,
+    "src/runtime/7.0/windowsservercore-ltsc2019/amd64": 4504564821,
+    "src/runtime/7.0/windowsservercore-ltsc2022/amd64": 3944434697,
     "src/runtime/8.0/nanoserver-1809/amd64": 332610335,
     "src/runtime/8.0/nanoserver-ltsc2022/amd64": 370748495,
-    "src/runtime/8.0/windowsservercore-ltsc2019/amd64": 3857438293,
-    "src/runtime/8.0/windowsservercore-ltsc2022/amd64": 3175168751
+    "src/runtime/8.0/windowsservercore-ltsc2019/amd64": 4502842344,
+    "src/runtime/8.0/windowsservercore-ltsc2022/amd64": 3943617568
   },
   "dotnet/nightly/aspnet": {
     "src/aspnet/6.0/nanoserver-1809/amd64": 362186301,
     "src/aspnet/6.0/nanoserver-ltsc2022/amd64": 391627241,
-    "src/aspnet/6.0/windowsservercore-ltsc2019/amd64": 3888934517,
-    "src/aspnet/6.0/windowsservercore-ltsc2022/amd64": 3213874419,
+    "src/aspnet/6.0/windowsservercore-ltsc2019/amd64": 4532042012,
+    "src/aspnet/6.0/windowsservercore-ltsc2022/amd64": 3979824632,
     "src/aspnet/7.0/nanoserver-1809/amd64": 349969843,
     "src/aspnet/7.0/nanoserver-ltsc2022/amd64": 389103139,
-    "src/aspnet/7.0/windowsservercore-ltsc2019/amd64": 3893639025,
-    "src/aspnet/7.0/windowsservercore-ltsc2022/amd64": 3218492683,
+    "src/aspnet/7.0/windowsservercore-ltsc2019/amd64": 4536385164,
+    "src/aspnet/7.0/windowsservercore-ltsc2022/amd64": 3983454128,
     "src/aspnet/8.0/nanoserver-1809/amd64": 357313558,
     "src/aspnet/8.0/nanoserver-ltsc2022/amd64": 395451718,
-    "src/aspnet/8.0/windowsservercore-ltsc2019/amd64": 3887534212,
-    "src/aspnet/8.0/windowsservercore-ltsc2022/amd64": 3212967526
+    "src/aspnet/8.0/windowsservercore-ltsc2019/amd64": 4534379740,
+    "src/aspnet/8.0/windowsservercore-ltsc2022/amd64": 3982354000
   },
   "dotnet/nightly/sdk": {
     "src/sdk/6.0/nanoserver-1809/amd64": 964537766,
     "src/sdk/6.0/nanoserver-ltsc2022/amd64": 1006844828,
-    "src/sdk/6.0/windowsservercore-ltsc2019/amd64": 4545438936,
-    "src/sdk/6.0/windowsservercore-ltsc2022/amd64": 3883848402,
+    "src/sdk/6.0/windowsservercore-ltsc2019/amd64": 5186501449,
+    "src/sdk/6.0/windowsservercore-ltsc2022/amd64": 4650233783,
     "src/sdk/7.0/nanoserver-1809/amd64": 1031012837,
     "src/sdk/7.0/nanoserver-ltsc2022/amd64": 1114152303,
-    "src/sdk/7.0/windowsservercore-ltsc2019/amd64": 4615487265,
-    "src/sdk/7.0/windowsservercore-ltsc2022/amd64": 3961514756,
+    "src/sdk/7.0/windowsservercore-ltsc2019/amd64": 5254946180,
+    "src/sdk/7.0/windowsservercore-ltsc2022/amd64": 4726532816,
     "src/sdk/8.0/nanoserver-1809/amd64": 1002684510,
     "src/sdk/8.0/nanoserver-ltsc2022/amd64": 1025921439,
-    "src/sdk/8.0/windowsservercore-ltsc2019/amd64": 4539591141,
-    "src/sdk/8.0/windowsservercore-ltsc2022/amd64": 3886094967
+    "src/sdk/8.0/windowsservercore-ltsc2019/amd64": 5196320291,
+    "src/sdk/8.0/windowsservercore-ltsc2022/amd64": 4668472071
   }
 }
