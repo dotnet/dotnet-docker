@@ -19,7 +19,6 @@ RUN addgroup \
     && adduser \
         --uid 64198 \
         --ingroup=app \
-        --shell /bin/false \
         --system \
         app
 

@@ -23,7 +23,6 @@ RUN tdnf install -y \
     && adduser \
         --uid 64198 \
         --gid 64198 \
-        --shell /bin/false \
         --create-home \
         --system \
         app \
