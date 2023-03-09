@@ -18,7 +18,7 @@ namespace Microsoft.DotNet.Docker.Tests
             DockerHelper = new DockerHelper(outputHelper);
             OutputHelper = outputHelper;
         }
-        
+
         protected DockerHelper DockerHelper { get; }
         protected ITestOutputHelper OutputHelper { get; }
         protected abstract DotNetImageType ImageType { get; }
@@ -117,6 +117,40 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             Assert.Equal(expectedUser, actualUser);
+
+            VerifyNonRootUID(imageData);
+        }
+
+        protected void VerifyNonRootUID(ProductImageData imageData)
+        {
+            if (((imageData.Version.Major == 6 || imageData.Version.Major == 7) && (!imageData.IsDistroless || imageData.OS.StartsWith(OS.Mariner)))
+                || imageData.IsWindows)
+            {
+                OutputHelper.WriteLine("UID check is only relevant for Linux images running .NET versions >= 8.0 and distroless images besides CBL Mariner.");
+                return;
+            }
+
+            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+            string rootPath = "/";
+
+            if (imageData.IsDistroless)
+            {
+                rootPath = "/rootfs/";
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath);
+            }
+
+            string command = $"-c \"grep '^app' {rootPath}etc/passwd | cut -d: -f3\"";
+
+            string uidString = DockerHelper.Run(
+                image: imageTag,
+                command: command,
+                name: imageData.GetIdentifier($"VerifyUID-{ImageType}"),
+                optionalRunArgs: $"--entrypoint /bin/sh"
+            );
+
+            int uid = int.Parse(uidString);
+
+            Assert.True(uid > 10000);
         }
 
         private IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)

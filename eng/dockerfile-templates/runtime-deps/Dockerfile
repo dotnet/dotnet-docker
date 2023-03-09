@@ -22,7 +22,7 @@
     set rpmFilename to "dotnet-runtime-deps.rpm" ^
     set utilPkgs to when(isMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0", ["shadow-utils"], []) ^
     set username to "app" ^
-    set uid to 101 ^
+    set uid to 64198 ^
     set gid to uid
 }}{{
     if !isSingleStage:# Installer image
