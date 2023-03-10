@@ -85,7 +85,7 @@ namespace Dotnet.Docker
                 { "runtime-deps-cm.1", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.1-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
                 { "runtime-deps-cm.2", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.2-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
 
-                { "aspnet", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
+                { "aspnet", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$COMPOSITE_SUFFIX$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
                 {
                     "aspnet-runtime-targeting-pack",
                     new string[]
@@ -207,6 +207,7 @@ namespace Dotnet.Docker
                     .Replace("$ARCHIVE_EXT", archiveExt)
                     .Replace("$VERSION_DIR", versionDir)
                     .Replace("$VERSION_FILE", versionFile)
+                    .Replace("$COMPOSITE_SUFFIX", _dockerfileVersion.Major != 6.0 && _dockerfileVersion.Major != 7.0 ? "composite-" : string.Empty)
                     .Replace("$OS", _os)
                     .Replace("$OPTIONAL_OS", optionalOs)
                     .Replace("$ARCH", _arch)

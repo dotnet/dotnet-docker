@@ -7,52 +7,47 @@
     set isDistrolessMariner to isMariner && isDistroless ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
-    set isRpmInstall to isFullMariner && dotnetVersion = "6.0" ^
+    set isRpmInstall to false ^
     set isSingleStage to (isAlpine || isRpmInstall) && !isInternal ^
-    set runtimeBaseTag to
-        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
-    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set runtimeDepsBaseTag to cat(
+        "$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
     set installerImageTag to when(isDistrolessMariner,
         cat("mcr.microsoft.com/cbl-mariner/base/core:", OS_VERSION_NUMBER),
         when(isAlpine || isFullMariner,
-            runtimeBaseTag,
-            cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))) ^
-    set copyFromSrcPath to when(isDistroless, "/dotnet", "/shared/Microsoft.AspNetCore.App") ^
-    set copyFromDstPath to when(isDistroless, "/usr/share/dotnet", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App")
-}}ARG REPO=mcr.microsoft.com/dotnet/{{
-    if dotnetVersion = "6.0" || dotnetVersion = "7.0":{{
-        echo "runtime"
-    }}^
-    else:{{
-        echo "runtime-deps"
-    }}}}{{if isSingleStage:
+            runtimeDepsBaseTag,
+            cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")))
+}}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps{{if isSingleStage:
 {{
 
-    _ SINGLE STAGE
+_ SINGLE STAGE
 
-}}FROM {{runtimeBaseTag}}
+}}FROM {{runtimeDepsBaseTag}}
 {{if isAlpine:
 {{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
 }}
 {{InsertTemplate("Dockerfile.envs")}}
 
-# Install ASP.NET Core
-{{InsertTemplate("Dockerfile.linux.install-aspnet",
+# Install ASP.NET composite runtime
+{{InsertTemplate("../runtime/Dockerfile.linux.install-runtime",
     [
         "install-method": "download-and-install",
-        "is-rpm-install": isRpmInstall
-    ])}}^else:
-{{
+        "dest-dir": "/usr/share/dotnet",
+        "add-symlink": !isRpmInstall,
+        "is-rpm-install": isRpmInstall,
+        "is-composite-runtime": "true"
+    ])}}^
+else:{{
 
-    _ MULTI STAGE
+_ MULTI STAGE
 
 }}
+
 # Installer image
 FROM {{installerImageTag}} AS installer
 {{if isInternal:
 ARG SAS_QUERY_STRING
-}}{{if isDistrolessMariner:
+}}{{ if isDistrolessMariner:
 {{InsertTemplate("../Dockerfile.linux.distroless-mariner-installer-prereqs")}}
 ^elif isFullMariner && !isRpmInstall:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
@@ -60,28 +55,43 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
         "pkgs": ["tar"]
     ])}}
 }}
-# Retrieve ASP.NET Core
-{{InsertTemplate("Dockerfile.linux.install-aspnet",
+# Retrieve ASP.NET composite runtime
+{{InsertTemplate("../runtime/Dockerfile.linux.install-runtime",
     [
         "install-method": when(isInternal && isRpmInstall, "download", "download-and-install"),
+        "dest-dir": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
         "use-local-version-var": "true",
         "is-internal": isInternal,
         "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
-        "is-rpm-install": isRpmInstall
-    ])}}
+        "is-rpm-install": isRpmInstall,
+        "is-composite-runtime": "true"
+    ])}}{{ if isDistroless:
+
+RUN mkdir /dotnet-symlink \
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet}}
 
 
-# ASP.NET Core image
-FROM {{runtimeBaseTag}}
+# ASP.NET composite runtime image
+FROM {{runtimeDepsBaseTag}}
 
+{{InsertTemplate("../runtime/Dockerfile.envs")}}
 {{InsertTemplate("Dockerfile.envs")}}
-{{if isInternal && isRpmInstall:
-{{InsertTemplate("Dockerfile.linux.install-aspnet",
+{{ if isInternal && isRpmInstall:
+{{InsertTemplate("../runtime/Dockerfile.linux.install-runtime",
     [
         "install-method": "copy-and-install",
+        "dest-dir": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
         "is-internal": isInternal,
         "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
         "installer-stage": "installer",
         "is-rpm-install": isRpmInstall
-    ])}}^else:
-COPY --from=installer ["{{copyFromSrcPath}}", "{{copyFromDstPath}}"]}}}}
+    ])}}}}{{ if isDistroless:
+COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/dotnet-symlink", "/usr/bin"]{{ if !isMariner || dotnetVersion != "6.0":
+
+ENTRYPOINT ["/usr/bin/dotnet"]
+CMD ["--info"]}}^
+elif !(isInternal && isRpmInstall):
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
+
+RUN {{InsertTemplate("../runtime/Dockerfile.linux.symlink")}}}}}}

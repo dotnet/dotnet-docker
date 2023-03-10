@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/runtime
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
@@ -9,20 +9,29 @@ RUN tdnf install -y \
         tar \
     && tdnf clean all
 
-# Retrieve ASP.NET Core
+# Retrieve ASP.NET composite runtime
 RUN aspnetcore_version=8.0.0-preview.4.23221.9 \
-    && curl -fSL --output aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='c1dc554665af00a931b882947d395eec4b92c95e4966a88e3993237e32d6f1147f34d2da560a93e7d5792239697f03bb7d3e80ef5fd10ff5cc6d5d973b0cd7dc' \
-    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
-    && mkdir -p /dotnet \
-    && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
-    && rm aspnetcore.tar.gz
+    && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
+    && dotnet_sha512='c1dc554665af00a931b882947d395eec4b92c95e4966a88e3993237e32d6f1147f34d2da560a93e7d5792239697f03bb7d3e80ef5fd10ff5cc6d5d973b0cd7dc' \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /usr/share/dotnet \
+    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
+    && rm dotnet.tar.gz
+
+RUN mkdir /dotnet-symlink \
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
 
 
-# ASP.NET Core image
+# ASP.NET composite runtime image
 FROM $REPO:8.0.0-preview.4-cbl-mariner2.0-distroless-amd64
 
+# .NET Runtime version
+ENV DOTNET_VERSION=8.0.0-preview.4.23221.1
 # ASP.NET Core version
 ENV ASPNET_VERSION=8.0.0-preview.4.23221.9
 
-COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
+
+ENTRYPOINT ["/usr/bin/dotnet"]
+CMD ["--info"]

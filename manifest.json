@@ -3773,10 +3773,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/bookworm-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {
@@ -3787,10 +3787,10 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/bookworm-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {
@@ -3802,10 +3802,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/bookworm-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {
@@ -3826,10 +3826,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/bookworm-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {}
@@ -3837,10 +3837,10 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/bookworm-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {},
@@ -3849,10 +3849,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/bookworm-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {},
@@ -3873,7 +3873,7 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/8.0/alpine3.17/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
@@ -3888,7 +3888,7 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/8.0/alpine3.17/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
@@ -3904,7 +3904,7 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/8.0/alpine3.17/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
@@ -3925,10 +3925,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/jammy/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
@@ -3939,10 +3939,10 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/jammy/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
@@ -3954,10 +3954,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/jammy/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
@@ -3977,10 +3977,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/jammy-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -4000,10 +4000,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/jammy-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -4024,10 +4024,10 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/jammy-chiseled/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -4063,10 +4063,10 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/cbl-mariner2.0/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
@@ -4084,10 +4084,10 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/cbl-mariner2.0/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
@@ -4124,7 +4124,7 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/8.0/cbl-mariner2.0-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -4154,7 +4154,7 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/8.0/cbl-mariner2.0-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
