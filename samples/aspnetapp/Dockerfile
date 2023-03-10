@@ -1,11 +1,13 @@
-# Learn about building .NET container images:
-# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# https://hub.docker.com/_/microsoft-dotnet
+ARG SDK_IMAGE
+ARG RUNTIME_IMAGE
+
+FROM $SDK_IMAGE AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY aspnetapp/*.csproj .
-RUN dotnet restore --use-current-runtime  
+RUN dotnet restore --use-current-runtime
 
 # copy everything else and build app
 COPY aspnetapp/. .
@@ -13,7 +15,7 @@ RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o 
 
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+FROM $RUNTIME_IMAGE
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnet", "aspnetapp.dll"]

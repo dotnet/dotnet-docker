@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
+ARG BASE_IMAGE
 
 # Installer image
 FROM amd64/buildpack-deps:bookworm-curl AS installer
@@ -14,7 +14,7 @@ RUN dotnet_version=8.0.0-preview.4.23221.1 \
 
 
 # .NET runtime image
-FROM $REPO:8.0.0-preview.4-bookworm-slim-amd64
+FROM $BASE_IMAGE
 
 # .NET Runtime version
 ENV DOTNET_VERSION=8.0.0-preview.4.23221.1
