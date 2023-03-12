@@ -14,7 +14,7 @@ RUN dotnet restore -r $RID
 # copy everything else and build
 COPY eng/update-dependencies/. ./
 
-RUN dotnet publish -c Release -o out --no-restore
+RUN dotnet publish -c Release /p:PublishDir=out --no-restore
 
 
 # runtime image

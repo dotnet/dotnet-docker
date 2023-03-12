@@ -8,7 +8,7 @@ RUN dotnet restore -r linux-arm
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c Release -o /app -r linux-arm --self-contained false --no-restore
+RUN dotnet publish -c Release /p:PublishDir=/app -r linux-arm --self-contained false --no-restore
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:7.0-jammy-arm32v7

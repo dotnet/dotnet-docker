@@ -43,7 +43,7 @@ RUN dotnet restore
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c Release -o /app --no-restore
+RUN dotnet publish -c Release /p:PublishDir=/app --no-restore
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:7.0

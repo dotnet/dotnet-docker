@@ -8,7 +8,7 @@ RUN dotnet restore --use-current-runtime
 
 # copy everything else and build app
 COPY aspnetapp/. .
-RUN dotnet publish -c Release -o /app --use-current-runtime --self-contained false --no-restore
+RUN dotnet publish -c Release /p:PublishDir=/app --use-current-runtime --self-contained false --no-restore
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0

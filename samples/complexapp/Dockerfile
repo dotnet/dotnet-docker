@@ -29,7 +29,7 @@ RUN dotnet build --no-restore
 ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore", "--no-build"]
 
 FROM build AS publish
-RUN dotnet publish -c Release --no-build -o /app
+RUN dotnet publish -c Release --no-build /p:PublishDir=/app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:7.0

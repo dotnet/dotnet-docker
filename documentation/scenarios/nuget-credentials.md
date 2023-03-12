@@ -46,7 +46,7 @@ RUN dotnet restore
 
 # Copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c Release -o out  --no-restore
+RUN dotnet publish -c Release /p:PublishDir=out  --no-restore
 
 
 FROM mcr.microsoft.com/dotnet/runtime:6.0 AS runtime
@@ -105,7 +105,7 @@ RUN dotnet restore
 
 # Copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c Release -o out  --no-restore
+RUN dotnet publish -c Release /p:PublishDir=out  --no-restore
 
 
 FROM mcr.microsoft.com/dotnet/runtime:6.0 AS runtime
@@ -161,7 +161,7 @@ RUN dotnet restore
 
 # Copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c Release -o out --no-restore
+RUN dotnet publish -c Release /p:PublishDir=out --no-restore
 
 
 FROM mcr.microsoft.com/dotnet/runtime:6.0 AS runtime
@@ -198,7 +198,7 @@ RUN dotnet restore
 
 # Copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c Release -o out --no-restore
+RUN dotnet publish -c Release /p:PublishDir=out --no-restore
 
 
 FROM mcr.microsoft.com/dotnet/runtime:6.0 AS runtime
@@ -298,7 +298,7 @@ RUN --mount=type=secret,id=nugetconfig \
 
 # Copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c Release -o out --no-restore
+RUN dotnet publish -c Release /p:PublishDir=out --no-restore
 
 
 FROM mcr.microsoft.com/dotnet/runtime:6.0 AS runtime

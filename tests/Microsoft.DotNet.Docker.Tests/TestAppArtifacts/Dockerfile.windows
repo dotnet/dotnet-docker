@@ -34,7 +34,7 @@ ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore"]
 
 
 FROM build as publish_fx_dependent
-RUN dotnet publish --no-restore -c Release -o out
+RUN dotnet publish --no-restore -c Release /p:PublishDir=out
 
 
 FROM $runtime_image AS fx_dependent_app
