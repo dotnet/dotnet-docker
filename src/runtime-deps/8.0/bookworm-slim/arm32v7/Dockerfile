@@ -17,12 +17,11 @@ RUN apt-get update \
 # Create a non-root user and group
 RUN groupadd \
         --system \
-        --gid=101 \
+        --gid=64198 \
         app \
     && useradd \
-        --uid 101 \
-        --gid 101 \
-        --shell /bin/false \
+        --uid 64198 \
+        --gid 64198 \
         --create-home \
         --system \
         app

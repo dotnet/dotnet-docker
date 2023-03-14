@@ -32,16 +32,16 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
 # Create a non-root user and group
 RUN groupadd \
         --system \
-        --gid=101 \
+        --gid=64198 \
         app \
     && adduser \
-        --uid 101 \
-        --gid 101 \
+        --uid 64198 \
+        --gid 64198 \
         --shell /bin/false \
         --create-home \
         --system \
         app \
-    && install -d -m 0755 -o 101 -g 101 "/staging/home/app" \
+    && install -d -m 0755 -o 64198 -g 64198 "/staging/home/app" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/staging/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
@@ -62,7 +62,7 @@ FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0
 COPY --from=installer /staging/ /
 
 # Workaround for https://github.com/moby/moby/issues/38710
-COPY --from=installer --chown=101:101 /staging/home/app /home/app
+COPY --from=installer --chown=64198:64198 /staging/home/app /home/app
 
 ENV \
     # Configure web servers to bind to port 8080 when present

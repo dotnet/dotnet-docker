@@ -2,7 +2,7 @@
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
     set username to "app" ^
-    set uid to 101 ^
+    set uid to 64198 ^
     set gid to uid
 }}FROM {{ARCH_VERSIONED}}/golang:1.18 as chisel
 RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel

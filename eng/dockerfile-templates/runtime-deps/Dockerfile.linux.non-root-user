@@ -4,7 +4,8 @@
         name: Name of the user/group to create
         uid: ID of the user to be created
         gid: ID of the group to be created
-        no-create-home (optional): Indicates whether a home directory should be created for the user ^
+        no-create-home (optional): Indicates whether a home directory should be created for the user
+        no-shell (optional): Indicates whether the shell should be set to /bin/false ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
@@ -21,8 +22,8 @@
         {{ARGS["name"]}} \
     && {{if isDebian:useradd^else:adduser}} \
         --uid {{ARGS["uid"]}} \
-        {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \
-        --shell /bin/false \{{if ARGS["no-create-home"]:
+        {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \{{if ARGS["no-shell"]:
+        --shell /bin/false \}}{{if ARGS["no-create-home"]:
         --no-create-home \^elif dotnetVersion != "6.0" && dotnetVersion != "7.0" && (isMariner || isDebian):
         --create-home \}}
         --system \
