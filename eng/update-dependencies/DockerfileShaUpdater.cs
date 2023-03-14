@@ -133,7 +133,7 @@ namespace Dotnet.Docker
             {
                 shaVariablePattern = $"\"(?<{ShaVariableGroupName}>{Regex.Escape(productName)}\\|{Regex.Escape(dockerfileVersion)}.*\\|sha)\":";
             }
-                
+
             Regex shaVariableRegex = new(shaVariablePattern);
 
             return shaVariableRegex.Matches(versions)
@@ -459,7 +459,7 @@ namespace Dotnet.Docker
                 if (response.IsSuccessStatusCode)
                 {
                     string checksums = await response.Content.ReadAsStringAsync();
-                    string[] checksumLines = checksums.Replace("\r\n", "\n").Split("\n");
+                    string[] checksumLines = checksums.Replace("\r\n", "\n").Split("\n", StringSplitOptions.RemoveEmptyEntries);
                     if (!checksumLines[0].StartsWith("Hash") || !string.IsNullOrEmpty(checksumLines[1]))
                     {
                         Trace.TraceError($"Checksum file is not in the expected format: {uri}");
