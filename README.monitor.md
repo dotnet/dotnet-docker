@@ -60,7 +60,7 @@ Tags | Dockerfile | OS Version
 ##### .NET Monitor 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.2-ubuntu-chiseled-amd64, 8.0-preview-ubuntu-chiseled-amd64, 8-preview-ubuntu-chiseled-amd64, 8.0.0-preview.2-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-preview.2, 8.0-preview, 8-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+8.0.0-preview.3-ubuntu-chiseled-amd64, 8.0-preview-ubuntu-chiseled-amd64, 8-preview-ubuntu-chiseled-amd64, 8.0.0-preview.3-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-preview.3, 8.0-preview, 8-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -75,7 +75,7 @@ Tags | Dockerfile | OS Version
 ##### .NET Monitor 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.2-ubuntu-chiseled-arm64v8, 8.0-preview-ubuntu-chiseled-arm64v8, 8-preview-ubuntu-chiseled-arm64v8, 8.0.0-preview.2-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-preview.2, 8.0-preview, 8-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.0-preview.3-ubuntu-chiseled-arm64v8, 8.0-preview-ubuntu-chiseled-arm64v8, 8-preview-ubuntu-chiseled-arm64v8, 8.0.0-preview.3-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-preview.3, 8.0-preview, 8-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 
 You can retrieve a list of all available tags for dotnet/nightly/monitor at https://mcr.microsoft.com/v2/dotnet/nightly/monitor/tags/list.
 <!--End of generated tags-->
