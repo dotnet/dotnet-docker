@@ -1,6 +1,6 @@
 # Replicas backed by health-checks
 
-Use multiple replicas and health checks for reliability.
+Use multiple replicas and health checks for reliability with a [sample app](../../samples/aspnetapp/Dockerfile.alpine).
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/kubernetes/replicas-and-health/replica-health.yaml

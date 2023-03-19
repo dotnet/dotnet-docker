@@ -1,6 +1,6 @@
 # Single node app
 
-Host an app by applying a sample manifest (deployment and service).
+Host a [sample app](../../samples/aspnetapp/Dockerfile.alpine) by applying a sample manifest (deployment and service).
 
 Launch an app on your cluster with the following command.
 

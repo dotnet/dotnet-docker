@@ -1,6 +1,6 @@
 # Resource-limited app
 
-Limit memory and CPU for an app.
+Limit memory and CPU for an app with a [sample app](../../samples/aspnetapp/Dockerfile.alpine).
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/kubernetes/resource-limits/resource-limits.yaml
