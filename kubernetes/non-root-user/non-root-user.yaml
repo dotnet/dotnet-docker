@@ -19,7 +19,7 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
-        #   runAsUser: 64198
+          runAsUser: 64198
 ---
 apiVersion: v1
 kind: Service
