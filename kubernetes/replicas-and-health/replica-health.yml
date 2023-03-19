@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-dotnet
+  labels:
+    app: aspnetapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aspnetapp
+  template:
+    metadata:
+      labels:
+        app: aspnetapp
+    spec:
+      containers:
+      - name: aspnetapp
+        image: richlander/aspnetapp #mcr.microsoft.com/dotnet/samples:aspnetapp
+        resources:
+          requests:
+            memory: "80Mi"
+          limits:
+            memory: "100Mi"
+            cpu: "1"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-dotnet
+spec:
+  type: NodePort
+  selector:
+    app: aspnetapp
+  ports:
+    - port: 80

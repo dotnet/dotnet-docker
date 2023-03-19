@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-dotnet
+  labels:
+    app: aspnetapp
+spec:
+  selector:
+    matchLabels:
+      app: aspnetapp
+  template:
+    metadata:
+      labels:
+        app: aspnetapp
+    spec:
+      containers:
+      - name: aspnetapp
+        image: mcr.microsoft.com/dotnet/samples:aspnetapp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-dotnet
+spec:
+  type: NodePort
+  selector:
+    app: aspnetapp
+  ports:
+    - port: 80
