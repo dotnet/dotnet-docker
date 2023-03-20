@@ -66,4 +66,6 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user",
         "append-cmd": len(utilPkgs) > 0
     ])}}
 }}
-{{InsertTemplate("../Dockerfile.common-dotnet-envs")}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
+    "uid": uid
+])}}

@@ -46,6 +46,7 @@ COPY --from=builder /rootfs /
 COPY --from=builder --chown=64198:64198 /rootfs/home/app /home/app
 
 ENV \
+    APP_UID=64198 \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 \
     # Enable detection of running in a container
@@ -53,4 +54,4 @@ ENV \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
-USER app
+USER $APP_UID

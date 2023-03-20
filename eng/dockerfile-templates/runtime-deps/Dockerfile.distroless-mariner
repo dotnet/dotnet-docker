@@ -65,6 +65,8 @@ COPY --from=installer {{distrolessStagingDir}}/ /{{if createUserHome:
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=installer --chown={{uid}}:{{gid}} {{distrolessStagingDir}}/home/{{username}} /home/{{username}}}}
 
-{{InsertTemplate("../Dockerfile.common-dotnet-envs")}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
+    "uid": uid
+])}}
 
-USER app
+USER $APP_UID
