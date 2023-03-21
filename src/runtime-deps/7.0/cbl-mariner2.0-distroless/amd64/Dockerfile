@@ -73,4 +73,4 @@ ENV \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
-USER $APP_UID
+USER app

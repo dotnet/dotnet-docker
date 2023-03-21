@@ -69,4 +69,4 @@ COPY --from=installer --chown={{uid}}:{{gid}} {{distrolessStagingDir}}/home/{{us
     "uid": uid
 ])}}
 
-USER $APP_UID
+USER app

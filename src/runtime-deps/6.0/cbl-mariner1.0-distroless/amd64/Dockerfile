@@ -59,4 +59,4 @@ ENV \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
 
-USER $APP_UID
+USER app
