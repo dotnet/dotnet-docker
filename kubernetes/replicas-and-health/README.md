@@ -21,7 +21,7 @@ kubectl get -w pod
 In another terminal, create a proxy to the service.
 
 ```bash
-kubectl port-forward service/hello-dotnet 8080:80
+kubectl port-forward service/dotnet-replica-health 8080:80
 ```
 
 View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.

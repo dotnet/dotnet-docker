@@ -1,8 +1,8 @@
 # Using .NET with Kubernetes
 
-These instruction should work with any [Kubernetes](https://kubernetes.io/) environment. The instructions make extensive use of [kubectl](https://kubernetes.io/docs/reference/kubectl/).
+[Kubernetes](https://kubernetes.io/) provides an orchestration system for containers. You can host .NET in Kubernetes in the same way as other dev platforms. We've provided samples that demonstrate best practices for configuring .NET apps with Kubernetes. More general container samples are provided in the [samples](../samples/README.md) directory.
 
-More general samples are provided in the [samples](../samples/README.md) directory.
+These instruction should work with any [Kubernetes](https://kubernetes.io/) environment. The instructions make extensive use of [kubectl](https://kubernetes.io/docs/reference/kubectl/).
 
 You can host a .NET sample with a [few quick commands](hello-dotnet/README.md).
 

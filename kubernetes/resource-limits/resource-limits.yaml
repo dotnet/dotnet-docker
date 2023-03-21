@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-dotnet
+  name: dotnet-resource-limits
   labels:
     app: aspnetapp
 spec:
@@ -26,7 +26,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-dotnet
+  name: dotnet-resource-limits
 spec:
   type: NodePort
   selector:

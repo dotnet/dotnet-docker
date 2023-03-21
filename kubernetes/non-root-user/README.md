@@ -19,7 +19,7 @@ kubectl apply -f non-root-user.yaml
 Create a proxy to the service.
 
 ```bash
-kubectl port-forward service/hello-dotnet 8080:8080
+kubectl port-forward service/dotnet-non-root 8080:8080
 ```
 
 View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
@@ -52,36 +52,21 @@ This `securityContext` object enforces non-root hosting:
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
-          runAsUser: 64198
 ```
 
 - [allowPrivilegeEscalation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) -- Prevents (if `false`) a process from gaining great privileges than its parent process. This is a good setting, but not directly related to users.
 - `runAsNonRoot` -- Tests that the user (via uid) is a non-root user, otherwise fail.
-- `runAsUser` -- Sets the user (via uid). It cannot be set to `0` (meaning `root`).
 
-Both `runAsNonRoot` and `runAsUser` require uid values. If `runAsNonRoot` is set to `true` and the container image has a user set by uid, then `runAsUser` is optional. Otherwise, `runAsUser` is required.
+`runAsUser` isn't present in this example, but is a related option. `runAsNonRoot` is a test that a non-root user is used, per the `USER` instruction in container image metadata. `runAsUser` sets the user to a given UID. If `runAsNonRoot` is set to `true` and the `USER` in the container image is set by name and not UID, then `runAsUser` is required. In our example, `USER` is set by UID.
 
 ## Best practice
 
-The source [Dockerfile](../../samples/aspnetapp/Dockerfile.alpine-non-root) for the `dotnetnonroot.azurecr.io/aspnetapp` image [sets the user by name](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.alpine-non-root#L27). As a result, the `runAsUser` property is needed.
-
-Name form:
+Users should be set by UID. .NET container images expose an environment variable for the UID, making that easy.
 
 ```dockerfile
-USER app
+USER $APP_UID
 ```
 
-UID form:
+The source [Dockerfile](../../samples/aspnetapp/Dockerfile.alpine-non-root) for the `dotnetnonroot.azurecr.io/aspnetapp` image [demonstrates this pattern](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.alpine-non-root#L28).
 
-```dockerfile
-USER 64198
-```
-
-If the UID form was used in the Dockerfile, then `runAsUser` would not be needed, in the manifest fragment above.
-
-Given common patterns and in the interests of security, we recommend the following practice:
-
-- Set `USER` with the name in a Dockerfiles.
-- Set `runAsUser` with UID in Kubernetes manifests.
-
-This approach has the advantage of making Dockerfiles easy to inspect and secure by default, while establishing Kubernetes manifests as the final arbiter of deployment permissions.
+This approach has the advantage of making Dockerfiles easy to inspect and secure by default, while establishing Kubernetes manifests as the final arbiter of deployment policies.
