@@ -55,6 +55,27 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public override int DefaultPort => (IsDistroless | Version.Major >= 8) ? 8080 : 80;
 
+        public override int? NonRootUID {
+            get {
+                if (OS == Tests.OS.Mariner10Distroless)
+                {
+                    return 1000;
+                }
+                else if (OS == Tests.OS.Mariner20Distroless)
+                {
+                    return 101;
+                }
+                else if ((Version.Major != 6 && Version.Major != 7) || !IsWindows)
+                {
+                    return 64198;
+                }
+                else
+                {
+                    return base.NonRootUID;
+                }
+            }
+        }
+
         public string GetDockerfilePath(DotNetImageType imageType) =>
             $"src/{GetVariantName(imageType)}/{Version}/{OSTag}/{GetArchLabel()}";
 

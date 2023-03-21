@@ -23,6 +23,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public string OS { get; set; }
         public bool IsDistroless => OS.Contains("distroless") || OS.Contains("chiseled");
         public virtual int DefaultPort => IsDistroless ? 8080 : 80;
+        public virtual int? NonRootUID => null;
 
         private static readonly Lazy<JObject> s_imageInfoData;
 
