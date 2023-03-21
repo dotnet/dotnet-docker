@@ -9,6 +9,7 @@
     set lineContinuation to when(isWindows, "`", "\") ^
     set port to when(isDistroless || (dotnetVersion != "6.0" && dotnetVersion != "7.0"), "8080", "80")
 }}ENV {{lineContinuation}}{{if (!isWindows && dotnetVersion != "6.0" && dotnetVersion != "7.0") || isDistroless:
+    # UID of the non-root user 'app'
     APP_UID={{ARGS["uid"]}} {{lineContinuation}}}}
     # Configure web servers to bind to port {{port}} when present
     {{if dotnetVersion = "6.0" || dotnetVersion = "7.0":ASPNETCORE_URLS=http://+:{{port}}^else:ASPNETCORE_HTTP_PORTS={{port}}}} {{lineContinuation}}

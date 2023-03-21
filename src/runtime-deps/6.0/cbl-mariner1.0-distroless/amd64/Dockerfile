@@ -52,6 +52,7 @@ FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:1.0
 COPY --from=installer /staging/ /
 
 ENV \
+    # UID of the non-root user 'app'
     APP_UID=1000 \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_URLS=http://+:8080 \
