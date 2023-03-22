@@ -57,11 +57,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public override int? NonRootUID {
             get {
-                if (IsWindows)
-                {
-                    return null;
-                }
-                else if (OS == Tests.OS.Mariner10Distroless)
+                if (OS == Tests.OS.Mariner10Distroless)
                 {
                     return 1000;
                 }
