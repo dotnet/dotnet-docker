@@ -8,7 +8,7 @@
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set lineContinuation to when(isWindows, "`", "\") ^
     set port to when(isDistroless || (dotnetVersion != "6.0" && dotnetVersion != "7.0"), "8080", "80")
-}}ENV {{lineContinuation}}{{if (!isWindows && dotnetVersion != "6.0" && dotnetVersion != "7.0") || isDistroless:
+}}ENV {{lineContinuation}}{{if (!isWindows && dotnetVersion != "6.0" && dotnetVersion != "7.0") || (isDistroless && !isMariner):
     # UID of the non-root user 'app'
     APP_UID={{ARGS["uid"]}} {{lineContinuation}}}}
     # Configure web servers to bind to port {{port}} when present
