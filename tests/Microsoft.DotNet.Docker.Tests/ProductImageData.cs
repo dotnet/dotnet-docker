@@ -57,17 +57,17 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public override int? NonRootUID {
             get {
-                if (OS == Tests.OS.Mariner10Distroless)
+                if (IsWindows)
+                {
+                    return null;
+                }
+                else if (OS == Tests.OS.Mariner10Distroless)
                 {
                     return 1000;
                 }
-                else if (OS == Tests.OS.Mariner20Distroless)
+                else if (OS == Tests.OS.Mariner20Distroless && (Version.Major == 6 || Version.Major == 7))
                 {
                     return 101;
-                }
-                else if ((Version.Major != 6 && Version.Major != 7) || !IsWindows)
-                {
-                    return 64198;
                 }
                 else
                 {
