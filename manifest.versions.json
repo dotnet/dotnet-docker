@@ -97,9 +97,9 @@
     "monitor|7.1|linux|arm64|sha": "9fff11644bb77361bd6ec15186a1d6cbdf4a370641d10c9cc8f8a35b778f6da6cd53885f570bf88c0b7107320b8ae50e0d6d6f8a801cb16b0c83c3d3b2a2749b",
     "monitor|7.1|product-version": "7.1.1",
 
-    "monitor|8.0|build-version": "8.0.0-preview.3.23171.6",
-    "monitor|8.0|linux|x64|sha": "51c6cc218cbe093b71a9f793b40151508e2e0da51b827677fbefbb8369e92d97ce758ed1bed4bcac9d9b68aacb29d72fa416aff5f8e6b086849bfc3206e6bf1c",
-    "monitor|8.0|linux|arm64|sha": "d7374e415db99437792cf86b536b2a555c10c3e5d7310cfb686f39d0e85e54cbc11c169fad75a5d4248b2814012cabae4603a701bba74935e9e5df28be8b4e76",
+    "monitor|8.0|build-version": "8.0.0-preview.3.23172.5",
+    "monitor|8.0|linux|x64|sha": "373b1932e87bf9f2d2d53e84725ac27c101977c74af0516cceb8e4046218a94256b01d8e48c9028c77357cdb88d773919b757efe052be7fb156c4db4cb847398",
+    "monitor|8.0|linux|arm64|sha": "fd30cebec1a0bd65a34bb92bc5840911e0b88bc1497a93e2b0dbd77d28818f24e9b1a8ef661cf102a0d087bf3c69e27d62c16b3fd75ab1269e1b9bbcd89c3ba8",
     "monitor|8.0|product-version": "8.0.0-preview.3",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
