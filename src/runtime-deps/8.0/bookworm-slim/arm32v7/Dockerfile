@@ -27,6 +27,8 @@ RUN groupadd \
         app
 
 ENV \
+    # UID of the non-root user 'app'
+    APP_UID=64198 \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 \
     # Enable detection of running in a container
