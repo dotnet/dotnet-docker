@@ -1,4 +1,6 @@
 {{
+    _ ARGS:
+        uid (optional): ID of the non-root user ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
@@ -6,7 +8,9 @@
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set lineContinuation to when(isWindows, "`", "\") ^
     set port to when(isDistroless || (dotnetVersion != "6.0" && dotnetVersion != "7.0"), "8080", "80")
-}}ENV {{lineContinuation}}
+}}ENV {{lineContinuation}}{{if (!isWindows && dotnetVersion != "6.0" && dotnetVersion != "7.0") || (isDistroless && !isMariner):
+    # UID of the non-root user 'app'
+    APP_UID={{ARGS["uid"]}} {{lineContinuation}}}}
     # Configure web servers to bind to port {{port}} when present
     {{if dotnetVersion = "6.0" || dotnetVersion = "7.0":ASPNETCORE_URLS=http://+:{{port}}^else:ASPNETCORE_HTTP_PORTS={{port}}}} {{lineContinuation}}
     {{InsertTemplate("Dockerfile.env.container")}}{{if isAlpine || (isDistroless && !(isMariner && find(OS_VERSION, "1.0") > 0)): {{lineContinuation}}

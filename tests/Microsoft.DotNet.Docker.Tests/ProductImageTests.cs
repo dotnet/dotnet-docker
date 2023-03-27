@@ -103,7 +103,14 @@ namespace Microsoft.DotNet.Docker.Tests
             string expectedUser;
             if (imageData.IsDistroless && ImageType != DotNetImageType.SDK)
             {
-                expectedUser = "app";
+                if (imageData.OS.Contains("cbl-mariner"))
+                {
+                    expectedUser = "app";
+                }
+                else
+                {
+                    expectedUser = imageData.NonRootUID.ToString();
+                }
             }
             // For Windows, only Nano Server defines a user, which seems wrong.
             // I've logged https://dev.azure.com/microsoft/OS/_workitems/edit/40146885 for this.
