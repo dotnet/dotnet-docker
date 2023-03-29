@@ -1,14 +1,14 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
-
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview-alpine AS build
+ARG TARGETARCH
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY aspnetapp/*.csproj .
-RUN dotnet restore --use-current-runtime
+RUN dotnet restore -a $TARGETARCH
 
 # copy everything else and build app
 COPY aspnetapp/. .
-RUN dotnet publish --use-current-runtime -c Release --self-contained false --no-restore -o /app
+RUN dotnet publish -a $TARGETARCH --self-contained false --no-restore -o /app
 
 
 # To enable globalization:
@@ -24,5 +24,5 @@ ENV DOTNET_ROLL_FORWARD_PRE_RELEASE=1
 WORKDIR /app
 COPY --from=build /app .
 
-USER app
+USER $APP_UID
 ENTRYPOINT ["./aspnetapp"]
