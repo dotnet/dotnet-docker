@@ -460,12 +460,12 @@ namespace Dotnet.Docker
                 {
                     string checksums = await response.Content.ReadAsStringAsync();
                     string[] checksumLines = checksums.Replace("\r\n", "\n").Split("\n", StringSplitOptions.RemoveEmptyEntries);
-                    if (!checksumLines[0].StartsWith("Hash") || !string.IsNullOrEmpty(checksumLines[1]))
+                    if (!checksumLines[0].StartsWith("Hash"))
                     {
                         Trace.TraceError($"Checksum file is not in the expected format: {uri}");
                     }
 
-                    for (int i = 2; i < checksumLines.Length - 1; i++)
+                    for (int i = 1; i < checksumLines.Length; i++)
                     {
                         string[] parts = checksumLines[i].Split(" ");
                         if (parts.Length != 2)
