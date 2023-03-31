@@ -1,4 +1,5 @@
-# https://hub.docker.com/_/microsoft-dotnet
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 FROM mcr.microsoft.com/dotnet/sdk:7.0-windowsservercore-ltsc2022 AS build
 WORKDIR /source
 

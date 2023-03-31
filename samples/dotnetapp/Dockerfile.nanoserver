@@ -1,5 +1,8 @@
-# https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# escape=`
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+ARG TAG=ltsc2022
+FROM mcr.microsoft.com/dotnet/sdk:7.0-nanoserver-$TAG AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -11,9 +14,7 @@ COPY . .
 RUN dotnet publish -c Release -o /app -r win-x64 --self-contained false --no-restore
 
 # final stage/image
-# Relies on 7.0 multi-arch tag to pick the same Windows version as the host. 
-# Alternatively, a release specific tag can be used, like: `7.0-nanoserver-ltsc2022`
-FROM mcr.microsoft.com/dotnet/runtime:7.0
+FROM mcr.microsoft.com/dotnet/runtime:7.0-nanoserver-$TAG
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnetapp"]

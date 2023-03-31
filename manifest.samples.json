@@ -31,7 +31,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-x64-slim",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -40,7 +40,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-arm32-slim",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -50,7 +50,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-arm64-slim",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
