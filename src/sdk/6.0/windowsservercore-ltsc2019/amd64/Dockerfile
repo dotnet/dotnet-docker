@@ -46,7 +46,7 @@ RUN powershell -Command " `
         Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
         Remove-Item -Path $Env:ProgramFiles\powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force;"
 
-RUN setx /M PATH "%PATH%;C:\Program Files\powershell;C:\Program Files\MinGit\cmd"
+RUN setx /M PATH "%PATH%;C:\Program Files\powershell"
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
