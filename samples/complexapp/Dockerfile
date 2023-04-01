@@ -6,30 +6,30 @@ WORKDIR /source
 COPY complexapp/*.csproj complexapp/
 COPY libfoo/*.csproj libfoo/
 COPY libbar/*.csproj libbar/
-RUN dotnet restore complexapp/complexapp.csproj --use-current-runtime
+RUN dotnet restore complexapp/complexapp.csproj
 
 # copy and build app and libraries
 COPY complexapp/ complexapp/
 COPY libfoo/ libfoo/
 COPY libbar/ libbar/
-WORKDIR /source/complexapp
-RUN dotnet build --use-current-runtime --no-restore
 
 # test stage -- exposes optional entrypoint
 # target entrypoint with: docker build --target test
 FROM build AS test
-WORKDIR /source/tests
 
-COPY tests/*.csproj .
-RUN dotnet restore tests.csproj
+COPY tests/*.csproj tests/
+WORKDIR /source/tests
+RUN dotnet restore
 
 COPY tests/ .
-RUN dotnet build --use-current-runtime --no-restore
+RUN dotnet build --no-restore
 
-ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore", "--no-build"]
+ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-build"]
+
 
 FROM build AS publish
-RUN dotnet publish --use-current-runtime --no-build -o /app
+WORKDIR /source/complexapp
+RUN dotnet publish --no-restore -o /app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:7.0
