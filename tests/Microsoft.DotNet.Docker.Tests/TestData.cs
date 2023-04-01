@@ -120,7 +120,6 @@ namespace Microsoft.DotNet.Docker.Tests
             // jobs in order to test the Windows Server Core samples.
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore" },
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-iis" },
-            new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-slim" },
         };
 
         private static readonly ProductImageData[] s_linuxMonitorTestData =
