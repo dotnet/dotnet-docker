@@ -15,7 +15,7 @@ RUN dotnet publish -a $TARGETARCH --no-restore -o /app
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
 # .NET 8 tag includes `-preview`
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-preview-alpine
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:8.0-preview-alpine
 
 # These ENVs are only needed because the sample uses .NET 7
 ENV DOTNET_ROLL_FORWARD=Major
