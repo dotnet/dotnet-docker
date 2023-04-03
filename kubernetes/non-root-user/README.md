@@ -54,19 +54,11 @@ This `securityContext` object enforces non-root hosting:
           runAsNonRoot: true
 ```
 
-- [allowPrivilegeEscalation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) -- Prevents (if `false`) a process from gaining great privileges than its parent process. This is a good setting, but not directly related to users.
+- [allowPrivilegeEscalation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) -- Prevents (if `false`) a process from gaining greater privileges than its parent process. This is a good setting, but not directly related to users.
 - `runAsNonRoot` -- Tests that the user (via uid) is a non-root user, otherwise fail.
 
-`runAsUser` isn't present in this example, but is a related option. `runAsNonRoot` is a test that a non-root user is used, per the `USER` instruction in container image metadata. `runAsUser` sets the user to a given UID. If `runAsNonRoot` is set to `true` and the `USER` in the container image is set by name and not UID, then `runAsUser` is required. In our example, `USER` is set by UID.
-
-## Best practice
-
-Users should be set by UID. .NET container images expose an environment variable for the UID, making that easy.
+The `USER` Dockerfile instruction must be set via `UID` for the the `runAsNonRoot` setting to work correctly, as demonstrated by [Dockerfile.alpine-non-root](https://github.com/dotnet/dotnet-docker/blob/f4786b8c0b4469f7eb18f891fd6c090561e50006/samples/aspnetapp/Dockerfile.alpine-non-root#L27) and the following example.
 
 ```dockerfile
 USER $APP_UID
 ```
-
-The source [Dockerfile](../../samples/aspnetapp/Dockerfile.alpine-non-root) for the `dotnetnonroot.azurecr.io/aspnetapp` image [demonstrates this pattern](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.alpine-non-root#L28).
-
-This approach has the advantage of making Dockerfiles easy to inspect and secure by default, while establishing Kubernetes manifests as the final arbiter of deployment policies.
