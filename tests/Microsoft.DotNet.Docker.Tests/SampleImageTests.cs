@@ -36,14 +36,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public async Task VerifyDotnetSample(SampleImageData imageData)
+        public Task VerifyDotnetSample(SampleImageData imageData)
         {
-            if (imageData.DockerfileSuffix == "windowsservercore-iis-x64")
-            {
-                return;
-            }
-
-            await VerifySampleAsync(imageData, SampleImageType.Dotnetapp, (image, containerName) =>
+            return VerifySampleAsync(imageData, SampleImageType.Dotnetapp, (image, containerName) =>
             {
                 string output = DockerHelper.Run(image, containerName);
                 Assert.True(output.Contains("42") || output.StartsWith("Hello"));

@@ -24,8 +24,8 @@ The following samples and guidance demonstrate how to use .NET and Docker for de
 ## Hosting guidance
 
 * [Host ASP.NET Core Images with container and HTTPS](host-aspnetcore-https.md)
-* [Push container Images to Azure Container Registry](push-image-to-acr.md)
-* [Push container Images to Docker Hub](push-image-to-dockerhub.md)
+* [Push container images to Azure Container Registry](push-image-to-acr.md)
+* [Push container images to Docker Hub](push-image-to-dockerhub.md)
 * [Deploy ASP.NET Core Applications to Azure Container Instances](deploy-container-to-aci.md)
 
 ## Other documentation
