@@ -1,7 +1,6 @@
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
-
+FROM mcr.microsoft.com/dotnet/sdk:7.0-jammy AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -13,19 +12,8 @@ COPY aspnetapp/. .
 RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o /app
 
 
-# Enable globalization and time zones:
-# https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine
-
-ENV \
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
-    LC_ALL=en_US.UTF-8 \
-    LANG=en_US.UTF-8
-RUN apk add --no-cache \
-    icu-data-full \
-    icu-libs
-
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-jammy
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["./aspnetapp"]

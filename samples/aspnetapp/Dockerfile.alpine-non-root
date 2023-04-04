@@ -1,3 +1,5 @@
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview-alpine AS build
 ARG TARGETARCH
 WORKDIR /source
@@ -11,7 +13,7 @@ COPY aspnetapp/. .
 RUN dotnet publish -a $TARGETARCH --no-restore -o /app
 
 
-# To enable globalization:
+# Enable globalization and time zones:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
 # .NET 8 tag includes `-preview`

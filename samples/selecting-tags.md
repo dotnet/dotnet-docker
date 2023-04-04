@@ -78,7 +78,7 @@ docker pull mcr.microsoft.com/dotnet/runtime:6.0-alpine
 
 <a name="alpine-globalization">Globalization Support</a>:
 
-By default, the `icu-libs` package is not included and the [globalization invariant mode](https://github.com/dotnet/runtime/blob/main/docs/design/features/globalization-invariant-mode.md) is enabled. You can opt into globalization support by [following the pattern shown in the sample Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.alpine-x64#L19).
+By default, the `icu-libs` package is not included and the [globalization invariant mode](https://github.com/dotnet/runtime/blob/main/docs/design/features/globalization-invariant-mode.md) is enabled. You can opt into globalization support by [following the pattern shown in the sample Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.alpine-icu).
 
 ### Windows
 
@@ -139,9 +139,3 @@ Each container image is generated for a specific processor architecture and oper
 For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. It is fine to use a multi-platform tag for the SDK. That's the pattern used for .NET samples. You will pull an SDK image that works on your machine. It is important to define a .NET runtime (`runtime-deps`, `runtime`, or `aspnet`) that matches your production environment.
 
 Linux containers are flexible. As long as the processor architecture matches, you can run Alpine, Debian and Ubuntu (the distros we produce images for) in any environment that supports Linux containers. [Windows images are more restricted](https://docs.microsoft.com/virtualization/windowscontainers/deploy-containers/version-compatibility). You cannot load containers for newer Windows versions on older hosts. For the best experience, the Windows container version should match the host Windows version.
-
-There are multiple patterns used in the samples:
-
-* Multi-platform tags for both SDK and runtime (can be built and run in any single environment) -- see [dotnetapp/Dockerfile](dotnetapp/Dockerfile) and [aspnetapp/Dockerfile](dotnetapp/Dockerfile)
-* Multi-platform tag for the SDK and architecture-specific Linux runtime tag (can be built on any environment that supports Linux containers and run in any processor-specific environment that supports Linux containers) -- see [dotnetapp/Dockerfile.alpine-x64](dotnetapp/Dockerfile.alpine-x64) and [aspnetapp/Dockerfile.alpine-arm64](aspnetapp/Dockerfile.alpine-arm64)
-* Multi-platform tag for the SDK and a Windows-version-specific runtime tag (can be built on any environment that supports Windows containers and run in any processor-specific environment that supports the specific Windows versions) -- see [dotnetapp/Dockerfile.nanoserver-x64](dotnetapp/Dockerfile.nanoserver-x64)
