@@ -93,11 +93,9 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Arm,   DockerfileSuffix = "debian" },
             new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Arm64, DockerfileSuffix = "debian" },
             new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Amd64, DockerfileSuffix = "debian" },
-            new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Amd64, DockerfileSuffix = "debian-slim" },
             new SampleImageData { OS = OS.Jammy,        Arch = Arch.Arm,   DockerfileSuffix = "ubuntu" },
             new SampleImageData { OS = OS.Jammy,        Arch = Arch.Arm64, DockerfileSuffix = "ubuntu" },
             new SampleImageData { OS = OS.Jammy,        Arch = Arch.Amd64, DockerfileSuffix = "ubuntu" },
-            new SampleImageData { OS = OS.Jammy,        Arch = Arch.Amd64, DockerfileSuffix = "ubuntu-slim" },
         };
 
         private static readonly SampleImageData[] s_windowsSampleTestData =

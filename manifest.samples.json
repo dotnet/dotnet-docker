@@ -189,6 +189,68 @@
               ]
             }
           ]
+        },
+        {
+          "sharedTags": {
+            "aspnetapp-non-root": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-non-root",
+              "os": "linux",
+              "osVersion": "alpine",
+              "tags": {
+                "aspnetapp-alpine-non-root-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-alpine-slim-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-non-root",
+              "os": "linux",
+              "osVersion": "alpine",
+              "tags": {
+                "aspnetapp-alpine-non-root-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-alpine-slim-arm32v7"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-non-root",
+              "os": "linux",
+              "osVersion": "alpine",
+              "tags": {
+                "aspnetapp-alpine-non-root-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-alpine-slim-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }

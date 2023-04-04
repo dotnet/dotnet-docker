@@ -5,7 +5,7 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY aspnetapp/*.csproj .
-RUN dotnet restore --use-current-runtime  
+RUN dotnet restore --use-current-runtime
 
 # copy everything else and build app
 COPY aspnetapp/. .
@@ -16,4 +16,4 @@ RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-bullseye-slim
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["./aspnetapp.dll"]
+ENTRYPOINT ["./aspnetapp"]

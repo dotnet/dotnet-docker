@@ -62,18 +62,21 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 dotnetapp-alpine-slim-amd64, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.alpine-slim) | Alpine
 aspnetapp-alpine-slim-amd64, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.alpine-slim) | Alpine
+aspnetapp-alpine-non-root-amd64, aspnetapp-non-root | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.alpine-non-root) | Alpine
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 dotnetapp-alpine-slim-arm32v7, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.alpine-slim) | Alpine
 aspnetapp-alpine-slim-arm32v7, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.alpine-slim) | Alpine
+aspnetapp-alpine-non-root-arm32v7, aspnetapp-non-root | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.alpine-non-root) | Alpine
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 dotnetapp-alpine-slim-arm64v8, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.alpine-slim) | Alpine
 aspnetapp-alpine-slim-arm64v8, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.alpine-slim) | Alpine
+aspnetapp-alpine-non-root-arm64v8, aspnetapp-non-root | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.alpine-non-root) | Alpine
 
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
