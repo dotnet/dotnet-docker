@@ -2,7 +2,7 @@
 
 The following samples and guidance demonstrate how to use .NET and Docker for development, testing and production. You can use the samples as the basis of your own Docker images or just to learn.
 
-Kubernetes samples are provided in the [kubernetes](../kubernetes/README.md) directory.
+Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) directory.
 
 ## Building images
 

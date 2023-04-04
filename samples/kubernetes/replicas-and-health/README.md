@@ -3,7 +3,7 @@
 Use multiple replicas and health checks for reliability with a [sample app](../../samples/aspnetapp/Dockerfile.alpine).
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/kubernetes/replicas-and-health/replica-health.yaml
+kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/replicas-and-health/replica-health.yaml
 ```
 
 Apply the local file if you've cloned the repo.
@@ -29,5 +29,5 @@ View the sample app at http://localhost:8080/ or call `curl http://localhost:808
 Resources can be deleted using the following pattern:
 
 ```bash
-kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/kubernetes/replicas-and-health/replica-health.yaml
+kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/replicas-and-health/replica-health.yaml
 ```

@@ -7,7 +7,7 @@ These instruction should work with any [Kubernetes](https://kubernetes.io/) envi
 You can host a .NET sample with a [few quick commands](hello-dotnet/README.md).
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/kubernets/hello-dotnet/hello-dotnet.yaml
+kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-dotnet/hello-dotnet.yaml
 kubectl port-forward service/hello-dotnet 8080:80
 ```
 

@@ -7,7 +7,7 @@ Note: This sample uses a .NET 8 container image, which includes a non-root user.
 Launch an app on your cluster with the following command.
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/kubernetes/non-root-user/non-root-user.yaml
+kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/non-root-user/non-root-user.yaml
 ```
 
 Or use the manifest directly if you've cloned the repo.
@@ -35,7 +35,7 @@ kubectl get deployment
 Delete the resources (remote URL or local manifest).
 
 ```bash
-kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/kubernetes/non-root-user/non-root-user.yaml
+kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/non-root-user/non-root-user.yaml
 ```
 
 ## SecurityContext

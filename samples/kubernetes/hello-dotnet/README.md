@@ -5,7 +5,7 @@ Host a [sample app](../../samples/aspnetapp/Dockerfile.alpine) by applying a sam
 Launch an app on your cluster with the following command.
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/kubernetes/hello-dotnet/hello-dotnet.yaml
+kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-dotnet/hello-dotnet.yaml
 ```
 
 Or use the manifest directly if you've cloned the repo.
@@ -42,5 +42,5 @@ kubectl delete deployment hello-dotnet
 Alternatively, you can delete the resources with the following pattern (remote URL or local manifest).
 
 ```bash
-kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/kubernetes/hello-dotnet/hello-dotnet.yaml
+kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-dotnet/hello-dotnet.yaml
 ```

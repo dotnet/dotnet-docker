@@ -1,8 +1,8 @@
 # Graceful shutdown
 
-Enable graceful shutdown of an app, particularly with long-running code.
+Enable graceful shutdown of an app, particularly with long-running code. This pattern id described in more depth in [Graceful shutdown of ASP.NET-based applications](graceful-shutdown.md).
 
-The [following pattern](https://github.com/richlander/dotnet-docker/blob/09d257d8b75773569cd59f7cde283625d8fc7d42/samples/aspnetapp/aspnetapp/Program.cs#L30-L54) can be used:
+The [following pattern](https://github.com/richlander/dotnet-docker/blob/fe9ec76b68acca1c2319a08482d9d0d594751422/samples/aspnetapp/aspnetapp/Program.cs#L30-L55) can be used:
 
 ```bash
 CancellationTokenSource cancellation = new();

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: aspnetapp
-        image: richlander/aspnetapp #mcr.microsoft.com/dotnet/samples:aspnetapp
+        image: mcr.microsoft.com/dotnet/samples:aspnetapp
         resources:
           requests:
             memory: "80Mi"

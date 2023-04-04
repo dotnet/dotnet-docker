@@ -6,7 +6,7 @@ Kubernetes-hosted applications should shut down smoothly and quickly when asked 
 
 Kubernetes will send `SIGTERM` signal to the main container process as means of requesting shutdown. By default the container has 30 seconds to exit gracefully before it gets killed, but this can be changed via [container lifecycle spec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#lifecycle).
 
-The default ASP.NET host [handles SIGTERM signal](https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-7.0#ihostlifetime) and will raise the `ApplicationStopping` event when that happens. You should leverage that event to implement graceful application shutdown. How you handle the event, varies depending on what type of code is performing a long-running operation. There are two broad categories of such code: long-running requests and background processing.
+The default ASP.NET host [handles SIGTERM signal](https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host#ihostlifetime) and will raise the `ApplicationStopping` event when that happens. You should leverage that event to implement graceful application shutdown. How you handle the event, varies depending on what type of code is performing a long-running operation. There are two broad categories of such code: long-running requests and background processing.
 
 ## Long-running network requests
 
@@ -34,9 +34,9 @@ app.Map("/longop/{value}", async Task<Results<StatusCodeHttpResult, Ok<String>>>
 });
 ```
 
-The same technique can be applied to traditional (controller-based) ASP.NET code, you just need to add `IHostApplicationLifetime` parameter to controller method(s) that might take long time to execute, construct a linked `CancellationToken`, and then use it inside the request method.
+The same technique can be applied to traditional (controller-based) ASP.NET code. You just need to add `IHostApplicationLifetime` parameter to controller method(s) that might take a long time to execute, construct a linked `CancellationToken`, and then use it inside the request method.
 
-You can also change ASP.NET behavior so that the default `CancellationToken` passed to your request handlers *does get activated* when `ApplicationStopping` event occurs. This code snipped (a custom middleware) will do it:
+You can also change ASP.NET behavior so that the default `CancellationToken` passed to your request handlers *does get activated* when `ApplicationStopping` event occurs. This code snippet (a custom middleware) will do it:
 
 ```csharp
 app.Use((httpContext, next) =>
@@ -105,7 +105,3 @@ For background services ASP.NET provides [`IHostedService` interface and a `Back
 - If you are using `BackgroundService` base class, the `CancellationToken` passed to [`ExecuteAsync` method](https://learn.microsoft.com/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-7.0#backgroundservice-base-class) will be activated if `ApplicationStopping` event occurs. So as long as you are using this token, or a token derived from it, for all asynchronous calls, they will be automatically cancelled upon application shutdown.
 
 - If you are implementing `IHostedService` interface directly, make sure you cancel all background processing when the framework calls [`StopAsync` method](https://learn.microsoft.com/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-7.0#stopasync) on your service. This usually means you need to keep a reference, or a `CancellationTokenSource`, for all background tasks in progress, so that you can cancel them when `StopAsync` is called.
-
-## Additional resources
-
-(TBD)
