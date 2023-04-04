@@ -43,7 +43,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
             
-            async VerifySampleAsync(imageData, SampleImageType.Dotnetapp, (image, containerName) =>
+            await VerifySampleAsync(imageData, SampleImageType.Dotnetapp, (image, containerName) =>
             {
                 string output = DockerHelper.Run(image, containerName);
                 Assert.True(output.Contains("42") || output.StartsWith("Hello"));
