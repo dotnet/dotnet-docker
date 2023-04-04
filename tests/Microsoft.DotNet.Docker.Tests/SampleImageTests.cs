@@ -36,7 +36,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-       public async Task VerifyDotnetSample(SampleImageData imageData)
+        public async Task VerifyDotnetSample(SampleImageData imageData)
         {
             if (imageData.DockerfileSuffix == "windowsservercore-iis")
             {
