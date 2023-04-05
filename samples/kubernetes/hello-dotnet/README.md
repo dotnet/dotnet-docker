@@ -1,8 +1,8 @@
 # Single node app
 
-Host a [sample app](../../samples/aspnetapp/Dockerfile.alpine) by applying a sample manifest (deployment and service).
+[Kubernetes](https://kubernetes.io/) provides an orchestration system for containers. You can host a .NET app with Kubernetes with a few straightforward commands.
 
-Launch an app on your cluster with the following command.
+Run [hello-dotnet.yaml](hello-dotnet.yaml) on your cluster with the following command.
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-dotnet/hello-dotnet.yaml

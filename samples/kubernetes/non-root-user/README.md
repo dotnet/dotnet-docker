@@ -1,10 +1,8 @@
 # Using a non-root user
 
-Use a non-root user with a [sample app](../../samples/aspnetapp/Dockerfile.alpine-non-root).
+[Kubernetes](https://kubernetes.io/) provides a way to validate that a [non-root user](https://devblogs.microsoft.com/dotnet/securing-containers-with-rootless/) is used.
 
-Note: This sample uses a .NET 8 container image, which includes a non-root user.
-
-Launch an app on your cluster with the following command.
+Run [non-root-user.yaml](non-root-user.yaml) on your cluster with the following command.
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/non-root-user/non-root-user.yaml
@@ -14,6 +12,16 @@ Or use the manifest directly if you've cloned the repo.
 
 ```bash
 kubectl apply -f non-root-user.yaml
+```
+
+You can validate the user with the following commands.
+
+```bash
+$kubectl get po
+NAME                               READY   STATUS    RESTARTS   AGE
+dotnet-non-root-7db6ff8b6d-zdc9n   1/1     Running   0          21s
+$ kubectl exec dotnet-non-root-7db6ff8b6d-zdc9n -- whoami
+app
 ```
 
 Create a proxy to the service.
