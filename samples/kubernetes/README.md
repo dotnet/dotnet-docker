@@ -4,6 +4,8 @@
 
 These instruction should work with any [Kubernetes](https://kubernetes.io/) environment. The instructions make extensive use of [kubectl](https://kubernetes.io/docs/reference/kubectl/).
 
+Most of the samples use a `NodePort` service since that works better locally. Use the [Cloud ready app](hello-cloud-apps/README.md) -- which uses a `LoadBalancer` service -- if you want to test the app in a cloud Kubernetes service.
+
 You can host a .NET sample with a [few quick commands](hello-dotnet/README.md).
 
 ```bash
@@ -19,3 +21,4 @@ A subset of patterns are covered to help you get started.
 - [Resource limits](resource-limits/README.md)
 - [Replicas and health checks](health-and-replicas/README.md)
 - [Graceful shutdown](graceful-shutdown/README.md)
+- [Cloud ready app](hello-cloud-apps/README.md)
