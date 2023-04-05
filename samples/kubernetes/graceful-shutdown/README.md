@@ -1,6 +1,6 @@
 # Graceful shutdown
 
-Enable graceful shutdown of an app, particularly with long-running code. This pattern id described in more depth in [Graceful shutdown of ASP.NET-based applications](graceful-shutdown.md).
+Enable graceful shutdown of an app, particularly with long-running code. This pattern is described in more depth in [Graceful shutdown of ASP.NET-based applications](graceful-shutdown.md).
 
 The [following pattern](https://github.com/richlander/dotnet-docker/blob/fe9ec76b68acca1c2319a08482d9d0d594751422/samples/aspnetapp/aspnetapp/Program.cs#L30-L55) can be used:
 
@@ -33,7 +33,7 @@ Test the pattern with a single replica deployment. This test requires multiple t
 First terminal:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/richlander/dotnet-k8s/main/hello-dotnet/hello-dotnet.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-dotnet/hello-dotnet.yaml
 $ kubectl port-forward service/hello-dotnet 8080:80
 ```
 

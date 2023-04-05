@@ -41,7 +41,7 @@ Events:
   Normal  Started    30s   kubelet            Started container aspnetapp
 ```
 
-Much of the output has removed in this example. The key part is the events. Kubernetes will show a failing container, as is demonstrated in [Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/), as follows.
+Much of the output has been removed in this example. The key part is the events. Kubernetes will show a failing container, as is demonstrated in [Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/), as follows.
 
 ```bash
  Type     Reason     Age                From               Message
