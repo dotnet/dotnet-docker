@@ -1941,26 +1941,6 @@
                 "8.0-preview-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
-            },
-            {
-              "dockerfile": "src/runtime/8.0/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(dotnet|8.0|product-version)-nanoserver-1809": {},
-                "8.0-preview-nanoserver-1809": {}
-              }
-            },
-            {
-              "dockerfile": "src/runtime/8.0/nanoserver-ltsc2022/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-ltsc2022",
-              "tags": {
-                "$(dotnet|8.0|product-version)-nanoserver-ltsc2022": {},
-                "8.0-preview-nanoserver-ltsc2022": {}
-              }
             }
           ]
         },
@@ -2326,6 +2306,36 @@
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/8.0/nanoserver-1809/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(dotnet|8.0|product-version)-nanoserver-1809": {},
+                "8.0-preview-nanoserver-1809": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/8.0/nanoserver-ltsc2022/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2022",
+              "tags": {
+                "$(dotnet|8.0|product-version)-nanoserver-ltsc2022": {},
+                "8.0-preview-nanoserver-ltsc2022": {}
+              }
             }
           ]
         },
@@ -3347,32 +3357,6 @@
                 "8.0-preview-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/8.0/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(dotnet|8.0|product-version)-nanoserver-1809": {},
-                "8.0-preview-nanoserver-1809": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/8.0/nanoserver-ltsc2022/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-ltsc2022",
-              "tags": {
-                "$(dotnet|8.0|product-version)-nanoserver-ltsc2022": {},
-                "8.0-preview-nanoserver-ltsc2022": {}
-              }
             }
           ]
         },
@@ -3738,6 +3722,42 @@
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/nanoserver-1809/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(dotnet|8.0|product-version)-nanoserver-1809": {},
+                "8.0-preview-nanoserver-1809": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/nanoserver-ltsc2022/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2022",
+              "tags": {
+                "$(dotnet|8.0|product-version)-nanoserver-ltsc2022": {},
+                "8.0-preview-nanoserver-ltsc2022": {}
+              }
             }
           ]
         },
@@ -4574,32 +4594,6 @@
                 "8.0-preview-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/sdk/8.0/nanoserver-1809/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "$(sdk|8.0|product-version)-nanoserver-1809": {},
-                "8.0-preview-nanoserver-1809": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/sdk/8.0/nanoserver-ltsc2022/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
-              "os": "windows",
-              "osVersion": "nanoserver-ltsc2022",
-              "tags": {
-                "$(sdk|8.0|product-version)-nanoserver-ltsc2022": {},
-                "8.0-preview-nanoserver-ltsc2022": {}
-              }
             }
           ]
         },
@@ -4810,6 +4804,42 @@
                 }
               },
               "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/8.0/nanoserver-1809/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(sdk|8.0|product-version)-nanoserver-1809": {},
+                "8.0-preview-nanoserver-1809": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/8.0/nanoserver-ltsc2022/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2022",
+              "tags": {
+                "$(sdk|8.0|product-version)-nanoserver-ltsc2022": {},
+                "8.0-preview-nanoserver-ltsc2022": {}
+              }
             }
           ]
         },
