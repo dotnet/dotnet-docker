@@ -121,7 +121,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.100-preview.3-nanoserver-ltsc2022, 8.0-preview-nanoserver-ltsc2022, 8.0.100-preview.3, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
+8.0.100-preview.3-nanoserver-ltsc2022, 8.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ## Windows Server Core 2022 amd64 Tags
 Tag | Dockerfile
@@ -143,7 +143,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.100-preview.3-nanoserver-1809, 8.0-preview-nanoserver-1809, 8.0.100-preview.3, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/nanoserver-1809/amd64/Dockerfile)
+8.0.100-preview.3-nanoserver-1809, 8.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server Core 2019 amd64 Tags
 Tag | Dockerfile
