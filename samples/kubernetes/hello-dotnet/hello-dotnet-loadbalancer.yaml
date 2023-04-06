@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-cloud-dotnet
+  name: hello-dotnet
   labels:
     app: aspnetapp
 spec:
@@ -34,7 +34,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-cloud-dotnet
+  name: hello-dotnet
 spec:
   type: LoadBalancer
   selector:

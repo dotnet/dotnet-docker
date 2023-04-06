@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-dotnet
+  name: basic-dotnet
   labels:
     app: aspnetapp
 spec:
@@ -20,7 +20,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-dotnet
+  name: basic-dotnet
 spec:
   type: NodePort
   selector:
