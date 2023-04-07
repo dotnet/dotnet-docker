@@ -2,7 +2,7 @@
 
 Enable graceful shutdown of an app, particularly with long-running code. This pattern is described in more depth in [Graceful shutdown of ASP.NET-based applications](graceful-shutdown.md).
 
-The [following pattern](https://github.com/richlander/dotnet-docker/blob/fe9ec76b68acca1c2319a08482d9d0d594751422/samples/aspnetapp/aspnetapp/Program.cs#L30-L55) can be used:
+The [following pattern](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/aspnetapp/Program.cs#L30-L55) can be used:
 
 ```bash
 CancellationTokenSource cancellation = new();
