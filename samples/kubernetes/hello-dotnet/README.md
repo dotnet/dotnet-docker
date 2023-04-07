@@ -1,22 +1,39 @@
-#  app
+# Fully-configured Kubernetes .NET app
 
-[Kubernetes](https://kubernetes.io/) offers a `LoadBalancer` service type that is intended for exposing a service to the internet. This sample is intended for testing on a service like Azure Kubernetes Service (AKS).
+This .NET app sample is fully-configured (for a simple app) with respect to [Kubernetes](https://kubernetes.io/) settings. It includes both `NodePort` and `LoadBalancer` variant, for local and cloud cluster use, respectively.
 
-Run [hello-cloud-dotnet.yaml](hello-cloud-dotnet.yaml) on your cluster with the following command.
+This sample is configured to use port `8080`, uses a non-root user, and is running on .NET 8.
 
-```bash
-kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-cloud-dotnet/hello-cloud-dotnet.yaml
-```
+## Run on your local cluster -- `NodePort`
 
-Or use the manifest directly if you've cloned the repo.
+Host on your cluster:
 
 ```bash
-kubectl apply -f hello-cloud-dotnet.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-dotnet/hello-dotnet-nodeport.yaml
+$ kubectl port-forward service/hello-dotnet 8080:80
 ```
 
-To run on AKS or another cloud service, configure `kubectl` to access that kubernetes cluster control plane. Otherwise, you can configure your local environment to [create a `LoadBalancer` tunnel](https://minikube.sigs.k8s.io/docs/handbook/accessing/#example-of-loadbalancer).
+View the sample app at http://localhost:8080/ and call `curl http://localhost:8080/Environment`.
 
-You can [discover the external IP](https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-application?tabs=azure-cli#test-the-application) for the service using `kubectl`.
+## Run on your cloud cluster -- `LoadBalancer`
+
+To run on Azure Kubernetes Service (AKS) or another cloud service, configure `kubectl` to access that kubernetes cluster control plane. For AKS, you can do that [via the Azure CLI](https://learn.microsoft.com/azure/aks/learn/quick-kubernetes-deploy-cli#connect-to-the-cluster). This same command is available via the "Connect" menu in the Azure Portal (for an AKS resource).
+
+```bash
+$ az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+$ kubectl get nodes
+NAME                                STATUS   ROLES   AGE   VERSION
+aks-agentpool-81348477-vmss000004   Ready    agent   2d    v1.26.0
+```
+
+Host on your cluster:
+
+```bash
+$ kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-dotnet/hello-dotnet-loadbalancer.yaml
+$ kubectl get service -w
+```
+
+You can discover the external IP for the service using `kubectl`.
 
 ```bash
 % kubectl get service -w
@@ -26,10 +43,6 @@ kubernetes           ClusterIP      10.0.0.1      <none>        443/TCP         
 hello-cloud-dotnet   LoadBalancer   10.0.186.62   20.237.122.134   8080:32751/TCP   9s
 ```
 
-This sample is configured to use port `8080`.
+Otherwise, you can configure your local environment to [create a `LoadBalancer` tunnel](https://minikube.sigs.k8s.io/docs/handbook/accessing/#example-of-loadbalancer), per whichever local cluster software you are using.
 
-You can delete the resources with the following pattern (remote URL or local manifest).
-
-```bash
-kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-cloud-dotnet/hello-cloud-dotnet.yaml
-```
+View the sample app at whatever the IP address is (on port `8080`) and call the `Environment` endpoint.
