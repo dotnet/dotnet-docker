@@ -63,13 +63,13 @@ RUN powershell -Command " `
                 "sdk-extract-groups": when(isSingleStage, sdkExtractGroups, []),
                 "is-internal": ARGS["dotnet-is-internal"],
                 "url-suffix": ARGS["dotnet-url-suffix"]
-            ], "        ")}}{{if dotnetVersion != "8.0": `
+            ], "        ")}} `
         `
         {{InsertTemplate("Dockerfile.windows.install-powershell",
             [
                 "dotnet-is-internal": ARGS["dotnet-is-internal"]
             ],
-            "        ")}}}}{{if !isSingleStage: `
+            "        ")}}{{if !isSingleStage: `
         `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers{{
 for i, group in sdkExtractGroups:

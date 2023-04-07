@@ -39,12 +39,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 return false;
             }
 
-            if (imageData.Version.Major == 8)
-            {
-                reason = "PowerShell doesn't have .NET 8 support yet";
-                return false;
-            }
-
             reason = null;
             return true;
         }

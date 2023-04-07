@@ -31,3 +31,17 @@ RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/
     && rm dotnet.tar.gz \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
+
+# Install PowerShell global tool
+RUN powershell_version=7.4.0-preview.2 \
+    && curl -fSL --output PowerShell.Linux.arm32.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Linux.arm32.$powershell_version.nupkg \
+    && powershell_sha512='ecc3c4c08e5317a714294405cdacbaef43eefd3e1216f51e9a2a921f1e761c89a4e82e8eac4a1f954392925ef710784280aeb7e02ca21a362d0219bb50410155' \
+    && echo "$powershell_sha512  PowerShell.Linux.arm32.$powershell_version.nupkg" | sha512sum -c - \
+    && mkdir -p /usr/share/powershell \
+    && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm32 \
+    && dotnet nuget locals all --clear \
+    && rm PowerShell.Linux.arm32.$powershell_version.nupkg \
+    && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
+    && chmod 755 /usr/share/powershell/pwsh \
+    # To reduce image size, remove the copy nupkg that nuget keeps.
+    && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm
