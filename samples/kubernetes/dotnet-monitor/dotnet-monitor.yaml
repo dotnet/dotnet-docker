@@ -77,7 +77,6 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: monitor
+    app: aspnetapp
   ports:
     - port: 52323
-
