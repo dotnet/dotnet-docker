@@ -68,6 +68,13 @@ if ($RuntimeVersion) {
 
 if ($MonitorVersion) {
     $updateDepsArgs += @("--product-version", "monitor=$MonitorVersion")
+
+    $productMajorVersion = $ProductVersion.Split('.', 2)[0]
+    if ($productMajorVersion -ge 8) {
+        $updateDepsArgs += @("--product-version", "monitor-base=$MonitorVersion")
+        $updateDepsArgs += @("--product-version", "monitor-ext-azureblobstorage=$MonitorVersion")
+        $updateDepsArgs += @("--product-version", "monitor-ext-s3storage=$MonitorVersion")
+    }
 }
 
 if ($ComputeShas) {

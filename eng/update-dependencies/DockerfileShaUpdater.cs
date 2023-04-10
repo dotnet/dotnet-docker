@@ -65,6 +65,9 @@ namespace Dotnet.Docker
                 { "powershell", new string[] { "https://pwshtool.blob.core.windows.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" } },
 
                 { "monitor", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
+                { "monitor-base", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-base-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
+                { "monitor-ext-azureblobstorage", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-azureblobstorage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
+                { "monitor-ext-s3storage", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-s3storage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
 
                 { "runtime", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
                 { "runtime-host", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },

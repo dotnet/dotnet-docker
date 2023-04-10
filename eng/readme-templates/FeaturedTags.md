@@ -12,6 +12,8 @@ elif match(SHORT_REPO, "monitor"):* `7` (Standard Support)
   * `docker pull {{FULL_REPO}}:7`
 * `6` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:6`^
+elif match(REPO, "monitor/base"):* `8` (Long-Term Support)
+  * `docker pull {{FULL_REPO}}:8`^
 else:* `7.0` (Standard Support)
   * `docker pull {{FULL_REPO}}:7.0`
 * `6.0` (Long-Term Support)

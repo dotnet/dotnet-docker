@@ -1,0 +1,33 @@
+{{
+    _ .NET major version matches the major version of dotnet-monitor ^
+    set dotnetMajor to split(PRODUCT_VERSION, ".")[0] ^
+    set dotnetMajorMinor to cat(dotnetMajor, ".0") ^
+    set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
+    set isMariner to find(OS_VERSION, "mariner") >= 0 ^
+    set aspnetBaseTag to
+        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+    set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
+    set installerImageTag to when(isMariner,
+        cat("mcr.microsoft.com/cbl-mariner/base/core:", OS_VERSION_NUMBER),
+        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))
+}}ARG REPO=mcr.microsoft.com/dotnet/aspnet
+
+# Installer image
+FROM {{installerImageTag}} AS installer
+{{if isMariner:
+{{InsertTemplate("../Dockerfile.linux.distroless-mariner-installer-prereqs")}}
+}}
+# Retrieve .NET Monitor Base
+{{InsertTemplate("Dockerfile.linux.install-monitor-base")}}
+
+
+# .NET Monitor Base image
+FROM {{aspnetBaseTag}}
+
+WORKDIR /app
+COPY --from=installer /app .
+
+{{InsertTemplate("Dockerfile.envs")}}
+
+ENTRYPOINT [ "dotnet-monitor" ]
+CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
