@@ -2,9 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dotnet-non-root
-  labels:
-    app: aspnetapp
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: aspnetapp

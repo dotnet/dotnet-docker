@@ -2,9 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dotnet-resource-limits
-  labels:
-    app: aspnetapp
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: aspnetapp
@@ -28,7 +27,7 @@ kind: Service
 metadata:
   name: dotnet-resource-limits
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: aspnetapp
   ports:
