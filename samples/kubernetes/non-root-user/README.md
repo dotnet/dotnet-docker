@@ -48,7 +48,7 @@ kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/sa
 
 ## SecurityContext
 
-[`SecurityContext`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#securitycontext-v1-core) holds security configuration that will be applied to a container, in a Pod or [Deployment manifest](non-root-user.yaml). It includes a few fields that are required to configure a container to correctly run as a non-root user. This sample follows [Kubernetes "Restricted" hardening best practices](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted).
+[`SecurityContext`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#securitycontext-v1-core) holds security configuration that will be applied to a container, in a Pod or [Deployment manifest](non-root-user.yaml). These fields can be used to configure and/or validate that the container image is running as non-root. This sample follows [Kubernetes "Restricted" hardening best practices](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted).
 
 This `securityContext` object enforces non-root hosting:
 

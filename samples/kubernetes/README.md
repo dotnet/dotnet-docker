@@ -4,7 +4,7 @@
 
 These instruction use [kubectl](https://kubernetes.io/docs/reference/kubectl/) and should work with any [Kubernetes](https://kubernetes.io/) environment.
 
-If you are new to Kubernetes, you'll need to establish a [local environment](https://kubernetes.io/docs/tasks/tools/), such as [Docker Desktop](https://www.docker.com/products/kubernetes/), [K3s](https://k3s.io/) and [Rancher](https://rancherdesktop.io/).
+If you are new to Kubernetes, you'll need to establish a [local environment](https://kubernetes.io/docs/tasks/tools/), such as [Docker Desktop](https://www.docker.com/products/kubernetes/), [K3s](https://k3s.io/), [OpenShift Local](https://developers.redhat.com/products/openshift-local), and [Rancher](https://rancherdesktop.io/).
 
 ## Examples
 
