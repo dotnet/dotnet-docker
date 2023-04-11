@@ -6,6 +6,8 @@ These instruction use [kubectl](https://kubernetes.io/docs/reference/kubectl/) a
 
 If you are new to Kubernetes, you'll need to establish a [local environment](https://kubernetes.io/docs/tasks/tools/), such as [Docker Desktop](https://www.docker.com/products/kubernetes/), [K3s](https://k3s.io/), [OpenShift Local](https://developers.redhat.com/products/openshift-local), and [Rancher](https://rancherdesktop.io/).
 
+Both [`ClusterIP` and `LoadBalancer`](https://minikube.sigs.k8s.io/docs/handbook/accessing/) [service variants](https://learn.microsoft.com/azure/aks/concepts-network#services) are used in these samples. `ClusterIP` is the default service type and works well for local clusters and private cloud deployments. `LoadBalancer` is intended for exposing a Pod to the internet. The use of these two service variants makes it straightforward to try these samples in multiple environments.
+
 ## Examples
 
 The following fine-grained examples demonstrate various Kubernetes and .NET capabilities.
@@ -17,7 +19,7 @@ The following fine-grained examples demonstrate various Kubernetes and .NET capa
 - [Graceful shutdown](graceful-shutdown/README.md)
 - [Fully configured](hello-dotnet/README.md)
 
-The [Fully configured](hello-dotnet/README.md) example demonstrates most of these aspects together.  [`ClusterIP` and `LoadBalancer`](https://minikube.sigs.k8s.io/docs/handbook/accessing/) [service variants](https://learn.microsoft.com/azure/aks/concepts-network#services) are provided, enabling straightforward local and cloud testing, respectively.
+The [Fully configured](hello-dotnet/README.md) example demonstrates most of these aspects in a single sample. The following instructions demonstrate how to apply the `ClusterIP` and `LoadBalancer` variants of the sample, intended for local and cloud environments, respectively.
 
 ## Run app on your local cluster
 

@@ -2,6 +2,10 @@
 
 [Kubernetes](https://kubernetes.io/) enables creating multiple [replicas](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) and registering [health checks](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 
+There are multiple forms of health checks. The sample demonstrates a `liveness` check. The following warning is copied from [Kubernetes docs](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
+
+> Caution: Liveness probes can be a powerful way to recover from application failures, but they should be used with caution. Liveness probes must be configured carefully to ensure that they truly indicate unrecoverable application failure, for example a deadlock.
+
 Apply [replica-health.yaml](replica-health.yaml) to your cluster.
 
 ```bash
