@@ -1,8 +1,8 @@
-# Resource-limited app
+# Limiting resources in Kubernetes
 
-[Kubernetes](https://kubernetes.io/) enables limiting the CPU and/or memory resources that can be used by a container.
+[Kubernetes](https://kubernetes.io/) enables [limiting the CPU and/or memory resources](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) that can be used by a container.
 
-Run [resource-limits.yaml](resource-limits.yaml) on your cluster with the following command.
+Apply [resource-limits.yaml](resource-limits.yaml) to your cluster.
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/resource-limits/resource-limits.yaml
@@ -48,7 +48,7 @@ kubectl port-forward service/dotnet-resource-limits 8080:80
 
 View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
 
-Resources can be deleted using the following pattern:
+Delete the resources (remote URL or local manifest).
 
 ```bash
 kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/resource-limits/resource-limits.yaml

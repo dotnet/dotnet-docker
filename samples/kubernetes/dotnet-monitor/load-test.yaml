@@ -4,10 +4,9 @@ metadata:
   name: load-test
 spec:
   template:
-    # This is the pod template
     spec:
       containers:
       - name: bombardier
         image: dotnetnonroot.azurecr.io/bombardier
-        args: ["--duration=20s", "--timeout=1s", "http://aspnetapp.default.svc.cluster.local/Environment"]
+        args: ["--duration=20s", "http://aspnetapp.default.svc.cluster.local/Environment"]
       restartPolicy: Never

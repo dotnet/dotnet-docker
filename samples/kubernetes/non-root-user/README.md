@@ -2,7 +2,7 @@
 
 [Kubernetes](https://kubernetes.io/) provides a way to validate that a [non-root user](https://devblogs.microsoft.com/dotnet/securing-containers-with-rootless/) is used.
 
-Run [non-root-user.yaml](non-root-user.yaml) on your cluster with the following command.
+Apply [non-root-user.yaml](non-root-user.yaml) to your cluster.
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/non-root-user/non-root-user.yaml
@@ -31,14 +31,6 @@ kubectl port-forward service/dotnet-non-root 8080:8080
 ```
 
 View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
-
-View the active resources that have been deployed and then delete them.
-
-```bash
-kubectl get pod
-kubectl get service
-kubectl get deployment
-```
 
 Delete the resources (remote URL or local manifest).
 

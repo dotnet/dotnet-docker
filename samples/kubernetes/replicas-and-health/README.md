@@ -2,7 +2,7 @@
 
 [Kubernetes](https://kubernetes.io/) enables creating multiple [replicas](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) and registering [health checks](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 
-Run [replica-health.yaml](replica-health.yaml) on your cluster with the following command.
+Apply [replica-health.yaml](replica-health.yaml) to your cluster.
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/replicas-and-health/replica-health.yaml
@@ -64,7 +64,7 @@ $ kubectl exec dotnet-replica-health-64d49554c9-f8mlp -- wget -qO- -t1 http://lo
 Healthy
 ```
 
-You can access your deployment by creating a proxy to the service.
+Create a proxy to the service.
 
 ```bash
 kubectl port-forward service/dotnet-replica-health 8080:80
@@ -72,7 +72,7 @@ kubectl port-forward service/dotnet-replica-health 8080:80
 
 View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
 
-Resources can be deleted using the following pattern:
+Delete the resources (remote URL or local manifest).
 
 ```bash
 kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/replicas-and-health/replica-health.yaml

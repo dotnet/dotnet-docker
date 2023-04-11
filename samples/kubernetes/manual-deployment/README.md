@@ -6,7 +6,7 @@ You can do that with a few quick commands
 
 ```bash
 kubectl create deployment dotnet-app --image mcr.microsoft.com/dotnet/samples:aspnetapp
-kubectl expose deployment dotnet-app --type=NodePort --port=80
+kubectl expose deployment dotnet-app --type=ClusterIP --port=80
 ```
 
 View the resources that have been deployed.
