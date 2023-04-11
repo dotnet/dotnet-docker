@@ -1,8 +1,8 @@
 # escape=`
-
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 ARG TAG=ltsc2022
-# https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0-nanoserver-$TAG AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -11,7 +11,8 @@ RUN dotnet restore --use-current-runtime /p:PublishReadyToRun=true
 
 # copy everything else and build app
 COPY aspnetapp/. .
-RUN dotnet publish -c Release -o /app --use-current-runtime --no-restore /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishSingleFile=true
+RUN dotnet publish --use-current-runtime --no-restore -o /app /p:PublishTrimmed=true /p:PublishReadyToRun=true
+
 
 # final stage/image
 FROM mcr.microsoft.com/windows/nanoserver:$TAG

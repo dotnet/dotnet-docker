@@ -59,9 +59,15 @@ The [Dockerfile](Dockerfile) includes a `test` stage that demonstrates running v
 # test stage -- exposes optional entrypoint
 # target entrypoint with: docker build --target test
 FROM build AS test
+
+COPY tests/*.csproj tests/
 WORKDIR /source/tests
+RUN dotnet restore
+
 COPY tests/ .
-ENTRYPOINT ["dotnet", "test", "--logger:trx"]
+RUN dotnet build --no-restore
+
+ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-build"]
 ```
 
 The presence of the `test` stage costs very little and doesn't significantly change the behavior of the build if you don't specifically target it. By default, the test stage `ENTRYPOINT` will not be used if you build this Dockerfile

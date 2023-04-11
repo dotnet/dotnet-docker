@@ -1,0 +1,24 @@
+# escape=`
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+ARG TAG=ltsc2022
+FROM mcr.microsoft.com/dotnet/sdk:7.0-nanoserver-$TAG AS build
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY *.csproj .
+RUN dotnet restore --use-current-runtime /p:PublishReadyToRun=true
+
+# copy and publish app and libraries
+COPY . .
+RUN dotnet publish --use-current-runtime --self-contained true --no-restore -o /app /p:PublishTrimmed=true /p:PublishReadyToRun=true
+
+# final stage/image
+FROM mcr.microsoft.com/windows/nanoserver:$TAG
+WORKDIR /app
+COPY --from=build /app .
+
+# Enable detection of running in a container
+ENV DOTNET_RUNNING_IN_CONTAINER=true
+
+ENTRYPOINT ["dotnetapp"]
