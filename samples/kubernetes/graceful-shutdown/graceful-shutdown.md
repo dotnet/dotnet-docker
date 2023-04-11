@@ -6,7 +6,13 @@ Kubernetes-hosted applications should shut down smoothly and quickly when asked 
 
 Kubernetes will send `SIGTERM` signal to the main container process as means of requesting shutdown. By default the container has 30 seconds to exit gracefully before it gets killed, but this can be changed via [container lifecycle spec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#lifecycle).
 
-The default ASP.NET host [handles SIGTERM signal](https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host#ihostlifetime) and will raise the `ApplicationStopping` event when that happens. You should leverage that event to implement graceful application shutdown. How you handle the event, varies depending on what type of code is performing a long-running operation. There are two broad categories of such code: long-running requests and background processing.
+The default ASP.NET host [handles SIGTERM signal](https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host#ihostlifetime) and will raise the `ApplicationStopping` event when that happens. The host will stop accepting new requests, but the requests already "in flight" will run to completion, subject to a timeout. The default shutdown timeout in ASP.NET is also 30 seconds, and can be changed via `HostOptions.ShutdownTimeout`, for example:
+
+```csharp
+builder.Host.ConfigureHostOptions(opts => opts.ShutdownTimeout = TimeSpan.FromSeconds(5));
+```
+
+Changing the `HostOptions.ShutdownTimeout` is the simplest way to accelerate the application shutdown, but relying on this setting exclusively means requests in flight will be aborted when the timeout is reached. Clients that sent these requests will be notified (ASP.NET and the operating system will close client connections automatically) but request handlers will not run to completion. If you need to cancel request work gracefully, you can use `ApplicationShutdown` event to get notified when a shutdown is requested. How you handle the event, varies depending on what type of code is performing a long-running operation. There are two broad categories of such code: long-running requests and background processing.
 
 ## Long-running network requests
 
@@ -53,50 +59,66 @@ app.Use((httpContext, next) =>
 
 Services that handle requests coming from [Kubernetes ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) may run into an issue where they continue to receive new requests *after* Kubernetes requests them to shut down via `SIGTERM` signal. This usually lasts for only a few seconds, but if the service shuts down immediately and these requests fail, it puts a burden on the client to retry them and the overall service responsiveness goes down.
 
-The reason for this behavior is that ingress and Kubernetes control plane are separate entities, operating independently. When Kubernetes decides to shut down some pod(s), there is inevitable delay between control plane taking a pod out of Service backend, and ingress "noticing" that this has happened and actually stopping routing requests to that pod. So it is useful to introduce some delay between the time the pod receivers `SIGTERM` signal, and the time when it stops responding to requests. Here is how you can make it happen. First, introduce a new kind of `CancellationTokenSource` for the delayed `CancellationToken` activation:
+The reason for this behavior is that ingress and Kubernetes control plane are separate entities, operating independently. When Kubernetes decides to shut down some pod(s), there is inevitable delay between control plane taking a pod out of Service backend, and ingress "noticing" that this has happened and actually stopping routing requests to that pod. So it is useful to introduce some delay between the time the pod receivers `SIGTERM` signal, and the time when it stops responding to requests. You can make it happen by replacing the default `IHostLifetime` implementation (which shuts down the application immediately upon receiving `SIGTERM` signal):
 
 ```csharp
-public class DelayedLinkedTokenSource
-{
-    private CancellationTokenSource _cts;
+using System.Runtime.InteropServices;
 
-    public DelayedLinkedTokenSource(CancellationToken source, TimeSpan delay)
-    {
-        _cts = new CancellationTokenSource();
-        source.Register(() => _cts.CancelAfter(delay));
+public class DelayedShutdownHostLifetime : IHostLifetime, IDisposable
+{
+    private IHostApplicationLifetime _applicationLifetime;
+    private TimeSpan _delay;
+    private IEnumerable<IDisposable>? _disposables;
+
+    public DelayedShutdownHostLifetime(IHostApplicationLifetime applicationLifetime, TimeSpan delay) { 
+        _applicationLifetime = applicationLifetime;
+        _delay = delay;
     }
 
-    public CancellationToken Token => _cts.Token;
-}
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
 
-public class ApplicationStoppingTokenSource: DelayedLinkedTokenSource
-{
-    public static readonly TimeSpan ShutdownDelay = TimeSpan.FromSeconds(3); // Change the delay as appropriate for your service.
+    public Task WaitForStartAsync(CancellationToken cancellationToken)
+    {
+        _disposables = new IDisposable[]
+        {
+            PosixSignalRegistration.Create(PosixSignal.SIGINT, HandleSignal),
+            PosixSignalRegistration.Create(PosixSignal.SIGQUIT, HandleSignal),
+            PosixSignalRegistration.Create(PosixSignal.SIGTERM, HandleSignal)
+        };
+        return Task.CompletedTask;
+    }
 
-    public ApplicationStoppingTokenSource(IHostApplicationLifetime hostLifetime) :
-        base(hostLifetime.ApplicationStopping, ShutdownDelay)
-    { }
+    protected void HandleSignal(PosixSignalContext ctx)
+    {
+        ctx.Cancel = true;
+        Task.Delay(_delay).ContinueWith(t => _applicationLifetime.StopApplication());
+    }
+
+    public void Dispose()
+    {
+        foreach (var disposable in _disposables ?? Enumerable.Empty<IDisposable>()) 
+        {
+            disposable.Dispose(); 
+        }
+    }
 }
 ```
 
-Add `ApplicationStoppingTokenSource` as a singleton service to the dependency container:
+> Note: do not confuse `IHostLifetime` with `IHostApplicationLifetime`--they are related, but different interfaces. It is the `IHostLifetime` instance that listens for signals, including `SIGTERM`, and once a signal arrives, it calls into `IHostApplicationLifetime` instance to orchestrate application shutdown. For more information see [generic host shutdown documentation](https://learn.microsoft.com/dotnet/core/extensions/generic-host#host-shutdown)
+
+Make ASP.NET use `DelayedShutdownHostLifetime` by adding it to the dependency injection container:
 
 ```csharp
-builder.Services.AddSingleton<ApplicationStoppingTokenSource>();
+builder.Services.AddSingleton<IHostLifetime>(sp => new DelayedShutdownHostLifetime(
+    sp.GetRequiredService<IHostApplicationLifetime>(), 
+    TimeSpan.FromSeconds(5) // ... or whatever delay is appropriate for your service.
+));
 ```
 
-Then, in your request handlers, create the effective `CancellationToken` [as described above](#long-running-network-requests), but replace `hostingLifetime.ApplicationStopping` with `ApplicationStoppingTokenSource`:
-
-```csharp
-app.Map("/longop/{value}", async Task<Results<StatusCodeHttpResult, Ok<String>>> (int value, CancellationToken ct, [FromServices] ApplicationStoppingTokenSource appStoppingTS) =>
-{
-    var effectiveCt = CancellationTokenSource.CreateLinkedTokenSource(ct, appStoppingTS.Token).Token;
-
-    // Rest of the request handler code unchanged
-}
-```
-
-As a result, the `effectiveCt` will not become active until `ApplicationStoppingTokenSource.ShutdownDelay` seconds after `SIGTERM` is received.
+The `IHostApplicationLifetime.ApplicationStopping` token will now be activated only after the specified delay after `SIGTERM` arrival.
 
 ## Background services
 
