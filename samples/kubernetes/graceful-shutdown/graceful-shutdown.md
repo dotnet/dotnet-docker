@@ -6,7 +6,13 @@ Kubernetes-hosted applications should shut down smoothly and quickly when asked 
 
 Kubernetes will send `SIGTERM` signal to the main container process as means of requesting shutdown. By default the container has 30 seconds to exit gracefully before it gets killed, but this can be changed via [container lifecycle spec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#lifecycle).
 
-The default ASP.NET host [handles SIGTERM signal](https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host#ihostlifetime) and will raise the `ApplicationStopping` event when that happens. You should leverage that event to implement graceful application shutdown. How you handle the event, varies depending on what type of code is performing a long-running operation. There are two broad categories of such code: long-running requests and background processing.
+The default ASP.NET host [handles SIGTERM signal](https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host#ihostlifetime) and will raise the `ApplicationStopping` event when that happens. The host will stop accepting new requests, but the requests already "in flight" will run to completion, subject to a timeout. The default shutdown timeout in ASP.NET is also 30 seconds, and can be changed via `HostOptions.ShutdownTimeout`, for example:
+
+```csharp
+builder.Host.ConfigureHostOptions(opts => opts.ShutdownTimeout = TimeSpan.FromSeconds(5));
+```
+
+Changing the `HostOptions.ShutdownTimeout` is the simplest way to accelerate the application shutdown, but relying on this setting exclusively means requests in flight will be aborted when the timeout is reached. Clients that sent these requests will be notified (ASP.NET and the operating system will close client connections automatically) but request handlers will not run to completion. If you need to cancel request work gracefully, you can use `ApplicationShutdown` event to get notified when a shutdown is requested. How you handle the event, varies depending on what type of code is performing a long-running operation. There are two broad categories of such code: long-running requests and background processing.
 
 ## Long-running network requests
 
