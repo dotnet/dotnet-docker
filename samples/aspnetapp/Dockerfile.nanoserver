@@ -1,0 +1,23 @@
+# escape=`
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+ARG TAG=ltsc2022
+FROM mcr.microsoft.com/dotnet/sdk:7.0-nanoserver-$TAG AS build
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY aspnetapp/*.csproj .
+RUN dotnet restore --use-current-runtime
+
+# copy everything else and build app
+COPY aspnetapp/. .
+RUN dotnet publish --use-current-runtime --no-restore -o /app
+
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-nanoserver-$TAG
+WORKDIR /app
+COPY --from=build /app .
+HEALTHCHECK CMD curl -sf --show-error http://localhost:80/healthz || exit 1
+
+ENTRYPOINT ["aspnetapp"]

@@ -1,4 +1,5 @@
-# https://hub.docker.com/_/microsoft-dotnet
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /source
 
@@ -8,7 +9,8 @@ RUN dotnet restore --use-current-runtime
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c Release -o /app --use-current-runtime --self-contained false --no-restore
+RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o /app
+
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:7.0
