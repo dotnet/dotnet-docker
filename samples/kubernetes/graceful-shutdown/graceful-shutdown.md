@@ -62,7 +62,7 @@ public class DelayedShutdownHostLifetime : IHostLifetime, IDisposable
 {
     private IHostApplicationLifetime _applicationLifetime;
     private TimeSpan _delay;
-    private IEnumerable<IDisposable> _disposables;
+    private IEnumerable<IDisposable>? _disposables;
 
     public DelayedShutdownHostLifetime(IHostApplicationLifetime applicationLifetime, TimeSpan delay) { 
         _applicationLifetime = applicationLifetime;
@@ -88,14 +88,14 @@ public class DelayedShutdownHostLifetime : IHostLifetime, IDisposable
     protected void HandleSignal(PosixSignalContext ctx)
     {
         ctx.Cancel = true;
-        Task.Delay(_delay).ContinueWith(t => { _applicationLifetime.StopApplication(); });
+        Task.Delay(_delay).ContinueWith(t => _applicationLifetime.StopApplication());
     }
 
     public void Dispose()
     {
-        if (_disposables != null)
+        foreach (var disposable in _disposables ?? Enumerable.Empty<IDisposable>()) 
         {
-            foreach (var disposable in _disposables) { disposable.Dispose(); }
+            disposable.Dispose(); 
         }
     }
 }
