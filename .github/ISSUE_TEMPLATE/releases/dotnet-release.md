@@ -44,9 +44,8 @@ _The set of .NET versions that are being released as a unit._
 
           stages: test;publish
           sourceBuildId: <Build ID from the build stage>
-
-1. - [ ] Confirm successful pipeline run
-1. - [ ] Update [CBL Mariner docs on Engineering Hub](https://eng.ms/docs/products/mariner-linux/gettingstarted/containers/dotnet) with new Mariner tags.
+1. - [ ] Confirm successful pipeline run(s)
+1. - [ ] Update [CBL Mariner docs on Engineering Hub](https://eng.ms/docs/products/mariner-linux/gettingstarted/containers/dotnet) with new Mariner tags by clicking the `Improve this Doc` button and editing the file in the repo.
 
 ## 2. Sample Images (Not needed for Preview-only release)
 
