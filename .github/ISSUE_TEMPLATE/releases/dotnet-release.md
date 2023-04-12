@@ -18,36 +18,35 @@ _The set of .NET versions that are being released as a unit._
       - [ ] PowerShell version
       - [ ] Check for additional changes by diffing the main and nightly branches
       - [ ] &lt;add link to PR/commit&gt;
-2. - [ ] Check whether a change has been made to a Dockerfile that is shared by multiple .NET versions. If a change has been made and the .NET versions that share that file are not being released at the same time, define a separate Dockerfile to isolate the change to the .NET version that's being released. Conversely, after a shared Dockerfile has diverged in such a way, it should be combined again into a shared Dockerfile when the other other .NET version is released. Shared Dockerfiles to check:
+1. - [ ] Check whether a change has been made to a Dockerfile that is shared by multiple .NET versions. If a change has been made and the .NET versions that share that file are not being released at the same time, define a separate Dockerfile to isolate the change to the .NET version that's being released. Conversely, after a shared Dockerfile has diverged in such a way, it should be combined again into a shared Dockerfile when the other other .NET version is released. Shared Dockerfiles to check:
       - [ ] 6.0 runtime-deps shared with 7.0
-3. - [ ] Run `update-dependencies` tool to update all the necessary files to reflect the specified .NET versions (run this command for each version being released):
+1. - [ ] Run `update-dependencies` tool to update all the necessary files to reflect the specified .NET versions (run this command for each version being released):
       - [ ] `./eng/Set-DotnetVersions.ps1 -ProductVersion <major/minor version> -SdkVersion <sdk> -RuntimeVersion <runtime> -AspnetVersion <aspnet>`
       - [ ] .NET Monitor has its own major/minor versioning scheme, so it is updated separately:
          - [ ] `./eng/Set-DotnetVersions.ps1 -ProductVersion <major/minor version> -MonitorVersion <version>`
-4. - [ ] Wait for .NET archive files (.zip, .tar.gz) to be available at blob storage location
-5. - [ ] Inspect generated changes for correctness
-6. - [ ] Create PR
-7. - [ ] Get PR approval
-8. - [ ] Merge PR
-9. - [ ] Wait for changes to be mirrored to internal [dotnet-docker repo](https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet-docker) (internal MSFT link)
-10. - [ ] Run [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with variables:
-
-      All releases:
-
-          stages: build
+1. - [ ] Wait for .NET archive files (.zip, .tar.gz) to be available at blob storage location
+1. - [ ] Inspect generated changes for correctness
+1. - [ ] Create PR
+1. - [ ] Get PR approval
+1. - [ ] Merge PR
+1. - [ ] Wait for changes to be mirrored to internal [dotnet-docker repo](https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet-docker) (internal MSFT link)
+1. - [ ] Run [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with variables:
 
       Servicing release:
 
           noCache: true
-11. - [ ] Confirm successful pipeline run
-12. - [ ] Wait for NuGet packages to be published during release tic-toc
-13. - [ ] Run [dotnet-docker pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=373) (internal MSFT link) with variables:
 
-      All releases:
+      If NuGet packages aren't published yet, you can split the pipeline up into two runs. First, run only the build stage with the variables:
+
+          stages: build
+      
+      Then once NuGet packages are live, run the pipeline again with variables:
 
           stages: test;publish
           sourceBuildId: <Build ID from the build stage>
-14. - [ ] Confirm successful pipeline run
+
+1. - [ ] Confirm successful pipeline run
+1. - [ ] Update [CBL Mariner docs on Engineering Hub](https://eng.ms/docs/products/mariner-linux/gettingstarted/containers/dotnet) with new Mariner tags.
 
 ## 2. Sample Images (Not needed for Preview-only release)
 
@@ -64,3 +63,4 @@ _The set of .NET versions that are being released as a unit._
 1. - [ ] Merge PR
 1. - [ ] Confirm CI build is automatically run for [dotnet-docker-nightly pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=359) (internal MSFT link)
 1. - [ ] Confirm successful pipeline run
+1. - [ ] If the release contains a preview, update the `channel` variable in the [dotnet-docker-update-dependencies pipeline](https://dev.azure.com/dnceng/internal/_apps/hub/ms.vss-build-web.ci-designer-hub?pipelineId=470) to point to the next release. You can see available channels and builds in [BarViz](https://maestro-prod.westus2.cloudapp.azure.com/). If there are no builds available for the next preview yet, drop the preview designation (e.g. `8.0.1xx`). When branding happens and dotnet/installer branches, then this variable will need to be updated again.
