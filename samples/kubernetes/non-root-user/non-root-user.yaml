@@ -24,7 +24,7 @@ kind: Service
 metadata:
   name: dotnet-non-root
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: aspnetapp
   ports:

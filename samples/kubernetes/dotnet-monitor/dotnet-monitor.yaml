@@ -15,6 +15,8 @@ spec:
       containers:
       - name: aspnetapp
         image: mcr.microsoft.com/dotnet/samples:aspnetapp
+        ports:
+        - containerPort: 80        
         env:
         - name: DOTNET_DiagnosticPorts
           value: /diag/dotnet-monitor.sock
@@ -29,6 +31,8 @@ spec:
             cpu: "2"
       - name: monitor
         image: mcr.microsoft.com/dotnet/monitor
+        ports:
+        - containerPort: 52325
         # DO NOT use the --no-auth argument for deployments in production; this argument is used for demonstration
         # purposes only in this example. Please continue reading after this example for further details.
         args: [ "collect", "--no-auth" ]
@@ -79,4 +83,4 @@ spec:
   selector:
     app: aspnetapp
   ports:
-    - port: 52323
+    - port: 52325

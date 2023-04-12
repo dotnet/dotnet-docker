@@ -31,7 +31,7 @@ kind: Service
 metadata:
   name: dotnet-replica-health
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: aspnetapp
   ports:

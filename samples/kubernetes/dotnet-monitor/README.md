@@ -2,6 +2,8 @@
 
 [`dotnet-monitor`](https://github.com/dotnet/dotnet-monitor) allows you to gather diagnostic data from running applications using HTTP endpoints. It can be used as a sidecar for your app in your [Kubernetes](https://kubernetes.io/) deployment.
 
+## Use `dotnet-monitor`
+
 Apply [dotnet-monitor.yaml](dotnet-monitor.yaml) to your cluster.
 
 ```bash
@@ -51,6 +53,8 @@ The `livemetrics` endpoint provides access to more information.
 {"timestamp":"2023-04-11T02:05:22.4037996+00:00","provider":"Microsoft.AspNetCore.Hosting","name":"failed-requests","displayName":"Failed Requests","unit":"","counterType":"Metric","tags":"","value":0}
 ```
 
+## Generate load
+
 You may want to generate more traffic to demonstrate that `dotnet-monitor` can work well in production.
 
 Apply the [`load-test.yaml`](load-test.yaml) manifest. Start collecting `livemetrics` just before doing (in another terminal).
@@ -71,8 +75,42 @@ Delete the job.
 
 Note: The job must be deleted and then re-applied to be run again.
 
-Resources can be deleted using the following pattern:
+## Monitor with Prometheus
+
+[Prometheus](https://prometheus.io/) is a popular monitoring solution. `dotnet-monitor` exports metrics data in [Prometheus exposition format](https://prometheus.io/docs/instrumenting/exposition_formats/) via its `metrics` endpoint. That makes it straightforward to connect the two systems.
+
+Apply [prometheus-app.yaml](prometheus-app.yaml) to your cluster.
 
 ```bash
-kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/resource-limits/resource-limits.yaml
+kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/prometheus-app.yaml
+```
+
+Apply the local file if you've cloned the repo.
+
+```bash
+kubectl apply -f prometheus-app.yaml
+```
+
+Create a proxy to the `prometheus` service.
+
+```bash
+kubectl port-forward service/prometheus 9090
+```
+
+View the Prometheus site at `http://localhost:9090`.
+
+You can re-run the load-test job on the `aspnetapp` site to generate data for Prometheus to collect via `dotnet-monitor`. You can run it multiple times to generate more traffic. It runs for a minute. The job needs to be deleted before it can be re-applied.
+
+It should looks something like the following image.
+
+<img width="1191" alt="image" src="https://user-images.githubusercontent.com/2608468/231349237-69bd3b08-57fd-4d87-9e16-1fdaf6087b34.png">
+
+## Delete resources
+
+Delete the resources (remote URL or local manifest).
+
+```bash
+kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/dotnet-monitor.yaml
+kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/load-test.yaml
+kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/prometheus-app.yaml
 ```

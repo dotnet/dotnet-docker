@@ -36,7 +36,7 @@ kind: Service
 metadata:
   name: hello-dotnet
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: aspnetapp
   ports:

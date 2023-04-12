@@ -8,5 +8,5 @@ spec:
       containers:
       - name: bombardier
         image: dotnetnonroot.azurecr.io/bombardier
-        args: ["--duration=20s", "http://aspnetapp.default.svc.cluster.local/Environment"]
+        args: ["--duration=60s", "http://aspnetapp.default.svc.cluster.local/Environment"]
       restartPolicy: Never
