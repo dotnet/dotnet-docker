@@ -4,7 +4,7 @@ Enable graceful shutdown of an app, particularly with long-running code. This pa
 
 The [following pattern](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/aspnetapp/Program.cs#L30-L55) can be used:
 
-```bash
+```csharp
 CancellationTokenSource cancellation = new();
 app.Lifetime.ApplicationStopping.Register( () =>
 {
