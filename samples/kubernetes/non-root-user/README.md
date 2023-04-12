@@ -1,4 +1,4 @@
-# Using a non-root user
+# Securing containers with a non-root user in Kubernetes
 
 [Kubernetes](https://kubernetes.io/) provides a way to validate that a [non-root user](https://devblogs.microsoft.com/dotnet/securing-containers-with-rootless/) is used.
 

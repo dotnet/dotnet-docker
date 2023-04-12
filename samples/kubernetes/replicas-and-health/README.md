@@ -1,4 +1,4 @@
-# Replicas backed by health-checks
+# Configuring Kubernetes with pod replicas and container health checks
 
 [Kubernetes](https://kubernetes.io/) enables creating multiple [replicas](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) and registering [health checks](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 

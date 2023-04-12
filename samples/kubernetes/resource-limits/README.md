@@ -1,4 +1,4 @@
-# Limiting resources in Kubernetes
+# Limiting container resources in Kubernetes
 
 [Kubernetes](https://kubernetes.io/) enables [limiting the CPU and/or memory resources](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) that can be used by a container.
 
