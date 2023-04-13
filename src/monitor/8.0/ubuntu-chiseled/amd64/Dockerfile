@@ -14,7 +14,7 @@ RUN dotnet_monitor_version=8.0.0-preview.3.23180.9 \
 
 
 # .NET Monitor image
-FROM $REPO:8.0.0-preview.3-jammy-chiseled-amd64
+FROM $REPO:8.0.0-preview.4-jammy-chiseled-amd64
 
 WORKDIR /app
 COPY --from=installer /app .

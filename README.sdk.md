@@ -72,9 +72,9 @@ Tags | Dockerfile | OS Version
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.100-preview.3-bookworm-slim-amd64, 8.0-preview-bookworm-slim-amd64, 8.0.100-preview.3-bookworm-slim, 8.0-preview-bookworm-slim, 8.0.100-preview.3, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-8.0.100-preview.3-alpine3.17-amd64, 8.0-preview-alpine3.17-amd64, 8.0-preview-alpine-amd64, 8.0.100-preview.3-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.17/amd64/Dockerfile) | Alpine 3.17
-8.0.100-preview.3-jammy-amd64, 8.0-preview-jammy-amd64, 8.0.100-preview.3-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+8.0.100-preview.4-bookworm-slim-amd64, 8.0-preview-bookworm-slim-amd64, 8.0.100-preview.4-bookworm-slim, 8.0-preview-bookworm-slim, 8.0.100-preview.4, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.100-preview.4-alpine3.17-amd64, 8.0-preview-alpine3.17-amd64, 8.0-preview-alpine-amd64, 8.0.100-preview.4-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.17/amd64/Dockerfile) | Alpine 3.17
+8.0.100-preview.4-jammy-amd64, 8.0-preview-jammy-amd64, 8.0.100-preview.4-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -90,9 +90,9 @@ Tags | Dockerfile | OS Version
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.100-preview.3-bookworm-slim-arm64v8, 8.0-preview-bookworm-slim-arm64v8, 8.0.100-preview.3-bookworm-slim, 8.0-preview-bookworm-slim, 8.0.100-preview.3, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-8.0.100-preview.3-alpine3.17-arm64v8, 8.0-preview-alpine3.17-arm64v8, 8.0-preview-alpine-arm64v8, 8.0.100-preview.3-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.17/arm64v8/Dockerfile) | Alpine 3.17
-8.0.100-preview.3-jammy-arm64v8, 8.0-preview-jammy-arm64v8, 8.0.100-preview.3-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.100-preview.4-bookworm-slim-arm64v8, 8.0-preview-bookworm-slim-arm64v8, 8.0.100-preview.4-bookworm-slim, 8.0-preview-bookworm-slim, 8.0.100-preview.4, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.100-preview.4-alpine3.17-arm64v8, 8.0-preview-alpine3.17-arm64v8, 8.0-preview-alpine-arm64v8, 8.0.100-preview.4-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.17/arm64v8/Dockerfile) | Alpine 3.17
+8.0.100-preview.4-jammy-arm64v8, 8.0-preview-jammy-arm64v8, 8.0.100-preview.4-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -108,9 +108,9 @@ Tags | Dockerfile | OS Version
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.100-preview.3-bookworm-slim-arm32v7, 8.0-preview-bookworm-slim-arm32v7, 8.0.100-preview.3-bookworm-slim, 8.0-preview-bookworm-slim, 8.0.100-preview.3, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-8.0.100-preview.3-alpine3.17-arm32v7, 8.0-preview-alpine3.17-arm32v7, 8.0-preview-alpine-arm32v7, 8.0.100-preview.3-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.17/arm32v7/Dockerfile) | Alpine 3.17
-8.0.100-preview.3-jammy-arm32v7, 8.0-preview-jammy-arm32v7, 8.0.100-preview.3-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+8.0.100-preview.4-bookworm-slim-arm32v7, 8.0-preview-bookworm-slim-arm32v7, 8.0.100-preview.4-bookworm-slim, 8.0-preview-bookworm-slim, 8.0.100-preview.4, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.100-preview.4-alpine3.17-arm32v7, 8.0-preview-alpine3.17-arm32v7, 8.0-preview-alpine-arm32v7, 8.0.100-preview.4-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.17/arm32v7/Dockerfile) | Alpine 3.17
+8.0.100-preview.4-jammy-arm32v7, 8.0-preview-jammy-arm32v7, 8.0.100-preview.4-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
@@ -121,7 +121,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.100-preview.3-nanoserver-ltsc2022, 8.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
+8.0.100-preview.4-nanoserver-ltsc2022, 8.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ## Windows Server Core 2022 amd64 Tags
 Tag | Dockerfile
@@ -132,7 +132,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.100-preview.3-windowsservercore-ltsc2022, 8.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+8.0.100-preview.4-windowsservercore-ltsc2022, 8.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
@@ -143,7 +143,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.100-preview.3-nanoserver-1809, 8.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/nanoserver-1809/amd64/Dockerfile)
+8.0.100-preview.4-nanoserver-1809, 8.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server Core 2019 amd64 Tags
 Tag | Dockerfile
@@ -154,7 +154,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.100-preview.3-windowsservercore-ltsc2019, 8.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+8.0.100-preview.4-windowsservercore-ltsc2019, 8.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/nightly/sdk at https://mcr.microsoft.com/v2/dotnet/nightly/sdk/tags/list.
 <!--End of generated tags-->
