@@ -10,16 +10,16 @@ Both [`ClusterIP` and `LoadBalancer`](https://minikube.sigs.k8s.io/docs/handbook
 
 ## Examples
 
-The following fine-grained examples demonstrate various Kubernetes and .NET capabilities.
+The following fine-grained examples demonstrate various Kubernetes and .NET capabilities and patterns.
 
 - [Manual deployment](manual-deployment/README.md)
 - [Resource limits](resource-limits/README.md)
 - [Non-root user](non-root-user/README.md)
 - [Replicas and health checks](health-and-replicas/README.md)
+- [dotnet-monitor](dotnet-monitor/README.md)
 - [Graceful shutdown](graceful-shutdown/README.md)
-- [Fully configured](hello-dotnet/README.md)
 
-The [Fully configured](hello-dotnet/README.md) example demonstrates most of these aspects in a single sample. The following instructions demonstrate how to apply the `ClusterIP` and `LoadBalancer` variants of the sample, intended for local and cloud environments, respectively.
+The [hello-dotnet](hello-dotnet/README.md) example demonstrates most of these aspects in a single sample. The following instructions demonstrate how to apply the `ClusterIP` and `LoadBalancer` variants of the sample, intended for local and cloud environments, respectively.
 
 ## Run app on your local cluster
 
@@ -30,6 +30,8 @@ $ kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/s
 $ kubectl port-forward service/hello-dotnet 8080:80
 ```
 
+View the sample app at http://localhost:8080/ and call `curl http://localhost:8080/Environment`.
+
 ## Run app on your cloud cluster
 
 Apply to your cloud cluster, using a `LoadBalancer` service.
@@ -38,3 +40,5 @@ Apply to your cloud cluster, using a `LoadBalancer` service.
 $ kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-dotnet/hello-dotnet-loadbalancer.yaml
 $ kubectl get service -w
 ```
+
+View the sample app at http://EXTERNAL-IP:8080/ and call `curl http://EXTERNAL-IP:8080/Environment`.
