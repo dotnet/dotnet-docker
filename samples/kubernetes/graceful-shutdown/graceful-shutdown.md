@@ -6,7 +6,7 @@ Kubernetes-hosted applications should shut down smoothly and quickly when asked 
 
 Kubernetes will send `SIGTERM` signal to the main container process as means of requesting shutdown. By default the container has 30 seconds to exit gracefully before it gets killed, but this can be changed via [container lifecycle spec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#lifecycle).
 
-The default ASP.NET host [handles SIGTERM signal](https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host#ihostlifetime) and will raise the `ApplicationStopping` event when that happens. The host will stop accepting new requests, but the requests already "in flight" will run to completion, subject to a timeout. The default shutdown timeout in ASP.NET is 5 seconds, and can be changed via `HostOptions.ShutdownTimeout`, for example:
+The default ASP.NET host [handles SIGTERM signal](https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host#ihostlifetime) and will raise the `ApplicationStopping` event when that happens. The host will stop accepting new requests, but the requests already "in flight" will run to completion, subject to a timeout. The default shutdown timeout in ASP.NET is 30 seconds, and can be changed via `HostOptions.ShutdownTimeout`, for example:
 
 ```csharp
 builder.Host.ConfigureHostOptions(opts => opts.ShutdownTimeout = TimeSpan.FromSeconds(20));
