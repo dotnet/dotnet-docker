@@ -33,7 +33,7 @@
     :* [dotnet/nightly/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/runtime-deps" ])}}): .NET Runtime Dependencies (Preview)
 }}{{if ((isNightlyRepo && SHORT_REPO != "monitor") || (!isNightlyRepo && SHORT_REPO = "monitor") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/monitor]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/monitor" ])}}): .NET Monitor Tool (Preview)
-}}{{if ((SHORT_REPO = "monitor") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
+}}{{if (isNightlyRepo && SHORT_REPO = "monitor")
     :* [dotnet/nightly/monitor/base]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/monitor/base" ])}}): .NET Monitor Base (Preview)
 }}
 .NET Framework:
