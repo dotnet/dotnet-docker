@@ -15,6 +15,8 @@ spec:
       containers:
       - name: aspnetapp
         image: mcr.microsoft.com/dotnet/samples:aspnetapp
+        ports:
+        - containerPort: 80
         resources:
           requests:
             memory: "80Mi"
@@ -35,4 +37,7 @@ spec:
   selector:
     app: aspnetapp
   ports:
-    - port: 80
+  - name: aspnetapp
+    protocol: TCP
+    port: 8080
+    targetPort: 80

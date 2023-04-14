@@ -71,7 +71,7 @@ Healthy
 Create a proxy to the service.
 
 ```bash
-kubectl port-forward service/dotnet-replica-health 8080:80
+kubectl port-forward service/dotnet-replica-health 8080
 ```
 
 View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.

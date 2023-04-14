@@ -16,18 +16,19 @@ Apply the local file if you've cloned the repo.
 kubectl apply -f dotnet-monitor.yaml
 ```
 
-Create a proxy to the `aspnetapp` service.
+Create a proxy to the service, on all three ports.
 
 ```bash
-kubectl port-forward service/aspnetapp 8080:80
+% k port-forward service/dotnet-monitor 8080 52323 52325
 ```
 
 View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
 
-Create a proxy to the `monitor` service.
+You can query the app.
 
 ```bash
-kubectl port-forward service/monitor 52323
+% curl http://localhost:8080/Environment
+{"runtimeVersion":".NET 7.0.5","osVersion":"Linux 5.15.49-linuxkit #1 SMP PREEMPT Tue Sep 13 07:51:32 UTC 2022","osArchitecture":"Arm64","user":"root","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":28311552}
 ```
 
 You can query basic information from `dotnet-monitor` with the following approach.
@@ -52,6 +53,34 @@ The `livemetrics` endpoint provides access to more information.
 {"timestamp":"2023-04-11T02:05:22.4037831+00:00","provider":"Microsoft.AspNetCore.Hosting","name":"current-requests","displayName":"Current Requests","unit":"","counterType":"Metric","tags":"","value":0}
 {"timestamp":"2023-04-11T02:05:22.4037996+00:00","provider":"Microsoft.AspNetCore.Hosting","name":"failed-requests","displayName":"Failed Requests","unit":"","counterType":"Metric","tags":"","value":0}
 ```
+
+The `metrics` endpoint exposes the same data in [Prometheus exposition format](https://prometheus.io/docs/instrumenting/exposition_formats/). Here, we're requested it on port `52325`.
+
+```bash
+% curl http://localhost:52325/metrics   
+# HELP microsoftaspnetcorehosting_requests_per_second Request Rate
+# TYPE microsoftaspnetcorehosting_requests_per_second gauge
+microsoftaspnetcorehosting_requests_per_second 0 1681509071290
+microsoftaspnetcorehosting_requests_per_second 0 1681509076289
+microsoftaspnetcorehosting_requests_per_second 0 1681509081292
+# HELP microsoftaspnetcorehosting_total_requests Total Requests
+# TYPE microsoftaspnetcorehosting_total_requests gauge
+microsoftaspnetcorehosting_total_requests 5 1681509066304
+microsoftaspnetcorehosting_total_requests 5 1681509071290
+microsoftaspnetcorehosting_total_requests 5 1681509076290
+# HELP microsoftaspnetcorehosting_current_requests Current Requests
+# TYPE microsoftaspnetcorehosting_current_requests gauge
+microsoftaspnetcorehosting_current_requests 0 1681509066304
+microsoftaspnetcorehosting_current_requests 0 1681509071290
+microsoftaspnetcorehosting_current_requests 0 1681509076290
+# HELP microsoftaspnetcorehosting_failed_requests Failed Requests
+# TYPE microsoftaspnetcorehosting_failed_requests gauge
+microsoftaspnetcorehosting_failed_requests 0 1681509066304
+microsoftaspnetcorehosting_failed_requests 0 1681509071290
+microsoftaspnetcorehosting_failed_requests 0 1681509076290
+```
+
+Port `52325` is special since it limits access to just the `metrics` endpoint, making it safe to expose to external systems. The other endpoints -- only accessible on port `52323` -- may provide access to privileged data, like dumps. This is why port `52323` is configured for the loopback interface, making it only accessible to the pod.
 
 ## Generate load
 

@@ -20,7 +20,7 @@ spec:
         app: aspnetapp
     spec:
       containers:
-      - name: webapp
+      - name: aspnetapp
         image: dotnetnonroot.azurecr.io/aspnetapp
         ports:
         - containerPort: 8080
@@ -33,10 +33,10 @@ spec:
         resources:
           requests:
             memory: "60Mi"
-            cpu: "250m"
+            cpu: "250m" # same as 0.25
           limits:
             memory: "100Mi"
-            cpu: "500m"
+            cpu: "500m" # same as 0.5
         livenessProbe:
           httpGet:
             path: "/healthz"
@@ -76,6 +76,7 @@ spec:
             memory: 256Mi
         securityContext:
           allowPrivilegeEscalation: false
+          runAsNonRoot: true
       volumes:
       - name: diagvol
         emptyDir: {}
