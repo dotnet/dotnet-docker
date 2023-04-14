@@ -68,9 +68,15 @@ You can use Prometheus in AKS to collect `dotnet-monitor` metrics. The endpoint 
         prometheus.io/scheme: 'http'
 ```
 
-That metadata tells Prometheus where to look. Azure needs a bit more data to [Collect Prometheus metrics with Container insights](https://learn.microsoft.com/azure/azure-monitor/containers/container-insights-prometheus?tabs=pod). That's what [container-azm-ms-agentconfig.yaml] is for.
+That metadata tells Prometheus where to look. Azure needs a bit more data to [Collect Prometheus metrics with Container insights](https://learn.microsoft.com/azure/azure-monitor/containers/container-insights-prometheus?tabs=pod). That's what [container-azm-ms-agentconfig.yaml](container-azm-ms-agentconfig.yaml) is for.
 
 First, you need to enable [Azure Monitor managed service for Prometheus](https://learn.microsoft.com/azure/azure-monitor/essentials/prometheus-metrics-overview).
+
+After that, you can need to apply `container-azm-ms-agentconfig.yaml` to kick off monitoring.
+
+```bash
+kubectl apply -f container-azm-ms-agentconfig.yaml
+```
 
 After that, you should be able to run a query in **Logs** like the following, in Kusto.
 
