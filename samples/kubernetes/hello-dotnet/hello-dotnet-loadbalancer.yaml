@@ -20,10 +20,10 @@ spec:
         app: aspnetapp
     spec:
       containers:
-      - name: aspnetapp
+      - name: webapp
         image: dotnetnonroot.azurecr.io/aspnetapp
         ports:
-        - containerPort: 8080       
+        - containerPort: 8080
         env:
         - name: DOTNET_DiagnosticPorts
           value: /diag/dotnet-monitor.sock
@@ -33,9 +33,10 @@ spec:
         resources:
           requests:
             memory: "60Mi"
+            cpu: "250m"
           limits:
             memory: "100Mi"
-            cpu: "2"
+            cpu: "500m"
         livenessProbe:
           httpGet:
             path: "/healthz"
@@ -44,7 +45,7 @@ spec:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
       - name: monitor
-        image: mcr.microsoft.com/dotnet/monitor
+        image: mcr.microsoft.com/dotnet/monitor:8.0.0-preview.3
         ports:
         - containerPort: 52325
         # DO NOT use the --no-auth argument for deployments in production; this argument is used for demonstration
@@ -73,6 +74,8 @@ spec:
           limits:
             cpu: 250m
             memory: 256Mi
+        securityContext:
+          allowPrivilegeEscalation: false
       volumes:
       - name: diagvol
         emptyDir: {}
@@ -80,10 +83,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-dotnet
+  name: aspnetapp
 spec:
   type: LoadBalancer
   selector:
     app: aspnetapp
   ports:
-    - port: 8080
+  - name: http
+    protocol: TCP
+    port: 8080

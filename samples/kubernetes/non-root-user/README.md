@@ -1,17 +1,19 @@
-# Securing containers with a non-root user in Kubernetes
+# Securing containers with a non-root user with Kubernetes
 
 [Kubernetes](https://kubernetes.io/) provides a way to validate that a [non-root user](https://devblogs.microsoft.com/dotnet/securing-containers-with-rootless/) is used.
 
-Apply [non-root-user.yaml](non-root-user.yaml) to your cluster.
+This sample uses .NET 8.
+
+Apply [non-root.yaml](non-root.yaml) to your cluster.
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/non-root-user/non-root-user.yaml
+kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/non-root/non-root.yaml
 ```
 
 Or use the manifest directly if you've cloned the repo.
 
 ```bash
-kubectl apply -f non-root-user.yaml
+kubectl apply -f non-root.yaml
 ```
 
 You can validate the user with the following commands.
@@ -32,15 +34,22 @@ kubectl port-forward service/dotnet-non-root 8080:8080
 
 View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
 
+```bash
+% curl http://localhost:8080/Environment
+{"runtimeVersion":".NET 8.0.0-preview.3.23174.8","osVersion":"Linux 5.15.49-linuxkit #1 SMP PREEMPT Tue Sep 13 07:51:32 UTC 2022","osArchitecture":"Arm64","user":"app","processorCount":4,"totalAvailableMemoryBytes":4124512256,"memoryLimit":0,"memoryUsage":29655040}
+```
+
+`user` is displayed as `app`, as expected.
+
 Delete the resources (remote URL or local manifest).
 
 ```bash
-kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/non-root-user/non-root-user.yaml
+kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/non-root/non-root.yaml
 ```
 
 ## SecurityContext
 
-[`SecurityContext`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#securitycontext-v1-core) holds security configuration that will be applied to a container, in a Pod or [Deployment manifest](non-root-user.yaml). These fields can be used to configure and/or validate that the container image is running as non-root. This sample follows [Kubernetes "Restricted" hardening best practices](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted).
+[`SecurityContext`](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#securitycontext-v1-core) holds security configuration that will be applied to a container, in a Pod or [Deployment manifest](non-root.yaml). These fields can be used to configure and/or validate that the container image is running as non-root. This sample follows [Kubernetes "Restricted" hardening best practices](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted).
 
 This `securityContext` object enforces non-root hosting:
 
