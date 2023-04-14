@@ -23,17 +23,17 @@
     :* [dotnet/monitor/base]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/monitor/base" ])}}): .NET Monitor Base
 }}{{if ((!IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly") && SHORT_REPO != "samples")
     :* [dotnet/samples]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/samples" ])}}): .NET Samples
-}}{{if ((isNightlyRepo && SHORT_REPO != "sdk") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
+}}{{if ((isNightlyRepo && SHORT_REPO != "sdk") || (!isNightlyRepo && SHORT_REPO = "sdk") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/sdk]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/sdk" ])}}): .NET SDK (Preview)
-}}{{if ((isNightlyRepo && SHORT_REPO != "aspnet") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
+}}{{if ((isNightlyRepo && SHORT_REPO != "aspnet") || (!isNightlyRepo && SHORT_REPO = "aspnet") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/aspnet]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/aspnet" ])}}): ASP.NET Core Runtime (Preview)
-}}{{if ((isNightlyRepo && SHORT_REPO != "runtime") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
+}}{{if ((isNightlyRepo && SHORT_REPO != "runtime") || (!isNightlyRepo && SHORT_REPO = "runtime") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/runtime]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/runtime" ])}}): .NET Runtime (Preview)
-}}{{if ((isNightlyRepo && SHORT_REPO != "runtime-deps") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
+}}{{if ((isNightlyRepo && SHORT_REPO != "runtime-deps") || (!isNightlyRepo && SHORT_REPO = "runtime-deps") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/runtime-deps" ])}}): .NET Runtime Dependencies (Preview)
-}}{{if ((isNightlyRepo && SHORT_REPO != "monitor") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
+}}{{if ((isNightlyRepo && SHORT_REPO != "monitor") || (!isNightlyRepo && SHORT_REPO = "monitor") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/monitor]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/monitor" ])}}): .NET Monitor Tool (Preview)
-}}{{if ((isNightlyRepo && SHORT_REPO = "monitor") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
+}}{{if ((SHORT_REPO = "monitor") || (IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main"))
     :* [dotnet/nightly/monitor/base]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/monitor/base" ])}}): .NET Monitor Base (Preview)
 }}
 .NET Framework:
