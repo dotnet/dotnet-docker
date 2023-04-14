@@ -216,9 +216,13 @@
     "src/monitor/7.1/cbl-mariner/arm64v8": 217293451,
     "src/monitor/7.1/cbl-mariner-distroless/amd64": 132678720,
     "src/monitor/7.1/cbl-mariner-distroless/arm64v8": 133547868,
-    "src/monitor/8.0/ubuntu-chiseled/amd64": 121260554,
-    "src/monitor/8.0/ubuntu-chiseled/arm64v8": 128934532,
-    "src/monitor/8.0/cbl-mariner-distroless/amd64": 133235508,
-    "src/monitor/8.0/cbl-mariner-distroless/arm64v8": 140710709
+    "src/monitor/8.0/ubuntu-chiseled/amd64": 127821834,
+    "src/monitor/8.0/ubuntu-chiseled/arm64v8": 134958622,
+    "src/monitor/8.0/cbl-mariner-distroless/amd64": 141200979,
+    "src/monitor/8.0/cbl-mariner-distroless/arm64v8": 148117492,
+    "src/monitor-base/8.0/ubuntu-chiseled/amd64": 119965752,
+    "src/monitor-base/8.0/ubuntu-chiseled/arm64v8": 127102540,
+    "src/monitor-base/8.0/cbl-mariner-distroless/amd64": 133344897,
+    "src/monitor-base/8.0/cbl-mariner-distroless/arm64v8": 140261410
   }
 }

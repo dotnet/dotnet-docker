@@ -97,10 +97,17 @@
     "monitor|7.1|linux|arm64|sha": "c3313bcad518e34210400c8d0bdd255150ee0f2976ff317ae4d703e82320fc1d659f3073462d3f10b258df2bc79230e818a442d1ebff4e43ebd86209a2ed172a",
     "monitor|7.1|product-version": "7.1.1",
 
-    "monitor|8.0|build-version": "8.0.0-preview.3.23180.9",
-    "monitor|8.0|linux|x64|sha": "e7f7220a3d0e268b4db12bfdf6e95a01a186ede1ea8aff2eedcae149f1c4369b80c7aaebacf5ac2b4b9fc612640a27a616890f07ff90a3fe6d95b84cfc99543f",
-    "monitor|8.0|linux|arm64|sha": "38a209cb6e5c2bdfa53c1470a5ad0e5f777c7b882826f426d406a2267699f5462118391d3430c3fbf3153f99e2aff12b401c6cc86e4ff85e05da66bd24492d8e",
-    "monitor|8.0|product-version": "8.0.0-preview.3",
+    "monitor|8.0|build-version": "8.0.0-preview.4.23207.3",
+    "monitor|8.0|product-version": "8.0.0-preview.4",
+
+    "monitor-base|8.0|linux|x64|sha": "3cec6d9902afeea454b2dde99bb0e24ec11882e554c70eb9a0394e4d644bce58af7fb13b4d2ac92a8e5af3120032d93d4f34ed551c5e85f65e00e0460b0c3084",
+    "monitor-base|8.0|linux|arm64|sha": "1bf77b8ca2cde1b89c51c49893a89c5cde4c994dc2df95c83c472cf9095dc540a6c920cdc6ba3346bc63b5c0a2c0cb1c1e86d7740850f994bf39dc0f6027c038",
+
+    "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "3a96ad6ac0f795f2348966bc77f67f06489354ce19e803f3c02c55df651f3abf6e025161176e28e59a460fb0a409632d4488c189b5eb42a4bdf50e18e07eb4fe",
+    "monitor-ext-azureblobstorage|8.0|linux|arm64|sha": "c021b20983c18b7a0dfef0075578d915b78fb3dc25d08de9c8103976ab2c9fb1b2bc4e8588c9a52d506db8fd343c3415e6b7d59ea34e21c1072a6b1b2aa0791c",
+
+    "monitor-ext-s3storage|8.0|linux|x64|sha": "7b99de681c9efe8a69bab03571ebc210db9747067e1a2e621aa422d2058c528035a7deb02ef5016cb635a127bb3424d4b300c81b8cb260ce419f55fc4e9fbdfd",
+    "monitor-ext-s3storage|8.0|linux|arm64|sha": "45bd876739a241a41901bd3dd41960f3e51dbaeb662b3c86e028cad936883006b1accd7f5f628faffe883a0e4d64578bf0ce8f9e85268b4e7975d9c82b7275d4",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 

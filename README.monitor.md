@@ -32,6 +32,7 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 * [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
 * [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
+* [dotnet/monitor/base](https://hub.docker.com/_/microsoft-dotnet-monitor-base/): .NET Monitor Base
 * [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
 * [dotnet/nightly/monitor](https://hub.docker.com/_/microsoft-dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
 
@@ -52,7 +53,7 @@ Tags | Dockerfile | OS Version
 ##### .NET Monitor 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.3-ubuntu-chiseled-amd64, 8.0-preview-ubuntu-chiseled-amd64, 8-preview-ubuntu-chiseled-amd64, 8.0.0-preview.3-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-preview.3, 8.0-preview, 8-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+8.0.0-preview.4-ubuntu-chiseled-amd64, 8.0-preview-ubuntu-chiseled-amd64, 8-preview-ubuntu-chiseled-amd64, 8.0.0-preview.4-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-preview.4, 8.0-preview, 8-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -64,7 +65,7 @@ Tags | Dockerfile | OS Version
 ##### .NET Monitor 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.3-ubuntu-chiseled-arm64v8, 8.0-preview-ubuntu-chiseled-arm64v8, 8-preview-ubuntu-chiseled-arm64v8, 8.0.0-preview.3-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-preview.3, 8.0-preview, 8-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.0-preview.4-ubuntu-chiseled-arm64v8, 8.0-preview-ubuntu-chiseled-arm64v8, 8-preview-ubuntu-chiseled-arm64v8, 8.0.0-preview.4-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-preview.4, 8.0-preview, 8-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 
 You can retrieve a list of all available tags for dotnet/monitor at https://mcr.microsoft.com/v2/dotnet/monitor/tags/list.
 <!--End of generated tags-->

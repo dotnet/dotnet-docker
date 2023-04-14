@@ -24,6 +24,7 @@ $onDockerfilesGenerated = {
         CopyReadme $ContainerName "README.aspnet.md"
         CopyReadme $ContainerName "README.md"
         CopyReadme $ContainerName "README.monitor.md"
+        CopyReadme $ContainerName "README.monitor-base.md"
         CopyReadme $ContainerName "README.runtime-deps.md"
         CopyReadme $ContainerName "README.runtime.md"
         CopyReadme $ContainerName "README.samples.md"
@@ -31,6 +32,7 @@ $onDockerfilesGenerated = {
 
         CopyReadme $ContainerName ".mar/portal/README.aspnet.portal.md"
         CopyReadme $ContainerName ".mar/portal/README.monitor.portal.md"
+        CopyReadme $ContainerName ".mar/portal/README.monitor-base.portal.md"
         CopyReadme $ContainerName ".mar/portal/README.runtime-deps.portal.md"
         CopyReadme $ContainerName ".mar/portal/README.runtime.portal.md"
         CopyReadme $ContainerName ".mar/portal/README.samples.portal.md"
