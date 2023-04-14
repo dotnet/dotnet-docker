@@ -1,6 +1,7 @@
 {{
     _ ARGS:
-      top-header: The string to use as the top-level header.
+      top-header: The string to use as the top-level header. ^
+    set isNightlyRepo to match(split(REPO, "/")[1], "nightly")
 }}{{ARGS["top-header"]}} Featured Tags
 
 {{if match(SHORT_REPO, "samples")
@@ -12,8 +13,8 @@ elif match(SHORT_REPO, "monitor"):* `7` (Standard Support)
   * `docker pull {{FULL_REPO}}:7`
 * `6` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:6`^
-elif match(REPO, "monitor/base"):* `8` (Long-Term Support)
-  * `docker pull {{FULL_REPO}}:8`^
+elif match(REPO, "monitor/base") && isNightlyRepo:* `8` (Preview)
+  * `docker pull {{FULL_REPO}}:8-preview`^
 else:* `7.0` (Standard Support)
   * `docker pull {{FULL_REPO}}:7.0`
 * `6.0` (Long-Term Support)

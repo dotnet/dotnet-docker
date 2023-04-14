@@ -20,7 +20,7 @@ FROM {{installerImageTag}} AS installer
 {{if isMariner:
 {{InsertTemplate("../Dockerfile.linux.distroless-mariner-installer-prereqs")}}
 }}
-# Retrieve .NET Monitor
+# Retrieve .NET Monitor extensions
 {{InsertTemplate("Dockerfile.linux.install-extensions")}}
 
 

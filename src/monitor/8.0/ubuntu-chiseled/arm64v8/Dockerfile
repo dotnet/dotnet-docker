@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 # Installer image
 FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
-# Retrieve .NET Monitor
+# Retrieve .NET Monitor extensions
 RUN dotnet_monitor_extension_version=8.0.0-preview.4.23207.3 \
     && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
     && dotnet_monitor_extension_sha512='c021b20983c18b7a0dfef0075578d915b78fb3dc25d08de9c8103976ab2c9fb1b2bc4e8588c9a52d506db8fd343c3415e6b7d59ea34e21c1072a6b1b2aa0791c' \
