@@ -78,7 +78,7 @@ After that, you can need to apply `container-azm-ms-agentconfig.yaml` to kick of
 kubectl apply -f container-azm-ms-agentconfig.yaml
 ```
 
-After that, you should be able to run a query in **Logs** like the following, in Kusto.
+You should now drive some traffic to the site (via the browser or `curl`). After that, you should be able to run a query in **Logs** like the following, in Kusto.
 
 ```kusto
 InsightsMetrics 
