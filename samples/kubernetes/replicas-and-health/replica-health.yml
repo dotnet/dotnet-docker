@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-replica-health
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aspnetapp
+  template:
+    metadata:
+      labels:
+        app: aspnetapp
+    spec:
+      containers:
+      - name: aspnetapp
+        image: mcr.microsoft.com/dotnet/samples:aspnetapp
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "80Mi"
+          limits:
+            memory: "100Mi"
+            cpu: "1"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-replica-health
+spec:
+  type: ClusterIP
+  selector:
+    app: aspnetapp
+  ports:
+  - name: aspnetapp
+    protocol: TCP
+    port: 8080
+    targetPort: 80

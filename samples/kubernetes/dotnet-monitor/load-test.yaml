@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: load-test
+spec:
+  template:
+    spec:
+      containers:
+      - name: bombardier
+        image: dotnetnonroot.azurecr.io/bombardier
+        args: ["--duration=60s", "http://aspnetapp.default.svc.cluster.local/Environment"]
+      restartPolicy: Never
