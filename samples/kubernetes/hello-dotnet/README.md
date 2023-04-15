@@ -40,7 +40,7 @@ hello-cloud-dotnet   LoadBalancer   10.0.186.62   20.237.122.134   8080:32751/TC
 
 Otherwise, you can configure your local environment to [create a `LoadBalancer` tunnel](https://minikube.sigs.k8s.io/docs/handbook/accessing/#example-of-loadbalancer), per whichever local cluster software you are using.
 
-View the sample app at http://EXTERNAL-IP:8080/ and call `curl http://EXTERNAL-IP:8080/Environment`.
+View the sample app at http://EXTERNAL-IP/ and call `curl http://EXTERNAL-IP/Environment`.
 
 ### Configure `kubectl` to access your cloud service
 
