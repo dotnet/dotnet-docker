@@ -29,7 +29,7 @@ app
 Create a proxy to the service.
 
 ```bash
-kubectl port-forward service/dotnet-non-root 8080:8080
+kubectl port-forward service/dotnet-non-root 8080
 ```
 
 View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
