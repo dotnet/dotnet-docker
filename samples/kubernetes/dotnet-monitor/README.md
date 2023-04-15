@@ -19,7 +19,7 @@ kubectl apply -f dotnet-monitor.yaml
 Create a proxy to the service, on all three ports.
 
 ```bash
-% k port-forward service/dotnet-monitor 8080 52323 52325
+kubectl port-forward service/dotnet-monitor 8080 52323 52325
 ```
 
 View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
@@ -99,7 +99,7 @@ Apply the [`load-test.yaml`](load-test.yaml) manifest. Start collecting `livemet
 Delete the job.
 
 ```bash
-% kubectl delete -f load-test.yaml
+kubectl delete -f load-test.yaml
 ```
 
 Note: The job must be deleted and then re-applied to be run again.
