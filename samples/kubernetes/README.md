@@ -43,4 +43,4 @@ $ kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/s
 $ kubectl get service -w
 ```
 
-View the sample app at http://EXTERNAL-IP:8080/ and call `curl http://EXTERNAL-IP:8080/Environment`.
+View the sample app at http://EXTERNAL-IP and call `curl http://EXTERNAL-IP/Environment`.

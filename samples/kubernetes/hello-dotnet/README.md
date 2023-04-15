@@ -32,15 +32,15 @@ You can discover the external IP for the service using `kubectl`.
 
 ```bash
 % kubectl get service -w
-NAME                 TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
-hello-cloud-dotnet   LoadBalancer   10.0.186.62   <pending>     8080:32751/TCP   3s
-kubernetes           ClusterIP      10.0.0.1      <none>        443/TCP          100m
-hello-cloud-dotnet   LoadBalancer   10.0.186.62   20.237.122.134   8080:32751/TCP   9s
+NAME           TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+hello-dotnet   LoadBalancer   10.0.120.232   <pending>     80:31567/TCP   5s
+kubernetes     ClusterIP      10.0.0.1       <none>        443/TCP        42h
+hello-dotnet   LoadBalancer   10.0.120.232   20.51.80.224   80:31567/TCP   9s
 ```
 
 Otherwise, you can configure your local environment to [create a `LoadBalancer` tunnel](https://minikube.sigs.k8s.io/docs/handbook/accessing/#example-of-loadbalancer), per whichever local cluster software you are using.
 
-View the sample app at http://EXTERNAL-IP:8080/ and call `curl http://EXTERNAL-IP:8080/Environment`.
+View the sample app at http://EXTERNAL-IP/ and call `curl http://EXTERNAL-IP/Environment`.
 
 ### Configure `kubectl` to access your cloud service
 
