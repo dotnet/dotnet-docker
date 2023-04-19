@@ -13,7 +13,7 @@ The following fine-grained examples demonstrate various Kubernetes and .NET capa
 - [Manual deployment](manual-deployment/README.md)
 - [Resource limits](resource-limits/README.md)
 - [Non-root user](non-root/README.md)
-- [Replicas and health checks](health-and-replicas/README.md)
+- [Replicas and health checks](replicas-and-health/README.md)
 - [dotnet-monitor](dotnet-monitor/README.md)
 - [Graceful shutdown](graceful-shutdown/README.md)
 
