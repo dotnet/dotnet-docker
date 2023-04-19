@@ -29,9 +29,16 @@ stages:
     - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -BuildVersionFilePath "$(Pipeline.Workspace)/dotnet-monitor/Build_Info/dotnet-monitor.nupkg.buildversion"
       displayName: Get Versions
     - powershell: |
-        $customArgs = "$(monitorMajorMinorVersion) --product-version monitor=$(monitorVer) --version-source-name dotnet/dotnet-monitor/$(monitorMajorMinorVersion) --stable-branding=$(stableBranding)"
+        $scriptArgs = @{
+          ProductVersion = "$(monitorMajorMinorVersion)"
+          MonitorVersion = "$(monitorVer)"
+          AzdoVariableName = 'updateDepsArgs'
+          UseStableBranding = [bool]::Parse("$(stableBranding)")
+        }
 
-        $customArgsArray = @($customArgs)
+        $(engPath)/Set-DotnetVersions.ps1 @scriptArgs
+
+        $customArgsArray = @($updateDepsArgs)
         echo "##vso[task.setvariable variable=customArgsArray]$($customArgsArray | ConvertTo-Json -Compress -AsArray)"
       displayName: Set Custom Args
     - template: steps/update-dependencies.yml
