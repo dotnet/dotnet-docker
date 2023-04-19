@@ -95,7 +95,7 @@ if ($UseStableBranding) {
 
 $versionSourceName = switch ($PSCmdlet.ParameterSetName) {
     "DotnetInstaller" { "dotnet/installer" }
-    "DotnetMonitor" { "dotnet/dotnet-monitor" }
+    "DotnetMonitor" { "dotnet/dotnet-monitor/$ProductVersion" }
     default { Write-Error -Message "Unknown version source" -ErrorAction Stop }
 }
 
