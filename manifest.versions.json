@@ -97,7 +97,7 @@
     "monitor|7.1|linux|arm64|sha": "c3313bcad518e34210400c8d0bdd255150ee0f2976ff317ae4d703e82320fc1d659f3073462d3f10b258df2bc79230e818a442d1ebff4e43ebd86209a2ed172a",
     "monitor|7.1|product-version": "7.1.1",
 
-    "monitor|8.0|build-version": "8.0.0-preview.4.23207.3",
+    "monitor|8.0|build-version": "8.0.0-preview.4.23218.4",
     "monitor|8.0|product-version": "8.0.0-preview.4",
 
     "monitor-base|8.0|linux|x64|sha": "3cec6d9902afeea454b2dde99bb0e24ec11882e554c70eb9a0394e4d644bce58af7fb13b4d2ac92a8e5af3120032d93d4f34ed551c5e85f65e00e0460b0c3084",
