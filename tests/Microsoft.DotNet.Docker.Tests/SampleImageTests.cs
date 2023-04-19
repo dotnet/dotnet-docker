@@ -126,8 +126,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 XElement summary = doc.Root.Element(XName.Get("ResultSummary", doc.Root.Name.NamespaceName));
                 Assert.Equal("Completed", summary.Attribute("outcome").Value);
                 XElement counters = summary.Element(XName.Get("Counters", doc.Root.Name.NamespaceName));
-                Assert.Equal("2", counters.Attribute("total").Value);
-                Assert.Equal("2", counters.Attribute("passed").Value);
+                Assert.Equal("3", counters.Attribute("total").Value);
+                Assert.Equal("3", counters.Attribute("passed").Value);
             }
             finally
             {
