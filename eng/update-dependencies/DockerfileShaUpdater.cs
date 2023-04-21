@@ -207,7 +207,7 @@ namespace Dotnet.Docker
                     .Replace("$ARCHIVE_EXT", archiveExt)
                     .Replace("$VERSION_DIR", versionDir)
                     .Replace("$VERSION_FILE", versionFile)
-                    .Replace("$COMPOSITE_SUFFIX", _dockerfileVersion.Major != 6.0 && _dockerfileVersion.Major != 7.0 ? "composite-" : string.Empty)
+                    .Replace("$COMPOSITE_SUFFIX", _dockerfileVersion.Major != 6.0 && _dockerfileVersion.Major != 7.0 && !_os.Contains("win") ? "composite-" : string.Empty)
                     .Replace("$OS", _os)
                     .Replace("$OPTIONAL_OS", optionalOs)
                     .Replace("$ARCH", _arch)
