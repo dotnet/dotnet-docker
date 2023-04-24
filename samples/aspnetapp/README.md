@@ -52,7 +52,7 @@ You may notice that the sample includes a [health check](../enable-healthchecks.
 
 ## Supported Linux distros
 
-The .NET Team publishes images for [multiple distros](../../documentation/supported-platforms.md.md).
+The .NET Team publishes images for [multiple distros](../../documentation/supported-platforms.md).
 
 Samples are provided for:
 
