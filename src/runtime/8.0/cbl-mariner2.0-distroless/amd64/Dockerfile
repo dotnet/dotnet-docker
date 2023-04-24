@@ -10,9 +10,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=8.0.0-preview.4.23217.4 \
+RUN dotnet_version=8.0.0-preview.4.23220.7 \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='bbee5b163a885765c85c3f0ca3354935e56ad5624cc1bd4904b3b7e4ac0bbaf6025c037465076b55d1a64e5a1684c965fd7ee2a3c585a0997091e323eed74ff9' \
+    && dotnet_sha512='77c846477414d4164e3458f55ac86d278e63e717656c5b16463f013f91367cc1fab756c2f665fa62d2175c3bc77ac3b8c76a241675e41cc6dc985feb382a011d' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
@@ -26,7 +26,7 @@ RUN mkdir /dotnet-symlink \
 FROM $REPO:8.0.0-preview.4-cbl-mariner2.0-distroless-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=8.0.0-preview.4.23217.4
+ENV DOTNET_VERSION=8.0.0-preview.4.23220.7
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
