@@ -6,7 +6,8 @@
         - is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
         - url-suffix (optional): Suffix string to append the end of the URL.
         - installer-stage (optional): Name of the Dockerfile stage responsible for installation
-        - is-rpm-install (optional): Whether to install RPM versus tarball ^
+        - is-rpm-install (optional): Whether to install RPM versus tarball
+        - is-composite-install (optional): Whether to install aspnetcore composite version ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
@@ -15,9 +16,11 @@
     set filePlatform to when(ARGS["is-rpm-install"], "", when(isAlpine, "-linux-musl", "-linux")) ^
     set varPlatform to when(ARGS["is-rpm-install"], "linux-rpm", when(isAlpine, "linux-musl", "linux")) ^
     set fileExt to when(ARGS["is-rpm-install"], "rpm", "tar.gz") ^
-    set destDir to when((isAlpine || ARGS["is-rpm-install"]) && !ARGS["is-internal"],
-        "/usr/share/dotnet",
-        when(isDistroless, "/dotnet", "")) ^
+    set destDir to when(dotnetVersion != "6.0" && dotnetVersion != "7.0",
+        "/dotnet",
+        when((isAlpine || ARGS["is-rpm-install"]) && !ARGS["is-internal"],
+            "/usr/share/dotnet",
+            when(isDistroless, "/dotnet", "")) ^
     set aspnetVersionDir to when(ARGS["use-local-version-var"],
         "$aspnetcore_version",
         when(ARGS["is-internal"],
