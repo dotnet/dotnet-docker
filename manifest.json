@@ -3462,7 +3462,7 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/aspnet/8.0/alpine3.17/amd64",
+              "dockerfile": "src/aspnet-composite/8.0/alpine3.17/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "alpine3.17",
@@ -3477,7 +3477,7 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/aspnet/8.0/alpine3.17/arm32v7",
+              "dockerfile": "src/aspnet-composite/8.0/alpine3.17/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "alpine3.17",
@@ -3493,7 +3493,7 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/aspnet/8.0/alpine3.17/arm64v8",
+              "dockerfile": "src/aspnet-composite/8.0/alpine3.17/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "alpine3.17",
