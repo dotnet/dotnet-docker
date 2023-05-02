@@ -9,7 +9,7 @@
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set isRpmInstall to false ^
     set isSingleStage to (isAlpine || isRpmInstall) && !isInternal ^
-    set runtimeBaseTag to
+    set runtimeDepsBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
     set installerImageTag to when(isDistrolessMariner,
@@ -17,12 +17,12 @@
         when(isAlpine || isFullMariner,
             runtimeDepsBaseTag,
             cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")))
-}} ARG REPO=mcr.microsoft.com/dotnet/runtime-deps{{ if isSingleStage:
+}}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps{{ if isSingleStage:
 {{
 
     _ SINGLE STAGE
 
-}} FROM {{runtimeDepsBaseTag}}
+}}FROM {{runtimeDepsBaseTag}}
 {{ if isAlpine:
 {{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
 }}
