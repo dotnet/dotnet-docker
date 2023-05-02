@@ -96,7 +96,7 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
     ])
 }}
 }}RUN {{if ARGS["use-local-version-var"]:{{ if ARGS["is-composite-runtime"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|buildVersion")]}} ^
-    else:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
+    else:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}}}} \
     && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
         [
             "files": files,

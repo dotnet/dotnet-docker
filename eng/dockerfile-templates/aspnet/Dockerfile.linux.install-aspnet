@@ -20,7 +20,7 @@
         "/dotnet",
         when((isAlpine || ARGS["is-rpm-install"]) && !ARGS["is-internal"],
             "/usr/share/dotnet",
-            when(isDistroless, "/dotnet", "")) ^
+            when(isDistroless, "/dotnet", ""))) ^
     set aspnetVersionDir to when(ARGS["use-local-version-var"],
         "$aspnetcore_version",
         when(ARGS["is-internal"],

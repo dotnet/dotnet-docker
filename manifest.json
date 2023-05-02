@@ -3467,7 +3467,7 @@
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-amd64": {},
+                "$(dotnet|8.0|product-version)-alpine3.17-amd64-composite": {},
                 "8.0-preview-alpine3.17-amd64-composite": {},
                 "8.0-preview-alpine-amd64-composite": {}
               }
@@ -3482,7 +3482,7 @@
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-arm32v7": {},
+                "$(dotnet|8.0|product-version)-alpine3.17-arm32v7-composite": {},
                 "8.0-preview-alpine3.17-arm32v7-composite": {},
                 "8.0-preview-alpine-arm32v7-composite": {}
               },
@@ -3498,7 +3498,7 @@
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-arm64v8": {},
+                "$(dotnet|8.0|product-version)-alpine3.17-arm64v8-composite": {},
                 "8.0-preview-alpine3.17-arm64v8-composite": {},
                 "8.0-preview-alpine-arm64v8-composite": {}
               },
