@@ -5,11 +5,11 @@ FROM $REPO:8.0.0-preview.4-alpine3.17-arm64v8
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.0-preview.4.23225.8
+ENV ASPNET_VERSION=8.0.0-preview.4.23251.12
 
 # Install ASP.NET Core
 RUN wget -O aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-arm64.tar.gz \
-    && aspnetcore_sha512='9a84268acf6718ca09cc6f067d7319cc301fef0b71542129c6f4ca130811a320324d9fb95a394e469490f3c6a26c13e7a7ceb5c319be1cbfc1ca4fbb2ff21b9d' \
+    && aspnetcore_sha512='7b566d6d5fe825c27a90c3f49e35026b003a1e69409755877ba4b7b78a56ad6be221c1a328b5b505478855c1aea8f362f0bc1ca6619dc811e19b0191eae21b00' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
