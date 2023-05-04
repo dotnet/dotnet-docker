@@ -68,6 +68,13 @@ if ($RuntimeVersion) {
 
 if ($MonitorVersion) {
     $updateDepsArgs += @("--product-version", "monitor=$MonitorVersion")
+
+    $productMajorVersion = $ProductVersion.Split('.', 2)[0]
+    if ($productMajorVersion -ge 8) {
+        $updateDepsArgs += @("--product-version", "monitor-base=$MonitorVersion")
+        $updateDepsArgs += @("--product-version", "monitor-ext-azureblobstorage=$MonitorVersion")
+        $updateDepsArgs += @("--product-version", "monitor-ext-s3storage=$MonitorVersion")
+    }
 }
 
 if ($ComputeShas) {
@@ -88,7 +95,7 @@ if ($UseStableBranding) {
 
 $versionSourceName = switch ($PSCmdlet.ParameterSetName) {
     "DotnetInstaller" { "dotnet/installer" }
-    "DotnetMonitor" { "dotnet/dotnet-monitor" }
+    "DotnetMonitor" { "dotnet/dotnet-monitor/$ProductVersion" }
     default { Write-Error -Message "Unknown version source" -ErrorAction Stop }
 }
 

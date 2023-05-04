@@ -1,5 +1,11 @@
 ## About
 
+**IMPORTANT**
+
+**The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
+
+**See [dotnet](https://mcr.microsoft.com/product/dotnet/runtime-deps/about) for images with official releases of [.NET](https://github.com/dotnet/core).**
+
 This image contains the native dependencies needed by .NET. It does not include .NET. It is for [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
@@ -7,20 +13,19 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 ## Featured Tags
 
 * `7.0` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:7.0`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:7.0`
 * `6.0` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:6.0`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:6.0`
 
 ## Related Repositories
 
 .NET:
 
-* [dotnet/sdk](https://mcr.microsoft.com/product/dotnet/sdk/about): .NET SDK
-* [dotnet/aspnet](https://mcr.microsoft.com/product/dotnet/aspnet/about): ASP.NET Core Runtime
-* [dotnet/runtime](https://mcr.microsoft.com/product/dotnet/runtime/about): .NET Runtime
-* [dotnet/monitor](https://mcr.microsoft.com/product/dotnet/monitor/about): .NET Monitor Tool
 * [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
-* [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
+* [dotnet/nightly/sdk](https://mcr.microsoft.com/product/dotnet/nightly/sdk/about): .NET SDK (Preview)
+* [dotnet/nightly/aspnet](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
+* [dotnet/nightly/runtime](https://mcr.microsoft.com/product/dotnet/nightly/runtime/about): .NET Runtime (Preview)
+* [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
 
 .NET Framework:
 

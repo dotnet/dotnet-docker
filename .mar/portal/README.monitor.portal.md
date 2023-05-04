@@ -1,5 +1,11 @@
 ## About
 
+**IMPORTANT**
+
+**The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
+
+**See [dotnet](https://mcr.microsoft.com/product/dotnet/monitor/about) for images with official releases of [.NET](https://github.com/dotnet/core).**
+
 This image contains the .NET Monitor tool.
 
 Use this image as a sidecar container to collect diagnostic information from other containers running .NET Core 3.1 or later processes.
@@ -9,20 +15,20 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 ## Featured Tags
 
 * `7` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/monitor:7`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:7`
 * `6` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/monitor:6`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:6`
 
 ## Related Repositories
 
 .NET:
 
-* [dotnet/sdk](https://mcr.microsoft.com/product/dotnet/sdk/about): .NET SDK
-* [dotnet/aspnet](https://mcr.microsoft.com/product/dotnet/aspnet/about): ASP.NET Core Runtime
-* [dotnet/runtime](https://mcr.microsoft.com/product/dotnet/runtime/about): .NET Runtime
-* [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies
 * [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
-* [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
+* [dotnet/nightly/sdk](https://mcr.microsoft.com/product/dotnet/nightly/sdk/about): .NET SDK (Preview)
+* [dotnet/nightly/aspnet](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
+* [dotnet/nightly/runtime](https://mcr.microsoft.com/product/dotnet/nightly/runtime/about): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
+* [dotnet/nightly/monitor/base](https://mcr.microsoft.com/product/dotnet/nightly/monitor/base/about): .NET Monitor Base (Preview)
 
 .NET Framework:
 
