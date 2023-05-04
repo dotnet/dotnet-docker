@@ -20,7 +20,7 @@
         --system \
         --gid={{ARGS["gid"]}} \
         {{ARGS["name"]}} \
-    && {{if isDebian:useradd^else:adduser}} \
+    && {{if isDebian:useradd^else:adduser}} -l \
         --uid {{ARGS["uid"]}} \
         {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \{{if ARGS["no-shell"]:
         --shell /bin/false \}}{{if ARGS["no-create-home"]:

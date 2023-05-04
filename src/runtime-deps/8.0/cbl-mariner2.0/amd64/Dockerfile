@@ -20,7 +20,7 @@ RUN tdnf install -y \
         --system \
         --gid=64198 \
         app \
-    && adduser \
+    && adduser -l \
         --uid 64198 \
         --gid 64198 \
         --create-home \
