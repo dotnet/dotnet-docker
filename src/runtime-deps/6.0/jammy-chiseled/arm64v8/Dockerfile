@@ -14,7 +14,7 @@ RUN groupadd \
         --system \
         --gid=64198 \
         app \
-    && adduser -l \
+    && useradd -l \
         --uid 64198 \
         --gid 64198 \
         --shell /bin/false \

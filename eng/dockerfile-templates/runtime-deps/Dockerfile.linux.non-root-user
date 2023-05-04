@@ -9,6 +9,7 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
+    set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
     set utilPkgs to when(isMariner && !isDistrolessMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0", ["shadow-utils"], [])
@@ -20,7 +21,7 @@
         --system \
         --gid={{ARGS["gid"]}} \
         {{ARGS["name"]}} \
-    && {{if isDebian:useradd^else:adduser}} -l \
+    && {{if isDebian || isUbuntu:useradd -l^else:adduser}} \
         --uid {{ARGS["uid"]}} \
         {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \{{if ARGS["no-shell"]:
         --shell /bin/false \}}{{if ARGS["no-create-home"]:

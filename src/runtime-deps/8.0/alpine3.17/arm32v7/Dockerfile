@@ -16,7 +16,7 @@ RUN addgroup \
         --system \
         --gid=64198 \
         app \
-    && adduser -l \
+    && adduser \
         --uid 64198 \
         --ingroup=app \
         --system \
