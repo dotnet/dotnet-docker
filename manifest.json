@@ -3918,14 +3918,14 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/aspnet-composite/8.0/alpine3.17/amd64",
+              "dockerfile": "src/aspnet/8.0/alpine3.17-composite/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-amd64-composite": {},
-                "8.0-preview-alpine3.17-amd64-composite": {},
-                "8.0-preview-alpine-amd64-composite": {}
+                "$(dotnet|8.0|product-version)-alpine3.17-composite-amd64": {},
+                "8.0-preview-alpine3.17-composite-amd64": {},
+                "8.0-preview-alpine-composite-amd64": {}
               }
             },
             {
@@ -3933,14 +3933,14 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/aspnet-composite/8.0/alpine3.17/arm32v7",
+              "dockerfile": "src/aspnet/8.0/alpine3.17-composite/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-arm32v7-composite": {},
-                "8.0-preview-alpine3.17-arm32v7-composite": {},
-                "8.0-preview-alpine-arm32v7-composite": {}
+                "$(dotnet|8.0|product-version)-alpine3.17-composite-arm32v7": {},
+                "8.0-preview-alpine3.17-composite-arm32v7": {},
+                "8.0-preview-alpine-composite-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -3949,14 +3949,14 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/aspnet-composite/8.0/alpine3.17/arm64v8",
+              "dockerfile": "src/aspnet/8.0/alpine3.17-composite/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
               "osVersion": "alpine3.17",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-arm64v8-composite": {},
-                "8.0-preview-alpine3.17-arm64v8-composite": {},
-                "8.0-preview-alpine-arm64v8-composite": {}
+                "$(dotnet|8.0|product-version)-alpine3.17-composite-arm64v8": {},
+                "8.0-preview-alpine3.17-composite-arm64v8": {},
+                "8.0-preview-alpine-composite-arm64v8": {}
               },
               "variant": "v8"
             }
