@@ -26,6 +26,7 @@
 {{ if isAlpine:
 {{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
 }}
+{{InsertTemplate("../runtime/Dockerfile.envs")}}
 {{InsertTemplate("Dockerfile.envs")}}
 
 # Install ASP.NET Composite Runtime
