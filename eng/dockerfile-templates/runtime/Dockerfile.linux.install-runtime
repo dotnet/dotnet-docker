@@ -8,7 +8,8 @@
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
         url-suffix (optional): Suffix string to append the end of the URL.
         installer-stage (optional): Name of the Dockerfile stage responsible for installation
-        is-rpm-install (optional): Whether to install RPM versus tarball ^
+        is-rpm-install (optional): Whether to install RPM versus tarball
+        is-composite-runtime (optional): Whether to install aspnetcore composite version ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
@@ -19,15 +20,30 @@
         when(ARGS["is-internal"],
             VARIABLES[cat("runtime|", dotnetVersion, "|build-version")],
             "$DOTNET_VERSION")) ^
+    set aspnetVersionDir to when(ARGS["use-local-version-var"],
+        "$aspnetcore_version",
+        when(ARGS["is-internal"],
+            VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")],
+            "$ASPNET_VERSION")) ^
     set isInternalStableBranding to ARGS["is-internal"] &&
         (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
         find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
     set runtimeVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         runtimeVersionDir) ^
-    set runtimeBaseUrl to cat(
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
-        "/Runtime/", runtimeVersionDir, "/") ^
+    set aspnetVersionFile to when(isInternalStableBranding,
+        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
+        aspnetVersionDir) ^
+    set fileArch to when(ARGS["is-rpm-install"] && ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
+    set fileExt to when(ARGS["is-rpm-install"], "rpm", "tar.gz") ^
+    set filePlatform to when(ARGS["is-rpm-install"], "", when(isAlpine, "-linux-musl", "-linux")) ^
+    set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
+    set runtimeBaseUrl to cat(baseUrl, "/Runtime/", runtimeVersionDir, "/") ^
+    set aspnetUrl to cat(baseUrl, "/aspnetcore/Runtime/", aspnetVersionDir, "/aspnetcore-runtime-composite-", aspnetVersionFile,
+        filePlatform, "-", fileArch, ".", fileExt, ARGS["url-suffix"]) ^
+    set localVersionVar to when(ARGS["is-composite-runtime"],
+        VARIABLES[cat("runtime|", dotnetVersion, "|build-version")],
+        VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]) ^
     set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set rpms to [
         [
@@ -49,15 +65,24 @@
             "sha-var-name": "dotnet_sha512"
         ]
     ] ^
-    set tarballs to [
+    set tarballs to when(ARGS["is-composite-runtime"],
         [
-            "filename": "dotnet.tar.gz",
-            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", varPlatform, "-", ARCH_SHORT, ".tar.gz",
-                ARGS["url-suffix"]),
-            "sha": VARIABLES[join(["runtime", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_sha512"
-        ]
-    ] ^
+            [
+                "filename": "dotnet.tar.gz",
+                "url": aspnetUrl,
+                "sha": VARIABLES[join(["aspnet", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
+                "sha-var-name": "dotnet_sha512"
+            ]
+        ],
+        [
+            [
+                "filename": "dotnet.tar.gz",
+                "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", varPlatform, "-", ARCH_SHORT, ".tar.gz",
+                    ARGS["url-suffix"]),
+                "sha": VARIABLES[join(["runtime", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
+                "sha-var-name": "dotnet_sha512"
+            ]
+        ]) ^
     set files to when(ARGS["is-rpm-install"], rpms, tarballs) ^
     set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
     set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
@@ -70,7 +95,8 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
         "destination": ""
     ])
 }}
-}}RUN {{if ARGS["use-local-version-var"]:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
+}}RUN {{if ARGS["use-local-version-var"]:{{ if ARGS["is-composite-runtime"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|buildVersion")]}} ^
+    else:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}}}} \
     && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
         [
             "files": files,
