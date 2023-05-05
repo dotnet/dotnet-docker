@@ -22,6 +22,7 @@ RUN groupadd \
     && useradd -l \
         --uid 64198 \
         --gid 64198 \
+        --create-home \
         --system \
         app
 
