@@ -86,7 +86,7 @@ namespace Dotnet.Docker
                 { "runtime-deps-cm.2", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.2-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
 
                 { "aspnet", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
-                { "aspnet", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$COMPOSITE_SUFFIX$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
+                { "aspnet-composite", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$COMPOSITE_SUFFIX$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
                 {
                     "aspnet-runtime-targeting-pack",
                     new string[]
@@ -196,7 +196,7 @@ namespace Dotnet.Docker
 
             string optionalOs = _os.Contains("rpm") ? string.Empty : $"-{_os}";
             string compositeSuffix = _dockerfileVersion.Major != 6.0 && _dockerfileVersion.Major != 7.0 && !_os.Contains("win")
-                                     ? "composite-;
+                                     ? "composite-"
                                      : string.Empty;
 
             // Each product name has one or more candidate URLs from which to retrieve the artifact. Multiple candidate URLs

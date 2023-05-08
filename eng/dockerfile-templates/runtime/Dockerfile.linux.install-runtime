@@ -20,7 +20,7 @@
         when(ARGS["is-internal"],
             VARIABLES[cat("runtime|", dotnetVersion, "|build-version")],
             "$DOTNET_VERSION")) ^
-    set aspnetVersionDir to when(ARGS["use-local-version-var"],
+    set aspnetCompositeVersionDir to when(ARGS["use-local-version-var"],
         "$aspnetcore_version",
         when(ARGS["is-internal"],
             VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")],
@@ -31,15 +31,15 @@
     set runtimeVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         runtimeVersionDir) ^
-    set aspnetVersionFile to when(isInternalStableBranding,
+    set aspnetCompositeVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
-        aspnetVersionDir) ^
+        aspnetCompositeVersionDir) ^
     set fileArch to when(ARGS["is-rpm-install"] && ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set fileExt to when(ARGS["is-rpm-install"], "rpm", "tar.gz") ^
     set filePlatform to when(ARGS["is-rpm-install"], "", when(isAlpine, "-linux-musl", "-linux")) ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set runtimeBaseUrl to cat(baseUrl, "/Runtime/", runtimeVersionDir, "/") ^
-    set aspnetUrl to cat(baseUrl, "/aspnetcore/Runtime/", aspnetVersionDir, "/aspnetcore-runtime-composite-", aspnetVersionFile,
+    set aspnetCompositeUrl to cat(baseUrl, "/aspnetcore/Runtime/", aspnetCompositeVersionDir, "/aspnetcore-runtime-composite-", aspnetCompositeVersionFile,
         filePlatform, "-", fileArch, ".", fileExt, ARGS["url-suffix"]) ^
     set localVersionVar to when(ARGS["is-composite-runtime"],
         VARIABLES[cat("runtime|", dotnetVersion, "|build-version")],
@@ -69,8 +69,8 @@
         [
             [
                 "filename": "dotnet.tar.gz",
-                "url": aspnetUrl,
-                "sha": VARIABLES[join(["aspnet", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
+                "url": aspnetCompositeUrl,
+                "sha": VARIABLES[join(["aspnet-composite", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
                 "sha-var-name": "dotnet_sha512"
             ]
         ],
