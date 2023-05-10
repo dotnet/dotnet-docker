@@ -55,6 +55,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Amd64,   SdkOS = OS.Jammy },
             new ProductImageData { Version = V8_0, OS = OS.Alpine317,           Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, OS = OS.Alpine317Composite,  Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20,           Arch = Arch.Arm64 },
@@ -67,7 +68,10 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Jammy },
             new ProductImageData { Version = V8_0, OS = OS.Alpine317,           Arch = Arch.Arm },
             new ProductImageData { Version = V8_0, OS = OS.Alpine317,           Arch = Arch.Arm64 },
+            new ProductImageData { Version = V8_0, OS = OS.Alpine317Composite,  Arch = Arch.Arm },
+            new ProductImageData { Version = V8_0, OS = OS.Alpine317Composite,  Arch = Arch.Arm64 },
         };
+
         private static readonly ProductImageData[] s_windowsTestData =
         {
             new ProductImageData { Version = V6_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
