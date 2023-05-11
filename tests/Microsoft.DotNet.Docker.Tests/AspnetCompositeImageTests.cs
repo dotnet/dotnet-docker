@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 namespace Microsoft.DotNet.Docker.Tests;
 
 [Trait("Category", "aspnet-composite")]
-public class AspnetCompositeImageTests : CommonRuntimeImageTests
+public class AspnetCompositeImageTests : CommonAspnetImageTests
 {
     public AspnetCompositeImageTests(ITestOutputHelper outputHelper)
         : base(outputHelper)
@@ -23,8 +23,8 @@ public class AspnetCompositeImageTests : CommonRuntimeImageTests
     public static IEnumerable<object[]> GetImageData() => GetImageData(DotNetImageType.Aspnet_Composite);
 
     [DotNetTheory]
-    [MemberData(memberof(GetImageData))]
-    public async Task VerifyAppScenario(ProductImageData imageData)
+    [MemberData(nameof(GetImageData))]
+    public override async Task VerifyAppScenario(ProductImageData imageData)
     {
         if (imageData.OSTag != OS.Alpine317Composite)
         {
@@ -42,8 +42,8 @@ public class AspnetCompositeImageTests : CommonRuntimeImageTests
     }
 
     [DotNetTheory]
-    [MemberData(memberof(GetImageData))]
-    public void VerifyEnvironmentVariables(ProductImageData imageData)
+    [MemberData(nameof(GetImageData))]
+    public override void VerifyEnvironmentVariables(ProductImageData imageData)
     {
         List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>
         {
@@ -63,41 +63,13 @@ public class AspnetCompositeImageTests : CommonRuntimeImageTests
     }
 
     [DotNetTheory]
-    [MemberData(memberof(GetImageData))]
-    public void VerifyPackageInstallation(ProductImageData imageData)
+    [MemberData(nameof(GetImageData))]
+    public override void VerifyPackageInstallation(ProductImageData imageData)
     {
         VerifyExpectedInstalledRpmPackages(
                 imageData,
                 GetExpectedRpmPackagesInstalled(imageData)
                 .Concat(RuntimeDepsImageTests.GetExpectedRpmPackagesInstalled(imageData)));
-    }
-
-    [LinuxImageTheory]
-    [MemberData(memberof(GetImageData))]
-    public void VerifyInsecureFiles(ProductImageData imageData)
-    {
-        base.VerifyCommonInsecureFiles(imageData);
-    }
-
-    [LinuxImageTheory]
-    [MemberData(memberof(GetImageData))]
-    public void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
-    {
-        base.VerifyCommonShellNotInstalledForDistroless(imageData);
-    }
-
-    [DotNetTheory]
-    [MemberData(memberof(GetImageData))]
-    public void VerifyNoSasToken(ProductImageData imageData)
-    {
-        base.VerifyCommonNoSasToken(imageData);
-    }
-
-    [DotNetTheory]
-    [MemberData(memberof(GetImageData))]
-    public void VerifyDefaultUser(ProductImageData imageData)
-    {
-        VerifyCommonDefaultUser(imageData);
     }
 
     public static EnvironmentVariableInfo GetAspnetCompositeVersionVariableInfo(
