@@ -16,4 +16,4 @@ RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o 
 FROM mcr.microsoft.com/dotnet/nightly/runtime:7.0-jammy-chiseled
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet", "dotnetapp.dll"]
+ENTRYPOINT ["./dotnetapp"]
