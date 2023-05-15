@@ -13,6 +13,10 @@
     set createUserHome to dotnetVersion != "6.0"
 }}# Installer image
 FROM {{marinerRepo}}/base/core:{{OS_VERSION_NUMBER}} AS installer
+
+{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
+    "uid": uid
+])}}
 {{ if find(OS_VERSION, "1.0") >= 0:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
@@ -42,8 +46,8 @@ RUN {{InsertTemplate("Dockerfile.linux.distroless-user",
             "staging-dir": distrolessStagingDir,
             "exclusive": dotnetVersion != "6.0",
             "name": username,
-            "uid": uid,
-            "gid": gid,
+            "uid": when(dotnetVersion = "6.0" || dotnetVersion = "7.0", uid, ""),
+            "gid": when(dotnetVersion = "6.0" || dotnetVersion = "7.0", gid, ""),
             "no-create-home": !createUserHome
         ])}}
 
@@ -64,9 +68,5 @@ COPY --from=installer {{distrolessStagingDir}}/ /{{if createUserHome:
 
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=installer --chown={{uid}}:{{gid}} {{distrolessStagingDir}}/home/{{username}} /home/{{username}}}}
-
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
 
 USER app

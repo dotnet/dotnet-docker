@@ -1,6 +1,14 @@
 # Installer image
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
+ENV \
+    # Configure web servers to bind to port 8080 when present
+    ASPNETCORE_URLS=http://+:8080 \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true \
+    # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+
 RUN tdnf install -y \
         gawk \
         shadow-utils \
@@ -35,8 +43,8 @@ RUN groupadd \
         --gid=101 \
         app \
     && useradd -l \
-        --uid 101 \
-        --gid 101 \
+        --uid=101 \
+        --gid=101 \
         --shell /bin/false \
         --system \
         app \
@@ -62,13 +70,5 @@ COPY --from=installer /staging/ /
 
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=installer --chown=101:101 /staging/home/app /home/app
-
-ENV \
-    # Configure web servers to bind to port 8080 when present
-    ASPNETCORE_URLS=http://+:8080 \
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true \
-    # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
 USER app

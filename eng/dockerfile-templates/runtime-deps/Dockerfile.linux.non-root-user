@@ -2,8 +2,8 @@
     _ Configures a non-root user
     _ ARGS:
         name: Name of the user/group to create
-        uid: ID of the user to be created
-        gid: ID of the group to be created
+        gid (optional): ID of the group to be created
+        uid (optional): ID of the user to be created
         no-create-home (optional): Indicates whether a home directory should be created for the user
         no-shell (optional): Indicates whether the shell should be set to /bin/false ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
@@ -14,6 +14,8 @@
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
     set isChiseledUbuntu to find(OS_VERSION, "chiseled") >= 0 ^
     set addUserCommand to when(isDebian || isUbuntu || isMariner, "useradd -l", "adduser") ^
+    set uid to when(len(ARGS["uid"]) > 0, ARGS["uid"], "$APP_UID") ^
+    set gid to when(len(ARGS["gid"]) > 0, ARGS["gid"], "$APP_UID") ^
     set utilPkgs to when(isMariner && !isDistrolessMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0", ["shadow-utils"], [])
 }}{{if len(utilPkgs) > 0:{{InsertTemplate("../Dockerfile.linux.install-pkgs", [
         "pkgs": utilPkgs,
@@ -21,11 +23,11 @@
     ])}}
     && }}{{if isAlpine:addgroup^else:groupadd}} \
         --system \
-        --gid={{ARGS["gid"]}} \
+        --gid={{gid}} \
         {{ARGS["name"]}} \
     && {{addUserCommand}} \
-        --uid {{ARGS["uid"]}} \
-        {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \{{if ARGS["no-shell"]:
+        --uid={{uid}} \
+        {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid={{ARGS["gid"]}}}} \{{if ARGS["no-shell"]:
         --shell /bin/false \}}{{if ARGS["no-create-home"]:
         --no-create-home \^elif dotnetVersion != "6.0" && dotnetVersion != "7.0" && (find(addUserCommand, "useradd") >= 0) && !isChiseledUbuntu:
         --create-home \}}

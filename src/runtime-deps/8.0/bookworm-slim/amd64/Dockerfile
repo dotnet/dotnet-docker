@@ -1,5 +1,13 @@
 FROM amd64/debian:bookworm-slim
 
+ENV \
+    # UID of the non-root user 'app'
+    APP_UID=64198 \
+    # Configure web servers to bind to port 8080 when present
+    ASPNETCORE_HTTP_PORTS=8080 \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -13,23 +21,14 @@ RUN apt-get update \
         libstdc++6 \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
-
 # Create a non-root user and group
 RUN groupadd \
         --system \
-        --gid=64198 \
+        --gid=$APP_UID \
         app \
     && useradd -l \
-        --uid 64198 \
-        --gid 64198 \
+        --uid=$APP_UID \
+        --gid= \
         --create-home \
         --system \
         app
-
-ENV \
-    # UID of the non-root user 'app'
-    APP_UID=64198 \
-    # Configure web servers to bind to port 8080 when present
-    ASPNETCORE_HTTP_PORTS=8080 \
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true

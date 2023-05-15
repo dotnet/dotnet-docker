@@ -5,6 +5,11 @@
     set uid to 64198 ^
     set gid to uid
 }}FROM {{ARCH_VERSIONED}}/golang:1.18 as chisel
+
+{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
+    "uid": uid
+])}}
+
 RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel
 WORKDIR /opt/chisel
 RUN go generate internal/deb/version.go \
@@ -21,8 +26,6 @@ RUN {{InsertTemplate("Dockerfile.linux.distroless-user", [
         "exclusive": "true",
         "create-dir": "true",
         "name": username,
-        "uid": uid,
-        "gid": gid,
         "create-home": "true"
     ])}}
 
@@ -44,9 +47,5 @@ COPY --from=builder /rootfs /
 
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=builder --chown={{uid}}:{{gid}} /rootfs/home/{{username}} /home/{{username}}
-
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
 
 USER $APP_UID
