@@ -14,7 +14,9 @@ elif match(SHORT_REPO, "monitor"):* `7` (Standard Support)
   * `docker pull {{FULL_REPO}}:6`^
 elif match(REPO, "monitor/base"):* `8` (Preview)
   * `docker pull {{FULL_REPO}}:8-preview`^
-else:* `7.0` (Standard Support)
+else:{{if VARIABLES["branch"] = "nightly":* `8.0` (Preview)
+  * `docker pull {{FULL_REPO}}:8.0-preview`
+}}* `7.0` (Standard Support)
   * `docker pull {{FULL_REPO}}:7.0`
 * `6.0` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:6.0`}}
