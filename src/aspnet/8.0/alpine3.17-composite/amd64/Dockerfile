@@ -5,9 +5,9 @@ FROM $REPO:8.0.0-preview.4-alpine3.17-amd64
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 # .NET Runtime version
-ENV DOTNET_VERSION=8.0.0-preview.4.23228.5
+ENV DOTNET_VERSION=8.0.0-preview.4.23259.5
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.0-preview.4.23251.12
+ENV ASPNET_VERSION=8.0.0-preview.4.23260.4
 
 # Install ASP.NET Composite Runtime
 RUN wget -O dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-composite-$ASPNET_VERSION-linux-musl-x64.tar.gz \
