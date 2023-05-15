@@ -11,7 +11,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=7.0.203 `
+    DOTNET_SDK_VERSION=7.0.302 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -24,8 +24,8 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.40.0.windows.1/MinGit-2.40.0-64-bit.zip; `
-        $mingit_sha256 = 'f3e898f8856e80c66b367c80396c6debc46ae0b258ab9fd00ee08b4812c8f987'; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.40.1.windows.1/MinGit-2.40.1-64-bit.zip; `
+        $mingit_sha256 = '36498716572394918625476ca207df3d5f8b535a669e9aad7a99919d0179848c'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -40,7 +40,7 @@ RUN powershell -Command " `
         `
         # Retrieve .NET SDK
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-        $dotnet_sha512 = 'd675c05c6a30fcc2d5512f37e56fda19ee5e0d22de3b2c410c7bee58d3e565a2c87af7ee522c17a51b0f8562de6610831b7f89c1d22586e8be475855b3a060e5'; `
+        $dotnet_sha512 = '6cadc278b4bc980796d255062d0e2f786e82cde8f5ca591b81727b2a808496ea0abad73f0263fc80f9f946235e9aa6fd42640b4908aa39a92299c713f159abe9'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
