@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 namespace Microsoft.DotNet.Docker.Tests
 {
     [Trait("Category", "aspnet")]
-    public class AspnetImageTests : CommonAspnetImageTests
+    public class AspnetImageTests : CommonRuntimeImageTests
     {
         public AspnetImageTests(ITestOutputHelper outputHelper)
             : base(outputHelper)
@@ -24,7 +24,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public override async Task VerifyAppScenario(ProductImageData imageData)
+        public async Task VerifyAppScenario(ProductImageData imageData)
         {
             if (imageData.IsArm && imageData.OS == OS.Jammy)
             {
@@ -39,7 +39,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public override void VerifyEnvironmentVariables(ProductImageData imageData)
+        public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>
             {
@@ -57,7 +57,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public override void VerifyPackageInstallation(ProductImageData imageData)
+        public void VerifyPackageInstallation(ProductImageData imageData)
         {
             if (!imageData.OS.Contains("cbl-mariner") || imageData.IsDistroless || imageData.Version.Major > 6)
             {
@@ -68,6 +68,34 @@ namespace Microsoft.DotNet.Docker.Tests
                 imageData,
                 GetExpectedRpmPackagesInstalled(imageData)
                     .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyInsecureFiles(ProductImageData imageData)
+        {
+            base.VerifyCommonInsecureFiles(imageData);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
+        {
+            base.VerifyCommonShellNotInstalledForDistroless(imageData);
+        }
+
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyNoSasToken(ProductImageData imageData)
+        {
+            base.VerifyCommonNoSasToken(imageData);
+        }
+
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyDefaultUser(ProductImageData imageData)
+        {
+            base.VerifyCommonDefaultUser(imageData);
         }
 
         public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
