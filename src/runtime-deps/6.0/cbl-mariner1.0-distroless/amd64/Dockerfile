@@ -1,12 +1,6 @@
 # Installer image
 FROM mcr.microsoft.com/cbl-mariner/base/core:1.0 AS installer
 
-ENV \
-    # Configure web servers to bind to port 8080 when present
-    ASPNETCORE_URLS=http://+:8080 \
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true
-
 RUN tdnf install -y \
         dnf \
     && tdnf clean all
@@ -54,6 +48,12 @@ RUN rm -rf /staging/etc/dnf \
 
 # .NET runtime-deps image
 FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:1.0
+
+ENV \
+    # Configure web servers to bind to port 8080 when present
+    ASPNETCORE_URLS=http://+:8080 \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true
 
 COPY --from=installer /staging/ /
 

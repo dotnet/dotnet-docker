@@ -1,16 +1,6 @@
 # Installer image
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
-ENV \
-    # UID of the non-root user 'app'
-    APP_UID=64198 \
-    # Configure web servers to bind to port 8080 when present
-    ASPNETCORE_HTTP_PORTS=8080 \
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true \
-    # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
-
 RUN tdnf install -y \
         gawk \
         shadow-utils \
@@ -42,16 +32,16 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
 # Create a non-root user and group
 RUN groupadd \
         --system \
-        --gid=$APP_UID \
+        --gid=64198 \
         app \
     && useradd -l \
-        --uid=$APP_UID \
-        --gid= \
+        --uid=64198 \
+        --gid=64198 \
         --shell /bin/false \
         --create-home \
         --system \
         app \
-    && install -d -m 0755 -o $APP_UID -g $APP_UID "/staging/home/app" \
+    && install -d -m 0755 -o 64198 -g 64198 "/staging/home/app" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/staging/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
@@ -68,6 +58,16 @@ RUN rm -rf /staging/etc/tdnf \
 
 # .NET runtime-deps image
 FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0
+
+ENV \
+    # UID of the non-root user 'app'
+    APP_UID=64198 \
+    # Configure web servers to bind to port 8080 when present
+    ASPNETCORE_HTTP_PORTS=8080 \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true \
+    # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
 COPY --from=installer /staging/ /
 

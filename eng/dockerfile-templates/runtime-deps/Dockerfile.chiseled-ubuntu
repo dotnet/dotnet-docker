@@ -6,10 +6,6 @@
     set gid to uid
 }}FROM {{ARCH_VERSIONED}}/golang:1.18 as chisel
 
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
-
 RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel
 WORKDIR /opt/chisel
 RUN go generate internal/deb/version.go \
@@ -26,6 +22,8 @@ RUN {{InsertTemplate("Dockerfile.linux.distroless-user", [
         "exclusive": "true",
         "create-dir": "true",
         "name": username,
+        "uid": uid,
+        "gid": gid,
         "create-home": "true"
     ])}}
 
@@ -42,6 +40,10 @@ RUN chisel cut --release "ubuntu-{{osVersionNumber}}" --root /rootfs \
 
 
 FROM scratch
+
+{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
+    "uid": uid
+])}}
 
 COPY --from=builder /rootfs /
 

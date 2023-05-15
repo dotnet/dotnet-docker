@@ -1,15 +1,5 @@
 FROM arm64v8/golang:1.18 as chisel
 
-ENV \
-    # UID of the non-root user 'app'
-    APP_UID=64198 \
-    # Configure web servers to bind to port 8080 when present
-    ASPNETCORE_HTTP_PORTS=8080 \
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true \
-    # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
-
 RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel
 WORKDIR /opt/chisel
 RUN go generate internal/deb/version.go \
@@ -23,15 +13,15 @@ RUN apt-get update && \
 
 RUN groupadd \
         --system \
-        --gid=$APP_UID \
+        --gid=64198 \
         app \
     && useradd -l \
-        --uid=$APP_UID \
-        --gid= \
+        --uid=64198 \
+        --gid=64198 \
         --shell /bin/false \
         --system \
         app \
-    && install -d -m 0755 -o $APP_UID -g $APP_UID "/rootfs/home/app" \
+    && install -d -m 0755 -o 64198 -g 64198 "/rootfs/home/app" \
     && mkdir -p "/rootfs/etc" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/rootfs/etc/passwd" \
@@ -50,6 +40,16 @@ RUN chisel cut --release "ubuntu-22.04" --root /rootfs \
 
 
 FROM scratch
+
+ENV \
+    # UID of the non-root user 'app'
+    APP_UID=64198 \
+    # Configure web servers to bind to port 8080 when present
+    ASPNETCORE_HTTP_PORTS=8080 \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true \
+    # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
 COPY --from=builder /rootfs /
 
