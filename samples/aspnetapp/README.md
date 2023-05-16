@@ -52,7 +52,7 @@ You may notice that the sample includes a [health check](../enable-healthchecks.
 
 ## Supported Linux distros
 
-The .NET Team publishes images for [multiple distros](../../documentation/supported-platforms.md.md).
+The .NET Team publishes images for [multiple distros](../../documentation/supported-platforms.md).
 
 Samples are provided for:
 
@@ -72,7 +72,7 @@ These patterns can be applied to other distros.
 
 ## Supported Windows versions
 
-The .NET Team publishes images for [multiple Windows versions](../../documentation/supported-platforms.md.md). You must have [Windows containers enabled](https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers) to use these images.
+The .NET Team publishes images for [multiple Windows versions](../../documentation/supported-platforms.md). You must have [Windows containers enabled](https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers) to use these images.
 
 Samples are provided for
 
