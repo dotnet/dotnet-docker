@@ -4883,7 +4883,7 @@
     },
     {
       "id": "monitor-base",
-      "name": "dotnet/nightly/monitor/base",
+      "name": "dotnet/monitor/base",
       "readmes": [
         {
           "path": "README.monitor-base.md",

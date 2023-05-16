@@ -1,11 +1,5 @@
 ## About
 
-**IMPORTANT**
-
-**The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
-
-**See [dotnet](https://mcr.microsoft.com/product/dotnet/monitor/base/about) for images with official releases of [.NET](https://github.com/dotnet/core).**
-
 This image contains the .NET Monitor Base installation.
 
 Use this image as a base image for building a .NET Monitor image with extensions.
@@ -15,18 +9,18 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 ## Featured Tags
 
 * `8` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor/base:8-preview`
+  * `docker pull mcr.microsoft.com/dotnet/monitor/base:8-preview`
 
 ## Related Repositories
 
 .NET:
 
+* [dotnet/sdk](https://mcr.microsoft.com/product/dotnet/sdk/about): .NET SDK
+* [dotnet/aspnet](https://mcr.microsoft.com/product/dotnet/aspnet/about): ASP.NET Core Runtime
+* [dotnet/runtime](https://mcr.microsoft.com/product/dotnet/runtime/about): .NET Runtime
+* [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies
+* [dotnet/monitor](https://mcr.microsoft.com/product/dotnet/monitor/about): .NET Monitor Tool
 * [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
-* [dotnet/nightly/sdk](https://mcr.microsoft.com/product/dotnet/nightly/sdk/about): .NET SDK (Preview)
-* [dotnet/nightly/aspnet](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime](https://mcr.microsoft.com/product/dotnet/nightly/runtime/about): .NET Runtime (Preview)
-* [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
-* [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
 
 .NET Framework:
 
