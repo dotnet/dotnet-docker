@@ -1,6 +1,7 @@
 using System;
-using System.IO;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Net;
 using System.Runtime.InteropServices;
 using static System.Console;
 
@@ -55,6 +56,7 @@ WriteLine($"{nameof(Environment.UserName)}: {Environment.UserName}");
 WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
 WriteLine($"{nameof(Environment.ProcessorCount)}: {Environment.ProcessorCount}");
 WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {totalMemoryBytes} ({GetInBestUnit(totalMemoryBytes)})");
+WriteLine($"HostName : {Dns.GetHostName()}");
 
 string[] memoryLimitPaths = new string[] 
 {

@@ -1,3 +1,4 @@
+using System.Net;
 using System.Runtime.InteropServices;
 
 public struct EnvironmentInfo
@@ -38,10 +39,10 @@ public struct EnvironmentInfo
     public long TotalAvailableMemoryBytes { get; }
     public long MemoryLimit { get; }
     public long MemoryUsage { get; }
+    public string HostName => Dns.GetHostName();
 
     private static long GetBestValue(string[] paths)
     {
-        string value = string.Empty;
         foreach (string path in paths)
         {
             if (Path.Exists(path) &&
