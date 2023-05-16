@@ -1,6 +1,6 @@
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview-alpine AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-preview-alpine AS build
 ARG TARGETARCH
 WORKDIR /source
 
@@ -10,14 +10,14 @@ RUN dotnet restore -a $TARGETARCH
 
 # copy everything else and build app
 COPY aspnetapp/. .
-RUN dotnet publish -a $TARGETARCH --self-contained false --no-restore -o /app
+RUN dotnet publish -a $TARGETARCH --no-restore -o /app
 
 
 # Enable globalization and time zones:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
 # .NET 8 tag includes `-preview`
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:8.0-preview-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-preview-alpine
 
 # These ENVs are only needed because the sample uses .NET 7
 ENV DOTNET_ROLL_FORWARD=Major

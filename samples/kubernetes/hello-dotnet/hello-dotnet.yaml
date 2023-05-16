@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-dotnet
+  labels:
+    app: aspnetapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aspnetapp
+  template:
+    metadata:
+      labels:
+        app: aspnetapp
+      containers:
+      - name: aspnetapp
+        image: dotnetnonroot.azurecr.io/aspnetapp
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DOTNET_DiagnosticPorts
+          value: /diag/dotnet-monitor.sock
+        volumeMounts:
+        - mountPath: /diag
+          name: diagvol        
+        resources:
+          requests:
+            memory: "60Mi"
+            cpu: "250m" # same as 0.25
+          limits:
+            memory: "100Mi"
+            cpu: "500m" # same as 0.5
+        livenessProbe:
+          httpGet:
+            path: "/healthz"
+            port: 8080
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+      - name: monitor
+        image: mcr.microsoft.com/dotnet/monitor:8.0.0-preview.3
+        ports:
+        - containerPort: 52325
+        # DO NOT use the --no-auth argument for deployments in production; this argument is used for demonstration
+        # purposes only in this example. Please continue reading after this example for further details.
+        args: [ "collect", "--no-auth" ]
+        imagePullPolicy: Always
+        env:
+        - name: DOTNETMONITOR_DiagnosticPort__ConnectionMode
+          value: Listen
+        - name: DOTNETMONITOR_Storage__DefaultSharedPath
+          value: /diag
+        # ALWAYS use the HTTPS form of the URL for deployments in production; the removal of HTTPS is done for
+        # demonstration purposes only in this example. Please continue reading after this example for further details.
+        - name: DOTNETMONITOR_Urls
+          value: http://localhost:52323
+        # The metrics URL is set in the CMD instruction of the image by default. However, this deployment overrides that with the args setting; manually set the URL to the same value using configuration.
+        - name: DOTNETMONITOR_Metrics__Endpoints
+          value: http://+:52325
+        volumeMounts:
+        - mountPath: /diag
+          name: diagvol
+        resources:
+          requests:
+            cpu: 50m
+            memory: 32Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+      volumes:
+      - name: diagvol
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-dotnet
+spec:
+  type: ClusterIP
+  selector:
+    app: aspnetapp
+  ports:
+    - port: 8080
