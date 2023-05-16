@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 namespace Microsoft.DotNet.Docker.Tests
 {
     [Trait("Category", "aspnet-composite")]
-    public class AspnetCompositeImageTests : CommonRuntimeImageTests
+    public class AspnetCompositeImageTests : CommonAspnetImageTests
     {
         public AspnetCompositeImageTests(ITestOutputHelper outputHelper)
             : base(outputHelper)
@@ -33,69 +33,52 @@ namespace Microsoft.DotNet.Docker.Tests
                 return ;
             }
 
-            ImageScenarioVerifier verifier = new ImageScenarioVerifier(
-                                                imageData: imageData,
-                                                dockerHelper: DockerHelper,
-                                                outputHelper: OutputHelper,
-                                                isWeb: true);
-            await verifier.Execute();
+            await base.VerifyAspnetAppScenario(imageData);
         }
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>
-            {
-                RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper)
-            };
-
             EnvironmentVariableInfo compositeVersionVariableInfo = GetAspnetCompositeVersionVariableInfo(
                     imageData,
                     DockerHelper);
 
-            if (compositeVersionVariableInfo != null)
-            {
-                variables.Add(compositeVersionVariableInfo);
-            }
-
-            base.VerifyCommonEnvironmentVariables(imageData, variables);
+            base.VerifyAspnetEnvironmentVariables(imageData, compositeVersionVariableInfo);
         }
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyPackageInstallation(ProductImageData imageData)
         {
-            VerifyExpectedInstalledRpmPackages(
-                imageData,
-                GetExpectedRpmPackagesInstalled(imageData)
-                .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
+            string[] expectedRpmPackages = GetExpectedRpmPackagesInstalled(imageData);
+            base.VerifyAspnetPackageInstallation(imageData, expectedRpmPackages);
         }
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyInsecureFiles(ProductImageData imageData)
+        public override void VerifyInsecureFiles(ProductImageData imageData)
         {
             base.VerifyCommonInsecureFiles(imageData);
         }
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
+        public override void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
         {
             base.VerifyCommonShellNotInstalledForDistroless(imageData);
         }
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyNoSasToken(ProductImageData imageData)
+        public override void VerifyNoSasToken(ProductImageData imageData)
         {
             base.VerifyCommonNoSasToken(imageData);
         }
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyDefaultUser(ProductImageData imageData)
+        public override void VerifyDefaultUser(ProductImageData imageData)
         {
             base.VerifyCommonDefaultUser(imageData);
         }
