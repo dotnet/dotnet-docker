@@ -21,6 +21,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 * [dotnet/aspnet](https://mcr.microsoft.com/product/dotnet/aspnet/about): ASP.NET Core Runtime
 * [dotnet/runtime](https://mcr.microsoft.com/product/dotnet/runtime/about): .NET Runtime
 * [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies
+* [dotnet/monitor/base](https://mcr.microsoft.com/product/dotnet/monitor/base/about): .NET Monitor Base
 * [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
 * [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
 

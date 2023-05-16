@@ -1,44 +1,26 @@
-ARG REPO=mcr.microsoft.com/dotnet/aspnet
+ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 
 # Installer image
 FROM amd64/buildpack-deps:jammy-curl AS installer
 
-# Retrieve .NET Monitor
-RUN dotnet_monitor_version=8.0.0-preview.3.23180.9 \
-    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
-    && dotnet_monitor_sha512='e7f7220a3d0e268b4db12bfdf6e95a01a186ede1ea8aff2eedcae149f1c4369b80c7aaebacf5ac2b4b9fc612640a27a616890f07ff90a3fe6d95b84cfc99543f' \
-    && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
+# Retrieve .NET Monitor extensions
+RUN dotnet_monitor_extension_version=8.0.0-preview.4.23260.4 \
+    && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
+    && dotnet_monitor_extension_sha512='b51b64c70f41adeb486557b802274b6f3046fd25b45aac0fe6e0c3bbf0784c2f1203fba648a807c1937b3780fec2812f917c4b1aafbc0f8b8be0dd48ec7bbadb' \
+    && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
+    \
+    && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
+    && dotnet_monitor_extension_sha512='78b0793455df32cec9526f952a36e010077dada7312dfd4ca93d30fff24760b2a368574db679c868d0ff260e1394201336ab557468eb0db4742f412a3af99707' \
+    && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
+    \
     && mkdir -p /app \
-    && tar -oxzf dotnet-monitor.tar.gz -C /app \
-    && rm dotnet-monitor.tar.gz
+    && tar -oxzf dotnet-monitor-egress-azureblobstorage.tar.gz -C /app \
+    && rm dotnet-monitor-egress-azureblobstorage.tar.gz \
+    && tar -oxzf dotnet-monitor-egress-s3storage.tar.gz -C /app \
+    && rm dotnet-monitor-egress-s3storage.tar.gz
 
 
 # .NET Monitor image
-FROM $REPO:8.0.0-preview.3-jammy-chiseled-amd64
+FROM $REPO:8.0.0-preview.4-ubuntu-chiseled-amd64
 
-WORKDIR /app
-COPY --from=installer /app .
-
-ENV \
-    # Unset ASPNETCORE_HTTP_PORTS from aspnet base image
-    ASPNETCORE_HTTP_PORTS= \
-    # Disable debugger and profiler diagnostics to avoid diagnosing self.
-    COMPlus_EnableDiagnostics=0 \
-    # Default Filter
-    DefaultProcess__Filters__0__Key=ProcessId \
-    DefaultProcess__Filters__0__Value=1 \
-    # Remove Unix Domain Socket before starting diagnostic port server
-    DiagnosticPort__DeleteEndpointOnStartup=true \
-    # Server GC mode
-    DOTNET_gcServer=1 \
-    # Logging: JSON format so that analytic platforms can get discrete entry information
-    Logging__Console__FormatterName=json \
-    # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
-    Logging__Console__FormatterOptions__TimestampFormat=yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z' \
-    # Logging: Write timestamps using UTC offset (+0:00)
-    Logging__Console__FormatterOptions__UseUtcTimestamp=true \
-    # Add dotnet-monitor path to front of PATH for easier, prioritized execution
-    PATH="/app:${PATH}"
-
-ENTRYPOINT [ "dotnet-monitor" ]
-CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
+COPY --from=installer ["/app", "/app"]

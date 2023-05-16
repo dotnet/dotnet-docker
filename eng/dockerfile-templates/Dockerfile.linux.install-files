@@ -20,4 +20,5 @@ else:{{if ARGS["create-install-dir"]:mkdir -p {{ARGS["install-dir"]}} \
         "file": file["filename"],
         "dest-dir": ARGS["install-dir"],
         "extract-paths": file["extract-paths"]
-    ])}}}}}}
+    ])}}{{if i < len(ARGS["files"]) - 1: \
+}}}}}}
