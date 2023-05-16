@@ -1,9 +1,9 @@
 # Users referenced in this file will automatically be requested as reviewers for PRs that modify the given paths.
 # See https://help.github.com/articles/about-code-owners/
 
-*               @MichaelSimons @mthalman @lbussell
+*               @dotnet-docker-reviewers
 
-monitor/        @jander-msft @MichaelSimons @mthalman @lbussell
-monitor-base/   @jander-msft @MichaelSimons @mthalman @lbussell
-*monitor*       @jander-msft @MichaelSimons @mthalman @lbussell
-*Monitor*       @jander-msft @MichaelSimons @mthalman @lbussell
+monitor/        @dotnet-docker-reviewers @jander-msft
+monitor-base/   @dotnet-docker-reviewers @jander-msft
+*monitor*       @dotnet-docker-reviewers @jander-msft
+*Monitor*       @dotnet-docker-reviewers @jander-msft
