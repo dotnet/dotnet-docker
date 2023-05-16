@@ -2,3 +2,8 @@
 # See https://help.github.com/articles/about-code-owners/
 
 * @MichaelSimons @mthalman @lbussell
+
+monitor/ @jander-msft
+monitor-base/ @jander-msft
+*monitor* @jander-msft
+*Monitor* @jander-msft
