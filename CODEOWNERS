@@ -1,9 +1,9 @@
 # Users referenced in this file will automatically be requested as reviewers for PRs that modify the given paths.
 # See https://help.github.com/articles/about-code-owners/
 
-* @MichaelSimons @mthalman @lbussell
+*               @MichaelSimons @mthalman @lbussell
 
-monitor/ @jander-msft
-monitor-base/ @jander-msft
-*monitor* @jander-msft
-*Monitor* @jander-msft
+monitor/        @jander-msft @MichaelSimons @mthalman @lbussell
+monitor-base/   @jander-msft @MichaelSimons @mthalman @lbussell
+*monitor*       @jander-msft @MichaelSimons @mthalman @lbussell
+*Monitor*       @jander-msft @MichaelSimons @mthalman @lbussell
