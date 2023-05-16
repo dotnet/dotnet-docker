@@ -25,7 +25,7 @@ RUN groupadd \
         --system \
         --gid=1000 \
         app \
-    && adduser \
+    && useradd -l \
         --uid 1000 \
         --gid 1000 \
         --shell /bin/false \

@@ -9,8 +9,11 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
+    set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
+    set isChiseledUbuntu to find(OS_VERSION, "chiseled") >= 0 ^
+    set addUserCommand to when(isDebian || isUbuntu || isMariner, "useradd -l", "adduser") ^
     set utilPkgs to when(isMariner && !isDistrolessMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0", ["shadow-utils"], [])
 }}{{if len(utilPkgs) > 0:{{InsertTemplate("../Dockerfile.linux.install-pkgs", [
         "pkgs": utilPkgs,
@@ -20,11 +23,11 @@
         --system \
         --gid={{ARGS["gid"]}} \
         {{ARGS["name"]}} \
-    && {{if isDebian:useradd^else:adduser}} \
+    && {{addUserCommand}} \
         --uid {{ARGS["uid"]}} \
         {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid {{ARGS["gid"]}}}} \{{if ARGS["no-shell"]:
         --shell /bin/false \}}{{if ARGS["no-create-home"]:
-        --no-create-home \^elif dotnetVersion != "6.0" && dotnetVersion != "7.0" && (isMariner || isDebian):
+        --no-create-home \^elif dotnetVersion != "6.0" && dotnetVersion != "7.0" && (find(addUserCommand, "useradd") >= 0) && !isChiseledUbuntu:
         --create-home \}}
         --system \
         {{ARGS["name"]}}{{if len(utilPkgs) > 0: \

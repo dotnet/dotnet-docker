@@ -34,7 +34,7 @@ RUN groupadd \
         --system \
         --gid=101 \
         app \
-    && adduser \
+    && useradd -l \
         --uid 101 \
         --gid 101 \
         --shell /bin/false \
