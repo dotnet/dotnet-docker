@@ -48,11 +48,4 @@ public abstract class CommonAspnetImageTests : CommonRuntimeImageTests
     }
 #nullable disable
 
-    protected void VerifyAspnetPackageInstallation(ProductImageData imageData,
-                                                   string[] expectedRpmPackagesInstalled)
-    {
-        base.VerifyExpectedInstalledRpmPackages(
-            imageData, expectedRpmPackagesInstalled
-                       .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
-    }
 }

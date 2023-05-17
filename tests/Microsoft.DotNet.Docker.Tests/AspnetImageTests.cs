@@ -42,8 +42,9 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
             EnvironmentVariableInfo aspnetVersionVariableInfo = GetAspnetVersionVariableInfo(
-                    imageData,
-                    DockerHelper);
+                                                                    imageData,
+                                                                    DockerHelper,
+                                                                    isComposite: false);
 
             base.VerifyAspnetEnvironmentVariables(imageData, aspnetVersionVariableInfo);
         }
@@ -57,8 +58,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            string[] expectedRpmPackages = GetExpectedRpmPackagesInstalled(imageData);
-            base.VerifyAspnetPackageInstallation(imageData, expectedRpmPackages);
+            string[] expectedRpmPackagesInstalled = GetExpectedRpmPackagesInstalled(imageData);
+            base.VerifyExpectedInstalledRpmPackages(
+                    imageData, expectedRpmPackagesInstalled
+                               .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
+
         }
 
         [LinuxImageTheory]
@@ -91,9 +95,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(
                 ProductImageData imageData,
-                DockerHelper dockerHelper)
+                DockerHelper dockerHelper,
+                bool isComposite)
         {
-            string version = imageData.GetProductVersion(DotNetImageType.Aspnet, dockerHelper);
+            DotNetImageType imageType = isComposite ? DotNetImageType.Aspnet_Composite
+                                                    : DotNetImageType.Aspnet;
+
+            string version = imageData.GetProductVersion(imageType, dockerHelper);
+
             return new EnvironmentVariableInfo("ASPNET_VERSION", version)
             {
                 IsProductVersion = true

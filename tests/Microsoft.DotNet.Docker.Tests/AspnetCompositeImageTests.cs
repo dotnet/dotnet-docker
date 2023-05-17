@@ -26,13 +26,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAppScenario(ProductImageData imageData)
         {
-            if (imageData.OSTag != OS.Alpine317Composite)
-            {
-                OutputHelper.WriteLine("Skipping because currently only Alpine composite"
-                                     + " images are supported.");
-                return ;
-            }
-
             await base.VerifyAspnetAppScenario(imageData);
         }
 
@@ -40,19 +33,12 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            EnvironmentVariableInfo compositeVersionVariableInfo = GetAspnetCompositeVersionVariableInfo(
-                    imageData,
-                    DockerHelper);
+            EnvironmentVariableInfo compositeVersionVariableInfo = AspnetImageTests.GetAspnetVersionVariableInfo(
+                                                                       imageData,
+                                                                       DockerHelper,
+                                                                       isComposite: true);
 
             base.VerifyAspnetEnvironmentVariables(imageData, compositeVersionVariableInfo);
-        }
-
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyPackageInstallation(ProductImageData imageData)
-        {
-            string[] expectedRpmPackages = GetExpectedRpmPackagesInstalled(imageData);
-            base.VerifyAspnetPackageInstallation(imageData, expectedRpmPackages);
         }
 
         [LinuxImageTheory]
@@ -82,24 +68,5 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             base.VerifyCommonDefaultUser(imageData);
         }
-
-        public static EnvironmentVariableInfo GetAspnetCompositeVersionVariableInfo(
-                ProductImageData imageData,
-                DockerHelper dockerHelper)
-        {
-            string version = imageData.GetProductVersion(DotNetImageType.Aspnet_Composite,
-                                                         dockerHelper);
-
-            return new EnvironmentVariableInfo("ASPNET_VERSION", version)
-            {
-                IsProductVersion = true
-            };
-        }
-
-        internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>
-            new string[]
-            {
-                $"aspnetcore-runtime-composite-{imageData.VersionString}"
-            };
     }
 }

@@ -18,8 +18,8 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         public static string DockerOS => GetDockerOS();
         public static string DockerArchitecture => GetDockerArch();
-        public static bool IsLinuxContainerModeEnabled => string.Equals(DockerOS, "linux", StringComparison.OrdinalIgnoreCase);
         public static string ContainerWorkDir => IsLinuxContainerModeEnabled ? "/sandbox" : "c:\\sandbox";
+        public static bool IsLinuxContainerModeEnabled => string.Equals(DockerOS, "linux", StringComparison.OrdinalIgnoreCase);
         public static string TestArtifactsDir { get; } = Path.Combine(Directory.GetCurrentDirectory(), "TestAppArtifacts");
 
         private ITestOutputHelper OutputHelper { get; set; }
