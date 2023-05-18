@@ -50,7 +50,7 @@ ENTRYPOINT ["dotnet", "app.dll"]
 
 FROM build as publish_self_contained
 ARG rid
-RUN dotnet publish -r $rid -c Release -o out
+RUN dotnet publish -r $rid -c Release --self-contained true -o out
 
 
 FROM $runtime_deps_image AS self_contained_app
