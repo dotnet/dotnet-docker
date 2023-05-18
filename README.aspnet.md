@@ -130,7 +130,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.0-preview.4-nanoserver-ltsc2022, 8.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
+8.0.0-preview.5-nanoserver-ltsc2022, 8.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ## Windows Server Core 2022 amd64 Tags
 Tag | Dockerfile
@@ -141,7 +141,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.0-preview.4-windowsservercore-ltsc2022, 8.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+8.0.0-preview.5-windowsservercore-ltsc2022, 8.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
@@ -152,7 +152,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.0-preview.4-nanoserver-1809, 8.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/nanoserver-1809/amd64/Dockerfile)
+8.0.0-preview.5-nanoserver-1809, 8.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server Core 2019 amd64 Tags
 Tag | Dockerfile
@@ -163,7 +163,7 @@ Tag | Dockerfile
 ##### .NET 8 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-8.0.0-preview.4-windowsservercore-ltsc2019, 8.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+8.0.0-preview.5-windowsservercore-ltsc2019, 8.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/nightly/aspnet at https://mcr.microsoft.com/v2/dotnet/nightly/aspnet/tags/list.
 <!--End of generated tags-->
