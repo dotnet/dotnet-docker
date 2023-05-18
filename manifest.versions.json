@@ -32,9 +32,9 @@
     "aspnet|8.0|linux|arm64|sha": "542a309e46bd164305166eff8132fe7d1f0fb13b9c55ab2e3f9daca711b5e74040738cc79b6b1c11358404c365bc39adbc0cb153a143b223dfad235e378cbb21",
     "aspnet|8.0|win|x64|sha": "873582310f4197af6f9449d8f2bc5160936fbdcedc36aad618884df2751e6f9e61422e2cf91a70848f3622b50f41e509e6de25d612459609c47f9b3201071629",
 
-    "aspnet-composite|8.0|linux-musl|x64|sha": "ccbc3f257a25c9ba37155b9e2b136723e993b092fe5d60b522ce8a4cbf1c5f6c4082949cc7aa9b5a79f05905c7ffdac8a0127121c40eb24b634e289de9bafd8f",
-    "aspnet-composite|8.0|linux-musl|arm|sha": "0c3ed49b23477d4418e269a641bdc2f15e0df9435be92128ef00b600e80297008b1a08cf3f5d676955bdacd32459d6ad5913040479e337b40b54b2d81aa37112",
-    "aspnet-composite|8.0|linux-musl|arm64|sha": "f57d802a3d1c5a4035045322b5e1528b7787f5700659d2b7418e60b948c7c8bff28c29de716268bf934dd10e5a8b967e0a0a23ec0fb2bb15a9c02b4a775e188c",
+    "aspnet-composite|8.0|linux-musl|x64|sha": "0af58221b89cc6a721f71ae9bc93278254ef1b2bacef6157f5b0c66d7ff4e4adad14a80e7902e02f02cedf6c6a6926f3a2f01e45753436c19097660ed41d747c",
+    "aspnet-composite|8.0|linux-musl|arm|sha": "e10e73ac962e98d3f44fdfd1726317d0b647c11bdfdf4f45314e0ed8847a5624d72adc49eb6b3f85f100cd0a25538152b980d698ced14081cc14baa9aed3ce1c",
+    "aspnet-composite|8.0|linux-musl|arm64|sha": "2a7909a5b8fb784e643238d7ff75dbdf4c6033fbfdc22e6591bdecd8f05312c4938153e8494eef8b9b420cff781e20119fcae3b04bc756c5ca3e14d9ac523641",
 
     "base-url|public|main": "https://dotnetcli.azureedge.net/dotnet",
     "base-url|public|nightly": "https://dotnetbuilds.azureedge.net/public",

@@ -11,7 +11,7 @@ ENV ASPNET_VERSION=8.0.0-preview.5.23262.1
 
 # Install ASP.NET Composite Runtime
 RUN wget -O dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-composite-$ASPNET_VERSION-linux-musl-arm.tar.gz \
-    && dotnet_sha512='0c3ed49b23477d4418e269a641bdc2f15e0df9435be92128ef00b600e80297008b1a08cf3f5d676955bdacd32459d6ad5913040479e337b40b54b2d81aa37112' \
+    && dotnet_sha512='e10e73ac962e98d3f44fdfd1726317d0b647c11bdfdf4f45314e0ed8847a5624d72adc49eb6b3f85f100cd0a25538152b980d698ced14081cc14baa9aed3ce1c' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
