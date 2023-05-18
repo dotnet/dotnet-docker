@@ -26,8 +26,8 @@ param(
 
     [string]$ImageInfoPath,
 
-    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor")]
-    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor"),
+    [ValidateSet("runtime", "runtime-deps", "aspnet", "aspnet-composite", "sdk", "pre-build", "sample", "image-size", "monitor")]
+    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "aspnet-composite", "sdk", "monitor"),
 
     [securestring]$SasQueryString,
     
