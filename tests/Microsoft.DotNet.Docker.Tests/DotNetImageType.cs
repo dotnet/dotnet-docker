@@ -10,6 +10,7 @@ namespace Microsoft.DotNet.Docker.Tests
         Runtime,
         Runtime_Deps,
         Aspnet,
+        Aspnet_Composite,
         Monitor
     }
 }

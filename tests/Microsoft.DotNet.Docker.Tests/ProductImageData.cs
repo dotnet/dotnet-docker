@@ -100,6 +100,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 DotNetImageType.SDK => dockerHelper.Run(imageName, containerName, "dotnet --version"),
                 DotNetImageType.Runtime => GetRuntimeVersion(imageName, containerName, "Microsoft.NETCore.App", dockerHelper),
                 DotNetImageType.Aspnet => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
+                DotNetImageType.Aspnet_Composite => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
                 _ => throw new NotSupportedException($"Unsupported image type '{imageType}'"),
             };
         }
@@ -133,6 +134,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 case DotNetImageType.Runtime:
                 case DotNetImageType.Aspnet:
+                case DotNetImageType.Aspnet_Composite:
                 case DotNetImageType.Runtime_Deps:
                 case DotNetImageType.Monitor:
                     imageVersion = Version;

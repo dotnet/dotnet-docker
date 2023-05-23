@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 namespace Microsoft.DotNet.Docker.Tests
 {
     [Trait("Category", "aspnet")]
-    public class AspnetImageTests : CommonRuntimeImageTests
+    public class AspnetImageTests : CommonAspnetImageTests
     {
         public AspnetImageTests(ITestOutputHelper outputHelper)
             : base(outputHelper)
@@ -28,31 +28,25 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             if (imageData.IsArm && imageData.OS == OS.Jammy)
             {
-                OutputHelper.WriteLine(
-                    "Skipping test due to https://github.com/dotnet/runtime/issues/66310. Re-enable when fixed.");
+                OutputHelper.WriteLine("Skipping test due to"
+                                     + " https://github.com/dotnet/runtime/issues/66310."
+                                     + " Re-enable when fixed.");
                 return;
             }
 
-            ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper, isWeb: true);
-            await verifier.Execute();
+            await base.VerifyAspnetAppScenario(imageData);
         }
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>
-            {
-                RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper)
-            };
+            EnvironmentVariableInfo aspnetVersionVariableInfo = GetAspnetVersionVariableInfo(
+                                                                    imageData,
+                                                                    DockerHelper,
+                                                                    isComposite: false);
 
-            EnvironmentVariableInfo aspnetVersionVariableInfo = GetAspnetVersionVariableInfo(imageData, DockerHelper);
-            if (aspnetVersionVariableInfo != null)
-            {
-                variables.Add(aspnetVersionVariableInfo);
-            }
-
-            base.VerifyCommonEnvironmentVariables(imageData, variables);
+            base.VerifyAspnetEnvironmentVariables(imageData, aspnetVersionVariableInfo);
         }
 
         [DotNetTheory]
@@ -64,43 +58,51 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            VerifyExpectedInstalledRpmPackages(
-                imageData,
-                GetExpectedRpmPackagesInstalled(imageData)
-                    .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
+            string[] expectedRpmPackagesInstalled = GetExpectedRpmPackagesInstalled(imageData);
+            base.VerifyExpectedInstalledRpmPackages(
+                    imageData, expectedRpmPackagesInstalled
+                               .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
+
         }
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyInsecureFiles(ProductImageData imageData)
+        public override void VerifyInsecureFiles(ProductImageData imageData)
         {
             base.VerifyCommonInsecureFiles(imageData);
         }
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
+        public override void VerifyShellNotInstalledForDistroless(ProductImageData imageData)
         {
             base.VerifyCommonShellNotInstalledForDistroless(imageData);
         }
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyNoSasToken(ProductImageData imageData)
+        public override void VerifyNoSasToken(ProductImageData imageData)
         {
             base.VerifyCommonNoSasToken(imageData);
         }
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyDefaultUser(ProductImageData imageData)
+        public override void VerifyDefaultUser(ProductImageData imageData)
         {
-            VerifyCommonDefaultUser(imageData);
+            base.VerifyCommonDefaultUser(imageData);
         }
 
-        public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(ProductImageData imageData, DockerHelper dockerHelper)
+        public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(
+                ProductImageData imageData,
+                DockerHelper dockerHelper,
+                bool isComposite)
         {
-            string version = imageData.GetProductVersion(DotNetImageType.Aspnet, dockerHelper);
+            DotNetImageType imageType = isComposite ? DotNetImageType.Aspnet_Composite
+                                                    : DotNetImageType.Aspnet;
+
+            string version = imageData.GetProductVersion(imageType, dockerHelper);
+
             return new EnvironmentVariableInfo("ASPNET_VERSION", version)
             {
                 IsProductVersion = true
