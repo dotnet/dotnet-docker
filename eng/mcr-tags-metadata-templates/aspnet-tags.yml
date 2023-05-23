@@ -3,6 +3,8 @@ $(McrTagsYmlTagGroup:8.0-preview-bookworm-slim-amd64)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-alpine3.17-amd64)
     customSubTableTitle: .NET 8 Preview Tags
+$(McrTagsYmlTagGroup:8.0-preview-alpine3.17-composite-amd64)
+    customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-jammy-amd64)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-jammy-chiseled-amd64)
@@ -18,6 +20,8 @@ $(McrTagsYmlTagGroup:8.0-preview-bookworm-slim-arm64v8)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-alpine3.17-arm64v8)
     customSubTableTitle: .NET 8 Preview Tags
+$(McrTagsYmlTagGroup:8.0-preview-alpine3.17-composite-arm64v8)
+    customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-jammy-arm64v8)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-jammy-chiseled-arm64v8)
@@ -32,6 +36,8 @@ $(McrTagsYmlTagGroup:6.0-focal-arm64v8)
 $(McrTagsYmlTagGroup:8.0-preview-bookworm-slim-arm32v7)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-alpine3.17-arm32v7)
+    customSubTableTitle: .NET 8 Preview Tags
+$(McrTagsYmlTagGroup:8.0-preview-alpine3.17-composite-arm32v7)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:8.0-preview-jammy-arm32v7)
     customSubTableTitle: .NET 8 Preview Tags

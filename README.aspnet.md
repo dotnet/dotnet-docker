@@ -9,6 +9,12 @@
 
 This image contains the ASP.NET Core and .NET runtimes and libraries and is optimized for running ASP.NET Core apps in production.
 
+## Composite container images
+
+Starting from .NET 8, a composite version of the ASP.NET images, `denoted with the -composite` tag part, is being offered alongside the regular image. The main characteristics of these images are their smaller size on disk while keeping the performance of the default [ReadyToRun (R2R) setting](https://learn.microsoft.com/dotnet/core/deploying/ready-to-run). The caveat is that the composite images have tighter version coupling. This means the final app run on them cannot use handpicked custom versions of the framework and/or ASP.NET assemblies that are built into the composite binary.
+
+For a full technical description on how the composites work, we have a [feature doc here](https://github.com/dotnet/runtime/blob/main/docs/design/features/readytorun-composite-format-design.md).
+
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
 # Usage
@@ -64,6 +70,7 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-preview.4-bookworm-slim-amd64, 8.0-preview-bookworm-slim-amd64, 8.0.0-preview.4-bookworm-slim, 8.0-preview-bookworm-slim, 8.0.0-preview.4, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 8.0.0-preview.4-alpine3.17-amd64, 8.0-preview-alpine3.17-amd64, 8.0-preview-alpine-amd64, 8.0.0-preview.4-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.17/amd64/Dockerfile) | Alpine 3.17
+8.0.0-preview.4-alpine3.17-composite-amd64, 8.0-preview-alpine3.17-composite-amd64, 8.0-preview-alpine-composite-amd64, 8.0.0-preview.4-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.17-composite/amd64/Dockerfile) | Alpine 3.17
 8.0.0-preview.4-jammy-amd64, 8.0-preview-jammy-amd64, 8.0.0-preview.4-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 8.0.0-preview.4-jammy-chiseled-amd64, 8.0-preview-jammy-chiseled-amd64, 8.0.0-preview.4-jammy-chiseled, 8.0-preview-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 
@@ -83,6 +90,7 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-preview.4-bookworm-slim-arm64v8, 8.0-preview-bookworm-slim-arm64v8, 8.0.0-preview.4-bookworm-slim, 8.0-preview-bookworm-slim, 8.0.0-preview.4, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 8.0.0-preview.4-alpine3.17-arm64v8, 8.0-preview-alpine3.17-arm64v8, 8.0-preview-alpine-arm64v8, 8.0.0-preview.4-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.17/arm64v8/Dockerfile) | Alpine 3.17
+8.0.0-preview.4-alpine3.17-composite-arm64v8, 8.0-preview-alpine3.17-composite-arm64v8, 8.0-preview-alpine-composite-arm64v8, 8.0.0-preview.4-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.17-composite/arm64v8/Dockerfile) | Alpine 3.17
 8.0.0-preview.4-jammy-arm64v8, 8.0-preview-jammy-arm64v8, 8.0.0-preview.4-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.0-preview.4-jammy-chiseled-arm64v8, 8.0-preview-jammy-chiseled-arm64v8, 8.0.0-preview.4-jammy-chiseled, 8.0-preview-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 
@@ -102,6 +110,7 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-preview.4-bookworm-slim-arm32v7, 8.0-preview-bookworm-slim-arm32v7, 8.0.0-preview.4-bookworm-slim, 8.0-preview-bookworm-slim, 8.0.0-preview.4, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.0-preview.4-alpine3.17-arm32v7, 8.0-preview-alpine3.17-arm32v7, 8.0-preview-alpine-arm32v7, 8.0.0-preview.4-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.17/arm32v7/Dockerfile) | Alpine 3.17
+8.0.0-preview.4-alpine3.17-composite-arm32v7, 8.0-preview-alpine3.17-composite-arm32v7, 8.0-preview-alpine-composite-arm32v7, 8.0.0-preview.4-alpine3.17, 8.0-preview-alpine3.17, 8.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.17-composite/arm32v7/Dockerfile) | Alpine 3.17
 8.0.0-preview.4-jammy-arm32v7, 8.0-preview-jammy-arm32v7, 8.0.0-preview.4-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.0-preview.4-jammy-chiseled-arm32v7, 8.0-preview-jammy-chiseled-arm32v7, 8.0.0-preview.4-jammy-chiseled, 8.0-preview-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
 

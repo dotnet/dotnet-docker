@@ -32,6 +32,10 @@
     "aspnet|8.0|linux|arm64|sha": "1224d2ebe38122380db54b8fbf5ce95a7666b2a2062a1f5da40a769e0ec859640ced391ca6cfabe21f5c0aef4a7b1722b324f361e898c9c8c4207198b0b390b5",
     "aspnet|8.0|win|x64|sha": "af30d31f986bc19881ba4a6479fe90a0db31348382f8ea05634d727e80588f1d11c05634ca113c1151de8e80122021cc68151e140ba748680cfd00b45260aad4",
 
+    "aspnet-composite|8.0|linux-musl|x64|sha": "0af58221b89cc6a721f71ae9bc93278254ef1b2bacef6157f5b0c66d7ff4e4adad14a80e7902e02f02cedf6c6a6926f3a2f01e45753436c19097660ed41d747c",
+    "aspnet-composite|8.0|linux-musl|arm|sha": "e10e73ac962e98d3f44fdfd1726317d0b647c11bdfdf4f45314e0ed8847a5624d72adc49eb6b3f85f100cd0a25538152b980d698ced14081cc14baa9aed3ce1c",
+    "aspnet-composite|8.0|linux-musl|arm64|sha": "2a7909a5b8fb784e643238d7ff75dbdf4c6033fbfdc22e6591bdecd8f05312c4938153e8494eef8b9b420cff781e20119fcae3b04bc756c5ca3e14d9ac523641",
+
     "base-url|public|main": "https://dotnetcli.azureedge.net/dotnet",
     "base-url|public|nightly": "https://dotnetbuilds.azureedge.net/public",
 
