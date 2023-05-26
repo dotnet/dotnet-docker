@@ -32,7 +32,7 @@ $powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-ver
 Remove-Item -Force {{nupkgFile}}; `
 Remove-Item -Path {{rootDir}}powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\{{lcase(nupkgFile)}} -Force;{{if dotnetVersion = "8.0": `
 `
-# Workaround for https://github.com/dotnet/runtime/issues/86713
+# Workaround for https://github.com/PowerShell/PowerShell/issues/19679
 $runtimeConfig = Get-Content {{powershellRuntimeConfigFile}} -Raw | ConvertFrom-Json; `
 $runtimeConfig.runtimeOptions.configProperties | Add-Member -MemberType NoteProperty -Name "System.Runtime.Loader.UseRidGraph" -Value $true; `
 $runtimeConfig | ConvertTo-Json -Depth 10 | Set-Content {{powershellRuntimeConfigFile}};}}
