@@ -5,13 +5,13 @@ FROM $REPO:8.0.0-preview.5-alpine3.17-arm32v7
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 # .NET Runtime version
-ENV DOTNET_VERSION=8.0.0-preview.5.23260.3
+ENV DOTNET_VERSION=8.0.0-preview.5.23272.14
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.0-preview.5.23262.1
+ENV ASPNET_VERSION=8.0.0-preview.5.23273.2
 
 # Install ASP.NET Composite Runtime
 RUN wget -O dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-composite-$ASPNET_VERSION-linux-musl-arm.tar.gz \
-    && dotnet_sha512='e10e73ac962e98d3f44fdfd1726317d0b647c11bdfdf4f45314e0ed8847a5624d72adc49eb6b3f85f100cd0a25538152b980d698ced14081cc14baa9aed3ce1c' \
+    && dotnet_sha512='4e75b93899ce5ec650d8f2abb16f6220ceb008c5957b1fb091fc15c2f2fb97189d994a76488cd640a23d125895dc3e7c88ee1691f9238859cf3a32068852eb27' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \

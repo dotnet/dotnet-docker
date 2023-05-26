@@ -25,9 +25,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '8.0.100-preview.5.23267.7'; `
+        $sdk_version = '8.0.100-preview.5.23275.2'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '0880321ed3ad935a1eb0c7c0167fa7023644ded91128fcec3f4fd7028ef10b81fe390f48eac5fa736e72fbf60c2e0c0419e6fdd25a7262f8af4c56bfa561b87d'; `
+        $dotnet_sha512 = 'a9b971fbeae4a38c154a29a3fe4bc18c01ba62d7140a5da7748c808e56dae705371d135d46b5fadb602054e0d71723b42e26687f2381bbbe96896f4fe83b3c88'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -49,6 +49,11 @@ RUN powershell -Command " `
         Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
         Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force; `
         `
+        # Workaround for https://github.com/PowerShell/PowerShell/issues/19679
+        $runtimeConfig = Get-Content \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\tools\net8.0\any\pwsh.runtimeconfig.json -Raw | ConvertFrom-Json; `
+        $runtimeConfig.runtimeOptions.configProperties | Add-Member -MemberType NoteProperty -Name "System.Runtime.Loader.UseRidGraph" -Value $true; `
+        $runtimeConfig | ConvertTo-Json -Depth 10 | Set-Content \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\tools\net8.0\any\pwsh.runtimeconfig.json; `
+        `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
         Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
             | Remove-Item -Force -Recurse; `
@@ -64,7 +69,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=8.0.100-preview.5.23267.7 `
+    DOTNET_SDK_VERSION=8.0.100-preview.5.23275.2 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
