@@ -27,7 +27,7 @@
         {{ARGS["name"]}} \
     && {{addUserCommand}} \
         --uid={{uid}} \
-        {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid={{ARGS["gid"]}}}} \{{if ARGS["no-shell"]:
+        {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid={{gid}}}} \{{if ARGS["no-shell"]:
         --shell /bin/false \}}{{if ARGS["no-create-home"]:
         --no-create-home \^elif dotnetVersion != "6.0" && dotnetVersion != "7.0" && (find(addUserCommand, "useradd") >= 0) && !isChiseledUbuntu:
         --create-home \}}
