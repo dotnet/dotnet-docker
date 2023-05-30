@@ -41,13 +41,13 @@ RUN chisel cut --release "ubuntu-{{osVersionNumber}}" --root /rootfs \
 
 FROM scratch
 
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
-
 COPY --from=builder /rootfs /
 
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=builder --chown={{uid}}:{{gid}} /rootfs/home/{{username}} /home/{{username}}
+
+{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
+    "uid": uid
+])}}
 
 USER $APP_UID

@@ -41,6 +41,11 @@ RUN chisel cut --release "ubuntu-22.04" --root /rootfs \
 
 FROM scratch
 
+COPY --from=builder /rootfs /
+
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=builder --chown=64198:64198 /rootfs/home/app /home/app
+
 ENV \
     # UID of the non-root user 'app'
     APP_UID=64198 \
@@ -50,10 +55,5 @@ ENV \
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
-
-COPY --from=builder /rootfs /
-
-# Workaround for https://github.com/moby/moby/issues/38710
-COPY --from=builder --chown=64198:64198 /rootfs/home/app /home/app
 
 USER $APP_UID
