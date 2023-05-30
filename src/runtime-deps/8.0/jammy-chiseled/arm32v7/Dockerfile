@@ -1,4 +1,5 @@
 FROM arm32v7/golang:1.18 as chisel
+
 RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel
 WORKDIR /opt/chisel
 RUN go generate internal/deb/version.go \
@@ -15,8 +16,8 @@ RUN groupadd \
         --gid=64198 \
         app \
     && useradd -l \
-        --uid 64198 \
-        --gid 64198 \
+        --uid=64198 \
+        --gid=64198 \
         --shell /bin/false \
         --system \
         app \

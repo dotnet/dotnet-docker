@@ -1,6 +1,15 @@
 {{
+    _ ARGS:
+        is-composite-runtime (optional): Whether to include the runtime version ^
+
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
-    set lineContinuation to when(isWindows, "`", "\")
-}}# ASP.NET Core version
-ENV ASPNET_VERSION={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}}
+    set lineContinuation to when(isWindows, "`", "\") ^
+    set aspnetComment to "# ASP.NET Core version"
+}}{{if ARGS["is-composite-runtime"]:ENV {{lineContinuation}}
+    # .NET Runtime version
+    DOTNET_VERSION={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} {{lineContinuation}}
+    {{aspnetComment}}
+    ASPNET_VERSION={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}}
+^else:{{aspnetComment}}
+ENV ASPNET_VERSION={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}}}}
