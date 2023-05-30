@@ -35,8 +35,8 @@ RUN groupadd \
         --gid=64198 \
         app \
     && useradd -l \
-        --uid 64198 \
-        --gid 64198 \
+        --uid=64198 \
+        --gid=64198 \
         --shell /bin/false \
         --create-home \
         --system \
@@ -59,11 +59,6 @@ RUN rm -rf /staging/etc/tdnf \
 # .NET runtime-deps image
 FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0
 
-COPY --from=installer /staging/ /
-
-# Workaround for https://github.com/moby/moby/issues/38710
-COPY --from=installer --chown=64198:64198 /staging/home/app /home/app
-
 ENV \
     # UID of the non-root user 'app'
     APP_UID=64198 \
@@ -73,5 +68,10 @@ ENV \
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+
+COPY --from=installer /staging/ /
+
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=installer --chown=64198:64198 /staging/home/app /home/app
 
 USER app

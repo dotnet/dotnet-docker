@@ -1,5 +1,11 @@
 FROM mcr.microsoft.com/cbl-mariner/base/core:1.0
 
+ENV \
+    # Configure web servers to bind to port 80 when present
+    ASPNETCORE_URLS=http://+:80 \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true
+
 RUN tdnf install -y \
         ca-certificates \
         \
@@ -20,9 +26,3 @@ RUN dotnet_version=6.0.16 \
     && echo "$dotnet_sha512  dotnet-runtime-deps.rpm" | sha512sum -c - \
     && rpm --install dotnet-runtime-deps.rpm \
     && rm dotnet-runtime-deps.rpm
-
-ENV \
-    # Configure web servers to bind to port 80 when present
-    ASPNETCORE_URLS=http://+:80 \
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true

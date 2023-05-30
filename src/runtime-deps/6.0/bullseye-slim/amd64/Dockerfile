@@ -1,5 +1,11 @@
 FROM amd64/debian:bullseye-slim
 
+ENV \
+    # Configure web servers to bind to port 80 when present
+    ASPNETCORE_URLS=http://+:80 \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -13,9 +19,3 @@ RUN apt-get update \
         libstdc++6 \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
-
-ENV \
-    # Configure web servers to bind to port 80 when present
-    ASPNETCORE_URLS=http://+:80 \
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true

@@ -26,8 +26,8 @@ RUN groupadd \
         --gid=1000 \
         app \
     && useradd -l \
-        --uid 1000 \
-        --gid 1000 \
+        --uid=1000 \
+        --gid=1000 \
         --shell /bin/false \
         --no-create-home \
         --system \
@@ -49,12 +49,12 @@ RUN rm -rf /staging/etc/dnf \
 # .NET runtime-deps image
 FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:1.0
 
-COPY --from=installer /staging/ /
-
 ENV \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_URLS=http://+:8080 \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
+
+COPY --from=installer /staging/ /
 
 USER app

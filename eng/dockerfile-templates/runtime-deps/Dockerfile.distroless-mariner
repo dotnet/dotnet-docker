@@ -60,13 +60,13 @@ RUN rm -rf {{distrolessStagingDir}}/etc/{{when(find(OS_VERSION, "1.0") >= 0, "dn
 # .NET runtime-deps image
 FROM {{baseImage}}
 
+{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
+    "uid": uid
+])}}
+
 COPY --from=installer {{distrolessStagingDir}}/ /{{if createUserHome:
 
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=installer --chown={{uid}}:{{gid}} {{distrolessStagingDir}}/home/{{username}} /home/{{username}}}}
-
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
 
 USER app
