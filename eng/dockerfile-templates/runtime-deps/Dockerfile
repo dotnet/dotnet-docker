@@ -59,6 +59,7 @@ RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
         "url-suffix": urlSuffix,
         "filename": rpmFilename
     ])}}}}{{if dotnetVersion != "6.0" && dotnetVersion != "7.0":
+
 # Create a non-root user and group
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user",
     [

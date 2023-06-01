@@ -20,6 +20,7 @@ RUN tdnf install -y \
         openssl-libs \
         zlib \
     && tdnf clean all
+
 # Create a non-root user and group
 RUN tdnf install -y \
         shadow-utils \
