@@ -70,6 +70,7 @@
     "libicu|jammy": 70,
 
     "libssl|alpine3.17": "3",
+    "libssl|alpine3.18": "3",
     "libssl|bionic": "1.1",
     "libssl|bookworm": "3",
     "libssl|bullseye": "1.1",
