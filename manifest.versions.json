@@ -55,6 +55,8 @@
     "base-url|7.0-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|7.1-monitor|main": "$(base-url|public|main)",
     "base-url|7.1-monitor|nightly": "$(base-url|public|nightly)",
+    "base-url|7.2-monitor|main": "$(base-url|public|main)",
+    "base-url|7.2-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|8.0-monitor|main": "$(base-url|public|main)",
     "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
 
@@ -101,6 +103,13 @@
     "monitor|7.1|linux|x64|sha": "df823b04db358326d30d051aa5eda4703ee4544de189948fa7226f0c9662e34d6327faaf532cc8a92fa4ea7970bc92bba9afdf44769f2f70d6951d9382ef3272",
     "monitor|7.1|linux|arm64|sha": "c3313bcad518e34210400c8d0bdd255150ee0f2976ff317ae4d703e82320fc1d659f3073462d3f10b258df2bc79230e818a442d1ebff4e43ebd86209a2ed172a",
     "monitor|7.1|product-version": "7.1.1",
+
+    "monitor|7.2|build-version": "7.2.0",
+    "monitor|7.2|linux-musl|x64|sha": "39afcada18d30861dbb1a3f91bfedca85a7f4ab4ded83bae7eda211d7eb1ea43b5ac198f4dd7e494c85f5502fcf7257f94ee6c14e2f144d344b747ddfa3a4717",
+    "monitor|7.2|linux-musl|arm64|sha": "27ba9267e7d7ae0b41ac7d4614df637a947e1527b94112042ec79697e84b9b06e7114072d002e469a104cc5c25fc3a4e561acfbef6e2de099f7273dda3504b6f",
+    "monitor|7.2|linux|x64|sha": "daa8de1d9dab4658865ca3a8008e916dafb10cd04b6ad7b6e5ab243cf7d0a9840b1abbd1840c4822c6af4ce4a563a52a95d5970630cd283fd3b0fcf9e8958499",
+    "monitor|7.2|linux|arm64|sha": "fac2c819d12d1bcac199b43ec9b89d2ade9ed55715a5cba8c278e30b174fa65b897106cb4af00a12846ee5ef29fc113bc63703fca71defb08ebd65f3d4b2887c",
+    "monitor|7.2|product-version": "7.2.0",
 
     "monitor|8.0|build-version": "8.0.0-preview.4.23260.4",
     "monitor|8.0|product-version": "8.0.0-preview.4",

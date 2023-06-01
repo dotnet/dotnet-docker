@@ -5770,11 +5770,8 @@
           "sharedTags": {
             "$(monitor|7.1|product-version)-alpine": {},
             "7.1-alpine": {},
-            "7-alpine": {},
             "$(monitor|7.1|product-version)": {},
-            "7.1": {},
-            "7": {},
-            "latest": {}
+            "7.1": {}
           },
           "platforms": [
             {
@@ -5787,8 +5784,7 @@
               "osVersion": "alpine3.17",
               "tags": {
                 "$(monitor|7.1|product-version)-alpine-amd64": {},
-                "7.1-alpine-amd64": {},
-                "7-alpine-amd64": {}
+                "7.1-alpine-amd64": {}
               }
             },
             {
@@ -5802,8 +5798,7 @@
               "osVersion": "alpine3.17",
               "tags": {
                 "$(monitor|7.1|product-version)-alpine-arm64v8": {},
-                "7.1-alpine-arm64v8": {},
-                "7-alpine-arm64v8": {}
+                "7.1-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5816,9 +5811,6 @@
               "docType": "Undocumented"
             },
             "7.1-cbl-mariner": {
-              "docType": "Undocumented"
-            },
-            "7-cbl-mariner": {
               "docType": "Undocumented"
             }
           },
@@ -5836,9 +5828,6 @@
                   "docType": "Undocumented"
                 },
                 "7.1-cbl-mariner-amd64": {
-                  "docType": "Undocumented"
-                },
-                "7-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -5858,9 +5847,6 @@
                 },
                 "7.1-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
-                },
-                "7-cbl-mariner-arm64v8": {
-                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -5874,9 +5860,6 @@
               "docType": "Undocumented"
             },
             "7.1-cbl-mariner-distroless": {
-              "docType": "Undocumented"
-            },
-            "7-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -5895,9 +5878,6 @@
                 },
                 "7.1-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
-                },
-                "7-cbl-mariner-distroless-amd64": {
-                  "docType": "Undocumented"
                 }
               }
             },
@@ -5915,6 +5895,163 @@
                   "docType": "Undocumented"
                 },
                 "7.1-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|7.2|product-version)",
+          "sharedTags": {
+            "$(monitor|7.2|product-version)-alpine": {},
+            "7.2-alpine": {},
+            "7-alpine": {},
+            "$(monitor|7.2|product-version)": {},
+            "7.2": {},
+            "7": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/alpine/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.17",
+              "tags": {
+                "$(monitor|7.2|product-version)-alpine-amd64": {},
+                "7.2-alpine-amd64": {},
+                "7-alpine-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/alpine/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.17",
+              "tags": {
+                "$(monitor|7.2|product-version)-alpine-arm64v8": {},
+                "7.2-alpine-arm64v8": {},
+                "7-alpine-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|7.2|product-version)",
+          "sharedTags": {
+            "$(monitor|7.2|product-version)-cbl-mariner": {
+              "docType": "Undocumented"
+            },
+            "7.2-cbl-mariner": {
+              "docType": "Undocumented"
+            },
+            "7-cbl-mariner": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/cbl-mariner/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(monitor|7.2|product-version)-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.2-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/cbl-mariner/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(monitor|7.2|product-version)-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.2-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|7.2|product-version)",
+          "sharedTags": {
+            "$(monitor|7.2|product-version)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "7.2-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "7-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/cbl-mariner-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|7.2|product-version)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.2-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/cbl-mariner-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|7.2|product-version)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.2-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
                 "7-cbl-mariner-distroless-arm64v8": {
