@@ -16,7 +16,6 @@ RUN apk add --no-cache \
         # .NET dependencies
         krb5-libs \
         libgcc \
-        libintl \
         libssl3 \
         libstdc++ \
         zlib
