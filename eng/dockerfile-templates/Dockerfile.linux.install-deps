@@ -9,14 +9,23 @@
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
     set dotnetDepsComment to "# .NET dependencies" ^
     set pkgs to when(isAlpine,
-        [
-            "krb5-libs",
-            "libgcc",
-            "libintl",
-            cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
-            "libstdc++",
-            "zlib"
-        ],
+        when (dotnetVersion = "6.0" || dotnetVersion = "7.0",
+            [
+                "krb5-libs",
+                "libgcc",
+                "libintl",
+                cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
+                "libstdc++",
+                "zlib"
+            ],
+            [
+                "krb5-libs",
+                "libgcc",
+                cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
+                "libstdc++",
+                "zlib"
+            ]
+        ),
         when(isMariner,
             when(isDistrolessMariner && find(OS_VERSION, "1.0") < 0,
                 [
