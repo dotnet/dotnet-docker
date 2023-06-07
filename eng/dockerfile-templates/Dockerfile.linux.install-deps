@@ -54,24 +54,30 @@
                 "libstdc++6",
                 "zlib1g"
             ])) ^
-    set certsPkgPrefix to when(isMariner,
+    set certsPkgName to when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates") ^
+    set prefixPkgs to when(isMariner && !isDistrolessMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0",
         [
-            when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates"),
+            certsPkgName,
+            "mariner-release"
             "",
             dotnetDepsComment
         ],
         [
-            "ca-certificates",
+            certsPkgName,
             "",
             dotnetDepsComment
         ]) ^
-    set pkgs to when(ARGS["isSdk"], pkgs, cat(certsPkgPrefix, pkgs))
+    set pkgs to when(ARGS["isSdk"], pkgs, cat(prefixPkgs, pkgs)) ^
+    set pkgMgrOpts to when(len(ARGS["staging-dir"]) > 0,
+        cat(" --installroot ", ARGS["staging-dir"]),
+        "") ^
+    set pkgMgrOpts to when(isDistrolessMariner || (isMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0"),
+        cat(" --releasever=", OS_VERSION_NUMBER, pkgMgrOpts),
+        pkgMgrOpts)
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",
     [
         "pkgs": pkgs,
         "noninteractive": (OS_VERSION = "focal"),
         "pkg-mgr": when(isDistrolessMariner, when (find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf"), ""),
-        "pkg-mgr-opts": when(len(ARGS["staging-dir"]) > 0,
-            cat(" --releasever=", OS_VERSION_NUMBER, " --installroot ", ARGS["staging-dir"]),
-            "")
+        "pkg-mgr-opts": pkgMgrOpts
     ])}}

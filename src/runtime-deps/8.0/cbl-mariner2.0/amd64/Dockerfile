@@ -19,6 +19,7 @@ RUN tdnf install -y \
 RUN mkdir /staging \
     && tdnf install -y --releasever=2.0 --installroot /staging \
         ca-certificates \
+        mariner-release \
         \
         # .NET dependencies
         glibc \
