@@ -55,23 +55,17 @@
                 "zlib1g"
             ])) ^
     set certsPkgName to when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates") ^
-    set prefixPkgs to when(isMariner && !isDistrolessMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0",
-        [
-            certsPkgName,
-            "mariner-release"
-            "",
-            dotnetDepsComment
-        ],
+    set prefixPkgs to
         [
             certsPkgName,
             "",
             dotnetDepsComment
-        ]) ^
+        ] ^
     set pkgs to when(ARGS["isSdk"], pkgs, cat(prefixPkgs, pkgs)) ^
     set pkgMgrOpts to when(len(ARGS["staging-dir"]) > 0,
         cat(" --installroot ", ARGS["staging-dir"]),
         "") ^
-    set pkgMgrOpts to when(isDistrolessMariner || (isMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0"),
+    set pkgMgrOpts to when(isDistrolessMariner,
         cat(" --releasever=", OS_VERSION_NUMBER, pkgMgrOpts),
         pkgMgrOpts)
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",

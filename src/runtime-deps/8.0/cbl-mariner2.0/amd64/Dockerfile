@@ -8,18 +8,8 @@ ENV \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
 
-
-# Installer image
-FROM base as installer
-
 RUN tdnf install -y \
-        shadow-utils \
-    && tdnf clean all
-
-RUN mkdir /staging \
-    && tdnf install -y --releasever=2.0 --installroot /staging \
         ca-certificates \
-        mariner-release \
         \
         # .NET dependencies
         glibc \
@@ -29,10 +19,18 @@ RUN mkdir /staging \
         libstdc++ \
         openssl-libs \
         zlib \
-    && tdnf clean all --releasever=2.0 --installroot /staging
+    && tdnf clean all
+
 
 # Create a non-root user and group
-RUN groupadd \
+FROM base as installer
+
+RUN tdnf install -y \
+        shadow-utils \
+    && tdnf clean all
+
+RUN mkdir -p /staging/etc \
+    && groupadd \
         --system \
         --gid=$APP_UID \
         app \
