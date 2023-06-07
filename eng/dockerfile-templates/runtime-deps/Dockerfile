@@ -72,7 +72,7 @@ FROM base
 COPY --from=installer {{depsStagingDir}}/ /{{if createUserHome:
 
 # Workaround for https://github.com/moby/moby/issues/38710
-COPY --from=installer --chown={{uid}}:{{gid}} {{depsStagingDir}}/home/{{username}} /home/{{username}}}}{{if isRpmInstall:
+COPY --from=installer --chown=$APP_UID:$APP_UID {{depsStagingDir}}/home/{{username}} /home/{{username}}}}{{if isRpmInstall:
 
 {{if isInternal:{{InsertTemplate("../Dockerfile.linux.copy-files",
 [
