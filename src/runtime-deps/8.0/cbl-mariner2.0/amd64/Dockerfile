@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/cbl-mariner/base/core:2.0
+FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS base
 
 ENV \
     # UID of the non-root user 'app'
@@ -8,7 +8,16 @@ ENV \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
 
+
+# Installer image
+FROM base as installer
+
 RUN tdnf install -y \
+        shadow-utils \
+    && tdnf clean all
+
+RUN mkdir /staging \
+    && tdnf install -y --releasever=2.0 --installroot /staging \
         ca-certificates \
         \
         # .NET dependencies
@@ -19,12 +28,10 @@ RUN tdnf install -y \
         libstdc++ \
         openssl-libs \
         zlib \
-    && tdnf clean all
+    && tdnf clean all --releasever=2.0 --installroot /staging
 
 # Create a non-root user and group
-RUN tdnf install -y \
-        shadow-utils \
-    && groupadd \
+RUN groupadd \
         --system \
         --gid=$APP_UID \
         app \
@@ -34,6 +41,16 @@ RUN tdnf install -y \
         --create-home \
         --system \
         app \
-    && tdnf remove -y \
-        shadow-utils \
-    && tdnf clean all
+    && install -d -m 0755 -o $APP_UID -g $APP_UID "/staging/home/app" \
+    && rootOrAppRegex='^\(root\|app\):' \
+    && cat /etc/passwd | grep $rootOrAppRegex > "/staging/etc/passwd" \
+    && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
+
+
+# Final image
+FROM base
+
+COPY --from=installer /staging/ /
+
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=installer --chown=64198:64198 /staging/home/app /home/app

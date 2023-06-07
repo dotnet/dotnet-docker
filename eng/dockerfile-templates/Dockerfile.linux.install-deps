@@ -1,7 +1,7 @@
 {{
     _ ARGS:
         isSdk (optional): Indicates whether the dependencies are installed for an sdk Dockerfile
-        distroless-staging-dir (optional): Location of the staging directory for distroless installation ^
+        staging-dir (optional): Location of the staging directory for distroless installation ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
@@ -71,7 +71,7 @@
         "pkgs": pkgs,
         "noninteractive": (OS_VERSION = "focal"),
         "pkg-mgr": when(isDistrolessMariner, when (find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf"), ""),
-        "pkg-mgr-opts": when(isDistrolessMariner,
-            cat(" --releasever=", OS_VERSION_NUMBER, " --installroot ", ARGS["distroless-staging-dir"]),
-            ""),
+        "pkg-mgr-opts": when(len(ARGS["staging-dir"]) > 0,
+            cat(" --releasever=", OS_VERSION_NUMBER, " --installroot ", ARGS["staging-dir"]),
+            "")
     ])}}

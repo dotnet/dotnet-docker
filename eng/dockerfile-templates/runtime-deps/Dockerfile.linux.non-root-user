@@ -15,13 +15,8 @@
     set isChiseledUbuntu to find(OS_VERSION, "chiseled") >= 0 ^
     set addUserCommand to when(isDebian || isUbuntu || isMariner, "useradd -l", "adduser") ^
     set uid to when(len(ARGS["uid"]) > 0, ARGS["uid"], "$APP_UID") ^
-    set gid to when(len(ARGS["gid"]) > 0, ARGS["gid"], "$APP_UID") ^
-    set utilPkgs to when(isMariner && !isDistrolessMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0", ["shadow-utils"], [])
-}}{{if len(utilPkgs) > 0:{{InsertTemplate("../Dockerfile.linux.install-pkgs", [
-        "pkgs": utilPkgs,
-        "no-clean": "true"
-    ])}}
-    && }}{{if isAlpine:addgroup^else:groupadd}} \
+    set gid to when(len(ARGS["gid"]) > 0, ARGS["gid"], "$APP_UID")
+}}{{if isAlpine:addgroup^else:groupadd}} \
         --system \
         --gid={{gid}} \
         {{ARGS["name"]}} \
@@ -32,7 +27,4 @@
         --no-create-home \^elif dotnetVersion != "6.0" && dotnetVersion != "7.0" && (find(addUserCommand, "useradd") >= 0) && !isChiseledUbuntu:
         --create-home \}}
         --system \
-        {{ARGS["name"]}}{{if len(utilPkgs) > 0: \
-    && {{InsertTemplate("../Dockerfile.linux.remove-pkgs", [
-        "pkgs": utilPkgs
-        ], "    ")}}}}
+        {{ARGS["name"]}}
