@@ -22,9 +22,8 @@
     "no-create-home": ARGS["no-create-home"],
     "no-shell": isDistroless
 ])}} \{{if !ARGS["no-create-home"]:
-    && install -d -m 0755 -o {{uid}} -g {{gid}} "{{ARGS["staging-dir"]}}/home/{{ARGS["name"]}}" \}}{{
-    if ARGS["exclusive"]:{{if ARGS["create-dir"]:
-    && mkdir -p "{{ARGS["staging-dir"]}}/etc" \}}
+    && install -d -m 0755 -o {{uid}} -g {{gid}} "{{ARGS["staging-dir"]}}/home/{{ARGS["name"]}}" \}}{{if ARGS["create-dir"]:
+    && mkdir -p "{{ARGS["staging-dir"]}}/etc" \}}{{if ARGS["exclusive"]:
     && rootOrAppRegex='@^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "{{ARGS["staging-dir"]}}/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "{{ARGS["staging-dir"]}}/etc/group"^

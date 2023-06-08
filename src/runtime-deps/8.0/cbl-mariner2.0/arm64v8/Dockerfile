@@ -22,28 +22,27 @@ RUN tdnf install -y \
     && tdnf clean all
 
 
-# Create a non-root user and group
-FROM base as installer
+FROM base AS installer
 
 RUN tdnf install -y \
         shadow-utils \
     && tdnf clean all
 
-RUN mkdir -p /staging/etc \
-    && groupadd \
+# Create a non-root user and group
+RUN groupadd \
         --system \
         --gid=$APP_UID \
         app \
     && useradd -l \
         --uid=$APP_UID \
         --gid=$APP_UID \
-        --create-home \
+        --no-create-home \
         --system \
         app \
-    && install -d -m 0755 -o $APP_UID -g $APP_UID "/staging/home/app" \
-    && rootOrAppRegex='^\(root\|app\):' \
-    && cat /etc/passwd | grep $rootOrAppRegex > "/staging/etc/passwd" \
-    && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
+    && mkdir -p "/staging/etc" \
+    # Copy user/group info to staging
+    && cp /etc/passwd /staging/etc/passwd \
+    && cp /etc/group /staging/etc/group
 
 
 # Final image
@@ -51,5 +50,4 @@ FROM base
 
 COPY --from=installer /staging/ /
 
-# Workaround for https://github.com/moby/moby/issues/38710
-COPY --from=installer --chown=64198:64198 /staging/home/app /home/app
+RUN install -d -m 0755 -o $APP_UID -g $APP_UID "/home/app"
