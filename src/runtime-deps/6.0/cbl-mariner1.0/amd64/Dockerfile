@@ -18,6 +18,7 @@ RUN tdnf install -y \
         openssl-libs \
         zlib \
     && tdnf clean all
+
 # Install dotnet-runtime-deps package
 RUN dotnet_version=6.0.18 \
     && curl -fSL --output dotnet-runtime-deps.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.1-x64.rpm \
