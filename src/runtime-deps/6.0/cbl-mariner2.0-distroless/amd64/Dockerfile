@@ -34,9 +34,9 @@ RUN groupadd \
         --system \
         --gid=101 \
         app \
-    && adduser \
-        --uid 101 \
-        --gid 101 \
+    && useradd -l \
+        --uid=101 \
+        --gid=101 \
         --shell /bin/false \
         --no-create-home \
         --system \
@@ -58,8 +58,6 @@ RUN rm -rf /staging/etc/tdnf \
 # .NET runtime-deps image
 FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0
 
-COPY --from=installer /staging/ /
-
 ENV \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_URLS=http://+:8080 \
@@ -67,5 +65,7 @@ ENV \
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+
+COPY --from=installer /staging/ /
 
 USER app

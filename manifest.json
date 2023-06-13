@@ -77,6 +77,49 @@
         {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
+            "$(dotnet|6.0|product-version)-alpine3.18": {},
+            "6.0-alpine3.18": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/6.0/alpine3.18/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|6.0|product-version)-alpine3.18-amd64": {},
+                "6.0-alpine3.18-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "src/runtime-deps/6.0/alpine3.18/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|6.0|product-version)-alpine3.18-arm32v7": {},
+                "6.0-alpine3.18-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/6.0/alpine3.18/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|6.0|product-version)-alpine3.18-arm64v8": {},
+                "6.0-alpine3.18-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
             "$(dotnet|6.0|product-version)-alpine3.17": {},
             "6.0-alpine3.17": {},
             "6.0-alpine": {}
@@ -441,6 +484,49 @@
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
+            "$(dotnet|7.0|product-version)-alpine3.18": {},
+            "7.0-alpine3.18": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/6.0/alpine3.18/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|7.0|product-version)-alpine3.18-amd64": {},
+                "7.0-alpine3.18-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "src/runtime-deps/6.0/alpine3.18/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|7.0|product-version)-alpine3.18-arm32v7": {},
+                "7.0-alpine3.18-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/6.0/alpine3.18/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|7.0|product-version)-alpine3.18-arm64v8": {},
+                "7.0-alpine3.18-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|7.0|product-version)",
+          "sharedTags": {
             "$(dotnet|7.0|product-version)-alpine3.17": {},
             "7.0-alpine3.17": {},
             "7.0-alpine": {}
@@ -698,44 +784,44 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|product-version)-alpine3.17": {},
-            "8.0-preview-alpine3.17": {},
+            "$(dotnet|8.0|product-version)-alpine3.18": {},
+            "8.0-preview-alpine3.18": {},
             "8.0-preview-alpine": {}
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/8.0/alpine3.17/amd64",
+              "dockerfile": "src/runtime-deps/8.0/alpine3.18/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-amd64": {},
-                "8.0-preview-alpine3.17-amd64": {},
+                "$(dotnet|8.0|product-version)-alpine3.18-amd64": {},
+                "8.0-preview-alpine3.18-amd64": {},
                 "8.0-preview-alpine-amd64": {}
               }
             },
             {
               "architecture": "arm",
-              "dockerfile": "src/runtime-deps/8.0/alpine3.17/arm32v7",
+              "dockerfile": "src/runtime-deps/8.0/alpine3.18/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-arm32v7": {},
-                "8.0-preview-alpine3.17-arm32v7": {},
+                "$(dotnet|8.0|product-version)-alpine3.18-arm32v7": {},
+                "8.0-preview-alpine3.18-arm32v7": {},
                 "8.0-preview-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/alpine3.17/arm64v8",
+              "dockerfile": "src/runtime-deps/8.0/alpine3.18/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-arm64v8": {},
-                "8.0-preview-alpine3.17-arm64v8": {},
+                "$(dotnet|8.0|product-version)-alpine3.18-arm64v8": {},
+                "8.0-preview-alpine3.18-arm64v8": {},
                 "8.0-preview-alpine-arm64v8": {}
               },
               "variant": "v8"
@@ -1106,6 +1192,58 @@
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {},
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)-alpine3.18": {},
+            "6.0-alpine3.18": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/alpine3.18/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|6.0|product-version)-alpine3.18-amd64": {},
+                "6.0-alpine3.18-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/alpine3.18/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|6.0|product-version)-alpine3.18-arm32v7": {},
+                "6.0-alpine3.18-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/alpine3.18/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|6.0|product-version)-alpine3.18-arm64v8": {},
+                "6.0-alpine3.18-arm64v8": {}
+              },
               "variant": "v8"
             }
           ]
@@ -1623,6 +1761,58 @@
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
+            "$(dotnet|7.0|product-version)-alpine3.18": {},
+            "7.0-alpine3.18": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/7.0/alpine3.18/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|7.0|product-version)-alpine3.18-amd64": {},
+                "7.0-alpine3.18-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/7.0/alpine3.18/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|7.0|product-version)-alpine3.18-arm32v7": {},
+                "7.0-alpine3.18-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/7.0/alpine3.18/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|7.0|product-version)-alpine3.18-arm64v8": {},
+                "7.0-alpine3.18-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|7.0|product-version)",
+          "sharedTags": {
             "$(dotnet|7.0|product-version)-alpine3.17": {},
             "7.0-alpine3.17": {},
             "7.0-alpine": {}
@@ -1991,8 +2181,8 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|product-version)-alpine3.17": {},
-            "8.0-preview-alpine3.17": {},
+            "$(dotnet|8.0|product-version)-alpine3.18": {},
+            "8.0-preview-alpine3.18": {},
             "8.0-preview-alpine": {}
           },
           "platforms": [
@@ -2000,13 +2190,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/8.0/alpine3.17/amd64",
+              "dockerfile": "src/runtime/8.0/alpine3.18/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-amd64": {},
-                "8.0-preview-alpine3.17-amd64": {},
+                "$(dotnet|8.0|product-version)-alpine3.18-amd64": {},
+                "8.0-preview-alpine3.18-amd64": {},
                 "8.0-preview-alpine-amd64": {}
               }
             },
@@ -2015,13 +2205,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/8.0/alpine3.17/arm32v7",
+              "dockerfile": "src/runtime/8.0/alpine3.18/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-arm32v7": {},
-                "8.0-preview-alpine3.17-arm32v7": {},
+                "$(dotnet|8.0|product-version)-alpine3.18-arm32v7": {},
+                "8.0-preview-alpine3.18-arm32v7": {},
                 "8.0-preview-alpine-arm32v7": {}
               },
               "variant": "v7"
@@ -2031,13 +2221,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/8.0/alpine3.17/arm64v8",
+              "dockerfile": "src/runtime/8.0/alpine3.18/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-arm64v8": {},
-                "8.0-preview-alpine3.17-arm64v8": {},
+                "$(dotnet|8.0|product-version)-alpine3.18-arm64v8": {},
+                "8.0-preview-alpine3.18-arm64v8": {},
                 "8.0-preview-alpine-arm64v8": {}
               },
               "variant": "v8"
@@ -2504,6 +2694,58 @@
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {},
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|6.0|product-version)-alpine3.18": {},
+            "6.0-alpine3.18": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/6.0/alpine3.18/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|6.0|product-version)-alpine3.18-amd64": {},
+                "6.0-alpine3.18-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/6.0/alpine3.18/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|6.0|product-version)-alpine3.18-arm32v7": {},
+                "6.0-alpine3.18-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/6.0/alpine3.18/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|6.0|product-version)-alpine3.18-arm64v8": {},
+                "6.0-alpine3.18-arm64v8": {}
+              },
               "variant": "v8"
             }
           ]
@@ -3033,6 +3275,58 @@
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
+            "$(dotnet|7.0|product-version)-alpine3.18": {},
+            "7.0-alpine3.18": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/7.0/alpine3.18/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|7.0|product-version)-alpine3.18-amd64": {},
+                "7.0-alpine3.18-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/7.0/alpine3.18/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|7.0|product-version)-alpine3.18-arm32v7": {},
+                "7.0-alpine3.18-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/7.0/alpine3.18/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|7.0|product-version)-alpine3.18-arm64v8": {},
+                "7.0-alpine3.18-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|7.0|product-version)",
+          "sharedTags": {
             "$(dotnet|7.0|product-version)-alpine3.17": {},
             "7.0-alpine3.17": {},
             "7.0-alpine": {}
@@ -3407,8 +3701,8 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|product-version)-alpine3.17": {},
-            "8.0-preview-alpine3.17": {},
+            "$(dotnet|8.0|product-version)-alpine3.18": {},
+            "8.0-preview-alpine3.18": {},
             "8.0-preview-alpine": {}
           },
           "platforms": [
@@ -3416,13 +3710,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/8.0/alpine3.17/amd64",
+              "dockerfile": "src/aspnet/8.0/alpine3.18/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-amd64": {},
-                "8.0-preview-alpine3.17-amd64": {},
+                "$(dotnet|8.0|product-version)-alpine3.18-amd64": {},
+                "8.0-preview-alpine3.18-amd64": {},
                 "8.0-preview-alpine-amd64": {}
               }
             },
@@ -3431,13 +3725,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/8.0/alpine3.17/arm32v7",
+              "dockerfile": "src/aspnet/8.0/alpine3.18/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-arm32v7": {},
-                "8.0-preview-alpine3.17-arm32v7": {},
+                "$(dotnet|8.0|product-version)-alpine3.18-arm32v7": {},
+                "8.0-preview-alpine3.18-arm32v7": {},
                 "8.0-preview-alpine-arm32v7": {}
               },
               "variant": "v7"
@@ -3447,14 +3741,70 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/8.0/alpine3.17/arm64v8",
+              "dockerfile": "src/aspnet/8.0/alpine3.18/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(dotnet|8.0|product-version)-alpine3.17-arm64v8": {},
-                "8.0-preview-alpine3.17-arm64v8": {},
+                "$(dotnet|8.0|product-version)-alpine3.18-arm64v8": {},
+                "8.0-preview-alpine3.18-arm64v8": {},
                 "8.0-preview-alpine-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-alpine3.17-composite": {},
+            "8.0-preview-alpine3.17-composite": {},
+            "8.0-preview-alpine-composite": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/alpine3.18-composite/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|8.0|product-version)-alpine3.18-composite-amd64": {},
+                "8.0-preview-alpine3.18-composite-amd64": {},
+                "8.0-preview-alpine-composite-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/alpine3.18-composite/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|8.0|product-version)-alpine3.18-composite-arm32v7": {},
+                "8.0-preview-alpine3.18-composite-arm32v7": {},
+                "8.0-preview-alpine-composite-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/alpine3.18-composite/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|8.0|product-version)-alpine3.18-composite-arm64v8": {},
+                "8.0-preview-alpine3.18-composite-arm64v8": {},
+                "8.0-preview-alpine-composite-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -3939,6 +4289,58 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
+            "$(sdk|6.0|product-version)-alpine3.18": {},
+            "6.0-alpine3.18": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/6.0/alpine3.18/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(sdk|6.0|product-version)-alpine3.18-amd64": {},
+                "6.0-alpine3.18-amd64": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "architecture": "arm",
+              "dockerfile": "src/sdk/6.0/alpine3.18/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(sdk|6.0|product-version)-alpine3.18-arm32v7": {},
+                "6.0-alpine3.18-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "architecture": "arm64",
+              "dockerfile": "src/sdk/6.0/alpine3.18/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(sdk|6.0|product-version)-alpine3.18-arm64v8": {},
+                "6.0-alpine3.18-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|6.0|product-version)",
+          "sharedTags": {
             "$(sdk|6.0|product-version)-alpine3.17": {},
             "6.0-alpine3.17": {},
             "6.0-alpine": {}
@@ -4346,6 +4748,58 @@
         {
           "productVersion": "$(sdk|7.0|product-version)",
           "sharedTags": {
+            "$(sdk|7.0|product-version)-alpine3.18": {},
+            "7.0-alpine3.18": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/7.0/alpine3.18/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(sdk|7.0|product-version)-alpine3.18-amd64": {},
+                "7.0-alpine3.18-amd64": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "architecture": "arm",
+              "dockerfile": "src/sdk/7.0/alpine3.18/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(sdk|7.0|product-version)-alpine3.18-arm32v7": {},
+                "7.0-alpine3.18-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "architecture": "arm64",
+              "dockerfile": "src/sdk/7.0/alpine3.18/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(sdk|7.0|product-version)-alpine3.18-arm64v8": {},
+                "7.0-alpine3.18-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|7.0|product-version)",
+          "sharedTags": {
             "$(sdk|7.0|product-version)-alpine3.17": {},
             "7.0-alpine3.17": {},
             "7.0-alpine": {}
@@ -4644,8 +5098,8 @@
         {
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
-            "$(sdk|8.0|product-version)-alpine3.17": {},
-            "8.0-preview-alpine3.17": {},
+            "$(sdk|8.0|product-version)-alpine3.18": {},
+            "8.0-preview-alpine3.18": {},
             "8.0-preview-alpine": {}
           },
           "platforms": [
@@ -4653,13 +5107,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/sdk/8.0/alpine3.17/amd64",
+              "dockerfile": "src/sdk/8.0/alpine3.18/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(sdk|8.0|product-version)-alpine3.17-amd64": {},
-                "8.0-preview-alpine3.17-amd64": {},
+                "$(sdk|8.0|product-version)-alpine3.18-amd64": {},
+                "8.0-preview-alpine3.18-amd64": {},
                 "8.0-preview-alpine-amd64": {}
               }
             },
@@ -4668,13 +5122,13 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "architecture": "arm",
-              "dockerfile": "src/sdk/8.0/alpine3.17/arm32v7",
+              "dockerfile": "src/sdk/8.0/alpine3.18/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(sdk|8.0|product-version)-alpine3.17-arm32v7": {},
-                "8.0-preview-alpine3.17-arm32v7": {},
+                "$(sdk|8.0|product-version)-alpine3.18-arm32v7": {},
+                "8.0-preview-alpine3.18-arm32v7": {},
                 "8.0-preview-alpine-arm32v7": {}
               },
               "variant": "v7"
@@ -4684,13 +5138,13 @@
                 "REPO": "$(Repo:aspnet)"
               },
               "architecture": "arm64",
-              "dockerfile": "src/sdk/8.0/alpine3.17/arm64v8",
+              "dockerfile": "src/sdk/8.0/alpine3.18/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.17",
+              "osVersion": "alpine3.18",
               "tags": {
-                "$(sdk|8.0|product-version)-alpine3.17-arm64v8": {},
-                "8.0-preview-alpine3.17-arm64v8": {},
+                "$(sdk|8.0|product-version)-alpine3.18-arm64v8": {},
+                "8.0-preview-alpine3.18-arm64v8": {},
                 "8.0-preview-alpine-arm64v8": {}
               },
               "variant": "v8"
@@ -5316,11 +5770,8 @@
           "sharedTags": {
             "$(monitor|7.1|product-version)-alpine": {},
             "7.1-alpine": {},
-            "7-alpine": {},
             "$(monitor|7.1|product-version)": {},
-            "7.1": {},
-            "7": {},
-            "latest": {}
+            "7.1": {}
           },
           "platforms": [
             {
@@ -5333,8 +5784,7 @@
               "osVersion": "alpine3.17",
               "tags": {
                 "$(monitor|7.1|product-version)-alpine-amd64": {},
-                "7.1-alpine-amd64": {},
-                "7-alpine-amd64": {}
+                "7.1-alpine-amd64": {}
               }
             },
             {
@@ -5348,8 +5798,7 @@
               "osVersion": "alpine3.17",
               "tags": {
                 "$(monitor|7.1|product-version)-alpine-arm64v8": {},
-                "7.1-alpine-arm64v8": {},
-                "7-alpine-arm64v8": {}
+                "7.1-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5362,9 +5811,6 @@
               "docType": "Undocumented"
             },
             "7.1-cbl-mariner": {
-              "docType": "Undocumented"
-            },
-            "7-cbl-mariner": {
               "docType": "Undocumented"
             }
           },
@@ -5382,9 +5828,6 @@
                   "docType": "Undocumented"
                 },
                 "7.1-cbl-mariner-amd64": {
-                  "docType": "Undocumented"
-                },
-                "7-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -5404,9 +5847,6 @@
                 },
                 "7.1-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
-                },
-                "7-cbl-mariner-arm64v8": {
-                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -5420,9 +5860,6 @@
               "docType": "Undocumented"
             },
             "7.1-cbl-mariner-distroless": {
-              "docType": "Undocumented"
-            },
-            "7-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -5441,9 +5878,6 @@
                 },
                 "7.1-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
-                },
-                "7-cbl-mariner-distroless-amd64": {
-                  "docType": "Undocumented"
                 }
               }
             },
@@ -5461,6 +5895,163 @@
                   "docType": "Undocumented"
                 },
                 "7.1-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|7.2|product-version)",
+          "sharedTags": {
+            "$(monitor|7.2|product-version)-alpine": {},
+            "7.2-alpine": {},
+            "7-alpine": {},
+            "$(monitor|7.2|product-version)": {},
+            "7.2": {},
+            "7": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/alpine/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.17",
+              "tags": {
+                "$(monitor|7.2|product-version)-alpine-amd64": {},
+                "7.2-alpine-amd64": {},
+                "7-alpine-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/alpine/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.17",
+              "tags": {
+                "$(monitor|7.2|product-version)-alpine-arm64v8": {},
+                "7.2-alpine-arm64v8": {},
+                "7-alpine-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|7.2|product-version)",
+          "sharedTags": {
+            "$(monitor|7.2|product-version)-cbl-mariner": {
+              "docType": "Undocumented"
+            },
+            "7.2-cbl-mariner": {
+              "docType": "Undocumented"
+            },
+            "7-cbl-mariner": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/cbl-mariner/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(monitor|7.2|product-version)-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.2-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/cbl-mariner/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(monitor|7.2|product-version)-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.2-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|7.2|product-version)",
+          "sharedTags": {
+            "$(monitor|7.2|product-version)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "7.2-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "7-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/cbl-mariner-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|7.2|product-version)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7.2-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "7-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/7.2/cbl-mariner-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|7.2|product-version)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "7.2-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
                 "7-cbl-mariner-distroless-arm64v8": {

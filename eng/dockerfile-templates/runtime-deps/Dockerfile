@@ -26,7 +26,12 @@
     set gid to uid
 }}{{
     if !isSingleStage:# Installer image
-}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if !isSingleStage: AS installer}}{{ if isInternal && isRpmInstall:
+}}FROM {{baseImageRepo}}:{{baseImageTag}}
+
+{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
+    "uid": uid
+])}}
+{{if !isSingleStage: AS installer}}{{ if isInternal && isRpmInstall:
 
 ARG SAS_QUERY_STRING
 
@@ -37,9 +42,7 @@ RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
         "is-internal": isInternal
     ], "    ")}}}}
 {{if isRpmInstall && isInternal:FROM {{baseImageRepo}}:{{baseImageTag}}
-}}
-RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}
-{{ if isRpmInstall:
+}}RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}{{ if isRpmInstall:
 {{if isInternal:{{InsertTemplate("../Dockerfile.linux.copy-files",
 [
     "files": [
@@ -49,23 +52,17 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}
     ],
     "srcStage": "installer",
     "destination": ""
-])}}
-}}{{InsertTemplate("Dockerfile.install-runtime-deps-pkg",
+])}}}}
+{{InsertTemplate("Dockerfile.install-runtime-deps-pkg",
     [
         "skip-download": isInternal
         "url-suffix": urlSuffix,
         "filename": rpmFilename
-    ])}}
-}}{{if dotnetVersion != "6.0" && dotnetVersion != "7.0":
+    ])}}}}{{if dotnetVersion != "6.0" && dotnetVersion != "7.0":
+
 # Create a non-root user and group
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user",
     [
         "name": username,
-        "uid": uid,
-        "gid": gid,
         "append-cmd": len(utilPkgs) > 0
-    ])}}
-}}
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
+    ])}}}}

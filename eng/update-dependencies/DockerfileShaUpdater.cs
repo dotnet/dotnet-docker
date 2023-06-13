@@ -86,6 +86,7 @@ namespace Dotnet.Docker
                 { "runtime-deps-cm.2", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.2-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
 
                 { "aspnet", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
+                { "aspnet-composite", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-composite-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
                 {
                     "aspnet-runtime-targeting-pack",
                     new string[]

@@ -11,6 +11,6 @@
     "leading-line-break": "true",
     "readme-host": ARGS["readme-host"]
   ])}}}}
-{{InsertTemplate(join(["About", templateQualifier, "md"], "."))}}
+{{InsertTemplate(join(["About", templateQualifier, "md"], "."), [ "top-header": ARGS["top-header"] ])}}
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
