@@ -16,8 +16,8 @@ _The set of .NET versions that are being released as a unit._
       - [ ] New/EOL distro
       - [ ] Infrastructure changes
       - [ ] PowerShell version
-      - [ ] Check for additional changes by diffing the main and nightly branches
       - [ ] &lt;add link to PR/commit&gt;
+1. - [ ] **IMPORTANT!** Check for additional changes or commits by diffing the main and nightly branches. This can help catch critical fixes that were merged as part of dependency flows, for example.
 1. - [ ] Check whether a change has been made to a Dockerfile that is shared by multiple .NET versions. If a change has been made and the .NET versions that share that file are not being released at the same time, define a separate Dockerfile to isolate the change to the .NET version that's being released. Conversely, after a shared Dockerfile has diverged in such a way, it should be combined again into a shared Dockerfile when the other other .NET version is released. Shared Dockerfiles to check:
       - [ ] 6.0 runtime-deps shared with 7.0
 1. - [ ] Run `update-dependencies` tool to update all the necessary files to reflect the specified .NET versions (run this command for each version being released):
@@ -39,7 +39,7 @@ _The set of .NET versions that are being released as a unit._
       If NuGet packages aren't published yet, you can split the pipeline up into two runs. First, run only the build stage with the variables:
 
           stages: build
-      
+
       Then once NuGet packages are live, run the pipeline again with variables:
 
           stages: test;publish
