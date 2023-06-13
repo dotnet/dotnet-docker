@@ -19,7 +19,10 @@ RUN apk add --no-cache \
         libssl3 \
         libstdc++ \
         zlib
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/main
 # Create a non-root user and group
 RUN addgroup \
         --system \
