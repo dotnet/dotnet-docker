@@ -39,11 +39,7 @@ _The set of .NET versions that are being released as a unit._
       If NuGet packages aren't published yet, you can split the pipeline up into two runs. First, run only the build stage with the variables:
 
           stages: build
-<<<<<<< HEAD
 
-=======
-
->>>>>>> upstream/main
       Then once NuGet packages are live, run the pipeline again with variables:
 
           stages: test;publish
