@@ -40,8 +40,8 @@
     "src/runtime-deps/8.0/jammy-chiseled/amd64": 12935991,
     "src/runtime-deps/8.0/jammy-chiseled/arm64v8": 10176580,
     "src/runtime-deps/8.0/jammy-chiseled/arm32v7": 6689546,
-    "src/runtime-deps/8.0/cbl-mariner2.0/amd64": 120620319,
-    "src/runtime-deps/8.0/cbl-mariner2.0/arm64v8": 114601871,
+    "src/runtime-deps/8.0/cbl-mariner2.0/amd64": 106886896,
+    "src/runtime-deps/8.0/cbl-mariner2.0/arm64v8": 101218471,
     "src/runtime-deps/8.0/cbl-mariner2.0-distroless/amd64": 25570883,
     "src/runtime-deps/8.0/cbl-mariner2.0-distroless/arm64v8": 22586819
   },
