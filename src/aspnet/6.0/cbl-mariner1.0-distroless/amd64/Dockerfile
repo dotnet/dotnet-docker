@@ -8,9 +8,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=6.0.16 \
+RUN aspnetcore_version=6.0.18 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='62f25ed054868155b351b98fdd04c27aebd913d92844430a002da1346e77a8e86e61833f7b81bdc3d733ff2ae60a21d66533cdd7003b2fee47b8d0e8746ad504' \
+    && aspnetcore_sha512='8adbd7c6f303d69410c34ebc4a8df0afb340c6283ee18ca5e213ad502c8df15ef4db35023a5f9ef88a20ec41c733ec5006ad80dc4d31df5c32e5665f7f8b0563' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
@@ -18,9 +18,9 @@ RUN aspnetcore_version=6.0.16 \
 
 
 # ASP.NET Core image
-FROM $REPO:6.0.16-cbl-mariner1.0-distroless-amd64
+FROM $REPO:6.0.18-cbl-mariner1.0-distroless-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=6.0.16
+ENV ASPNET_VERSION=6.0.18
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
