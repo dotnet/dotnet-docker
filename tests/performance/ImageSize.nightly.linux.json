@@ -101,8 +101,8 @@
     "src/runtime/8.0/jammy-chiseled/amd64": 85971353,
     "src/runtime/8.0/jammy-chiseled/arm64v8": 86105735,
     "src/runtime/8.0/jammy-chiseled/arm32v7": 71980198,
-    "src/runtime/8.0/cbl-mariner2.0/amd64": 191760591,
-    "src/runtime/8.0/cbl-mariner2.0/arm64v8": 193075810,
+    "src/runtime/8.0/cbl-mariner2.0/amd64": 177315427,
+    "src/runtime/8.0/cbl-mariner2.0/arm64v8": 177801765,
     "src/runtime/8.0/cbl-mariner2.0-distroless/amd64": 97946307,
     "src/runtime/8.0/cbl-mariner2.0-distroless/arm64v8": 102726330
   },
@@ -165,8 +165,8 @@
     "src/aspnet/8.0/jammy-chiseled/amd64": 107739112,
     "src/aspnet/8.0/jammy-chiseled/arm64v8": 115413090,
     "src/aspnet/8.0/jammy-chiseled/arm32v7": 94888009,
-    "src/aspnet/8.0/cbl-mariner2.0/amd64": 213319282,
-    "src/aspnet/8.0/cbl-mariner2.0/arm64v8": 217197583,
+    "src/aspnet/8.0/cbl-mariner2.0/amd64": 199786709,
+    "src/aspnet/8.0/cbl-mariner2.0/arm64v8": 202822305,
     "src/aspnet/8.0/cbl-mariner2.0-distroless/amd64": 119714066,
     "src/aspnet/8.0/cbl-mariner2.0-distroless/arm64v8": 127189267
   },
@@ -212,8 +212,8 @@
     "src/sdk/8.0/jammy/amd64": 767865127,
     "src/sdk/8.0/jammy/arm32v7": 726830802,
     "src/sdk/8.0/jammy/arm64v8": 786124352,
-    "src/sdk/8.0/cbl-mariner2.0/amd64": 1024681672,
-    "src/sdk/8.0/cbl-mariner2.0/arm64v8": 1030973821
+    "src/sdk/8.0/cbl-mariner2.0/amd64": 1106747607,
+    "src/sdk/8.0/cbl-mariner2.0/arm64v8": 1115033181
   },
   "dotnet/nightly/monitor": {
     "src/monitor/6.3/alpine/amd64": 108549128,
