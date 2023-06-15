@@ -17,21 +17,20 @@
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
     set isRpmInstall to isMariner && dotnetVersion = "6.0" ^
-    set isSingleStage to !(isRpmInstall && isInternal) ^
+    set nonRootUserSupported to dotnetVersion != "6.0" && dotnetVersion != "7.0" ^
+    set isMultiStage to (isRpmInstall && isInternal) || (isMariner && nonRootUserSupported) ^
+    set firstStageName to when(isRpmInstall, "installer", "base") ^
+    set secondStageName to when(isMultiStage && nonRootUserSupported, "installer") ^
+    set stagingDir to "/staging" ^
+    set createUserHome to is ^
     set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm" ^
-    set utilPkgs to when(isMariner && dotnetVersion != "6.0" && dotnetVersion != "7.0", ["shadow-utils"], []) ^
+    set utilPkgs to when(isMariner && nonRootUserSupported, ["shadow-utils"], []) ^
     set username to "app" ^
     set uid to 64198 ^
-    set gid to uid
-}}{{
-    if !isSingleStage:# Installer image
-}}FROM {{baseImageRepo}}:{{baseImageTag}}
-
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
-{{if !isSingleStage: AS installer}}{{ if isInternal && isRpmInstall:
+    set gid to uid ^
+    set nonRootUserComment to "# Create a non-root user and group"
+}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if isMultiStage: AS {{firstStageName}}}}{{if isRpmInstall && isInternal:
 
 ARG SAS_QUERY_STRING
 
@@ -40,29 +39,55 @@ RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
         "url-suffix": urlSuffix,
         "filename": rpmFilename,
         "is-internal": isInternal
-    ], "    ")}}}}
-{{if isRpmInstall && isInternal:FROM {{baseImageRepo}}:{{baseImageTag}}
-}}RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}{{ if isRpmInstall:
-{{if isInternal:{{InsertTemplate("../Dockerfile.linux.copy-files",
-[
-    "files": [
-        [
-            "filename": rpmFilename
-        ]
     ],
-    "srcStage": "installer",
-    "destination": ""
-])}}}}
+    "    "
+)}}
+
+
+FROM {{baseImageRepo}}:{{baseImageTag}}}}
+
+{{InsertTemplate("../Dockerfile.common-dotnet-envs", [ "uid": uid ])}}
+
+RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}{{if isRpmInstall:{{if isMultiStage:
+
+{{InsertTemplate("../Dockerfile.linux.copy-files",
+    [
+        "files": [[ "filename": rpmFilename ]],
+        "srcStage": firstStageName,
+        "destination": ""
+    ]
+)}}}}
+
 {{InsertTemplate("Dockerfile.install-runtime-deps-pkg",
     [
         "skip-download": isInternal
         "url-suffix": urlSuffix,
         "filename": rpmFilename
-    ])}}}}{{if dotnetVersion != "6.0" && dotnetVersion != "7.0":
+    ]
+)}}}}{{if isMultiStage && nonRootUserSupported:
 
-# Create a non-root user and group
-RUN {{InsertTemplate("Dockerfile.linux.non-root-user",
+
+FROM {{firstStageName}} AS {{secondStageName}}
+
+RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs", [ "pkgs": utilPkgs ])}}
+
+{{nonRootUserComment}}
+RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
     [
+        "staging-dir": stagingDir,
         "name": username,
-        "append-cmd": len(utilPkgs) > 0
-    ])}}}}
+        "no-create-home": "true",
+        "create-dir": "true"
+    ]
+)}}
+
+
+# Final image
+FROM {{firstStageName}}
+
+COPY --from={{secondStageName}} {{stagingDir}}/ /
+
+RUN install -d -m 0755 -o $APP_UID -g $APP_UID "/home/{{username}}"^else:{{if nonRootUserSupported:
+
+{{nonRootUserComment}}
+RUN {{InsertTemplate("Dockerfile.linux.non-root-user", [ "name": username ])}}}}}}
