@@ -1,7 +1,7 @@
 {{
-    _ Configures the app user and group for distroless containers
+    _ Configures the non-root user and group to be installed in a staging directory
     _ ARGS:
-        staging-dir: Path to the distroless staging directory
+        staging-dir: Path to the staging directory
         name: Name of the user/group to create
         create-dir (optional): Indicates whether the etc directory should be created in staging
         exclusive (optional): Indicates whether the app user is the only user and all other users are removed
@@ -11,6 +11,7 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set uid to when(len(ARGS["uid"]) > 0, ARGS["uid"], "$APP_UID") ^
     set gid to when(len(ARGS["gid"]) > 0, ARGS["gid"], uid)
 }}{{InsertTemplate("Dockerfile.linux.non-root-user",
@@ -19,11 +20,10 @@
     "uid": uid,
     "gid": gid,
     "no-create-home": ARGS["no-create-home"],
-    "no-shell": "true"
+    "no-shell": isDistroless
 ])}} \{{if !ARGS["no-create-home"]:
-    && install -d -m 0755 -o {{uid}} -g {{gid}} "{{ARGS["staging-dir"]}}/home/{{ARGS["name"]}}" \}}{{
-    if ARGS["exclusive"]:{{if ARGS["create-dir"]:
-    && mkdir -p "{{ARGS["staging-dir"]}}/etc" \}}
+    && install -d -m 0755 -o {{uid}} -g {{gid}} "{{ARGS["staging-dir"]}}/home/{{ARGS["name"]}}" \}}{{if ARGS["create-dir"]:
+    && mkdir -p "{{ARGS["staging-dir"]}}/etc" \}}{{if ARGS["exclusive"]:
     && rootOrAppRegex='@^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "{{ARGS["staging-dir"]}}/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "{{ARGS["staging-dir"]}}/etc/group"^
