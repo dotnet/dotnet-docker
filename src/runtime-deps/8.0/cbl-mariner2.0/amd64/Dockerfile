@@ -30,14 +30,12 @@ RUN tdnf install -y \
 
 # Create a non-root user and group
 RUN groupadd \
-        --system \
         --gid=$APP_UID \
         app \
     && useradd -l \
         --uid=$APP_UID \
         --gid=$APP_UID \
         --no-create-home \
-        --system \
         app \
     && mkdir -p "/staging/etc" \
     # Copy user/group info to staging
