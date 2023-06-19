@@ -22,11 +22,9 @@ RUN apk add --no-cache \
 
 # Create a non-root user and group
 RUN addgroup \
-        --system \
         --gid=$APP_UID \
         app \
     && adduser \
         --uid=$APP_UID \
         --ingroup=app \
-        --system \
         app

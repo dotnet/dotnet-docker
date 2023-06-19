@@ -24,12 +24,10 @@ RUN apt-get update \
 
 # Create a non-root user and group
 RUN groupadd \
-        --system \
         --gid=$APP_UID \
         app \
     && useradd -l \
         --uid=$APP_UID \
         --gid=$APP_UID \
         --create-home \
-        --system \
         app
