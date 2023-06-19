@@ -4051,8 +4051,8 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|product-version)-alpine3.17-composite": {},
-            "8.0-preview-alpine3.17-composite": {},
+            "$(dotnet|8.0|product-version)-alpine3.18-composite": {},
+            "8.0-preview-alpine3.18-composite": {},
             "8.0-preview-alpine-composite": {}
           },
           "platforms": [
