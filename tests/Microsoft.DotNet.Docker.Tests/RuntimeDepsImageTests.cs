@@ -121,8 +121,16 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             else if (imageData.OS == OS.JammyChiseled)
             {
-                OutputHelper.WriteLine("Package scanning support not implemented for Chiseled Ubuntu images.");
-                expectedPackages = Array.Empty<string>();
+                expectedPackages = new[]
+                {
+                    "base-files",
+                    "ca-certificates",
+                    "libc6",
+                    "libgcc-s1",
+                    "libssl3",
+                    "libstdc++6",
+                    "zlib1g"
+                };
             }
             else
             {
