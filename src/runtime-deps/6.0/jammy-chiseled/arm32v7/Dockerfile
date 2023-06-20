@@ -12,14 +12,12 @@ RUN apt-get update && \
     apt-get install -y ca-certificates
 
 RUN groupadd \
-        --system \
         --gid=64198 \
         app \
     && useradd -l \
         --uid=64198 \
         --gid=64198 \
         --shell /bin/false \
-        --system \
         app \
     && install -d -m 0755 -o 64198 -g 64198 "/rootfs/home/app" \
     && mkdir -p "/rootfs/etc" \

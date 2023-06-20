@@ -25,7 +25,7 @@ param(
 )
 
 if ($Version -notmatch '^\d+\.\d+(\.[\d*])?|\*$') {
-    Write-Error "Error: Input version is not in the expected format of X.Y or X.Y.*"
+    Write-Error "Error: Input version '$Version' is not in the expected format of X.Y or X.Y.*"
     exit 1
 
     # If we call the script with a format like "8.0", add the trailing ".*" that ImageBuilder expects
