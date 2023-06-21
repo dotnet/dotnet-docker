@@ -8,7 +8,7 @@
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set isRpmInstall to false ^
-    set isSingleStage to (isAlpine || isRpmInstall) && !isInternal ^
+    set isSingleStage to (isAlpine || isRpmInstall || isDistroless) && !isInternal ^
     set runtimeDepsBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
