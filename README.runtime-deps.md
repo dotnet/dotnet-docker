@@ -43,11 +43,11 @@ Tags | Dockerfile | OS Version
 7.0.7-alpine3.18-amd64, 7.0-alpine3.18-amd64, 7.0.7-alpine3.18, 7.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
 7.0.7-alpine3.17-amd64, 7.0-alpine3.17-amd64, 7.0-alpine-amd64, 7.0.7-alpine3.17, 7.0-alpine3.17, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/amd64/Dockerfile) | Alpine 3.17
 7.0.7-jammy-amd64, 7.0-jammy-amd64, 7.0.7-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-6.0.18-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.18, 6.0.18-bullseye-slim, 6.0, 6.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
-6.0.18-alpine3.18-amd64, 6.0-alpine3.18-amd64, 6.0.18-alpine3.18, 6.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
-6.0.18-alpine3.17-amd64, 6.0-alpine3.17-amd64, 6.0-alpine-amd64, 6.0.18-alpine3.17, 6.0-alpine3.17, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/amd64/Dockerfile) | Alpine 3.17
-6.0.18-jammy-amd64, 6.0-jammy-amd64, 6.0.18-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-6.0.18-focal-amd64, 6.0-focal-amd64, 6.0.18-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
+6.0.19-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.19, 6.0.19-bullseye-slim, 6.0, 6.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
+6.0.19-alpine3.18-amd64, 6.0-alpine3.18-amd64, 6.0.19-alpine3.18, 6.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
+6.0.19-alpine3.17-amd64, 6.0-alpine3.17-amd64, 6.0-alpine-amd64, 6.0.19-alpine3.17, 6.0-alpine3.17, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/amd64/Dockerfile) | Alpine 3.17
+6.0.19-jammy-amd64, 6.0-jammy-amd64, 6.0.19-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+6.0.19-focal-amd64, 6.0-focal-amd64, 6.0.19-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
@@ -64,11 +64,11 @@ Tags | Dockerfile | OS Version
 7.0.7-alpine3.18-arm64v8, 7.0-alpine3.18-arm64v8, 7.0.7-alpine3.18, 7.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
 7.0.7-alpine3.17-arm64v8, 7.0-alpine3.17-arm64v8, 7.0-alpine-arm64v8, 7.0.7-alpine3.17, 7.0-alpine3.17, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/arm64v8/Dockerfile) | Alpine 3.17
 7.0.7-jammy-arm64v8, 7.0-jammy-arm64v8, 7.0.7-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-6.0.18-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.18, 6.0.18-bullseye-slim, 6.0, 6.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
-6.0.18-alpine3.18-arm64v8, 6.0-alpine3.18-arm64v8, 6.0.18-alpine3.18, 6.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
-6.0.18-alpine3.17-arm64v8, 6.0-alpine3.17-arm64v8, 6.0-alpine-arm64v8, 6.0.18-alpine3.17, 6.0-alpine3.17, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/arm64v8/Dockerfile) | Alpine 3.17
-6.0.18-jammy-arm64v8, 6.0-jammy-arm64v8, 6.0.18-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-6.0.18-focal-arm64v8, 6.0-focal-arm64v8, 6.0.18-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+6.0.19-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.19, 6.0.19-bullseye-slim, 6.0, 6.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
+6.0.19-alpine3.18-arm64v8, 6.0-alpine3.18-arm64v8, 6.0.19-alpine3.18, 6.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
+6.0.19-alpine3.17-arm64v8, 6.0-alpine3.17-arm64v8, 6.0-alpine-arm64v8, 6.0.19-alpine3.17, 6.0-alpine3.17, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/arm64v8/Dockerfile) | Alpine 3.17
+6.0.19-jammy-arm64v8, 6.0-jammy-arm64v8, 6.0.19-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+6.0.19-focal-arm64v8, 6.0-focal-arm64v8, 6.0.19-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
@@ -85,11 +85,11 @@ Tags | Dockerfile | OS Version
 7.0.7-alpine3.18-arm32v7, 7.0-alpine3.18-arm32v7, 7.0.7-alpine3.18, 7.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
 7.0.7-alpine3.17-arm32v7, 7.0-alpine3.17-arm32v7, 7.0-alpine-arm32v7, 7.0.7-alpine3.17, 7.0-alpine3.17, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/arm32v7/Dockerfile) | Alpine 3.17
 7.0.7-jammy-arm32v7, 7.0-jammy-arm32v7, 7.0.7-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
-6.0.18-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.18, 6.0.18-bullseye-slim, 6.0, 6.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
-6.0.18-alpine3.18-arm32v7, 6.0-alpine3.18-arm32v7, 6.0.18-alpine3.18, 6.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
-6.0.18-alpine3.17-arm32v7, 6.0-alpine3.17-arm32v7, 6.0-alpine-arm32v7, 6.0.18-alpine3.17, 6.0-alpine3.17, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/arm32v7/Dockerfile) | Alpine 3.17
-6.0.18-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.18-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
-6.0.18-focal-arm32v7, 6.0-focal-arm32v7, 6.0.18-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+6.0.19-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.19, 6.0.19-bullseye-slim, 6.0, 6.0-bullseye-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
+6.0.19-alpine3.18-arm32v7, 6.0-alpine3.18-arm32v7, 6.0.19-alpine3.18, 6.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
+6.0.19-alpine3.17-arm32v7, 6.0-alpine3.17-arm32v7, 6.0-alpine-arm32v7, 6.0.19-alpine3.17, 6.0-alpine3.17, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/alpine3.17/arm32v7/Dockerfile) | Alpine 3.17
+6.0.19-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.19-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+6.0.19-focal-arm32v7, 6.0-focal-arm32v7, 6.0.19-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
