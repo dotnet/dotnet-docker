@@ -92,7 +92,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            const string SyftImage = "anchore/syft:v0.75.0";
+            const string SyftImage = "anchore/syft:v0.84.0";
             DockerHelper.Pull(SyftImage);
 
             string imageName = imageData.GetImage(ImageType, DockerHelper);
