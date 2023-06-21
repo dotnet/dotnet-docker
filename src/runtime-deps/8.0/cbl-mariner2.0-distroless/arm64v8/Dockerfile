@@ -31,7 +31,6 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
 
 # Create a non-root user and group
 RUN groupadd \
-        --system \
         --gid=64198 \
         app \
     && useradd -l \
@@ -39,7 +38,6 @@ RUN groupadd \
         --gid=64198 \
         --shell /bin/false \
         --create-home \
-        --system \
         app \
     && install -d -m 0755 -o 64198 -g 64198 "/staging/home/app" \
     && rootOrAppRegex='^\(root\|app\):' \
