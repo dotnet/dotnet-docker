@@ -1,4 +1,9 @@
-FROM amd64/golang:1.18 as chisel
+FROM amd64/golang:1.20 as chisel
+
+RUN apt-get update \
+    && apt-get install -y \
+        ca-certificates \
+        file
 
 RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel \
     && git clone --depth 1 -b main https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox
@@ -6,15 +11,9 @@ RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel 
 WORKDIR /opt/chisel
 
 RUN go generate internal/deb/version.go \
-    && go build ./cmd/chisel
-
-
-FROM amd64/ubuntu:jammy as builder
-
-RUN apt-get update \
-    && apt-get install -y \
-        ca-certificates \
-        file
+    && go build ./cmd/chisel \
+    && cp /opt/chisel/chisel /usr/bin/ \
+    && cp /opt/rocks-toolbox/chisel-wrapper /usr/bin/
 
 RUN groupadd \
         --gid=64198 \
@@ -29,8 +28,6 @@ RUN groupadd \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/rootfs/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "/rootfs/etc/group"
-
-COPY --from=chisel /opt/chisel/chisel /opt/rocks-toolbox/chisel-wrapper /usr/bin/
 
 RUN mkdir -p /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
@@ -47,7 +44,7 @@ RUN mkdir -p /rootfs/var/lib/dpkg/ \
 
 FROM scratch
 
-COPY --from=builder /rootfs /
+COPY --from=chisel /rootfs /
 
 ENV \
     # UID of the non-root user 'app'
@@ -60,6 +57,6 @@ ENV \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
 # Workaround for https://github.com/moby/moby/issues/38710
-COPY --from=builder --chown=$APP_UID:$APP_UID /rootfs/home/app /home/app
+COPY --from=chisel --chown=$APP_UID:$APP_UID /rootfs/home/app /home/app
 
 USER $APP_UID
