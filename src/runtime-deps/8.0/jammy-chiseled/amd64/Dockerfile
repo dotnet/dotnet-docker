@@ -1,15 +1,19 @@
-FROM amd64/golang:1.18 as chisel
+FROM amd64/golang:1.20 as chisel
 
-RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel
+RUN apt-get update \
+    && apt-get install -y \
+        ca-certificates \
+        file
+
+RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel \
+    && git clone --depth 1 -b main https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox
+
 WORKDIR /opt/chisel
+
 RUN go generate internal/deb/version.go \
-    && go build ./cmd/chisel
-
-
-FROM amd64/ubuntu:jammy as builder
-
-RUN apt-get update && \
-    apt-get install -y ca-certificates
+    && go build ./cmd/chisel \
+    && cp /opt/chisel/chisel /usr/bin/ \
+    && cp /opt/rocks-toolbox/chisel-wrapper /usr/bin/
 
 RUN groupadd \
         --gid=64198 \
@@ -25,24 +29,22 @@ RUN groupadd \
     && cat /etc/passwd | grep $rootOrAppRegex > "/rootfs/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "/rootfs/etc/group"
 
-COPY --from=chisel /opt/chisel/chisel /usr/bin/
-RUN chisel cut --release "ubuntu-22.04" --root /rootfs \
-        base-files_base \
-        base-files_release-info \
-        ca-certificates_data \
-        libc6_libs \
-        libgcc-s1_libs \
-        libssl3_libs \
-        libstdc++6_libs \
-        zlib1g_libs
+RUN mkdir -p /rootfs/var/lib/dpkg/ \
+    && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
+        --release "ubuntu-22.04" --root /rootfs \
+            base-files_base \
+            base-files_release-info \
+            ca-certificates_data \
+            libc6_libs \
+            libgcc-s1_libs \
+            libssl3_libs \
+            libstdc++6_libs \
+            zlib1g_libs
 
 
 FROM scratch
 
-COPY --from=builder /rootfs /
-
-# Workaround for https://github.com/moby/moby/issues/38710
-COPY --from=builder --chown=64198:64198 /rootfs/home/app /home/app
+COPY --from=chisel /rootfs /
 
 ENV \
     # UID of the non-root user 'app'
@@ -53,5 +55,8 @@ ENV \
     DOTNET_RUNNING_IN_CONTAINER=true \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=chisel --chown=$APP_UID:$APP_UID /rootfs/home/app /home/app
 
 USER $APP_UID
