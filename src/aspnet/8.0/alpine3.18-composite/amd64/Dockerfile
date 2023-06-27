@@ -19,4 +19,3 @@ RUN wget -O dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/R
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
     && rm dotnet.tar.gz \
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
-
