@@ -66,9 +66,7 @@ RUN mkdir /dotnet-symlink \
 # .NET Runtime-Deps Image
 FROM {{runtimeDepsBaseTag}}
 
-{{InsertTemplate("../runtime/Dockerfile.envs")}}
-{{InsertTemplate("Dockerfile.envs")}}
-
+{{InsertTemplate("Dockerfile.envs", [ "is-composite-runtime": "true" ])}}
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
 
