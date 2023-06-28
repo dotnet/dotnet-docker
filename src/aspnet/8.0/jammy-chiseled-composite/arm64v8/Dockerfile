@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=  \
+RUN aspnetcore_version=8.0.0-preview.5.23302.2  \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
     && dotnet_sha512='' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
@@ -14,7 +14,6 @@ RUN aspnetcore_version=  \
 
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
-
 
 # .NET Runtime-Deps Image
 FROM $REPO:8.0.0-preview.5-jammy-chiseled-arm64v8

@@ -95,7 +95,7 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
         "destination": ""
     ])
 }}
-}}RUN {{if ARGS["use-local-version-var"]:{{ if ARGS["is-composite-runtime"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|buildVersion")]}} ^
+}}RUN {{if ARGS["use-local-version-var"]:{{ if ARGS["is-composite-runtime"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} ^
     else:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}}}} \
     && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
         [
