@@ -187,6 +187,8 @@
     "src/aspnet/8.0/cbl-mariner2.0/arm64v8": 202822305,
     "src/aspnet/8.0/cbl-mariner2.0-distroless/amd64": 119714066,
     "src/aspnet/8.0/cbl-mariner2.0-distroless/arm64v8": 127189267
+    "src/aspnet/8.0/cbl-mariner2.0-distroless-composite/amd64": 119714066,
+    "src/aspnet/8.0/cbl-mariner2.0-distroless-composite/arm64v8": 127189267
   },
   "dotnet/nightly/sdk": {
     "src/sdk/6.0/bullseye-slim/amd64": 711281821,
