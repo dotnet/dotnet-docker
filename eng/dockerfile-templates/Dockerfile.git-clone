@@ -1,0 +1,16 @@
+{{
+    _ Shallow clones a git repository at a specific reference
+
+    ARGS:
+        url: The git repository URL
+        ref: The commit hash, branch, or tag to checkout
+        dir: The directory to clone the repository into ^
+
+    set lineContinuation to when(isWindows, "`", "\")
+
+}}git init -q {{ARGS["dir"]}} {{lineContinuation}}
+&& cd {{ARGS["dir"]}} {{lineContinuation}}
+&& git remote add origin {{ARGS["url"]}} {{lineContinuation}}
+&& ref="{{ARGS["ref"]}}" {{lineContinuation}}
+&& git fetch --depth 1 origin "$ref" {{lineContinuation}}
+&& git checkout "$ref"

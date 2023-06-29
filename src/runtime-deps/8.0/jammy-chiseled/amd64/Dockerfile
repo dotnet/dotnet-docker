@@ -5,8 +5,19 @@ RUN apt-get update \
         ca-certificates \
         file
 
-RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel \
-    && git clone --depth 1 -b main https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox
+RUN git init -q /opt/chisel \
+    && cd /opt/chisel \
+    && git remote add origin https://github.com/canonical/chisel \
+    && ref="69809382196473976e550e1c07362c1315e13cc8" \
+    && git fetch --depth 1 origin "$ref" \
+    && git checkout "$ref" \
+    \
+    && git init -q /opt/rocks-toolbox \
+    && cd /opt/rocks-toolbox \
+    && git remote add origin https://github.com/canonical/rocks-toolbox \
+    && ref="e92d18b733647e77b6829968c91f8a16d25c1f2d" \
+    && git fetch --depth 1 origin "$ref" \
+    && git checkout "$ref"
 
 WORKDIR /opt/chisel
 
