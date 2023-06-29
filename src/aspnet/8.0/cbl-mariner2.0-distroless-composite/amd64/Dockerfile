@@ -9,6 +9,7 @@ RUN tdnf install -y \
         tar \
     && tdnf clean all
 
+
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=8.0.0-preview.5.23302.2  \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
@@ -29,6 +30,7 @@ ENV \
     DOTNET_VERSION=8.0.0-preview.5.23280.8 \
     # ASP.NET Core version
     ASPNET_VERSION=8.0.0-preview.5.23302.2
+
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
