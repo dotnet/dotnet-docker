@@ -16,14 +16,14 @@ RUN go generate internal/deb/version.go \
     && cp /opt/rocks-toolbox/chisel-wrapper /usr/bin/
 
 RUN groupadd \
-        --gid=64198 \
+        --gid=1654 \
         app \
     && useradd -l \
-        --uid=64198 \
-        --gid=64198 \
+        --uid=1654 \
+        --gid=1654 \
         --shell /bin/false \
         app \
-    && install -d -m 0755 -o 64198 -g 64198 "/rootfs/home/app" \
+    && install -d -m 0755 -o 1654 -g 1654 "/rootfs/home/app" \
     && mkdir -p "/rootfs/etc" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/rootfs/etc/passwd" \
@@ -48,7 +48,7 @@ COPY --from=chisel /rootfs /
 
 ENV \
     # UID of the non-root user 'app'
-    APP_UID=64198 \
+    APP_UID=1654 \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 \
     # Enable detection of running in a container

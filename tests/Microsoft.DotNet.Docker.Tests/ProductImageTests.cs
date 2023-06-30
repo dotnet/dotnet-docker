@@ -157,7 +157,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
             int uid = int.Parse(uidString);
 
-            Assert.True(uid > 10000);
+            // UIDs below 1000 are reserved for system accounts
+            Assert.True(uid >= 1000);
+            // Debian has a UID_MAX of 60000
+            Assert.True(uid <= 60000);
         }
 
         private IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)

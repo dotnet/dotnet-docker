@@ -8,7 +8,7 @@
         when(find(OS_VERSION, "1.0") >= 0,
             1000,
             101),
-        64198) ^
+        1654) ^
     set gid to uid ^
     set createUserHome to dotnetVersion != "6.0"
 }}# Installer image
