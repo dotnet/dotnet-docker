@@ -8,9 +8,6 @@
 
     set lineContinuation to when(isWindows, "`", "\")
 
-}}git init -q {{ARGS["dir"]}} {{lineContinuation}}
-&& cd {{ARGS["dir"]}} {{lineContinuation}}
-&& git remote add origin {{ARGS["url"]}} {{lineContinuation}}
-&& ref="{{ARGS["ref"]}}" {{lineContinuation}}
-&& git fetch --depth 1 origin "$ref" {{lineContinuation}}
-&& git checkout "$ref"
+}}git clone --no-checkout {{ARGS["url"]}} {{ARGS["dir"]}} \
+&& cd {{ARGS["dir"]}} \
+&& git checkout {{ARGS["ref"]}}
