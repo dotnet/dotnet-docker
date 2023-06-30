@@ -1,8 +1,10 @@
 {{
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
+    set chiselDir to "/opt/chisel" ^
+    set rocksToolboxDir to "/opt/rocks-toolbox" ^
     set username to "app" ^
-    set uid to 64198 ^
+    set uid to 1654 ^
     set gid to uid
 }}FROM {{ARCH_VERSIONED}}/golang:1.20 as chisel
 
@@ -11,15 +13,24 @@ RUN apt-get update \
         ca-certificates \
         file
 
-RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel \
-    && git clone --depth 1 -b main https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox
+RUN {{InsertTemplate("../Dockerfile.git-clone", [
+        "url": VARIABLES["chisel|url"],
+        "ref": VARIABLES["chisel|ref"],
+        "dir": chiselDir
+    ], "    ")}} \
+    \
+    && {{InsertTemplate("../Dockerfile.git-clone", [
+        "url": VARIABLES["rocks-toolbox|url"],
+        "ref": VARIABLES["rocks-toolbox|ref"],
+        "dir": rocksToolboxDir
+    ], "    ")}}
 
-WORKDIR /opt/chisel
+WORKDIR {{chiselDir}}
 
 RUN go generate internal/deb/version.go \
     && go build ./cmd/chisel \
-    && cp /opt/chisel/chisel /usr/bin/ \
-    && cp /opt/rocks-toolbox/chisel-wrapper /usr/bin/
+    && cp {{chiselDir}}/chisel /usr/bin/ \
+    && cp {{rocksToolboxDir}}/chisel-wrapper /usr/bin/
 
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged", [
         "staging-dir": "/rootfs",

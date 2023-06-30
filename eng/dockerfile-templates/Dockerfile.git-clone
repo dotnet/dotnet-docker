@@ -1,0 +1,11 @@
+{{
+    _ Shallow clones a git repository at a specific reference
+
+    ARGS:
+        url: The git repository URL
+        ref: The commit hash, branch, or tag to checkout
+        dir: The directory to clone the repository into
+
+}}git clone --no-checkout {{ARGS["url"]}} {{ARGS["dir"]}} \
+&& cd {{ARGS["dir"]}} \
+&& git checkout {{ARGS["ref"]}}

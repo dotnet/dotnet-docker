@@ -5,8 +5,13 @@ RUN apt-get update \
         ca-certificates \
         file
 
-RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel \
-    && git clone --depth 1 -b main https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox
+RUN git clone --no-checkout https://github.com/canonical/chisel /opt/chisel \
+    && cd /opt/chisel \
+    && git checkout 69809382196473976e550e1c07362c1315e13cc8 \
+    \
+    && git clone --no-checkout https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox \
+    && cd /opt/rocks-toolbox \
+    && git checkout e92d18b733647e77b6829968c91f8a16d25c1f2d
 
 WORKDIR /opt/chisel
 
@@ -16,14 +21,14 @@ RUN go generate internal/deb/version.go \
     && cp /opt/rocks-toolbox/chisel-wrapper /usr/bin/
 
 RUN groupadd \
-        --gid=64198 \
+        --gid=1654 \
         app \
     && useradd -l \
-        --uid=64198 \
-        --gid=64198 \
+        --uid=1654 \
+        --gid=1654 \
         --shell /bin/false \
         app \
-    && install -d -m 0755 -o 64198 -g 64198 "/rootfs/home/app" \
+    && install -d -m 0755 -o 1654 -g 1654 "/rootfs/home/app" \
     && mkdir -p "/rootfs/etc" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/rootfs/etc/passwd" \
@@ -48,7 +53,7 @@ COPY --from=chisel /rootfs /
 
 ENV \
     # UID of the non-root user 'app'
-    APP_UID=64198 \
+    APP_UID=1654 \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 \
     # Enable detection of running in a container
