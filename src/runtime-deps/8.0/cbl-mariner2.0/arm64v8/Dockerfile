@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS base
 
 ENV \
     # UID of the non-root user 'app'
-    APP_UID=64198 \
+    APP_UID=1654 \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 \
     # Enable detection of running in a container

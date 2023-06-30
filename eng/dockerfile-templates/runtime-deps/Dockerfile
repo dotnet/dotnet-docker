@@ -27,7 +27,7 @@
     set rpmFilename to "dotnet-runtime-deps.rpm" ^
     set utilPkgs to when(isMariner && nonRootUserSupported, ["shadow-utils"], []) ^
     set username to "app" ^
-    set uid to 64198 ^
+    set uid to 1654 ^
     set gid to uid ^
     set nonRootUserComment to "# Create a non-root user and group"
 }}FROM {{baseImageRepo}}:{{baseImageTag}}{{if isMultiStage: AS {{firstStageName}}}}{{if isRpmInstall && isInternal:
