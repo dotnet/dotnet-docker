@@ -5,8 +5,13 @@ RUN apt-get update \
         ca-certificates \
         file
 
-RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel \
-    && git clone --depth 1 -b main https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox
+RUN git clone --no-checkout https://github.com/canonical/chisel /opt/chisel \
+    && cd /opt/chisel \
+    && git checkout 69809382196473976e550e1c07362c1315e13cc8 \
+    \
+    && git clone --no-checkout https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox \
+    && cd /opt/rocks-toolbox \
+    && git checkout e92d18b733647e77b6829968c91f8a16d25c1f2d
 
 WORKDIR /opt/chisel
 

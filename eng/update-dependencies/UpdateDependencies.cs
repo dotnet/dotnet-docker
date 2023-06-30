@@ -228,7 +228,7 @@ namespace Dotnet.Docker
             }
         }
 
-        // Normally the web link would be available within GitPullRequest.Links property but that's not populated 
+        // Normally the web link would be available within GitPullRequest.Links property but that's not populated
         private static string GetGitPullRequestWebLink(GitPullRequest pr) =>
             $"https://dev.azure.com/{Options.AzdoOrganization}/{Options.AzdoProject}/_git/{Options.AzdoRepo}/pullrequest/{pr.PullRequestId}";
 
@@ -247,7 +247,7 @@ namespace Dotnet.Docker
         {
             GitHubAuth gitHubAuth = new GitHubAuth(Options.Password, Options.User, Options.Email);
             PullRequestCreator prCreator = new PullRequestCreator(gitHubAuth, Options.User);
-            
+
             GitHubProject upstreamProject = new GitHubProject(Options.GitHubProject, Options.GitHubUpstreamOwner);
             GitHubBranch upstreamBranch = new GitHubBranch(Options.TargetBranch, upstreamProject);
 
@@ -286,7 +286,7 @@ namespace Dotnet.Docker
             // implement logic which pulls down each file individually from the API and compare it to what exists
             // in the local repo.  Since that's not an efficient process, this method works by cloning the PR's
             // branch to a temporary repo location, grabbing the whole repo where the original updates from
-            // update-dependencies were made and copying it into the temp repo, and committing and pushing 
+            // update-dependencies were made and copying it into the temp repo, and committing and pushing
             // those changes in the temp repo back to the PR's branch.
 
             string tempRepoPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
@@ -408,16 +408,20 @@ namespace Dotnet.Docker
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
 
-            JObject release = await MinGitHelper.GetLatestMinGitReleaseAsync();
+            JObject minGitRelease = await GitHubHelper.GetLatestReleaseAsync("git-for-windows", "git");
+            string chiselRef = await GitHubHelper.GetLatestCommitAsync("canonical", "chisel", "main");
+            string rocksToolboxRef = await GitHubHelper.GetLatestCommitAsync("canonical", "rocks-toolbox", "main");
 
             List<IDependencyUpdater> updaters = new()
             {
                 new NuGetConfigUpdater(RepoRoot, Options),
                 new BaseUrlUpdater(RepoRoot, Options),
-                new MinGitUrlUpdater(RepoRoot, release),
-                new MinGitShaUpdater(RepoRoot, release)
+                new MinGitUrlUpdater(RepoRoot, minGitRelease),
+                new MinGitShaUpdater(RepoRoot, minGitRelease),
+                new BasicVariableUpdater(RepoRoot, "chisel|ref", chiselRef),
+                new BasicVariableUpdater(RepoRoot, "rocks-toolbox|ref", rocksToolboxRef)
             };
-            
+
             foreach (string productName in Options.ProductVersions.Keys)
             {
                 updaters.Add(new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot, Options));
