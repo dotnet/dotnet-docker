@@ -8,19 +8,19 @@ using Newtonsoft.Json.Linq;
 #nullable enable
 namespace Dotnet.Docker;
 
-internal abstract class BasicVersionUpdater : FileRegexUpdater
+internal abstract class VariableUpdaterBase : FileRegexUpdater
 {
-    protected readonly string _variableName;
-    protected readonly Lazy<JObject> _manifestVariables;
+    protected readonly string VariableName;
+    protected readonly Lazy<JObject> ManifestVariables;
 
-    public BasicVersionUpdater(string repoRoot, string variableName)
+    public VariableUpdaterBase(string repoRoot, string variableName)
     {
-        _variableName = variableName;
+        VariableName = variableName;
         Path = System.IO.Path.Combine(repoRoot, UpdateDependencies.VersionsFilename);
         VersionGroupName = "val";
         Regex = ManifestHelper.GetManifestVariableRegex(variableName, @$"(?<{VersionGroupName}>\S*)");
 
-        _manifestVariables = new Lazy<JObject>(
+        ManifestVariables = new Lazy<JObject>(
             () =>
             {
                 const string VariablesProperty = "variables";

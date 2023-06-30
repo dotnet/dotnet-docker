@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 #nullable enable
 namespace Dotnet.Docker;
 
-internal abstract class MinGitUpdater : BasicVersionUpdater
+internal abstract class MinGitUpdater : VariableUpdaterBase
 {
     protected JObject LatestMinGitRelease { get; }
 
@@ -26,7 +26,7 @@ internal abstract class MinGitUpdater : BasicVersionUpdater
         if (sdkDependencyInfo is null)
         {
             usedDependencyInfos = Enumerable.Empty<IDependencyInfo>();
-            return ManifestHelper.GetVariableValue(_variableName, _manifestVariables.Value);
+            return ManifestHelper.GetVariableValue(VariableName, ManifestVariables.Value);
         }
 
         usedDependencyInfos = new[] { sdkDependencyInfo };

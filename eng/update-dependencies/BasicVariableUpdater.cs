@@ -8,18 +8,18 @@ using Microsoft.DotNet.VersionTools.Dependencies;
 #nullable enable
 namespace Dotnet.Docker;
 
-internal class GitReferenceUpdater : BasicVersionUpdater
+internal class BasicVariableUpdater : VariableUpdaterBase
 {
-    private readonly string _reference;
+    private readonly string _newValue;
 
-    public GitReferenceUpdater(string repoRoot, string variableName, string reference) : base(repoRoot, variableName)
+    public BasicVariableUpdater(string repoRoot, string variableName, string newValue) : base(repoRoot, variableName)
     {
-        _reference = reference;
+        _newValue = newValue;
     }
 
     protected sealed override string TryGetDesiredValue(IEnumerable<IDependencyInfo> dependencyInfos, out IEnumerable<IDependencyInfo> usedDependencyInfos)
     {
         usedDependencyInfos = Enumerable.Empty<IDependencyInfo>();
-        return _reference;
+        return _newValue;
     }
 }
