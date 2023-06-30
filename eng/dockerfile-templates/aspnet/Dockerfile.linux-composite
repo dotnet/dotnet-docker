@@ -35,7 +35,7 @@
         "dest-dir": "/usr/share/dotnet",
         "add-symlink": !isRpmInstall,
         "is-rpm-install": isRpmInstall,
-        "is-composite-runtime": "true",
+        "is-composite-runtime": "true"
     ])}}^
 else:{{
 
@@ -55,7 +55,6 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
         "pkgs": ["tar"]
     ])}}
 }}
-
 # Retrieve ASP.NET Composite Runtime
 {{InsertTemplate("../runtime/Dockerfile.linux.install-runtime",
     [
@@ -69,13 +68,13 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 {{ if isDistroless:
 RUN mkdir /dotnet-symlink \
-    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet}}
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
+}}
 
-# .NET Runtime-Deps Image
+# ASP.NET Composite Image
 FROM {{runtimeDepsBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs", [ "is-composite-runtime": "true" ])}}
-{{ if isInternal && isRpmInstall:
+{{InsertTemplate("Dockerfile.envs", [ "is-composite-runtime": "true" ])}}{{ if isInternal && isRpmInstall:
 {{InsertTemplate("../runtime/Dockerfile.linux.install-runtime",
     [
         "dest-dir": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
@@ -83,13 +82,13 @@ FROM {{runtimeDepsBaseTag}}
         "is-internal": isInternal,
         "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
         "installer-stage": "installer",
-        "is-rpm-install": isRpmInstall,
+        "is-rpm-install": isRpmInstall
     ])}}}}{{ if isDistroless:
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
 
 ENTRYPOINT ["/usr/bin/dotnet"]
-CMD ["--info"]
-^elif !(isInternal && isRpmInstall):
+CMD ["--info"]^
+elif !(isInternal && isRpmInstall):
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN {{InsertTemplate("../runtime/Dockerfile.linux.symlink")}}}}}}
