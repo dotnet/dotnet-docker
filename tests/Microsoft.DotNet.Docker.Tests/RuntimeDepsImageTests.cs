@@ -92,7 +92,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            const string SyftImage = "anchore/syft:v0.75.0";
+            const string SyftImage = "anchore/syft:v0.84.0";
             DockerHelper.Pull(SyftImage);
 
             string imageName = imageData.GetImage(ImageType, DockerHelper);
@@ -121,8 +121,16 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             else if (imageData.OS == OS.JammyChiseled)
             {
-                OutputHelper.WriteLine("Package scanning support not implemented for Chiseled Ubuntu images.");
-                expectedPackages = Array.Empty<string>();
+                expectedPackages = new[]
+                {
+                    "base-files",
+                    "ca-certificates",
+                    "libc6",
+                    "libgcc-s1",
+                    "libssl3",
+                    "libstdc++6",
+                    "zlib1g"
+                };
             }
             else
             {
