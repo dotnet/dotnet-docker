@@ -10,8 +10,8 @@ namespace Dotnet.Docker;
 
 internal abstract class VariableUpdaterBase : FileRegexUpdater
 {
-    protected readonly string VariableName;
-    protected readonly Lazy<JObject> ManifestVariables;
+    protected string VariableName { get; }
+    protected Lazy<JObject> ManifestVariables { get; }
 
     public VariableUpdaterBase(string repoRoot, string variableName)
     {
