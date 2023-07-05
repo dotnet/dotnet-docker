@@ -35,7 +35,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string Focal = "focal";
         public const string Jammy = "jammy";
         public const string JammyChiseled = $"{Jammy}-chiseled";
-        public const string JammyChiseledComposite = $"{JammyChiseled}-composite"
+        public const string JammyChiseledComposite = $"{JammyChiseled}-composite";
         public const string UbuntuChiseled = "ubuntu-chiseled";
 
         // Windows
