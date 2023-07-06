@@ -4700,7 +4700,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/jammy-chiseled-composite/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
@@ -4714,7 +4714,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/jammy-chiseled-composite/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
@@ -4729,7 +4729,7 @@
             {
               "architecture": "arm",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/jammy-chiseled-composite/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
@@ -4893,7 +4893,7 @@
           "platforms": [
             {
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/cbl-mariner2.0-distroless-composite/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
@@ -4923,7 +4923,7 @@
             {
               "architecture": "arm64",
               "buildArgs": {
-                "REPO": "$(Repo:runtime)"
+                "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/8.0/cbl-mariner2.0-distroless-composite/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
