@@ -418,8 +418,8 @@ namespace Dotnet.Docker
                 new BaseUrlUpdater(RepoRoot, Options),
                 new MinGitUrlUpdater(RepoRoot, minGitRelease),
                 new MinGitShaUpdater(RepoRoot, minGitRelease),
-                new BasicVariableUpdater(RepoRoot, "chisel|ref", chiselRef),
-                new BasicVariableUpdater(RepoRoot, "rocks-toolbox|ref", rocksToolboxRef)
+                new BasicVariableUpdater(RepoRoot, "runtime", "chisel|ref", chiselRef),
+                new BasicVariableUpdater(RepoRoot, "runtime", "rocks-toolbox|ref", rocksToolboxRef)
             };
 
             foreach (string productName in Options.ProductVersions.Keys)
