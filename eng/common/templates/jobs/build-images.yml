@@ -126,7 +126,8 @@ jobs:
     displayName: Publish Image Info File Artifact
   - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
       # Define the task here to load it into the agent so that we can invoke the tool manually
-    - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+      # TODO: Revert the build-specific pinned version when https://github.com/dotnet/docker-tools/issues/1152 is fixed
+    - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0.197.56
       inputs:
         BuildDropPath: $(Build.ArtifactStagingDirectory)
       displayName: Load Manifest Generator
