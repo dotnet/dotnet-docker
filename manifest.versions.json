@@ -100,12 +100,12 @@
     "monitor|7.1|linux|arm64|sha": "f7d411ce7f56be5dc6c51898b8e37a674b041a330f2a7ed1345c3a9fcbf33fccfb339cce026aab9764d453972b0cff404452f2a389215ffc51376097595f6945",
     "monitor|7.1|product-version": "7.1.2",
 
-    "monitor|7.2|build-version": "7.2.0",
-    "monitor|7.2|linux-musl|x64|sha": "39afcada18d30861dbb1a3f91bfedca85a7f4ab4ded83bae7eda211d7eb1ea43b5ac198f4dd7e494c85f5502fcf7257f94ee6c14e2f144d344b747ddfa3a4717",
-    "monitor|7.2|linux-musl|arm64|sha": "27ba9267e7d7ae0b41ac7d4614df637a947e1527b94112042ec79697e84b9b06e7114072d002e469a104cc5c25fc3a4e561acfbef6e2de099f7273dda3504b6f",
-    "monitor|7.2|linux|x64|sha": "daa8de1d9dab4658865ca3a8008e916dafb10cd04b6ad7b6e5ab243cf7d0a9840b1abbd1840c4822c6af4ce4a563a52a95d5970630cd283fd3b0fcf9e8958499",
-    "monitor|7.2|linux|arm64|sha": "fac2c819d12d1bcac199b43ec9b89d2ade9ed55715a5cba8c278e30b174fa65b897106cb4af00a12846ee5ef29fc113bc63703fca71defb08ebd65f3d4b2887c",
-    "monitor|7.2|product-version": "7.2.0",
+    "monitor|7.2|build-version": "7.2.1-servicing.23356.4",
+    "monitor|7.2|linux-musl|x64|sha": "6a427634c03d3d8d6222c720c6ed54968003511c44b079e7dcf7f12645243446d01eddd6e5c3644ecbfb163a727f7ffeb447baa979464ec6bb0d58c5422630ea",
+    "monitor|7.2|linux-musl|arm64|sha": "2ab3027e36f1eb359142d1eac245aca77371f60743c2c19d046a3624a69bb729faa0bd6f40f814c6656b8e220791ddf4e9d77b784b69676b839dcc2a5cbd8169",
+    "monitor|7.2|linux|x64|sha": "67795cf744f3c7579c7f85217470b621453b3817ed772ce59ab9db7fc813183925a67251b3df008957b8f25066228b781c34c582965e5ceb8c9dc9138d94115c",
+    "monitor|7.2|linux|arm64|sha": "d82d40d2125d4ddab7d212e45adf20a095f4862e1c3cfbf047fe49ea394d9b895a51a5d71211dc0f36fc6c071de5d0e93f7c96cc9e8c2ea9473d70cf15cccf7e",
+    "monitor|7.2|product-version": "7.2.1",
 
     "monitor|8.0|build-version": "8.0.0-preview.6.23354.3",
     "monitor|8.0|product-version": "8.0.0-preview.6",
