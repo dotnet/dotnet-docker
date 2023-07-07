@@ -83,8 +83,8 @@
     "libssl|focal": "1.1",
     "libssl|jammy": "3",
 
-    "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.41.0.windows.2/MinGit-2.41.0.2-64-bit.zip",
-    "mingit|x64|sha": "06d71967e8f47f82fc2ebf9911d2cf8102221e4e22becb825e2dbec85cc1047e",
+    "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.41.0.windows.1/MinGit-2.41.0-64-bit.zip",
+    "mingit|x64|sha": "c9cffc25e2ef81f51029138678b7bfc538a56095ec0538125dc790a01e20d77a",
 
     "monitor|6.3|build-version": "6.3.2-servicing.23106.4",
     "monitor|6.3|linux-musl|x64|sha": "aca88dfe67e582eb065ee0518cb5eee653e38494a5a6b5d80a397a1582869355b99d04aeb777ae4fc1f13f71f9a35bb37cc4137f85705ea3af615279051d56c1",
