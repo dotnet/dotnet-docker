@@ -14,7 +14,7 @@ parameters:
   windowsAmdBuildJobTimeout: 60
   windowsAmdTestJobTimeout: 60
   linuxAmdBuildJobTimeout: 60
-  linuxAmd64Pool: ""
+  linuxAmd64Pool: null
   buildMatrixType: platformDependencyGraph
   testMatrixType: platformVersionedOs
 
@@ -62,7 +62,7 @@ stages:
       - group: DotNet-AllOrgs-Darc-Pats
 
     linuxAmd64Pool:
-      ${{ if ne(parameters.linuxAmd64Pool, '') }}:
+      ${{ if parameters.linuxAmd64Pool }}:
         ${{ parameters.linuxAmd64Pool }}
       ${{ elseif eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         vmImage: $(defaultLinuxAmd64PoolImage)
