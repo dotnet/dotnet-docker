@@ -36,6 +36,9 @@ public static class ManifestHelper
         return $"base-url|{version}|{branch}";
     }
 
+    public static string GetVersionVariableName(VersionType versionType, string productName, string dockerfileVersion) =>
+        $"{productName}|{dockerfileVersion}|{versionType.ToString().ToLowerInvariant()}-version";
+
     /// <summary>
     /// Gets the value of a manifest variable.
     /// </summary>

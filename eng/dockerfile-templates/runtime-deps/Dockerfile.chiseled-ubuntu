@@ -14,14 +14,14 @@ RUN apt-get update \
         file
 
 RUN {{InsertTemplate("../Dockerfile.git-clone", [
-        "url": VARIABLES["chisel|url"],
-        "ref": VARIABLES["chisel|ref"],
+        "url": VARIABLES["chisel|6.0|8.0|url"],
+        "ref": VARIABLES["chisel|6.0|8.0|ref"],
         "dir": chiselDir
     ], "    ")}} \
     \
     && {{InsertTemplate("../Dockerfile.git-clone", [
-        "url": VARIABLES["rocks-toolbox|url"],
-        "ref": VARIABLES["rocks-toolbox|ref"],
+        "url": VARIABLES["rocks-toolbox|6.0|8.0|url"],
+        "ref": VARIABLES["rocks-toolbox|6.0|8.0|ref"],
         "dir": rocksToolboxDir
     ], "    ")}}
 
