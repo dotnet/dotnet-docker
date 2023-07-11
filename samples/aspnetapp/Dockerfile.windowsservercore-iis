@@ -1,19 +1,8 @@
 # escape=`
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/sdk:7.0-windowsservercore-ltsc2022 AS build
-WORKDIR /source
-
-# copy csproj and restore as distinct layers
-COPY aspnetapp/*.csproj .
-RUN dotnet restore --use-current-runtime
-
-# copy everything else and build app
-COPY aspnetapp/. .
-RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o /app
-
 # final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:7.0-windowsservercore-ltsc2022
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-preview-windowsservercore-ltsc2022 AS final
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
@@ -35,9 +24,22 @@ RUN powershell -Command `
         Remove-Item -Force C:\dotnet-hosting-win.exe; `
         Remove-Item -Force -Recurse $Env:Temp\*
 
+FROM mcr.microsoft.com/dotnet/sdk:8.0-preview-windowsservercore-ltsc2022 AS build
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY aspnetapp/*.csproj .
+RUN dotnet restore --ucr
+
+# copy everything else and build app
+COPY aspnetapp/. .
+RUN dotnet publish --ucr --no-restore -o /app
+
+
+FROM final
 WORKDIR /inetpub/wwwroot
 COPY --from=build /app .
 
 EXPOSE 80
-
+USER ContainerUser
 ENTRYPOINT ["C:\\ServiceMonitor.exe", "w3svc"]

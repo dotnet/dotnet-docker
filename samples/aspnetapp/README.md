@@ -7,14 +7,14 @@ This sample demonstrates how to build container images for ASP.NET Core web apps
 You can start by launching a sample from our [container registry](https://mcr.microsoft.com/) and access it in your web browser at `http://localhost:8000`.
 
 ```console
-docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/samples:aspnetapp
+docker run --rm -it -p 8000:8080 mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 You can also call an endpoint that the app exposes:
 
 ```bash
 $ curl http://localhost:8000/Environment
-{"runtimeVersion":".NET 7.0.2","osVersion":"Linux 5.15.79.1-microsoft-standard-WSL2 #1 SMP Wed Nov 23 01:01:46 UTC 2022","osArchitecture":"X64","user":"root","processorCount":16,"totalAvailableMemoryBytes":67430023168,"memoryLimit":9223372036854771712,"memoryUsage":100577280}
+{"runtimeVersion":".NET 8.0.0-preview.6.23329.7","osVersion":"Ubuntu 22.04.2 LTS","osArchitecture":"Arm64","user":"app","processorCount":4,"totalAvailableMemoryBytes":4124442624,"memoryLimit":0,"memoryUsage":31518720,"hostName":"78e2b2cfc0e8"}
 ```
 
 ## Build an ASP.NET Core image
@@ -23,29 +23,29 @@ You can build and run an image using the following instructions (if you've clone
 
 ```console
 docker build --pull -t aspnetapp .
-docker run --rm -it -p 8000:80 aspnetapp
+docker run --rm -it -p 8000:8080 aspnetapp
 ```
 
 You should see the following console output as the application starts:
 
 ```console
-> docker run --rm -it -p 8000:80 aspnetapp
-Hosting environment: Production
-Content root path: /app
-Now listening on: http://[::]:80
-Application started. Press Ctrl+C to shut down.
+> docker run --rm -it -p 8000:8080 aspnetapp
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://[::]:8080
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
 ```
 
 After the application starts, navigate to `http://localhost:8000` in your web browser. You can also view the ASP.NET Core site running in the container from another machine with a local IP address such as `http://192.168.1.18:8000`.
 
-> Note: ASP.NET Core apps (in our official images) listen to [port 80 by default](https://github.com/dotnet/dotnet-docker/blob/d5df3f0710c43b14aacdac1e30ceed666699ea69/src/runtime-deps/6.0/jammy/amd64/Dockerfile#L19). The [`-p` argument](https://docs.docker.com/engine/reference/commandline/run/#publish) in these examples maps host port `8000` to container port `80` (`host:container` mapping). The container will not be accessible without this mapping. ASP.NET Core can be [configured to listen on a different or additional port](https://learn.microsoft.com/aspnet/core/fundamentals/servers/kestrel/endpoints).
+> Note: ASP.NET Core apps (in our official images) listen to [port 8080 by default](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7), starting with .NET 8. The [`-p` argument](https://docs.docker.com/engine/reference/commandline/run/#publish) in these examples maps host port `8000` to container port `8080` (`host:container` mapping). The container will not be accessible without this mapping. ASP.NET Core can be [configured to listen on a different or additional port](https://learn.microsoft.com/aspnet/core/fundamentals/servers/kestrel/endpoints).
 
 You can see the app running via `docker ps`.
 
 ```bash
 $ docker ps
 CONTAINER ID   IMAGE                                        COMMAND         CREATED          STATUS                    PORTS                  NAMES
-d79edc6bfcb6   mcr.microsoft.com/dotnet/samples:aspnetapp   "./aspnetapp"   35 seconds ago   Up 34 seconds (healthy)   0.0.0.0:8080->80/tcp   nice_curran
+d79edc6bfcb6   mcr.microsoft.com/dotnet/samples:aspnetapp   "./aspnetapp"   35 seconds ago   Up 34 seconds (healthy)   0.0.0.0:8080->8080/tcp   nice_curran
 ```
 
 You may notice that the sample includes a [health check](../enable-healthchecks.md), indicated in the "STATUS" column.
