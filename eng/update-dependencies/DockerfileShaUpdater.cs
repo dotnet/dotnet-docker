@@ -464,12 +464,17 @@ namespace Dotnet.Docker
                 {
                     string checksums = await response.Content.ReadAsStringAsync();
                     string[] checksumLines = checksums.Replace("\r\n", "\n").Split("\n", StringSplitOptions.RemoveEmptyEntries);
-                    if (!checksumLines[0].StartsWith("Hash"))
-                    {
-                        Trace.TraceError($"Checksum file is not in the expected format: {uri}");
-                    }
 
-                    for (int i = 1; i < checksumLines.Length; i++)
+                    /**
+                        Sometimes the checksum file starts with the following line:
+
+                        # Hash: SHA512
+
+                        Other times the first line is the first checksum entry. This
+                        happens sometimes for preview releases.
+                    **/
+                    int firstChecksumEntry = checksumLines[0].Contains("Hash") ? 1 : 0;
+                    for (int i = firstChecksumEntry; i < checksumLines.Length; i++)
                     {
                         string[] parts = checksumLines[i].Split(" ");
                         if (parts.Length != 2)
