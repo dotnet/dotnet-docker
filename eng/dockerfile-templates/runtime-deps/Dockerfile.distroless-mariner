@@ -8,7 +8,7 @@
         when(find(OS_VERSION, "1.0") >= 0,
             1000,
             101),
-        64198) ^
+        1654) ^
     set gid to uid ^
     set createUserHome to dotnetVersion != "6.0"
 }}# Installer image
@@ -25,7 +25,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 
 # Install .NET's dependencies into a staging location
 RUN mkdir {{distrolessStagingDir}} \
-    && {{InsertTemplate("../Dockerfile.linux.install-deps", ["distroless-staging-dir": distrolessStagingDir])}}
+    && {{InsertTemplate("../Dockerfile.linux.install-deps", ["staging-dir": distrolessStagingDir])}}
 {{if find(OS_VERSION, "1.0") < 0:
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
 COPY --from={{baseImage}} /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
@@ -37,7 +37,7 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
 
 }}
 # Create a non-root user and group
-RUN {{InsertTemplate("Dockerfile.linux.distroless-user",
+RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
         [
             "staging-dir": distrolessStagingDir,
             "exclusive": dotnetVersion != "6.0",

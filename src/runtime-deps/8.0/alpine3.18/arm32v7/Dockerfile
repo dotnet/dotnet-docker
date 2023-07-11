@@ -2,7 +2,7 @@ FROM arm32v7/alpine:3.18
 
 ENV \
     # UID of the non-root user 'app'
-    APP_UID=64198 \
+    APP_UID=1654 \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 \
     # Enable detection of running in a container
@@ -22,11 +22,10 @@ RUN apk add --no-cache \
 
 # Create a non-root user and group
 RUN addgroup \
-        --system \
         --gid=$APP_UID \
         app \
     && adduser \
         --uid=$APP_UID \
         --ingroup=app \
-        --system \
+        --disabled-password \
         app

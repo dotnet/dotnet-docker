@@ -1,23 +1,38 @@
 {{
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
+    set chiselDir to "/opt/chisel" ^
+    set rocksToolboxDir to "/opt/rocks-toolbox" ^
     set username to "app" ^
-    set uid to 64198 ^
+    set uid to 1654 ^
     set gid to uid
-}}FROM {{ARCH_VERSIONED}}/golang:1.18 as chisel
+}}FROM {{ARCH_VERSIONED}}/golang:1.20 as chisel
 
-RUN git clone --depth 1 -b main https://github.com/canonical/chisel /opt/chisel
-WORKDIR /opt/chisel
+RUN apt-get update \
+    && apt-get install -y \
+        ca-certificates \
+        file
+
+RUN {{InsertTemplate("../Dockerfile.git-clone", [
+        "url": VARIABLES["chisel|url"],
+        "ref": VARIABLES["chisel|ref"],
+        "dir": chiselDir
+    ], "    ")}} \
+    \
+    && {{InsertTemplate("../Dockerfile.git-clone", [
+        "url": VARIABLES["rocks-toolbox|url"],
+        "ref": VARIABLES["rocks-toolbox|ref"],
+        "dir": rocksToolboxDir
+    ], "    ")}}
+
+WORKDIR {{chiselDir}}
+
 RUN go generate internal/deb/version.go \
-    && go build ./cmd/chisel
+    && go build ./cmd/chisel \
+    && cp {{chiselDir}}/chisel /usr/bin/ \
+    && cp {{rocksToolboxDir}}/chisel-wrapper /usr/bin/
 
-
-FROM {{ARCH_VERSIONED}}/ubuntu:{{osVersionBase}} as builder
-
-RUN apt-get update && \
-    apt-get install -y ca-certificates
-
-RUN {{InsertTemplate("Dockerfile.linux.distroless-user", [
+RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged", [
         "staging-dir": "/rootfs",
         "exclusive": "true",
         "create-dir": "true",
@@ -27,27 +42,28 @@ RUN {{InsertTemplate("Dockerfile.linux.distroless-user", [
         "create-home": "true"
     ])}}
 
-COPY --from=chisel /opt/chisel/chisel /usr/bin/
-RUN chisel cut --release "ubuntu-{{osVersionNumber}}" --root /rootfs \
-        base-files_base \
-        base-files_release-info \
-        ca-certificates_data \
-        libc6_libs \
-        libgcc-s1_libs \
-        libssl3_libs \
-        libstdc++6_libs \
-        zlib1g_libs
+RUN mkdir -p /rootfs/var/lib/dpkg/ \
+    && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
+        --release "ubuntu-{{osVersionNumber}}" --root /rootfs \
+            base-files_base \
+            base-files_release-info \
+            ca-certificates_data \
+            libc6_libs \
+            libgcc-s1_libs \
+            libssl3_libs \
+            libstdc++6_libs \
+            zlib1g_libs
 
 
 FROM scratch
 
-COPY --from=builder /rootfs /
-
-# Workaround for https://github.com/moby/moby/issues/38710
-COPY --from=builder --chown={{uid}}:{{gid}} /rootfs/home/{{username}} /home/{{username}}
+COPY --from=chisel /rootfs /
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs", [
     "uid": uid
 ])}}
+
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=chisel --chown=$APP_UID:$APP_UID /rootfs/home/{{username}} /home/{{username}}
 
 USER $APP_UID

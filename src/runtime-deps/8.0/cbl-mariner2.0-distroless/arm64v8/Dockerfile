@@ -31,17 +31,15 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
 
 # Create a non-root user and group
 RUN groupadd \
-        --system \
-        --gid=64198 \
+        --gid=1654 \
         app \
     && useradd -l \
-        --uid=64198 \
-        --gid=64198 \
+        --uid=1654 \
+        --gid=1654 \
         --shell /bin/false \
         --create-home \
-        --system \
         app \
-    && install -d -m 0755 -o 64198 -g 64198 "/staging/home/app" \
+    && install -d -m 0755 -o 1654 -g 1654 "/staging/home/app" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/staging/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
@@ -61,7 +59,7 @@ FROM mcr.microsoft.com/cbl-mariner/distroless/minimal:2.0
 
 ENV \
     # UID of the non-root user 'app'
-    APP_UID=64198 \
+    APP_UID=1654 \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 \
     # Enable detection of running in a container
@@ -72,6 +70,6 @@ ENV \
 COPY --from=installer /staging/ /
 
 # Workaround for https://github.com/moby/moby/issues/38710
-COPY --from=installer --chown=64198:64198 /staging/home/app /home/app
+COPY --from=installer --chown=1654:1654 /staging/home/app /home/app
 
 USER app

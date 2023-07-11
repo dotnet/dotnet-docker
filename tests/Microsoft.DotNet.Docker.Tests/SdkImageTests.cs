@@ -32,11 +32,20 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private bool IsPowerShellSupported(ProductImageData imageData, out string reason)
         {
-            if (imageData.OS.Contains("alpine") && imageData.IsArm)
+            if (imageData.OS.Contains("alpine"))
             {
-                // PowerShell needs support for Arm-based Alpine (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
-                reason = "PowerShell does not have Alpine arm images, skip testing";
-                return false;
+                if (imageData.IsArm)
+                {
+                    // PowerShell needs support for Arm-based Alpine (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
+                    reason = "PowerShell does not have Alpine arm images, skip testing";
+                    return false;
+                }
+                else if (imageData.Version.Major == 6 && imageData.OS.Contains("3.18"))
+                {
+                    // PowerShell does not support Alpine 3.18 yet (https://github.com/PowerShell/PowerShell/issues/19703)
+                    reason = "Powershell does not support Alpine 3.18 yet, skip testing";
+                    return false;
+                }
             }
 
             reason = null;
