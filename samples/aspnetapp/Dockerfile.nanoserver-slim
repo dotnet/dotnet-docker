@@ -1,7 +1,8 @@
 # escape=`
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/sdk:8.0-preview-nanoserver-ltsc2022 AS build
+ARG TAG=ltsc2022
+FROM mcr.microsoft.com/dotnet/sdk:8.0-preview-nanoserver-$TAG AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -14,7 +15,7 @@ RUN dotnet publish --ucr --self-contained --no-restore -o /app /p:PublishTrimmed
 
 
 # final stage/image
-FROM mcr.microsoft.com/windows/nanoserver:ltsc2022
+FROM mcr.microsoft.com/windows/nanoserver:$TAG
 WORKDIR /app
 COPY --from=build /app .
 HEALTHCHECK CMD curl -sf --show-error http://localhost:80/healthz || exit 1

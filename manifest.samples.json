@@ -59,7 +59,10 @@
               "variant": "v8"
             },
             {
-              "dockerfile": "samples/dotnetapp",
+              "buildArgs": {
+                "TAG": "1809"
+              },
+              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver-slim",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -71,7 +74,10 @@
               }
             },
             {
-              "dockerfile": "samples/dotnetapp",
+              "buildArgs": {
+                "TAG": "ltsc2022"
+              },
+              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver-slim",
               "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
