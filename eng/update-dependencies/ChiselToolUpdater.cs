@@ -42,7 +42,7 @@ internal class ChiselToolUpdater : VariableUpdaterBase
         // tool shouldn't make a difference in the output image.
         string runtimeVariableName = ManifestHelper.GetVersionVariableName(VersionType.Build, "runtime", _dockerfileVersion);
         string currentRuntimeVersion = ManifestHelper.GetVariableValue(runtimeVariableName, ManifestVariables.Value);
-        if (/* runtimeDependencyInfo.SimpleVersion == currentRuntimeVersion */ false)
+        if (runtimeDependencyInfo.SimpleVersion == currentRuntimeVersion)
         {
             return currentChiselToolVersion;
         }
