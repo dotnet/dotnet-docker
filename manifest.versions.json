@@ -61,7 +61,7 @@
     "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
 
     "chisel|6.0|url": "https://github.com/canonical/chisel",
-    "chisel|8.0|url": "https://github.com/canonical/chisel",
+    "chisel|8.0|url": "$(chisel|6.0|url)",
     "chisel|6.0|ref": "00f796f17323422704241517aa0386ded5e0fba1",
     "chisel|8.0|ref": "00f796f17323422704241517aa0386ded5e0fba1",
 
@@ -145,7 +145,7 @@
     "powershell|8.0|Windows|x64|sha": "e1c97f48e5de1b38dfaf60be1085c3f6c996c61a5ce1a20dec0a9e50bb747cccf816c6778f77951cff7f3b24095d7e7f849bc9b222e139ef07c7b90381a4b21b",
 
     "rocks-toolbox|6.0|url": "https://github.com/canonical/rocks-toolbox",
-    "rocks-toolbox|8.0|url": "https://github.com/canonical/rocks-toolbox",
+    "rocks-toolbox|8.0|url": "$(rocks-toolbox|6.0|url)",
     "rocks-toolbox|6.0|ref": "e92d18b733647e77b6829968c91f8a16d25c1f2d",
     "rocks-toolbox|8.0|ref": "e92d18b733647e77b6829968c91f8a16d25c1f2d",
 
