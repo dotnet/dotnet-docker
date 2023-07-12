@@ -1,8 +1,17 @@
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// var builder = WebApplication.CreateSlimBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddHealthChecks();
+
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
+});
 
 var app = builder.Build();
 
@@ -49,7 +58,14 @@ app.MapGet("/Delay/{value}", async (int value) =>
     {
     }
     
-    return new {Delay = value};
+    return new Operation(value);
 });
 
 app.Run();
+
+[JsonSerializable(typeof(EnvironmentInfo[]))]
+internal partial class AppJsonSerializerContext : JsonSerializerContext
+{
+}
+
+public record Operation(int Delay);
