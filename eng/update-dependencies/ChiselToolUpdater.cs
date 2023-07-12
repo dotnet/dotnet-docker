@@ -24,13 +24,13 @@ internal class ChiselToolUpdater : VariableUpdaterBase
         IDependencyInfo? runtimeDependencyInfo = dependencyInfos.FirstOrDefault(info => info.SimpleName == "runtime");
         usedDependencyInfos = Enumerable.Empty<IDependencyInfo>();
 
-        string currentChsielToolVersion = ManifestHelper.GetVariableValue(VariableName, ManifestVariables.Value);
+        string currentChiselToolVersion = ManifestHelper.GetVariableValue(VariableName, ManifestVariables.Value);
 
         // Avoid updating the chisel tooling if we are updating a runtime
         // version that doesn't ship chiseled images
         if (runtimeDependencyInfo is null || !VariableName.Contains(_dockerfileVersion))
         {
-            return currentChsielToolVersion;
+            return currentChiselToolVersion;
         }
 
         // Avoid updating chisel tooling unless we already know we are
@@ -40,7 +40,7 @@ internal class ChiselToolUpdater : VariableUpdaterBase
         string currentRuntimeVersion = ManifestHelper.GetVariableValue(runtimeVariableName, ManifestVariables.Value);
         if (runtimeDependencyInfo.SimpleVersion == currentRuntimeVersion)
         {
-            return currentChsielToolVersion;
+            return currentChiselToolVersion;
         }
 
         usedDependencyInfos = new[] { runtimeDependencyInfo };
