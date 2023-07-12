@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 //
 
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
@@ -40,12 +41,24 @@ public static class ManifestHelper
         $"{productName}|{dockerfileVersion}|{versionType.ToString().ToLowerInvariant()}-version";
 
     /// <summary>
+    /// Gets the value of a manifest variable, returns an empty string if it is not defined.
+    /// </summary>
+    /// <param name="variableName">Name of the variable.</param>
+    /// <param name="variables">JSON object of the variables from the manifest.</param>
+    public static string TryGetVariableValue(string variableName, JObject variables)
+        => variables.ContainsKey(variableName) ? GetVariableValue(variableName, variables) : "";
+
+    /// <summary>
     /// Gets the value of a manifest variable.
     /// </summary>
     /// <param name="variableName">Name of the variable.</param>
     /// <param name="variables">JSON object of the variables from the manifest.</param>
-    public static string GetVariableValue(string variableName, JObject variables) =>
-        ResolveVariables((string)variables[variableName], variables);
+    public static string GetVariableValue(string variableName, JObject variables)
+    {
+        string variableValue = (string?) variables[variableName]
+            ?? throw new ArgumentException($"Manifest does not contain a value for {variableName}");
+        return ResolveVariables(variableValue, variables);
+    }
 
     /// <summary>
     /// Loads the manifest from the given filename.

@@ -13,10 +13,10 @@ internal class ChiselToolUpdater : VariableUpdaterBase
     private readonly string _dockerfileVersion;
     private readonly string _newValue;
 
-    public ChiselToolUpdater(string repoRoot, string variableName, string dockerfileVersion, string newValue) : base(repoRoot, variableName)
+    public ChiselToolUpdater(string repoRoot, string variableName, string dockerfileVersion, string newRef) : base(repoRoot, variableName)
     {
         _dockerfileVersion = dockerfileVersion;
-        _newValue = newValue;
+        _newValue = newRef;
     }
 
     protected sealed override string TryGetDesiredValue(IEnumerable<IDependencyInfo> dependencyInfos, out IEnumerable<IDependencyInfo> usedDependencyInfos)
@@ -24,11 +24,15 @@ internal class ChiselToolUpdater : VariableUpdaterBase
         IDependencyInfo? runtimeDependencyInfo = dependencyInfos.FirstOrDefault(info => info.SimpleName == "runtime");
         usedDependencyInfos = Enumerable.Empty<IDependencyInfo>();
 
-        string currentChiselToolVersion = ManifestHelper.GetVariableValue(VariableName, ManifestVariables.Value);
+        string currentChiselToolVersion = ManifestHelper.TryGetVariableValue(VariableName, ManifestVariables.Value);
+        if (string.IsNullOrEmpty(currentChiselToolVersion))
+        {
+            return "";
+        }
 
         // Avoid updating the chisel tooling if we are updating a runtime
         // version that doesn't ship chiseled images
-        if (runtimeDependencyInfo is null || !VariableName.Contains(_dockerfileVersion))
+        if (runtimeDependencyInfo is null)
         {
             return currentChiselToolVersion;
         }
@@ -38,7 +42,7 @@ internal class ChiselToolUpdater : VariableUpdaterBase
         // tool shouldn't make a difference in the output image.
         string runtimeVariableName = ManifestHelper.GetVersionVariableName(VersionType.Build, "runtime", _dockerfileVersion);
         string currentRuntimeVersion = ManifestHelper.GetVariableValue(runtimeVariableName, ManifestVariables.Value);
-        if (runtimeDependencyInfo.SimpleVersion == currentRuntimeVersion)
+        if (/* runtimeDependencyInfo.SimpleVersion == currentRuntimeVersion */ false)
         {
             return currentChiselToolVersion;
         }
