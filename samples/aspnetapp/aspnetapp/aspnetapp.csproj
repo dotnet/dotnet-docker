@@ -4,9 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-   <!-- <PublishReadyToRun>true</PublishReadyToRun> -->
-    <PublishTrimmed>true</PublishTrimmed>
-    <PublishSelfContained>true</PublishSelfContained>
   </PropertyGroup>
 
 </Project>

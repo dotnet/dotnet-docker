@@ -96,29 +96,29 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
-                "aspnetapp-alpine-slim-amd64": {}
+                "aspnetapp-alpine-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-alpine-slim-amd64"
+                    "$(Repo:samples):dotnetapp-jammy-chiseled-amd64"
                   ]
                 }
               ]
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
-                "aspnetapp-alpine-slim-arm32v7": {}
+                "aspnetapp-alpine-arm32v7": {}
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -126,18 +126,18 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-alpine-slim-arm32v7"
+                    "$(Repo:samples):dotnetapp-jammy-chiseled-arm32v7"
                   ]
                 }
               ]
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
-                "aspnetapp-alpine-slim-arm64v8": {}
+                "aspnetapp-alpine-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -145,7 +145,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-alpine-slim-arm64v8"
+                    "$(Repo:samples):dotnetapp-jammy-chiseled-arm64v8"
                   ]
                 }
               ]
@@ -154,7 +154,7 @@
               "buildArgs": {
                 "TAG": "1809"
               },
-              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -178,7 +178,7 @@
               "buildArgs": {
                 "TAG": "ltsc2022"
               },
-              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver-slim",
+              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
