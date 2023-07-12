@@ -421,8 +421,8 @@ namespace Dotnet.Docker
                 // Chisel updaters must be listed before runtime version
                 // updaters because they check the manifest for whether the
                 // runtime versions are being updated or not
-                new ChiselUpdater(RepoRoot, Options.DockerfileVersion, chiselRef),
-                new RocksToolboxUpdater(RepoRoot, Options.DockerfileVersion, rocksToolboxRef)
+                new ChiselRefUpdater(RepoRoot, Options.DockerfileVersion, chiselRef),
+                new RocksToolboxRefUpdater(RepoRoot, Options.DockerfileVersion, rocksToolboxRef)
             };
 
             foreach (string productName in Options.ProductVersions.Keys)

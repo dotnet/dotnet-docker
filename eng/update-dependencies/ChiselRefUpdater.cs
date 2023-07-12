@@ -4,8 +4,8 @@
 #nullable enable
 namespace Dotnet.Docker;
 
-internal class ChiselUpdater : ChiselToolUpdater
+internal class ChiselRefUpdater : ChiselToolUpdater
 {
-    public ChiselUpdater(string repoRoot, string dockerfileVersion, string newRef)
+    public ChiselRefUpdater(string repoRoot, string dockerfileVersion, string newRef)
         : base(repoRoot, $"chisel|{dockerfileVersion}|ref", dockerfileVersion, newRef) { }
 }

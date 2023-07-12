@@ -4,8 +4,8 @@
 #nullable enable
 namespace Dotnet.Docker;
 
-internal class RocksToolboxUpdater : ChiselToolUpdater
+internal class RocksToolboxRefUpdater : ChiselToolUpdater
 {
-    public RocksToolboxUpdater(string repoRoot, string dockerfileVersion, string newRef)
+    public RocksToolboxRefUpdater(string repoRoot, string dockerfileVersion, string newRef)
         : base(repoRoot, $"rocks-toolbox|{dockerfileVersion}|ref", dockerfileVersion, newRef) { }
 }
