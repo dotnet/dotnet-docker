@@ -77,6 +77,7 @@ Tags | Dockerfile | OS Version
 8.0.0-preview.6-alpine3.18-composite-amd64, 8.0-preview-alpine3.18-composite-amd64, 8.0-preview-alpine-composite-amd64, 8.0.0-preview.6-alpine3.18-composite, 8.0-preview-alpine3.18-composite, 8.0-preview-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.18-composite/amd64/Dockerfile) | Alpine 3.18
 8.0.0-preview.6-jammy-amd64, 8.0-preview-jammy-amd64, 8.0.0-preview.6-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 8.0.0-preview.6-jammy-chiseled-amd64, 8.0-preview-jammy-chiseled-amd64, 8.0.0-preview.6-jammy-chiseled, 8.0-preview-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+8.0.0-preview.6-jammy-chiseled-composite-amd64, 8.0-preview-jammy-chiseled-composite-amd64, 8.0.0-preview.6-jammy-chiseled-composite, 8.0-preview-jammy-chiseled-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled-composite/amd64/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -101,6 +102,7 @@ Tags | Dockerfile | OS Version
 8.0.0-preview.6-alpine3.18-composite-arm64v8, 8.0-preview-alpine3.18-composite-arm64v8, 8.0-preview-alpine-composite-arm64v8, 8.0.0-preview.6-alpine3.18-composite, 8.0-preview-alpine3.18-composite, 8.0-preview-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.18-composite/arm64v8/Dockerfile) | Alpine 3.18
 8.0.0-preview.6-jammy-arm64v8, 8.0-preview-jammy-arm64v8, 8.0.0-preview.6-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.0-preview.6-jammy-chiseled-arm64v8, 8.0-preview-jammy-chiseled-arm64v8, 8.0.0-preview.6-jammy-chiseled, 8.0-preview-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.0-preview.6-jammy-chiseled-composite-arm64v8, 8.0-preview-jammy-chiseled-composite-arm64v8, 8.0.0-preview.6-jammy-chiseled-composite, 8.0-preview-jammy-chiseled-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -125,6 +127,7 @@ Tags | Dockerfile | OS Version
 8.0.0-preview.6-alpine3.18-composite-arm32v7, 8.0-preview-alpine3.18-composite-arm32v7, 8.0-preview-alpine-composite-arm32v7, 8.0.0-preview.6-alpine3.18-composite, 8.0-preview-alpine3.18-composite, 8.0-preview-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.18-composite/arm32v7/Dockerfile) | Alpine 3.18
 8.0.0-preview.6-jammy-arm32v7, 8.0-preview-jammy-arm32v7, 8.0.0-preview.6-jammy, 8.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.0-preview.6-jammy-chiseled-arm32v7, 8.0-preview-jammy-chiseled-arm32v7, 8.0.0-preview.6-jammy-chiseled, 8.0-preview-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
+8.0.0-preview.6-jammy-chiseled-composite-arm32v7, 8.0-preview-jammy-chiseled-composite-arm32v7, 8.0.0-preview.6-jammy-chiseled-composite, 8.0-preview-jammy-chiseled-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 22.04
 
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile

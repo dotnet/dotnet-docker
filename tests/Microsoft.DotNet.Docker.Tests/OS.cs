@@ -28,12 +28,14 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string Mariner10Distroless = $"{Mariner10}-distroless";
         public const string Mariner20 = $"{Mariner}2.0";
         public const string Mariner20Distroless = $"{Mariner20}-distroless";
+        public const string Mariner20DistrolessComposite = $"{Mariner20}-distroless-composite";
 
         // Ubuntu
         public const string Bionic = "bionic";
         public const string Focal = "focal";
         public const string Jammy = "jammy";
-        public const string JammyChiseled = "jammy-chiseled";
+        public const string JammyChiseled = $"{Jammy}-chiseled";
+        public const string JammyChiseledComposite = $"{JammyChiseled}-composite";
         public const string UbuntuChiseled = "ubuntu-chiseled";
 
         // Windows
