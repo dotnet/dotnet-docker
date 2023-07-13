@@ -1,25 +1,25 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM $REPO:8.0.0-preview.6-cbl-mariner2.0-amd64 AS installer
+FROM $REPO:8.0.0-preview.7-cbl-mariner2.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=8.0.0-preview.6.23329.11 \
+RUN aspnetcore_version=8.0.0-preview.7.23362.32 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='767ee4f67777d53edd322c771baa70d592e9fec99dce66e66a67fdd3c377b3f791f0f89b7dd5bbce932f499266f52f21449728849def706d976b55dafe2e6551' \
+    && aspnetcore_sha512='a546c7dfcd375583b90f05fba170e37622d207b6e304263e2f48870da770156bebc6d6c48418609fe83ac57f497a8d64505b0cddf0fc0bf316a6b4b4017e32bc' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
 
 
 # ASP.NET Core image
-FROM $REPO:8.0.0-preview.6-cbl-mariner2.0-amd64
+FROM $REPO:8.0.0-preview.7-cbl-mariner2.0-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.0-preview.6.23329.11
+ENV ASPNET_VERSION=8.0.0-preview.7.23362.32
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]

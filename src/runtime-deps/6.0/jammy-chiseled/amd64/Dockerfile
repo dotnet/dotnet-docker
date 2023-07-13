@@ -11,7 +11,7 @@ RUN git clone --no-checkout https://github.com/canonical/chisel /opt/chisel \
     \
     && git clone --no-checkout https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox \
     && cd /opt/rocks-toolbox \
-    && git checkout e92d18b733647e77b6829968c91f8a16d25c1f2d
+    && git checkout fae9d8fa9de58459ade1ad8b67a75614eb2f659a
 
 WORKDIR /opt/chisel
 
