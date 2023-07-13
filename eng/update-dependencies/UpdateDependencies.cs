@@ -410,7 +410,7 @@ namespace Dotnet.Docker
 
             JObject minGitRelease = await GitHubHelper.GetLatestReleaseAsync("git-for-windows", "git");
             string chiselRef = await GitHubHelper.GetLatestCommitAsync("canonical", "chisel", "main");
-            string rocksToolboxRef = await GitHubHelper.GetLatestCommitAsync("canonical", "rocks-toolbox", "main");
+            string rocksToolboxRef = await GitHubHelper.GetLatestReleaseTagAsync("canonical", "rocks-toolbox");
 
             List<IDependencyUpdater> updaters = new()
             {

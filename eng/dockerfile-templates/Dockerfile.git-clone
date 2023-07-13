@@ -4,8 +4,11 @@
     ARGS:
         url: The git repository URL
         ref: The commit hash, branch, or tag to checkout
-        dir: The directory to clone the repository into
+        dir: The directory to clone the repository into ^
 
-}}git clone --no-checkout {{ARGS["url"]}} {{ARGS["dir"]}} \
+    set is_tag to len(ARGS["ref"]) < 40
+
+}}{{if is_tag:git clone --branch {{ARGS["ref"]}} --depth 1 {{ARGS["url"]}} {{ARGS["dir"]}}^
+else:git clone --no-checkout {{ARGS["url"]}} {{ARGS["dir"]}} \
 && cd {{ARGS["dir"]}} \
-&& git checkout {{ARGS["ref"]}}
+&& git checkout {{ARGS["ref"]}}}}
