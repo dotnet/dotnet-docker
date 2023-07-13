@@ -62,9 +62,9 @@ namespace Microsoft.DotNet.Docker.Tests
             return this;
         }
 
-        public DockerRunArgsBuilder AsUser(string userIdentifier)
+        public DockerRunArgsBuilder AsUser(int uid)
         {
-            _builder.AppendFormat(CultureInfo.InvariantCulture, "-u {0}", userIdentifier);
+            _builder.AppendFormat(CultureInfo.InvariantCulture, "-u {0} ", uid);
             return this;
         }
     }

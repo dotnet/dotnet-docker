@@ -442,8 +442,8 @@ namespace Microsoft.DotNet.Docker.Tests
             Action<DockerRunArgsBuilder> monitorRunArgsCallback = null,
             Action<DockerRunArgsBuilder> sampleRunArgsCallback = null)
         {
-            GetNames(productImageData, out string monitorImageName, out string monitorContainerName, out string monitorUser);
-            GetNames(sampleImageData, out string sampleImageName, out string sampleContainerName, out string sampleUser);
+            GetNames(productImageData, out string monitorImageName, out string monitorContainerName, out int monitorUser);
+            GetNames(sampleImageData, out string sampleImageName, out string sampleContainerName, out int sampleUser);
 
             DockerRunArgsBuilder monitorArgsBuilder = DockerRunArgsBuilder.Create()
                 .MonitorUrl(DefaultArtifactsPort);
@@ -456,12 +456,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
             try
             {
-                string volumeOwner = CalculateVolumeOwner(sampleUser, monitorUser, monitorArgsBuilder);
+                int? volumeUid = AdjustMonitorUserAndCalculateVolumeOwner(
+                    listenDiagPortVolume,
+                    sampleUser,
+                    monitorUser,
+                    monitorArgsBuilder);
 
                 // Create a volume for the two containers to share the /tmp directory.
                 if (shareTmpVolume)
                 {
-                    tmpVolumeName = DockerHelper.CreateTmpfsVolume(UniqueName("tmpvol"), volumeOwner);
+                    tmpVolumeName = DockerHelper.CreateTmpfsVolume(UniqueName("tmpvol"), volumeUid);
 
                     monitorArgsBuilder.VolumeMount(tmpVolumeName, Directory_Tmp);
 
@@ -473,7 +477,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 // process can connect to the dotnet-monitor process.
                 if (listenDiagPortVolume)
                 {
-                    diagPortVolumeName = DockerHelper.CreateTmpfsVolume(UniqueName("diagportvol"), volumeOwner);
+                    diagPortVolumeName = DockerHelper.CreateTmpfsVolume(UniqueName("diagportvol"), volumeUid);
 
                     monitorArgsBuilder.VolumeMount(diagPortVolumeName, Directory_Diag);
                     monitorArgsBuilder.MonitorListen(File_DiagPort);
@@ -531,39 +535,52 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private static string CalculateVolumeOwner(string sampleUser, string monitorUser, DockerRunArgsBuilder monitorArgsBuilder)
+        private static int? AdjustMonitorUserAndCalculateVolumeOwner(bool listenMode, int sampleUid, int monitorUid, DockerRunArgsBuilder monitorArgsBuilder)
         {
             // Make sure volume is accessible by sample app without modifying the sample container
             // and ensure monitor app can access it, even if needing to change its user. This is
             // done by making the volume owned by the least privileged user; if they are the same user or
             // are different non-root users, defer to the user of the sample image.
 
-            if (sampleUser != monitorUser && !string.IsNullOrEmpty(sampleUser) && !string.IsNullOrEmpty(monitorUser))
+            if (!IsRoot(sampleUid))
             {
-                // Both sample and monitor are non-root but have different user:
-                // make sample user the volume owner and change monitor to use the same user.
-                monitorArgsBuilder.AsUser(sampleUser);
-                return sampleUser;
+                // If monitor has UDS to which sample will connect, change monitor to run as
+                // same user as sample.
+                if (listenMode && sampleUid != monitorUid)
+                {
+                    monitorArgsBuilder.AsUser(sampleUid);
+                }
+
+                return sampleUid;
             }
-            if (sampleUser == monitorUser && !string.IsNullOrEmpty(monitorUser))
+            else if (!IsRoot(monitorUid))
             {
-                // Both sample and monitor are the same non-root user: make sample user the volume owner
-                return sampleUser;
-            }
-            if (string.IsNullOrEmpty(sampleUser) && !string.IsNullOrEmpty(monitorUser))
-            {
-                // Sample is root and monitor is non-root: make monitor user owner the volume owner
-                return monitorUser;
-            }
-            else if (!string.IsNullOrEmpty(sampleUser) && string.IsNullOrEmpty(monitorUser))
-            {
-                // Sample is non-root and monitor is root: make sample user owner the volume owner
-                return sampleUser;
+                // Sample is root; monitor is non-root
+
+                if (listenMode)
+                {
+                    // Monitor has UDS to which sample will connect, which it can without changes since
+                    // it is running as root; use monitor user as volume owner
+                    return monitorUid;
+                }
+                else
+                {
+                    // Sample has UDS to which monitor will connect, which requires monitor to run as
+                    // root as well; use sample user as volume owner
+                    monitorArgsBuilder.AsUser(sampleUid);
+
+                    return sampleUid;
+                }
             }
 
-            // Both sample and monitor are root users: no volume ownership change necessary
-            Debug.Assert(string.IsNullOrEmpty(monitorUser) && string.IsNullOrEmpty(sampleUser));
+            // Both sample and monitor run as root: no volume ownership change necessary
+            Debug.Assert(IsRoot(sampleUid) && IsRoot(monitorUid));
             return null;
+
+            static bool IsRoot(int uid)
+            {
+                return 0 == uid;
+            }
         }
 
         private static string UniqueName(string name)
@@ -610,21 +627,23 @@ namespace Microsoft.DotNet.Docker.Tests
             return cmdsResult;
         }
 
-        private void GetNames(ProductImageData imageData, out string imageName, out string containerName, out string userIdentifier)
+        private void GetNames(ProductImageData imageData, out string imageName, out string containerName, out int userIdentifier)
         {
             imageName = imageData.GetImage(ImageType, DockerHelper);
             containerName = imageData.GetIdentifier("monitortest");
-            userIdentifier = DockerHelper.GetImageUser(imageName);
+            // If user is empty, then image is running as same as docker daemon (typically root)
+            userIdentifier = string.IsNullOrEmpty(DockerHelper.GetImageUser(imageName)) ? 0 : imageData.NonRootUID.Value;
         }
 
-        private void GetNames(SampleImageData imageData, out string imageName, out string containerName, out string userIdentifier)
+        private void GetNames(SampleImageData imageData, out string imageName, out string containerName, out int userIdentifier)
         {
             // Need to allow pulling of the sample image since these are not built in the same pipeline
             // as the other images; otherwise, these tests will fail due to lack of sample image.
             string tag = imageData.GetTagNameBase(SampleImageType.Aspnetapp);
             imageName = imageData.GetImage(tag, DockerHelper, allowPull: true);
             containerName = imageData.GetIdentifier("monitortest-sample");
-            userIdentifier = DockerHelper.GetImageUser(imageName);
+            // If user is empty, then image is running as same as docker daemon (typically root)
+            userIdentifier = string.IsNullOrEmpty(DockerHelper.GetImageUser(imageName)) ? 0 : imageData.NonRootUID.Value;
         }
 
         private void VerifyStatusCode(HttpResponseMessage message, HttpStatusCode statusCode)
