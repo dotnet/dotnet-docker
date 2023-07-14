@@ -31,30 +31,30 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
               "os": "linux",
-              "osVersion": "alpine",
+              "osVersion": "ubuntu",
               "tags": {
-                "dotnetapp-alpine-slim-amd64": {}
+                "dotnetapp-jammy-chiseled-amd64": {}
               }
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
               "os": "linux",
-              "osVersion": "alpine",
+              "osVersion": "ubuntu",
               "tags": {
-                "dotnetapp-alpine-slim-arm32v7": {}
+                "dotnetapp-jammy-chiseled-arm32v7": {}
               },
               "variant": "v7"
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine-slim",
+              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
               "os": "linux",
-              "osVersion": "alpine",
+              "osVersion": "ubuntu",
               "tags": {
-                "dotnetapp-alpine-slim-arm64v8": {}
+                "dotnetapp-jammy-chiseled-arm64v8": {}
               },
               "variant": "v8"
             },
@@ -62,7 +62,7 @@
               "buildArgs": {
                 "TAG": "1809"
               },
-              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver-slim",
+              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
@@ -77,7 +77,7 @@
               "buildArgs": {
                 "TAG": "ltsc2022"
               },
-              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver-slim",
+              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
               "tags": {

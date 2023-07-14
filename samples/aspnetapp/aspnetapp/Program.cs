@@ -61,9 +61,10 @@ app.MapGet("/Delay/{value}", async (int value) =>
 
 app.Run();
 
-[JsonSerializable(typeof(EnvironmentInfo[]))]
+[JsonSerializable(typeof(EnvironmentInfo))]
+[JsonSerializable(typeof(Operation))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 }
 
-public record Operation(int Delay);
+public record struct Operation(int Delay);
