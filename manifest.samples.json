@@ -100,7 +100,7 @@
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
-                "aspnetapp-alpine-amd64": {}
+                "aspnetapp-jammy-chiseled-amd64": {}
               },
               "customBuildLegGroups": [
                 {
