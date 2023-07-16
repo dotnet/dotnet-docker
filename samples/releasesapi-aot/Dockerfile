@@ -11,7 +11,7 @@ RUN dotnet restore
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish -o /app
+RUN dotnet publish -o /app releasesapi.csproj
 
 RUN rm /app/*.dbg /app/*.Development.json
 
