@@ -1,23 +1,24 @@
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/sdk:8.0-preview-alpine AS build
-ARG TARGETARCH
-RUN apk add build-base clang zlib-dev
+FROM mcr.microsoft.com/dotnet-buildtools/prereqs:cbl-mariner-2.0-cross-arm64 AS build
+COPY --from=mcr.microsoft.com/dotnet/sdk:8.0-preview-cbl-mariner-2.0 /usr/share/dotnet /usr/share/dotnet
+RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+# RUN apk add build-base clang zlib-dev
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
-RUN dotnet restore
+RUN dotnet restore -a arm64
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish -o /app
+RUN dotnet publish -a arm64 -o /app
 
 RUN rm /app/*.dbg /app/*.Development.json
 
 
 # final stage/image
-FROM alpine
+FROM --platform=linux/arm64 alpine
 
 ENV \
     # Configure web servers to bind to port 8080 when present

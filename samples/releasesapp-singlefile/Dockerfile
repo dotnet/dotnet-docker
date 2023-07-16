@@ -10,7 +10,7 @@ RUN dotnet restore -a $TARGETARCH
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish -a $TARGETARCH -o /app releases.csproj
+RUN dotnet publish -a $TARGETARCH -o /app --self-contained
 
 
 # final stage/image
