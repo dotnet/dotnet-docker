@@ -269,7 +269,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// <summary>
         /// Creates a file system volume that is backed by memory instead of disk.
         /// </summary>
-        public string CreateTmpfsVolume(string name, bool ownedByDistrolessUser = false)
+        public string CreateTmpfsVolume(string name, int? ownerUid = null)
         {
             // Create volume using the local driver (the default driver),
             // which accepts options similar to the 'mount' command.
@@ -278,9 +278,9 @@ namespace Microsoft.DotNet.Docker.Tests
             // - make this volume an in-memory file system with a unique device name (type=tmpfs, device={guid}}).
             // - to set the owner of the root of the file system (o=uid=101).
             string optionalArgs = string.Empty;
-            if (ownedByDistrolessUser)
+            if (ownerUid.HasValue)
             {
-                optionalArgs += " --opt o=uid=101";
+                optionalArgs += $" --opt o=uid={ownerUid.Value}";
             }
             string device = Guid.NewGuid().ToString("D");
             return ExecuteWithLogging($"volume create --opt type=tmpfs --opt device={device}{optionalArgs} {name}");
