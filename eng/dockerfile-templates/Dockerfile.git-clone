@@ -4,10 +4,15 @@
     ARGS:
         url: The git repository URL
         ref: The commit hash, branch, or tag to checkout
-        dir: The directory to clone the repository into
-        is-tag (optional): Whether to perform a shallow clone for a tag only
+             Formatted as "<ref type>:<ref>"
+        dir: The directory to clone the repository into ^
 
-}}{{if ARGS["is-tag"]:git clone --branch {{ARGS["ref"]}} --depth 1 {{ARGS["url"]}} {{ARGS["dir"]}}^
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+
+    set ref to token(ARGS["ref"], ":", 1) ^
+    set isTag to token(ARGS["ref"], ":", 0) = "tag"
+
+}}{{if isTag:git clone --branch {{ref}} --depth 1 {{ARGS["url"]}} {{ARGS["dir"]}}^
 else:git clone --no-checkout {{ARGS["url"]}} {{ARGS["dir"]}} \
 && cd {{ARGS["dir"]}} \
-&& git checkout {{ARGS["ref"]}}}}
+&& git checkout {{ref}}}}

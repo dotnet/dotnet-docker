@@ -5,15 +5,11 @@
 
     set chiselDir to "/opt/chisel" ^
     set chiselUrl to VARIABLES[cat("chisel|", dotnetVersion, "|url")] ^
-    set chiselRefVar to VARIABLES[cat("chisel|", dotnetVersion, "|ref")] ^
-    set chiselRef to token(chiselRefVar, ":", 1) ^
-    set chiselRefIsTag to token(chiselRefVar, ":", 0) = "tag" ^
+    set chiselRef to VARIABLES[cat("chisel|", dotnetVersion, "|ref")] ^
 
     set rocksToolboxDir to "/opt/rocks-toolbox" ^
     set rocksToolboxUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
-    set rocksToolboxRefVar to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|ref")] ^
-    set rocksToolboxRef to token(rocksToolboxRefVar, ":", 1) ^
-    set rocksToolboxRefIsTag to token(rocksToolboxRefVar, ":", 0) = "tag" ^
+    set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|ref")] ^
 
     set username to "app" ^
     set uid to 1654 ^
@@ -28,15 +24,13 @@ RUN apt-get update \
 RUN {{InsertTemplate("../Dockerfile.git-clone", [
         "url": chiselUrl,
         "ref": chiselRef,
-        "dir": chiselDir,
-        "is-tag": chiselRefIsTag
+        "dir": chiselDir
     ], "    ")}} \
     \
     && {{InsertTemplate("../Dockerfile.git-clone", [
         "url": rocksToolboxUrl,
         "ref": rocksToolboxRef,
-        "dir": rocksToolboxDir,
-        "is-tag": rocksToolboxRefIsTag
+        "dir": rocksToolboxDir
     ], "    ")}}
 
 WORKDIR {{chiselDir}}
