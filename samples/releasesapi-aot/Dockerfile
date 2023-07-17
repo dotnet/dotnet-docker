@@ -26,4 +26,4 @@ ENV \
 WORKDIR /app
 COPY --from=build /app .
 # USER $APP_UID
-ENTRYPOINT ["./releasejsonapp"]
+ENTRYPOINT ["./releasesapi"]
