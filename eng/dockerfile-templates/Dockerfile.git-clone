@@ -4,11 +4,10 @@
     ARGS:
         url: The git repository URL
         ref: The commit hash, branch, or tag to checkout
-        dir: The directory to clone the repository into ^
+        dir: The directory to clone the repository into
+        is-tag (optional): Whether to perform a shallow clone for a tag only
 
-    set is_tag to len(ARGS["ref"]) < 40
-
-}}{{if is_tag:git clone --branch {{ARGS["ref"]}} --depth 1 {{ARGS["url"]}} {{ARGS["dir"]}}^
+}}{{if ARGS["is-tag"]:git clone --branch {{ARGS["ref"]}} --depth 1 {{ARGS["url"]}} {{ARGS["dir"]}}^
 else:git clone --no-checkout {{ARGS["url"]}} {{ARGS["dir"]}} \
 && cd {{ARGS["dir"]}} \
 && git checkout {{ARGS["ref"]}}}}

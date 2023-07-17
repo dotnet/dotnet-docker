@@ -65,8 +65,8 @@
 
     "chisel|6.0|url": "https://github.com/canonical/chisel",
     "chisel|8.0|url": "$(chisel|6.0|url)",
-    "chisel|6.0|ref": "00f796f17323422704241517aa0386ded5e0fba1",
-    "chisel|8.0|ref": "00f796f17323422704241517aa0386ded5e0fba1",
+    "chisel|6.0|ref": "commit:00f796f17323422704241517aa0386ded5e0fba1",
+    "chisel|8.0|ref": "commit:00f796f17323422704241517aa0386ded5e0fba1",
 
     "dotnet|6.0|product-version": "6.0.20",
     "dotnet|7.0|product-version": "7.0.9",
