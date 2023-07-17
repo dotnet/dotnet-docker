@@ -2,7 +2,9 @@
 
 This sample demonstrates how to build container images for ASP.NET Core web apps. See [.NET Docker Samples](../README.md) for more samples.
 
-## Try a pre-built version of the sample
+> Note: .NET 8 container images use port `8080`, by default. Previous .NET versions used port `80`. The instructions for the sample assume the use of port `8080`.
+
+## Run the sample image
 
 You can start by launching a sample from our [container registry](https://mcr.microsoft.com/) and access it in your web browser at `http://localhost:8000`.
 
@@ -17,7 +19,29 @@ $ curl http://localhost:8000/Environment
 {"runtimeVersion":".NET 8.0.0-preview.6.23329.7","osVersion":"Ubuntu 22.04.2 LTS","osArchitecture":"Arm64","user":"app","processorCount":4,"totalAvailableMemoryBytes":4124442624,"memoryLimit":0,"memoryUsage":31518720,"hostName":"78e2b2cfc0e8"}
 ```
 
-## Build an ASP.NET Core image
+This container image is built with [Ubuntu Chiseled](https://devblogs.microsoft.com/dotnet/dotnet-6-is-now-in-ubuntu-2204/#net-in-chiseled-ubuntu-containers), with [Dockerfile](Dockerfile.chiseled-composite).
+
+## Changing the port
+
+You can change the port ASP.NET Core uses with one of the following environment variables. The following examples change the port to port `80`.
+
+Supported with .NET 8+:
+
+```bash
+ASPNETCORE_HTTP_PORTS=80
+```
+
+Supported with .NET Core 1.0+
+
+```bash
+ASPNETCORE_URLS=http://+:80 
+```
+
+Note: `ASPNETCORE_URLS` overwrites `ASPNETCORE_HTTP_PORTS`` if set.
+
+These environment variables are used in [.NET 8](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7C5-L7C31) and [.NET 6](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/6.0/bookworm-slim/amd64/Dockerfile#L5) Dockerfiles, respectively.
+
+## Build the image
 
 You can build and run an image using the following instructions (if you've cloned this repo):
 
@@ -38,7 +62,7 @@ info: Microsoft.Hosting.Lifetime[0]
 
 After the application starts, navigate to `http://localhost:8000` in your web browser. You can also view the ASP.NET Core site running in the container from another machine with a local IP address such as `http://192.168.1.18:8000`.
 
-> Note: ASP.NET Core apps (in our official images) listen to [port 8080 by default](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7), starting with .NET 8. The [`-p` argument](https://docs.docker.com/engine/reference/commandline/run/#publish) in these examples maps host port `8000` to container port `8080` (`host:container` mapping). The container will not be accessible without this mapping. ASP.NET Core can be [configured to listen on a different or additional port](https://learn.microsoft.com/aspnet/core/fundamentals/servers/kestrel/endpoints).
+> Note: ASP.NET Core apps (in official images) listen to [port 8080 by default](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7), starting with .NET 8. The [`-p` argument](https://docs.docker.com/engine/reference/commandline/run/#publish) in these examples maps host port `8000` to container port `8080` (`host:container` mapping). The container will not be accessible without this mapping. ASP.NET Core can be [configured to listen on a different or additional port](https://learn.microsoft.com/aspnet/core/fundamentals/servers/kestrel/endpoints).
 
 You can see the app running via `docker ps`.
 
@@ -57,18 +81,12 @@ The .NET Team publishes images for [multiple distros](../../documentation/suppor
 Samples are provided for:
 
 - [Alpine](Dockerfile.alpine)
+- [Alpine with Composite ready-to-run image](Dockerfile.alpine-composite)
+- [Alpine with ICU installed](Dockerfile.alpine-icu)
 - [Debian](Dockerfile.debian)
 - [Ubuntu](Dockerfile.ubuntu)
 - [Ubuntu Chiseled](Dockerfile.chiseled)
-
-The default [Dockerfile](Dockerfile) uses a major.minor version tag, which references a multi-platform image that provides Debian and Windows Nano Server images (depending on the requesting client).
-
-More extensive samples are provided for Alpine:
-
-- [Alpine with ICU (for globalization)](Dockerfile.alpine-icu)
-- [Alpine with trimming, ready-to-run compilation, and self-contained publishing](Dockerfile.alpine-slim)
-
-These patterns can be applied to other distros.
+- [Ubuntu Chiseled with Composite ready-to-run image](Dockerfile.chiseled-composite)
 
 ## Supported Windows versions
 
@@ -77,6 +95,10 @@ The .NET Team publishes images for [multiple Windows versions](../../documentati
 Samples are provided for
 
 - [Nano Server](Dockerfile.nanoserver)
-- [Nano Server with trimming, ready-to-run compilation, and self-contained publishing](Dockerfile.nanoserver-slim)
 - [Windows Server Core](Dockerfile.windowsservercore)
 - [Windows Server Core with IIS](Dockerfile.windowsservercore-iis)
+
+Windows variants of the sample can be pulled via one the following registry addresses:
+
+- `mcr.microsoft.com/dotnet/samples:aspnetapp-nanoserver-1809`
+- `mcr.microsoft.com/dotnet/samples:aspnetapp-nanoserver-ltsc2022`
