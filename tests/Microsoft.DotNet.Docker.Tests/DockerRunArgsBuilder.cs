@@ -61,5 +61,11 @@ namespace Microsoft.DotNet.Docker.Tests
             _builder.AppendFormat(CultureInfo.InvariantCulture, "-v {0}:{1} ", name, path);
             return this;
         }
+
+        public DockerRunArgsBuilder AsUser(int uid)
+        {
+            _builder.AppendFormat(CultureInfo.InvariantCulture, "-u {0} ", uid);
+            return this;
+        }
     }
 }
