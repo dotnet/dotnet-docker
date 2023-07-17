@@ -8,7 +8,6 @@
         dir: The directory to clone the repository into ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-
     set ref to token(ARGS["ref"], ":", 1) ^
     set isTag to token(ARGS["ref"], ":", 0) = "tag"
 
