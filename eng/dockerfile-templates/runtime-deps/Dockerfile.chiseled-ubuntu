@@ -2,12 +2,15 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
+
     set chiselDir to "/opt/chisel" ^
     set chiselUrl to VARIABLES[cat("chisel|", dotnetVersion, "|url")] ^
     set chiselRef to VARIABLES[cat("chisel|", dotnetVersion, "|ref")] ^
+
     set rocksToolboxDir to "/opt/rocks-toolbox" ^
     set rocksToolboxUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
     set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|ref")] ^
+
     set username to "app" ^
     set uid to 1654 ^
     set gid to uid

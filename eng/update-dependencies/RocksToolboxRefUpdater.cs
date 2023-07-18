@@ -7,5 +7,5 @@ namespace Dotnet.Docker;
 internal class RocksToolboxRefUpdater : ChiselToolUpdater
 {
     public RocksToolboxRefUpdater(string repoRoot, string dockerfileVersion, string newRef)
-        : base(repoRoot, $"rocks-toolbox|{dockerfileVersion}|ref", dockerfileVersion, newRef) { }
+        : base(repoRoot, $"rocks-toolbox|{dockerfileVersion}|ref", dockerfileVersion, true, newRef) { }
 }
