@@ -65,8 +65,8 @@
 
     "chisel|6.0|url": "https://github.com/canonical/chisel",
     "chisel|8.0|url": "$(chisel|6.0|url)",
-    "chisel|6.0|ref": "00f796f17323422704241517aa0386ded5e0fba1",
-    "chisel|8.0|ref": "00f796f17323422704241517aa0386ded5e0fba1",
+    "chisel|6.0|ref": "commit:00f796f17323422704241517aa0386ded5e0fba1",
+    "chisel|8.0|ref": "commit:00f796f17323422704241517aa0386ded5e0fba1",
 
     "dotnet|6.0|product-version": "6.0.20",
     "dotnet|7.0|product-version": "7.0.9",
@@ -149,8 +149,8 @@
 
     "rocks-toolbox|6.0|url": "https://github.com/canonical/rocks-toolbox",
     "rocks-toolbox|8.0|url": "$(rocks-toolbox|6.0|url)",
-    "rocks-toolbox|6.0|ref": "e92d18b733647e77b6829968c91f8a16d25c1f2d",
-    "rocks-toolbox|8.0|ref": "e92d18b733647e77b6829968c91f8a16d25c1f2d",
+    "rocks-toolbox|6.0|ref": "commit:e92d18b733647e77b6829968c91f8a16d25c1f2d",
+    "rocks-toolbox|8.0|ref": "commit:e92d18b733647e77b6829968c91f8a16d25c1f2d",
 
     "runtime|6.0|build-version": "6.0.20",
     "runtime|6.0|targeting-pack-version": "$(runtime|6.0|build-version)",
