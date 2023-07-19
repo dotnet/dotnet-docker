@@ -8,8 +8,8 @@ Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) direct
 
 * [Build a .NET container image](dotnetapp/README.md)
 * [Build an ASP.NET Core container image](aspnetapp/README.md)
-* [Build a single file app](releasesapp/README.md)
-* [Build a Native AOT app](releasesapi/README.md)
+* [Build a single file app](releasesapp-singlefile/README.md)
+* [Build a Native AOT app](releasesapi-aot/README.md)
 * [Building a globalization and time zone aware (or unaware) image](globalapp/README.md)
 * [Container best practices](container-best-practices.md)
 * [Build for a platform](build-for-a-platform.md)

@@ -1,13 +1,13 @@
 # Release Json Report App
 
-This app demonstrates publishing an app with [Native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) in containers.
+This app demonstrates publishing an app as [native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) in containers.
 
 It demonstrates key aspects:
 
 - Container images to use
 - Packages to install
 - Project properties to use
-- Configuring JSON (de)serialization for trimming and Native AOT
+- Configuring JSON (de)serialization for trimming and native AOT
 
 ## Usage
 

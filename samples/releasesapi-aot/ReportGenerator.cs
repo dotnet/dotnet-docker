@@ -7,7 +7,7 @@ public static class ReportGenerator
 {
     public static async Task<ReleaseReport> MakeReport()
     {
-        List<DotnetVersion> versions= new();
+        List<DotnetVersion> versions = new();
         await foreach (var release in GetReleases())
         {
             versions.Add(GetVersionDetail(release));
@@ -19,7 +19,7 @@ public static class ReportGenerator
 
     public static async IAsyncEnumerable<Release> GetReleases()
     {
-        HttpClient  httpClient = new();
+        HttpClient httpClient = new();
         var loadError = "Failed to load release information.";
         var releases = await httpClient.GetFromJsonAsync<ReleaseIndex>(ReleaseValues.RELEASE_INDEX_URL, ReleaseJsonSerializerContext.Default.ReleaseIndex) ?? throw new Exception(loadError);
 
