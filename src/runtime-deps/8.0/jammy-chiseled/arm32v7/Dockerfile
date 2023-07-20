@@ -9,9 +9,7 @@ RUN git clone --no-checkout https://github.com/canonical/chisel /opt/chisel \
     && cd /opt/chisel \
     && git checkout 00f796f17323422704241517aa0386ded5e0fba1 \
     \
-    && git clone --no-checkout https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox \
-    && cd /opt/rocks-toolbox \
-    && git checkout fae9d8fa9de58459ade1ad8b67a75614eb2f659a
+    && git clone --branch v1.0.0 --depth 1 https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox
 
 WORKDIR /opt/chisel
 
