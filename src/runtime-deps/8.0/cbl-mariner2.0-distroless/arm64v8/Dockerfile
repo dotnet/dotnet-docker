@@ -28,7 +28,6 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
     # Remove duplicates that match on the first field (package name)
     && tac $tmpManifestPath | gawk '!x[$1]++' | sort > /staging/var/lib/rpmmanifest/container-manifest-2
 
-
 # Create a non-root user and group
 RUN groupadd \
         --gid=1654 \
