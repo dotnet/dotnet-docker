@@ -19,7 +19,7 @@
                 "zlib"
             ],
             [
-                "krb5-libs",
+                dotnetDepsComment,
                 "libgcc",
                 cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
                 "libstdc++",
@@ -55,12 +55,13 @@
                 "zlib1g"
             ])) ^
     set certsPkgName to when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates") ^
-    set prefixPkgs to
+    set prefixPkgs to when(isAlpine && !(dotnetVersion = "6.0" || dotnetVersion = "7.0"),
+        [ ],
         [
             certsPkgName,
             "",
             dotnetDepsComment
-        ] ^
+        ]) ^
     set pkgs to when(ARGS["isSdk"], pkgs, cat(prefixPkgs, pkgs)) ^
     set pkgMgrOpts to when(len(ARGS["staging-dir"]) > 0,
         cat(" --installroot ", ARGS["staging-dir"]),
