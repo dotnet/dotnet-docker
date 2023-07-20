@@ -27,7 +27,7 @@ public static class ReportGenerator
         {
             // Only show releases in support or < 1 year EOL
             if (DateOnly.TryParse(releaseSummary.EolDate, out DateOnly eolDate)
-             && DateOnly.FromDateTime(DateTime.Now.AddYears(-1)).DayNumber > eolDate.DayNumber)
+             && DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-1)).DayNumber > eolDate.DayNumber)
             {
                 continue;
             }
