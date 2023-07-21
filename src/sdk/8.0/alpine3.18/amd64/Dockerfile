@@ -17,7 +17,7 @@ ENV \
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Alpine-3.18
 
-RUN apk add --no-cache \
+RUN apk add --upgrade --no-cache \
         curl \
         icu-data-full \
         icu-libs \
