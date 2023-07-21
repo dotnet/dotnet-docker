@@ -19,7 +19,6 @@
                 "zlib"
             ],
             [
-                dotnetDepsComment,
                 "libgcc",
                 cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
                 "libstdc++",
@@ -54,14 +53,17 @@
                 "libstdc++6",
                 "zlib1g"
             ])) ^
-    set certsPkgName to when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates") ^
-    set prefixPkgs to when(isAlpine && !(dotnetVersion = "6.0" || dotnetVersion = "7.0"),
-        [ ],
-        [
+    set certsPkgName to when(isDistrolessMariner,
+        "prebuilt-ca-certificates",
+        when(isAlpine && dotnetVersion != "6.0" && dotnetVersion != "7.0",
+            "ca-certificates-bundle",
+            "ca-certificates"
+        )) ^
+    set prefixPkgs to [
             certsPkgName,
             "",
             dotnetDepsComment
-        ]) ^
+        ] ^
     set pkgs to when(ARGS["isSdk"], pkgs, cat(prefixPkgs, pkgs)) ^
     set pkgMgrOpts to when(len(ARGS["staging-dir"]) > 0,
         cat(" --installroot ", ARGS["staging-dir"]),
