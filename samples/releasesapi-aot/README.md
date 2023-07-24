@@ -25,7 +25,7 @@ It exposes two endpoints:
 
 ## Dockerfiles
 
-The Dockerfiles are currently more proof-of-concept than finished product. Because of that, they have differing usage patterns and a couple don't yet work.
+The Dockerfiles are currently more proof-of-concept than finished product. Because of that, they have differing usage patterns and one that doesn't yet work.
 
 Note: Most of these Dockerfiles can be simplified after [dotnet/sdk #34026](https://github.com/dotnet/sdk/issues/34026) gets fixed in RC1.
 
