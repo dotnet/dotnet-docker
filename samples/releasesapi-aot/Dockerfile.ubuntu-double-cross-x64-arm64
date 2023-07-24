@@ -1,0 +1,25 @@
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+FROM mcr.microsoft.com/dotnet-buildtools/prereqs:cbl-mariner-2.0-cross-arm64 AS build
+ARG TARGETARCH
+COPY --from=mcr.microsoft.com/dotnet/sdk:8.0-preview-cbl-mariner2.0-amd64 /usr/share/dotnet /usr/share/dotnet
+RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY *.csproj .
+RUN dotnet restore -r linux-$TARGETARCH
+
+# copy and publish app and libraries
+COPY . .
+RUN <<EOF
+dotnet publish -r linux-$TARGETARCH -o /app --no-restore -p:SysRoot=/crossrootfs/arm64 -p:LinkerFlavor=lld releasesapi.csproj
+rm /app/*.dbg /app/*.Development.json
+EOF
+
+
+# final stage/image
+FROM --platform=$TARGETPLATFORM mcr.microsoft.com/dotnet/runtime-deps:6.0-focal
+WORKDIR /app
+COPY --from=build /app .
+ENTRYPOINT ["./releasesapi"]
