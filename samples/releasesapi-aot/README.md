@@ -39,7 +39,7 @@ These Dockerfiles are supported on AMD64 and Arm64, but do not enable cross-comp
 
 ### Architecture cross-compilation
 
-These Dockerfiles enable architecture cross-compilation (`host-target``). That means you can build an Arm64 app on x64, or vice-versa.
+These Dockerfiles enable architecture cross-compilation (`host-target`). That means you can build an Arm64 app on x64, or vice-versa.
 
 - [Dockerfile.debian-cross-arm64-x64](Dockerfile.debian-cross-arm64-x64)
 - [Dockerfile.debian-cross-x64-arm64](Dockerfile.debian-cross-x64-arm64)
