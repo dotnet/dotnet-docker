@@ -3,15 +3,14 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0-preview-jammy-arm64v8 AS build
 ARG TARGETARCH
 COPY <<EOF /etc/apt/sources.list.d/amd64.list
-deb [arch=amd64] http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted
-deb [arch=amd64] http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted
-deb [arch=amd64] http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ jammy main restricted
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted
 EOF
 RUN <<EOF
 sed -i -e 's/deb http/deb [arch=arm64] http/g' /etc/apt/sources.list
 dpkg --add-architecture amd64
 apt-get update
-apt-get install -y clang llvm gcc-aarch64-linux-gnu zlib1g-dev zlib1g-dev:arm64
+apt-get install -y clang llvm gcc-x86-64-linux-gnu zlib1g-dev zlib1g-dev:amd64
 EOF
 WORKDIR /source
 

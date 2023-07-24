@@ -13,7 +13,7 @@ RUN dotnet restore -r linux-$TARGETARCH
 # copy and publish app and libraries
 COPY . .
 RUN <<EOF
-dotnet publish -r linux-$TARGETARCH -o /app --no-restore -p:SysRoot=/crossrootfs/arm64 -p:LinkerFlavor=lld releasesapi.csproj
+dotnet publish -a $TARGETARCH --self-contained -o /app --no-restore -p:SysRoot=/crossrootfs/arm64 -p:LinkerFlavor=lld releasesapi.csproj
 rm /app/*.dbg /app/*.Development.json
 EOF
 

@@ -43,7 +43,7 @@ These Dockerfiles enable architecture cross-compilation (`host-target`). That me
 
 - [Dockerfile.debian-cross-arm64-x64](Dockerfile.debian-cross-arm64-x64)
 - [Dockerfile.debian-cross-x64-arm64](Dockerfile.debian-cross-x64-arm64)
-- [Dockerfile.ubuntu-cross-arm64-x64](Dockerfile.ubuntu-cross-arm64-x64) -- This one doesn't work (needs help)
+- [Dockerfile.ubuntu-cross-arm64-x64](Dockerfile.ubuntu-cross-arm64-x64)
 - [Dockerfile.ubuntu-cross-x64-arm64](Dockerfile.ubuntu-cross-x64-arm64)
 
 These Dockerfiles need to be built on the host OS (first architecture listed) and can be used to build for both the host or target architecture (the second architecture listed). When building for the target architecture, the `--platform` switch must be used.
