@@ -47,8 +47,9 @@ FROM {{installerImageTag}} AS installer
 # .NET Monitor image
 FROM {{aspnetBaseTag}}
 
+COPY --from=installer ["/app", "/app"] 
+
 WORKDIR /app
-COPY --from=installer /app .
 
 {{InsertTemplate("Dockerfile.envs")}}
 
