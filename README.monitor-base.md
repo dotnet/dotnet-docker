@@ -51,13 +51,13 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 ##### .NET Monitor 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.7-ubuntu-chiseled-amd64, 8.0-preview-ubuntu-chiseled-amd64, 8-preview-ubuntu-chiseled-amd64, 8.0.0-preview.7-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-preview.7, 8.0-preview, 8-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+8.0.0-rc.1-ubuntu-chiseled-amd64, 8.0-preview-ubuntu-chiseled-amd64, 8-preview-ubuntu-chiseled-amd64, 8.0.0-rc.1-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-rc.1, 8.0-preview, 8-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm64 Tags
 ##### .NET Monitor 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.7-ubuntu-chiseled-arm64v8, 8.0-preview-ubuntu-chiseled-arm64v8, 8-preview-ubuntu-chiseled-arm64v8, 8.0.0-preview.7-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-preview.7, 8.0-preview, 8-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.0-rc.1-ubuntu-chiseled-arm64v8, 8.0-preview-ubuntu-chiseled-arm64v8, 8-preview-ubuntu-chiseled-arm64v8, 8.0.0-rc.1-ubuntu-chiseled, 8.0-preview-ubuntu-chiseled, 8-preview-ubuntu-chiseled, 8.0.0-rc.1, 8.0-preview, 8-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 
 You can retrieve a list of all available tags for dotnet/nightly/monitor/base at https://mcr.microsoft.com/v2/dotnet/nightly/monitor/base/tags/list.
 <!--End of generated tags-->
