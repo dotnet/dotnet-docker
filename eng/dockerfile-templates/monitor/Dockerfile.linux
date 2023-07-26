@@ -48,7 +48,7 @@ FROM {{installerImageTag}} AS installer
 FROM {{aspnetBaseTag}}
 
 WORKDIR /app
-COPY {{if isMariner && isDistroless:--chown=101:101 }}--from=installer /app .
+COPY --from=installer /app .
 
 {{InsertTemplate("Dockerfile.envs")}}
 
