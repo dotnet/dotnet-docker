@@ -16,8 +16,9 @@ RUN dotnet_monitor_version=7.1.2 \
 # .NET Monitor image
 FROM $REPO:7.0.9-jammy-chiseled-amd64
 
+COPY --from=installer ["/app", "/app"] 
+
 WORKDIR /app
-COPY --from=installer /app .
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image

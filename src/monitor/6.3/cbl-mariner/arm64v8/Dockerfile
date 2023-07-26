@@ -22,8 +22,9 @@ RUN dotnet_monitor_version=6.3.2 \
 # .NET Monitor image
 FROM $REPO:6.0.20-cbl-mariner2.0-arm64v8
 
+COPY --from=installer ["/app", "/app"] 
+
 WORKDIR /app
-COPY --from=installer /app .
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
