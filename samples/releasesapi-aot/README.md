@@ -35,6 +35,7 @@ These Dockerfiles are supported on AMD64 and Arm64, but do not enable cross-comp
 
 - [Dockerfile.alpine](Dockerfile.alpine)
 - [Dockerfile.debian](Dockerfile.debian)
+- [Dockerfile.cbl-mariner](Dockerfile.cbl-mariner)
 - [Dockerfile.ubuntu](Dockerfile.ubuntu)
 
 ### Architecture cross-compilation
