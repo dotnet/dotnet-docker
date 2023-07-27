@@ -11,10 +11,9 @@ ENV \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
 RUN apk add --upgrade --no-cache \
-        ca-certificates \
+        ca-certificates-bundle \
         \
         # .NET dependencies
-        krb5-libs \
         libgcc \
         libssl3 \
         libstdc++ \
