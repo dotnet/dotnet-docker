@@ -18,7 +18,7 @@
     }}
 }}{{
 if isDnf:dnf install -y{{ARGS["pkg-mgr-opts"]}} \^
-elif isApk:apk add --no-cache{{ARGS["pkg-mgr-opts"]}} \^
+elif isApk:apk add --upgrade --no-cache{{ARGS["pkg-mgr-opts"]}} \^
 elif isTdnf:tdnf install -y{{ARGS["pkg-mgr-opts"]}} \^
 else:apt-get update \
     &&{{if ARGS["noninteractive"]: DEBIAN_FRONTEND=noninteractive}} apt-get install -y --no-install-recommends{{ARGS["pkg-mgr-opts"]}} \}}{{

@@ -10,7 +10,7 @@ ENV \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
-RUN apk add --no-cache \
+RUN apk add --upgrade --no-cache \
         ca-certificates \
         \
         # .NET dependencies
