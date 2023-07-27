@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 FROM mcr.microsoft.com/dotnet/sdk:8.0-preview-jammy-arm64v8 AS build
