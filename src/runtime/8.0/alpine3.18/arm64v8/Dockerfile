@@ -5,11 +5,11 @@ FROM $REPO:8.0.0-preview.7-alpine3.18-arm64v8
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 # .NET Runtime version
-ENV DOTNET_VERSION=8.0.0-preview.7.23364.3
+ENV DOTNET_VERSION=8.0.0-preview.7.23375.6
 
 # Install .NET Runtime
 RUN wget -O dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='9a4b38c1a64a41edcd4a23fe7ef6b19c504e4541f54673a7ccd0f98d755db2f54d994ffd19b25f8f2a7503be79575804dbeca3eae36eb584a2139330f65d2d71' \
+    && dotnet_sha512='724c01d49d373b09c8213f06121ebd9169529b1f05fc3eb33fea3cc8619ad3bac6ff66d24feb253405fee9bbbffbbe7d1ff6c1bd4b5310564e3fb5cbd9617bfb' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
