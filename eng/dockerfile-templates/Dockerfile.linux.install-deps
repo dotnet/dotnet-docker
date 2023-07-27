@@ -19,7 +19,6 @@
                 "zlib"
             ],
             [
-                "krb5-libs",
                 "libgcc",
                 cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
                 "libstdc++",
@@ -54,9 +53,13 @@
                 "libstdc++6",
                 "zlib1g"
             ])) ^
-    set certsPkgName to when(isDistrolessMariner, "prebuilt-ca-certificates", "ca-certificates") ^
-    set prefixPkgs to
-        [
+    set certsPkgName to when(isDistrolessMariner,
+        "prebuilt-ca-certificates",
+        when(isAlpine && dotnetVersion != "6.0" && dotnetVersion != "7.0",
+            "ca-certificates-bundle",
+            "ca-certificates"
+        )) ^
+    set prefixPkgs to [
             certsPkgName,
             "",
             dotnetDepsComment
