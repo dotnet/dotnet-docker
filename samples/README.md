@@ -4,6 +4,11 @@ The following samples and guidance demonstrate how to use .NET and Docker for de
 
 Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) directory.
 
+Announcements:
+
+- [Pre-announcement: dotnet/samples breaking changes (port 8080, ...](https://github.com/dotnet/dotnet-docker/discussions/4764)
+- [Breaking change: Alpine image dependencies changing (size and CVE affecting)](https://github.com/dotnet/dotnet-docker/discussions/4784)
+
 ## Building images
 
 * [Build a .NET container image](dotnetapp/README.md)
