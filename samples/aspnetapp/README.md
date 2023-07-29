@@ -21,9 +21,11 @@ $ curl http://localhost:8000/Environment
 
 This container image is built with [Ubuntu Chiseled](https://devblogs.microsoft.com/dotnet/dotnet-6-is-now-in-ubuntu-2204/#net-in-chiseled-ubuntu-containers), with [Dockerfile](Dockerfile.chiseled-composite).
 
-## Changing the port
+## Change port
 
-You can change the port ASP.NET Core uses with one of the following environment variables. The following examples change the port to port `80`.
+You can change the port ASP.NET Core uses with one of the following environment variables. However, port `8080` (set by default) is recommended.
+
+The following examples change the port to port `80`.
 
 Supported with .NET 8+:
 
@@ -41,9 +43,9 @@ Note: `ASPNETCORE_URLS` overwrites `ASPNETCORE_HTTP_PORTS`` if set.
 
 These environment variables are used in [.NET 8](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7C5-L7C31) and [.NET 6](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/6.0/bookworm-slim/amd64/Dockerfile#L5) Dockerfiles, respectively.
 
-## Build the image
+## Build image
 
-You can build and run an image using the following instructions (if you've cloned this repo):
+You can built an image using one of the provided Dockerfiles.
 
 ```console
 docker build --pull -t aspnetapp .
@@ -73,6 +75,20 @@ d79edc6bfcb6   mcr.microsoft.com/dotnet/samples:aspnetapp   "./aspnetapp"   35 s
 ```
 
 You may notice that the sample includes a [health check](../enable-healthchecks.md), indicated in the "STATUS" column.
+
+## Build image with the SDK
+
+The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds). 
+
+```console
+dotnet publish /p:PublishProfile=DefaultContainer
+```
+
+That command can be further customized to use a different base image and publish to a container registry. You must first use `docker login` to login to the registry.
+
+```console
+dotnet publish /p:PublishProfile=DefaultContainer /p:ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:8.0-jammy-chiseled /p:ContainerRegistry=docker.io /p:ContainerRepository=youraccount/aspnetapp
+```
 
 ## Supported Linux distros
 

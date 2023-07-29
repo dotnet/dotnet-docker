@@ -9,7 +9,7 @@ It demonstrates key aspects:
 - Project properties to use
 - Configuring JSON (de)serialization for trimming and native AOT
 
-## Usage
+## Build image
 
 You can build and run the sample:
 
@@ -22,6 +22,28 @@ It exposes two endpoints:
 
 - `http://localhost:8000/releases`
 - `http://localhost:8000/healthz`
+
+## Build image with the SDK
+
+The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds). Native AOT apps [require additional pre-requisitives](https://learn.microsoft.com/dotnet/core/deploying/native-aot/#prerequisites). If you don't have them installed, you can use `aot-sdk` image, described at the end of this section.
+
+```console
+dotnet publish /p:PublishProfile=DefaultContainer
+```
+
+That command can be further customized to use a different base image and publish to a container registry. You must first use `docker login` to login to the registry.
+
+```console
+dotnet publish /p:PublishProfile=DefaultContainer /p:ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:8.0-jammy-chiseled /p:ContainerRegistry=docker.io /p:ContainerRepository=youraccount/aspnetapp
+```
+
+You can also use the `aot-sdk` image if you don't have native AOT pre-requisites installed. In this scenario, a container registry must be provided.
+
+```console
+docker run --rm -it -v $(pwd):/source -v /home/myusername/.docker:/root/.docker -w /source mcr.microsoft.com/dotnet/aot-sdk:latest dotnet publish /p:PublishProfile=DefaultContainer /p:ContainerBaseImage=mcr.microsoft.com/dotnet/runtime-deps:8.0-preview-jammy-chiseled /p:ContainerRegistry=your-registry
+```
+
+This pattern only works on Linux since the `~/.docker/config.json` file contains unencrypted passwords on that system, enabling them to be used within the `aot-sdk` container.
 
 ## Dockerfiles
 
