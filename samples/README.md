@@ -6,7 +6,7 @@ Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) direct
 
 Announcements:
 
-- [Pre-announcement: dotnet/samples breaking changes (port 8080, ...](https://github.com/dotnet/dotnet-docker/discussions/4764)
+- [Breaking change: dotnet/samples port and user changing](https://github.com/dotnet/dotnet-docker/discussions/4764)
 - [Breaking change: Alpine image dependencies changing (size and CVE affecting)](https://github.com/dotnet/dotnet-docker/discussions/4784)
 
 ## Building images
