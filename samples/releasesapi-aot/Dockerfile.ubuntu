@@ -20,7 +20,7 @@ RUN rm /app/*.dbg /app/*.Development.json
 
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/runtime-deps:8.0-preview-jammy
+FROM mcr.microsoft.com/dotnet/runtime-deps:8.0-preview-jammy-chiseled
 WORKDIR /app
 COPY --from=build /app .
 USER $APP_UID
