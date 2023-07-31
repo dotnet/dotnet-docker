@@ -86,12 +86,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            if (imageData.OS == OS.Mariner10Distroless)
-            {
-                OutputHelper.WriteLine("Scanning support not implemented for Mariner 1.0.");
-                return;
-            }
-
             const string SyftImage = "anchore/syft:v0.84.0";
             DockerHelper.Pull(SyftImage);
 

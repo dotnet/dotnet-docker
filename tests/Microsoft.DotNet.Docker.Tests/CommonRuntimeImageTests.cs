@@ -48,8 +48,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.AddRange(customVariables);
             }
 
-            if (imageData.OS.StartsWith(OS.Alpine) ||
-                (imageData.IsDistroless && imageData.OS != OS.Mariner10Distroless))
+            if (imageData.OS.StartsWith(OS.Alpine) || imageData.IsDistroless)
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
             }
