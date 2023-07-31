@@ -268,8 +268,6 @@
     "src/monitor/7.2/cbl-mariner-distroless/arm64v8": 145441793,
     "src/monitor/7.3/alpine/amd64": 128250369,
     "src/monitor/7.3/alpine/arm64v8": 141137686,
-    "src/monitor/7.3/ubuntu-chiseled/amd64": 125167820,
-    "src/monitor/7.3/ubuntu-chiseled/arm64v8": 132889434,
     "src/monitor/7.3/cbl-mariner/amd64": 219210220,
     "src/monitor/7.3/cbl-mariner/arm64v8": 224001932,
     "src/monitor/7.3/cbl-mariner-distroless/amd64": 138412478,

@@ -6867,7 +6867,8 @@
           "productVersion": "$(monitor|7.2|product-version)",
           "sharedTags": {
             "$(monitor|7.2|product-version)-ubuntu-chiseled": {},
-            "7.2-ubuntu-chiseled": {}
+            "7.2-ubuntu-chiseled": {},
+            "7-ubuntu-chiseled": {}
           },
           "platforms": [
             {
@@ -6880,7 +6881,8 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|7.2|product-version)-ubuntu-chiseled-amd64": {},
-                "7.2-ubuntu-chiseled-amd64": {}
+                "7.2-ubuntu-chiseled-amd64": {},
+                "7-ubuntu-chiseled-amd64": {}
               }
             },
             {
@@ -6894,7 +6896,8 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|7.2|product-version)-ubuntu-chiseled-arm64v8": {},
-                "7.2-ubuntu-chiseled-arm64v8": {}
+                "7.2-ubuntu-chiseled-arm64v8": {},
+                "7-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -7036,46 +7039,6 @@
                 "$(monitor|7.3|product-version)-alpine-arm64v8": {},
                 "7.3-alpine-arm64v8": {},
                 "7-alpine-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(monitor|7.3|product-version)",
-          "sharedTags": {
-            "$(monitor|7.3|product-version)-ubuntu-chiseled": {},
-            "7.3-ubuntu-chiseled": {},
-            "7-ubuntu-chiseled": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/monitor/7.3/ubuntu-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "jammy-chiseled",
-              "tags": {
-                "$(monitor|7.3|product-version)-ubuntu-chiseled-amd64": {},
-                "7.3-ubuntu-chiseled-amd64": {},
-                "7-ubuntu-chiseled-amd64": {}
-              }
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/monitor/7.3/ubuntu-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "jammy-chiseled",
-              "tags": {
-                "$(monitor|7.3|product-version)-ubuntu-chiseled-arm64v8": {},
-                "7.3-ubuntu-chiseled-arm64v8": {},
-                "7-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
