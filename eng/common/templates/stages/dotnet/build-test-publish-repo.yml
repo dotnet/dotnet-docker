@@ -82,10 +82,4 @@ stages:
         name: Docker-Linux-Arm-Internal
     windows2016Pool: Docker-2016-${{ variables['System.TeamProject'] }}
     windows1809Pool: Docker-1809-${{ variables['System.TeamProject'] }}
-    windows2022Pool:
-      ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-        name: NetCore-Public
-        demands: ImageOverride -equals 1es-windows-2022-open
-      ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-        name: NetCore1ESPool-Svc-Internal
-        demands: ImageOverride -equals 1es-windows-2022
+    windows2022Pool: Docker-2022-${{ variables['System.TeamProject'] }}
