@@ -4,6 +4,9 @@ The following samples and guidance demonstrate how to use .NET and Docker for de
 
 Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) directory.
 
+> Note: Samples ports and users are changing, with .NET 8 RC1 <br>
+> [Breaking change: dotnet/samples port and user changing](https://github.com/dotnet/dotnet-docker/discussions/4764)
+
 ## Building images
 
 * [Build a .NET container image](dotnetapp/README.md)
@@ -11,7 +14,6 @@ Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) direct
 * [Build a single file app](releasesapp-singlefile/README.md)
 * [Build a Native AOT app](releasesapi-aot/README.md)
 * [Building a globalization and time zone aware (or unaware) image](globalapp/README.md)
-* [Container best practices](container-best-practices.md)
 * [Build for a platform](build-for-a-platform.md)
 
 ## Development guidance
