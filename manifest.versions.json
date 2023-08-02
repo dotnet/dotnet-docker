@@ -121,17 +121,17 @@
     "monitor|7.3|linux|arm64|sha": "23caeec5657f6789550b7b4858c3d86b2909195310b3e88387b9fa57764baec7f3f70c0a1985a10ebcf0f14e4723f4049bbb5935633570f7a9e361d4121dff4a",
     "monitor|7.3|product-version": "7.3.0",
 
-    "monitor|8.0|build-version": "8.0.0-preview.7.23381.6",
+    "monitor|8.0|build-version": "8.0.0-preview.7.23402.4",
     "monitor|8.0|product-version": "8.0.0-preview.7",
 
-    "monitor-base|8.0|linux|x64|sha": "8392b5da31cc94c65def0a9480e4bba873b705bf8cb27382190ebd842d2daf1af7e8899f65f336954aac4259df7f2591db1d50b474fbe68f8327ae6f7cfcd8a9",
-    "monitor-base|8.0|linux|arm64|sha": "31fe6384f8f6a74efe1b7e3ec7d42c19bb92936f7c581a546f48b5fe30a618adcf7592ca3573fadeac25b12263245c85caddb95e35f0554f68eb0feadaa02539",
+    "monitor-base|8.0|linux|x64|sha": "3cfdeaa2cfea1d25cc18df8e5f4f27aabcc1aab0381e9ce069d765db636e23fdf860102f38888c098d23c04b6df55fe8926843bb45c3f360b4c39ef702a4aa7d",
+    "monitor-base|8.0|linux|arm64|sha": "da40a4ed3a819bc59b1ef1adca250c76f5a8c0fce09980db19ec301113e83377ac5611a794375bc6b131083dd20506cbbc399eab457832b73391b0d10e7481ea",
 
-    "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "1f7874f94ea3d511d10a0f13a3b9da2d7c494876946fd25a210b76e5e104015b3ae51815fb1daa333f6a4480cd12f203db2505dc7eb4a51f1825c8dfcf409800",
-    "monitor-ext-azureblobstorage|8.0|linux|arm64|sha": "4fc84c7de486e1531126234c8f49b33487623513ed4bb02812f1cba3aa8d68f58e961be2696b498178175cf37bc7b0e330e44dc6b12f70c26fe2c8eda62260c6",
+    "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "a466d0702e770ca0705404b39d2218ccdf927c1c43d93630132783ce169c366949c2ce095fa9d338d0446dcffcf7ec205409a2abb6c936c220a4124f2d64e2b1",
+    "monitor-ext-azureblobstorage|8.0|linux|arm64|sha": "51ee62399953eb8b8a7b60699a6022741a3563aac25b8561e07e66a6fc5dd75b2761aaac3a89ada6318321f401b613a9e0e36db003fec48dd82c2279c2cdf9d5",
 
-    "monitor-ext-s3storage|8.0|linux|x64|sha": "05839aceba42cfbde30a601b614b1f105b16ff1f45e6b0aadc6c00f747a810a52fd6ac25881671fb32b034ad098f81ca9a49c514611d4f434ed614fc3bd2effb",
-    "monitor-ext-s3storage|8.0|linux|arm64|sha": "bf4bbade1605bfbbeb3846d95864fd17afdbada922e692ff0bc63f9419028907b33ceb3a0df361a0d25d22aef092311686b57a20d175e5347befcba420cac430",
+    "monitor-ext-s3storage|8.0|linux|x64|sha": "6cdc42811961afcdad98fdac32d1fd575f80e4fd1d89c2fbadc821635aec252eb3817a5aceb8e509994f1f4eb5a4f65df7e2fe6de3808093c7fc93c86736cacd",
+    "monitor-ext-s3storage|8.0|linux|arm64|sha": "ab8d6c03a1f4737aee0c57b89e02445400cc47011a42d00264c81e9bce4a6c332f39006bc725b92d04e61a75b57213f57e92853fb1a21d294c499e51a8258592",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
