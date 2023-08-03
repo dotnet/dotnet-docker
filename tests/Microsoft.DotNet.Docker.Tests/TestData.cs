@@ -20,8 +20,6 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V6_0, OS = OS.Jammy,                        Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine317,                    Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Alpine318,                    Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.Mariner10,                    Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.Mariner10Distroless,          Arch = Arch.Amd64,   SdkOS = OS.Mariner10 },
             new ProductImageData { Version = V6_0, OS = OS.Mariner20,                    Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Mariner20Distroless,          Arch = Arch.Amd64,   SdkOS = OS.Mariner20 },
             new ProductImageData { Version = V6_0, OS = OS.Mariner20,                    Arch = Arch.Arm64 },

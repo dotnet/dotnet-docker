@@ -1,12 +1,8 @@
 RUN {{InsertTemplate("Dockerfile.linux.install-pkgs",
     [
-        "pkgs": when(find(OS_VERSION, "1.0") >= 0,
-            [
-                "ca-certificates"
-            ],
-            [
-                "ca-certificates",
-                "gzip",
-                "tar"
-            ])
+        "pkgs": [
+            "ca-certificates",
+            "gzip",
+            "tar"
+        ]
     ])}}

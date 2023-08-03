@@ -26,7 +26,7 @@
             ]
         ),
         when(isMariner,
-            when(isDistrolessMariner && find(OS_VERSION, "1.0") < 0,
+            when(isDistrolessMariner,
                 [
                     "glibc",
                     "krb5",
@@ -75,6 +75,6 @@
     [
         "pkgs": pkgs,
         "noninteractive": (OS_VERSION = "focal"),
-        "pkg-mgr": when(isDistrolessMariner, when (find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf"), ""),
+        "pkg-mgr": when(isDistrolessMariner, "tdnf", ""),
         "pkg-mgr-opts": pkgMgrOpts
     ])}}
