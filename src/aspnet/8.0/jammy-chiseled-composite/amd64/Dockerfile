@@ -5,7 +5,7 @@ FROM amd64/buildpack-deps:jammy-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=8.0.0-preview.6.23329.11  \
-    && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
+    && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
     && dotnet_sha512='5d1c34a1d3adefa63e5ab1d7ab39f062f66972536c1320a119da3a99ca175a3970df10c81b68d6e5654ff3f2a91e504e298b0711aac1d58f709ef4791728164a' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \

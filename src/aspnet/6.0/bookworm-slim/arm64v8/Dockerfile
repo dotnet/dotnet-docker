@@ -4,18 +4,18 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm64v8/buildpack-deps:bookworm-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=6.0.20 \
+RUN aspnetcore_version=6.0.21 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz \
-    && aspnetcore_sha512='83b1825c80cabfa5bbbd8c3e69b3525fa5cebef773957f96fee9319d60285155817973a176d47348c9b22bff5af24044f0f06b59229c067ce8adad4f3d4123de' \
+    && aspnetcore_sha512='3d39f458831c2e2167c06eb85205a764e9aa497ccc26cb19968f03cb3102daaafde391a707f08c3010bff95cfc0e9586ea97c0fe7d8ef885b4aae009748591c8' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
 
 
 # ASP.NET Core image
-FROM $REPO:6.0.20-bookworm-slim-arm64v8
+FROM $REPO:6.0.21-bookworm-slim-arm64v8
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=6.0.20
+ENV ASPNET_VERSION=6.0.21
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]
