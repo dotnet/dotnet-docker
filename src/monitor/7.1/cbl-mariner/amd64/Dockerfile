@@ -10,9 +10,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Monitor
-RUN dotnet_monitor_version=7.1.2 \
+RUN dotnet_monitor_version=7.1.3 \
     && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
-    && dotnet_monitor_sha512='249b59454e661dfcc6623895f671fec78d41af692fcd3e349ec08bf9af1105e0118b08c49e89724249f2a9205fff4efaa0f4a1b0e7b0523691f39891e5bba31a' \
+    && dotnet_monitor_sha512='02d5c50c88277e20631d8000c4593d55e4edc1fa272fd2fbb38396937988862501cf4f5648e2f2087a7831362421ae33ed55e2dd91cec043b416b7764fc8ddd3' \
     && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor.tar.gz -C /app \
@@ -20,10 +20,11 @@ RUN dotnet_monitor_version=7.1.2 \
 
 
 # .NET Monitor image
-FROM $REPO:7.0.9-cbl-mariner2.0-amd64
+FROM $REPO:7.0.10-cbl-mariner2.0-amd64
+
+COPY --from=installer ["/app", "/app"] 
 
 WORKDIR /app
-COPY --from=installer /app .
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image

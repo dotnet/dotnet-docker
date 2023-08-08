@@ -10,9 +10,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '6.0.412'; `
+        $sdk_version = '6.0.413'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '824f5dd4390cad4ac7ddc344a6cdecda3ff9f19adef0ac77430302a2fa8df57e1e044c2c3ea83545ff25223b856873364239067b448707bb009788dce7f0c732'; `
+        $dotnet_sha512 = 'a9e1bbb52484ad0667b258451ebb6b47ce6c7b788c015aee8a86c5e0c4dcf4ee8c82d796921869d64c92bb2afef2c7ceea09cfe255d8519d48f2471a098c361e'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -22,9 +22,9 @@ RUN powershell -Command " `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.2.12'; `
+        $powershell_version = '7.2.13'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = '57cbe2baa24c848ed52f92dddf1c149cb4096c3e1291d42af3d7e51642765ff7d34c6c6989baf5fa3b66f2e2478109deff80436b248c2cfb519e0e028b6235f2'; `
+        $powershell_sha512 = 'ec6eafe9791f72a0d797cac0c8cdf8cefcf35e07fa728c375245e1975ab0e0fdfce9548ef63f2777f239a4e753fdbe0af270bdf94f3f40fc83952fa606bb8734'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -41,7 +41,7 @@ RUN powershell -Command " `
             | Remove-Item -Force -Recurse"
 
 # SDK image
-FROM $REPO:6.0.20-nanoserver-ltsc2022
+FROM $REPO:6.0.21-nanoserver-ltsc2022
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -51,7 +51,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=6.0.412 `
+    DOTNET_SDK_VERSION=6.0.413 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

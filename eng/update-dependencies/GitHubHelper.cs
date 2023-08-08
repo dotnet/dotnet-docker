@@ -23,6 +23,12 @@ public static class GitHubHelper
         s_httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Dotnet.Docker.UpdateDependencies", "1.0"));
     }
 
+    public static async Task<string> GetLatestReleaseTagAsync(string owner, string repo)
+    {
+        JObject releaseResponse = await GetLatestReleaseAsync(owner, repo);
+        return releaseResponse.GetRequiredToken<JValue>("tag_name").ToString();
+    }
+
     public static async Task<JObject> GetLatestReleaseAsync(string owner, string repo)
     {
         string request = $"/repos/{owner}/{repo}/releases/latest";

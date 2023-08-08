@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -60,7 +61,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// Gets each dotnet-monitor image paired with each sample aspnetcore image of the same architecture.
         /// Allows for testing volume mounts and diagnostic port usage among different distros.
         /// </summary>
-        private static IEnumerable<object[]> GetScenarioData(bool isConnectMode)
+        public static IEnumerable<object[]> GetScenarioData()
         {
             IList<object[]> data = new List<object[]>();
             foreach (ProductImageData ProductImageData in TestData.GetMonitorImageData())
@@ -75,38 +76,10 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (ProductImageData.Arch != sampleImageData.Arch)
                         continue;
 
-                    if (isConnectMode)
-                    {
-                        // The dotnet-monitor process is only able to connect to the other container process' diagnostic port
-                        // if it is running as the same user or is running as root. If the target application container is
-                        // running as root, then the dotnet-monitor must be running as root, which is not the case for distroless.
-                        if (ProductImageData.IsDistroless && !sampleImageData.IsDistroless)
-                            continue;
-                    }
-                    else
-                    {
-                        // In listen mode, if the dotnet-monitor container is non-distroless, then it has a communication
-                        // pipe that is established as root. This requires that the target application container to be running
-                        // as root in order for it to connect to the pipe. If dotnet-monitor is distroless, then either
-                        // distroless (as long as it is the same user) or non-distroless will be able to communicate with it.
-                        if (!ProductImageData.IsDistroless && sampleImageData.IsDistroless)
-                            continue;
-                    }
-
                     data.Add(new object[] { ProductImageData, sampleImageData });
                 }
             }
             return data;
-        }
-
-        public static IEnumerable<object[]> GetConnectModeScenarioData()
-        {
-            return GetScenarioData(isConnectMode: true);
-        }
-
-        public static IEnumerable<object[]> GetListenModeScenarioData()
-        {
-            return GetScenarioData(isConnectMode: false);
         }
 
         [LinuxImageTheory]
@@ -318,7 +291,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// in another container via mounting the /tmp directory.
         /// </summary>
         [LinuxImageTheory]
-        [MemberData(nameof(GetConnectModeScenarioData))]
+        [MemberData(nameof(GetScenarioData))]
         public Task VerifyConnectMode(ProductImageData imageData, SampleImageData sampleData)
         {
             return VerifyScenarioAsync(
@@ -353,7 +326,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// in other containers by having them connect to the diagnostic port listener.
         /// </summary>
         [LinuxImageTheory]
-        [MemberData(nameof(GetListenModeScenarioData))]
+        [MemberData(nameof(GetScenarioData))]
         public Task VerifyListenMode(ProductImageData imageData, SampleImageData sampleData)
         {
             return VerifyScenarioAsync(
@@ -398,7 +371,7 @@ namespace Microsoft.DotNet.Docker.Tests
             AuthenticationHeaderValue authorizationHeader = null
             )
         {
-            GetNames(imageData, out string monitorImageName, out string monitorContainerName);
+            GetNames(imageData, out string monitorImageName, out string monitorContainerName, out _);
             try
             {
                 DockerRunArgsBuilder runArgsBuilder = DockerRunArgsBuilder.Create()
@@ -469,8 +442,8 @@ namespace Microsoft.DotNet.Docker.Tests
             Action<DockerRunArgsBuilder> monitorRunArgsCallback = null,
             Action<DockerRunArgsBuilder> sampleRunArgsCallback = null)
         {
-            GetNames(productImageData, out string monitorImageName, out string monitorContainerName);
-            GetNames(sampleImageData, out string sampleImageName, out string sampleContainerName);
+            GetNames(productImageData, out string monitorImageName, out string monitorContainerName, out int monitorUser);
+            GetNames(sampleImageData, out string sampleImageName, out string sampleContainerName, out int sampleUser);
 
             DockerRunArgsBuilder monitorArgsBuilder = DockerRunArgsBuilder.Create()
                 .MonitorUrl(DefaultArtifactsPort);
@@ -483,12 +456,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
             try
             {
-                bool allowDistrolessUserToUseVolume = productImageData.IsDistroless || sampleImageData.IsDistroless;
+                int? volumeUid = AdjustMonitorUserAndCalculateVolumeOwner(
+                    listenDiagPortVolume,
+                    sampleUser,
+                    monitorUser,
+                    monitorArgsBuilder);
 
                 // Create a volume for the two containers to share the /tmp directory.
                 if (shareTmpVolume)
                 {
-                    tmpVolumeName = DockerHelper.CreateTmpfsVolume(UniqueName("tmpvol"), allowDistrolessUserToUseVolume);
+                    tmpVolumeName = DockerHelper.CreateTmpfsVolume(UniqueName("tmpvol"), volumeUid);
 
                     monitorArgsBuilder.VolumeMount(tmpVolumeName, Directory_Tmp);
 
@@ -500,7 +477,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 // process can connect to the dotnet-monitor process.
                 if (listenDiagPortVolume)
                 {
-                    diagPortVolumeName = DockerHelper.CreateTmpfsVolume(UniqueName("diagportvol"), allowDistrolessUserToUseVolume);
+                    diagPortVolumeName = DockerHelper.CreateTmpfsVolume(UniqueName("diagportvol"), volumeUid);
 
                     monitorArgsBuilder.VolumeMount(diagPortVolumeName, Directory_Diag);
                     monitorArgsBuilder.MonitorListen(File_DiagPort);
@@ -558,6 +535,54 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
+        private static int? AdjustMonitorUserAndCalculateVolumeOwner(bool listenMode, int sampleUid, int monitorUid, DockerRunArgsBuilder monitorArgsBuilder)
+        {
+            // Make sure volume is accessible by sample app without modifying the sample container
+            // and ensure monitor app can access it, even if needing to change its user. This is
+            // done by making the volume owned by the least privileged user; if they are the same user or
+            // are different non-root users, defer to the user of the sample image.
+
+            if (!IsRoot(sampleUid))
+            {
+                // If monitor has UDS to which sample will connect, change monitor to run as
+                // same user as sample.
+                if (listenMode && sampleUid != monitorUid)
+                {
+                    monitorArgsBuilder.AsUser(sampleUid);
+                }
+
+                return sampleUid;
+            }
+            else if (!IsRoot(monitorUid))
+            {
+                // Sample is root; monitor is non-root
+
+                if (listenMode)
+                {
+                    // Monitor has UDS to which sample will connect, which it can without changes since
+                    // it is running as root; use monitor user as volume owner
+                    return monitorUid;
+                }
+                else
+                {
+                    // Sample has UDS to which monitor will connect, which requires monitor to run as
+                    // root as well; use sample user as volume owner
+                    monitorArgsBuilder.AsUser(sampleUid);
+
+                    return sampleUid;
+                }
+            }
+
+            // Both sample and monitor run as root: no volume ownership change necessary
+            Debug.Assert(IsRoot(sampleUid) && IsRoot(monitorUid));
+            return null;
+
+            static bool IsRoot(int uid)
+            {
+                return 0 == uid;
+            }
+        }
+
         private static string UniqueName(string name)
         {
             return $"{name}-{DateTime.Now.ToFileTime()}";
@@ -602,19 +627,23 @@ namespace Microsoft.DotNet.Docker.Tests
             return cmdsResult;
         }
 
-        private void GetNames(ProductImageData imageData, out string imageName, out string containerName)
+        private void GetNames(ProductImageData imageData, out string imageName, out string containerName, out int userIdentifier)
         {
             imageName = imageData.GetImage(ImageType, DockerHelper);
             containerName = imageData.GetIdentifier("monitortest");
+            // If user is empty, then image is running as same as docker daemon (typically root)
+            userIdentifier = string.IsNullOrEmpty(DockerHelper.GetImageUser(imageName)) ? 0 : imageData.NonRootUID.Value;
         }
 
-        private void GetNames(SampleImageData imageData, out string imageName, out string containerName)
+        private void GetNames(SampleImageData imageData, out string imageName, out string containerName, out int userIdentifier)
         {
             // Need to allow pulling of the sample image since these are not built in the same pipeline
             // as the other images; otherwise, these tests will fail due to lack of sample image.
             string tag = imageData.GetTagNameBase(SampleImageType.Aspnetapp);
             imageName = imageData.GetImage(tag, DockerHelper, allowPull: true);
             containerName = imageData.GetIdentifier("monitortest-sample");
+            // If user is empty, then image is running as same as docker daemon (typically root)
+            userIdentifier = string.IsNullOrEmpty(DockerHelper.GetImageUser(imageName)) ? 0 : imageData.NonRootUID.Value;
         }
 
         private void VerifyStatusCode(HttpResponseMessage message, HttpStatusCode statusCode)
@@ -635,7 +664,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private GenerateKeyOutput GenerateKey(ProductImageData imageData)
         {
-            GetNames(imageData, out string monitorImageName, out string monitorContainerName);
+            GetNames(imageData, out string monitorImageName, out string monitorContainerName, out _);
             try
             {
                 DockerRunArgsBuilder runArgsBuilder = DockerRunArgsBuilder.Create()

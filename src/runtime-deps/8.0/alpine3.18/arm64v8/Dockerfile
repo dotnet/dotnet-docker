@@ -10,11 +10,10 @@ ENV \
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
-RUN apk add --no-cache \
-        ca-certificates \
+RUN apk add --upgrade --no-cache \
+        ca-certificates-bundle \
         \
         # .NET dependencies
-        krb5-libs \
         libgcc \
         libssl3 \
         libstdc++ \
