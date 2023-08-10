@@ -20,6 +20,8 @@ RUN dotnet_version=8.0.0-preview.7.23375.6 \
 # .NET runtime image
 FROM $REPO:8.0.0-preview.7-cbl-mariner2.0-arm64v8
 
+RUN echo "Hello, your cache is invalid."
+
 # .NET Runtime version
 ENV DOTNET_VERSION=8.0.0-preview.7.23375.6
 

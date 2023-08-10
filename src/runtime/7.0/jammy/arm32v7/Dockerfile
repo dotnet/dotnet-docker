@@ -16,6 +16,8 @@ RUN dotnet_version=7.0.10 \
 # .NET runtime image
 FROM $REPO:7.0.10-jammy-arm32v7
 
+RUN echo "Hello, your cache is invalid."
+
 # .NET Runtime version
 ENV DOTNET_VERSION=7.0.10
 

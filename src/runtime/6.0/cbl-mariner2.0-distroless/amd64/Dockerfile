@@ -25,6 +25,8 @@ RUN mkdir /dotnet-symlink \
 # .NET runtime image
 FROM $REPO:6.0.21-cbl-mariner2.0-distroless-amd64
 
+RUN echo "Hello, your cache is invalid."
+
 # .NET Runtime version
 ENV DOTNET_VERSION=6.0.21
 

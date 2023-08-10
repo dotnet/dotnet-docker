@@ -19,6 +19,8 @@ RUN mkdir /dotnet-symlink \
 # .NET runtime image
 FROM $REPO:8.0.0-preview.7-jammy-chiseled-amd64
 
+RUN echo "Hello, your cache is invalid."
+
 # .NET Runtime version
 ENV DOTNET_VERSION=8.0.0-preview.7.23375.6
 

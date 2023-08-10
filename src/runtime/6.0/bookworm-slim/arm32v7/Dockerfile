@@ -16,6 +16,8 @@ RUN dotnet_version=6.0.21 \
 # .NET runtime image
 FROM $REPO:6.0.21-bookworm-slim-arm32v7
 
+RUN echo "Hello, your cache is invalid."
+
 # .NET Runtime version
 ENV DOTNET_VERSION=6.0.21
 
