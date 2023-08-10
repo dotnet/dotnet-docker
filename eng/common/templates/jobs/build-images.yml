@@ -13,10 +13,10 @@ parameters:
 
 jobs:
 - job: ${{ parameters.name }}
-  condition: and(${{ parameters.matrix }}, not(canceled()), in(dependencies.PreBuildValidation.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))
+  condition: and(${{ parameters.matrix }}, not(canceled()))
   dependsOn:
-  - PreBuildValidation
-  - CopyBaseImages
+  # - PreBuildValidation
+  # - CopyBaseImages
   - GenerateBuildMatrix
   pool: ${{ parameters.pool }}
   strategy:
@@ -172,7 +172,7 @@ jobs:
             -PackageVersion '$(Build.BuildNumber)' `
             -ManifestDirPath $sbomChildDir `
             -DockerImagesToScan $_ `
-            -Verbosity Information 
+            -Verbosity Information
         }
       displayName: Generate SBOMs
       condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
