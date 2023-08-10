@@ -110,7 +110,7 @@
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {
-                "$(dotnet|6.0|product-version)-bookworm-slim-arm64v8": {},
+                "$(dotnet|6.0|product-version)-bookworm-slim-arm64v8-foo": {},
                 "6.0-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
