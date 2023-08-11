@@ -1,5 +1,5 @@
 variables:
-  imageNames.imageBuilderName: dotnetdockerdev.azurecr.io/imagebuilder:buildkit-08112023-1129
+  imageNames.imageBuilderName: dotnetdockerdev.azurecr.io/imagebuilder:buildkit-08112023-1157
   imageNames.imageBuilder: $(imageNames.imageBuilderName)
   imageNames.imageBuilder.withrepo: imagebuilder-withrepo:$(Build.BuildId)-$(System.JobId)
   imageNames.testRunner: mcr.microsoft.com/dotnet-buildtools/prereqs:debian-bullseye-slim-docker-testrunner
