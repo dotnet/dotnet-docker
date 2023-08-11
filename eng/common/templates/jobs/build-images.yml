@@ -15,8 +15,8 @@ jobs:
 - job: ${{ parameters.name }}
   condition: and(${{ parameters.matrix }}, not(canceled()))
   dependsOn:
-  - PreBuildValidation
-  - CopyBaseImages
+  # - PreBuildValidation
+  # - CopyBaseImages
   - GenerateBuildMatrix
   pool: ${{ parameters.pool }}
   strategy:
