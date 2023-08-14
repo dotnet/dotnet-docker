@@ -903,8 +903,8 @@
           "sharedTags": {
             "$(dotnet|8.0|product-version)": {},
             "$(dotnet|8.0|product-version)-bookworm-slim": {},
-            "8.0-preview": {},
-            "8.0-preview-bookworm-slim": {},
+            "8.0": {},
+            "8.0-bookworm-slim": {},
             "latest": {}
           },
           "platforms": [
@@ -915,7 +915,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|8.0|product-version)-bookworm-slim-amd64": {},
-                "8.0-preview-bookworm-slim-amd64": {}
+                "8.0-bookworm-slim-amd64": {}
               }
             },
             {
@@ -926,7 +926,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|8.0|product-version)-bookworm-slim-arm32v7": {},
-                "8.0-preview-bookworm-slim-arm32v7": {}
+                "8.0-bookworm-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -938,7 +938,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|8.0|product-version)-bookworm-slim-arm64v8": {},
-                "8.0-preview-bookworm-slim-arm64v8": {}
+                "8.0-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -948,8 +948,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-alpine3.18": {},
-            "8.0-preview-alpine3.18": {},
-            "8.0-preview-alpine": {}
+            "8.0-alpine3.18": {},
+            "8.0-alpine": {}
           },
           "platforms": [
             {
@@ -959,8 +959,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-amd64": {},
-                "8.0-preview-alpine3.18-amd64": {},
-                "8.0-preview-alpine-amd64": {}
+                "8.0-alpine3.18-amd64": {},
+                "8.0-alpine-amd64": {}
               }
             },
             {
@@ -971,8 +971,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-arm32v7": {},
-                "8.0-preview-alpine3.18-arm32v7": {},
-                "8.0-preview-alpine-arm32v7": {}
+                "8.0-alpine3.18-arm32v7": {},
+                "8.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -984,8 +984,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-arm64v8": {},
-                "8.0-preview-alpine3.18-arm64v8": {},
-                "8.0-preview-alpine-arm64v8": {}
+                "8.0-alpine3.18-arm64v8": {},
+                "8.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -995,7 +995,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-jammy": {},
-            "8.0-preview-jammy": {}
+            "8.0-jammy": {}
           },
           "platforms": [
             {
@@ -1005,7 +1005,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-amd64": {},
-                "8.0-preview-jammy-amd64": {}
+                "8.0-jammy-amd64": {}
               }
             },
             {
@@ -1016,7 +1016,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-arm32v7": {},
-                "8.0-preview-jammy-arm32v7": {}
+                "8.0-jammy-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -1028,7 +1028,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-arm64v8": {},
-                "8.0-preview-jammy-arm64v8": {}
+                "8.0-jammy-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1038,7 +1038,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-jammy-chiseled": {},
-            "8.0-preview-jammy-chiseled": {}
+            "8.0-jammy-chiseled": {}
           },
           "platforms": [
             {
@@ -1048,14 +1048,14 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-amd64": {},
-                "8.0-preview-jammy-chiseled-amd64": {}
+                "8.0-jammy-chiseled-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-jammy-amd64"
+                    "$(Repo:sdk):8.0-jammy-amd64"
                   ]
                 }
               ]
@@ -1068,7 +1068,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-arm64v8": {},
-                "8.0-preview-jammy-chiseled-arm64v8": {}
+                "8.0-jammy-chiseled-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -1076,7 +1076,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-jammy-arm64v8"
+                    "$(Repo:sdk):8.0-jammy-arm64v8"
                   ]
                 }
               ]
@@ -1089,7 +1089,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-arm32v7": {},
-                "8.0-preview-jammy-chiseled-arm32v7": {}
+                "8.0-jammy-chiseled-arm32v7": {}
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -1097,7 +1097,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-jammy-arm32v7"
+                    "$(Repo:sdk):8.0-jammy-arm32v7"
                   ]
                 }
               ]
@@ -1110,10 +1110,10 @@
             "$(dotnet|8.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner2.0": {
+            "8.0-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner": {
+            "8.0-cbl-mariner": {
               "docType": "Undocumented"
             }
           },
@@ -1127,10 +1127,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-amd64": {
+                "8.0-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-amd64": {
+                "8.0iner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -1145,10 +1145,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-arm64v8": {
+                "8.0-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-arm64v8": {
+                "8.0-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -1162,10 +1162,10 @@
             "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner2.0-distroless": {
+            "8.0-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner-distroless": {
+            "8.0-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -1179,10 +1179,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-distroless-amd64": {
+                "8.0-cbl-mariner2.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-amd64": {
+                "8.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -1191,7 +1191,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
                   ]
                 }
               ]
@@ -1206,10 +1206,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-distroless-arm64v8": {
+                "8.0-cbl-mariner2.0-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-arm64v8": {
+                "8.0-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -1219,7 +1219,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
                   ]
                 }
               ]
@@ -2441,7 +2441,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)": {},
-            "8.0-preview": {},
+            "8.0": {},
             "latest": {}
           },
           "platforms": [
@@ -2455,7 +2455,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|8.0|product-version)-bookworm-slim-amd64": {},
-                "8.0-preview-bookworm-slim-amd64": {}
+                "8.0-bookworm-slim-amd64": {}
               }
             },
             {
@@ -2469,7 +2469,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|8.0|product-version)-bookworm-slim-arm32v7": {},
-                "8.0-preview-bookworm-slim-arm32v7": {}
+                "8.0-bookworm-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -2484,7 +2484,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|8.0|product-version)-bookworm-slim-arm64v8": {},
-                "8.0-preview-bookworm-slim-arm64v8": {}
+                "8.0-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2495,7 +2495,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-bookworm-slim": {},
-            "8.0-preview-bookworm-slim": {}
+            "8.0-bookworm-slim": {}
           },
           "platforms": [
             {
@@ -2538,8 +2538,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-alpine3.18": {},
-            "8.0-preview-alpine3.18": {},
-            "8.0-preview-alpine": {}
+            "8.0-alpine3.18": {},
+            "8.0-alpine": {}
           },
           "platforms": [
             {
@@ -2552,8 +2552,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-amd64": {},
-                "8.0-preview-alpine3.18-amd64": {},
-                "8.0-preview-alpine-amd64": {}
+                "8.0-alpine3.18-amd64": {},
+                "8.0-alpine-amd64": {}
               }
             },
             {
@@ -2567,8 +2567,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-arm32v7": {},
-                "8.0-preview-alpine3.18-arm32v7": {},
-                "8.0-preview-alpine-arm32v7": {}
+                "8.0-alpine3.18-arm32v7": {},
+                "8.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -2583,8 +2583,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-arm64v8": {},
-                "8.0-preview-alpine3.18-arm64v8": {},
-                "8.0-preview-alpine-arm64v8": {}
+                "8.0-alpine3.18-arm64v8": {},
+                "8.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2594,7 +2594,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-jammy": {},
-            "8.0-preview-jammy": {}
+            "8.0-jammy": {}
           },
           "platforms": [
             {
@@ -2607,7 +2607,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-amd64": {},
-                "8.0-preview-jammy-amd64": {}
+                "8.0-jammy-amd64": {}
               }
             },
             {
@@ -2621,7 +2621,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-arm32v7": {},
-                "8.0-preview-jammy-arm32v7": {}
+                "8.0-jammy-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -2636,7 +2636,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-arm64v8": {},
-                "8.0-preview-jammy-arm64v8": {}
+                "8.0-jammy-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2646,7 +2646,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-jammy-chiseled": {},
-            "8.0-preview-jammy-chiseled": {}
+            "8.0-jammy-chiseled": {}
           },
           "platforms": [
             {
@@ -2659,14 +2659,14 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-amd64": {},
-                "8.0-preview-jammy-chiseled-amd64": {}
+                "8.0-jammy-chiseled-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-jammy-amd64"
+                    "$(Repo:sdk):8.0-jammy-amd64"
                   ]
                 }
               ]
@@ -2682,7 +2682,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-arm64v8": {},
-                "8.0-preview-jammy-chiseled-arm64v8": {}
+                "8.0-jammy-chiseled-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2690,7 +2690,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-jammy-arm64v8"
+                    "$(Repo:sdk):8.0-jammy-arm64v8"
                   ]
                 }
               ]
@@ -2706,7 +2706,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-arm32v7": {},
-                "8.0-preview-jammy-chiseled-arm32v7": {}
+                "8.0-jammy-chiseled-arm32v7": {}
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -2714,7 +2714,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-jammy-arm32v7"
+                    "$(Repo:sdk):8.0-jammy-arm32v7"
                   ]
                 }
               ]
@@ -2727,10 +2727,10 @@
             "$(dotnet|8.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner2.0": {
+            "8.0-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner": {
+            "8.0-cbl-mariner": {
               "docType": "Undocumented"
             }
           },
@@ -2747,10 +2747,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-amd64": {
+                "8.0-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-amd64": {
+                "8.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -2768,10 +2768,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-arm64v8": {
+                "8.0-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-arm64v8": {
+                "8.0-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -2785,10 +2785,10 @@
             "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner2.0-distroless": {
+            "8.0-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner-distroless": {
+            "8.0-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -2805,10 +2805,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-distroless-amd64": {
+                "8.0-cbl-mariner2.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-amd64": {
+                "8.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -2817,7 +2817,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
                   ]
                 }
               ]
@@ -2835,10 +2835,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-distroless-arm64v8": {
+                "8.0-cbl-mariner2.0-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-arm64v8": {
+                "8.0-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -2848,7 +2848,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
                   ]
                 }
               ]
@@ -2865,7 +2865,7 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(dotnet|8.0|product-version)-nanoserver-1809": {},
-                "8.0-preview-nanoserver-1809": {}
+                "8.0-nanoserver-1809": {}
               }
             }
           ]
@@ -2880,7 +2880,7 @@
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
                 "$(dotnet|8.0|product-version)-nanoserver-ltsc2022": {},
-                "8.0-preview-nanoserver-ltsc2022": {}
+                "8.0-nanoserver-ltsc2022": {}
               }
             }
           ]
@@ -2895,7 +2895,7 @@
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
                 "$(dotnet|8.0|product-version)-windowsservercore-ltsc2019": {},
-                "8.0-preview-windowsservercore-ltsc2019": {}
+                "8.0-windowsservercore-ltsc2019": {}
               }
             }
           ]
@@ -2910,7 +2910,7 @@
               "osVersion": "windowsservercore-ltsc2022",
               "tags": {
                 "$(dotnet|8.0|product-version)-windowsservercore-ltsc2022": {},
-                "8.0-preview-windowsservercore-ltsc2022": {}
+                "8.0-windowsservercore-ltsc2022": {}
               }
             }
           ]
@@ -4154,7 +4154,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)": {},
-            "8.0-preview": {},
+            "8.0": {},
             "latest": {}
           },
           "platforms": [
@@ -4168,7 +4168,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|8.0|product-version)-bookworm-slim-amd64": {},
-                "8.0-preview-bookworm-slim-amd64": {}
+                "8.0-bookworm-slim-amd64": {}
               }
             },
             {
@@ -4182,7 +4182,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|8.0|product-version)-bookworm-slim-arm32v7": {},
-                "8.0-preview-bookworm-slim-arm32v7": {}
+                "8.0-bookworm-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -4197,7 +4197,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|8.0|product-version)-bookworm-slim-arm64v8": {},
-                "8.0-preview-bookworm-slim-arm64v8": {}
+                "8.0-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -4208,7 +4208,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-bookworm-slim": {},
-            "8.0-preview-bookworm-slim": {}
+            "8.0-bookworm-slim": {}
           },
           "platforms": [
             {
@@ -4251,8 +4251,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-alpine3.18": {},
-            "8.0-preview-alpine3.18": {},
-            "8.0-preview-alpine": {}
+            "8.0-alpine3.18": {},
+            "8.0-alpine": {}
           },
           "platforms": [
             {
@@ -4265,8 +4265,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-amd64": {},
-                "8.0-preview-alpine3.18-amd64": {},
-                "8.0-preview-alpine-amd64": {}
+                "8.0-alpine3.18-amd64": {},
+                "8.0-alpine-amd64": {}
               }
             },
             {
@@ -4280,8 +4280,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-arm32v7": {},
-                "8.0-preview-alpine3.18-arm32v7": {},
-                "8.0-preview-alpine-arm32v7": {}
+                "8.0-alpine3.18-arm32v7": {},
+                "8.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -4296,8 +4296,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-arm64v8": {},
-                "8.0-preview-alpine3.18-arm64v8": {},
-                "8.0-preview-alpine-arm64v8": {}
+                "8.0-alpine3.18-arm64v8": {},
+                "8.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -4307,8 +4307,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-alpine3.18-composite": {},
-            "8.0-preview-alpine3.18-composite": {},
-            "8.0-preview-alpine-composite": {}
+            "8.0-alpine3.18-composite": {},
+            "8.0-alpine-composite": {}
           },
           "platforms": [
             {
@@ -4321,8 +4321,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-composite-amd64": {},
-                "8.0-preview-alpine3.18-composite-amd64": {},
-                "8.0-preview-alpine-composite-amd64": {}
+                "8.0-alpine3.18-composite-amd64": {},
+                "8.0-alpine-composite-amd64": {}
               }
             },
             {
@@ -4336,8 +4336,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-composite-arm32v7": {},
-                "8.0-preview-alpine3.18-composite-arm32v7": {},
-                "8.0-preview-alpine-composite-arm32v7": {}
+                "8.0-alpine3.18-composite-arm32v7": {},
+                "8.0-alpine-composite-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -4352,8 +4352,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.18-composite-arm64v8": {},
-                "8.0-preview-alpine3.18-composite-arm64v8": {},
-                "8.0-preview-alpine-composite-arm64v8": {}
+                "8.0-alpine3.18-composite-arm64v8": {},
+                "8.0-alpine-composite-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -4363,7 +4363,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-jammy": {},
-            "8.0-preview-jammy": {}
+            "8.0-jammy": {}
           },
           "platforms": [
             {
@@ -4376,7 +4376,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-amd64": {},
-                "8.0-preview-jammy-amd64": {}
+                "8.0-jammy-amd64": {}
               }
             },
             {
@@ -4390,7 +4390,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-arm32v7": {},
-                "8.0-preview-jammy-arm32v7": {}
+                "8.0-jammy-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -4405,7 +4405,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-arm64v8": {},
-                "8.0-preview-jammy-arm64v8": {}
+                "8.0-jammy-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -4415,7 +4415,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-jammy-chiseled": {},
-            "8.0-preview-jammy-chiseled": {}
+            "8.0-jammy-chiseled": {}
           },
           "platforms": [
             {
@@ -4428,14 +4428,14 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-amd64": {},
-                "8.0-preview-jammy-chiseled-amd64": {}
+                "8.0-jammy-chiseled-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-jammy-amd64"
+                    "$(Repo:sdk):8.0-jammy-amd64"
                   ]
                 }
               ]
@@ -4451,7 +4451,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-arm64v8": {},
-                "8.0-preview-jammy-chiseled-arm64v8": {}
+                "8.0-jammy-chiseled-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -4459,7 +4459,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-jammy-arm64v8"
+                    "$(Repo:sdk):8.0-jammy-arm64v8"
                   ]
                 }
               ]
@@ -4475,7 +4475,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-arm32v7": {},
-                "8.0-preview-jammy-chiseled-arm32v7": {}
+                "8.0-jammy-chiseled-arm32v7": {}
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -4483,7 +4483,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-jammy-arm32v7"
+                    "$(Repo:sdk):8.0-jammy-arm32v7"
                   ]
                 }
               ]
@@ -4494,7 +4494,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-jammy-chiseled-composite": {},
-            "8.0-preview-jammy-chiseled-composite": {}
+            "8.0-jammy-chiseled-composite": {}
           },
           "platforms": [
             {
@@ -4507,7 +4507,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-composite-amd64": {},
-                "8.0-preview-jammy-chiseled-composite-amd64": {}
+                "8.0-jammy-chiseled-composite-amd64": {}
               }
             },
             {
@@ -4521,7 +4521,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-composite-arm64v8": {},
-                "8.0-preview-jammy-chiseled-composite-arm64v8": {}
+                "8.0-jammy-chiseled-composite-arm64v8": {}
               },
               "variant": "v8"
             },
@@ -4536,7 +4536,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|product-version)-jammy-chiseled-composite-arm32v7": {},
-                "8.0-preview-jammy-chiseled-composite-arm32v7": {}
+                "8.0-jammy-chiseled-composite-arm32v7": {}
               },
               "variant": "v7"
             }
@@ -4548,10 +4548,10 @@
             "$(dotnet|8.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner2.0": {
+            "8.0-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner": {
+            "8.0-cbl-mariner": {
               "docType": "Undocumented"
             }
           },
@@ -4568,10 +4568,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-amd64": {
+                "8.0-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-amd64": {
+                "8.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -4589,10 +4589,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-arm64v8": {
+                "8.0-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-arm64v8": {
+                "8.0-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -4606,10 +4606,10 @@
             "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner2.0-distroless": {
+            "8.0-cbl-mariner2.0-distroless": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner-distroless": {
+            "8.0-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -4626,10 +4626,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-distroless-amd64": {
+                "8.0-cbl-mariner2.0-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-amd64": {
+                "8.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -4638,7 +4638,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
                   ]
                 }
               ]
@@ -4656,10 +4656,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-distroless-arm64v8": {
+                "8.0-cbl-mariner2.0-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-arm64v8": {
+                "8.0-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -4669,7 +4669,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
                   ]
                 }
               ]
@@ -4682,10 +4682,10 @@
             "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-composite": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner2.0-distroless-composite": {
+            "8.0-cbl-mariner2.0-distroless-composite": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner-distroless-composite": {
+            "8.0-cbl-mariner-distroless-composite": {
               "docType": "Undocumented"
             }
           },
@@ -4702,10 +4702,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-composite-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-distroless-composite-amd64": {
+                "8.0-cbl-mariner2.0-distroless-composite-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-composite-amd64": {
+                "8.0-cbl-mariner-distroless-composite-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -4714,7 +4714,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
                   ]
                 }
               ]
@@ -4732,10 +4732,10 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-composite-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-distroless-composite-arm64v8": {
+                "8.0-cbl-mariner2.0-distroless-composite-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-composite-arm64v8": {
+                "8.0-cbl-mariner-distroless-composite-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -4745,7 +4745,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-preview-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
                   ]
                 }
               ]
@@ -4765,7 +4765,7 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(dotnet|8.0|product-version)-nanoserver-1809": {},
-                "8.0-preview-nanoserver-1809": {}
+                "8.0-nanoserver-1809": {}
               }
             }
           ]
@@ -4783,7 +4783,7 @@
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
                 "$(dotnet|8.0|product-version)-nanoserver-ltsc2022": {},
-                "8.0-preview-nanoserver-ltsc2022": {}
+                "8.0-nanoserver-ltsc2022": {}
               }
             }
           ]
@@ -4801,7 +4801,7 @@
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
                 "$(dotnet|8.0|product-version)-windowsservercore-ltsc2019": {},
-                "8.0-preview-windowsservercore-ltsc2019": {}
+                "8.0-windowsservercore-ltsc2019": {}
               }
             }
           ]
@@ -4819,7 +4819,7 @@
               "osVersion": "windowsservercore-ltsc2022",
               "tags": {
                 "$(dotnet|8.0|product-version)-windowsservercore-ltsc2022": {},
-                "8.0-preview-windowsservercore-ltsc2022": {}
+                "8.0-windowsservercore-ltsc2022": {}
               }
             }
           ]
@@ -5753,7 +5753,7 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|product-version)": {},
-            "8.0-preview": {},
+            "8.0": {},
             "latest": {}
           },
           "platforms": [
@@ -5767,7 +5767,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(sdk|8.0|product-version)-bookworm-slim-amd64": {},
-                "8.0-preview-bookworm-slim-amd64": {}
+                "8.0-bookworm-slim-amd64": {}
               }
             },
             {
@@ -5781,7 +5781,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(sdk|8.0|product-version)-bookworm-slim-arm32v7": {},
-                "8.0-preview-bookworm-slim-arm32v7": {}
+                "8.0-bookworm-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -5796,7 +5796,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(sdk|8.0|product-version)-bookworm-slim-arm64v8": {},
-                "8.0-preview-bookworm-slim-arm64v8": {}
+                "8.0-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5807,7 +5807,7 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|product-version)-bookworm-slim": {},
-            "8.0-preview-bookworm-slim": {}
+            "8.0-bookworm-slim": {}
           },
           "platforms": [
             {
@@ -5850,8 +5850,8 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|product-version)-alpine3.18": {},
-            "8.0-preview-alpine3.18": {},
-            "8.0-preview-alpine": {}
+            "8.0-alpine3.18": {},
+            "8.0-alpine": {}
           },
           "platforms": [
             {
@@ -5864,8 +5864,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(sdk|8.0|product-version)-alpine3.18-amd64": {},
-                "8.0-preview-alpine3.18-amd64": {},
-                "8.0-preview-alpine-amd64": {}
+                "8.0-alpine3.18-amd64": {},
+                "8.0-alpine-amd64": {}
               }
             },
             {
@@ -5879,8 +5879,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(sdk|8.0|product-version)-alpine3.18-arm32v7": {},
-                "8.0-preview-alpine3.18-arm32v7": {},
-                "8.0-preview-alpine-arm32v7": {}
+                "8.0-alpine3.18-arm32v7": {},
+                "8.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -5895,8 +5895,8 @@
               "osVersion": "alpine3.18",
               "tags": {
                 "$(sdk|8.0|product-version)-alpine3.18-arm64v8": {},
-                "8.0-preview-alpine3.18-arm64v8": {},
-                "8.0-preview-alpine-arm64v8": {}
+                "8.0-alpine3.18-arm64v8": {},
+                "8.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5906,7 +5906,7 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|product-version)-jammy": {},
-            "8.0-preview-jammy": {}
+            "8.0-jammy": {}
           },
           "platforms": [
             {
@@ -5919,7 +5919,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(sdk|8.0|product-version)-jammy-amd64": {},
-                "8.0-preview-jammy-amd64": {}
+                "8.0-jammy-amd64": {}
               }
             },
             {
@@ -5933,7 +5933,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(sdk|8.0|product-version)-jammy-arm32v7": {},
-                "8.0-preview-jammy-arm32v7": {}
+                "8.0-jammy-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -5948,7 +5948,7 @@
               "osVersion": "jammy",
               "tags": {
                 "$(sdk|8.0|product-version)-jammy-arm64v8": {},
-                "8.0-preview-jammy-arm64v8": {}
+                "8.0-jammy-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5960,10 +5960,10 @@
             "$(sdk|8.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner2.0": {
+            "8.0-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner": {
+            "8.0-cbl-mariner": {
               "docType": "Undocumented"
             }
           },
@@ -5980,10 +5980,10 @@
                 "$(sdk|8.0|product-version)-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-amd64": {
+                "8.0-cbl-mariner2.0-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-amd64": {
+                "8.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -6001,10 +6001,10 @@
                 "$(sdk|8.0|product-version)-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner2.0-arm64v8": {
+                "8.0-cbl-mariner2.0-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-arm64v8": {
+                "8.0-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -6025,7 +6025,7 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(sdk|8.0|product-version)-nanoserver-1809": {},
-                "8.0-preview-nanoserver-1809": {}
+                "8.0-nanoserver-1809": {}
               }
             }
           ]
@@ -6043,7 +6043,7 @@
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
                 "$(sdk|8.0|product-version)-nanoserver-ltsc2022": {},
-                "8.0-preview-nanoserver-ltsc2022": {}
+                "8.0-nanoserver-ltsc2022": {}
               }
             }
           ]
@@ -6061,7 +6061,7 @@
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
                 "$(sdk|8.0|product-version)-windowsservercore-ltsc2019": {},
-                "8.0-preview-windowsservercore-ltsc2019": {}
+                "8.0-windowsservercore-ltsc2019": {}
               }
             }
           ]
@@ -6079,7 +6079,7 @@
               "osVersion": "windowsservercore-ltsc2022",
               "tags": {
                 "$(sdk|8.0|product-version)-windowsservercore-ltsc2022": {},
-                "8.0-preview-windowsservercore-ltsc2022": {}
+                "8.0-windowsservercore-ltsc2022": {}
               }
             }
           ]
@@ -6105,11 +6105,11 @@
           "productVersion": "$(monitor|8.0|product-version)",
           "sharedTags": {
             "$(monitor|8.0|product-version)-ubuntu-chiseled": {},
-            "8.0-preview-ubuntu-chiseled": {},
-            "8-preview-ubuntu-chiseled": {},
+            "8.0-ubuntu-chiseled": {},
+            "8-ubuntu-chiseled": {},
             "$(monitor|8.0|product-version)": {},
-            "8.0-preview": {},
-            "8-preview": {},
+            "8.0": {},
+            "8": {},
             "latest": {}
           },
           "platforms": [
@@ -6123,8 +6123,8 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-amd64": {},
-                "8.0-preview-ubuntu-chiseled-amd64": {},
-                "8-preview-ubuntu-chiseled-amd64": {}
+                "8.0-ubuntu-chiseled-amd64": {},
+                "8-ubuntu-chiseled-amd64": {}
               }
             },
             {
@@ -6138,8 +6138,8 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-arm64v8": {},
-                "8.0-preview-ubuntu-chiseled-arm64v8": {},
-                "8-preview-ubuntu-chiseled-arm64v8": {}
+                "8.0-ubuntu-chiseled-arm64v8": {},
+                "8-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -6151,10 +6151,10 @@
             "$(monitor|8.0|product-version)-cbl-mariner-distroless": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner-distroless": {
+            "8.0-cbl-mariner-distroless": {
               "docType": "Undocumented"
             },
-            "8-preview-cbl-mariner-distroless": {
+            "8-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -6171,10 +6171,10 @@
                 "$(monitor|8.0|product-version)-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-amd64": {
+                "8.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8-preview-cbl-mariner-distroless-amd64": {
+                "8-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -6192,10 +6192,10 @@
                 "$(monitor|8.0|product-version)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-arm64v8": {
+                "8.0-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8-preview-cbl-mariner-distroless-arm64v8": {
+                "8-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -6896,11 +6896,11 @@
           "productVersion": "$(monitor|8.0|product-version)",
           "sharedTags": {
             "$(monitor|8.0|product-version)-ubuntu-chiseled": {},
-            "8.0-preview-ubuntu-chiseled": {},
-            "8-preview-ubuntu-chiseled": {},
+            "8.0-ubuntu-chiseled": {},
+            "8-ubuntu-chiseled": {},
             "$(monitor|8.0|product-version)": {},
-            "8.0-preview": {},
-            "8-preview": {},
+            "8.0": {},
+            "8": {},
             "latest": {}
           },
           "platforms": [
@@ -6914,8 +6914,8 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-amd64": {},
-                "8.0-preview-ubuntu-chiseled-amd64": {},
-                "8-preview-ubuntu-chiseled-amd64": {}
+                "8.0-ubuntu-chiseled-amd64": {},
+                "8-ubuntu-chiseled-amd64": {}
               }
             },
             {
@@ -6929,8 +6929,8 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-arm64v8": {},
-                "8.0-preview-ubuntu-chiseled-arm64v8": {},
-                "8-preview-ubuntu-chiseled-arm64v8": {}
+                "8.0-ubuntu-chiseled-arm64v8": {},
+                "8-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -6942,10 +6942,10 @@
             "$(monitor|8.0|product-version)-cbl-mariner-distroless": {
               "docType": "Undocumented"
             },
-            "8.0-preview-cbl-mariner-distroless": {
+            "8.0-cbl-mariner-distroless": {
               "docType": "Undocumented"
             },
-            "8-preview-cbl-mariner-distroless": {
+            "8-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -6962,10 +6962,10 @@
                 "$(monitor|8.0|product-version)-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-amd64": {
+                "8.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8-preview-cbl-mariner-distroless-amd64": {
+                "8-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -6983,10 +6983,10 @@
                 "$(monitor|8.0|product-version)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-preview-cbl-mariner-distroless-arm64v8": {
+                "8.0-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8-preview-cbl-mariner-distroless-arm64v8": {
+                "8-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },

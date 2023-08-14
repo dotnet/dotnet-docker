@@ -1,9 +1,9 @@
 $(McrTagsYmlRepo:sdk)
-$(McrTagsYmlTagGroup:8.0-preview-bookworm-slim-amd64)
+$(McrTagsYmlTagGroup:8.0-bookworm-slim-amd64)
     customSubTableTitle: .NET 8 Preview Tags
-$(McrTagsYmlTagGroup:8.0-preview-alpine3.18-amd64)
+$(McrTagsYmlTagGroup:8.0-alpine3.18-amd64)
     customSubTableTitle: .NET 8 Preview Tags
-$(McrTagsYmlTagGroup:8.0-preview-jammy-amd64)
+$(McrTagsYmlTagGroup:8.0-jammy-amd64)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:7.0-bookworm-slim-amd64)
 $(McrTagsYmlTagGroup:7.0-bullseye-slim-amd64)
@@ -16,11 +16,11 @@ $(McrTagsYmlTagGroup:6.0-alpine3.18-amd64)
 $(McrTagsYmlTagGroup:6.0-alpine3.17-amd64)
 $(McrTagsYmlTagGroup:6.0-jammy-amd64)
 $(McrTagsYmlTagGroup:6.0-focal-amd64)
-$(McrTagsYmlTagGroup:8.0-preview-bookworm-slim-arm64v8)
+$(McrTagsYmlTagGroup:8.0-bookworm-slim-arm64v8)
     customSubTableTitle: .NET 8 Preview Tags
-$(McrTagsYmlTagGroup:8.0-preview-alpine3.18-arm64v8)
+$(McrTagsYmlTagGroup:8.0-alpine3.18-arm64v8)
     customSubTableTitle: .NET 8 Preview Tags
-$(McrTagsYmlTagGroup:8.0-preview-jammy-arm64v8)
+$(McrTagsYmlTagGroup:8.0-jammy-arm64v8)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:7.0-bookworm-slim-arm64v8)
 $(McrTagsYmlTagGroup:7.0-bullseye-slim-arm64v8)
@@ -33,11 +33,11 @@ $(McrTagsYmlTagGroup:6.0-alpine3.18-arm64v8)
 $(McrTagsYmlTagGroup:6.0-alpine3.17-arm64v8)
 $(McrTagsYmlTagGroup:6.0-jammy-arm64v8)
 $(McrTagsYmlTagGroup:6.0-focal-arm64v8)
-$(McrTagsYmlTagGroup:8.0-preview-bookworm-slim-arm32v7)
+$(McrTagsYmlTagGroup:8.0-bookworm-slim-arm32v7)
     customSubTableTitle: .NET 8 Preview Tags
-$(McrTagsYmlTagGroup:8.0-preview-alpine3.18-arm32v7)
+$(McrTagsYmlTagGroup:8.0-alpine3.18-arm32v7)
     customSubTableTitle: .NET 8 Preview Tags
-$(McrTagsYmlTagGroup:8.0-preview-jammy-arm32v7)
+$(McrTagsYmlTagGroup:8.0-jammy-arm32v7)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:7.0-bookworm-slim-arm32v7)
 $(McrTagsYmlTagGroup:7.0-bullseye-slim-arm32v7)
@@ -50,17 +50,17 @@ $(McrTagsYmlTagGroup:6.0-alpine3.18-arm32v7)
 $(McrTagsYmlTagGroup:6.0-alpine3.17-arm32v7)
 $(McrTagsYmlTagGroup:6.0-jammy-arm32v7)
 $(McrTagsYmlTagGroup:6.0-focal-arm32v7)
-$(McrTagsYmlTagGroup:8.0-preview-nanoserver-ltsc2022)
+$(McrTagsYmlTagGroup:8.0-nanoserver-ltsc2022)
     customSubTableTitle: .NET 8 Preview Tags
-$(McrTagsYmlTagGroup:8.0-preview-windowsservercore-ltsc2022)
+$(McrTagsYmlTagGroup:8.0-windowsservercore-ltsc2022)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:7.0-nanoserver-ltsc2022)
 $(McrTagsYmlTagGroup:7.0-windowsservercore-ltsc2022)
 $(McrTagsYmlTagGroup:6.0-nanoserver-ltsc2022)
 $(McrTagsYmlTagGroup:6.0-windowsservercore-ltsc2022)
-$(McrTagsYmlTagGroup:8.0-preview-nanoserver-1809)
+$(McrTagsYmlTagGroup:8.0-nanoserver-1809)
     customSubTableTitle: .NET 8 Preview Tags
-$(McrTagsYmlTagGroup:8.0-preview-windowsservercore-ltsc2019)
+$(McrTagsYmlTagGroup:8.0-windowsservercore-ltsc2019)
     customSubTableTitle: .NET 8 Preview Tags
 $(McrTagsYmlTagGroup:7.0-nanoserver-1809)
 $(McrTagsYmlTagGroup:7.0-windowsservercore-ltsc2019)
