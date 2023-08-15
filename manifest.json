@@ -5507,6 +5507,62 @@
         {
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
+            "$(sdk|8.0|product-version)-alpine3.18-aot": {},
+            "8.0-alpine3.18-aot": {},
+            "8.0-alpine-aot": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/sdk/8.0/alpine3.18-aot/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(sdk|8.0|product-version)-alpine3.18-aot-amd64": {},
+                "8.0-alpine3.18-aot-amd64": {},
+                "8.0-alpine-aot-amd64": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:sdk)"
+              },
+              "architecture": "arm",
+              "dockerfile": "src/sdk/8.0/alpine3.18-aot/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(sdk|8.0|product-version)-alpine3.18-aot-arm32v7": {},
+                "8.0-alpine3.18-aot-arm32v7": {},
+                "8.0-alpine-aot-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:sdk)"
+              },
+              "architecture": "arm64",
+              "dockerfile": "src/sdk/8.0/alpine3.18-aot/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(sdk|8.0|product-version)-alpine3.18-aot-arm64v8": {},
+                "8.0-alpine3.18-aot-arm64v8": {},
+                "8.0-alpine-aot-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|8.0|product-version)",
+          "sharedTags": {
             "$(sdk|8.0|product-version)-jammy": {},
             "8.0-jammy": {}
           },
@@ -5551,6 +5607,58 @@
               "tags": {
                 "$(sdk|8.0|product-version)-jammy-arm64v8": {},
                 "8.0-jammy-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|8.0|product-version)",
+          "sharedTags": {
+            "$(sdk|8.0|product-version)-jammy-aot": {},
+            "8.0-jammy-aot": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/sdk/8.0/jammy-aot/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(sdk|8.0|product-version)-jammy-aot-amd64": {},
+                "8.0-jammy-aot-amd64": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:sdk)"
+              },
+              "architecture": "arm",
+              "dockerfile": "src/sdk/8.0/jammy-aot/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(sdk|8.0|product-version)-jammy-aot-arm32v7": {},
+                "8.0-jammy-aot-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:sdk)"
+              },
+              "architecture": "arm64",
+              "dockerfile": "src/sdk/8.0/jammy-aot/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(sdk|8.0|product-version)-jammy-aot-arm64v8": {},
+                "8.0-jammy-aot-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5607,6 +5715,64 @@
                   "docType": "Undocumented"
                 },
                 "8.0-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|8.0|product-version)",
+          "sharedTags": {
+            "$(sdk|8.0|product-version)-cbl-mariner2.0-aot": {
+              "docType": "Undocumented"
+            },
+            "8.0-cbl-mariner2.0-aot": {
+              "docType": "Undocumented"
+            },
+            "8.0-cbl-mariner-aot": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/sdk/8.0/cbl-mariner2.0-aot/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(sdk|8.0|product-version)-cbl-mariner2.0-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "8.0-cbl-mariner2.0-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "8.0-cbl-mariner-aot-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:sdk)"
+              },
+              "dockerfile": "src/sdk/8.0/cbl-mariner2.0-aot/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(sdk|8.0|product-version)-cbl-mariner2.0-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "8.0-cbl-mariner2.0-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "8.0-cbl-mariner-aot-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
