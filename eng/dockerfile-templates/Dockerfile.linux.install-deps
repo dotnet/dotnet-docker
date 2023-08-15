@@ -1,30 +1,41 @@
 {{
     _ ARGS:
-        isSdk (optional): Indicates whether the dependencies are installed for an sdk Dockerfile
+        is-aot (optional): TODO: fill out
+        is-extra (optional): TODO: fill out
         staging-dir (optional): Location of the staging directory for distroless installation ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
+    set useNewDistrolessPkgLayout to (isDistrolessMariner || isAlpine) && dotnetVersion != "6.0" && dotnetVersion != "7.0" ^
+
     set dotnetDepsComment to "# .NET dependencies" ^
-    set pkgs to when(isAlpine,
-        when (dotnetVersion = "6.0" || dotnetVersion = "7.0",
-            [
-                "krb5-libs",
-                "libgcc",
-                "libintl",
-                cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
-                "libstdc++",
-                "zlib"
-            ],
-            [
-                "libgcc",
-                cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
-                "libstdc++",
-                "zlib"
-            ]
-        ),
+
+    set aotPkgs to when(isDistrolessMariner,
+        [
+            "glibc",
+            "libgcc",
+            "openssl-libs",
+            "zlib"
+        ],
+        [
+            "libgcc",
+            cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
+            "zlib"
+        ]) ^
+    set standardPkgs to sort(cat(aotPkgs, [ "libstdc++" ])) ^
+    set extraPkgs to sort(cat(standardPkgs, [ "icu", "tzdata" ])) ^
+
+    set legacyPkgs to when(isAlpine,
+        [
+            "krb5-libs",
+            "libgcc",
+            "libintl",
+            cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
+            "libstdc++",
+            "zlib"
+        ],
         when(isMariner,
             when(isDistrolessMariner,
                 [
@@ -53,6 +64,15 @@
                 "libstdc++6",
                 "zlib1g"
             ])) ^
+
+    set pkgs to when(useNewDistrolessPkgLayout,
+        when(ARGS["is-extra"],
+            extraPkgs,
+            when(ARGS["is-aot"],
+                aotPkgs,
+                standardPkgs)),
+        legacyPkgs) ^
+
     set certsPkgName to when(isDistrolessMariner,
         "prebuilt-ca-certificates",
         when(isAlpine && dotnetVersion != "6.0" && dotnetVersion != "7.0",
@@ -64,13 +84,16 @@
             "",
             dotnetDepsComment
         ] ^
-    set pkgs to when(ARGS["isSdk"], pkgs, cat(prefixPkgs, pkgs)) ^
+
+    set pkgs to cat(prefixPkgs, pkgs) ^
+
     set pkgMgrOpts to when(len(ARGS["staging-dir"]) > 0,
         cat(" --installroot ", ARGS["staging-dir"]),
         "") ^
     set pkgMgrOpts to when(isDistrolessMariner,
         cat(" --releasever=", OS_VERSION_NUMBER, pkgMgrOpts),
         pkgMgrOpts)
+
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",
     [
         "pkgs": pkgs,
