@@ -15,6 +15,27 @@
     set rocksToolboxUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
     set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|ref")] ^
 
+    set aotPkgs to [
+            "base-files_base",
+            "base-files_release-info",
+            "ca-certificates_data",
+            "libc6_libs",
+            "libgcc-s1_libs",
+            "libssl3_libs",
+            "zlib1g_libs"
+        ] ^
+    set standardPkgs to cat(sort(cat(aotPkgs, [ "libstdc++6_libs" ]))) ^
+    set extraPkgs to cat(sort(cat(standardPkgs,
+            [
+                cat("libicu", VARIABLES[cat("libicu|", OS_VERSION_BASE)])
+            ]))) ^
+
+    set pkgs to when(ARGS["is-extra"],
+            extraPkgs,
+            when(ARGS["is-aot"],
+                aotPkgs,
+                standardPkgs)) ^
+
     set username to "app" ^
     set uid to 1654 ^
     set gid to uid
@@ -56,15 +77,8 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged", [
 
 RUN mkdir -p /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
-        --release "ubuntu-{{osVersionNumber}}" --root /rootfs \
-            base-files_base \
-            base-files_release-info \
-            ca-certificates_data \
-            libc6_libs \
-            libgcc-s1_libs \
-            libssl3_libs \
-            libstdc++6_libs \
-            zlib1g_libs
+        --release "ubuntu-{{osVersionNumber}}" --root /rootfs \{{for index, pkg in pkgs:
+            {{pkg}}{{if index < len(pkgs) - 1: \}}}}
 
 
 FROM scratch

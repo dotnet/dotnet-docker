@@ -41,7 +41,6 @@ RUN mkdir -p /rootfs/var/lib/dpkg/ \
             libc6_libs \
             libgcc-s1_libs \
             libssl3_libs \
-            libstdc++6_libs \
             zlib1g_libs
 
 
