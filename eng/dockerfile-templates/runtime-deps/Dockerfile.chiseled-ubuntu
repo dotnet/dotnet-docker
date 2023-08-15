@@ -1,4 +1,8 @@
 {{
+    _ ARGS:
+        is-aot (optional): TODO: fill out
+        is-extra (optional): TODO: fill out ^
+
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^

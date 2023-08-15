@@ -13,10 +13,11 @@ RUN mkdir /staging \
         \
         # .NET dependencies
         glibc \
-        krb5 \
+        icu \
         libgcc \
         libstdc++ \
         openssl-libs \
+        tzdata \
         zlib \
     && tdnf clean all --releasever=2.0 --installroot /staging
 
