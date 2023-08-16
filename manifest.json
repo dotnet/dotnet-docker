@@ -922,7 +922,16 @@
                 "$(dotnet|8.0|product-version)-alpine3.18-aot-amd64": {},
                 "8.0-alpine3.18-aot-amd64": {},
                 "8.0-alpine-aot-amd64": {}
-              }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-alpine3.18-amd64"
+                  ]
+                }
+              ]
             },
             {
               "architecture": "arm",
@@ -935,7 +944,16 @@
                 "8.0-alpine3.18-aot-arm32v7": {},
                 "8.0-alpine-aot-arm32v7": {}
               },
-              "variant": "v7"
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-alpine3.18-arm32v7"
+                  ]
+                }
+              ]
             },
             {
               "architecture": "arm64",
@@ -948,7 +966,16 @@
                 "8.0-alpine3.18-aot-arm64v8": {},
                 "8.0-alpine-aot-arm64v8": {}
               },
-              "variant": "v8"
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-alpine3.18-arm64v8"
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -5711,7 +5738,16 @@
                 "$(sdk|8.0|product-version)-alpine3.18-aot-amd64": {},
                 "8.0-alpine3.18-aot-amd64": {},
                 "8.0-alpine-aot-amd64": {}
-              }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-alpine3.18-amd64"
+                  ]
+                }
+              ]
             },
             {
               "buildArgs": {
@@ -5727,7 +5763,16 @@
                 "8.0-alpine3.18-aot-arm64v8": {},
                 "8.0-alpine-aot-arm64v8": {}
               },
-              "variant": "v8"
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-alpine3.18-arm64v8"
+                  ]
+                }
+              ]
             }
           ]
         },
