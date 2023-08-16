@@ -7,8 +7,9 @@
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
 
     set isMultiArch to isUbuntu ^
-    set buildArchLongName to when(ARCH_SHORT = "arm64", "aarch64", "x86_64") ^
-    set targetArchLongName to when(ARCH_SHORT = "arm64", "x86_64", "aarch64") ^
+    set buildArchShortName to when(ARCH_SHORT = "arm64", ARCH_SHORT, "amd64") ^
+    set buildArchLongName to when(ARCH_SHORT = "arm64", "aarch64", "x86-64") ^
+    set targetArchLongName to when(ARCH_SHORT = "arm64", "x86-64", "aarch64") ^
     set targetArchShortName to when(ARCH_SHORT = "arm64", "amd64", "arm64") ^
 
     set pkgs to when(isAlpine,
@@ -28,19 +29,23 @@
                 "llvm"
                 cat("zlib1g-dev:", targetArchShortName),
                 "zlib1g-dev",
-            ]))
+            ])) ^
+
+    set ubuntuPortsUrl to when(ARCH_SHORT = "arm64",
+            "http://archive.ubuntu.com/ubuntu/",
+            "http://ports.ubuntu.com/ubuntu-ports/")
 
 }}# syntax=docker/dockerfile:1
 ARG REPO=mcr.microsoft.com/dotnet/sdk
 FROM {{baseImageTag}}
 
 {{if isMultiArch:COPY <<EOF /etc/apt/sources.list.d/{{targetArchShortName}}.list
-deb [arch={{targetArchShortName}}] http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted
-deb [arch={{targetArchShortName}}] http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted
+deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} jammy main restricted
+deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} jammy-updates main restricted
 EOF
 
-RUN sed -i -e 's/deb http/deb [arch=amd64] http/g' /etc/apt/sources.list \
-    && dpkg --add-architecture arm64 \
+RUN sed -i -e 's/deb http/deb [arch={{buildArchShortName}}] http/g' /etc/apt/sources.list \
+    && dpkg --add-architecture {{targetArchShortName}} \
     && {{InsertTemplate("../Dockerfile.linux.install-pkgs", [ "pkgs": pkgs ])}}^
 
 else:RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs", [ "pkgs": pkgs ])}}}}
