@@ -7,7 +7,7 @@ RUN apt-get update \
 
 RUN git clone --no-checkout https://github.com/canonical/chisel /opt/chisel \
     && cd /opt/chisel \
-    && git checkout 86bcf61564287d27950ea0e2a45c87eedbfb0042 \
+    && git checkout 2e69cee456eae3126585a6ba8b4b353ba9c7fc12 \
     \
     && git clone --branch v1.0.0 --depth 1 https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox
 

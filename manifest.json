@@ -5717,22 +5717,6 @@
               "buildArgs": {
                 "REPO": "$(Repo:sdk)"
               },
-              "architecture": "arm",
-              "dockerfile": "src/sdk/8.0/alpine3.18-aot/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "alpine3.18",
-              "tags": {
-                "$(sdk|8.0|product-version)-alpine3.18-aot-arm32v7": {},
-                "8.0-alpine3.18-aot-arm32v7": {},
-                "8.0-alpine-aot-arm32v7": {}
-              },
-              "variant": "v7"
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
               "architecture": "arm64",
               "dockerfile": "src/sdk/8.0/alpine3.18-aot/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
@@ -5818,21 +5802,6 @@
                 "$(sdk|8.0|product-version)-jammy-aot-amd64": {},
                 "8.0-jammy-aot-amd64": {}
               }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "architecture": "arm",
-              "dockerfile": "src/sdk/8.0/jammy-aot/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "jammy",
-              "tags": {
-                "$(sdk|8.0|product-version)-jammy-aot-arm32v7": {},
-                "8.0-jammy-aot-arm32v7": {}
-              },
-              "variant": "v7"
             },
             {
               "buildArgs": {
