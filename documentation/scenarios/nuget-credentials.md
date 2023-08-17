@@ -179,13 +179,13 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-# Change user to workaround https://github.com/microsoft/artifacts-credprovider/issues/201
-USER ContainerAdministrator
 # Install the cred provider
-RUN Invoke-WebRequest https://raw.githubusercontent.com/microsoft/artifacts-credprovider/master/helpers/installcredprovider.ps1 -OutFile installcredprovider.ps1; `
+# In order to install as ContainerUser an explicit temp directory must be created
+WORKDIR /temp
+ENV TMP=C:\temp
+RUN Invoke-WebRequest https://aka.ms/install-artifacts-credprovider.ps1 -OutFile installcredprovider.ps1; `
     .\installcredprovider.ps1; `
     del installcredprovider.ps1
-USER ContainerUser
 
 WORKDIR /app
 
