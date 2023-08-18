@@ -180,7 +180,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install the cred provider
-# In order to install as ContainerUser an explicit temp directory must be created
+# By default, Nano Server runs as ContainerUser. In order to install the cred provider as ContainerUser, an explicit temp directory must be created
 WORKDIR /temp
 ENV TMP=C:\temp
 RUN Invoke-WebRequest https://aka.ms/install-artifacts-credprovider.ps1 -OutFile installcredprovider.ps1; `
