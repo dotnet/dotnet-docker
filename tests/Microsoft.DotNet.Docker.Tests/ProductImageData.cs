@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -12,6 +13,15 @@ namespace Microsoft.DotNet.Docker.Tests
         private string _sdkOS;
         private string _osTag;
         private ImageVersion? _versionFamily;
+        private string _imageVariant;
+
+        private DotNetImageType[] _supportedImageTypes = new[]
+            {
+                DotNetImageType.Runtime_Deps,
+                DotNetImageType.Runtime,
+                DotNetImageType.Aspnet,
+                DotNetImageType.SDK,
+            };
 
         public bool HasCustomSdk => _sdkOS != null;
 
@@ -51,6 +61,18 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _versionFamily = value; }
         }
 
+        public string ImageVariant
+        {
+            get => _imageVariant;
+            set => _imageVariant = value;
+        }
+
+        public DotNetImageType[] SupportedImageTypes
+        {
+            get => _supportedImageTypes;
+            set => _supportedImageTypes = value;
+        }
+
         public string VersionString => Version.ToString();
 
         public override int DefaultPort => (IsDistroless || (Version.Major != 6 && Version.Major != 7)) ? 8080 : 80;
@@ -59,35 +81,42 @@ namespace Microsoft.DotNet.Docker.Tests
             OS == Tests.OS.Mariner20Distroless && (Version.Major == 6 || Version.Major == 7) ? 101 : base.NonRootUID;
 
         public string GetDockerfilePath(DotNetImageType imageType) =>
-            $"src/{GetVariantName(imageType)}/{Version}/{OSTag}/{GetArchLabel()}";
+            $"src/{GetImageTypeName(imageType)}{GetVariantSuffix()}/{Version}/{OSTag}/{GetArchLabel()}";
+
+        private string GetVariantSuffix() =>
+            string.IsNullOrEmpty(_imageVariant) ? "" : $"-{_imageVariant}";
 
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
 
-        public static string GetVariantName(DotNetImageType imageType) =>
+        public static string GetImageTypeName(DotNetImageType imageType) =>
             Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
 
         public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
         {
+            // ASP.NET composite includes its own runtime that we want to test
+            if (ImageVariant == DotNetImageVariant.Composite && imageType == DotNetImageType.Runtime)
+            {
+                imageType = DotNetImageType.Aspnet;
+            }
+
             string tag = GetTagName(imageType);
-            string imageName = GetImageName(tag, GetVariantName(imageType));
+            string imageName = GetImageName(tag, GetImageTypeName(imageType));
 
             PullImageIfNecessary(imageName, dockerHelper);
 
             return imageName;
         }
 
-        public string GetProductVersion(DotNetImageType imageType, DockerHelper dockerHelper)
+        public string GetProductVersion(string imageName, DotNetImageType productVersionType, DockerHelper dockerHelper)
         {
-            string imageName = GetImage(imageType, dockerHelper);
-            string containerName = GetIdentifier($"GetProductVersion-{imageType}");
+            string containerName = GetIdentifier($"GetProductVersion-{productVersionType}");
 
-            return imageType switch
+            return productVersionType switch
             {
                 DotNetImageType.SDK => dockerHelper.Run(imageName, containerName, "dotnet --version"),
                 DotNetImageType.Runtime => GetRuntimeVersion(imageName, containerName, "Microsoft.NETCore.App", dockerHelper),
                 DotNetImageType.Aspnet => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
-                DotNetImageType.Aspnet_Composite => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
-                _ => throw new NotSupportedException($"Unsupported image type '{imageType}'"),
+                _ => throw new NotSupportedException($"Unsupported image type '{productVersionType}'"),
             };
         }
 
@@ -115,11 +144,12 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             ImageVersion imageVersion;
             string os;
+            string variant = SupportedImageTypes.Contains(imageType) ? _imageVariant : "";
+
             switch (imageType)
             {
                 case DotNetImageType.Runtime:
                 case DotNetImageType.Aspnet:
-                case DotNetImageType.Aspnet_Composite:
                 case DotNetImageType.Runtime_Deps:
                 case DotNetImageType.Monitor:
                     imageVersion = Version;
@@ -133,7 +163,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     throw new NotSupportedException($"Unsupported image type '{imageType}'");
             }
 
-            return GetTagName(imageVersion.GetTagName(), os);
+            return GetTagName(imageVersion.GetTagName(), os, variant);
         }
     }
 }

@@ -4,12 +4,8 @@
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public enum DotNetImageType
+    public class DotNetImageVariant
     {
-        SDK,
-        Runtime,
-        Runtime_Deps,
-        Aspnet,
-        Monitor
+        public static string Composite = "composite";
     }
 }

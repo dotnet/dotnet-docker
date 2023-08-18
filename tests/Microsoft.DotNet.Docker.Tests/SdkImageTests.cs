@@ -79,7 +79,8 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            string version = imageData.GetProductVersion(ImageType, DockerHelper);
+            string imageName = imageData.GetImage(ImageType, DockerHelper);
+            string version = imageData.GetProductVersion(imageName, ImageType, DockerHelper);
 
             List<EnvironmentVariableInfo> variables = new()
             {
@@ -91,8 +92,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 {
                     IsProductVersion = true
                 },
-                AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper, isComposite: false),
-                RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper),
+                AspnetImageTests.GetAspnetVersionVariableInfo(imageName, imageData, DockerHelper),
+                RuntimeImageTests.GetRuntimeVersionVariableInfo(imageName, imageData, DockerHelper),
                 new EnvironmentVariableInfo("DOTNET_NOLOGO", "true")
             };
             variables.AddRange(GetCommonEnvironmentVariables());
@@ -102,7 +103,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
             }
 
-            EnvironmentVariableInfo.Validate(variables, imageData.GetImage(DotNetImageType.SDK, DockerHelper), imageData, DockerHelper);
+            EnvironmentVariableInfo.Validate(variables, imageName, imageData, DockerHelper);
         }
 
         [DotNetTheory]
@@ -333,9 +334,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private string GetSdkUrl(ProductImageData imageData)
         {
+            string imageName = imageData.GetImage(ImageType, DockerHelper);
             bool isInternal = Config.IsInternal(imageData.VersionString);
             string sdkBuildVersion = Config.GetBuildVersion(ImageType, imageData.VersionString);
-            string sdkFileVersionLabel = isInternal ? imageData.GetProductVersion(ImageType, DockerHelper) : sdkBuildVersion;
+            string sdkFileVersionLabel = isInternal
+                    ? imageData.GetProductVersion(imageName, ImageType, DockerHelper)
+                    : sdkBuildVersion;
 
             string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
             if (imageData.SdkOS.StartsWith(OS.Alpine))
