@@ -1,6 +1,6 @@
 {{
     _ ARGS:
-        is-aot (optional): TODO: fill out
+        is-aot (optional): Whether to use the smallest set of packages that is necessary to run native AOT apps
         staging-dir (optional): Location of the staging directory for distroless installation ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
