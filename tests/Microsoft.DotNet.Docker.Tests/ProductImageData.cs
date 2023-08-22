@@ -89,8 +89,8 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string GetImageRepoName(DotNetImageRepo imageRepo) =>
             Enum.GetName(typeof(DotNetImageRepo), imageRepo).ToLowerInvariant().Replace('_', '-');
 
-        public static string GetImageVariantName(DotNetImageVariant imageVariant) =>
-            Enum.GetName(typeof(DotNetImageVariant), imageVariant).ToLowerInvariant().Replace('_', '-');
+        public static string GetImageVariantName(DotNetImageVariant imageVariant) => imageVariant == DotNetImageVariant.None
+            ? "" : Enum.GetName(typeof(DotNetImageVariant), imageVariant).ToLowerInvariant();
 
         public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper)
         {
