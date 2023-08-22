@@ -99,8 +99,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 expectedPackages = new[]
                 {
                     "distroless-packages-minimal",
+                    "e2fsprogs-libs",
                     "filesystem",
                     "glibc",
+                    "krb5",
                     "libgcc",
                     "libstdc++",
                     "mariner-release",
