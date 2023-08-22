@@ -7,12 +7,9 @@ using System;
 namespace Microsoft.DotNet.Docker.Tests
 {
     [Flags]
-    public enum DotNetImageRepo
+    public enum DotNetImageVariant
     {
-        SDK             = 1 << 0,
-        Runtime         = 1 << 1,
-        Runtime_Deps    = 1 << 2,
-        Aspnet          = 1 << 3,
-        Monitor         = 1 << 4
+        None        = 0,
+        Composite   = 1 << 0
     }
 }

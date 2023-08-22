@@ -28,7 +28,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         }
 
-        protected override DotNetImageType ImageType => DotNetImageType.SDK;
+        protected override DotNetImageRepo ImageRepo => DotNetImageRepo.SDK;
 
         private bool IsPowerShellSupported(ProductImageData imageData, out string reason)
         {
@@ -54,7 +54,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static IEnumerable<object[]> GetImageData()
         {
-            return TestData.GetImageData(DotNetImageType.SDK)
+            return TestData.GetImageData(DotNetImageRepo.SDK)
                 .Where(imageData => !imageData.IsDistroless)
                 // Filter the image data down to the distinct SDK OSes
                 .Distinct(new SdkImageDataEqualityComparer())
@@ -79,7 +79,8 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            string version = imageData.GetProductVersion(ImageType, DockerHelper);
+            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
+            string version = imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper);
 
             List<EnvironmentVariableInfo> variables = new()
             {
@@ -91,8 +92,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 {
                     IsProductVersion = true
                 },
-                AspnetImageTests.GetAspnetVersionVariableInfo(imageData, DockerHelper, isComposite: false),
-                RuntimeImageTests.GetRuntimeVersionVariableInfo(imageData, DockerHelper),
+                AspnetImageTests.GetAspnetVersionVariableInfo(ImageRepo, imageData, DockerHelper),
+                RuntimeImageTests.GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper),
                 new EnvironmentVariableInfo("DOTNET_NOLOGO", "true")
             };
             variables.AddRange(GetCommonEnvironmentVariables());
@@ -102,7 +103,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
             }
 
-            EnvironmentVariableInfo.Validate(variables, imageData.GetImage(DotNetImageType.SDK, DockerHelper), imageData, DockerHelper);
+            EnvironmentVariableInfo.Validate(variables, imageName, imageData, DockerHelper);
         }
 
         [DotNetTheory]
@@ -234,7 +235,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             DockerHelper.Run(
-                image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
+                image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
                 name: imageData.GetIdentifier($"git"),
                 command: "git version"
             );
@@ -249,7 +250,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             // tar should exist in the SDK for both Linux and Windows. The --version option works in either OS
             DockerHelper.Run(
-                image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
+                image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
                 name: imageData.GetIdentifier("tar"),
                 command: "tar --version"
             );
@@ -276,7 +277,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string command = $"pwsh -Command \"{powerShellCommand}\"";
 
             string containerFileList = DockerHelper.Run(
-                image: imageData.GetImage(ImageType, DockerHelper),
+                image: imageData.GetImage(ImageRepo, DockerHelper),
                 command: command,
                 name: imageData.GetIdentifier("DotnetFolder"));
 
@@ -334,8 +335,10 @@ namespace Microsoft.DotNet.Docker.Tests
         private string GetSdkUrl(ProductImageData imageData)
         {
             bool isInternal = Config.IsInternal(imageData.VersionString);
-            string sdkBuildVersion = Config.GetBuildVersion(ImageType, imageData.VersionString);
-            string sdkFileVersionLabel = isInternal ? imageData.GetProductVersion(ImageType, DockerHelper) : sdkBuildVersion;
+            string sdkBuildVersion = Config.GetBuildVersion(ImageRepo, imageData.VersionString);
+            string sdkFileVersionLabel = isInternal
+                    ? imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper)
+                    : sdkBuildVersion;
 
             string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
             if (imageData.SdkOS.StartsWith(OS.Alpine))
@@ -372,7 +375,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             // A basic test which executes an arbitrary command to validate PS is functional
             string output = DockerHelper.Run(
-                image: imageData.GetImage(DotNetImageType.SDK, DockerHelper),
+                image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
                 name: imageData.GetIdentifier($"pwsh"),
                 optionalRunArgs: optionalArgs,
                 command: $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value"
