@@ -68,36 +68,36 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,                Arch = Arch.Amd64,   SdkOS = OS.Jammy },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,                Arch = Arch.Amd64,   SdkOS = OS.Jammy },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,                Arch = Arch.Amd64,   SdkOS = OS.Jammy,
-                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = new[] { DotNetImageType.Aspnet } },
+                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = DotNetImageType.Aspnet },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,                    Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,                    Arch = Arch.Amd64,   SdkOS = OS.Alpine318,
-                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = new[] { DotNetImageType.Aspnet } },
+                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = DotNetImageType.Aspnet },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20,                    Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless,          Arch = Arch.Amd64,   SdkOS = OS.Mariner20 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless,          Arch = Arch.Amd64,   SdkOS = OS.Mariner20,
-                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = new[] { DotNetImageType.Aspnet } },
+                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = DotNetImageType.Aspnet },
 
             new ProductImageData { Version = V8_0, OS = OS.Mariner20,                    Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless,          Arch = Arch.Arm64,   SdkOS = OS.Mariner20 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless,          Arch = Arch.Arm64,   SdkOS = OS.Mariner20,
-                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = new[] { DotNetImageType.Aspnet } },
+                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = DotNetImageType.Aspnet },
             new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,                 Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.Jammy,                        Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,                Arch = Arch.Arm64,   SdkOS = OS.Jammy },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,                Arch = Arch.Arm64,   SdkOS = OS.Jammy,
-                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = new[] { DotNetImageType.Aspnet } },
+                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = DotNetImageType.Aspnet },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,                    Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,                    Arch = Arch.Arm64,   SdkOS = OS.Alpine318,
-                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = new[] { DotNetImageType.Aspnet } },
+                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = DotNetImageType.Aspnet },
 
             new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,                 Arch = Arch.Arm },
             new ProductImageData { Version = V8_0, OS = OS.Jammy,                        Arch = Arch.Arm },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,                Arch = Arch.Arm,     SdkOS = OS.Jammy },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,                Arch = Arch.Arm,     SdkOS = OS.Jammy,
-                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = new[] { DotNetImageType.Aspnet } },
+                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = DotNetImageType.Aspnet },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,                    Arch = Arch.Arm },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,                    Arch = Arch.Arm,     SdkOS = OS.Alpine318,
-                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = new[] { DotNetImageType.Aspnet } }
+                    ImageVariant = DotNetImageVariant.Composite, SupportedImageTypes = DotNetImageType.Aspnet }
         };
 
         private static readonly ProductImageData[] s_windowsTestData =
@@ -254,7 +254,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static IEnumerable<ProductImageData> FilterImagesBySupportedType(this IEnumerable<ProductImageData> imageData, DotNetImageType imageType)
         {
-            var images = imageData.Where(imageData => imageData.SupportedImageTypes.Contains(imageType));
+            var images = imageData.Where(imageData => imageData.ImageTypeIsSupported(imageType));
             return images;
         }
 

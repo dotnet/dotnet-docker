@@ -15,13 +15,11 @@ namespace Microsoft.DotNet.Docker.Tests
         private ImageVersion? _versionFamily;
         private string _imageVariant;
 
-        private DotNetImageType[] _supportedImageTypes = new[]
-            {
-                DotNetImageType.Runtime_Deps,
-                DotNetImageType.Runtime,
-                DotNetImageType.Aspnet,
-                DotNetImageType.SDK,
-            };
+        private DotNetImageType _supportedImageTypes = 
+                DotNetImageType.Runtime_Deps
+                    | DotNetImageType.Runtime
+                    | DotNetImageType.Aspnet
+                    | DotNetImageType.SDK;
 
         public bool HasCustomSdk => _sdkOS != null;
 
@@ -67,7 +65,7 @@ namespace Microsoft.DotNet.Docker.Tests
             set => _imageVariant = value;
         }
 
-        public DotNetImageType[] SupportedImageTypes
+        public DotNetImageType SupportedImageTypes
         {
             get => _supportedImageTypes;
             set => _supportedImageTypes = value;
@@ -144,7 +142,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             ImageVersion imageVersion;
             string os;
-            string variant = SupportedImageTypes.Contains(imageType) ? _imageVariant : "";
+            string variant = ImageTypeIsSupported(imageType) ? _imageVariant : "";
 
             switch (imageType)
             {
@@ -165,5 +163,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             return GetTagName(imageVersion.GetTagName(), os, variant);
         }
+
+        public bool ImageTypeIsSupported(DotNetImageType imageType) => (SupportedImageTypes & imageType) == imageType;
     }
 }
