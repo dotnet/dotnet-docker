@@ -95,8 +95,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static EnvironmentVariableInfo GetRuntimeVersionVariableInfo(
             DotNetImageRepo imageRepo, ProductImageData imageData, DockerHelper dockerHelper)
         {
-            string imageName = imageData.GetImage(imageRepo, dockerHelper);
-            string version = imageData.GetProductVersion(imageName, DotNetImageRepo.Runtime, dockerHelper);
+            string version = imageData.GetProductVersion(imageRepo, DotNetImageRepo.Runtime, dockerHelper);
             return new EnvironmentVariableInfo("DOTNET_VERSION", version)
             {
                 IsProductVersion = true

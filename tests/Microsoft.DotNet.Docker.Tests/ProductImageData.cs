@@ -105,16 +105,22 @@ namespace Microsoft.DotNet.Docker.Tests
             return imageName;
         }
 
-        public string GetProductVersion(string imageName, DotNetImageRepo productVersionType, DockerHelper dockerHelper)
+        public string GetProductVersion(DotNetImageRepo imageRepoToUse, DotNetImageRepo productVersionRepo, DockerHelper dockerHelper)
         {
-            string containerName = GetIdentifier($"GetProductVersion-{productVersionType}");
+            string imageName = GetImage(imageRepoToUse, dockerHelper);
+            return GetProductVersion(imageName, productVersionRepo, dockerHelper);
+        }
 
-            return productVersionType switch
+        public string GetProductVersion(string imageName, DotNetImageRepo productVersionRepo, DockerHelper dockerHelper)
+        {
+            string containerName = GetIdentifier($"GetProductVersion-{productVersionRepo}");
+
+            return productVersionRepo switch
             {
                 DotNetImageRepo.SDK => dockerHelper.Run(imageName, containerName, "dotnet --version"),
                 DotNetImageRepo.Runtime => GetRuntimeVersion(imageName, containerName, "Microsoft.NETCore.App", dockerHelper),
                 DotNetImageRepo.Aspnet => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
-                _ => throw new NotSupportedException($"Unsupported image type '{productVersionType}'"),
+                _ => throw new NotSupportedException($"Unsupported image type '{productVersionRepo}'"),
             };
         }
 

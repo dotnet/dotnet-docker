@@ -112,8 +112,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(
             DotNetImageRepo imageRepo, ProductImageData imageData, DockerHelper dockerHelper)
         {
-            string imageName = imageData.GetImage(imageRepo, dockerHelper);
-            string version = imageData.GetProductVersion(imageName, DotNetImageRepo.Aspnet, dockerHelper);
+            string version = imageData.GetProductVersion(imageRepo, DotNetImageRepo.Aspnet, dockerHelper);
 
             return new EnvironmentVariableInfo("ASPNET_VERSION", version)
             {

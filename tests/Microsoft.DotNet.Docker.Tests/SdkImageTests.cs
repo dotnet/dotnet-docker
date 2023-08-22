@@ -80,7 +80,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
             string imageName = imageData.GetImage(ImageRepo, DockerHelper);
-            string version = imageData.GetProductVersion(imageName, ImageRepo, DockerHelper);
+            string version = imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper);
 
             List<EnvironmentVariableInfo> variables = new()
             {
@@ -334,11 +334,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private string GetSdkUrl(ProductImageData imageData)
         {
-            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
             bool isInternal = Config.IsInternal(imageData.VersionString);
             string sdkBuildVersion = Config.GetBuildVersion(ImageRepo, imageData.VersionString);
             string sdkFileVersionLabel = isInternal
-                    ? imageData.GetProductVersion(imageName, ImageRepo, DockerHelper)
+                    ? imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper)
                     : sdkBuildVersion;
 
             string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
