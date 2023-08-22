@@ -72,7 +72,7 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged", [
 
 RUN mkdir -p /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
-        --release ubuntu-{{osVersionNumber}} --root /rootfs \{{for index, pkg in pkgs:
+        --release "ubuntu-{{osVersionNumber}}" --root /rootfs \{{for index, pkg in pkgs:
             {{pkg}}{{if index < len(pkgs) - 1: \}}}}
 
 
