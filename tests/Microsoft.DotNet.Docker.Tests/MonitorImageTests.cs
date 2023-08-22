@@ -51,7 +51,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         }
 
-        protected override DotNetImageType ImageType => DotNetImageType.Monitor;
+        protected override DotNetImageRepo ImageRepo => DotNetImageRepo.Monitor;
 
         public static IEnumerable<object[]> GetMonitorImageData() =>
             TestData.GetMonitorImageData()
@@ -145,7 +145,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             EnvironmentVariableInfo.Validate(
                 variables,
-                imageData.GetImage(ImageType, DockerHelper),
+                imageData.GetImage(ImageRepo, DockerHelper),
                 imageData,
                 DockerHelper);
         }
@@ -629,7 +629,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void GetNames(ProductImageData imageData, out string imageName, out string containerName, out int userIdentifier)
         {
-            imageName = imageData.GetImage(ImageType, DockerHelper);
+            imageName = imageData.GetImage(ImageRepo, DockerHelper);
             containerName = imageData.GetIdentifier("monitortest");
             // If user is empty, then image is running as same as docker daemon (typically root)
             userIdentifier = string.IsNullOrEmpty(DockerHelper.GetImageUser(imageName)) ? 0 : imageData.NonRootUID.Value;

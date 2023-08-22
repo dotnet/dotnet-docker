@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -12,6 +13,13 @@ namespace Microsoft.DotNet.Docker.Tests
         private string _sdkOS;
         private string _osTag;
         private ImageVersion? _versionFamily;
+        private DotNetImageVariant _imageVariant = DotNetImageVariant.None;
+
+        private DotNetImageRepo _supportedImageRepos = 
+                DotNetImageRepo.Runtime_Deps
+                    | DotNetImageRepo.Runtime
+                    | DotNetImageRepo.Aspnet
+                    | DotNetImageRepo.SDK;
 
         public bool HasCustomSdk => _sdkOS != null;
 
@@ -51,6 +59,18 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _versionFamily = value; }
         }
 
+        public DotNetImageVariant ImageVariant
+        {
+            get => _imageVariant;
+            set => _imageVariant = value;
+        }
+
+        public DotNetImageRepo SupportedImageRepos
+        {
+            get => _supportedImageRepos;
+            set => _supportedImageRepos = value;
+        }
+
         public string VersionString => Version.ToString();
 
         public override int DefaultPort => (IsDistroless || (Version.Major != 6 && Version.Major != 7)) ? 8080 : 80;
@@ -58,36 +78,52 @@ namespace Microsoft.DotNet.Docker.Tests
         public override int? NonRootUID =>
             OS == Tests.OS.Mariner20Distroless && (Version.Major == 6 || Version.Major == 7) ? 101 : base.NonRootUID;
 
-        public string GetDockerfilePath(DotNetImageType imageType) =>
-            $"src/{GetVariantName(imageType)}/{Version}/{OSTag}/{GetArchLabel()}";
+        public string GetDockerfilePath(DotNetImageRepo imageRepo) =>
+            $"src/{GetImageRepoName(imageRepo)}{GetVariantSuffix()}/{Version}/{OSTag}/{GetArchLabel()}";
+
+        private string GetVariantSuffix() =>
+            ImageVariant == DotNetImageVariant.None ? "" : $"-{GetImageVariantName(ImageVariant)}";
 
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
 
-        public static string GetVariantName(DotNetImageType imageType) =>
-            Enum.GetName(typeof(DotNetImageType), imageType).ToLowerInvariant().Replace('_', '-');
+        public static string GetImageRepoName(DotNetImageRepo imageRepo) =>
+            Enum.GetName(typeof(DotNetImageRepo), imageRepo).ToLowerInvariant().Replace('_', '-');
 
-        public string GetImage(DotNetImageType imageType, DockerHelper dockerHelper)
+        public static string GetImageVariantName(DotNetImageVariant imageVariant) => imageVariant == DotNetImageVariant.None
+            ? "" : Enum.GetName(typeof(DotNetImageVariant), imageVariant).ToLowerInvariant();
+
+        public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper)
         {
-            string tag = GetTagName(imageType);
-            string imageName = GetImageName(tag, GetVariantName(imageType));
+            // ASP.NET composite includes its own runtime that we want to test
+            if (ImageVariant == DotNetImageVariant.Composite && imageRepo == DotNetImageRepo.Runtime)
+            {
+                imageRepo = DotNetImageRepo.Aspnet;
+            }
+
+            string tag = GetTagName(imageRepo);
+            string imageName = GetImageName(tag, GetImageRepoName(imageRepo));
 
             PullImageIfNecessary(imageName, dockerHelper);
 
             return imageName;
         }
 
-        public string GetProductVersion(DotNetImageType imageType, DockerHelper dockerHelper)
+        public string GetProductVersion(DotNetImageRepo imageRepoToUse, DotNetImageRepo productVersionRepo, DockerHelper dockerHelper)
         {
-            string imageName = GetImage(imageType, dockerHelper);
-            string containerName = GetIdentifier($"GetProductVersion-{imageType}");
+            string imageName = GetImage(imageRepoToUse, dockerHelper);
+            return GetProductVersion(imageName, productVersionRepo, dockerHelper);
+        }
 
-            return imageType switch
+        public string GetProductVersion(string imageName, DotNetImageRepo productVersionRepo, DockerHelper dockerHelper)
+        {
+            string containerName = GetIdentifier($"GetProductVersion-{productVersionRepo}");
+
+            return productVersionRepo switch
             {
-                DotNetImageType.SDK => dockerHelper.Run(imageName, containerName, "dotnet --version"),
-                DotNetImageType.Runtime => GetRuntimeVersion(imageName, containerName, "Microsoft.NETCore.App", dockerHelper),
-                DotNetImageType.Aspnet => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
-                DotNetImageType.Aspnet_Composite => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
-                _ => throw new NotSupportedException($"Unsupported image type '{imageType}'"),
+                DotNetImageRepo.SDK => dockerHelper.Run(imageName, containerName, "dotnet --version"),
+                DotNetImageRepo.Runtime => GetRuntimeVersion(imageName, containerName, "Microsoft.NETCore.App", dockerHelper),
+                DotNetImageRepo.Aspnet => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
+                _ => throw new NotSupportedException($"Unsupported image type '{productVersionRepo}'"),
             };
         }
 
@@ -111,29 +147,34 @@ namespace Microsoft.DotNet.Docker.Tests
             return executable + command;
         }
 
-        private string GetTagName(DotNetImageType imageType)
+        private string GetTagName(DotNetImageRepo imageRepo)
         {
             ImageVersion imageVersion;
             string os;
-            switch (imageType)
+            string variant = ImageRepoIsSupported(imageRepo) && ImageVariant != DotNetImageVariant.None
+                ? GetImageVariantName(ImageVariant)
+                : "";
+
+            switch (imageRepo)
             {
-                case DotNetImageType.Runtime:
-                case DotNetImageType.Aspnet:
-                case DotNetImageType.Aspnet_Composite:
-                case DotNetImageType.Runtime_Deps:
-                case DotNetImageType.Monitor:
+                case DotNetImageRepo.Runtime:
+                case DotNetImageRepo.Aspnet:
+                case DotNetImageRepo.Runtime_Deps:
+                case DotNetImageRepo.Monitor:
                     imageVersion = Version;
                     os = OSTag;
                     break;
-                case DotNetImageType.SDK:
+                case DotNetImageRepo.SDK:
                     imageVersion = Version;
                     os = SdkOS;
                     break;
                 default:
-                    throw new NotSupportedException($"Unsupported image type '{imageType}'");
+                    throw new NotSupportedException($"Unsupported image type '{imageRepo}'");
             }
 
-            return GetTagName(imageVersion.GetTagName(), os);
+            return GetTagName(imageVersion.GetTagName(), os, variant);
         }
+
+        public bool ImageRepoIsSupported(DotNetImageRepo imageRepo) => SupportedImageRepos.HasFlag(imageRepo);
     }
 }
