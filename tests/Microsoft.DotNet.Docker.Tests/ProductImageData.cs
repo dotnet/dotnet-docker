@@ -13,7 +13,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private string _sdkOS;
         private string _osTag;
         private ImageVersion? _versionFamily;
-        private string _imageVariant;
+        private DotNetImageVariant _imageVariant = DotNetImageVariant.None;
 
         private DotNetImageRepo _supportedImageRepos = 
                 DotNetImageRepo.Runtime_Deps
@@ -59,7 +59,7 @@ namespace Microsoft.DotNet.Docker.Tests
             set { _versionFamily = value; }
         }
 
-        public string ImageVariant
+        public DotNetImageVariant ImageVariant
         {
             get => _imageVariant;
             set => _imageVariant = value;
@@ -82,12 +82,15 @@ namespace Microsoft.DotNet.Docker.Tests
             $"src/{GetImageRepoName(imageRepo)}{GetVariantSuffix()}/{Version}/{OSTag}/{GetArchLabel()}";
 
         private string GetVariantSuffix() =>
-            string.IsNullOrEmpty(_imageVariant) ? "" : $"-{_imageVariant}";
+            ImageVariant == DotNetImageVariant.None ? "" : $"-{GetImageVariantName(ImageVariant)}";
 
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
 
         public static string GetImageRepoName(DotNetImageRepo imageRepo) =>
             Enum.GetName(typeof(DotNetImageRepo), imageRepo).ToLowerInvariant().Replace('_', '-');
+
+        public static string GetImageVariantName(DotNetImageVariant imageVariant) =>
+            Enum.GetName(typeof(DotNetImageVariant), imageVariant).ToLowerInvariant().Replace('_', '-');
 
         public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper)
         {
@@ -148,7 +151,9 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             ImageVersion imageVersion;
             string os;
-            string variant = ImageRepoIsSupported(imageRepo) ? _imageVariant : "";
+            string variant = ImageRepoIsSupported(imageRepo) && ImageVariant != DotNetImageVariant.None
+                ? GetImageVariantName(ImageVariant)
+                : "";
 
             switch (imageRepo)
             {
