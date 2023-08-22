@@ -92,8 +92,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 {
                     IsProductVersion = true
                 },
-                AspnetImageTests.GetAspnetVersionVariableInfo(imageName, imageData, DockerHelper),
-                RuntimeImageTests.GetRuntimeVersionVariableInfo(imageName, imageData, DockerHelper),
+                AspnetImageTests.GetAspnetVersionVariableInfo(ImageRepo, imageData, DockerHelper),
+                RuntimeImageTests.GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper),
                 new EnvironmentVariableInfo("DOTNET_NOLOGO", "true")
             };
             variables.AddRange(GetCommonEnvironmentVariables());

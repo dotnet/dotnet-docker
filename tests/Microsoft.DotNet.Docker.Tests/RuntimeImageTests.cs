@@ -41,11 +41,9 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
-
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>
             {
-                GetRuntimeVersionVariableInfo(imageName, imageData, DockerHelper)
+                GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper)
             };
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);
@@ -95,8 +93,9 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         public static EnvironmentVariableInfo GetRuntimeVersionVariableInfo(
-            string imageName, ProductImageData imageData, DockerHelper dockerHelper)
+            DotNetImageRepo imageRepo, ProductImageData imageData, DockerHelper dockerHelper)
         {
+            string imageName = imageData.GetImage(imageRepo, dockerHelper);
             string version = imageData.GetProductVersion(imageName, DotNetImageRepo.Runtime, dockerHelper);
             return new EnvironmentVariableInfo("DOTNET_VERSION", version)
             {

@@ -50,16 +50,14 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             List<EnvironmentVariableInfo> variables = new();
 
-            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
-
             // Skip runtime version check due to https://github.com/dotnet/dotnet-docker/issues/4834.
             // Re-enable when fixed.
             if (imageData.ImageVariant != DotNetImageVariant.Composite)
             {
-                variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(imageName, imageData, DockerHelper));
+                variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper));
             }
 
-            EnvironmentVariableInfo aspnetVersionVariableInfo = GetAspnetVersionVariableInfo(imageName, imageData, DockerHelper);
+            EnvironmentVariableInfo aspnetVersionVariableInfo = GetAspnetVersionVariableInfo(ImageRepo, imageData, DockerHelper);
             if (aspnetVersionVariableInfo != null)
             {
                 variables.Add(aspnetVersionVariableInfo);
@@ -112,8 +110,9 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(
-            string imageName, ProductImageData imageData, DockerHelper dockerHelper)
+            DotNetImageRepo imageRepo, ProductImageData imageData, DockerHelper dockerHelper)
         {
+            string imageName = imageData.GetImage(imageRepo, dockerHelper);
             string version = imageData.GetProductVersion(imageName, DotNetImageRepo.Aspnet, dockerHelper);
 
             return new EnvironmentVariableInfo("ASPNET_VERSION", version)
