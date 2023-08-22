@@ -23,7 +23,16 @@
             cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
             "zlib"
         ]) ^
-    set standardPkgs to sort(cat(aotPkgs, [ "libstdc++" ])) ^
+    set standardPkgs to sort(cat(aotPkgs,
+        when(isDistrolessMariner,
+            [
+                "krb5",
+                "libstdc++"
+            ],
+            [
+                "libstdc++"
+            ]
+        ))) ^
 
     set legacyPkgs to when(isAlpine,
         [
