@@ -20,9 +20,9 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         }
 
-        protected override DotNetImageType ImageType => DotNetImageType.Runtime_Deps;
+        protected override DotNetImageRepo ImageRepo => DotNetImageRepo.Runtime_Deps;
 
-        public static IEnumerable<object[]> GetImageData() => GetImageData(DotNetImageType.Runtime_Deps);
+        public static IEnumerable<object[]> GetImageData() => GetImageData(DotNetImageRepo.Runtime_Deps);
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
@@ -89,7 +89,7 @@ namespace Microsoft.DotNet.Docker.Tests
             const string SyftImage = "anchore/syft:v0.84.0";
             DockerHelper.Pull(SyftImage);
 
-            string imageName = imageData.GetImage(ImageType, DockerHelper);
+            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
             string output = DockerHelper.Run(
                 SyftImage, "distroless-packages", $"packages docker:{imageName} -o json", useMountedDockerSocket: true);
 

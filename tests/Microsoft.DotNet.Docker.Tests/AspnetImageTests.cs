@@ -18,9 +18,9 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         }
 
-        protected override DotNetImageType ImageType => DotNetImageType.Aspnet;
+        protected override DotNetImageRepo ImageRepo => DotNetImageRepo.Aspnet;
 
-        public static IEnumerable<object[]> GetImageData() => GetImageData(DotNetImageType.Aspnet);
+        public static IEnumerable<object[]> GetImageData() => GetImageData(DotNetImageRepo.Aspnet);
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
@@ -50,7 +50,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             List<EnvironmentVariableInfo> variables = new();
 
-            string imageName = imageData.GetImage(ImageType, DockerHelper);
+            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
 
             // Skip runtime version check due to https://github.com/dotnet/dotnet-docker/issues/4834.
             // Re-enable when fixed.
@@ -114,7 +114,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static EnvironmentVariableInfo GetAspnetVersionVariableInfo(
             string imageName, ProductImageData imageData, DockerHelper dockerHelper)
         {
-            string version = imageData.GetProductVersion(imageName, DotNetImageType.Aspnet, dockerHelper);
+            string version = imageData.GetProductVersion(imageName, DotNetImageRepo.Aspnet, dockerHelper);
 
             return new EnvironmentVariableInfo("ASPNET_VERSION", version)
             {

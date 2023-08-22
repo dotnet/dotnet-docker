@@ -197,17 +197,17 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string tag = _imageData.GetIdentifier(stageTarget);
 
-            DotNetImageType runtimeImageType = _isWeb ? DotNetImageType.Aspnet : DotNetImageType.Runtime;
+            DotNetImageRepo runtimeImageRepo = _isWeb ? DotNetImageRepo.Aspnet : DotNetImageRepo.Runtime;
             List<string> buildArgs = new()
             {
-                $"sdk_image={_imageData.GetImage(DotNetImageType.SDK, _dockerHelper)}",
-                $"runtime_image={_imageData.GetImage(runtimeImageType, _dockerHelper)}",
+                $"sdk_image={_imageData.GetImage(DotNetImageRepo.SDK, _dockerHelper)}",
+                $"runtime_image={_imageData.GetImage(runtimeImageRepo, _dockerHelper)}",
                 $"port={_imageData.DefaultPort}"
             };
 
             if (DockerHelper.IsLinuxContainerModeEnabled)
             {
-                buildArgs.Add($"runtime_deps_image={_imageData.GetImage(DotNetImageType.Runtime_Deps, _dockerHelper)}");
+                buildArgs.Add($"runtime_deps_image={_imageData.GetImage(DotNetImageRepo.Runtime_Deps, _dockerHelper)}");
             }
 
             if (customBuildArgs != null)
@@ -306,7 +306,7 @@ namespace Microsoft.DotNet.Docker.Tests
             const string ProjectContainerDir = "/app";
 
             _dockerHelper.Run(
-                image: _imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
+                image: _imageData.GetImage(DotNetImageRepo.SDK, _dockerHelper),
                 name: containerName,
                 command: $"dotnet new {String.Join(' ', args)}",
                 workdir: ProjectContainerDir,

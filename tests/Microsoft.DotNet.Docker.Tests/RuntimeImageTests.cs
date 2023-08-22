@@ -18,9 +18,9 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         }
 
-        protected override DotNetImageType ImageType => DotNetImageType.Runtime;
+        protected override DotNetImageRepo ImageRepo => DotNetImageRepo.Runtime;
 
-        public static IEnumerable<object[]> GetImageData() => GetImageData(DotNetImageType.Runtime);
+        public static IEnumerable<object[]> GetImageData() => GetImageData(DotNetImageRepo.Runtime);
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
@@ -41,7 +41,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            string imageName = imageData.GetImage(ImageType, DockerHelper);
+            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
 
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>
             {
@@ -97,7 +97,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static EnvironmentVariableInfo GetRuntimeVersionVariableInfo(
             string imageName, ProductImageData imageData, DockerHelper dockerHelper)
         {
-            string version = imageData.GetProductVersion(imageName, DotNetImageType.Runtime, dockerHelper);
+            string version = imageData.GetProductVersion(imageName, DotNetImageRepo.Runtime, dockerHelper);
             return new EnvironmentVariableInfo("DOTNET_VERSION", version)
             {
                 IsProductVersion = true
