@@ -1,1 +1,0 @@
-{{InsertTemplate("Dockerfile.chiseled-ubuntu", [ "is-extra": "true" ])}}

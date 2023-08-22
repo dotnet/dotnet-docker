@@ -1,7 +1,6 @@
 {{
     _ ARGS:
         is-aot (optional): TODO: fill out
-        is-extra (optional): TODO: fill out
         staging-dir (optional): Location of the staging directory for distroless installation ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
@@ -25,7 +24,6 @@
             "zlib"
         ]) ^
     set standardPkgs to sort(cat(aotPkgs, [ "libstdc++" ])) ^
-    set extraPkgs to sort(cat(standardPkgs, [ "icu", "tzdata" ])) ^
 
     set legacyPkgs to when(isAlpine,
         [
@@ -66,11 +64,9 @@
             ])) ^
 
     set pkgs to when(useNewDistrolessPkgLayout,
-        when(ARGS["is-extra"],
-            extraPkgs,
-            when(ARGS["is-aot"],
-                aotPkgs,
-                standardPkgs)),
+        when(ARGS["is-aot"],
+            aotPkgs,
+            standardPkgs),
         legacyPkgs) ^
 
     set certsPkgName to when(isDistrolessMariner,

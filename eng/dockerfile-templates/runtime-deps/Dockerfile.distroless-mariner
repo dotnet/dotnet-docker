@@ -1,8 +1,6 @@
 {{
     _ ARGS:
-        is-aot (optional): Whether to use the smallest set of packages that is necessary to run native AOT apps
-        is-extra (optional): Whether to include extra packages that are not needed for every app,
-            for example globalization support ^
+        is-aot (optional): Whether to use the smallest set of packages that is necessary to run native AOT apps ^
 
     set distrolessStagingDir to "/staging" ^
     set marinerRepo to "mcr.microsoft.com/cbl-mariner" ^
@@ -25,7 +23,6 @@ RUN mkdir {{distrolessStagingDir}} \
     && {{InsertTemplate("../Dockerfile.linux.install-deps",
             [
                 "is-aot": ARGS["is-aot"],
-                "is-extra": ARGS["is-extra"],
                 "staging-dir": distrolessStagingDir
             ]
         )}}
