@@ -37,9 +37,9 @@ RUN powershell -Command " `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.4.0-preview.3'; `
+        $powershell_version = '7.4.0-preview.5'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pwshtool.blob.core.windows.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = 'e1c97f48e5de1b38dfaf60be1085c3f6c996c61a5ce1a20dec0a9e50bb747cccf816c6778f77951cff7f3b24095d7e7f849bc9b222e139ef07c7b90381a4b21b'; `
+        $powershell_sha512 = '68e91c15fff44972284c9e2922ea471bf6061f9bfa15b58dcf18c52db8257a2e6431a8166962880e415a47abe1d0391f9931c280fa93de603433c1de8f2379b9'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -48,11 +48,6 @@ RUN powershell -Command " `
         & \dotnet\dotnet nuget locals all --clear; `
         Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
         Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force; `
-        `
-        # Workaround for https://github.com/PowerShell/PowerShell/issues/19679
-        $runtimeConfig = Get-Content \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\tools\net8.0\any\pwsh.runtimeconfig.json -Raw | ConvertFrom-Json; `
-        $runtimeConfig.runtimeOptions.configProperties | Add-Member -MemberType NoteProperty -Name "System.Runtime.Loader.UseRidGraph" -Value $true; `
-        $runtimeConfig | ConvertTo-Json -Depth 10 | Set-Content \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\tools\net8.0\any\pwsh.runtimeconfig.json; `
         `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
         Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
