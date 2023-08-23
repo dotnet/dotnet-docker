@@ -89,8 +89,8 @@
     "libssl|focal": "1.1",
     "libssl|jammy": "3",
 
-    "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.41.0.windows.3/MinGit-2.41.0.3-64-bit.zip",
-    "mingit|x64|sha": "b7487724fbd85dd345e7deb4c37c1d3958b139904a6981fb80ec5b31728cd0f2",
+    "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.1/MinGit-2.42.0-64-bit.zip",
+    "mingit|x64|sha": "b945e6df773fd8013f12e26b65b6815122be62a241d3ef4b9ed2d5ae67ae0aa1",
 
     "monitor|6.3|build-version": "6.3.2-servicing.23106.4",
     "monitor|6.3|linux-musl|x64|sha": "aca88dfe67e582eb065ee0518cb5eee653e38494a5a6b5d80a397a1582869355b99d04aeb777ae4fc1f13f71f9a35bb37cc4137f85705ea3af615279051d56c1",
@@ -223,14 +223,14 @@
     "sdk|7.0|linux|x64|sha": "4cfeedb8e99ffd423da7a99159ee3f31535fd142711941b8206542acb6be26638fbd9a184a5d904084ffdbd8362c83b6b2acf9d193b2cd38bf7f061443439e3c",
     "sdk|7.0|win|x64|sha": "a8d73ecf7c17ae8bc7a7cd3ec7c290fe3c3b67e4456a13b8356aaaafbcfef166ebcdd4106a42ce513fbce2b208bc9dd97dbd63cf6328c64b828776bfcd9b8775",
 
-    "sdk|8.0|build-version": "8.0.100-rc.1.23415.19",
+    "sdk|8.0|build-version": "8.0.100-rc.1.23422.1",
     "sdk|8.0|product-version": "8.0.100-rc.1",
-    "sdk|8.0|linux-musl|arm|sha": "3b6a9c0ed8d1cc3a4a5ac5fc0baa9309437eb55b7e04b23348f03cbfd43e352580c529741fccf1e3e0bed389d3c4f4e200d63939006c92fa109438d3ccbdc8bb",
-    "sdk|8.0|linux-musl|arm64|sha": "9ee1d68ac87d1b462a76188c108d0a92a2de4e33cbc61b02822751dfdd15e4edbc93358a592c962cea18b171f207fa9e1937fcf3716470a903a4f7b230af798a",
-    "sdk|8.0|linux-musl|x64|sha": "141287511d9b96b7499234669dab655de8611575f1d81c3dbbad427ad74328424b7d2762fb00e69d13fce35dedcc52a99075bc976d39ca4d1d5fc859fbc60db7",
-    "sdk|8.0|linux|arm|sha": "3946684f25f6614686bf06d497b85dd887b7509b7a19241f9170e5d695484c43d541c43e3c6df61196010e4b3a661671f3565f9fb05b17107ba97f95141d924c",
-    "sdk|8.0|linux|arm64|sha": "17e7b4b9805aafdc47714aff6f8e2b4fb1c1a15bdd2edaa9ae4d9c8bfac9e473333dd805277a270e31fb4c8ce91c018f288a73af2692e33b54f6ee56e1fe6c30",
-    "sdk|8.0|linux|x64|sha": "faa2de4d54b65d68822a06f4381083784b7fa8f6fec56d3470ab6fd886c3c86e060afda0b8b06b74587fa37c6dc3b82b9c9f515d44db280f80363f153cdd9b8c",
-    "sdk|8.0|win|x64|sha": "4883e4188eb6b4c6895a7230a05035053e381f7413d2716f11f3d2b3d3fd68daa7306b72d371d50fd8de14bf0822e240500985d2b43659397888b985e4c7d311"
+    "sdk|8.0|linux-musl|arm|sha": "d81504c8e617a0c595cbaf2cf3fbec51c59e90795941e96951db9fbba5c70585e04adfcf9a02d4a7920d83a0bb098bbb7d05e75b31f39adfafc6f305d138a255",
+    "sdk|8.0|linux-musl|arm64|sha": "5fe7f886ae554e9552a19dca2fa16d29eb2793de867d361b423401abc19356f5e7bd7e584d65e2fc3704731e0dc4fb7e2b865043559ac0bcd57d225c5cf87b01",
+    "sdk|8.0|linux-musl|x64|sha": "7973c31b06e2255b3d33d9d7798cda17a016869ea0abd7527ba69ab71aeffe291ae05a61717d5b1d2c2847036d8a5b77977d62b93e27a60a789aae138496fd41",
+    "sdk|8.0|linux|arm|sha": "3b4e38183893210c3dd93719465958006d9a0f0d00f77cb37d7641d589cf2cc1209f2f51aed2ccfa7db0ea481a76fb47d45b31205579a4fc1ce1d1489957fbbc",
+    "sdk|8.0|linux|arm64|sha": "7354ee9ce6539d5317c54c45ef9ed38ccf286349628e879d316846490492151d82c562cbb72ece424e544eec06e44da5f0d62a9378dbc285b924fc52ff235dc8",
+    "sdk|8.0|linux|x64|sha": "7eb2139cf7c2949c577422d7b83bf136476f15763587d89dd91cf0e8def011fc6677aa6c725792864fb56b824d6f0cf5adbf7f44b828e36210f277b99d6cae0b",
+    "sdk|8.0|win|x64|sha": "b90b0f6d4ba682800e2accf20a2ef18940a76578aed2fbebc209ced4f0badb74ad2e6e5bd883a4663807b6f794473334ccda45727425826cfc8ea441001a2469"
   }
 }
