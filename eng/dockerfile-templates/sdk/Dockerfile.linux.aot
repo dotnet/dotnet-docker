@@ -26,7 +26,6 @@
             [
                 "clang",
                 cat("gcc-", targetArchLongName, "-linux-gnu"),
-                "llvm"
                 cat("zlib1g-dev:", targetArchShortName),
                 "zlib1g-dev",
             ])) ^

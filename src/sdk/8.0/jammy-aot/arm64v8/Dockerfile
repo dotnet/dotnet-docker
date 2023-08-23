@@ -13,7 +13,6 @@ RUN sed -i -e 's/deb http/deb [arch=arm64] http/g' /etc/apt/sources.list \
     && apt-get install -y --no-install-recommends \
         clang \
         gcc-x86-64-linux-gnu \
-        llvm \
         zlib1g-dev:amd64 \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
