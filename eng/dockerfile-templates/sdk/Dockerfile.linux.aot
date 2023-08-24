@@ -30,6 +30,7 @@
                 "zlib1g-dev",
             ])) ^
 
+    set sourcesListFilePath to cat("/etc/apt/sources.list.d/", targetArchShortName, ".list") ^
     set ubuntuPortsUrl to when(ARCH_SHORT = "arm64",
             "http://archive.ubuntu.com/ubuntu/",
             "http://ports.ubuntu.com/ubuntu-ports/")
@@ -38,10 +39,8 @@
 ARG REPO=mcr.microsoft.com/dotnet/sdk
 FROM {{baseImageTag}}
 
-{{if isMultiArch:COPY <<EOF /etc/apt/sources.list.d/{{targetArchShortName}}.list
-deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} jammy main restricted
-deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} jammy-updates main restricted
-EOF
+{{if isMultiArch:RUN echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} jammy main restricted" > {{sourcesListFilePath}} \
+    && echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} jammy-updates main restricted" >> {{sourcesListFilePath}}
 
 RUN sed -i -e 's/deb http/deb [arch={{buildArchShortName}}] http/g' /etc/apt/sources.list \
     && dpkg --add-architecture {{targetArchShortName}} \
