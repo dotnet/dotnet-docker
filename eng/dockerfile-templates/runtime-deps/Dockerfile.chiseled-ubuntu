@@ -89,9 +89,12 @@ FROM scratch
 
 COPY --from=chisel /rootfs /
 
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs",
+    [
+        "uid": uid,
+        "globalization-invariant": !ARGS["is-extra"]
+    ]
+)}}
 
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=chisel --chown=$APP_UID:$APP_UID /rootfs/home/{{username}} /home/{{username}}

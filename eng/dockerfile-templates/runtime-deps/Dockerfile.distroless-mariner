@@ -60,9 +60,12 @@ RUN rm -rf {{distrolessStagingDir}}/etc/tdnf \
 # .NET runtime-deps image
 FROM {{baseImage}}
 
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs",
+    [
+        "uid": uid,
+        "globalization-invariant": !ARGS["is-extra"]
+    ]
+)}}
 
 COPY --from=installer {{distrolessStagingDir}}/ /{{if createUserHome:
 

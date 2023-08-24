@@ -31,6 +31,7 @@
     set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm" ^
     set utilPkgs to when(isMariner && nonRootUserSupported, ["shadow-utils"], []) ^
+    set useGlobalizationInvariantMode to !ARGS["is-extra"] && (isDistroless || isAlpine) ^
     set username to "app" ^
     set uid to 1654 ^
     set gid to uid ^
@@ -51,7 +52,12 @@ RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
 
 FROM {{baseImageRepo}}:{{baseImageTag}}}}
 
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [ "uid": uid ])}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs",
+    [
+        "uid": uid,
+        "globalization-invariant": useGlobalizationInvariantMode
+    ]
+)}}
 
 RUN {{InsertTemplate("../Dockerfile.linux.install-deps",
     [

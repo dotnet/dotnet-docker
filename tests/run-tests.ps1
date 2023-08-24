@@ -152,6 +152,7 @@ Try {
         $testFilter = "--filter `"$testFilter`""
     }
 
+    Write-Host "$testFilter"
     Exec "$DotnetInstallDir/dotnet test $testFilter --logger:trx"
 
     if ($TestCategories.Contains('image-size')) {

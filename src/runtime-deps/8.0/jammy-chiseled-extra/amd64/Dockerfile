@@ -58,9 +58,7 @@ ENV \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 \
     # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true \
-    # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+    DOTNET_RUNNING_IN_CONTAINER=true
 
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=chisel --chown=$APP_UID:$APP_UID /rootfs/home/app /home/app
