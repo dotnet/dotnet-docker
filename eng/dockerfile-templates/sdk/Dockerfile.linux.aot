@@ -40,9 +40,8 @@ ARG REPO=mcr.microsoft.com/dotnet/sdk
 FROM {{baseImageTag}}
 
 {{if isMultiArch:RUN echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} jammy main restricted" > {{sourcesListFilePath}} \
-    && echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} jammy-updates main restricted" >> {{sourcesListFilePath}}
-
-RUN sed -i -e 's/deb http/deb [arch={{buildArchShortName}}] http/g' /etc/apt/sources.list \
+    && echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} jammy-updates main restricted" >> {{sourcesListFilePath}} \
+    && sed -i -e 's/deb http/deb [arch={{buildArchShortName}}] http/g' /etc/apt/sources.list \
     && dpkg --add-architecture {{targetArchShortName}} \
     && {{InsertTemplate("../Dockerfile.linux.install-pkgs", [ "pkgs": pkgs ])}}^
 
