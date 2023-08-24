@@ -31,7 +31,7 @@ These are the guiding principles for the content, tagging and production of the 
 
 1. For packages that are installed from a native package manager:
     * When a package is installed, it will be done so in a way that forces it to be upgraded. This ensures the latest version of the package is installed even if an older version of the package was installed in a base image.
-    * A package will be listed for install if it is a top-level packages necessary to fulfill required scenarios for the image.
+    * A package will be listed for install if it is a top-level package necessary to fulfill required scenarios for the image.
     * A dependency of a top-level package will not be listed for install unless it is deemed to have sufficient CVE activity that would make it beneficial to do so.
 
 ## Image Tagging
