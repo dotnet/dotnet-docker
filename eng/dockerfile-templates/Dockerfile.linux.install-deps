@@ -1,30 +1,70 @@
 {{
     _ ARGS:
-        isSdk (optional): Indicates whether the dependencies are installed for an sdk Dockerfile
+        is-extra (optional): Whether to include extra packages that are not needed for every app,
+            for example globalization support
         staging-dir (optional): Location of the staging directory for distroless installation ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
+    set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
+    set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
+    set isFullMariner to isMariner && !isDistrolessMariner ^
+    set useLegacyPackageLayout to dotnetVersion = "6.0" || dotnetVersion = "7.0" ^
+
     set dotnetDepsComment to "# .NET dependencies" ^
-    set pkgs to when(isAlpine,
-        when (dotnetVersion = "6.0" || dotnetVersion = "7.0",
+
+    set basePkgs to when(isMariner,
+        [
+            "glibc",
+            "libgcc",
+            "openssl-libs",
+            "zlib"
+        ],
+        when(isAlpine,
             [
-                "krb5-libs",
                 "libgcc",
-                "libintl",
                 cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
-                "libstdc++",
                 "zlib"
             ],
             [
-                "libgcc",
+                "libc6",
+                "libgcc1",
                 cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
-                "libstdc++",
-                "zlib"
+                "zlib1g"
             ]
-        ),
+        )) ^
+    set standardPkgs to sort(cat(basePkgs,
+        when(isMariner || isAlpine,
+            [
+                "libstdc++"
+            ],
+            [
+                "libstdc++6",
+            ]
+        ))) ^
+    set extraPkgs to sort(cat(standardPkgs,
+        when (isMariner || isAlpine,
+            [
+                "icu",
+                "tzdata"
+            ],
+            [
+                cat("libicu", VARIABLES[cat("libicu|", OS_VERSION_BASE)]),
+                "tzdata"
+            ]
+        ))) ^
+
+    set legacyPkgs to when(isAlpine,
+        [
+            "krb5-libs",
+            "libgcc",
+            "libintl",
+            cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
+            "libstdc++",
+            "zlib"
+        ],
         when(isMariner,
             when(isDistrolessMariner,
                 [
@@ -53,6 +93,13 @@
                 "libstdc++6",
                 "zlib1g"
             ])) ^
+
+    set pkgs to when(useLegacyPackageLayout,
+        legacyPkgs,
+        when(ARGS["is-extra"] || isDebian || isUbuntu || isFullMariner,
+            extraPkgs,
+            standardPkgs)) ^
+
     set certsPkgName to when(isDistrolessMariner,
         "prebuilt-ca-certificates",
         when(isAlpine && dotnetVersion != "6.0" && dotnetVersion != "7.0",
@@ -64,13 +111,16 @@
             "",
             dotnetDepsComment
         ] ^
-    set pkgs to when(ARGS["isSdk"], pkgs, cat(prefixPkgs, pkgs)) ^
+
+    set pkgs to cat(prefixPkgs, pkgs) ^
+
     set pkgMgrOpts to when(len(ARGS["staging-dir"]) > 0,
         cat(" --installroot ", ARGS["staging-dir"]),
         "") ^
     set pkgMgrOpts to when(isDistrolessMariner,
         cat(" --releasever=", OS_VERSION_NUMBER, pkgMgrOpts),
         pkgMgrOpts)
+
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",
     [
         "pkgs": pkgs,

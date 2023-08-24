@@ -1,9 +1,14 @@
 {{
+    _ ARGS:
+        is-extra (optional): Whether to include extra packages that are not needed for every app,
+            for example globalization support ^
+
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
+
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set baseImageRepo to when(isAlpine,
@@ -48,7 +53,11 @@ FROM {{baseImageRepo}}:{{baseImageTag}}}}
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs", [ "uid": uid ])}}
 
-RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}{{if isRpmInstall:{{if isMultiStage:
+RUN {{InsertTemplate("../Dockerfile.linux.install-deps",
+    [
+        "is-extra": ARGS["is-extra"]
+    ]
+)}}{{if isRpmInstall:{{if isMultiStage:
 
 {{InsertTemplate("../Dockerfile.linux.copy-files",
     [

@@ -86,50 +86,60 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            const string SyftImage = "anchore/syft:v0.84.0";
+            const string SyftImage = "anchore/syft:v0.87.1";
             DockerHelper.Pull(SyftImage);
 
             string imageName = imageData.GetImage(ImageRepo, DockerHelper);
             string output = DockerHelper.Run(
                 SyftImage, "distroless-packages", $"packages docker:{imageName} -o json", useMountedDockerSocket: true);
 
-            string[] expectedPackages;
-            if (imageData.OS.Contains(OS.Mariner))
+            string[] basePackages = imageData switch
             {
-                expectedPackages = new[]
-                {
-                    "distroless-packages-minimal",
-                    "e2fsprogs-libs",
-                    "filesystem",
-                    "glibc",
-                    "krb5",
-                    "libgcc",
-                    "libstdc++",
-                    "mariner-release",
-                    "openssl",
-                    "openssl-libs",
-                    "prebuilt-ca-certificates",
-                    "tzdata",
-                    "zlib"
-                };
-            }
-            else if (imageData.OS == OS.JammyChiseled)
+                { IsDistroless: true, OS: string os } when os.Contains(OS.Mariner) => new[]
+                    {
+                        "distroless-packages-minimal",
+                        "filesystem",
+                        "glibc",
+                        "libgcc",
+                        "libstdc++",
+                        "mariner-release",
+                        "openssl-libs",
+                        "prebuilt-ca-certificates",
+                        "tzdata", // tzdata is included by default on Distroless Mariner base image
+                        "zlib"
+                    },
+                { OS: OS.JammyChiseled } => new[]
+                    {
+                        "base-files",
+                        "ca-certificates",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3",
+                        "libstdc++6",
+                        "zlib1g"
+                    },
+                _ => throw new NotImplementedException()
+            };
+
+            string[] extraPackages = imageData switch
             {
-                expectedPackages = new[]
-                {
-                    "base-files",
-                    "ca-certificates",
-                    "libc6",
-                    "libgcc-s1",
-                    "libssl3",
-                    "libstdc++6",
-                    "zlib1g"
-                };
-            }
-            else
+                { IsDistroless: true, OS: string os } when os.Contains(OS.Mariner) => new[]
+                    {
+                        "icu",
+                    },
+                { OS: OS.JammyChiseled } => new[]
+                    {
+                        "libicu70",
+                        "tzdata"
+                    },
+                _ => new string[0]
+            };
+
+            IEnumerable<string> expectedPackages = imageData switch
             {
-                throw new NotImplementedException();
-            }
+                { ImageVariant: DotNetImageVariant.Extra } => basePackages.Concat(extraPackages).OrderBy(s => s),
+                _ => basePackages
+            };
 
             JsonNode node = JsonNode.Parse(output);
             if (node is null)
@@ -137,9 +147,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 throw new JsonException($"Unable to parse the output as JSON:{Environment.NewLine}{output}");
             }
 
-            string[] actualPackages = ((JsonArray)node["artifacts"])
-                .Select(artifact => artifact["name"]?.ToString())
-                .ToArray();
+            IEnumerable<string> actualPackages = ((JsonArray)node["artifacts"])
+                .Select(artifact => artifact["name"]?.ToString());
+            
+            OutputHelper.WriteLine($"Expected Packages: [ {String.Join(", ", expectedPackages)} ]");
+            OutputHelper.WriteLine($"Actual Packages: [ {String.Join(", ", actualPackages)} ]");
 
             Assert.Equal(expectedPackages, actualPackages);
 

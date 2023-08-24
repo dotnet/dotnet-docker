@@ -15,10 +15,10 @@ RUN apt-get update \
         # .NET dependencies
         libc6 \
         libgcc1 \
-        libgssapi-krb5-2 \
         libicu72 \
         libssl3 \
         libstdc++6 \
+        tzdata \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
