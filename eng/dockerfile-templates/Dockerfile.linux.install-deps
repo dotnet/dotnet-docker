@@ -30,7 +30,7 @@
             ],
             [
                 "libc6",
-                "libgcc1",
+                "libgcc-s1",
                 cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
                 "zlib1g"
             ]
@@ -45,16 +45,22 @@
             ]
         ))) ^
     set extraPkgs to sort(cat(standardPkgs,
-        when (isMariner || isAlpine,
+        when (isMariner,
             [
                 "icu",
                 "tzdata"
             ],
-            [
-                cat("libicu", VARIABLES[cat("libicu|", OS_VERSION_BASE)]),
-                "tzdata"
-            ]
-        ))) ^
+            when(isAlpine,
+                [
+                    "icu-data-full",
+                    "icu-libs",
+                    "tzdata"
+                ],
+                [
+                    cat("libicu", VARIABLES[cat("libicu|", OS_VERSION_BASE)]),
+                    "tzdata"
+                ]
+            )))) ^
 
     set legacyPkgs to when(isAlpine,
         [

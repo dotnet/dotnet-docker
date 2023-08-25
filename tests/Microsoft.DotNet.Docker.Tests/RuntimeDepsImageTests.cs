@@ -91,28 +91,36 @@ namespace Microsoft.DotNet.Docker.Tests
         /// </summary>
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyDistrolessPackages(ProductImageData imageData)
+        public void VerifyInstalledPackages(ProductImageData imageData)
         {
-            if (!imageData.IsDistroless)
-            {
-                return;
-            }
+            IEnumerable<string> basePackages = imageData.IsDistroless
+                ? GetDistrolessBasePackages(imageData).Concat(GetRuntimeDepsPackages(imageData))
+                : GetRuntimeDepsPackages(imageData);
 
-            IEnumerable<string> basePackages = GetExpectedPackages(imageData);
-            IEnumerable<string> extraPackages = GetExpectedExtraPackages(imageData);
+            IEnumerable<string> expectedPackages = imageData.ImageVariant.HasFlag(DotNetImageVariant.Extra)
+                ? basePackages.Concat(GetExtraPackages(imageData))
+                : basePackages;
 
-            IEnumerable<string> expectedPackages = imageData.ImageVariant switch
-            {
-                DotNetImageVariant.Extra => basePackages.Concat(extraPackages).OrderBy(s => s),
-                _ => basePackages
-            };
+            expectedPackages = expectedPackages.Distinct().OrderBy(s => s);
 
             IEnumerable<string> actualPackages = GetInstalledPackages(imageData);
 
             OutputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
-            OutputHelper.WriteLine($"Actual Packages: [ {string.Join(", ", actualPackages)} ]");
 
-            Assert.Equal(expectedPackages, actualPackages);
+            if (imageData.IsDistroless)
+            {
+                OutputHelper.WriteLine($"Actual Packages: [ {string.Join(", ", actualPackages)} ]");
+                Assert.Equal(expectedPackages, actualPackages);
+            }
+            else
+            {
+                IEnumerable<string> missingPackages = expectedPackages.Except(actualPackages);
+                if (missingPackages.Count() > 0)
+                {
+                    OutputHelper.WriteLine($"Missing packages: [ {string.Join(", ", missingPackages)} ]");
+                }
+                Assert.Empty(missingPackages);
+            }
         }
 
         private IEnumerable<string> GetInstalledPackages(ProductImageData imageData)
@@ -136,17 +144,123 @@ namespace Microsoft.DotNet.Docker.Tests
 
             string imageName = imageData.GetImage(ImageRepo, DockerHelper);
             string output = DockerHelper.Run(
-                SyftImage, name, $"packages docker:{imageName} -o json", useMountedDockerSocket: true);
+                SyftImage, name, $"packages docker:{imageName} -o json",
+                useMountedDockerSocket: true);
 
             return JsonNode.Parse(output)
                     ?? throw new JsonException($"Unable to parse the output as JSON:{Environment.NewLine}{output}");
         }
 
-        internal static IEnumerable<string> GetExpectedExtraPackages(ProductImageData imageData) => imageData switch
+        internal static IEnumerable<string> GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
+            {
+                { OS: string os } when os.Contains(OS.Mariner) => new[]
+                    {
+                        "distroless-packages-minimal",
+                        "filesystem",
+                        "mariner-release",
+                        "prebuilt-ca-certificates",
+                        "tzdata"
+                    },
+                { OS: OS.JammyChiseled } => new[]
+                    {
+                        "base-files"
+                    },
+                _ => throw new NotSupportedException()
+            };
+
+        internal static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) => imageData switch
+            {
+                { OS: OS.Mariner20Distroless, Version: ImageVersion version }
+                        when version.Major == 6 || version.Major == 7 => new[]
+                    {
+                        "e2fsprogs-libs",
+                        "glibc",
+                        "krb5",
+                        "libgcc",
+                        "libstdc++",
+                        "openssl",
+                        "openssl-libs",
+                        "prebuilt-ca-certificates",
+                        "zlib"
+                    },
+                { OS: OS.Mariner20, Version: ImageVersion version }
+                        when version.Major == 6 || version.Major == 7 => new[]
+                    {
+                        "glibc",
+                        "icu",
+                        "krb5",
+                        "libgcc",
+                        "libstdc++",
+                        "openssl-libs",
+                        "zlib"
+                    },
+                { OS: string os } when os.Contains(OS.Mariner) => new[]
+                    {
+                        "glibc",
+                        "libgcc",
+                        "libstdc++",
+                        "openssl-libs",
+                        "zlib"
+                    },
+                { OS: string os } when os.Contains(OS.Jammy) => new[]
+                    {
+                        "ca-certificates",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3",
+                        "libstdc++6",
+                        "zlib1g"
+                    },
+                { OS: OS.Focal } => new[]
+                    {
+                        "ca-certificates",
+                        "libc6",
+                        "libgcc-s1",
+                        "libgssapi-krb5-2",
+                        "libicu66",
+                        "libssl1.1",
+                        "libstdc++6",
+                        "zlib1g"
+                    },
+                { OS: OS.Alpine318 } => new[]
+                    {
+                        "ca-certificates-bundle",
+                        "libgcc",
+                        "libssl3",
+                        "libstdc++",
+                        "zlib"
+                    },
+                { OS: OS.BookwormSlim } => new[]
+                    {
+                        "ca-certificates",
+                        "libc6",
+                        "libgcc-s1", 
+                        "libicu72",
+                        "libssl3",
+                        "libstdc++6",
+                        "tzdata",
+                        "zlib1g"
+                    },
+                { OS: OS.BullseyeSlim } => new[]
+                    {
+                        "ca-certificates",
+                        "libc6",
+                        "libgcc-s1", // Listed as libgcc1 in the Dockerfile
+                        "libgssapi-krb5-2",
+                        "libicu67",
+                        "libssl1.1",
+                        "libstdc++6",
+                        "zlib1g"
+                    },
+                _ => throw new NotSupportedException()
+            };
+
+        internal static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
                 { IsDistroless: true, OS: string os } when os.Contains(OS.Mariner) => new[]
                     {
                         "icu",
+                        "tzdata"
                     },
                 { OS: OS.JammyChiseled } => new[]
                     {
@@ -160,52 +274,6 @@ namespace Microsoft.DotNet.Docker.Tests
                         "tzdata"
                     },
                 _ => new string[0]
-            };
-
-        internal static IEnumerable<string> GetExpectedPackages(ProductImageData imageData) => imageData switch
-            {
-                { OS: string os, Version: ImageVersion version }
-                        when (version.Major == 6 || version.Major == 7)
-                             && os.Contains(OS.Mariner) => new[]
-                    {
-                        "distroless-packages-minimal",
-                        "e2fsprogs-libs",
-                        "filesystem",
-                        "glibc",
-                        "krb5",
-                        "libgcc",
-                        "libstdc++",
-                        "mariner-release",
-                        "openssl",
-                        "openssl-libs",
-                        "prebuilt-ca-certificates",
-                        "tzdata",
-                        "zlib"
-                    },
-                { OS: string os } when os.Contains(OS.Mariner) => new[]
-                    {
-                        "distroless-packages-minimal",
-                        "filesystem",
-                        "glibc",
-                        "libgcc",
-                        "libstdc++",
-                        "mariner-release",
-                        "openssl-libs",
-                        "prebuilt-ca-certificates",
-                        "tzdata", // tzdata is included by default on Distroless Mariner base image
-                        "zlib"
-                    },
-                { OS: OS.JammyChiseled } => new[]
-                    {
-                        "base-files",
-                        "ca-certificates",
-                        "libc6",
-                        "libgcc-s1",
-                        "libssl3",
-                        "libstdc++6",
-                        "zlib1g"
-                    },
-                _ => throw new NotImplementedException()
             };
 
         internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>

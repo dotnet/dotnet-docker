@@ -12,7 +12,8 @@ RUN apk add --upgrade --no-cache \
         ca-certificates-bundle \
         \
         # .NET dependencies
-        icu \
+        icu-data-full \
+        icu-libs \
         libgcc \
         libssl3 \
         libstdc++ \
