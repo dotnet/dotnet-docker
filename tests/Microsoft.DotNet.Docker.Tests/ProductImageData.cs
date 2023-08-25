@@ -21,7 +21,9 @@ namespace Microsoft.DotNet.Docker.Tests
                     | DotNetImageRepo.SDK;
 
         public bool HasCustomSdk => _sdkOS != null;
-        public bool globalizationInvariantMode => !ImageVariant.HasFlag(DotNetImageVariant.Extra)
+        public bool globalizationInvariantMode => (!ImageVariant.HasFlag(DotNetImageVariant.Extra)
+                    || Version.Major == 6
+                    || Version.Major == 7)
                 && (IsDistroless || OS.Contains(Tests.OS.Alpine));
 
         public string SdkOS

@@ -95,7 +95,25 @@ namespace Microsoft.DotNet.Docker.Tests
 
             string[] basePackages = imageData switch
             {
-                { IsDistroless: true, OS: string os } when os.Contains(OS.Mariner) => new[]
+                {  OS: string os, Version: ImageVersion version }
+                        when (version.Major == 6 || version.Major == 7)
+                             && os.Contains(OS.Mariner) => new[]
+                    {
+                        "distroless-packages-minimal",
+                        "e2fsprogs-libs",
+                        "filesystem",
+                        "glibc",
+                        "krb5",
+                        "libgcc",
+                        "libstdc++",
+                        "mariner-release",
+                        "openssl",
+                        "openssl-libs",
+                        "prebuilt-ca-certificates",
+                        "tzdata",
+                        "zlib"
+                    },
+                { OS: string os } when os.Contains(OS.Mariner) => new[]
                     {
                         "distroless-packages-minimal",
                         "filesystem",
