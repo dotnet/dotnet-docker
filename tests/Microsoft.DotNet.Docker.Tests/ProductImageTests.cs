@@ -220,9 +220,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                                    || imageRepo == DotNetImageRepo.SDK
                 ? basePackages.Concat(RuntimeDepsImageTests.GetExtraPackages(imageData))
                 : basePackages;
-
             expectedPackages = expectedPackages.Distinct().OrderBy(s => s);
-
             IEnumerable<string> actualPackages = GetInstalledPackages(imageData);
 
             OutputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
