@@ -194,7 +194,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyPackageInstallation(ProductImageData imageData)
+        public void VerifyInstalledRpmPackages(ProductImageData imageData)
         {
             if (!imageData.OS.Contains("cbl-mariner") || imageData.IsDistroless || imageData.Version.Major > 6)
             {
@@ -212,6 +212,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     $"netstandard-targeting-pack-2.1"
                 }
                 .Concat(AspnetImageTests.GetExpectedRpmPackagesInstalled(imageData)));
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyRuntimeDepsPackages(ProductImageData imageData)
+        {
+            base.VerifyInstalledPackages(imageData, ImageRepo);
         }
 
         [DotNetTheory]

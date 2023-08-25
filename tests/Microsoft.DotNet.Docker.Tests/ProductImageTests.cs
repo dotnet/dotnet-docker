@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using Xunit;
 using Xunit.Abstractions;
@@ -202,6 +204,64 @@ namespace Microsoft.DotNet.Docker.Tests
                 bool installed = GetInstalledRpmPackages(imageData).Any(pkg => pkg.StartsWith(expectedPackage));
                 Assert.True(installed, $"Package '{expectedPackage}' is not installed.");
             }
+        }
+
+        /// <summary>
+        /// Verifies that the packages installed are correct and scannable by security tools.
+        /// </summary>
+        protected void VerifyInstalledPackages(ProductImageData imageData, DotNetImageRepo imageRepo)
+        {
+            IEnumerable<string> basePackages = imageData.IsDistroless
+                ? RuntimeDepsImageTests.GetDistrolessBasePackages(imageData)
+                        .Concat(RuntimeDepsImageTests.GetRuntimeDepsPackages(imageData))
+                : RuntimeDepsImageTests.GetRuntimeDepsPackages(imageData);
+
+            IEnumerable<string> expectedPackages = imageData.ImageVariant.HasFlag(DotNetImageVariant.Extra)
+                                                   || imageRepo == DotNetImageRepo.SDK
+                ? basePackages.Concat(RuntimeDepsImageTests.GetExtraPackages(imageData))
+                : basePackages;
+
+            expectedPackages = expectedPackages.Distinct().OrderBy(s => s);
+
+            IEnumerable<string> actualPackages = GetInstalledPackages(imageData);
+
+            OutputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
+
+            if (imageData.IsDistroless)
+            {
+                OutputHelper.WriteLine($"Actual Packages: [ {string.Join(", ", actualPackages)} ]");
+                Assert.Equal(expectedPackages, actualPackages);
+            }
+            else
+            {
+                IEnumerable<string> missingPackages = expectedPackages.Except(actualPackages);
+                if (missingPackages.Count() > 0)
+                {
+                    OutputHelper.WriteLine($"Missing packages: [ {string.Join(", ", missingPackages)} ]");
+                }
+                Assert.Empty(missingPackages);
+            }
+        }
+
+        protected IEnumerable<string> GetInstalledPackages(ProductImageData imageData)
+        {
+            JsonNode output = GetSyftOutput("package-info", imageData);
+            return ((JsonArray)output["artifacts"])
+                .Select(artifact => artifact["name"]?.ToString());
+        }
+
+        protected JsonNode GetSyftOutput(string name, ProductImageData imageData)
+        {
+            const string SyftImage = "anchore/syft:v0.87.1";
+            DockerHelper.Pull(SyftImage);
+
+            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
+            string output = DockerHelper.Run(
+                SyftImage, name, $"packages docker:{imageName} -o json",
+                useMountedDockerSocket: true);
+
+            return JsonNode.Parse(output)
+                    ?? throw new JsonException($"Unable to parse the output as JSON:{Environment.NewLine}{output}");
         }
 
         public static IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
