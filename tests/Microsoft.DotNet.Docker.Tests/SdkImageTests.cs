@@ -216,9 +216,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyRuntimeDepsPackages(ProductImageData imageData)
+        public void VerifyInstalledPackages(ProductImageData imageData)
         {
-            base.VerifyInstalledPackages(imageData, ImageRepo);
+            RuntimeDepsImageTests.VerifyInstalledPackages(imageData, ImageRepo, DockerHelper, OutputHelper);
         }
 
         [DotNetTheory]

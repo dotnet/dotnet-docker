@@ -4,9 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using Xunit;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
@@ -79,24 +82,101 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 return;
             }
-            Assert.NotEmpty(GetOSReleaseInfo(imageData));
+            Assert.NotEmpty(GetOSReleaseInfo(imageData, ImageRepo, DockerHelper));
         }
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyRuntimeDepsPackages(ProductImageData imageData)
         {
-            base.VerifyInstalledPackages(imageData, ImageRepo);
+            VerifyInstalledPackages(imageData, ImageRepo, DockerHelper, OutputHelper);
         }
 
-        private string GetOSReleaseInfo(ProductImageData imageData)
+        /// <summary>
+        /// Verifies that the packages installed are correct and scannable by security tools.
+        /// </summary>
+        internal static void VerifyInstalledPackages(
+            ProductImageData imageData,
+            DotNetImageRepo imageRepo,
+            DockerHelper dockerHelper,
+            ITestOutputHelper outputHelper)
         {
-            JsonNode output = GetSyftOutput("os-release-info", imageData);
+            IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
+            IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, dockerHelper);
+
+            outputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
+
+            if (imageData.IsDistroless)
+            {
+                outputHelper.WriteLine($"Actual Packages: [ {string.Join(", ", actualPackages)} ]");
+                Assert.Equal(expectedPackages, actualPackages);
+            }
+            else
+            {
+                IEnumerable<string> missingPackages = expectedPackages.Except(actualPackages);
+                if (missingPackages.Count() > 0)
+                {
+                    outputHelper.WriteLine($"Missing packages: [ {string.Join(", ", missingPackages)} ]");
+                }
+                Assert.Empty(missingPackages);
+            }
+        }
+
+        private static IEnumerable<string> GetInstalledPackages(
+            ProductImageData imageData,
+            DotNetImageRepo imageRepo,
+            DockerHelper dockerHelper)
+        {
+            JsonNode output = GetSyftOutput("package-info", imageData, imageRepo, dockerHelper);
+            return ((JsonArray)output["artifacts"])
+                .Select(artifact => artifact["name"]?.ToString());
+        }
+
+        private static string GetOSReleaseInfo(
+            ProductImageData imageData,
+            DotNetImageRepo imageRepo,
+            DockerHelper dockerHelper)
+        {
+            JsonNode output = GetSyftOutput("os-release-info", imageData, imageRepo, dockerHelper);
             JsonObject distro = (JsonObject)output["distro"];
             return (string)distro["version"];
         }
 
-        internal static IEnumerable<string> GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
+        private static JsonNode GetSyftOutput(
+            string name,
+            ProductImageData imageData,
+            DotNetImageRepo imageRepo,
+            DockerHelper dockerHelper)
+        {
+            const string SyftImage = "anchore/syft:v0.87.1";
+            dockerHelper.Pull(SyftImage);
+
+            string imageName = imageData.GetImage(imageRepo, dockerHelper);
+            string output = dockerHelper.Run(
+                SyftImage, name, $"packages docker:{imageName} -o json",
+                useMountedDockerSocket: true);
+
+            return JsonNode.Parse(output)
+                    ?? throw new JsonException($"Unable to parse the output as JSON:{Environment.NewLine}{output}");
+        }
+
+        private static IEnumerable<string> GetExpectedPackages(ProductImageData imageData, DotNetImageRepo imageRepo)
+        {
+            IEnumerable<string> expectedPackages = GetRuntimeDepsPackages(imageData);
+
+            if (imageData.IsDistroless)
+            {
+                expectedPackages = expectedPackages.Concat(GetDistrolessBasePackages(imageData));
+            }
+            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Extra)
+                || (imageRepo == DotNetImageRepo.SDK && imageData.Version.Major != 6 && imageData.Version.Major != 7))
+            {
+                expectedPackages = expectedPackages.Concat(GetExtraPackages(imageData));
+            }
+            return expectedPackages.Distinct().OrderBy(s => s);
+        }
+
+        private static IEnumerable<string> GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
             {
                 { OS: string os } when os.Contains(OS.Mariner) => new[]
                     {
@@ -113,7 +193,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 _ => throw new NotSupportedException()
             };
 
-        internal static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) => imageData switch
+        private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) => imageData switch
             {
                 { OS: OS.Mariner20Distroless, Version: ImageVersion version }
                         when version.Major == 6 || version.Major == 7 => new[]
