@@ -11,20 +11,20 @@
         baseImageTag,
         cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl")) ^
     set pkgs to filter(when(isAlpine,
-            when (dotnetVersion = "6.0" || dotnetVersion = "7.0",
-                [
-                    "curl",
-                    "icu-data-full",
-                    "icu-libs",
-                    "git"
-                ],
-                [
-                    "curl",
-                    "icu-data-full",
-                    "icu-libs",
-                    "git",
-                    "tzdata"
-                ]),
+        when (dotnetVersion = "6.0" || dotnetVersion = "7.0",
+            [
+                "curl",
+                "icu-data-full",
+                "icu-libs",
+                "git"
+            ],
+            [
+                "curl",
+                "icu-data-full",
+                "icu-libs",
+                "git",
+                "tzdata"
+            ]),
         when(isMariner,
             [
                 "git",
