@@ -218,7 +218,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyInstalledPackages(ProductImageData imageData)
         {
-            RuntimeDepsImageTests.VerifyInstalledPackages(imageData, ImageRepo, DockerHelper, OutputHelper);
+            RuntimeDepsImageTests.VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper);
         }
 
         [DotNetTheory]

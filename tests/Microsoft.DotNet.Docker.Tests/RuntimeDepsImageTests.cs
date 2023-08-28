@@ -87,15 +87,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyRuntimeDepsPackages(ProductImageData imageData)
+        public void VerifyInstalledPackages(ProductImageData imageData)
         {
-            VerifyInstalledPackages(imageData, ImageRepo, DockerHelper, OutputHelper);
+            VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper);
         }
 
         /// <summary>
         /// Verifies that the packages installed are correct and scannable by security tools.
         /// </summary>
-        internal static void VerifyInstalledPackages(
+        internal static void VerifyInstalledPackagesBase(
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper,
