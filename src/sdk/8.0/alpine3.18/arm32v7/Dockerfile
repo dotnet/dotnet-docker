@@ -19,9 +19,9 @@ ENV \
 
 RUN apk add --upgrade --no-cache \
         curl \
+        git \
         icu-data-full \
         icu-libs \
-        git \
         tzdata
 
 # Install .NET SDK
