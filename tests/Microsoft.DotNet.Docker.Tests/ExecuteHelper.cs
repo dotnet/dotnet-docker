@@ -4,6 +4,8 @@
 
 using System;
 using System.Diagnostics;
+using System.Text;
+using System.Threading;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -27,18 +29,63 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
             };
 
-            process.Start();
-            string output = process.StandardOutput.ReadToEnd();
-            string error = process.StandardError.ReadToEnd();
-            process.WaitForExit();
+            StringBuilder stdOutput = new StringBuilder();
+            StringBuilder stdError = new StringBuilder();
 
-            output = output.Trim();
-            error = error.Trim();
+            using (AutoResetEvent outputWaitHandle = new(false))
+            using (AutoResetEvent errorWaitHandle = new(false))
+            {
+                process.OutputDataReceived += (sender, e) => {
+                    if (e.Data == null)
+                    {
+                        outputWaitHandle.Set();
+                    }
+                    else
+                    {
+                        stdOutput.Append(e.Data);
+                    }
+                };
 
-            outputHelper?.WriteLine(output);
-            outputHelper?.WriteLine(error);
+                process.ErrorDataReceived += (sender, e) => {
+                    if (e.Data == null)
+                    {
+                        errorWaitHandle.Set();
+                    }
+                    else
+                    {
+                        stdError.Append(e.Data);
+                    }
+                };
 
-            return (process, output, error);
+                process.Start();
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+
+                int timeoutInMs = Convert.ToInt32(Timeout.TotalMilliseconds);
+
+                if (process.WaitForExit(timeoutInMs)
+                    && outputWaitHandle.WaitOne(timeoutInMs)
+                    && errorWaitHandle.WaitOne(timeoutInMs))
+                {
+                    string output = stdOutput.ToString().Trim();
+                    if (outputHelper != null && !string.IsNullOrWhiteSpace(output))
+                    {
+                        outputHelper.WriteLine(output);
+                    }
+
+                    string error = stdError.ToString().Trim();
+                    if (outputHelper != null && !string.IsNullOrWhiteSpace(error))
+                    {
+                        outputHelper.WriteLine(error);
+                    }
+
+                    return (process, output, error);
+                }
+                else
+                {
+                    throw new TimeoutException();
+                }
+            }
         }
     }
 }
