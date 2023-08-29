@@ -204,7 +204,7 @@
     "src/sdk/8.0/bookworm-slim/amd64": 823543661,
     "src/sdk/8.0/bookworm-slim/arm32v7": 776844580,
     "src/sdk/8.0/bookworm-slim/arm64v8": 880785194,
-    "src/sdk/8.0/alpine3.18/amd64": 673611712,
+    "src/sdk/8.0/alpine3.18/amd64": 720874103,
     "src/sdk/8.0/alpine3.18/arm32v7": 616375263,
     "src/sdk/8.0/alpine3.18/arm64v8": 665616507,
     "src/sdk/8.0/jammy/amd64": 798717829,
