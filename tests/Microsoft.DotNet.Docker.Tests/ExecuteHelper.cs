@@ -2,14 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Diagnostics;
-using System.Text;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
     public static class ExecuteHelper
     {
+        public static TimeSpan Timeout = TimeSpan.FromMinutes(5);
+
         public static (Process Process, string StdOut, string StdErr) ExecuteProcess(
             string fileName, string args, ITestOutputHelper outputHelper)
         {
@@ -25,28 +27,16 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
             };
 
-            StringBuilder stdOutput = new StringBuilder();
-            process.OutputDataReceived += new DataReceivedEventHandler((sender, e) => stdOutput.AppendLine(e.Data));
-
-            StringBuilder stdError = new StringBuilder();
-            process.ErrorDataReceived += new DataReceivedEventHandler((sender, e) => stdError.AppendLine(e.Data));
-
             process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
+            string output = process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
             process.WaitForExit();
 
-            string output = stdOutput.ToString().Trim();
-            if (outputHelper != null && !string.IsNullOrWhiteSpace(output))
-            {
-                outputHelper.WriteLine(output);
-            }
+            output = output.Trim();
+            error = error.Trim();
 
-            string error = stdError.ToString().Trim();
-            if (outputHelper != null && !string.IsNullOrWhiteSpace(error))
-            {
-                outputHelper.WriteLine(error);
-            }
+            outputHelper?.WriteLine(output);
+            outputHelper?.WriteLine(error);
 
             return (process, output, error);
         }
