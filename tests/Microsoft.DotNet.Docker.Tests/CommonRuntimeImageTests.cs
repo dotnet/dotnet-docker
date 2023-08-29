@@ -48,7 +48,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.AddRange(customVariables);
             }
 
-            if (imageData.globalizationInvariantMode)
+            if (imageData.GlobalizationInvariantMode)
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
             }

@@ -80,6 +80,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             if (!imageData.IsDistroless)
             {
+                OutputHelper.WriteLine("This test is only relevant to distroless images.");
                 return;
             }
             Assert.NotEmpty(GetOSReleaseInfo(imageData, ImageRepo, DockerHelper));
@@ -247,7 +248,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libstdc++6",
                         "zlib1g"
                     },
-                { OS: OS.Alpine318 } => new[]
+                { OS: string os } when os.Contains(OS.Alpine) => new[]
                     {
                         "ca-certificates-bundle",
                         "libgcc",
@@ -298,7 +299,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "icu-libs",
                         "tzdata"
                     },
-                _ => new string[0]
+                _ => Array.Empty<string>()
             };
 
         internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>
