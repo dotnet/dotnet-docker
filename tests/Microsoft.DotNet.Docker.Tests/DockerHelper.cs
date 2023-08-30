@@ -22,7 +22,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static bool IsLinuxContainerModeEnabled => string.Equals(DockerOS, "linux", StringComparison.OrdinalIgnoreCase);
         public static string TestArtifactsDir { get; } = Path.Combine(Directory.GetCurrentDirectory(), "TestAppArtifacts");
 
-        public ITestOutputHelper OutputHelper { get; set; }
+        private ITestOutputHelper OutputHelper { get; set; }
 
         public DockerHelper(ITestOutputHelper outputHelper)
         {
