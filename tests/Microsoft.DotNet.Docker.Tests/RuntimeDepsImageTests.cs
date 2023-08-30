@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -144,7 +145,7 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         private static JsonNode GetSyftOutput(
-            string name,
+            string syftContainerName,
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper)
@@ -152,13 +153,27 @@ namespace Microsoft.DotNet.Docker.Tests
             const string SyftImage = "anchore/syft:v0.87.1";
             dockerHelper.Pull(SyftImage);
 
-            string imageName = imageData.GetImage(imageRepo, dockerHelper);
-            string output = dockerHelper.Run(
-                SyftImage, name, $"packages docker:{imageName} -o json",
+            string outputContainerFilePath = Path.Join("artifacts", "output.json");
+            string imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
+
+            dockerHelper.Run(
+                SyftImage,
+                syftContainerName, $"packages docker:{imageToInspect} -o json=/{outputContainerFilePath}",
+                skipAutoCleanup: true,
                 useMountedDockerSocket: true);
 
-            return JsonNode.Parse(output)
-                    ?? throw new JsonException($"Unable to parse the output as JSON:{Environment.NewLine}{output}");
+            // Copy the output from the container to the host
+            string tempDir = Directory.CreateDirectory(
+                Path.Combine(Path.GetTempPath(), Path.GetRandomFileName())).FullName;
+            dockerHelper.Copy($"{syftContainerName}:/{outputContainerFilePath}", tempDir);
+
+            dockerHelper.DeleteContainer(syftContainerName);
+
+            string outputLocalFilePath = Path.Join(tempDir, Path.GetFileName(outputContainerFilePath));
+            string outputContents = File.ReadAllText(outputLocalFilePath);
+
+            return JsonNode.Parse(outputContents)
+                    ?? throw new JsonException($"Unable to parse the output as JSON:{Environment.NewLine}{outputContents}");
         }
 
         private static IEnumerable<string> GetExpectedPackages(ProductImageData imageData, DotNetImageRepo imageRepo)
