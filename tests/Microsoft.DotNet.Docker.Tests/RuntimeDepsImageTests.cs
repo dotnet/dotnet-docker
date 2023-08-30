@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -129,10 +128,9 @@ namespace Microsoft.DotNet.Docker.Tests
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper)
         {
-            string templatePath = Path.Combine(DockerHelper.TestArtifactsDir, "syftPackageOutput.tmpl") ;
-            string output = GetSyftOutput("package-info", templatePath, imageData, imageRepo, dockerHelper);
-            Console.WriteLine(output);
-            return output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            JsonNode output = GetSyftOutput("package-info", imageData, imageRepo, dockerHelper);
+            return ((JsonArray)output["artifacts"])
+                .Select(artifact => artifact["name"]?.ToString());
         }
 
         private static string GetOSReleaseInfo(
@@ -140,13 +138,13 @@ namespace Microsoft.DotNet.Docker.Tests
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper)
         {
-            string templatePath = Path.Combine(DockerHelper.TestArtifactsDir, "syftDistroOutput.tmpl");
-            return GetSyftOutput("os-release-info", templatePath, imageData, imageRepo, dockerHelper);
+            JsonNode output = GetSyftOutput("os-release-info", imageData, imageRepo, dockerHelper);
+            JsonObject distro = (JsonObject)output["distro"];
+            return (string)distro["version"];
         }
 
-        private static string GetSyftOutput(
+        private static JsonNode GetSyftOutput(
             string name,
-            string templatePath,
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper)
@@ -155,26 +153,12 @@ namespace Microsoft.DotNet.Docker.Tests
             dockerHelper.Pull(SyftImage);
 
             string imageName = imageData.GetImage(imageRepo, dockerHelper);
-
-            string localTemplateDirectory = Path.GetDirectoryName(templatePath);
-            string containerTemplateDirectory = "/templates/";
-            string containerTemplatePath = Path.Combine(containerTemplateDirectory, Path.GetFileName(templatePath));
-
-            // Convert Windows-style paths to linux-style paths for running locally
-            if (!DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                localTemplateDirectory = "//" + localTemplateDirectory.Replace(":\\", "/").Replace("\\", "/");
-            }
-
             string output = dockerHelper.Run(
-                SyftImage,
-                name,
-                $"packages docker:{imageName} -o template -t {containerTemplatePath}",
-                optionalRunArgs: $" -v {localTemplateDirectory}:{containerTemplateDirectory}",
-                useMountedDockerSocket: true
-            );
+                SyftImage, name, $"packages docker:{imageName} -o json",
+                useMountedDockerSocket: true);
 
-            return output;
+            return JsonNode.Parse(output)
+                    ?? throw new JsonException($"Unable to parse the output as JSON:{Environment.NewLine}{output}");
         }
 
         private static IEnumerable<string> GetExpectedPackages(ProductImageData imageData, DotNetImageRepo imageRepo)
