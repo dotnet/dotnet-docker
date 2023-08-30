@@ -10,7 +10,6 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
@@ -153,21 +152,26 @@ namespace Microsoft.DotNet.Docker.Tests
             const string SyftImage = "anchore/syft:v0.87.1";
             dockerHelper.Pull(SyftImage);
 
-            string outputContainerFilePath = Path.Join("artifacts", "output.json");
             string imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
 
-            dockerHelper.Run(
-                SyftImage,
-                syftContainerName, $"packages docker:{imageToInspect} -o json=/{outputContainerFilePath}",
-                skipAutoCleanup: true,
-                useMountedDockerSocket: true);
-
-            // Copy the output from the container to the host
+            string outputContainerFilePath = "/artifacts/output.json";
             string tempDir = Directory.CreateDirectory(
                 Path.Combine(Path.GetTempPath(), Path.GetRandomFileName())).FullName;
-            dockerHelper.Copy($"{syftContainerName}:/{outputContainerFilePath}", tempDir);
 
-            dockerHelper.DeleteContainer(syftContainerName);
+            try
+            {
+                dockerHelper.Run(
+                    SyftImage,
+                    syftContainerName, $"packages docker:{imageToInspect} -o json={outputContainerFilePath}",
+                    skipAutoCleanup: true,
+                    useMountedDockerSocket: true);
+
+                dockerHelper.Copy($"{syftContainerName}:{outputContainerFilePath}", tempDir);
+            }
+            finally
+            {
+                dockerHelper.DeleteContainer(syftContainerName);
+            }
 
             string outputLocalFilePath = Path.Join(tempDir, Path.GetFileName(outputContainerFilePath));
             string outputContents = File.ReadAllText(outputLocalFilePath);
