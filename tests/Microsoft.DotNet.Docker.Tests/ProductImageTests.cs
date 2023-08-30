@@ -5,8 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using Xunit;
 using Xunit.Abstractions;
@@ -205,7 +203,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 Assert.True(installed, $"Package '{expectedPackage}' is not installed.");
             }
         }
-
 
         public static IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
         {
