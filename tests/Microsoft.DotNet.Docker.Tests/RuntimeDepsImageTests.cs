@@ -156,6 +156,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             string outputContainerFilePath = "/artifacts/output.json";
             string tempDir = null;
+            string outputContents = null;
 
             try
             {
@@ -169,6 +170,9 @@ namespace Microsoft.DotNet.Docker.Tests
                     Path.Combine(Path.GetTempPath(), Path.GetRandomFileName())).FullName;
 
                 dockerHelper.Copy($"{syftContainerName}:{outputContainerFilePath}", tempDir);
+
+                string outputLocalFilePath = Path.Join(tempDir, Path.GetFileName(outputContainerFilePath));
+                outputContents = File.ReadAllText(outputLocalFilePath);
             }
             finally
             {
@@ -178,9 +182,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
                 dockerHelper.DeleteContainer(syftContainerName);
             }
-
-            string outputLocalFilePath = Path.Join(tempDir, Path.GetFileName(outputContainerFilePath));
-            string outputContents = File.ReadAllText(outputLocalFilePath);
 
             return JsonNode.Parse(outputContents)
                     ?? throw new JsonException($"Unable to parse the output as JSON:{Environment.NewLine}{outputContents}");
