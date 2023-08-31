@@ -182,7 +182,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (imageType == SampleImageType.Aspnetapp)
             {
-                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:80"));
+                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", imageData.DefaultPort.ToString()));
             }
             
             EnvironmentVariableInfo.Validate(
