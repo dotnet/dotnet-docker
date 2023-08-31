@@ -1,9 +1,14 @@
 {{
+    _ ARGS:
+        is-extra (optional): Whether to include extra packages that are not needed for every app,
+            for example globalization support ^
+
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
+
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set baseImageRepo to when(isAlpine,
@@ -26,6 +31,7 @@
     set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm" ^
     set utilPkgs to when(isMariner && nonRootUserSupported, ["shadow-utils"], []) ^
+    set useGlobalizationInvariantMode to !ARGS["is-extra"] && (isDistroless || isAlpine) ^
     set username to "app" ^
     set uid to 1654 ^
     set gid to uid ^
@@ -46,9 +52,18 @@ RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
 
 FROM {{baseImageRepo}}:{{baseImageTag}}}}
 
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [ "uid": uid ])}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs",
+    [
+        "uid": uid,
+        "globalization-invariant": useGlobalizationInvariantMode
+    ]
+)}}
 
-RUN {{InsertTemplate("../Dockerfile.linux.install-deps")}}{{if isRpmInstall:{{if isMultiStage:
+RUN {{InsertTemplate("../Dockerfile.linux.install-deps",
+    [
+        "is-extra": ARGS["is-extra"]
+    ]
+)}}{{if isRpmInstall:{{if isMultiStage:
 
 {{InsertTemplate("../Dockerfile.linux.copy-files",
     [
