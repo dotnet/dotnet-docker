@@ -19,9 +19,10 @@ ENV \
 
 RUN apk add --upgrade --no-cache \
         curl \
+        git \
         icu-data-full \
         icu-libs \
-        git
+        tzdata
 
 # Install .NET SDK
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \

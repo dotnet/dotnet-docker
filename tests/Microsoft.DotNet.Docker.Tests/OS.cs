@@ -15,8 +15,6 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string BookwormSlim = $"{Bookworm}{SlimSuffix}";
         public const string Bullseye = "bullseye";
         public const string BullseyeSlim = $"{Bullseye}{SlimSuffix}";
-        public const string Buster = "buster";
-        public const string BusterSlim = $"{Buster}{SlimSuffix}";
 
         // Mariner
         public const string Mariner = "cbl-mariner";

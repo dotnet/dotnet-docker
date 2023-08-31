@@ -13,9 +13,11 @@ RUN mkdir /staging \
         \
         # .NET dependencies
         glibc \
+        icu \
         libgcc \
         libstdc++ \
         openssl-libs \
+        tzdata \
         zlib \
     && tdnf clean all --releasever=2.0 --installroot /staging
 
@@ -61,9 +63,7 @@ ENV \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 \
     # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true \
-    # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+    DOTNET_RUNNING_IN_CONTAINER=true
 
 COPY --from=installer /staging/ /
 

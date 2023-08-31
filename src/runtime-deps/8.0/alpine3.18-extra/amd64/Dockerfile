@@ -1,4 +1,4 @@
-FROM amd64/debian:bookworm-slim
+FROM amd64/alpine:3.18
 
 ENV \
     # UID of the non-root user 'app'
@@ -8,26 +8,24 @@ ENV \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        ca-certificates \
+RUN apk add --upgrade --no-cache \
+        ca-certificates-bundle \
         \
         # .NET dependencies
-        libc6 \
-        libgcc-s1 \
-        libicu72 \
+        icu-data-full \
+        icu-libs \
+        libgcc \
         libssl3 \
-        libstdc++6 \
+        libstdc++ \
         tzdata \
-        zlib1g \
-    && rm -rf /var/lib/apt/lists/*
+        zlib
 
 # Create a non-root user and group
-RUN groupadd \
+RUN addgroup \
         --gid=$APP_UID \
         app \
-    && useradd -l \
+    && adduser \
         --uid=$APP_UID \
-        --gid=$APP_UID \
-        --create-home \
+        --ingroup=app \
+        --disabled-password \
         app

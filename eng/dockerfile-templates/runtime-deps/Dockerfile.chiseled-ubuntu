@@ -1,4 +1,8 @@
 {{
+    _ ARGS:
+        is-extra (optional): Whether to include extra packages that are not needed for every app,
+            for example globalization support ^
+
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
@@ -10,6 +14,31 @@
     set rocksToolboxDir to "/opt/rocks-toolbox" ^
     set rocksToolboxUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
     set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|ref")] ^
+
+    set basePkgs to [
+            "base-files_base",
+            "base-files_release-info",
+            "ca-certificates_data",
+            "libc6_libs",
+            "libgcc-s1_libs",
+            "libssl3_libs",
+            "zlib1g_libs"
+        ] ^
+
+    _ Arrays in cottle are actually key-value maps. Sorting the array sorts by value
+        but does not change the key value. In order to have the right index in the
+        array, we must call `cat` again to reset the indices (keys) in the map. ^
+    set standardPkgs to cat(sort(cat(basePkgs, [ "libstdc++6_libs" ]))) ^
+    set extraPkgs to cat(sort(cat(standardPkgs,
+            [
+                cat("libicu", VARIABLES[cat("libicu|", osVersionBase)], "_libs"),
+                "tzdata_zoneinfo",
+                "tzdata_zoneinfo-icu"
+            ]))) ^
+
+    set pkgs to when(ARGS["is-extra"],
+            extraPkgs,
+            standardPkgs) ^
 
     set username to "app" ^
     set uid to 1654 ^
@@ -52,24 +81,20 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged", [
 
 RUN mkdir -p /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
-        --release "ubuntu-{{osVersionNumber}}" --root /rootfs \
-            base-files_base \
-            base-files_release-info \
-            ca-certificates_data \
-            libc6_libs \
-            libgcc-s1_libs \
-            libssl3_libs \
-            libstdc++6_libs \
-            zlib1g_libs
+        --release "ubuntu-{{osVersionNumber}}" --root /rootfs \{{for index, pkg in pkgs:
+            {{pkg}}{{if index < len(pkgs) - 1: \}}}}
 
 
 FROM scratch
 
 COPY --from=chisel /rootfs /
 
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs",
+    [
+        "uid": uid,
+        "globalization-invariant": !ARGS["is-extra"]
+    ]
+)}}
 
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=chisel --chown=$APP_UID:$APP_UID /rootfs/home/{{username}} /home/{{username}}
