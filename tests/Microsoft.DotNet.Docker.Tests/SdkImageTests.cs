@@ -134,6 +134,13 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
+            // Skip test due to https://github.com/dotnet/dotnet-docker/issues/4841
+            // Re-enable for release in main branch.
+            if (imageData.IsWindows)
+            {
+                return;
+            }
+
             if (!IsPowerShellSupported(imageData, out string powerShellReason))
             {
                 OutputHelper.WriteLine(powerShellReason);
@@ -194,7 +201,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyPackageInstallation(ProductImageData imageData)
+        public void VerifyInstalledRpmPackages(ProductImageData imageData)
         {
             if (!imageData.OS.Contains("cbl-mariner") || imageData.IsDistroless || imageData.Version.Major > 6)
             {
@@ -212,6 +219,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     $"netstandard-targeting-pack-2.1"
                 }
                 .Concat(AspnetImageTests.GetExpectedRpmPackagesInstalled(imageData)));
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyInstalledPackages(ProductImageData imageData)
+        {
+            RuntimeDepsImageTests.VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper);
         }
 
         [DotNetTheory]

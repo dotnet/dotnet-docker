@@ -14,7 +14,6 @@ namespace Microsoft.DotNet.Docker.Tests
         private string _osTag;
         private ImageVersion? _versionFamily;
         private DotNetImageVariant _imageVariant = DotNetImageVariant.None;
-
         private DotNetImageRepo _supportedImageRepos = 
                 DotNetImageRepo.Runtime_Deps
                     | DotNetImageRepo.Runtime
@@ -22,6 +21,10 @@ namespace Microsoft.DotNet.Docker.Tests
                     | DotNetImageRepo.SDK;
 
         public bool HasCustomSdk => _sdkOS != null;
+        public bool GlobalizationInvariantMode => (!ImageVariant.HasFlag(DotNetImageVariant.Extra)
+                    || Version.Major == 6
+                    || Version.Major == 7)
+                && (IsDistroless || OS.Contains(Tests.OS.Alpine));
 
         public string SdkOS
         {

@@ -216,7 +216,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public string GetContainerAddress(string container)
         {
             string containerAddress = ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + container);
-            if (String.IsNullOrWhiteSpace(containerAddress)){
+            if (string.IsNullOrWhiteSpace(containerAddress)){
                 containerAddress = ExecuteWithLogging("inspect -f \"{{.NetworkSettings.Networks.nat.IPAddress }}\" " + container);
             }
 

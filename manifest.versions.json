@@ -89,8 +89,8 @@
     "libssl|focal": "1.1",
     "libssl|jammy": "3",
 
-    "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.41.0.windows.3/MinGit-2.41.0.3-64-bit.zip",
-    "mingit|x64|sha": "b7487724fbd85dd345e7deb4c37c1d3958b139904a6981fb80ec5b31728cd0f2",
+    "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.1/MinGit-2.42.0-64-bit.zip",
+    "mingit|x64|sha": "b945e6df773fd8013f12e26b65b6815122be62a241d3ef4b9ed2d5ae67ae0aa1",
 
     "monitor|6.3|build-version": "6.3.2-servicing.23106.4",
     "monitor|6.3|linux-musl|x64|sha": "aca88dfe67e582eb065ee0518cb5eee653e38494a5a6b5d80a397a1582869355b99d04aeb777ae4fc1f13f71f9a35bb37cc4137f85705ea3af615279051d56c1",
@@ -120,17 +120,17 @@
     "monitor|7.3|linux|arm64|sha": "23caeec5657f6789550b7b4858c3d86b2909195310b3e88387b9fa57764baec7f3f70c0a1985a10ebcf0f14e4723f4049bbb5935633570f7a9e361d4121dff4a",
     "monitor|7.3|product-version": "7.3.0",
 
-    "monitor|8.0|build-version": "8.0.0-rc.1.23417.6",
+    "monitor|8.0|build-version": "8.0.0-rc.1.23429.4",
     "monitor|8.0|product-version": "8.0.0-rc.1",
 
-    "monitor-base|8.0|linux|x64|sha": "13f6ba8b73e893d8634e5afc04605ca229dcea5c158a91ede1babb466855ecef60f3d682d4bcf2c6bc6684014c0c0ed82bcfa9d4f3fd9c0d466b3c6803080ff8",
-    "monitor-base|8.0|linux|arm64|sha": "c0b789f8d15826958b37f1e9ecd5d4211ffab70aadf393a91424662e8c26db4bfe7a1fba4abb25f0f5d8035355384d6cc156819c9673ae3e01fc42144c8135a8",
+    "monitor-base|8.0|linux|x64|sha": "5464e541b403e38a4a7340d691a929fc9302711b1dcdbf95e12808cba1cd8b0a689bbfbcc31177ed8e7fca79e9e520780f130063026cb0c80e5652a49f0efcdd",
+    "monitor-base|8.0|linux|arm64|sha": "16817dcfff329f715512037faaabbbcd4a7ab685674f7ad4b1cd63ed9cee59be1ab93bed48edf9e08d3fb5cfb5db13f80894c0a3171d7b772807ef36c35eef4e",
 
-    "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "1f26cc410922df0d68ad74492f528186c73984816438b4bfdad2804e114a941febd7badbf17a6bc46be21ed565205f3dd9d11af091ccb093a94568b0964a309b",
-    "monitor-ext-azureblobstorage|8.0|linux|arm64|sha": "568011546d0ca35c76b2900d1d92ca363de1a43f42b7a3cfd8ffc2f0963620a765a8b20066c624a26cb9127ec9c246f4f0e95c67f2dd5de5ab7f488fab83bfc6",
+    "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "dc5a8680e503227e511093fa470c29bbfd6889f2ec7801a14e66796ca8bf4e248d0efcaf37d0a76e85591dd6e29e4b9d030d1bfc3a9239c2da92cc2104da19a1",
+    "monitor-ext-azureblobstorage|8.0|linux|arm64|sha": "55f62f4b375f30a07c42df36e73b1b464bfa2177ae3ba4c994a01c83bdcf0b2a81d54369434269d8bf433edaa52476f37e62e59a057f4db01c4baeae539dcb19",
 
-    "monitor-ext-s3storage|8.0|linux|x64|sha": "3da20eed5692a6c1f870029494b30fc4e66bacabea033faad5048282507ba79140e7f2b55d2de098d72ad7fa721e93a23d7099d5a363d1e67fc2c89ed9762f53",
-    "monitor-ext-s3storage|8.0|linux|arm64|sha": "e3b149547d9b0c44a78ccf608855b78286d9db91ac04acc458a0e2c8b2904594b1d5e7e449a4b126dfb570c59d8b3a378453eab24694a588c1073c38109b144d",
+    "monitor-ext-s3storage|8.0|linux|x64|sha": "a834debe8f74728a488ba82fd492b4b531c94880b0e597fc0a533e66b5a08d6700707ed6b88ef8e4eaab27119987413df6d61557cfc45f24ac0c076fb13c3881",
+    "monitor-ext-s3storage|8.0|linux|arm64|sha": "d67e8b8b741b6feb06c4fabc0d99d08c27213c803ad884da35bb27af7be6e607e87e27a579ce3ed6113304f3ac6c487af02ea5fef946ff5427aa35d0e0507066",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
@@ -223,14 +223,14 @@
     "sdk|7.0|linux|x64|sha": "4cfeedb8e99ffd423da7a99159ee3f31535fd142711941b8206542acb6be26638fbd9a184a5d904084ffdbd8362c83b6b2acf9d193b2cd38bf7f061443439e3c",
     "sdk|7.0|win|x64|sha": "a8d73ecf7c17ae8bc7a7cd3ec7c290fe3c3b67e4456a13b8356aaaafbcfef166ebcdd4106a42ce513fbce2b208bc9dd97dbd63cf6328c64b828776bfcd9b8775",
 
-    "sdk|8.0|build-version": "8.0.100-rc.1.23415.19",
+    "sdk|8.0|build-version": "8.0.100-rc.1.23422.1",
     "sdk|8.0|product-version": "8.0.100-rc.1",
-    "sdk|8.0|linux-musl|arm|sha": "3b6a9c0ed8d1cc3a4a5ac5fc0baa9309437eb55b7e04b23348f03cbfd43e352580c529741fccf1e3e0bed389d3c4f4e200d63939006c92fa109438d3ccbdc8bb",
-    "sdk|8.0|linux-musl|arm64|sha": "9ee1d68ac87d1b462a76188c108d0a92a2de4e33cbc61b02822751dfdd15e4edbc93358a592c962cea18b171f207fa9e1937fcf3716470a903a4f7b230af798a",
-    "sdk|8.0|linux-musl|x64|sha": "141287511d9b96b7499234669dab655de8611575f1d81c3dbbad427ad74328424b7d2762fb00e69d13fce35dedcc52a99075bc976d39ca4d1d5fc859fbc60db7",
-    "sdk|8.0|linux|arm|sha": "3946684f25f6614686bf06d497b85dd887b7509b7a19241f9170e5d695484c43d541c43e3c6df61196010e4b3a661671f3565f9fb05b17107ba97f95141d924c",
-    "sdk|8.0|linux|arm64|sha": "17e7b4b9805aafdc47714aff6f8e2b4fb1c1a15bdd2edaa9ae4d9c8bfac9e473333dd805277a270e31fb4c8ce91c018f288a73af2692e33b54f6ee56e1fe6c30",
-    "sdk|8.0|linux|x64|sha": "faa2de4d54b65d68822a06f4381083784b7fa8f6fec56d3470ab6fd886c3c86e060afda0b8b06b74587fa37c6dc3b82b9c9f515d44db280f80363f153cdd9b8c",
-    "sdk|8.0|win|x64|sha": "4883e4188eb6b4c6895a7230a05035053e381f7413d2716f11f3d2b3d3fd68daa7306b72d371d50fd8de14bf0822e240500985d2b43659397888b985e4c7d311"
+    "sdk|8.0|linux-musl|arm|sha": "d81504c8e617a0c595cbaf2cf3fbec51c59e90795941e96951db9fbba5c70585e04adfcf9a02d4a7920d83a0bb098bbb7d05e75b31f39adfafc6f305d138a255",
+    "sdk|8.0|linux-musl|arm64|sha": "5fe7f886ae554e9552a19dca2fa16d29eb2793de867d361b423401abc19356f5e7bd7e584d65e2fc3704731e0dc4fb7e2b865043559ac0bcd57d225c5cf87b01",
+    "sdk|8.0|linux-musl|x64|sha": "7973c31b06e2255b3d33d9d7798cda17a016869ea0abd7527ba69ab71aeffe291ae05a61717d5b1d2c2847036d8a5b77977d62b93e27a60a789aae138496fd41",
+    "sdk|8.0|linux|arm|sha": "3b4e38183893210c3dd93719465958006d9a0f0d00f77cb37d7641d589cf2cc1209f2f51aed2ccfa7db0ea481a76fb47d45b31205579a4fc1ce1d1489957fbbc",
+    "sdk|8.0|linux|arm64|sha": "7354ee9ce6539d5317c54c45ef9ed38ccf286349628e879d316846490492151d82c562cbb72ece424e544eec06e44da5f0d62a9378dbc285b924fc52ff235dc8",
+    "sdk|8.0|linux|x64|sha": "7eb2139cf7c2949c577422d7b83bf136476f15763587d89dd91cf0e8def011fc6677aa6c725792864fb56b824d6f0cf5adbf7f44b828e36210f277b99d6cae0b",
+    "sdk|8.0|win|x64|sha": "b90b0f6d4ba682800e2accf20a2ef18940a76578aed2fbebc209ced4f0badb74ad2e6e5bd883a4663807b6f794473334ccda45727425826cfc8ea441001a2469"
   }
 }

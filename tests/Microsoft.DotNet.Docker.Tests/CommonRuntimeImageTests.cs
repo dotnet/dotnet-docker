@@ -48,7 +48,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.AddRange(customVariables);
             }
 
-            if (imageData.OS.StartsWith(OS.Alpine) || imageData.IsDistroless)
+            if (imageData.GlobalizationInvariantMode)
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
             }
@@ -58,7 +58,7 @@ namespace Microsoft.DotNet.Docker.Tests
             EnvironmentVariableInfo.Validate(variables, imageTag, imageData, DockerHelper);
         }
 
-        public void VerifyCommonShellNotInstalledForDistroless(ProductImageData imageData)
+        protected void VerifyCommonShellNotInstalledForDistroless(ProductImageData imageData)
         {
             if (!imageData.IsDistroless)
             {

@@ -1,6 +1,8 @@
 {{
     _ ARGS:
-        is-aot (optional): Whether to use the smallest set of packages that is necessary to run native AOT apps ^
+        is-aot (optional): Whether to use the smallest set of packages that is necessary to run native AOT apps
+        is-extra (optional): Whether to include extra packages that are not needed for every app,
+            for example globalization support ^
 
     set distrolessStagingDir to "/staging" ^
     set marinerRepo to "mcr.microsoft.com/cbl-mariner" ^
@@ -23,6 +25,7 @@ RUN mkdir {{distrolessStagingDir}} \
     && {{InsertTemplate("../Dockerfile.linux.install-deps",
             [
                 "is-aot": ARGS["is-aot"],
+                "is-extra": ARGS["is-extra"],
                 "staging-dir": distrolessStagingDir
             ]
         )}}
@@ -59,9 +62,12 @@ RUN rm -rf {{distrolessStagingDir}}/etc/tdnf \
 # .NET runtime-deps image
 FROM {{baseImage}}
 
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs",
+    [
+        "uid": uid,
+        "globalization-invariant": !ARGS["is-extra"]
+    ]
+)}}
 
 COPY --from=installer {{distrolessStagingDir}}/ /{{if createUserHome:
 
