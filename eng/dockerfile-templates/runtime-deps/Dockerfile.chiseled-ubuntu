@@ -7,11 +7,8 @@
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
 
-    set chiselDir to "/opt/chisel" ^
     set chiselUrl to VARIABLES[cat("chisel|", dotnetVersion, "|url")] ^
     set chiselRef to VARIABLES[cat("chisel|", dotnetVersion, "|ref")] ^
-
-    set rocksToolboxDir to "/opt/rocks-toolbox" ^
     set rocksToolboxUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
     set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|ref")] ^
 
@@ -50,24 +47,9 @@ RUN apt-get update \
         ca-certificates \
         file
 
-RUN {{InsertTemplate("../Dockerfile.git-clone", [
-        "url": chiselUrl,
-        "ref": chiselRef,
-        "dir": chiselDir
-    ], "    ")}} \
-    \
-    && {{InsertTemplate("../Dockerfile.git-clone", [
-        "url": rocksToolboxUrl,
-        "ref": rocksToolboxRef,
-        "dir": rocksToolboxDir
-    ], "    ")}}
-
-WORKDIR {{chiselDir}}
-
-RUN go generate internal/deb/version.go \
-    && go build ./cmd/chisel \
-    && cp {{chiselDir}}/chisel /usr/bin/ \
-    && cp {{rocksToolboxDir}}/chisel-wrapper /usr/bin/
+RUN go install {{chiselUrl}}/cmd/chisel@@{{chiselRef}} \
+    && wget -O /usr/bin/chisel-wrapper {{rocksToolboxUrl}}/{{rocksToolboxRef}}/chisel-wrapper \
+    && chmod 755 /usr/bin/chisel-wrapper
 
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged", [
         "staging-dir": "/rootfs",
@@ -81,7 +63,7 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged", [
 
 RUN mkdir -p /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
-        --release "ubuntu-{{osVersionNumber}}" --root /rootfs \{{for index, pkg in pkgs:
+        --release ubuntu-{{osVersionNumber}} --root /rootfs \{{for index, pkg in pkgs:
             {{pkg}}{{if index < len(pkgs) - 1: \}}}}
 
 

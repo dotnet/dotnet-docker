@@ -5,18 +5,9 @@ RUN apt-get update \
         ca-certificates \
         file
 
-RUN git clone --no-checkout https://github.com/canonical/chisel /opt/chisel \
-    && cd /opt/chisel \
-    && git checkout 121a047c83d6c028d3772a825206c8b22a7bca3e \
-    \
-    && git clone --branch v1.0.0 --depth 1 https://github.com/canonical/rocks-toolbox /opt/rocks-toolbox
-
-WORKDIR /opt/chisel
-
-RUN go generate internal/deb/version.go \
-    && go build ./cmd/chisel \
-    && cp /opt/chisel/chisel /usr/bin/ \
-    && cp /opt/rocks-toolbox/chisel-wrapper /usr/bin/
+RUN go install github.com/canonical/chisel/cmd/chisel@v0.8 \
+    && wget -O /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.0.0/chisel-wrapper \
+    && chmod 755 /usr/bin/chisel-wrapper
 
 RUN groupadd \
         --gid=1654 \
@@ -34,7 +25,7 @@ RUN groupadd \
 
 RUN mkdir -p /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
-        --release "ubuntu-22.04" --root /rootfs \
+        --release ubuntu-22.04 --root /rootfs \
             base-files_base \
             base-files_release-info \
             ca-certificates_data \

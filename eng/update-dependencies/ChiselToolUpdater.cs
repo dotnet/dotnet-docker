@@ -16,8 +16,7 @@ internal class ChiselToolUpdater : VariableUpdaterBase
     public ChiselToolUpdater(string repoRoot, string variableName, string dockerfileVersion, bool isTag, string newRef) : base(repoRoot, variableName)
     {
         _dockerfileVersion = dockerfileVersion;
-        string prefix = isTag ? "tag" : "commit";
-        _newValue = $"{prefix}:{newRef}";
+        _newValue = newRef;
     }
 
     protected sealed override string TryGetDesiredValue(IEnumerable<IDependencyInfo> dependencyInfos, out IEnumerable<IDependencyInfo> usedDependencyInfos)
