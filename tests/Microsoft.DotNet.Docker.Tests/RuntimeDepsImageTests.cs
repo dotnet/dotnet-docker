@@ -155,8 +155,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
 
             string outputContainerFilePath = "/artifacts/output.json";
-            string tempDir = Directory.CreateDirectory(
-                Path.Combine(Path.GetTempPath(), Path.GetRandomFileName())).FullName;
+            string tempDir = null;
 
             try
             {
@@ -166,10 +165,17 @@ namespace Microsoft.DotNet.Docker.Tests
                     skipAutoCleanup: true,
                     useMountedDockerSocket: true);
 
+                tempDir = Directory.CreateDirectory(
+                    Path.Combine(Path.GetTempPath(), Path.GetRandomFileName())).FullName;
+
                 dockerHelper.Copy($"{syftContainerName}:{outputContainerFilePath}", tempDir);
             }
             finally
             {
+                if (!string.IsNullOrEmpty(tempDir))
+                {
+                    Directory.Delete(tempDir, true);
+                }
                 dockerHelper.DeleteContainer(syftContainerName);
             }
 
