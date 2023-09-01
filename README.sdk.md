@@ -78,7 +78,9 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.100-rc.1-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.100-rc.1-bookworm-slim, 8.0-bookworm-slim, 8.0.100-rc.1, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 8.0.100-rc.1-alpine3.18-amd64, 8.0-alpine3.18-amd64, 8.0-alpine-amd64, 8.0.100-rc.1-alpine3.18, 8.0-alpine3.18, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
+8.0.100-rc.1-alpine3.18-aot-amd64, 8.0-alpine3.18-aot-amd64, 8.0-alpine-aot-amd64, 8.0.100-rc.1-alpine3.18-aot, 8.0-alpine3.18-aot, 8.0-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.18-aot/amd64/Dockerfile) | Alpine 3.18
 8.0.100-rc.1-jammy-amd64, 8.0-jammy-amd64, 8.0.100-rc.1-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+8.0.100-rc.1-jammy-aot-amd64, 8.0-jammy-aot-amd64, 8.0.100-rc.1-jammy-aot, 8.0-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy-aot/amd64/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -98,7 +100,9 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.100-rc.1-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.100-rc.1-bookworm-slim, 8.0-bookworm-slim, 8.0.100-rc.1, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 8.0.100-rc.1-alpine3.18-arm64v8, 8.0-alpine3.18-arm64v8, 8.0-alpine-arm64v8, 8.0.100-rc.1-alpine3.18, 8.0-alpine3.18, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
+8.0.100-rc.1-alpine3.18-aot-arm64v8, 8.0-alpine3.18-aot-arm64v8, 8.0-alpine-aot-arm64v8, 8.0.100-rc.1-alpine3.18-aot, 8.0-alpine3.18-aot, 8.0-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.18-aot/arm64v8/Dockerfile) | Alpine 3.18
 8.0.100-rc.1-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.100-rc.1-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.100-rc.1-jammy-aot-arm64v8, 8.0-jammy-aot-arm64v8, 8.0.100-rc.1-jammy-aot, 8.0-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy-aot/arm64v8/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version

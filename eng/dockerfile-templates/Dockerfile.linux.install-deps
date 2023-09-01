@@ -1,5 +1,6 @@
 {{
     _ ARGS:
+        is-aot (optional): Whether to use the smallest set of packages that is necessary to run native AOT apps
         is-extra (optional): Whether to include extra packages that are not needed for every app,
             for example globalization support
         staging-dir (optional): Location of the staging directory for distroless installation ^
@@ -102,9 +103,11 @@
 
     set pkgs to when(useLegacyPackageLayout,
         legacyPkgs,
-        when(ARGS["is-extra"] || isDebian || isUbuntu || isFullMariner,
-            extraPkgs,
-            standardPkgs)) ^
+        when(ARGS["is-aot"],
+            basePkgs,
+            when(ARGS["is-extra"] || isDebian || isUbuntu || isFullMariner,
+                extraPkgs,
+                standardPkgs))) ^
 
     set certsPkgName to when(isDistrolessMariner,
         "prebuilt-ca-certificates",

@@ -1,5 +1,6 @@
 {{
     _ ARGS:
+        is-aot (optional): Whether to use the smallest set of packages that is necessary to run native AOT apps
         is-extra (optional): Whether to include extra packages that are not needed for every app,
             for example globalization support ^
 
@@ -61,6 +62,7 @@ FROM {{baseImageRepo}}:{{baseImageTag}}}}
 
 RUN {{InsertTemplate("../Dockerfile.linux.install-deps",
     [
+        "is-aot": ARGS["is-aot"],
         "is-extra": ARGS["is-extra"]
     ]
 )}}{{if isRpmInstall:{{if isMultiStage:

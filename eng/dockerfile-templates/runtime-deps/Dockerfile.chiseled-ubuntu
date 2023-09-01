@@ -1,5 +1,6 @@
 {{
     _ ARGS:
+        is-aot (optional): Whether to use the smallest set of packages that is necessary to run native AOT apps
         is-extra (optional): Whether to include extra packages that are not needed for every app,
             for example globalization support ^
 
@@ -33,9 +34,11 @@
                 "tzdata_zoneinfo-icu"
             ]))) ^
 
-    set pkgs to when(ARGS["is-extra"],
-            extraPkgs,
-            standardPkgs) ^
+    set pkgs to when(ARGS["is-aot"], 
+            basePkgs,
+            when(ARGS["is-extra"],
+                extraPkgs,
+                standardPkgs)) ^
 
     set username to "app" ^
     set uid to 1654 ^
