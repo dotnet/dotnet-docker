@@ -67,8 +67,8 @@
 
     "chisel|6.0|url": "github.com/canonical/chisel",
     "chisel|8.0|url": "$(chisel|6.0|url)",
-    "chisel|6.0|ref": "v0.8",
-    "chisel|8.0|ref": "v0.8",
+    "chisel|6.0|ref": "v0.8.0",
+    "chisel|8.0|ref": "v0.8.0",
 
     "dotnet|6.0|product-version": "6.0.21",
     "dotnet|7.0|product-version": "7.0.10",
