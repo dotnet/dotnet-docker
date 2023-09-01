@@ -13,14 +13,9 @@ namespace Microsoft.DotNet.Docker.Tests
         private string _sdkOS;
         private string _osTag;
         private ImageVersion? _versionFamily;
-        private DotNetImageVariant _imageVariant = DotNetImageVariant.None;
-        private DotNetImageRepo _supportedImageRepos = 
-                DotNetImageRepo.Runtime_Deps
-                    | DotNetImageRepo.Runtime
-                    | DotNetImageRepo.Aspnet
-                    | DotNetImageRepo.SDK;
 
         public bool HasCustomSdk => _sdkOS != null;
+
         public bool GlobalizationInvariantMode => (!ImageVariant.HasFlag(DotNetImageVariant.Extra)
                     || Version.Major == 6
                     || Version.Major == 7)
@@ -28,51 +23,32 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string SdkOS
         {
-            get
-            {
-                if (_sdkOS != null)
-                {
-                    return _sdkOS;
-                }
-
-                return OS;
-            }
-            set { _sdkOS = value; }
+            get => HasCustomSdk ? _sdkOS : OS;
+            init => _sdkOS = value;
         }
+
+        public DotNetImageVariant SdkImageVariant { get; init; } = DotNetImageVariant.None;
 
         public string OSTag
         {
-            get
-            {
-                if (_osTag is not null)
-                {
-                    return _osTag;
-                }
-
-                return OS;
-            }
-            set { _osTag = value; }
+            get => _osTag != null ? _osTag : OS;
+            init => _osTag = value;
         }
 
-        public ImageVersion Version { get; set; }
+        public ImageVersion Version { get; init; }
 
         public ImageVersion VersionFamily
         {
             get { return _versionFamily.GetValueOrDefault(Version); }
-            set { _versionFamily = value; }
+            init { _versionFamily = value; }
         }
 
-        public DotNetImageVariant ImageVariant
-        {
-            get => _imageVariant;
-            set => _imageVariant = value;
-        }
+        public DotNetImageVariant ImageVariant { get; init;}
 
-        public DotNetImageRepo SupportedImageRepos
-        {
-            get => _supportedImageRepos;
-            set => _supportedImageRepos = value;
-        }
+        public DotNetImageRepo SupportedImageRepos { get; init; } = DotNetImageRepo.Runtime_Deps
+                                                                    | DotNetImageRepo.Runtime
+                                                                    | DotNetImageRepo.Aspnet
+                                                                    | DotNetImageRepo.SDK;
 
         public string VersionString => Version.ToString();
 
@@ -97,8 +73,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper)
         {
-            // ASP.NET composite includes its own runtime that we want to test
-            if (ImageVariant == DotNetImageVariant.Composite && imageRepo == DotNetImageRepo.Runtime)
+            // Aspnet or Runtime images are irrelevant for the AOT image variant.
+            // AOT runtime-deps images should be able to run any AOT compiled console or web apps.
+            if (ImageVariant.HasFlag(DotNetImageVariant.AOT)
+                && (imageRepo == DotNetImageRepo.Aspnet || imageRepo == DotNetImageRepo.Runtime))
+            {
+                imageRepo = DotNetImageRepo.Runtime_Deps;
+            }
+
+            // ASP.NET composite includes its own runtime that we want to test.
+            if (ImageVariant.HasFlag(DotNetImageVariant.Composite) && imageRepo == DotNetImageRepo.Runtime)
             {
                 imageRepo = DotNetImageRepo.Aspnet;
             }
@@ -170,6 +154,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 case DotNetImageRepo.SDK:
                     imageVersion = Version;
                     os = SdkOS;
+                    variant = GetImageVariantName(SdkImageVariant);
                     break;
                 default:
                     throw new NotSupportedException($"Unsupported image type '{imageRepo}'");

@@ -10,7 +10,8 @@ namespace Microsoft.DotNet.Docker.Tests
     public enum DotNetImageVariant
     {
         None        = 0,
-        Composite   = 1 << 0,
-        Extra       = 1 << 1
+        AOT       = 1 << 0,
+        Composite   = 1 << 1,
+        Extra       = 1 << 2,
     }
 }
