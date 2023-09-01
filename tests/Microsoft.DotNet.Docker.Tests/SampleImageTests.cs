@@ -65,17 +65,19 @@ namespace Microsoft.DotNet.Docker.Tests
 
             await VerifySampleAsync(imageData, SampleImageType.Aspnetapp, async (image, containerName) =>
             {
+                int port = imageData.DockerfileSuffix == "windowsservercore-iis" ? 80 : imageData.DefaultPort;
+
                 try
                 {
                     DockerHelper.Run(
                         image: image,
                         name: containerName,
                         detach: true,
-                        optionalRunArgs: $"-p {imageData.DefaultPort}");
+                        optionalRunArgs: $"-p {port}");
 
                     if (!Config.IsHttpVerificationDisabled)
                     {
-                        await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(containerName, DockerHelper, OutputHelper, imageData.DefaultPort);
+                        await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(containerName, DockerHelper, OutputHelper, port);
                     }
 
                     ValidateEnvironmentVariables(imageData, image, SampleImageType.Aspnetapp);
