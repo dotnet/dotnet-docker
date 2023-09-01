@@ -36,14 +36,6 @@ public static class GitHubHelper
         return response;
     }
 
-    public static async Task<string> GetLatestCommitAsync(string owner, string repo, string branch)
-    {
-        string request = $"/repos/{owner}/{repo}/commits/{branch}";
-        JObject response = await Get(request);
-        string commit = response.GetRequiredToken<JValue>("sha").ToString();
-        return commit;
-    }
-
     private static async Task<JObject> Get(string request) {
         string responseString = await s_httpClient.GetStringAsync(request);
         JObject response = (JObject)(JsonConvert.DeserializeObject(responseString) ??
