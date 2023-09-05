@@ -409,7 +409,7 @@ namespace Dotnet.Docker
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
 
             JObject minGitRelease = await GitHubHelper.GetLatestReleaseAsync("git-for-windows", "git");
-            string chiselRef = await GitHubHelper.GetLatestCommitAsync("canonical", "chisel", "main");
+            string chiselRef = await GitHubHelper.GetLatestReleaseTagAsync("canonical", "chisel");
             string rocksToolboxRef = await GitHubHelper.GetLatestReleaseTagAsync("canonical", "rocks-toolbox");
 
             List<IDependencyUpdater> updaters = new()
