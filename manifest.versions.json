@@ -65,10 +65,10 @@
     "base-url|8.0-monitor|main": "$(base-url|public|main)",
     "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
 
-    "chisel|6.0|url": "https://github.com/canonical/chisel",
+    "chisel|6.0|url": "github.com/canonical/chisel",
     "chisel|8.0|url": "$(chisel|6.0|url)",
-    "chisel|6.0|ref": "commit:121a047c83d6c028d3772a825206c8b22a7bca3e",
-    "chisel|8.0|ref": "commit:2e69cee456eae3126585a6ba8b4b353ba9c7fc12",
+    "chisel|6.0|ref": "v0.8.0",
+    "chisel|8.0|ref": "v0.8.0",
 
     "dotnet|6.0|product-version": "6.0.21",
     "dotnet|7.0|product-version": "7.0.10",
@@ -155,10 +155,10 @@
     "powershell|8.0|Linux|x64|sha": "42a10ea0492d7504e412077fbcd31643e90fb31bc111bd7fea37b4f1289d0939b4be99cded9f759d054058b94ba0dbc2ecc4f132970bfe76ae9f937e83be0a7b",
     "powershell|8.0|Windows|x64|sha": "68e91c15fff44972284c9e2922ea471bf6061f9bfa15b58dcf18c52db8257a2e6431a8166962880e415a47abe1d0391f9931c280fa93de603433c1de8f2379b9",
 
-    "rocks-toolbox|6.0|url": "https://github.com/canonical/rocks-toolbox",
+    "rocks-toolbox|6.0|url": "https://raw.githubusercontent.com/canonical/rocks-toolbox",
     "rocks-toolbox|8.0|url": "$(rocks-toolbox|6.0|url)",
-    "rocks-toolbox|6.0|ref": "tag:v1.0.0",
-    "rocks-toolbox|8.0|ref": "tag:v1.0.0",
+    "rocks-toolbox|6.0|ref": "v1.0.0",
+    "rocks-toolbox|8.0|ref": "v1.0.0",
 
     "runtime|6.0|build-version": "6.0.21",
     "runtime|6.0|targeting-pack-version": "$(runtime|6.0|build-version)",
