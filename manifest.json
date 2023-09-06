@@ -930,6 +930,14 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-alpine3.18-aot-amd64",
+                    "$(Repo:runtime-deps):8.0-alpine3.18-amd64"
+                  ]
                 }
               ]
             },
@@ -952,6 +960,14 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-arm32v7"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-alpine3.18-aot-arm64v8",
+                    "$(Repo:runtime-deps):8.0-alpine3.18-arm32v7"
+                  ]
                 }
               ]
             },
@@ -973,6 +989,14 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-alpine3.18-aot-arm64v8",
+                    "$(Repo:runtime-deps):8.0-alpine3.18-arm64v8"
                   ]
                 }
               ]
@@ -1004,6 +1028,14 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-alpine3.18-amd64",
+                    "$(Repo:runtime-deps):8.0-alpine3.18-amd64"
+                  ]
                 }
               ]
             },
@@ -1026,6 +1058,14 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-arm32v7"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-alpine3.18-arm64v8",
+                    "$(Repo:runtime-deps):8.0-alpine3.18-arm64v8"
+                  ]
                 }
               ]
             },
@@ -1047,6 +1087,14 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-alpine3.18-arm64v8",
+                    "$(Repo:runtime-deps):8.0-alpine3.18-arm32v7"
                   ]
                 }
               ]
@@ -1189,6 +1237,14 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-jammy-aot-amd64",
+                    "$(Repo:runtime-deps):8.0-jammy-chiseled-amd64"
+                  ]
                 }
               ]
             },
@@ -1210,6 +1266,14 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-arm64v8"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-jammy-aot-arm64v8",
+                    "$(Repo:runtime-deps):8.0-jammy-chiseled-arm64v8"
+                  ]
                 }
               ]
             },
@@ -1230,6 +1294,14 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-arm32v7"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-jammy-aot-arm64v8",
+                    "$(Repo:runtime-deps):8.0-jammy-chiseled-arm32v7"
                   ]
                 }
               ]
@@ -1259,6 +1331,14 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-jammy-amd64",
+                    "$(Repo:runtime-deps):8.0-jammy-chiseled-amd64"
+                  ]
                 }
               ]
             },
@@ -1280,6 +1360,14 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-arm64v8"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-jammy-arm64v8",
+                    "$(Repo:runtime-deps):8.0-jammy-chiseled-arm64v8"
+                  ]
                 }
               ]
             },
@@ -1300,6 +1388,14 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-arm32v7"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-jammy-arm64v8",
+                    "$(Repo:runtime-deps):8.0-jammy-chiseled-arm32v7"
                   ]
                 }
               ]
@@ -1465,6 +1561,14 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-aot-amd64",
+                    "$(Repo:runtime-deps):8.0-cbl-mariner2.0-amd64"
+                  ]
                 }
               ]
             },
@@ -1492,6 +1596,14 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-aot-arm64v8",
+                    "$(Repo:runtime-deps):8.0-cbl-mariner2.0-distroless-arm64v8"
                   ]
                 }
               ]
@@ -1535,6 +1647,14 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-amd64",
+                    "$(Repo:runtime-deps):8.0-cbl-mariner2.0-distroless-amd64"
+                  ]
                 }
               ]
             },
@@ -1562,6 +1682,14 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8",
+                    "$(Repo:runtime-deps):8.0-cbl-mariner2.0-distroless-arm64v8"
                   ]
                 }
               ]
