@@ -14,6 +14,7 @@
 
     set pkgs to when(isAlpine,
         [
+            "build-base",
             "clang",
             "zlib-dev"
         ],
