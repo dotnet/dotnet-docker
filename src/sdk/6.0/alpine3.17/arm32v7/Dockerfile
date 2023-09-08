@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:6.0.20-alpine3.17-arm32v7
+FROM $REPO:6.0.21-alpine3.17-arm32v7
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=6.0.412 \
+    DOTNET_SDK_VERSION=6.0.413 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -19,7 +19,7 @@ ENV \
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Alpine-3.17-arm32
 
-RUN apk add --no-cache \
+RUN apk add --upgrade --no-cache \
         curl \
         icu-data-full \
         icu-libs \
@@ -27,7 +27,7 @@ RUN apk add --no-cache \
 
 # Install .NET SDK
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-arm.tar.gz \
-    && dotnet_sha512='8e39ccea1481e6588e9c2c52292d8a9a66615f7fc73f91a30b350d854bd3ac4d5245c75fdb3de5877f6eda73b2bb5ad1696ea925f7b9d14347964603db89bc68' \
+    && dotnet_sha512='6b88eca7b3caca24049afa1ec8f625ada07d3a32f250d19a0b15ef2c08ab2d6b9617b63f52957f165dbc58e51e2df2d22a12f1c9f9df452e58e3471fd35a349d' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \

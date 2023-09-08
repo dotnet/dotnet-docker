@@ -4,29 +4,21 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set baseImage to cat(marinerRepo, "/distroless/minimal:", OS_VERSION_NUMBER) ^
     set username to "app" ^
-    set uid to when(dotnetVersion = "6.0" || dotnetVersion = "7.0",
-        when(find(OS_VERSION, "1.0") >= 0,
-            1000,
-            101),
-        1654) ^
+    set uid to when(dotnetVersion = "6.0" || dotnetVersion = "7.0", 101, 1654) ^
     set gid to uid ^
     set createUserHome to dotnetVersion != "6.0"
 }}# Installer image
 FROM {{marinerRepo}}/base/core:{{OS_VERSION_NUMBER}} AS installer
-{{ if find(OS_VERSION, "1.0") >= 0:
-RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
-    [
-        "pkgs": ["dnf"]
-    ])}}^else:
+
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "pkgs": ["gawk", "shadow-utils"]
-    ])}}}}
+    ])}}
 
 # Install .NET's dependencies into a staging location
 RUN mkdir {{distrolessStagingDir}} \
     && {{InsertTemplate("../Dockerfile.linux.install-deps", ["staging-dir": distrolessStagingDir])}}
-{{if find(OS_VERSION, "1.0") < 0:
+
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
 COPY --from={{baseImage}} /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
 RUN tmpManifestPath="/tmp/rpmmanifest" \
@@ -35,7 +27,6 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
     # Remove duplicates that match on the first field (package name)
     && tac $tmpManifestPath | gawk '!x[$1]++' | sort > /staging/var/lib/rpmmanifest/container-manifest-2
 
-}}
 # Create a non-root user and group
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
         [
@@ -48,9 +39,9 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
         ])}}
 
 # Clean up staging
-RUN rm -rf {{distrolessStagingDir}}/etc/{{when(find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf")}} \
+RUN rm -rf {{distrolessStagingDir}}/etc/tdnf \
     && rm -rf {{distrolessStagingDir}}/run/* \
-    && rm -rf {{distrolessStagingDir}}/var/cache/{{when(find(OS_VERSION, "1.0") >= 0, "dnf", "tdnf")}} \
+    && rm -rf {{distrolessStagingDir}}/var/cache/tdnf \
     && rm -rf {{distrolessStagingDir}}/var/lib/rpm \
     && rm -rf {{distrolessStagingDir}}/usr/share/doc \
     && rm -rf {{distrolessStagingDir}}/usr/share/man \
