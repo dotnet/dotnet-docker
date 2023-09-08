@@ -52,12 +52,12 @@ Tags | Dockerfile | OS Version
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.7-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.0-preview.7, 8.0.0-preview.7-bookworm-slim, 8.0, 8.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-8.0.0-preview.7-alpine3.18-amd64, 8.0-alpine3.18-amd64, 8.0-alpine-amd64, 8.0.0-preview.7-alpine3.18, 8.0-alpine3.18, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
-8.0.0-preview.7-alpine3.18-extra-amd64, 8.0-alpine3.18-extra-amd64, 8.0-alpine-extra-amd64, 8.0.0-preview.7-alpine3.18-extra, 8.0-alpine3.18-extra, 8.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18-extra/amd64/Dockerfile) | Alpine 3.18
-8.0.0-preview.7-jammy-amd64, 8.0-jammy-amd64, 8.0.0-preview.7-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-8.0.0-preview.7-jammy-chiseled-amd64, 8.0-jammy-chiseled-amd64, 8.0.0-preview.7-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-8.0.0-preview.7-jammy-chiseled-extra-amd64, 8.0-jammy-chiseled-extra-amd64, 8.0.0-preview.7-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled-extra/amd64/Dockerfile) | Ubuntu 22.04
+8.0.0-rc.1-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.0-rc.1, 8.0.0-rc.1-bookworm-slim, 8.0, 8.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.0-rc.1-alpine3.18-amd64, 8.0-alpine3.18-amd64, 8.0-alpine-amd64, 8.0.0-rc.1-alpine3.18, 8.0-alpine3.18, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
+8.0.0-rc.1-alpine3.18-extra-amd64, 8.0-alpine3.18-extra-amd64, 8.0-alpine-extra-amd64, 8.0.0-rc.1-alpine3.18-extra, 8.0-alpine3.18-extra, 8.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18-extra/amd64/Dockerfile) | Alpine 3.18
+8.0.0-rc.1-jammy-amd64, 8.0-jammy-amd64, 8.0.0-rc.1-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+8.0.0-rc.1-jammy-chiseled-amd64, 8.0-jammy-chiseled-amd64, 8.0.0-rc.1-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+8.0.0-rc.1-jammy-chiseled-extra-amd64, 8.0-jammy-chiseled-extra-amd64, 8.0.0-rc.1-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled-extra/amd64/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -75,12 +75,12 @@ Tags | Dockerfile | OS Version
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.7-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.0-preview.7, 8.0.0-preview.7-bookworm-slim, 8.0, 8.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-8.0.0-preview.7-alpine3.18-arm64v8, 8.0-alpine3.18-arm64v8, 8.0-alpine-arm64v8, 8.0.0-preview.7-alpine3.18, 8.0-alpine3.18, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
-8.0.0-preview.7-alpine3.18-extra-arm64v8, 8.0-alpine3.18-extra-arm64v8, 8.0-alpine-extra-arm64v8, 8.0.0-preview.7-alpine3.18-extra, 8.0-alpine3.18-extra, 8.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18-extra/arm64v8/Dockerfile) | Alpine 3.18
-8.0.0-preview.7-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.0-preview.7-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.0-preview.7-jammy-chiseled-arm64v8, 8.0-jammy-chiseled-arm64v8, 8.0.0-preview.7-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.0-preview.7-jammy-chiseled-extra-arm64v8, 8.0-jammy-chiseled-extra-arm64v8, 8.0.0-preview.7-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.0-rc.1-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.0-rc.1, 8.0.0-rc.1-bookworm-slim, 8.0, 8.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.0-rc.1-alpine3.18-arm64v8, 8.0-alpine3.18-arm64v8, 8.0-alpine-arm64v8, 8.0.0-rc.1-alpine3.18, 8.0-alpine3.18, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
+8.0.0-rc.1-alpine3.18-extra-arm64v8, 8.0-alpine3.18-extra-arm64v8, 8.0-alpine-extra-arm64v8, 8.0.0-rc.1-alpine3.18-extra, 8.0-alpine3.18-extra, 8.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18-extra/arm64v8/Dockerfile) | Alpine 3.18
+8.0.0-rc.1-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.0-rc.1-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.0-rc.1-jammy-chiseled-arm64v8, 8.0-jammy-chiseled-arm64v8, 8.0.0-rc.1-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.0-rc.1-jammy-chiseled-extra-arm64v8, 8.0-jammy-chiseled-extra-arm64v8, 8.0.0-rc.1-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -98,12 +98,12 @@ Tags | Dockerfile | OS Version
 ##### .NET 8 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.7-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.0-preview.7, 8.0.0-preview.7-bookworm-slim, 8.0, 8.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-8.0.0-preview.7-alpine3.18-arm32v7, 8.0-alpine3.18-arm32v7, 8.0-alpine-arm32v7, 8.0.0-preview.7-alpine3.18, 8.0-alpine3.18, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
-8.0.0-preview.7-alpine3.18-extra-arm32v7, 8.0-alpine3.18-extra-arm32v7, 8.0-alpine-extra-arm32v7, 8.0.0-preview.7-alpine3.18-extra, 8.0-alpine3.18-extra, 8.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18-extra/arm32v7/Dockerfile) | Alpine 3.18
-8.0.0-preview.7-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.0-preview.7-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
-8.0.0-preview.7-jammy-chiseled-arm32v7, 8.0-jammy-chiseled-arm32v7, 8.0.0-preview.7-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
-8.0.0-preview.7-jammy-chiseled-extra-arm32v7, 8.0-jammy-chiseled-extra-arm32v7, 8.0.0-preview.7-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
+8.0.0-rc.1-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.0-rc.1, 8.0.0-rc.1-bookworm-slim, 8.0, 8.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.0-rc.1-alpine3.18-arm32v7, 8.0-alpine3.18-arm32v7, 8.0-alpine-arm32v7, 8.0.0-rc.1-alpine3.18, 8.0-alpine3.18, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
+8.0.0-rc.1-alpine3.18-extra-arm32v7, 8.0-alpine3.18-extra-arm32v7, 8.0-alpine-extra-arm32v7, 8.0.0-rc.1-alpine3.18-extra, 8.0-alpine3.18-extra, 8.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18-extra/arm32v7/Dockerfile) | Alpine 3.18
+8.0.0-rc.1-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.0-rc.1-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+8.0.0-rc.1-jammy-chiseled-arm32v7, 8.0-jammy-chiseled-arm32v7, 8.0.0-rc.1-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
+8.0.0-rc.1-jammy-chiseled-extra-arm32v7, 8.0-jammy-chiseled-extra-arm32v7, 8.0.0-rc.1-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
 
 You can retrieve a list of all available tags for dotnet/runtime-deps at https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list.
 <!--End of generated tags-->
