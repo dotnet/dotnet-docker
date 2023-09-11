@@ -1,6 +1,6 @@
 # .NET container samples
 
-The following samples and guidance demonstrate how to use .NET and Docker for development, testing and production. You can equally use the samples for learning about containers or as the basis of your own container images.
+The following samples and guidance demonstrate how to use .NET and Docker for development, testing and production. You can use the samples for learning about containers or as the basis of your own container images.
 
 Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) directory.
 
@@ -11,8 +11,8 @@ Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) direct
 
 * [Build a .NET container image](dotnetapp/README.md)
 * [Build an ASP.NET Core container image](aspnetapp/README.md)
-* [Build a single file app](releasesapp-singlefile/README.md)
-* [Build a Native AOT app](releasesapi-aot/README.md)
+* [Build a single file app](releasesapp/README.md)
+* [Build a native AOT app](releasesapi/README.md)
 * [Building a globalization and time zone aware (or unaware) image](globalapp/README.md)
 * [Build for a platform](build-for-a-platform.md)
 

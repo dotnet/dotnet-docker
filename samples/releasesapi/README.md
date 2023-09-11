@@ -40,7 +40,7 @@ dotnet publish /p:PublishProfile=DefaultContainer /p:ContainerBaseImage=mcr.micr
 You can also use the `aot-sdk` image if you don't have native AOT pre-requisites installed. In this scenario, a container registry must be provided.
 
 ```console
-docker run --rm -it -v $(pwd):/source -v /home/myusername/.docker:/root/.docker -w /source mcr.microsoft.com/dotnet/aot-sdk:latest dotnet publish /p:PublishProfile=DefaultContainer /p:ContainerBaseImage=mcr.microsoft.com/dotnet/runtime-deps:8.0-preview-jammy-chiseled /p:ContainerRegistry=your-registry
+docker run --rm -it -v $(pwd):/source -v /home/myusername/.docker:/root/.docker -w /source mcr.microsoft.com/dotnet/aot-sdk:latest dotnet publish /p:PublishProfile=DefaultContainer /p:ContainerBaseImage=mcr.microsoft.com/dotnet/runtime-deps:8.0-jammy-chiseled /p:ContainerRegistry=your-registry
 ```
 
 This pattern only works on Linux since the `~/.docker/config.json` file contains unencrypted passwords on that system, enabling them to be used within the `aot-sdk` container.
