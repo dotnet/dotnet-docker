@@ -70,9 +70,9 @@
     "chisel|6.0|ref": "commit:121a047c83d6c028d3772a825206c8b22a7bca3e",
     "chisel|8.0|ref": "commit:121a047c83d6c028d3772a825206c8b22a7bca3e",
 
-    "dotnet-prev|6.0|product-version": "6.0.21",
-    "dotnet-prev|7.0|product-version": "7.0.10",
-    "dotnet-prev|8.0|product-version": "8.0.0-preview.7",
+    "dotnet-prev|6.0|product-version": "6.0.22",
+    "dotnet-prev|7.0|product-version": "7.0.11",
+    "dotnet-prev|8.0|product-version": "8.0.0-rc.1",
 
     "dotnet|6.0|product-version": "6.0.21",
     "dotnet|7.0|product-version": "7.0.10",
