@@ -5465,11 +5465,11 @@
           "productVersion": "$(monitor|8.0|product-version)",
           "sharedTags": {
             "$(monitor|8.0|product-version)-ubuntu-chiseled": {},
-            "8.0-ubuntu-chiseled": {},
-            "8-ubuntu-chiseled": {},
+            "8.0-preview-ubuntu-chiseled": {},
+            "8-preview-ubuntu-chiseled": {},
             "$(monitor|8.0|product-version)": {},
-            "8.0": {},
-            "8": {},
+            "8.0-preview": {},
+            "8-preview": {},
             "latest": {}
           },
           "platforms": [
@@ -5483,8 +5483,8 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-amd64": {},
-                "8.0-ubuntu-chiseled-amd64": {},
-                "8-ubuntu-chiseled-amd64": {}
+                "8.0-preview-ubuntu-chiseled-amd64": {},
+                "8-preview-ubuntu-chiseled-amd64": {}
               }
             },
             {
@@ -5498,8 +5498,8 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-arm64v8": {},
-                "8.0-ubuntu-chiseled-arm64v8": {},
-                "8-ubuntu-chiseled-arm64v8": {}
+                "8.0-preview-ubuntu-chiseled-arm64v8": {},
+                "8-preview-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5511,10 +5511,10 @@
             "$(monitor|8.0|product-version)-cbl-mariner-distroless": {
               "docType": "Undocumented"
             },
-            "8.0-cbl-mariner-distroless": {
+            "8.0-preview-cbl-mariner-distroless": {
               "docType": "Undocumented"
             },
-            "8-cbl-mariner-distroless": {
+            "8-preview-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -5531,10 +5531,10 @@
                 "$(monitor|8.0|product-version)-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-cbl-mariner-distroless-amd64": {
+                "8.0-preview-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8-cbl-mariner-distroless-amd64": {
+                "8-preview-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -5552,10 +5552,10 @@
                 "$(monitor|8.0|product-version)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-cbl-mariner-distroless-arm64v8": {
+                "8.0-preview-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8-cbl-mariner-distroless-arm64v8": {
+                "8-preview-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -6177,11 +6177,11 @@
           "productVersion": "$(monitor|8.0|product-version)",
           "sharedTags": {
             "$(monitor|8.0|product-version)-ubuntu-chiseled": {},
-            "8.0-ubuntu-chiseled": {},
-            "8-ubuntu-chiseled": {},
+            "8.0-preview-ubuntu-chiseled": {},
+            "8-preview-ubuntu-chiseled": {},
             "$(monitor|8.0|product-version)": {},
-            "8.0": {},
-            "8": {}
+            "8.0-preview": {},
+            "8-preview": {}
           },
           "platforms": [
             {
@@ -6194,8 +6194,8 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-amd64": {},
-                "8.0-ubuntu-chiseled-amd64": {},
-                "8-ubuntu-chiseled-amd64": {}
+                "8.0-preview-ubuntu-chiseled-amd64": {},
+                "8-preview-ubuntu-chiseled-amd64": {}
               }
             },
             {
@@ -6209,8 +6209,8 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-arm64v8": {},
-                "8.0-ubuntu-chiseled-arm64v8": {},
-                "8-ubuntu-chiseled-arm64v8": {}
+                "8.0-preview-ubuntu-chiseled-arm64v8": {},
+                "8-preview-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -6222,10 +6222,10 @@
             "$(monitor|8.0|product-version)-cbl-mariner-distroless": {
               "docType": "Undocumented"
             },
-            "8.0-cbl-mariner-distroless": {
+            "8.0-preview-cbl-mariner-distroless": {
               "docType": "Undocumented"
             },
-            "8-cbl-mariner-distroless": {
+            "8-preview-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -6242,10 +6242,10 @@
                 "$(monitor|8.0|product-version)-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.0-cbl-mariner-distroless-amd64": {
+                "8.0-preview-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8-cbl-mariner-distroless-amd64": {
+                "8-preview-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -6263,10 +6263,10 @@
                 "$(monitor|8.0|product-version)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.0-cbl-mariner-distroless-arm64v8": {
+                "8.0-preview-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8-cbl-mariner-distroless-arm64v8": {
+                "8-preview-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
