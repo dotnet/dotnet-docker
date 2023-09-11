@@ -1000,8 +1000,8 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
-                  "type": "Supplemental",
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-amd64"
                   ]
@@ -1022,8 +1022,8 @@
               "variant": "v7",
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
-                  "type": "Supplemental",
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-arm32v7"
                   ]
@@ -1044,8 +1044,8 @@
               "variant": "v8",
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
-                  "type": "Supplemental",
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-arm64v8"
                   ]
