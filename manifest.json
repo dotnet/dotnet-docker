@@ -785,8 +785,8 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
-                  "type": "Supplemental",
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-amd64"
                   ]
@@ -807,8 +807,8 @@
               "variant": "v7",
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
-                  "type": "Supplemental",
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-arm32v7"
                   ]
@@ -829,8 +829,8 @@
               "variant": "v8",
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
-                  "type": "Supplemental",
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-alpine3.18-arm64v8"
                   ]
@@ -970,8 +970,8 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
-                  "type": "Supplemental",
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-amd64"
                   ]
@@ -991,8 +991,8 @@
               "variant": "v8",
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
-                  "type": "Supplemental",
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-arm64v8"
                   ]
@@ -1012,8 +1012,8 @@
               "variant": "v7",
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
-                  "type": "Supplemental",
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-arm32v7"
                   ]
@@ -1176,8 +1176,8 @@
               },
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
-                  "type": "Supplemental",
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
                   ]
@@ -1204,8 +1204,8 @@
               "variant": "v8",
               "customBuildLegGroups": [
                 {
-                  "name": "pr-build",
-                  "type": "Supplemental",
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
                   ]
