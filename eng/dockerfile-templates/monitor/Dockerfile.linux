@@ -8,7 +8,7 @@
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isSingleStage to isAlpine ^
     set aspnetBaseTag to
-        cat("$REPO:", VARIABLES[cat("dotnet-prev|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
     set installerImageTag to when(isMariner,
         cat("mcr.microsoft.com/cbl-mariner/base/core:", OS_VERSION_NUMBER),
@@ -47,7 +47,7 @@ FROM {{installerImageTag}} AS installer
 # .NET Monitor image
 FROM {{aspnetBaseTag}}
 
-COPY --from=installer ["/app", "/app"] 
+COPY --from=installer ["/app", "/app"]
 
 WORKDIR /app
 

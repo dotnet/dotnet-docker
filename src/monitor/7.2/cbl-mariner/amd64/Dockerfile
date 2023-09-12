@@ -22,7 +22,7 @@ RUN dotnet_monitor_version=7.2.2 \
 # .NET Monitor image
 FROM $REPO:7.0.11-cbl-mariner2.0-amd64
 
-COPY --from=installer ["/app", "/app"] 
+COPY --from=installer ["/app", "/app"]
 
 WORKDIR /app
 

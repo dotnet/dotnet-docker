@@ -70,10 +70,6 @@
     "chisel|6.0|ref": "v0.8.0",
     "chisel|8.0|ref": "v0.8.0",
 
-    "dotnet-prev|6.0|product-version": "6.0.22",
-    "dotnet-prev|7.0|product-version": "7.0.11",
-    "dotnet-prev|8.0|product-version": "8.0.0-rc.1",
-
     "dotnet|6.0|product-version": "6.0.22",
     "dotnet|7.0|product-version": "7.0.11",
     "dotnet|8.0|product-version": "8.0.0-rc.1",
