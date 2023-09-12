@@ -17,9 +17,9 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         }
 
-        public static IEnumerable<object[]> GetImageData(DotNetImageType imageType)
+        public static IEnumerable<object[]> GetImageData(DotNetImageRepo imageRepo)
         {
-            return TestData.GetImageData(imageType)
+            return TestData.GetImageData(imageRepo)
                 .Select(imageData => new object[] { imageData });
         }
 
@@ -48,17 +48,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 variables.AddRange(customVariables);
             }
 
-            if (imageData.OS.StartsWith(OS.Alpine) || imageData.IsDistroless)
+            if (imageData.GlobalizationInvariantMode)
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
             }
 
-            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+            string imageTag = imageData.GetImage(ImageRepo, DockerHelper);
 
             EnvironmentVariableInfo.Validate(variables, imageTag, imageData, DockerHelper);
         }
 
-        public void VerifyCommonShellNotInstalledForDistroless(ProductImageData imageData)
+        protected void VerifyCommonShellNotInstalledForDistroless(ProductImageData imageData)
         {
             if (!imageData.IsDistroless)
             {
@@ -72,7 +72,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+            string imageTag = imageData.GetImage(ImageRepo, DockerHelper);
 
             // Attempting to execute the container's shell should result in an exception.
             // There should be no shell installed in distroless containers.

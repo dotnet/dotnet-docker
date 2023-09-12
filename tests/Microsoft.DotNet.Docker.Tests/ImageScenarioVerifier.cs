@@ -54,6 +54,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 // what we'd want and plus it would fail in that case if it was targeting a private NuGet feed because
                 // the password isn't necessarily provided in that stage.
                 string customBuildArgs = $"rid={_imageData.Rid}";
+
                 if (!_imageData.HasCustomSdk)
                 {
                     // Use `sdk` image to build and run test app
@@ -92,11 +93,14 @@ namespace Microsoft.DotNet.Docker.Tests
                     await RunTestAppImage(fxDepTag, user: _nonRootUser);
                 }
 
-                if (DockerHelper.IsLinuxContainerModeEnabled)
+                // There is no point in testing composite images here because there are no composite-specific
+                // runtime-deps or SDK images
+                if (DockerHelper.IsLinuxContainerModeEnabled && _imageData.ImageVariant != DotNetImageVariant.Composite)
                 {
                     // Use `sdk` image to publish self contained app and run with `runtime-deps` image
                     string selfContainedTag = BuildTestAppImage("self_contained_app", solutionDir, customBuildArgs);
                     tags.Add(selfContainedTag);
+
                     await RunTestAppImage(selfContainedTag, user: _adminUser);
 
                     if (_nonRootUserSupported)
@@ -172,7 +176,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 SyntaxNode newRoot = programTree.GetRoot().ReplaceNode(mainMethod, newMainMethod);
                 newContent = newRoot.ToFullString();
             }
-            
+
             File.WriteAllText(programFilePath, newContent);
         }
 
@@ -193,17 +197,17 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string tag = _imageData.GetIdentifier(stageTarget);
 
-            DotNetImageType runtimeImageType = _isWeb ? DotNetImageType.Aspnet : DotNetImageType.Runtime;
+            DotNetImageRepo runtimeImageRepo = _isWeb ? DotNetImageRepo.Aspnet : DotNetImageRepo.Runtime;
             List<string> buildArgs = new()
             {
-                $"sdk_image={_imageData.GetImage(DotNetImageType.SDK, _dockerHelper)}",
-                $"runtime_image={_imageData.GetImage(runtimeImageType, _dockerHelper)}",
+                $"sdk_image={_imageData.GetImage(DotNetImageRepo.SDK, _dockerHelper)}",
+                $"runtime_image={_imageData.GetImage(runtimeImageRepo, _dockerHelper)}",
                 $"port={_imageData.DefaultPort}"
             };
 
             if (DockerHelper.IsLinuxContainerModeEnabled)
             {
-                buildArgs.Add($"runtime_deps_image={_imageData.GetImage(DotNetImageType.Runtime_Deps, _dockerHelper)}");
+                buildArgs.Add($"runtime_deps_image={_imageData.GetImage(DotNetImageRepo.Runtime_Deps, _dockerHelper)}");
             }
 
             if (customBuildArgs != null)
@@ -302,7 +306,7 @@ namespace Microsoft.DotNet.Docker.Tests
             const string ProjectContainerDir = "/app";
 
             _dockerHelper.Run(
-                image: _imageData.GetImage(DotNetImageType.SDK, _dockerHelper),
+                image: _imageData.GetImage(DotNetImageRepo.SDK, _dockerHelper),
                 name: containerName,
                 command: $"dotnet new {String.Join(' ', args)}",
                 workdir: ProjectContainerDir,

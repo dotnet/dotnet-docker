@@ -8,7 +8,7 @@
 param(
     [Parameter(ParameterSetName = "Version")]
     [string]$Version = "*",
-    
+
     [Parameter(ParameterSetName = "Paths")]
     [string[]]$Paths = @(),
 
@@ -26,11 +26,11 @@ param(
 
     [string]$ImageInfoPath,
 
-    [ValidateSet("runtime", "runtime-deps", "aspnet", "aspnet-composite", "sdk", "pre-build", "sample", "image-size", "monitor")]
-    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "aspnet-composite", "sdk", "monitor"),
+    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor")]
+    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor"),
 
     [securestring]$SasQueryString,
-    
+
     [securestring]$NuGetFeedPassword
 )
 
@@ -121,7 +121,7 @@ Try {
     if ($SasQueryString) {
         $env:SAS_QUERY_STRING = ConvertFrom-SecureString $SasQueryString -AsPlainText
     }
-    
+
     if ($NuGetFeedPassword) {
         $env:NUGET_FEED_PASSWORD = ConvertFrom-SecureString $NuGetFeedPassword -AsPlainText
     }

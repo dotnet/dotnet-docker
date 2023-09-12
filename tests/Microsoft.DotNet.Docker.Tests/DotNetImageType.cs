@@ -2,15 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
+
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public enum DotNetImageType
+    [Flags]
+    public enum DotNetImageRepo
     {
-        SDK,
-        Runtime,
-        Runtime_Deps,
-        Aspnet,
-        Aspnet_Composite,
-        Monitor
+        SDK             = 1 << 0,
+        Runtime         = 1 << 1,
+        Runtime_Deps    = 1 << 2,
+        Aspnet          = 1 << 3,
+        Monitor         = 1 << 4
     }
 }

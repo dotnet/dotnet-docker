@@ -1,4 +1,8 @@
 {{
+    _ ARGS:
+        is-extra (optional): Whether to include extra packages that are not needed for every app,
+            for example globalization support ^
+
     set distrolessStagingDir to "/staging" ^
     set marinerRepo to "mcr.microsoft.com/cbl-mariner" ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
@@ -17,7 +21,12 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 
 # Install .NET's dependencies into a staging location
 RUN mkdir {{distrolessStagingDir}} \
-    && {{InsertTemplate("../Dockerfile.linux.install-deps", ["staging-dir": distrolessStagingDir])}}
+    && {{InsertTemplate("../Dockerfile.linux.install-deps",
+            [
+                "is-extra": ARGS["is-extra"],
+                "staging-dir": distrolessStagingDir
+            ]
+        )}}
 
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
 COPY --from={{baseImage}} /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
@@ -51,9 +60,12 @@ RUN rm -rf {{distrolessStagingDir}}/etc/tdnf \
 # .NET runtime-deps image
 FROM {{baseImage}}
 
-{{InsertTemplate("../Dockerfile.common-dotnet-envs", [
-    "uid": uid
-])}}
+{{InsertTemplate("../Dockerfile.common-dotnet-envs",
+    [
+        "uid": uid,
+        "globalization-invariant": !ARGS["is-extra"]
+    ]
+)}}
 
 COPY --from=installer {{distrolessStagingDir}}/ /{{if createUserHome:
 
