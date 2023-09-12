@@ -13,9 +13,6 @@
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
     set installDir to "/usr/share/dotnet" ^
-    set url to cat(
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
-        "/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-", platform, "-", ARCH_SHORT, ".tar.gz") ^
     set sdkVersionDir to when(ARGS["use-local-version-var"],
         "$sdk_version",
         when(ARGS["is-internal"],
