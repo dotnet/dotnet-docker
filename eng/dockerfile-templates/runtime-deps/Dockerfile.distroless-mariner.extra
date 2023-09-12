@@ -1,0 +1,1 @@
+{{InsertTemplate("Dockerfile.distroless-mariner", [ "is-extra": "true" ])}}

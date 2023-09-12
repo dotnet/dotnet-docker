@@ -76,15 +76,15 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string GetBaseUrl(string dotnetVersion) =>
             GetVariableValue($"base-url|{dotnetVersion}|{Config.SourceBranch}", (JObject)ManifestVersions.Value["variables"]);
 
-        public static string GetBuildVersion(DotNetImageType imageType, string dotnetVersion)
+        public static string GetBuildVersion(DotNetImageRepo imageRepo, string dotnetVersion)
         {
-            if (imageType == DotNetImageType.Runtime_Deps)
+            if (imageRepo == DotNetImageRepo.Runtime_Deps)
             {
                 throw new NotSupportedException("Runtime deps has no associated build version");
             }
 
             return GetVariableValue(
-                $"{imageType.ToString().ToLower()}|{dotnetVersion}|build-version",
+                $"{imageRepo.ToString().ToLower()}|{dotnetVersion}|build-version",
                 (JObject)ManifestVersions.Value["variables"]);
         }
 

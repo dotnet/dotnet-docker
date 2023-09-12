@@ -68,10 +68,10 @@ namespace Microsoft.DotNet.Docker.Tests
         /// this helper image stores the entire root of the distroless filesystem at the specified destination path within
         /// the built container image.
         /// </remarks>
-        public string BuildDistrolessHelper(DotNetImageType imageType, ProductImageData imageData, string rootDestination)
+        public string BuildDistrolessHelper(DotNetImageRepo imageRepo, ProductImageData imageData, string rootDestination)
         {
             string dockerfile = Path.Combine(TestArtifactsDir, "Dockerfile.distroless");
-            string distrolessImageTag = imageData.GetImage(imageType, this);
+            string distrolessImageTag = imageData.GetImage(imageRepo, this);
 
             // Use the runtime-deps image as the target of the filesyste copy.
             // Not all images are versioned the same as the mainline .NET products.
@@ -84,7 +84,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 Arch = imageData.Arch
             };
             string baseImageTag = runtimeDepsImageData
-                .GetImage(DotNetImageType.Runtime_Deps, this)
+                .GetImage(DotNetImageRepo.Runtime_Deps, this)
                 .Replace("-distroless", string.Empty)
                 .Replace("-chiseled", string.Empty);
 
@@ -216,7 +216,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public string GetContainerAddress(string container)
         {
             string containerAddress = ExecuteWithLogging("inspect -f \"{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\" " + container);
-            if (String.IsNullOrWhiteSpace(containerAddress)){
+            if (string.IsNullOrWhiteSpace(containerAddress)){
                 containerAddress = ExecuteWithLogging("inspect -f \"{{.NetworkSettings.Networks.nat.IPAddress }}\" " + container);
             }
 

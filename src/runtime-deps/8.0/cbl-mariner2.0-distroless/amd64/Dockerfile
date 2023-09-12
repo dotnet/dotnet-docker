@@ -13,7 +13,6 @@ RUN mkdir /staging \
         \
         # .NET dependencies
         glibc \
-        krb5 \
         libgcc \
         libstdc++ \
         openssl-libs \

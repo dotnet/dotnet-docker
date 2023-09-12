@@ -8,17 +8,13 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         // Alpine
         public const string Alpine = "alpine";
-        public const string Alpine317 = $"{Alpine}3.17";
         public const string Alpine318 = $"{Alpine}3.18";
-        public const string Alpine318Composite = $"{Alpine318}-composite";
 
         // Debian
         public const string Bookworm = "bookworm";
         public const string BookwormSlim = $"{Bookworm}{SlimSuffix}";
         public const string Bullseye = "bullseye";
         public const string BullseyeSlim = $"{Bullseye}{SlimSuffix}";
-        public const string Buster = "buster";
-        public const string BusterSlim = $"{Buster}{SlimSuffix}";
 
         // Mariner
         public const string Mariner = "cbl-mariner";
@@ -26,14 +22,12 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string MarinerDistroless = $"{Mariner}-distroless";
         public const string Mariner20 = $"{Mariner}2.0";
         public const string Mariner20Distroless = $"{Mariner20}-distroless";
-        public const string Mariner20DistrolessComposite = $"{Mariner20}-distroless-composite";
 
         // Ubuntu
         public const string Bionic = "bionic";
         public const string Focal = "focal";
         public const string Jammy = "jammy";
         public const string JammyChiseled = $"{Jammy}-chiseled";
-        public const string JammyChiseledComposite = $"{JammyChiseled}-composite";
         public const string UbuntuChiseled = "ubuntu-chiseled";
 
         // Windows
