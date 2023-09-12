@@ -42,7 +42,7 @@ Samples are provided for
 - [Nano Server](Dockerfile.nanoserver)
 - [Windows Server Core](Dockerfile.windowsservercore)
 
-Windows variants of the sample can be pulled via one the following registry addresses:
+Windows variants of the sample can be pulled via one the following image names:
 
 - `mcr.microsoft.com/dotnet/samples:dotnetapp-nanoserver-1809`
 - `mcr.microsoft.com/dotnet/samples:dotnetapp-nanoserver-ltsc2022`
