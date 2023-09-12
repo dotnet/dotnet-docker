@@ -1,86 +1,85 @@
 using System.Text.Json.Serialization;
-using Report;
+using ReleaseJson;
+using ReleaseValues;
+using ReportJson;
+using Version = ReportJson.Version;
 
-namespace ReleaseJson;
+namespace ReleaseReport;
 
-public static class ReportGenerator
+public static class Generator
 {
-    public static async Task<ReleaseReport> MakeReport()
+    public static async Task<Report> MakeReportAsync()
     {
-        List<DotnetVersion> versions = new();
-        await foreach (var release in GetReleases())
-        {
-            versions.Add(GetVersionDetail(release));
-        }
-
-        ReleaseReport report = new(DateTime.Today.ToShortDateString(), versions);
+        Report report = new(DateTime.Today.ToShortDateString(), await GetVersionsAsync().ToListAsync());
         return report;
     }
 
-    public static async IAsyncEnumerable<Release> GetReleases()
+    public static async IAsyncEnumerable<Version> GetVersionsAsync()
     {
-        HttpClient httpClient = new();
-        var loadError = "Failed to load release information.";
-        var releases = await httpClient.GetFromJsonAsync<ReleaseIndex>(ReleaseValues.RELEASE_INDEX_URL, ReleaseJsonSerializerContext.Default.ReleaseIndex) ?? throw new Exception(loadError);
-
-        foreach (var releaseSummary in releases.ReleasesIndex)
+        await foreach(MajorRelease release in GetMajorReleasesAsync())
         {
-            // Only show releases in support or < 1 year EOL
-            if (DateOnly.TryParse(releaseSummary.EolDate, out DateOnly eolDate)
-             && DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-1)).DayNumber > eolDate.DayNumber)
-            {
-                continue;
-            }
-
-            var release = await httpClient.GetFromJsonAsync<Release>(releaseSummary.ReleasesJson, ReleaseJsonSerializerContext.Default.Release);
-            if (release is not null)
-            {
-                yield return release;
-            }
-            else
-            {
-                yield break;
-            }
+            int supportDays = release.EolDate is null ? 0 : GetDaysAgo(release.EolDate);
+            bool supported = release.SupportPhase is "active" or "maintainence";
+            Version version = new(release.ChannelVersion, supported, release.EolDate ?? "", supportDays, GetReleases(release).ToList());
+            yield return version;
         }
 
         yield break;
     }
 
-    public static DotnetVersion GetVersionDetail(Release release)
+    public static async IAsyncEnumerable<MajorRelease> GetMajorReleasesAsync()
     {
-        int supportDays = release.EolDate is null ? 0 : GetDaysAgo(release.EolDate);
-        List<Report.Release> releases = new();
-        DotnetVersion version = new(release.ChannelVersion, release.SupportPhase is "active" or "maintainence", release.EolDate ?? "unknown", supportDays, releases);
-        bool hasSecurity = false;
-        bool hasLatest = false;
+        HttpClient httpClient = new();
+        string loadError = "Failed to load release information.";
+        ReleaseIndex releases = await httpClient.GetFromJsonAsync<ReleaseIndex>(Values.RELEASE_INDEX_URL, ReleaseJsonSerializerContext.Default.ReleaseIndex) ?? throw new Exception(loadError);
+
+        foreach (MajorRelease releaseSummary in releases.ReleasesIndex)
+        {
+            // Only show releases in support or < 1 year EOL
+            if (DateOnly.TryParse(releaseSummary.EolDate, out DateOnly eolDate) &&
+                DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-1)).DayNumber > eolDate.DayNumber)
+            {
+                continue;
+            }
+
+            MajorRelease release = await httpClient.GetFromJsonAsync<MajorRelease>(releaseSummary.ReleasesJson, ReleaseJsonSerializerContext.Default.MajorRelease) ?? throw new Exception(loadError);
+            yield return release;
+        }
+
+        yield break;
+    }
+
+    // Get first and first security release
+    public static IEnumerable<Release> GetReleases(MajorRelease release)
+    {
+        bool securityOnly = false;
         
-        // Include latest and latest security release (which is often a single release)
-        // It is important to include the latest CVE fixes
         foreach (ReleaseDetail releaseDetail in release.Releases)
         {
-            if (hasSecurity)
-            {
-                break;
-            }
-            else if (hasLatest && !releaseDetail.Security)
+            if (!releaseDetail.Security && securityOnly)
             {
                 continue;
             }
             
-            var r = new Report.Release(releaseDetail.ReleaseVersion, releaseDetail.Security, releaseDetail.ReleaseDate, GetDaysAgo(releaseDetail.ReleaseDate, true), releaseDetail.Cves);
-            releases.Add(r);
+            yield return new Release(releaseDetail.ReleaseDate, GetDaysAgo(releaseDetail.ReleaseDate, true), releaseDetail.ReleaseVersion, releaseDetail.Security, releaseDetail.Cves);
 
-            hasSecurity = releaseDetail.Security;
-            hasLatest = true;
+            if (releaseDetail.Security)
+            {
+                yield break;
+            }
+            else if (!securityOnly)
+            {
+                securityOnly = true;
+            }
         }
 
-        return version;
-    }   
+        yield break;
+    } 
 
     public static int GetDaysAgo(string date, bool isPositive = false)
     {
-        bool success = DateTime.TryParse(date, out var day);
-        var daysAgo = success ? (int)(day - DateTime.Now).TotalDays : 0;
+        bool success = DateTime.TryParse(date, out DateTime day);
+        int daysAgo = success ? (int)(day - DateTime.Now).TotalDays : 0;
         return isPositive ? Math.Abs(daysAgo) : daysAgo;
     }
 }

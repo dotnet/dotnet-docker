@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-alpine-aot AS build
 ARG TARGETARCH
 WORKDIR /source
 

@@ -1,6 +1,4 @@
 using System.Text.Json.Serialization;
-using ReleaseJson;
-using Report;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 builder.Services.AddHealthChecks();
@@ -14,16 +12,12 @@ var app = builder.Build();
 
 app.MapHealthChecks("/healthz");
 
-app.MapGet("/releases", async () =>
-{
-    return await ReportGenerator.MakeReport();
-});
-
+app.MapGet("/releases", async () => await ReleaseReport.Generator.MakeReportAsync());
 
 app.Run();
 
 
-[JsonSerializable(typeof(ReleaseReport))]
+[JsonSerializable(typeof(ReportJson.Report))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 }

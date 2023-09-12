@@ -1,20 +1,17 @@
 # Release Json Report App
 
-This app demonstrates publishing an app as [native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) in containers.
+This app demonstrates publishing an app as [native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) in containers. 
 
-It demonstrates key aspects:
+> Note: The base images used by this sample are in preview.
 
-- Container images to use
-- Packages to install
-- Project properties to use
-- Configuring JSON (de)serialization for trimming and native AOT
+A similar console app sample supports [single file deployment](../releasesapp/README.md) (non-AOT scenario). This app could also be deployed that way.
 
 ## Build image
 
 You can build and run the sample:
 
 ```bash
-docker build --pull -t app -f Dockerfile.ubuntu .
+docker build --pull -t app .
 docker run --rm -it -p 8000:8080 app
 ```
 
@@ -23,53 +20,44 @@ It exposes two endpoints:
 - `http://localhost:8000/releases`
 - `http://localhost:8000/healthz`
 
+## App
+
+The app is intended as a sort of compliance report for .NET. The report includes supported major releases and those recently out of support. It includes the latest and latest security patch versions for each of those major releases. 
+
+This same information is available from the [release JSON](https://github.com/dotnet/core/blob/main/release-notes/releases-index.json) files that the team maintains, but that requires a bit of code to provide the same report. In fact, this app is that code.
+
 ## Build image with the SDK
 
-The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds). Native AOT apps [require additional pre-requisitives](https://learn.microsoft.com/dotnet/core/deploying/native-aot/#prerequisites). If you don't have them installed, you can use `aot-sdk` image, described at the end of this section.
-
-```console
-dotnet publish /p:PublishProfile=DefaultContainer
-```
-
-That command can be further customized to use a different base image and publish to a container registry. You must first use `docker login` to login to the registry.
-
-```console
-dotnet publish /p:PublishProfile=DefaultContainer /p:ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:8.0-jammy-chiseled /p:ContainerRegistry=docker.io /p:ContainerRepository=youraccount/aspnetapp
-```
-
-You can also use the `aot-sdk` image if you don't have native AOT pre-requisites installed. In this scenario, a container registry must be provided.
-
-```console
-docker run --rm -it -v $(pwd):/source -v /home/myusername/.docker:/root/.docker -w /source mcr.microsoft.com/dotnet/aot-sdk:latest dotnet publish /p:PublishProfile=DefaultContainer /p:ContainerBaseImage=mcr.microsoft.com/dotnet/runtime-deps:8.0-jammy-chiseled /p:ContainerRegistry=your-registry
-```
-
-This pattern only works on Linux since the `~/.docker/config.json` file contains unencrypted passwords on that system, enabling them to be used within the `aot-sdk` container.
+The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds). Native AOT apps [require additional pre-requisitives](https://learn.microsoft.com/dotnet/core/deploying/native-aot/#prerequisites). If you don't have them installed, you can use a `-aot` SDK image, using `docker run`.
 
 ## Dockerfiles
 
-The Dockerfiles are currently more proof-of-concept than finished product. Because of that, they have differing usage patterns and one that doesn't yet work.
+The sample includes several Dockerfiles with varying functionality.
 
-Note: Most of these Dockerfiles can be simplified after [dotnet/sdk #34026](https://github.com/dotnet/sdk/issues/34026) gets fixed in RC1.
+These Dockerfiles work on AMD64 and Arm64.
 
-### Supported on AMD64 and Arm64
+- [Alpine](Dockerfile.alpine)
+- [Ubuntu](Dockerfile)
 
-These Dockerfiles are supported on AMD64 and Arm64, but do not enable cross-compilation.
+## Cross-compilation
 
-- [Dockerfile.alpine](Dockerfile.alpine)
-- [Dockerfile.debian](Dockerfile.debian)
-- [Dockerfile.cbl-mariner](Dockerfile.cbl-mariner)
-- [Dockerfile.ubuntu](Dockerfile.ubuntu)
+The Ubuntu sample enables cross-compilation. That means that you can use `--platform linux/amd64` on Arm64 and vice-versa. Alpine doesn't support cross-compilation (for native apps).
 
-### Architecture cross-compilation
+### Unsupported Dockerfiles
 
-These Dockerfiles enable architecture cross-compilation (`host-target`). That means you can build an Arm64 app on x64, or vice-versa.
+Additional Dockerfiles are provided to help users that to explore other options.
 
-- [Dockerfile.debian-cross-arm64-x64](Dockerfile.debian-cross-arm64-x64)
-- [Dockerfile.debian-cross-x64-arm64](Dockerfile.debian-cross-x64-arm64)
-- [Dockerfile.ubuntu-cross-arm64-x64](Dockerfile.ubuntu-cross-arm64-x64)
-- [Dockerfile.ubuntu-cross-x64-arm64](Dockerfile.ubuntu-cross-x64-arm64)
+- [Debian](Dockerfile.debian)
+- [Mariner (used by Microsoft teams)](Dockerfile.cbl-mariner)
 
-These Dockerfiles need to be built on the host OS (first architecture listed) and can be used to build for both the host or target architecture (the second architecture listed). When building for the target architecture, the `--platform` switch must be used.
+### Cross-compilation (Debian)
+
+The following two Debian samples support cross-compilation and the others above don't.
+
+- [Debian cross-compile on Amd64](Dockerfile.debian-cross-x64-arm64)
+- [Debian cross-compile on Arm64](Dockerfile.debian-cross-arm64-x64)
+
+These Dockerfiles need to be built on the host OS and can be used to build for both the host or target architecture. When building for the target architecture, the `--platform` switch must be used.
 
 ### Distro/libc version cross-compilation
 
