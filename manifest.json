@@ -1301,7 +1301,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):8.0-jammy-arm64v8"
+                    "$(Repo:sdk):8.0-jammy-arm32v7"
                   ]
                 }
               ]
