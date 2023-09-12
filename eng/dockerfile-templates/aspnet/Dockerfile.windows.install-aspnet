@@ -18,8 +18,9 @@
     set aspnetVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         aspnetVersion) ^
+    set extraUrlSegment to when(dotnetVersion = "8.0", "|release|", "|") ^
     set url to cat(
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
+        VARIABLES[cat("base-url|", dotnetVersion, extraUrlSegment, VARIABLES["branch"])],
         "/aspnetcore/Runtime/", aspnetVersion, "/aspnetcore-runtime-", aspnetVersionFile, "-win-x64.zip", ARGS["url-suffix"])
 }}# Install ASP.NET Core Runtime
 RUN powershell -Command `
