@@ -21,14 +21,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected DockerHelper DockerHelper { get; }
         protected ITestOutputHelper OutputHelper { get; }
-        protected abstract DotNetImageType ImageType { get; }
+        protected abstract DotNetImageRepo ImageRepo { get; }
 
         /// <summary>
         /// Verifies that a SAS token isn't accidentally leaked through the Docker history of the image.
         /// </summary>
         protected void VerifyCommonNoSasToken(ProductImageData imageData)
         {
-            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+            string imageTag = imageData.GetImage(ImageRepo, DockerHelper);
             string historyContents = DockerHelper.GetHistory(imageTag);
             Match match = Regex.Match(historyContents, @"=\?(sig|\S+&sig)=\S+");
             Assert.False(match.Success, $"A SAS token was detected in the Docker history of '{imageTag}'.");
@@ -61,16 +61,16 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageTag;
             if (imageData.IsDistroless)
             {
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootFsPath);
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageRepo, imageData, rootFsPath);
             }
             else
             {
-                imageTag = imageData.GetImage(ImageType, DockerHelper);
+                imageTag = imageData.GetImage(ImageRepo, DockerHelper);
             }
 
             string output = DockerHelper.Run(
                 image: imageTag,
-                name: imageData.GetIdentifier($"InsecureFiles-{ImageType}"),
+                name: imageData.GetIdentifier($"InsecureFiles-{ImageRepo}"),
                 command: command,
                 runAsUser: "root",
                 optionalRunArgs: "--entrypoint /bin/sh"
@@ -97,11 +97,11 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected void VerifyCommonDefaultUser(ProductImageData imageData)
         {
-            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+            string imageTag = imageData.GetImage(ImageRepo, DockerHelper);
             string actualUser = DockerHelper.GetImageUser(imageTag);
 
             string expectedUser;
-            if (imageData.IsDistroless && ImageType != DotNetImageType.SDK)
+            if (imageData.IsDistroless && ImageRepo != DotNetImageRepo.SDK)
             {
                 if (imageData.OS.Contains("cbl-mariner"))
                 {
@@ -137,13 +137,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            string imageTag = imageData.GetImage(ImageType, DockerHelper);
+            string imageTag = imageData.GetImage(ImageRepo, DockerHelper);
             string rootPath = "/";
 
             if (imageData.IsDistroless)
             {
                 rootPath = "/rootfs/";
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath);
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageRepo, imageData, rootPath);
             }
 
             string command = $"-c \"grep '^app' {rootPath}etc/passwd | cut -d: -f3\"";
@@ -151,7 +151,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string uidString = DockerHelper.Run(
                 image: imageTag,
                 command: command,
-                name: imageData.GetIdentifier($"VerifyUID-{ImageType}"),
+                name: imageData.GetIdentifier($"VerifyUID-{ImageRepo}"),
                 optionalRunArgs: $"--entrypoint /bin/sh"
             );
 
@@ -172,11 +172,11 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageTag;
             if (imageData.IsDistroless)
             {
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageType, imageData, rootPath);
+                imageTag = DockerHelper.BuildDistrolessHelper(ImageRepo, imageData, rootPath);
             }
             else
             {
-                imageTag = imageData.GetImage(ImageType, DockerHelper);
+                imageTag = imageData.GetImage(ImageRepo, DockerHelper);
             }
 
             string installedPackages = DockerHelper.Run(

@@ -1,5 +1,6 @@
 {{
     _ ARGS:
+        globalization-invariant (optional): whether to set DOTNET_SYSTEM_GLOBALIZATION_INVARIANT
         uid (optional): ID of the non-root user ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
@@ -13,6 +14,6 @@
     APP_UID={{ARGS["uid"]}} {{lineContinuation}}}}
     # Configure web servers to bind to port {{port}} when present
     {{if dotnetVersion = "6.0" || dotnetVersion = "7.0":ASPNETCORE_URLS=http://+:{{port}}^else:ASPNETCORE_HTTP_PORTS={{port}}}} {{lineContinuation}}
-    {{InsertTemplate("Dockerfile.env.container")}}{{if isAlpine || isDistroless: {{lineContinuation}}
+    {{InsertTemplate("Dockerfile.env.container")}}{{if ARGS["globalization-invariant"]: {{lineContinuation}}
     # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true}}

@@ -14,10 +14,10 @@ RUN tdnf install -y \
         # .NET dependencies
         glibc \
         icu \
-        krb5 \
         libgcc \
         libstdc++ \
         openssl-libs \
+        tzdata \
         zlib \
     && tdnf clean all
 
