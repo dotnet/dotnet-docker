@@ -14,9 +14,9 @@ RUN dotnet_monitor_version=7.3.0 \
 
 
 # .NET Monitor image
-FROM $REPO:7.0.10-jammy-chiseled-amd64
+FROM $REPO:7.0.11-jammy-chiseled-amd64
 
-COPY --from=installer ["/app", "/app"] 
+COPY --from=installer ["/app", "/app"]
 
 WORKDIR /app
 

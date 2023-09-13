@@ -29,13 +29,6 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.ImageVariant == DotNetImageVariant.Composite)
             {
                 OutputHelper.WriteLine(
-                    "Skipping test due to https://github.com/dotnet/dotnet-docker/issues/4834. Re-enable when fixed.");
-                return;
-            }
-
-            if (imageData.IsArm && imageData.OS == OS.Jammy)
-            {
-                OutputHelper.WriteLine(
                     "Skipping test due to https://github.com/dotnet/runtime/issues/66310. Re-enable when fixed.");
                 return;
             }
