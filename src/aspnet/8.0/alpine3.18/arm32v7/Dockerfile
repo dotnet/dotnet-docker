@@ -1,15 +1,15 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:8.0.0-rc.1-alpine3.18-arm32v7
+FROM $REPO:8.0.0-rc.2-alpine3.18-arm32v7
 
 # .NET globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.0-rc.1.23414.10
+ENV ASPNET_VERSION=8.0.0-rc.2.23455.8
 
 # Install ASP.NET Core
 RUN wget -O aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-arm.tar.gz \
-    && aspnetcore_sha512='55b40d079bf0e31f47fe33be9ad329e5912551914178f5df4618dd184ab60e862c99f3527991bda310219a31a4143741a60af0e21dad418def1d6440f3f89a71' \
+    && aspnetcore_sha512='d24a77780ee07c4e7e11f9bb1193540c6fa35c9a113354971b8accfe0649eba20a2bda0c1ff2dfada41ca31e477dc96536c6470df88651fd6d8f8cd2ccebcded' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
