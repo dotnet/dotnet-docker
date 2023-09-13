@@ -5,6 +5,7 @@
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isFullMariner to isMariner && !isDistroless ^
     set isDistrolessMariner to isMariner && isDistroless ^
+    set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set isSingleStage to isAlpine && !isInternal ^
     set runtimeDepsBaseTag to
