@@ -19,11 +19,11 @@ It will produce output similar to: https://gist.github.com/richlander/4701a33592
 
 The app is intended as a sort of compliance report for .NET. The report includes supported major releases and those recently out of support. It includes the latest and latest security patch versions for each of those major releases. 
 
-This same information is available from the [release JSON](https://github.com/dotnet/core/blob/main/release-notes/releases-index.json) files that the team maintains, but that requires a bit of code to provide the same report. In fact, this app is that code.
+This same information is available from the [release JSON](https://github.com/dotnet/core/blob/main/release-notes/releases-index.json) files that the team maintains, but that requires a bit of code to provide the same report.
 
 ## Dockerfiles
 
-The app includes support for three distributions:
+The sample includes support for three distributions:
 
 - [Alpine](Dockerfile.alpine)
 - [Debian](Dockerfile)
