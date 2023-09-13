@@ -97,11 +97,23 @@ namespace Microsoft.DotNet.Docker.Tests
             string sampleFolder = Path.Combine(s_samplesPath, "complexapp");
             string dockerfilePath = $"{sampleFolder}/Dockerfile";
             string testContainerName = ImageData.GenerateContainerName("sample-complex-test");
+
+            // Run using the oldest available Windows version to guarantee compatibility across CI legs
+            string[] dockerBuildArgs = DockerHelper.IsLinuxContainerModeEnabled
+                ? Array.Empty<string>()
+                : new string[] { "TAG=-nanoserver-1809" };
+
             string tempDir = null;
             try
             {
                 // Test that the app works
-                DockerHelper.Build(appTag, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages);
+                DockerHelper.Build(
+                    appTag,
+                    dockerfilePath,
+                    contextDir: sampleFolder,
+                    pull: Config.PullImages,
+                    buildArgs: dockerBuildArgs);
+
                 string containerName = ImageData.GenerateContainerName("sample-complex");
                 string output = DockerHelper.Run(appTag, containerName);
                 Assert.StartsWith("string: The quick brown fox jumps over the lazy dog", output);
@@ -114,7 +126,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
 
                 // Run the app's tests
-                DockerHelper.Build(testTag, dockerfilePath, target: "test", contextDir: sampleFolder);
+                DockerHelper.Build(testTag, dockerfilePath, target: "test", contextDir: sampleFolder, buildArgs: dockerBuildArgs);
                 DockerHelper.Run(testTag, testContainerName, skipAutoCleanup: true);
 
                 // Copy the test log from the container to the host
