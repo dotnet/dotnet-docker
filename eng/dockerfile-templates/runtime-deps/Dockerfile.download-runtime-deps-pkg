@@ -13,13 +13,12 @@
     set runtimeVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         "$dotnet_version") ^
-    set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
-    set extraUrlSegment to when(dotnetVersion = "8.0", "|release|", "|")
+    set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT)
 }}dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
 && {{InsertTemplate("../Dockerfile.linux.download-file",
     [
         "out-file": ARGS["filename"],
-        "url": cat(VARIABLES[cat("base-url|", dotnetVersion, extraUrlSegment, VARIABLES["branch"])], "/Runtime/$dotnet_version/dotnet-runtime-deps-", runtimeVersionFile, "-cm.", marinerMajorVersion, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
+        "url": cat(VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])], "/Runtime/$dotnet_version/dotnet-runtime-deps-", runtimeVersionFile, "-cm.", marinerMajorVersion, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
         "sha": VARIABLES[cat("runtime-deps-cm.", marinerMajorVersion, "|", dotnetVersion, "|linux-rpm|", ARCH_SHORT, "|sha")],
         "sha-var-name": "dotnet_sha512"
     ])}}

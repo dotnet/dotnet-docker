@@ -20,9 +20,8 @@
     set runtimeVersionFile to when(isInternalStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         runtimeVersionDir) ^
-    set extraUrlSegment to when(dotnetVersion = "8.0", "|release|", "|") ^
     set url to cat(
-        VARIABLES[cat("base-url|", dotnetVersion, extraUrlSegment, VARIABLES["branch"])],
+        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
         "/Runtime/", runtimeVersionDir, "/dotnet-runtime-", runtimeVersionFile, "-win-x64.zip", ARGS["url-suffix"])
 }}RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `

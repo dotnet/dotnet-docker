@@ -51,8 +51,6 @@
     "base-url|7.0|nightly": "$(base-url|public|maintenance|nightly)",
     "base-url|8.0|main": "$(base-url|public|main)",
     "base-url|8.0|nightly": "$(base-url|public|nightly)",
-    "base-url|8.0|release|main": "$(base-url|public|maintenance|main)",
-    "base-url|8.0|release|nightly": "$(base-url|public|maintenance|nightly)",
 
     "base-url|6.3-monitor|main": "$(base-url|public|main)",
     "base-url|6.3-monitor|nightly": "$(base-url|public|nightly)",

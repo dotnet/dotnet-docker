@@ -37,8 +37,7 @@
     set fileArch to when(ARGS["is-rpm-install"] && ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set fileExt to when(ARGS["is-rpm-install"], "rpm", "tar.gz") ^
     set filePlatform to when(ARGS["is-rpm-install"], "", when(isAlpine, "-linux-musl", "-linux")) ^
-    set extraUrlSegment to when(dotnetVersion = "8.0", "|release|", "|") ^
-    set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, extraUrlSegment, VARIABLES["branch"])] ^
+    set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set runtimeBaseUrl to cat(baseUrl, "/Runtime/", runtimeVersionDir, "/") ^
     set aspnetCompositeUrl to cat(baseUrl, "/aspnetcore/Runtime/", aspnetCompositeVersionDir, "/aspnetcore-runtime-composite-", aspnetCompositeVersionFile,
         filePlatform, "-", fileArch, ".", fileExt, ARGS["url-suffix"]) ^

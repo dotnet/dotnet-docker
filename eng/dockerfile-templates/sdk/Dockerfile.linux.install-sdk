@@ -37,8 +37,7 @@
     set aspnetTargetingPackVersionFile to when(isInternalStableBranding,
         split(VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")], "-")[0],
         VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")]) ^
-    set extraUrlSegment to when(dotnetVersion = "8.0", "|release|", "|") ^
-    set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, extraUrlSegment, VARIABLES["branch"])] ^
+    set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set commonShaVarName to "dotnet_sha512" ^
     set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set rpms to [

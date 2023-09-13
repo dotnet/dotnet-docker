@@ -8,7 +8,7 @@ FROM $REPO:8.0.0-rc.1-alpine3.18-amd64
 ENV ASPNET_VERSION=8.0.0-rc.1.23421.29
 
 # Install ASP.NET Core
-RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-x64.tar.gz \
+RUN wget -O aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-x64.tar.gz \
     && aspnetcore_sha512='46cf816b4207b6e5361e04962968629aa7c0f3245b017a55d4c0edbb1410705a458a250ea9d52f71e8d5d02b264c49e089c34c36f2cdb807e2667975a43f43e6' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
