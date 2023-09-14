@@ -4,6 +4,7 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
+COPY *.config .
 RUN dotnet restore -r linux-$TARGETARCH
 
 # copy and publish app and libraries
