@@ -92,6 +92,12 @@ namespace Microsoft.DotNet.Docker.Tests
         [Fact]
         public void VerifyComplexAppSample()
         {
+            // complexapp sample doesn't currently support building on Windows.
+            if (!DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                return;
+            }
+
             string appTag = SampleImageData.GetImageName("complexapp-local-app");
             string testTag = SampleImageData.GetImageName("complexapp-local-test");
             string sampleFolder = Path.Combine(s_samplesPath, "complexapp");
