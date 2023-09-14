@@ -7,7 +7,7 @@
 # Featured Tags
 
 * `8` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor/base:8-preview`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor/base:8`
 
 # About
 
