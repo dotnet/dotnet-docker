@@ -46,7 +46,7 @@ namespace Microsoft.DotNet.Docker.Tests
             await VerifySampleAsync(imageData, SampleImageType.Dotnetapp, (image, containerName) =>
             {
                 string output = DockerHelper.Run(image, containerName);
-                Assert.True(output.Contains("42") || output.StartsWith("Hello"));
+                Assert.True(output.Contains("88") || output.StartsWith("Hello"));
 
                 ValidateEnvironmentVariables(imageData, image, SampleImageType.Dotnetapp);
 

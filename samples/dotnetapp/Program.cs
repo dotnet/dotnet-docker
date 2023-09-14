@@ -8,17 +8,17 @@ using static System.Console;
 // Variant of https://github.com/dotnet/core/tree/main/samples/dotnet-runtimeinfo
 // Ascii text: https://ascii.co.uk/text (Univers font)
 
-WriteLine("""
-         42                                                    
-         42              ,d                             ,d     
-         42              42                             42     
- ,adPPYb,42  ,adPPYba, MM42MMM 8b,dPPYba,   ,adPPYba, MM42MMM  
-a8"    `Y42 a8"     "8a  42    42P'   `"8a a8P_____42   42     
-8b       42 8b       d8  42    42       42 8PP!!!!!!!   42     
-"8a,   ,d42 "8a,   ,a8"  42,   42       42 "8b,   ,aa   42,    
- `"8bbdP"Y8  `"YbbdP"'   "Y428 42       42  `"Ybbd8"'   "Y428  
+WriteLine(""""""""
+         88
+         88              ,d                             ,d
+         88              88                             88
+ ,adPPYb,88  ,adPPYba, MM88MMM 8b,dPPYba,   ,adPPYba, MM88MMM
+a8"    `Y88 a8"     "8a  88    88P'   `"8a a8P_____88   88
+8b       88 8b       d8  88    88       88 8PP"""""""   88
+"8a,   ,d88 "8a,   ,a8"  88,   88       88 "8b,   ,aa   88,
+ `"8bbdP"Y8  `"YbbdP"'   "Y888 88       88  `"Ybbd8"'   "Y888
 
-""");
+"""""""");
 
 const long Mebi = 1024 * 1024;
 const long Gibi = Mebi * 1024;
@@ -40,7 +40,7 @@ WriteLine();
 WriteLine($"{nameof(Environment.ProcessorCount)}: {Environment.ProcessorCount}");
 WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {totalMemoryBytes} ({GetInBestUnit(totalMemoryBytes)})");
 
-string[] memoryLimitPaths = new string[] 
+string[] memoryLimitPaths = new string[]
 {
     "/sys/fs/cgroup/memory.max",
     "/sys/fs/cgroup/memory.high",
@@ -48,7 +48,7 @@ string[] memoryLimitPaths = new string[]
     "/sys/fs/cgroup/memory/memory.limit_in_bytes",
 };
 
-string[] currentMemoryPaths = new string[] 
+string[] currentMemoryPaths = new string[]
 {
     "/sys/fs/cgroup/memory.current",
     "/sys/fs/cgroup/memory/memory.usage_in_bytes",
