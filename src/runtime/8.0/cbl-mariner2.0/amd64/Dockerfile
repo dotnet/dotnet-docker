@@ -1,16 +1,16 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:8.0.0-rc.1-cbl-mariner2.0-amd64 AS installer
+FROM $REPO:8.0.0-rc.2-cbl-mariner2.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=8.0.0-rc.1.23419.4 \
-    && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='53938ec3aa4353cfb760d22faa850821b54a53fdd864c4969f48caa6b718ba207162b04a196e85543947acb7d3e719982edad1420b76198562051846f51b1b5c' \
+RUN dotnet_version=8.0.0-rc.2.23431.9 \
+    && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
+    && dotnet_sha512='2ae4df477007307ce2221d85d46c9aa786885d8886b7004d177346fe7a5acb8bbb76842972c49c73865ec0625e3253065d27a06c8812edac691878ccb2dd3b9a' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -18,10 +18,10 @@ RUN dotnet_version=8.0.0-rc.1.23419.4 \
 
 
 # .NET runtime image
-FROM $REPO:8.0.0-rc.1-cbl-mariner2.0-amd64
+FROM $REPO:8.0.0-rc.2-cbl-mariner2.0-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=8.0.0-rc.1.23419.4
+ENV DOTNET_VERSION=8.0.0-rc.2.23431.9
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
