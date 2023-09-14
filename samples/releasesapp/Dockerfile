@@ -18,4 +18,4 @@ FROM mcr.microsoft.com/dotnet/runtime-deps:8.0
 WORKDIR /app
 COPY --from=build /app .
 USER $APP_UID
-ENTRYPOINT ["./releases"]
+ENTRYPOINT ["./releasesapp"]
