@@ -47,7 +47,7 @@ FROM {{installerImageTag}} AS installer
 # .NET Monitor image
 FROM {{aspnetBaseTag}}
 
-COPY --from=installer ["/app", "/app"] 
+COPY --from=installer ["/app", "/app"]
 
 WORKDIR /app
 
