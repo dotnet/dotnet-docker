@@ -1,6 +1,5 @@
 # https://hub.docker.com/_/microsoft-dotnet
-ARG TAG
-FROM mcr.microsoft.com/dotnet/sdk:8.0${TAG} AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -33,7 +32,7 @@ WORKDIR /source/complexapp
 RUN dotnet publish --no-restore -o /app
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/runtime:8.0${TAG}
+FROM mcr.microsoft.com/dotnet/runtime:8.0
 WORKDIR /app
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "complexapp.dll"]
