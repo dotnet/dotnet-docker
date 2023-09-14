@@ -6,7 +6,7 @@
 
 # Featured Tags
 
-* `8.0` (Preview)
+* `8.0` (Release Candidate)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:8.0`
 * `7.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:7.0`

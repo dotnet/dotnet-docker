@@ -14,7 +14,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `8` (Preview)
+* `8` (Release Candidate)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor/base:8`
 
 ## Related Repositories

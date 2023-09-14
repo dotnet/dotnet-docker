@@ -6,7 +6,7 @@
 
 # Featured Tags
 
-* `8` (Preview)
+* `8` (Release Candidate)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor/base:8`
 
 # About
