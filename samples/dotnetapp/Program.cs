@@ -20,8 +20,8 @@ a8"    `Y42 a8"     "8a  42    42P'   `"8a a8P_____42   42
 
 """);
 
-const long Mebi = 1024 * 1024;
-const long Gibi = Mebi * 1024;
+const double Mebi = 1024 * 1024;
+const double Gibi = Mebi * 1024;
 GCMemoryInfo gcInfo = GC.GetGCMemoryInfo();
 long totalMemoryBytes = gcInfo.TotalAvailableMemoryBytes;
 
@@ -76,12 +76,12 @@ string GetInBestUnit(long size)
     }
     else if (size < Gibi)
     {
-        double mebibytes = (double)(size / Mebi);
+        double mebibytes = size / Mebi;
         return $"{mebibytes:F} MiB";
     }
     else
     {
-        double gibibytes = (double)(size / Gibi);
+        double gibibytes = size / Gibi;
         return $"{gibibytes:F} GiB";
     }
 }
