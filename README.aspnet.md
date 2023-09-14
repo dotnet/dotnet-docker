@@ -1,5 +1,7 @@
 # Featured Tags
 
+* `8.0` (Release Candidate)
+  * `docker pull mcr.microsoft.com/dotnet/aspnet:8.0`
 * `7.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/aspnet:7.0`
 * `6.0` (Long-Term Support)

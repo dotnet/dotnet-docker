@@ -6,6 +6,8 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
+* `8.0` (Release Candidate)
+  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:8.0`
 * `7.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:7.0`
 * `6.0` (Long-Term Support)
