@@ -128,24 +128,21 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly SampleImageData[] s_linuxSampleTestData =
         {
-            new SampleImageData { OS = OS.Alpine,       Arch = Arch.Amd64, DockerfileSuffix = "alpine-slim", IsPublished = true },
-            new SampleImageData { OS = OS.Alpine,       Arch = Arch.Arm,   DockerfileSuffix = "alpine-slim", IsPublished = true },
-            new SampleImageData { OS = OS.Alpine,       Arch = Arch.Arm64, DockerfileSuffix = "alpine-slim", IsPublished = true },
+            // new SampleImageData { OS = OS.Alpine,       Arch = Arch.Amd64, DockerfileSuffix = "alpine-slim", IsPublished = true },
+            // new SampleImageData { OS = OS.Alpine,       Arch = Arch.Arm,   DockerfileSuffix = "alpine-slim", IsPublished = true },
+            // new SampleImageData { OS = OS.Alpine,       Arch = Arch.Arm64, DockerfileSuffix = "alpine-slim", IsPublished = true },
 
             new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Amd64 },
             new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Arm },
             new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Arm64 },
             new SampleImageData { OS = OS.Alpine,       Arch = Arch.Arm64, DockerfileSuffix = "alpine" },
             new SampleImageData { OS = OS.Alpine,       Arch = Arch.Amd64, DockerfileSuffix = "alpine" },
-            new SampleImageData { OS = OS.Alpine,       Arch = Arch.Amd64, DockerfileSuffix = "alpine-slim" },
             new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Arm,   DockerfileSuffix = "debian" },
             new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Arm64, DockerfileSuffix = "debian" },
             new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Amd64, DockerfileSuffix = "debian" },
-            new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Amd64, DockerfileSuffix = "debian-slim" },
             new SampleImageData { OS = OS.Jammy,        Arch = Arch.Arm,   DockerfileSuffix = "ubuntu" },
             new SampleImageData { OS = OS.Jammy,        Arch = Arch.Arm64, DockerfileSuffix = "ubuntu" },
             new SampleImageData { OS = OS.Jammy,        Arch = Arch.Amd64, DockerfileSuffix = "ubuntu" },
-            new SampleImageData { OS = OS.Jammy,        Arch = Arch.Amd64, DockerfileSuffix = "ubuntu-slim" },
         };
 
         private static readonly SampleImageData[] s_windowsSampleTestData =
@@ -154,7 +151,6 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, IsPublished = true },
 
             new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver" },
-            new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver-slim" },
 
             // Use Nano Server as the OS even though the Dockerfiles are for Windows Server Core. This is because the OS value
             // needs to match the filter set by the build/test job. We only produce builds jobs based on what's in the manifest

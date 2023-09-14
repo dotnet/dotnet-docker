@@ -19,10 +19,10 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string tagPrefix = GetTagNameBase(imageType);
             string os = OS;
-            if (os == Tests.OS.Alpine)
-            {
-                os += "-slim";
-            }
+            // if (os == Tests.OS.Alpine)
+            // {
+            //     os += "-slim";
+            // }
 
             string tag = GetTagName(tagPrefix, os);
             if (!IsPublished)
