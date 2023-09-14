@@ -1,0 +1,22 @@
+# syntax=docker/dockerfile:1.6
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-jammy-aot AS build
+ARG TARGETARCH
+WORKDIR /source
+
+# copy and publish app and libraries
+COPY . .
+RUN --mount=type=cache,target=/root/.nuget \
+    --mount=type=cache,target=/source/bin \
+    --mount=type=cache,target=/source/obj \
+    dotnet publish -r linux-$TARGETARCH -o /app releasesapi.csproj
+RUN rm /app/*.dbg /app/*.Development.json
+
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/nightly/runtime-deps:8.0-jammy-chiseled-aot
+WORKDIR /app
+COPY --from=build /app .
+USER $APP_UID
+ENTRYPOINT ["./releasesapi"]

@@ -1,16 +1,16 @@
-ARG TAG=7.0
-# ARG TAG=7.0-jammy
-# ARG TAG=7.0-alpine
+ARG TAG=8.0
+# ARG TAG=8.0-jammy
+# ARG TAG=8.0-alpine
 FROM mcr.microsoft.com/dotnet/sdk:$TAG AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
-RUN dotnet restore --use-current-runtime
+RUN dotnet restore --ucr
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o /app
+RUN dotnet publish --ucr --self-contained false --no-restore -o /app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:$TAG

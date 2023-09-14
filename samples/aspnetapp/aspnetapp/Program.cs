@@ -1,16 +1,24 @@
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 builder.Services.AddHealthChecks();
 
+// builder.Services.ConfigureHttpJsonOptions(options =>
+// {
+//     options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
+// });
+
 var app = builder.Build();
+
 app.MapHealthChecks("/healthz");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -22,10 +30,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.MapRazorPages();
 
 CancellationTokenSource cancellation = new();
 app.Lifetime.ApplicationStopping.Register( () =>
@@ -51,7 +56,15 @@ app.MapGet("/Delay/{value}", async (int value) =>
     {
     }
     
-    return new {Delay = value};
+    return new Operation(value);
 });
 
 app.Run();
+
+[JsonSerializable(typeof(EnvironmentInfo))]
+[JsonSerializable(typeof(Operation))]
+internal partial class AppJsonSerializerContext : JsonSerializerContext
+{
+}
+
+public record struct Operation(int Delay);
