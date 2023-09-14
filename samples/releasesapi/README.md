@@ -1,4 +1,4 @@
-# Release Json Report App
+# Release Json Report API
 
 This app demonstrates publishing an app as [native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) in containers. 
 
