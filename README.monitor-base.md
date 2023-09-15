@@ -1,7 +1,7 @@
 # Featured Tags
 
-* `8` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/monitor/base:8-preview`
+* `8` (Release Candidate)
+* `docker pull mcr.microsoft.com/dotnet/monitor/base:8`
 
 # About
 
