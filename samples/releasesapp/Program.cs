@@ -1,15 +1,17 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using ReportJson;
 
-var report = await ReleaseReport.Generator.MakeReportAsync();
-var json = JsonSerializer.Serialize(report, AppJsonSerializerContext.Default.Report);
+Report report = await ReleaseReport.Generator.MakeReportAsync();
+string json = JsonSerializer.Serialize(report, AppJsonSerializerContext.Default.Report);
 Console.WriteLine(json);
 
 [JsonSourceGenerationOptions(
     GenerationMode = JsonSourceGenerationMode.Serialization,
-    PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase
+    PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
+    WriteIndented = true
     )]
-[JsonSerializable(typeof(ReportJson.Report))]
+[JsonSerializable(typeof(Report))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 }
