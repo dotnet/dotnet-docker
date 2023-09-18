@@ -134,9 +134,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly SampleImageData[] s_linuxSampleTestData =
         {
-            // new SampleImageData { OS = OS.Alpine,       Arch = Arch.Amd64, DockerfileSuffix = "alpine-slim", IsPublished = true },
-            // new SampleImageData { OS = OS.Alpine,       Arch = Arch.Arm,   DockerfileSuffix = "alpine-slim", IsPublished = true },
-            // new SampleImageData { OS = OS.Alpine,       Arch = Arch.Arm64, DockerfileSuffix = "alpine-slim", IsPublished = true },
+            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Amd64, DockerfileSuffix = "chiseled", IsPublished = true },
+            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Arm,   DockerfileSuffix = "chiseled", IsPublished = true },
+            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Arm64, DockerfileSuffix = "chiseled", IsPublished = true },
 
             new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Amd64 },
             new SampleImageData { OS = OS.BullseyeSlim, Arch = Arch.Arm },
