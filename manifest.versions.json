@@ -59,7 +59,7 @@
     "base-url|7.3-monitor|main": "$(base-url|public|main)",
     "base-url|7.3-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|8.0-monitor|main": "$(base-url|public|main)",
-    "base-url|8.0-monitor|nightly": "$(base-url|public|maintenance|nightly)",
+    "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
 
     "chisel|6.0|url": "github.com/canonical/chisel",
     "chisel|8.0|url": "$(chisel|6.0|url)",
@@ -109,17 +109,17 @@
     "monitor|7.3|linux|arm64|sha": "23caeec5657f6789550b7b4858c3d86b2909195310b3e88387b9fa57764baec7f3f70c0a1985a10ebcf0f14e4723f4049bbb5935633570f7a9e361d4121dff4a",
     "monitor|7.3|product-version": "7.3.0",
 
-    "monitor|8.0|build-version": "8.0.0-rc.1.23458.6",
-    "monitor|8.0|product-version": "8.0.0-rc.1",
+    "monitor|8.0|build-version": "8.0.0-rc.2.23468.7",
+    "monitor|8.0|product-version": "8.0.0-rc.2",
 
-    "monitor-base|8.0|linux|x64|sha": "e12a2f1d999ec3619d05499be5a5948e5900ed33cbf9b0f78bf53dce5fb210fcd9b234280ddd492365dfebb0591527970e9f20cf70eeccefb93fe131f19c0579",
-    "monitor-base|8.0|linux|arm64|sha": "732b20b2ef2b83b9b2119a2954c116e4c91886aa44c1727f6beeb6815f7a69359eb8d27b86b8c5732cd4aaf7e365dc74d1a2e51e2af514dfc26059a4d4191ec5",
+    "monitor-base|8.0|linux|x64|sha": "4f2572b576cdf99245058cf9d3732861c8f1c10c4359b1a9b9be5b69fc44bffcfe87b6b18d24d95cfcffaea108d2d0a19b7ab7f9d88073adb59d380fd9c66811",
+    "monitor-base|8.0|linux|arm64|sha": "12773656a7c87409d7c0daf2a463a7bc7ea82cd333435270ad1c0049e302475e8dc0dbe797e689bbebf2e96a0d327546123c3420e21a6acb4ae5338701f784f8",
 
-    "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "58e0d730705f908aee6dcdc43bc88673c8418d4981aaaeaa95bb034d71cdf8183dc396a131a4f7c9bbd9277d2ac21662f61cfa71789b5fb90772137f94b3c587",
-    "monitor-ext-azureblobstorage|8.0|linux|arm64|sha": "79a7b216ff69456bb4de8398e5a84ddb42927d3c053a5ac19d57d67038c67d5fde1646790ea0464d4913a8dde21027b5fe09b92b9509131c5df16500feac2811",
+    "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "7f624cf584eed9ac67ca613575dc60d79435a5f8f813212b360eccb025fbd025761e91501257096441eeaa1a41be087a112b215b9507082d55103c9cebf23ac9",
+    "monitor-ext-azureblobstorage|8.0|linux|arm64|sha": "3593018a7db4a00cebf3cff28efcdeb0a2b1d7e1ab367a2bb50861475008a98c18fee407750a58b73a19b8b85f3212a687fafadfb77268625ee962d9f1309009",
 
-    "monitor-ext-s3storage|8.0|linux|x64|sha": "5d2d46ea3393868f6e3c50c8d454c47a6ea6e342a8252962a394d2d614da8094554db260ecac4d05707ca8fecfd5d14908eb4e9bcd87410696a68f3aa017c6ac",
-    "monitor-ext-s3storage|8.0|linux|arm64|sha": "735cabc73f9673df2b0367646f053128f2bfc75495882b570cc70d67842bb3d85e690c115ddb8c01c7d6fd3f8c70b22cdc5f2166c19b426db28f04b69f97d17e",
+    "monitor-ext-s3storage|8.0|linux|x64|sha": "d3eea8c2c8bef2a9b7819199293a36522633d2024cafc536e0b332bf65292e464d9f9dd6e12341763257eb6358529371cb5a0f70df506dfad477db992e8adb98",
+    "monitor-ext-s3storage|8.0|linux|arm64|sha": "38c255aeb24b419291678452810971f601b85494e967b4e9d9226f520ac80b098f1d9c3a7a591a67896ca097e7ac239854bbf1df5d83b2b7cd25a4f421402718",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
