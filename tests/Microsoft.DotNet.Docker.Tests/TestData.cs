@@ -124,7 +124,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm,     SdkOS = OS.Jammy, SdkImageVariant = DotNetImageVariant.AOT,
                     ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Arm },
-            new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Arm,     SdkOS = OS.Alpine318, SdkImageVariant = DotNetImageVariant.AOT,
+            new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Arm,     SdkOS = OS.Alpine318,
                     ImageVariant = DotNetImageVariant.Composite, SupportedImageRepos = DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Arm,     SdkOS = OS.Alpine318,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
