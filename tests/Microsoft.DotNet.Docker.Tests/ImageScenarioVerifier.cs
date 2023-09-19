@@ -47,8 +47,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string appType = _isAot && _isWeb
                 ? "webapiaot"
                 : _isWeb
-                    ? "console"
-                    : "web";
+                    ? "web"
+                    : "console";
 
             string solutionDir = CreateTestSolutionWithSdkImage(appType);
             List<string> tags = new List<string>();
