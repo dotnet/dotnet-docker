@@ -20,43 +20,25 @@ a8"    `Y42 a8"     "8a  42    42P'   `"8a a8P_____42   42
 
 """);
 
-// .NET information
-WriteLine(RuntimeInformation.FrameworkDescription);
-
-// OS information
-const string OSRel = "/etc/os-release";
-if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && 
-    File.Exists(OSRel))
-{
-  const string PrettyName = "PRETTY_NAME";
-  foreach(string line in File.ReadAllLines(OSRel))
-  {
-      if (line.StartsWith(PrettyName))
-      {
-          ReadOnlySpan<char> value = line.AsSpan()[(PrettyName.Length + 2)..^1];
-          WriteLine(value.ToString());
-          break;
-      }
-  }
-}
-else
-{
-    WriteLine(RuntimeInformation.OSDescription);
-}
-
-WriteLine();
-
-const long Mebi = 1024 * 1024;
-const long Gibi = Mebi * 1024;
+const double Mebi = 1024 * 1024;
+const double Gibi = Mebi * 1024;
 GCMemoryInfo gcInfo = GC.GetGCMemoryInfo();
 long totalMemoryBytes = gcInfo.TotalAvailableMemoryBytes;
 
+// OS and .NET information
+WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
+WriteLine($"{nameof(RuntimeInformation.OSDescription)}: {RuntimeInformation.OSDescription}");
+WriteLine($"{nameof(RuntimeInformation.FrameworkDescription)}: {RuntimeInformation.FrameworkDescription}");
+WriteLine();
+
 // Environment information
 WriteLine($"{nameof(Environment.UserName)}: {Environment.UserName}");
-WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
+WriteLine($"HostName : {Dns.GetHostName()}");
+WriteLine();
+
+// Hardware information
 WriteLine($"{nameof(Environment.ProcessorCount)}: {Environment.ProcessorCount}");
 WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {totalMemoryBytes} ({GetInBestUnit(totalMemoryBytes)})");
-WriteLine($"HostName : {Dns.GetHostName()}");
 
 string[] memoryLimitPaths = new string[] 
 {
@@ -94,12 +76,12 @@ string GetInBestUnit(long size)
     }
     else if (size < Gibi)
     {
-        double mebibytes = (double)(size / Mebi);
+        double mebibytes = size / Mebi;
         return $"{mebibytes:F} MiB";
     }
     else
     {
-        double gibibytes = (double)(size / Gibi);
+        double gibibytes = size / Gibi;
         return $"{gibibytes:F} GiB";
     }
 }
