@@ -1,7 +1,7 @@
 using System.Net;
 using System.Runtime.InteropServices;
 
-public struct EnvironmentInfo
+public readonly struct EnvironmentInfo
 {
     public EnvironmentInfo()
     {

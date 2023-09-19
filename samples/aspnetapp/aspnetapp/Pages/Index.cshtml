@@ -1,4 +1,6 @@
-﻿@using System.Runtime.InteropServices
+﻿@page
+@model IndexModel
+@using System.Runtime.InteropServices
 @using System.IO
 @using System.Diagnostics
 @{
@@ -6,8 +8,8 @@
     string hostName = System.Net.Dns.GetHostName();
     var ipList = await System.Net.Dns.GetHostAddressesAsync(hostName);
     EnvironmentInfo env = new();
-    const long Mebi = 1024 * 1024;
-    const long Gibi = Mebi * 1024;
+    const double Mebi = 1024 * 1024;
+    const double Gibi = Mebi * 1024;
 }
 
 <div class="text-center">
@@ -84,12 +86,12 @@
         }
         else if (size < Gibi)
         {
-            double mebibytes = (double)size / Mebi;
+            double mebibytes = size / Mebi;
             return $"{mebibytes:N2} MiB";
         }
         else
         {
-            double gibibytes = (double)size / Gibi;
+            double gibibytes = size / Gibi;
             return $"{gibibytes:N2} GiB";
         }
     }
