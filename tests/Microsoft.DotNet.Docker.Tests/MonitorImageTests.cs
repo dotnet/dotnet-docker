@@ -544,11 +544,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (!IsRoot(sampleUid))
             {
-                // If monitor has UDS to which sample will connect, change monitor to run as
-                // same user as sample.
-                if (listenMode && sampleUid != monitorUid)
+                if (sampleUid != monitorUid)
                 {
-                    monitorArgsBuilder.AsUser(sampleUid);
+                    // If sample is connecting to monitor OR (monitor is connecting to sample AND is not running as root),
+                    // change monitor to run as same user as sample. In general, a client has to either be root or
+                    // the same user as the server for UDS connections.
+                    if (listenMode || !IsRoot(monitorUid))
+                    {
+                        monitorArgsBuilder.AsUser(sampleUid);
+                    }
                 }
 
                 return sampleUid;
