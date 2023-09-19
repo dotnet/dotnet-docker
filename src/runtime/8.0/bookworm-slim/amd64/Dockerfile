@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM amd64/buildpack-deps:bookworm-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=8.0.0-rc.2.23431.9 \
+RUN dotnet_version=8.0.0-rc.2.23466.4 \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='2ae4df477007307ce2221d85d46c9aa786885d8886b7004d177346fe7a5acb8bbb76842972c49c73865ec0625e3253065d27a06c8812edac691878ccb2dd3b9a' \
+    && dotnet_sha512='809b1313f52b92e00dd29f467f02354f861c6f6a3f44b6a2ce551dd8a23390df913f0e6f4dc8b785fc00ba08e243b770e2cccdb62d9e5123ebba1f527375deed' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -17,7 +17,7 @@ RUN dotnet_version=8.0.0-rc.2.23431.9 \
 FROM $REPO:8.0.0-rc.2-bookworm-slim-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=8.0.0-rc.2.23431.9
+ENV DOTNET_VERSION=8.0.0-rc.2.23466.4
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
