@@ -96,7 +96,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled",
+              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled-composite",
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
