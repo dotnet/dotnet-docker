@@ -63,7 +63,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 // the password isn't necessarily provided in that stage.
                 string customBuildArgs = $"rid={_imageData.Rid}";
 
-                string buildStageTarget = _isAot ? "build_aot" : "build";
+                string buildStageTarget = _isAot ? "publish_aot" : "build";
                 string appStageTarget = _isAot ? "aot_app" : "self_contained_app";
 
                 if (!_imageData.HasCustomSdk)
