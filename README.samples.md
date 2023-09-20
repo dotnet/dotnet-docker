@@ -61,7 +61,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 dotnetapp-jammy-chiseled-amd64, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
-aspnetapp-jammy-chiseled-composite-amd64, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.chiseled) | Ubuntu
+aspnetapp-jammy-chiseled-composite-amd64, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.chiseled-composite) | Ubuntu
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
