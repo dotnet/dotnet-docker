@@ -81,7 +81,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (imageRepo != DotNetImageRepo.SDK && !SupportedImageRepos.HasFlag(imageRepo))
             {
-                throw new ArgumentOutOfRangeException(nameof(imageRepo), $"Unsupported image type '{imageRepo}'");
+                throw new ArgumentOutOfRangeException(nameof(imageRepo),
+                    $"Unsupported image type '{imageRepo}' for Image Variant '{ImageVariant}'");
             }
 
             string tag = GetTagName(imageRepo);
