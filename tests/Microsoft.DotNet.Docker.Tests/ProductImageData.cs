@@ -73,18 +73,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper)
         {
-            // Aspnet or Runtime images are irrelevant for the AOT image variant.
-            // AOT runtime-deps images should be able to run any AOT compiled console or web apps.
-            if (ImageVariant.HasFlag(DotNetImageVariant.AOT)
-                && (imageRepo == DotNetImageRepo.Aspnet || imageRepo == DotNetImageRepo.Runtime))
-            {
-                imageRepo = DotNetImageRepo.Runtime_Deps;
-            }
-
             // ASP.NET composite includes its own runtime that we want to test.
             if (ImageVariant.HasFlag(DotNetImageVariant.Composite) && imageRepo == DotNetImageRepo.Runtime)
             {
                 imageRepo = DotNetImageRepo.Aspnet;
+            }
+
+            if (imageRepo != DotNetImageRepo.SDK && !SupportedImageRepos.HasFlag(imageRepo))
+            {
+                throw new ArgumentOutOfRangeException(nameof(imageRepo), $"Unsupported image type '{imageRepo}'");
             }
 
             string tag = GetTagName(imageRepo);

@@ -212,7 +212,12 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string tag = _imageData.GetIdentifier(stageTarget);
 
-            DotNetImageRepo runtimeImageRepo = _isWeb ? DotNetImageRepo.Aspnet : DotNetImageRepo.Runtime;
+            DotNetImageRepo runtimeImageRepo = _isAot
+                ? DotNetImageRepo.Runtime_Deps
+                : _isWeb
+                    ? DotNetImageRepo.Aspnet
+                    : DotNetImageRepo.Runtime;
+
             List<string> buildArgs = new()
             {
                 $"sdk_image={_imageData.GetImage(DotNetImageRepo.SDK, _dockerHelper)}",
