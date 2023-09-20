@@ -10,7 +10,7 @@ COPY . .
 RUN --mount=type=cache,target=/root/.nuget \
     --mount=type=cache,target=/source/bin \
     --mount=type=cache,target=/source/obj \
-    dotnet publish -r linux-$TARGETARCH -o /app releasesapi.csproj
+    dotnet publish -r linux-$TARGETARCH -p DebugType=none -o /app releasesapi.csproj
 RUN rm /app/*.dbg /app/*.Development.json
 
 

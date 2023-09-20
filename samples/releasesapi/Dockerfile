@@ -9,8 +9,7 @@ RUN dotnet restore -r linux-$TARGETARCH
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish -r linux-$TARGETARCH --no-restore -o /app releasesapi.csproj
-RUN rm /app/*.dbg /app/*.Development.json
+RUN dotnet publish -r linux-$TARGETARCH -p DebugType=none --no-restore -o /app releasesapi.csproj
 
 
 # final stage/image
