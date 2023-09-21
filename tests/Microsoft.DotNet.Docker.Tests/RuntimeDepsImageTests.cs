@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -24,6 +25,28 @@ namespace Microsoft.DotNet.Docker.Tests
         protected override DotNetImageRepo ImageRepo => DotNetImageRepo.Runtime_Deps;
 
         public static IEnumerable<object[]> GetImageData() => GetImageData(DotNetImageRepo.Runtime_Deps);
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifyAotAppScenario(ProductImageData imageData)
+        {
+            if (!imageData.ImageVariant.HasFlag(DotNetImageVariant.AOT))
+            {
+                OutputHelper.WriteLine("Test is only relevant to AOT images.");
+                return;
+            }
+
+            if (imageData.Arch == Arch.Arm)
+            {
+                OutputHelper.WriteLine("Skipping test due to https://github.com/dotnet/docker-tools/issues/1177. "
+                        + "ImageBuilder is unable to queue arm32 AOT images together with the arm64 AOT SDKs. "
+                        + "Re-enable once fixed.");
+                return;
+            }
+
+            ImageScenarioVerifier verifier = new(imageData, DockerHelper, OutputHelper, isWeb: true);
+            await verifier.Execute();
+        }
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
@@ -189,7 +212,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<string> GetExpectedPackages(ProductImageData imageData, DotNetImageRepo imageRepo)
         {
-            IEnumerable<string> expectedPackages = GetRuntimeDepsPackages(imageData);
+            IEnumerable<string> expectedPackages = imageData.ImageVariant.HasFlag(DotNetImageVariant.AOT)
+                ? GetAotDepsPackages(imageData)
+                : GetRuntimeDepsPackages(imageData);
 
             if (imageData.IsDistroless)
             {
@@ -220,7 +245,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 _ => throw new NotSupportedException()
             };
 
-        private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) => imageData switch
+        private static IEnumerable<string> GetAotDepsPackages(ProductImageData imageData) => imageData switch
             {
                 { OS: OS.Mariner20Distroless, Version: ImageVersion version }
                         when version.Major == 6 || version.Major == 7 => new[]
@@ -229,7 +254,6 @@ namespace Microsoft.DotNet.Docker.Tests
                         "glibc",
                         "krb5",
                         "libgcc",
-                        "libstdc++",
                         "openssl",
                         "openssl-libs",
                         "prebuilt-ca-certificates",
@@ -242,7 +266,6 @@ namespace Microsoft.DotNet.Docker.Tests
                         "icu",
                         "krb5",
                         "libgcc",
-                        "libstdc++",
                         "openssl-libs",
                         "zlib"
                     },
@@ -250,7 +273,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         "glibc",
                         "libgcc",
-                        "libstdc++",
                         "openssl-libs",
                         "zlib"
                     },
@@ -260,7 +282,6 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libc6",
                         "libgcc-s1",
                         "libssl3",
-                        "libstdc++6",
                         "zlib1g"
                     },
                 { OS: OS.Focal } => new[]
@@ -271,7 +292,6 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libgssapi-krb5-2",
                         "libicu66",
                         "libssl1.1",
-                        "libstdc++6",
                         "zlib1g"
                     },
                 { OS: string os } when os.Contains(OS.Alpine) => new[]
@@ -279,17 +299,15 @@ namespace Microsoft.DotNet.Docker.Tests
                         "ca-certificates-bundle",
                         "libgcc",
                         "libssl3",
-                        "libstdc++",
                         "zlib"
                     },
                 { OS: OS.BookwormSlim } => new[]
                     {
                         "ca-certificates",
                         "libc6",
-                        "libgcc-s1", 
+                        "libgcc-s1",
                         "libicu72",
                         "libssl3",
-                        "libstdc++6",
                         "tzdata",
                         "zlib1g"
                     },
@@ -301,11 +319,17 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libgssapi-krb5-2",
                         "libicu67",
                         "libssl1.1",
-                        "libstdc++6",
                         "zlib1g"
                     },
                 _ => throw new NotSupportedException()
             };
+
+        private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
+            string libstdcppPkgName = imageData.OS.Contains(OS.Mariner) || imageData.OS.Contains(OS.Alpine)
+                ? "libstdc++"
+                : "libstdc++6";
+            return GetAotDepsPackages(imageData).Append(libstdcppPkgName);
+        }
 
         internal static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
