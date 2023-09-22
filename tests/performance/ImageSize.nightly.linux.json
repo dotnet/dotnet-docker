@@ -116,7 +116,7 @@
     "src/runtime/8.0/cbl-mariner2.0/amd64": 177315427,
     "src/runtime/8.0/cbl-mariner2.0/arm64v8": 177801765,
     "src/runtime/8.0/cbl-mariner2.0-distroless/amd64": 97946307,
-    "src/runtime/8.0/cbl-mariner2.0-distroless/arm64v8": 102726330
+    "src/runtime/8.0/cbl-mariner2.0-distroless/arm64v8": 97114651
   },
   "dotnet/nightly/aspnet": {
     "src/aspnet/6.0/bullseye-slim/amd64": 207920698,
