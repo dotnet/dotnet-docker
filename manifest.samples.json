@@ -96,11 +96,11 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine",
               "os": "linux",
-              "osVersion": "ubuntu",
+              "osVersion": "alpine",
               "tags": {
-                "aspnetapp-jammy-chiseled-composite-amd64": {}
+                "aspnetapp-alpine-amd64": {}
               },
               "customBuildLegGroups": [
                 {
@@ -114,11 +114,11 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled-composite",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine",
               "os": "linux",
-              "osVersion": "ubuntu",
+              "osVersion": "alpine",
               "tags": {
-                "aspnetapp-jammy-chiseled-composite-arm32v7": {}
+                "aspnetapp-alpine-arm32v7": {}
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -133,11 +133,11 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled-composite",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine",
               "os": "linux",
-              "osVersion": "ubuntu",
+              "osVersion": "alpine",
               "tags": {
-                "aspnetapp-jammy-chiseled-composite-arm64v8": {}
+                "aspnetapp-alpine-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
