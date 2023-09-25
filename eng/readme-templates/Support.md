@@ -3,7 +3,9 @@
       top-header: The string to use as the top-level header.
 }}{{ARGS["top-header"]}} Support
 
-{{ARGS["top-header"]}}# Lifecycle
+{{if match(SHORT_REPO, "samples"):These sample images are not intended for production use. They are provided as a starting point for developers to experiment with and learn about .NET in a containerized environment. The samples can be used to explore different features, frameworks, and libraries available in the .NET ecosystem. Please refer to the official support documentation below for best practices for using .NET Docker images in production environments.
+
+}}{{ARGS["top-header"]}}# Lifecycle
 
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/microsoft-support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
