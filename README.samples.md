@@ -96,6 +96,8 @@ For tags contained in the old dotnet/core/samples repository, you can retrieve a
 
 # Support
 
+The .NET Docker Samples are not intended for production use. They are provided as a starting point for developers to experiment with and learn about .NET in a containerized environment. The samples can be used to explore different features, frameworks, and libraries available in the .NET ecosystem. Please refer to the official documentation for more information on the support policy and best practices for using .NET Docker images in production environments.
+
 ## Lifecycle
 
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/microsoft-support.md)
