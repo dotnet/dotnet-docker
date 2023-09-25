@@ -12,7 +12,7 @@
     set targetArchLongName to when(ARCH_SHORT = "arm64", "x86-64", "aarch64") ^
     set targetArchShortName to when(ARCH_SHORT = "arm64", "amd64", "arm64") ^
 
-    set pkgs to when(isAlpine,
+    set pkgs to cat(sort(when(isAlpine,
         [
             "build-base",
             "clang",
@@ -29,7 +29,8 @@
                 cat("gcc-", targetArchLongName, "-linux-gnu"),
                 cat("zlib1g-dev:", targetArchShortName),
                 "zlib1g-dev",
-            ])) ^
+                "llvm"
+            ])))) ^
 
     set sourcesListFilePath to cat("/etc/apt/sources.list.d/", targetArchShortName, ".list") ^
     set ubuntuPortsUrl to when(ARCH_SHORT = "arm64",
