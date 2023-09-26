@@ -46,7 +46,7 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 
 ### Lifecycle
 
-* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/microsoft-support.md)
+* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 

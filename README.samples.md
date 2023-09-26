@@ -96,11 +96,11 @@ For tags contained in the old dotnet/core/samples repository, you can retrieve a
 
 # Support
 
-These sample images are not intended for production use and may be subject to breaking changes or removal at any time. They are provided as a starting point for developers to experiment with and learn about .NET in a containerized environment. The samples can be used to explore different features, frameworks, and libraries available in the .NET ecosystem. Please refer to the [Lifecycle](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md#lifecycle) support section below for best practices for using .NET Docker images in production environments.
+These sample images are not intended for production use and may be subject to breaking changes or removal at any time. They are provided as a starting point for developers to experiment with and learn about .NET in a containerized environment. The samples can be used to explore different features, frameworks, and libraries available in the .NET ecosystem. For information on supported tags for non-sample .NET Docker images, please refer to the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md).
 
 ## Lifecycle
 
-* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/microsoft-support.md)
+* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 
