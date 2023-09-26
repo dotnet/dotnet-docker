@@ -10,6 +10,7 @@ RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ jammy main restrict
     && apt-get install -y --no-install-recommends \
         clang \
         gcc-x86-64-linux-gnu \
-        zlib1g-dev:amd64 \
+        llvm \
         zlib1g-dev \
+        zlib1g-dev:amd64 \
     && rm -rf /var/lib/apt/lists/*

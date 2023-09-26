@@ -10,6 +10,7 @@ RUN echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy main rest
     && apt-get install -y --no-install-recommends \
         clang \
         gcc-aarch64-linux-gnu \
-        zlib1g-dev:arm64 \
+        llvm \
         zlib1g-dev \
+        zlib1g-dev:arm64 \
     && rm -rf /var/lib/apt/lists/*
