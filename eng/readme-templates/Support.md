@@ -3,7 +3,7 @@
       top-header: The string to use as the top-level header.
 }}{{ARGS["top-header"]}} Support
 
-{{if match(SHORT_REPO, "samples"):These sample images are not intended for production use and may be subject to breaking changes or removal at any time. They are provided as a starting point for developers to experiment with and learn about .NET in a containerized environment. The samples can be used to explore different features, frameworks, and libraries available in the .NET ecosystem. For information on supported tags for non-sample .NET Docker images, please refer to the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md).
+{{if match(SHORT_REPO, "samples"):These sample images are not intended for production use and may be subject to breaking changes or removal at any time. They are provided as a starting point for developers to experiment with and learn about .NET in a containerized environment.
 
 }}{{ARGS["top-header"]}}# Lifecycle
 
