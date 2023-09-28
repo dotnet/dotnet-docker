@@ -10,9 +10,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Monitor
-RUN dotnet_monitor_version=7.3.0 \
-    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
-    && dotnet_monitor_sha512='9e3f8677bb9b65937314179d1bbf66ede9e3e0a423cccdfa68dde2c169f323bed702fa15c8baa2ec00bb5c48958291fcb4895e828b687ea1a4003ab80bfed4ad' \
+RUN dotnet_monitor_version=7.3.1 \
+    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/7.3.1-servicing.23478.8/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
+    && dotnet_monitor_sha512='2e409dd5bb979e0e8e1b844cd21a4eb2508bda2b6c2b946e97a26c6c2b6ade6d9f1df3ca8e9d836948ad3fd0a5a77eb61614fa0655b24ef0cc62eca4e6c8015b' \
     && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor.tar.gz -C /app \
