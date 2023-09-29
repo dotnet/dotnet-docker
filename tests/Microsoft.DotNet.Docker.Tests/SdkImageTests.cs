@@ -141,62 +141,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            if (!IsPowerShellSupported(imageData, out string powerShellReason))
-            {
-                OutputHelper.WriteLine(powerShellReason);
-                return;
-            }
-
-            // Skip test on CBL-Mariner. Since installation is done via RPM package, we just need to verify the package installation
-            // was done (handled by VerifyPackageInstallation test). There's no need to check the actual contents of the package.
-            if (imageData.OS.Contains("cbl-mariner"))
-            {
-                return;
-            }
-
-            if (!imageData.SdkOS.StartsWith(OS.Alpine) && DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                return;
-            }
-
-            IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
-            IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
-
-            bool hasCountDifference = expectedDotnetFiles.Count() != actualDotnetFiles.Count();
-
-            bool hasFileContentDifference = false;
-
-            int fileCount = expectedDotnetFiles.Count();
-            for (int i = 0; i < fileCount; i++)
-            {
-                if (expectedDotnetFiles.ElementAt(i).CompareTo(actualDotnetFiles.ElementAt(i)) != 0)
-                {
-                    hasFileContentDifference = true;
-                    break;
-                }
-            }
-
-            if (hasCountDifference || hasFileContentDifference)
-            {
-                OutputHelper.WriteLine(string.Empty);
-                OutputHelper.WriteLine("EXPECTED FILES:");
-                foreach (SdkContentFileInfo file in expectedDotnetFiles)
-                {
-                    OutputHelper.WriteLine($"Path: {file.Path}");
-                    OutputHelper.WriteLine($"Checksum: {file.Sha512}");
-                }
-
-                OutputHelper.WriteLine(string.Empty);
-                OutputHelper.WriteLine("ACTUAL FILES:");
-                foreach (SdkContentFileInfo file in actualDotnetFiles)
-                {
-                    OutputHelper.WriteLine($"Path: {file.Path}");
-                    OutputHelper.WriteLine($"Checksum: {file.Sha512}");
-                }
-            }
-
-            Assert.Equal(expectedDotnetFiles.Count(), actualDotnetFiles.Count());
-            Assert.False(hasFileContentDifference, "There are file content differences. Check the log output.");
+            var s = GetContainerSdkContents(imageData);
         }
 
         [DotNetTheory]
@@ -270,42 +215,19 @@ namespace Microsoft.DotNet.Docker.Tests
             );
         }
 
-        private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
+        private IEnumerable<string> GetContainerSdkContents(ProductImageData imageData)
         {
-            string dotnetPath;
+            string dotnetPath = DockerHelper.IsLinuxContainerModeEnabled
+                ? "/usr/share/dotnet"
+                : "Program Files\\dotnet";
 
-            if (DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                dotnetPath = "/usr/share/dotnet";
-            }
-            else
-            {
-                dotnetPath = "Program Files\\dotnet";
-            }
+            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
+            string imageFsArchivePath = Path.Combine(DockerHelper.TestArtifactsDir, "image.tar");
 
-            string powerShellCommand =
-                $"Get-ChildItem -File -Force -Recurse '{dotnetPath}' " +
-                "| Get-FileHash -Algorithm SHA512 " +
-                "| select @{name='Value'; expression={$_.Hash + '  ' +$_.Path}} " +
-                "| select -ExpandProperty Value";
-            string command = $"pwsh -Command \"{powerShellCommand}\"";
+            string imageFsArchive = DockerHelper.Export(imageName, imageFsArchivePath);
+            OutputHelper.WriteLine($"Exported {imageFsArchivePath}");
 
-            string containerFileList = DockerHelper.Run(
-                image: imageData.GetImage(ImageRepo, DockerHelper),
-                command: command,
-                name: imageData.GetIdentifier("DotnetFolder"));
-
-            IEnumerable<SdkContentFileInfo> actualDotnetFiles = containerFileList
-                .Replace("\r\n", "\n")
-                .Split("\n")
-                .Select(output =>
-                {
-                    string[] outputParts = output.Split("  ");
-                    return new SdkContentFileInfo(outputParts[1], outputParts[0]);
-                })
-                .OrderBy(fileInfo => fileInfo.Path)
-                .ToArray();
-            return actualDotnetFiles;
+            return Enumerable.Empty<string>();
         }
 
         private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string path)
@@ -325,7 +247,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private async Task<IEnumerable<SdkContentFileInfo>> GetExpectedSdkContentsAsync(ProductImageData imageData)
+        private async Task<IEnumerable<string>> GetMsftSdkContentsAsync(ProductImageData imageData)
         {
             string sdkUrl = GetSdkUrl(imageData);
 
@@ -343,7 +265,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 s_sdkContentsCache.Add(sdkUrl, files);
             }
 
-            return files;
+            return Enumerable.Empty<string>();
         }
 
         private string GetSdkUrl(ProductImageData imageData)

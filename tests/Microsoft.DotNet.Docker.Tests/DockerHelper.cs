@@ -198,6 +198,22 @@ namespace Microsoft.DotNet.Docker.Tests
             return result;
         }
 
+        // Export an image's filesystem as a tar archive.
+        public string Export(string imageName, string destination)
+        {
+            // Include ":" as a command for the container (it does nothing in bash).
+            // Even though the container won't be run, Docker won't create the container unless it has a command.
+            string command = "\":\"";
+
+            // We need to create a container to export it, since Docker doesn't have a way to export the filesystem of
+            // an image by itself. `docker save` saves the layers of an image, but not the image's filesystem.
+            string containerName = ExecuteWithLogging($"create {imageName} {command}");
+            OutputHelper.WriteLine($"Created {containerName}");
+            ExecuteWithLogging($"export {containerName} --output=\"{destination}\"");
+            DeleteContainer(containerName);
+            return destination;
+        }
+
         private static string GetDockerOS() => Execute("version -f \"{{ .Server.Os }}\"");
         private static string GetDockerArch() => Execute("version -f \"{{ .Server.Arch }}\"");
 
