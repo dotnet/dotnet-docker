@@ -1,6 +1,6 @@
 variables:
-  imageNames.imageBuilderName: mcr.microsoft.com/dotnet-buildtools/image-builder:2240150
+  imageNames.imageBuilderName: mcr.microsoft.com/dotnet-buildtools/image-builder:2279658
   imageNames.imageBuilder: $(imageNames.imageBuilderName)
   imageNames.imageBuilder.withrepo: imagebuilder-withrepo:$(Build.BuildId)-$(System.JobId)
-  imageNames.testRunner: mcr.microsoft.com/dotnet-buildtools/prereqs:debian-bullseye-slim-docker-testrunner
+  imageNames.testRunner: mcr.microsoft.com/dotnet-buildtools/prereqs:cbl-mariner2.0-docker-testrunner
   imageNames.testRunner.withrepo: testrunner-withrepo:$(Build.BuildId)-$(System.JobId)
