@@ -137,12 +137,12 @@
     "powershell|7.0|Linux|x64|sha": "5b593b1ae6b0b3aa7ce8ba74e3c8c788ee583f09fbad0803931104ec45ebd658453c84e677e2c4533834bfa2dc2a77317bac378dc8fda8c2294f997b54c883d1",
     "powershell|7.0|Windows|x64|sha": "5be73925ad0b70ef265899afc752c673ecafa1a92e317ccf0e224eea6e1b5e3fac5861e473469791bae90cfbcb48a6ae3f1184751e2a3d8b1d90d1ea545c39cb",
 
-    "powershell|8.0|build-version": "7.4.0-preview.5",
-    "powershell|8.0|Linux.Alpine|sha": "a14055ad16e7abcc4814e9c98dcc656b9568faac43105ef418dfb94eaacfd673ba5ebe4babc36aac83e84a9143aded7416a71cc7f4b69655030d647e722b52e2",
-    "powershell|8.0|Linux|arm32|sha": "5d23ae192ac96c6b3e2488bca63af2f2be2d41793cdf4de073fea787d2b4e24eb3200a64adf6a1945be909a791f554a157b706fe72e62fd202bfa2d16061d1c9",
-    "powershell|8.0|Linux|arm64|sha": "8c5bd1e05a09f5c6616ceddcbffeb689eaa3cc2c623a821cb413aaf5e611121d76c948fd4c612eda20797bd5d0a473eeebd469ba3abc24c89c4d27aff516d3d8",
-    "powershell|8.0|Linux|x64|sha": "42a10ea0492d7504e412077fbcd31643e90fb31bc111bd7fea37b4f1289d0939b4be99cded9f759d054058b94ba0dbc2ecc4f132970bfe76ae9f937e83be0a7b",
-    "powershell|8.0|Windows|x64|sha": "68e91c15fff44972284c9e2922ea471bf6061f9bfa15b58dcf18c52db8257a2e6431a8166962880e415a47abe1d0391f9931c280fa93de603433c1de8f2379b9",
+    "powershell|8.0|build-version": "7.4.0-preview.6",
+    "powershell|8.0|Linux.Alpine|sha": "811aa4e3a65657b813cd8cd7ce2985349490885bfac50f8c7e5c17160f98c43ad4dec1d1594e6f97e63fecd28475f70ab78e3d2654d4d3b6dcdbda7ce25a85ea",
+    "powershell|8.0|Linux|arm32|sha": "81a5650cf723934d054646e3c2b43120fc05b23246d108343f2484d3d1d05a1bc532c6c79d703e5f3c11710882b6107c4bf1d4285dfad1f578909b75fc28b370",
+    "powershell|8.0|Linux|arm64|sha": "84ded0db3b26a46775da48bca72648f74e875b4c1d3c95c76f2e7b48f0820a19db881c3973054c59543ebe5f081c49e153daeba0a2d855832282abf6ffc1efca",
+    "powershell|8.0|Linux|x64|sha": "a3862b561bb99cc509763a97597aeb909e6fc3c7a80356683899a9d5cfb4d6483d089e351222f6a4cb0be3c1b84e871649316979c88988d4fe651857820ad7e0",
+    "powershell|8.0|Windows|x64|sha": "b67cb78a7ad2ce34de70af6089c22c41cb51016714756d0a23c303c5f8265cfe73065d6f690880b66e51d578fc03219ec99f3b10ed9fc68ac39d52109b1cb574",
 
     "rocks-toolbox|6.0|url": "https://raw.githubusercontent.com/canonical/rocks-toolbox",
     "rocks-toolbox|8.0|url": "$(rocks-toolbox|6.0|url)",
