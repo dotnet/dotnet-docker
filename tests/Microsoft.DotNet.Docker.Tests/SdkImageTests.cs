@@ -5,13 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Formats.Tar;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using SharpCompress.Common;
-using SharpCompress.Readers;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -141,7 +140,21 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            var s = GetContainerSdkContents(imageData);
+            // Get container SDK contents
+            IEnumerable<SdkContentFileInfo> sdkContents = GetImageSdkContents(imageData);
+
+            //print out the contents of the SDK
+            foreach (SdkContentFileInfo fi in sdkContents)
+            {
+                OutputHelper.WriteLine(fi.Path);
+            }
+
+            // Get official MSFT SDK contents
+            // IEnumerable<SdkContentFileInfo> msftSdkContents = await GetMsftSdkContentsAsync(imageData);
+
+            // Write lines of each to files
+
+            // Run a git diff of the files
         }
 
         [DotNetTheory]
@@ -215,7 +228,7 @@ namespace Microsoft.DotNet.Docker.Tests
             );
         }
 
-        private IEnumerable<string> GetContainerSdkContents(ProductImageData imageData)
+        private IEnumerable<SdkContentFileInfo> GetImageSdkContents(ProductImageData imageData)
         {
             string dotnetPath = DockerHelper.IsLinuxContainerModeEnabled
                 ? "/usr/share/dotnet"
@@ -227,25 +240,29 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageFsArchive = DockerHelper.Export(imageName, imageFsArchivePath);
             OutputHelper.WriteLine($"Exported {imageFsArchivePath}");
 
-            return Enumerable.Empty<string>();
+            return EnumerateArchiveContents(imageFsArchivePath, dotnetPath).Select(tarEntry => new SdkContentFileInfo(tarEntry));
         }
 
-        private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string path)
+        # nullable enable
+        private static IEnumerable<TarEntry> EnumerateArchiveContents(string archivePath, string pathToEnumerate = "/")
         {
-            using FileStream fileStream = File.OpenRead(path);
-            using IReader reader = ReaderFactory.Open(fileStream);
-            using TempFolderContext tempFolderContext = FileHelper.UseTempFolder();
-            reader.WriteAllToDirectory(tempFolderContext.Path, new ExtractionOptions() { ExtractFullPath = true });
+            using FileStream fileStream = File.OpenRead(archivePath);
+            using TarReader reader = new TarReader(fileStream);
 
-            foreach (FileInfo file in new DirectoryInfo(tempFolderContext.Path).EnumerateFiles("*", SearchOption.AllDirectories))
+            IEnumerable<TarEntry> tarEntries = new List<TarEntry>();
+            TarEntry? currentEntry;
+            while ((currentEntry = reader.GetNextEntry()) != null)
             {
-                using SHA512 sha512 = SHA512.Create();
-                byte[] sha512HashBytes = sha512.ComputeHash(File.ReadAllBytes(file.FullName));
-                string sha512Hash = BitConverter.ToString(sha512HashBytes).Replace("-", string.Empty);
-                yield return new SdkContentFileInfo(
-                    file.FullName.Substring(tempFolderContext.Path.Length), sha512Hash);
+                tarEntries = tarEntries.Append(currentEntry);
             }
+
+            tarEntries = tarEntries
+                .Where(tarEntry => tarEntry.EntryType != TarEntryType.Directory)
+                .Where(tarEntry => $"/{tarEntry.Name}".StartsWith(pathToEnumerate));
+
+            return tarEntries;
         }
+        #nullable disable
 
         private async Task<IEnumerable<string>> GetMsftSdkContentsAsync(ProductImageData imageData)
         {
@@ -258,11 +275,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 using HttpClient httpClient = new();
                 await httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
 
-                files = EnumerateArchiveContents(sdkFile)
-                    .OrderBy(file => file.Path)
-                    .ToArray();
+                // files = EnumerateArchiveContents(sdkFile)
+                //     .OrderBy(file => file.Path)
+                //     .ToArray();
 
-                s_sdkContentsCache.Add(sdkUrl, files);
+                // s_sdkContentsCache.Add(sdkUrl, files);
             }
 
             return Enumerable.Empty<string>();
@@ -350,21 +367,29 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private class SdkContentFileInfo : IComparable<SdkContentFileInfo>
+        private class SdkContentFileInfo : IComparable<SdkContentFileInfo>, IEquatable<SdkContentFileInfo>
         {
-            public SdkContentFileInfo(string path, string sha512)
+            private static readonly SHA512 Sha512Algorithm = SHA512.Create();
+
+            private readonly TarEntry _tarEntry;
+
+            public SdkContentFileInfo(TarEntry tarEntry)
             {
-                Path = NormalizePath(path);
-                Sha512 = sha512.ToLower();
+                _tarEntry = tarEntry;
+                Path = NormalizePath(_tarEntry.Name);
+                // Sha512 = Sha512Algorithm.ComputeHash(_tarEntry.DataStream).ToString();
+                Sha512 = string.Empty;
             }
 
-            public string Path { get; }
-            public string Sha512 { get; }
+            public string Path { get; init; }
+            public string Sha512 { get; init; }
 
             public int CompareTo([AllowNull] SdkContentFileInfo other)
             {
                 return (Path + Sha512).CompareTo(other.Path + other.Sha512);
             }
+
+            public bool Equals(SdkContentFileInfo other) => other.Sha512 == Sha512;
 
             private static string NormalizePath(string path)
             {
