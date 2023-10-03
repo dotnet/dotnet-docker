@@ -57,11 +57,51 @@ namespace Microsoft.DotNet.Docker.Tests
         public override int? NonRootUID =>
             OS == Tests.OS.Mariner20Distroless && (Version.Major == 6 || Version.Major == 7) ? 101 : base.NonRootUID;
 
-        public string GetDockerfilePath(DotNetImageRepo imageRepo) =>
-            $"src/{GetImageRepoName(imageRepo)}{GetVariantSuffix()}/{Version}/{OSTag}/{GetArchLabel()}";
+        public string FormatPath(DotNetImageRepo imageRepo)
+        {
+            var (repo, version, os, variant, arch) = Format(imageRepo);
+            return $"src/{repo}/{version}/{os}{variant}/{arch}";
+        }
+
+        public string FormatTag(DotNetImageRepo imageRepo)
+        {
+            var (repo, version, os, variant, arch) = Format(imageRepo);
+            return $"{version}-{os}{variant}-{arch}";
+        }
+
+        private (string repo, string version, string os, string variantSuffix, string arch) Format(DotNetImageRepo imageRepo)
+        {
+            string repo = GetImageRepoName(imageRepo);
+            string version = Version.ToString();
+            string os = GetOS(imageRepo);
+            string variant = GetVariantSuffix(imageRepo, ImageVariant, SdkImageVariant);
+            string arch = GetArchLabel();
+
+            return (repo, version, os, variant, arch);
+        }
+
+        private string GetOS(DotNetImageRepo imageRepo) => imageRepo switch
+        {
+            DotNetImageRepo.SDK => SdkOS,
+            _ => OS,
+        };
+
+        public string GetDockerfilePath(DotNetImageRepo imageRepo) => imageRepo switch {
+                DotNetImageRepo.SDK => $"src/{GetImageRepoName(imageRepo)}/{Version}/{OSTag}{GetVariantSuffix()}/{GetArchLabel()}",
+                _ => $"src/{GetImageRepoName(imageRepo)}/{Version}/{OSTag}{GetVariantSuffix()}/{GetArchLabel()}",
+            };
 
         private string GetVariantSuffix() =>
             ImageVariant == DotNetImageVariant.None ? "" : $"-{GetImageVariantName(ImageVariant)}";
+
+        private static string GetVariantSuffix(
+            DotNetImageRepo imageRepo,
+            DotNetImageVariant imageVariant,
+            DotNetImageVariant sdkImageVariant) => imageRepo switch
+            {
+                DotNetImageRepo.SDK => sdkImageVariant == DotNetImageVariant.None ? "" : "-" + GetImageVariantName(sdkImageVariant),
+                _ => imageVariant == DotNetImageVariant.None ? "" : "-" + GetImageVariantName(imageVariant),
+            };
 
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
 
