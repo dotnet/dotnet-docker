@@ -11,6 +11,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using SharpCompress.Common;
+using SharpCompress.Readers;
 using Xunit;
 using Xunit.Abstractions;
 using System.IO.Compression;
@@ -137,12 +139,8 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             // Skip test due to https://github.com/dotnet/dotnet-docker/issues/4841
             // Re-enable for release in main branch.
-            if (imageData.IsWindows)
-            {
-                return;
-            }
 
-            IEnumerable<SdkContentFileInfo> imageSdkContents = GetImageSdkContents(imageData);
+            IEnumerable<SdkContentFileInfo> imageSdkContents = GetImageSdkContents(imageData, ImageRepo, DockerHelper);
 
             IEnumerable<SdkContentFileInfo> msftSdkContents = await GetMsftSdkContentsAsync(imageData);
 
@@ -152,7 +150,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string msftSdkContentsPath = "msft.txt"; // Path.GetTempFileName();
             File.WriteAllLines(msftSdkContentsPath, msftSdkContents.Select(fileInfo => fileInfo.ToString()));
 
-            // Run a git diff of the files
+            FileHelper.CompareFiles(msftSdkContentsPath, imageSdkContentsPath, OutputHelper, warnOnDiffs: false);
         }
 
         [DotNetTheory]
@@ -226,80 +224,77 @@ namespace Microsoft.DotNet.Docker.Tests
             );
         }
 
-        private IEnumerable<SdkContentFileInfo> GetImageSdkContents(ProductImageData imageData)
+        private static IEnumerable<SdkContentFileInfo> GetImageSdkContents(
+            ProductImageData imageData,
+            DotNetImageRepo imageRepo,
+            DockerHelper dockerHelper) =>
+            DockerHelper.IsLinuxContainerModeEnabled
+                ? GetImageSdkContentsLinux(imageData, imageRepo, dockerHelper)
+                : GetImageSdkContentsWindows(imageData, imageRepo, dockerHelper);
+
+        private static IEnumerable<SdkContentFileInfo> GetImageSdkContentsLinux(
+            ProductImageData imageData,
+            DotNetImageRepo imageRepo,
+            DockerHelper dockerHelper)
         {
-            string dotnetPath = DockerHelper.IsLinuxContainerModeEnabled
-                ? "/usr/share/dotnet"
-                : "Program Files\\dotnet";
+            string dotnetPath = "/usr/share/dotnet";
+            string imageName = imageData.GetImage(imageRepo, dockerHelper);
+            string imageFsArchivePath = dockerHelper.Export(imageName, Path.GetTempFileName());
+            return EnumerateArchiveContents(imageFsArchivePath, dotnetPath)
+                .OrderBy(fileInfo => fileInfo.Path);
+        }
 
-            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
+        private static IEnumerable<SdkContentFileInfo> GetImageSdkContentsWindows(
+            ProductImageData imageData,
+            DotNetImageRepo imageRepo,
+            DockerHelper dockerHelper)
+        {
+            string dotnetPath = "Program Files\\dotnet";
 
-            string imageFsArchivePath = DockerHelper.Export(imageName, Path.GetTempFileName());
-            OutputHelper.WriteLine($"Exported {imageFsArchivePath}");
+            string powerShellCommand =
+                $"Get-ChildItem -File -Force -Recurse '{dotnetPath}' " +
+                "| Get-FileHash -Algorithm SHA512 " +
+                "| select @{name='Value'; expression={$_.Hash + '  ' +$_.Path}} " +
+                "| select -ExpandProperty Value";
+            string command = $"pwsh -Command \"{powerShellCommand}\"";
 
-            return EnumerateArchiveContents(imageFsArchivePath, dotnetPath);
+            string containerFileList = dockerHelper.Run(
+                image: imageData.GetImage(imageRepo, dockerHelper),
+                command: command,
+                name: imageData.GetIdentifier("DotnetFolder"));
+
+            IEnumerable<SdkContentFileInfo> actualDotnetFiles = containerFileList
+                .Replace("\r\n", "\n")
+                .Split("\n")
+                .Select(output =>
+                {
+                    string[] outputParts = output.Split("  ");
+                    return new SdkContentFileInfo(outputParts[1], outputParts[0]);
+                })
+                .OrderBy(fileInfo => fileInfo.Path)
+                .ToArray();
+            return actualDotnetFiles;
         }
 
         # nullable enable
         private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(
             string archivePath,
-            string pathToEnumerate = "",
-            bool isCompressed = false,
-            ITestOutputHelper? outputHelper = null)
+            string pathToEnumerate = "")
         {
-            // TarReader paths don't contain a leading slash
-            if (pathToEnumerate.StartsWith("/"))
+            using FileStream fileStream = File.OpenRead(archivePath);
+            using IReader reader = ReaderFactory.Open(fileStream);
+            using TempFolderContext tempFolderContext = FileHelper.UseTempFolder();
+            reader.WriteAllToDirectory(tempFolderContext.Path, new ExtractionOptions() { ExtractFullPath = true });
+
+            DirectoryInfo directory = new(Path.Join(tempFolderContext.Path, pathToEnumerate));
+            foreach (FileInfo file in directory.EnumerateFiles("*", SearchOption.AllDirectories))
             {
-                pathToEnumerate = pathToEnumerate[1..];
+                using SHA512 sha512 = SHA512.Create();
+                byte[] sha512HashBytes = sha512.ComputeHash(File.ReadAllBytes(file.FullName));
+                string sha512Hash = BitConverter.ToString(sha512HashBytes).Replace("-", string.Empty);
+                yield return new SdkContentFileInfo(
+                    file.FullName.Substring(tempFolderContext.Path.Length), sha512Hash);
             }
-
-            using Stream archiveStream = isCompressed
-                ? DecompressStream(File.OpenRead(archivePath))
-                : File.OpenRead(archivePath);
-
-            // if (isCompressed)
-            // {
-            //     using FileStream compressedFilePath = File.OpenRead(archivePath);
-            //     using GZipStream decompressor = new(File.OpenRead(archivePath), CompressionMode.Decompress);
-            //     archiveStream = new MemoryStream();
-            //     decompressor.CopyTo(archiveStream);
-            //     archiveStream.Position = 0;
-            // }
-            // else
-            // {
-            //     archiveStream = File.OpenRead(archivePath);
-            // }
-
-            using TarReader tarReader = new(archiveStream);
-
-            IEnumerable<TarEntry> tarEntries = new List<TarEntry>();
-            TarEntry? currentEntry;
-            while ((currentEntry = tarReader.GetNextEntry()) != null)
-            {
-                if (currentEntry.DataStream == null)
-                {
-                    outputHelper?.WriteLine($"{currentEntry.Name} has no data stream");
-                }
-                tarEntries = tarEntries.Append(currentEntry);
-            }
-
-            IEnumerable<SdkContentFileInfo> sdkContent = tarEntries
-                .Where(tarEntry => tarEntry.EntryType != TarEntryType.Directory)
-                .Where(tarEntry => tarEntry.Name.StartsWith(pathToEnumerate))
-                .Select(tarEntry => new SdkContentFileInfo(tarEntry))
-                .OrderBy(fileInfo => fileInfo.ToString())
-                .ToArray(); // Force enumeration so we don't try to access disposed streams later
-
-            return sdkContent;
-        }
-
-        private static MemoryStream DecompressStream(Stream inputStream)
-        {
-            using GZipStream decompressor = new(inputStream, CompressionMode.Decompress);
-            MemoryStream destinationStream = new();
-            decompressor.CopyTo(destinationStream);
-            destinationStream.Position = 0;
-            return destinationStream;
         }
         #nullable disable
 
@@ -307,19 +302,19 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string sdkUrl = GetSdkUrl(imageData);
 
-            if (!s_sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo> files))
+            if (!s_sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo> sdkContents))
             {
                 string sdkFilePath = Path.GetTempFileName();
 
                 using HttpClient httpClient = new();
                 await httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFilePath);
 
-                files = EnumerateArchiveContents(sdkFilePath, isCompressed: true);
+                sdkContents = EnumerateArchiveContents(sdkFilePath);
 
-                s_sdkContentsCache.Add(sdkUrl, files);
+                s_sdkContentsCache.Add(sdkUrl, sdkContents);
             }
 
-            return files;
+            return sdkContents.OrderBy(fileInfo => fileInfo.Path);
         }
 
         private string GetSdkUrl(ProductImageData imageData)
@@ -407,20 +402,10 @@ namespace Microsoft.DotNet.Docker.Tests
         #nullable enable
         private class SdkContentFileInfo : IComparable<SdkContentFileInfo>, IEquatable<SdkContentFileInfo>
         {
-            private static readonly SHA512 Sha512Algorithm = SHA512.Create();
-
-            private readonly TarEntry _tarEntry;
-
-            public SdkContentFileInfo(TarEntry tarEntry)
+            public SdkContentFileInfo(string path, string sha512)
             {
-                _tarEntry = tarEntry;
-                Path = NormalizePath(_tarEntry.Name);
-
-                if (_tarEntry.DataStream is not null)
-                {
-                    byte[] hash = Sha512Algorithm.ComputeHash(_tarEntry.DataStream);
-                    Sha512 = Convert.ToBase64String(hash);
-                }
+                Path = NormalizePath(path);
+                Sha512 = sha512.ToLower();
             }
 
             public string Path { get; init; }
@@ -434,7 +419,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             public bool Equals(SdkContentFileInfo? other) => other?.Sha512 == Sha512;
 
-            private static string NormalizePath(string path)
+            private static string NormalizePath(string path, string prefix = "")
             {
                 return path
                     .Replace("\\", "/")
