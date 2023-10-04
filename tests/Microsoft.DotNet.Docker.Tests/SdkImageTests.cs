@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Formats.Tar;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -15,8 +14,6 @@ using SharpCompress.Common;
 using SharpCompress.Readers;
 using Xunit;
 using Xunit.Abstractions;
-using System.IO.Compression;
-using Xunit.Sdk;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
@@ -137,17 +134,12 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            // Skip test due to https://github.com/dotnet/dotnet-docker/issues/4841
-            // Re-enable for release in main branch.
-
+            string imageSdkContentsPath = Path.GetTempFileName();
             IEnumerable<SdkContentFileInfo> imageSdkContents = GetImageSdkContents(imageData, ImageRepo, DockerHelper);
-
-            IEnumerable<SdkContentFileInfo> msftSdkContents = await GetMsftSdkContentsAsync(imageData);
-
-            string imageSdkContentsPath = "image.txt"; // Path.GetTempFileName();
             File.WriteAllLines(imageSdkContentsPath, imageSdkContents.Select(fileInfo => fileInfo.ToString()));
 
-            string msftSdkContentsPath = "msft.txt"; // Path.GetTempFileName();
+            string msftSdkContentsPath = Path.GetTempFileName();
+            IEnumerable<SdkContentFileInfo> msftSdkContents = await GetMsftSdkContentsAsync(imageData);
             File.WriteAllLines(msftSdkContentsPath, msftSdkContents.Select(fileInfo => fileInfo.ToString()));
 
             FileHelper.CompareFiles(msftSdkContentsPath, imageSdkContentsPath, OutputHelper, warnOnDiffs: false);
@@ -276,7 +268,6 @@ namespace Microsoft.DotNet.Docker.Tests
             return actualDotnetFiles;
         }
 
-        # nullable enable
         private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(
             string archivePath,
             string pathToEnumerate = "")
@@ -296,7 +287,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     file.FullName.Substring(tempFolderContext.Path.Length), sha512Hash);
             }
         }
-        #nullable disable
 
         private async Task<IEnumerable<SdkContentFileInfo>> GetMsftSdkContentsAsync(ProductImageData imageData)
         {
@@ -304,17 +294,19 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (!s_sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo> sdkContents))
             {
-                string sdkFilePath = Path.GetTempFileName();
+                string sdkFile = Path.GetTempFileName();
 
                 using HttpClient httpClient = new();
-                await httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFilePath);
+                await httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
 
-                sdkContents = EnumerateArchiveContents(sdkFilePath);
+                sdkContents = EnumerateArchiveContents(sdkFile)
+                    .OrderBy(fileInfo => fileInfo.Path)
+                    .ToArray();
 
                 s_sdkContentsCache.Add(sdkUrl, sdkContents);
             }
 
-            return sdkContents.OrderBy(fileInfo => fileInfo.Path);
+            return sdkContents;
         }
 
         private string GetSdkUrl(ProductImageData imageData)
@@ -399,8 +391,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        #nullable enable
-        private class SdkContentFileInfo : IComparable<SdkContentFileInfo>, IEquatable<SdkContentFileInfo>
+        private class SdkContentFileInfo : IComparable<SdkContentFileInfo>
         {
             public SdkContentFileInfo(string path, string sha512)
             {
@@ -408,18 +399,21 @@ namespace Microsoft.DotNet.Docker.Tests
                 Sha512 = sha512.ToLower();
             }
 
-            public string Path { get; init; }
+            public string Path { get; }
 
-            public string Sha512 { get; init; } = string.Empty;
+            public string Sha512 { get; }
 
-            public int CompareTo(SdkContentFileInfo? other)
+            public int CompareTo([AllowNull] SdkContentFileInfo other)
             {
-                return (Path + Sha512).CompareTo(other?.Path + other?.Sha512);
+                return (Path + Sha512).CompareTo(other.Path + other.Sha512);
             }
 
-            public bool Equals(SdkContentFileInfo? other) => other?.Sha512 == Sha512;
+            public override string ToString()
+            {
+                return $"{Path} {Sha512}";
+            }
 
-            private static string NormalizePath(string path, string prefix = "")
+            private static string NormalizePath(string path)
             {
                 return path
                     .Replace("\\", "/")
@@ -428,12 +422,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     .TrimStart('/')
                     .ToLower();
             }
-
-            public override string ToString()
-            {
-                return $"{Path} {Sha512}";
-            }
         }
-        #nullable disable
     }
 }

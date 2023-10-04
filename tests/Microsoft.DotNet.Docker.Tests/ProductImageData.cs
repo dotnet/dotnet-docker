@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -57,42 +56,19 @@ namespace Microsoft.DotNet.Docker.Tests
         public override int? NonRootUID =>
             OS == Tests.OS.Mariner20Distroless && (Version.Major == 6 || Version.Major == 7) ? 101 : base.NonRootUID;
 
-        public string FormatPath(DotNetImageRepo imageRepo)
+        public string GetDockerfilePath(DotNetImageRepo imageRepo)
         {
-            var (repo, version, os, variant, arch) = Format(imageRepo);
-            return $"src/{repo}/{version}/{os}{variant}/{arch}";
-        }
-
-        public string FormatTag(DotNetImageRepo imageRepo)
-        {
-            var (repo, version, os, variant, arch) = Format(imageRepo);
-            return $"{version}-{os}{variant}-{arch}";
-        }
-
-        private (string repo, string version, string os, string variantSuffix, string arch) Format(DotNetImageRepo imageRepo)
-        {
+            string os = imageRepo switch {
+                DotNetImageRepo.SDK => SdkOS,
+                _ => OS,
+            };
             string repo = GetImageRepoName(imageRepo);
             string version = Version.ToString();
-            string os = GetOS(imageRepo);
             string variant = GetVariantSuffix(imageRepo, ImageVariant, SdkImageVariant);
             string arch = GetArchLabel();
 
-            return (repo, version, os, variant, arch);
+            return $"src/{repo}/{version}/{os}{variant}/{arch}";
         }
-
-        private string GetOS(DotNetImageRepo imageRepo) => imageRepo switch
-        {
-            DotNetImageRepo.SDK => SdkOS,
-            _ => OS,
-        };
-
-        public string GetDockerfilePath(DotNetImageRepo imageRepo) => imageRepo switch {
-                DotNetImageRepo.SDK => $"src/{GetImageRepoName(imageRepo)}/{Version}/{OSTag}{GetVariantSuffix()}/{GetArchLabel()}",
-                _ => $"src/{GetImageRepoName(imageRepo)}/{Version}/{OSTag}{GetVariantSuffix()}/{GetArchLabel()}",
-            };
-
-        private string GetVariantSuffix() =>
-            ImageVariant == DotNetImageVariant.None ? "" : $"-{GetImageVariantName(ImageVariant)}";
 
         private static string GetVariantSuffix(
             DotNetImageRepo imageRepo,
@@ -172,33 +148,18 @@ namespace Microsoft.DotNet.Docker.Tests
             return executable + command;
         }
 
-        private string GetTagName(DotNetImageRepo imageRepo)
+        public string GetTagName(DotNetImageRepo imageRepo)
         {
-            ImageVersion imageVersion;
-            string os;
             string variant = ImageRepoIsSupported(imageRepo) && ImageVariant != DotNetImageVariant.None
-                ? GetImageVariantName(ImageVariant)
+                ? GetVariantSuffix(imageRepo, ImageVariant, SdkImageVariant)
                 : "";
 
-            switch (imageRepo)
-            {
-                case DotNetImageRepo.Runtime:
-                case DotNetImageRepo.Aspnet:
-                case DotNetImageRepo.Runtime_Deps:
-                case DotNetImageRepo.Monitor:
-                    imageVersion = Version;
-                    os = OSTag;
-                    break;
-                case DotNetImageRepo.SDK:
-                    imageVersion = Version;
-                    os = SdkOS;
-                    variant = GetImageVariantName(SdkImageVariant);
-                    break;
-                default:
-                    throw new NotSupportedException($"Unsupported image type '{imageRepo}'");
-            }
+            string os = imageRepo switch {
+                DotNetImageRepo.SDK => SdkOS,
+                _ => OSTag,
+            };
 
-            return GetTagName(imageVersion.GetTagName(), os, variant);
+            return GetTagName(Version.GetTagName(), os, variant);
         }
 
         public bool ImageRepoIsSupported(DotNetImageRepo imageRepo) => SupportedImageRepos.HasFlag(imageRepo);

@@ -198,7 +198,9 @@ namespace Microsoft.DotNet.Docker.Tests
             return result;
         }
 
-        // Export an image's filesystem as a tar archive.
+        /// <summary>
+        /// Export an image's filesystem as a tar archive.
+        /// </summary>
         public string Export(string imageName, string destination)
         {
             // Include ":" as a command for the container (it does nothing in bash).

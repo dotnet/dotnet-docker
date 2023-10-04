@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.CodeAnalysis.Diagnostics;
 using static Microsoft.DotNet.Docker.Tests.ImageVersion;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -73,14 +72,14 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Amd64,   SdkOS = OS.Jammy,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Amd64,   SdkOS = OS.Jammy, SdkImageVariant = DotNetImageVariant.AOT,
-                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.SDK },
+                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Amd64,   SdkOS = OS.Alpine318,
                     ImageVariant = DotNetImageVariant.Composite, SupportedImageRepos = DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Amd64,   SdkOS = OS.Alpine318,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Amd64,   SdkOS = OS.Alpine318, SdkImageVariant = DotNetImageVariant.AOT,
-                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.SDK },
+                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20,
@@ -88,7 +87,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20, SdkImageVariant = DotNetImageVariant.AOT,
-                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.SDK },
+                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
 
             new ProductImageData { Version = V8_0, OS = OS.Mariner20,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Arm64,   SdkOS = OS.Mariner20 },
@@ -97,7 +96,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Arm64,   SdkOS = OS.Mariner20,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Arm64,   SdkOS = OS.Mariner20, SdkImageVariant = DotNetImageVariant.AOT,
-                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.SDK },
+                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,        Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Jammy },
@@ -106,14 +105,14 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Jammy,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Jammy, SdkImageVariant = DotNetImageVariant.AOT,
-                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.SDK },
+                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Arm64,   SdkOS = OS.Alpine318,
                     ImageVariant = DotNetImageVariant.Composite, SupportedImageRepos = DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Arm64,   SdkOS = OS.Alpine318,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V8_0, OS = OS.Alpine318,           Arch = Arch.Arm64,   SdkOS = OS.Alpine318, SdkImageVariant = DotNetImageVariant.AOT,
-                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.SDK },
+                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
 
             new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,        Arch = Arch.Arm },
             new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Arm },
@@ -215,23 +214,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static IEnumerable<ProductImageData> GetImageData(DotNetImageRepo imageRepo)
         {
-            IEnumerable<ProductImageData> images =
-                (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxTestData : s_windowsTestData)
-                    .FilterImagesBySupportedRepo(imageRepo).Cast<ProductImageData>();
-
-            images = images.FilterImagesByPath(imageRepo).Cast<ProductImageData>();
-
-            var any = images.Any();
-            images = images.FilterImagesByArch().FilterImagesByOs().Cast<ProductImageData>();
-
-            return images;
-
-            // return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxTestData : s_windowsTestData)
-            //     .FilterImagesBySupportedRepo(imageRepo)
-            //     .FilterImagesByPath(imageRepo)
-            //     .FilterImagesByArch()
-            //     .FilterImagesByOs()
-            //     .Cast<ProductImageData>();
+            return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxTestData : s_windowsTestData)
+                .FilterImagesBySupportedRepo(imageRepo)
+                .FilterImagesByPath(imageRepo)
+                .FilterImagesByArch()
+                .FilterImagesByOs()
+                .Cast<ProductImageData>();
         }
 
         public static IEnumerable<SampleImageData> GetAllSampleImageData() =>
@@ -272,19 +260,14 @@ namespace Microsoft.DotNet.Docker.Tests
                     || osFilterPatterns.Any(osFilterPattern => Regex.IsMatch(imageData.OS, osFilterPattern, RegexOptions.IgnoreCase)));
         }
 
-        public static IEnumerable<ImageData> FilterImagesByPath(this IEnumerable<ProductImageData> imageDatas, DotNetImageRepo imageRepo)
+        public static IEnumerable<ImageData> FilterImagesByPath(this IEnumerable<ProductImageData> imageData, DotNetImageRepo imageRepo)
         {
             IEnumerable<string> pathPatterns = Config.Paths
                 .Select(path => Config.GetFilterRegexPattern(path));
 
-            var images = imageDatas
-                .Where(imageData =>
-                {
-                    string path = imageData.FormatPath(imageRepo);
-                    return !pathPatterns.Any() || pathPatterns.Any(pathPattern => Regex.IsMatch(path, pathPattern, RegexOptions.IgnoreCase));
-                });
-
-            return images;
+            return imageData
+                .Where(imageData => !pathPatterns.Any()
+                    || pathPatterns.Any(pathPattern => Regex.IsMatch(imageData.GetDockerfilePath(imageRepo), pathPattern, RegexOptions.IgnoreCase)));
         }
 
         public static IEnumerable<ProductImageData> FilterImagesBySupportedRepo(this IEnumerable<ProductImageData> imageData, DotNetImageRepo imageRepo)
