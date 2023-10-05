@@ -64,28 +64,36 @@ namespace Microsoft.DotNet.Docker.Tests
             };
             string repo = GetImageRepoName(imageRepo);
             string version = Version.ToString();
-            string variant = GetVariantSuffix(imageRepo, ImageVariant, SdkImageVariant);
+            string variant = GetVariantSuffix(imageRepo);
             string arch = GetArchLabel();
 
             return $"src/{repo}/{version}/{os}{variant}/{arch}";
         }
 
-        private static string GetVariantSuffix(
-            DotNetImageRepo imageRepo,
-            DotNetImageVariant imageVariant,
-            DotNetImageVariant sdkImageVariant) => imageRepo switch
+        private string GetVariantSuffix(DotNetImageRepo imageRepo) {
+            static string GetImageVariantName(DotNetImageVariant imageVariant, bool isSuffix)
             {
-                DotNetImageRepo.SDK => sdkImageVariant == DotNetImageVariant.None ? "" : "-" + GetImageVariantName(sdkImageVariant),
-                _ => imageVariant == DotNetImageVariant.None ? "" : "-" + GetImageVariantName(imageVariant),
+                if (imageVariant == DotNetImageVariant.None)
+                {
+                    return string.Empty;
+                }
+
+                string variantName = Enum.GetName(typeof(DotNetImageVariant), imageVariant).ToLowerInvariant();
+                string suffix = isSuffix ? "-" : string.Empty;
+                return $"{suffix}{variantName}";
+            }
+
+            return imageRepo switch
+            {
+                DotNetImageRepo.SDK => GetImageVariantName(SdkImageVariant, isSuffix: true),
+                _ => GetImageVariantName(ImageVariant, isSuffix: true),
             };
+        }
 
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
 
         public static string GetImageRepoName(DotNetImageRepo imageRepo) =>
             Enum.GetName(typeof(DotNetImageRepo), imageRepo).ToLowerInvariant().Replace('_', '-');
-
-        public static string GetImageVariantName(DotNetImageVariant imageVariant) => imageVariant == DotNetImageVariant.None
-            ? "" : Enum.GetName(typeof(DotNetImageVariant), imageVariant).ToLowerInvariant();
 
         public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper)
         {
@@ -150,10 +158,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string GetTagName(DotNetImageRepo imageRepo)
         {
-            string variant = ImageRepoIsSupported(imageRepo) && ImageVariant != DotNetImageVariant.None
-                ? GetVariantSuffix(imageRepo, ImageVariant, SdkImageVariant)
-                : "";
-
+            string variant = ImageRepoIsSupported(imageRepo) ? GetVariantSuffix(imageRepo) : string.Empty;
             string os = imageRepo switch {
                 DotNetImageRepo.SDK => SdkOS,
                 _ => OSTag,
