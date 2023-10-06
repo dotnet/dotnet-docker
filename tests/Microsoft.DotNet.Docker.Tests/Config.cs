@@ -16,6 +16,9 @@ namespace Microsoft.DotNet.Docker.Tests
         private static Lazy<JObject> Manifest { get; } = new Lazy<JObject>(() => LoadManifest("manifest.json"));
         private static Lazy<JObject> ManifestVersions { get; } = new Lazy<JObject>(() => LoadManifest("manifest.versions.json"));
 
+        public static string ArtifactsStagingDirectory = IsRunningInContainer ? "/artifacts/" : string.Empty;
+        public static string SdkContentTestOutputDirectoryName { get; } =
+            Environment.GetEnvironmentVariable("SDK_CONTENT_TEST_OUTPUT_DIRECTORY_NAME") ?? "sdk-content-test";
         public static string SourceRepoRoot { get; } = Environment.GetEnvironmentVariable("SOURCE_REPO_ROOT") ?? string.Empty;
         public static bool IsHttpVerificationDisabled { get; } =
             Environment.GetEnvironmentVariable("DISABLE_HTTP_VERIFICATION") != null;

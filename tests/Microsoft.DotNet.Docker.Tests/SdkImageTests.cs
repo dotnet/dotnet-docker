@@ -134,11 +134,15 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            string imageSdkContentsPath = Path.GetTempFileName();
+            string artifactsDirectory = Path.Combine(
+                Config.ArtifactsStagingDirectory,
+                Config.SdkContentTestOutputDirectoryName);
+
+            string imageSdkContentsPath = Path.Combine(artifactsDirectory, "imageSdkContents.txt");
             IEnumerable<SdkContentFileInfo> imageSdkContents = GetImageSdkContents(imageData, ImageRepo);
             File.WriteAllLines(imageSdkContentsPath, imageSdkContents.Select(fileInfo => fileInfo.ToString()));
 
-            string msftSdkContentsPath = Path.GetTempFileName();
+            string msftSdkContentsPath = Path.Combine(artifactsDirectory, "msftSdkContents.txt");
             IEnumerable<SdkContentFileInfo> msftSdkContents = await GetMsftSdkContentsAsync(imageData);
             File.WriteAllLines(msftSdkContentsPath, msftSdkContents.Select(fileInfo => fileInfo.ToString()));
 

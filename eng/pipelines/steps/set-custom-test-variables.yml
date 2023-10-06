@@ -1,7 +1,7 @@
 steps:
 - powershell: |
     # Forward team project name for consumption by test script
-    $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT'"
+    $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT' -e SDK_CONTENT_TEST_OUTPUT_DIRECTORY_NAME=$(legName)-sdk-content-test"
     $testInit=""
 
     if ("$(publishRepoPrefix)".Contains("internal/")) {
@@ -18,7 +18,7 @@ steps:
           $testInit='$Env:SAS_QUERY_STRING=' + "'$sasQueryString'" + '; $Env:NUGET_FEED_PASSWORD=''$(dn-bot-dnceng-artifact-feeds-rw)'''
       }
     }
-    
+
     echo "##vso[task.setvariable variable=testRunner.options]$testRunnerOptions"
     echo "##vso[task.setvariable variable=test.init]$testInit"
   displayName: Set Custom Test Variables
