@@ -209,10 +209,21 @@ namespace Microsoft.DotNet.Docker.Tests
 
             // We need to create a container to export it, since Docker doesn't have a way to export the filesystem of
             // an image by itself. `docker save` saves the layers of an image, but not the image's filesystem.
-            string containerName = ExecuteWithLogging($"create {imageName} {command}");
-            OutputHelper.WriteLine($"Created {containerName}");
-            ExecuteWithLogging($"export {containerName} --output=\"{destination}\"");
-            DeleteContainer(containerName);
+            string containerName = null;
+            try
+            {
+                containerName = ExecuteWithLogging($"create {imageName} {command}");
+                OutputHelper.WriteLine($"Created {containerName}");
+                ExecuteWithLogging($"export {containerName} --output=\"{destination}\"");
+            }
+            finally
+            {
+                if (!string.IsNullOrEmpty(containerName))
+                {
+                    DeleteContainer(containerName);
+                }
+            }
+
             return destination;
         }
 
