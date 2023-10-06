@@ -216,30 +216,27 @@ namespace Microsoft.DotNet.Docker.Tests
             );
         }
 
-        private static IEnumerable<SdkContentFileInfo> GetImageSdkContents(
+        private IEnumerable<SdkContentFileInfo> GetImageSdkContents(
             ProductImageData imageData,
-            DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper) =>
+            DotNetImageRepo imageRepo) =>
             DockerHelper.IsLinuxContainerModeEnabled
-                ? GetImageSdkContentsLinux(imageData, imageRepo, dockerHelper)
-                : GetImageSdkContentsWindows(imageData, imageRepo, dockerHelper);
+                ? GetImageSdkContentsLinux(imageData, imageRepo)
+                : GetImageSdkContentsWindows(imageData, imageRepo);
 
-        private static IEnumerable<SdkContentFileInfo> GetImageSdkContentsLinux(
+        private IEnumerable<SdkContentFileInfo> GetImageSdkContentsLinux(
             ProductImageData imageData,
-            DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper)
+            DotNetImageRepo imageRepo)
         {
             string dotnetPath = "/usr/share/dotnet";
-            string imageName = imageData.GetImage(imageRepo, dockerHelper);
-            string imageFsArchivePath = dockerHelper.Export(imageName, Path.GetTempFileName());
+            string imageName = imageData.GetImage(imageRepo, DockerHelper);
+            string imageFsArchivePath = DockerHelper.Export(imageName, Path.GetTempFileName());
             return EnumerateArchiveContents(imageFsArchivePath, dotnetPath)
                 .OrderBy(fileInfo => fileInfo.Path);
         }
 
-        private static IEnumerable<SdkContentFileInfo> GetImageSdkContentsWindows(
+        private IEnumerable<SdkContentFileInfo> GetImageSdkContentsWindows(
             ProductImageData imageData,
-            DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper)
+            DotNetImageRepo imageRepo)
         {
             string dotnetPath = "Program Files\\dotnet";
 
@@ -250,8 +247,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 "| select -ExpandProperty Value";
             string command = $"pwsh -Command \"{powerShellCommand}\"";
 
-            string containerFileList = dockerHelper.Run(
-                image: imageData.GetImage(imageRepo, dockerHelper),
+            string containerFileList = DockerHelper.Run(
+                image: imageData.GetImage(imageRepo, DockerHelper),
                 command: command,
                 name: imageData.GetIdentifier("DotnetFolder"));
 
