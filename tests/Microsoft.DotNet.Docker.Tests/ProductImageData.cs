@@ -70,24 +70,22 @@ namespace Microsoft.DotNet.Docker.Tests
             return $"src/{repo}/{version}/{os}{variant}/{arch}";
         }
 
-        private string GetVariantSuffix(DotNetImageRepo imageRepo) {
-            static string GetImageVariantName(DotNetImageVariant imageVariant, bool isSuffix)
-            {
-                if (imageVariant == DotNetImageVariant.None)
-                {
-                    return string.Empty;
-                }
-
-                string variantName = Enum.GetName(typeof(DotNetImageVariant), imageVariant).ToLowerInvariant();
-                string suffix = isSuffix ? "-" : string.Empty;
-                return $"{suffix}{variantName}";
-            }
-
-            return imageRepo switch
+        private string GetVariantSuffix(DotNetImageRepo imageRepo) => imageRepo switch
             {
                 DotNetImageRepo.SDK => GetImageVariantName(SdkImageVariant, isSuffix: true),
                 _ => GetImageVariantName(ImageVariant, isSuffix: true),
             };
+
+        private static string GetImageVariantName(DotNetImageVariant imageVariant, bool isSuffix)
+        {
+            if (imageVariant == DotNetImageVariant.None)
+            {
+                return string.Empty;
+            }
+
+            string variantName = Enum.GetName(typeof(DotNetImageVariant), imageVariant).ToLowerInvariant();
+            string suffix = isSuffix ? "-" : string.Empty;
+            return $"{suffix}{variantName}";
         }
 
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
