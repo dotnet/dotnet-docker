@@ -135,7 +135,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
             string imageSdkContentsPath = Path.GetTempFileName();
-            IEnumerable<SdkContentFileInfo> imageSdkContents = GetImageSdkContents(imageData, ImageRepo, DockerHelper);
+            IEnumerable<SdkContentFileInfo> imageSdkContents = GetImageSdkContents(imageData, ImageRepo);
             File.WriteAllLines(imageSdkContentsPath, imageSdkContents.Select(fileInfo => fileInfo.ToString()));
 
             string msftSdkContentsPath = Path.GetTempFileName();
