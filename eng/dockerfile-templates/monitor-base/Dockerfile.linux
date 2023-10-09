@@ -5,7 +5,7 @@
     set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
     set isMariner to find(OS_VERSION, "mariner") >= 0 ^
     set aspnetBaseTag to
-        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+        cat("$REPO:", VARIABLES[cat("dotnet-prev|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set installerImageTag to when(isMariner,
         cat("mcr.microsoft.com/cbl-mariner/base/core:", OS_VERSION_NUMBER),
