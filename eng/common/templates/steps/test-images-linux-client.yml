@@ -92,11 +92,13 @@ steps:
       testRunTitle: $(productVersion) $(osVersionsDisplayName) $(architecture)
     ${{ if eq(parameters.preBuildValidation, 'true') }}:
       testRunTitle: Pre-Build Validation
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)/sdk-content-test
-    artifact: $(legName)-sdk-content-tests
-    publishLocation: pipeline
+- ${{ if eq(parameters.preBuildValidation, 'false') }}:
+  - task: PublishPipelineArtifact@1
+    displayName: Publish Test Artifacts
+    inputs:
+      targetPath: $(Build.ArtifactStagingDirectory)/sdk-content-test
+      artifact: $(legName)-sdk-content-tests
+      publishLocation: pipeline
 - script: docker rm -f $(testRunner.container)
   displayName: Cleanup TestRunner Container
   condition: and(always(), ${{ parameters.condition }})
