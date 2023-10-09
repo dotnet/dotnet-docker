@@ -1,7 +1,7 @@
 steps:
 - powershell: |
     # Forward team project name for consumption by test script
-    $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT' -e SDK_CONTENT_TEST_OUTPUT_DIRECTORY_NAME=$(legName)-sdk-content-test"
+    $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT' -e SDK_CONTENT_TEST_OUTPUT_DIRECTORY_NAME=$(artifactsPath)sdk-content-test"
     $testInit=""
 
     if ("$(publishRepoPrefix)".Contains("internal/")) {

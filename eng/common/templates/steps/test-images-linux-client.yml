@@ -94,8 +94,8 @@ steps:
       testRunTitle: Pre-Build Validation
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)/$(legName)-sdk-content-test
-    artifact: $(legName)-sdk-content-test
+    targetPath: $(Build.ArtifactStagingDirectory)/sdk-content-test
+    artifact: $(legName)-sdk-content-tests
     publishLocation: pipeline
 - script: docker rm -f $(testRunner.container)
   displayName: Cleanup TestRunner Container
