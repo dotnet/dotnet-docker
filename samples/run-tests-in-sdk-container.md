@@ -16,7 +16,7 @@ The instructions assume that you have cloned the [repository](https://github.com
 
 You may need to enable [shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
 
-Container scenarios that use volume mounting can produce conflicts between the `bin` and `obj` directories in local and container environments.  To avoid that, you need to use a different set of `obj` and `bin` folders for your container environment. The easiest way to do that is to copy a custom [Directory.Build.props](Directory.Build.props) into the directory you are using (like the `complexapp` directory in the following example), either via copying from this repo or downloading with the following command:
+Container scenarios that use volume mounting can produce conflicts between the `bin` and `obj` directories in local and container environments. To avoid that, you need to use a different set of `obj` and `bin` folders for your container environment. The easiest way to do that is to copy a custom [Directory.Build.props](Directory.Build.props) into the directory you are using (like the `complexapp` directory in the following example), either via copying from this repo or downloading with the following command:
 
 ```console
 curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/Directory.Build.props
@@ -26,7 +26,7 @@ curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-do
 
 ## Running tests
 
-You can run `dotnet test` within a .NET SDK container using the following pattern, with `docker run` and volume mounting.  This initial example is demonstrated on Windows with PowerShell (in Linux container mode). Instructions for all OSes follow.
+You can run `dotnet test` within a .NET SDK container using the following pattern, with `docker run` and volume mounting. This initial example is demonstrated on Windows with PowerShell (in Linux container mode). Instructions for all OSes follow.
 
 ```console
 > docker run --rm -v ${pwd}:/app -w /app/tests mcr.microsoft.com/dotnet/sdk:7.0 dotnet test
@@ -39,12 +39,12 @@ You can run `dotnet test` within a .NET SDK container using the following patter
   tests -> /app/tests/bin/Debug/net7.0/tests.dll
 Test run for /app/tests/bin/Debug/net7.0/tests.dll (.NETCoreApp,Version=v7.0)
 Microsoft (R) Test Execution Command Line Tool Version 16.8.0
-Copyright (c) Microsoft Corporation.  All rights reserved.
+Copyright (c) Microsoft Corporation. All rights reserved.
 
 Starting test execution, please wait...
 A total of 1 test files matched the specified pattern.
 
-Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 2 ms - /app/tests/bin/Debug/net7.0/tests.dll (net7.0)
+Passed! - Failed:   0, Passed:   2, Skipped:   0, Total:   2, Duration: 2 ms - /app/tests/bin/Debug/net7.0/tests.dll (net7.0)
  ```
 
 In this example, the tests (and any other required code) are [volume mounted](https://docs.docker.com/engine/admin/volumes/volumes/) into the container, and `dotnet test` is run from the `tests` directory (`-w` sets the working directory). Test results can be read from the console or from logs, which can be written to disk with the `--logger:trx` flag.
