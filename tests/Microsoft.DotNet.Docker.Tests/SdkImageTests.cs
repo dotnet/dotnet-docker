@@ -134,15 +134,25 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            string imageSdkContentsPath = Path.Combine(Config.SdkContentTestOutputDirectory, "imageSdkContents.txt");
+            string imageSdkContentsPath = Path.Combine(GetSdkContentTestOutputDirectory(), "imageSdkContents.txt");
             IEnumerable<SdkContentFileInfo> imageSdkContents = GetImageSdkContents(imageData, ImageRepo);
             File.WriteAllLines(imageSdkContentsPath, imageSdkContents.Select(fileInfo => fileInfo.ToString()));
 
-            string msftSdkContentsPath = Path.Combine(Config.SdkContentTestOutputDirectory, "msftSdkContents.txt");
+            string msftSdkContentsPath = Path.Combine(GetSdkContentTestOutputDirectory(), "msftSdkContents.txt");
             IEnumerable<SdkContentFileInfo> msftSdkContents = await GetMsftSdkContentsAsync(imageData);
             File.WriteAllLines(msftSdkContentsPath, msftSdkContents.Select(fileInfo => fileInfo.ToString()));
 
             FileHelper.CompareFiles(msftSdkContentsPath, imageSdkContentsPath, OutputHelper, warnOnDiffs: false);
+        }
+
+        private static string GetSdkContentTestOutputDirectory()
+        {
+            string sdkContentTestOutputDirectory = Config.SdkContentTestOutputDirectory;
+            if (!Directory.Exists(sdkContentTestOutputDirectory))
+            {
+                Directory.CreateDirectory(sdkContentTestOutputDirectory);
+            }
+            return sdkContentTestOutputDirectory;
         }
 
         [DotNetTheory]
