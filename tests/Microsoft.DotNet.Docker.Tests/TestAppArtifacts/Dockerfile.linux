@@ -2,6 +2,7 @@ ARG sdk_image
 ARG runtime_image
 ARG runtime_deps_image
 
+
 FROM $sdk_image as build
 
 ARG rid
@@ -60,4 +61,17 @@ ARG port
 EXPOSE $port
 WORKDIR /app
 COPY --from=publish_self_contained /source/app/out ./
+ENTRYPOINT ["./app"]
+
+
+FROM build as publish_aot
+
+RUN dotnet publish -r $rid --no-restore -o /app
+
+
+FROM $runtime_deps_image AS aot_app
+
+WORKDIR /app
+COPY --from=publish_aot /app .
+USER $APP_UID
 ENTRYPOINT ["./app"]

@@ -31,30 +31,30 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine",
               "os": "linux",
-              "osVersion": "ubuntu",
+              "osVersion": "alpine",
               "tags": {
-                "dotnetapp-jammy-chiseled-amd64": {}
+                "dotnetapp-alpine-amd64": {}
               }
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine",
               "os": "linux",
-              "osVersion": "ubuntu",
+              "osVersion": "alpine",
               "tags": {
-                "dotnetapp-jammy-chiseled-arm32v7": {}
+                "dotnetapp-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine",
               "os": "linux",
-              "osVersion": "ubuntu",
+              "osVersion": "alpine",
               "tags": {
-                "dotnetapp-jammy-chiseled-arm64v8": {}
+                "dotnetapp-alpine-arm64v8": {}
               },
               "variant": "v8"
             },
@@ -107,7 +107,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-jammy-chiseled-amd64"
+                    "$(Repo:samples):dotnetapp-alpine-amd64"
                   ]
                 }
               ]
@@ -126,7 +126,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-jammy-chiseled-arm32v7"
+                    "$(Repo:samples):dotnetapp-alpine-arm32v7"
                   ]
                 }
               ]
@@ -145,7 +145,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-jammy-chiseled-arm64v8"
+                    "$(Repo:samples):dotnetapp-alpine-arm64v8"
                   ]
                 }
               ]
