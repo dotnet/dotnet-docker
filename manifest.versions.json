@@ -59,7 +59,7 @@
     "base-url|7.3-monitor|main": "$(base-url|public|main)",
     "base-url|7.3-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|8.0-monitor|main": "$(base-url|public|main)",
-    "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
+    "base-url|8.0-monitor|nightly": "$(base-url|public|maintenance|nightly)",
 
     "chisel|6.0|url": "github.com/canonical/chisel",
     "chisel|8.0|url": "$(chisel|6.0|url)",
