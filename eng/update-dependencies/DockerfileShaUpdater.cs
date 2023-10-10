@@ -1,5 +1,6 @@
-// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+//
 
 using System;
 using System.Collections.Generic;
@@ -64,11 +65,38 @@ namespace Dotnet.Docker
             {
                 { "powershell", new string[] { "https://pwshtool.blob.core.windows.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" } },
 
-                { "monitor", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
-                { "monitor-base", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-base-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
-                { "monitor-ext-azureblobstorage", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-azureblobstorage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
-                { "monitor-ext-s3storage", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-s3storage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
-
+                {
+                    "monitor",
+                    new string[]
+                    {
+                        $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT",
+                        $"$DOTNET_BASE_URL/$VERSION_DIR/BlobAssets/dotnet-monitor-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT"
+                    }
+                },
+                {
+                    "monitor-base",
+                    new string[]
+                    {
+                        $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-base-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT",
+                        $"$DOTNET_BASE_URL/$VERSION_DIR/BlobAssets/dotnet-monitor-base-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT"
+                    }
+                },
+                {
+                    "monitor-ext-azureblobstorage",
+                    new string[]
+                    {
+                        $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-azureblobstorage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT",
+                        $"$DOTNET_BASE_URL/$VERSION_DIR/BlobAssets/dotnet-monitor-egress-azureblobstorage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT"
+                    }
+                },
+                {
+                    "monitor-ext-s3storage",
+                    new string[]
+                    {
+                        $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-s3storage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT",
+                        $"$DOTNET_BASE_URL/$VERSION_DIR/BlobAssets/dotnet-monitor-egress-s3storage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT"
+                    }
+                },
                 { "runtime", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
                 { "runtime-host", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
                 { "runtime-hostfxr", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-hostfxr-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
@@ -326,14 +354,9 @@ namespace Dotnet.Docker
             return sha;
         }
 
-        private static bool IsInternalUrl(string url)
+        private string ApplySasQueryStringIfNecessary(string url, string sasQueryString)
         {
-            return url.Contains("internal");
-        }
-
-        private static string ApplySasQueryStringIfNecessary(string url, string sasQueryString)
-        {
-            if (IsInternalUrl(url))
+            if (_options.IsInternal)
             {
                 return url + sasQueryString;
             }
@@ -350,6 +373,7 @@ namespace Dotnet.Docker
                 .Replace("/dotnetcli", "/dotnetclichecksums")
                 .Replace("/internal/", "/internal-checksums/")
                 .Replace("/public/", "/public-checksums/")
+                .Replace("/BlobAssets/", "/ChecksumAssets/")
                 .Replace("azureedge.net", "blob.core.windows.net")
                 + shaExt;
 

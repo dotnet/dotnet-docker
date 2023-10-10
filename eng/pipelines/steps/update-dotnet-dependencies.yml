@@ -25,53 +25,7 @@ steps:
 
     $(engPath)/Get-DropVersions.ps1 @args
   displayName: Get Versions
-- powershell: |
-    $versionInfos = '$(versionInfos)' | ConvertFrom-Json
-
-    $index=0
-    foreach ($versionInfo in $versionInfos) {
-      $args = @{
-        ProductVersion = $versionInfo.DockerfileVersion
-        RuntimeVersion = $versionInfo.RuntimeVersion
-        AspnetVersion = $versionInfo.AspnetVersion
-        SdkVersion = $versionInfo.SdkVersion
-        ComputeShas = $true
-        AzdoVariableName = "updateDepsArgs-$index"
-        UseStableBranding = $versionInfo.StableBranding
-      }
-
-      if ("${{ parameters.useInternalBuild }}" -eq "true") {
-        $args["ChecksumSasQueryString"] = '"$(dotnetchecksumsstage-account-sas-read-token)"'
-        $args["BinarySasQueryString"] = '"$(dotnetstage-account-sas-read-token)"'
-      }
-
-      Write-Host "Executing Set-DotnetVersions.ps1 for $($versionInfo.DockerfileVersion)"
-      $(engPath)/Set-DotnetVersions.ps1 @args
-      $index++
-    }
-  displayName: Get update-dependencies args
-- powershell: |
-    $branchPrefix = ""
-    if ("${{ parameters.useInternalBuild }}" -eq "true") {
-      $branchPrefix = "internal/release/"
-    }
-    $targetBranch = $branchPrefix + $(& $(engPath)/Get-Branch.ps1)
-
-    $customArgsArray = @()
-    $index=0
-
-    # Grab the variables that were set by the multiple calls to Set-DotnetVersions.ps1 and
-    # add them to an array. This allows us to pass args for multiple Dockerfile versions.
-    while ([Environment]::GetEnvironmentVariable("UPDATEDEPSARGS-$index") -ne $null) {
-      $updateDepsArgs = [Environment]::GetEnvironmentVariable("UPDATEDEPSARGS-$index")
-      $updateDepsArgs = "$updateDepsArgs --org dnceng --project $(System.TeamProject) --repo $(Build.Repository.Name) --target-branch $targetBranch"
-      $customArgsArray += $updateDepsArgs
-      $index++
-    }
-    
-    echo "##vso[task.setvariable variable=customArgsArray]$($customArgsArray | ConvertTo-Json -Compress -AsArray)"
-  displayName: Set Custom Args
 - template: update-dependencies.yml
   parameters:
-    customArgsArray: "$(customArgsArray)"
+    versionInfosArray: "$(versionInfos)"
     useInternalBuild: ${{ parameters.useInternalBuild }}

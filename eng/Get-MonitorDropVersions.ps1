@@ -20,6 +20,13 @@ $majorMinorVersion="$($versionSplit[0]).$($versionSplit[1])"
 
 $stableBranding = & $PSScriptRoot/Get-IsStableBranding.ps1 -Version $monitorVersion
 
-Write-Output "##vso[task.setvariable variable=monitorMajorMinorVersion]$majorMinorVersion"
-Write-Output "##vso[task.setvariable variable=monitorVer]$monitorVersion"
-Write-Output "##vso[task.setvariable variable=stableBranding]$stableBranding"
+$versionInfos = @(
+    @{
+        DockerfileVersion = $majorMinorVersion
+        MonitorVersion = $monitorVersion
+        StableBranding = $stableBranding
+        ComputeShas = $false
+    }
+)
+
+Write-Output "##vso[task.setvariable variable=versionInfos]$($versionInfos | ConvertTo-Json -Compress -AsArray)"

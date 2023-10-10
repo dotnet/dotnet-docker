@@ -208,6 +208,7 @@ foreach ($sdkVersionInfo in $SdkVersionInfos) {
         RuntimeVersion = $runtimeVersion
         AspnetVersion = $aspnetVersion
         StableBranding = $sdkVersionInfo.IsStableVersion
+        ComputeShas = $true
     }
 }
 
