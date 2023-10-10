@@ -9,7 +9,7 @@ This sample demonstrates how to build container images for ASP.NET Core web apps
 You can start by launching a sample from our [container registry](https://mcr.microsoft.com/) and access it in your web browser at `http://localhost:8000`.
 
 ```console
-docker run --rm -it -p 8000:8080 mcr.microsoft.com/dotnet/samples:aspnetapp
+docker run --rm -it -p 8000:8080 -e ASPNETCORE_HTTP_PORTS=8080 mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 You can also call an endpoint that the app exposes:
@@ -36,10 +36,10 @@ ASPNETCORE_HTTP_PORTS=80
 Supported with .NET Core 1.0+
 
 ```bash
-ASPNETCORE_URLS=http://+:80 
+ASPNETCORE_URLS=http://+:80
 ```
 
-Note: `ASPNETCORE_URLS` overwrites `ASPNETCORE_HTTP_PORTS`` if set.
+Note: `ASPNETCORE_URLS` overwrites `ASPNETCORE_HTTP_PORTS` if set.
 
 These environment variables are used in [.NET 8](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7C5-L7C31) and [.NET 6](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/6.0/bookworm-slim/amd64/Dockerfile#L5) Dockerfiles, respectively.
 
@@ -49,13 +49,13 @@ You can built an image using one of the provided Dockerfiles.
 
 ```console
 docker build --pull -t aspnetapp .
-docker run --rm -it -p 8000:8080 aspnetapp
+docker run --rm -it -p 8000:8080 -e ASPNETCORE_HTTP_PORTS=8080 aspnetapp
 ```
 
 You should see the following console output as the application starts:
 
 ```console
-> docker run --rm -it -p 8000:8080 aspnetapp
+> docker run --rm -it -p 8000:8080 -e ASPNETCORE_HTTP_PORTS=8080 aspnetapp
 info: Microsoft.Hosting.Lifetime[14]
       Now listening on: http://[::]:8080
 info: Microsoft.Hosting.Lifetime[0]
@@ -78,7 +78,7 @@ You may notice that the sample includes a [health check](../enable-healthchecks.
 
 ## Build image with the SDK
 
-The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds). 
+The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds).
 
 ```console
 dotnet publish /p:PublishProfile=DefaultContainer

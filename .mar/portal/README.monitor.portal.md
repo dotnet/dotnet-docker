@@ -14,6 +14,8 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
+* `8` (Release Candidate)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:8`
 * `7` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:7`
 * `6` (Long-Term Support)
@@ -49,7 +51,7 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 
 ### Lifecycle
 
-* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/microsoft-support.md)
+* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 

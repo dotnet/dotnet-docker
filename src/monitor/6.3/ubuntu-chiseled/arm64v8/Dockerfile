@@ -5,7 +5,7 @@ FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor
 RUN dotnet_monitor_version=6.3.3 \
-    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/6.3.3-servicing.23502.4/dotnet-monitor-$dotnet_monitor_version-linux-arm64.tar.gz \
+    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-arm64.tar.gz \
     && dotnet_monitor_sha512='472e890141a3890f35cfc496cbc3226f95b8f4c241a9d599467336f3495626ec558a112671028d3b7ed32060b7bd42e5ac98dc65ebe53990a136d884c748166a' \
     && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
@@ -14,7 +14,7 @@ RUN dotnet_monitor_version=6.3.3 \
 
 
 # .NET Monitor image
-FROM $REPO:6.0.22-jammy-chiseled-arm64v8
+FROM $REPO:6.0.23-jammy-chiseled-arm64v8
 
 COPY --from=installer ["/app", "/app"]
 
