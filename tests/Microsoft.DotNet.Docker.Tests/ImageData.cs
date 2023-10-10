@@ -134,9 +134,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static string GetRepoNameModifier() => $"{(Config.IsNightlyRepo ? "/nightly" : string.Empty)}";
 
-        public static string GetImageName(string tag, string variantName, string repoNameModifier = null)
+        public static string GetImageName(string tag, string repoName, string repoNameModifier = null)
         {
-            string repo = $"dotnet{repoNameModifier ?? GetRepoNameModifier()}/{variantName}";
+            string repo = $"dotnet{repoNameModifier ?? GetRepoNameModifier()}/{repoName}";
             string registry = GetRegistryName(repo, tag);
 
             return $"{registry}{repo}:{tag}";

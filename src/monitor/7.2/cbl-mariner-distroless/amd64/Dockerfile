@@ -10,9 +10,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Monitor
-RUN dotnet_monitor_version=7.2.2 \
+RUN dotnet_monitor_version=7.2.3 \
     && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
-    && dotnet_monitor_sha512='53934731d7feee0924087379ae294c19077f0b24d8f16c84b8c706c65f58e10382a2573b3376107b30b1cc7fceb66e919b277f0ff2a25d6c002d1e67371b1aeb' \
+    && dotnet_monitor_sha512='0336014a31e59067e98f050c281849d320e93c526d262ef3aecc14dcc00a620f534d4fd3866d2d23c7a47b15366310bb4d83d1c4078b9d1bb906c05ab661425b' \
     && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor.tar.gz -C /app \
@@ -20,7 +20,7 @@ RUN dotnet_monitor_version=7.2.2 \
 
 
 # .NET Monitor image
-FROM $REPO:7.0.11-cbl-mariner2.0-distroless-amd64
+FROM $REPO:7.0.12-cbl-mariner2.0-distroless-amd64
 
 COPY --from=installer ["/app", "/app"]
 
