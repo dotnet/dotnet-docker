@@ -4,14 +4,14 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 ARG TARGETARCH
 WORKDIR /source
 
-# optimize 
+# optimize
 RUN --mount=type=bind,source=aspnetapp/aspnetapp.csproj,target=aspnetapp.csproj \
     --mount=type=cache,target=/root/.nuget/ \
     dotnet restore -a $TARGETARCH
 
 # copy and publish app and libraries
 COPY aspnetapp/. .
-RUN dotnet publish -a $TARGETARCH --no-restore -o /app
+RUN dotnet publish -a $TARGETARCH -o /app
 
 
 # Enable globalization and time zones:

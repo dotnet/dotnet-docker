@@ -54,8 +54,6 @@
     "src/runtime-deps/8.0/cbl-mariner2.0/arm64v8": 101218471,
     "src/runtime-deps/8.0/cbl-mariner2.0-distroless/amd64": 21317388,
     "src/runtime-deps/8.0/cbl-mariner2.0-distroless/arm64v8": 18449538,
-    "src/runtime-deps/8.0/cbl-mariner2.0-distroless-aot/amd64": 18884861,
-    "src/runtime-deps/8.0/cbl-mariner2.0-distroless-aot/arm64v8": 16068598,
     "src/runtime-deps/8.0/cbl-mariner2.0-distroless-extra/amd64": 56229970,
     "src/runtime-deps/8.0/cbl-mariner2.0-distroless-extra/arm64v8": 53042143
   },
