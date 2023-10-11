@@ -1,6 +1,6 @@
 # Featured Tags
 
-* `8.0` (Release Candidate)
+* `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:8.0`
 * `7.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:7.0`

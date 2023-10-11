@@ -15,8 +15,8 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 
 ## Featured Tags
 
-* `8` (Release Candidate)
-* `docker pull mcr.microsoft.com/dotnet/monitor/base:8`
+* `8` (Long-Term Support)
+  * `docker pull mcr.microsoft.com/dotnet/monitor/base:8`
 
 ## Related Repositories
 
