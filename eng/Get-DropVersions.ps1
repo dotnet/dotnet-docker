@@ -69,7 +69,7 @@ function GetCommitSha([string]$sdkVersion, [string]$queryString, [switch]$useSta
     Write-Host "Downloading SDK from $sdkUrl"
     $sdkOutPath = "$tempDir/sdk.zip"
     Invoke-WebRequest -Uri $sdkUrl -OutFile $sdkOutPath
-    
+
     # Extract .version file from SDK zip
     $zipFile = [IO.Compression.ZipFile]::OpenRead($sdkOutPath)
     try {
@@ -89,7 +89,7 @@ function GetCommitSha([string]$sdkVersion, [string]$queryString, [switch]$useSta
 
 function GetVersionDetails([string]$commitSha) {
     $versionDetailsPath="eng/Version.Details.xml"
-    
+
     if ($UseInternalBuild) {
         $dotnetInstallerRepoId="c20f712b-f093-40de-9013-d6b084c1ff30"
         $versionDetailsUrl="https://dev.azure.com/dnceng/internal/_apis/git/repositories/$dotnetInstallerRepoId/items?scopePath=/$versionDetailsPath&api-version=6.0&version=$commitSha&versionType=commit"
@@ -124,7 +124,7 @@ if ($UseInternalBuild) {
     {
         $Channel = "internal/$Channel"
     }
-    
+
     $queryString = "$BlobStorageSasQueryString"
 }
 else {

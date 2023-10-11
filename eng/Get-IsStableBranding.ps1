@@ -14,7 +14,7 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 2.0
 
-if ($Version.Contains("-servicing") -or $Version.Contains("-rtm")) {
+if ($Version.Contains("-servicing")) {
     return $true
 }
 
