@@ -29,7 +29,7 @@ param(
     $AzdoVersionsRepoInfoAccessToken
 )
 
-function GetLatestSdkVersionFromChannel([string]$queryString) {
+function GetLatestSdkVersionInfoFromChannel([string]$queryString) {
     $sdkFile = "dotnet-sdk-win-x64.zip"
     $akaMsUrl = "https://aka.ms/dotnet/$Channel/$sdkFile$queryString"
     Write-Host "Querying $akaMsUrl"
@@ -37,16 +37,64 @@ function GetLatestSdkVersionFromChannel([string]$queryString) {
     $sdkUrl = $response.BaseResponse.RequestMessage.RequestUri.AbsoluteUri
     Write-Host "Resolved SDK URL: $sdkUrl"
 
-    # Resolve the SDK build version from the SDK URL
-    # Example URL: https://dotnetcli.azureedge.net/dotnet/Sdk/6.0.100-rtm.21522.1/dotnet-sdk-6.0.100-win-x64.zip
-    #   The command below extracts the 6.0.100-rtm.21522.1 from the URL
-    $sdkUrlPath = "/Sdk/"
-    $versionUrlPath = $sdkUrl.Substring($sdkUrl.IndexOf($sdkUrlPath) + $sdkUrlPath.Length)
-    $sdkVersion = $versionUrlPath.Substring(0, $versionUrlPath.IndexOf("/"))
-    return $sdkVersion
+    return GetSdkVersionInfo $sdkUrl
 }
 
-function GetCommitSha([string]$sdkVersion, [string]$queryString, [switch]$useStableBranding) {
+function GetSdkVersionInfo([string]$sdkUrl) {
+    New-Item -Path $tempDir -ItemType Directory -Force | Out-Null
+
+    try {
+        # Download the SDK
+        Write-Host "Downloading SDK from $sdkUrl"
+        $sdkOutPath = "$tempDir/sdk.zip"
+        Invoke-WebRequest -Uri $sdkUrl -OutFile $sdkOutPath
+
+        # Extract .version file from SDK zip
+        $zipFile = [IO.Compression.ZipFile]::OpenRead($sdkOutPath)
+        try {
+            $zipFile.Entries | Where-Object { $_.FullName -like "sdk/*/.version" } | ForEach-Object {
+                [IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$tempDir/$($_.Name)")
+            }
+        }
+        finally {
+            $zipFile.Dispose()
+        }
+
+        # Get the commit SHA from the .version file. Example contents:
+        #
+        # Unstable version:
+        # f54f69f9aade0a00936aca343c3eb493d5edbc05
+        # 8.0.100-rtm.23512.13
+        # win-x64
+        # 8.0.100-rtm.23512.13
+        #
+        # Stable version:
+        # eb26aacfecb08dd87b418f4cfaf7faa10eb1900f
+        # 7.0.401
+        # win-x64
+        # 7.0.401-servicing.23425.30
+        #
+        $versionInfoText = $(Get-Content "$tempDir/.version")
+
+        $commitSha = $versionInfoText[0].Trim()
+        $shortVersion = $versionInfoText[1].Trim()
+        $rid = $versionInfoText[2].Trim()
+        $fullVersion = $versionInfoText[3].Trim()
+        $isStableVersion = $fullVersion -ne $shortVersion
+
+        return [PSCustomObject]@{
+            CommitSha = $commitSha
+            Version = $shortVersion
+            IsStableVersion = $isStableVersion
+            Rid = $rid
+        }
+    }
+    finally {
+        Remove-Item $tempDir -Force -Recurse -ErrorAction Ignore
+    }
+}
+
+function ResolveSdkUrl([string]$sdkVersion, [string]$queryString, [switch]$useStableBranding) {
     if ($useStableBranding) {
         $sdkStableVersion = ($sdkVersion -split "-")[0]
     }
@@ -64,32 +112,12 @@ function GetCommitSha([string]$sdkVersion, [string]$queryString, [switch]$useSta
     else {
         $sdkUrl = "https://dotnetbuilds.blob.core.windows.net/public/Sdk/$sdkVersion/$zipFile"
     }
-
-    # Download the SDK
-    Write-Host "Downloading SDK from $sdkUrl"
-    $sdkOutPath = "$tempDir/sdk.zip"
-    Invoke-WebRequest -Uri $sdkUrl -OutFile $sdkOutPath
-    
-    # Extract .version file from SDK zip
-    $zipFile = [IO.Compression.ZipFile]::OpenRead($sdkOutPath)
-    try {
-        $zipFile.Entries | Where-Object { $_.FullName -like "sdk/*/.version" } | ForEach-Object {
-            [IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$tempDir/$($_.Name)")
-        }
-    }
-    finally {
-        $zipFile.Dispose()
-    }
-
-    # Get the commit SHA from the .version file
-    $commitSha = $(Get-Content "$tempDir/.version")[0].Trim()
-
-    return $commitSha
+    return $sdkUrl
 }
 
 function GetVersionDetails([string]$commitSha) {
     $versionDetailsPath="eng/Version.Details.xml"
-    
+
     if ($UseInternalBuild) {
         $dotnetInstallerRepoId="c20f712b-f093-40de-9013-d6b084c1ff30"
         $versionDetailsUrl="https://dev.azure.com/dnceng/internal/_apis/git/repositories/$dotnetInstallerRepoId/items?scopePath=/$versionDetailsPath&api-version=6.0&version=$commitSha&versionType=commit"
@@ -124,60 +152,62 @@ if ($UseInternalBuild) {
     {
         $Channel = "internal/$Channel"
     }
-    
+
     $queryString = "$BlobStorageSasQueryString"
 }
 else {
     $queryString = ""
 }
 
+$sdkVersionInfos = @()
+
 if ($Channel) {
-    $SdkVersions += GetLatestSdkVersionFromChannel $queryString
+    $sdkVersionInfo = GetLatestSdkVersionInfoFromChannel $queryString
+    $sdkVersionInfos += $sdkVersionInfo
+}
+
+foreach ($sdkVersion in $SdkVersions)
+{
+    $useStableBranding = & $PSScriptRoot/Get-IsStableBranding.ps1 -Version $sdkVersion
+    $sdkUrl = ResolveSdkUrl $sdkVersion $queryString $useStableBranding
+    $sdkVersionInfo = GetSdkVersionInfo $sdkUrl
+    $sdkVersionInfos += $sdkVersionInfo
 }
 
 Write-Host "Resolved SDK versions: $SdkVersions"
 $versionInfos = @()
-foreach ($sdkVersion in $SdkVersions) {
-    New-Item -Path $tempDir -ItemType Directory -Force | Out-Null
+foreach ($sdkVersionInfo in $SdkVersionInfos) {
+    $versionDetails = GetVersionDetails $sdkVersionInfo.CommitSha
 
-    try {
-        $useStableBranding = & $PSScriptRoot/Get-IsStableBranding.ps1 -Version $sdkVersion
-        $commitSha = GetCommitSha $sdkVersion $queryString -useStableBranding:$useStableBranding
-        $versionDetails = GetVersionDetails $commitSha
+    $runtimeVersion = GetDependencyVersion "VS.Redist.Common.NetCore.SharedFramework.x64" $versionDetails
 
-        $runtimeVersion = GetDependencyVersion "VS.Redist.Common.NetCore.SharedFramework.x64" $versionDetails
+    $aspnetVersion = GetDependencyVersion "VS.Redist.Common.AspNetCore.SharedFramework.x64" $versionDetails
 
-        $aspnetVersion = GetDependencyVersion "VS.Redist.Common.AspNetCore.SharedFramework.x64" $versionDetails
-
-        if (-not $runtimeVersion) {
-            Write-Error "Unable to resolve the runtime version"
-            exit 1
-        }
-
-        if (-not $aspnetVersion) {
-            Write-Error "Unable to resolve the ASP.NET Core runtime version"
-            exit 1
-        }
-
-        $sdkVersionParts = $sdkVersion -split "\."
-        $dockerfileVersion = "$($sdkVersionParts[0]).$($sdkVersionParts[1])"
-
-        Write-Host "Dockerfile version: $dockerfileVersion"
-        Write-Host "SDK version: $sdkVersion"
-        Write-Host "Runtime version: $runtimeVersion"
-        Write-Host "ASP.NET Core version: $aspnetVersion"
-        Write-Host
-
-        $versionInfos += @{
-            DockerfileVersion = $dockerfileVersion
-            SdkVersion = $sdkVersion
-            RuntimeVersion = $runtimeVersion
-            AspnetVersion = $aspnetVersion
-            StableBranding = $useStableBranding
-        }
+    if (-not $runtimeVersion) {
+        Write-Error "Unable to resolve the runtime version"
+        exit 1
     }
-    finally {
-        Remove-Item $tempDir -Force -Recurse -ErrorAction Ignore
+
+    if (-not $aspnetVersion) {
+        Write-Error "Unable to resolve the ASP.NET Core runtime version"
+        exit 1
+    }
+
+    $sdkVersionParts = $sdkVersionInfo.Version -split "\."
+    $dockerfileVersion = "$($sdkVersionParts[0]).$($sdkVersionParts[1])"
+
+    Write-Host "Dockerfile version: $dockerfileVersion"
+    Write-Host "SDK version: $($sdkVersionInfo.Version)"
+    Write-Host "Runtime version: $runtimeVersion"
+    Write-Host "ASP.NET Core version: $aspnetVersion"
+    Write-Host
+
+    $versionInfos += @{
+        DockerfileVersion = $dockerfileVersion
+        SdkVersion = $sdkVersionInfo.Version
+        RuntimeVersion = $runtimeVersion
+        AspnetVersion = $aspnetVersion
+        StableBranding = $sdkVersionInfo.IsStableVersion
     }
 }
 
