@@ -53,7 +53,7 @@ docker run --rm mcr.microsoft.com/dotnet/samples
 The following command will run an ASP.NET Core console app in a container that you can access in your web browser at `http://localhost:8000`.
 
 ```console
-docker run --rm -it -p 8000:80 mcr.microsoft.com/dotnet/samples:aspnetapp
+docker run --rm -it -p 8000:8080 mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 ## Docker Repositories
