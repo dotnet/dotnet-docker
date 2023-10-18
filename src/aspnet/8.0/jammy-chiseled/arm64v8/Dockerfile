@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=8.0.0-rtm.23510.7 \
+RUN aspnetcore_version=8.0.0-rtm.23512.10 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz \
-    && aspnetcore_sha512='5a648491a579268b76148125987ab92ec139724eae9bbfeb1639b909320f7bda6d0bcbeef6bf3d504a2d0aab57d8c6e8804d0d34b5e20a3d3e5c3b4fc407a8df' \
+    && aspnetcore_sha512='113ccb582113d6c94efbdb931544eda16e2dd300211c933d1452fedefa69a30a77d948bdca87c2481f8232d414307a944d31f8c2bab30bfaa05811c8ec60d5a1' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
@@ -17,6 +17,6 @@ RUN aspnetcore_version=8.0.0-rtm.23510.7 \
 FROM $REPO:8.0.0-jammy-chiseled-arm64v8
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.0-rtm.23510.7
+ENV ASPNET_VERSION=8.0.0-rtm.23512.10
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
