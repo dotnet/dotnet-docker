@@ -249,6 +249,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     tag: tag,
                     target: stageTarget,
                     contextDir: contextDir,
+                    platform: _imageData.Platform,
                     buildArgs: buildArgs.ToArray());
             }
             finally
@@ -330,6 +331,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 name: containerName,
                 command: $"dotnet new {String.Join(' ', args)}",
                 workdir: ProjectContainerDir,
+                optionalRunArgs: $"--platform {_imageData.Platform}",
                 skipAutoCleanup: true);
 
             _dockerHelper.Copy($"{containerName}:{ProjectContainerDir}", destinationPath);
