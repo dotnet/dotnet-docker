@@ -2,15 +2,13 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/nightly/sdk:8.0-jammy-ao
 ARG TARGETARCH
 WORKDIR /source
 
-# copy csproj and restore as distinct layers
-COPY *.csproj .
-COPY *.config .
-RUN dotnet restore -r linux-$TARGETARCH
-
-# copy and publish app and libraries
+# Copy all source assets
 COPY . .
-RUN dotnet publish -r linux-$TARGETARCH --no-restore -o /app releasesapi.csproj
-RUN rm /app/*.dbg /app/*.Development.json
+# Cache mounts caches runtime packs and NuGet packages across builds
+RUN --mount=type=cache,target=/root/.nuget \
+    --mount=type=cache,target=/source/bin \
+    --mount=type=cache,target=/source/obj \
+    dotnet publish -a $TARGETARCH -o /app releasesapi.csproj
 
 
 # final stage/image
