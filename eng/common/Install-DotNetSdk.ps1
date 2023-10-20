@@ -40,7 +40,7 @@ if (!(Test-Path $DotnetInstallScriptPath)) {
     & "$PSScriptRoot/Invoke-WithRetry.ps1" "Invoke-WebRequest 'https://dot.net/v1/$DotnetInstallScript' -OutFile $DotnetInstallScriptPath"
 }
 
-$DotnetChannel = "7.0"
+$DotnetChannel = "8.0"
 
 $InstallFailed = $false
 if ($IsRunningOnUnix) {
