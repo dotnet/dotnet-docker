@@ -42,14 +42,19 @@ namespace Microsoft.DotNet.Docker.Tests
             });
         }
 
-        public string NormalizedPlatform
-        {
-            get => GetPlatform(normalized: true);
-        }
-
         public string Platform
         {
-            get => GetPlatform(normalized: false);
+            get
+            {
+                string os = IsWindows ? "windows" : "linux";
+                string arch = Arch.ToString().ToLowerInvariant();
+                if (ArchVariant.Length > 0)
+                {
+                    arch += $"/{ArchVariant}";
+                }
+
+                return $"{os}/{arch}";
+            }
         }
 
         public string ArchVariant =>
@@ -186,22 +191,6 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             return imageExistsInStaging ? $"{Config.Registry}/{Config.RepoPrefix}" : "mcr.microsoft.com/";
-        }
-
-        private string GetPlatform(bool normalized)
-        {
-            string os = IsWindows ? "windows" : "linux";
-            string arch = Arch.ToString().ToLowerInvariant();
-            string variant = ArchVariant.Length > 0 ? $"/{ArchVariant}" : string.Empty;
-
-            // Containerd normalizes arm64/v8 to arm64 with no variant.
-            // See https://github.com/moby/buildkit/issues/4039
-            if (normalized && !IsWindows && Arch == Arch.Arm64)
-            {
-                variant = string.Empty;
-            }
-
-            return $"{os}/{arch}{variant}";
         }
 
         public override string ToString()
