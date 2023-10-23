@@ -42,7 +42,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 return;
             }
-
+            
             await VerifySampleAsync(imageData, SampleImageType.Dotnetapp, (image, containerName) =>
             {
                 string output = DockerHelper.Run(image, containerName);
@@ -168,7 +168,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         dockerfilePath += $".{imageData.DockerfileSuffix}";
                     }
 
-                    DockerHelper.Build(image, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages, platform: imageData.NormalizedPlatform);
+                    DockerHelper.Build(image, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages, platform: imageData.Platform);
                 }
 
                 string containerName = imageData.GetIdentifier($"sample-{imageType}");
@@ -192,7 +192,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 variables.Add(new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", imageData.DefaultPort.ToString()));
             }
-
+            
             EnvironmentVariableInfo.Validate(
                 variables,
                 image,

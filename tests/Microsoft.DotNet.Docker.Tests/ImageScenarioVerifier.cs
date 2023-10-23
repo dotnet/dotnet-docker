@@ -331,7 +331,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 name: containerName,
                 command: $"dotnet new {String.Join(' ', args)}",
                 workdir: ProjectContainerDir,
-                optionalRunArgs: $"--platform {_imageData.NormalizedPlatform}",
+                optionalRunArgs: $"--platform {_imageData.Platform}",
                 skipAutoCleanup: true);
 
             _dockerHelper.Copy($"{containerName}:{ProjectContainerDir}", destinationPath);
