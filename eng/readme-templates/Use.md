@@ -3,7 +3,7 @@
       top-header: The string to use as the top-level header.
       readme-host: Moniker of the site that will host the readme ^
     set templateQualifier to when(IS_PRODUCT_FAMILY,
-        "product-family",
+        "samples",
         when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO))
 }}{{ARGS["top-header"]}} Usage
 
