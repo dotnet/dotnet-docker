@@ -6,18 +6,18 @@
 These images offer dramatically smaller deployment sizes and attack surface compared to our "full" Ubuntu images that are based on the Ubuntu base images. This is achieved through the following features:
 
 - Minimal set of packages required to run a .NET application
-- No package manager (avoids a whole class of attacks)
-- No shell (avoids a whole class of attacks)
-- Non-root user by default (avoids a whole class of attacks)
+- Non-root user by default
+- No package manager
+- No shell
 
 Ubuntu Chiseled images are available for the following image repos:
-- [`mcr.microsoft.com/dotnet/runtime`](https://mcr.microsoft.com/product/dotnet/runtime/about)
-- [`mcr.microsoft.com/dotnet/aspnet`](https://mcr.microsoft.com/product/dotnet/aspnet/about)
-- [`mcr.microsoft.com/dotnet/runtime-deps`](https://mcr.microsoft.com/product/dotnet/runtime-deps/about) (for self-contained apps)
+- [`mcr.microsoft.com/dotnet/runtime`](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime.md)
+- [`mcr.microsoft.com/dotnet/aspnet`](https://github.com/dotnet/dotnet-docker/blob/main/README.aspnet.md)
+- [`mcr.microsoft.com/dotnet/runtime-deps`](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime-deps.md) (for self-contained apps)
 
 We’re not offering a chiseled SDK image as there wasn't a strong need for one, and a chiseled SDK image could be hard to use for some scenarios.
 You can continue to use the existing full Ubuntu SDK images to build your apps to run on Chiseled.
-If you have a compelling use case for a distroless SDK image, please [file a discussion](https://github.com/dotnet/dotnet-docker/discussions/new/choose) and we’ll be happy to reconsider.
+If you have a compelling use case for a distroless SDK image, please leave a comment on [this issue](https://github.com/dotnet/dotnet-docker/issues/4942) and we’ll be happy to reconsider.
 
 ## How do I use Ubuntu Chiseled .NET images?
 
@@ -75,6 +75,8 @@ RUN dotnet --list-versions
 ENTRYPOINT dotnet myapp.dll
 CMD dotnet myapp.dll --args
 ```
+
+Please see the [Dockerfile documentation](https://docs.docker.com/engine/reference/builder/#run) for more info about different ways to format Dockerfile instructions.
 
 ### Permission denied error
 
