@@ -3,12 +3,12 @@
 ## What is Ubuntu Chiseled?
 
 .NET's Ubuntu Chiseled images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
-These images offer dramatically smaller deployment sizes and attack surface through the following features:
+These images offer dramatically smaller deployment sizes and attack surface compared to our "full" Ubuntu images that are based on the Ubuntu base images. This is achieved through the following features:
 
-- Ultra-small images (reduced size and attack surface)
+- Minimal set of packages required to run a .NET application
 - No package manager (avoids a whole class of attacks)
 - No shell (avoids a whole class of attacks)
-- Non-root by default (avoids a whole class of attacks)
+- Non-root user by default (avoids a whole class of attacks)
 
 Ubuntu Chiseled images are available for the following image repos:
 - [`mcr.microsoft.com/dotnet/runtime`](https://mcr.microsoft.com/product/dotnet/runtime/about)
@@ -16,7 +16,7 @@ Ubuntu Chiseled images are available for the following image repos:
 - [`mcr.microsoft.com/dotnet/runtime-deps`](https://mcr.microsoft.com/product/dotnet/runtime-deps/about) (for self-contained apps)
 
 We’re not offering a chiseled SDK image as there wasn't a strong need for one, and a chiseled SDK image could be hard to use for some scenarios.
-You can continue to use the existing Ubuntu SDK images to build your apps to run on Chiseled.
+You can continue to use the existing full Ubuntu SDK images to build your apps to run on Chiseled.
 If you have a compelling use case for a distroless SDK image, please [file a discussion](https://github.com/dotnet/dotnet-docker/discussions/new/choose) and we’ll be happy to reconsider.
 
 ## How do I use Ubuntu Chiseled .NET images?
@@ -27,7 +27,7 @@ Please see our sample Dockerfiles for examples on how to use Ubuntu Chiseled .NE
 - [releasesapi](https://github.com/dotnet/dotnet-docker/blob/main/samples/releasesapi/Dockerfile.ubuntu-chiseled) (and [icu version](https://github.com/dotnet/dotnet-docker/blob/main/samples/releasesapi/Dockerfile.ubuntu-chiseled-icu))
 - [releasesapp](https://github.com/dotnet/dotnet-docker/blob/main/samples/releasesapp/Dockerfile.chiseled)
 
-If your app's Dockerfile doesn't install any additional linux packages or depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our default Ubuntu images.
+If your app's Dockerfile doesn't install any additional Linux packages or depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our full Ubuntu or Debian images.
 
 ## FAQs
 
@@ -35,7 +35,7 @@ If your app's Dockerfile doesn't install any additional linux packages or depend
 
 Our Chiseled images are focused on size. That means the default Chiseled images do not include the `icu` or `tzdata`
 libraries from Ubuntu. However, we offer an `extra` image variant that includes `tzdata` and `icu` by default. You can
-use this in place of the default chiseled image appending the `-extra` suffix like so:
+use this in place of the default chiseled image appending the `-extra` suffix to the image tag like so:
 
 - `8.0-jammy-chiseled-extra`
 
@@ -59,7 +59,7 @@ If you switch your containers to Ubuntu Chiseled, you may run into one of the fo
 - `stat  /bin/sh: no such file or directory`
 - `docker: Error response from daemon: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "bash": executable file not found in $PATH: unknown.`
 
-These errors happen when you try to invoke a shell Ubuntu Chiseled images since they don't include `sh` or `bash`.
+These errors happen when you try to invoke a shell command in a container that doesn't include `sh` or `bash`.
 Before adopting Ubuntu Chiseled, you should make sure your app doesn't depend on any shell commands or scripts.
 
 Additionally, you should make sure any instructions in your Dockerfile are formatted in the `exec` form instead of the `shell` form. For example:
@@ -85,7 +85,7 @@ System.UnauthorizedAccessException: Access to the path "<path>" is denied
 ```
 
 Ubuntu Chiseled .NET images use a non-root user by default.
-This error happens when apps try to write to a directory that the current user doesn't have access to.
+This error happens when apps try to write to a directory or file that the current user doesn't have access to.
 By design, an app shouldn't be able to modify the directory it's running from. Instead, you should try to write to the non-root user's home directory.
 
 For example, instead of:
