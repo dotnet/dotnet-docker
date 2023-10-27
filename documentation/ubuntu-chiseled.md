@@ -11,9 +11,9 @@ These images offer dramatically smaller deployment sizes and attack surface comp
 - No shell
 
 Ubuntu Chiseled images are available for the following image repos:
-- [`mcr.microsoft.com/dotnet/runtime`](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime.md)
-- [`mcr.microsoft.com/dotnet/aspnet`](https://github.com/dotnet/dotnet-docker/blob/main/README.aspnet.md)
-- [`mcr.microsoft.com/dotnet/runtime-deps`](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime-deps.md) (for self-contained apps)
+- [`mcr.microsoft.com/dotnet/runtime`](../README.runtime.md)
+- [`mcr.microsoft.com/dotnet/aspnet`](../README.aspnet.md)
+- [`mcr.microsoft.com/dotnet/runtime-deps`](../README.runtime-deps.md) (for self-contained apps)
 
 We’re not offering a chiseled SDK image as there wasn't a strong need for one, and a chiseled SDK image could be hard to use for some scenarios.
 You can continue to use the existing full Ubuntu SDK images to build your apps to run on Chiseled.
@@ -22,10 +22,10 @@ If you have a compelling use case for a distroless SDK image, please leave a com
 ## How do I use Ubuntu Chiseled .NET images?
 
 Please see our sample Dockerfiles for examples on how to use Ubuntu Chiseled .NET images:
-- [aspnetapp](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.chiseled)
-- [dotnetapp](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.chiseled)
-- [releasesapi](https://github.com/dotnet/dotnet-docker/blob/main/samples/releasesapi/Dockerfile.ubuntu-chiseled) (and [icu version](https://github.com/dotnet/dotnet-docker/blob/main/samples/releasesapi/Dockerfile.ubuntu-chiseled-icu))
-- [releasesapp](https://github.com/dotnet/dotnet-docker/blob/main/samples/releasesapp/Dockerfile.chiseled)
+- [aspnetapp](../samples/aspnetapp/Dockerfile.chiseled)
+- [dotnetapp](../samples/dotnetapp/Dockerfile.chiseled)
+- [releasesapi](../samples/releasesapi/Dockerfile.ubuntu-chiseled) (and [icu version](../samples/releasesapi/Dockerfile.ubuntu-chiseled-icu))
+- [releasesapp](../samples/releasesapp/Dockerfile.chiseled)
 
 If your app's Dockerfile doesn't install any additional Linux packages or depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our full Ubuntu or Debian images.
 
