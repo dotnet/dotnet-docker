@@ -35,7 +35,7 @@ If your app's Dockerfile doesn't install any additional Linux packages or depend
 
 Our Chiseled images are focused on size. That means the default Chiseled images do not include the `icu` or `tzdata`
 libraries from Ubuntu. However, we offer an `extra` image variant that includes `tzdata` and `icu` by default. You can
-use this in place of the default chiseled image appending the `-extra` suffix to the image tag like so:
+use this in place of the default chiseled image by appending the `-extra` suffix to the image tag like so:
 
 - `8.0-jammy-chiseled-extra`
 
