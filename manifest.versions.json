@@ -59,7 +59,7 @@
     "base-url|7.3-monitor|main": "$(base-url|public|main)",
     "base-url|7.3-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|8.0-monitor|main": "$(base-url|public|main)",
-    "base-url|8.0-monitor|nightly": "$(base-url|public|maintenance|nightly)",
+    "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
 
     "chisel|6.0|url": "github.com/canonical/chisel",
     "chisel|8.0|url": "$(chisel|6.0|url)",
@@ -109,8 +109,8 @@
     "monitor|7.3|linux|arm64|sha": "9e616b1329ecfc917c9f68dc603c302efe1af5e3fd7097375da486a740c3c0df333b691cb134a18d58368571f5f584edd6b92425221cde287ea3391fd772a4f0",
     "monitor|7.3|product-version": "7.3.1",
 
-    "monitor|8.0|build-version": "8.0.0-rc.2.23502.11",
-    "monitor|8.0|product-version": "8.0.0-rc.2",
+    "monitor|8.0|build-version": "8.0.0",
+    "monitor|8.0|product-version": "8.0.0",
 
     "monitor-base|8.0|linux|x64|sha": "b024c1871061b8ec03e26af2ee8fe28cdfcc5c64f7c6bfbbdea143c37fe2a16b671b6a880e84f5b73d84a5d28f7b227ead76549b74e60be561a377eff6b32bce",
     "monitor-base|8.0|linux|arm64|sha": "806f0887eff2d38f54e0a1d7dad20bf17a8f0f4f941d0962d4dcfe67732acbddd9e1f48de0304be52e8e091bf51e8e8a35bcd5b60ee5173dc000a2aeac6c5246",
