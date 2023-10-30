@@ -57,7 +57,6 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-rc.2-ubuntu-chiseled-amd64, 8.0-ubuntu-chiseled-amd64, 8-ubuntu-chiseled-amd64, 8.0.0-rc.2-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8-ubuntu-chiseled, 8.0.0-rc.2, 8.0, 8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 7.3.1-alpine-amd64, 7.3-alpine-amd64, 7-alpine-amd64, 7.3.1-alpine, 7.3-alpine, 7-alpine, 7.3.1, 7.3, 7, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.3/alpine/amd64/Dockerfile) | Alpine 3.18
-7.2.3-alpine-amd64, 7.2-alpine-amd64, 7.2.3-alpine, 7.2-alpine, 7.2.3, 7.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.2/alpine/amd64/Dockerfile) | Alpine 3.18
 6.3.3-alpine-amd64, 6.3-alpine-amd64, 6-alpine-amd64, 6.3.3-alpine, 6.3-alpine, 6-alpine, 6.3.3, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.3/alpine/amd64/Dockerfile) | Alpine 3.18
 
 ## Linux arm64 Tags
@@ -65,7 +64,6 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-rc.2-ubuntu-chiseled-arm64v8, 8.0-ubuntu-chiseled-arm64v8, 8-ubuntu-chiseled-arm64v8, 8.0.0-rc.2-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8-ubuntu-chiseled, 8.0.0-rc.2, 8.0, 8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 7.3.1-alpine-arm64v8, 7.3-alpine-arm64v8, 7-alpine-arm64v8, 7.3.1-alpine, 7.3-alpine, 7-alpine, 7.3.1, 7.3, 7, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.3/alpine/arm64v8/Dockerfile) | Alpine 3.18
-7.2.3-alpine-arm64v8, 7.2-alpine-arm64v8, 7.2.3-alpine, 7.2-alpine, 7.2.3, 7.2 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.2/alpine/arm64v8/Dockerfile) | Alpine 3.18
 6.3.3-alpine-arm64v8, 6.3-alpine-arm64v8, 6-alpine-arm64v8, 6.3.3-alpine, 6.3-alpine, 6-alpine, 6.3.3, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.3/alpine/arm64v8/Dockerfile) | Alpine 3.18
 
 You can retrieve a list of all available tags for dotnet/monitor at https://mcr.microsoft.com/v2/dotnet/monitor/tags/list.
