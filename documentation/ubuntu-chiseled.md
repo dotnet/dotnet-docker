@@ -50,9 +50,7 @@ For example, you can scan for CVEs with [Docker Scout](https://docs.docker.com/s
 docker scout cves mcr.microsoft.com/dotnet/runtime-deps:8.0-jammy-chiseled
 ```
 
-## Common issues adopting distroless containers
-
-### Trying to invoke a shell
+### How can I write my Dockerfile to work without a shell?
 
 If you switch your containers to Ubuntu Chiseled, you may run into one of the following errors:
 
@@ -78,7 +76,7 @@ CMD dotnet myapp.dll --args
 
 Please see the [Dockerfile documentation](https://docs.docker.com/engine/reference/builder/#run) for more info about different ways to format Dockerfile instructions.
 
-### Permission denied error
+### How do I handle file permissions when running as a non-root user?
 
 If your app writes to the disk, you may encounter permission issues at runtime, such as:
 
