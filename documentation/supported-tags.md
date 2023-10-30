@@ -49,8 +49,17 @@ These tags reference images for [multiple platforms](https://docs.docker.com/bui
 They include:
 
 - Debian, unless specified (like `6.0-alpine`).
-- Each supported Nano Server version for OS-agnostic tags (like `7.0` and `latest`)
 - All [supported architectures](supported-platforms.md#architectures).
+
+**Note:** Since .NET 8, these multi-platform tags **specifically exclude all Windows versions** due to `containerd`'s platform matching algorithm for Windows hosts.
+Please see [#4492 (Switch multi-platform tags to Linux only)](https://github.com/dotnet/dotnet-docker/issues/4492) for more context.
+If you are using Windows, you will need to explicitly specify an OS Version with a single-platform tag like so:
+```Dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-ltsc2022
+FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-1809
+FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2019
+FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
+```
 
 ### `<Major.Minor.Patch .NET Version>-<OS version>`
 
@@ -109,7 +118,7 @@ These "floating version" `latest` tag references an image with the latest `Major
 
 Notes:
 
-- The `latest` tag references the latest stable release. 
+- The `latest` tag references the latest stable release.
 - In the `nightly` image repo, it may reference the latest preview release.
 
 ## Tag policies
