@@ -50,7 +50,7 @@ For example, you can scan for CVEs with [Docker Scout](https://docs.docker.com/s
 docker scout cves mcr.microsoft.com/dotnet/runtime-deps:8.0-jammy-chiseled
 ```
 
-### How can I write my Dockerfile to work without a shell?
+### How do I write my Dockerfile to work without a shell?
 
 If you switch your containers to Ubuntu Chiseled, you may run into one of the following errors:
 
@@ -58,9 +58,9 @@ If you switch your containers to Ubuntu Chiseled, you may run into one of the fo
 - `docker: Error response from daemon: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "bash": executable file not found in $PATH: unknown.`
 
 These errors happen when you try to invoke a shell command in a container that doesn't include `sh` or `bash`.
-Before adopting Ubuntu Chiseled, you should make sure your app doesn't depend on any shell commands or scripts.
+To avoid these, you'll need to make sure your Dockerfile is architected correctly and your .NET app doesn't depend on the shell.
 
-Additionally, you should make sure any instructions in your Dockerfile are formatted in the `exec` form instead of the `shell` form. For example:
+First, use the `exec` form instead of the `shell` form for instructions in your Dockerfile's Ubuntu Chiseled stage. For example:
 
 ```Dockerfile
 # "Exec" form - Works without a shell
@@ -69,12 +69,30 @@ ENTRYPOINT ["dotnet", "myapp.dll"]
 CMD ["dotnet", "myapp.dll", "--", "args"]
 
 # "Shell" form - Doesn't work without a shell
-RUN dotnet --list-versions
+RUN dotnet --list-runtimes
 ENTRYPOINT dotnet myapp.dll
-CMD dotnet myapp.dll --args
+CMD dotnet myapp.dll -- args
 ```
 
-Please see the [Dockerfile documentation](https://docs.docker.com/engine/reference/builder/#run) for more info about different ways to format Dockerfile instructions.
+Please see Docker's [Dockerfile documentation](https://docs.docker.com/engine/reference/builder/#run) for more info on instruction formatting.
+
+If you need to run any shell commands or other utilities at build time, you can do so in the build stage of the multi-stage Dockerfile and copy the results to the runtime stage.
+For example, you could download and extract an archive so that the files will be available in your container.
+
+```Dockerfile
+# build stage
+FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-jammy AS build
+...
+RUN wget -O somefile.tar.gz <URL> \
+    && tar -oxzf aspnetcore.tar.gz -C /somefile-extracted
+...
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/nightly/runtime-deps:8.0-jammy-chiseled
+...
+COPY --from=build /somefile-extracted .
+...
+```
 
 ### How do I handle file permissions when running as a non-root user?
 
