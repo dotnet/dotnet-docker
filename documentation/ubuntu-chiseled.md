@@ -76,19 +76,19 @@ CMD dotnet myapp.dll -- args
 
 Please see Docker's [Dockerfile documentation](https://docs.docker.com/engine/reference/builder/#run) for more info on instruction formatting.
 
-If you need to run any shell commands or other utilities at build time, you can do so in the build stage of the multi-stage Dockerfile and copy the results to the runtime stage.
+If you need to run any shell commands or other utilities at build time, you can do so in the build stage of the multi-stage Dockerfile and copy the results to the final stage.
 For example, you could download and extract an archive so that the files will be available in your container.
 
 ```Dockerfile
 # build stage
-FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-jammy AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy AS build
 ...
 RUN wget -O somefile.tar.gz <URL> \
     && tar -oxzf aspnetcore.tar.gz -C /somefile-extracted
 ...
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/nightly/runtime-deps:8.0-jammy-chiseled
+FROM mcr.microsoft.com/dotnet/runtime-deps:8.0-jammy-chiseled
 ...
 COPY --from=build /somefile-extracted .
 ...
