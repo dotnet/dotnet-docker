@@ -3,10 +3,13 @@ jobs:
   pool:
     vmImage: $(defaultLinuxAmd64PoolImage)
   steps:
+  - powershell: >
+      ./eng/common/Install-DotNetSdk.ps1 /usr/share/.dotnet
+    displayName: Run Dotnet Install Script
   - task: CodeQL3000Init@0
     displayName: CodeQL Initialize
   - script: >
-      find . -name '*.csproj' | grep $(cgBuildGrepArgs) | xargs -n 1 dotnet build
+      find . -name '*.csproj' | grep $(cgBuildGrepArgs) | xargs -n 1 /usr/share/.dotnet/dotnet build
     displayName: Build Projects
   - task: CodeQL3000Finalize@0
     displayName: CodeQL Finalize
