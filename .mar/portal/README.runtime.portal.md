@@ -76,13 +76,19 @@ These tags reference images for [multiple platforms](https://docs.docker.com/bui
 - `<.NET Version>-<OS>`
 - `<.NET Version>-<OS>-<variant>`
 
-### Image Variants
+#### Image Variants
 
 By default, Ubuntu and Debian images for .NET 8 will have both `icu` and `tzdata` installed.
+These images are intended to satisfy the most common use cases of .NET developers.
 
 Our Alpine and Ubuntu Chiseled images are focused on size.
 These images do not and will not include `icu` or `tzdata`, meaning that these images only work iwth apps that are configured for [globalization-invariant mode](https://learn.microsoft.com/dotnet/core/runtime-config/globalization).
-Apps that require globalization support can use the `extra` image variant.
+Apps that require globalization support can use the `extra` image variant of the [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about) images.
+
+Example tags:
+- `8.0-bookworm-slim`
+- `6.0-jammy`
+- `7.0-alpine3.18-arm64v8`
 
 ## Support
 

@@ -68,15 +68,21 @@ These tags reference images for [multiple platforms](https://docs.docker.com/bui
 - `<.NET Version>-<OS>`
 - `<.NET Version>-<OS>-<variant>`
 
-### Image Variants
+#### Image Variants
 
 By default, Ubuntu and Debian images for .NET 8 will have both `icu` and `tzdata` installed.
+These images are intended to satisfy the most common use cases of .NET developers.
 
 Our Alpine and Ubuntu Chiseled images are focused on size.
 These images do not and will not include `icu` or `tzdata`, meaning that these images only work iwth apps that are configured for [globalization-invariant mode](https://learn.microsoft.com/dotnet/core/runtime-config/globalization).
-Apps that require globalization support can use the `extra` image variant.
+Apps that require globalization support can use the `extra` image variant of the [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about) images.
 
-#### `extra`
+Example tags:
+- `8.0-bookworm-slim`
+- `6.0-jammy`
+- `7.0-alpine3.18-arm64v8`
+
+##### `extra`
 
 The `extra` image variant is offered alongside our size-focused base images for self-contained or single file apps that depend on globalization functionality.
 Extra images contain everything that the default images do, plus `icu` and `tzdata`.
@@ -85,11 +91,13 @@ Example tags:
 - `8.0-jammy-chiseled-extra`
 - `8.0.0-alpine3.18-extra`
 
-#### (Preview) `aot`
+##### (Preview) `aot`
 
 `aot` images provide an optimized deployment size for [native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) compiled .NET apps.
 Native AOT has the lowest size, startup time, and memory footprint of all .NET deployment models.
 Please see ["Limiatations of Native AOT deployment"](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot#limitations-of-native-aot-deployment) to see if your app might be compatible.
+`aot` image variants are only available for our size-focused `runtime-deps` images: Alpine and Ubuntu Chiseled.
+They also require the use of the `aot` SDK image which include extra libraries needed for Native AOT compilation.
 
 Example tags:
 - `8.0-jammy-chiseled-aot`
