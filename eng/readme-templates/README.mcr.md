@@ -8,4 +8,6 @@
 
 {{InsertTemplate("Use.md", commonArgs)}}
 
+{{InsertTemplate("About.variants.md", commonArgs)}}
+
 {{InsertTemplate("Support.md", commonArgs)}}

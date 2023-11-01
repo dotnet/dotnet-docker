@@ -27,6 +27,8 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 
 {{InsertTemplate("Use.md", commonArgs)}}
 
+{{InsertTemplate("About.variants.md", commonArgs)}}
+
 {{InsertTemplate("RelatedRepos.md", commonArgs)}}
 {{if !IS_PRODUCT_FAMILY:
 # Full Tag Listing
