@@ -58,22 +58,13 @@ By default, Ubuntu and Debian images for .NET 8 will have both `icu` and `tzdata
 These images are intended to satisfy the most common use cases of .NET developers.
 
 Our Alpine and Ubuntu Chiseled images are focused on size.
-These images do not and will not include `icu` or `tzdata`, meaning that these images only work iwth apps that are configured for [globalization-invariant mode](https://learn.microsoft.com/dotnet/core/runtime-config/globalization).
-Apps that require globalization support can use the `extra` image variant of the [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) images.
-
-Example tags:
-- `8.0-bookworm-slim`
-- `6.0-jammy`
-- `7.0-alpine3.18-arm64v8`
+These images do not include `icu` or `tzdata`, meaning that these images only work with apps that are configured for [globalization-invariant mode](https://learn.microsoft.com/dotnet/core/runtime-config/globalization).
+Apps that require globalization support can use the `extra` image variant of the [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) images. 
 
 #### `extra`
 
 The `extra` image variant is offered alongside our size-focused base images for self-contained or single file apps that depend on globalization functionality.
 Extra images contain everything that the default images do, plus `icu` and `tzdata`.
-
-Example tags:
-- `8.0-jammy-chiseled-extra`
-- `8.0.0-alpine3.18-extra`
 
 #### (Preview) `aot`
 
@@ -83,13 +74,9 @@ Please see ["Limiatations of Native AOT deployment"](https://learn.microsoft.com
 `aot` image variants are only available for our size-focused `runtime-deps` images: Alpine and Ubuntu Chiseled.
 They also require the use of the `aot` SDK image which include extra libraries needed for Native AOT compilation.
 
-Example tags:
-- `8.0-jammy-chiseled-aot`
-- `8.0.0-alpine3.18-aot`
-
 **Note:** `aot` images are only available as a preview in the [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/) and [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/) repos.
 Native AOT compiled apps will function exactly the same on the existing `runtime-deps` (non-`aot`) images, but with a larger deployment size.
-Please try these new, smaller images out and give us feedback!
+Please try out these new, smaller images and give us feedback!
 
 # Related Repositories
 
