@@ -1,17 +1,22 @@
 # build image
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build-env
 ARG TARGETARCH
+# The rid must be version-specific to workaround a libgit2sharp issue (see https://github.com/dotnet/dotnet-docker/pull/2111)
+ARG RID=alpine.3.18-$TARGETARCH
 WORKDIR /update-dependencies
 
 # copy csproj and restore as distinct layers
 COPY eng/update-dependencies/*.csproj ./
 COPY NuGet.config ./
-RUN dotnet restore -r linux-musl-$TARGETARCH
+
+# Set UseRidGraph=true to enable non-portable RIDs: https://aka.ms/netsdk1083
+RUN dotnet restore -r $RID /p:UseRidGraph=true
 
 # copy everything else and build
 COPY eng/update-dependencies/. ./
 
-RUN dotnet publish -r linux-musl-$TARGETARCH -c Release -o out --no-restore
+# Set UseRidGraph=true to enable non-portable RIDs: https://aka.ms/netsdk1083
+RUN dotnet publish -r $RID /p:UseRidGraph=true -c Release -o out --no-restore
 
 
 # runtime image
