@@ -37,7 +37,7 @@ By default, Ubuntu and Debian images for .NET 8 will have both `icu` and `tzdata
 These images are intended to satisfy the most common use cases of .NET developers.
 
 Our Alpine and Ubuntu Chiseled images are focused on size.
-These images do not and will not include `icu` or `tzdata`, meaning that these images only work iwth apps that are configured for [globalization-invariant mode](https://learn.microsoft.com/dotnet/core/runtime-config/globalization).
+These images do not include `icu` or `tzdata`, meaning that these images only work with apps that are configured for [globalization-invariant mode](https://learn.microsoft.com/dotnet/core/runtime-config/globalization).
 Apps that require globalization support can use the `extra` image variant of the [dotnet/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/runtime-deps" ])}}) images.
 
 Example tags:
@@ -80,4 +80,4 @@ Example tags:{{if repo = "sdk":
 
 **Note:** `aot` images are only available as a preview in the [dotnet/nightly/sdk]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/sdk" ])}}) and [dotnet/nightly/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/runtime-deps" ])}}) repos.
 Native AOT compiled apps will function exactly the same on the existing `runtime-deps` (non-`aot`) images, but with a larger deployment size.
-Please try these new, smaller images out and give us feedback!}}
+Please try out these new, smaller images and give us feedback!}}
