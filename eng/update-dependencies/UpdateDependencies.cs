@@ -43,6 +43,20 @@ namespace Dotnet.Docker
             return command.InvokeAsync(args);
         }
 
+        internal static string ResolveStableVersion(string version)
+        {
+            if (!string.IsNullOrEmpty(version))
+            {
+                int monikerSeparatorIndex = version.IndexOf('-');
+                if (monikerSeparatorIndex >= 0)
+                {
+                    return version.Substring(0, monikerSeparatorIndex);
+                }
+            }
+
+            return version;
+        }
+
         internal static string ResolveProductVersion(string version, Options options)
         {
             if (version is not null && options.UseStableBranding)

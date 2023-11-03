@@ -69,7 +69,13 @@ namespace Dotnet.Docker
                 { "monitor-ext-azureblobstorage", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-azureblobstorage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
                 { "monitor-ext-s3storage", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-s3storage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
 
-                { "runtime", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
+                {
+                    "runtime",
+                    [
+                        $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-$STABLE_VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT",
+                        $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-$UNSTABLE_VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT"
+                    ]
+                },
                 { "runtime-host", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
                 { "runtime-hostfxr", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-hostfxr-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
                 {
@@ -85,8 +91,20 @@ namespace Dotnet.Docker
                 { "runtime-deps-cm.1", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.1-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
                 { "runtime-deps-cm.2", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.2-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
 
-                { "aspnet", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
-                { "aspnet-composite", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-composite-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
+                {
+                    "aspnet",
+                    [
+                        $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$STABLE_VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT",
+                        $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$UNSTABLE_VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT"
+                    ]
+                },
+                {
+                    "aspnet-composite",
+                    [
+                        $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-composite-$STABLE_VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT",
+                        $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-composite-$UNSTABLE_VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT"
+                    ]
+                },
                 {
                     "aspnet-runtime-targeting-pack",
                     new string[]
@@ -96,7 +114,13 @@ namespace Dotnet.Docker
                     }
                 },
 
-                { "sdk", new string[] { $"$DOTNET_BASE_URL/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
+                {
+                    "sdk",
+                    [
+                        $"$DOTNET_BASE_URL/Sdk/$VERSION_DIR/dotnet-sdk-$STABLE_VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT",
+                        $"$DOTNET_BASE_URL/Sdk/$VERSION_DIR/dotnet-sdk-$UNSTABLE_VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT"
+                    ]
+                },
                 { "lzma", new string[] { $"$DOTNET_BASE_URL/Sdk/$VERSION_DIR/nuGetPackagesArchive.lzma" } }
             };
 
@@ -179,6 +203,8 @@ namespace Dotnet.Docker
 
             string? versionDir = _buildVersion;
             string? versionFile = UpdateDependencies.ResolveProductVersion(_buildVersion, _options);
+            string? unstableVersion = _buildVersion;
+            string? stableVersion = UpdateDependencies.ResolveStableVersion(_buildVersion);
 
             string archiveExt;
             if (_os.Contains("win"))
@@ -208,6 +234,8 @@ namespace Dotnet.Docker
                     .Replace("$ARCHIVE_EXT", archiveExt)
                     .Replace("$VERSION_DIR", versionDir)
                     .Replace("$VERSION_FILE", versionFile)
+                    .Replace("$STABLE_VERSION_FILE", stableVersion)
+                    .Replace("$UNSTABLE_VERSION_FILE", unstableVersion)
                     .Replace("$OS", _os)
                     .Replace("$OPTIONAL_OS", optionalOs)
                     .Replace("$ARCH", _arch)
