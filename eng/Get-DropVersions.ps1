@@ -94,7 +94,7 @@ function GetSdkVersionInfo([string]$sdkUrl) {
     }
 }
 
-function ResolveSdkUrl([string]$sdkVersion, [string]$queryString, [switch]$useStableBranding) {
+function ResolveSdkUrl([string]$sdkVersion, [string]$queryString, [bool]$useStableBranding) {
     if ($useStableBranding) {
         $sdkStableVersion = ($sdkVersion -split "-")[0]
     }
