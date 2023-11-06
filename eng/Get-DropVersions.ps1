@@ -84,7 +84,7 @@ function GetSdkVersionInfo([string]$sdkUrl) {
 
         return [PSCustomObject]@{
             CommitSha = $commitSha
-            Version = $shortVersion
+            Version = $fullVersion
             IsStableVersion = $isStableVersion
             Rid = $rid
         }
