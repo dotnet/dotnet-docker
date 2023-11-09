@@ -49,7 +49,11 @@ param(
 
     # SAS query string used to access files in the checksum blob container
     [string]
-    $ChecksumSasQueryString
+    $ChecksumSasQueryString,
+
+    # File containing checksums for each product asset; used to override the behavior of locating the checksums from blob storage accounts.
+    [string]
+    $ChecksumsFile
 )
 
 $updateDepsArgs = @($ProductVersion)
@@ -87,6 +91,10 @@ if ($BinarySasQueryString) {
 
 if ($ChecksumSasQueryString) {
     $updateDepsArgs += "--checksum-sas=$ChecksumSasQueryString"
+}
+
+if ($ChecksumsFile) {
+    $updateDepsArgs += "--checksums-file=$ChecksumsFile"
 }
 
 if ($UseStableBranding) {
