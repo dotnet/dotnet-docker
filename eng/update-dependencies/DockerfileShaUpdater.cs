@@ -466,7 +466,7 @@ namespace Dotnet.Docker
                 () =>
                 {
                     Trace.TraceInformation($"Opening '{_options.ChecksumsFile}'.");
-                    return Task.FromResult<string?>(File.ReadAllText(_options.ChecksumsFile));
+                    return Task.FromResult(File.ReadAllText(_options.ChecksumsFile));
                 });
         }
 
@@ -488,51 +488,54 @@ namespace Dotnet.Docker
                         else
                         {
                             Trace.TraceInformation($"Failed to find dotnet release checksums");
-                            return null;
+                            return string.Empty;
                         }
                     }
                 });
         }
 
-        private async Task<IDictionary<string, string>> GetChecksums(string cacheId, Func<Task<string?>> getContentCallback)
+        private async Task<IDictionary<string, string>> GetChecksums(string sourceUrlOrPath, Func<Task<string>> getContentCallback)
         {
-            if (s_releaseChecksumCache.TryGetValue(cacheId, out Dictionary<string, string>? checksumEntries))
+            if (s_releaseChecksumCache.TryGetValue(sourceUrlOrPath, out Dictionary<string, string>? checksumEntries))
             {
                 return checksumEntries;
             }
 
             checksumEntries = new Dictionary<string, string>();
-            s_releaseChecksumCache.Add(cacheId, checksumEntries);
+            s_releaseChecksumCache.Add(sourceUrlOrPath, checksumEntries);
 
-            string? content = await getContentCallback();
+            string content = await getContentCallback();
 
-            if (!string.IsNullOrEmpty(content))
+            if (string.IsNullOrEmpty(content))
             {
-                string[] checksumLines = content.Replace("\r\n", "\n").Split("\n", StringSplitOptions.RemoveEmptyEntries);
+                // Return empty dictionary since there are no checksums
+                return checksumEntries;
+            }
 
-                /**
-                    Sometimes the checksum file starts with the following line:
+            string[] checksumLines = content.Replace("\r\n", "\n").Split("\n", StringSplitOptions.RemoveEmptyEntries);
 
-                    # Hash: SHA512
+            /**
+                Sometimes the checksum file starts with the following line:
 
-                    Other times the first line is the first checksum entry. This
-                    happens sometimes for preview releases.
-                **/
-                int firstChecksumEntry = checksumLines[0].Contains("Hash") ? 1 : 0;
-                for (int i = firstChecksumEntry; i < checksumLines.Length; i++)
+                # Hash: SHA512
+
+                Other times the first line is the first checksum entry. This
+                happens sometimes for preview releases.
+            **/
+            int firstChecksumEntry = checksumLines[0].Contains("Hash") ? 1 : 0;
+            for (int i = firstChecksumEntry; i < checksumLines.Length; i++)
+            {
+                string[] parts = checksumLines[i].Split(" ");
+                if (parts.Length != 2)
                 {
-                    string[] parts = checksumLines[i].Split(" ");
-                    if (parts.Length != 2)
-                    {
-                        Trace.TraceError($"Checksum file is not in the expected format: {cacheId}");
-                    }
-
-                    string fileName = parts[1];
-                    string checksum = parts[0];
-
-                    checksumEntries.Add(fileName, checksum);
-                    Trace.TraceInformation($"Parsed checksum '{checksum}' for '{fileName}'");
+                    Trace.TraceError($"Checksum file is not in the expected format: {sourceUrlOrPath}");
                 }
+
+                string fileName = parts[1];
+                string checksum = parts[0];
+
+                checksumEntries.Add(fileName, checksum);
+                Trace.TraceInformation($"Parsed checksum '{checksum}' for '{fileName}'");
             }
 
             return checksumEntries;
