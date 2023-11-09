@@ -49,11 +49,6 @@ You can run a container with a pre-built [.NET Docker Image](https://mcr.microso
 
 See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to configure the image to be run in a Docker or Kubernetes environment, including how to configure authentication and certificates for https bindings.
 
-## Image Variants
-
-.NET Container Images have several variants that offer different combinations of flexibility and deployment size.
-The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
-
 ## Support
 
 ### Lifecycle
