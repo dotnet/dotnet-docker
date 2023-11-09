@@ -25,9 +25,9 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 }}
 {{InsertTemplate("About.md", commonArgs)}}
 
-{{InsertTemplate("Use.md", commonArgs)}}
+{{InsertTemplate("Use.md", commonArgs)}}{{if find(REPO, "monitor") < 0:
 
-{{InsertTemplate("About.variants.md", commonArgs)}}
+{{InsertTemplate("About.variants.md", commonArgs)}}}}
 
 {{InsertTemplate("RelatedRepos.md", commonArgs)}}
 {{if !IS_PRODUCT_FAMILY:
