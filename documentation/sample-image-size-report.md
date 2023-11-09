@@ -29,7 +29,7 @@ And [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-
 
 ## Notes
 
-Please note that the recorded image sizes are a snapshot of deployment sizes at .NET 8.0 GA, and that image sizes will vary due to base image updates and updated package installations. This document will not be updated over time. The key takeaway is the size *difference* between the different models.
+Please note that the recorded image sizes are a snapshot of deployment sizes at the time of .NET 8.0 GA, and that image sizes will vary due to base image updates and updated package installations. This document will not be updated over time. The key takeaway is the size *difference* between the different models.
 
 For more information about new images for .NET 8, please see the [.NET image variants documentation (temporary link to PR)](https://github.com/dotnet/dotnet-docker/pull/4979) and ["Announcement: New approach for differentiating .NET 8+ images"](https://github.com/dotnet/dotnet-docker/discussions/4821).
 
