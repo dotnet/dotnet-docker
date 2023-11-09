@@ -14,42 +14,45 @@ Complete tag lists:
 
 The terms "fixed version" and "floating version" are used throughout. They are defined in [Tag policies](#tag-policies).
 
+## .NET Versions
+
+All .NET container images have both "fixed version" and "floating version" tags.
+Floating version tags will always reference the latest version of a specific .NET major version, while fixed version tags will always only reference a specific patch version.
+For all of the tags below, `<.NET Version>` can be substituted for either `<Major.Minor>` or `<Major.Minor.Patch>`, for example: `6.0` or `6.0.12`.
+
+## Image Variants
+
+.NET Container Images have several variants that offer different combinations of flexibility and deployment size.
+The [Image Variants documentation](./image-variants.md) contains a summary of the image variants and their use-cases.
+
 ## Single-platform tags
 
-These tags reference an image for a single platform (e.g. "Linux Arm64" or "Windows x64").
+These "fixed version" tags reference an image with a specific .NET version for a specific operating system and architecture.
 
-### `<Major.Minor.Patch .NET Version>-<OS>-<Architecture>`
-
-These "fixed version" tags reference an image with a specific `Major.Minor.Patch` .NET version for a specific operating system and architecture.
+- `<.NET Version>-<OS>-<Architecture>`
+- `<.NET Version>-<OS>-<variant>-<Architecture>`
+- `<.NET Version>-<OS>-<Architecture>`
+- `<.NET Version>-<OS>-<variant>-<Architecture>`
 
 Examples:
-
 - `6.0.12-jammy-amd64`
-- `6.0.12-jammy-arm64v8`
+- `6.0.12-jammy-chiseled-arm64v8`
 - `6.0.12-nanoserver-1809`
-- `7.0.2-alpine3.17-arm64v8`
-- `7.0.2-bullseye-slim-arm32v7`
-
-### `<Major.Minor .NET Version>-<OS>-<Architecture>`
-
-These "floating version" tags reference an image with a specific `Major.Minor` (with latest patch) .NET version for a specific operating system and architecture.
-
-Examples:
-
-- `6.0-jammy-arm64v8`
-- `6.0-jammy-amd64`
-- `6.0-nanoserver-1809`
-- `7.0-alpine3.17-arm64v8`
-- `7.0-bullseye-slim-arm32v7`
+- `8.0.0-alpine3.18-extra-arm64v8`
+- `8.0.0-bullseye-slim-arm32v7`
 
 ## Multi-platform tags
 
 These tags reference images for [multiple platforms](https://docs.docker.com/build/building/multi-platform/).
 
-They include:
+- `<.NET Version>` - This version-only floating tag refers to the latest Debian version available at the .NET Major Version's release.
+- `<.NET Version>-<OS>`
+- `<.NET Version>-<OS>-<variant>`
 
-- Debian, unless specified (like `6.0-alpine`).
-- All [supported architectures](supported-platforms.md#architectures).
+Examples:
+- `8.0`
+- `8.0-jammy`
+- `8.0-jammy-chiseled-extra`
 
 **Note:** Since .NET 8, these multi-platform tags **specifically exclude all Windows versions** due to `containerd`'s platform matching algorithm for Windows hosts.
 Please see [#4492 (Switch multi-platform tags to Linux only)](https://github.com/dotnet/dotnet-docker/issues/4492) for more context.
@@ -61,58 +64,22 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2019
 FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
 ```
 
-### `<Major.Minor.Patch .NET Version>-<OS version>`
-
-These "fixed version" tags reference an image with a specific `Major.Minor.Patch` .NET version, for a specific operating system, while architecture will be chosen based on the requesting environment.
-
-Examples:
-
-- `6.0.12-jammy`
-- `7.0.2-alpine3.17`
-
-### `<Major.Minor .NET Version>-<OS version>`
-
-These "floating version" tags reference an image with a specific `Major.Minor` (with latest patch) .NET version, for a specific operating system, while architecture will be chosen based on the requesting environment.
-
-Examples:
-
-- `6.0-alpine3.17`
-- `7.0-jammy`
-
-### `<Major.Minor .NET Version>-alpine`
+### Alpine Floating Tags
 
 These "floating version" tags reference an image with a specific `Major.Minor` (with latest patch) .NET version, for the latest Alpine version, while architecture will be chosen based on the requesting environment.
 
 Examples:
 
-- `6.0-alpine`
-- `7.0-alpine`
+- `8.0-alpine`
+- `6.0.12-alpine`
 
 Notes:
 
-- New versions of Alpine will be published with version-specific tags (e.g. `6.0-alpine3.17`).
-- Floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version a month later.
+- New versions of Alpine will be published with version-specific tags (e.g. `8.0-alpine3.18`).
+- Floating tag (e.g. `8.0-alpine`) will be updated with the new Alpine version a month later.
 - Tag changes will be [announced](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) so that users know when the tags they want are available.
 
-### `<Major.Minor.Patch .NET Version>`
-
-These "fixed version" tags reference an image with a specific `Major.Minor.Patch` .NET version, while operating system and architecture will be chosen based on the requesting environment.
-
-Examples:
-
-- `6.0.12`
-- `7.0.2`
-
-### `<Major.Minor .NET Version>`
-
-These "floating version" tags reference an image with a specific `Major.Minor` (with latest patch) .NET version, while operating system and architecture will be chosen based on the requesting environment.
-
-Examples:
-
-- `6.0`
-- `7.0`
-
-### `latest`
+### Latest
 
 These "floating version" `latest` tag references an image with the latest `Major.Minor.Patch` .NET version, while operating system and architecture will be chosen based on the requesting environment.
 
@@ -132,7 +99,7 @@ The following policies are used for the tag patterns we use.
 Examples:
 
 - `6.0.12`
-- `7.0.2-alpine3.17`
+- `8.0.0-alpine3.18`
 
 Notes:
 
@@ -148,7 +115,7 @@ Notes:
 Examples:
 
 - `6.0`
-- `7.0-alpine3.17`
+- `8.0-alpine3.18`
 
 Notes:
 
@@ -163,7 +130,7 @@ Version-specific operating system tags reference an image with a specific OS ver
 Examples:
 
 - `6.0-jammy`
-- `7.0-alpine3.17`
+- `8.0-alpine3.18`
 
 Notes:
 
