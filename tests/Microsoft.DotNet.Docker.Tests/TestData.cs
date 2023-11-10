@@ -180,6 +180,8 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V7_3, VersionFamily = V7_0, OS = OS.Alpine318,           OSTag = OS.Alpine,            Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V7_3, VersionFamily = V7_0, OS = OS.Alpine318,           OSTag = OS.Alpine,            Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
+            new ProductImageData { Version = V7_3, VersionFamily = V7_0, OS = OS.JammyChiseled,       OSTag = OS.UbuntuChiseled,    Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
+            new ProductImageData { Version = V7_3, VersionFamily = V7_0, OS = OS.JammyChiseled,       OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V7_3, VersionFamily = V7_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V7_3, VersionFamily = V7_0, OS = OS.Mariner20,           OSTag = OS.Mariner,           Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V7_3, VersionFamily = V7_0, OS = OS.Mariner20Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },

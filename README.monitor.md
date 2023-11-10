@@ -56,7 +56,8 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-rc.2-ubuntu-chiseled-amd64, 8.0-ubuntu-chiseled-amd64, 8-ubuntu-chiseled-amd64, 8.0.0-rc.2-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8-ubuntu-chiseled, 8.0.0-rc.2, 8.0, 8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-7.3.1-alpine-amd64, 7.3-alpine-amd64, 7-alpine-amd64, 7.3.1-alpine, 7.3-alpine, 7-alpine, 7.3.1, 7.3, 7, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.3/alpine/amd64/Dockerfile) | Alpine 3.18
+7.3.2-alpine-amd64, 7.3-alpine-amd64, 7-alpine-amd64, 7.3.2-alpine, 7.3-alpine, 7-alpine, 7.3.2, 7.3, 7, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.3/alpine/amd64/Dockerfile) | Alpine 3.18
+7.3.2-ubuntu-chiseled-amd64, 7.3-ubuntu-chiseled-amd64, 7-ubuntu-chiseled-amd64, 7.3.2-ubuntu-chiseled, 7.3-ubuntu-chiseled, 7-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.3/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 6.3.4-alpine-amd64, 6.3-alpine-amd64, 6-alpine-amd64, 6.3.4-alpine, 6.3-alpine, 6-alpine, 6.3.4, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.3/alpine/amd64/Dockerfile) | Alpine 3.18
 6.3.4-ubuntu-chiseled-amd64, 6.3-ubuntu-chiseled-amd64, 6-ubuntu-chiseled-amd64, 6.3.4-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.3/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 
@@ -64,7 +65,8 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-rc.2-ubuntu-chiseled-arm64v8, 8.0-ubuntu-chiseled-arm64v8, 8-ubuntu-chiseled-arm64v8, 8.0.0-rc.2-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8-ubuntu-chiseled, 8.0.0-rc.2, 8.0, 8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-7.3.1-alpine-arm64v8, 7.3-alpine-arm64v8, 7-alpine-arm64v8, 7.3.1-alpine, 7.3-alpine, 7-alpine, 7.3.1, 7.3, 7, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.3/alpine/arm64v8/Dockerfile) | Alpine 3.18
+7.3.2-alpine-arm64v8, 7.3-alpine-arm64v8, 7-alpine-arm64v8, 7.3.2-alpine, 7.3-alpine, 7-alpine, 7.3.2, 7.3, 7, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.3/alpine/arm64v8/Dockerfile) | Alpine 3.18
+7.3.2-ubuntu-chiseled-arm64v8, 7.3-ubuntu-chiseled-arm64v8, 7-ubuntu-chiseled-arm64v8, 7.3.2-ubuntu-chiseled, 7.3-ubuntu-chiseled, 7-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/7.3/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 6.3.4-alpine-arm64v8, 6.3-alpine-arm64v8, 6-alpine-arm64v8, 6.3.4-alpine, 6.3-alpine, 6-alpine, 6.3.4, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.3/alpine/arm64v8/Dockerfile) | Alpine 3.18
 6.3.4-ubuntu-chiseled-arm64v8, 6.3-ubuntu-chiseled-arm64v8, 6-ubuntu-chiseled-arm64v8, 6.3.4-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/6.3/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 

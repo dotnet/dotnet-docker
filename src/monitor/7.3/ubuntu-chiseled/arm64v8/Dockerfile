@@ -1,18 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
-
-RUN tdnf install -y \
-        ca-certificates \
-        gzip \
-        tar \
-    && tdnf clean all
+FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor
 RUN dotnet_monitor_version=7.3.2 \
-    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
-    && dotnet_monitor_sha512='9e1da6b41119874659e00cfae5c22e541041093ff1c55ecb2234610502e714868474c3bc52de78a650201d36271296069e8ed5dc8b3a4972954bffadd4478248' \
+    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-arm64.tar.gz \
+    && dotnet_monitor_sha512='9866bc99b71880f1ea305361e23703f34238546589b70e38b387000e141335908f0ebd2708f851ad911dc89d53460b98e6a9215a6c391e78b558cb55569de3c3' \
     && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor.tar.gz -C /app \
@@ -20,7 +14,7 @@ RUN dotnet_monitor_version=7.3.2 \
 
 
 # .NET Monitor image
-FROM $REPO:7.0.14-cbl-mariner2.0-distroless-amd64
+FROM $REPO:7.0.13-jammy-chiseled-arm64v8
 
 COPY --from=installer ["/app", "/app"]
 
