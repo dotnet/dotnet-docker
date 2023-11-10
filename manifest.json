@@ -6243,8 +6243,7 @@
             "7-alpine": {},
             "$(monitor|7.3|product-version)": {},
             "7.3": {},
-            "7": {},
-            "latest": {}
+            "7": {}
           },
           "platforms": [
             {
@@ -6443,7 +6442,8 @@
             "8-ubuntu-chiseled": {},
             "$(monitor|8.0|product-version)": {},
             "8.0": {},
-            "8": {}
+            "8": {},
+            "latest": {}
           },
           "platforms": [
             {
