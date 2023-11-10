@@ -6082,6 +6082,46 @@
         {
           "productVersion": "$(monitor|6.3|product-version)",
           "sharedTags": {
+            "$(monitor|6.3|product-version)-ubuntu-chiseled": {},
+            "6.3-ubuntu-chiseled": {},
+            "6-ubuntu-chiseled": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/6.3/ubuntu-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|6.3|product-version)-ubuntu-chiseled-amd64": {},
+                "6.3-ubuntu-chiseled-amd64": {},
+                "6-ubuntu-chiseled-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor/6.3/ubuntu-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|6.3|product-version)-ubuntu-chiseled-arm64v8": {},
+                "6.3-ubuntu-chiseled-arm64v8": {},
+                "6-ubuntu-chiseled-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|6.3|product-version)",
+          "sharedTags": {
             "$(monitor|6.3|product-version)-cbl-mariner": {
               "docType": "Undocumented"
             },

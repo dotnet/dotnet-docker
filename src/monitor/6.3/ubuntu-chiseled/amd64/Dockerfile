@@ -1,13 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
-
-RUN tdnf install -y \
-        ca-certificates \
-        gzip \
-        tar \
-    && tdnf clean all
+FROM amd64/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor
 RUN dotnet_monitor_version=6.3.4 \
@@ -20,7 +14,7 @@ RUN dotnet_monitor_version=6.3.4 \
 
 
 # .NET Monitor image
-FROM $REPO:6.0.25-cbl-mariner2.0-amd64
+FROM $REPO:6.0.24-jammy-chiseled-amd64
 
 COPY --from=installer ["/app", "/app"]
 
