@@ -253,6 +253,76 @@
         {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
+            "$(dotnet|6.0|product-version)-jammy-chiseled": {},
+            "6.0-jammy-chiseled": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/6.0/jammy-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-chiseled-amd64": {},
+                "6.0-jammy-chiseled-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-jammy-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/6.0/jammy-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-chiseled-arm64v8": {},
+                "6.0-jammy-chiseled-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-jammy-arm64v8"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "src/runtime-deps/6.0/jammy-chiseled/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-chiseled-arm32v7": {},
+                "6.0-jammy-chiseled-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-jammy-arm32v7"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
             "$(dotnet|6.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
@@ -378,8 +448,7 @@
             "$(dotnet|7.0|product-version)": {},
             "$(dotnet|7.0|product-version)-bullseye-slim": {},
             "7.0": {},
-            "7.0-bullseye-slim": {},
-            "latest": {}
+            "7.0-bullseye-slim": {}
           },
           "platforms": [
             {
@@ -554,6 +623,76 @@
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
+            "$(dotnet|7.0|product-version)-jammy-chiseled": {},
+            "7.0-jammy-chiseled": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/6.0/jammy-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-chiseled-amd64": {},
+                "7.0-jammy-chiseled-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-jammy-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/6.0/jammy-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-chiseled-arm64v8": {},
+                "7.0-jammy-chiseled-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-jammy-arm64v8"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "src/runtime-deps/6.0/jammy-chiseled/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-chiseled-arm32v7": {},
+                "7.0-jammy-chiseled-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-jammy-arm32v7"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|7.0|product-version)",
+          "sharedTags": {
             "$(dotnet|7.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
@@ -679,7 +818,8 @@
             "$(dotnet|8.0|product-version)": {},
             "$(dotnet|8.0|product-version)-bookworm-slim": {},
             "8.0": {},
-            "8.0-bookworm-slim": {}
+            "8.0-bookworm-slim": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -1562,6 +1702,85 @@
         {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
+            "$(dotnet|6.0|product-version)-jammy-chiseled": {},
+            "6.0-jammy-chiseled": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/jammy-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-chiseled-amd64": {},
+                "6.0-jammy-chiseled-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-jammy-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/jammy-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-chiseled-arm64v8": {},
+                "6.0-jammy-chiseled-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-jammy-arm64v8"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/6.0/jammy-chiseled/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-chiseled-arm32v7": {},
+                "6.0-jammy-chiseled-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-jammy-arm32v7"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
             "$(dotnet|6.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
@@ -1727,8 +1946,7 @@
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
             "$(dotnet|7.0|product-version)": {},
-            "7.0": {},
-            "latest": {}
+            "7.0": {}
           },
           "platforms": [
             {
@@ -2003,6 +2221,85 @@
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
+            "$(dotnet|7.0|product-version)-jammy-chiseled": {},
+            "7.0-jammy-chiseled": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/7.0/jammy-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-chiseled-amd64": {},
+                "7.0-jammy-chiseled-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-jammy-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/7.0/jammy-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-chiseled-arm64v8": {},
+                "7.0-jammy-chiseled-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-jammy-arm64v8"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/7.0/jammy-chiseled/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-chiseled-arm32v7": {},
+                "7.0-jammy-chiseled-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-jammy-arm32v7"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|7.0|product-version)",
+          "sharedTags": {
             "$(dotnet|7.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
@@ -2168,7 +2465,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)": {},
-            "8.0": {}
+            "8.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -2995,6 +3293,85 @@
         {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
+            "$(dotnet|6.0|product-version)-jammy-chiseled": {},
+            "6.0-jammy-chiseled": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/6.0/jammy-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-chiseled-amd64": {},
+                "6.0-jammy-chiseled-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-jammy-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/6.0/jammy-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-chiseled-arm64v8": {},
+                "6.0-jammy-chiseled-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-jammy-arm64v8"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/6.0/jammy-chiseled/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|6.0|product-version)-jammy-chiseled-arm32v7": {},
+                "6.0-jammy-chiseled-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):6.0-jammy-arm32v7"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|6.0|product-version)",
+          "sharedTags": {
             "$(dotnet|6.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
@@ -3166,8 +3543,7 @@
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
             "$(dotnet|7.0|product-version)": {},
-            "7.0": {},
-            "latest": {}
+            "7.0": {}
           },
           "platforms": [
             {
@@ -3448,6 +3824,85 @@
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
+            "$(dotnet|7.0|product-version)-jammy-chiseled": {},
+            "7.0-jammy-chiseled": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/7.0/jammy-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-chiseled-amd64": {},
+                "7.0-jammy-chiseled-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-jammy-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/7.0/jammy-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-chiseled-arm64v8": {},
+                "7.0-jammy-chiseled-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-jammy-arm64v8"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/7.0/jammy-chiseled/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|7.0|product-version)-jammy-chiseled-arm32v7": {},
+                "7.0-jammy-chiseled-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):7.0-jammy-arm32v7"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|7.0|product-version)",
+          "sharedTags": {
             "$(dotnet|7.0|product-version)-cbl-mariner2.0": {
               "docType": "Undocumented"
             },
@@ -3619,7 +4074,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)": {},
-            "8.0": {}
+            "8.0": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -4737,8 +5193,7 @@
           "productVersion": "$(sdk|7.0|product-version)",
           "sharedTags": {
             "$(sdk|7.0|product-version)": {},
-            "7.0": {},
-            "latest": {}
+            "7.0": {}
           },
           "platforms": [
             {
@@ -5114,7 +5569,8 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|product-version)": {},
-            "8.0": {}
+            "8.0": {},
+            "latest": {}
           },
           "platforms": [
             {
