@@ -54,15 +54,16 @@ Examples:
 - `8.0-jammy`
 - `8.0-jammy-chiseled-extra`
 
-**Note:** Since .NET 8, these multi-platform tags **specifically exclude all Windows versions** due to `containerd`'s platform matching algorithm for Windows hosts.
-Please see [#4492 (Switch multi-platform tags to Linux only)](https://github.com/dotnet/dotnet-docker/issues/4492) for more context.
-If you are using Windows, you will need to explicitly specify an OS Version with a single-platform tag like so:
-```Dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-ltsc2022
-FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-1809
-FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2019
-FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
-```
+> [!IMPORTANT]
+> Since .NET 8, these multi-platform tags **specifically exclude all Windows versions** due to `containerd`'s platform matching algorithm for Windows hosts.
+> Please see [#4492 (Switch multi-platform tags to Linux only)](https://github.com/dotnet/dotnet-docker/issues/4492) for more context.
+> If you are using Windows, you will need to explicitly specify an OS Version with a single-platform tag like so:
+> ```Dockerfile
+> FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-ltsc2022
+> FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-1809
+> FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2019
+> FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
+> ```
 
 ### Alpine Floating Tags
 
