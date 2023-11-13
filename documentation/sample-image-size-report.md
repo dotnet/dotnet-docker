@@ -1,4 +1,4 @@
-# .NET 8.0 Container image size report
+# .NET 8.0 Container Image Size Report
 
 .NET offers a variety of deployment options for applications, which pair with container images that we offer. It's possible to produce very small container images. This document summarizes the available options to help you make the best choice for your apps and environment.
 
@@ -13,7 +13,7 @@ However, the new [Ubuntu Chiseled](https://github.com/dotnet/dotnet-docker/blob/
 > Image sizes will fluctuate over time due to base image updates and updated package installations.
 > This document will not be updated over time. The key takeaway is the size *difference* between the different models.
 
-### Framework-dependent deployment
+## Framework-Dependent Deployment
 
 | Image Kind | Base Image | Uncompressed Image Size | Compressed Image Size | % Size savings over Baseline[^1] |
 | --- | --- |--- | --- | --- |
@@ -21,7 +21,7 @@ However, the new [Ubuntu Chiseled](https://github.com/dotnet/dotnet-docker/blob/
 | [Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) | [`aspnet:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled/amd64/Dockerfile)| 111 MB | 49.3 MB | 46% |
 | ASP.NET Composite Runtime | [`aspnet:8.0-jammy-chiseled-composite`](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled-composite/amd64/Dockerfile)| 103 MB | 40.8 MB | 55% |
 
-### Self-contained + Trimming deployment
+## Self-Contained + Trimming Deployment
 
 [Self-contained](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained) deployments bundle the .NET Runtime with your app so that it's able to run without the full .NET Runtime installed.
 [IL Trimming](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) for self-contained apps removes unused code from the .NET Runtime and libraries to reduce application size.
