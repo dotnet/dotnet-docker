@@ -1,6 +1,6 @@
 # .NET Image Variants
 
-.NET Container images offer several image variants.
+.NET container images offer several image variants.
 
 .NET images for Ubuntu, Debian, Windows Server Core, and Nano Server images are full-featured and include ICU libraries which provide Unicode and globalization support.
 As of .NET 8, we also guarantee these images include time zone information (e.g. `tzdata` in Linux).
@@ -30,7 +30,7 @@ For a full technical description on how the composites work, we have a [feature 
 
 ### (Preview) `aot` (.NET 8.0+)
 
-The `aot` images provide an optimized deployment size for [native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) compiled .NET apps.
+The `aot` images provide an optimized deployment size for [Native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) compiled .NET apps.
 Native AOT has the lowest size, startup time, and memory footprint of all .NET deployment models.
 Please see ["Limitations of Native AOT deployment"](https://learn.microsoft.com/dotnet/core/deploying/native-aot#limitations-of-native-aot-deployment) to see if your app might be compatible.
 `aot` image variants are only available for our size-focused `runtime-deps` images: Alpine and Ubuntu Chiseled.
