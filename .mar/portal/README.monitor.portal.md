@@ -6,7 +6,7 @@ Use this image as a sidecar container to collect diagnostic information from oth
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-### New: Ubuntu Chiseled images
+### New: Ubuntu Chiseled Images
 
 Ubuntu Chiseled .NET images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
 These images offer dramatically smaller deployment sizes and attack surface by including only the minimal set of packages required to run .NET applications.

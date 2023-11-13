@@ -24,8 +24,9 @@ Extra images contain everything that the default images do, plus `icu` and `tzda
 
 ### `composite` (.NET 8.0+)
 
-Compared to the default ASP.NET Core images, ASP.NET Core composite images provide a smaller image size on disk as well as performance improvements for framework-dependent ASP.NET Core apps by performing some cross-assembly optimizations and between the .NET and ASP.NET Core runtimes.
-However, this means that apps run on the ASP.NET Composite runtime cannot use handpicked custom versions of .NET or ASP.NET assemblies that are built into the image.
+ASP.NET Core Composite images provide a smaller size on disk while keeping the performance of the default [ReadyToRun (R2R) setting](https://learn.microsoft.com/dotnet/core/deploying/ready-to-run).
+The caveat is that the composite images have tighter version coupling. This means the final app run on them cannot use handpicked custom versions of the framework and/or ASP.NET assemblies that are built into the composite binary.
+For a full technical description on how the composites work, we have a [feature doc here](https://github.com/dotnet/runtime/blob/main/docs/design/features/readytorun-composite-format-design.md).
 
 ### (Preview) `aot` (.NET 8.0+)
 
