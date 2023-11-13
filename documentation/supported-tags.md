@@ -114,7 +114,7 @@ Examples:
 
 ### Image Variants
 
-.NET 8.0 offers several image variants that provide different features for the size-focused OSes, Alpine and Ubuntu Chiseled.
+Starting with 8.0, .NET offers several image variants that provide different features for the size-focused OSes, Alpine and Ubuntu Chiseled.
 You can use these variants by appending the variant name (e.g. `extra`, `chiseled`) to the OS name.
 
 Examples:
