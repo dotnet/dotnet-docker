@@ -7,5 +7,5 @@
         when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO))
 }}{{ARGS["top-header"]}} Image Variants
 
-.NET Container Images have several variants that offer different combinations of flexibility and deployment size.
-The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use cases.
+.NET container images have several variants that offer different combinations of flexibility and deployment size.
+The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.

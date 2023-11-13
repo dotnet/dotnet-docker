@@ -7,27 +7,27 @@ As of .NET 8, we also guarantee these images include time zone information (e.g.
 These images are intended to satisfy the most common use cases of .NET developers.
 
 Alpine and [Ubuntu Chiseled](#ubuntu-chiseled-net-60) .NET images are focused on size.
-These images do not include `icu` or `tzdata`, meaning that these images only work with apps that are configured for [globalization-invariant mode](https://learn.microsoft.com/dotnet/core/runtime-config/globalization).
+By default, these images do not include `icu` or `tzdata`, meaning that these images only work with apps that are configured for [globalization-invariant mode](https://learn.microsoft.com/dotnet/core/runtime-config/globalization).
 Apps that require globalization support can use the `extra` image variant of the [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) images. Because this is only available with `runtime-deps` images, it requires a [self-contained deployment](https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained) of the application.
 Alpine and Chiseled images also come in `extra`, `composite`, and `aot` variants (see below).
 
-### `chiseled` (.NET 6.0+)
+### `chiseled`
 
 [Ubuntu Chiseled](https://ubuntu.com/engage/chiselled-ubuntu-images-for-containers) is Ubuntu's take on "distroless" container images.
 The Ubuntu Chiseled .NET images include the minimum set of libraries necessary to run .NET applications.
 For more information, see the [Ubuntu Chiseled .NET Containers documentation](./ubuntu-chiseled.md).
 
-### `extra` (.NET 8.0)
+### `extra` (.NET 8.0+)
 
 The `extra` image variant is offered for Linux alongside our size-focused base images for [self-contained](https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained) or single file apps that depend on globalization functionality.
 Extra images contain everything that the default images do, plus `icu` and `tzdata`.
 
-### `composite` (.NET 8.0)
+### `composite` (.NET 8.0+)
 
 Compared to the default ASP.NET Core images, ASP.NET Core composite images provide a smaller image size on disk as well as performance improvements for framework-dependent ASP.NET Core apps by performing some cross-assembly optimizations and between the .NET and ASP.NET Core runtimes.
 However, this means that apps run on the ASP.NET Composite runtime cannot use handpicked custom versions of .NET or ASP.NET assemblies that are built into the image.
 
-### (Preview) `aot` (.NET 8.0)
+### (Preview) `aot` (.NET 8.0+)
 
 The `aot` images provide an optimized deployment size for [native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) compiled .NET apps.
 Native AOT has the lowest size, startup time, and memory footprint of all .NET deployment models.

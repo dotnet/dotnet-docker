@@ -50,7 +50,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 # Image Variants
 
-.NET Container Images have several variants that offer different combinations of flexibility and deployment size.
+.NET container images have several variants that offer different combinations of flexibility and deployment size.
 The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
 
 # Related Repositories

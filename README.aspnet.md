@@ -20,7 +20,7 @@ These images offer dramatically smaller deployment sizes and attack surface by i
 
 Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) documentation page for more info.
 
-## Composite container images
+## Composite Container Images
 
 Starting from .NET 8, a composite version of the ASP.NET images, `denoted with the -composite` tag part, is being offered alongside the regular image. The main characteristics of these images are their smaller size on disk while keeping the performance of the default [ReadyToRun (R2R) setting](https://learn.microsoft.com/dotnet/core/deploying/ready-to-run). The caveat is that the composite images have tighter version coupling. This means the final app run on them cannot use handpicked custom versions of the framework and/or ASP.NET assemblies that are built into the composite binary.
 
@@ -48,7 +48,7 @@ See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotn
 
 # Image Variants
 
-.NET Container Images have several variants that offer different combinations of flexibility and deployment size.
+.NET container images have several variants that offer different combinations of flexibility and deployment size.
 The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
 
 # Related Repositories
