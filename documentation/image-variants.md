@@ -2,7 +2,7 @@
 
 .NET Container images offer several image variants.
 
-.NET images for Ubuntu, Debian, Windows Server Core, and Nano Server images are "batteries included" and include ICU libraries which provide Unicode and globalization support.
+.NET images for Ubuntu, Debian, Windows Server Core, and Nano Server images are full-featured and include ICU libraries which provide Unicode and globalization support.
 As of .NET 8, we also guarantee these images include time zone information (e.g. `tzdata` in Linux).
 These images are intended to satisfy the most common use cases of .NET developers.
 
