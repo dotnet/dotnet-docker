@@ -19,7 +19,7 @@ For more information, see the [Ubuntu Chiseled .NET Containers documentation](./
 
 ### `extra` (.NET 8.0+)
 
-The `extra` image variant is offered for Linux alongside our size-focused base images for [self-contained](https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained) or single file apps that depend on globalization functionality.
+The `extra` image variant is offered for Linux alongside our size-focused base images for [self-contained](https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained) apps that depend on globalization functionality.
 Extra images contain everything that the default images do, plus `icu` and `tzdata`.
 
 ### `composite` (.NET 8.0+)
