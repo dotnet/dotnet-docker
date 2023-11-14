@@ -24,11 +24,11 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `6.0.12-jammy-amd64`
-- `6.0.12-jammy-arm64v8`
-- `6.0.12-nanoserver-1809`
-- `7.0.2-alpine3.17-arm64v8`
-- `7.0.2-bullseye-slim-arm32v7`
+- `6.0.25-jammy-amd64`
+- `6.0.25-jammy-arm64v8`
+- `6.0.25-nanoserver-ltsc2022`
+- `8.0.0-alpine3.18-arm64v8`
+- `8.0.0-bookworm-slim-arm32v7`
 
 ### `<Major.Minor .NET Version>-<OS>-<Architecture>`
 
@@ -38,9 +38,9 @@ Examples:
 
 - `6.0-jammy-arm64v8`
 - `6.0-jammy-amd64`
-- `6.0-nanoserver-1809`
-- `7.0-alpine3.17-arm64v8`
-- `7.0-bullseye-slim-arm32v7`
+- `6.0-nanoserver-ltsc2022`
+- `8.0-alpine3.18-arm64v8`
+- `8.0-bookworm-slim-arm32v7`
 
 ## Multi-platform tags
 
@@ -67,8 +67,8 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `6.0.12-jammy`
-- `7.0.2-alpine3.17`
+- `6.0.25-jammy`
+- `8.0.0-alpine3.18`
 
 ### `<Major.Minor .NET Version>-<OS version>`
 
@@ -76,8 +76,8 @@ These "floating version" tags reference an image with a specific `Major.Minor` (
 
 Examples:
 
-- `6.0-alpine3.17`
-- `7.0-jammy`
+- `6.0-alpine3.18`
+- `8.0-jammy`
 
 ### `<Major.Minor .NET Version>-alpine`
 
@@ -86,11 +86,11 @@ These "floating version" tags reference an image with a specific `Major.Minor` (
 Examples:
 
 - `6.0-alpine`
-- `7.0-alpine`
+- `8.0-alpine`
 
 Notes:
 
-- New versions of Alpine will be published with version-specific tags (e.g. `6.0-alpine3.17`).
+- New versions of Alpine will be published with version-specific tags (e.g. `6.0-alpine3.18`).
 - Floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version a month later.
 - Tag changes will be [announced](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) so that users know when the tags they want are available.
 
@@ -100,8 +100,8 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `6.0.12`
-- `7.0.2`
+- `6.0.25`
+- `8.0.0`
 
 ### `<Major.Minor .NET Version>`
 
@@ -110,7 +110,20 @@ These "floating version" tags reference an image with a specific `Major.Minor` (
 Examples:
 
 - `6.0`
-- `7.0`
+- `8.0`
+
+### Image Variants
+
+Starting with 8.0, .NET offers several image variants that provide different features for the size-focused OSes, Alpine and Ubuntu Chiseled.
+You can use these variants by appending the variant name (e.g. `extra`, `chiseled`) to the OS name.
+
+Examples:
+
+- `8.0-jammy-chiseled`
+- `8.0.0-jammy-chiseled-extra`
+- `8.0.0-alpine3.18-extra`
+
+For more information, see the [Image Variants documentation](./image-variants.md).
 
 ### `latest`
 
@@ -131,8 +144,8 @@ The following policies are used for the tag patterns we use.
 
 Examples:
 
-- `6.0.12`
-- `7.0.2-alpine3.17`
+- `6.0.25`
+- `8.0.0-alpine3.18`
 
 Notes:
 
@@ -148,7 +161,7 @@ Notes:
 Examples:
 
 - `6.0`
-- `7.0-alpine3.17`
+- `8.0-alpine3.18`
 
 Notes:
 
@@ -163,7 +176,7 @@ Version-specific operating system tags reference an image with a specific OS ver
 Examples:
 
 - `6.0-jammy`
-- `7.0-alpine3.17`
+- `8.0-alpine3.18`
 
 Notes:
 
