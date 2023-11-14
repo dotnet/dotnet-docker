@@ -1,5 +1,22 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:7.0.13-alpine3.18-amd64
+
+# Installer image
+FROM amd64/buildpack-deps:jammy-curl AS installer
+
+# Retrieve .NET Monitor
+RUN dotnet_monitor_version=7.3.2 \
+    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
+    && dotnet_monitor_sha512='9e1da6b41119874659e00cfae5c22e541041093ff1c55ecb2234610502e714868474c3bc52de78a650201d36271296069e8ed5dc8b3a4972954bffadd4478248' \
+    && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
+    && mkdir -p /app \
+    && tar -oxzf dotnet-monitor.tar.gz -C /app \
+    && rm dotnet-monitor.tar.gz
+
+
+# .NET Monitor image
+FROM $REPO:7.0.14-jammy-chiseled-amd64
+
+COPY --from=installer ["/app", "/app"]
 
 WORKDIR /app
 
@@ -23,15 +40,6 @@ ENV \
     Logging__Console__FormatterOptions__UseUtcTimestamp=true \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
-
-# Install .NET Monitor
-RUN dotnet_monitor_version=7.2.3 \
-    && wget -O dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-musl-x64.tar.gz \
-    && dotnet_monitor_sha512='e97e3c704e17c8078a8a1a71a9cc5a0f42cfd700007c4255002a073cd32407f64a83d1992225d61906d4021b723cd26c57d3d2f3b95a381113dc17953142cf28' \
-    && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
-    && mkdir -p /app \
-    && tar -oxzf dotnet-monitor.tar.gz -C /app \
-    && rm dotnet-monitor.tar.gz
 
 ENTRYPOINT [ "dotnet-monitor" ]
 CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]

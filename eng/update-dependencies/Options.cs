@@ -1,5 +1,6 @@
-// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+//
 
 using System.Collections.Generic;
 using System.CommandLine;
@@ -29,9 +30,10 @@ namespace Dotnet.Docker
         public bool UseStableBranding { get; }
         public bool UpdateOnly => Email == null || Password == null || User == null || TargetBranch == null;
         public bool IsInternal => !string.IsNullOrEmpty(BinarySasQueryString) || !string.IsNullOrEmpty(ChecksumSasQueryString);
+        public string ChecksumsFile { get; }
 
         public Options(string dockerfileVersion, string[] productVersion, string versionSourceName, string email, string password, string user,
-            bool computeShas, bool stableBranding, string binarySas, string checksumSas, string sourceBranch, string targetBranch, string org, string project, string repo)
+            bool computeShas, bool stableBranding, string binarySas, string checksumSas, string sourceBranch, string targetBranch, string org, string project, string repo, string checksumsFile)
         {
             DockerfileVersion = dockerfileVersion;
             ProductVersions = productVersion
@@ -42,6 +44,7 @@ namespace Dotnet.Docker
             Password = password;
             User = user;
             ComputeChecksums = computeShas;
+            ChecksumsFile = checksumsFile;
             UseStableBranding = stableBranding;
             BinarySasQueryString = binarySas;
             ChecksumSasQueryString = checksumSas;
@@ -83,6 +86,7 @@ namespace Dotnet.Docker
                 new Option<string>("--org", "Name of the AzDO organization"),
                 new Option<string>("--project", "Name of the AzDO project"),
                 new Option<string>("--repo", "Name of the AzDO repo"),
+                new Option<string>("--checksums-file", "File containing a list of checksums for each product asset")
             };
     }
 }

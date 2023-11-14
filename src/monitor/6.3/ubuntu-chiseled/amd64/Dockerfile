@@ -1,18 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
-
-RUN tdnf install -y \
-        ca-certificates \
-        gzip \
-        tar \
-    && tdnf clean all
+FROM amd64/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor
-RUN dotnet_monitor_version=7.2.3 \
+RUN dotnet_monitor_version=6.3.4 \
     && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
-    && dotnet_monitor_sha512='0336014a31e59067e98f050c281849d320e93c526d262ef3aecc14dcc00a620f534d4fd3866d2d23c7a47b15366310bb4d83d1c4078b9d1bb906c05ab661425b' \
+    && dotnet_monitor_sha512='6df820099d13c2f367682c6f6f5a635da2d0943b5d6760c7987521f8b62ac1339bd4e84144fee2a70b1c721c7c124b3e33f91342523a2e9610a492263b43e9ec' \
     && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor.tar.gz -C /app \
@@ -20,7 +14,7 @@ RUN dotnet_monitor_version=7.2.3 \
 
 
 # .NET Monitor image
-FROM $REPO:7.0.13-cbl-mariner2.0-distroless-amd64
+FROM $REPO:6.0.25-jammy-chiseled-amd64
 
 COPY --from=installer ["/app", "/app"]
 
@@ -36,8 +30,6 @@ ENV \
     DefaultProcess__Filters__0__Value=1 \
     # Remove Unix Domain Socket before starting diagnostic port server
     DiagnosticPort__DeleteEndpointOnStartup=true \
-    # Server GC mode
-    DOTNET_gcServer=1 \
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
@@ -47,5 +39,4 @@ ENV \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
 
-ENTRYPOINT [ "dotnet-monitor" ]
-CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
+ENTRYPOINT [ "dotnet-monitor", "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]

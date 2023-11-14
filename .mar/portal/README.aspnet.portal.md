@@ -19,7 +19,7 @@ For a full technical description on how the composites work, we have a [feature 
 
 ## Featured Tags
 
-* `8.0` (Release Candidate)
+* `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/aspnet:8.0`
 * `7.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/aspnet:7.0`
