@@ -11,12 +11,12 @@ RUN tdnf install -y \
 
 # Retrieve .NET Monitor extensions
 RUN dotnet_monitor_extension_version=8.0.0 \
-    && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/8.0.0-rtm.23558.6/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
-    && dotnet_monitor_extension_sha512='64e750e44c5c926f658c74e1a46e33fa19035b15d8eb1fb1349178a8acfefcbe123034cbcf8c01c0da5aa9e19201130a7158973b68bcccfe9bebbe25eef92ff8' \
+    && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
+    && dotnet_monitor_extension_sha512='6241d70e0bf1c77a1097b0b7f3816702fa21426d2feca777c633bc40a5fa3233d2282c8b8b76d7fb4e2624b69b24147ed3daa90e9ac9b69e4dc5611b37cbe4de' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
     \
-    && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/8.0.0-rtm.23558.6/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
-    && dotnet_monitor_extension_sha512='be742e815f8664d721384fad6e29d282394f44c9825bdeb0d13163d83e247200f7401f7037132201ff35a9c7b6bec8c1e77b4f7fd96ad2a1bbfad75c68c9879f' \
+    && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
+    && dotnet_monitor_extension_sha512='b3c08e47675756c85de6631f3d0fe9ee764f9d6fd2d7c7804ee9b54dace4e937dbdda4a50e1e1f14291ce1eebff2f71f48b5e75d0699061a940c77c77ad9b607' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
     \
     && mkdir -p /app \
