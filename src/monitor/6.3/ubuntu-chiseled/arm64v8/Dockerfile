@@ -1,18 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
-
-RUN tdnf install -y \
-        ca-certificates \
-        gzip \
-        tar \
-    && tdnf clean all
+FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor
-RUN dotnet_monitor_version=7.2.2 \
+RUN dotnet_monitor_version=6.3.4 \
     && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-arm64.tar.gz \
-    && dotnet_monitor_sha512='5f179ac55e6f046c14dd0df69bbf2e2fb771606ca03a90a99730bbbf1d92c57befc8324f0b89f80eee7243577929d0984bb471c7020bc31ea64e3e202572760b' \
+    && dotnet_monitor_sha512='d070bbe993eb325a8d52d23c14d4e7365eaa13f1aa023d5fa7b9db2630b16186a10f75091c0ab9c79109811c1cb18d36ede247cbd88bd698ebea75beb0b2e78a' \
     && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor.tar.gz -C /app \
@@ -20,7 +14,7 @@ RUN dotnet_monitor_version=7.2.2 \
 
 
 # .NET Monitor image
-FROM $REPO:7.0.12-cbl-mariner2.0-arm64v8
+FROM $REPO:6.0.25-jammy-chiseled-arm64v8
 
 COPY --from=installer ["/app", "/app"]
 
@@ -36,8 +30,6 @@ ENV \
     DefaultProcess__Filters__0__Value=1 \
     # Remove Unix Domain Socket before starting diagnostic port server
     DiagnosticPort__DeleteEndpointOnStartup=true \
-    # Server GC mode
-    DOTNET_gcServer=1 \
     # Logging: JSON format so that analytic platforms can get discrete entry information
     Logging__Console__FormatterName=json \
     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
@@ -47,5 +39,4 @@ ENV \
     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
     PATH="/app:${PATH}"
 
-ENTRYPOINT [ "dotnet-monitor" ]
-CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
+ENTRYPOINT [ "dotnet-monitor", "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]

@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:7.0.12-alpine3.18-arm64v8
+FROM $REPO:7.0.14-alpine3.18-arm64v8
 
 WORKDIR /app
 
@@ -25,9 +25,9 @@ ENV \
     PATH="/app:${PATH}"
 
 # Install .NET Monitor
-RUN dotnet_monitor_version=7.3.0 \
+RUN dotnet_monitor_version=7.3.2 \
     && wget -O dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-musl-arm64.tar.gz \
-    && dotnet_monitor_sha512='f21e11c1209a9e3ee0127af4a574fb799b7f8fbffd1788ac8146cd1d422933f7038bc9fbebd8a2282ec373a5cdc7fc830653a8aaf0c83c5637ee999efa777296' \
+    && dotnet_monitor_sha512='8bbb3313e86a83d515a284878e1db3ee1d0df6b17afe49c263316e01aa134995d90205bd0db4be22d937a74eaee1aafe92ccd5a5bafcf8002f7fed46025366fc' \
     && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor.tar.gz -C /app \
