@@ -19,7 +19,7 @@ However, the new [Ubuntu Chiseled](https://github.com/dotnet/dotnet-docker/blob/
 | --- | --- |--- | --- | --- |
 | Baseline | [`aspnet:8.0-jammy`](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy/amd64/Dockerfile)| 217 MB | 90.9 MB | |
 | [Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) | [`aspnet:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled/amd64/Dockerfile)| 111 MB | 49.3 MB | 46% |
-| ASP.NET Composite Runtime | [`aspnet:8.0-jammy-chiseled-composite`](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled-composite/amd64/Dockerfile)| 103 MB | 40.8 MB | 55% |
+| [Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) + [ASP.NET Composite Runtime](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md#composite-net-80) | [`aspnet:8.0-jammy-chiseled-composite`](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled-composite/amd64/Dockerfile)| 103 MB | 40.8 MB | 55% |
 
 ## Self-Contained + Trimming Deployment
 
@@ -29,10 +29,10 @@ And [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-
 
 | Image Kind | Base Image | Uncompressed Image Size | Compressed Image Size | % Size Savings Over Baseline[^1] |
 | --- | --- |--- | --- | --- |
-| Self-contained + Trimming | [`runtime-deps:8.0-jammy`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/amd64/Dockerfile) | 146 MB | 57.9 MB | 36% |
-| Self-contained + Trimming + [Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 39.3 MB | 16.4 MB | 82% |
-| Native AOT | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 27.7 MB | 12.4 MB | 86% |
-| Native AOT (preview image)[^2] | [`runtime-deps:8.0-jammy-chiseled-aot`](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/jammy-chiseled-aot/amd64/Dockerfile) | 25.4 MB | 11.6 MB | 87% |
+| [Self-contained](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained) + [Trimming](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) | [`runtime-deps:8.0-jammy`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/amd64/Dockerfile) | 146 MB | 57.9 MB | 36% |
+| [Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) + [Self-contained](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained) + [Trimming](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 39.3 MB | 16.4 MB | 82% |
+| [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/) | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 27.7 MB | 12.4 MB | 86% |
+| [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/) (preview image)[^2] | [`runtime-deps:8.0-jammy-chiseled-aot`](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/jammy-chiseled-aot/amd64/Dockerfile) | 25.4 MB | 11.6 MB | 87% |
 
 For more information about new images for .NET 8, please see the [.NET image variants documentation (temporary link to PR)](https://github.com/dotnet/dotnet-docker/pull/4979) and ["Announcement: New approach for differentiating .NET 8+ images"](https://github.com/dotnet/dotnet-docker/discussions/4821).
 
