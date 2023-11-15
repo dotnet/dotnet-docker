@@ -10,6 +10,13 @@ This image contains the .NET runtimes and libraries and is optimized for running
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
+### New: Ubuntu Chiseled Images
+
+Ubuntu Chiseled .NET images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
+These images offer dramatically smaller deployment sizes and attack surface by including only the minimal set of packages required to run .NET applications.
+
+Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) documentation page for more info.
+
 ## Featured Tags
 
 * `8.0` (Long-Term Support)
@@ -47,6 +54,11 @@ Type the following command to run a sample console application:
 ```console
 docker run --rm mcr.microsoft.com/dotnet/samples
 ```
+
+## Image Variants
+
+.NET container images have several variants that offer different combinations of flexibility and deployment size.
+The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
 
 ## Support
 
