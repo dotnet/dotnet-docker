@@ -4,7 +4,7 @@
     set nupkgPlatform to when(isAlpine, "Linux.Alpine", cat("Linux.", ARCH_NUPKG)) ^
     set shaPlatform to when(isAlpine, "Linux.Alpine", cat("Linux|", ARCH_NUPKG)) ^
     set nupkgName to cat("PowerShell.", nupkgPlatform, ".$powershell_version.nupkg") ^
-    set url to cat("https://pwshtool.blob.core.windows.net/tool/$powershell_version/", nupkgName)
+    set url to cat("https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/", nupkgName)
 }}# Install PowerShell global tool
 RUN powershell_version={{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}} \
     && {{InsertTemplate("../Dockerfile.linux.download-file",
