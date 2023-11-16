@@ -6291,11 +6291,8 @@
           "sharedTags": {
             "$(monitor|8.0|product-version)-ubuntu-chiseled": {},
             "8.0-ubuntu-chiseled": {},
-            "8-ubuntu-chiseled": {},
             "$(monitor|8.0|product-version)": {},
-            "8.0": {},
-            "8": {},
-            "latest": {}
+            "8.0": {}
           },
           "platforms": [
             {
@@ -6308,8 +6305,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-amd64": {},
-                "8.0-ubuntu-chiseled-amd64": {},
-                "8-ubuntu-chiseled-amd64": {}
+                "8.0-ubuntu-chiseled-amd64": {}
               }
             },
             {
@@ -6323,8 +6319,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-arm64v8": {},
-                "8.0-ubuntu-chiseled-arm64v8": {},
-                "8-ubuntu-chiseled-arm64v8": {}
+                "8.0-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -6337,9 +6332,6 @@
               "docType": "Undocumented"
             },
             "8.0-cbl-mariner-distroless": {
-              "docType": "Undocumented"
-            },
-            "8-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -6358,9 +6350,6 @@
                 },
                 "8.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
-                },
-                "8-cbl-mariner-distroless-amd64": {
-                  "docType": "Undocumented"
                 }
               }
             },
@@ -6378,6 +6367,105 @@
                   "docType": "Undocumented"
                 },
                 "8.0-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|8.1|product-version)",
+          "sharedTags": {
+            "$(monitor|8.1|product-version)-ubuntu-chiseled": {},
+            "8.1-preview-ubuntu-chiseled": {},
+            "8-ubuntu-chiseled": {},
+            "$(monitor|8.1|product-version)": {},
+            "8.1-preview": {},
+            "8": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/8.1/ubuntu-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|8.1|product-version)-ubuntu-chiseled-amd64": {},
+                "8.1-preview-ubuntu-chiseled-amd64": {},
+                "8-ubuntu-chiseled-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/8.1/ubuntu-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|8.1|product-version)-ubuntu-chiseled-arm64v8": {},
+                "8.1-preview-ubuntu-chiseled-arm64v8": {},
+                "8-ubuntu-chiseled-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|8.1|product-version)",
+          "sharedTags": {
+            "$(monitor|8.1|product-version)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "8.1-preview-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "8-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/8.1/cbl-mariner-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|8.1|product-version)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "8.1-preview-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "8-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/8.1/cbl-mariner-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|8.1|product-version)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "8.1-preview-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
                 "8-cbl-mariner-distroless-arm64v8": {
@@ -6808,11 +6896,8 @@
           "sharedTags": {
             "$(monitor|8.0|product-version)-ubuntu-chiseled": {},
             "8.0-ubuntu-chiseled": {},
-            "8-ubuntu-chiseled": {},
             "$(monitor|8.0|product-version)": {},
-            "8.0": {},
-            "8": {},
-            "latest": {}
+            "8.0": {}
           },
           "platforms": [
             {
@@ -6825,8 +6910,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-amd64": {},
-                "8.0-ubuntu-chiseled-amd64": {},
-                "8-ubuntu-chiseled-amd64": {}
+                "8.0-ubuntu-chiseled-amd64": {}
               }
             },
             {
@@ -6840,8 +6924,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|product-version)-ubuntu-chiseled-arm64v8": {},
-                "8.0-ubuntu-chiseled-arm64v8": {},
-                "8-ubuntu-chiseled-arm64v8": {}
+                "8.0-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -6854,9 +6937,6 @@
               "docType": "Undocumented"
             },
             "8.0-cbl-mariner-distroless": {
-              "docType": "Undocumented"
-            },
-            "8-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
           },
@@ -6875,9 +6955,6 @@
                 },
                 "8.0-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
-                },
-                "8-cbl-mariner-distroless-amd64": {
-                  "docType": "Undocumented"
                 }
               }
             },
@@ -6895,6 +6972,105 @@
                   "docType": "Undocumented"
                 },
                 "8.0-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|8.1|product-version)",
+          "sharedTags": {
+            "$(monitor|8.1|product-version)-ubuntu-chiseled": {},
+            "8.1-preview-ubuntu-chiseled": {},
+            "8-ubuntu-chiseled": {},
+            "$(monitor|8.1|product-version)": {},
+            "8.1-preview": {},
+            "8": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/8.1/ubuntu-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|8.1|product-version)-ubuntu-chiseled-amd64": {},
+                "8.1-preview-ubuntu-chiseled-amd64": {},
+                "8-ubuntu-chiseled-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/8.1/ubuntu-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|8.1|product-version)-ubuntu-chiseled-arm64v8": {},
+                "8.1-preview-ubuntu-chiseled-arm64v8": {},
+                "8-ubuntu-chiseled-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|8.1|product-version)",
+          "sharedTags": {
+            "$(monitor|8.1|product-version)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "8.1-preview-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "8-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/8.1/cbl-mariner-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|8.1|product-version)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "8.1-preview-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "8-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/8.1/cbl-mariner-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|8.1|product-version)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "8.1-preview-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
                 "8-cbl-mariner-distroless-arm64v8": {
