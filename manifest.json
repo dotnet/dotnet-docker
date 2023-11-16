@@ -6378,10 +6378,10 @@
           "productVersion": "$(monitor|8.1|product-version)",
           "sharedTags": {
             "$(monitor|8.1|product-version)-ubuntu-chiseled": {},
-            "8.1-ubuntu-chiseled": {},
+            "8.1-preview-ubuntu-chiseled": {},
             "8-ubuntu-chiseled": {},
             "$(monitor|8.1|product-version)": {},
-            "8.1": {},
+            "8.1-preview": {},
             "8": {},
             "latest": {}
           },
@@ -6396,7 +6396,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.1|product-version)-ubuntu-chiseled-amd64": {},
-                "8.1-ubuntu-chiseled-amd64": {},
+                "8.1-preview-ubuntu-chiseled-amd64": {},
                 "8-ubuntu-chiseled-amd64": {}
               }
             },
@@ -6411,7 +6411,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.1|product-version)-ubuntu-chiseled-arm64v8": {},
-                "8.1-ubuntu-chiseled-arm64v8": {},
+                "8.1-preview-ubuntu-chiseled-arm64v8": {},
                 "8-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
@@ -6424,7 +6424,7 @@
             "$(monitor|8.1|product-version)-cbl-mariner-distroless": {
               "docType": "Undocumented"
             },
-            "8.1-cbl-mariner-distroless": {
+            "8.1-preview-cbl-mariner-distroless": {
               "docType": "Undocumented"
             },
             "8-cbl-mariner-distroless": {
@@ -6444,7 +6444,7 @@
                 "$(monitor|8.1|product-version)-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 },
-                "8.1-cbl-mariner-distroless-amd64": {
+                "8.1-preview-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 },
                 "8-cbl-mariner-distroless-amd64": {
@@ -6465,7 +6465,7 @@
                 "$(monitor|8.1|product-version)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "8.1-cbl-mariner-distroless-arm64v8": {
+                "8.1-preview-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
                 "8-cbl-mariner-distroless-arm64v8": {
