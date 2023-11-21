@@ -1,3 +1,5 @@
 $(McrTagsYmlRepo:monitor-base)
 $(McrTagsYmlTagGroup:8.0-ubuntu-chiseled-amd64)
 $(McrTagsYmlTagGroup:8.0-ubuntu-chiseled-arm64v8)
+$(McrTagsYmlTagGroup:8.0-cbl-mariner-distroless-amd64)
+$(McrTagsYmlTagGroup:8.0-cbl-mariner-distroless-arm64v8)
