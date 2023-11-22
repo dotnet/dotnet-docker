@@ -4711,6 +4711,143 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
+            "$(dotnet|8.0|product-version)-jammy-chiseled-extra": {},
+            "8.0-jammy-chiseled-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)",
+                "VARIANT": "-extra"
+              },
+              "dockerfile": "src/aspnet/8.0/jammy-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-jammy-chiseled-extra-amd64": {},
+                "8.0-jammy-chiseled-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-jammy-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)",
+                "VARIANT": "-extra"
+              },
+              "dockerfile": "src/aspnet/8.0/jammy-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-jammy-chiseled-extra-arm64v8": {},
+                "8.0-jammy-chiseled-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-jammy-arm64v8"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)",
+                "VARIANT": "-extra"
+              },
+              "dockerfile": "src/aspnet/8.0/jammy-chiseled/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-jammy-chiseled-extra-arm32v7": {},
+                "8.0-jammy-chiseled-extra-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-jammy-arm32v7"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-jammy-chiseled-composite-extra": {},
+            "8.0-jammy-chiseled-composite-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)",
+                "VARIANT": "-extra"
+              },
+              "dockerfile": "src/aspnet/8.0/jammy-chiseled-composite/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-jammy-chiseled-composite-extra-amd64": {},
+                "8.0-jammy-chiseled-composite-extra-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)",
+                "VARIANT": "-extra"
+              },
+              "dockerfile": "src/aspnet/8.0/jammy-chiseled-composite/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-jammy-chiseled-composite-extra-arm64v8": {},
+                "8.0-jammy-chiseled-composite-extra-arm64v8": {}
+              },
+              "variant": "v8"
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)",
+                "VARIANT": "-extra"
+              },
+              "dockerfile": "src/aspnet/8.0/jammy-chiseled-composite/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-jammy-chiseled-composite-extra-arm32v7": {},
+                "8.0-jammy-chiseled-composite-extra-arm32v7": {}
+              },
+              "variant": "v7"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
             "$(dotnet|8.0|product-version)-jammy-chiseled-composite": {},
             "8.0-jammy-chiseled-composite": {}
           },

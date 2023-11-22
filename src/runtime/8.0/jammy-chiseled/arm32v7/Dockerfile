@@ -18,7 +18,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:8.0.0-jammy-chiseled$VARIANT-arm32v7
+FROM $REPO:8.0.0-jammy-chiseled${VARIANT}-arm32v7
 
 # .NET Runtime version
 ENV DOTNET_VERSION=8.0.0

@@ -5,12 +5,15 @@
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isFullMariner to isMariner && !isDistroless ^
     set isDistrolessMariner to isMariner && isDistroless ^
+    set isChiseledUbuntu to find(OS_VERSION, "chiseled") >= 0 ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set isRpmInstall to isFullMariner && dotnetVersion = "6.0" ^
     set isSingleStage to (isAlpine || isRpmInstall) && !isInternal ^
+    set osVersionVariant to when(isChiseledUbuntu && dotnetVersion != "6.0" && dotnetVersion != "7.0",
+        cat(OS_VERSION, "${VARIANT}"), OS_VERSION) ^
     set runtimeBaseTag to
-        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", osVersionVariant, ARCH_TAG_SUFFIX) ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
     set installerImageTag to when(isDistrolessMariner,
@@ -20,7 +23,8 @@
             cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))) ^
     set copyFromSrcPath to when(isDistroless, "/dotnet", "/shared/Microsoft.AspNetCore.App") ^
     set copyFromDstPath to when(isDistroless, "/usr/share/dotnet", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App")
-}}ARG REPO=mcr.microsoft.com/dotnet/runtime{{if isSingleStage:
+}}ARG REPO=mcr.microsoft.com/dotnet/runtime{{if isChiseledUbuntu && dotnetVersion != "6.0" && dotnetVersion != "7.0":
+ARG VARIANT}}{{if isSingleStage:
 {{
 
     _ SINGLE STAGE
