@@ -1,5 +1,4 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-ARG VARIANT
 
 # Installer image
 FROM arm64v8/buildpack-deps:jammy-curl AS installer
@@ -15,7 +14,7 @@ RUN aspnetcore_version=8.0.0 \
 
 
 # ASP.NET Core image
-FROM $REPO:8.0.0-jammy-chiseled${VARIANT}-arm64v8
+FROM $REPO:8.0.0-jammy-chiseled-arm64v8
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=8.0.0

@@ -14,7 +14,7 @@ RUN aspnetcore_version=8.0.0 \
 
 
 # ASP.NET Core image
-FROM $REPO:8.0.0-jammy-chiseled-amd64
+FROM $REPO:8.0.0-jammy-chiseled-extra-amd64
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=8.0.0
