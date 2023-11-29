@@ -186,6 +186,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 "packages",
                 $"docker:{imageToInspect}",
                 $"-o json={outputContainerFilePath}",
+                // Ignore the dotnet folder, or else syft will report all the packages in the .NET Runtime. We only care
+                // about the packages from the linux distro for this test.
                 "--exclude /usr/share/dotnet"
             ];
 
