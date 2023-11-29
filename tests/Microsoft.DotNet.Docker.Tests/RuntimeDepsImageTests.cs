@@ -173,7 +173,7 @@ namespace Microsoft.DotNet.Docker.Tests
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper)
         {
-            const string SyftImage = "anchore/syft:v0.87.1";
+            const string SyftImage = "anchore/syft:v0.97.1";
             dockerHelper.Pull(SyftImage);
 
             string imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
@@ -182,11 +182,19 @@ namespace Microsoft.DotNet.Docker.Tests
             string tempDir = null;
             string outputContents = null;
 
+            string[] args = [
+                "packages",
+                $"docker:{imageToInspect}",
+                $"-o json={outputContainerFilePath}",
+                "--exclude /usr/share/dotnet"
+            ];
+
             try
             {
                 dockerHelper.Run(
                     SyftImage,
-                    syftContainerName, $"packages docker:{imageToInspect} -o json={outputContainerFilePath}",
+                    syftContainerName,
+                    string.Join(' ', args),
                     skipAutoCleanup: true,
                     useMountedDockerSocket: true);
 
