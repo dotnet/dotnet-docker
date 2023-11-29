@@ -6,6 +6,12 @@ using System;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
+    /// <summary>
+    /// The possible variants of a .NET container image.
+    /// </summary>
+    /// <remarks>
+    /// The order of values in this enum enforces the order that the variants must appear in tags if there are multiple.
+    /// </remarks>
     [Flags]
     public enum DotNetImageVariant
     {

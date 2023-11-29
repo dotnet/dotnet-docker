@@ -76,6 +76,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
+        public void VerifyInstalledPackages(ProductImageData imageData)
+        {
+            RuntimeDepsImageTests.VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper);
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
         public void VerifyInsecureFiles(ProductImageData imageData)
         {
             base.VerifyCommonInsecureFiles(imageData);
