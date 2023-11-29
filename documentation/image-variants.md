@@ -19,7 +19,7 @@ For more information, see the [Ubuntu Chiseled .NET Containers documentation](./
 
 ### `extra` (.NET 8.0+)
 
-For apps that depend on globalization functionality, the `extra` image variant is offered for [Ubuntu Chiseled](./ubuntu-chiseled.md) runtime-deps, Runtime, and ASP.NET Core images as well as runtime-deps images for Alpine Linux and Azure Linux.
+For apps that depend on globalization functionality, the `extra` image variant is offered for [Ubuntu Chiseled](./ubuntu-chiseled.md) `runtime-deps`, `runtime`, and `aspnet` images as well as `runtime-deps` images for Alpine Linux and CBL Mariner distroless.
 These `extra` images contain everything that the default images do, plus `icu` and `tzdata`.
 
 ### `composite` (.NET 8.0+)
