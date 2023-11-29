@@ -130,20 +130,21 @@ namespace Microsoft.DotNet.Docker.Tests
 
             outputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
 
+            // Verify we only include strictly necessary packages in distroless images
             if (imageData.IsDistroless)
             {
                 outputHelper.WriteLine($"Actual Packages: [ {string.Join(", ", actualPackages)} ]");
                 Assert.Equal(expectedPackages, actualPackages);
+                return;
             }
-            else
+
+            // Verify we have all of the .NET dependencies on non-distroless images
+            IEnumerable<string> missingPackages = expectedPackages.Except(actualPackages);
+            if (missingPackages.Any())
             {
-                IEnumerable<string> missingPackages = expectedPackages.Except(actualPackages);
-                if (missingPackages.Count() > 0)
-                {
-                    outputHelper.WriteLine($"Missing packages: [ {string.Join(", ", missingPackages)} ]");
-                }
-                Assert.Empty(missingPackages);
+                outputHelper.WriteLine($"Missing packages: [ {string.Join(", ", missingPackages)} ]");
             }
+            Assert.Empty(missingPackages);
         }
 
         private static IEnumerable<string> GetInstalledPackages(
@@ -172,7 +173,7 @@ namespace Microsoft.DotNet.Docker.Tests
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper)
         {
-            const string SyftImage = "anchore/syft:v0.87.1";
+            const string SyftImage = "anchore/syft:v0.97.1";
             dockerHelper.Pull(SyftImage);
 
             string imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
@@ -181,11 +182,21 @@ namespace Microsoft.DotNet.Docker.Tests
             string tempDir = null;
             string outputContents = null;
 
+            string[] args = [
+                "packages",
+                $"docker:{imageToInspect}",
+                $"-o json={outputContainerFilePath}",
+                // Ignore the dotnet folder, or else syft will report all the packages in the .NET Runtime. We only care
+                // about the packages from the linux distro for this test.
+                "--exclude /usr/share/dotnet"
+            ];
+
             try
             {
                 dockerHelper.Run(
                     SyftImage,
-                    syftContainerName, $"packages docker:{imageToInspect} -o json={outputContainerFilePath}",
+                    syftContainerName,
+                    string.Join(' ', args),
                     skipAutoCleanup: true,
                     useMountedDockerSocket: true);
 
@@ -218,12 +229,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (imageData.IsDistroless)
             {
-                expectedPackages = expectedPackages.Concat(GetDistrolessBasePackages(imageData));
+                expectedPackages = [..expectedPackages, ..GetDistrolessBasePackages(imageData)];
             }
             if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Extra)
                 || (imageRepo == DotNetImageRepo.SDK && imageData.Version.Major != 6 && imageData.Version.Major != 7))
             {
-                expectedPackages = expectedPackages.Concat(GetExtraPackages(imageData));
+                expectedPackages = [..expectedPackages, ..GetExtraPackages(imageData)];
             }
             return expectedPackages.Distinct().OrderBy(s => s);
         }
