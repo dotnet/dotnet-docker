@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM amd64/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor Base
-RUN dotnet_monitor_version=8.1.0-alpha.1.23564.5 \
+RUN dotnet_monitor_version=8.1.0-alpha.1.23578.4 \
     && curl -fSL --output dotnet-monitor-base.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz \
-    && dotnet_monitor_base_sha512='3f9f1c19aec606c723b6a6fc95d21adae09a33bb8eb6e0c84af3603f3ac1bad89b77670aff98fcbca5b7223b932e7b1bac18bc6540dd54ad30ca32ef8c969fae' \
+    && dotnet_monitor_base_sha512='7412b9c66a248d78d34b17be36a675f371f9a2245fb3e6a86ed00e08badca102d7e25d627af53cfd703de428d739ed1a8422af5f8100162e407e4642006b70a2' \
     && echo "$dotnet_monitor_base_sha512  dotnet-monitor-base.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor-base.tar.gz -C /app \
