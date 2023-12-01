@@ -3438,8 +3438,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)": {},
-            "8.0": {},
-            "latest": {}
+            "8.0": {}
           },
           "platforms": [
             {
@@ -3987,6 +3986,563 @@
               "tags": {
                 "$(dotnet|8.0|product-version)-windowsservercore-ltsc2022": {},
                 "8.0-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|9.0|product-version)": {},
+            "9.0": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/bookworm-slim/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "bookworm-slim",
+              "tags": {
+                "$(dotnet|9.0|product-version)-bookworm-slim-amd64": {},
+                "9.0-bookworm-slim-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/bookworm-slim/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "bookworm-slim",
+              "tags": {
+                "$(dotnet|9.0|product-version)-bookworm-slim-arm32v7": {},
+                "9.0-bookworm-slim-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/bookworm-slim/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "bookworm-slim",
+              "tags": {
+                "$(dotnet|9.0|product-version)-bookworm-slim-arm64v8": {},
+                "9.0-bookworm-slim-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "id": "bookworm-slim",
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|9.0|product-version)-bookworm-slim": {},
+            "9.0-bookworm-slim": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/bookworm-slim/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "bookworm-slim",
+              "tags": {}
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/bookworm-slim/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "bookworm-slim",
+              "tags": {},
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/bookworm-slim/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "bookworm-slim",
+              "tags": {},
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|9.0|product-version)-alpine3.18": {},
+            "9.0-alpine3.18": {},
+            "9.0-alpine": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/alpine3.18/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|9.0|product-version)-alpine3.18-amd64": {},
+                "9.0-alpine3.18-amd64": {},
+                "9.0-alpine-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/alpine3.18/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|9.0|product-version)-alpine3.18-arm32v7": {},
+                "9.0-alpine3.18-arm32v7": {},
+                "9.0-alpine-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/alpine3.18/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "alpine3.18",
+              "tags": {
+                "$(dotnet|9.0|product-version)-alpine3.18-arm64v8": {},
+                "9.0-alpine3.18-arm64v8": {},
+                "9.0-alpine-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|9.0|product-version)-jammy": {},
+            "9.0-jammy": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/jammy/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|9.0|product-version)-jammy-amd64": {},
+                "9.0-jammy-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/jammy/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|9.0|product-version)-jammy-arm32v7": {},
+                "9.0-jammy-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/jammy/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy",
+              "tags": {
+                "$(dotnet|9.0|product-version)-jammy-arm64v8": {},
+                "9.0-jammy-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|9.0|product-version)-jammy-chiseled": {},
+            "9.0-jammy-chiseled": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/jammy-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|9.0|product-version)-jammy-chiseled-amd64": {},
+                "9.0-jammy-chiseled-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):9.0-jammy-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/jammy-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|9.0|product-version)-jammy-chiseled-arm64v8": {},
+                "9.0-jammy-chiseled-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):9.0-jammy-arm64v8"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/jammy-chiseled/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|9.0|product-version)-jammy-chiseled-arm32v7": {},
+                "9.0-jammy-chiseled-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):9.0-jammy-arm32v7"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|9.0|product-version)-jammy-chiseled-extra": {},
+            "9.0-jammy-chiseled-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/jammy-chiseled-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|9.0|product-version)-jammy-chiseled-extra-amd64": {},
+                "9.0-jammy-chiseled-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):9.0-jammy-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/jammy-chiseled-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|9.0|product-version)-jammy-chiseled-extra-arm64v8": {},
+                "9.0-jammy-chiseled-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):9.0-jammy-arm64v8"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/jammy-chiseled-extra/arm32v7",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(dotnet|9.0|product-version)-jammy-chiseled-extra-arm32v7": {},
+                "9.0-jammy-chiseled-extra-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):9.0-jammy-arm32v7"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|9.0|product-version)-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "9.0-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "9.0-cbl-mariner": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/cbl-mariner2.0/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(dotnet|9.0|product-version)-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "9.0-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "9.0-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/cbl-mariner2.0/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0",
+              "tags": {
+                "$(dotnet|9.0|product-version)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "9.0-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "9.0-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|9.0|product-version)-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "9.0-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "9.0-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/cbl-mariner2.0-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|9.0|product-version)-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "9.0-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "9.0-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):9.0-cbl-mariner2.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/cbl-mariner2.0-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|9.0|product-version)-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "9.0-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "9.0-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):9.0-cbl-mariner2.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/9.0/nanoserver-1809/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "$(dotnet|9.0|product-version)-nanoserver-1809": {},
+                "9.0-nanoserver-1809": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/9.0/nanoserver-ltsc2022/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2022",
+              "tags": {
+                "$(dotnet|9.0|product-version)-nanoserver-ltsc2022": {},
+                "9.0-nanoserver-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/9.0/windowsservercore-ltsc2019/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2019",
+              "tags": {
+                "$(dotnet|9.0|product-version)-windowsservercore-ltsc2019": {},
+                "9.0-windowsservercore-ltsc2019": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/9.0/windowsservercore-ltsc2022/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2022",
+              "tags": {
+                "$(dotnet|9.0|product-version)-windowsservercore-ltsc2022": {},
+                "9.0-windowsservercore-ltsc2022": {}
               }
             }
           ]
