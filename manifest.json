@@ -1106,7 +1106,7 @@
               "tags": {
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-amd64": {},
                 "8.0-cbl-mariner2.0-amd64": {},
-                "8.0iner-amd64": {}
+                "8.0-cbl-mariner-amd64": {}
               }
             },
             {
