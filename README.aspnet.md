@@ -77,7 +77,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.0-bookworm-slim, 8.0-bookworm-slim, 8.0.0, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.0-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.0-bookworm-slim, 8.0-bookworm-slim, 8.0.0, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 8.0.0-alpine3.18-amd64, 8.0-alpine3.18-amd64, 8.0-alpine-amd64, 8.0.0-alpine3.18, 8.0-alpine3.18, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
 8.0.0-alpine3.18-composite-amd64, 8.0-alpine3.18-composite-amd64, 8.0-alpine-composite-amd64, 8.0.0-alpine3.18-composite, 8.0-alpine3.18-composite, 8.0-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/alpine3.18-composite/amd64/Dockerfile) | Alpine 3.18
 8.0.0-jammy-amd64, 8.0-jammy-amd64, 8.0.0-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
@@ -97,10 +97,22 @@ Tags | Dockerfile | OS Version
 6.0.25-jammy-chiseled-amd64, 6.0-jammy-chiseled-amd64, 6.0.25-jammy-chiseled, 6.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/6.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 6.0.25-focal-amd64, 6.0-focal-amd64, 6.0.25-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
+##### .NET 9 Preview Tags
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+9.0.0-alpha.1-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.0-alpha.1-bookworm-slim, 9.0-bookworm-slim, 9.0.0-alpha.1, 9.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.0-alpha.1-alpine3.18-amd64, 9.0-alpine3.18-amd64, 9.0-alpine-amd64, 9.0.0-alpha.1-alpine3.18, 9.0-alpine3.18, 9.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
+9.0.0-alpha.1-alpine3.18-composite-amd64, 9.0-alpine3.18-composite-amd64, 9.0-alpine-composite-amd64, 9.0.0-alpha.1-alpine3.18-composite, 9.0-alpine3.18-composite, 9.0-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.18-composite/amd64/Dockerfile) | Alpine 3.18
+9.0.0-alpha.1-jammy-amd64, 9.0-jammy-amd64, 9.0.0-alpha.1-jammy, 9.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-amd64, 9.0-jammy-chiseled-amd64, 9.0.0-alpha.1-jammy-chiseled, 9.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-extra-amd64, 9.0-jammy-chiseled-extra-amd64, 9.0.0-alpha.1-jammy-chiseled-extra, 9.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled-extra/amd64/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-composite-amd64, 9.0-jammy-chiseled-composite-amd64, 9.0.0-alpha.1-jammy-chiseled-composite, 9.0-jammy-chiseled-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled-composite/amd64/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-composite-extra-amd64, 9.0-jammy-chiseled-composite-extra-amd64, 9.0.0-alpha.1-jammy-chiseled-composite-extra, 9.0-jammy-chiseled-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 22.04
+
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.0-bookworm-slim, 8.0-bookworm-slim, 8.0.0, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.0-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.0-bookworm-slim, 8.0-bookworm-slim, 8.0.0, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 8.0.0-alpine3.18-arm64v8, 8.0-alpine3.18-arm64v8, 8.0-alpine-arm64v8, 8.0.0-alpine3.18, 8.0-alpine3.18, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
 8.0.0-alpine3.18-composite-arm64v8, 8.0-alpine3.18-composite-arm64v8, 8.0-alpine-composite-arm64v8, 8.0.0-alpine3.18-composite, 8.0-alpine3.18-composite, 8.0-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/alpine3.18-composite/arm64v8/Dockerfile) | Alpine 3.18
 8.0.0-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.0-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
@@ -120,10 +132,22 @@ Tags | Dockerfile | OS Version
 6.0.25-jammy-chiseled-arm64v8, 6.0-jammy-chiseled-arm64v8, 6.0.25-jammy-chiseled, 6.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/6.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 6.0.25-focal-arm64v8, 6.0-focal-arm64v8, 6.0.25-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
+##### .NET 9 Preview Tags
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+9.0.0-alpha.1-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.0-alpha.1-bookworm-slim, 9.0-bookworm-slim, 9.0.0-alpha.1, 9.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.0-alpha.1-alpine3.18-arm64v8, 9.0-alpine3.18-arm64v8, 9.0-alpine-arm64v8, 9.0.0-alpha.1-alpine3.18, 9.0-alpine3.18, 9.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
+9.0.0-alpha.1-alpine3.18-composite-arm64v8, 9.0-alpine3.18-composite-arm64v8, 9.0-alpine-composite-arm64v8, 9.0.0-alpha.1-alpine3.18-composite, 9.0-alpine3.18-composite, 9.0-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.18-composite/arm64v8/Dockerfile) | Alpine 3.18
+9.0.0-alpha.1-jammy-arm64v8, 9.0-jammy-arm64v8, 9.0.0-alpha.1-jammy, 9.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-arm64v8, 9.0-jammy-chiseled-arm64v8, 9.0.0-alpha.1-jammy-chiseled, 9.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-extra-arm64v8, 9.0-jammy-chiseled-extra-arm64v8, 9.0.0-alpha.1-jammy-chiseled-extra, 9.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-composite-arm64v8, 9.0-jammy-chiseled-composite-arm64v8, 9.0.0-alpha.1-jammy-chiseled-composite, 9.0-jammy-chiseled-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-composite-extra-arm64v8, 9.0-jammy-chiseled-composite-extra-arm64v8, 9.0.0-alpha.1-jammy-chiseled-composite-extra, 9.0-jammy-chiseled-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 22.04
+
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.0-bookworm-slim, 8.0-bookworm-slim, 8.0.0, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.0-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.0-bookworm-slim, 8.0-bookworm-slim, 8.0.0, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.0-alpine3.18-arm32v7, 8.0-alpine3.18-arm32v7, 8.0-alpine-arm32v7, 8.0.0-alpine3.18, 8.0-alpine3.18, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
 8.0.0-alpine3.18-composite-arm32v7, 8.0-alpine3.18-composite-arm32v7, 8.0-alpine-composite-arm32v7, 8.0.0-alpine3.18-composite, 8.0-alpine3.18-composite, 8.0-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/alpine3.18-composite/arm32v7/Dockerfile) | Alpine 3.18
 8.0.0-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.0-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
@@ -143,12 +167,29 @@ Tags | Dockerfile | OS Version
 6.0.25-jammy-chiseled-arm32v7, 6.0-jammy-chiseled-arm32v7, 6.0.25-jammy-chiseled, 6.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/6.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.25-focal-arm32v7, 6.0-focal-arm32v7, 6.0.25-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
+##### .NET 9 Preview Tags
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+9.0.0-alpha.1-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.0-alpha.1-bookworm-slim, 9.0-bookworm-slim, 9.0.0-alpha.1, 9.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.0-alpha.1-alpine3.18-arm32v7, 9.0-alpine3.18-arm32v7, 9.0-alpine-arm32v7, 9.0.0-alpha.1-alpine3.18, 9.0-alpine3.18, 9.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
+9.0.0-alpha.1-alpine3.18-composite-arm32v7, 9.0-alpine3.18-composite-arm32v7, 9.0-alpine-composite-arm32v7, 9.0.0-alpha.1-alpine3.18-composite, 9.0-alpine3.18-composite, 9.0-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.18-composite/arm32v7/Dockerfile) | Alpine 3.18
+9.0.0-alpha.1-jammy-arm32v7, 9.0-jammy-arm32v7, 9.0.0-alpha.1-jammy, 9.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-arm32v7, 9.0-jammy-chiseled-arm32v7, 9.0.0-alpha.1-jammy-chiseled, 9.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-extra-arm32v7, 9.0-jammy-chiseled-extra-arm32v7, 9.0.0-alpha.1-jammy-chiseled-extra, 9.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-composite-arm32v7, 9.0-jammy-chiseled-composite-arm32v7, 9.0.0-alpha.1-jammy-chiseled-composite, 9.0-jammy-chiseled-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 22.04
+9.0.0-alpha.1-jammy-chiseled-composite-extra-arm32v7, 9.0-jammy-chiseled-composite-extra-arm32v7, 9.0.0-alpha.1-jammy-chiseled-composite-extra, 9.0-jammy-chiseled-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/jammy-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 22.04
+
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 8.0.0-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
 7.0.14-nanoserver-ltsc2022, 7.0-nanoserver-ltsc2022, 7.0.14, 7.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/7.0/nanoserver-ltsc2022/amd64/Dockerfile)
 6.0.25-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.25, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
+
+##### .NET 9 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+9.0.0-alpha.1-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ## Windows Server Core 2022 amd64 Tags
 Tag | Dockerfile
@@ -157,6 +198,11 @@ Tag | Dockerfile
 7.0.14-windowsservercore-ltsc2022, 7.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/7.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 6.0.25-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
+##### .NET 9 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+9.0.0-alpha.1-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
@@ -164,12 +210,22 @@ Tag | Dockerfile
 7.0.14-nanoserver-1809, 7.0-nanoserver-1809, 7.0.14, 7.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/7.0/nanoserver-1809/amd64/Dockerfile)
 6.0.25-nanoserver-1809, 6.0-nanoserver-1809, 6.0.25, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/6.0/nanoserver-1809/amd64/Dockerfile)
 
+##### .NET 9 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+9.0.0-alpha.1-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/nanoserver-1809/amd64/Dockerfile)
+
 ## Windows Server Core 2019 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
 8.0.0-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 7.0.14-windowsservercore-ltsc2019, 7.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/7.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 6.0.25-windowsservercore-ltsc2019, 6.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/6.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+
+##### .NET 9 Preview Tags
+Tag | Dockerfile
+---------| ---------------
+9.0.0-alpha.1-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/nightly/aspnet at https://mcr.microsoft.com/v2/dotnet/nightly/aspnet/tags/list.
 <!--End of generated tags-->
