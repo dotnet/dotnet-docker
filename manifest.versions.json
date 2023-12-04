@@ -91,6 +91,8 @@
     "dotnet|7.0|product-version": "7.0.14",
     "dotnet|8.0|product-version": "8.0.0",
     "dotnet|9.0|product-version": "9.0.0-alpha.1",
+    "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)-preview",
+    "dotnet|9.0|floating-tag": "9.0-preview",
 
     "libicu|bionic": 60,
     "libicu|bookworm": 72,
@@ -270,6 +272,8 @@
 
     "sdk|9.0|build-version": "9.0.100-alpha.1.23601.1",
     "sdk|9.0|product-version": "9.0.100-alpha.1",
+    "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)-preview",
+    "sdk|9.0|floating-tag": "$(dotnet|9.0|floating-tag)",
     "sdk|9.0|linux-musl|arm|sha": "0709f0d4b0546c5161e84b92dbd7a23a549d6e6f650322d55404aa49b15c97675c6221a9762f0d8b4715f726d38d78391121593f49633d47d743e8dc2c8d39c1",
     "sdk|9.0|linux-musl|arm64|sha": "d6d9828c7dbf03b1b76427a22c2c7f77615a5dc0d73257a35f8851358774781d4f6e2a33811daea72e658311200cba222736422b5353452fa2c774c8a11b4ea3",
     "sdk|9.0|linux-musl|x64|sha": "332b5ce542632cdfa21188c74a7e73dfdee8c8fe56207164fb20d6bb67701a2deb9d9866343143dbe526acfe5532145b8f43dd749c365dc26366eaa04e311e3c",
