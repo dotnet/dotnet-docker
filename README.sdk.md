@@ -86,11 +86,11 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-alpha.1-preview-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.100-alpha.1-preview-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-alpha.1-preview, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-9.0.100-alpha.1-preview-alpine3.18-amd64, 9.0-preview-alpine3.18-amd64, 9.0-preview-alpine-amd64, 9.0.100-alpha.1-preview-alpine3.18, 9.0-preview-alpine3.18, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
-9.0.100-alpha.1-preview-alpine3.18-aot-amd64, 9.0-preview-alpine3.18-aot-amd64, 9.0-preview-alpine-aot-amd64, 9.0.100-alpha.1-preview-alpine3.18-aot, 9.0-preview-alpine3.18-aot, 9.0-preview-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.18-aot/amd64/Dockerfile) | Alpine 3.18
-9.0.100-alpha.1-preview-jammy-amd64, 9.0-preview-jammy-amd64, 9.0.100-alpha.1-preview-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-9.0.100-alpha.1-preview-jammy-aot-amd64, 9.0-preview-jammy-aot-amd64, 9.0.100-alpha.1-preview-jammy-aot, 9.0-preview-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy-aot/amd64/Dockerfile) | Ubuntu 22.04
+9.0.100-alpha.1-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.100-alpha.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-alpha.1, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.100-alpha.1-alpine3.18-amd64, 9.0-preview-alpine3.18-amd64, 9.0-preview-alpine-amd64, 9.0.100-alpha.1-alpine3.18, 9.0-preview-alpine3.18, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
+9.0.100-alpha.1-alpine3.18-aot-amd64, 9.0-preview-alpine3.18-aot-amd64, 9.0-preview-alpine-aot-amd64, 9.0.100-alpha.1-alpine3.18-aot, 9.0-preview-alpine3.18-aot, 9.0-preview-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.18-aot/amd64/Dockerfile) | Alpine 3.18
+9.0.100-alpha.1-jammy-amd64, 9.0-preview-jammy-amd64, 9.0.100-alpha.1-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+9.0.100-alpha.1-jammy-aot-amd64, 9.0-preview-jammy-aot-amd64, 9.0.100-alpha.1-jammy-aot, 9.0-preview-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy-aot/amd64/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -113,11 +113,11 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-alpha.1-preview-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.100-alpha.1-preview-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-alpha.1-preview, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-9.0.100-alpha.1-preview-alpine3.18-arm64v8, 9.0-preview-alpine3.18-arm64v8, 9.0-preview-alpine-arm64v8, 9.0.100-alpha.1-preview-alpine3.18, 9.0-preview-alpine3.18, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
-9.0.100-alpha.1-preview-alpine3.18-aot-arm64v8, 9.0-preview-alpine3.18-aot-arm64v8, 9.0-preview-alpine-aot-arm64v8, 9.0.100-alpha.1-preview-alpine3.18-aot, 9.0-preview-alpine3.18-aot, 9.0-preview-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.18-aot/arm64v8/Dockerfile) | Alpine 3.18
-9.0.100-alpha.1-preview-jammy-arm64v8, 9.0-preview-jammy-arm64v8, 9.0.100-alpha.1-preview-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-9.0.100-alpha.1-preview-jammy-aot-arm64v8, 9.0-preview-jammy-aot-arm64v8, 9.0.100-alpha.1-preview-jammy-aot, 9.0-preview-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy-aot/arm64v8/Dockerfile) | Ubuntu 22.04
+9.0.100-alpha.1-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.100-alpha.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-alpha.1, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.100-alpha.1-alpine3.18-arm64v8, 9.0-preview-alpine3.18-arm64v8, 9.0-preview-alpine-arm64v8, 9.0.100-alpha.1-alpine3.18, 9.0-preview-alpine3.18, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
+9.0.100-alpha.1-alpine3.18-aot-arm64v8, 9.0-preview-alpine3.18-aot-arm64v8, 9.0-preview-alpine-aot-arm64v8, 9.0.100-alpha.1-alpine3.18-aot, 9.0-preview-alpine3.18-aot, 9.0-preview-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.18-aot/arm64v8/Dockerfile) | Alpine 3.18
+9.0.100-alpha.1-jammy-arm64v8, 9.0-preview-jammy-arm64v8, 9.0.100-alpha.1-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+9.0.100-alpha.1-jammy-aot-arm64v8, 9.0-preview-jammy-aot-arm64v8, 9.0.100-alpha.1-jammy-aot, 9.0-preview-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy-aot/arm64v8/Dockerfile) | Ubuntu 22.04
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -138,9 +138,9 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-alpha.1-preview-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-alpha.1-preview-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-alpha.1-preview, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-9.0.100-alpha.1-preview-alpine3.18-arm32v7, 9.0-preview-alpine3.18-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.100-alpha.1-preview-alpine3.18, 9.0-preview-alpine3.18, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
-9.0.100-alpha.1-preview-jammy-arm32v7, 9.0-preview-jammy-arm32v7, 9.0.100-alpha.1-preview-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+9.0.100-alpha.1-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-alpha.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-alpha.1, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.100-alpha.1-alpine3.18-arm32v7, 9.0-preview-alpine3.18-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.100-alpha.1-alpine3.18, 9.0-preview-alpine3.18, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
+9.0.100-alpha.1-jammy-arm32v7, 9.0-preview-jammy-arm32v7, 9.0.100-alpha.1-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
@@ -152,7 +152,7 @@ Tag | Dockerfile
 ##### .NET 9 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-9.0.100-alpha.1-preview-nanoserver-ltsc2022, 9.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
+9.0.100-alpha.1-nanoserver-ltsc2022, 9.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ## Windows Server Core 2022 amd64 Tags
 Tag | Dockerfile
@@ -164,7 +164,7 @@ Tag | Dockerfile
 ##### .NET 9 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-9.0.100-alpha.1-preview-windowsservercore-ltsc2022, 9.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+9.0.100-alpha.1-windowsservercore-ltsc2022, 9.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
@@ -176,7 +176,7 @@ Tag | Dockerfile
 ##### .NET 9 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-9.0.100-alpha.1-preview-nanoserver-1809, 9.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/nanoserver-1809/amd64/Dockerfile)
+9.0.100-alpha.1-nanoserver-1809, 9.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server Core 2019 amd64 Tags
 Tag | Dockerfile
@@ -188,7 +188,7 @@ Tag | Dockerfile
 ##### .NET 9 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-9.0.100-alpha.1-preview-windowsservercore-ltsc2019, 9.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+9.0.100-alpha.1-windowsservercore-ltsc2019, 9.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/nightly/sdk at https://mcr.microsoft.com/v2/dotnet/nightly/sdk/tags/list.
 <!--End of generated tags-->

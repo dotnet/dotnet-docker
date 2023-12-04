@@ -14,8 +14,11 @@
     set isRpmInstall to isFullMariner && dotnetVersion = "6.0" ^
     set isSingleStage to (isAlpine || isRpmInstall) && !isInternal ^
     set runtimeDepsVariant to when(ARGS["is-extra"], "-extra", "") ^
+    set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "7.0" || dotnetVersion = "8.0",
+        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
+        VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
     set runtimeDepsBaseTag to cat(
-        "$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, runtimeDepsVariant, ARCH_TAG_SUFFIX) ^
+        "$REPO:", tagVersion, "-", OS_VERSION, runtimeDepsVariant, ARCH_TAG_SUFFIX) ^
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
     set installerImageTag to when(isDistrolessMariner,
         cat("mcr.microsoft.com/cbl-mariner/base/core:", OS_VERSION_NUMBER),
