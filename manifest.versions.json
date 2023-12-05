@@ -83,9 +83,9 @@
     "chisel|8.0|url": "$(chisel|6.0|url)",
     "chisel|9.0|url": "$(chisel|6.0|url)",
 
-    "chisel|6.0|ref": "$(chisel|9.0|ref)",
-    "chisel|8.0|ref": "$(chisel|9.0|ref)",
     "chisel|9.0|ref": "v0.8.0",
+    "chisel|8.0|ref": "$(chisel|9.0|ref)",
+    "chisel|6.0|ref": "$(chisel|9.0|ref)",
 
     "dotnet|6.0|product-version": "6.0.25",
     "dotnet|7.0|product-version": "7.0.14",
@@ -184,9 +184,9 @@
     "rocks-toolbox|8.0|url": "$(rocks-toolbox|6.0|url)",
     "rocks-toolbox|9.0|url": "$(rocks-toolbox|6.0|url)",
 
-    "rocks-toolbox|6.0|ref": "$(rocks-toolbox|9.0|ref)",
-    "rocks-toolbox|8.0|ref": "$(rocks-toolbox|9.0|ref)",
     "rocks-toolbox|9.0|ref": "v1.0.0",
+    "rocks-toolbox|8.0|ref": "$(rocks-toolbox|9.0|ref)",
+    "rocks-toolbox|6.0|ref": "$(rocks-toolbox|9.0|ref)",
 
     "runtime|6.0|build-version": "6.0.25",
     "runtime|6.0|targeting-pack-version": "$(runtime|6.0|build-version)",
