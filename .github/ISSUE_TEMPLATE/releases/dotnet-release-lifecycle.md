@@ -1,7 +1,7 @@
-# New .NET Major Version Release
+# New .NET Version Release Lifecycle
 
 This document is a collection of tasks that need to be completed over the lifecycle of a .NET release.
-Each checkbox represents an issue that should be filed.
+Each top-level checkbox represents an issue that should be filed.
 File all issues at once when a new .NET version is in Alpha.
 Add due dates to each of the issues so that we don't lose track of them.
 
@@ -47,6 +47,8 @@ Add due dates to each of the issues so that we don't lose track of them.
     - Example issue: https://github.com/dotnet/docker-tools/issues/1181
 - [ ] Update samples to new .NET version
     - Consider creating new samples to feature new .NET or .NET Docker features
+- [ ] Review supported OS versions for new .NET version before release
+    - Include only the latest/LTS version of each operating system according to our [supported operating systems documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md#operating-systems).
 
 ## GA
 - [ ] New .NET version GA tasks (one issue)
