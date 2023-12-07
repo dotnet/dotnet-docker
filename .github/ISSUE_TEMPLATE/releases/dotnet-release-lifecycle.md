@@ -2,7 +2,8 @@
 
 This document is a collection of tasks that need to be completed over the lifecycle of a .NET release.
 Each top-level checkbox represents an issue that should be filed.
-File all issues at once when a new .NET version is in Alpha.
+File all release and pre-release issues at once when a new .NET version is in Alpha.
+File an issue for removing an EOL .NET version *after* its last release, so that it can be removed before the next release.
 Add due dates to each of the issues so that we don't lose track of them.
 
 ### Breaking changes
@@ -62,7 +63,7 @@ Add due dates to each of the issues so that we don't lose track of them.
     - [ ] Update documentation as necessary to reference the new .NET version
 
 ## EOL
-- [ ] Remove EOL .NET version from `main` and `nightly` repos (one issue)
+- [ ] Remove EOL .NET version from `main` and `nightly` branches (one issue)
     - [ ] Remove all entries for the EOL .NET version in `manifest.json`, `manifest.versions.json`, [ImageVersion.cs](https://github.com/dotnet/dotnet-docker/blob/nightly/tests/Microsoft.DotNet.Docker.Tests/ImageVersion.cs), [TestData.cs](https://github.com/dotnet/dotnet-docker/blob/nightly/tests/Microsoft.DotNet.Docker.Tests/TestData.cs), [MCR tags metadata templates](https://github.com/dotnet/dotnet-docker/tree/main/eng/mcr-tags-metadata-templates), and delete the Dockerfiles
     - [ ] Search for and simplify conditions including the EOL .NET Version in the Dockerfile templates and tests
     - [ ] Replace all references to the EOL .NET version in documentation with a new .NET version
