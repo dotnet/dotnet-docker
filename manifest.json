@@ -1915,7 +1915,7 @@
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
-                  "type": "Integral",
+                  "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-arm32v7"
                   ]
