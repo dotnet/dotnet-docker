@@ -19,6 +19,8 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.JammyChiseled,       Arch = Arch.Amd64,   SdkOS = OS.Jammy },
+            new ProductImageData { Version = V6_0, OS = OS.JammyChiseled,       Arch = Arch.Amd64,   SdkOS = OS.Jammy,
+                    ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V6_0, OS = OS.Alpine318,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Mariner20,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20 },
@@ -30,6 +32,8 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Arm64 },
             new ProductImageData { Version = V6_0, OS = OS.JammyChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Jammy },
+            new ProductImageData { Version = V6_0, OS = OS.JammyChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Jammy,
+                    ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V6_0, OS = OS.Alpine318,           Arch = Arch.Arm64 },
 
             new ProductImageData { Version = V6_0, OS = OS.BullseyeSlim,        Arch = Arch.Arm },
@@ -37,6 +41,8 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Arm },
             new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Arm },
             new ProductImageData { Version = V6_0, OS = OS.JammyChiseled,       Arch = Arch.Arm,     SdkOS = OS.Jammy },
+            new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm,     SdkOS = OS.Jammy,
+                    ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V6_0, OS = OS.Alpine318,           Arch = Arch.Arm },
 
 
