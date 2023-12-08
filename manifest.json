@@ -1877,6 +1877,13 @@
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-amd64"
                   ]
+                },
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-amd64"
+                  ]
                 }
               ]
             },
@@ -1898,6 +1905,13 @@
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-arm64v8"
                   ]
+                },
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-arm64v8"
+                  ]
                 }
               ]
             },
@@ -1915,6 +1929,13 @@
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-arm32v7"
+                  ]
+                },
+                {
+                  "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-arm32v7"
