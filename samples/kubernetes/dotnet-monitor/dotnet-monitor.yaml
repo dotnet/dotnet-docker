@@ -16,13 +16,13 @@ spec:
       - name: aspnetapp
         image: mcr.microsoft.com/dotnet/samples:aspnetapp
         ports:
-        - containerPort: 80     
+        - containerPort: 8080
         env:
         - name: DOTNET_DiagnosticPorts
           value: /diag/dotnet-monitor.sock
         volumeMounts:
         - mountPath: /diag
-          name: diagvol        
+          name: diagvol
         resources:
           requests:
             memory: "60Mi"
@@ -62,7 +62,7 @@ spec:
             memory: 256Mi
       volumes:
       - name: diagvol
-        emptyDir: {}            
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

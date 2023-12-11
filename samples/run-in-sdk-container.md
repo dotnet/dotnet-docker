@@ -78,10 +78,10 @@ The following example demonstrates using `dotnet run` with an ASP.NET Core app i
 The instructions assume you are in the `samples/aspnetapp/aspnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax used).
 
 ```console
-% docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --no-launch-profile
+% docker run --rm -it -p 8000:8080 -v $(pwd):/app/ -w /app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --no-launch-profile
 
 info: Microsoft.Hosting.Lifetime[0]
-      Now listening on: http://[::]:80
+      Now listening on: http://[::]:8080
 info: Microsoft.Hosting.Lifetime[0]
       Application started. Press Ctrl+C to shut down.
 info: Microsoft.Hosting.Lifetime[0]
@@ -99,7 +99,7 @@ The following instructions demonstrate this scenario in various environments:
 ### Linux or macOS
 
 ```console
-docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --no-launch-profile
+docker run --rm -it -p 8000:8080 -v $(pwd):/app/ -w /app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --no-launch-profile
 ```
 
 ### Windows using Linux containers
@@ -107,7 +107,7 @@ docker run --rm -it -p 8000:80 -v $(pwd):/app/ -w /app -e ASPNETCORE_URLS=http:/
 This example uses PowerShell.
 
 ```console
-docker run --rm -it -p 8000:80 -v ${pwd}:/app/ -w /app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --no-launch-profile
+docker run --rm -it -p 8000:8080 -v ${pwd}:/app/ -w /app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --no-launch-profile
 ```
 
 ### Windows using Windows containers
@@ -115,7 +115,7 @@ docker run --rm -it -p 8000:80 -v ${pwd}:/app/ -w /app -e ASPNETCORE_URLS=http:/
 This example uses PowerShell.
 
 ```console
-docker run --rm -it -p 8000:80 -v ${pwd}:C:\app\ -w \app -e ASPNETCORE_URLS=http://+:80 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --no-launch-profile
+docker run --rm -it -p 8000:8080 -v ${pwd}:C:\app\ -w \app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --no-launch-profile
 ```
 
 ### Using a launch profile to configure ASP.NET Core
@@ -128,7 +128,7 @@ The following JSON segment shows the `container` profile that was added to enabl
 "publicdev": {
   "commandName": "Project",
   "launchBrowser": true,
-  "applicationUrl": "http://+:80",
+  "applicationUrl": "http://+:8080",
   "environmentVariables": {
     "ASPNETCORE_ENVIRONMENT": "Development"
   }
@@ -140,7 +140,7 @@ The following instructions demonstrate this scenario in various environments:
 ### Linux or macOS
 
 ```console
-docker run --rm -it -p 8000:80 -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --launch-profile publicdev
+docker run --rm -it -p 8000:8080 -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --launch-profile publicdev
 ```
 
 ### Windows using Linux containers
@@ -148,7 +148,7 @@ docker run --rm -it -p 8000:80 -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/s
 The following example uses PowerShell.
 
 ```console
-docker run --rm -it -p 8000:80 -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --launch-profile publicdev
+docker run --rm -it -p 8000:8080 -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --launch-profile publicdev
 ```
 
 ### Windows using Windows containers
@@ -156,7 +156,8 @@ docker run --rm -it -p 8000:80 -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/s
 The following example uses PowerShell.
 
 ```console
-docker run --rm -it -p 8000:80 -v ${pwd}:C:\app -w C:\app mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --launch-profile publicdev
+docker run --rm -it -p 8000:8080 -v ${pwd}:C:\app -w C:\app mcr.microsoft.com/dotnet/sdk:7.0 dotnet run --launch-profile publicdev
+
 ```
 
 ## More Samples
