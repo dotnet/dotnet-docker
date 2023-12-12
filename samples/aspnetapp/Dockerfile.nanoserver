@@ -16,6 +16,7 @@ RUN dotnet publish --ucr --no-restore -o /app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-nanoserver-$TAG
+EXPOSE 8080
 WORKDIR /app
 COPY --from=build /app .
 HEALTHCHECK CMD curl -sf --show-error http://localhost:80/healthz || exit 1
