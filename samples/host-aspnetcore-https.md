@@ -29,10 +29,10 @@ You need the [.NET 6 SDK or newer](https://dotnet.microsoft.com/download) for so
 Generate cert and configure local machine:
 
 > [!NOTE]
-> If you are using PowerShell instead of CMD, substitute `%USERPROFILE%` with `$env:USERPROFILE`.
+> If you are using CMD instead of PowerShell, substitute `$env:USERPROFILE` with `%USERPROFILE%`.
 
 ```console
-dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p crypticpassword
+dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p crypticpassword
 dotnet dev-certs https --trust
 ```
 
@@ -43,7 +43,7 @@ Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
 docker pull mcr.microsoft.com/dotnet/samples:aspnetapp
-docker run --rm -it -p 8000:8080 -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="crypticpassword" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v %USERPROFILE%\.aspnet\https:/https/ mcr.microsoft.com/dotnet/samples:aspnetapp
+docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="crypticpassword" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v $env:USERPROFILE\.aspnet\https:/https/ mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 > [!NOTE]
@@ -68,7 +68,7 @@ Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
 docker pull mcr.microsoft.com/dotnet/samples:aspnetapp
-docker run --rm -it -p 8000:8080 -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="crypticpassword" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v ${HOME}/.aspnet/https:/https/ mcr.microsoft.com/dotnet/samples:aspnetapp
+docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="crypticpassword" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v ${HOME}/.aspnet/https:/https/ mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 > [!NOTE]
@@ -79,7 +79,7 @@ docker run --rm -it -p 8000:8080 -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e 
 Generate cert and configure local machine:
 
 ```console
-dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p crypticpassword
+dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p crypticpassword
 dotnet dev-certs https --trust
 ```
 
@@ -90,7 +90,7 @@ Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
 docker pull mcr.microsoft.com/dotnet/samples:aspnetapp
-docker run --rm -it -p 8000:8080 -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="crypticpassword" -e ASPNETCORE_Kestrel__Certificates__Default__Path=\https\aspnetapp.pfx -v %USERPROFILE%\.aspnet\https:C:\https\ --user ContainerAdministrator mcr.microsoft.com/dotnet/samples:aspnetapp
+docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="crypticpassword" -e ASPNETCORE_Kestrel__Certificates__Default__Path=\https\aspnetapp.pfx -v $env:USERPROFILE\.aspnet\https:C:\https\ --user ContainerAdministrator mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 > [!NOTE]

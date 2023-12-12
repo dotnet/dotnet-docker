@@ -6,7 +6,7 @@ This document demonstrates how to develop ASP.NET Core applications with HTTPS i
 
 See [Hosting ASP.NET Core Images with Docker over HTTPS](host-aspnetcore-https.md) for production scenarios.
 
-The samples are written for `cmd.exe`. PowerShell users will need to special case the environment variables that are used in the instructions.
+The Windows examples below are written for PowerShell. CMD users will need to change the format of the environment variables in the instructions from `$env:USERPROFILE` to `%USERPROFILE%`.
 
 This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
@@ -74,6 +74,7 @@ dotnet dev-certs https --trust
 Configure application secrets, for the certificate:
 
 ```console
+dotnet user-secrets init -p aspnetapp\aspnetapp.csproj
 dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
@@ -91,7 +92,7 @@ Run the container image with ASP.NET Core configured for HTTPS:
 docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_ENVIRONMENT=Development -v $env:APPDATA\microsoft\UserSecrets\:/root/.microsoft/usersecrets -v $env:USERPROFILE\.aspnet\https:/root/.aspnet/https/ aspnetapp
 ```
 
-After the application starts, navigate to `http://localhost:8001` in your web browser.
+After the application starts, navigate to `https://localhost:8001` in your web browser.
 
 ### macOS
 
@@ -113,6 +114,7 @@ dotnet dev-certs https --trust
 Configure application secrets, for the certificate:
 
 ```console
+dotnet user-secrets init -p aspnetapp/aspnetapp.csproj
 dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
@@ -130,7 +132,7 @@ Run the container image with ASP.NET Core configured for HTTPS:
 docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_ENVIRONMENT=Development -v ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
 ```
 
-After the application starts, navigate to `http://localhost:8001` in your web browser.
+After the application starts, navigate to `https://localhost:8001` in your web browser.
 
 ### Linux
 
@@ -153,6 +155,7 @@ dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p <CREDENTIAL_PL
 Configure application secrets, for the certificate:
 
 ```console
+dotnet user-secrets init -p aspnetapp/aspnetapp.csproj
 dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
@@ -168,7 +171,7 @@ Run the container image with ASP.NET Core configured for HTTPS:
 docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_ENVIRONMENT=Development -e ASPNETCORE_Kestrel__Certificates__Development__Password="<CREDENTIAL_PLACEHOLDER>" -v ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets -v ${HOME}/.aspnet/https:/root/.aspnet/https/ aspnetapp
 ```
 
-After the application starts, navigate to `http://localhost:8001` in your web browser.
+After the application starts, navigate to `https://localhost:8001` in your web browser.
 
 ### Windows using Windows containers
 
@@ -196,6 +199,7 @@ dotnet dev-certs https --trust
 Configure application secrets, for the certificate:
 
 ```console
+dotnet user-secrets init -p aspnetapp/aspnetapp.csproj
 dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
@@ -213,7 +217,7 @@ Run the container image with ASP.NET Core configured for HTTPS.
 docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_ENVIRONMENT=Development -v $env:APPDATA\microsoft\UserSecrets\:C:\Users\ContainerUser\AppData\Roaming\microsoft\UserSecrets -v $env:USERPROFILE\.aspnet\https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https aspnetapp
 ```
 
-After the application starts, navigate to `http://localhost:8001` in your web browser.
+After the application starts, navigate to `https://localhost:8001` in your web browser.
 
 > In the case of using https, be sure to check the certificate you're using is trusted on the host. You can start with navigating to https://localhost:8001 in the browser. If you're looking to test https with a domain name (e.g. https://contoso.com:8001), the certificate would also need the appropiate Subject Alternative Name included, and the DNS settings on the host would need to be updated. In the case of using the generated dev certificate, the trusted certificate will be issued from localhost and will not have the SAN added.
 
