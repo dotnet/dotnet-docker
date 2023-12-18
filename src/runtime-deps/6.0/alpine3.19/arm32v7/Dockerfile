@@ -1,4 +1,4 @@
-FROM arm32v7/alpine:3.18
+FROM arm32v7/alpine:3.19
 
 ENV \
     # Configure web servers to bind to port 80 when present

@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:6.0.25-alpine3.18-arm32v7
+FROM $REPO:6.0.25-alpine3.19-arm32v7
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -17,7 +17,7 @@ ENV \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Alpine-3.18-arm32
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Alpine-3.19-arm32
 
 RUN apk add --upgrade --no-cache \
         curl \
