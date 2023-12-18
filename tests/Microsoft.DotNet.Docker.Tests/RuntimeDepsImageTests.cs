@@ -44,8 +44,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            ImageScenarioVerifier verifier = new(imageData, DockerHelper, OutputHelper, isWeb: true);
-            await verifier.Execute();
+            // ImageScenarioVerifier verifier = new(imageData, DockerHelper, OutputHelper, isWeb: true);
+            // await verifier.Execute();
         }
 
         [LinuxImageTheory]

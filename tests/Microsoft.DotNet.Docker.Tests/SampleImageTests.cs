@@ -42,7 +42,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 return;
             }
-            
+
             await VerifySampleAsync(imageData, SampleImageType.Dotnetapp, (image, containerName) =>
             {
                 string output = DockerHelper.Run(image, containerName);
@@ -77,7 +77,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
                     if (!Config.IsHttpVerificationDisabled)
                     {
-                        await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(containerName, DockerHelper, OutputHelper, port);
+                        await WebScenario.VerifyHttpResponseFromContainerAsync(containerName, DockerHelper, OutputHelper, port);
                     }
 
                     ValidateEnvironmentVariables(imageData, image, SampleImageType.Aspnetapp);
@@ -192,7 +192,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 variables.Add(new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", imageData.DefaultPort.ToString()));
             }
-            
+
             EnvironmentVariableInfo.Validate(
                 variables,
                 image,

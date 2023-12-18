@@ -178,7 +178,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (!Config.IsHttpVerificationDisabled)
                     {
                         // Verify processes returns 401 (Unauthorized) since authentication was not configured.
-                        await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(
+                        await WebScenario.VerifyHttpResponseFromContainerAsync(
                             containerName,
                             DockerHelper,
                             OutputHelper,
@@ -211,7 +211,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         // Verify metrics endpoint is accessible and produces zero processes
                         using HttpResponseMessage processesMessage =
-                            await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                            await WebScenario.GetHttpResponseFromContainerAsync(
                                 containerName,
                                 DockerHelper,
                                 OutputHelper,
@@ -251,7 +251,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (!Config.IsHttpVerificationDisabled)
                     {
                         // Verify processes returns 401 (Unauthorized) since authentication was not provided.
-                        await ImageScenarioVerifier.VerifyHttpResponseFromContainerAsync(
+                        await WebScenario.VerifyHttpResponseFromContainerAsync(
                             containerName,
                             DockerHelper,
                             OutputHelper,
@@ -261,7 +261,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
                         // Verify processes is accessible using authorization header
                         using HttpResponseMessage processesMessage =
-                            await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                            await WebScenario.GetHttpResponseFromContainerAsync(
                                 containerName,
                                 DockerHelper,
                                 OutputHelper,
@@ -305,7 +305,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (!Config.IsHttpVerificationDisabled)
                     {
                         using HttpResponseMessage responseMessage =
-                            await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                            await WebScenario.GetHttpResponseFromContainerAsync(
                                 monitorName,
                                 DockerHelper,
                                 OutputHelper,
@@ -340,7 +340,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (!Config.IsHttpVerificationDisabled)
                     {
                         using HttpResponseMessage responseMessage =
-                            await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                            await WebScenario.GetHttpResponseFromContainerAsync(
                                 monitorName,
                                 DockerHelper,
                                 OutputHelper,
@@ -393,7 +393,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 {
                     // Verify metrics endpoint is accessible
                     using HttpResponseMessage metricsMessage =
-                        await ImageScenarioVerifier.GetHttpResponseFromContainerAsync(
+                        await WebScenario.GetHttpResponseFromContainerAsync(
                             monitorContainerName,
                             DockerHelper,
                             OutputHelper,

@@ -33,8 +33,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper);
-            await verifier.Execute();
+            TestScenario scenario = new(imageData, DockerHelper, OutputHelper);
+            await scenario.Execute();
         }
 
         [DotNetTheory]

@@ -33,8 +33,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper, isWeb: true);
-            await verifier.Execute();
+            TestScenario scenario = imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite)
+                ? new WebScenarioComposite(imageData, DockerHelper, OutputHelper)
+                : new WebScenario(imageData, DockerHelper, OutputHelper);
+            await scenario.Execute();
         }
 
         [DotNetTheory]
