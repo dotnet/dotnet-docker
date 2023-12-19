@@ -1,6 +1,7 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isAlpine319 to find(OS_VERSION, "alpine3.19") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
@@ -84,6 +85,10 @@ else:{{InsertTemplate("Dockerfile.linux.install-sdk",
     [
         "install-method": "download-and-install",
         "is-rpm-install": isRpmInstall
-    ])}}}}{{if !isAlpine || ARCH_SHORT = "x64":
+    ])}}}}{{
+
+    _ PowerShell does not yet support .NET 6 + Alpine 3.19 (https://github.com/PowerShell/PowerShell/issues/19703)
+
+}}{{if (!isAlpine || ARCH_SHORT = "x64") && (dotnetVersion != "6.0" || !isAlpine319):
 
 {{InsertTemplate("Dockerfile.linux.install-powershell")}}}}

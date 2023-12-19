@@ -40,10 +40,10 @@ namespace Microsoft.DotNet.Docker.Tests
                     reason = "PowerShell does not have Alpine arm images, skip testing";
                     return false;
                 }
-                else if (imageData.Version.Major == 6 && imageData.OS.Contains("3.18"))
+                else if (imageData.Version.Major == 6 && imageData.OS.Contains("3.19"))
                 {
-                    // PowerShell does not support Alpine 3.18 yet (https://github.com/PowerShell/PowerShell/issues/19703)
-                    reason = "Powershell does not support Alpine 3.18 yet, skip testing";
+                    // PowerShell does not support Alpine 3.19 yet (https://github.com/PowerShell/PowerShell/issues/20945)
+                    reason = "Powershell does not support Alpine 3.19 yet, skip testing (https://github.com/PowerShell/PowerShell/issues/20945)";
                     return false;
                 }
             }
