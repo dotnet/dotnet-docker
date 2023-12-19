@@ -22,6 +22,7 @@ RUN apk add --upgrade --no-cache \
         git \
         icu-data-full \
         icu-libs \
+        libatomic \
         tzdata
 
 # Install .NET SDK
