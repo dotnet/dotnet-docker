@@ -76,11 +76,13 @@ Tags | Dockerfile | OS Version
 7.0.14-alpine3.18-amd64, 7.0-alpine3.18-amd64, 7.0-alpine-amd64, 7.0.14-alpine3.18, 7.0-alpine3.18, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
 7.0.14-jammy-amd64, 7.0-jammy-amd64, 7.0.14-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 7.0.14-jammy-chiseled-amd64, 7.0-jammy-chiseled-amd64, 7.0.14-jammy-chiseled, 7.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+7.0.14-jammy-chiseled-extra-amd64, 7.0-jammy-chiseled-extra-amd64, 7.0.14-jammy-chiseled-extra, 7.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/jammy-chiseled-extra/amd64/Dockerfile) | Ubuntu 22.04
 6.0.25-bookworm-slim-amd64, 6.0-bookworm-slim-amd64, 6.0.25-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 6.0.25-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.25-bullseye-slim, 6.0-bullseye-slim, 6.0.25, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
 6.0.25-alpine3.18-amd64, 6.0-alpine3.18-amd64, 6.0-alpine-amd64, 6.0.25-alpine3.18, 6.0-alpine3.18, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
 6.0.25-jammy-amd64, 6.0-jammy-amd64, 6.0.25-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 6.0.25-jammy-chiseled-amd64, 6.0-jammy-chiseled-amd64, 6.0.25-jammy-chiseled, 6.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+6.0.25-jammy-chiseled-extra-amd64, 6.0-jammy-chiseled-extra-amd64, 6.0.25-jammy-chiseled-extra, 6.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/jammy-chiseled-extra/amd64/Dockerfile) | Ubuntu 22.04
 6.0.25-focal-amd64, 6.0-focal-amd64, 6.0.25-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ##### .NET 9 Preview Tags
@@ -105,11 +107,13 @@ Tags | Dockerfile | OS Version
 7.0.14-alpine3.18-arm64v8, 7.0-alpine3.18-arm64v8, 7.0-alpine-arm64v8, 7.0.14-alpine3.18, 7.0-alpine3.18, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
 7.0.14-jammy-arm64v8, 7.0-jammy-arm64v8, 7.0.14-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 7.0.14-jammy-chiseled-arm64v8, 7.0-jammy-chiseled-arm64v8, 7.0.14-jammy-chiseled, 7.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+7.0.14-jammy-chiseled-extra-arm64v8, 7.0-jammy-chiseled-extra-arm64v8, 7.0.14-jammy-chiseled-extra, 7.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/jammy-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 22.04
 6.0.25-bookworm-slim-arm64v8, 6.0-bookworm-slim-arm64v8, 6.0.25-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 6.0.25-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.25-bullseye-slim, 6.0-bullseye-slim, 6.0.25, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
 6.0.25-alpine3.18-arm64v8, 6.0-alpine3.18-arm64v8, 6.0-alpine-arm64v8, 6.0.25-alpine3.18, 6.0-alpine3.18, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
 6.0.25-jammy-arm64v8, 6.0-jammy-arm64v8, 6.0.25-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 6.0.25-jammy-chiseled-arm64v8, 6.0-jammy-chiseled-arm64v8, 6.0.25-jammy-chiseled, 6.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+6.0.25-jammy-chiseled-extra-arm64v8, 6.0-jammy-chiseled-extra-arm64v8, 6.0.25-jammy-chiseled-extra, 6.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/jammy-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 22.04
 6.0.25-focal-arm64v8, 6.0-focal-arm64v8, 6.0.25-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ##### .NET 9 Preview Tags
@@ -134,11 +138,13 @@ Tags | Dockerfile | OS Version
 7.0.14-alpine3.18-arm32v7, 7.0-alpine3.18-arm32v7, 7.0-alpine-arm32v7, 7.0.14-alpine3.18, 7.0-alpine3.18, 7.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
 7.0.14-jammy-arm32v7, 7.0-jammy-arm32v7, 7.0.14-jammy, 7.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 7.0.14-jammy-chiseled-arm32v7, 7.0-jammy-chiseled-arm32v7, 7.0.14-jammy-chiseled, 7.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
+7.0.14-jammy-chiseled-extra-arm32v7, 7.0-jammy-chiseled-extra-arm32v7, 7.0.14-jammy-chiseled-extra, 7.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/7.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.25-bookworm-slim-arm32v7, 6.0-bookworm-slim-arm32v7, 6.0.25-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 6.0.25-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.25-bullseye-slim, 6.0-bullseye-slim, 6.0.25, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
 6.0.25-alpine3.18-arm32v7, 6.0-alpine3.18-arm32v7, 6.0-alpine-arm32v7, 6.0.25-alpine3.18, 6.0-alpine3.18, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
 6.0.25-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.25-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.25-jammy-chiseled-arm32v7, 6.0-jammy-chiseled-arm32v7, 6.0.25-jammy-chiseled, 6.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
+6.0.25-jammy-chiseled-extra-arm32v7, 6.0-jammy-chiseled-extra-arm32v7, 6.0.25-jammy-chiseled-extra, 6.0-jammy-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.25-focal-arm32v7, 6.0-focal-arm32v7, 6.0.25-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ##### .NET 9 Preview Tags
