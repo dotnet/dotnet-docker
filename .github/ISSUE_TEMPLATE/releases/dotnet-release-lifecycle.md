@@ -49,7 +49,7 @@ Add due dates to each of the issues so that we don't lose track of them.
 - [ ] Update samples to new .NET version
     - Consider creating new samples to feature new .NET or .NET Docker features
     - [ ] Update documentation as necessary to reference the new .NET version
-    - [ ] Update IIS sample URL to preview version of `dotnet-hosting-win.exe`: https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.windowsservercore-iis#L19.
+    - [ ] Update IIS sample URL to preview version of `dotnet-hosting-win.exe` (`/dotnet/<version>/preview/`): https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.windowsservercore-iis#L19.
 - [ ] Review supported OS versions for new .NET version before release
     - Include only the latest/LTS version of each operating system according to our [supported operating systems documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md#operating-systems).
 
