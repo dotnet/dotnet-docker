@@ -13,6 +13,7 @@ RUN dotnet publish --ucr --no-restore -o /app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-windowsservercore-ltsc2022
+EXPOSE 8080
 WORKDIR /app
 COPY --from=build /app .
 USER ContainerUser

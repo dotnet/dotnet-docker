@@ -88,7 +88,7 @@ RUN apk add --no-cache tzdata
 `tzdata` can be added to a .NET Ubuntu image with the following `Dockerfile` fragment.
 
 ```bash
-apt update && DEBIAN_FRONTEND=noninteractive && apt install -y tzdata && rm -rf /var/lib/apt/lists/*
+apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && rm -rf /var/lib/apt/lists/*
 ```
 
 ### Launching a container with timezone information
