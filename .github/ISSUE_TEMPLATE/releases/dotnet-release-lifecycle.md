@@ -61,6 +61,7 @@ Add due dates to each of the issues so that we don't lose track of them.
         - Include new .NET Docker features and breaking changes and defer to other official .NET documentation/announcements for other features
         - Example announcement: https://github.com/dotnet/dotnet-docker/discussions/4995
     - [ ] Update documentation as necessary to reference the new .NET version
+    - [ ] Update IIS sample URL to final version of `dotnet-hosting-win.exe` (remove "preview" from the URL): https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.windowsservercore-iis#L19.
 
 ## EOL
 - [ ] Remove EOL .NET version from `main` and `nightly` branches (one issue)
