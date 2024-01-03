@@ -75,6 +75,7 @@
     "libicu|focal": 66,
     "libicu|jammy": 70,
 
+    "libssl|alpine3.19": "3",
     "libssl|alpine3.18": "3",
     "libssl|bionic": "1.1",
     "libssl|bookworm": "3",
