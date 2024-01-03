@@ -41,7 +41,7 @@ public class TestScenario
         TestSolution = new(imageData, SampleName, dockerHelper);
     }
 
-    protected string Build(string stageTarget, string[] customBuildArgs)
+    protected string Build(string stageTarget, string[]? customBuildArgs)
     {
         string tag = ImageData.GetIdentifier(stageTarget);
 
@@ -52,9 +52,22 @@ public class TestScenario
             $"port={ImageData.DefaultPort}"
         ];
 
-        if (DockerHelper.IsLinuxContainerModeEnabled && !ImageData.ImageVariant.HasFlag(DotNetImageVariant.Composite))
+        if (DockerHelper.IsLinuxContainerModeEnabled)
         {
-            buildArgs.Add($"runtime_deps_image={ImageData.GetImage(DotNetImageRepo.Runtime_Deps, DockerHelper)}");
+            // Docker needs all FROM images to be defined even if we won't use them for testing Composite images
+            ProductImageData runtimeDepsImageData = ImageData.ImageVariant.HasFlag(DotNetImageVariant.Composite)
+                ?  new ProductImageData()
+                    {
+                        Version = ImageData.Version,
+                        OS = ImageData.OS,
+                        Arch = ImageData.Arch,
+                        SdkOS = ImageData.SdkOS,
+                        ImageVariant = DotNetImageVariant.None,
+                        SupportedImageRepos = DotNetImageRepo.Runtime_Deps,
+                    }
+                : ImageData;
+
+            buildArgs.Add($"runtime_deps_image={runtimeDepsImageData.GetImage(DotNetImageRepo.Runtime_Deps, DockerHelper)}");
         }
 
         if (customBuildArgs != null)

@@ -93,11 +93,11 @@ public class TestSolution : IDisposable
 
         string newContent;
 
-        MethodDeclarationSyntax mainMethod = programTree.GetRoot().DescendantNodes()
+        MethodDeclarationSyntax? mainMethod = programTree.GetRoot().DescendantNodes()
             .OfType<MethodDeclarationSyntax>()
             .FirstOrDefault(method => method.Identifier.ValueText == "Main");
 
-        if (mainMethod is null)
+        if (mainMethod is null || mainMethod.Body is null)
         {
             // Handles project templates that use top-level statements instead of a Main method
             IEnumerable<SyntaxNode> nodes = programTree.GetRoot().ChildNodes();

@@ -8,7 +8,6 @@ public class WebApiAotScenario(ProductImageData imageData, DockerHelper dockerHe
     : WebScenario(imageData, dockerHelper, outputHelper)
 {
     protected override string? Endpoint { get; } = "todos";
-
     protected override string SampleName { get; } = "webapiaot";
     protected override string BuildStageTarget { get; } = "publish_aot";
     protected override string TestStageTarget { get; } = "test";
