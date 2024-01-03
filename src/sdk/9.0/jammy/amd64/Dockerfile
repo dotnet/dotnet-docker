@@ -19,6 +19,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         curl \
         git \
+        libatomic1 \
         wget \
     && rm -rf /var/lib/apt/lists/*
 
