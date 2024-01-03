@@ -32,18 +32,18 @@ Generate cert and configure local machine:
 > If you are using CMD instead of PowerShell, substitute `$env:USERPROFILE` with `%USERPROFILE%`.
 
 ```console
-dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p placeholder
+dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p <CREDENTIAL_PLACEHOLDER>
 dotnet dev-certs https --trust
 ```
 
 > [!NOTE]
-> `placeholder` is used as a stand-in for a password of your own choosing.
+> `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
 
 Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
 docker pull mcr.microsoft.com/dotnet/samples:aspnetapp
-docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="placeholder" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v $env:USERPROFILE\.aspnet\https:/https/ mcr.microsoft.com/dotnet/samples:aspnetapp
+docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="<CREDENTIAL_PLACEHOLDER>" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v $env:USERPROFILE\.aspnet\https:/https/ mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 > [!NOTE]
@@ -54,7 +54,7 @@ docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Ke
 Generate cert and configure local machine:
 
 ```console
-dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p placeholder
+dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p <CREDENTIAL_PLACEHOLDER>
 dotnet dev-certs https --trust
 ```
 
@@ -62,13 +62,13 @@ dotnet dev-certs https --trust
 > `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. It is likely that you need to trust the certificate in your browser.
 
 > [!NOTE]
-> `placeholder` is used as a stand-in for a password of your own choosing.
+> `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
 
 Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
 docker pull mcr.microsoft.com/dotnet/samples:aspnetapp
-docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="placeholder" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v ${HOME}/.aspnet/https:/https/ mcr.microsoft.com/dotnet/samples:aspnetapp
+docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="<CREDENTIAL_PLACEHOLDER>" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v ${HOME}/.aspnet/https:/https/ mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 > [!NOTE]
@@ -79,18 +79,18 @@ docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Ke
 Generate cert and configure local machine:
 
 ```console
-dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p placeholder
+dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p <CREDENTIAL_PLACEHOLDER>
 dotnet dev-certs https --trust
 ```
 
 > [!NOTE]
-> `placeholder` is used as a stand-in for a password of your own choosing.
+> `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
 
 Run the container image with ASP.NET Core configured for HTTPS:
 
 ```console
 docker pull mcr.microsoft.com/dotnet/samples:aspnetapp
-docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="placeholder" -e ASPNETCORE_Kestrel__Certificates__Default__Path=\https\aspnetapp.pfx -v $env:USERPROFILE\.aspnet\https:C:\https\ --user ContainerAdministrator mcr.microsoft.com/dotnet/samples:aspnetapp
+docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="<CREDENTIAL_PLACEHOLDER>" -e ASPNETCORE_Kestrel__Certificates__Default__Path=\https\aspnetapp.pfx -v $env:USERPROFILE\.aspnet\https:C:\https\ --user ContainerAdministrator mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 > [!NOTE]
