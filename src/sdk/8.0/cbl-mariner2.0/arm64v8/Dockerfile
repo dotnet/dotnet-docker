@@ -17,6 +17,7 @@ ENV \
 
 RUN tdnf install -y \
         git \
+        libatomic_ops \
         tar \
     && tdnf clean all
 
