@@ -10,23 +10,31 @@ namespace Microsoft.DotNet.Docker.Tests;
 public class TestScenario
 {
     protected static string AdminUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "root" : "ContainerAdministrator";
+
     protected static string NonRootUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "app" : "ContainerUser";
 
     protected DockerHelper DockerHelper { get; }
+
     protected ProductImageData ImageData { get; }
+
     protected ITestOutputHelper OutputHelper { get; }
+
     protected bool NonRootUserSupported { get; }
+
     protected TestSolution TestSolution { get; }
 
     protected virtual string SampleName { get; } = "console";
 
     // Target stages refer to stages in TestAppArtifacts/Dockerfile.linux
     protected virtual string BuildStageTarget { get; } = "build";
+
     protected virtual string? TestStageTarget { get; } = "test";
-    // protected virtual string[] AppStageTargets { get; } = [ "self_contained_app", "fx_dependent_app" ];
-    protected virtual string[] AppStageTargets { get; } = [ "boom" ];
+
+    protected virtual string[] AppStageTargets { get; } = [ "self_contained_app", "fx_dependent_app" ];
+
     protected virtual DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Runtime;
-    protected virtual DotNetImageRepo SdkImageRepo { get; } = DotNetImageRepo.SDK;
+
+    protected DotNetImageRepo SdkImageRepo { get; } = DotNetImageRepo.SDK;
 
     public TestScenario(
         ProductImageData imageData,
@@ -38,7 +46,7 @@ public class TestScenario
         OutputHelper = outputHelper;
         NonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && ImageData.Version.Major > 7;
 
-        TestSolution = new(imageData, SampleName, dockerHelper);
+        TestSolution = new(imageData, SampleName, dockerHelper, withTests: TestStageTarget != null);
     }
 
     protected string Build(string stageTarget, string[]? customBuildArgs)
@@ -124,7 +132,7 @@ public class TestScenario
             // Build and run tests on SDK image
             // Tests must run as admin user in order to write the test results to the output directory in the
             // project directory
-            if (TestStageTarget != null)
+            if (!string.IsNullOrEmpty(TestStageTarget))
             {
                 string unitTestTag = Build(TestStageTarget, customBuildArgs);
                 tags.Add(unitTestTag);
@@ -150,7 +158,7 @@ public class TestScenario
         }
     }
 
-    protected virtual async Task Run(string image, string user, string? command = null)
+    protected virtual Task Run(string image, string user, string? command = null)
     {
         string containerName = ImageData.GetIdentifier("app-run");
 
@@ -166,5 +174,7 @@ public class TestScenario
         {
             DockerHelper.DeleteContainer(containerName);
         }
+
+        return Task.FromResult(0);
     }
 }

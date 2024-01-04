@@ -61,6 +61,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
+        public async void VerifyBlazorWasmScenario(ProductImageData imageData)
+        {
+            BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper);
+            await testScenario.Execute();
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
         public void VerifyInsecureFiles(ProductImageData imageData)
         {
             base.VerifyCommonInsecureFiles(imageData);

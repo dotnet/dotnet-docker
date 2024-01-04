@@ -10,8 +10,7 @@ public class WebApiAotScenario(ProductImageData imageData, DockerHelper dockerHe
     protected override string? Endpoint { get; } = "todos";
     protected override string SampleName { get; } = "webapiaot";
     protected override string BuildStageTarget { get; } = "publish_aot";
-    protected override string TestStageTarget { get; } = "test";
+    protected override string? TestStageTarget { get; } = "test";
     protected override string[] AppStageTargets { get; } = [ "aot_app" ];
     protected override DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Runtime_Deps;
-    protected override DotNetImageRepo SdkImageRepo { get; } = DotNetImageRepo.SDK;
 }

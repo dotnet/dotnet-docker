@@ -11,25 +11,33 @@ namespace Microsoft.DotNet.Docker.Tests;
 public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
     : TestScenario(imageData, dockerHelper, outputHelper)
 {
+    protected virtual int? PortOverride { get; }= null;
+
     protected virtual string? Endpoint { get; } = null;
 
     protected override string SampleName { get; } = "web";
+
     protected override string BuildStageTarget { get; } = "build";
 
     // Running a scenario of unit testing within the sdk container is identical between a console app and web app,
     // so we only want to execute it for one of those app types.
     protected override string? TestStageTarget { get; } = null;
+
     protected override string[] AppStageTargets { get; } = [ "self_contained_app", "fx_dependent_app" ];
 
     protected override DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Aspnet;
-    protected override DotNetImageRepo SdkImageRepo { get; } = DotNetImageRepo.SDK;
 
     protected override async Task Run(string image, string user, string? command = null)
     {
         string containerName = ImageData.GetIdentifier("app-run");
 
         command = "dotnet run";
-        if (ImageData.Version.Major <= 7)
+
+        if (PortOverride != null)
+        {
+            command += $" --urls http://*:{PortOverride}";
+        }
+        else if (ImageData.Version.Major == 6 || ImageData.Version.Major == 7)
         {
             command += $" --urls http://0.0.0.0:{ImageData.DefaultPort}";
         }
@@ -66,7 +74,7 @@ public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, 
         Action<HttpResponseMessage>? validateCallback = null,
         AuthenticationHeaderValue? authorizationHeader = null)
     {
-        int retries = 32;
+        int retries = 4;
 
         // Can't use localhost when running inside containers or Windows.
         string url = !Config.IsRunningInContainer && DockerHelper.IsLinuxContainerModeEnabled

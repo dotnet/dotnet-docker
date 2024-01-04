@@ -25,7 +25,7 @@ public class TestSolution : IDisposable
 
     public string SolutionDir => _solutionDir;
 
-    public TestSolution(ProductImageData imageData, string sampleName, DockerHelper dockerHelper)
+    public TestSolution(ProductImageData imageData, string sampleName, DockerHelper dockerHelper, bool withTests = true)
     {
         SampleName = sampleName;
         _imageData = imageData;
@@ -36,7 +36,11 @@ public class TestSolution : IDisposable
         _appProjectDir = Path.Combine(_solutionDir, _appName);
 
         CreateTestSolutionWithSdkImage(_solutionDir, sampleName);
-        InjectCustomTestCode(_appProjectDir);
+
+        if (withTests)
+        {
+            InjectCustomTestCode(_appProjectDir);
+        }
     }
 
     private string CreateTestSolutionWithSdkImage(string solutionDir, string appType)

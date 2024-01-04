@@ -21,6 +21,26 @@ COPY app/ .
 RUN dotnet build --no-restore
 
 
+FROM $sdk_image as blazorwasm_build
+
+ARG rid
+ARG NuGetFeedPassword
+ARG port
+
+EXPOSE $port
+
+# RUN dotnet workload install wasm-tools --skip-manifest-update
+# RUN apt-get install -y python3
+WORKDIR /source
+COPY NuGet.config .
+WORKDIR /source/app
+COPY app/*.csproj .
+RUN dotnet restore -r $rid
+
+COPY app/ .
+RUN dotnet build --no-restore
+
+
 FROM build AS test
 
 ARG rid
