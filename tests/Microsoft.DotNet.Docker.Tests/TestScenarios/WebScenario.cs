@@ -31,15 +31,13 @@ public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, 
     {
         string containerName = ImageData.GetIdentifier("app-run");
 
-        command = "dotnet run";
+        command ??= "dotnet run";
 
-        if (PortOverride != null)
+        int port = PortOverride ?? ImageData.DefaultPort;
+
+        if (PortOverride != null || ImageData.Version.Major == 6 || ImageData.Version.Major == 7)
         {
-            command += $" --urls http://*:{PortOverride}";
-        }
-        else if (ImageData.Version.Major == 6 || ImageData.Version.Major == 7)
-        {
-            command += $" --urls http://0.0.0.0:{ImageData.DefaultPort}";
+            command += $" --urls http://*:{port}";
         }
 
         try
@@ -48,7 +46,7 @@ public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, 
                 image: image,
                 name: containerName,
                 detach: true,
-                optionalRunArgs: $"-p {ImageData.DefaultPort}",
+                optionalRunArgs: $"-p {port}",
                 runAsUser: user,
                 command: command);
 
