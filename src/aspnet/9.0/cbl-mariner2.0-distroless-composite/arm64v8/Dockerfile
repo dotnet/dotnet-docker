@@ -27,7 +27,7 @@ FROM $REPO:9.0.0-alpha.1-cbl-mariner2.0-distroless-arm64v8
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=9.0.0-alpha.1.24052.12 \
+    DOTNET_VERSION=9.0.0-alpha.1.24053.6 \
     # ASP.NET Core version
     ASPNET_VERSION=9.0.0-alpha.1.23620.2
 
