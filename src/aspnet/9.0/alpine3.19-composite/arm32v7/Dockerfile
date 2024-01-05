@@ -6,7 +6,7 @@ FROM $REPO:9.0.0-alpha.1-alpine3.19-arm32v7
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=9.0.0-alpha.1.24053.6 \
+    DOTNET_VERSION=9.0.0-alpha.1.24054.10 \
     # ASP.NET Core version
     ASPNET_VERSION=9.0.0-alpha.1.23620.2
 
