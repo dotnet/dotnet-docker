@@ -3260,6 +3260,13 @@
                   "dependencies": [
                     "$(Repo:sdk):6.0-jammy-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):6.0-jammy-chiseled-amd64"
+                  ]
                 }
               ]
             },
@@ -3284,6 +3291,13 @@
                   "dependencies": [
                     "$(Repo:sdk):6.0-jammy-arm64v8"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):6.0-jammy-chiseled-arm64v8"
+                  ]
                 }
               ]
             },
@@ -3307,6 +3321,13 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):6.0-jammy-arm32v7"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):6.0-jammy-chiseled-arm32v7"
                   ]
                 }
               ]
@@ -3910,6 +3931,13 @@
                   "dependencies": [
                     "$(Repo:sdk):7.0-jammy-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):7.0-jammy-chiseled-amd64"
+                  ]
                 }
               ]
             },
@@ -3934,6 +3962,13 @@
                   "dependencies": [
                     "$(Repo:sdk):7.0-jammy-arm64v8"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):7.0-jammy-chiseled-arm64v8"
+                  ]
                 }
               ]
             },
@@ -3957,6 +3992,13 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):7.0-jammy-arm32v7"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):7.0-jammy-chiseled-arm32v7"
                   ]
                 }
               ]
@@ -4488,6 +4530,13 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):8.0-jammy-chiseled-amd64"
+                  ]
                 }
               ]
             },
@@ -4512,6 +4561,13 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-arm64v8"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):8.0-jammy-chiseled-arm64v8"
+                  ]
                 }
               ]
             },
@@ -4535,6 +4591,13 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-arm32v7"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):8.0-jammy-chiseled-arm32v7"
                   ]
                 }
               ]
@@ -5045,6 +5108,13 @@
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):$(dotnet|9.0|floating-tag)-jammy-chiseled-amd64"
+                  ]
                 }
               ]
             },
@@ -5069,6 +5139,13 @@
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-arm64v8"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):$(dotnet|9.0|floating-tag)-jammy-chiseled-arm64v8"
+                  ]
                 }
               ]
             },
@@ -5092,6 +5169,13 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-arm32v7"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):$(dotnet|9.0|floating-tag)-jammy-chiseled-arm32v7"
                   ]
                 }
               ]
@@ -5800,6 +5884,13 @@
                   "dependencies": [
                     "$(Repo:sdk):6.0-jammy-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):6.0-jammy-chiseled-amd64"
+                  ]
                 }
               ]
             },
@@ -5824,6 +5915,13 @@
                   "dependencies": [
                     "$(Repo:sdk):6.0-jammy-arm64v8"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):6.0-jammy-chiseled-arm64v8"
+                  ]
                 }
               ]
             },
@@ -5847,6 +5945,13 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):6.0-jammy-arm32v7"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):6.0-jammy-chiseled-arm32v7"
                   ]
                 }
               ]
@@ -6462,6 +6567,13 @@
                   "dependencies": [
                     "$(Repo:sdk):7.0-jammy-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):7.0-jammy-chiseled-amd64"
+                  ]
                 }
               ]
             },
@@ -6486,6 +6598,13 @@
                   "dependencies": [
                     "$(Repo:sdk):7.0-jammy-arm64v8"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):7.0-jammy-chiseled-arm64v8"
+                  ]
                 }
               ]
             },
@@ -6509,6 +6628,13 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):7.0-jammy-arm32v7"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):7.0-jammy-chiseled-arm32v7"
                   ]
                 }
               ]
@@ -7154,6 +7280,13 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):8.0-jammy-chiseled-amd64"
+                  ]
                 }
               ]
             },
@@ -7178,6 +7311,13 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-arm64v8"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):8.0-jammy-chiseled-arm64v8"
+                  ]
                 }
               ]
             },
@@ -7201,6 +7341,13 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):8.0-jammy-arm32v7"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):8.0-jammy-chiseled-arm32v7"
                   ]
                 }
               ]
@@ -7959,6 +8106,13 @@
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):$(dotnet|9.0|floating-tag)-jammy-chiseled-amd64"
+                  ]
                 }
               ]
             },
@@ -7983,6 +8137,13 @@
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-arm64v8"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):$(dotnet|9.0|floating-tag)-jammy-chiseled-arm64v8"
+                  ]
                 }
               ]
             },
@@ -8006,6 +8167,13 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-jammy-arm32v7"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):$(dotnet|9.0|floating-tag)-jammy-chiseled-arm32v7"
                   ]
                 }
               ]
