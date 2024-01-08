@@ -226,13 +226,12 @@ In Azure Pipelines, the [NuGetAuthenticate](https://learn.microsoft.com/azure/de
     - task: NuGetAuthenticate@1
       displayName: 'Authenticate to NuGet'
 
-    - task: Docker@0
+    - task: Docker@2
       displayName: 'build container'
       inputs:
         command: 'build'
-        Dockerfile: '**/Dockerfile'
-        buildArguments: |
-          FEED_ACCESSTOKEN=$(VSS_NUGET_ACCESSTOKEN)
+        dockerfile: '**/Dockerfile'
+        arguments: '--build-arg FEED_ACCESSTOKEN=$(VSS_NUGET_ACCESSTOKEN)'
 ```
 
 ### Credential Provider Troubleshooting
