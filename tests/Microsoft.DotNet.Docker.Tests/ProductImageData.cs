@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -68,8 +69,18 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string GetImageRepoName(DotNetImageRepo imageRepo) =>
             Enum.GetName(typeof(DotNetImageRepo), imageRepo).ToLowerInvariant().Replace('_', '-');
 
-        public static string GetImageVariantName(DotNetImageVariant imageVariant) => imageVariant == DotNetImageVariant.None
-            ? "" : Enum.GetName(typeof(DotNetImageVariant), imageVariant).ToLowerInvariant();
+        public static string GetImageVariantName(DotNetImageVariant imageVariant)
+        {
+            IEnumerable<string> imageVariants = [];
+            foreach (DotNetImageVariant enumValue in Enum.GetValues(typeof(DotNetImageVariant)))
+            {
+                if (enumValue != DotNetImageVariant.None && imageVariant.HasFlag(enumValue))
+                {
+                    imageVariants = imageVariants.Append(Enum.GetName(typeof(DotNetImageVariant), enumValue).ToLowerInvariant());
+                }
+            }
+            return string.Join('-', imageVariants);
+        }
 
         public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper)
         {
