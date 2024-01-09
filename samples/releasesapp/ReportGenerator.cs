@@ -3,29 +3,23 @@ using System.Text.Json.Serialization;
 using ReleaseJson;
 using ReleaseValues;
 using ReportJson;
-using Version = ReportJson.Version;
 
 namespace ReleaseReport;
 
 public static class Generator
 {
-    public static async Task<Report> MakeReportAsync()
-    {
-        Report report = new(DateTime.Today.ToShortDateString(), await GetVersionsAsync().ToListAsync());
-        return report;
-    }
+    public static async Task<Report> MakeReportAsync() =>
+        new(DateTime.Today.ToShortDateString(), await GetVersionsAsync().ToListAsync());
 
-    public static async IAsyncEnumerable<Version> GetVersionsAsync()
+    public static async IAsyncEnumerable<MajorVersion> GetVersionsAsync()
     {
         await foreach(MajorRelease release in GetMajorReleasesAsync())
         {
             int supportDays = release.EolDate is null ? 0 : GetDaysAgo(release.EolDate);
             bool supported = release.SupportPhase is "active" or "maintainence";
-            Version version = new(release.ChannelVersion, supported, release.EolDate ?? "", supportDays, GetReleases(release).ToList());
+            MajorVersion version = new(release.ChannelVersion, supported, release.EolDate ?? "", supportDays, GetReleases(release).ToList());
             yield return version;
         }
-
-        yield break;
     }
 
     public static async IAsyncEnumerable<MajorRelease> GetMajorReleasesAsync()
@@ -46,25 +40,31 @@ public static class Generator
             MajorRelease release = await httpClient.GetFromJsonAsync<MajorRelease>(releaseSummary.ReleasesJson, ReleaseJsonSerializerContext.Default.MajorRelease) ?? throw new Exception(loadError);
             yield return release;
         }
-
-        yield break;
     }
 
+    public static MajorVersion GetVersion(MajorRelease release) =>
+        new(release.ChannelVersion, 
+            release.SupportPhase is "active" or "maintainence", 
+            release.EolDate ?? "", 
+            release.EolDate is null ? 0 : GetDaysAgo(release.EolDate), 
+            GetReleases(release).ToList()
+            );
+
     // Get first and first security release
-    public static IEnumerable<Release> GetReleases(MajorRelease release)
+    public static IEnumerable<PatchRelease> GetReleases(MajorRelease majorRelease)
     {
         bool securityOnly = false;
         
-        foreach (ReleaseDetail releaseDetail in release.Releases)
+        foreach (Release release in majorRelease.Releases)
         {
-            if (!releaseDetail.Security && securityOnly)
+            if (securityOnly && !release.Security)
             {
                 continue;
             }
             
-            yield return new Release(releaseDetail.ReleaseDate, GetDaysAgo(releaseDetail.ReleaseDate, true), releaseDetail.ReleaseVersion, releaseDetail.Security, releaseDetail.Cves);
+            yield return new(release.ReleaseDate, GetDaysAgo(release.ReleaseDate, true), release.ReleaseVersion, release.Security, release.CveList);
 
-            if (releaseDetail.Security)
+            if (release.Security)
             {
                 yield break;
             }
@@ -73,19 +73,21 @@ public static class Generator
                 securityOnly = true;
             }
         }
-
-        yield break;
-    } 
-
-    public static int GetDaysAgo(string date, bool isPositive = false)
-    {
-        bool success = DateTime.TryParse(date, out DateTime day);
-        int daysAgo = success ? (int)(day - DateTime.Now).TotalDays : 0;
-        return isPositive ? Math.Abs(daysAgo) : daysAgo;
     }
+   
+    static int GetDaysAgo(string date, bool positiveNumber = false)
+    {
+        bool success = DateTime.TryParse(date, out var day);
+        var daysAgo = success ? (int)(day - DateTime.Now).TotalDays : 0;
+        return positiveNumber ? Math.Abs(daysAgo) : daysAgo;
+    }
+
 }
 
-[JsonSourceGenerationOptions(GenerationMode = JsonSourceGenerationMode.Metadata)]
+[JsonSourceGenerationOptions(
+    GenerationMode = JsonSourceGenerationMode.Metadata,
+    PropertyNamingPolicy = JsonKnownNamingPolicy.KebabCaseLower
+)]
 [JsonSerializable(typeof(ReleaseIndex))]
 internal partial class ReleaseJsonSerializerContext : JsonSerializerContext
 {
