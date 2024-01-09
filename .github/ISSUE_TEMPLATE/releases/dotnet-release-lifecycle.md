@@ -48,6 +48,8 @@ Add due dates to each of the issues so that we don't lose track of them.
     - Example issue: https://github.com/dotnet/docker-tools/issues/1181
 - [ ] Update samples to new .NET version
     - Consider creating new samples to feature new .NET or .NET Docker features
+    - [ ] Update documentation as necessary to reference the new .NET version
+    - [ ] Update IIS sample URL to preview version of `dotnet-hosting-win.exe` (`/dotnet/<version>/preview/`): https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.windowsservercore-iis#L19.
 - [ ] Review supported OS versions for new .NET version before release
     - Include only the latest/LTS version of each operating system according to our [supported operating systems documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md#operating-systems).
 
@@ -61,6 +63,7 @@ Add due dates to each of the issues so that we don't lose track of them.
         - Include new .NET Docker features and breaking changes and defer to other official .NET documentation/announcements for other features
         - Example announcement: https://github.com/dotnet/dotnet-docker/discussions/4995
     - [ ] Update documentation as necessary to reference the new .NET version
+    - [ ] Update IIS sample URL to final version of `dotnet-hosting-win.exe` (remove "preview" from the URL): https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.windowsservercore-iis#L19.
 
 ## EOL
 - [ ] Remove EOL .NET version from `main` and `nightly` branches (one issue)
