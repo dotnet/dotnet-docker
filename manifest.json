@@ -9985,7 +9985,7 @@
           "productVersion": "$(monitor|8.0|product-version)",
           "sharedTags": {
             "$(monitor|8.0|product-version)-cbl-mariner-distroless": {},
-            "8.0-cbl-mariner-distroless": {},
+            "8.0-cbl-mariner-distroless": {}
           },
           "platforms": [
             {
@@ -9998,7 +9998,7 @@
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
                 "$(monitor|8.0|product-version)-cbl-mariner-distroless-amd64": {},
-                "8.0-cbl-mariner-distroless-amd64": {},
+                "8.0-cbl-mariner-distroless-amd64": {}
               }
             },
             {
