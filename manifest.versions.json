@@ -184,7 +184,6 @@
 
     "sdk|6.0|build-version": "6.0.418",
     "sdk|6.0|product-version": "6.0.418",
-    "sdk|6.0|alpine-arm-product-version": "6.0.417",
     "sdk|6.0|linux-musl|arm|sha": "6a6967a94ca704f659d47b47e179cdd2336bcf9446d3a78bd84148eb122f0a56b85ef8a35052b297780d498138d9a58e87778d61f808500567a981e97aee0c19",
     "sdk|6.0|linux-musl|arm64|sha": "f9534a747826ca653910d0180ead9cda04e803aae49eadfea21fcc09f8aafc1b39dcc64dce5e8d561f899605df260962a917b00ecc15866fc606d08aacf09b75",
     "sdk|6.0|linux-musl|x64|sha": "4815072e8f9680df72a8ca84b11d109a092ae50cefb12e96613a62216136784b9972d7aac8a5db3ad0ca7b4fa630b4694fb72d926382ea798ed8bdaffe591cfc",
@@ -197,7 +196,6 @@
 
     "sdk|7.0|build-version": "7.0.405",
     "sdk|7.0|product-version": "7.0.405",
-    "sdk|7.0|alpine-arm-product-version": "7.0.404",
     "sdk|7.0|linux-musl|arm|sha": "5e957d5e8fa67929b43594a414c73febea6769e993ceab9ae792c2aed111d986b302db2aac81d8d59c58b2f173c52cea6a8aa3619c9bcfa962476fdf3167ccee",
     "sdk|7.0|linux-musl|arm64|sha": "b27720f523660ee24e8b539dae804683bae58ef8a669c9f62e6b7afc4e0b352edd7f1c7cca6c541563a312fa5e2e3ee756930f93b2f49c89860d19cc8651c8d8",
     "sdk|7.0|linux-musl|x64|sha": "c061e969af85ab30e28425e457674cdf062bb1ca9ce8c10d450a9b31cfc543cd6a6b6bc22db521a063ad39441e6d2b1cc599f84132a3b7393659fc959e3789d2",
@@ -208,7 +206,6 @@
 
     "sdk|8.0|build-version": "8.0.101",
     "sdk|8.0|product-version": "8.0.101",
-    "sdk|8.0|alpine-arm-product-version": "8.0.100",
     "sdk|8.0|linux-musl|arm|sha": "764edb8803a68f074391714029800ef2309d212618790ba00506bba201a9655ea46e47d6017c89d78c9b1ef57e8e47352a63e8116a8b1f9fb169844745170172",
     "sdk|8.0|linux-musl|arm64|sha": "796d9fa4fda9d7d0f014820e20a8bad63052ba5e15dcb4fcb44ce33438a1aa4cd5e2ea0ad4a538b07946302b9649638762e3bfaa22a70318f0f17bc50c105193",
     "sdk|8.0|linux-musl|x64|sha": "95751235b774ed1050b721528495c1ba561c0bce99989a5fd6c0d0510b8b7d07a34ef186f347d16194b07d5ec4966ae8cb47aa7c1a65eebcea8a68fd90fb22e5",
