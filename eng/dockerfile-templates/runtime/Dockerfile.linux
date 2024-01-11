@@ -1,4 +1,8 @@
 {{
+    _ ARGS:
+        is-extra (optional): Whether to include extra packages that are not needed for every app,
+            for example globalization support ^
+
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isMariner to find(OS_VERSION, "mariner") >= 0 ^
@@ -9,8 +13,9 @@
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set isRpmInstall to isFullMariner && dotnetVersion = "6.0" ^
     set isSingleStage to (isAlpine || isRpmInstall) && !isInternal ^
+    set runtimeDepsVariant to when(ARGS["is-extra"], "-extra", "") ^
     set runtimeDepsBaseTag to cat(
-        "$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+        "$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], "-", OS_VERSION, runtimeDepsVariant, ARCH_TAG_SUFFIX) ^
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
     set installerImageTag to when(isDistrolessMariner,
         cat("mcr.microsoft.com/cbl-mariner/base/core:", OS_VERSION_NUMBER),

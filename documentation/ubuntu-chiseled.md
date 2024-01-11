@@ -37,7 +37,9 @@ Our Chiseled images are focused on size. That means the default Chiseled images 
 libraries from Ubuntu. However, we offer an `extra` image variant that includes `tzdata` and `icu` by default. You can
 use this in place of the default chiseled image by appending the `-extra` suffix to the image tag like so:
 
-- `8.0-jammy-chiseled-extra`
+- `mcr.microsoft.com/dotnet/runtime-deps:8.0-jammy-chiseled-extra`
+- `mcr.microsoft.com/dotnet/runtime:8.0-jammy-chiseled-extra`
+- `mcr.microsoft.com/dotnet/aspnet:8.0-jammy-chiseled-extra`
 
 Please see ["Announcement: New approach for differentiating .NET 8+ images"](https://github.com/dotnet/dotnet-docker/discussions/4821) for more info.
 
