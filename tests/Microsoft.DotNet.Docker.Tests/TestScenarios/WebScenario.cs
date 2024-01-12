@@ -11,7 +11,7 @@ namespace Microsoft.DotNet.Docker.Tests;
 public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
     : TestScenario(imageData, dockerHelper, outputHelper)
 {
-    protected virtual int? PortOverride { get; }= null;
+    protected virtual int? PortOverride { get; } = null;
 
     protected virtual string? Endpoint { get; } = null;
 
@@ -54,7 +54,7 @@ public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, 
                 containerName,
                 DockerHelper,
                 OutputHelper,
-                ImageData.DefaultPort,
+                port,
                 pathAndQuery: Endpoint);
         }
         finally
