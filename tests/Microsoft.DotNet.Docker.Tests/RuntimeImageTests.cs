@@ -34,7 +34,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             TestScenario scenario = new(imageData, DockerHelper, OutputHelper);
-            await scenario.Execute();
+            await scenario.ExecuteAsync();
         }
 
         [DotNetTheory]

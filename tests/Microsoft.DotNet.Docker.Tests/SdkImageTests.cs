@@ -64,7 +64,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public async void VerifyBlazorWasmScenario(ProductImageData imageData)
         {
             BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper);
-            await testScenario.Execute();
+            await testScenario.ExecuteAsync();
         }
 
         [LinuxImageTheory]

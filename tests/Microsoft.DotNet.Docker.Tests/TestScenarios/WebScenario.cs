@@ -27,7 +27,7 @@ public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, 
 
     protected override DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Aspnet;
 
-    protected override async Task Run(string image, string user, string? command = null)
+    protected override async Task RunAsync(string image, string user, string? command = null)
     {
         string containerName = ImageData.GetIdentifier("app-run");
 

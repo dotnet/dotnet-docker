@@ -36,7 +36,7 @@ namespace Microsoft.DotNet.Docker.Tests
             TestScenario scenario = imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite)
                 ? new WebScenarioComposite(imageData, DockerHelper, OutputHelper)
                 : new WebScenario(imageData, DockerHelper, OutputHelper);
-            await scenario.Execute();
+            await scenario.ExecuteAsync();
         }
 
         [DotNetTheory]

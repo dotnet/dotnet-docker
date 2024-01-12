@@ -46,7 +46,7 @@ public class TestScenario
         OutputHelper = outputHelper;
         NonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && ImageData.Version.Major > 7;
 
-        TestSolution = new(imageData, SampleName, dockerHelper, withTests: TestStageTarget != null);
+        TestSolution = new(imageData, SampleName, dockerHelper, excludeTests: TestStageTarget != null);
     }
 
     protected string Build(string stageTarget, string[]? customBuildArgs)
@@ -111,7 +111,7 @@ public class TestScenario
         return tag;
     }
 
-    public async Task Execute()
+    public async Task ExecuteAsync()
     {
         List<string> tags = [];
 
@@ -127,7 +127,7 @@ public class TestScenario
             // Build and run app on SDK image
             string buildTag = Build(BuildStageTarget, customBuildArgs);
             tags.Add(buildTag);
-            await Run(buildTag, AdminUser, "dotnet run");
+            await RunAsync(buildTag, AdminUser, "dotnet run");
 
             // Build and run tests on SDK image
             // Tests must run as admin user in order to write the test results to the output directory in the
@@ -136,7 +136,7 @@ public class TestScenario
             {
                 string unitTestTag = Build(TestStageTarget, customBuildArgs);
                 tags.Add(unitTestTag);
-                await Run(unitTestTag, AdminUser);
+                await RunAsync(unitTestTag, AdminUser);
             }
 
             // Build and run all other projects for each user and target stage
@@ -144,11 +144,11 @@ public class TestScenario
             {
                 string tag = Build(target, customBuildArgs);
                 tags.Add(tag);
-                await Run(tag, AdminUser);
+                await RunAsync(tag, AdminUser);
 
                 if (NonRootUserSupported)
                 {
-                    await Run(tag, NonRootUser);
+                    await RunAsync(tag, NonRootUser);
                 }
             }
         }
@@ -158,7 +158,7 @@ public class TestScenario
         }
     }
 
-    protected virtual Task Run(string image, string user, string? command = null)
+    protected virtual Task RunAsync(string image, string user, string? command = null)
     {
         string containerName = ImageData.GetIdentifier("app-run");
 
