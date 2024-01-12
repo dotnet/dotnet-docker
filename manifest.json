@@ -8249,7 +8249,7 @@
               "os": "linux",
               "osVersion": "alpine3.18",
               "tags": {
-                "$(sdk|6.0|alpine-arm-product-version)-alpine3.18-arm32v7": {},
+                "$(sdk|6.0|product-version)-alpine3.18-arm32v7": {},
                 "6.0-alpine3.18-arm32v7": {},
                 "6.0-alpine-arm32v7": {}
               },
@@ -8265,7 +8265,7 @@
               "os": "linux",
               "osVersion": "alpine3.18",
               "tags": {
-                "$(sdk|6.0|alpine-arm-product-version)-alpine3.18-arm64v8": {},
+                "$(sdk|6.0|product-version)-alpine3.18-arm64v8": {},
                 "6.0-alpine3.18-arm64v8": {},
                 "6.0-alpine-arm64v8": {}
               },
@@ -8710,7 +8710,7 @@
               "os": "linux",
               "osVersion": "alpine3.18",
               "tags": {
-                "$(sdk|7.0|alpine-arm-product-version)-alpine3.18-arm32v7": {},
+                "$(sdk|7.0|product-version)-alpine3.18-arm32v7": {},
                 "7.0-alpine3.18-arm32v7": {},
                 "7.0-alpine-arm32v7": {}
               },
@@ -8726,7 +8726,7 @@
               "os": "linux",
               "osVersion": "alpine3.18",
               "tags": {
-                "$(sdk|7.0|alpine-arm-product-version)-alpine3.18-arm64v8": {},
+                "$(sdk|7.0|product-version)-alpine3.18-arm64v8": {},
                 "7.0-alpine3.18-arm64v8": {},
                 "7.0-alpine-arm64v8": {}
               },
@@ -9042,7 +9042,7 @@
               "os": "linux",
               "osVersion": "alpine3.18",
               "tags": {
-                "$(sdk|8.0|alpine-arm-product-version)-alpine3.18-arm32v7": {},
+                "$(sdk|8.0|product-version)-alpine3.18-arm32v7": {},
                 "8.0-alpine3.18-arm32v7": {},
                 "8.0-alpine-arm32v7": {}
               },
@@ -9058,7 +9058,7 @@
               "os": "linux",
               "osVersion": "alpine3.18",
               "tags": {
-                "$(sdk|8.0|alpine-arm-product-version)-alpine3.18-arm64v8": {},
+                "$(sdk|8.0|product-version)-alpine3.18-arm64v8": {},
                 "8.0-alpine3.18-arm64v8": {},
                 "8.0-alpine-arm64v8": {}
               },
