@@ -29,8 +29,17 @@ ARG port
 
 EXPOSE $port
 
-# RUN dotnet workload install wasm-tools --skip-manifest-update
-# RUN apt-get install -y python3
+RUN dotnet workload install wasm-tools --skip-manifest-update \
+    && . /etc/os-release \
+    && case $ID in \
+        alpine) apk add --no-cache python3 ;; \
+        debian | ubuntu) apt-get update \
+            && apt-get install -y --no-install-recommends python3 \
+            && rm -rf /var/lib/apt/lists/* ;; \
+        mariner) tdnf install -y python3 \
+            && tdnf clean all ;; \
+    esac
+
 WORKDIR /source
 COPY NuGet.config .
 WORKDIR /source/app
@@ -39,6 +48,12 @@ RUN dotnet restore -r $rid
 
 COPY app/ .
 RUN dotnet build --no-restore
+
+
+FROM blazorwasm_build as blazorwasm_publish
+
+ARG rid
+RUN dotnet publish -r $rid -c Release --self-contained true -o out
 
 
 FROM build AS test

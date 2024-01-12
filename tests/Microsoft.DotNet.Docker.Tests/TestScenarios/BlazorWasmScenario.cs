@@ -8,7 +8,7 @@ public class BlazorWasmScenario(ProductImageData imageData, DockerHelper dockerH
     : WebScenario(imageData, dockerHelper, outputHelper)
 {
     protected override string SampleName { get; } = "blazorwasm";
-    protected override string BuildStageTarget { get; } = "publish_self_contained";
+    protected override string BuildStageTarget { get; } = "blazorwasm_publish";
     protected override string? TestStageTarget { get; } = null;
 
     // Known issue: Blazor ignores the ASPNETCORE_HTTP_PORTS environment variable that we set in runtime-deps.
