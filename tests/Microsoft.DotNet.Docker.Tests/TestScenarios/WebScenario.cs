@@ -9,7 +9,7 @@ using Xunit.Abstractions;
 namespace Microsoft.DotNet.Docker.Tests;
 
 public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
-    : TestScenario(imageData, dockerHelper, outputHelper)
+    : ConsoleAppScenario(imageData, dockerHelper, outputHelper)
 {
     protected virtual int? PortOverride { get; } = null;
 

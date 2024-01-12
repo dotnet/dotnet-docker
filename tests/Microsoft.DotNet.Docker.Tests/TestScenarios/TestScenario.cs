@@ -7,7 +7,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public class TestScenario
+public abstract class TestScenario
 {
     protected static string AdminUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "root" : "ContainerAdministrator";
 
@@ -19,22 +19,22 @@ public class TestScenario
 
     protected ITestOutputHelper OutputHelper { get; }
 
-    protected bool NonRootUserSupported { get; }
-
     protected TestSolution TestSolution { get; }
 
-    protected virtual string SampleName { get; } = "console";
+    protected bool NonRootUserSupported { get; init; }
+
+    protected abstract string SampleName { get; }
 
     // Target stages refer to stages in TestAppArtifacts/Dockerfile.linux
-    protected virtual string BuildStageTarget { get; } = "build";
+    protected abstract string BuildStageTarget { get; }
 
-    protected virtual string? TestStageTarget { get; } = "test";
+    protected abstract string? TestStageTarget { get; }
 
-    protected virtual string[] AppStageTargets { get; } = [ "self_contained_app", "fx_dependent_app" ];
+    protected abstract string[] AppStageTargets { get; }
 
-    protected virtual DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Runtime;
+    protected abstract DotNetImageRepo RuntimeImageRepo { get; }
 
-    protected DotNetImageRepo SdkImageRepo { get; } = DotNetImageRepo.SDK;
+    protected abstract DotNetImageRepo SdkImageRepo { get; }
 
     public TestScenario(
         ProductImageData imageData,
@@ -158,23 +158,5 @@ public class TestScenario
         }
     }
 
-    protected virtual Task RunAsync(string image, string user, string? command = null)
-    {
-        string containerName = ImageData.GetIdentifier("app-run");
-
-        try
-        {
-            DockerHelper.Run(
-                image: image,
-                name: containerName,
-                runAsUser: user,
-                command: command);
-        }
-        finally
-        {
-            DockerHelper.DeleteContainer(containerName);
-        }
-
-        return Task.FromResult(0);
-    }
+    protected abstract Task RunAsync(string image, string user, string? command = null);
 }

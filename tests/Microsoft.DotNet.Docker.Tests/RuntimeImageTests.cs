@@ -33,7 +33,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            TestScenario scenario = new(imageData, DockerHelper, OutputHelper);
+            ConsoleAppScenario scenario = new(imageData, DockerHelper, OutputHelper);
             await scenario.ExecuteAsync();
         }
 
