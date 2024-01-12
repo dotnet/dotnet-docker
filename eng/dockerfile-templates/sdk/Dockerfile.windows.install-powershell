@@ -6,7 +6,7 @@
     set isNanoServer to find(OS_VERSION, "nanoserver") >= 0 ^
     set rootDir to when(isNanoServer || ARGS["dotnet-is-internal"], "\", "$Env:ProgramFiles\") ^
     set nupkgFile to "PowerShell.Windows.x64.$powershell_version.nupkg" ^
-    set url to cat("https://pwshtool.blob.core.windows.net/tool/$powershell_version/", nupkgFile) ^
+    set url to cat("https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/", nupkgFile) ^
     set powershellVersion to VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]
 }}# Install PowerShell global tool
 $powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}}'; `

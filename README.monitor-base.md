@@ -58,21 +58,25 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-ubuntu-chiseled-amd64, 8.0-ubuntu-chiseled-amd64, 8.0.0-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.0, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+8.0.0-cbl-mariner-distroless-amd64, 8.0-cbl-mariner-distroless-amd64, 8.0.0-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
 
 ##### .NET Monitor Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.1.0-alpha.1-ubuntu-chiseled-amd64, 8.1-preview-ubuntu-chiseled-amd64, 8-ubuntu-chiseled-amd64, 8.1.0-alpha.1-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0-alpha.1, 8.1-preview, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.1/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+8.1.0-alpha.1-cbl-mariner-distroless-amd64, 8.1-preview-cbl-mariner-distroless-amd64, 8-cbl-mariner-distroless-amd64, 8.1.0-alpha.1-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.1/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-ubuntu-chiseled-arm64v8, 8.0-ubuntu-chiseled-arm64v8, 8.0.0-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.0, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.0-cbl-mariner-distroless-arm64v8, 8.0-cbl-mariner-distroless-arm64v8, 8.0.0-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
 
 ##### .NET Monitor Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.1.0-alpha.1-ubuntu-chiseled-arm64v8, 8.1-preview-ubuntu-chiseled-arm64v8, 8-ubuntu-chiseled-arm64v8, 8.1.0-alpha.1-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0-alpha.1, 8.1-preview, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.1/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+8.1.0-alpha.1-cbl-mariner-distroless-arm64v8, 8.1-preview-cbl-mariner-distroless-arm64v8, 8-cbl-mariner-distroless-arm64v8, 8.1.0-alpha.1-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.1/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
 
 You can retrieve a list of all available tags for dotnet/nightly/monitor/base at https://mcr.microsoft.com/v2/dotnet/nightly/monitor/base/tags/list.
 <!--End of generated tags-->
