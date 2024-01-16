@@ -33,7 +33,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            ConsoleAppScenario scenario = imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite)
+            using ConsoleAppScenario scenario = imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite)
                 ? new WebScenarioComposite(imageData, DockerHelper, OutputHelper)
                 : new WebScenario(imageData, DockerHelper, OutputHelper);
             await scenario.ExecuteAsync();

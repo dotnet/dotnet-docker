@@ -7,8 +7,10 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public abstract class TestScenario
+public abstract class TestScenario : IDisposable
 {
+    private bool _disposed;
+
     protected static string AdminUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "root" : "ContainerAdministrator";
 
     protected static string NonRootUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "app" : "ContainerUser";
@@ -154,9 +156,28 @@ public abstract class TestScenario
         }
         finally
         {
-            tags.ForEach(tag => DockerHelper.DeleteImage(tag));
+            tags.ForEach(DockerHelper.DeleteImage);
         }
     }
 
     protected abstract Task RunAsync(string image, string user, string? command = null);
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                TestSolution.Dispose();
+            }
+
+            _disposed = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
 }

@@ -29,7 +29,10 @@ ARG port
 
 EXPOSE $port
 
-RUN dotnet workload install wasm-tools --skip-manifest-update \
+WORKDIR /source
+COPY NuGet.config .
+
+RUN dotnet workload install --configfile NuGet.config --skip-manifest-update wasm-tools \
     && . /etc/os-release \
     && case $ID in \
         alpine) apk add --no-cache python3 ;; \
@@ -40,8 +43,6 @@ RUN dotnet workload install wasm-tools --skip-manifest-update \
             && tdnf clean all ;; \
     esac
 
-WORKDIR /source
-COPY NuGet.config .
 WORKDIR /source/app
 COPY app/*.csproj .
 RUN dotnet restore -r $rid

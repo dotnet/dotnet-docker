@@ -44,7 +44,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            WebApiAotScenario testScenario = new(imageData, DockerHelper, OutputHelper);
+            using WebApiAotScenario testScenario = new(imageData, DockerHelper, OutputHelper);
             await testScenario.ExecuteAsync();
         }
 
