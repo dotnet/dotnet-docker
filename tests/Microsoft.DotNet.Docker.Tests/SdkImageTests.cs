@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -63,7 +64,9 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async void VerifyBlazorWasmScenario(ProductImageData imageData)
         {
-            BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper);
+            // not supported for alpine or arm
+            bool useWasmTools = !imageData.OS.Contains(OS.Alpine) && !imageData.IsArm;
+            BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools: useWasmTools);
             await testScenario.ExecuteAsync();
         }
 

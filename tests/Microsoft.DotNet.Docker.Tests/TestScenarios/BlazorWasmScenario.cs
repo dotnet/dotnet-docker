@@ -4,11 +4,15 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public class BlazorWasmScenario(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
+public class BlazorWasmScenario(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper, bool useWasmTools)
     : WebScenario(imageData, dockerHelper, outputHelper)
 {
     protected override string SampleName { get; } = "blazorwasm";
-    protected override string BuildStageTarget { get; } = "blazorwasm_publish";
+
+    // Currently, only some platforms support the wasm-tools workload.
+    // In the case that wasm-tools isn't supported, even though blazorwasm's publish output isn't framework dependent,
+    // running the standard publish in the fx_dependent target gives us the correct static site output.
+    protected override string BuildStageTarget { get; } = useWasmTools ? "blazorwasm_publish" : "publish_fx_dependent";
     protected override string? TestStageTarget { get; } = null;
 
     // Known issue: Blazor ignores the ASPNETCORE_HTTP_PORTS environment variable that we set in runtime-deps.
