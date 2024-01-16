@@ -64,9 +64,18 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async void VerifyBlazorWasmScenario(ProductImageData imageData)
         {
-            // not supported for alpine or arm
-            bool useWasmTools = !imageData.OS.Contains(OS.Alpine) && !imageData.IsArm;
-            BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools: useWasmTools);
+            bool isAlpine = imageData.OS.StartsWith(OS.Alpine);
+
+            // Microsoft.NETCore.App.Runtime.Mono.linux-musl-arm* package does not exist
+            if (isAlpine && imageData.IsArm)
+            {
+                return;
+            }
+
+            // wasm-tools workload is not supported on Alpine or ARM, fall back to the unoptimized test
+            bool useWasmTools = !isAlpine && !imageData.IsArm;
+
+            using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools: useWasmTools);
             await testScenario.ExecuteAsync();
         }
 
