@@ -48,7 +48,7 @@ public abstract class TestScenario : IDisposable
         OutputHelper = outputHelper;
         NonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && ImageData.Version.Major > 7;
 
-        TestSolution = new(imageData, SampleName, dockerHelper, excludeTests: TestStageTarget != null);
+        TestSolution = new(imageData, SampleName, dockerHelper, excludeTests: string.IsNullOrEmpty(TestStageTarget));
     }
 
     protected string Build(string stageTarget, string[]? customBuildArgs)
