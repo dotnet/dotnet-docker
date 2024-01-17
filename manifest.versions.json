@@ -85,7 +85,7 @@
 
     "chisel|9.0|ref": "v0.8.1",
     "chisel|8.0|ref": "$(chisel|9.0|ref)",
-    "chisel|6.0|ref": "$(chisel|9.0|ref)",
+    "chisel|6.0|ref": "v0.8.1",
 
     "dotnet|6.0|product-version": "6.0.26",
     "dotnet|7.0|product-version": "7.0.15",
@@ -153,12 +153,12 @@
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
-    "powershell|6.0|build-version": "7.2.17",
-    "powershell|6.0|Linux.Alpine|sha": "36a13ca238d171fb0e3b33ae42ad51e7aaad07e004d8201549f49d4e1454a76706aec2300be0b31f13fa29fac1e6c1e3ee462b662a9d128c2151447f656e4391",
-    "powershell|6.0|Linux|arm32|sha": "2808855b52f5eff789de22010f90522d599e2318dbfc4caf1a824264e2d963390bc47e84c681bf76702deb46a47653a0c8dc3fe190e86524eb40649ba2911cfb",
-    "powershell|6.0|Linux|arm64|sha": "2a8290a335dfb4257ce9db5cf275815e80983109809cfbd3bad73f05b4070c1072f200d7a2b7dcdc1fad165087c55170c0eb0079da344991b24bdab899615ad9",
-    "powershell|6.0|Linux|x64|sha": "0ac914a18caa4da3ed75b7535ff12399304cf38a4937369b8fecc61db79ff892cd4a0a8e7171e91fa733ab2477dac61679e3ea5dd693bf234778d7a66dc0f7f7",
-    "powershell|6.0|Windows|x64|sha": "ac9a73027280b0871592646b08d52df8ca2f026e1f109d4baf185a8162b4ba321c0838722398a97722533cc8f44077a2c4d764e2be6f29d3fd42d485ea1ca491",
+    "powershell|6.0|build-version": "7.2.18",
+    "powershell|6.0|Linux.Alpine|sha": "ad27427e22c34f61e9e59e4cc5781abd6e12667f45051b806fe331ca26e2a7c9ff657529ab8ce0e995b1c2eeacf75a97a50de408ac7e2bf43a628f6c0622f4d7",
+    "powershell|6.0|Linux|arm32|sha": "26197bb633b9ea77c1bc4442c7add9e2be5cc8b6869295d088b100e1b302acba78ecf952194a0c563f059256b7525a7c5f9405fa5cba00b33259b96e23d4c926",
+    "powershell|6.0|Linux|arm64|sha": "75012b9a68188a94a491a26f6bcfc62858f5764182c310e4ae9ba1fb203c5ae0b7f87e6d1ac196928b5d144b8c2753df1f09514d2b09045c6ed1a782bd27d0fd",
+    "powershell|6.0|Linux|x64|sha": "9a682a4431172da3b069c5dc4b9e43ae9d43c3ec0697b85558a7b6a47861922d6578543cce599523f0c4418d13a90f0c917b30212fdcc385821651b5da52592f",
+    "powershell|6.0|Windows|x64|sha": "53e53cffba886e14e280339fee7f99c62e5c6ec9c8d575c83b2f360aca1b3d9c0b209cb3ad15412ce68ff5c3cc0fc7844d16a038932cd27de7d7acef955d23ce",
 
     "powershell|7.0|build-version": "7.3.10",
     "powershell|7.0|Linux.Alpine|sha": "d12b026b3ccff44478fde49f8c0da04649e317c179bf28ec2882b9039c910130c1d310e8cb917fd828fe478df8c4745a4237da13bcc21f8ad0a3994dbea37389",
@@ -187,7 +187,7 @@
 
     "rocks-toolbox|9.0|ref": "v1.0.0",
     "rocks-toolbox|8.0|ref": "$(rocks-toolbox|9.0|ref)",
-    "rocks-toolbox|6.0|ref": "$(rocks-toolbox|9.0|ref)",
+    "rocks-toolbox|6.0|ref": "v1.0.0",
 
     "runtime|6.0|build-version": "6.0.26",
     "runtime|6.0|targeting-pack-version": "$(runtime|6.0|build-version)",
