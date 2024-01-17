@@ -13,7 +13,9 @@ public class ConsoleAppScenario : TestScenario
 
     protected override string? TestStageTarget { get; } = "test";
 
-    protected override string[] AppStageTargets { get; } = [ "self_contained_app", "fx_dependent_app" ];
+    protected override string[] AppStageTargets { get; } = DockerHelper.IsLinuxContainerModeEnabled
+        ? ["fx_dependent_app", "self_contained_app"]
+        : ["fx_dependent_app"];
 
     protected override DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Runtime;
 

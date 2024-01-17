@@ -23,8 +23,6 @@ public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, 
     // so we only want to execute it for one of those app types.
     protected override string? TestStageTarget { get; } = null;
 
-    protected override string[] AppStageTargets { get; } = [ "self_contained_app", "fx_dependent_app" ];
-
     protected override DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Aspnet;
 
     protected override async Task RunAsync(string image, string user, string? command = null)
