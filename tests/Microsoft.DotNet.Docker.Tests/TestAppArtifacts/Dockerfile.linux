@@ -32,7 +32,7 @@ COPY tests/*.csproj .
 RUN dotnet restore -r $rid
 
 COPY tests/ .
-ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore"]
+ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore", "-v", "diag"]
 
 
 FROM build as publish_fx_dependent
