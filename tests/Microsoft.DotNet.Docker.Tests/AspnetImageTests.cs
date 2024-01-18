@@ -33,6 +33,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            if (imageData.Version.Major == 9 && !DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                OutputHelper.WriteLine(
+                    "Skipping test due to https://github.com/dotnet/msbuild/issues/9662. Re-enable when fixed.");
+                return;
+            }
+
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper, isWeb: true);
             await verifier.Execute();
         }
