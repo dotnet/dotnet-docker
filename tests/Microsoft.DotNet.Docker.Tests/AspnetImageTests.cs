@@ -33,6 +33,14 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            string[] unsupportedWindowsVersions = [ OS.ServerCoreLtsc2019, OS.NanoServer1809 ];
+            if (imageData.Version.Major == 9 && unsupportedWindowsVersions.Contains(imageData.OS))
+            {
+                OutputHelper.WriteLine(
+                    "Skipping test due to https://github.com/dotnet/msbuild/issues/9662. Re-enable when fixed.");
+                return;
+            }
+
             ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper, isWeb: true);
             await verifier.Execute();
         }
