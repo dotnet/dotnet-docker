@@ -72,6 +72,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            // `wasm-tools` workload does not work on .NET 6 with CBL Mariner 2.0.
+            // Re-enable when issue is resolved: https://github.com/dotnet/aspnetcore/issues/53469
+            if (imageData.OS.Contains(OS.Mariner) && imageData.Version.Major == 6)
+            {
+                return;
+            }
+
             // wasm-tools workload is not supported on Alpine or ARM, fall back to the unoptimized test
             bool useWasmTools = !isAlpine && !imageData.IsArm;
 
