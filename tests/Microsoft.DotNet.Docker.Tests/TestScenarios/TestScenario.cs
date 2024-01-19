@@ -11,9 +11,9 @@ public abstract class TestScenario : IDisposable
 {
     private bool _disposed;
 
-    protected static string AdminUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "root" : "ContainerAdministrator";
+    protected static string? AdminUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "root" : null;
 
-    protected static string NonRootUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "app" : "ContainerUser";
+    protected static string? NonRootUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "app" : "ContainerUser";
 
     protected DockerHelper DockerHelper { get; }
 
