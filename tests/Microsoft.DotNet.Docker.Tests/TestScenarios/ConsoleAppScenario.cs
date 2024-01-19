@@ -26,7 +26,7 @@ public class ConsoleAppScenario : TestScenario
     {
     }
 
-    protected override Task RunAsync(string image, string user, string? command = null)
+    protected override Task RunAsync(string image, string? user, string? command = null)
     {
         string containerName = ImageData.GetIdentifier("app-run");
 

@@ -129,7 +129,7 @@ public abstract class TestScenario : IDisposable
             // Build and run app on SDK image
             string buildTag = Build(BuildStageTarget, customBuildArgs);
             tags.Add(buildTag);
-            await RunAsync(buildTag, AdminUser, "dotnet run");
+            await RunAsync(buildTag, command: "dotnet run");
 
             // Build and run tests on SDK image
             // Tests must run as admin user in order to write the test results to the output directory in the
@@ -138,7 +138,7 @@ public abstract class TestScenario : IDisposable
             {
                 string unitTestTag = Build(TestStageTarget, customBuildArgs);
                 tags.Add(unitTestTag);
-                await RunAsync(unitTestTag, AdminUser);
+                await RunAsync(unitTestTag);
             }
 
             // Build and run all other projects for each user and target stage
@@ -160,7 +160,7 @@ public abstract class TestScenario : IDisposable
         }
     }
 
-    protected abstract Task RunAsync(string image, string user, string? command = null);
+    protected abstract Task RunAsync(string image, string? user = null, string? command = null);
 
     protected virtual void Dispose(bool disposing)
     {
