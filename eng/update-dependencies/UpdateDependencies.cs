@@ -416,8 +416,8 @@ namespace Dotnet.Docker
             string chiselRef = await GitHubHelper.GetLatestReleaseTagAsync("canonical", "chisel");
             string rocksToolboxRef = await GitHubHelper.GetLatestReleaseTagAsync("canonical", "rocks-toolbox");
 
-            List<IDependencyUpdater> updaters = new()
-            {
+            List<IDependencyUpdater> updaters =
+            [
                 new NuGetConfigUpdater(RepoRoot, Options),
                 new BaseUrlUpdater(RepoRoot, Options),
                 new MinGitUrlUpdater(RepoRoot, minGitRelease),
@@ -427,7 +427,7 @@ namespace Dotnet.Docker
                 // runtime versions are being updated or not
                 new ChiselRefUpdater(RepoRoot, Options.DockerfileVersion, chiselRef),
                 new RocksToolboxRefUpdater(RepoRoot, Options.DockerfileVersion, rocksToolboxRef)
-            };
+            ];
 
             foreach (string productName in Options.ProductVersions.Keys)
             {
