@@ -123,7 +123,7 @@ public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, 
         throw new TimeoutException($"Timed out attempting to access the endpoint {url} on container {containerName}");
     }
 
-    public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort, string pathAndQuery = null, Action<HttpResponseMessage> validateCallback = null)
+    public static async Task VerifyHttpResponseFromContainerAsync(string containerName, DockerHelper dockerHelper, ITestOutputHelper outputHelper, int containerPort, string? pathAndQuery = null, Action<HttpResponseMessage>? validateCallback = null)
     {
         (await GetHttpResponseFromContainerAsync(
             containerName,
