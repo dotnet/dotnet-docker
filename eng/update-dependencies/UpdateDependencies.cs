@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation and contributors. All rights reserved.
+// Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -412,18 +412,28 @@ namespace Dotnet.Docker
             string chiselRef = await GitHubHelper.GetLatestReleaseTagAsync("canonical", "chisel");
             string rocksToolboxRef = await GitHubHelper.GetLatestReleaseTagAsync("canonical", "rocks-toolbox");
 
-            List<IDependencyUpdater> updaters = new()
-            {
+            List<IDependencyUpdater> updaters =
+            [
                 new NuGetConfigUpdater(RepoRoot, Options),
                 new BaseUrlUpdater(RepoRoot, Options),
                 new MinGitUrlUpdater(RepoRoot, minGitRelease),
-                new MinGitShaUpdater(RepoRoot, minGitRelease),
+                new MinGitShaUpdater(RepoRoot, minGitRelease)
+            ];
+
+            // Chisel tooling versions are shared between versions, so we only want to update it with automatic
+            // dependency flows for preview versions.
+            if (Options.DockerfileVersion == "9.0")
+            {
                 // Chisel updaters must be listed before runtime version
                 // updaters because they check the manifest for whether the
                 // runtime versions are being updated or not
-                new ChiselRefUpdater(RepoRoot, Options.DockerfileVersion, chiselRef),
-                new RocksToolboxRefUpdater(RepoRoot, Options.DockerfileVersion, rocksToolboxRef)
-            };
+                updaters =
+                [
+                    ..updaters,
+                    new ChiselRefUpdater(RepoRoot, Options.DockerfileVersion, chiselRef),
+                    new RocksToolboxRefUpdater(RepoRoot, Options.DockerfileVersion, rocksToolboxRef)
+                ];
+            }
 
             foreach (string productName in Options.ProductVersions.Keys)
             {
