@@ -54,7 +54,7 @@ RUN dotnet build --no-restore
 FROM blazorwasm_build as blazorwasm_publish
 
 ARG rid
-RUN dotnet publish -r $rid -c Release --self-contained true -o out -v diag
+RUN dotnet publish -r $rid -c Release --self-contained true -o out
 
 
 FROM build AS test
@@ -68,7 +68,7 @@ COPY tests/*.csproj .
 RUN dotnet restore -r $rid
 
 COPY tests/ .
-ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore", "-v", "diag"]
+ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore"]
 
 
 FROM build as publish_fx_dependent
