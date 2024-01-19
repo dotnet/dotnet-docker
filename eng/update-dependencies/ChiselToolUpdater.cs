@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.DotNet.VersionTools.Dependencies;
 
 #nullable enable
@@ -28,6 +29,12 @@ internal class ChiselToolUpdater : VariableUpdaterBase
         if (string.IsNullOrEmpty(currentChiselToolVersion))
         {
             return "";
+        }
+
+        // Don't overwrite versions that are set to other variables
+        if (Regex.IsMatch(currentChiselToolVersion, @"^\$\(.*\)$"))
+        {
+            return currentChiselToolVersion;
         }
 
         // Avoid updating the chisel tooling if we are updating a runtime
