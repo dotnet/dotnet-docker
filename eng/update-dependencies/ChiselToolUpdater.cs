@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -48,7 +49,7 @@ internal class ChiselToolUpdater : VariableUpdaterBase
         // rebuilding at least the runtime images, since changing the chisel
         // tool shouldn't make a difference in the output image.
         string runtimeVariableName = ManifestHelper.GetVersionVariableName(VersionType.Build, "runtime", _dockerfileVersion);
-        string currentRuntimeVersion = ManifestHelper.GetVariableValue(runtimeVariableName, ManifestVariables.Value);
+        string currentRuntimeVersion = ManifestHelper.ResolveVariableValue(runtimeVariableName, ManifestVariables.Value);
         if (runtimeDependencyInfo.SimpleVersion == currentRuntimeVersion)
         {
             return currentChiselToolVersion;

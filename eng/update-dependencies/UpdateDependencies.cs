@@ -71,7 +71,7 @@ namespace Dotnet.Docker
                 IEnumerable<IDependencyInfo> buildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(
                         kvp.Key,
-                        kvp.Value ?? throw new InvalidOperationException($"No version specified for {kvp.Key}")))
+                        kvp.Value))
                     .ToArray();
                 DependencyUpdateResults updateResults = await UpdateFilesAsync(buildInfos);
 
@@ -113,7 +113,7 @@ namespace Dotnet.Docker
             return DependencyUpdateUtils.Update(updaters, buildInfos);
         }
 
-        private static IDependencyInfo CreateDependencyBuildInfo(string name, string version)
+        private static IDependencyInfo CreateDependencyBuildInfo(string name, string? version)
         {
             return new BuildDependencyInfo(
                 new BuildInfo()
