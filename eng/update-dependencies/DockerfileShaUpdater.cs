@@ -178,8 +178,8 @@ namespace Dotnet.Docker
 
             usedBuildInfos = new IDependencyInfo[] { productInfo };
 
-            string? versionDir = _buildVersion;
-            string? versionFile = UpdateDependencies.ResolveProductVersion(_buildVersion, _options);
+            string versionDir = _buildVersion ?? "";
+            string versionFile = UpdateDependencies.ResolveProductVersion(versionDir, _options);
 
             string archiveExt;
             if (_os.Contains("win"))
