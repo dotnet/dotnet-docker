@@ -36,7 +36,7 @@ View the sample app at http://localhost:8080/ or call `curl http://localhost:808
 
 ```bash
 % curl http://localhost:8080/Environment
-{"runtimeVersion":".NET 8.0.0-preview.3.23174.8","osVersion":"Linux 5.15.49-linuxkit #1 SMP PREEMPT Tue Sep 13 07:51:32 UTC 2022","osArchitecture":"Arm64","user":"app","processorCount":4,"totalAvailableMemoryBytes":4124512256,"memoryLimit":0,"memoryUsage":29655040}
+{"runtimeVersion":".NET 8.0.1","osVersion":"Alpine Linux v3.18","osArchitecture":"X64","user":"app","processorCount":8,"totalAvailableMemoryBytes":67373219840,"memoryLimit":0,"memoryUsage":30576640,"hostName":"dotnet-non-root-7bdbc96b8-bcp6c"}
 ```
 
 `user` is displayed as `app`, as expected.
@@ -57,16 +57,18 @@ This `securityContext` object enforces non-root hosting:
     spec:
       containers:
       - name: aspnetapp
-        image: dotnetnonroot.azurecr.io/aspnetapp
+        image: mcr.microsoft.com/dotnet/samples:aspnetapp
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
+          runAsUser: 1654
 ```
 
 - [allowPrivilegeEscalation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) -- Prevents (if `false`) a process from gaining greater privileges than its parent process. This is a good setting, but not directly related to users.
 - `runAsNonRoot` -- Tests that the user (via uid) is a non-root user, otherwise fail.
+- `runAsUser` -- Sets the user; only needed if non set in the container image.
 
-The `USER` Dockerfile instruction must be set via `UID` for the the `runAsNonRoot` setting to work correctly, as demonstrated by [Dockerfile.alpine-non-root](https://github.com/dotnet/dotnet-docker/blob/f4786b8c0b4469f7eb18f891fd6c090561e50006/samples/aspnetapp/Dockerfile.alpine-non-root#L27) and the following example.
+The `USER` Dockerfile instruction must be set via `UID` for the the `runAsNonRoot` setting to work correctly, as demonstrated by [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/7bca20cb06e1f912fc2e7fa8ce04dda606277537/samples/aspnetapp/Dockerfile#L21) and the following example.
 
 ```dockerfile
 USER $APP_UID
