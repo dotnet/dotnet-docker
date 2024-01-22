@@ -66,7 +66,7 @@ This `securityContext` object enforces non-root hosting:
 
 - [allowPrivilegeEscalation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) -- Prevents (if `false`) a process from gaining greater privileges than its parent process. This is a good setting, but not directly related to users.
 - `runAsNonRoot` -- Tests that the user (via uid) is a non-root user, otherwise fail.
-- `runAsUser` -- Sets the user; only needed if non set in the container image.
+- `runAsUser` -- Sets the user; only needed if not set in the container image.
 
 The `USER` Dockerfile instruction must be set via `UID` for the the `runAsNonRoot` setting to work correctly, as demonstrated by [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/7bca20cb06e1f912fc2e7fa8ce04dda606277537/samples/aspnetapp/Dockerfile#L21) and the following example.
 
