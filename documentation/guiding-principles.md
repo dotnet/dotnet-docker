@@ -37,10 +37,23 @@ See the [supported tags](supported-tags.md) for the tagging practices and polici
 
 1. Images will be included as part of the .NET release process. The Docker images will be released at the same time as the core product.
 
-1. Images will be rebuilt within hours of base image changes. For example, suppose a particular version of Alpine is patched. The .NET images based on this version of Alpine will be rebuilt with this new base image within hours of its release.
-
 1. Images will never be deleted from the [official Docker repositories](https://hub.docker.com/_/microsoft-dotnet/). This does not apply to the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md).
 
 1. The [Dockerfiles](https://github.com/dotnet/dotnet-docker/search?q=filename%3ADockerfile) used to produce all of the images will be publicly available. Customers will be able to take the Dockerfiles and build them to produce their own equivalent images. No special build steps or permissions should be needed to build the Dockerfiles.
 
 1. No experimental Docker features will be utilized within the infrastructure used to produce the images. Utilizing experimental features can negatively affect the reliability of image production and introduces a risk to the integrity of the resulting artifacts.
+
+## Image Rebuilds
+
+Since .NET container images are used as base images, excessive image rebuilds can cause immense usage of compute and network for our customers. We strive to rebuild our images only when absolutely necessary.
+
+Images will be rebuilt within hours of base image changes. For example, suppose a particular version of Alpine is patched. The .NET images based on this version of Alpine will be rebuilt with this new base image within hours of its release.
+
+An image will be rebuilt to pick up fixes for CVEs when:
+
+- We detect the image contains a CVE with a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score of "High" or "Critical".
+- OR when we detect the image contains a CVE that has not been assigned a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score for more than two weeks since the CVE was disclosed.
+- OR when we detect the image contains a CVE with a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score of "None", "Low", or "Medium" and it has been more than two weeks since the CVE was disclosed.
+    - This is to give ample opportunity for distro maintainers to re-build their base images with package updates so that we avoid repeated re-builds of our images.
+- AND The CVE is in a package that is a direct dependency of .NET or is in a package that we explicitly install in our Dockerfiles.
+- AND There is a fix for the package affected by the CVE available in the affected base image's package feed.
