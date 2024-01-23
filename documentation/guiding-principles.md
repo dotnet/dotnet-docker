@@ -52,8 +52,8 @@ Images will be rebuilt within hours of base image changes. For example, suppose 
 An image will be rebuilt to pick up fixes for CVEs when:
 
 - We detect the image contains a CVE with a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score of "High" or "Critical".
-- OR when we detect the image contains a CVE that has not been assigned a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score for more than two weeks since the CVE was disclosed.
-- OR when we detect the image contains a CVE with a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score of "None", "Low", or "Medium" and it has been more than two weeks since the CVE was disclosed.
+- **OR** when we detect the image contains a CVE that has not been assigned a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score for more than two weeks since the CVE was disclosed.
+- **OR** when we detect the image contains a CVE with a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score of "None", "Low", or "Medium" and it has been more than two weeks since the CVE was disclosed.
     - This is to give ample opportunity for distro maintainers to re-build their base images with package updates so that we avoid repeated re-builds of our images.
-- AND The CVE is in a package that is a direct dependency of .NET or is in a package that we explicitly install in our Dockerfiles.
-- AND There is a fix for the package affected by the CVE available in the affected base image's package feed.
+- **AND** The CVE is in a package that is a direct dependency of .NET or is in a package that we explicitly install in our Dockerfiles.
+- **AND** There is a fix for the package affected by the CVE available in the affected base image's package feed.
