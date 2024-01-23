@@ -79,8 +79,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            // wasm-tools workload is not supported on Alpine or ARM, fall back to the unoptimized test
-            bool useWasmTools = !isAlpine && !imageData.IsArm;
+            // wasm-tools workload is not supported on ARM, fall back to the unoptimized test
+            bool useWasmTools = !imageData.IsArm;
 
             using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools: useWasmTools);
             await testScenario.ExecuteAsync();
