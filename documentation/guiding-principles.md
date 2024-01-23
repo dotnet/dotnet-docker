@@ -37,17 +37,11 @@ See the [supported tags](supported-tags.md) for the tagging practices and polici
 
 1. Images will be included as part of the .NET release process. The Docker images will be released at the same time as the core product.
 
-1. Images will be rebuilt within 12 hours of any updates to their base images. For example, if a particular version of Alpine is patched, the .NET images based on this version of Alpine will be rebuilt with this new base image.
+1. Images will be rebuilt only as necessary in order to avoid downstream churn for consumers of .NET images.
+The [Image Update Policy](https://github.com/dotnet/dotnet-docker/blob/main/README.md#image-update-policy) section of the README contains the exact guidelines for when images will be updated.
 
 1. Images will never be deleted from the [official Docker repositories](https://hub.docker.com/_/microsoft-dotnet/). This does not apply to the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md).
 
 1. The [Dockerfiles](https://github.com/dotnet/dotnet-docker/search?q=filename%3ADockerfile) used to produce all of the images will be publicly available. Customers will be able to take the Dockerfiles and build them to produce their own equivalent images. No special build steps or permissions should be needed to build the Dockerfiles.
 
 1. No experimental Docker features will be utilized within the infrastructure used to produce the images. Utilizing experimental features can negatively affect the reliability of image production and introduces a risk to the integrity of the resulting artifacts.
-
-## CVE Update Policy
-
-A given image will be rebuilt to pick up fixes for a CVE when:
-* We detect the image contains a CVE with a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score of "High" or "Critical"
-* **AND** the CVE is in a package that is added in our Dockerfile layers (meaning the CVE is in a package we explicitly install or any transitive dependencies of those packages)
-* **AND** there is a fix for the package affected by the CVE available in the affected base image's package feed.
