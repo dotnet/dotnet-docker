@@ -79,10 +79,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            // wasm-tools workload is not supported on ARM, fall back to the unoptimized test
-            bool useWasmTools = !imageData.IsArm;
+            // `wasm-tools` workload does not work on ARM
+            // `wasm-tools` is also not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
+            int[] unsupportedVersionsForAlpine = [6, 7, 8];
+            bool isSupportedVersionForAlpine = unsupportedVersionsForAlpine.Contains(imageData.Version.Major);
+            bool useWasmTools = !imageData.IsArm && (!isAlpine || isSupportedVersionForAlpine);
 
-            using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools: useWasmTools);
+            using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
             await testScenario.ExecuteAsync();
         }
 
