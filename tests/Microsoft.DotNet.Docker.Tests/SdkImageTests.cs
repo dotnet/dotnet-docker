@@ -82,6 +82,13 @@ namespace Microsoft.DotNet.Docker.Tests
             // wasm-tools workload is not supported on Alpine or ARM, fall back to the unoptimized test
             bool useWasmTools = !isAlpine && !imageData.IsArm;
 
+            // workload installation is broken as of .NET SDK 9.0.100-alpha.1.24073.1
+            // Remove when https://github.com/dotnet/sdk/issues/38202 is resolved.
+            if (imageData.Version.Major == 9)
+            {
+                useWasmTools = false;
+            }
+
             using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools: useWasmTools);
             await testScenario.ExecuteAsync();
         }
