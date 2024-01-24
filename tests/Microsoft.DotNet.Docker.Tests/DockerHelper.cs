@@ -125,6 +125,14 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
+        public void StopContainer(string container)
+        {
+            if (ContainerExists(container))
+            {
+                ExecuteWithLogging($"stop {container}", autoRetry: true);
+            }
+        }
+
         private static string Execute(
             string args, bool ignoreErrors = false, bool autoRetry = false, ITestOutputHelper outputHelper = null)
         {
