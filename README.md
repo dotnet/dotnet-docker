@@ -98,7 +98,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 ### CVE Update Policy
 
-A given image will be rebuilt to pick up fixes for a CVE when:
+.NET container images are regularly monitored for the presence of CVEs. A given image will be rebuilt to pick up fixes for a CVE when:
 * We detect the image contains a CVE with a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score of "High" or "Critical"
 * **AND** the CVE is in a package that is added in our Dockerfile layers (meaning the CVE is in a package we explicitly install or any transitive dependencies of those packages)
 * **AND** there is a fix for the package affected by the CVE available in the affected base image's package repository.
