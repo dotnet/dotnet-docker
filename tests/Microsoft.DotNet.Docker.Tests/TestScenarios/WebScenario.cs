@@ -57,6 +57,7 @@ public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, 
         }
         finally
         {
+            DockerHelper.StopContainer(containerName);
             DockerHelper.DeleteContainer(containerName);
         }
     }
