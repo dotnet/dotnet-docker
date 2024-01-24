@@ -98,13 +98,13 @@ aspnetapp-8.0-chiseled-arm64v8, aspnetapp-chiseled-arm64v8, aspnetapp-chiseled-8
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-dotnetapp-nanoserver-ltsc2022, dotnetapp-8.0, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.nanoserver)
+dotnetapp-8.0-nanoserver-ltsc2022, dotnetapp-nanoserver-ltsc2022, dotnetapp-8.0, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.nanoserver)
 aspnetapp-8.0-nanoserver-ltsc2022, aspnetapp-nanoserver-ltsc2022, aspnetapp-8.0, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.nanoserver)
 
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
 ---------| ---------------
-dotnetapp-nanoserver-1809, dotnetapp-8.0, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.nanoserver)
+dotnetapp-8.0-nanoserver-1809, dotnetapp-nanoserver-1809, dotnetapp-8.0, dotnetapp, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.nanoserver)
 aspnetapp-8.0-nanoserver-1809, aspnetapp-nanoserver-1809, aspnetapp-8.0, aspnetapp | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.nanoserver)
 
 You can retrieve a list of all available tags for dotnet/samples at https://mcr.microsoft.com/v2/dotnet/samples/tags/list.
