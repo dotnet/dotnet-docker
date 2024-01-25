@@ -103,7 +103,7 @@
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
-                "dotnetapp-8.0-chiseled-amd64": {},
+                "dotnetapp-chiseled-8.0-amd64": {},
                 "dotnetapp-chiseled-amd64": {}
               }
             },
@@ -113,7 +113,7 @@
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
-                "dotnetapp-8.0-chiseled-arm32v7": {},
+                "dotnetapp-chiseled-8.0-arm32v7": {},
                 "dotnetapp-chiseled-arm32v7": {}
               },
               "variant": "v7"
@@ -124,7 +124,7 @@
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
-                "dotnetapp-8.0-chiseled-arm64v8": {},
+                "dotnetapp-chiseled-8.0-arm64v8": {},
                 "dotnetapp-chiseled-arm64v8": {}
               },
               "variant": "v8"
@@ -258,7 +258,7 @@
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
-                "aspnetapp-8.0-chiseled-amd64": {},
+                "aspnetapp-chiseled-8.0-amd64": {},
                 "aspnetapp-chiseled-amd64": {}
               },
               "customBuildLegGroups": [
@@ -277,7 +277,7 @@
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
-                "aspnetapp-8.0-chiseled-arm32v7": {},
+                "aspnetapp-chiseled-8.0-arm32v7": {},
                 "aspnetapp-chiseled-arm32v7": {}
               },
               "variant": "v7",
@@ -297,7 +297,7 @@
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
-                "aspnetapp-8.0-chiseled-arm64v8": {},
+                "aspnetapp-chiseled-8.0-arm64v8": {},
                 "aspnetapp-chiseled-arm64v8": {}
               },
               "variant": "v8",
