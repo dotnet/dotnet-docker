@@ -27,3 +27,5 @@ artifacts/
 
 # ImageBuilder directory
 .Microsoft.DotNet.ImageBuilder
+
+*.nupkg
