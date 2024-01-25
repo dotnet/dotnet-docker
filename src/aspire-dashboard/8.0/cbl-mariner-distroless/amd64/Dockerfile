@@ -12,48 +12,23 @@ RUN tdnf install -y \
     && tdnf clean all
 
 WORKDIR /tmp
+
 COPY Aspire.Dashboard.Sdk.linux-x64.8.0.0-dev.nupkg .
+
 RUN mkdir -p /app \
     && unzip Aspire.Dashboard.Sdk.linux-x64.8.0.0-dev.nupkg -d /app \
     && rm Aspire.Dashboard.Sdk.linux-x64.8.0.0-dev.nupkg
 
-ENTRYPOINT [ "dotnet", "/app/tools/Aspire.Dashboard.dll" ]
 
-# RUN dotnet_monitor_version=8.1.0-alpha.1.24073.4 \
-#     && curl -fSL --output dotnet-monitor-base.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz \
-#     && dotnet_monitor_base_sha512='98b5e81ae1c368a20a5c9b46bc7bd59f1c462d960ce72b06c5b18988ec68ace0b5b1c29d050a47df202fe35256b2e4e1909227059f3376ec1f2f8a127058bcf1' \
-#     && echo "$dotnet_monitor_base_sha512  dotnet-monitor-base.tar.gz" | sha512sum -c - \
-#     && mkdir -p /app \
-#     && tar -oxzf dotnet-monitor-base.tar.gz -C /app \
-#     && rm dotnet-monitor-base.tar.gz
+FROM $REPO:8.0.1-cbl-mariner2.0-distroless-amd64
 
+WORKDIR /app
 
-# .NET Monitor Base image
-# FROM $REPO:8.0.1-cbl-mariner2.0-distroless-amd64
+COPY --from=installer /app/tools .
 
-# WORKDIR /app
-# COPY --from=installer /app .
+ENV \
+    # ASPNETCORE_HTTP_PORTS=18888 \
+    # Server GC mode
+    DOTNET_gcServer=1
 
-# ENV \
-#     # Unset ASPNETCORE_HTTP_PORTS from aspnet base image
-#     ASPNETCORE_HTTP_PORTS= \
-#     # Disable debugger and profiler diagnostics to avoid diagnosing self.
-#     COMPlus_EnableDiagnostics=0 \
-#     # Default Filter
-#     DefaultProcess__Filters__0__Key=ProcessId \
-#     DefaultProcess__Filters__0__Value=1 \
-#     # Remove Unix Domain Socket before starting diagnostic port server
-#     DiagnosticPort__DeleteEndpointOnStartup=true \
-#     # Server GC mode
-#     DOTNET_gcServer=1 \
-#     # Logging: JSON format so that analytic platforms can get discrete entry information
-#     Logging__Console__FormatterName=json \
-#     # Logging: Use round-trip date/time format without timezone information (always logged in UTC)
-#     Logging__Console__FormatterOptions__TimestampFormat=yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z' \
-#     # Logging: Write timestamps using UTC offset (+0:00)
-#     Logging__Console__FormatterOptions__UseUtcTimestamp=true \
-#     # Add dotnet-monitor path to front of PATH for easier, prioritized execution
-#     PATH="/app:${PATH}"
-
-# ENTRYPOINT [ "dotnet-monitor" ]
-# CMD [ "collect", "--urls", "https://+:52323", "--metricUrls", "http://+:52325" ]
+ENTRYPOINT [ "dotnet", "/app/Aspire.Dashboard.dll" ]
