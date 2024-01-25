@@ -21,7 +21,7 @@ FROM $REPO:9.0.0-preview.1-jammy-chiseled-extra-amd64
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=9.0.0-preview.1.24073.8 \
+    DOTNET_VERSION=9.0.0-preview.1.24073.11 \
     # ASP.NET Core version
     ASPNET_VERSION=9.0.0-preview.1.24073.4
 
