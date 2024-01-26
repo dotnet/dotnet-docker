@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG REPO=mcr.microsoft.com/dotnet/sdk
-FROM $REPO:9.0.100-alpha.1-jammy-amd64
+FROM $REPO:9.0.100-preview.1-jammy-amd64
 
 RUN echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted" > /etc/apt/sources.list.d/arm64.list \
     && echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted" >> /etc/apt/sources.list.d/arm64.list \
