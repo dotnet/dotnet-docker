@@ -95,6 +95,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 * We update supported .NET images within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
 * We re-build all .NET images as part of releasing new versions of .NET including new major/minor versions and servicing.
+* Distroless images such as Ubuntu Chiseled have no base image, and as such will only be updated with .NET releases and CVE fixes as described below.
 
 ### CVE Update Policy
 
