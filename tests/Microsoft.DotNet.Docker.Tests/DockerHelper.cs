@@ -113,6 +113,11 @@ namespace Microsoft.DotNet.Docker.Tests
                     ExecuteWithLogging($"logs {container}", ignoreErrors: true);
                 }
 
+                // If a container is already stopped, running `docker stop` again has no adverse effects.
+                // This prevents some issues where containers could fail to be forcibly removed while they're running.
+                // e.g. https://github.com/dotnet/dotnet-docker/issues/5127
+                StopContainer(container);
+
                 ExecuteWithLogging($"container rm -f {container}");
             }
         }
@@ -125,7 +130,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        public void StopContainer(string container)
+        private void StopContainer(string container)
         {
             if (ContainerExists(container))
             {
