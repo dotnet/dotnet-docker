@@ -266,6 +266,9 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.Jammy,            Arch = Arch.Arm,   DockerfileSuffix = "ubuntu" },
             new SampleImageData { OS = OS.Jammy,            Arch = Arch.Arm64, DockerfileSuffix = "ubuntu" },
             new SampleImageData { OS = OS.Jammy,            Arch = Arch.Amd64, DockerfileSuffix = "ubuntu" },
+            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Arm,   DockerfileSuffix = "chiseled" },
+            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Arm64, DockerfileSuffix = "chiseled" },
+            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Amd64, DockerfileSuffix = "chiseled" },
         };
 
         private static readonly SampleImageData[] s_windowsSampleTestData =
