@@ -8,9 +8,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.0-preview.1.24073.11 \
+RUN dotnet_version=9.0.0-preview.1.24074.8 \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='fc3b561c9438bdab59517a8166978ecee358e10dbd52037bc9ece106736e29beb35d2ba2f3039a8ab700a54b59eb00af107f1ace8f9faeea5ac77d5ca171e464' \
+    && dotnet_sha512='334b25d098582af9bc1f23de03446a63032aa20b8389fb0ebd80e2503bf684b38cfbebfd0fe4deae1350affc4c3b8fb5778513cfecc5a78dfce99f1175d66d35' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -21,7 +21,7 @@ RUN dotnet_version=9.0.0-preview.1.24073.11 \
 FROM $REPO:9.0.0-preview.1-cbl-mariner2.0-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.0-preview.1.24073.11
+ENV DOTNET_VERSION=9.0.0-preview.1.24074.8
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
