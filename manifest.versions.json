@@ -120,12 +120,12 @@
     "monitor|6.3|linux|arm64|sha": "7fabe8e143fbd85757a7f3af10e51ec65c2afe927b9e4fd04161775740fe9060c862fcb71ecd04c859da331c8215a9f1d7e345f5d5f07aee65866e9c0ec9e61a",
     "monitor|6.3|product-version": "6.3.5",
 
-    "monitor|7.3|build-version": "7.3.2",
-    "monitor|7.3|linux-musl|x64|sha": "591cdbe72e724ddd67a9a223df167e33a7f84e47caa33bcadad6c44cb44f54ccab3be379c48e02898c89e51e4645d2872eccf5c8da110f7798722c9451ff9270",
-    "monitor|7.3|linux-musl|arm64|sha": "8bbb3313e86a83d515a284878e1db3ee1d0df6b17afe49c263316e01aa134995d90205bd0db4be22d937a74eaee1aafe92ccd5a5bafcf8002f7fed46025366fc",
-    "monitor|7.3|linux|x64|sha": "9e1da6b41119874659e00cfae5c22e541041093ff1c55ecb2234610502e714868474c3bc52de78a650201d36271296069e8ed5dc8b3a4972954bffadd4478248",
-    "monitor|7.3|linux|arm64|sha": "9866bc99b71880f1ea305361e23703f34238546589b70e38b387000e141335908f0ebd2708f851ad911dc89d53460b98e6a9215a6c391e78b558cb55569de3c3",
-    "monitor|7.3|product-version": "7.3.2",
+    "monitor|7.3|build-version": "7.3.3-servicing.24080.13",
+    "monitor|7.3|linux-musl|x64|sha": "c6ccbaa680b9aace18abf997437cf34dd0ea6eb74f6ec75bb346f1ff35a37c334db8cd8856e6cc4499398a064421d3d250a5d8fe68ccb5dd16039321bbe14140",
+    "monitor|7.3|linux-musl|arm64|sha": "e042cb72e70909052508bdedfc330481f68fd30e1c98d96591813ad4d77d1e8ce6ebcc6b2e172e0379b8fec8fb566661f37e4c18a6036a20be3ea95bd6536264",
+    "monitor|7.3|linux|x64|sha": "95b023caf844ad76bbba2917c0d620b87fe48b3951d3139943ecdd117fc6db3c470f9189ae30a229f248b385f5c4f7b56eabbc5998e656d01972956f4b7a8804",
+    "monitor|7.3|linux|arm64|sha": "3eb5fc7cecf95a4e82669f0cb7691a22d18787f2f9992f902e22cdd9318821cb2db2fd792dd15fe9baadc76c9fca9d414a3a6e0f4e3fc73e8ecd8c18f2ae3925",
+    "monitor|7.3|product-version": "7.3.3",
 
     "monitor|8.0|build-version": "8.0.0",
     "monitor|8.0|product-version": "8.0.0",
