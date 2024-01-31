@@ -49,6 +49,7 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 * [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
 * [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor/base](https://hub.docker.com/_/microsoft-dotnet-nightly-monitor-base/): .NET Monitor Base (Preview)
+* [dotnet/nightly/aspire-dashboard](https://hub.docker.com/_/microsoft-dotnet-nightly-aspire-dashboard/): .NET Aspire Dashboard (Preview)
 
 .NET Framework:
 

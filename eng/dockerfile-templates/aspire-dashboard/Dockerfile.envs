@@ -1,0 +1,5 @@
+ENV \
+    # Unset ASPNETCORE_HTTP_PORTS from aspnet base image
+    ASPNETCORE_HTTP_PORTS= \
+    # Server GC mode
+    DOTNET_gcServer=1

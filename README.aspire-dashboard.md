@@ -2,18 +2,20 @@
 
 **The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
 
-**See [dotnet](https://hub.docker.com/_/microsoft-dotnet-monitor-base/) for images with official releases of [.NET](https://github.com/dotnet/core).**
+**See [dotnet](https://hub.docker.com/_/microsoft-dotnet-aspire-dashboard/) for images with official releases of [.NET](https://github.com/dotnet/core).**
 
 # Featured Tags
 
-* `8` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor/base:8`
+* `8.0` (Long-Term Support)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.0`
+* `7.0` (Standard Support)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:7.0`
+* `6.0` (Long-Term Support)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:6.0`
 
 # About
 
-This image contains the .NET Monitor Base installation.
-
-Use this image as a base image for building a .NET Monitor image with extensions.
+This image contains the .NET Aspire Dashboard.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
@@ -28,12 +30,14 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-## Building a Custom .NET Monitor Image
+## Fill this out
 
-The following Dockerfiles demonstrate how you can use this base image to build a .NET Monitor image with a custom set of extensions.
+TODO: How to use Aspire Dashboard
 
-* [Ubuntu Chiseled - amd64](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile)
-* [Ubuntu Chiseled - arm64v8](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile)
+# Image Variants
+
+.NET container images have several variants that offer different combinations of flexibility and deployment size.
+The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
 
 # Related Repositories
 
@@ -56,31 +60,21 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 # Full Tag Listing
 
 ## Linux amd64 Tags
+##### .NET Aspire Dashboard Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-ubuntu-chiseled-amd64, 8.0-ubuntu-chiseled-amd64, 8.0.0-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.0, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-8.0.0-cbl-mariner-distroless-amd64, 8.0-cbl-mariner-distroless-amd64, 8.0.0-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
-
-##### .NET Monitor Preview Tags
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-8.1.0-alpha.1-ubuntu-chiseled-amd64, 8.1-preview-ubuntu-chiseled-amd64, 8-ubuntu-chiseled-amd64, 8.1.0-alpha.1-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0-alpha.1, 8.1-preview, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.1/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-8.1.0-alpha.1-cbl-mariner-distroless-amd64, 8.1-preview-cbl-mariner-distroless-amd64, 8-cbl-mariner-distroless-amd64, 8.1.0-alpha.1-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.1/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
+8.0.0-preview.3.24075.10-cbl-mariner-distroless-amd64, 8.0-preview-cbl-mariner-distroless-amd64, 8.0.0-preview.3.24075.10-cbl-mariner-distroless, 8.0-preview-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
 
 ## Linux arm64 Tags
+##### .NET Aspire Dashboard Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-ubuntu-chiseled-arm64v8, 8.0-ubuntu-chiseled-arm64v8, 8.0.0-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.0, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.0-cbl-mariner-distroless-arm64v8, 8.0-cbl-mariner-distroless-arm64v8, 8.0.0-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
+8.0.0-preview.3.24075.10-cbl-mariner-distroless-arm64v8, 8.0-preview-cbl-mariner-distroless-arm64v8, 8.0.0-preview.3.24075.10-cbl-mariner-distroless, 8.0-preview-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
 
-##### .NET Monitor Preview Tags
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-8.1.0-alpha.1-ubuntu-chiseled-arm64v8, 8.1-preview-ubuntu-chiseled-arm64v8, 8-ubuntu-chiseled-arm64v8, 8.1.0-alpha.1-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0-alpha.1, 8.1-preview, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.1/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-8.1.0-alpha.1-cbl-mariner-distroless-arm64v8, 8.1-preview-cbl-mariner-distroless-arm64v8, 8-cbl-mariner-distroless-arm64v8, 8.1.0-alpha.1-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.1/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
-
-You can retrieve a list of all available tags for dotnet/nightly/monitor/base at https://mcr.microsoft.com/v2/dotnet/nightly/monitor/base/tags/list.
+You can retrieve a list of all available tags for dotnet/nightly/aspire-dashboard at https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list.
 <!--End of generated tags-->
+
+For tags contained in the old dotnet/core-nightly/aspire-dashboard repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core-nightly/aspire-dashboard/tags/list.
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
 

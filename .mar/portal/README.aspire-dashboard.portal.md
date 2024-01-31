@@ -4,32 +4,34 @@
 
 **The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
 
-**See [dotnet](https://mcr.microsoft.com/product/dotnet/sdk/about) for images with official releases of [.NET](https://github.com/dotnet/core).**
+**See [dotnet](https://mcr.microsoft.com/product/dotnet/aspire-dashboard/about) for images with official releases of [.NET](https://github.com/dotnet/core).**
 
-This image contains the .NET SDK which is comprised of three parts:
-
-1. .NET CLI
-1. .NET runtime
-1. ASP.NET Core
-
-Use this image for your development process (developing, building and testing applications).
+This image contains the .NET Aspire Dashboard.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
+
+### New: Ubuntu Chiseled Images
+
+Ubuntu Chiseled .NET images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
+These images offer dramatically smaller deployment sizes and attack surface by including only the minimal set of packages required to run .NET applications.
+
+Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) documentation page for more info.
 
 ## Featured Tags
 
 * `8.0` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:8.0`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.0`
 * `7.0` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:7.0`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:7.0`
 * `6.0` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:6.0`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:6.0`
 
 ## Related Repositories
 
 .NET:
 
 * [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
+* [dotnet/nightly/sdk](https://mcr.microsoft.com/product/dotnet/nightly/sdk/about): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://mcr.microsoft.com/product/dotnet/nightly/runtime/about): .NET Runtime (Preview)
 * [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
@@ -45,18 +47,9 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-### Building .NET Apps with Docker
+### Fill this out
 
-* [.NET Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
-* [ASP.NET Core Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
-
-### Develop .NET Apps in a Container
-
-The following samples show how to develop, build and test .NET applications with Docker without the need to install the .NET SDK.
-
-* [Build .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/build-in-sdk-container.md)
-* [Test .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-tests-in-sdk-container.md)
-* [Run .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-in-sdk-container.md)
+TODO: How to use Aspire Dashboard
 
 ## Image Variants
 
