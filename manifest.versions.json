@@ -78,6 +78,8 @@
     "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|8.1-monitor|main": "$(base-url|public|main)",
     "base-url|8.1-monitor|nightly": "$(base-url|public|nightly)",
+    "base-url|9.0-monitor|main": "$(base-url|public|main)",
+    "base-url|9.0-monitor|nightly": "$(base-url|public|nightly)",
 
     "chisel|6.0|url": "github.com/canonical/chisel",
     "chisel|8.0|url": "$(chisel|6.0|url)",
@@ -129,6 +131,18 @@
 
     "monitor|8.0|build-version": "8.0.1-servicing.24081.5",
     "monitor|8.0|product-version": "8.0.1",
+
+    "monitor|9.0|build-version": "9.0.0-preview.1.24080.10",
+    "monitor|9.0|product-version": "9.0.0-preview.1",
+
+    "monitor-base|9.0|linux|x64|sha": "444550f0aaaa2df2e86594ec4beda276657c0f285a21d41dc52289bc1dee3ec5e7455a30745d637cad9d40d14f802aa773caf75500cc65ef74246903f5e8d260",
+    "monitor-base|9.0|linux|arm64|sha": "e6795ccdffb12fcc1bc9a44438beb789b981b4bc7fb7f78d59cf19661c542f466edebf1d4496f637a7a6e79993bbe40294411a4458e34a9bf71b97f7b24034e6",
+
+    "monitor-ext-azureblobstorage|9.0|linux|x64|sha": "ffeb40ed93c7a7c857fcb8fce8d61c8176a3beb8ccbc6a03d703072d7e17e11d27e1a59b723653aa9ac40fa4f4c26afb7c5f454c34665122ae46b3eb62e7dec5",
+    "monitor-ext-azureblobstorage|9.0|linux|arm64|sha": "394ebf6d211fb43b13946a991d5cb166d3beed9d85fb937eec632b8c003db878862b5b20b750247148cfb1e75c3e715fac2bb162c232d0a019231e9af1a966ab",
+
+    "monitor-ext-s3storage|9.0|linux|x64|sha": "c86e1c53d92556cfe2ab23749f7067654e14c97fd39579085a711f430b8ae2b89aa54fc0824db832c9083cf30c2813fffd659ffcd578f181e57e26770ab7928c",
+    "monitor-ext-s3storage|9.0|linux|arm64|sha": "1b03c6451ebcdac440109a3d9f5554afb859614d4c89956df3b88c340f1d0ad24fe077fab8ad69032df9d260ff9968cd60a5f9301f44a9851b0979e1afaf0c17",
 
     "monitor-base|8.0|linux|x64|sha": "f782406c50f9583b3bd94fd90ffc4b4d1b148b2d3e2386c9f468fe3576a533f79154eeed76f5c439259d3008b6665ff6973c3e4c5a96fbb5732878f44acefa5d",
     "monitor-base|8.0|linux|arm64|sha": "b8858b8c0a5053aa6a18c349fa1d9d783cd2a9e266942ea1d9b0d91391ae88df6340daef0abe7ded3d81fd171179fd3a3faebb7755c4f350b2cdf1560e0a0410",
