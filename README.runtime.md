@@ -190,8 +190,9 @@ For tags contained in the old dotnet/core/runtime repository, you can retrieve a
 
 ## Image Update Policy
 
-* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:ltsc2022, buildpack-deps:bionic-scm, etc.).
-* We publish .NET images as part of releasing new versions of .NET including major/minor and servicing.
+* We update supported .NET images within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
+* We re-build all .NET images as part of releasing new versions of .NET including new major/minor versions and servicing.
+* Distroless images such as Ubuntu Chiseled have no base image, and as such will only be updated with .NET releases and CVE fixes as described below.
 
 ### CVE Update Policy
 
