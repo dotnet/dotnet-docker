@@ -2,7 +2,7 @@
   "variables": {
     "aspire-dashboard|8.0|build-version": "8.0.0-preview.3.24075.10",
     "aspire-dashboard|8.0|product-version": "8.0.0-preview.3",
-    "aspire-dashboard|8.0|fixed-tag": "$(aspire-dashboard|8.0|build-version)",
+    "aspire-dashboard|8.0|fixed-tag": "$(aspire-dashboard|8.0|product-version)",
     "aspire-dashboard|8.0|floating-tag": "8.0-preview",
 
     "aspnet|6.0|build-version": "6.0.26",
