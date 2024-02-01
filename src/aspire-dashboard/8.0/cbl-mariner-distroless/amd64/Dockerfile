@@ -10,10 +10,10 @@ RUN tdnf install -y \
 
 # Retrieve Aspire Dashboard
 RUN dotnet_aspire_version=8.0.0-preview.3.24075.10 \
-    && curl -fSL --output dotnet-aspire.tar.gz https://dotnetbuilds.azureedge.net/public/aspire/$dotnet_aspire_version/aspire-dashboard-linux-x64.zip \
+    && curl -fSL --output dotnet-aspire.zip https://dotnetbuilds.azureedge.net/public/aspire/$dotnet_aspire_version/aspire-dashboard-linux-x64.zip \
     && mkdir -p /app \
-    && unzip dotnet-aspire.tar.gz -d /app \
-    && rm dotnet-aspire.tar.gz
+    && unzip dotnet-aspire.zip -d /app \
+    && rm dotnet-aspire.zip
 
 
 # Aspire Dashboard image
