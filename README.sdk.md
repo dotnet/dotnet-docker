@@ -6,6 +6,8 @@
 
 # Featured Tags
 
+* `9.0` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:9.0-preview`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:8.0`
 * `7.0` (Standard Support)
