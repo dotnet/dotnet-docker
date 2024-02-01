@@ -35,7 +35,7 @@
     :* [dotnet/nightly/monitor]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/monitor" ])}}): .NET Monitor Tool (Preview)
 }}{{if (isNightlyRepo && SHORT_REPO = "monitor")
     :* [dotnet/nightly/monitor/base]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/monitor/base" ])}}): .NET Monitor Base (Preview)
-}}{{if isNightlyRepo
+}}{{if isNightlyRepo && SHORT_REPO != "aspire-dashboard"
     :* [dotnet/nightly/aspire-dashboard]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/nightly/aspire-dashboard" ])}}): .NET Aspire Dashboard (Preview)
 }}
 .NET Framework:
