@@ -10019,90 +10019,6 @@
           ]
         },
         {
-          "productVersion": "$(monitor|9.0|product-version)",
-          "sharedTags": {
-            "$(monitor|9.0|product-version)-ubuntu-chiseled": {},
-            "9.0-preview-ubuntu-chiseled": {},
-            "9.0-ubuntu-chiseled": {},
-            "$(monitor|9.0|product-version)": {},
-            "9.0-preview": {},
-            "9": {},
-            "latest": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/monitor-base/9.0/ubuntu-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "jammy-chiseled",
-              "tags": {
-                "$(monitor|9.0|product-version)-ubuntu-chiseled-amd64": {},
-                "9.0-preview-ubuntu-chiseled-amd64": {},
-                "9-ubuntu-chiseled-amd64": {}
-              }
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/monitor-base/9.0/ubuntu-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "jammy-chiseled",
-              "tags": {
-                "$(monitor|9.0|product-version)-ubuntu-chiseled-arm64v8": {},
-                "9.0-preview-ubuntu-chiseled-arm64v8": {},
-                "9-ubuntu-chiseled-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(monitor|9.0|product-version)",
-          "sharedTags": {
-            "$(monitor|9.0|product-version)-cbl-mariner-distroless": {},
-            "9.0-preview-cbl-mariner-distroless": {},
-            "9-cbl-mariner-distroless": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/monitor-base/9.0/cbl-mariner-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
-              "tags": {
-                "$(monitor|9.0|product-version)-cbl-mariner-distroless-amd64": {},
-                "9.0-preview-cbl-mariner-distroless-amd64": {},
-                "9-cbl-mariner-distroless-amd64": {}
-              }
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/monitor-base/9.0/cbl-mariner-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
-              "tags": {
-                "$(monitor|9.0|product-version)-cbl-mariner-distroless-arm64v8": {},
-                "9.0-preview-cbl-mariner-distroless-arm64v8": {},
-                "9-cbl-mariner-distroless-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
           "productVersion": "$(monitor|8.1|product-version)",
           "sharedTags": {
             "$(monitor|8.1|product-version)-ubuntu-chiseled": {},
@@ -10180,6 +10096,84 @@
                 "$(monitor|8.1|product-version)-cbl-mariner-distroless-arm64v8": {},
                 "8.1-preview-cbl-mariner-distroless-arm64v8": {},
                 "8-cbl-mariner-distroless-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|9.0|product-version)",
+          "sharedTags": {
+            "$(monitor|9.0|product-version)-ubuntu-chiseled": {},
+            "9.0-preview-ubuntu-chiseled": {},
+            "$(monitor|9.0|product-version)": {},
+            "9.0-preview": {},
+            "9-preview": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/9.0/ubuntu-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|9.0|product-version)-ubuntu-chiseled-amd64": {},
+                "9.0-preview-ubuntu-chiseled-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/9.0/ubuntu-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|9.0|product-version)-ubuntu-chiseled-arm64v8": {},
+                "9.0-preview-ubuntu-chiseled-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|9.0|product-version)",
+          "sharedTags": {
+            "$(monitor|9.0|product-version)-cbl-mariner-distroless": {},
+            "9.0-preview-cbl-mariner-distroless": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/9.0/cbl-mariner-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|9.0|product-version)-cbl-mariner-distroless-amd64": {},
+                "9.0-preview-cbl-mariner-distroless-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/9.0/cbl-mariner-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|9.0|product-version)-cbl-mariner-distroless-arm64v8": {},
+                "9.0-preview-cbl-mariner-distroless-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -10692,10 +10686,9 @@
           "sharedTags": {
             "$(monitor|9.0|product-version)-ubuntu-chiseled": {},
             "9.0-preview-ubuntu-chiseled": {},
-            "9-ubuntu-chiseled": {},
             "$(monitor|9.0|product-version)": {},
             "9.0-preview": {},
-            "9": {},
+            "9-preview": {},
             "latest": {}
           },
           "platforms": [
@@ -10709,8 +10702,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|9.0|product-version)-ubuntu-chiseled-amd64": {},
-                "9.0-preview-ubuntu-chiseled-amd64": {},
-                "9-ubuntu-chiseled-amd64": {}
+                "9.0-preview-ubuntu-chiseled-amd64": {}
               }
             },
             {
@@ -10724,8 +10716,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|9.0|product-version)-ubuntu-chiseled-arm64v8": {},
-                "9.0-preview-ubuntu-chiseled-arm64v8": {},
-                "9-ubuntu-chiseled-arm64v8": {}
+                "9.0-preview-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -10735,8 +10726,7 @@
           "productVersion": "$(monitor|9.0|product-version)",
           "sharedTags": {
             "$(monitor|9.0|product-version)-cbl-mariner-distroless": {},
-            "9.0-preview-cbl-mariner-distroless": {},
-            "9-cbl-mariner-distroless": {}
+            "9.0-preview-cbl-mariner-distroless": {}
           },
           "platforms": [
             {
@@ -10749,8 +10739,7 @@
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
                 "$(monitor|9.0|product-version)-cbl-mariner-distroless-amd64": {},
-                "9.0-preview-cbl-mariner-distroless-amd64": {},
-                "9-cbl-mariner-distroless-amd64": {}
+                "9.0-preview-cbl-mariner-distroless-amd64": {}
               }
             },
             {
@@ -10758,14 +10747,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:monitor-base)"
               },
-              "dockerfile": "src/monitor/8.1/cbl-mariner-distroless/arm64v8",
+              "dockerfile": "src/monitor/9.0/cbl-mariner-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
                 "$(monitor|9.0|product-version)-cbl-mariner-distroless-arm64v8": {},
-                "9.0-preview-cbl-mariner-distroless-arm64v8": {},
-                "9-cbl-mariner-distroless-arm64v8": {}
+                "9.0-preview-cbl-mariner-distroless-arm64v8": {}
               },
               "variant": "v8"
             }
