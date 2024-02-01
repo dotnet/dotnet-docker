@@ -30,7 +30,11 @@ try {
         $branch = ".nightly"
     }
     
+    #https://github.com/docker/compose/issues/8186
     $activeOS = docker version -f "{{ .Server.Os }}"
+    if ($activeOS -is [System.Array] -and $activeOS.Length -eq 2){
+        $activeOs = $activeOS[1]
+    }
     $baselinePath = "./tests/performance/ImageSize$branch.$activeOS.json"
     $commandArgs = "$baselinePath $ImageBuilderCustomArgs"
 
