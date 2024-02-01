@@ -165,6 +165,13 @@ For tags contained in the old dotnet/core/runtime-deps repository, you can retri
 * We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:ltsc2022, buildpack-deps:bionic-scm, etc.).
 * We publish .NET images as part of releasing new versions of .NET including major/minor and servicing.
 
+### CVE Update Policy
+
+.NET container images are regularly monitored for the presence of CVEs. A given image will be rebuilt to pick up fixes for a CVE when:
+* We detect the image contains a CVE with a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score of "Critical"
+* **AND** the CVE is in a package that is added in our Dockerfile layers (meaning the CVE is in a package we explicitly install or any transitive dependencies of those packages)
+* **AND** there is a CVE fix for the package available in the affected base image's package repository.
+
 ## Feedback
 
 * [File an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose)
