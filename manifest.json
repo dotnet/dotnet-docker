@@ -10628,8 +10628,7 @@
             "$(aspire-dashboard|8.0|fixed-tag)-cbl-mariner-distroless": {},
             "$(aspire-dashboard|8.0|floating-tag)-cbl-mariner-distroless": {},
             "$(aspire-dashboard|8.0|fixed-tag)": {},
-            "$(aspire-dashboard|8.0|floating-tag)": {},
-            "8.0-preview": {}
+            "$(aspire-dashboard|8.0|floating-tag)": {}
           },
           "platforms": [
             {

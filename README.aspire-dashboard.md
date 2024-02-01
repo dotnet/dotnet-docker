@@ -6,8 +6,8 @@
 
 # Featured Tags
 
-* `8.0` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.0`
+* `8.0-preview` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.0-preview`
 
 # About
 
@@ -19,9 +19,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-## Fill this out
 
-TODO: How to use Aspire Dashboard
 
 # Image Variants
 
@@ -52,13 +50,13 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 ##### .NET Aspire Dashboard Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.3-cbl-mariner-distroless-amd64, 8.0-preview-cbl-mariner-distroless-amd64, 8.0.0-preview.3-cbl-mariner-distroless, 8.0-preview-cbl-mariner-distroless, 8.0.0-preview.3, 8.0-preview, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
+8.0.0-preview.3-cbl-mariner-distroless-amd64, 8.0-preview-cbl-mariner-distroless-amd64, 8.0.0-preview.3-cbl-mariner-distroless, 8.0-preview-cbl-mariner-distroless, 8.0.0-preview.3, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
 
 ## Linux arm64 Tags
 ##### .NET Aspire Dashboard Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.3-cbl-mariner-distroless-arm64v8, 8.0-preview-cbl-mariner-distroless-arm64v8, 8.0.0-preview.3-cbl-mariner-distroless, 8.0-preview-cbl-mariner-distroless, 8.0.0-preview.3, 8.0-preview, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
+8.0.0-preview.3-cbl-mariner-distroless-arm64v8, 8.0-preview-cbl-mariner-distroless-arm64v8, 8.0.0-preview.3-cbl-mariner-distroless, 8.0-preview-cbl-mariner-distroless, 8.0.0-preview.3, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
 
 You can retrieve a list of all available tags for dotnet/nightly/aspire-dashboard at https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list.
 <!--End of generated tags-->

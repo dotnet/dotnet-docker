@@ -12,8 +12,8 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `8.0` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.0`
+* `8.0-preview` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.0-preview`
 
 ## Related Repositories
 
@@ -36,9 +36,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-### Fill this out
 
-TODO: How to use Aspire Dashboard
 
 ## Image Variants
 
