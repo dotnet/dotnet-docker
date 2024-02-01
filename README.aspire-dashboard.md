@@ -15,13 +15,6 @@ This image contains the .NET Aspire Dashboard.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-## New: Ubuntu Chiseled Images
-
-Ubuntu Chiseled .NET images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
-These images offer dramatically smaller deployment sizes and attack surface by including only the minimal set of packages required to run .NET applications.
-
-Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) documentation page for more info.
-
 # Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
@@ -59,13 +52,13 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 ##### .NET Aspire Dashboard Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.3-cbl-mariner-distroless-amd64, 8.0-preview-cbl-mariner-distroless-amd64, 8.0.0-preview.3-cbl-mariner-distroless, 8.0-preview-cbl-mariner-distroless, 8.0.0-preview.3, 8.0-preview, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
+8.0.0-preview.3-cbl-mariner-distroless-amd64, 8.0-preview-cbl-mariner-distroless-amd64, 8.0.0-preview.3-cbl-mariner-distroless, 8.0-preview-cbl-mariner-distroless, 8.0.0-preview.3, 8.0-preview, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
 
 ## Linux arm64 Tags
 ##### .NET Aspire Dashboard Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.3-cbl-mariner-distroless-arm64v8, 8.0-preview-cbl-mariner-distroless-arm64v8, 8.0.0-preview.3-cbl-mariner-distroless, 8.0-preview-cbl-mariner-distroless, 8.0.0-preview.3, 8.0-preview, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
+8.0.0-preview.3-cbl-mariner-distroless-arm64v8, 8.0-preview-cbl-mariner-distroless-arm64v8, 8.0.0-preview.3-cbl-mariner-distroless, 8.0-preview-cbl-mariner-distroless, 8.0.0-preview.3, 8.0-preview, 8.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
 
 You can retrieve a list of all available tags for dotnet/nightly/aspire-dashboard at https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list.
 <!--End of generated tags-->

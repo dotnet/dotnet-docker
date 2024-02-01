@@ -10629,7 +10629,7 @@
             "$(aspire-dashboard|8.0|floating-tag)-cbl-mariner-distroless": {},
             "$(aspire-dashboard|8.0|fixed-tag)": {},
             "$(aspire-dashboard|8.0|floating-tag)": {},
-            "8.0": {}
+            "8.0-preview": {}
           },
           "platforms": [
             {
