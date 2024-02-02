@@ -117,7 +117,7 @@ File.WriteAllLines("myFile.txt", myText);
 Try writing to the user's home directory:
 
 ```cs
-string path = Path.Combine(Environment.SpecialFolder.UserProfile, "myFile.txt");
+string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "myFile.txt");
 File.WriteAllLines(path, myText);
 ```
 
