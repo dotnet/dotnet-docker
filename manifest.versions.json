@@ -83,7 +83,7 @@
     "base-url|7.3-monitor|main": "$(base-url|public|main)",
     "base-url|7.3-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|8.0-monitor|main": "$(base-url|public|main)",
-    "base-url|8.0-monitor|nightly": "$(base-url|public|maintenance|nightly)",
+    "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|8.1-monitor|main": "$(base-url|public|main)",
     "base-url|8.1-monitor|nightly": "$(base-url|public|nightly)",
 
@@ -135,17 +135,17 @@
     "monitor|7.3|linux|arm64|sha": "3eb5fc7cecf95a4e82669f0cb7691a22d18787f2f9992f902e22cdd9318821cb2db2fd792dd15fe9baadc76c9fca9d414a3a6e0f4e3fc73e8ecd8c18f2ae3925",
     "monitor|7.3|product-version": "7.3.3",
 
-    "monitor|8.0|build-version": "8.0.0",
-    "monitor|8.0|product-version": "8.0.0",
+    "monitor|8.0|build-version": "8.0.1-servicing.24081.5",
+    "monitor|8.0|product-version": "8.0.1",
 
-    "monitor-base|8.0|linux|x64|sha": "29e4b3d1d85dcc170ed2c6e6525345e4ba896ff525258ec7fb93b7b6980d048c859f8b6b892bbaacb19f0f8eda1616a118be8f6f50cec23a2aea67ba3cab3f31",
-    "monitor-base|8.0|linux|arm64|sha": "0acc71ab36c98b03c1c66589ac8a0656dee97a29f10b44a62d715936cdb003bfb5d754f6be6f65cb46fb3fa4066a93f45d88790aab0db1631714d27f56eabbce",
+    "monitor-base|8.0|linux|x64|sha": "f782406c50f9583b3bd94fd90ffc4b4d1b148b2d3e2386c9f468fe3576a533f79154eeed76f5c439259d3008b6665ff6973c3e4c5a96fbb5732878f44acefa5d",
+    "monitor-base|8.0|linux|arm64|sha": "b8858b8c0a5053aa6a18c349fa1d9d783cd2a9e266942ea1d9b0d91391ae88df6340daef0abe7ded3d81fd171179fd3a3faebb7755c4f350b2cdf1560e0a0410",
 
-    "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "6241d70e0bf1c77a1097b0b7f3816702fa21426d2feca777c633bc40a5fa3233d2282c8b8b76d7fb4e2624b69b24147ed3daa90e9ac9b69e4dc5611b37cbe4de",
-    "monitor-ext-azureblobstorage|8.0|linux|arm64|sha": "acbcf4a85d1121e355bdc2bc383410b9432291532c7721eab03efc37de4ab0c51afbe3c9f176c8e4f0bfb85e85287fa57531a9caad6928e797755ac1b5939d77",
+    "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "5f9f451fce39e67215e654c22ef5d5c1fa4a729a39e1e9d5815cf9024b4d839c28e4fff7a45df7a2fe273158e267162fcc59c1264de148c3c1a309bad087603b",
+    "monitor-ext-azureblobstorage|8.0|linux|arm64|sha": "f85e377b05b5af717676d04dc20bfd7c8dff14564ee78c2abe71461e7a5bea7080967abc9e6a3abe36f70974846bd58999ccb050533a4c63bf9e41dcfefa912f",
 
-    "monitor-ext-s3storage|8.0|linux|x64|sha": "b3c08e47675756c85de6631f3d0fe9ee764f9d6fd2d7c7804ee9b54dace4e937dbdda4a50e1e1f14291ce1eebff2f71f48b5e75d0699061a940c77c77ad9b607",
-    "monitor-ext-s3storage|8.0|linux|arm64|sha": "4d17f8b01c7606db04d247dc82588b650b107bf90b78bb31715984cfa1ae863dda5a2b5df1e1c50af1cfcafe464dae9b0ee79c0826425b7589b8a130a13ab285",
+    "monitor-ext-s3storage|8.0|linux|x64|sha": "b5bca9ae81bd0c08ff10a291f1c4ea3992985e65e31aefb5b2a6d8806aa5a79abd829551c6433435e3138414c558d89d5ef1ece4e1afd7e1418f0c1f5fb658c8",
+    "monitor-ext-s3storage|8.0|linux|arm64|sha": "beaecaa7bae2977c71f059efe53c07303eb8d987d7839b81f9c52fefc86b7dd4489f09cd5a8b7c41b2ba7c543e776b7a19062f88d1723b5d6f21803f1fb40d45",
 
     "monitor|8.1|build-version": "8.1.0-alpha.1.24078.1",
     "monitor|8.1|product-version": "8.1.0-alpha.1",
@@ -279,16 +279,16 @@
     "sdk|8.0|linux|x64|sha": "26df0151a3a59c4403b52ba0f0df61eaa904110d897be604f19dcaa27d50860c82296733329cb4a3cf20a2c2e518e8f5d5f36dfb7931bf714a45e46b11487c9a",
     "sdk|8.0|win|x64|sha": "e05953b32429ddaa60dc27fb5f5077d7523fc9f9706d30f42cd1855e2469eb003d5250587468062df4e331817059f2f46a44d5ed10ce2eb599710897e6659d83",
 
-    "sdk|9.0|build-version": "9.0.100-preview.1.24101.1",
+    "sdk|9.0|build-version": "9.0.100-preview.1.24101.4",
     "sdk|9.0|product-version": "9.0.100-preview.1",
     "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)",
     "sdk|9.0|floating-tag": "$(dotnet|9.0|floating-tag)",
-    "sdk|9.0|linux-musl|arm|sha": "296348a4a077381fe801953fb550a1cc5706312821b4b13ac32a57d40a1865e306e68b35a9b4caf3647fad6ad9dcecd9e830eead5f7917af964dd1c73cd36617",
-    "sdk|9.0|linux-musl|arm64|sha": "57c6b2449297aa94258ae1f5aff2970d67a491bc237d9923b9c8aa1a038a03f6e78da0434084f597f8eadb7b79e537067d2d9f877a1bbc989d5081c4d60580a0",
-    "sdk|9.0|linux-musl|x64|sha": "681ab5e276e5da5910cfb2134ef11b3bcf741c3bdedc5fa57a091841b11230fa2be6ce6327e5fd0a38e7f477c44f5ceef72ce268da6f3af5ec6078c8c2622607",
-    "sdk|9.0|linux|arm|sha": "dd0695088740e54e952271c33422cc21429e582ea05d31e9768326fb7619bd7d01a8d34220308354fc692419717af01a073b3d4b3f5396a70f251c3426509478",
-    "sdk|9.0|linux|arm64|sha": "a06ea28189880f749f7472971b4e5cbf9d9d4328e615cb87f9ba316e64247054b21a44d7b41a47b30c8647cc4f18103de55afe72748a5c1bc204b8f01ac7eedd",
-    "sdk|9.0|linux|x64|sha": "85f9edff56f6d7678e57c826ff50e74166974007720a70110c8756a34b844819a85b98f72fad9c4d405db6a513269c9de589ce0c5d3705c9ccac2c50e04d4bb3",
-    "sdk|9.0|win|x64|sha": "e11e6a303b32b09b8fe53af9cedbdec6fd8c6d3e0833dbb05d97f59750d2a27275ff9d38a6d1512dff761ebe9d92632696b237665b10d96453b7dec4556b06bd"
+    "sdk|9.0|linux-musl|arm|sha": "ed18326c0ae29dcb9fc1bb7be5724c6ab513bc45a3c1ac6758a2113ac6f8b500ae11c51d2767607cb60d2ccfcfdc99938f73f49846b377a3b49b51db693d1d1d",
+    "sdk|9.0|linux-musl|arm64|sha": "eb33d20bd66310d529226c56f207b91ea8460f526126dd53f58778729159beca3e30957d53470e65938fdd3618b565a381914ecc52b1bc5a6a80c62de35a8dd5",
+    "sdk|9.0|linux-musl|x64|sha": "8b0dd2620d4638776e6ae03985833630c057ba147cc8ec78466ca92b844f6bfab042ee141b715345c1a806f84963dea890d728ffbd4d7dc9f5650a1435b57e07",
+    "sdk|9.0|linux|arm|sha": "e3f1b0a19a0d826462eff5e4c9f0c169e670dedd521d887b10533304c86d5b474dce28f3f515e0e9372a045bd93c42e7ee5624d68e03c909d0e4bdc9839c61c3",
+    "sdk|9.0|linux|arm64|sha": "1b19d9d1b46257a19eb02101e24f3673bf50ee5fe17255e52577908a55630608bdea78e908a03d403ac3b0ac9ba2d401471a0448ff1a2dbd54cf58b0542e1618",
+    "sdk|9.0|linux|x64|sha": "2c29deb1e77f63aaf9b18d2b43279b6a3d2acded80eb51a7f2353e363003465f02e2a2e8c6d75c8acd2c7cde7474fe2765a471ab13d62f94e0d9faad99d238a3",
+    "sdk|9.0|win|x64|sha": "f99dbb0f506e88d29b865d991f437597641c9f09e455f80c53dfa69903acffcbbc24c11c48bab11493726d65795cc2496af541c46922a7e7624905dfec57696b"
   }
 }
