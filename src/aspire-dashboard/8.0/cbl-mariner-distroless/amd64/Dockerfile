@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/nightly/aspnet
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
@@ -27,7 +27,7 @@ ENV \
     ASPNETCORE_HTTP_PORTS= \
     # Aspire Dashboard environment variables
     ASPNETCORE_URLS=http://0.0.0.0:18888 \
-    DOTNET_DASHBOARD_OTLP_ENDPOINT_URL=http://0.0.0.0:18889 \
+    DOTNET_DASHBOARD_OTLP_ENDPOINT_URL=http://0.0.0.0:18889  \
     # Server GC mode
     DOTNET_gcServer=1
 
