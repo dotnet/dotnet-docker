@@ -1,0 +1,5 @@
+$(McrTagsYmlRepo:aspire-dashboard)
+$(McrTagsYmlTagGroup:8.0-preview-cbl-mariner-distroless-amd64)
+    customSubTableTitle: .NET Aspire Dashboard Preview Tags
+$(McrTagsYmlTagGroup:8.0-preview-cbl-mariner-distroless-arm64v8)
+    customSubTableTitle: .NET Aspire Dashboard Preview Tags
