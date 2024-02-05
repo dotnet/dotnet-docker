@@ -2,11 +2,13 @@
     _ ARGS:
         files: Array of metadata describing the files to be downloaded and installed
         install-dir: Directory to install the files
-        create-install-dir (optional): Whether to create the install directory ^
-    
+        create-install-dir (optional): Whether to create the install directory
+        is-zip (optional): If the files to be installed are zips. Otherwise, assume they are .tar.gz. ^
+
     set getFilename(file) to:{{
         return file["filename"]
-    }}
+    }} ^
+    set fileExtractionTemplate to when(ARGS["is-zip"], "Dockerfile.linux.extract-zip", "Dockerfile.linux.extract-tarball")
 }}{{
 for file in ARGS["files"]:{{
     set hasRpm to find(file["filename"], ".rpm") >= 0}}}}{{
@@ -15,7 +17,7 @@ if hasRpm:{{InsertTemplate("Dockerfile.linux.install-rpms",
         "files": map(ARGS["files"], getFilename)
     ])}}^
 else:{{if ARGS["create-install-dir"]:mkdir -p {{ARGS["install-dir"]}} \
-}}{{for i, file in ARGS["files"]:{{if i > 0 || ARGS["create-install-dir"]:&& }}{{InsertTemplate("Dockerfile.linux.extract-tarball",
+}}{{for i, file in ARGS["files"]:{{if i > 0 || ARGS["create-install-dir"]:&& }}{{InsertTemplate(fileExtractionTemplate,
     [
         "file": file["filename"],
         "dest-dir": ARGS["install-dir"],

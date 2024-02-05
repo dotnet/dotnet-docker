@@ -1,5 +1,10 @@
 {
   "variables": {
+    "aspire-dashboard|8.0|build-version": "8.0.0-preview.3.24075.10",
+    "aspire-dashboard|8.0|product-version": "8.0.0-preview.3",
+    "aspire-dashboard|8.0|fixed-tag": "$(aspire-dashboard|8.0|product-version)",
+    "aspire-dashboard|8.0|floating-tag": "8.0-preview",
+
     "aspnet|6.0|build-version": "6.0.28",
     "aspnet|6.0|targeting-pack-version": "$(aspnet|6.0|build-version)",
     "aspnet|6.0|linux-musl|x64|sha": "74cf511026f5d5926bd4a16b88c711b87810265d85d5c9ed54b12b63c06f584fd4a4053c77d71c4818e8eff187ea31682defb001c19d8176e326afb42f8af255",
@@ -69,6 +74,9 @@
     "base-url|8.0|nightly": "$(base-url|public|maintenance|nightly)",
     "base-url|9.0|main": "$(base-url|public|main)",
     "base-url|9.0|nightly": "$(base-url|public|nightly)",
+
+    "base-url|8.0-aspire-dashboard|main": "$(base-url|public|nightly)",
+    "base-url|8.0-aspire-dashboard|nightly": "$(base-url|public|nightly)",
 
     "base-url|6.3-monitor|main": "$(base-url|public|maintenance|main)",
     "base-url|6.3-monitor|nightly": "$(base-url|public|nightly)",
