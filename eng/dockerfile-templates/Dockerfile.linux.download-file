@@ -8,6 +8,6 @@
         sha-var-name: Name of variable that stores the checksum ^
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0
-}}{{if isAlpine:wget -O^else:curl -fSL --output}} {{ARGS["out-file"]}} {{ARGS["url"]}} \
+}}{{if isAlpine:wget -O^else:curl -fSL --output}} {{ARGS["out-file"]}} {{ARGS["url"]}}{{if ARGS["sha"]: \
 && {{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
-&& echo "${{ARGS["sha-var-name"]}}  {{ARGS["out-file"]}}" | sha512sum -c -
+&& echo "${{ARGS["sha-var-name"]}}  {{ARGS["out-file"]}}" | sha512sum -c -}}

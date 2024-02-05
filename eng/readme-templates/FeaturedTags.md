@@ -18,6 +18,8 @@ elif match(SHORT_REPO, "monitor"):* `8` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:6`^
 elif match(REPO, "monitor/base"):* `8` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8`^
+elif match(REPO, "aspire-dashboard"):* `8.0-preview` (Preview)
+  * `docker pull {{FULL_REPO}}:8.0-preview`^
 else:{{if VARIABLES["branch"] = "nightly":* `9.0-preview` (Preview)
   * `docker pull {{FULL_REPO}}:9.0-preview`
 }}* `8.0` (Long-Term Support)

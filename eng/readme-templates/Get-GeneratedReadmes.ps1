@@ -21,6 +21,7 @@ $onDockerfilesGenerated = {
     param($ContainerName)
 
     if (-Not $Validate) {
+        CopyReadme $ContainerName "README.aspire-dashboard.md"
         CopyReadme $ContainerName "README.aspnet.md"
         CopyReadme $ContainerName "README.md"
         CopyReadme $ContainerName "README.monitor.md"
@@ -30,6 +31,7 @@ $onDockerfilesGenerated = {
         CopyReadme $ContainerName "README.samples.md"
         CopyReadme $ContainerName "README.sdk.md"
 
+        CopyReadme $ContainerName ".mar/portal/README.aspire-dashboard.portal.md"
         CopyReadme $ContainerName ".mar/portal/README.aspnet.portal.md"
         CopyReadme $ContainerName ".mar/portal/README.monitor.portal.md"
         CopyReadme $ContainerName ".mar/portal/README.monitor-base.portal.md"

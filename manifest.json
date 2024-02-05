@@ -10760,6 +10760,62 @@
           ]
         }
       ]
+    },
+    {
+      "id": "aspire-dashboard",
+      "name": "dotnet/nightly/aspire-dashboard",
+      "readmes": [
+        {
+          "path": "README.aspire-dashboard.md",
+          "templatePath": "eng/readme-templates/README.md"
+        },
+        {
+          "path": ".mar/portal/README.aspire-dashboard.portal.md",
+          "templatePath": "eng/readme-templates/README.mcr.md"
+        }
+      ],
+      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/aspire-dashboard-tags.yml",
+      "images": [
+        {
+          "productVersion": "$(aspire-dashboard|8.0|product-version)",
+          "sharedTags": {
+            "$(aspire-dashboard|8.0|fixed-tag)-cbl-mariner-distroless": {},
+            "$(aspire-dashboard|8.0|floating-tag)-cbl-mariner-distroless": {},
+            "$(aspire-dashboard|8.0|fixed-tag)": {},
+            "$(aspire-dashboard|8.0|floating-tag)": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/aspire-dashboard/8.0/cbl-mariner-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspire-dashboard/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(aspire-dashboard|8.0|fixed-tag)-cbl-mariner-distroless-amd64": {},
+                "$(aspire-dashboard|8.0|floating-tag)-cbl-mariner-distroless-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/aspire-dashboard/8.0/cbl-mariner-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspire-dashboard/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(aspire-dashboard|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": {},
+                "$(aspire-dashboard|8.0|floating-tag)-cbl-mariner-distroless-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
