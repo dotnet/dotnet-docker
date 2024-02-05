@@ -53,7 +53,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.2-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.2, 8.0.2-bookworm-slim, 8.0, 8.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.2-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.2, 8.0.2-bookworm-slim, 8.0, 8.0-bookworm-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 8.0.2-alpine3.18-amd64, 8.0-alpine3.18-amd64, 8.0-alpine-amd64, 8.0.2-alpine3.18, 8.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.18-extra-amd64, 8.0-alpine3.18-extra-amd64, 8.0-alpine-extra-amd64, 8.0.2-alpine3.18-extra, 8.0-alpine3.18-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18-extra/amd64/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.19-amd64, 8.0-alpine3.19-amd64, 8.0.2-alpine3.19, 8.0-alpine3.19, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
@@ -87,7 +87,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.1-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.0-preview.1, 9.0.0-preview.1-bookworm-slim, 9.0-preview, 9.0-preview-bookworm-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.0-preview.1-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.0-preview.1, 9.0.0-preview.1-bookworm-slim, 9.0-preview, 9.0-preview-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 9.0.0-preview.1-alpine3.19-amd64, 9.0-preview-alpine3.19-amd64, 9.0-preview-alpine-amd64, 9.0.0-preview.1-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
 9.0.0-preview.1-alpine3.19-extra-amd64, 9.0-preview-alpine3.19-extra-amd64, 9.0-preview-alpine-extra-amd64, 9.0.0-preview.1-alpine3.19-extra, 9.0-preview-alpine3.19-extra, 9.0-preview-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.19-extra/amd64/Dockerfile) | Alpine 3.19
 9.0.0-preview.1-jammy-amd64, 9.0-preview-jammy-amd64, 9.0.0-preview.1-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
@@ -100,7 +100,7 @@ Tags | Dockerfile | OS Version
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.2-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.2, 8.0.2-bookworm-slim, 8.0, 8.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.2-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.2, 8.0.2-bookworm-slim, 8.0, 8.0-bookworm-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 8.0.2-alpine3.18-arm64v8, 8.0-alpine3.18-arm64v8, 8.0-alpine-arm64v8, 8.0.2-alpine3.18, 8.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.18-extra-arm64v8, 8.0-alpine3.18-extra-arm64v8, 8.0-alpine-extra-arm64v8, 8.0.2-alpine3.18-extra, 8.0-alpine3.18-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18-extra/arm64v8/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.19-arm64v8, 8.0-alpine3.19-arm64v8, 8.0.2-alpine3.19, 8.0-alpine3.19, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
@@ -134,7 +134,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.1-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.0-preview.1, 9.0.0-preview.1-bookworm-slim, 9.0-preview, 9.0-preview-bookworm-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.0-preview.1-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.0-preview.1, 9.0.0-preview.1-bookworm-slim, 9.0-preview, 9.0-preview-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 9.0.0-preview.1-alpine3.19-arm64v8, 9.0-preview-alpine3.19-arm64v8, 9.0-preview-alpine-arm64v8, 9.0.0-preview.1-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
 9.0.0-preview.1-alpine3.19-extra-arm64v8, 9.0-preview-alpine3.19-extra-arm64v8, 9.0-preview-alpine-extra-arm64v8, 9.0.0-preview.1-alpine3.19-extra, 9.0-preview-alpine3.19-extra, 9.0-preview-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.19-extra/arm64v8/Dockerfile) | Alpine 3.19
 9.0.0-preview.1-jammy-arm64v8, 9.0-preview-jammy-arm64v8, 9.0.0-preview.1-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
@@ -147,7 +147,7 @@ Tags | Dockerfile | OS Version
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.2-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.2, 8.0.2-bookworm-slim, 8.0, 8.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.2-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.2, 8.0.2-bookworm-slim, 8.0, 8.0-bookworm-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.2-alpine3.18-arm32v7, 8.0-alpine3.18-arm32v7, 8.0-alpine-arm32v7, 8.0.2-alpine3.18, 8.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.18-extra-arm32v7, 8.0-alpine3.18-extra-arm32v7, 8.0-alpine-extra-arm32v7, 8.0.2-alpine3.18-extra, 8.0-alpine3.18-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.18-extra/arm32v7/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.19-arm32v7, 8.0-alpine3.19-arm32v7, 8.0.2-alpine3.19, 8.0-alpine3.19, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
@@ -174,7 +174,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.1-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.0-preview.1, 9.0.0-preview.1-bookworm-slim, 9.0-preview, 9.0-preview-bookworm-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.0-preview.1-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.0-preview.1, 9.0.0-preview.1-bookworm-slim, 9.0-preview, 9.0-preview-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 9.0.0-preview.1-alpine3.19-arm32v7, 9.0-preview-alpine3.19-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.0-preview.1-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
 9.0.0-preview.1-alpine3.19-extra-arm32v7, 9.0-preview-alpine3.19-extra-arm32v7, 9.0-preview-alpine-extra-arm32v7, 9.0.0-preview.1-alpine3.19-extra, 9.0-preview-alpine3.19-extra, 9.0-preview-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.19-extra/arm32v7/Dockerfile) | Alpine 3.19
 9.0.0-preview.1-jammy-arm32v7, 9.0-preview-jammy-arm32v7, 9.0.0-preview.1-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04

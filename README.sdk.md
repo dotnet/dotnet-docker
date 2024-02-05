@@ -85,7 +85,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-preview.1-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.100-preview.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.1, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.100-preview.1-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.100-preview.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.1, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 9.0.100-preview.1-alpine3.19-amd64, 9.0-preview-alpine3.19-amd64, 9.0-preview-alpine-amd64, 9.0.100-preview.1-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
 9.0.100-preview.1-jammy-amd64, 9.0-preview-jammy-amd64, 9.0.100-preview.1-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 9.0.100-preview.1-cbl-mariner2.0-amd64, 9.0-preview-cbl-mariner2.0-amd64, 9.0-preview-cbl-mariner-amd64, 9.0.100-preview.1-cbl-mariner2.0, 9.0-preview-cbl-mariner2.0, 9.0-preview-cbl-mariner | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
@@ -115,7 +115,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-preview.1-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.100-preview.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.1, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.100-preview.1-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.100-preview.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.1, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 9.0.100-preview.1-alpine3.19-arm64v8, 9.0-preview-alpine3.19-arm64v8, 9.0-preview-alpine-arm64v8, 9.0.100-preview.1-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
 9.0.100-preview.1-jammy-arm64v8, 9.0-preview-jammy-arm64v8, 9.0.100-preview.1-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 9.0.100-preview.1-cbl-mariner2.0-arm64v8, 9.0-preview-cbl-mariner2.0-arm64v8, 9.0-preview-cbl-mariner-arm64v8, 9.0.100-preview.1-cbl-mariner2.0, 9.0-preview-cbl-mariner2.0, 9.0-preview-cbl-mariner | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
@@ -142,7 +142,7 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-preview.1-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-preview.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.1, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.100-preview.1-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-preview.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.1, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 9.0.100-preview.1-alpine3.19-arm32v7, 9.0-preview-alpine3.19-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.100-preview.1-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
 9.0.100-preview.1-jammy-arm32v7, 9.0-preview-jammy-arm32v7, 9.0.100-preview.1-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
