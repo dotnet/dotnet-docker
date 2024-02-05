@@ -15,8 +15,7 @@ In many scenarios, globalization support with ICU is required, for example, to c
 - Alpine `sdk` images
 - Debian images
 - Ubuntu images
-- Ubuntu chiseled `extra` variant images
-- Mariner 2.0 `extra` variant images
+- All [`extra` variant](../documentation/image-variants.md) images
 
 .NET container images that do not include ICU:
 
