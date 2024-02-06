@@ -9668,7 +9668,8 @@
           "productVersion": "$(aspire-dashboard|8.0|product-version)",
           "sharedTags": {
             "$(aspire-dashboard|8.0|fixed-tag)": {},
-            "$(aspire-dashboard|8.0|floating-tag)": {}
+            "$(aspire-dashboard|8.0|floating-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
