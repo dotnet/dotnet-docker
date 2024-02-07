@@ -124,7 +124,8 @@ if ($versionSourceName) {
     $updateDepsArgs += "--version-source-name=$versionSourceName"
 }
 
-$updateDepsArgs += "--source-branch=$(Get-Branch)"
+$branch = & $PSScriptRoot/Get-Branch.ps1
+$updateDepsArgs += "--source-branch=$branch"
 
 if ($AzdoVariableName) {
     Write-Host "##vso[task.setvariable variable=$AzdoVariableName]$updateDepsArgs"
