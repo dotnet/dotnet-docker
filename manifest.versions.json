@@ -4,6 +4,8 @@
     "aspire-dashboard|8.0|product-version": "8.0.0-preview.3",
     "aspire-dashboard|8.0|fixed-tag": "$(aspire-dashboard|8.0|product-version)",
     "aspire-dashboard|8.0|floating-tag": "8.0-preview",
+    "aspire-dashboard|8.0|linux|x64|sha": "fe8e7a4e921f6799793709996d5e8eb4eb921856e85b9ee8c6e6d28ab52ce608616a9a2ee36a59021b394b056d216d0af92288f03c355063c8e957bbc35cc95c",
+    "aspire-dashboard|8.0|linux|arm64|sha": "d56d60b141253527cd9591d091c8958aa96700d2df7a596da2391324e406a6e3ad25862d892ba3e19786e9ded26cb6516adaaef78b82ce500868a8e55d50c00c",
 
     "aspnet|6.0|build-version": "6.0.26",
     "aspnet|6.0|targeting-pack-version": "$(aspnet|6.0|build-version)",

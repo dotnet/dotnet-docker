@@ -29,6 +29,8 @@ param(
     $AzdoVersionsRepoInfoAccessToken
 )
 
+Import-Module -force $PSScriptRoot\DependencyManagement.psm1
+
 function GetLatestSdkVersionInfoFromChannel([string]$queryString) {
     $sdkFile = "dotnet-sdk-win-x64.zip"
     $akaMsUrl = "https://aka.ms/dotnet/$Channel/$sdkFile$queryString"
@@ -162,13 +164,16 @@ else {
 $sdkVersionInfos = @()
 
 if ($Channel) {
-    $sdkVersionInfo = GetLatestSdkVersionInfoFromChannel $queryString
-    $sdkVersionInfos += $sdkVersionInfo
+    $sdkFile = "dotnet-sdk-win-x64.zip"
+    $akaMsUrl = "https://aka.ms/dotnet/$Channel/$sdkFile$queryString"
+
+    $sdkUrl = Resolve-DotnetProductUrl $akaMsUrl
+    $sdkVersionInfos += GetSdkVersionInfo $sdkUrl
 }
 
 foreach ($sdkVersion in $SdkVersions)
 {
-    $useStableBranding = & $PSScriptRoot/Get-IsStableBranding.ps1 -Version $sdkVersion
+    $useStableBranding = Get-IsStableBranding -Version $sdkVersion
     $sdkUrl = ResolveSdkUrl $sdkVersion $queryString $useStableBranding
     $sdkVersionInfo = GetSdkVersionInfo $sdkUrl
     $sdkVersionInfos += $sdkVersionInfo

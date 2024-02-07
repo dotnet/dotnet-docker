@@ -13,12 +13,14 @@ param(
     $BuildVersionFilePath
 )
 
+Import-Module -force $PSScriptRoot\DependencyManagement.psm1
+
 $monitorVersion = $(Get-Content $BuildVersionFilePath).Trim()
 
 $versionSplit=$monitorVersion.Split('.', 3)
 $majorMinorVersion="$($versionSplit[0]).$($versionSplit[1])"
 
-$stableBranding = & $PSScriptRoot/Get-IsStableBranding.ps1 -Version $monitorVersion
+$stableBranding = Get-IsStableBranding -Version $monitorVersion
 
 Write-Output "##vso[task.setvariable variable=monitorMajorMinorVersion]$majorMinorVersion"
 Write-Output "##vso[task.setvariable variable=monitorVer]$monitorVersion"
