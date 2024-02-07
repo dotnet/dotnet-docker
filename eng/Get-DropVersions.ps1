@@ -31,17 +31,6 @@ param(
 
 Import-Module -force $PSScriptRoot\DependencyManagement.psm1
 
-function GetLatestSdkVersionInfoFromChannel([string]$queryString) {
-    $sdkFile = "dotnet-sdk-win-x64.zip"
-    $akaMsUrl = "https://aka.ms/dotnet/$Channel/$sdkFile$queryString"
-    Write-Host "Querying $akaMsUrl"
-    $response = Invoke-WebRequest -Uri $akaMsUrl -Method Head
-    $sdkUrl = $response.BaseResponse.RequestMessage.RequestUri.AbsoluteUri
-    Write-Host "Resolved SDK URL: $sdkUrl"
-
-    return GetSdkVersionInfo $sdkUrl
-}
-
 function GetSdkVersionInfo([string]$sdkUrl) {
     New-Item -Path $tempDir -ItemType Directory -Force | Out-Null
 
