@@ -13,7 +13,7 @@ param(
     $BuildVersionFilePath
 )
 
-Import-Module -force $PSScriptRoot\DependencyManagement.psm1
+Import-Module -force $PSScriptRoot/DependencyManagement.psm1
 
 $monitorVersion = $(Get-Content $BuildVersionFilePath).Trim()
 

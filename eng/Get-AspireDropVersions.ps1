@@ -17,7 +17,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-Import-Module -force $PSScriptRoot\DependencyManagement.psm1
+Import-Module -force $PSScriptRoot/DependencyManagement.psm1
 
 # Example channel: '8.0/daily'
 $akaMsUrl = "https://aka.ms/dotnet/${Channel}/aspire-dashboard-linux-x64.zip"
