@@ -29,7 +29,7 @@ param(
     $AzdoVersionsRepoInfoAccessToken
 )
 
-Import-Module -force $PSScriptRoot\DependencyManagement.psm1
+Import-Module -force $PSScriptRoot/DependencyManagement.psm1
 
 function GetSdkVersionInfo([string]$sdkUrl) {
     New-Item -Path $tempDir -ItemType Directory -Force | Out-Null
