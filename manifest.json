@@ -10779,8 +10779,6 @@
         {
           "productVersion": "$(aspire-dashboard|8.0|product-version)",
           "sharedTags": {
-            "$(aspire-dashboard|8.0|fixed-tag)-cbl-mariner-distroless": {},
-            "$(aspire-dashboard|8.0|floating-tag)-cbl-mariner-distroless": {},
             "$(aspire-dashboard|8.0|fixed-tag)": {},
             "$(aspire-dashboard|8.0|floating-tag)": {},
             "latest": {}
@@ -10795,8 +10793,8 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(aspire-dashboard|8.0|fixed-tag)-cbl-mariner-distroless-amd64": {},
-                "$(aspire-dashboard|8.0|floating-tag)-cbl-mariner-distroless-amd64": {}
+                "$(aspire-dashboard|8.0|fixed-tag)-amd64": {},
+                "$(aspire-dashboard|8.0|floating-tag)-amd64": {}
               }
             },
             {
@@ -10809,8 +10807,8 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(aspire-dashboard|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": {},
-                "$(aspire-dashboard|8.0|floating-tag)-cbl-mariner-distroless-arm64v8": {}
+                "$(aspire-dashboard|8.0|fixed-tag)-arm64v8": {},
+                "$(aspire-dashboard|8.0|floating-tag)-arm64v8": {}
               },
               "variant": "v8"
             }
