@@ -44,3 +44,5 @@ The following samples support cross-compile, which means you can use `--platform
 - [Ubuntu](Dockerfile)
 
 The Debian Dockerfiles need to be built on the specified architecture and can be used to build for both the host or target architecture. When building for the target architecture, the `--platform` switch must be used.
+
+Additional cross-compilation options are described in the  [dotnet/runtime](https://github.com/dotnet/runtime/blob/main/src/coreclr/nativeaot/docs/containers.md) repo.
