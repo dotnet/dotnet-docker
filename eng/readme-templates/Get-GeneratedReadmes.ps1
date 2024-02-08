@@ -4,8 +4,8 @@ param(
     [string] $Branch
 )
 
-Import-Module -force $PSScriptRoot/DependencyManagement.psm1
 $ErrorActionPreference = 'Stop'
+Import-Module -force $PSScriptRoot/../DependencyManagement.psm1
 
 if ($Validate) {
     $customImageBuilderArgs = " --validate"
