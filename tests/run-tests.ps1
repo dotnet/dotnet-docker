@@ -34,7 +34,7 @@ param(
     [securestring]$NuGetFeedPassword
 )
 
-Import-Module -force $PSScriptRoot/DependencyManagement.psm1
+Import-Module -force $PSScriptRoot/../eng/DependencyManagement.psm1
 
 function Log {
     param ([string] $Message)

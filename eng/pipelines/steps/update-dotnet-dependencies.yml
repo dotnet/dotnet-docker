@@ -51,7 +51,7 @@ steps:
     }
   displayName: Get update-dependencies args
 - powershell: |
-    Import-Module -force $PSScriptRoot/DependencyManagement.psm1
+    Import-Module -force $(engPath)/DependencyManagement.psm1
 
     $branchPrefix = ""
     if ("${{ parameters.useInternalBuild }}" -eq "true") {

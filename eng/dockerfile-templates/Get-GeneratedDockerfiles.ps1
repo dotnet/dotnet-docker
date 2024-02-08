@@ -4,7 +4,7 @@ param(
     [string]$Branch
 )
 
-Import-Module -force $PSScriptRoot/DependencyManagement.psm1
+Import-Module -force $PSScriptRoot/../DependencyManagement.psm1
 
 if ($Validate) {
     $customImageBuilderArgs = " --validate"
