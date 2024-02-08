@@ -4,6 +4,7 @@ param(
     [string] $Branch
 )
 
+Import-Module -force $PSScriptRoot/DependencyManagement.psm1
 $ErrorActionPreference = 'Stop'
 
 if ($Validate) {
@@ -52,7 +53,7 @@ function Invoke-GenerateReadme {
 }
 
 if (!$Branch) {
-    $Branch = & $PSScriptRoot/../Get-Branch.ps1
+    $Branch = Get-Branch
 }
 
 Invoke-GenerateReadme "manifest.json" $Branch
