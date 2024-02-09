@@ -29,16 +29,7 @@ param(
     $AzdoVersionsRepoInfoAccessToken
 )
 
-function GetLatestSdkVersionInfoFromChannel([string]$queryString) {
-    $sdkFile = "dotnet-sdk-win-x64.zip"
-    $akaMsUrl = "https://aka.ms/dotnet/$Channel/$sdkFile$queryString"
-    Write-Host "Querying $akaMsUrl"
-    $response = Invoke-WebRequest -Uri $akaMsUrl -Method Head
-    $sdkUrl = $response.BaseResponse.RequestMessage.RequestUri.AbsoluteUri
-    Write-Host "Resolved SDK URL: $sdkUrl"
-
-    return GetSdkVersionInfo $sdkUrl
-}
+Import-Module -force $PSScriptRoot/DependencyManagement.psm1
 
 function GetSdkVersionInfo([string]$sdkUrl) {
     New-Item -Path $tempDir -ItemType Directory -Force | Out-Null
@@ -162,13 +153,16 @@ else {
 $sdkVersionInfos = @()
 
 if ($Channel) {
-    $sdkVersionInfo = GetLatestSdkVersionInfoFromChannel $queryString
-    $sdkVersionInfos += $sdkVersionInfo
+    $sdkFile = "dotnet-sdk-win-x64.zip"
+    $akaMsUrl = "https://aka.ms/dotnet/$Channel/$sdkFile$queryString"
+
+    $sdkUrl = Resolve-DotnetProductUrl $akaMsUrl
+    $sdkVersionInfos += GetSdkVersionInfo $sdkUrl
 }
 
 foreach ($sdkVersion in $SdkVersions)
 {
-    $useStableBranding = & $PSScriptRoot/Get-IsStableBranding.ps1 -Version $sdkVersion
+    $useStableBranding = Get-IsStableBranding -Version $sdkVersion
     $sdkUrl = ResolveSdkUrl $sdkVersion $queryString $useStableBranding
     $sdkVersionInfo = GetSdkVersionInfo $sdkUrl
     $sdkVersionInfos += $sdkVersionInfo

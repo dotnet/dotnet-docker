@@ -10,8 +10,10 @@
     set aspireBaseUrl to cat(VARIABLES[cat("base-url|", aspireMajorMinor, "-aspire-dashboard|", urlBranch)], "/aspire/", versionFolder, "/") ^
     set files to [
         [
-            "filename": "dotnet-aspire.zip",
-            "url": cat(aspireBaseUrl, "aspire-dashboard-linux-", ARCH_SHORT, ".zip")
+            "filename": "aspire_dashboard.zip",
+            "url": cat(aspireBaseUrl, "aspire-dashboard-linux-", ARCH_SHORT, ".zip"),
+            "sha": VARIABLES[join(["aspire-dashboard", aspireMajorMinor, "linux", ARCH_SHORT, "sha"], "|")],
+            "sha-var-name": "aspire_dashboard_sha512"
         ]
     ]
 }}RUN dotnet_aspire_version={{aspireVersion}} \

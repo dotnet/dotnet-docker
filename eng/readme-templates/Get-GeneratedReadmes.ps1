@@ -5,6 +5,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+Import-Module -force $PSScriptRoot/../DependencyManagement.psm1
 
 if ($Validate) {
     $customImageBuilderArgs = " --validate"
@@ -52,7 +53,7 @@ function Invoke-GenerateReadme {
 }
 
 if (!$Branch) {
-    $Branch = & $PSScriptRoot/../Get-Branch.ps1
+    $Branch = Get-Branch
 }
 
 Invoke-GenerateReadme "manifest.json" $Branch
