@@ -57,7 +57,7 @@ steps:
     if ("${{ parameters.useInternalBuild }}" -eq "true") {
       $branchPrefix = "internal/release/"
     }
-    $targetBranch = $branchPrefix + Get-Branch
+    $targetBranch = $branchPrefix + $(Get-Branch)
 
     $customArgsArray = @()
     $index=0
