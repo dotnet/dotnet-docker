@@ -72,7 +72,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.2-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.2, 8.0.2-bookworm-slim, 8.0, 8.0-bookworm-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.2-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.2-bookworm-slim, 8.0-bookworm-slim, 8.0.2, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 8.0.2-alpine3.18-amd64, 8.0-alpine3.18-amd64, 8.0-alpine-amd64, 8.0.2-alpine3.18, 8.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.18/amd64/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.18-composite-amd64, 8.0-alpine3.18-composite-amd64, 8.0-alpine-composite-amd64, 8.0.2-alpine3.18-composite, 8.0-alpine3.18-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.18-composite/amd64/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.19-amd64, 8.0-alpine3.19-amd64, 8.0.2-alpine3.19, 8.0-alpine3.19, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
@@ -123,7 +123,7 @@ Tags | Dockerfile | OS Version
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.2-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.2, 8.0.2-bookworm-slim, 8.0, 8.0-bookworm-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.2-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.2-bookworm-slim, 8.0-bookworm-slim, 8.0.2, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 8.0.2-alpine3.18-arm64v8, 8.0-alpine3.18-arm64v8, 8.0-alpine-arm64v8, 8.0.2-alpine3.18, 8.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.18/arm64v8/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.18-composite-arm64v8, 8.0-alpine3.18-composite-arm64v8, 8.0-alpine-composite-arm64v8, 8.0.2-alpine3.18-composite, 8.0-alpine3.18-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.18-composite/arm64v8/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.19-arm64v8, 8.0-alpine3.19-arm64v8, 8.0.2-alpine3.19, 8.0-alpine3.19, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
@@ -174,7 +174,7 @@ Tags | Dockerfile | OS Version
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.2-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.2, 8.0.2-bookworm-slim, 8.0, 8.0-bookworm-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.2-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.2-bookworm-slim, 8.0-bookworm-slim, 8.0.2, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.2-alpine3.18-arm32v7, 8.0-alpine3.18-arm32v7, 8.0-alpine-arm32v7, 8.0.2-alpine3.18, 8.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.18-composite-arm32v7, 8.0-alpine3.18-composite-arm32v7, 8.0-alpine-composite-arm32v7, 8.0.2-alpine3.18-composite, 8.0-alpine3.18-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.18-composite/arm32v7/Dockerfile) | Alpine 3.18
 8.0.2-alpine3.19-arm32v7, 8.0-alpine3.19-arm32v7, 8.0.2-alpine3.19, 8.0-alpine3.19, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
