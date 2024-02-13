@@ -17,6 +17,10 @@ spec:
         image: mcr.microsoft.com/dotnet/samples:aspnetapp
         ports:
         - containerPort: 8080
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 1654
         env:
         - name: DOTNET_DiagnosticPorts
           value: /diag/dotnet-monitor.sock
@@ -76,7 +80,6 @@ spec:
   - name: aspnetapp
     protocol: TCP
     port: 8080
-    targetPort: 80
   - name: monitor
     protocol: TCP
     port: 52323

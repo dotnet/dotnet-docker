@@ -15,9 +15,13 @@ spec:
         app: aspnetapp
       containers:
       - name: aspnetapp
-        image: dotnetnonroot.azurecr.io/aspnetapp
+        image: mcr.microsoft.com/dotnet/samples:aspnetapp
         ports:
         - containerPort: 8080
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 1654
         env:
         - name: DOTNET_DiagnosticPorts
           value: /diag/dotnet-monitor.sock
@@ -38,8 +42,9 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
+          runAsUser: 1654
       - name: monitor
-        image: mcr.microsoft.com/dotnet/monitor:8.0.0-preview.3
+        image: mcr.microsoft.com/dotnet/monitor:8.0
         ports:
         - containerPort: 52325
         # DO NOT use the --no-auth argument for deployments in production; this argument is used for demonstration

@@ -35,6 +35,7 @@ Add due dates to each of the issues so that we don't lose track of them.
         - [ ] Inspect the image sizes by pulling the new images from the `dotnetdocker` ACR and update the baselines accordingly
 
 ## Preview 1
+- [ ] Add new .NET version to featured tags in `nightly` branch ([Example PR](https://github.com/dotnet/dotnet-docker/pull/5157))
 - [ ] Merge new .NET version images from `nightly` branch to `main`
 
 ## RC1
