@@ -26,7 +26,7 @@ internal abstract class MinGitUpdater : VariableUpdaterBase
         if (sdkDependencyInfo is null)
         {
             usedDependencyInfos = Enumerable.Empty<IDependencyInfo>();
-            return ManifestHelper.GetVariableValue(VariableName, ManifestVariables.Value);
+            return ManifestHelper.ResolveVariableValue(VariableName, ManifestVariables.Value);
         }
 
         usedDependencyInfos = new[] { sdkDependencyInfo };

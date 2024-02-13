@@ -15,8 +15,10 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 
 * `dotnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp`
+  * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp-chiseled`
 * `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
+  * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp-chiseled`
 
 ## Related Repositories
 
