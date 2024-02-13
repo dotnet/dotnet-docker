@@ -32,10 +32,10 @@
         {
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
-            "$(dotnet|6.0|product-version)": {},
             "$(dotnet|6.0|product-version)-bullseye-slim": {},
-            "6.0": {},
-            "6.0-bullseye-slim": {}
+            "6.0-bullseye-slim": {},
+            "$(dotnet|6.0|product-version)": {},
+            "6.0": {}
           },
           "platforms": [
             {
@@ -522,10 +522,10 @@
         {
           "productVersion": "$(dotnet|7.0|product-version)",
           "sharedTags": {
-            "$(dotnet|7.0|product-version)": {},
             "$(dotnet|7.0|product-version)-bullseye-slim": {},
-            "7.0": {},
-            "7.0-bullseye-slim": {}
+            "7.0-bullseye-slim": {},
+            "$(dotnet|7.0|product-version)": {},
+            "7.0": {}
           },
           "platforms": [
             {
@@ -969,10 +969,10 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|product-version)": {},
             "$(dotnet|8.0|product-version)-bookworm-slim": {},
-            "8.0": {},
-            "8.0-bookworm-slim": {}
+            "8.0-bookworm-slim": {},
+            "$(dotnet|8.0|product-version)": {},
+            "8.0": {}
           },
           "platforms": [
             {
@@ -3884,6 +3884,8 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
+            "$(dotnet|8.0|product-version)-bookworm-slim": {},
+            "8.0-bookworm-slim": {},
             "$(dotnet|8.0|product-version)": {},
             "8.0": {}
           },
@@ -3929,50 +3931,6 @@
                 "$(dotnet|8.0|product-version)-bookworm-slim-arm64v8": {},
                 "8.0-bookworm-slim-arm64v8": {}
               },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "id": "bookworm-slim",
-          "productVersion": "$(dotnet|8.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|8.0|product-version)-bookworm-slim": {},
-            "8.0-bookworm-slim": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "src/runtime/8.0/bookworm-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "bookworm-slim",
-              "tags": {}
-            },
-            {
-              "architecture": "arm",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "src/runtime/8.0/bookworm-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "bookworm-slim",
-              "tags": {},
-              "variant": "v7"
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "src/runtime/8.0/bookworm-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "bookworm-slim",
-              "tags": {},
               "variant": "v8"
             }
           ]
@@ -6382,6 +6340,8 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
+            "$(dotnet|8.0|product-version)-bookworm-slim": {},
+            "8.0-bookworm-slim": {},
             "$(dotnet|8.0|product-version)": {},
             "8.0": {}
           },
@@ -6427,50 +6387,6 @@
                 "$(dotnet|8.0|product-version)-bookworm-slim-arm64v8": {},
                 "8.0-bookworm-slim-arm64v8": {}
               },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "id": "bookworm-slim",
-          "productVersion": "$(dotnet|8.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|8.0|product-version)-bookworm-slim": {},
-            "8.0-bookworm-slim": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/8.0/bookworm-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "bookworm-slim",
-              "tags": {}
-            },
-            {
-              "architecture": "arm",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/8.0/bookworm-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "bookworm-slim",
-              "tags": {},
-              "variant": "v7"
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/8.0/bookworm-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "bookworm-slim",
-              "tags": {},
               "variant": "v8"
             }
           ]
