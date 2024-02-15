@@ -24,8 +24,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine
 
 # install Docker
 RUN apk add --no-cache \
-        docker \
-        openssl1.1-compat
+        docker
 
 # copy update-dependencies
 WORKDIR /update-dependencies
