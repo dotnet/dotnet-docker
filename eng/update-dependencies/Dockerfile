@@ -2,7 +2,7 @@
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build-env
 ARG TARGETARCH
 # The rid must be version-specific to workaround a libgit2sharp issue (see https://github.com/dotnet/dotnet-docker/pull/2111)
-ARG RID=alpine.3.19-$TARGETARCH
+ARG RID=linux-musl-$TARGETARCH
 WORKDIR /update-dependencies
 
 # copy csproj and restore as distinct layers
