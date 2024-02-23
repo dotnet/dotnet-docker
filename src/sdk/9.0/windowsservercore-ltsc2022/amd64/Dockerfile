@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:9.0.0-preview.1-windowsservercore-ltsc2022
+FROM $REPO:9.0.0-preview.2-windowsservercore-ltsc2022
 
 ENV `
     # Do not generate certificate
@@ -9,7 +9,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=9.0.100-preview.1.24101.2 `
+    DOTNET_SDK_VERSION=9.0.100-preview.2.24122.2 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -38,7 +38,7 @@ RUN powershell -Command " `
         `
         # Retrieve .NET SDK
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-        $dotnet_sha512 = 'a993f0a23dee43f43e51509094f385379183ae916ee04f891927bc2398fd3645bfd866d0960c9d0ccf11f7878856dd7317298a6e5ec6a17dd7f32fb3890855a9'; `
+        $dotnet_sha512 = 'a4900b5976cea9f88494dc3d26a311b4a7050de888c8f34bca5ecf05512ce5af27489d0aa3ec042a5cc6ac58d56fb1aa41df56ce38ce43695049dc344dd6ab01'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -47,9 +47,9 @@ RUN powershell -Command " `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.4.0'; `
+        $powershell_version = '7.5.0-preview.2'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = '1064fa988b382c96385930c23ef65de8383c345d1c22013fb5e5dd736c5bda90bea7468414a22844485b28b1649a980467faa558c4219a2d37daca81a2e0c523'; `
+        $powershell_sha512 = '4e6c6b9e65813cddb6d4376ca655044de098edeee7979e6148cb7d6bf63d713b9b195780481a21e759b9473e4c954bbdc725739b79bc7ed9597a7178775ec74c'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
