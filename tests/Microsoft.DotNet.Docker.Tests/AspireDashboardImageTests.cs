@@ -26,6 +26,7 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
     {
         IEnumerable<EnvironmentVariableInfo> expectedVariables =
         [
+            // Unset ASPNETCORE_HTTP_PORTS from base image
             new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", string.Empty),
             // These two URL environment variables should be in the more compact format, i.e. "http://+:18888", but need
             // to have a base URL of 0.0.0.0 due to a bug in the Aspire Dashboard.
