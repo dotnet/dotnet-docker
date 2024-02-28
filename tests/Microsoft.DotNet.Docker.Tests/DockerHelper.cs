@@ -86,6 +86,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 Arch = imageData.Arch,
             };
 
+            // Make sure we don't try to get an image that we don't need before we specify that we want the distro-full
+            // version. The image might not be on disk. The correct, distro-full versino will be pulled in the helper
+            // image build.
             string baseImageTag = runtimeDepsImageData
                 .GetImage(DotNetImageRepo.Runtime_Deps, this, skipPull: true)
                 .Replace("-distroless", string.Empty)

@@ -250,18 +250,18 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<string> GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
             {
-                { OS: string os } when os.Contains(OS.Mariner) =>
-                    [
+                { OS: string os } when os.Contains(OS.Mariner) => new[]
+                    {
                         "distroless-packages-minimal",
                         "filesystem",
                         "mariner-release",
                         "prebuilt-ca-certificates",
                         "tzdata"
-                    ],
-                { OS: OS.JammyChiseled } =>
-                    [
+                    },
+                { OS: OS.JammyChiseled } => new[]
+                    {
                         "base-files"
-                    ],
+                    },
                 _ => throw new NotSupportedException()
             };
 
