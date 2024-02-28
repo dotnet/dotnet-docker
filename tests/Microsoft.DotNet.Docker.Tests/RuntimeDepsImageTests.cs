@@ -123,10 +123,11 @@ namespace Microsoft.DotNet.Docker.Tests
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper,
-            ITestOutputHelper outputHelper)
+            ITestOutputHelper outputHelper,
+            IEnumerable<string> extraExcludePaths = null)
         {
             IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
-            IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, dockerHelper);
+            IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, dockerHelper, extraExcludePaths);
 
             outputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
 
@@ -150,9 +151,10 @@ namespace Microsoft.DotNet.Docker.Tests
         private static IEnumerable<string> GetInstalledPackages(
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper)
+            DockerHelper dockerHelper,
+            IEnumerable<string> extraExcludePaths = null)
         {
-            JsonNode output = GetSyftOutput("package-info", imageData, imageRepo, dockerHelper);
+            JsonNode output = GetSyftOutput("package-info", imageData, imageRepo, dockerHelper, extraExcludePaths);
             return ((JsonArray)output["artifacts"])
                 .Select(artifact => artifact["name"]?.ToString());
         }
@@ -171,7 +173,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string syftContainerName,
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper)
+            DockerHelper dockerHelper,
+            IEnumerable<string> extraExcludePaths = null)
         {
             const string SyftImage = "anchore/syft:v0.97.1";
             dockerHelper.Pull(SyftImage);
@@ -182,13 +185,17 @@ namespace Microsoft.DotNet.Docker.Tests
             string tempDir = null;
             string outputContents = null;
 
+            // Ignore the dotnet folder, or else syft will report all the packages in the .NET Runtime. We only care
+            // about the packages from the linux distro for this test.
+            extraExcludePaths ??= [];
+            extraExcludePaths = extraExcludePaths.Append("/usr/share/dotnet");
+            IEnumerable<string> excludeArgs = extraExcludePaths.Select(path => $"--exclude {path}");
+
             string[] args = [
                 "packages",
                 $"docker:{imageToInspect}",
                 $"-o json={outputContainerFilePath}",
-                // Ignore the dotnet folder, or else syft will report all the packages in the .NET Runtime. We only care
-                // about the packages from the linux distro for this test.
-                "--exclude /usr/share/dotnet"
+                ..excludeArgs
             ];
 
             try
@@ -231,28 +238,30 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 expectedPackages = [..expectedPackages, ..GetDistrolessBasePackages(imageData)];
             }
+
             if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Extra)
                 || (imageRepo == DotNetImageRepo.SDK && imageData.Version.Major != 6 && imageData.Version.Major != 7))
             {
                 expectedPackages = [..expectedPackages, ..GetExtraPackages(imageData)];
             }
+
             return expectedPackages.Distinct().OrderBy(s => s);
         }
 
         private static IEnumerable<string> GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
             {
-                { OS: string os } when os.Contains(OS.Mariner) => new[]
-                    {
+                { OS: string os } when os.Contains(OS.Mariner) =>
+                    [
                         "distroless-packages-minimal",
                         "filesystem",
                         "mariner-release",
                         "prebuilt-ca-certificates",
                         "tzdata"
-                    },
-                { OS: OS.JammyChiseled } => new[]
-                    {
+                    ],
+                { OS: OS.JammyChiseled } =>
+                    [
                         "base-files"
-                    },
+                    ],
                 _ => throw new NotSupportedException()
             };
 

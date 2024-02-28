@@ -142,8 +142,23 @@ namespace Microsoft.DotNet.Docker.Tests
             return $"{registry}{repo}:{tag}";
         }
 
-        protected string GetTagName(string tagPrefix, string os, string tagPostfix = null) =>
-            $"{tagPrefix}-{os}{(string.IsNullOrEmpty(tagPostfix) ? "" : $"-{tagPostfix}")}{GetArchTagSuffix()}";
+        // protected string GetTagName =>
+        //     $"{tagPrefix}-{os}{(string.IsNullOrEmpty(tagPostfix) ? "" : $"-{tagPostfix}")}{GetArchTagSuffix()}";
+
+        protected static string GetTagName(string tagPrefix, string os, string tagPostfix = null)
+        {
+            List<string> tagParts = [ tagPrefix ];
+
+            foreach (string tagPart in new string[] { os, tagPostfix })
+            {
+                if (!string.IsNullOrEmpty(tagPart))
+                {
+                    tagParts.Add(tagPart);
+                }
+            }
+
+            return string.Join('-', tagParts);
+        }
 
         protected virtual string GetArchTagSuffix()
         {

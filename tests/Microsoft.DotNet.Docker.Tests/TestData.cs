@@ -349,6 +349,25 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         };
 
+        private static readonly ProductImageData[] s_AspireDashboardTestData =
+        {
+            new() {
+                Version = V8_0_Preview,
+                OS = OS.Mariner20Distroless,
+                OSTag = "",
+                Arch = Arch.Amd64,
+                SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard,
+
+            },
+            new() {
+                Version = V8_0_Preview,
+                OS = OS.Mariner20Distroless,
+                OSTag = "",
+                Arch = Arch.Amd64,
+                SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard
+            },
+        };
+
         public static IEnumerable<ProductImageData> GetImageData(DotNetImageRepo imageRepo)
         {
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxTestData : s_windowsTestData)
@@ -369,6 +388,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 .FilterImagesByOs()
                 .Cast<SampleImageData>();
         }
+
+        public static IEnumerable<ProductImageData> GetAspireDashboardImageData() =>
+            (DockerHelper.IsLinuxContainerModeEnabled ? s_AspireDashboardTestData : [])
+                .FilterImagesByPath(DotNetImageRepo.Aspire_Dashboard)
+                .FilterImagesByArch()
+                .FilterImagesByOs()
+                .Cast<ProductImageData>();
 
         public static IEnumerable<ProductImageData> GetMonitorImageData()
         {
