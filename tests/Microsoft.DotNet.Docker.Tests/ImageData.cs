@@ -142,11 +142,11 @@ namespace Microsoft.DotNet.Docker.Tests
             return $"{registry}{repo}:{tag}";
         }
 
-        protected static string GetTagName(string tagPrefix, string os, string tagPostfix = null)
+        protected string GetTagName(string tagPrefix, string os, string tagPostfix = null)
         {
             List<string> tagParts = [ tagPrefix ];
 
-            foreach (string tagPart in new string[] { os, tagPostfix })
+            foreach (string tagPart in new string[] { os, tagPostfix, GetArchTagSuffix() })
             {
                 if (!string.IsNullOrEmpty(tagPart))
                 {
@@ -157,15 +157,9 @@ namespace Microsoft.DotNet.Docker.Tests
             return string.Join('-', tagParts);
         }
 
-        protected virtual string GetArchTagSuffix()
-        {
-            if (Arch == Arch.Amd64 && !DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                return string.Empty;
-            }
-
-            return $"-{GetArchLabel()}";
-        }
+        protected virtual string GetArchTagSuffix() => (Arch == Arch.Amd64 && !DockerHelper.IsLinuxContainerModeEnabled)
+            ? string.Empty
+            : GetArchLabel();
 
         protected string GetArchLabel() =>
             Arch switch
