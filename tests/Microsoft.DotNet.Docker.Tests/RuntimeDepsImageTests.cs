@@ -173,8 +173,8 @@ namespace Microsoft.DotNet.Docker.Tests
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper)
         {
-            const string SyftImage = "anchore/syft:v0.97.1";
-            dockerHelper.Pull(SyftImage);
+            string syftImage = $"{Config.GetVariableValue("syft|repo")}:{Config.GetVariableValue("syft|tag")}";
+            dockerHelper.Pull(syftImage);
 
             string imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
 
@@ -183,7 +183,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string outputContents = null;
 
             string[] args = [
-                "packages",
+                "scan",
                 $"docker:{imageToInspect}",
                 $"-o json={outputContainerFilePath}",
                 // Ignore the dotnet folder, or else syft will report all the packages in the .NET Runtime. We only care
@@ -194,7 +194,7 @@ namespace Microsoft.DotNet.Docker.Tests
             try
             {
                 dockerHelper.Run(
-                    SyftImage,
+                    syftImage,
                     syftContainerName,
                     string.Join(' ', args),
                     skipAutoCleanup: true,
