@@ -144,16 +144,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected string GetTagName(string tagPrefix, string os, string tagPostfix = null)
         {
-            List<string> tagParts = [ tagPrefix ];
-
-            foreach (string tagPart in new string[] { os, tagPostfix, GetArchTagSuffix() })
-            {
-                if (!string.IsNullOrEmpty(tagPart))
-                {
-                    tagParts.Add(tagPart);
-                }
-            }
-
+            IEnumerable<string> tagParts = [ tagPrefix, os, tagPostfix, GetArchTagSuffix() ];
+            tagParts = tagParts.Where(s => !string.IsNullOrEmpty(s));
             return string.Join('-', tagParts);
         }
 
