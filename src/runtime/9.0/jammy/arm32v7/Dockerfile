@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.0-preview.2.24120.11 \
+RUN dotnet_version=9.0.0-preview.3.24126.5 \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
-    && dotnet_sha512='b02c2e287001f5b28b9a8df5bddedcf0b6d607b6a7c7284b79a790e5ac3156267cf19903ed62eab0662bdd3f817f79cd28105e18b6e1fa67a25131b5aa9ad48c' \
+    && dotnet_sha512='82b7972eda1cb846da2f95f31916a0e8b0c522369f4839c4df6affcbc771bf9044810258e9531b0e83c4f2eeda25e47e1f09da1c8ba70746d9b12e193aaa64dd' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -14,10 +14,10 @@ RUN dotnet_version=9.0.0-preview.2.24120.11 \
 
 
 # .NET runtime image
-FROM $REPO:9.0.0-preview.2-jammy-arm32v7
+FROM $REPO:9.0.0-preview.3-jammy-arm32v7
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.0-preview.2.24120.11
+ENV DOTNET_VERSION=9.0.0-preview.3.24126.5
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
