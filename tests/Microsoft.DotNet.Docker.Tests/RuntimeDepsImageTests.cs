@@ -154,7 +154,16 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             JsonNode output = GetSyftOutput("package-info", imageData, imageRepo, dockerHelper);
             return ((JsonArray)output["artifacts"])
-                .Select(artifact => artifact["name"]?.ToString());
+                .Select(artifact => artifact["name"]?.ToString())
+                // Syft can sometimes detect duplicates of packages if they have a distro-specific version suffix. Syft
+                // will report the distro package version and the binary package version as separate.
+                //
+                // openssl                      1.1.1k                binary
+                // openssl                      1.1.1k-29.cm2         rpm
+                //                              ^ Mariner specific version
+                //
+                // So we need to remove duplicates.
+                .Distinct();
         }
 
         private static string GetOSReleaseInfo(
