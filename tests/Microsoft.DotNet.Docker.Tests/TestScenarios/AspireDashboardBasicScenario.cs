@@ -1,5 +1,7 @@
 #nullable enable
 
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
 
@@ -7,7 +9,7 @@ namespace Microsoft.DotNet.Docker.Tests;
 
 public class AspireDashboardBasicScenario : ITestScenario
 {
-    private const int DashboardPort = 18888;
+    private const string DashboardPortEnvVar = "ASPNETCORE_URLS";
 
     private readonly DockerHelper _dockerHelper;
 
@@ -32,6 +34,7 @@ public class AspireDashboardBasicScenario : ITestScenario
     public async Task ExecuteAsync()
     {
         string containerName = _imageData.GetIdentifier(nameof(AspireDashboardBasicScenario));
+        int dashboardPort = GetDashboardPort(_imageTag, _dockerHelper);
 
         try
         {
@@ -39,18 +42,25 @@ public class AspireDashboardBasicScenario : ITestScenario
                 image: _imageTag,
                 name: containerName,
                 detach: true,
-                optionalRunArgs: $"-p {DashboardPort}",
+                optionalRunArgs: $"-p {dashboardPort}",
                 skipAutoCleanup: true);
 
             await WebScenario.VerifyHttpResponseFromContainerAsync(
                 containerName,
                 _dockerHelper,
                 _outputHelper,
-                DashboardPort);
+                dashboardPort);
         }
         finally
         {
             _dockerHelper.DeleteContainer(containerName);
         }
+    }
+
+    private static int GetDashboardPort(string imageTag, DockerHelper dockerHelper)
+    {
+        IDictionary<string, string> envVars = dockerHelper.GetEnvironmentVariables(imageTag);
+        string portString = envVars[DashboardPortEnvVar].Split(':')[^1];
+        return int.Parse(portString);
     }
 }
