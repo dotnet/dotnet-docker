@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 #nullable enable
 
 using System;
@@ -7,7 +11,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public abstract class TestScenario : IDisposable
+public abstract class SampleTestScenario : ITestScenario, IDisposable
 {
     private bool _disposed;
 
@@ -38,7 +42,7 @@ public abstract class TestScenario : IDisposable
 
     protected abstract DotNetImageRepo SdkImageRepo { get; }
 
-    public TestScenario(
+    public SampleTestScenario(
         ProductImageData imageData,
         DockerHelper dockerHelper,
         ITestOutputHelper outputHelper)

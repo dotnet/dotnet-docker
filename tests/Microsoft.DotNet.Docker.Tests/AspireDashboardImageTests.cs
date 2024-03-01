@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -19,6 +20,14 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
     public static IEnumerable<object[]> GetImageData() =>
         TestData.GetAspireDashboardImageData()
             .Select(imageData => new object[] { imageData });
+
+    [DotNetTheory]
+    [MemberData(nameof(GetImageData))]
+    public async Task VerifyDashboardEndpoint(ProductImageData imageData)
+    {
+        AspireDashboardBasicScenario testScenario = new(imageData, DockerHelper, OutputHelper);
+        await testScenario.ExecuteAsync();
+    }
 
     [DotNetTheory]
     [MemberData(nameof(GetImageData))]

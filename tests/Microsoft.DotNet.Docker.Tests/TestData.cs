@@ -357,7 +357,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 OSTag = "",
                 Arch = Arch.Amd64,
                 SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard,
-
             },
             new() {
                 Version = V8_0_Preview,
