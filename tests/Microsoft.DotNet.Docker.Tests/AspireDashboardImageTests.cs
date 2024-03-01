@@ -42,7 +42,6 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
             // Change the format when https://github.com/dotnet/dotnet-docker/issues/5190 is closed.
             new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://0.0.0.0:18888"),
             new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_ENDPOINT_URL", "http://0.0.0.0:18889"),
-            new EnvironmentVariableInfo("DOTNET_gcServer", "1"),
         ];
 
         string imageTag = imageData.GetImage(ImageRepo, DockerHelper);
