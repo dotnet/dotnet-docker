@@ -46,7 +46,8 @@ public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, 
                 detach: true,
                 optionalRunArgs: $"-p {port}",
                 runAsUser: user,
-                command: command);
+                command: command,
+                skipAutoCleanup: true);
 
             await VerifyHttpResponseFromContainerAsync(
                 containerName,
