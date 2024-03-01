@@ -387,7 +387,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     name: monitorContainerName,
                     command: GetMonitorAdditionalArgs(imageData, noAuthentication),
                     detach: true,
-                    optionalRunArgs: runArgsBuilder.Build());
+                    optionalRunArgs: runArgsBuilder.Build(),
+                    skipAutoCleanup: true);
 
                 if (!Config.IsHttpVerificationDisabled)
                 {
