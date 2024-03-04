@@ -82,7 +82,7 @@ namespace Microsoft.DotNet.Docker.Tests
             return string.Join('-', imageVariants);
         }
 
-        public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper)
+        public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper, bool skipPull = false)
         {
             // ASP.NET composite includes its own runtime that we want to test.
             if (ImageVariant.HasFlag(DotNetImageVariant.Composite) && imageRepo == DotNetImageRepo.Runtime)
@@ -99,7 +99,11 @@ namespace Microsoft.DotNet.Docker.Tests
             string tag = GetTagName(imageRepo);
             string imageName = GetImageName(tag, GetImageRepoName(imageRepo));
 
-            PullImageIfNecessary(imageName, dockerHelper);
+            if (!skipPull)
+            {
+                // Pull the image to ensure it exists
+                PullImageIfNecessary(imageName, dockerHelper);
+            }
 
             return imageName;
         }
@@ -157,6 +161,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 case DotNetImageRepo.Aspnet:
                 case DotNetImageRepo.Runtime_Deps:
                 case DotNetImageRepo.Monitor:
+                case DotNetImageRepo.Aspire_Dashboard:
                     imageVersion = Version;
                     os = OSTag;
                     break;
