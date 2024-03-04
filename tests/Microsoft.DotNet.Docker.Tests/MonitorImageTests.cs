@@ -504,7 +504,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     image: sampleImageName,
                     name: sampleContainerName,
                     detach: true,
-                    optionalRunArgs: sampleArgsBuilder.Build());
+                    optionalRunArgs: sampleArgsBuilder.Build(),
+                    skipAutoCleanup: true);
 
                 // Run the dotnet-monitor container
                 DockerHelper.Run(
@@ -512,7 +513,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     name: monitorContainerName,
                     command: GetMonitorAdditionalArgs(productImageData, noAuthentication),
                     detach: true,
-                    optionalRunArgs: monitorArgsBuilder.Build());
+                    optionalRunArgs: monitorArgsBuilder.Build(),
+                    skipAutoCleanup: true);
 
                 await verifyContainerAsync(
                     monitorContainerName,
