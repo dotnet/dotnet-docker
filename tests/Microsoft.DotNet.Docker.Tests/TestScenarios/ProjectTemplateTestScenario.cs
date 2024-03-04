@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public abstract class SampleTestScenario : ITestScenario, IDisposable
+public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
 {
     private bool _disposed;
 
@@ -42,7 +42,7 @@ public abstract class SampleTestScenario : ITestScenario, IDisposable
 
     protected abstract DotNetImageRepo SdkImageRepo { get; }
 
-    public SampleTestScenario(
+    public ProjectTemplateTestScenario(
         ProductImageData imageData,
         DockerHelper dockerHelper,
         ITestOutputHelper outputHelper)
