@@ -1,6 +1,11 @@
 {{
     _ ARGS:
-      top-header: The string to use as the top-level header.
+      top-header: The string to use as the top-level header. ^
+
+    set isSample to match(SHORT_REPO, "samples") ^
+    set isMonitor to match(SHORT_REPO, "monitor") ^
+    set isAspireDashboard to match(SHORT_REPO, "aspire-dashboard")
+
 }}{{ARGS["top-header"]}} Support
 
 {{if match(SHORT_REPO, "samples"):These sample images are not intended for production use and may be subject to breaking changes or removal at any time. They are provided as a starting point for developers to experiment with and learn about .NET in a containerized environment.
@@ -33,6 +38,6 @@
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 * [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)
-* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md)
+* [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md){{if !(isMonitor || isAspireDashboard):
 * [Windows base image license](https://docs.microsoft.com/virtualization/windowscontainers/images-eula) (only applies to Windows containers)
-* [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)
+* [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)}}
