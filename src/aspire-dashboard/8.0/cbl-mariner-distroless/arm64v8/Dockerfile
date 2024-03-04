@@ -29,8 +29,6 @@ ENV \
     ASPNETCORE_HTTP_PORTS= \
     # Aspire Dashboard environment variables
     ASPNETCORE_URLS=http://0.0.0.0:18888 \
-    DOTNET_DASHBOARD_OTLP_ENDPOINT_URL=http://0.0.0.0:18889  \
-    # Server GC mode
-    DOTNET_gcServer=1
+    DOTNET_DASHBOARD_OTLP_ENDPOINT_URL=http://0.0.0.0:18889
 
 ENTRYPOINT [ "dotnet", "/app/Aspire.Dashboard.dll" ]
