@@ -15,6 +15,10 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
 {
     private const string AppPath = "/app";
 
+    private const int DashboardWebPort = 18888;
+
+    private const int DashboardOTLPPort = 18889;
+
     protected override DotNetImageRepo ImageRepo => DotNetImageRepo.Aspire_Dashboard;
 
     public static IEnumerable<object[]> GetImageData() =>
@@ -25,7 +29,7 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
     [MemberData(nameof(GetImageData))]
     public async Task VerifyDashboardEndpoint(ProductImageData imageData)
     {
-        AspireDashboardBasicScenario testScenario = new(imageData, DockerHelper, OutputHelper);
+        AspireDashboardBasicScenario testScenario = new(DashboardWebPort, imageData, DockerHelper, OutputHelper);
         await testScenario.ExecuteAsync();
     }
 
@@ -40,8 +44,8 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
             // These two URL environment variables should be in the more compact format, i.e. "http://+:18888", but need
             // to have a base URL of 0.0.0.0 due to a bug in the Aspire Dashboard.
             // Change the format when https://github.com/dotnet/dotnet-docker/issues/5190 is closed.
-            new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://0.0.0.0:18888"),
-            new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_ENDPOINT_URL", "http://0.0.0.0:18889"),
+            new EnvironmentVariableInfo("ASPNETCORE_URLS", $"http://0.0.0.0:{DashboardWebPort}"),
+            new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_ENDPOINT_URL", $"http://0.0.0.0:{DashboardOTLPPort}"),
         ];
 
         string imageTag = imageData.GetImage(ImageRepo, DockerHelper);
