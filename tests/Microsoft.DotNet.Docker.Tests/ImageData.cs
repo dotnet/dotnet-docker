@@ -142,18 +142,16 @@ namespace Microsoft.DotNet.Docker.Tests
             return $"{registry}{repo}:{tag}";
         }
 
-        protected string GetTagName(string tagPrefix, string os, string tagPostfix = null) =>
-            $"{tagPrefix}-{os}{(string.IsNullOrEmpty(tagPostfix) ? "" : $"-{tagPostfix}")}{GetArchTagSuffix()}";
-
-        protected virtual string GetArchTagSuffix()
+        protected string GetTagName(string tagPrefix, string os, string tagPostfix = null)
         {
-            if (Arch == Arch.Amd64 && !DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                return string.Empty;
-            }
-
-            return $"-{GetArchLabel()}";
+            IEnumerable<string> tagParts = [ tagPrefix, os, tagPostfix, GetArchTagSuffix() ];
+            tagParts = tagParts.Where(s => !string.IsNullOrEmpty(s));
+            return string.Join('-', tagParts);
         }
+
+        protected virtual string GetArchTagSuffix() => (Arch == Arch.Amd64 && !DockerHelper.IsLinuxContainerModeEnabled)
+            ? string.Empty
+            : GetArchLabel();
 
         protected string GetArchLabel() =>
             Arch switch

@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public class ConsoleAppScenario : TestScenario
+public class ConsoleAppScenario : ProjectTemplateTestScenario
 {
     protected override string SampleName { get; } = "console";
 

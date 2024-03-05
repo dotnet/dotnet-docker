@@ -123,10 +123,11 @@ namespace Microsoft.DotNet.Docker.Tests
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper,
-            ITestOutputHelper outputHelper)
+            ITestOutputHelper outputHelper,
+            IEnumerable<string> extraExcludePaths = null)
         {
             IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
-            IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, dockerHelper);
+            IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, dockerHelper, extraExcludePaths);
 
             outputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
 
@@ -150,11 +151,21 @@ namespace Microsoft.DotNet.Docker.Tests
         private static IEnumerable<string> GetInstalledPackages(
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper)
+            DockerHelper dockerHelper,
+            IEnumerable<string> extraExcludePaths = null)
         {
-            JsonNode output = GetSyftOutput("package-info", imageData, imageRepo, dockerHelper);
+            JsonNode output = GetSyftOutput("package-info", imageData, imageRepo, dockerHelper, extraExcludePaths);
             return ((JsonArray)output["artifacts"])
-                .Select(artifact => artifact["name"]?.ToString());
+                .Select(artifact => artifact["name"]?.ToString())
+                // Syft can sometimes detect duplicates of packages if they have a distro-specific version suffix. Syft
+                // will report the distro package version and the binary package version as separate.
+                //
+                // openssl                      1.1.1k                binary
+                // openssl                      1.1.1k-29.cm2         rpm
+                //                              ^ Mariner specific version
+                //
+                // So we need to remove duplicates.
+                .Distinct();
         }
 
         private static string GetOSReleaseInfo(
@@ -171,10 +182,11 @@ namespace Microsoft.DotNet.Docker.Tests
             string syftContainerName,
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper)
+            DockerHelper dockerHelper,
+            IEnumerable<string> extraExcludePaths = null)
         {
-            const string SyftImage = "anchore/syft:v0.97.1";
-            dockerHelper.Pull(SyftImage);
+            string syftImage = $"{Config.GetVariableValue("syft|repo")}:{Config.GetVariableValue("syft|tag")}";
+            dockerHelper.Pull(syftImage);
 
             string imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
 
@@ -182,19 +194,23 @@ namespace Microsoft.DotNet.Docker.Tests
             string tempDir = null;
             string outputContents = null;
 
+            // Ignore the dotnet folder, or else syft will report all the packages in the .NET Runtime. We only care
+            // about the packages from the linux distro for this test.
+            extraExcludePaths ??= [];
+            extraExcludePaths = extraExcludePaths.Append("/usr/share/dotnet");
+            IEnumerable<string> excludeArgs = extraExcludePaths.Select(path => $"--exclude {path}");
+
             string[] args = [
-                "packages",
+                "scan",
                 $"docker:{imageToInspect}",
                 $"-o json={outputContainerFilePath}",
-                // Ignore the dotnet folder, or else syft will report all the packages in the .NET Runtime. We only care
-                // about the packages from the linux distro for this test.
-                "--exclude /usr/share/dotnet"
+                ..excludeArgs
             ];
 
             try
             {
                 dockerHelper.Run(
-                    SyftImage,
+                    syftImage,
                     syftContainerName,
                     string.Join(' ', args),
                     skipAutoCleanup: true,
@@ -231,11 +247,13 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 expectedPackages = [..expectedPackages, ..GetDistrolessBasePackages(imageData)];
             }
+
             if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Extra)
                 || (imageRepo == DotNetImageRepo.SDK && imageData.Version.Major != 6 && imageData.Version.Major != 7))
             {
                 expectedPackages = [..expectedPackages, ..GetExtraPackages(imageData)];
             }
+
             return expectedPackages.Distinct().OrderBy(s => s);
         }
 
