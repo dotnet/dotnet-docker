@@ -128,6 +128,7 @@
     "libicu|buster": 63,
     "libicu|focal": 66,
     "libicu|jammy": 70,
+    "libicu|noble": 74,
 
     "libssl|alpine3.19": "3",
     "libssl|alpine3.18": "3",
@@ -137,6 +138,7 @@
     "libssl|buster": "1.1",
     "libssl|focal": "1.1",
     "libssl|jammy": "3",
+    "libssl|noble": "3",
 
     "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/MinGit-2.43.0-64-bit.zip",
     "mingit|x64|sha": "1905d93068e986258fafc69517df8fddff829bb2a289c1fa4dcc6cdf720ddf36",

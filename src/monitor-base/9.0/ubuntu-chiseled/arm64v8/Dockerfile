@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM arm64v8/buildpack-deps:jammy-curl AS installer
+FROM arm64v8/buildpack-deps:noble-curl AS installer
 
 # Retrieve .NET Monitor Base
 RUN dotnet_monitor_version=9.0.0-preview.1.24106.4 \
@@ -14,7 +14,7 @@ RUN dotnet_monitor_version=9.0.0-preview.1.24106.4 \
 
 
 # .NET Monitor Base image
-FROM $REPO:9.0.0-preview.1-jammy-chiseled-arm64v8
+FROM $REPO:9.0.0-preview.1-noble-chiseled-arm64v8
 
 WORKDIR /app
 COPY --from=installer /app .
