@@ -84,4 +84,4 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 * [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)
 * [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md)
 * [Windows base image license](https://docs.microsoft.com/virtualization/windowscontainers/images-eula) (only applies to Windows containers)
-* [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)
+* [Pricing and licensing for Windows Server](https://www.microsoft.com/cloud-platform/windows-server-pricing)
