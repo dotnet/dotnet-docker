@@ -32,8 +32,12 @@ if ($components[1] -ne "dotnet") {
 
 $imageComponents = $components[2] -split ':'
 
+if ($components[2] -eq "nightly") {
+    throw "Nightly images are not supported for production use."
+}
+
 $imageType = $imageComponents[0]
-$imageTypes = @("aspnet", "runtime", "runtime-deps", "sdk", "monitor")
+$imageTypes = @("aspnet", "runtime", "runtime-deps", "sdk", "monitor", "aspire-dashboard")
 if (-not $imageTypes.Contains($imageType)) {
     throw "The image tag must use one of the following image types: $($imageTypes -join ', ')"
 }
