@@ -60,8 +60,6 @@ Tags | Dockerfile | OS Version
 You can retrieve a list of all available tags for dotnet/nightly/aspire-dashboard at https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list.
 <!--End of generated tags-->
 
-For tags contained in the old dotnet/core-nightly/aspire-dashboard repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core-nightly/aspire-dashboard/tags/list.
-
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
 
 # Support
@@ -95,5 +93,3 @@ For tags contained in the old dotnet/core-nightly/aspire-dashboard repository, y
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 * [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)
 * [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md)
-* [Windows base image license](https://docs.microsoft.com/virtualization/windowscontainers/images-eula) (only applies to Windows containers)
-* [Pricing and licensing for Windows Server 2019](https://www.microsoft.com/cloud-platform/windows-server-pricing)
