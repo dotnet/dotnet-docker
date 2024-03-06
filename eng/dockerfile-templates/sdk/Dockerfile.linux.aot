@@ -33,7 +33,7 @@
                 "llvm"
             ])))) ^
 
-    set sourcesListFilePath to when(ubuntuVersion = "jammy",
+    set sourcesListFilePath to when(OS_VERSION = "jammy",
         cat("/etc/apt/sources.list.d/", targetArchShortName, ".list"),
         cat("/etc/apt/sources.list.d/", targetArchShortName, ".sources")) ^
 
@@ -45,12 +45,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/sdk
 FROM {{baseImageTag}}
 
-{{if isMultiArch:{{if match(ubuntuVersion, "jammy"):RUN echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} {{ubuntuVersion}} main restricted" > {{sourcesListFilePath}} \
-    && echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} {{ubuntuVersion}}-updates main restricted" >> {{sourcesListFilePath}} \
+{{if isMultiArch:{{if match(OS_VERSION, "jammy"):RUN echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} {{OS_VERSION}} main restricted" > {{sourcesListFilePath}} \
+    && echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} {{OS_VERSION}}-updates main restricted" >> {{sourcesListFilePath}} \
     && sed -i -e 's/deb http/deb [arch={{buildArchShortName}}] http/g' /etc/apt/sources.list \^else:COPY <<EOF {{sourcesListFilePath}}
 Types: deb
 URIs: {{ubuntuPortsUrl}}
-Suites: {{ubuntuVersion}} {{ubuntuVersion}}-updates
+Suites: {{OS_VERSION}} {{OS_VERSION}}-updates
 Components: main restricted
 Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
 Architectures: {{targetArchShortName}}
