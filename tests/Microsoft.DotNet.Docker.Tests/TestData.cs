@@ -398,7 +398,7 @@ namespace Microsoft.DotNet.Docker.Tests
             (DockerHelper.IsLinuxContainerModeEnabled ? s_AspireDashboardTestData : [])
                 .FilterImagesByPath(DotNetImageRepo.Aspire_Dashboard)
                 .FilterImagesByArch()
-                // .FilterImagesByOs()
+                .FilterImagesByOs()
                 .Cast<ProductImageData>();
 
         public static IEnumerable<ProductImageData> GetMonitorImageData()
