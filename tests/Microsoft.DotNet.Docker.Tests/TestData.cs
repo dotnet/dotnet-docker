@@ -359,6 +359,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 Version = V8_0_Preview,
                 OS = OS.Mariner20Distroless,
                 OSTag = "",
+                OSDir = OS.MarinerDistroless,
                 Arch = Arch.Amd64,
                 SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard,
             },
@@ -366,6 +367,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 Version = V8_0_Preview,
                 OS = OS.Mariner20Distroless,
                 OSTag = "",
+                OSDir = OS.MarinerDistroless,
                 Arch = Arch.Amd64,
                 SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard
             },
@@ -430,6 +432,8 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             IEnumerable<string> pathPatterns = Config.Paths
                 .Select(path => Config.GetFilterRegexPattern(path));
+
+            var p = imageData.Select(i => i.GetDockerfilePath(imageRepo)).ToArray();
 
             return imageData
                 .Where(imageData => !pathPatterns.Any()

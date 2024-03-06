@@ -13,6 +13,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private string _sdkOS;
         private string _osTag;
+        private string _osDir;
         private ImageVersion? _versionFamily;
 
         public bool HasCustomSdk => _sdkOS != null;
@@ -32,8 +33,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string OSTag
         {
-            get => _osTag != null ? _osTag : OS;
+            get => _osTag ?? OS;
             init => _osTag = value;
+        }
+
+        public string OSDir
+        {
+            get => _osDir ?? OSTag;
+            init => _osDir = value;
         }
 
         public ImageVersion Version { get; init; }
@@ -58,8 +65,20 @@ namespace Microsoft.DotNet.Docker.Tests
         public override int? NonRootUID =>
             OS == Tests.OS.Mariner20Distroless && (Version.Major == 6 || Version.Major == 7) ? 101 : base.NonRootUID;
 
-        public string GetDockerfilePath(DotNetImageRepo imageRepo) =>
-            $"src/{GetImageRepoName(imageRepo)}{GetVariantSuffix()}/{Version}/{OSTag}/{GetArchLabel()}";
+        public string GetDockerfilePath(DotNetImageRepo imageRepo)
+        {
+            IEnumerable<string> pathComponents =
+            [
+                "src",
+                GetImageRepoName(imageRepo) + GetVariantSuffix(),
+                Version.ToString(),
+                OSDir,
+                GetArchLabel()
+            ];
+
+            // Don't use Path.Join since it will use Windows path separators when run locally.
+            return string.Join('/', pathComponents);
+        }
 
         private string GetVariantSuffix() =>
             ImageVariant == DotNetImageVariant.None ? "" : $"-{GetImageVariantName(ImageVariant)}";
