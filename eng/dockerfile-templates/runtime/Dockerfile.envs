@@ -1,4 +1,11 @@
 {{
-    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".")
-}}# .NET Runtime version
-{{if INDENT ="":ENV }}DOTNET_VERSION={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}}
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set alpineVersion to split(OS_VERSION, ".")[1] ^
+    set usePortableRid to isAlpine && alpineVersion != "18" && dotnetVersion = "6.0" ^
+    set runtimeComment to "# .NET Runtime version"
+}}{{if !usePortableRid:{{runtimeComment}}
+}}{{if INDENT ="":ENV }}{{if usePortableRid:\
+    {{runtimeComment}}
+    }}DOTNET_VERSION={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}}{{if usePortableRid: \
+    DOTNET_RUNTIME_ID=linux-musl-{{ARCH_SHORT}}}}
