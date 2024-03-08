@@ -79,13 +79,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            // Microsoft.NETCore.App.Runtime.AOT.linux-musl-x64.Cross.browser-wasm is not present in dotnet-public feed.
-            // Re-enable when issue is resolved: https://github.com/dotnet/dotnet-docker/issues/5224
-            if (isAlpine && imageData.Arch == Arch.Amd64 && imageData.Version.Major == 9)
-            {
-                return;
-            }
-
             // `wasm-tools` workload does not work on ARM
             // `wasm-tools` is also not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
             int[] unsupportedVersionsForAlpine = [6, 7, 8];
