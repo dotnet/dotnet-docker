@@ -55,10 +55,10 @@
     "aspnet-composite|9.0|linux-musl|arm|sha": "de45c5866d477bc2685f3a9d6ebdd08e3cb7effc37df896fb1a10c5ab9dd95cc120e49e9d95930c078f9f8b7262ed567b85cb752ee93b236193eb3e90fc49657",
     "aspnet-composite|9.0|linux-musl|arm64|sha": "4030c12b8efd49a254a53454bae20407f3fdfba39c8ecf637ef9581b8cdb98b792d904d0be641561237b47f7daf83281b15e473b81a43c0f1052e6f42011f92a",
 
-    "base-url|public|main": "https://dotnetbuilds.azureedge.net/public",
+    "base-url|public|main": "https://dotnetcli.azureedge.net/dotnet",
     "base-url|public|nightly": "https://dotnetbuilds.azureedge.net/public",
 
-    "base-url|public|maintenance|main": "https://dotnetcli.azureedge.net/dotnet",
+    "base-url|public|maintenance|main": "$(base-url|public|main)",
     "base-url|public|maintenance|nightly": "https://dotnetcli.azureedge.net/dotnet",
 
     "base-url|6.0|main": "$(base-url|public|maintenance|main)",
@@ -76,7 +76,7 @@
     "base-url|7.3-monitor|nightly": "$(base-url|public|nightly)",
     "base-url|8.0-monitor|main": "$(base-url|public|maintenance|main)",
     "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
-    "base-url|9.0-monitor|main": "$(base-url|public|maintenance|main)",
+    "base-url|9.0-monitor|main": "$(base-url|public|main)",
     "base-url|9.0-monitor|nightly": "$(base-url|public|nightly)",
 
     "chisel|6.0|url": "github.com/canonical/chisel",
