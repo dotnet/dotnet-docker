@@ -15,8 +15,10 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 
 * `dotnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp`
+  * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp-chiseled`
 * `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
+  * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp-chiseled`
 
 ## Related Repositories
 
@@ -80,8 +82,16 @@ These sample images are not intended for production use and may be subject to br
 
 ### Image Update Policy
 
-* We update the supported .NET images within 12 hours of any updates to their base images (e.g. debian:buster-slim, windows/nanoserver:ltsc2022, buildpack-deps:bionic-scm, etc.).
-* We publish .NET images as part of releasing new versions of .NET including major/minor and servicing.
+* We update supported .NET images within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
+* We re-build all .NET images as part of releasing new versions of .NET including new major/minor versions and servicing.
+* Distroless images such as Ubuntu Chiseled have no base image, and as such will only be updated with .NET releases and CVE fixes as described below.
+
+#### CVE Update Policy
+
+.NET container images are regularly monitored for the presence of CVEs. A given image will be rebuilt to pick up fixes for a CVE when:
+* We detect the image contains a CVE with a [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score of "Critical"
+* **AND** the CVE is in a package that is added in our Dockerfile layers (meaning the CVE is in a package we explicitly install or any transitive dependencies of those packages)
+* **AND** there is a CVE fix for the package available in the affected base image's package repository.
 
 ### Feedback
 

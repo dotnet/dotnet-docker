@@ -90,12 +90,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
             string tag = imageData.GetIdentifier("distroless-helper");
             Build(tag, dockerfile, null, TestArtifactsDir, false,
-                buildArgs: new string[]
-                {
+                platform: imageData.Platform,
+                buildArgs:
+                [
                     $"distroless_image={distrolessImageTag}",
                     $"base_image={baseImageTag}",
                     $"root_destination={rootDestination}"
-                });
+                ]);
             return tag;
         }
 
@@ -112,6 +113,11 @@ namespace Microsoft.DotNet.Docker.Tests
                     ExecuteWithLogging($"logs {container}", ignoreErrors: true);
                 }
 
+                // If a container is already stopped, running `docker stop` again has no adverse effects.
+                // This prevents some issues where containers could fail to be forcibly removed while they're running.
+                // e.g. https://github.com/dotnet/dotnet-docker/issues/5127
+                StopContainer(container);
+
                 ExecuteWithLogging($"container rm -f {container}");
             }
         }
@@ -121,6 +127,14 @@ namespace Microsoft.DotNet.Docker.Tests
             if (ImageExists(tag))
             {
                 ExecuteWithLogging($"image rm -f {tag}");
+            }
+        }
+
+        private void StopContainer(string container)
+        {
+            if (ContainerExists(container))
+            {
+                ExecuteWithLogging($"stop {container}", autoRetry: true);
             }
         }
 

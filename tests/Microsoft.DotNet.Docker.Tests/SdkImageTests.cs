@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -57,6 +58,35 @@ namespace Microsoft.DotNet.Docker.Tests
                 // Filter the image data down to the distinct SDK OSes
                 .Distinct(new SdkImageDataEqualityComparer())
                 .Select(imageData => new object[] { imageData });
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public async void VerifyBlazorWasmScenario(ProductImageData imageData)
+        {
+            bool isAlpine = imageData.OS.StartsWith(OS.Alpine);
+
+            // Microsoft.NETCore.App.Runtime.Mono.linux-musl-arm* package does not exist
+            if (isAlpine && imageData.IsArm)
+            {
+                return;
+            }
+
+            // `wasm-tools` workload does not work on .NET 6 with CBL Mariner 2.0.
+            // Re-enable when issue is resolved: https://github.com/dotnet/aspnetcore/issues/53469
+            if (imageData.OS.Contains(OS.Mariner) && imageData.Version.Major == 6)
+            {
+                return;
+            }
+
+            // `wasm-tools` workload does not work on ARM
+            // `wasm-tools` is also not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
+            int[] unsupportedVersionsForAlpine = [6, 7, 8];
+            bool isSupportedVersionForAlpine = !unsupportedVersionsForAlpine.Contains(imageData.Version.Major);
+            bool useWasmTools = !imageData.IsArm && (!isAlpine || isSupportedVersionForAlpine);
+
+            using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
+            await testScenario.ExecuteAsync();
         }
 
         [LinuxImageTheory]
