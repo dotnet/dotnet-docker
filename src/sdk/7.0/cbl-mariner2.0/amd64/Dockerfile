@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:7.0.16-cbl-mariner2.0-amd64
+FROM $REPO:7.0.17-cbl-mariner2.0-amd64
 
 ENV \
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -9,7 +9,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=7.0.406 \
+    DOTNET_SDK_VERSION=7.0.407 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -24,7 +24,7 @@ RUN tdnf install -y \
 
 # Install .NET SDK
 RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
-    && dotnet_sha512='5455ac21b1d8a37da326b99128a7d10983673259f4ccf89b7cdc6f67bb5f6d4f123caadb9532d523b2d9025315e3de684a63a09712e2dc6de1702f5ad1e9c410' \
+    && dotnet_sha512='82e659aee7d3ab6595bfc141f24eda13551f5c5bd9048aad53ebe3963b8e25836ca07eb3d1d39d6adae145db399aab44ed57db27d34119e836202eb3af93c9e3' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz \
