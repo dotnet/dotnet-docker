@@ -4362,6 +4362,61 @@
         },
         {
           "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-extra": {},
+            "8.0-cbl-mariner2.0-distroless-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/cbl-mariner2.0-distroless-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-extra-amd64": {},
+                "8.0-cbl-mariner2.0-distroless-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/cbl-mariner2.0-distroless-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-extra-arm64v8": {},
+                "8.0-cbl-mariner2.0-distroless-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime/8.0/nanoserver-1809/amd64",
@@ -4882,6 +4937,64 @@
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-arm64v8": {},
                 "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra": {},
+            "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-extra": {},
+            "$(dotnet|9.0|floating-tag)-cbl-mariner-distroless-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/cbl-mariner2.0-distroless-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner-distroless-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/9.0/cbl-mariner2.0-distroless-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner-distroless-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -7025,6 +7138,61 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
+            "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-extra": {},
+            "8.0-cbl-mariner2.0-distroless-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/cbl-mariner2.0-distroless-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-extra-amd64": {},
+                "8.0-cbl-mariner2.0-distroless-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/cbl-mariner2.0-distroless-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-extra-arm64v8": {},
+                "8.0-cbl-mariner2.0-distroless-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
             "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-composite": {},
             "8.0-cbl-mariner2.0-distroless-composite": {},
             "8.0-cbl-mariner-distroless-composite": {}
@@ -7066,6 +7234,64 @@
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-composite-arm64v8": {},
                 "8.0-cbl-mariner2.0-distroless-composite-arm64v8": {},
                 "8.0-cbl-mariner-distroless-composite-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-composite-extra": {},
+            "8.0-cbl-mariner2.0-distroless-composite-extra": {},
+            "8.0-cbl-mariner-distroless-composite-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/cbl-mariner2.0-distroless-composite-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite.extra",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-composite-extra-amd64": {},
+                "8.0-cbl-mariner2.0-distroless-composite-extra-amd64": {},
+                "8.0-cbl-mariner-distroless-composite-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/cbl-mariner2.0-distroless-composite-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite.extra",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-composite-extra-arm64v8": {},
+                "8.0-cbl-mariner2.0-distroless-composite-extra-arm64v8": {},
+                "8.0-cbl-mariner-distroless-composite-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -7791,6 +8017,64 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
+            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra": {},
+            "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-extra": {},
+            "$(dotnet|9.0|floating-tag)-cbl-mariner-distroless-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless-extra",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner-distroless-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner-distroless-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-composite": {},
             "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-composite": {}
           },
@@ -7829,6 +8113,64 @@
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-composite-arm64v8": {},
                 "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-composite-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra": {},
+            "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-composite-extra": {},
+            "$(dotnet|9.0|floating-tag)-cbl-mariner-distroless-composite-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless-composite-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite.extra",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra-amd64": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-composite-extra-amd64": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner-distroless-composite-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless-composite-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra-arm64v8": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-composite-extra-arm64v8": {},
+                "$(dotnet|9.0|floating-tag)-cbl-mariner-distroless-composite-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
