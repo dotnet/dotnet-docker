@@ -57,6 +57,9 @@ namespace Microsoft.DotNet.Docker.Tests
             return JObject.Parse(manifestJson);
         }
 
+        public static string GetVariableValue(string variableName) =>
+            GetVariableValue(variableName, (JObject)ManifestVersions.Value["variables"]);
+
         private static string GetVariableValue(string variableName, JObject variables) =>
             ResolveVariables((string)variables[variableName], variables);
 
