@@ -4364,7 +4364,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-extra": {},
-            "8.0-cbl-mariner2.0-distroless-extra": {}
+            "8.0-cbl-mariner2.0-distroless-extra": {},
+            "8.0-cbl-mariner-distroless-extra": {}
           },
           "platforms": [
             {
@@ -4377,7 +4378,8 @@
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-extra-amd64": {},
-                "8.0-cbl-mariner2.0-distroless-extra-amd64": {}
+                "8.0-cbl-mariner2.0-distroless-extra-amd64": {},
+                "8.0-cbl-mariner-distroless-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
@@ -4400,7 +4402,8 @@
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-extra-arm64v8": {},
-                "8.0-cbl-mariner2.0-distroless-extra-arm64v8": {}
+                "8.0-cbl-mariner2.0-distroless-extra-arm64v8": {},
+                "8.0-cbl-mariner-distroless-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -7139,7 +7142,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-extra": {},
-            "8.0-cbl-mariner2.0-distroless-extra": {}
+            "8.0-cbl-mariner2.0-distroless-extra": {},
+            "8.0-cbl-mariner-distroless-extra": {}
           },
           "platforms": [
             {
@@ -7152,7 +7156,8 @@
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
                 "$(dotnet|8.0|product-version)-cbl-mariner2.0-distroless-extra-amd64": {},
-                "8.0-cbl-mariner2.0-distroless-extra-amd64": {}
+                "8.0-cbl-mariner2.0-distroless-extra-amd64": {},
+                "8.0-cbl-mariner-distroless-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
