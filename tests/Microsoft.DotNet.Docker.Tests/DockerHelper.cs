@@ -104,7 +104,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     $"base_image={baseImageTag}",
                     $"root_destination={rootDestination}"
                 ]);
-
             return tag;
         }
 

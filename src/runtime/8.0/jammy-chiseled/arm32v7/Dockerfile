@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=8.0.2 \
+RUN dotnet_version=8.0.3 \
     && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
-    && dotnet_sha512='ee03411c04ab240b6356a6fcbe66948d688a90afdade6dc2b0229d9ab3b2df851a66211a2bfb3a5c142e7256fcc04412b64bec8794c1e9117dc2f9babd01adf5' \
+    && dotnet_sha512='ff57e94bfeca1c44beef4f960caa9e3600ddab4a75c4df09611a667d95d8aad56f7c8b4b89dd8919a9dacb5a79b90a516e6420d6ce39047f89b9d313d45acc62' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
@@ -17,10 +17,10 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:8.0.2-jammy-chiseled-arm32v7
+FROM $REPO:8.0.3-jammy-chiseled-arm32v7
 
 # .NET Runtime version
-ENV DOTNET_VERSION=8.0.2
+ENV DOTNET_VERSION=8.0.3
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
