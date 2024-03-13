@@ -8029,7 +8029,7 @@
               "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless-extra/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux.extra",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless-extra",
+              "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
                 "$(dotnet|9.0|floating-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
