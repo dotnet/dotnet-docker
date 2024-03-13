@@ -73,7 +73,8 @@ namespace Microsoft.DotNet.Docker.Tests
                         image: image,
                         name: containerName,
                         detach: true,
-                        optionalRunArgs: $"-p {port}");
+                        optionalRunArgs: $"-p {port}",
+                        skipAutoCleanup: true);
 
                     if (!Config.IsHttpVerificationDisabled)
                     {
