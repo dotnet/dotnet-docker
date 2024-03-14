@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=9.0.0-preview.3.24161.11 \
+RUN aspnetcore_version=9.0.0-preview.3.24162.20 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm.tar.gz \
-    && aspnetcore_sha512='40954525653bc0227337756268b05b62451ea868a3b827d0d5335d901bd03ee0073c3a1915aad76155213101c0a29ff815c4bf01c70f7c3850e1c1298aee5010' \
+    && aspnetcore_sha512='bce9cf992d4027f127030a2828a8981f4f18ec1f53bebafab5bb1d7f16ef5c2a3a69513e0fcd422168e492ddb9d9dca8e637fc3ef1112ad7162c35938b75f512' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
@@ -17,6 +17,6 @@ RUN aspnetcore_version=9.0.0-preview.3.24161.11 \
 FROM $REPO:9.0.0-preview.3-jammy-chiseled-arm32v7
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=9.0.0-preview.3.24161.11
+ENV ASPNET_VERSION=9.0.0-preview.3.24162.20
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
