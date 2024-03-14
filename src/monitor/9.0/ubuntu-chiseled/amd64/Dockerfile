@@ -4,13 +4,13 @@ ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 FROM amd64/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor extensions
-RUN dotnet_monitor_extension_version=9.0.0-preview.1.24106.4 \
+RUN dotnet_monitor_extension_version=9.0.0-preview.2.24155.3 \
     && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
-    && dotnet_monitor_extension_sha512='15d2107439ca6e7f420669424139f96f07b243fd6db75ac0ffbfa5c3fc5ca38e827c2ddf1688de04adf9756a7de314a4d50a42add74941d854bcbcaeb7f16eef' \
+    && dotnet_monitor_extension_sha512='61ceb27e9e25943df06358429c9f6adb3ffb2e3fbd6cc44bc633c50a83d5f33669b63030f4319398310b18cab6084126c44fb9526a9455bde3b46b8a28fa8edb' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
-    && dotnet_monitor_extension_sha512='dabde19637cdd12073df858d90c21d3c7fcbaeac36ab9138d39cddfd0c21674b0071d096afed90789bd6a57afdbf035c2c4bc2ea15f36061cc3d54e2d0a8aa1a' \
+    && dotnet_monitor_extension_sha512='3718d4751f4a0ce61b0d02d2413f2b874eeff9896cf462eb0e10760a455b590c2246275e1589de525e0db84a5850efc78e960d8f8bc4cb2de8a333aa71071ecf' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
     \
     && mkdir -p /app \
@@ -21,6 +21,6 @@ RUN dotnet_monitor_extension_version=9.0.0-preview.1.24106.4 \
 
 
 # .NET Monitor image
-FROM $REPO:9.0.0-preview.1-ubuntu-chiseled-amd64
+FROM $REPO:9.0.0-preview.2-ubuntu-chiseled-amd64
 
 COPY --from=installer ["/app", "/app"]
