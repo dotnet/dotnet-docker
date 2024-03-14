@@ -8,7 +8,7 @@ parameters:
   linuxAmd64Pool: ""
 
 stages:
-- template: ../../common/templates/stages/dotnet/build-test-publish-repo.yml
+- template: /eng/common/templates/stages/dotnet/build-test-publish-repo.yml@self
   parameters:
     noCache: ${{ parameters.noCache }}
     internalProjectName: ${{ parameters.internalProjectName }}
@@ -23,8 +23,8 @@ stages:
 
     # Template paths must be relative to the YAML job that executes them
     customBuildInitSteps:
-    - template: ../../../pipelines/steps/set-imagebuilder-build-args-var.yml
-    - template: ../../../pipelines/steps/set-public-source-branch-var.yml
+    - template: /eng/pipelines/steps/set-imagebuilder-build-args-var.yml@self
+    - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     - powershell: |
         $imageBuilderBuildArgs = "$(imageBuilderBuildArgs)"
         if ("$(publishRepoPrefix)".Contains("internal/")) {
@@ -33,9 +33,9 @@ stages:
         }
         echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
       displayName: Set Custom Build Variables
-    - template: ../../../pipelines/steps/set-custom-test-variables.yml
+    - template: /eng/pipelines/steps/set-custom-test-variables.yml@self
     customTestInitSteps:
-    - template: ../../../pipelines/steps/set-custom-test-variables.yml
+    - template: /eng/pipelines/steps/set-custom-test-variables.yml@self
     customPublishInitSteps:
-    - template: ../../../pipelines/steps/set-public-source-branch-var.yml
-    - template: ../../../pipelines/steps/set-publish-mcrdocs-args-var.yml
+    - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
+    - template: /eng/pipelines/steps/set-publish-mcrdocs-args-var.yml@self
