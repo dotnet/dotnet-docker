@@ -4,16 +4,16 @@ parameters:
   additionalOptions: null
   publicProjectName: null
   customInitSteps: []
-  
+
 jobs:
 - job: ${{ parameters.name }}
   pool: ${{ parameters.pool }}
   steps:
-  - template: ../steps/init-docker-linux.yml
+  - template: /eng/common/templates/steps/init-docker-linux.yml@self
   - ${{ parameters.customInitSteps }}
-  - template: ../steps/copy-base-images.yml
+  - template: /eng/common/templates/steps/copy-base-images.yml@self
     parameters:
       additionalOptions: ${{ parameters.additionalOptions }}
       publicProjectName: ${{ parameters.publicProjectName }}
       continueOnError: true
-  - template: ../steps/cleanup-docker-linux.yml
+  - template: /eng/common/templates/steps/cleanup-docker-linux.yml@self
