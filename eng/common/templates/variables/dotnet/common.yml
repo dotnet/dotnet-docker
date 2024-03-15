@@ -1,5 +1,5 @@
 variables:
-- template: ../common.yml
+- template: /eng/common/templates/variables/common.yml@self
 - name: publicProjectName
   value: public
 - name: internalProjectName

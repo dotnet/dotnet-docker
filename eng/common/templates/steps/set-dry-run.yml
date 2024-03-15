@@ -1,12 +1,11 @@
 steps:
 - powershell: |
-      # Use dry-run option for certain publish operations if this is not a production build
-      $dryRunArg=""
-      if (-not "$(officialRepoPrefixes)".Split(',').Contains("$(publishRepoPrefix)") `
-          -or "$(System.TeamProject)" -eq "$(publicProjectName)")
-      {
-        $dryRunArg=" --dry-run"
-      }
-      
-      echo "##vso[task.setvariable variable=dryRunArg]$dryRunArg"
+    # Use dry-run option for certain publish operations if this is not a production build
+    $dryRunArg=""
+    if (-not "$(officialRepoPrefixes)".Split(',').Contains("$(publishRepoPrefix)") `
+        -or "$(System.TeamProject)" -eq "$(publicProjectName)")
+    {
+      $dryRunArg=" --dry-run"
+    }
+    echo "##vso[task.setvariable variable=dryRunArg]$dryRunArg"
   displayName: Set dry-run arg for non-prod

@@ -10,13 +10,13 @@ jobs:
 - job: ${{ parameters.name }}
   pool: ${{ parameters.pool }}
   steps:
-  - template: ../steps/retain-build.yml
-  - template: ../steps/init-docker-linux.yml
-  - template: ../steps/validate-branch.yml
+  - template: /eng/common/templates/steps/retain-build.yml@self
+  - template: /eng/common/templates/steps/init-docker-linux.yml@self
+  - template: /eng/common/templates/steps/validate-branch.yml@self
     parameters:
       internalProjectName: ${{ parameters.internalProjectName }}
   - ${{ if eq(parameters.isTestStage, true) }}:
-    - template: ../steps/download-build-artifact.yml
+    - template: /eng/common/templates/steps/download-build-artifact.yml@self
       parameters:
         targetPath: $(Build.ArtifactStagingDirectory)
         artifactName: image-info
@@ -38,4 +38,4 @@ jobs:
       $(additionalGenerateBuildMatrixOptions)
     displayName: Generate ${{ parameters.matrixType }} Matrix
     name: matrix
-  - template: ../steps/cleanup-docker-linux.yml
+  - template: /eng/common/templates/steps/cleanup-docker-linux.yml@self
