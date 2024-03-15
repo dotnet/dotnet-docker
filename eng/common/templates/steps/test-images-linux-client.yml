@@ -5,7 +5,7 @@ parameters:
   customInitSteps: []
 
 steps:
-- template: init-docker-linux.yml
+- template: /eng/common/templates/steps/init-docker-linux.yml@self
   parameters:
     setupImageBuilder: false
     setupTestRunner: true
@@ -47,12 +47,12 @@ steps:
     displayName: Docker login
     condition: and(succeeded(), ${{ parameters.condition }})
   - ${{ if eq(parameters.preBuildValidation, 'false') }}:
-    - template: ../steps/download-build-artifact.yml
+    - template: /eng/common/templates/steps/download-build-artifact.yml@self
       parameters:
         targetPath: $(Build.ArtifactStagingDirectory)
         artifactName: image-info
         condition: ${{ parameters.condition }}
-- template: parse-test-arg-arrays.yml
+- template: /eng/common/templates/steps/parse-test-arg-arrays.yml@self
 - powershell: >
     $(test.init);
     docker exec
@@ -97,6 +97,6 @@ steps:
   condition: and(always(), ${{ parameters.condition }})
   continueOnError: true
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: cleanup-docker-linux.yml
+  - template: /eng/common/templates/steps/cleanup-docker-linux.yml@self
     parameters:
       condition: ${{ parameters.condition }}

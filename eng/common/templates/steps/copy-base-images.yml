@@ -2,10 +2,10 @@ parameters:
   additionalOptions: null
   publicProjectName: null
   continueOnError: false
-  
+
 steps:
 - ${{ if or(eq(variables['System.TeamProject'], parameters.publicProjectName), eq(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: ../steps/set-dry-run.yml
+  - template: /eng/common/templates/steps/set-dry-run.yml@self
 - script: >
     $(runImageBuilderCmd)
     copyBaseImages

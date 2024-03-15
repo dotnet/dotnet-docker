@@ -1,0 +1,28 @@
+parameters:
+- name: path
+  type: string
+- name: artifactName
+  type: string
+- name: displayName
+  type: string
+- name: internalProjectName
+  type: string
+- name: publicProjectName
+  type: string
+- name: condition
+  type: string
+  default: 'true'
+
+steps:
+- ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+  - task: 1ES.PublishPipelineArtifact@1
+    inputs:
+      path: ${{ parameters.path }}
+      artifact: ${{ parameters.artifactName }}
+    displayName: ${{ parameters.displayName }}
+    condition: and(succeeded(), ${{ parameters.condition }})
+- ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+  - publish: ${{ parameters.path }}
+    artifact: ${{ parameters.artifactName }}
+    displayName: ${{ parameters.displayName }}
+    condition: and(succeeded(), ${{ parameters.condition }})
