@@ -56,7 +56,7 @@ stages:
 
     internalVersionsRepoRef: InternalVersionsRepo
     publicVersionsRepoRef: PublicVersionsRepo
-    
+
     ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
       customPublishVariables:
       - group: DotNet-AllOrgs-Darc-Pats
@@ -71,25 +71,25 @@ stages:
         name: NetCore1ESPool-Internal
         image: 1es-ubuntu-2204
         os: linux
-    
+
     # Linux Arm64
     linuxArm64Pool:
-      image: Mariner-2-Docker-ARM64
       os: linux
       hostArchitecture: Arm64
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: Docker-Linux-Arm-Public
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        image: Mariner-2-Docker-ARM64
         name: Docker-Linux-Arm-Internal
 
     # Linux Arm32
     linuxArm32Pool:
-      image: Mariner-2-Docker-ARM64
       os: linux
       hostArchitecture: Arm64
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: Docker-Linux-Arm-Public
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        image: Mariner-2-Docker-ARM64
         name: Docker-Linux-Arm-Internal
 
     # Windows Server 2016
