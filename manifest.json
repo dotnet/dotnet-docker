@@ -7421,6 +7421,13 @@
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-amd64"
+                  ]
                 }
               ]
             },
@@ -7442,6 +7449,13 @@
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-arm64v8"
                   ]
@@ -7476,6 +7490,13 @@
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-amd64"
+                  ]
                 }
               ]
             },
@@ -7497,6 +7518,13 @@
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|floating-tag)-cbl-mariner2.0-arm64v8"
                   ]
