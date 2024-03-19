@@ -22,7 +22,7 @@ resources:
     name: dotnet/versions
 
 variables:
-- template: /eng/pipelines/variables/core.yml
+- template: /eng/pipelines/variables/core.yml@self
 - name: officialBranches
   # comma-delimited list of branch names
   value: nightly
