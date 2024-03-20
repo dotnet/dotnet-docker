@@ -440,8 +440,6 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<string> pathPatterns = Config.Paths
                 .Select(path => Config.GetFilterRegexPattern(path));
 
-            var p = imageData.Select(i => i.GetDockerfilePath(imageRepo)).ToArray();
-
             return imageData
                 .Where(imageData => !pathPatterns.Any()
                     || pathPatterns.Any(pathPattern => Regex.IsMatch(imageData.GetDockerfilePath(imageRepo), pathPattern, RegexOptions.IgnoreCase)));
