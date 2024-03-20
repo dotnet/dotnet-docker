@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class ProductImageData : ImageData
+    public record ProductImageData : ImageData
     {
         private string _sdkOS;
         private string _osTag;

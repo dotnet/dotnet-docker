@@ -129,26 +129,38 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
             IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, dockerHelper, extraExcludePaths);
 
+            ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, outputHelper);
+        }
+
+        internal static void ComparePackages(
+            IEnumerable<string> expectedPackages,
+            IEnumerable<string> actualPackages,
+            bool isDistroless,
+            ITestOutputHelper outputHelper)
+        {
             outputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
 
             // Verify we only include strictly necessary packages in distroless images
-            if (imageData.IsDistroless)
+            if (isDistroless)
             {
                 outputHelper.WriteLine($"Actual Packages: [ {string.Join(", ", actualPackages)} ]");
                 Assert.Equal(expectedPackages, actualPackages);
                 return;
             }
 
-            // Verify we have all of the .NET dependencies on non-distroless images
+            // Verify satisfy .NET dependencies on non-distroless images.
+            // There will be additional packages from the distro.
             IEnumerable<string> missingPackages = expectedPackages.Except(actualPackages);
             if (missingPackages.Any())
             {
                 outputHelper.WriteLine($"Missing packages: [ {string.Join(", ", missingPackages)} ]");
             }
+
             Assert.Empty(missingPackages);
         }
 
-        private static IEnumerable<string> GetInstalledPackages(
+
+        internal static IEnumerable<string> GetInstalledPackages(
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper,
@@ -237,7 +249,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     ?? throw new JsonException($"Unable to parse the output as JSON:{Environment.NewLine}{outputContents}");
         }
 
-        private static IEnumerable<string> GetExpectedPackages(ProductImageData imageData, DotNetImageRepo imageRepo)
+        internal static IEnumerable<string> GetExpectedPackages(ProductImageData imageData, DotNetImageRepo imageRepo)
         {
             IEnumerable<string> expectedPackages = imageData.ImageVariant.HasFlag(DotNetImageVariant.AOT)
                 ? GetAotDepsPackages(imageData)

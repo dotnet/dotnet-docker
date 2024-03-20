@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public abstract class ImageData
+    public abstract record ImageData
     {
         private readonly List<string> _pulledImages = new List<string>();
 
