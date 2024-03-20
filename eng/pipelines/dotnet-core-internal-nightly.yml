@@ -18,13 +18,17 @@ parameters:
 
 resources:
   repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
   - repository: InternalVersionsRepo
     type: github
     endpoint: dotnet
     name: dotnet/dotnet-docker-internal
 
 variables:
-- template: variables/internal-core.yml
+- template: /eng/pipelines/variables/internal-core.yml@self
 - name: officialBranches
   # comma-delimited list of branch names
   value: internal/release/nightly
@@ -39,11 +43,19 @@ variables:
   - name: publishRepoPrefix
     value: internal/private/
 
-stages:
-- template: stages/build-test-publish-repo.yml
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
-    internalProjectName: ${{ variables.internalProjectName }}
-    publicProjectName: ${{ variables.publicProjectName }}
-    linuxAmd64Pool:
-      name: NetCore1ESPool-Svc-Internal
-      demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
+    pool:
+      name: NetCore1ESPool-Internal
+      image: 1es-windows-2022
+      os: windows
+    sdl:
+      sourceRepositoriesToScan:
+        include:
+        - repository: InternalVersionsRepo
+    stages:
+    - template: /eng/pipelines/stages/build-test-publish-repo.yml@self
+      parameters:
+        internalProjectName: ${{ variables.internalProjectName }}
+        publicProjectName: ${{ variables.publicProjectName }}
