@@ -19,7 +19,6 @@ FROM {{installerImageTag}} AS installer
 {{InsertTemplate("Dockerfile.linux.install-aspire-dashboard", [ "is-zip": "true" ])}}
 
 
-
 # Aspire Dashboard image
 FROM {{aspnetBaseTag}}
 
