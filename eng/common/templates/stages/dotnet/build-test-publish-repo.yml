@@ -93,8 +93,11 @@ stages:
         name: Docker-Linux-Arm-Internal
 
     # Windows Server 2016
-    # TODO: Update this to 1ES-compatible pool
-    windows2016Pool: Docker-2016-${{ variables['System.TeamProject'] }}
+    windows2016Pool:
+      os: windows
+      name: Docker-2016-${{ variables['System.TeamProject'] }}
+      ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        image: Server2016-NESDockerBuilds-PT
 
     # Windows Server 2019 (1809)
     ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
