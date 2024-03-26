@@ -38,4 +38,3 @@ jobs:
       $(additionalGenerateBuildMatrixOptions)
     displayName: Generate ${{ parameters.matrixType }} Matrix
     name: matrix
-  - template: /eng/common/templates/steps/cleanup-docker-linux.yml@self

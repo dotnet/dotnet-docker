@@ -1,7 +1,7 @@
 parameters:
   setupImageBuilder: true
   setupTestRunner: false
-  cleanupDocker: true
+  cleanupDocker: false
   condition: true
 
 steps:
