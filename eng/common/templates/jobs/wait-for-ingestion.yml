@@ -24,4 +24,3 @@ jobs:
     parameters:
       commitDigest: $(readmeCommitDigest)
       condition: and(succeeded(), ne(variables['readmeCommitDigest'], ''))
-  - template: ../steps/cleanup-docker-linux.yml

@@ -16,4 +16,3 @@ jobs:
       additionalOptions: ${{ parameters.additionalOptions }}
       publicProjectName: ${{ parameters.publicProjectName }}
       continueOnError: true
-  - template: /eng/common/templates/steps/cleanup-docker-linux.yml@self
