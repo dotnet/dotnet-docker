@@ -2,13 +2,15 @@ parameters:
   dockerClientOS: null
   architecture: "*"
   validationMode: "all"
-  
+
 steps:
   - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
+    parameters:
+      # Get some disk space back, pipeline run time is not a concern here
+      cleanupDocker: true
   - powershell: >
       ./tests/performance/Validate-ImageSize.ps1
       -ImageBuilderCustomArgs "--architecture '${{ parameters.architecture }}'"
       -ValidationMode:${{ parameters.validationMode }}
       -PullImages
     displayName: Run Image Size Tests
-  - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
