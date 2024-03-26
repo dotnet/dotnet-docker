@@ -364,11 +364,12 @@ namespace Microsoft.DotNet.Docker.Tests
                         "prebuilt-ca-certificates",
                         "tzdata"
                     },
-                { OS: OS.JammyChiseled } => new[]
+                { OS: string os } when os.Contains(OS.ChiseledSuffix) => new[]
                     {
                         "base-files"
                     },
-                _ => throw new NotSupportedException()
+                _ => throw new NotSupportedException(
+                    $"OS {imageData.OS} does not have distroless base packages defined in tests")
             };
 
         private static IEnumerable<string> GetAotDepsPackages(ProductImageData imageData) => imageData switch
@@ -402,7 +403,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-libs",
                         "zlib"
                     },
-                { OS: string os } when os.Contains(OS.Jammy) => new[]
+                { OS: string os } when os.Contains(OS.Jammy) || os.Contains(OS.Noble) => new[]
                     {
                         "ca-certificates",
                         "libc6",
@@ -447,7 +448,8 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libssl1.1",
                         "zlib1g"
                     },
-                _ => throw new NotSupportedException()
+                _ => throw new NotSupportedException(
+                        $"OS {imageData.OS} does not have Runtime Deps AOT packages defined in tests")
             };
 
         private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
@@ -464,7 +466,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "icu",
                         "tzdata"
                     },
-                { OS: OS.JammyChiseled } => new[]
+                { OS: string os } when os.Contains(OS.ChiseledSuffix) => new[]
                     {
                         "libicu70",
                         "tzdata"
