@@ -17,10 +17,8 @@ app.MapGet("/releases", async () => await ReleaseReport.Generator.MakeReportAsyn
 app.Run();
 
 
-[JsonSourceGenerationOptions(
-    GenerationMode = JsonSourceGenerationMode.Serialization,
-    PropertyNamingPolicy = JsonKnownNamingPolicy.KebabCaseLower
-)][JsonSerializable(typeof(ReportJson.Report))]
+[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.KebabCaseLower)]
+[JsonSerializable(typeof(ReportJson.Report))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 }

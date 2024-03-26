@@ -5,7 +5,7 @@ parameters:
 
 steps:
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: init-docker-windows.yml
+  - template: /eng/common/templates/steps/init-docker-windows.yml@self
     parameters:
       setupImageBuilder: false
       condition: ${{ parameters.condition }}
@@ -29,12 +29,12 @@ steps:
   displayName: Cleanup Old Test Results
   condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: ../steps/download-build-artifact.yml
+  - template: /eng/common/templates/steps/download-build-artifact.yml@self
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
       artifactName: image-info
       condition: ${{ parameters.condition }}
-- template: parse-test-arg-arrays.yml
+- template: /eng/common/templates/steps/parse-test-arg-arrays.yml@self
 - powershell: >
     $(test.init);
     $(testScriptPath)
@@ -59,6 +59,6 @@ steps:
     publishRunAttachments: true
     testRunTitle: $(productVersion) $(osVersionsDisplayName) amd64
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: cleanup-docker-windows.yml
+  - template: /eng/common/templates/steps/cleanup-docker-windows.yml@self
     parameters:
       condition: ${{ parameters.condition }}

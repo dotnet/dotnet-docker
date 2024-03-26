@@ -83,10 +83,7 @@ public static class Generator
 
 }
 
-[JsonSourceGenerationOptions(
-    GenerationMode = JsonSourceGenerationMode.Metadata,
-    PropertyNamingPolicy = JsonKnownNamingPolicy.KebabCaseLower
-)]
+[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.KebabCaseLower)]
 [JsonSerializable(typeof(ReleaseIndex))]
 internal partial class ReleaseJsonSerializerContext : JsonSerializerContext
 {

@@ -1,6 +1,6 @@
 variables:
-- template: docker-images.yml
-- template: common-paths.yml
+- template: /eng/common/templates/variables/docker-images.yml@self
+- template: /eng/common/templates/variables/common-paths.yml@self
 - name: stagingRepoPrefix
   value: build-staging/$(sourceBuildId)/
 - name: publishReadme
@@ -9,8 +9,10 @@ variables:
   value: true
 - name: ingestKustoImageInfo
   value: true
+  # CG is disabled by default because projects are built within Dockerfiles and CG step do not scan artifacts
+  # that are built within Dockerfiles. A separate CG pipeline exists for this reason.
 - name: skipComponentGovernanceDetection
-  value: true
+  value: false
 - name: build.imageBuilderDockerRunExtraOptions
   value: ""
 - name: imageBuilderDockerRunExtraOptions

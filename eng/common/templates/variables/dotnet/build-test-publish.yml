@@ -1,7 +1,7 @@
 # Common variables for building/testing/publishing in the .NET team's pipelines
 
 variables:
-- template: common.yml
+- template: /eng/common/templates/variables/dotnet/common.yml@self
 
 - name: commonVersionsImageInfoPath
   value: build-info/docker

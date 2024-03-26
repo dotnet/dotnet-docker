@@ -1,0 +1,17 @@
+# This job builds all projects in the repository. It is intended to be used for CG purposes.
+# The 1ES CG step does not scan artifacts that are built within Dockerfiles therefore they
+# need to be built outside of Dockerfiles.
+jobs:
+- job: BuildProjects
+  displayName: Build Projects
+  pool:
+    name: NetCore1ESPool-Internal
+    image: 1es-ubuntu-2204
+    os: linux
+  steps:
+  - powershell: >
+      ./eng/common/Install-DotNetSdk.ps1 /usr/share/.dotnet
+    displayName: Run Dotnet Install Script
+  - script: >
+      find . -name '*.csproj' | grep $(cgBuildGrepArgs) | xargs -n 1 /usr/share/.dotnet/dotnet build
+    displayName: Build Projects

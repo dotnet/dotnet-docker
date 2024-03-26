@@ -23,29 +23,33 @@ jobs:
       value: $[ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') ]
   - ${{ parameters.customPublishVariables }}
   steps:
-  - template: ../steps/retain-build.yml
-  - template: ../steps/init-docker-linux.yml
+  - template: /eng/common/templates/steps/retain-build.yml@self
+  - template: /eng/common/templates/steps/init-docker-linux.yml@self
   - pwsh: |
       $azdoOrgName = Split-Path -Leaf $Env:SYSTEM_COLLECTIONURI
       echo "##vso[task.setvariable variable=azdoOrgName]$azdoOrgName"
     displayName: Set Publish Variables
   - ${{ parameters.customInitSteps }}
-  - template: ../steps/validate-branch.yml
+  - template: /eng/common/templates/steps/validate-branch.yml@self
     parameters:
       internalProjectName: ${{ parameters.internalProjectName }}
-  - template: ../steps/download-build-artifact.yml
+  - template: /eng/common/templates/steps/download-build-artifact.yml@self
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
       artifactName: image-info
-  - template: ../steps/set-image-info-path-var.yml
+  - template: /eng/common/templates/steps/set-image-info-path-var.yml@self
     parameters:
       publicSourceBranch: $(publicSourceBranch)
-  - template: ../steps/set-dry-run.yml
+  - template: /eng/common/templates/steps/set-dry-run.yml@self
   - script: echo $(sourceBuildId) > $(Build.ArtifactStagingDirectory)/source-build-id.txt
     displayName: Write Source Build ID to File
-  - publish: $(Build.ArtifactStagingDirectory)/source-build-id.txt
-    artifact: source-build-id
-    displayName: Publish Source Build ID Artifact
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(Build.ArtifactStagingDirectory)/source-build-id.txt
+      artifactName: source-build-id
+      displayName: Publish Source Build ID Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
   - script: echo "##vso[task.setvariable variable=imageQueueTime]$(date --rfc-2822)"
     displayName: Set Publish Variables
   - script: >
@@ -79,16 +83,20 @@ jobs:
       $(imageBuilder.pathArgs)
       $(imageBuilder.commonCmdArgs)
     displayName: Publish Manifest
-  - publish: $(Build.ArtifactStagingDirectory)/image-info.json
-    artifact: image-info-final-$(System.JobAttempt)
-    displayName: Publish Image Info File Artifact
-  - template: ../steps/wait-for-mcr-image-ingestion.yml
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(Build.ArtifactStagingDirectory)/image-info.json
+      artifactName: image-info-final-$(System.JobAttempt)
+      displayName: Publish Image Info File Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+  - template: /eng/common/templates/steps/wait-for-mcr-image-ingestion.yml@self
     parameters:
       imageInfoPath: '$(artifactsPath)/image-info.json'
       minQueueTime: $(imageQueueTime)
       dryRunArg: $(dryRunArg)
       condition: succeeded()
-  - template: ../steps/publish-readmes.yml
+  - template: /eng/common/templates/steps/publish-readmes.yml@self
     parameters:
       dryRunArg: $(dryRunArg)
       condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
@@ -146,4 +154,4 @@ jobs:
       $(imageBuilder.commonCmdArgs)
     displayName: Post Publish Notification
     condition: and(always(), eq(variables['publishNotificationsEnabled'], 'true'))
-  - template: ../steps/cleanup-docker-linux.yml
+  - template: /eng/common/templates/steps/cleanup-docker-linux.yml@self

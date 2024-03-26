@@ -1,5 +1,7 @@
 parameters:
   pool: {}
+  internalProjectName: null
+  publicProjectName: null
 
 jobs:
 - job: Build
@@ -8,8 +10,8 @@ jobs:
     imageInfosSubDir: "/image-infos"
     sbomSubDir: "/sbom"
   steps:
-  - template: ../steps/init-docker-linux.yml
-  - template: ../steps/download-build-artifact.yml
+  - template: /eng/common/templates/steps/init-docker-linux.yml@self
+  - template: /eng/common/templates/steps/download-build-artifact.yml@self
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
   - powershell: |
@@ -23,7 +25,7 @@ jobs:
       New-Item -ItemType Directory -Path $(Build.ArtifactStagingDirectory)$(sbomSubDir)
       Get-ChildItem -Directory -Filter "*-sboms" $(Build.ArtifactStagingDirectory) |
         ForEach-Object {
-          Get-ChildItem $_ -Directory | Move-Item -Verbose -Destination $(Build.ArtifactStagingDirectory)$(sbomSubDir)
+          Get-ChildItem $_ -Directory | Move-Item -Force -Verbose -Destination $(Build.ArtifactStagingDirectory)$(sbomSubDir)
         }
     displayName: Consolidate SBOMs to Single Directory
   - powershell: |
@@ -53,9 +55,17 @@ jobs:
       $(artifactsPath)$(imageInfosSubDir)/image-info.json
       $(manifestVariables)
     displayName: Merge Image Info Files
-  - publish: $(Build.ArtifactStagingDirectory)$(sbomSubDir)
-    artifact: sboms
-    displayName: Publish SBOM Artifact
-  - publish: $(Build.ArtifactStagingDirectory)$(imageInfosSubDir)/image-info.json
-    artifact: image-info
-    displayName: Publish Image Info File Artifact
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(Build.ArtifactStagingDirectory)$(sbomSubDir)
+      artifactName: sboms
+      displayName: Publish SBOM Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(Build.ArtifactStagingDirectory)$(imageInfosSubDir)/image-info.json
+      artifactName: image-info
+      displayName: Publish Image Info File Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}

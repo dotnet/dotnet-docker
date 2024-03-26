@@ -1,5 +1,5 @@
 variables:
-- template: ../../common/templates/variables/dotnet/build-test-publish.yml
+- template: /eng/common/templates/variables/dotnet/build-test-publish.yml@self
 
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
   - group: AzureDevOps-Artifact-Feeds-Pats

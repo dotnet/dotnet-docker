@@ -5,7 +5,7 @@ parameters:
   condition: true
 
 steps:
-- template: init-common.yml
+- template: /eng/common/templates/steps/init-common.yml@self
   parameters:
     condition: ${{ parameters.condition }}
 - script: echo "##vso[task.setvariable variable=artifactsPath]/artifacts"
@@ -16,7 +16,7 @@ steps:
   # Cleanup Docker Resources
   ################################################################################
 - ${{ if eq(parameters.cleanupDocker, 'true') }}:
-  - template: cleanup-docker-linux.yml
+  - template: /eng/common/templates/steps/cleanup-docker-linux.yml@self
     parameters:
       condition: ${{ parameters.condition }}
 

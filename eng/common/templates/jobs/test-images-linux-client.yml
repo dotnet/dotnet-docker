@@ -19,7 +19,7 @@ jobs:
   pool: ${{ parameters.pool }}
   timeoutInMinutes: ${{ parameters.testJobTimeout }}
   steps:
-  - template: ../steps/test-images-linux-client.yml
+  - template: /eng/common/templates/steps/test-images-linux-client.yml@self
     parameters:
       preBuildValidation: ${{ parameters.preBuildValidation }}
       internalProjectName: ${{ parameters.internalProjectName }}

@@ -46,7 +46,7 @@ stages:
 - stage: Build
   condition: and(succeeded(), contains(variables['stages'], 'build'))
   jobs:
-  - template: ../jobs/test-images-linux-client.yml
+  - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
     parameters:
       name: PreBuildValidation
       pool: ${{ parameters.linuxAmd64Pool }}
@@ -64,14 +64,14 @@ stages:
             echo "##vso[task.setvariable variable=osVersions]"
             echo "##vso[task.setvariable variable=architecture]"
           displayName: Initialize Test Variables
-  - template: ../jobs/copy-base-images.yml
+  - template: /eng/common/templates/jobs/copy-base-images.yml@self
     parameters:
       name: CopyBaseImages
       pool: ${{ parameters.linuxAmd64Pool }}
       additionalOptions: "--manifest '$(manifest)' $(imageBuilder.pathArgs) $(manifestVariables)"
       publicProjectName: ${{ parameters.publicProjectName }}
       customInitSteps: ${{ parameters.customCopyBaseImagesInitSteps}}
-  - template: ../jobs/generate-matrix.yml
+  - template: /eng/common/templates/jobs/generate-matrix.yml@self
     parameters:
       matrixType: ${{ parameters.buildMatrixType }}
       name: GenerateBuildMatrix
@@ -80,7 +80,7 @@ stages:
       internalProjectName: ${{ parameters.internalProjectName }}
       internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
       publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
-  - template: ../jobs/build-images.yml
+  - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Linux_amd64
       pool: ${{ parameters.linuxAmd64Pool }}
@@ -93,7 +93,7 @@ stages:
       publicProjectName: ${{ parameters.publicProjectName }}
       internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
       publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
-  - template: ../jobs/build-images.yml
+  - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Linux_arm64
       pool: ${{ parameters.linuxArm64Pool }}
@@ -106,7 +106,7 @@ stages:
       publicProjectName: ${{ parameters.publicProjectName }}
       internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
       publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
-  - template: ../jobs/build-images.yml
+  - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Linux_arm32
       pool: ${{ parameters.linuxArm32Pool }}
@@ -119,7 +119,7 @@ stages:
       publicProjectName: ${{ parameters.publicProjectName }}
       internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
       publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
-  - template: ../jobs/build-images.yml
+  - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Windows1809_amd64
       pool: ${{ parameters.windows1809Pool }}
@@ -132,7 +132,7 @@ stages:
       publicProjectName: ${{ parameters.publicProjectName }}
       internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
       publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
-  - template: ../jobs/build-images.yml
+  - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Windows2022_amd64
       pool: ${{ parameters.windows2022Pool }}
@@ -145,7 +145,7 @@ stages:
       publicProjectName: ${{ parameters.publicProjectName }}
       internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
       publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
-  - template: ../jobs/build-images.yml
+  - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: WindowsLtsc2016_amd64
       pool: ${{ parameters.windows2016Pool }}
@@ -166,9 +166,11 @@ stages:
   dependsOn: Build
   condition: and(succeeded(), contains(variables['stages'], 'build'))
   jobs:
-  - template: ../jobs/post-build.yml
+  - template: /eng/common/templates/jobs/post-build.yml@self
     parameters:
       pool: ${{ parameters.linuxAmd64Pool }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
 
 ################################################################################
 # Test Images
@@ -187,7 +189,7 @@ stages:
               contains(variables['stages'], 'build')),
             not(contains(variables['stages'], 'build')))))"
     jobs:
-    - template: ../jobs/generate-matrix.yml
+    - template: /eng/common/templates/jobs/generate-matrix.yml@self
       parameters:
         matrixType: ${{ parameters.testMatrixType }}
         name: GenerateTestMatrix
@@ -196,8 +198,7 @@ stages:
         isTestStage: true
         internalProjectName: ${{ parameters.internalProjectName }}
         publicProjectName: ${{ parameters.publicProjectName }}
-
-    - template: ../jobs/test-images-linux-client.yml
+    - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
       parameters:
         name: Linux_amd64
         pool: ${{ parameters.linuxAmd64Pool }}
@@ -205,7 +206,7 @@ stages:
         testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
-    - template: ../jobs/test-images-linux-client.yml
+    - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
       parameters:
         name: Linux_arm64
         pool: ${{ parameters.linuxArm64Pool }}
@@ -213,7 +214,7 @@ stages:
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
-    - template: ../jobs/test-images-linux-client.yml
+    - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
       parameters:
         name: Linux_arm32
         pool: ${{ parameters.linuxArm32Pool }}
@@ -221,7 +222,7 @@ stages:
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
-    - template: ../jobs/test-images-windows-client.yml
+    - template: /eng/common/templates/jobs/test-images-windows-client.yml@self
       parameters:
         name: Windows1809_amd64
         pool: ${{ parameters.windows1809Pool }}
@@ -229,7 +230,7 @@ stages:
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
-    - template: ../jobs/test-images-windows-client.yml
+    - template: /eng/common/templates/jobs/test-images-windows-client.yml@self
       parameters:
         name: Windows2022_amd64
         pool: ${{ parameters.windows2022Pool }}
@@ -237,7 +238,7 @@ stages:
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
-    - template: ../jobs/test-images-windows-client.yml
+    - template: /eng/common/templates/jobs/test-images-windows-client.yml@self
       parameters:
         name: WindowsLtsc2016_amd64
         pool: ${{ parameters.windows2016Pool }}
@@ -284,7 +285,7 @@ stages:
               contains(variables['stages'], 'build'),
               contains(variables['stages'], 'test'))))))"
   jobs:
-  - template: ../jobs/publish.yml
+  - template: /eng/common/templates/jobs/publish.yml@self
     parameters:
       pool: ${{ parameters.linuxAmd64Pool }}
       internalProjectName: ${{ parameters.internalProjectName }}

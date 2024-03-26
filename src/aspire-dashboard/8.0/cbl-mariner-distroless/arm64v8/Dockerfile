@@ -19,7 +19,7 @@ RUN dotnet_aspire_version=8.0.0-preview.5.24157.3 \
 
 
 # Aspire Dashboard image
-FROM $REPO:8.0.3-cbl-mariner2.0-distroless-arm64v8
+FROM $REPO:8.0.3-cbl-mariner2.0-distroless-extra-arm64v8
 
 WORKDIR /app
 COPY --from=installer /app .

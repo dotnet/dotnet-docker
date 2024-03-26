@@ -10,33 +10,55 @@ schedules:
     - nightly
   always: true
 
-variables:
-- template: ../common/templates/variables/common.yml
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
 
-jobs:
-- job: ScanImages
-  displayName: Scan Images
-  pool:
-    vmImage: $(defaultLinuxAmd64PoolImage)
-  strategy:
-      matrix:
-        amd64:
-          arch: amd64
-        arm32:
-          arch: arm
-        arm64:
-          arch: arm64
-  steps:
-  - template: ../common/templates/steps/init-docker-linux.yml
-  - script: >
-      $(runImageBuilderCmd) pullImages
-      --architecture '$(arch)'
-      --manifest 'manifest.json'
-      --output-var 'pulledImages'
-    displayName: Pull Images
-    name: PullImages
-  - task: ComponentGovernanceComponentDetection@0
-    inputs:
-      dockerImagesToScan: $(PullImages.pulledImages)
-    displayName: Detect Components
-  - template: ../common/templates/steps/cleanup-docker-linux.yml
+variables:
+- template: /eng/common/templates/variables/common.yml@self
+- name: ComponentDetection.Timeout
+  value: 3600 # 1 hour in seconds
+
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: NetCore1ESPool-Internal
+      image: 1es-ubuntu-2204
+      os: linux
+    sdl:
+      sourceAnalysisPool:
+        name: NetCore1ESPool-Internal
+        image: 1es-windows-2022
+        os: windows
+    stages:
+    - stage: cg
+      displayName: CG Detection (Docker Images)
+      jobs:
+      - job: ScanImages
+        displayName: Scan Images
+        strategy:
+            matrix:
+              amd64:
+                arch: amd64
+              arm32:
+                arch: arm
+              arm64:
+                arch: arm64
+        steps:
+        - template: /eng/common/templates/steps/init-docker-linux.yml@self
+        - script: >
+            $(runImageBuilderCmd) pullImages
+            --architecture '$(arch)'
+            --manifest 'manifest.json'
+            --output-var 'pulledImages'
+          displayName: Pull Images
+          name: PullImages
+        - task: ComponentGovernanceComponentDetection@0
+          inputs:
+            dockerImagesToScan: $(PullImages.pulledImages)
+          displayName: Detect Components
+        - template: /eng/common/templates/steps/cleanup-docker-linux.yml@self

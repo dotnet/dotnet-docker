@@ -75,9 +75,9 @@ jobs:
       }
       echo "##vso[task.setvariable variable=baseContainerRepoPath]$baseContainerRepoPath"
     displayName: Set Base Container Repo Path
-  - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
+  - template: /eng/common/templates/jobs/${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}@self
   - ${{ parameters.customInitSteps }}
-  - template: ../steps/set-image-info-path-var.yml
+  - template: /eng/common/templates/steps/set-image-info-path-var.yml@self
     parameters:
       publicSourceBranch: $(publicSourceBranch)
   - powershell: echo "##vso[task.setvariable variable=imageBuilderBuildArgs]"
@@ -121,9 +121,13 @@ jobs:
       $(imageBuilderBuildArgs)
     name: BuildImages
     displayName: Build Images
-  - publish: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
-    artifact: $(legName)-image-info-$(System.JobAttempt)
-    displayName: Publish Image Info File Artifact
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
+      artifactName: $(legName)-image-info-$(System.JobAttempt)
+      displayName: Publish Image Info File Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
   - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
       # Define the task here to load it into the agent so that we can invoke the tool manually
       # TODO: Revert the build-specific pinned version when https://github.com/dotnet/docker-tools/issues/1152 is fixed
@@ -135,14 +139,19 @@ jobs:
     - powershell: |
         $images = "$(BuildImages.builtImages)"
         if (-not $images) { return 0 }
+
         # There can be leftover versions of the task left on the agent if it's not fresh. So find the latest version.
         $taskDir = $(Get-ChildItem -Recurse -Directory -Filter "ManifestGeneratorTask*" -Path '$(Agent.WorkFolder)')[-1].FullName
-        $manifestToolDllPath = $(Get-ChildItem -Recurse -File -Filter "Microsoft.ManifestTool.dll" -Path $taskDir).FullName
+
+        # There may be multiple version directories within the task directory. Use the latest.
+        $taskVersionDir = $(Get-ChildItem -Directory $taskDir | Sort-Object)[-1].FullName
+
+        $manifestToolDllPath = $(Get-ChildItem -Recurse -File -Filter "Microsoft.ManifestTool.dll" -Path $taskVersionDir).FullName
 
         # Check whether the manifest task installed its own version of .NET.
         # To be more robust, we'll handle varying implementations that it's had.
         # First check for a dotnet folder in the task location
-        $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "dotnet-*" -Path $taskDir).FullName
+        $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "dotnet-*" -Path $taskVersionDir).FullName
         if (-not $dotnetDir) {
           # If it's not there, check in the agent tools location
           $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "*dotnet-*" -Path "$(Agent.ToolsDirectory)").FullName
@@ -177,12 +186,16 @@ jobs:
       displayName: Generate SBOMs
       condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-    - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
+    - template: /eng/common/templates/jobs/${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}@self
       parameters:
         condition: ne(variables.testScriptPath, '')
-  - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
+  - template: /eng/common/templates/jobs/${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}@self
   - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-    - publish: $(sbomDirectory)
-      artifact: $(legName)-sboms
-      displayName: Publish SBOM
-      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
+    - template: /eng/common/templates/steps/publish-artifact.yml@self
+      parameters:
+        path: $(sbomDirectory)
+        artifactName: $(legName)-sboms
+        displayName: Publish SBOM
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publicProjectName: ${{ parameters.publicProjectName }}
+        condition: ne(variables['BuildImages.builtImages'], '')

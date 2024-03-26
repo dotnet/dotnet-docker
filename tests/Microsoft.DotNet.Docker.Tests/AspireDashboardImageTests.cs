@@ -55,7 +55,14 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
     [LinuxImageTheory]
     [MemberData(nameof(GetImageData))]
     public void VerifyInstalledPackages(ProductImageData imageData)
-        => RuntimeDepsImageTests.VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper, [ AppPath ]);
+    {
+        // Aspire Dashboard image is based on an "extra" image, but doesn't have the "extra" qualifier itself, so we
+        // need to make sure we compare the correct lists of packages.
+        IEnumerable<string> expectedPackages = GetExpectedPackages(imageData with { ImageVariant = DotNetImageVariant.Extra }, ImageRepo);
+        IEnumerable<string> actualPackages = GetInstalledPackages(imageData, ImageRepo, DockerHelper, [ AppPath ]);
+
+        ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, OutputHelper);
+    }
 
     [LinuxImageTheory]
     [MemberData(nameof(GetImageData))]

@@ -3,7 +3,7 @@ parameters:
   condition: true
 
 steps:
-- template: init-common.yml
+- template: /eng/common/templates/steps/init-common.yml@self
   parameters:
     condition: ${{ parameters.condition }}
 - powershell: echo "##vso[task.setvariable variable=artifactsPath]$(Build.ArtifactStagingDirectory)"
@@ -13,7 +13,7 @@ steps:
   ################################################################################
   # Cleanup Docker Resources
   ################################################################################
-- template: cleanup-docker-windows.yml
+- template: /eng/common/templates/steps/cleanup-docker-windows.yml@self
   parameters:
     condition: ${{ parameters.condition }}
 
