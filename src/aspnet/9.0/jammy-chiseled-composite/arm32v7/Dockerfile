@@ -21,7 +21,7 @@ FROM $REPO:9.0.0-preview.4-jammy-chiseled-arm32v7
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=9.0.0-preview.4.24173.6 \
+    DOTNET_VERSION=9.0.0-preview.4.24174.6 \
     # ASP.NET Core version
     ASPNET_VERSION=9.0.0-preview.4.24173.3
 
