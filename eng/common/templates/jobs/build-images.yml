@@ -26,6 +26,8 @@ jobs:
     imageBuilderDockerRunExtraOptions: $(build.imageBuilderDockerRunExtraOptions)
     versionsRepoPath: versions
     sbomDirectory: $(Build.ArtifactStagingDirectory)/sbom
+    imageInfoHostDir: $(Build.ArtifactStagingDirectory)/imageInfo
+    imageInfoContainerDir: $(artifactsPath)/imageInfo
     ${{ if eq(parameters.noCache, false) }}:
       versionsBasePath: $(versionsRepoPath)/
       pipelineDisabledCache: false
@@ -76,6 +78,8 @@ jobs:
       echo "##vso[task.setvariable variable=baseContainerRepoPath]$baseContainerRepoPath"
     displayName: Set Base Container Repo Path
   - template: /eng/common/templates/jobs/${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}@self
+    parameters:
+      cleanupDocker: true
   - ${{ parameters.customInitSteps }}
   - template: /eng/common/templates/steps/set-image-info-path-var.yml@self
     parameters:
@@ -90,7 +94,8 @@ jobs:
       # to escape the single quotes that are in the string which would need to be done outside the context of PowerShell. Since
       # all we need is for that value to be in a PowerShell variable, we can get that by the fact that AzDO automatically creates
       # the environment variable for us.
-      $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(artifactsPath)/$(legName)-image-info.json"
+      New-Item -Path $(imageInfoHostDir) -ItemType Directory -Force
+      $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(imageInfoContainerDir)/$(legName)-image-info.json"
       if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}" -and $env:BUILD_REASON -ne "PullRequest") {
         $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push --registry-creds ""$(acr.server)=$(acr.userName);$(acr.password)"""
       }
@@ -123,7 +128,7 @@ jobs:
     displayName: Build Images
   - template: /eng/common/templates/steps/publish-artifact.yml@self
     parameters:
-      path: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
+      path: $(imageInfoHostDir)
       artifactName: $(legName)-image-info-$(System.JobAttempt)
       displayName: Publish Image Info File Artifact
       internalProjectName: ${{ parameters.internalProjectName }}
@@ -181,7 +186,7 @@ jobs:
             -PackageVersion '$(Build.BuildNumber)' `
             -ManifestDirPath $sbomChildDir `
             -DockerImagesToScan $_ `
-            -Verbosity Information 
+            -Verbosity Information
         }
       displayName: Generate SBOMs
       condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
@@ -189,7 +194,6 @@ jobs:
     - template: /eng/common/templates/jobs/${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}@self
       parameters:
         condition: ne(variables.testScriptPath, '')
-  - template: /eng/common/templates/jobs/${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}@self
   - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
     - template: /eng/common/templates/steps/publish-artifact.yml@self
       parameters:
