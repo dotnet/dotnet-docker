@@ -100,7 +100,7 @@ jobs:
       publicProjectName: ${{ parameters.publicProjectName }}
   - template: /eng/common/templates/steps/wait-for-mcr-image-ingestion.yml@self
     parameters:
-      imageInfoPath: '$(artifactsPath)/image-info.json'
+      imageInfoPath: '$(imageinfoContainerDir)/image-info.json'
       minQueueTime: $(imageQueueTime)
       dryRunArg: $(dryRunArg)
       condition: succeeded()
