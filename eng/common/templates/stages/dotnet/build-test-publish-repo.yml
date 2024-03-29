@@ -100,19 +100,15 @@ stages:
         image: Server2016-NESDockerBuilds-PT
 
     # Windows Server 2019 (1809)
-    ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-      windows1809Pool: Docker-1809-${{ variables['System.TeamProject'] }}
-    ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-      windows1809Pool:
-        name: NetCore1ESPool-Internal
-        image: 1es-windows-2019
-        os: windows
+    windows1809Pool:
+      os: windows
+      name: Docker-1809-${{ variables['System.TeamProject'] }}
+      ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        image: Server2019-1809-NESDockerBuilds-1ESPT
 
     # Windows Server 2022
-    ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-      windows2022Pool: Docker-2022-${{ variables['System.TeamProject'] }}
-    ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-      windows2022Pool:
-        name: NetCore1ESPool-Internal
-        image: 1es-windows-2022
-        os: windows
+    windows2022Pool:
+      os: windows
+      name: Docker-2022-${{ variables['System.TeamProject'] }}
+      ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        image: Server2022-NESDockerBuilds-1ESPT
