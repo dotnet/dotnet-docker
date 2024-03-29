@@ -7,6 +7,7 @@ steps:
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
   - template: /eng/common/templates/steps/init-docker-windows.yml@self
     parameters:
+      cleanupDocker: true
       setupImageBuilder: false
       condition: ${{ parameters.condition }}
   - powershell: >
@@ -18,7 +19,7 @@ steps:
 - powershell: |
     if ("${{ variables['System.TeamProject'] }}" -eq "${{ parameters.internalProjectName }}" -and "${{ variables['Build.Reason'] }}" -ne "PullRequest") {
       $optionalTestArgs="$optionalTestArgs -PullImages -Registry $env:ACR_SERVER -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info.json"
-    } 
+    }
     if ($env:REPOTESTARGS) {
       $optionalTestArgs += " $env:REPOTESTARGS"
     }
@@ -58,7 +59,3 @@ steps:
     mergeTestResults: true
     publishRunAttachments: true
     testRunTitle: $(productVersion) $(osVersionsDisplayName) amd64
-- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: /eng/common/templates/steps/cleanup-docker-windows.yml@self
-    parameters:
-      condition: ${{ parameters.condition }}
