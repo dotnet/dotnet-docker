@@ -1,6 +1,6 @@
 {
   "variables": {
-    "aspire-dashboard|8.0|build-version": "8.0.0-preview.5.24172.8",
+    "aspire-dashboard|8.0|build-version": "8.0.0-preview.5.24201.1",
     "aspire-dashboard|8.0|product-version": "8.0.0-preview.5",
     "aspire-dashboard|8.0|fixed-tag": "$(aspire-dashboard|8.0|product-version)",
     "aspire-dashboard|8.0|floating-tag": "8.0-preview",
