@@ -142,17 +142,17 @@
     "monitor|8.0|build-version": "8.0.1",
     "monitor|8.0|product-version": "8.0.1",
 
-    "monitor|9.0|build-version": "9.0.0-preview.2.24155.3",
-    "monitor|9.0|product-version": "9.0.0-preview.2",
+    "monitor|9.0|build-version": "9.0.0-preview.4.24201.3",
+    "monitor|9.0|product-version": "9.0.0-preview.4",
 
-    "monitor-base|9.0|linux|x64|sha": "44fb3a0178218d78d735f9a23e25ad15e2af8f002c6ba82e7ae233a0cc6c6ccd78fca6c6f709e2b651efa4be32bf0b38f0cb84b31fa2864af5421a8b44b94f2b",
-    "monitor-base|9.0|linux|arm64|sha": "72cbd329a5546382f4d2be7259c1432bbf89ae1ed47befb4bf86f3d691e3659484ea6c89f0e96129bd226589f3c8da088c1e4649b09a4a3401f7097392520449",
+    "monitor-base|9.0|linux|x64|sha": "b0d120a74f691d7acc4d5172cbc7ef757e53c4f1985974a743c926363f555a56137ddb9ee410e023190cdef417cff754178c77b5ab841cd93edbb6edfaaae76c",
+    "monitor-base|9.0|linux|arm64|sha": "06c878569c46fa5f67bc99fd17ae0851c37c2b63a441c7cd62d2c8f7b2c52bfcd274a8f34042dc942b310a3c77cf72ef34d90cd3b9bab52b0c93d6f80d9a4efb",
 
-    "monitor-ext-azureblobstorage|9.0|linux|x64|sha": "61ceb27e9e25943df06358429c9f6adb3ffb2e3fbd6cc44bc633c50a83d5f33669b63030f4319398310b18cab6084126c44fb9526a9455bde3b46b8a28fa8edb",
-    "monitor-ext-azureblobstorage|9.0|linux|arm64|sha": "52aac118ab06c23ec6bb5a86f8f98195f751bec0dcc4a6668a20c60098467465c4241b488337e0040a4f5c51f29bb5505f6de0d037d83688c4b528d3709bae46",
+    "monitor-ext-azureblobstorage|9.0|linux|x64|sha": "b49db29ea1139a09c0d7c0465b542690209db1feaed59f52866c0f95a0e8d7cc57a68f82d62677b0c2e2899f7e0b3804808f64f3857f0928923fb676c8fef86f",
+    "monitor-ext-azureblobstorage|9.0|linux|arm64|sha": "a542fe38513d9a2524f63f3a153eca8436eb53f0ce5c4712bca1aa5c022bf3dc033f5f85f914d43ce86897850b00d54f33bc2a0539fc9011070721debb0030a2",
 
-    "monitor-ext-s3storage|9.0|linux|x64|sha": "3718d4751f4a0ce61b0d02d2413f2b874eeff9896cf462eb0e10760a455b590c2246275e1589de525e0db84a5850efc78e960d8f8bc4cb2de8a333aa71071ecf",
-    "monitor-ext-s3storage|9.0|linux|arm64|sha": "e5ff562479b48d5ee52de17292c6ddfa048e2e8a7909d48cafcde64e604db4e4e3c5c722fa71368d81565a6903c190fc8c94603b98a6348640f3c480f81e1b9b",
+    "monitor-ext-s3storage|9.0|linux|x64|sha": "0e84fb37e7cfbbf1be97ccc173ba2d4e2998bb6a9383eedc427c3384fd287771c25c8b5e6e03475ed51a47331d697f9db9defcb79170c87a9b6260cf0bc12c7a",
+    "monitor-ext-s3storage|9.0|linux|arm64|sha": "5633e89f4b65cee9f572c8c44a51a7ba43439847f310acbb8f870385862d472c794accaa7dd16f54a93c7535d88dd45b13400d422b2101f00218a2da576af2ad",
 
     "monitor-base|8.0|linux|x64|sha": "014b3530f626aeae0bdf7f9c806808d177d623801f126e927390f13c5be88e1deb6402af72fc54133ee38e08ed66c8bbbffd662c4c68ecce71ed72c94e1ebc0d",
     "monitor-base|8.0|linux|arm64|sha": "7ea89124d4fe58fb83bc74f9c5575d6d924871221f12c8e056538b296eec81ebf32df0b4f24f9fc32b6757e93e40966551c6ab91d0b8c62615775af9141a942d",
