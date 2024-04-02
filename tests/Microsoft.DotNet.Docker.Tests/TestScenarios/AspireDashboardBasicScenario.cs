@@ -41,7 +41,7 @@ public class AspireDashboardBasicScenario : ITestScenario
                 image: _imageTag,
                 name: containerName,
                 detach: true,
-                optionalRunArgs: $"-p {_dashboardWebPort} -e DOTNET_DASHBOARD_INSECURE_ALLOW_ANONYMOUS=true",
+                optionalRunArgs: $"-p {_dashboardWebPort} -e DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=true",
                 skipAutoCleanup: true);
 
             await WebScenario.VerifyHttpResponseFromContainerAsync(
