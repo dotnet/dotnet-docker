@@ -1,10 +1,8 @@
 {{
     _ ARGS:
       top-header: The string to use as the top-level header.
-      readme-host: Moniker of the site that will host the readme ^
-}}
-
-The .NET Aspire Dashboard is a browser-based app to view run-time information about your distributed application.
+      readme-host: Moniker of the site that will host the readme
+}}The .NET Aspire Dashboard is a browser-based app to view run-time information about your distributed application.
 
 The dashboard shows:
 
@@ -12,7 +10,7 @@ The dashboard shows:
 - Live console logs of resources.
 - Live telemetry, such as structured logs, traces and metrics.
 
-### Configuration
+{{ARGS["top-header"]}}# Configuration
 
 The dashboard must be configured when it is started. The configuration is done via environment variables. The following environment variables are supported:
 
@@ -21,7 +19,7 @@ The dashboard must be configured when it is started. The configuration is done v
 - `DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS` specifies the dashboard doesn't use authentication and accepts anonymous access. This setting is a shortcut to configuring `Dashboard:Frontend:AuthMode` and `Dashboard:Otlp:AuthMode` to `Unsecured`.
 - `DOTNET_DASHBOARD_CONFIG_FILE_PATH` specifies the path for an optional JSON configuration file.
 
-#### Frontend authentication
+{{ARGS["top-header"]}}## Frontend authentication
 
 The dashboard's frontend supports OpenID Connect (OIDC). Set `Dashboard__Frontend__AuthMode` to `OpenIdConnect`, then add the following configuration:
 
@@ -32,7 +30,7 @@ The dashboard's frontend supports OpenID Connect (OIDC). Set `Dashboard__Fronten
 
 It may also be run unsecured. Set `Dashboard__Frontend__AuthMode` to `Unsecured`. The frontend endpoint will allow anonymous access. This setting is used during local development, but is not recommended if you attempt to host the dashboard in other settings.
 
-### OTLP authentication
+{{ARGS["top-header"]}}# OTLP authentication
 
 The OTLP endpoint can be secured with [client certificate](https://learn.microsoft.com/aspnet/core/security/authentication/certauth) or API key authentication.
 
@@ -45,7 +43,7 @@ For API key authentication, set `Dashboard__Otlp__AuthMode` to `ApiKey`, then ad
 
 It may also be run unsecured. Set `Dashboard__Otlp__AuthMode` to `Unsecured`. The OTLP endpoint will allow anonymous access. This setting is used during local development, but is not recommended if you attempt to host the dashboard in other settings.
 
-### Resources
+{{ARGS["top-header"]}}# Resources
 
 - `Dashboard__ResourceServiceClient__Url` specifies the gRPC endpoint to which the dashboard connects for its data. There's no default. If this variable is unspecified, the dashboard shows OTEL data but no resource list or console logs.
 
@@ -62,7 +60,7 @@ The resource service client supports certificates. Set `Dashboard__ResourceServi
 
 To opt-out of authentication, set `Dashboard__ResourceServiceClient__AuthMode` to `Unsecured`. This completely disables all security for the resource service client. This setting is used during local development, but is not recommended if you attempt to host the dashboard in other settings.
 
-#### Telemetry Limits
+{{ARGS["top-header"]}}## Telemetry Limits
 
 Telemetry is stored in-memory. To avoid excessive memory usage, the dashboard has limits on the count and size of stored telemetry. When a count limit is reached, new telemetry is added, and the oldest telemetry is removed. When a size limit is reached, data is truncated to the limit.
 
@@ -75,6 +73,6 @@ Telemetry is stored in-memory. To avoid excessive memory usage, the dashboard ha
 
 Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures the dashboard to store up to 10,000 log entries per-resource.
 
-### Other
+{{ARGS["top-header"]}}# Other
 
 - `Dashboard__ApplicationName` specifies the application name to be displayed in the UI. This applies only when no resource service URL is specified. When a resource service exists, the service specifies the application name.
