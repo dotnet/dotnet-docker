@@ -76,20 +76,20 @@ stages:
     linuxArm64Pool:
       os: linux
       hostArchitecture: Arm64
+      image: Mariner-2-Docker-ARM64
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: Docker-Linux-Arm-Public
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-        image: Mariner-2-Docker-ARM64
         name: Docker-Linux-Arm-Internal
 
     # Linux Arm32
     linuxArm32Pool:
       os: linux
       hostArchitecture: Arm64
+      image: Mariner-2-Docker-ARM64
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: Docker-Linux-Arm-Public
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-        image: Mariner-2-Docker-ARM64
         name: Docker-Linux-Arm-Internal
 
     # Windows Server 2016
