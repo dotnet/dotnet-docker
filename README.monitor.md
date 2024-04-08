@@ -75,8 +75,8 @@ Tags | Dockerfile | OS Version
 ##### .NET Monitor Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.2-ubuntu-chiseled-amd64, 9.0-preview-ubuntu-chiseled-amd64, 9.0.0-preview.2-ubuntu-chiseled, 9.0-preview-ubuntu-chiseled, 9.0.0-preview.2, 9.0-preview, 9-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/9.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-9.0.0-preview.2-cbl-mariner-distroless-amd64, 9.0-preview-cbl-mariner-distroless-amd64, 9.0.0-preview.2-cbl-mariner-distroless, 9.0-preview-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/9.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
+9.0.0-preview.3-ubuntu-chiseled-amd64, 9.0-preview-ubuntu-chiseled-amd64, 9.0.0-preview.3-ubuntu-chiseled, 9.0-preview-ubuntu-chiseled, 9.0.0-preview.3, 9.0-preview, 9-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/9.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+9.0.0-preview.3-cbl-mariner-distroless-amd64, 9.0-preview-cbl-mariner-distroless-amd64, 9.0.0-preview.3-cbl-mariner-distroless, 9.0-preview-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/9.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
 8.1.0-alpha.1-ubuntu-chiseled-amd64, 8.1-preview-ubuntu-chiseled-amd64, 8-ubuntu-chiseled-amd64, 8.1.0-alpha.1-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0-alpha.1, 8.1-preview, 8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.1/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 8.1.0-alpha.1-cbl-mariner-distroless-amd64, 8.1-preview-cbl-mariner-distroless-amd64, 8-cbl-mariner-distroless-amd64, 8.1.0-alpha.1-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.1/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0-distroless
 
@@ -97,8 +97,8 @@ Tags | Dockerfile | OS Version
 ##### .NET Monitor Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.2-ubuntu-chiseled-arm64v8, 9.0-preview-ubuntu-chiseled-arm64v8, 9.0.0-preview.2-ubuntu-chiseled, 9.0-preview-ubuntu-chiseled, 9.0.0-preview.2, 9.0-preview, 9-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/9.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-9.0.0-preview.2-cbl-mariner-distroless-arm64v8, 9.0-preview-cbl-mariner-distroless-arm64v8, 9.0.0-preview.2-cbl-mariner-distroless, 9.0-preview-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/9.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
+9.0.0-preview.3-ubuntu-chiseled-arm64v8, 9.0-preview-ubuntu-chiseled-arm64v8, 9.0.0-preview.3-ubuntu-chiseled, 9.0-preview-ubuntu-chiseled, 9.0.0-preview.3, 9.0-preview, 9-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/9.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+9.0.0-preview.3-cbl-mariner-distroless-arm64v8, 9.0-preview-cbl-mariner-distroless-arm64v8, 9.0.0-preview.3-cbl-mariner-distroless, 9.0-preview-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/9.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
 8.1.0-alpha.1-ubuntu-chiseled-arm64v8, 8.1-preview-ubuntu-chiseled-arm64v8, 8-ubuntu-chiseled-arm64v8, 8.1.0-alpha.1-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0-alpha.1, 8.1-preview, 8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.1/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 8.1.0-alpha.1-cbl-mariner-distroless-arm64v8, 8.1-preview-cbl-mariner-distroless-arm64v8, 8-cbl-mariner-distroless-arm64v8, 8.1.0-alpha.1-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.1/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
 
