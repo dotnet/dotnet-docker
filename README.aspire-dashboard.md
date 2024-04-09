@@ -1,13 +1,7 @@
-**IMPORTANT**
-
-**The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
-
-**See [dotnet](https://hub.docker.com/_/microsoft-dotnet-aspire-dashboard/) for images with official releases of [.NET](https://github.com/dotnet/core).**
-
 # Featured Tags
 
 * `8.0-preview` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.0-preview`
+  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:8.0-preview`
 
 # About
 
@@ -97,12 +91,12 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 .NET:
 
 * [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
+* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/): .NET SDK
+* [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/): ASP.NET Core Runtime
+* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
+* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
+* [dotnet/monitor](https://hub.docker.com/_/microsoft-dotnet-monitor/): .NET Monitor Tool
 * [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
-* [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/): .NET SDK (Preview)
-* [dotnet/nightly/aspnet](https://hub.docker.com/_/microsoft-dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime/): .NET Runtime (Preview)
-* [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
-* [dotnet/nightly/monitor](https://hub.docker.com/_/microsoft-dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
 
 .NET Framework:
 
@@ -123,7 +117,7 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-preview.5-arm64v8, 8.0-preview-arm64v8, 8.0.0-preview.5, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspire-dashboard/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0-distroless
 
-You can retrieve a list of all available tags for dotnet/nightly/aspire-dashboard at https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list.
+You can retrieve a list of all available tags for dotnet/aspire-dashboard at https://mcr.microsoft.com/v2/dotnet/aspire-dashboard/tags/list.
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
