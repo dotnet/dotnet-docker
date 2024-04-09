@@ -1522,6 +1522,13 @@
                   "dependencies": [
                     "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-amd64"
+                  ]
                 }
               ]
             },
@@ -1543,6 +1550,13 @@
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):8.0-cbl-mariner2.0-arm64v8"
                   ]
