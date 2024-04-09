@@ -41,7 +41,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            using TestScenario scenario = imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite)
+            using ProjectTemplateTestScenario scenario = imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite)
                 ? new WebScenarioComposite(imageData, DockerHelper, OutputHelper)
                 : new WebScenario(imageData, DockerHelper, OutputHelper);
             await scenario.ExecuteAsync();
@@ -88,7 +88,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyInstalledPackages(ProductImageData imageData)
         {
-            RuntimeDepsImageTests.VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper);
+            ProductImageTests.VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper);
         }
 
         [LinuxImageTheory]

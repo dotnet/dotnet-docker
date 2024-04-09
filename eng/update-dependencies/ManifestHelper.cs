@@ -31,9 +31,15 @@ public static class ManifestHelper
     /// </summary>
     /// <param name="dockerfileVersion">Dockerfile version.</param>
     /// <param name="branch">Name of the branch.</param>
-    public static string GetBaseUrlVariableName(string dockerfileVersion, string branch, string versionSourceName)
+    public static string GetBaseUrlVariableName(string dockerfileVersion, string branch, string? versionSourceName)
     {
-        string version = versionSourceName?.Contains("dotnet-monitor") == true ? $"{dockerfileVersion}-monitor" : dockerfileVersion;
+        string version = versionSourceName switch
+        {
+            string v when v.Contains("dotnet-monitor") => $"{dockerfileVersion}-monitor",
+            string v when v.Contains("aspire-dashboard") => $"{dockerfileVersion}-aspire-dashboard",
+            _ => dockerfileVersion,
+        };
+
         return $"base-url|{version}|{branch}";
     }
 

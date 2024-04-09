@@ -104,16 +104,20 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, OS = OS.Mariner20,           Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20,
+                    ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
+            new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20,
                     ImageVariant = DotNetImageVariant.Composite, SupportedImageRepos = DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20,
-                    ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
+                    ImageVariant = DotNetImageVariant.Composite | DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Aspnet },
 
             new ProductImageData { Version = V8_0, OS = OS.Mariner20,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Arm64,   SdkOS = OS.Mariner20 },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Arm64,   SdkOS = OS.Mariner20,
+                    ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
+            new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Arm64,   SdkOS = OS.Mariner20,
                     ImageVariant = DotNetImageVariant.Composite, SupportedImageRepos = DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V8_0, OS = OS.Mariner20Distroless, Arch = Arch.Arm64,   SdkOS = OS.Mariner20,
-                    ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
+                    ImageVariant = DotNetImageVariant.Composite | DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,        Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Arm64 },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Jammy },
@@ -303,6 +307,26 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         };
 
+        private static readonly ProductImageData[] s_AspireDashboardTestData =
+        {
+            new() {
+                Version = V8_0_Preview,
+                OS = OS.Mariner20Distroless,
+                OSTag = "",
+                OSDir = OS.MarinerDistroless,
+                Arch = Arch.Amd64,
+                SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard,
+            },
+            new() {
+                Version = V8_0_Preview,
+                OS = OS.Mariner20Distroless,
+                OSTag = "",
+                OSDir = OS.MarinerDistroless,
+                Arch = Arch.Arm64,
+                SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard
+            },
+        };
+
         public static IEnumerable<ProductImageData> GetImageData(DotNetImageRepo imageRepo)
         {
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxTestData : s_windowsTestData)
@@ -322,6 +346,20 @@ namespace Microsoft.DotNet.Docker.Tests
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<SampleImageData>();
+        }
+
+        public static IEnumerable<ProductImageData> GetAspireDashboardImageData()
+        {
+            if (!DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                return [];
+            }
+
+            return s_AspireDashboardTestData
+                .FilterImagesByPath(DotNetImageRepo.Aspire_Dashboard)
+                .FilterImagesByArch()
+                .FilterImagesByOs()
+                .Cast<ProductImageData>();
         }
 
         public static IEnumerable<ProductImageData> GetMonitorImageData()

@@ -26,13 +26,15 @@ param(
 
     [string]$ImageInfoPath,
 
-    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor")]
-    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor"),
+    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor", "aspire-dashboard")]
+    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor", "aspire-dashboard"),
 
     [securestring]$SasQueryString,
 
     [securestring]$NuGetFeedPassword
 )
+
+Import-Module -force $PSScriptRoot/../eng/DependencyManagement.psm1
 
 function Log {
     param ([string] $Message)
@@ -112,7 +114,7 @@ Try {
     $env:REPO_PREFIX = $RepoPrefix
     $env:IMAGE_INFO_PATH = $ImageInfoPath
     $env:SOURCE_REPO_ROOT = (Get-Item "$PSScriptRoot").Parent.FullName
-    $env:SOURCE_BRANCH = & $PSScriptRoot/../eng/Get-Branch.ps1
+    $env:SOURCE_BRANCH = Get-Branch
 
     $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
     $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
@@ -131,7 +133,7 @@ Try {
         # Construct an expression that filters the test to each of the
         # selected TestCategories (using an OR operator between each category).
         # See https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests
-        $TestCategories | foreach {
+        $TestCategories | ForEach-Object {
             # Skip pre-build tests on Windows because of missing pre-reqs (https://github.com/dotnet/dotnet-docker/issues/2261)
             if ($_ -eq "pre-build" -and $activeOS -eq "windows") {
                 Write-Warning "Skipping pre-build tests for Windows containers"

@@ -24,10 +24,11 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 * [dotnet/nightly/runtime]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/nightly/runtime" ])}}): .NET Runtime (Preview)
 * [dotnet/nightly/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/nightly/runtime-deps" ])}}): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/nightly/monitor" ])}}): .NET Monitor Tool (Preview)
+* [dotnet/nightly/aspire-dashboard]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/nightly/aspire-dashboard" ])}}): .NET Aspire Dashboard (Preview)
 }}
 {{InsertTemplate("About.md", commonArgs)}}
 
-{{InsertTemplate("Use.md", commonArgs)}}{{if find(REPO, "monitor") < 0:
+{{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "aspire") < 0):
 
 {{InsertTemplate("About.variants.md", commonArgs)}}}}
 

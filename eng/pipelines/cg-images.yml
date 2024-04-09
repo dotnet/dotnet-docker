@@ -50,6 +50,8 @@ extends:
                 arch: arm64
         steps:
         - template: /eng/common/templates/steps/init-docker-linux.yml@self
+          parameters:
+            cleanupDocker: true
         - script: >
             $(runImageBuilderCmd) pullImages
             --architecture '$(arch)'
