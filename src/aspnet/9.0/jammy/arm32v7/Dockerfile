@@ -13,7 +13,7 @@ RUN aspnetcore_version=9.0.0-preview.3.24172.13 \
 
 
 # ASP.NET Core image
-FROM $REPO:9.0.0-preview.3-jammy-arm32v7
+FROM $REPO:9.0.0-preview.2-jammy-arm32v7
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=9.0.0-preview.3.24172.13

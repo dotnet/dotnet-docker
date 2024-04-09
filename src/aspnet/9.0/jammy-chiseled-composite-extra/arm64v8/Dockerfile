@@ -17,7 +17,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # ASP.NET Composite Image
-FROM $REPO:9.0.0-preview.3-jammy-chiseled-extra-arm64v8
+FROM $REPO:9.0.0-preview.2-jammy-chiseled-extra-arm64v8
 
 ENV \
     # .NET Runtime version

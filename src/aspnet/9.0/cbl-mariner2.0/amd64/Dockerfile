@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM $REPO:9.0.0-preview.3-cbl-mariner2.0-amd64 AS installer
+FROM $REPO:9.0.0-preview.2-cbl-mariner2.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
@@ -17,7 +17,7 @@ RUN aspnetcore_version=9.0.0-preview.3.24172.13 \
 
 
 # ASP.NET Core image
-FROM $REPO:9.0.0-preview.3-cbl-mariner2.0-amd64
+FROM $REPO:9.0.0-preview.2-cbl-mariner2.0-amd64
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=9.0.0-preview.3.24172.13

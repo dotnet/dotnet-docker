@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:9.0.0-preview.3-cbl-mariner2.0-amd64 AS installer
+FROM $REPO:9.0.0-preview.2-cbl-mariner2.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
@@ -18,7 +18,7 @@ RUN dotnet_version=9.0.0-preview.3.24172.9 \
 
 
 # .NET runtime image
-FROM $REPO:9.0.0-preview.3-cbl-mariner2.0-amd64
+FROM $REPO:9.0.0-preview.2-cbl-mariner2.0-amd64
 
 # .NET Runtime version
 ENV DOTNET_VERSION=9.0.0-preview.3.24172.9
