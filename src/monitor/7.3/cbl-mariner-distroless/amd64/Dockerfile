@@ -20,7 +20,7 @@ RUN dotnet_monitor_version=7.3.3 \
 
 
 # .NET Monitor image
-FROM $REPO:7.0.17-cbl-mariner2.0-distroless-amd64
+FROM $REPO:7.0.18-cbl-mariner2.0-distroless-amd64
 
 COPY --from=installer ["/app", "/app"]
 
