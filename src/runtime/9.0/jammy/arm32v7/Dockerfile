@@ -14,7 +14,7 @@ RUN dotnet_version=9.0.0-preview.3.24172.9 \
 
 
 # .NET runtime image
-FROM $REPO:9.0.0-preview.2-jammy-arm32v7
+FROM $REPO:9.0.0-preview.3-jammy-arm32v7
 
 # .NET Runtime version
 ENV DOTNET_VERSION=9.0.0-preview.3.24172.9

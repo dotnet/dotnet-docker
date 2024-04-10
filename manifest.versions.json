@@ -102,7 +102,7 @@
     "dotnet|6.0|product-version": "6.0.29",
     "dotnet|7.0|product-version": "7.0.18",
     "dotnet|8.0|product-version": "8.0.4",
-    "dotnet|9.0|product-version": "9.0.0-preview.2",
+    "dotnet|9.0|product-version": "9.0.0-preview.3",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
     "dotnet|9.0|floating-tag": "9.0-preview",
 
