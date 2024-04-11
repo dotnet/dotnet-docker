@@ -16,7 +16,7 @@ RUN apt-get update \
         libc6 \
         libgcc-s1 \
         libicu74 \
-        libssl3 \
+        libssl3t64 \
         libstdc++6 \
         tzdata \
         zlib1g \
