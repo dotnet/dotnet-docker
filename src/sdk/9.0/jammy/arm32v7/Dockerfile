@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:9.0.0-preview.3-jammy-arm32v7
+FROM $REPO:9.0.0-preview.4-jammy-arm32v7
 
 ENV \
     # Do not generate certificate
@@ -7,7 +7,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=9.0.100-preview.3.24204.13 \
+    DOTNET_SDK_VERSION=9.0.100-preview.4.24211.4 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -25,7 +25,7 @@ RUN apt-get update \
 
 # Install .NET SDK
 RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
-    && dotnet_sha512='76e53d9b288ed800b9087d2a3bde25481642d84f133955f57ec69a35f2ef65237c937fc1f0f60b3c2190cd6e34f3bccc71b85fb2c37a08976e82e2d761ec40d0' \
+    && dotnet_sha512='cb709a30027b16b5a524ab71acf6c2d1f3a1ff8a470eec3dd2326238f45eac1c56e002173313fd90844280b9f1ce75d44ffa4ba370f0d55f2bdad312d0cb31c5' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \

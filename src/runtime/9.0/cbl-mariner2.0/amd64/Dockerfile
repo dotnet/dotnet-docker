@@ -1,16 +1,16 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:9.0.0-preview.3-cbl-mariner2.0-amd64 AS installer
+FROM $REPO:9.0.0-preview.4-cbl-mariner2.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.0-preview.3.24172.9 \
+RUN dotnet_version=9.0.0-preview.4.24209.8 \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='244963004ced27054eb1c5473adfa7a0e249cca4def0305e81136e39d00319e5be2c77f687034df7e1f026bf92321332d8904ce93851e215e9c213da105d37db' \
+    && dotnet_sha512='8169485ee7b140845205b17e223179f020747220cb95f698de67f0af1799c7e1413c7cdffd0146e3629613e0e403eb5577b46fde397a972bf62ebfeb54dea665' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -18,10 +18,10 @@ RUN dotnet_version=9.0.0-preview.3.24172.9 \
 
 
 # .NET runtime image
-FROM $REPO:9.0.0-preview.3-cbl-mariner2.0-amd64
+FROM $REPO:9.0.0-preview.4-cbl-mariner2.0-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.0-preview.3.24172.9
+ENV DOTNET_VERSION=9.0.0-preview.4.24209.8
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
