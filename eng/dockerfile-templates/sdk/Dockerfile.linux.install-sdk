@@ -10,7 +10,7 @@
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
+    set isFullAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) || defined(match(OS_VERSION, "^azure-linux\d+\.\d+$")) ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
     set installDir to "/usr/share/dotnet" ^
     set url to cat(
@@ -111,7 +111,7 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
 }}# Install .NET SDK
 RUN {{if ARGS["use-local-version-var"]:sdk_version={{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}} \
 {{
-if isFullMariner:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
+if isFullAzureLinux:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
     aspnet_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
 }}}}{{if ARGS["use-local-version-var"]:    && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
     [
@@ -119,6 +119,6 @@ if isFullMariner:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "
         "skip-download": !downloadEnabled,
         "skip-install": !installEnabled,
         "install-dir": installDir,
-        "create-install-dir": !isFullMariner
+        "create-install-dir": !isFullAzureLinux
     ], "    ")}}{{if !ARGS["is-internal"] || (ARGS["is-rpm-install"] && installEnabled): \
     {{InsertTemplate("Dockerfile.linux.first-run", ["append-cmd": "true"], "    ")}}}}

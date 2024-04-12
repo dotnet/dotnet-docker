@@ -8,7 +8,7 @@
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
-    set isMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
+    set isAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) || defined(match(OS_VERSION, "^azure-linux\d+\.\d+$")) ^
 
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
@@ -18,20 +18,22 @@
             cat(ARCH_VERSIONED, "/debian"),
             when(isUbuntu,
                 "ubuntu.azurecr.io/ubuntu",
-                when(isMariner,
-                    "mcr.microsoft.com/cbl-mariner/base/core",
+                when(isAzureLinux,
+                    when(find(OS_VERSION_NUMBER, "3.0") >= 0, 
+                        "azurelinuxpreview.azurecr.io/public/azurelinux/base/core",
+                        "mcr.microsoft.com/cbl-mariner/base/core"),
                     "<NOT-IMPLEMENTED>")))) ^
-    set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
-    set isRpmInstall to isMariner && dotnetVersion = "6.0" ^
+    set baseImageTag to when(isAlpine || isAzureLinux, OS_VERSION_NUMBER, OS_VERSION) ^
+    set isRpmInstall to isAzureLinux && dotnetVersion = "6.0" ^
     set nonRootUserSupported to dotnetVersion != "6.0" && dotnetVersion != "7.0" ^
-    set isMultiStage to (isRpmInstall && isInternal) || (isMariner && nonRootUserSupported) ^
+    set isMultiStage to (isRpmInstall && isInternal) || (isAzureLinux && nonRootUserSupported) ^
     set firstStageName to when(isRpmInstall, "installer", "base") ^
     set secondStageName to when(isMultiStage && nonRootUserSupported, "installer") ^
     set stagingDir to "/staging" ^
     set createUserHome to is ^
     set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm" ^
-    set utilPkgs to when(isMariner && nonRootUserSupported, ["shadow-utils"], []) ^
+    set utilPkgs to when(isAzureLinux && nonRootUserSupported, ["shadow-utils"], []) ^
     set useGlobalizationInvariantMode to !ARGS["is-extra"] && (isDistroless || isAlpine) ^
     set username to "app" ^
     set uid to 1654 ^
