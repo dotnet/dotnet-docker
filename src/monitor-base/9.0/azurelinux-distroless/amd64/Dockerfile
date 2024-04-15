@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
+FROM azurelinuxpreview.azurecr.io/public/azurelinux/base/core:3.0 AS installer
 
 RUN tdnf install -y \
         ca-certificates \
@@ -20,7 +20,7 @@ RUN dotnet_monitor_version=9.0.0-preview.3.24205.3 \
 
 
 # .NET Monitor Base image
-FROM $REPO:9.0.0-preview.4-azurelinux2.0-distroless-amd64
+FROM $REPO:9.0.0-preview.4-azurelinux3.0-distroless-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
