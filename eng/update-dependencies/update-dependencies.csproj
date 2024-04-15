@@ -12,5 +12,8 @@
     <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="16.205.1" />
     <PackageReference Include="System.Diagnostics.TextWriterTraceListener" Version="4.3.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20574.7" />
+
+    <!-- Workaround for CVE-2024-0056 introduced as a transient dependency of Microsoft.TeamFoundationServer.Client -->
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 </Project>
