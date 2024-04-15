@@ -1,7 +1,7 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azure-linux") >= 0 ^
+    set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isFullAzureLinux to isAzureLinux && !isDistroless ^
     set isDistrolessAzureLinux to isAzureLinux && isDistroless ^

@@ -1,7 +1,7 @@
 {{
     set dotnetMajor to split(PRODUCT_VERSION, ".")[0] ^
     set dotnetMajorMinor to cat(dotnetMajor, ".0") ^
-    set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azure-linux") >= 0 ^
+    set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
     set aspnetBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, "-extra", ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^

@@ -8,7 +8,7 @@
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
-    set isAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) || defined(match(OS_VERSION, "^azure-linux\d+\.\d+$")) ^
+    set isAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
 
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^

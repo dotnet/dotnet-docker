@@ -10,7 +10,7 @@
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isFullAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) || defined(match(OS_VERSION, "^azure-linux\d+\.\d+$")) ^
+    set isFullAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
     set installDir to "/usr/share/dotnet" ^
     set url to cat(

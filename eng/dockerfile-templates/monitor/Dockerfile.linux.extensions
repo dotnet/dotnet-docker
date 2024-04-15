@@ -1,7 +1,7 @@
 {{
     set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
     set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azure-linux") >=0 ^
+    set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >=0 ^
     set monitorBaseTagOs to when(isAzureLinux,
         "cbl-mariner-distroless",
         "ubuntu-chiseled") ^
