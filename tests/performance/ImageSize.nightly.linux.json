@@ -313,16 +313,16 @@
     "src/aspnet/9.0/jammy-chiseled-composite-extra/amd64": 141350821,
     "src/aspnet/9.0/jammy-chiseled-composite-extra/arm32v7": 126601326,
     "src/aspnet/9.0/jammy-chiseled-composite-extra/arm64v8": 141804451,
-    "src/aspnet/9.0/azure-linux3.0/amd64": 206003084,
-    "src/aspnet/9.0/azure-linux3.0/arm64v8": 209248436,
-    "src/aspnet/9.0/azure-linux3.0-distroless/amd64": 118908584,
-    "src/aspnet/9.0/azure-linux3.0-distroless/arm64v8": 125111745,
-    "src/aspnet/9.0/azure-linux3.0-distroless-composite/amd64": 112155995,
-    "src/aspnet/9.0/azure-linux3.0-distroless-composite/arm64v8": 112706648,
-    "src/aspnet/9.0/azure-linux3.0-distroless-extra/amd64": 155090332,
-    "src/aspnet/9.0/azure-linux3.0-distroless-extra/arm64v8": 126485392,
-    "src/aspnet/9.0/azure-linux3.0-distroless-composite-extra/amd64": 148896209,
-    "src/aspnet/9.0/azure-linux3.0-distroless-composite-extra/arm64v8": 114650761
+    "src/aspnet/9.0/azurelinux3.0/amd64": 206003084,
+    "src/aspnet/9.0/azurelinux3.0/arm64v8": 209248436,
+    "src/aspnet/9.0/azurelinux3.0-distroless/amd64": 118908584,
+    "src/aspnet/9.0/azurelinux3.0-distroless/arm64v8": 125111745,
+    "src/aspnet/9.0/azurelinux3.0-distroless-composite/amd64": 112155995,
+    "src/aspnet/9.0/azurelinux3.0-distroless-composite/arm64v8": 112706648,
+    "src/aspnet/9.0/azurelinux3.0-distroless-extra/amd64": 155090332,
+    "src/aspnet/9.0/azurelinux3.0-distroless-extra/arm64v8": 126485392,
+    "src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/amd64": 148896209,
+    "src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/arm64v8": 114650761
   },
   "dotnet/nightly/sdk": {
     "src/sdk/6.0/bullseye-slim/amd64": 740085773,
@@ -400,10 +400,10 @@
     "src/sdk/9.0/jammy/arm64v8": 896400197,
     "src/sdk/9.0/jammy-aot/amd64": 1435094738,
     "src/sdk/9.0/jammy-aot/arm64v8": 1404352935,
-    "src/sdk/9.0/azure-linux3.0/amd64": 1192447426,
-    "src/sdk/9.0/azure-linux3.0/arm64v8": 1201391993,
-    "src/sdk/9.0/azure-linux3.0-aot/amd64": 1551916354,
-    "src/sdk/9.0/azure-linux3.0-aot/arm64v8": 1535416587
+    "src/sdk/9.0/azurelinux3.0/amd64": 1192447426,
+    "src/sdk/9.0/azurelinux3.0/arm64v8": 1201391993,
+    "src/sdk/9.0/azurelinux3.0-aot/amd64": 1551916354,
+    "src/sdk/9.0/azurelinux3.0-aot/arm64v8": 1535416587
   },
   "dotnet/nightly/monitor": {
     "src/monitor/6.3/alpine/amd64": 108549128,
@@ -432,8 +432,8 @@
     "src/monitor/8.1/cbl-mariner-distroless/arm64v8": 148117492,
     "src/monitor/9.0/ubuntu-chiseled/amd64": 132608437,
     "src/monitor/9.0/ubuntu-chiseled/arm64v8": 138883775,
-    "src/monitor/9.0/azure-linux-distroless/amd64": 143287803,
-    "src/monitor/9.0/azure-linux-distroless/arm64v8": 149490964
+    "src/monitor/9.0/azurelinux-distroless/amd64": 143287803,
+    "src/monitor/9.0/azurelinux-distroless/arm64v8": 149490964
   },
   "dotnet/nightly/monitor/base": {
     "src/monitor-base/8.0/ubuntu-chiseled/amd64": 119965752,
@@ -446,8 +446,8 @@
     "src/monitor-base/8.1/cbl-mariner-distroless/arm64v8": 140261410,
     "src/monitor-base/9.0/ubuntu-chiseled/amd64": 124507518,
     "src/monitor-base/9.0/ubuntu-chiseled/arm64v8": 130782856,
-    "src/monitor-base/9.0/azure-linux-distroless/amd64": 135186884,
-    "src/monitor-base/9.0/azure-linux-distroless/arm64v8": 141390045
+    "src/monitor-base/9.0/azurelinux-distroless/amd64": 135186884,
+    "src/monitor-base/9.0/azurelinux-distroless/arm64v8": 141390045
   },
   "dotnet/nightly/aspire-dashboard": {
     "src/aspire-dashboard/8.0/cbl-mariner-distroless/amd64": 142036038,
