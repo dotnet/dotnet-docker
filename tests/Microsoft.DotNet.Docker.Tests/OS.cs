@@ -11,6 +11,13 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string Alpine318 = $"{Alpine}3.18";
         public const string Alpine319 = $"{Alpine}3.19";
 
+        // AzureLinux
+        public const string AzureLinux = "azurelinux";
+
+        public const string AzureLinuxDistroless = $"{AzureLinux}-distroless";
+        public const string AzureLinux30 = $"{AzureLinux}2.0";
+        public const string AzureLinux30Distroless = $"{AzureLinux30}-distroless";
+
         // Debian
         public const string Bookworm = "bookworm";
         public const string BookwormSlim = $"{Bookworm}{SlimSuffix}";
