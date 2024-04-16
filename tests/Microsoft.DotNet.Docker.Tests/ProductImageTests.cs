@@ -362,7 +362,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<string> GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
             {
-                { OS: string os } when os.Contains(OS.Mariner) => new[]
+                { OS: string os } when os.Contains(OS.Mariner) || os.Contains(os.AzureLinux) => new[]
                     {
                         "distroless-packages-minimal",
                         "filesystem",
