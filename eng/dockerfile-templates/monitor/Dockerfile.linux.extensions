@@ -18,7 +18,7 @@
 # Installer image
 FROM {{installerImageTag}} AS installer
 {{if isAzureLinux:
-{{InsertTemplate("../Dockerfile.linux.distroless-mariner-installer-prereqs")}}
+{{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
 }}
 # Retrieve .NET Monitor extensions
 {{InsertTemplate("Dockerfile.linux.install-extensions")}}
