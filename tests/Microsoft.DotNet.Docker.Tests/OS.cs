@@ -15,7 +15,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string AzureLinux = "azurelinux";
 
         public const string AzureLinuxDistroless = $"{AzureLinux}-distroless";
-        public const string AzureLinux30 = $"{AzureLinux}2.0";
+        public const string AzureLinux30 = $"{AzureLinux}3.0";
         public const string AzureLinux30Distroless = $"{AzureLinux30}-distroless";
 
         // Debian
