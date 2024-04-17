@@ -1,22 +1,12 @@
 trigger: none
 pr: none
+
 variables:
 - template: /eng/pipelines/variables/core.yml@self
-resources:
-  repositories:
-  - repository: 1ESPipelineTemplates
-    type: git
-    name: 1ESPipelineTemplates/1ESPipelineTemplates
-    ref: refs/tags/release
+
 extends:
-  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  template: /eng/common/templates/1es-official.yml@self
   parameters:
-    pool:
-      name: NetCore1ESPool-Internal
-      image: 1es-windows-2022
-      os: windows
-    customBuildTags:
-    - ES365AIMigrationTooling
     stages:
     - stage: UpdateReadmes
       displayName: Update Readmes
