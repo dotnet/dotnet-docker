@@ -10,30 +10,14 @@ schedules:
     - nightly
   always: true
 
-resources:
-  repositories:
-  - repository: 1ESPipelineTemplates
-    type: git
-    name: 1ESPipelineTemplates/1ESPipelineTemplates
-    ref: refs/tags/release
-
 variables:
 - template: /eng/common/templates/variables/common.yml@self
 - name: ComponentDetection.Timeout
   value: 3600 # 1 hour in seconds
 
 extends:
-  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  template: /eng/common/templates/1es-official.yml@self
   parameters:
-    pool:
-      name: NetCore1ESPool-Internal
-      image: 1es-ubuntu-2204
-      os: linux
-    sdl:
-      sourceAnalysisPool:
-        name: NetCore1ESPool-Internal
-        image: 1es-windows-2022
-        os: windows
     stages:
     - stage: cg
       displayName: CG Detection (Docker Images)
