@@ -409,10 +409,17 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-libs",
                         "zlib"
                     },
-                { OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) => new[]
+                { OS: string os } when os.Contains(OS.Mariner) => new[]
                     {
                         "glibc",
                         "libgcc",
+                        "openssl-libs",
+                        "zlib"
+                    },
+                { OS: string os } when os.Contains(OS.AzureLinux) => new[]
+                    {
+                        "glibc",
+                        "libgcc6",
                         "openssl-libs",
                         "zlib"
                     },
