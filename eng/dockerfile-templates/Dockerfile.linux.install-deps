@@ -8,14 +8,14 @@
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
-    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
-    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+-distroless$")) ^
-    set isFullMariner to isMariner && !isDistrolessMariner ^
+    set isAzureLinux to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
+    set isDistrolessAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+-distroless$")) ^
+    set isFullAzureLinux to isAzureLinux && !isDistrolessAzureLinux ^
     set useLegacyPackageLayout to dotnetVersion = "6.0" ^
 
     set dotnetDepsComment to "# .NET dependencies" ^
 
-    set basePkgs to when(isMariner,
+    set basePkgs to when(isAzureLinux,
         [
             "glibc",
             "libgcc",
@@ -36,7 +36,7 @@
             ]
         )) ^
     set standardPkgs to sort(cat(basePkgs,
-        when(isMariner || isAlpine,
+        when(isAzureLinux || isAlpine,
             [
                 "libstdc++"
             ],
@@ -45,7 +45,7 @@
             ]
         ))) ^
     set extraPkgs to sort(cat(standardPkgs,
-        when (isMariner,
+        when (isAzureLinux,
             [
                 "icu",
                 "tzdata"
@@ -71,8 +71,8 @@
             "libstdc++",
             "zlib"
         ],
-        when(isMariner,
-            when(isDistrolessMariner,
+        when(isAzureLinux,
+            when(isDistrolessAzureLinux,
                 [
                     "glibc",
                     "krb5",
@@ -102,11 +102,11 @@
 
     set pkgs to when(useLegacyPackageLayout,
         legacyPkgs,
-        when(ARGS["is-extra"] || isDebian || isUbuntu || isFullMariner,
+        when(ARGS["is-extra"] || isDebian || isUbuntu || isFullAzureLinux,
             extraPkgs,
             standardPkgs)) ^
 
-    set certsPkgName to when(isDistrolessMariner,
+    set certsPkgName to when(isDistrolessAzureLinux,
         "prebuilt-ca-certificates",
         when(isAlpine && dotnetVersion != "6.0",
             "ca-certificates-bundle",
@@ -123,7 +123,7 @@
     set pkgMgrOpts to when(len(ARGS["staging-dir"]) > 0,
         cat(" --installroot ", ARGS["staging-dir"]),
         "") ^
-    set pkgMgrOpts to when(isDistrolessMariner,
+    set pkgMgrOpts to when(isDistrolessAzureLinux,
         cat(" --releasever=", OS_VERSION_NUMBER, pkgMgrOpts),
         pkgMgrOpts)
 
@@ -131,6 +131,6 @@
     [
         "pkgs": pkgs,
         "noninteractive": (OS_VERSION = "focal"),
-        "pkg-mgr": when(isDistrolessMariner, "tdnf", ""),
+        "pkg-mgr": when(isDistrolessAzureLinux, "tdnf", ""),
         "pkg-mgr-opts": pkgMgrOpts
     ])}}

@@ -1605,29 +1605,29 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0": {},
-            "$(dotnet|9.0|minor-tag)-cbl-mariner2.0": {}
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0": {},
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0": {}
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0/amd64",
+              "dockerfile": "src/runtime-deps/9.0/azurelinux3.0/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0",
+              "osVersion": "azurelinux3.0",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-amd64": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-amd64": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-amd64": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-amd64": {}
               }
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0/arm64v8",
+              "dockerfile": "src/runtime-deps/9.0/azurelinux3.0/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0",
+              "osVersion": "azurelinux3.0",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-arm64v8": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1636,38 +1636,38 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless": {},
-            "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless": {}
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless": {},
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless": {}
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0-distroless/amd64",
+              "dockerfile": "src/runtime-deps/9.0/azurelinux3.0-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-amd64": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-amd64": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-amd64": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0-distroless/arm64v8",
+              "dockerfile": "src/runtime-deps/9.0/azurelinux3.0-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-arm64v8": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -1675,7 +1675,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -1685,38 +1685,38 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra": {},
-            "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-extra": {}
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra": {},
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra": {}
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0-distroless-extra/amd64",
+              "dockerfile": "src/runtime-deps/9.0/azurelinux3.0-distroless-extra/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner.extra",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-extra-amd64": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-amd64": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0-distroless-extra/arm64v8",
+              "dockerfile": "src/runtime-deps/9.0/azurelinux3.0-distroless-extra/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner.extra",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -1724,7 +1724,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -3543,21 +3543,21 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0": {},
-            "$(dotnet|9.0|minor-tag)-cbl-mariner2.0": {}
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0": {},
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/9.0/cbl-mariner2.0/amd64",
+              "dockerfile": "src/runtime/9.0/azurelinux3.0/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0",
+              "osVersion": "azurelinux3.0",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-amd64": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-amd64": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-amd64": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-amd64": {}
               }
             },
             {
@@ -3565,13 +3565,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/9.0/cbl-mariner2.0/arm64v8",
+              "dockerfile": "src/runtime/9.0/azurelinux3.0/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0",
+              "osVersion": "azurelinux3.0",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-arm64v8": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -3580,28 +3580,28 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless": {},
-            "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless": {}
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless": {},
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/9.0/cbl-mariner2.0-distroless/amd64",
+              "dockerfile": "src/runtime/9.0/azurelinux3.0-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-amd64": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-amd64": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-amd64": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -3611,13 +3611,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/9.0/cbl-mariner2.0-distroless/arm64v8",
+              "dockerfile": "src/runtime/9.0/azurelinux3.0-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-arm64v8": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -3625,7 +3625,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -3635,28 +3635,28 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra": {},
-            "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-extra": {}
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra": {},
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/9.0/cbl-mariner2.0-distroless-extra/amd64",
+              "dockerfile": "src/runtime/9.0/azurelinux3.0-distroless-extra/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-extra-amd64": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-amd64": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -3666,13 +3666,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/runtime/9.0/cbl-mariner2.0-distroless-extra/arm64v8",
+              "dockerfile": "src/runtime/9.0/azurelinux3.0-distroless-extra/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -3680,7 +3680,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -6127,21 +6127,21 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0": {},
-            "$(dotnet|9.0|minor-tag)-cbl-mariner2.0": {}
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0": {},
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0/amd64",
+              "dockerfile": "src/aspnet/9.0/azurelinux3.0/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0",
+              "osVersion": "azurelinux3.0",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-amd64": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-amd64": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-amd64": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-amd64": {}
               }
             },
             {
@@ -6149,13 +6149,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0/arm64v8",
+              "dockerfile": "src/aspnet/9.0/azurelinux3.0/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0",
+              "osVersion": "azurelinux3.0",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-arm64v8": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -6164,35 +6164,35 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless": {},
-            "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless": {}
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless": {},
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless/amd64",
+              "dockerfile": "src/aspnet/9.0/azurelinux3.0-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-amd64": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-amd64": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-amd64": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -6202,13 +6202,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless/arm64v8",
+              "dockerfile": "src/aspnet/9.0/azurelinux3.0-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-arm64v8": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -6216,14 +6216,14 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -6233,28 +6233,28 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra": {},
-            "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-extra": {}
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra": {},
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless-extra/amd64",
+              "dockerfile": "src/aspnet/9.0/azurelinux3.0-distroless-extra/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux.extra",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-extra-amd64": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-amd64": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -6264,13 +6264,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
-              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless-extra/arm64v8",
+              "dockerfile": "src/aspnet/9.0/azurelinux3.0-distroless-extra/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -6278,7 +6278,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -6288,35 +6288,35 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-composite": {},
-            "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-composite": {}
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite": {},
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless-composite/amd64",
+              "dockerfile": "src/aspnet/9.0/azurelinux3.0-distroless-composite/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-composite-amd64": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-composite-amd64": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite-amd64": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -6326,13 +6326,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless-composite/arm64v8",
+              "dockerfile": "src/aspnet/9.0/azurelinux3.0-distroless-composite/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-composite-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-composite-arm64v8": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -6340,14 +6340,14 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -6357,28 +6357,28 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra": {},
-            "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-composite-extra": {}
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite-extra": {},
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite-extra": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless-composite-extra/amd64",
+              "dockerfile": "src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite.extra",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra-amd64": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-composite-extra-amd64": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite-extra-amd64": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -6388,13 +6388,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime-deps)"
               },
-              "dockerfile": "src/aspnet/9.0/cbl-mariner2.0-distroless-composite-extra/arm64v8",
+              "dockerfile": "src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(dotnet|9.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-cbl-mariner2.0-distroless-composite-extra-arm64v8": {}
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite-extra-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -6402,7 +6402,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-cbl-mariner2.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -7528,21 +7528,21 @@
         {
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
-            "$(sdk|9.0|fixed-tag)-cbl-mariner2.0": {},
-            "$(sdk|9.0|minor-tag)-cbl-mariner2.0": {}
+            "$(sdk|9.0|fixed-tag)-azurelinux3.0": {},
+            "$(sdk|9.0|minor-tag)-azurelinux3.0": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/sdk/9.0/cbl-mariner2.0/amd64",
+              "dockerfile": "src/sdk/9.0/azurelinux3.0/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0",
+              "osVersion": "azurelinux3.0",
               "tags": {
-                "$(sdk|9.0|fixed-tag)-cbl-mariner2.0-amd64": {},
-                "$(sdk|9.0|minor-tag)-cbl-mariner2.0-amd64": {}
+                "$(sdk|9.0|fixed-tag)-azurelinux3.0-amd64": {},
+                "$(sdk|9.0|minor-tag)-azurelinux3.0-amd64": {}
               }
             },
             {
@@ -7550,13 +7550,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/sdk/9.0/cbl-mariner2.0/arm64v8",
+              "dockerfile": "src/sdk/9.0/azurelinux3.0/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0",
+              "osVersion": "azurelinux3.0",
               "tags": {
-                "$(sdk|9.0|fixed-tag)-cbl-mariner2.0-arm64v8": {},
-                "$(sdk|9.0|minor-tag)-cbl-mariner2.0-arm64v8": {}
+                "$(sdk|9.0|fixed-tag)-azurelinux3.0-arm64v8": {},
+                "$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -7778,21 +7778,21 @@
         {
           "productVersion": "$(monitor|9.0|product-version)",
           "sharedTags": {
-            "$(monitor|9.0|product-version)-cbl-mariner-distroless": {},
-            "9.0-preview-cbl-mariner-distroless": {}
+            "$(monitor|9.0|product-version)-azurelinux-distroless": {},
+            "9.0-preview-azurelinux-distroless": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/monitor-base/9.0/cbl-mariner-distroless/amd64",
+              "dockerfile": "src/monitor-base/9.0/azurelinux-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|product-version)-cbl-mariner-distroless-amd64": {},
-                "9.0-preview-cbl-mariner-distroless-amd64": {}
+                "$(monitor|9.0|product-version)-azurelinux-distroless-amd64": {},
+                "9.0-preview-azurelinux-distroless-amd64": {}
               }
             },
             {
@@ -7800,13 +7800,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/monitor-base/9.0/cbl-mariner-distroless/arm64v8",
+              "dockerfile": "src/monitor-base/9.0/azurelinux-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|product-version)-cbl-mariner-distroless-arm64v8": {},
-                "9.0-preview-cbl-mariner-distroless-arm64v8": {}
+                "$(monitor|9.0|product-version)-azurelinux-distroless-arm64v8": {},
+                "9.0-preview-azurelinux-distroless-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8119,21 +8119,21 @@
         {
           "productVersion": "$(monitor|9.0|product-version)",
           "sharedTags": {
-            "$(monitor|9.0|product-version)-cbl-mariner-distroless": {},
-            "9.0-preview-cbl-mariner-distroless": {}
+            "$(monitor|9.0|product-version)-azurelinux-distroless": {},
+            "9.0-preview-azurelinux-distroless": {}
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:monitor-base)"
               },
-              "dockerfile": "src/monitor/9.0/cbl-mariner-distroless/amd64",
+              "dockerfile": "src/monitor/9.0/azurelinux-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|product-version)-cbl-mariner-distroless-amd64": {},
-                "9.0-preview-cbl-mariner-distroless-amd64": {}
+                "$(monitor|9.0|product-version)-azurelinux-distroless-amd64": {},
+                "9.0-preview-azurelinux-distroless-amd64": {}
               }
             },
             {
@@ -8141,13 +8141,13 @@
               "buildArgs": {
                 "REPO": "$(Repo:monitor-base)"
               },
-              "dockerfile": "src/monitor/9.0/cbl-mariner-distroless/arm64v8",
+              "dockerfile": "src/monitor/9.0/azurelinux-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|product-version)-cbl-mariner-distroless-arm64v8": {},
-                "9.0-preview-cbl-mariner-distroless-arm64v8": {}
+                "$(monitor|9.0|product-version)-azurelinux-distroless-arm64v8": {},
+                "9.0-preview-azurelinux-distroless-arm64v8": {}
               },
               "variant": "v8"
             }

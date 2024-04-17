@@ -5,7 +5,7 @@
         files: Set of files to install ^
 
     set fileList to join(ARGS["files"], " ") ^
-    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
-    set useTdnf to isMariner
+    set isAzureLinux to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
+    set useTdnf to isAzureLinux
 }}{{if useTdnf:tdnf install -y --disablerepo=*^else:rpm --install}} {{fileList}} \
 && rm {{fileList}}

@@ -9,7 +9,7 @@
         gid: (optional) ID of the group to be created, same as uid by default
         no-create-home (optional): Indicates whether a home directory should be created for the user ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isAzureLinux to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set uid to when(len(ARGS["uid"]) > 0, ARGS["uid"], "$APP_UID") ^
