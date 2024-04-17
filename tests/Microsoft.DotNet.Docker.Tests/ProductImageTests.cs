@@ -409,17 +409,10 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-libs",
                         "zlib"
                     },
-                { OS: string os } when os.Contains(OS.Mariner) => new[]
+                { OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) => new[]
                     {
                         "glibc",
                         "libgcc",
-                        "openssl-libs",
-                        "zlib"
-                    },
-                { OS: string os } when os.Contains(OS.AzureLinux) => new[]
-                    {
-                        "glibc",
-                        "libgcc6",
                         "openssl-libs",
                         "zlib"
                     },
@@ -472,7 +465,7 @@ namespace Microsoft.DotNet.Docker.Tests
             };
 
         private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
-            string libstdcppPkgName = imageData.OS.Contains(OS.Mariner) || imageData.OS.Contains(OS.Alpine)
+            string libstdcppPkgName = imageData.OS.Contains(OS.Mariner) || imageData.OS.Contains(OS.AzureLinux) || imageData.OS.Contains(OS.Alpine)
                 ? "libstdc++"
                 : "libstdc++6";
             return GetAotDepsPackages(imageData).Append(libstdcppPkgName);
@@ -480,7 +473,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
-                { IsDistroless: true, OS: string os } when os.Contains(OS.Mariner) => new[]
+                { IsDistroless: true, OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) => new[]
                     {
                         "icu",
                         "tzdata"
