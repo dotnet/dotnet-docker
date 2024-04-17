@@ -3,7 +3,7 @@
     set baseImageTag to cat("$REPO:", VARIABLES[cat("sdk|", dotnetVersion, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isAzureLinux to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
 
     set isMultiArch to isUbuntu ^
@@ -18,7 +18,7 @@
             "clang",
             "zlib-dev"
         ],
-        when(isMariner,
+        when(isAzureLinux,
             [
                 "build-essential",
                 "clang",

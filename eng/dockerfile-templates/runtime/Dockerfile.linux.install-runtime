@@ -13,7 +13,6 @@
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isFullMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set varPlatform to when(isAlpine, "linux-musl", "linux") ^
     set runtimeVersionDir to when(ARGS["use-local-version-var"],
         "$dotnet_version",

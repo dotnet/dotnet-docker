@@ -5,7 +5,7 @@
             for example globalization support ^
 
     set distrolessStagingDir to "/staging" ^
-    set marinerRepo to "mcr.microsoft.com/cbl-mariner" ^
+    set marinerRepo to when(find(OS_VERSION_NUMBER, "3.0") >= 0, "azurelinuxpreview.azurecr.io/public/azurelinux", "mcr.microsoft.com/cbl-mariner") ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set baseImage to cat(marinerRepo, "/distroless/minimal:", OS_VERSION_NUMBER) ^
     set username to "app" ^

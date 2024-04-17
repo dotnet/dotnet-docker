@@ -39,7 +39,7 @@ RUN dotnet workload install --configfile NuGet.config --skip-manifest-update was
         debian | ubuntu) apt-get update \
             && apt-get install -y --no-install-recommends python3 \
             && rm -rf /var/lib/apt/lists/* ;; \
-        mariner) tdnf install -y python3 \
+        mariner | azurelinux) tdnf install -y python3 \
             && tdnf clean all ;; \
     esac
 

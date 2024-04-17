@@ -7,9 +7,9 @@
         no-clean (optional): skip package manager cleanup after install ^
     
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isAzureLinux to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
     set isDnf to ARGS["pkg-mgr"] = "dnf" ^
-    set isTdnf to ARGS["pkg-mgr"] = "tdnf" || (!isDnf && isMariner) ^
+    set isTdnf to ARGS["pkg-mgr"] = "tdnf" || (!isDnf && isAzureLinux) ^
     set isApk to ARGS["pkg-mgr"] = "apk" || isAlpine ^
     set appendPkgSuffix(pkg, index) to:{{
         _ Don't apply a space and continuation character after the package text if it's a comment or

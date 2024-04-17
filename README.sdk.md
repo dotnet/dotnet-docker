@@ -78,6 +78,8 @@ Tags | Dockerfile | OS Version
 8.0.204-alpine3.19-aot-amd64, 8.0-alpine3.19-aot-amd64, 8.0.204-alpine3.19-aot, 8.0-alpine3.19-aot, 8.0-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.19-aot/amd64/Dockerfile) | Alpine 3.19
 8.0.204-jammy-amd64, 8.0-jammy-amd64, 8.0.204-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 8.0.204-jammy-aot-amd64, 8.0-jammy-aot-amd64, 8.0.204-jammy-aot, 8.0-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy-aot/amd64/Dockerfile) | Ubuntu 22.04
+8.0.204-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.204-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+8.0.204-azurelinux3.0-aot-amd64, 8.0-azurelinux3.0-aot-amd64, 8.0.204-azurelinux3.0-aot, 8.0-azurelinux3.0-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
 8.0.204-cbl-mariner2.0-amd64, 8.0-cbl-mariner2.0-amd64, 8.0.204-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
 8.0.204-cbl-mariner2.0-aot-amd64, 8.0-cbl-mariner2.0-aot-amd64, 8.0.204-cbl-mariner2.0-aot, 8.0-cbl-mariner2.0-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/cbl-mariner2.0-aot/amd64/Dockerfile) | CBL-Mariner 2.0
 7.0.408-bookworm-slim-amd64, 7.0-bookworm-slim-amd64, 7.0.408-bookworm-slim, 7.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/bookworm-slim/amd64/Dockerfile) | Debian 12
@@ -102,8 +104,8 @@ Tags | Dockerfile | OS Version
 9.0.100-preview.4-alpine3.19-aot-amd64, 9.0-preview-alpine3.19-aot-amd64, 9.0-preview-alpine-aot-amd64, 9.0.100-preview.4-alpine3.19-aot, 9.0-preview-alpine3.19-aot, 9.0-preview-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.19-aot/amd64/Dockerfile) | Alpine 3.19
 9.0.100-preview.4-jammy-amd64, 9.0-preview-jammy-amd64, 9.0.100-preview.4-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 9.0.100-preview.4-jammy-aot-amd64, 9.0-preview-jammy-aot-amd64, 9.0.100-preview.4-jammy-aot, 9.0-preview-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy-aot/amd64/Dockerfile) | Ubuntu 22.04
-9.0.100-preview.4-cbl-mariner2.0-amd64, 9.0-preview-cbl-mariner2.0-amd64, 9.0.100-preview.4-cbl-mariner2.0, 9.0-preview-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
-9.0.100-preview.4-cbl-mariner2.0-aot-amd64, 9.0-preview-cbl-mariner2.0-aot-amd64, 9.0.100-preview.4-cbl-mariner2.0-aot, 9.0-preview-cbl-mariner2.0-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/cbl-mariner2.0-aot/amd64/Dockerfile) | CBL-Mariner 2.0
+9.0.100-preview.4-azurelinux3.0-amd64, 9.0-preview-azurelinux3.0-amd64, 9.0.100-preview.4-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+9.0.100-preview.4-azurelinux3.0-aot-amd64, 9.0-preview-azurelinux3.0-aot-amd64, 9.0.100-preview.4-azurelinux3.0-aot, 9.0-preview-azurelinux3.0-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -115,6 +117,8 @@ Tags | Dockerfile | OS Version
 8.0.204-alpine3.19-aot-arm64v8, 8.0-alpine3.19-aot-arm64v8, 8.0.204-alpine3.19-aot, 8.0-alpine3.19-aot, 8.0-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.19-aot/arm64v8/Dockerfile) | Alpine 3.19
 8.0.204-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.204-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.204-jammy-aot-arm64v8, 8.0-jammy-aot-arm64v8, 8.0.204-jammy-aot, 8.0-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy-aot/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.204-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.204-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+8.0.204-azurelinux3.0-aot-arm64v8, 8.0-azurelinux3.0-aot-arm64v8, 8.0.204-azurelinux3.0-aot, 8.0-azurelinux3.0-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
 8.0.204-cbl-mariner2.0-arm64v8, 8.0-cbl-mariner2.0-arm64v8, 8.0.204-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
 8.0.204-cbl-mariner2.0-aot-arm64v8, 8.0-cbl-mariner2.0-aot-arm64v8, 8.0.204-cbl-mariner2.0-aot, 8.0-cbl-mariner2.0-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/cbl-mariner2.0-aot/arm64v8/Dockerfile) | CBL-Mariner 2.0
 7.0.408-bookworm-slim-arm64v8, 7.0-bookworm-slim-arm64v8, 7.0.408-bookworm-slim, 7.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
@@ -139,8 +143,8 @@ Tags | Dockerfile | OS Version
 9.0.100-preview.4-alpine3.19-aot-arm64v8, 9.0-preview-alpine3.19-aot-arm64v8, 9.0-preview-alpine-aot-arm64v8, 9.0.100-preview.4-alpine3.19-aot, 9.0-preview-alpine3.19-aot, 9.0-preview-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.19-aot/arm64v8/Dockerfile) | Alpine 3.19
 9.0.100-preview.4-jammy-arm64v8, 9.0-preview-jammy-arm64v8, 9.0.100-preview.4-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 9.0.100-preview.4-jammy-aot-arm64v8, 9.0-preview-jammy-aot-arm64v8, 9.0.100-preview.4-jammy-aot, 9.0-preview-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy-aot/arm64v8/Dockerfile) | Ubuntu 22.04
-9.0.100-preview.4-cbl-mariner2.0-arm64v8, 9.0-preview-cbl-mariner2.0-arm64v8, 9.0.100-preview.4-cbl-mariner2.0, 9.0-preview-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
-9.0.100-preview.4-cbl-mariner2.0-aot-arm64v8, 9.0-preview-cbl-mariner2.0-aot-arm64v8, 9.0.100-preview.4-cbl-mariner2.0-aot, 9.0-preview-cbl-mariner2.0-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/cbl-mariner2.0-aot/arm64v8/Dockerfile) | CBL-Mariner 2.0
+9.0.100-preview.4-azurelinux3.0-arm64v8, 9.0-preview-azurelinux3.0-arm64v8, 9.0.100-preview.4-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.100-preview.4-azurelinux3.0-aot-arm64v8, 9.0-preview-azurelinux3.0-aot-arm64v8, 9.0.100-preview.4-azurelinux3.0-aot, 9.0-preview-azurelinux3.0-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
