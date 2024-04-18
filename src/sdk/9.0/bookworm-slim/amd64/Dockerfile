@@ -7,7 +7,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=9.0.100-preview.4.24217.1 \
+    DOTNET_SDK_VERSION=9.0.100-preview.4.24218.1 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -25,7 +25,7 @@ RUN apt-get update \
 
 # Install .NET SDK
 RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
-    && dotnet_sha512='45a0b7840872ef434e40fd440b1ec1332a4468e1f54cdbd002730fb4a1d7b7479d7cb79adecf5cae3192d924ce7be830a3d8dfd16591ed6aa607d4225d703a21' \
+    && dotnet_sha512='c56265427d392badbc2ca9090110e6c5b4961126762d83784d0c0c0172d584bfdf64e154a7599adcea46486197cb2c8d0115294411f5149f3fc5ac96bd41ecba' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
