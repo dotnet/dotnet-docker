@@ -11,9 +11,13 @@
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
         VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
     set baseImageTag to cat("$REPO:", tagVersion, "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+
+    _ Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed. ^
+    set osVersionBase to when(OS_VERSION_BASE = "noble" && ARCH_VERSIONED = "arm32v7", "jammy", OS_VERSION_BASE) ^
+
     set internalInstallerBase to when(isAlpine || isAzureLinux,
         baseImageTag,
-        cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl")) ^
+        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
     set pkgs to filter(when(isAlpine,
         when (dotnetVersion = "6.0" || dotnetVersion = "7.0",
             [
@@ -62,12 +66,13 @@
                     "libatomic1",
                     "wget",
                 ]
-            ))), len)
+            ))), len) ^
+    set useNobleArm32Workaround to OS_VERSION_BASE = "noble" && ARCH_SHORT = "arm"
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
-{{if isInternal:# Installer image
-FROM {{internalInstallerBase}} AS installer
+{{if isInternal || useNobleArm32Workaround:# Installer image
+FROM {{internalInstallerBase}} AS installer{{if isInternal:
 
-ARG SAS_QUERY_STRING
+ARG SAS_QUERY_STRING}}
 {{if isFullAzureLinux && !isRpmInstall:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
@@ -78,8 +83,9 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "install-method": when(isRpmInstall, "download", "download-and-install"),
         "is-internal": isInternal,
-        "url-suffix": "$SAS_QUERY_STRING",
-        "is-rpm-install": isRpmInstall
+        "url-suffix": when(useNobleArm32Workaround, "", "$SAS_QUERY_STRING"),
+        "is-rpm-install": isRpmInstall,
+        "disable-first-run-experience": useNobleArm32Workaround
     ])}}
 
 
@@ -93,7 +99,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     "pkgs": pkgs
 ])}}
 
-{{if isInternal:{{
+{{if isInternal || useNobleArm32Workaround:{{
 if isRpmInstall:{{InsertTemplate("Dockerfile.linux.install-sdk",
     [
         "install-method": "copy-and-install",

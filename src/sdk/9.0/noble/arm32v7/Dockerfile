@@ -1,4 +1,17 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
+# Installer image
+FROM arm32v7/buildpack-deps:jammy-curl AS installer
+
+# Install .NET SDK
+RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
+    && dotnet_sha512='5de6101fbf0c395cbb2198ec2d214bc57ff1b8ccd3ae1dd8ab4e4e8c820526d1e012996c8b8486aff1c92947462ba3b84dbd3d6474a63b14d50fccee0a551965' \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /usr/share/dotnet \
+    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm dotnet.tar.gz
+
+
+# .NET SDK image
 FROM $REPO:9.0.0-preview.4-noble-arm32v7
 
 ENV \
@@ -23,15 +36,10 @@ RUN apt-get update \
         wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
-    && dotnet_sha512='5de6101fbf0c395cbb2198ec2d214bc57ff1b8ccd3ae1dd8ab4e4e8c820526d1e012996c8b8486aff1c92947462ba3b84dbd3d6474a63b14d50fccee0a551965' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz \
-    # Trigger first run experience by running arbitrary cmd
-    && dotnet help
+COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+
+# Trigger first run experience by running arbitrary cmd
+RUN dotnet help
 
 # Install PowerShell global tool
 RUN powershell_version=7.5.0-preview.2 \

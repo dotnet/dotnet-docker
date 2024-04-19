@@ -6,7 +6,8 @@
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
         url-suffix (optional): Suffix string to append the end of the URL.
         installer-stage (optional): Name of the Dockerfile stage responsible for installation
-        is-rpm-install (optional): Whether to install RPM versus tarball ^
+        is-rpm-install (optional): Whether to install RPM versus tarball
+        disable-first-run-experience (optional): Force skipping the first-run experience regardless of other conditions ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
@@ -120,5 +121,5 @@ if isFullAzureLinux:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion
         "skip-install": !installEnabled,
         "install-dir": installDir,
         "create-install-dir": !isFullAzureLinux
-    ], "    ")}}{{if !ARGS["is-internal"] || (ARGS["is-rpm-install"] && installEnabled): \
+    ], "    ")}}{{if !ARGS["disable-first-run-experience"] && (!ARGS["is-internal"] || (ARGS["is-rpm-install"] && installEnabled)): \
     {{InsertTemplate("Dockerfile.linux.first-run", ["append-cmd": "true"], "    ")}}}}
