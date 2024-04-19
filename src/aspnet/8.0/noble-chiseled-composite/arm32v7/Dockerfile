@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM arm32v7/buildpack-deps:noble-curl AS installer
+FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=8.0.4  \

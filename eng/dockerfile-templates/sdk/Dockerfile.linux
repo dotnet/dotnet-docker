@@ -85,7 +85,8 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
         "is-internal": isInternal,
         "url-suffix": when(useNobleArm32Workaround, "", "$SAS_QUERY_STRING"),
         "is-rpm-install": isRpmInstall,
-        "disable-first-run-experience": useNobleArm32Workaround
+        "disable-first-run-experience": useNobleArm32Workaround,
+        "no-version-env-var": useNobleArm32Workaround
     ])}}
 
 

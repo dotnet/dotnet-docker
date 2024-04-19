@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
+RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/9.0.100-preview.4.24218.26/dotnet-sdk-9.0.100-preview.4.24218.26-linux-arm.tar.gz \
     && dotnet_sha512='5de6101fbf0c395cbb2198ec2d214bc57ff1b8ccd3ae1dd8ab4e4e8c820526d1e012996c8b8486aff1c92947462ba3b84dbd3d6474a63b14d50fccee0a551965' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
