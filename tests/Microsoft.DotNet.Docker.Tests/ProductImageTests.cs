@@ -416,12 +416,20 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-libs",
                         "zlib"
                     },
-                { OS: string os } when os.Contains(OS.Jammy) || os.Contains(OS.Noble) => new[]
+                { OS: string os } when os.Contains(OS.Jammy) => new[]
                     {
                         "ca-certificates",
                         "libc6",
                         "libgcc-s1",
                         "libssl3",
+                        "zlib1g"
+                    },
+                { OS: string os } when os.Contains(OS.Noble) => new[]
+                    {
+                        "ca-certificates",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
                         "zlib1g"
                     },
                 { OS: OS.Focal } => new[]
