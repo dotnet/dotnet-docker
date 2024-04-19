@@ -2,8 +2,6 @@
 
 [Kubernetes](https://kubernetes.io/) provides a way to validate that a [non-root user](https://devblogs.microsoft.com/dotnet/securing-containers-with-rootless/) is used.
 
-This sample uses .NET 8.
-
 Apply [non-root.yaml](non-root.yaml) to your cluster.
 
 ```bash
@@ -27,7 +25,7 @@ dotnet-non-root-7db6ff8b6d-zdc9n   1/1     Running   0          21s
 You can also validate that `runAsNonRoot` was set.
 
 ```bash
-$ kubectl get pod dotnet-non-root-5b7fc97df7-476s9 -o jsonpath="{.spec.securityContext}" 
+$ kubectl get pod dotnet-non-root-7db6ff8b6d-zdc9n -o jsonpath="{.spec.securityContext}" 
 {"runAsNonRoot":true}
 ```
 
@@ -37,7 +35,7 @@ In many cases, `kubectl exec` can be used to determine the user, like the follow
 $kubectl get po
 NAME                               READY   STATUS    RESTARTS   AGE
 dotnet-fakepod-7db6ff8b6d-zdc9n   1/1     Running   0          21s
-$ kubectl exec dotnet-fakepod-7db6ff8b6d- -- whoami
+$ kubectl exec dotnet-fakepod-7db6ff8b6d-zdc9n -- whoami
 app
 ```
 
