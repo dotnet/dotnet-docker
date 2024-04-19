@@ -13,13 +13,15 @@
     set rocksToolboxUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
     set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|ref")] ^
 
+    set opensslPkg to when(match(osVersionBase, "noble"), "libssl3t64", "libssl3") ^
+
     set basePkgs to [
             "base-files_base",
             "base-files_release-info",
             "ca-certificates_data",
             "libc6_libs",
             "libgcc-s1_libs",
-            "libssl3_libs",
+            cat(opensslPkg, "_libs"),
             "zlib1g_libs"
         ] ^
 
