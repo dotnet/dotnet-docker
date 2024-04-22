@@ -13,7 +13,8 @@
     set baseImageTag to cat("$REPO:", tagVersion, "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
 
     _ Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed. ^
-    set osVersionBase to when(OS_VERSION_BASE = "noble" && ARCH_VERSIONED = "arm32v7", "jammy", OS_VERSION_BASE) ^
+    set useNobleArm32Workaround to OS_VERSION_BASE = "noble" && ARCH_SHORT = "arm" ^
+    set osVersionBase to when(useNobleArm32Workaround, "jammy", OS_VERSION_BASE) ^
 
     set internalInstallerBase to when(isAlpine || isAzureLinux,
         baseImageTag,
@@ -66,8 +67,7 @@
                     "libatomic1",
                     "wget",
                 ]
-            ))), len) ^
-    set useNobleArm32Workaround to OS_VERSION_BASE = "noble" && ARCH_SHORT = "arm"
+            ))), len)
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
 {{if isInternal || useNobleArm32Workaround:# Installer image
 FROM {{internalInstallerBase}} AS installer{{if isInternal:
@@ -83,7 +83,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "install-method": when(isRpmInstall, "download", "download-and-install"),
         "is-internal": isInternal,
-        "url-suffix": when(useNobleArm32Workaround, "", "$SAS_QUERY_STRING"),
+        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
         "is-rpm-install": isRpmInstall,
         "disable-first-run-experience": useNobleArm32Workaround,
         "no-version-env-var": useNobleArm32Workaround
