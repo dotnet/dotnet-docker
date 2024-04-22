@@ -88,13 +88,18 @@ This is the same as with Docker Desktop, just with the additional requirement of
 
 ## Run on your cloud cluster
 
-To run on Azure Kubernetes Service (AKS) or another cloud service, configure `kubectl` to access that kubernetes cluster control plane. For AKS, you can do that [via the Azure CLI](https://learn.microsoft.com/azure/aks/learn/quick-kubernetes-deploy-cli#connect-to-the-cluster). This same command is available via the "Connect" menu in the Azure Portal (for an AKS resource).
+Apply to your local cluster, using a `LoadBalancer` service.
+
+The example uses Azure Kubernetes Service (AKS) as the [Kubernetes environment](../environment.md)
 
 ```bash
 $ az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
-$ kubectl get nodes
-NAME                                STATUS   ROLES   AGE   VERSION
-aks-agentpool-81348477-vmss000004   Ready    agent   2d    v1.26.0
+$ kubectl get nodes                  
+NAME                                STATUS   ROLES    AGE   VERSION
+aks-agentpool-17841206-vmss000000   Ready    <none>   31m   v1.29.2
+aks-agentpool-17841206-vmss000001   Ready    <none>   32m   v1.29.2
+aks-userpool-17841206-vmss000000    Ready    <none>   32m   v1.29.2
+aks-userpool-17841206-vmss000001    Ready    <none>   32m   v1.29.2
 ```
 
 Apply the `LoadBalancer` deployment to that cluster.
@@ -108,7 +113,7 @@ kubernetes     ClusterIP      10.0.0.1       <none>        443/TCP        42h
 hello-dotnet   LoadBalancer   10.0.120.232   20.51.80.224   80:31567/TCP   9s
 ```
 
-The `EXTERNAL-IP` will eventually resolve and you will be able to access it in the same way, via `curl` or the browser, on port `80`.
+The `EXTERNAL-IP` will resolve (after a brief wait) and you will be able to access it in the same way, via `curl` or the browser, on port `80`.
 
 ```bash
 $ curl http://20.51.80.224/Environment

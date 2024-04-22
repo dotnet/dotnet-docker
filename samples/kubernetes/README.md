@@ -8,7 +8,7 @@ The samples were tested with:
 - minikube 1.33 (Kubernetes 1.30.0)
 - Docker Desktop 26.0.0 (Kubernetes 1.29.2)
 
-These instruction rely on a correctly configured [Kubernetes environment](./environment.md).
+The instruction rely on a correctly configured [Kubernetes environment](./environment.md).
 
 ## Run sample
 
