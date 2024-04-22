@@ -1,8 +1,8 @@
 # Configure a .NET app with Kubernetes
 
-This .NET app sample is fully-configured (for a simple app) with respect to [Kubernetes](https://kubernetes.io/) settings. It includes both `ClusterIP` and `LoadBalancer` variants, for local and cloud cluster use, respectively.
+This .NET app sample demonstrates multiple [Kubernetes](https://kubernetes.io/) settings. It uses/requires a non-root user, has container limits set, uses multiple replicas, and registers a liveness probe.
 
-This sample uses/requires a non-root user, has container limits set, uses multiple replicas, and registers a liveness probe.
+The following instructions demonstrate how to apply the `ClusterIP` and `LoadBalancer` variants of the `hello-dotnet` sample. `ClusterIP` is the default service type and works well for local clusters and private cloud deployments. `LoadBalancer` is intended for exposing an app to the internet. They are other service types, such as `Ingress`.
 
 ## Run on your local cluster
 
@@ -17,11 +17,14 @@ Forwarding from [::1]:8080 -> 8080
 
 View the sample app at http://localhost:8080/ and call `curl http://localhost:8080/Environment`.
 
-You can also apply the `LoadBalancer` variant locally. However, you may find that it [doesn't work as you might expect locally](https://stackoverflow.com/questions/59412733/kubernetes-docker-desktop-with-multiple-loadbalancer-services) if you use Docker Desktop, Minikube or the like. It is more intended for use with a real cluster.
+```bash
+$ curl http://localhost:8080/Environment 
+{"runtimeVersion":".NET 8.0.4","osVersion":"Ubuntu 22.04.4 LTS","osArchitecture":"Arm64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":31797248,"hostName":"hello-dotnet-5b887d9fbd-b6bmh"}
+```
 
-### Using Docker Desktop
+The `LoadBalancer` variant can also be applied locally. It will use port `80`.
 
-Deploy the `LoadBalancer` manifest.
+The following example uses Docker Desktop.
 
 ```bash
 $ kubectl apply -f hello-dotnet-loadbalancer.yaml 
@@ -44,27 +47,6 @@ And then call the `Environment` endpoint with `curl`.
 $ curl http://localhost/Environment 
 {"runtimeVersion":".NET 8.0.4","osVersion":"Ubuntu 22.04.4 LTS","osArchitecture":"Arm64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":54845440,"hostName":"hello-dotnet-bd5fdfcfb-f5vjq"}
 ```
-
-Note the difference in port. Port `80` is being used, as defined in the deployment manifest.
-
-### Using minikube
-
-First, install and/or switch to [minikube](https://minikube.sigs.k8s.io/docs/), if neccessary.
-
-```bash
-$ kubectl config get-contexts
-CURRENT   NAME             CLUSTER          AUTHINFO         NAMESPACE
-*         docker-desktop   docker-desktop   docker-desktop   
-          minikube         minikube         minikube         default
-$ kubectl config use-context minikube
-Switched to context "minikube".
-$ kubectl config get-contexts        
-CURRENT   NAME             CLUSTER          AUTHINFO         NAMESPACE
-          docker-desktop   docker-desktop   docker-desktop   
-*         minikube         minikube         minikube         default
-```
-
-Deploy the app the same way.
 
 ```bash
 $ kubectl apply -f hello-dotnet-loadbalancer.yaml 
@@ -98,7 +80,7 @@ hello-dotnet   LoadBalancer   10.96.208.21   127.0.0.1     80:32597/TCP   2m9s
 And then a call with `curl`.
 
 ```bash
-curl http://localhost/Environment
+$ curl http://localhost/Environment
 {"runtimeVersion":".NET 8.0.4","osVersion":"Ubuntu 22.04.4 LTS","osArchitecture":"Arm64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":42151936,"hostName":"hello-dotnet-86f4cffb9d-blcnb"}
 ```
 
@@ -115,7 +97,7 @@ NAME                                STATUS   ROLES   AGE   VERSION
 aks-agentpool-81348477-vmss000004   Ready    agent   2d    v1.26.0
 ```
 
-Apply the `LoadBalancer1 deployment to that cluster.
+Apply the `LoadBalancer` deployment to that cluster.
 
 ```bash
 $ kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-dotnet/hello-dotnet-loadbalancer.yaml
@@ -127,3 +109,10 @@ hello-dotnet   LoadBalancer   10.0.120.232   20.51.80.224   80:31567/TCP   9s
 ```
 
 The `EXTERNAL-IP` will eventually resolve and you will be able to access it in the same way, via `curl` or the browser, on port `80`.
+
+```bash
+$ curl http://20.51.80.224/Environment
+{"runtimeVersion":".NET 8.0.4","osVersion":"Ubuntu 22.04.4 LTS","osArchitecture":"X64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":42323968,"hostName":"hello-dotnet-bd5fdfcfb-twgqs"}
+```
+
+You may notice that this approach is using raw HTTP on an internet-facing endpoint. That's only acceptable for brief testing like this. [Enforce HTTPS in ASP.NET Core](https://learn.microsoft.com/aspnet/core/security/enforcing-ssl) and [What is Application Gateway Ingress Controller?](https://learn.microsoft.com/azure/application-gateway/ingress-controller-overview) describe options for exposing secure HTTPS endpoints.
