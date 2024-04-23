@@ -192,10 +192,6 @@ Tags | Dockerfile | OS Version
 8.0.4-alpine3.19-arm32v7, 8.0-alpine3.19-arm32v7, 8.0.4-alpine3.19, 8.0-alpine3.19, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
 8.0.4-alpine3.19-aot-arm32v7, 8.0-alpine3.19-aot-arm32v7, 8.0.4-alpine3.19-aot, 8.0-alpine3.19-aot, 8.0-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/alpine3.19-aot/arm32v7/Dockerfile) | Alpine 3.19
 8.0.4-alpine3.19-extra-arm32v7, 8.0-alpine3.19-extra-arm32v7, 8.0.4-alpine3.19-extra, 8.0-alpine3.19-extra, 8.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/alpine3.19-extra/arm32v7/Dockerfile) | Alpine 3.19
-8.0.4-noble-arm32v7, 8.0-noble-arm32v7, 8.0.4-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-8.0.4-noble-chiseled-arm32v7, 8.0-noble-chiseled-arm32v7, 8.0.4-noble-chiseled, 8.0-noble-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
-8.0.4-noble-chiseled-aot-arm32v7, 8.0-noble-chiseled-aot-arm32v7, 8.0.4-noble-chiseled-aot, 8.0-noble-chiseled-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/noble-chiseled-aot/arm32v7/Dockerfile) | Ubuntu 24.04
-8.0.4-noble-chiseled-extra-arm32v7, 8.0-noble-chiseled-extra-arm32v7, 8.0.4-noble-chiseled-extra, 8.0-noble-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
 8.0.4-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.4-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.4-jammy-chiseled-arm32v7, 8.0-jammy-chiseled-arm32v7, 8.0.4-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.4-jammy-chiseled-aot-arm32v7, 8.0-jammy-chiseled-aot-arm32v7, 8.0.4-jammy-chiseled-aot, 8.0-jammy-chiseled-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/jammy-chiseled-aot/arm32v7/Dockerfile) | Ubuntu 22.04
@@ -220,10 +216,6 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.0-preview.4-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.0-preview.4, 9.0.0-preview.4-bookworm-slim, 9.0-preview, 9.0-preview-bookworm-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-9.0.0-preview.4-noble-arm32v7, 9.0-preview-noble-arm32v7, 9.0.0-preview.4-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.4-noble-chiseled-arm32v7, 9.0-preview-noble-chiseled-arm32v7, 9.0.0-preview.4-noble-chiseled, 9.0-preview-noble-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.4-noble-chiseled-aot-arm32v7, 9.0-preview-noble-chiseled-aot-arm32v7, 9.0.0-preview.4-noble-chiseled-aot, 9.0-preview-noble-chiseled-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/noble-chiseled-aot/arm32v7/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.4-noble-chiseled-extra-arm32v7, 9.0-preview-noble-chiseled-extra-arm32v7, 9.0.0-preview.4-noble-chiseled-extra, 9.0-preview-noble-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
 
 You can retrieve a list of all available tags for dotnet/nightly/runtime-deps at https://mcr.microsoft.com/v2/dotnet/nightly/runtime-deps/tags/list.
 <!--End of generated tags-->

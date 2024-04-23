@@ -156,7 +156,6 @@ Tags | Dockerfile | OS Version
 8.0.204-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.204-bookworm-slim, 8.0-bookworm-slim, 8.0.204, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.204-alpine3.18-arm32v7, 8.0-alpine3.18-arm32v7, 8.0-alpine-arm32v7, 8.0.204-alpine3.18, 8.0-alpine3.18 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.18/arm32v7/Dockerfile) | Alpine 3.18
 8.0.204-alpine3.19-arm32v7, 8.0-alpine3.19-arm32v7, 8.0.204-alpine3.19, 8.0-alpine3.19, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
-8.0.204-noble-arm32v7, 8.0-noble-arm32v7, 8.0.204-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 8.0.204-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.204-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 7.0.408-bookworm-slim-arm32v7, 7.0-bookworm-slim-arm32v7, 7.0.408-bookworm-slim, 7.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 7.0.408-bullseye-slim-arm32v7, 7.0-bullseye-slim-arm32v7, 7.0.408-bullseye-slim, 7.0-bullseye-slim, 7.0.408, 7.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/7.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
@@ -174,7 +173,6 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.100-preview.4-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-preview.4-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.4, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-9.0.100-preview.4-noble-arm32v7, 9.0-preview-noble-arm32v7, 9.0.100-preview.4-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
