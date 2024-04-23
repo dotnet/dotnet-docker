@@ -15,7 +15,7 @@ WORKDIR /source
 COPY NuGet.config .
 WORKDIR /source/app
 COPY app/*.csproj .
-RUN dotnet add package foo
+RUN dotnet restore -r $rid
 
 COPY app/ .
 RUN dotnet build --no-restore
