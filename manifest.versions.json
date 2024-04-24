@@ -1,11 +1,11 @@
 {
   "variables": {
-    "aspire-dashboard|8.0|build-version": "8.0.0-preview.5.24201.12",
-    "aspire-dashboard|8.0|product-version": "8.0.0-preview.5",
+    "aspire-dashboard|8.0|build-version": "8.0.0-preview.6.24214.1",
+    "aspire-dashboard|8.0|product-version": "8.0.0-preview.6",
     "aspire-dashboard|8.0|fixed-tag": "$(aspire-dashboard|8.0|product-version)",
     "aspire-dashboard|8.0|floating-tag": "8.0-preview",
-    "aspire-dashboard|8.0|linux|x64|sha": "dcc8373e45f49539357412678e67d95f31362b4b3d8f14aa74ef6b11d44929ff45b545c59a7ad57cc8e7a9e0dac3ae788442bee4ce8b7053381abcd2da5bd8c7",
-    "aspire-dashboard|8.0|linux|arm64|sha": "676e63dd0c73ab75b1d368878d72e3cefd975476ab43b09088c5a61f75d0a8400c57e5339ab86b6a70f382193f51ec6aff17ec8ad0f32b26b799a78414d6a120",
+    "aspire-dashboard|8.0|linux|x64|sha": "aae0b7d83b1de16b0f08a6dd5a3533e4155ca2462a215725fb4e67b0b1b09b46ce0086838744f7644ec1ea398947e53384995c637cf1710b70255e69b11aa108",
+    "aspire-dashboard|8.0|linux|arm64|sha": "5cd0b486435bd330fd855345eb247b984fc82a540eb3178eda060e4a0da4c706328ec9836594823fcfbcae8978e0b526a35b73334b945db61164fbef1a1bcc9d",
 
     "aspnet|6.0|build-version": "6.0.29",
     "aspnet|6.0|targeting-pack-version": "$(aspnet|6.0|build-version)",
