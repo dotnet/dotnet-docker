@@ -1273,6 +1273,135 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
+            "$(dotnet|8.0|product-version)-noble": {},
+            "8.0-noble": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/8.0/noble/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "noble",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-amd64": {},
+                "8.0-noble-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/8.0/noble/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "noble",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-arm64v8": {},
+                "8.0-noble-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-noble-chiseled": {},
+            "8.0-noble-chiseled": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/8.0/noble-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-amd64": {},
+                "8.0-noble-chiseled-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/8.0/noble-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-arm64v8": {},
+                "8.0-noble-chiseled-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-noble-chiseled-extra": {},
+            "8.0-noble-chiseled-extra": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/8.0/noble-chiseled-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.extra",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-extra-amd64": {},
+                "8.0-noble-chiseled-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/8.0/noble-chiseled-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.extra",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-extra-arm64v8": {},
+                "8.0-noble-chiseled-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
             "$(dotnet|8.0|product-version)-jammy": {},
             "8.0-jammy": {}
           },
@@ -3610,6 +3739,167 @@
                 "8.0-alpine3.19-arm64v8": {}
               },
               "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-noble": {},
+            "8.0-noble": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/noble/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "noble",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-amd64": {},
+                "8.0-noble-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/noble/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "noble",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-arm64v8": {},
+                "8.0-noble-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-noble-chiseled": {},
+            "8.0-noble-chiseled": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/noble-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-amd64": {},
+                "8.0-noble-chiseled-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/noble-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-arm64v8": {},
+                "8.0-noble-chiseled-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-noble-chiseled-extra": {},
+            "8.0-noble-chiseled-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/noble-chiseled-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-extra-amd64": {},
+                "8.0-noble-chiseled-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-amd64"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):8.0-noble-chiseled-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/noble-chiseled-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-extra-arm64v8": {},
+                "8.0-noble-chiseled-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):8.0-noble-chiseled-arm64v8"
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -6283,6 +6573,241 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
+            "$(dotnet|8.0|product-version)-noble": {},
+            "8.0-noble": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/noble/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "noble",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-amd64": {},
+                "8.0-noble-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/noble/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "noble",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-arm64v8": {},
+                "8.0-noble-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-noble-chiseled": {},
+            "8.0-noble-chiseled": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/noble-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-amd64": {},
+                "8.0-noble-chiseled-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/noble-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-arm64v8": {},
+                "8.0-noble-chiseled-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-noble-chiseled-extra": {},
+            "8.0-noble-chiseled-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/noble-chiseled-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-extra-amd64": {},
+                "8.0-noble-chiseled-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-amd64"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):8.0-noble-chiseled-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/noble-chiseled-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-extra-arm64v8": {},
+                "8.0-noble-chiseled-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):8.0-noble-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:aspnet):8.0-noble-chiseled-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-noble-chiseled-composite-extra": {},
+            "8.0-noble-chiseled-composite-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/noble-chiseled-composite-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite.extra",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-composite-extra-amd64": {},
+                "8.0-noble-chiseled-composite-extra-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/noble-chiseled-composite-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite.extra",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-composite-extra-arm64v8": {},
+                "8.0-noble-chiseled-composite-extra-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|product-version)-noble-chiseled-composite": {},
+            "8.0-noble-chiseled-composite": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/noble-chiseled-composite/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-composite-amd64": {},
+                "8.0-noble-chiseled-composite-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/noble-chiseled-composite/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "os": "linux",
+              "osVersion": "noble-chiseled",
+              "tags": {
+                "$(dotnet|8.0|product-version)-noble-chiseled-composite-arm64v8": {},
+                "8.0-noble-chiseled-composite-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
             "$(dotnet|8.0|product-version)-jammy": {},
             "8.0-jammy": {}
           },
@@ -8886,6 +9411,43 @@
               "tags": {
                 "$(sdk|8.0|product-version)-alpine3.19-arm64v8": {},
                 "8.0-alpine3.19-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|8.0|product-version)",
+          "sharedTags": {
+            "$(sdk|8.0|product-version)-noble": {},
+            "8.0-noble": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/8.0/noble/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "noble",
+              "tags": {
+                "$(sdk|8.0|product-version)-noble-amd64": {},
+                "8.0-noble-amd64": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "architecture": "arm64",
+              "dockerfile": "src/sdk/8.0/noble/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "noble",
+              "tags": {
+                "$(sdk|8.0|product-version)-noble-arm64v8": {},
+                "8.0-noble-arm64v8": {}
               },
               "variant": "v8"
             }

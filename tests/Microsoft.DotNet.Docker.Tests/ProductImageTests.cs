@@ -364,7 +364,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "prebuilt-ca-certificates",
                         "tzdata"
                     },
-                { OS: OS.JammyChiseled } => new[]
+                { OS: string os } when os.Contains(OS.ChiseledSuffix) => new[]
                     {
                         "base-files"
                     },
@@ -408,6 +408,14 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libc6",
                         "libgcc-s1",
                         "libssl3",
+                        "zlib1g"
+                    },
+                { OS: string os } when os.Contains(OS.Noble) => new[]
+                    {
+                        "ca-certificates",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
                         "zlib1g"
                     },
                 { OS: OS.Focal } => new[]
@@ -464,7 +472,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "icu",
                         "tzdata"
                     },
-                { OS: OS.JammyChiseled } => new[]
+                { OS: string os } when os.Contains(OS.ChiseledSuffix) => new[]
                     {
                         "libicu70",
                         "tzdata"
