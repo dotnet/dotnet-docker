@@ -161,9 +161,9 @@
 
     "monitor|9.0|build-version": "9.0.0-preview.4.24222.6",
     "monitor|9.0|product-version": "9.0.0-preview.4",
-    "monitor|9.0|tag|fixed": "$(monitor|9.0|product-version)",
-    "monitor|9.0|tag|majorminor": "9.0-preview",
-    "monitor|9.0|tag|major": "9-preview",
+    "monitor|9.0|fixed-tag": "$(monitor|9.0|product-version)",
+    "monitor|9.0|floating-tag|majorminor": "9.0-preview",
+    "monitor|9.0|floating-tag|major": "9-preview",
     "monitor-base|9.0|linux|x64|sha": "1cbff1f9cc5dd8c9970f2ed42c5c79a8f5ffd4a5b1bcbcdeee37a7558d8dfd6ee0cbae409dfcfc2987a899dadead77a521072ea1d11f0663a76fa43080bcdd0f",
     "monitor-base|9.0|linux|arm64|sha": "3e67ddef68003497e533ca7ac7c40353e71d772c7bb25908c5487c9ad07990d59c1796bd41861570e637ae98b1490e3c1a941c83858da182be9c7d7f02114b78",
     "monitor-ext-azureblobstorage|9.0|linux|x64|sha": "9c1ac825fb3081ae2a0be1276c911d57848345e8369b1527cec9bad3fc1ac199a252d9fc6535f373e0fe990f74ac33ceb4cbb400db811863b906275df7a7b235",
