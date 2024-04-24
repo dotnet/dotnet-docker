@@ -76,6 +76,8 @@ Tags | Dockerfile | OS Version
 8.0.204-alpine3.18-aot-amd64, 8.0-alpine3.18-aot-amd64, 8.0-alpine-aot-amd64, 8.0.204-alpine3.18-aot, 8.0-alpine3.18-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.18-aot/amd64/Dockerfile) | Alpine 3.18
 8.0.204-alpine3.19-amd64, 8.0-alpine3.19-amd64, 8.0.204-alpine3.19, 8.0-alpine3.19, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
 8.0.204-alpine3.19-aot-amd64, 8.0-alpine3.19-aot-amd64, 8.0.204-alpine3.19-aot, 8.0-alpine3.19-aot, 8.0-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.19-aot/amd64/Dockerfile) | Alpine 3.19
+8.0.204-noble-amd64, 8.0-noble-amd64, 8.0.204-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+8.0.204-noble-aot-amd64, 8.0-noble-aot-amd64, 8.0.204-noble-aot, 8.0-noble-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/noble-aot/amd64/Dockerfile) | Ubuntu 24.04
 8.0.204-jammy-amd64, 8.0-jammy-amd64, 8.0.204-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 8.0.204-jammy-aot-amd64, 8.0-jammy-aot-amd64, 8.0.204-jammy-aot, 8.0-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy-aot/amd64/Dockerfile) | Ubuntu 22.04
 8.0.204-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.204-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
@@ -102,8 +104,8 @@ Tags | Dockerfile | OS Version
 9.0.100-preview.4-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.100-preview.4-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.4, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 9.0.100-preview.4-alpine3.19-amd64, 9.0-preview-alpine3.19-amd64, 9.0-preview-alpine-amd64, 9.0.100-preview.4-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
 9.0.100-preview.4-alpine3.19-aot-amd64, 9.0-preview-alpine3.19-aot-amd64, 9.0-preview-alpine-aot-amd64, 9.0.100-preview.4-alpine3.19-aot, 9.0-preview-alpine3.19-aot, 9.0-preview-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.19-aot/amd64/Dockerfile) | Alpine 3.19
-9.0.100-preview.4-jammy-amd64, 9.0-preview-jammy-amd64, 9.0.100-preview.4-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-9.0.100-preview.4-jammy-aot-amd64, 9.0-preview-jammy-aot-amd64, 9.0.100-preview.4-jammy-aot, 9.0-preview-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy-aot/amd64/Dockerfile) | Ubuntu 22.04
+9.0.100-preview.4-noble-amd64, 9.0-preview-noble-amd64, 9.0.100-preview.4-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+9.0.100-preview.4-noble-aot-amd64, 9.0-preview-noble-aot-amd64, 9.0.100-preview.4-noble-aot, 9.0-preview-noble-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/noble-aot/amd64/Dockerfile) | Ubuntu 24.04
 9.0.100-preview.4-azurelinux3.0-amd64, 9.0-preview-azurelinux3.0-amd64, 9.0.100-preview.4-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 9.0.100-preview.4-azurelinux3.0-aot-amd64, 9.0-preview-azurelinux3.0-aot-amd64, 9.0.100-preview.4-azurelinux3.0-aot, 9.0-preview-azurelinux3.0-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
 
@@ -115,6 +117,8 @@ Tags | Dockerfile | OS Version
 8.0.204-alpine3.18-aot-arm64v8, 8.0-alpine3.18-aot-arm64v8, 8.0-alpine-aot-arm64v8, 8.0.204-alpine3.18-aot, 8.0-alpine3.18-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.18-aot/arm64v8/Dockerfile) | Alpine 3.18
 8.0.204-alpine3.19-arm64v8, 8.0-alpine3.19-arm64v8, 8.0.204-alpine3.19, 8.0-alpine3.19, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
 8.0.204-alpine3.19-aot-arm64v8, 8.0-alpine3.19-aot-arm64v8, 8.0.204-alpine3.19-aot, 8.0-alpine3.19-aot, 8.0-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.19-aot/arm64v8/Dockerfile) | Alpine 3.19
+8.0.204-noble-arm64v8, 8.0-noble-arm64v8, 8.0.204-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+8.0.204-noble-aot-arm64v8, 8.0-noble-aot-arm64v8, 8.0.204-noble-aot, 8.0-noble-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/noble-aot/arm64v8/Dockerfile) | Ubuntu 24.04
 8.0.204-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.204-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.204-jammy-aot-arm64v8, 8.0-jammy-aot-arm64v8, 8.0.204-jammy-aot, 8.0-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy-aot/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.204-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.204-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
@@ -141,8 +145,8 @@ Tags | Dockerfile | OS Version
 9.0.100-preview.4-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.100-preview.4-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.4, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 9.0.100-preview.4-alpine3.19-arm64v8, 9.0-preview-alpine3.19-arm64v8, 9.0-preview-alpine-arm64v8, 9.0.100-preview.4-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
 9.0.100-preview.4-alpine3.19-aot-arm64v8, 9.0-preview-alpine3.19-aot-arm64v8, 9.0-preview-alpine-aot-arm64v8, 9.0.100-preview.4-alpine3.19-aot, 9.0-preview-alpine3.19-aot, 9.0-preview-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.19-aot/arm64v8/Dockerfile) | Alpine 3.19
-9.0.100-preview.4-jammy-arm64v8, 9.0-preview-jammy-arm64v8, 9.0.100-preview.4-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-9.0.100-preview.4-jammy-aot-arm64v8, 9.0-preview-jammy-aot-arm64v8, 9.0.100-preview.4-jammy-aot, 9.0-preview-jammy-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy-aot/arm64v8/Dockerfile) | Ubuntu 22.04
+9.0.100-preview.4-noble-arm64v8, 9.0-preview-noble-arm64v8, 9.0.100-preview.4-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.100-preview.4-noble-aot-arm64v8, 9.0-preview-noble-aot-arm64v8, 9.0.100-preview.4-noble-aot, 9.0-preview-noble-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/noble-aot/arm64v8/Dockerfile) | Ubuntu 24.04
 9.0.100-preview.4-azurelinux3.0-arm64v8, 9.0-preview-azurelinux3.0-arm64v8, 9.0.100-preview.4-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.100-preview.4-azurelinux3.0-aot-arm64v8, 9.0-preview-azurelinux3.0-aot-arm64v8, 9.0.100-preview.4-azurelinux3.0-aot, 9.0-preview-azurelinux3.0-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
 
@@ -169,7 +173,6 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.100-preview.4-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-preview.4-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.4, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-9.0.100-preview.4-jammy-arm32v7, 9.0-preview-jammy-arm32v7, 9.0.100-preview.4-jammy, 9.0-preview-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile

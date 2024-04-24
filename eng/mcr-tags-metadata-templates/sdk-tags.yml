@@ -5,9 +5,9 @@ $(McrTagsYmlTagGroup:9.0-preview-alpine3.19-amd64)
     customSubTableTitle: .NET 9 Preview Tags
 $(McrTagsYmlTagGroup:9.0-preview-alpine3.19-aot-amd64)
     customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-jammy-amd64)
+$(McrTagsYmlTagGroup:9.0-preview-noble-amd64)
     customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-jammy-aot-amd64)
+$(McrTagsYmlTagGroup:9.0-preview-noble-aot-amd64)
     customSubTableTitle: .NET 9 Preview Tags
 $(McrTagsYmlTagGroup:9.0-preview-azurelinux3.0-amd64)
     customSubTableTitle: .NET 9 Preview Tags
@@ -18,6 +18,8 @@ $(McrTagsYmlTagGroup:8.0-alpine3.18-amd64)
 $(McrTagsYmlTagGroup:8.0-alpine3.18-aot-amd64)
 $(McrTagsYmlTagGroup:8.0-alpine3.19-amd64)
 $(McrTagsYmlTagGroup:8.0-alpine3.19-aot-amd64)
+$(McrTagsYmlTagGroup:8.0-noble-amd64)
+$(McrTagsYmlTagGroup:8.0-noble-aot-amd64)
 $(McrTagsYmlTagGroup:8.0-jammy-amd64)
 $(McrTagsYmlTagGroup:8.0-jammy-aot-amd64)
 $(McrTagsYmlTagGroup:8.0-azurelinux3.0-amd64)
@@ -43,9 +45,9 @@ $(McrTagsYmlTagGroup:9.0-preview-alpine3.19-arm64v8)
     customSubTableTitle: .NET 9 Preview Tags
 $(McrTagsYmlTagGroup:9.0-preview-alpine3.19-aot-arm64v8)
     customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-jammy-arm64v8)
+$(McrTagsYmlTagGroup:9.0-preview-noble-arm64v8)
     customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-jammy-aot-arm64v8)
+$(McrTagsYmlTagGroup:9.0-preview-noble-aot-arm64v8)
     customSubTableTitle: .NET 9 Preview Tags
 $(McrTagsYmlTagGroup:9.0-preview-azurelinux3.0-arm64v8)
     customSubTableTitle: .NET 9 Preview Tags
@@ -56,6 +58,8 @@ $(McrTagsYmlTagGroup:8.0-alpine3.18-arm64v8)
 $(McrTagsYmlTagGroup:8.0-alpine3.18-aot-arm64v8)
 $(McrTagsYmlTagGroup:8.0-alpine3.19-arm64v8)
 $(McrTagsYmlTagGroup:8.0-alpine3.19-aot-arm64v8)
+$(McrTagsYmlTagGroup:8.0-noble-arm64v8)
+$(McrTagsYmlTagGroup:8.0-noble-aot-arm64v8)
 $(McrTagsYmlTagGroup:8.0-jammy-arm64v8)
 $(McrTagsYmlTagGroup:8.0-jammy-aot-arm64v8)
 $(McrTagsYmlTagGroup:8.0-azurelinux3.0-arm64v8)
@@ -76,8 +80,6 @@ $(McrTagsYmlTagGroup:6.0-jammy-arm64v8)
 $(McrTagsYmlTagGroup:6.0-cbl-mariner2.0-arm64v8)
 $(McrTagsYmlTagGroup:6.0-focal-arm64v8)
 $(McrTagsYmlTagGroup:9.0-preview-bookworm-slim-arm32v7)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-jammy-arm32v7)
     customSubTableTitle: .NET 9 Preview Tags
 $(McrTagsYmlTagGroup:8.0-bookworm-slim-arm32v7)
 $(McrTagsYmlTagGroup:8.0-alpine3.18-arm32v7)
