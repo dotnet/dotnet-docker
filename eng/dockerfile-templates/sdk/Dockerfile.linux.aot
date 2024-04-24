@@ -1,0 +1,61 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set baseImageTag to cat("$REPO:", VARIABLES[cat("sdk|", dotnetVersion, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set isAzureLinux to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
+    set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
+    set ubuntuVersion to when(find(OS_VERSION, "jammy") >= 0, "jammy", "noble") ^
+
+    set isMultiArch to isUbuntu ^
+    set buildArchShortName to when(ARCH_SHORT = "arm64", ARCH_SHORT, "amd64") ^
+    set buildArchLongName to when(ARCH_SHORT = "arm64", "aarch64", "x86-64") ^
+    set targetArchLongName to when(ARCH_SHORT = "arm64", "x86-64", "aarch64") ^
+    set targetArchShortName to when(ARCH_SHORT = "arm64", "amd64", "arm64") ^
+
+    set pkgs to cat(sort(when(isAlpine,
+        [
+            "build-base",
+            "clang",
+            "zlib-dev"
+        ],
+        when(isAzureLinux,
+            [
+                "build-essential",
+                "clang",
+                "zlib-devel"
+            ],
+            [
+                "clang",
+                cat("gcc-", targetArchLongName, "-linux-gnu"),
+                cat("zlib1g-dev:", targetArchShortName),
+                "zlib1g-dev",
+                "llvm"
+            ])))) ^
+
+    set sourcesListFilePath to when(OS_VERSION = "jammy",
+        cat("/etc/apt/sources.list.d/", targetArchShortName, ".list"),
+        cat("/etc/apt/sources.list.d/", targetArchShortName, ".sources")) ^
+
+    set ubuntuPortsUrl to when(ARCH_SHORT = "arm64",
+            "http://archive.ubuntu.com/ubuntu/",
+            "http://ports.ubuntu.com/ubuntu-ports/")
+
+}}# syntax=docker/dockerfile:1
+ARG REPO=mcr.microsoft.com/dotnet/sdk
+FROM {{baseImageTag}}
+
+{{if isMultiArch:{{if match(OS_VERSION, "jammy"):RUN echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} {{OS_VERSION}} main restricted" > {{sourcesListFilePath}} \
+    && echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} {{OS_VERSION}}-updates main restricted" >> {{sourcesListFilePath}} \
+    && sed -i -e 's/deb http/deb [arch={{buildArchShortName}}] http/g' /etc/apt/sources.list \^else:COPY <<EOF {{sourcesListFilePath}}
+Types: deb
+URIs: {{ubuntuPortsUrl}}
+Suites: {{OS_VERSION}} {{OS_VERSION}}-updates
+Components: main restricted
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+Architectures: {{targetArchShortName}}
+EOF
+
+RUN sed -i '/Signed-By/ a Architectures: {{buildArchShortName}}' /etc/apt/sources.list.d/ubuntu.sources \}}
+    && dpkg --add-architecture {{targetArchShortName}} \
+    && {{InsertTemplate("../Dockerfile.linux.install-pkgs", [ "pkgs": pkgs ])}}^else:RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs", [ "pkgs": pkgs ])}}}}

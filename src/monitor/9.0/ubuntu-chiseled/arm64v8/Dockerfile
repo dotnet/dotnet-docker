@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 
 # Installer image
-FROM arm64v8/buildpack-deps:jammy-curl AS installer
+FROM arm64v8/buildpack-deps:noble-curl AS installer
 
 # Retrieve .NET Monitor extensions
 RUN dotnet_monitor_extension_version=9.0.0-preview.3.24205.3 \
