@@ -3,7 +3,7 @@
     "aspire-dashboard|8.0|build-version": "8.0.0-preview.6.24214.1",
     "aspire-dashboard|8.0|product-version": "8.0.0-preview.6",
     "aspire-dashboard|8.0|fixed-tag": "$(aspire-dashboard|8.0|product-version)",
-    "aspire-dashboard|8.0|floating-tag": "8.0-preview",
+    "aspire-dashboard|8.0|minor-tag": "8.0-preview",
     "aspire-dashboard|8.0|linux|x64|sha": "aae0b7d83b1de16b0f08a6dd5a3533e4155ca2462a215725fb4e67b0b1b09b46ce0086838744f7644ec1ea398947e53384995c637cf1710b70255e69b11aa108",
     "aspire-dashboard|8.0|linux|arm64|sha": "5cd0b486435bd330fd855345eb247b984fc82a540eb3178eda060e4a0da4c706328ec9836594823fcfbcae8978e0b526a35b73334b945db61164fbef1a1bcc9d",
 
@@ -104,7 +104,7 @@
     "dotnet|8.0|product-version": "8.0.4",
     "dotnet|9.0|product-version": "9.0.0-preview.4",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
-    "dotnet|9.0|floating-tag": "9.0-preview",
+    "dotnet|9.0|minor-tag": "9.0-preview",
 
     "libicu|bionic": 60,
     "libicu|bookworm": 72,
@@ -294,7 +294,7 @@
     "sdk|9.0|build-version": "9.0.100-preview.4.24224.3",
     "sdk|9.0|product-version": "9.0.100-preview.4",
     "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)",
-    "sdk|9.0|floating-tag": "$(dotnet|9.0|floating-tag)",
+    "sdk|9.0|minor-tag": "$(dotnet|9.0|minor-tag)",
     "sdk|9.0|linux-musl|arm|sha": "28d67f037722f38f7aaf52a744daf99669bcafd9014eaa23f424286915906e64e7e17d916729dfa49881c9edd15f99c966cd5582fad62e36c34dedb76f27ae35",
     "sdk|9.0|linux-musl|arm64|sha": "b073d38dca54764823b83e1a9af34a80daa0034be78d27bc6f05b515f68f12d3641f24159f96b5161bbf81b416627fca1cd570f1cc806cabdd03613807f1b052",
     "sdk|9.0|linux-musl|x64|sha": "3aab87142c017f43fe85a1e97c3aa5f2f070509fd86e73614b7fcee67d85f5b4671b3d571026e2a5bdbb9505cbbdf1ce604ffc58526ac72bc80a1933ee0406b1",

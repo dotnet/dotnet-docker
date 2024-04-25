@@ -2272,8 +2272,8 @@
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)": {},
             "$(dotnet|9.0|fixed-tag)-bookworm-slim": {},
-            "$(dotnet|9.0|floating-tag)": {},
-            "$(dotnet|9.0|floating-tag)-bookworm-slim": {},
+            "$(dotnet|9.0|minor-tag)": {},
+            "$(dotnet|9.0|minor-tag)-bookworm-slim": {},
             "latest": {}
           },
           "platforms": [
@@ -2284,7 +2284,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-bookworm-slim-amd64": {},
-                "$(dotnet|9.0|floating-tag)-bookworm-slim-amd64": {}
+                "$(dotnet|9.0|minor-tag)-bookworm-slim-amd64": {}
               }
             },
             {
@@ -2295,7 +2295,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-bookworm-slim-arm32v7": {},
-                "$(dotnet|9.0|floating-tag)-bookworm-slim-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-bookworm-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -2307,7 +2307,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-bookworm-slim-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-bookworm-slim-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2317,8 +2317,8 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.19": {},
-            "$(dotnet|9.0|floating-tag)-alpine3.19": {},
-            "$(dotnet|9.0|floating-tag)-alpine": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.19": {},
+            "$(dotnet|9.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -2328,8 +2328,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-amd64": {},
+                "$(dotnet|9.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -2340,8 +2340,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2351,8 +2351,8 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.19-aot": {},
-            "$(dotnet|9.0|floating-tag)-alpine3.19-aot": {},
-            "$(dotnet|9.0|floating-tag)-alpine-aot": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.19-aot": {},
+            "$(dotnet|9.0|minor-tag)-alpine-aot": {}
           },
           "platforms": [
             {
@@ -2362,15 +2362,15 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-aot-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-aot-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine-aot-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-aot-amd64": {},
+                "$(dotnet|9.0|minor-tag)-alpine-aot-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-alpine3.19-aot-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.19-aot-amd64"
                   ]
                 }
               ]
@@ -2383,8 +2383,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-aot-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-aot-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine-aot-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-aot-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-alpine-aot-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2392,7 +2392,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-alpine3.19-aot-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.19-aot-arm64v8"
                   ]
                 }
               ]
@@ -2403,8 +2403,8 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.19-extra": {},
-            "$(dotnet|9.0|floating-tag)-alpine3.19-extra": {},
-            "$(dotnet|9.0|floating-tag)-alpine-extra": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.19-extra": {},
+            "$(dotnet|9.0|minor-tag)-alpine-extra": {}
           },
           "platforms": [
             {
@@ -2414,15 +2414,15 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-extra-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-extra-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine-extra-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-extra-amd64": {},
+                "$(dotnet|9.0|minor-tag)-alpine-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-alpine3.19-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.19-amd64"
                   ]
                 }
               ]
@@ -2435,8 +2435,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-extra-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-extra-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine-extra-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-extra-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-alpine-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2444,7 +2444,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-alpine3.19-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.19-arm64v8"
                   ]
                 }
               ]
@@ -2455,7 +2455,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble": {},
-            "$(dotnet|9.0|floating-tag)-noble": {}
+            "$(dotnet|9.0|minor-tag)-noble": {}
           },
           "platforms": [
             {
@@ -2465,7 +2465,7 @@
               "osVersion": "noble",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-amd64": {}
               }
             },
             {
@@ -2476,7 +2476,7 @@
               "osVersion": "noble",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2486,7 +2486,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble-chiseled": {},
-            "$(dotnet|9.0|floating-tag)-noble-chiseled": {}
+            "$(dotnet|9.0|minor-tag)-noble-chiseled": {}
           },
           "platforms": [
             {
@@ -2496,21 +2496,21 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-amd64"
                   ]
                 },
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-amd64"
                   ]
                 }
               ]
@@ -2523,7 +2523,7 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2531,14 +2531,14 @@
                   "name": "test-dependencies",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-arm64v8"
                   ]
                 },
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-arm64v8"
                   ]
                 }
               ]
@@ -2549,7 +2549,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble-chiseled-aot": {},
-            "$(dotnet|9.0|floating-tag)-noble-chiseled-aot": {}
+            "$(dotnet|9.0|minor-tag)-noble-chiseled-aot": {}
           },
           "platforms": [
             {
@@ -2559,14 +2559,14 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-aot-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-aot-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-aot-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-aot-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-aot-amd64"
                   ]
                 }
               ]
@@ -2579,7 +2579,7 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-aot-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-aot-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-aot-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2587,7 +2587,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-aot-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-aot-arm64v8"
                   ]
                 }
               ]
@@ -2598,7 +2598,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble-chiseled-extra": {},
-            "$(dotnet|9.0|floating-tag)-noble-chiseled-extra": {}
+            "$(dotnet|9.0|minor-tag)-noble-chiseled-extra": {}
           },
           "platforms": [
             {
@@ -2608,14 +2608,14 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-extra-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-extra-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-amd64"
                   ]
                 }
               ]
@@ -2628,7 +2628,7 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-extra-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-extra-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2636,7 +2636,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-arm64v8"
                   ]
                 }
               ]
@@ -2647,7 +2647,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0": {}
           },
           "platforms": [
             {
@@ -2657,7 +2657,7 @@
               "osVersion": "azurelinux3.0",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-amd64": {}
               }
             },
             {
@@ -2668,7 +2668,7 @@
               "osVersion": "azurelinux3.0",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2678,7 +2678,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless": {}
           },
           "platforms": [
             {
@@ -2688,14 +2688,14 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -2708,7 +2708,7 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2716,7 +2716,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -2727,7 +2727,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-aot": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-aot": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-aot": {}
           },
           "platforms": [
             {
@@ -2737,14 +2737,14 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-aot-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-aot-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-aot-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-aot-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-aot-amd64"
                   ]
                 }
               ]
@@ -2757,7 +2757,7 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-aot-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-aot-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-aot-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2765,7 +2765,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-aot-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-aot-arm64v8"
                   ]
                 }
               ]
@@ -2776,7 +2776,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-extra": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra": {}
           },
           "platforms": [
             {
@@ -2786,14 +2786,14 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-extra-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -2806,7 +2806,7 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2814,7 +2814,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -5114,7 +5114,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)": {},
-            "$(dotnet|9.0|floating-tag)": {},
+            "$(dotnet|9.0|minor-tag)": {},
             "latest": {}
           },
           "platforms": [
@@ -5128,7 +5128,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-bookworm-slim-amd64": {},
-                "$(dotnet|9.0|floating-tag)-bookworm-slim-amd64": {}
+                "$(dotnet|9.0|minor-tag)-bookworm-slim-amd64": {}
               }
             },
             {
@@ -5142,7 +5142,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-bookworm-slim-arm32v7": {},
-                "$(dotnet|9.0|floating-tag)-bookworm-slim-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-bookworm-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -5157,7 +5157,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-bookworm-slim-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-bookworm-slim-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5168,7 +5168,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-bookworm-slim": {},
-            "$(dotnet|9.0|floating-tag)-bookworm-slim": {}
+            "$(dotnet|9.0|minor-tag)-bookworm-slim": {}
           },
           "platforms": [
             {
@@ -5211,8 +5211,8 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.19": {},
-            "$(dotnet|9.0|floating-tag)-alpine3.19": {},
-            "$(dotnet|9.0|floating-tag)-alpine": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.19": {},
+            "$(dotnet|9.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -5225,8 +5225,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-amd64": {},
+                "$(dotnet|9.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -5240,8 +5240,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5251,7 +5251,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble": {},
-            "$(dotnet|9.0|floating-tag)-noble": {}
+            "$(dotnet|9.0|minor-tag)-noble": {}
           },
           "platforms": [
             {
@@ -5264,7 +5264,7 @@
               "osVersion": "noble",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-amd64": {}
               }
             },
             {
@@ -5278,7 +5278,7 @@
               "osVersion": "noble",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5288,7 +5288,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble-chiseled": {},
-            "$(dotnet|9.0|floating-tag)-noble-chiseled": {}
+            "$(dotnet|9.0|minor-tag)-noble-chiseled": {}
           },
           "platforms": [
             {
@@ -5301,14 +5301,14 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-amd64"
                   ]
                 }
               ]
@@ -5324,7 +5324,7 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -5332,7 +5332,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-arm64v8"
                   ]
                 }
               ]
@@ -5343,7 +5343,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble-chiseled-extra": {},
-            "$(dotnet|9.0|floating-tag)-noble-chiseled-extra": {}
+            "$(dotnet|9.0|minor-tag)-noble-chiseled-extra": {}
           },
           "platforms": [
             {
@@ -5356,21 +5356,21 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-extra-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-extra-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-amd64"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:runtime):$(dotnet|9.0|floating-tag)-noble-chiseled-amd64"
+                    "$(Repo:runtime):$(dotnet|9.0|minor-tag)-noble-chiseled-amd64"
                   ]
                 }
               ]
@@ -5386,7 +5386,7 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-extra-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-extra-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -5394,14 +5394,14 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-arm64v8"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:runtime):$(dotnet|9.0|floating-tag)-noble-chiseled-arm64v8"
+                    "$(Repo:runtime):$(dotnet|9.0|minor-tag)-noble-chiseled-arm64v8"
                   ]
                 }
               ]
@@ -5412,7 +5412,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0": {}
           },
           "platforms": [
             {
@@ -5425,7 +5425,7 @@
               "osVersion": "azurelinux3.0",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-amd64": {}
               }
             },
             {
@@ -5439,7 +5439,7 @@
               "osVersion": "azurelinux3.0",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5449,7 +5449,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless": {}
           },
           "platforms": [
             {
@@ -5462,14 +5462,14 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -5485,7 +5485,7 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -5493,7 +5493,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -5504,7 +5504,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-extra": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra": {}
           },
           "platforms": [
             {
@@ -5517,21 +5517,21 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-extra-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:runtime):$(dotnet|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:runtime):$(dotnet|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -5547,7 +5547,7 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -5555,14 +5555,14 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:runtime):$(dotnet|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:runtime):$(dotnet|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -5579,7 +5579,7 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-nanoserver-1809": {},
-                "$(dotnet|9.0|floating-tag)-nanoserver-1809": {}
+                "$(dotnet|9.0|minor-tag)-nanoserver-1809": {}
               }
             }
           ]
@@ -5594,7 +5594,7 @@
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-nanoserver-ltsc2022": {},
-                "$(dotnet|9.0|floating-tag)-nanoserver-ltsc2022": {}
+                "$(dotnet|9.0|minor-tag)-nanoserver-ltsc2022": {}
               }
             }
           ]
@@ -5609,7 +5609,7 @@
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2019": {},
-                "$(dotnet|9.0|floating-tag)-windowsservercore-ltsc2019": {}
+                "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2019": {}
               }
             }
           ]
@@ -5624,7 +5624,7 @@
               "osVersion": "windowsservercore-ltsc2022",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2022": {},
-                "$(dotnet|9.0|floating-tag)-windowsservercore-ltsc2022": {}
+                "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2022": {}
               }
             }
           ]
@@ -8482,7 +8482,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)": {},
-            "$(dotnet|9.0|floating-tag)": {},
+            "$(dotnet|9.0|minor-tag)": {},
             "latest": {}
           },
           "platforms": [
@@ -8496,7 +8496,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-bookworm-slim-amd64": {},
-                "$(dotnet|9.0|floating-tag)-bookworm-slim-amd64": {}
+                "$(dotnet|9.0|minor-tag)-bookworm-slim-amd64": {}
               }
             },
             {
@@ -8510,7 +8510,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-bookworm-slim-arm32v7": {},
-                "$(dotnet|9.0|floating-tag)-bookworm-slim-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-bookworm-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -8525,7 +8525,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-bookworm-slim-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-bookworm-slim-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8536,7 +8536,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-bookworm-slim": {},
-            "$(dotnet|9.0|floating-tag)-bookworm-slim": {}
+            "$(dotnet|9.0|minor-tag)-bookworm-slim": {}
           },
           "platforms": [
             {
@@ -8579,8 +8579,8 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.19": {},
-            "$(dotnet|9.0|floating-tag)-alpine3.19": {},
-            "$(dotnet|9.0|floating-tag)-alpine": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.19": {},
+            "$(dotnet|9.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -8593,8 +8593,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-amd64": {},
+                "$(dotnet|9.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -8608,8 +8608,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8619,8 +8619,8 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.19-composite": {},
-            "$(dotnet|9.0|floating-tag)-alpine3.19-composite": {},
-            "$(dotnet|9.0|floating-tag)-alpine-composite": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.19-composite": {},
+            "$(dotnet|9.0|minor-tag)-alpine-composite": {}
           },
           "platforms": [
             {
@@ -8633,8 +8633,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-composite-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-composite-amd64": {},
-                "$(dotnet|9.0|floating-tag)-alpine-composite-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-composite-amd64": {},
+                "$(dotnet|9.0|minor-tag)-alpine-composite-amd64": {}
               }
             },
             {
@@ -8648,8 +8648,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.19-composite-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine3.19-composite-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-alpine-composite-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.19-composite-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-alpine-composite-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8659,7 +8659,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble": {},
-            "$(dotnet|9.0|floating-tag)-noble": {}
+            "$(dotnet|9.0|minor-tag)-noble": {}
           },
           "platforms": [
             {
@@ -8672,7 +8672,7 @@
               "osVersion": "noble",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-amd64": {}
               }
             },
             {
@@ -8686,7 +8686,7 @@
               "osVersion": "noble",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8696,7 +8696,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble-chiseled": {},
-            "$(dotnet|9.0|floating-tag)-noble-chiseled": {}
+            "$(dotnet|9.0|minor-tag)-noble-chiseled": {}
           },
           "platforms": [
             {
@@ -8709,14 +8709,14 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-amd64"
                   ]
                 }
               ]
@@ -8732,7 +8732,7 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -8740,7 +8740,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-arm64v8"
                   ]
                 }
               ]
@@ -8751,7 +8751,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble-chiseled-extra": {},
-            "$(dotnet|9.0|floating-tag)-noble-chiseled-extra": {}
+            "$(dotnet|9.0|minor-tag)-noble-chiseled-extra": {}
           },
           "platforms": [
             {
@@ -8764,21 +8764,21 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-extra-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-extra-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-amd64"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:aspnet):$(dotnet|9.0|floating-tag)-noble-chiseled-amd64"
+                    "$(Repo:aspnet):$(dotnet|9.0|minor-tag)-noble-chiseled-amd64"
                   ]
                 }
               ]
@@ -8794,7 +8794,7 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-extra-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-extra-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -8802,14 +8802,14 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-noble-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-arm64v8"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:aspnet):$(dotnet|9.0|floating-tag)-noble-chiseled-arm64v8"
+                    "$(Repo:aspnet):$(dotnet|9.0|minor-tag)-noble-chiseled-arm64v8"
                   ]
                 }
               ]
@@ -8820,7 +8820,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble-chiseled-composite-extra": {},
-            "$(dotnet|9.0|floating-tag)-noble-chiseled-composite-extra": {}
+            "$(dotnet|9.0|minor-tag)-noble-chiseled-composite-extra": {}
           },
           "platforms": [
             {
@@ -8833,7 +8833,7 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-composite-extra-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-composite-extra-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-composite-extra-amd64": {}
               }
             },
             {
@@ -8847,7 +8847,7 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-composite-extra-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-composite-extra-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-composite-extra-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8857,7 +8857,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble-chiseled-composite": {},
-            "$(dotnet|9.0|floating-tag)-noble-chiseled-composite": {}
+            "$(dotnet|9.0|minor-tag)-noble-chiseled-composite": {}
           },
           "platforms": [
             {
@@ -8870,7 +8870,7 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-composite-amd64": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-composite-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-composite-amd64": {}
               }
             },
             {
@@ -8884,7 +8884,7 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-composite-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-noble-chiseled-composite-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-composite-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8894,7 +8894,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0": {}
           },
           "platforms": [
             {
@@ -8907,7 +8907,7 @@
               "osVersion": "azurelinux3.0",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-amd64": {}
               }
             },
             {
@@ -8921,7 +8921,7 @@
               "osVersion": "azurelinux3.0",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8931,7 +8931,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless": {}
           },
           "platforms": [
             {
@@ -8944,21 +8944,21 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -8974,7 +8974,7 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -8982,14 +8982,14 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -9000,7 +9000,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-extra": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra": {}
           },
           "platforms": [
             {
@@ -9013,21 +9013,21 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-extra-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -9043,7 +9043,7 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-extra-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -9051,14 +9051,14 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -9069,7 +9069,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-composite": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite": {}
           },
           "platforms": [
             {
@@ -9082,21 +9082,21 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-composite-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -9112,7 +9112,7 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-composite-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -9120,14 +9120,14 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -9138,7 +9138,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite-extra": {},
-            "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-composite-extra": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite-extra": {}
           },
           "platforms": [
             {
@@ -9151,21 +9151,21 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite-extra-amd64": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-composite-extra-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
                 }
               ]
@@ -9181,7 +9181,7 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-composite-extra-arm64v8": {},
-                "$(dotnet|9.0|floating-tag)-azurelinux3.0-distroless-composite-extra-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-composite-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -9189,14 +9189,14 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 },
                 {
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -9216,7 +9216,7 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-nanoserver-1809": {},
-                "$(dotnet|9.0|floating-tag)-nanoserver-1809": {}
+                "$(dotnet|9.0|minor-tag)-nanoserver-1809": {}
               }
             }
           ]
@@ -9234,7 +9234,7 @@
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-nanoserver-ltsc2022": {},
-                "$(dotnet|9.0|floating-tag)-nanoserver-ltsc2022": {}
+                "$(dotnet|9.0|minor-tag)-nanoserver-ltsc2022": {}
               }
             }
           ]
@@ -9252,7 +9252,7 @@
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2019": {},
-                "$(dotnet|9.0|floating-tag)-windowsservercore-ltsc2019": {}
+                "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2019": {}
               }
             }
           ]
@@ -9270,7 +9270,7 @@
               "osVersion": "windowsservercore-ltsc2022",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2022": {},
-                "$(dotnet|9.0|floating-tag)-windowsservercore-ltsc2022": {}
+                "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2022": {}
               }
             }
           ]
@@ -10856,7 +10856,7 @@
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
             "$(sdk|9.0|fixed-tag)": {},
-            "$(sdk|9.0|floating-tag)": {},
+            "$(sdk|9.0|minor-tag)": {},
             "latest": {}
           },
           "platforms": [
@@ -10870,7 +10870,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-bookworm-slim-amd64": {},
-                "$(sdk|9.0|floating-tag)-bookworm-slim-amd64": {}
+                "$(sdk|9.0|minor-tag)-bookworm-slim-amd64": {}
               }
             },
             {
@@ -10884,7 +10884,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-bookworm-slim-arm32v7": {},
-                "$(sdk|9.0|floating-tag)-bookworm-slim-arm32v7": {}
+                "$(sdk|9.0|minor-tag)-bookworm-slim-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -10899,7 +10899,7 @@
               "osVersion": "bookworm-slim",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-bookworm-slim-arm64v8": {},
-                "$(sdk|9.0|floating-tag)-bookworm-slim-arm64v8": {}
+                "$(sdk|9.0|minor-tag)-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -10910,7 +10910,7 @@
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
             "$(sdk|9.0|fixed-tag)-bookworm-slim": {},
-            "$(sdk|9.0|floating-tag)-bookworm-slim": {}
+            "$(sdk|9.0|minor-tag)-bookworm-slim": {}
           },
           "platforms": [
             {
@@ -10953,8 +10953,8 @@
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
             "$(sdk|9.0|fixed-tag)-alpine3.19": {},
-            "$(sdk|9.0|floating-tag)-alpine3.19": {},
-            "$(sdk|9.0|floating-tag)-alpine": {}
+            "$(sdk|9.0|minor-tag)-alpine3.19": {},
+            "$(sdk|9.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -10967,8 +10967,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-alpine3.19-amd64": {},
-                "$(sdk|9.0|floating-tag)-alpine3.19-amd64": {},
-                "$(sdk|9.0|floating-tag)-alpine-amd64": {}
+                "$(sdk|9.0|minor-tag)-alpine3.19-amd64": {},
+                "$(sdk|9.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -10982,8 +10982,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-alpine3.19-arm64v8": {},
-                "$(sdk|9.0|floating-tag)-alpine3.19-arm64v8": {},
-                "$(sdk|9.0|floating-tag)-alpine-arm64v8": {}
+                "$(sdk|9.0|minor-tag)-alpine3.19-arm64v8": {},
+                "$(sdk|9.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -10993,8 +10993,8 @@
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
             "$(sdk|9.0|fixed-tag)-alpine3.19-aot": {},
-            "$(sdk|9.0|floating-tag)-alpine3.19-aot": {},
-            "$(sdk|9.0|floating-tag)-alpine-aot": {}
+            "$(sdk|9.0|minor-tag)-alpine3.19-aot": {},
+            "$(sdk|9.0|minor-tag)-alpine-aot": {}
           },
           "platforms": [
             {
@@ -11007,15 +11007,15 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-alpine3.19-aot-amd64": {},
-                "$(sdk|9.0|floating-tag)-alpine3.19-aot-amd64": {},
-                "$(sdk|9.0|floating-tag)-alpine-aot-amd64": {}
+                "$(sdk|9.0|minor-tag)-alpine3.19-aot-amd64": {},
+                "$(sdk|9.0|minor-tag)-alpine-aot-amd64": {}
               },
               "customBuildLegGroups": [
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-alpine3.19-amd64"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.19-amd64"
                   ]
                 }
               ]
@@ -11031,8 +11031,8 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-alpine3.19-aot-arm64v8": {},
-                "$(sdk|9.0|floating-tag)-alpine3.19-aot-arm64v8": {},
-                "$(sdk|9.0|floating-tag)-alpine-aot-arm64v8": {}
+                "$(sdk|9.0|minor-tag)-alpine3.19-aot-arm64v8": {},
+                "$(sdk|9.0|minor-tag)-alpine-aot-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -11040,7 +11040,7 @@
                   "name": "pr-build",
                   "type": "Supplemental",
                   "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|floating-tag)-alpine3.19-arm64v8"
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.19-arm64v8"
                   ]
                 }
               ]
@@ -11051,7 +11051,7 @@
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
             "$(sdk|9.0|fixed-tag)-noble": {},
-            "$(sdk|9.0|floating-tag)-noble": {}
+            "$(sdk|9.0|minor-tag)-noble": {}
           },
           "platforms": [
             {
@@ -11064,7 +11064,7 @@
               "osVersion": "noble",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-noble-amd64": {},
-                "$(sdk|9.0|floating-tag)-noble-amd64": {}
+                "$(sdk|9.0|minor-tag)-noble-amd64": {}
               }
             },
             {
@@ -11078,7 +11078,7 @@
               "osVersion": "noble",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-noble-arm64v8": {},
-                "$(sdk|9.0|floating-tag)-noble-arm64v8": {}
+                "$(sdk|9.0|minor-tag)-noble-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -11088,7 +11088,7 @@
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
             "$(sdk|9.0|fixed-tag)-noble-aot": {},
-            "$(sdk|9.0|floating-tag)-noble-aot": {}
+            "$(sdk|9.0|minor-tag)-noble-aot": {}
           },
           "platforms": [
             {
@@ -11101,7 +11101,7 @@
               "osVersion": "noble",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-noble-aot-amd64": {},
-                "$(sdk|9.0|floating-tag)-noble-aot-amd64": {}
+                "$(sdk|9.0|minor-tag)-noble-aot-amd64": {}
               }
             },
             {
@@ -11115,7 +11115,7 @@
               "osVersion": "noble",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-noble-aot-arm64v8": {},
-                "$(sdk|9.0|floating-tag)-noble-aot-arm64v8": {}
+                "$(sdk|9.0|minor-tag)-noble-aot-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -11125,7 +11125,7 @@
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
             "$(sdk|9.0|fixed-tag)-azurelinux3.0": {},
-            "$(sdk|9.0|floating-tag)-azurelinux3.0": {}
+            "$(sdk|9.0|minor-tag)-azurelinux3.0": {}
           },
           "platforms": [
             {
@@ -11138,7 +11138,7 @@
               "osVersion": "azurelinux3.0",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-azurelinux3.0-amd64": {},
-                "$(sdk|9.0|floating-tag)-azurelinux3.0-amd64": {}
+                "$(sdk|9.0|minor-tag)-azurelinux3.0-amd64": {}
               }
             },
             {
@@ -11152,7 +11152,7 @@
               "osVersion": "azurelinux3.0",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-azurelinux3.0-arm64v8": {},
-                "$(sdk|9.0|floating-tag)-azurelinux3.0-arm64v8": {}
+                "$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -11162,7 +11162,7 @@
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
             "$(sdk|9.0|fixed-tag)-azurelinux3.0-aot": {},
-            "$(sdk|9.0|floating-tag)-azurelinux3.0-aot": {}
+            "$(sdk|9.0|minor-tag)-azurelinux3.0-aot": {}
           },
           "platforms": [
             {
@@ -11175,7 +11175,7 @@
               "osVersion": "azurelinux3.0",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-azurelinux3.0-aot-amd64": {},
-                "$(sdk|9.0|floating-tag)-azurelinux3.0-aot-amd64": {}
+                "$(sdk|9.0|minor-tag)-azurelinux3.0-aot-amd64": {}
               }
             },
             {
@@ -11189,7 +11189,7 @@
               "osVersion": "azurelinux3.0",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-azurelinux3.0-aot-arm64v8": {},
-                "$(sdk|9.0|floating-tag)-azurelinux3.0-aot-arm64v8": {}
+                "$(sdk|9.0|minor-tag)-azurelinux3.0-aot-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -11208,7 +11208,7 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-nanoserver-1809": {},
-                "$(sdk|9.0|floating-tag)-nanoserver-1809": {}
+                "$(sdk|9.0|minor-tag)-nanoserver-1809": {}
               }
             }
           ]
@@ -11226,7 +11226,7 @@
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-nanoserver-ltsc2022": {},
-                "$(sdk|9.0|floating-tag)-nanoserver-ltsc2022": {}
+                "$(sdk|9.0|minor-tag)-nanoserver-ltsc2022": {}
               }
             }
           ]
@@ -11244,7 +11244,7 @@
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-windowsservercore-ltsc2019": {},
-                "$(sdk|9.0|floating-tag)-windowsservercore-ltsc2019": {}
+                "$(sdk|9.0|minor-tag)-windowsservercore-ltsc2019": {}
               }
             }
           ]
@@ -11262,7 +11262,7 @@
               "osVersion": "windowsservercore-ltsc2022",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-windowsservercore-ltsc2022": {},
-                "$(sdk|9.0|floating-tag)-windowsservercore-ltsc2022": {}
+                "$(sdk|9.0|minor-tag)-windowsservercore-ltsc2022": {}
               }
             }
           ]
@@ -12122,7 +12122,7 @@
           "productVersion": "$(aspire-dashboard|8.0|product-version)",
           "sharedTags": {
             "$(aspire-dashboard|8.0|fixed-tag)": {},
-            "$(aspire-dashboard|8.0|floating-tag)": {},
+            "$(aspire-dashboard|8.0|minor-tag)": {},
             "latest": {}
           },
           "platforms": [
@@ -12136,7 +12136,7 @@
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
                 "$(aspire-dashboard|8.0|fixed-tag)-amd64": {},
-                "$(aspire-dashboard|8.0|floating-tag)-amd64": {}
+                "$(aspire-dashboard|8.0|minor-tag)-amd64": {}
               }
             },
             {
@@ -12150,7 +12150,7 @@
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
                 "$(aspire-dashboard|8.0|fixed-tag)-arm64v8": {},
-                "$(aspire-dashboard|8.0|floating-tag)-arm64v8": {}
+                "$(aspire-dashboard|8.0|minor-tag)-arm64v8": {}
               },
               "variant": "v8"
             }
