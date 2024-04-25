@@ -106,8 +106,6 @@ kubectl port-forward service/prometheus 9090
 
 View the Prometheus site at `http://localhost:9090`.
 
-You can re-run the load-test job on the `aspnetapp` site to generate data for Prometheus to collect via `dotnet-monitor`. You can run it multiple times to generate more traffic. It runs for a minute. The job needs to be deleted before it can be re-applied.
-
 It should looks something like the following image.
 
 <img width="1191" alt="image" src="https://user-images.githubusercontent.com/2608468/231349237-69bd3b08-57fd-4d87-9e16-1fdaf6087b34.png">
@@ -119,7 +117,6 @@ The "metrics explorer" icon to the left of the "Execute" button provides a list 
 Delete the resources (remote URL or local manifest).
 
 ```bash
-kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/dotnet-monitor.yaml
-kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/load-test.yaml
-kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/prometheus-app.yaml
+kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/dotnet-monitor.yaml
+kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/prometheus-app.yaml
 ```
