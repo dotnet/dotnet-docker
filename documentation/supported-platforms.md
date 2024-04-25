@@ -1,4 +1,4 @@
-# Supported Platform
+# Supported Platforms
 
 This document describes the platforms (OS and architectures) supported by the official .NET Docker images.
 

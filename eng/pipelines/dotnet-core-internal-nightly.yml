@@ -24,7 +24,7 @@ resources:
     name: dotnet/dotnet-docker-internal
 
 variables:
-- template: variables/internal-core.yml
+- template: /eng/pipelines/variables/internal-core.yml@self
 - name: officialBranches
   # comma-delimited list of branch names
   value: internal/release/nightly
@@ -39,11 +39,11 @@ variables:
   - name: publishRepoPrefix
     value: internal/private/
 
-stages:
-- template: stages/build-test-publish-repo.yml
+extends:
+  template: /eng/common/templates/1es-official.yml@self
   parameters:
-    internalProjectName: ${{ variables.internalProjectName }}
-    publicProjectName: ${{ variables.publicProjectName }}
-    linuxAmd64Pool:
-      name: NetCore1ESPool-Svc-Internal
-      demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
+    stages:
+    - template: /eng/pipelines/stages/build-test-publish-repo.yml@self
+      parameters:
+        internalProjectName: ${{ variables.internalProjectName }}
+        publicProjectName: ${{ variables.publicProjectName }}

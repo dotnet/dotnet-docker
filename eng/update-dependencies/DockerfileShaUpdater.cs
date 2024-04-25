@@ -1,5 +1,6 @@
-// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+//
 
 using System;
 using System.Collections.Generic;
@@ -62,12 +63,14 @@ namespace Dotnet.Docker
             // for the build-specific location and then falling back to the overall major/minor release location.
             _urls = new()
             {
-                { "powershell", new string[] { "https://pwshtool.blob.core.windows.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" } },
+                { "powershell", new string[] { "https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" } },
 
                 { "monitor", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
                 { "monitor-base", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-base-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
                 { "monitor-ext-azureblobstorage", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-azureblobstorage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
                 { "monitor-ext-s3storage", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-s3storage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
+
+                { "aspire-dashboard", [ $"$DOTNET_BASE_URL/aspire/$VERSION_DIR/aspire-dashboard-$OS-$ARCH.$ARCHIVE_EXT" ] },
 
                 { "runtime", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
                 { "runtime-host", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
@@ -177,8 +180,8 @@ namespace Dotnet.Docker
 
             usedBuildInfos = new IDependencyInfo[] { productInfo };
 
-            string? versionDir = _buildVersion;
-            string? versionFile = UpdateDependencies.ResolveProductVersion(_buildVersion, _options);
+            string versionDir = _buildVersion ?? "";
+            string versionFile = UpdateDependencies.ResolveProductVersion(versionDir, _options);
 
             string archiveExt;
             if (_os.Contains("win"))
@@ -192,6 +195,13 @@ namespace Dotnet.Docker
             else
             {
                 archiveExt = "tar.gz";
+            }
+
+            // Special case for Aspire Dashboard
+            // Remove once https://github.com/dotnet/aspire/issues/2035 is fixed.
+            if (_productName.Contains("aspire-dashboard"))
+            {
+                archiveExt = "zip";
             }
 
             string optionalOs = _os.Contains("rpm") ? string.Empty : $"-{_os}";
@@ -261,7 +271,8 @@ namespace Dotnet.Docker
         {
             if (!s_shaCache.TryGetValue(downloadUrl, out string? sha))
             {
-                sha = await GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(downloadUrl)
+                sha = await GetChecksumShaFromChecksumsFileAsync(downloadUrl)
+                    ?? await GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(downloadUrl)
                     ?? await GetDotNetReleaseChecksumsShaFromBuildVersionAsync(downloadUrl)
                     ?? await GetDotNetReleaseChecksumsShaFromPreviewVersionAsync(downloadUrl)
                     ?? await GetDotNetBinaryStorageChecksumsShaAsync(downloadUrl)
@@ -414,8 +425,19 @@ namespace Dotnet.Docker
                 return null;
             }
 
-            IDictionary<string, string> checksumEntries = await GetDotnetReleaseChecksums(version);
+            return GetProductChecksum(await GetDotnetReleaseChecksums(version), productDownloadUrl);
+        }
 
+        private async Task<string?> GetChecksumShaFromChecksumsFileAsync(string productDownloadUrl)
+        {
+            if (string.IsNullOrEmpty(_options.ChecksumsFile))
+                return null;
+
+            return GetProductChecksum(await GetChecksumsFromChecksumsFile(), productDownloadUrl);
+        }
+
+        private static string? GetProductChecksum(IDictionary<string, string> checksumEntries, string productDownloadUrl)
+        {
             string installerFileName = productDownloadUrl.Substring(productDownloadUrl.LastIndexOf('/') + 1);
 
             if (!checksumEntries.TryGetValue(installerFileName, out string? sha))
@@ -446,53 +468,83 @@ namespace Dotnet.Docker
             }
         }
 
+        private async Task<IDictionary<string, string>> GetChecksumsFromChecksumsFile()
+        {
+            return await GetChecksums(
+                _options.ChecksumsFile,
+                () =>
+                {
+                    Trace.TraceInformation($"Opening '{_options.ChecksumsFile}'.");
+                    return Task.FromResult(File.ReadAllText(_options.ChecksumsFile));
+                });
+        }
+
         private async Task<IDictionary<string, string>> GetDotnetReleaseChecksums(string? version)
         {
             string uri = $"{ReleaseDotnetBaseUrl}/checksums/{version}-sha.txt";
-            if (s_releaseChecksumCache.TryGetValue(uri, out Dictionary<string, string>? checksumEntries))
+
+            return await GetChecksums(
+                uri,
+                async () =>
+                {
+                    Trace.TraceInformation($"Downloading '{uri}'.");
+                    using (HttpResponseMessage response = await s_httpClient.GetAsync(ApplySasQueryStringIfNecessary(uri, _options.BinarySasQueryString)))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return await response.Content.ReadAsStringAsync();
+                        }
+                        else
+                        {
+                            Trace.TraceInformation($"Failed to find dotnet release checksums");
+                            return string.Empty;
+                        }
+                    }
+                });
+        }
+
+        private async Task<IDictionary<string, string>> GetChecksums(string sourceUrlOrPath, Func<Task<string>> getContentCallback)
+        {
+            if (s_releaseChecksumCache.TryGetValue(sourceUrlOrPath, out Dictionary<string, string>? checksumEntries))
             {
                 return checksumEntries;
             }
 
             checksumEntries = new Dictionary<string, string>();
-            s_releaseChecksumCache.Add(uri, checksumEntries);
+            s_releaseChecksumCache.Add(sourceUrlOrPath, checksumEntries);
 
-            Trace.TraceInformation($"Downloading '{uri}'.");
-            using (HttpResponseMessage response = await s_httpClient.GetAsync(ApplySasQueryStringIfNecessary(uri, _options.BinarySasQueryString)))
+            string content = await getContentCallback();
+
+            if (string.IsNullOrEmpty(content))
             {
-                if (response.IsSuccessStatusCode)
+                // Return empty dictionary since there are no checksums
+                return checksumEntries;
+            }
+
+            string[] checksumLines = content.Replace("\r\n", "\n").Split("\n", StringSplitOptions.RemoveEmptyEntries);
+
+            /**
+                Sometimes the checksum file starts with the following line:
+
+                # Hash: SHA512
+
+                Other times the first line is the first checksum entry. This
+                happens sometimes for preview releases.
+            **/
+            int firstChecksumEntry = checksumLines[0].Contains("Hash") ? 1 : 0;
+            for (int i = firstChecksumEntry; i < checksumLines.Length; i++)
+            {
+                string[] parts = checksumLines[i].Split(" ");
+                if (parts.Length != 2)
                 {
-                    string checksums = await response.Content.ReadAsStringAsync();
-                    string[] checksumLines = checksums.Replace("\r\n", "\n").Split("\n", StringSplitOptions.RemoveEmptyEntries);
-
-                    /**
-                        Sometimes the checksum file starts with the following line:
-
-                        # Hash: SHA512
-
-                        Other times the first line is the first checksum entry. This
-                        happens sometimes for preview releases.
-                    **/
-                    int firstChecksumEntry = checksumLines[0].Contains("Hash") ? 1 : 0;
-                    for (int i = firstChecksumEntry; i < checksumLines.Length; i++)
-                    {
-                        string[] parts = checksumLines[i].Split(" ");
-                        if (parts.Length != 2)
-                        {
-                            Trace.TraceError($"Checksum file is not in the expected format: {uri}");
-                        }
-
-                        string fileName = parts[1];
-                        string checksum = parts[0];
-
-                        checksumEntries.Add(fileName, checksum);
-                        Trace.TraceInformation($"Parsed checksum '{checksum}' for '{fileName}'");
-                    }
+                    Trace.TraceError($"Checksum file is not in the expected format: {sourceUrlOrPath}");
                 }
-                else
-                {
-                    Trace.TraceInformation($"Failed to find dotnet release checksums");
-                }
+
+                string fileName = parts[1];
+                string checksum = parts[0];
+
+                checksumEntries.Add(fileName, checksum);
+                Trace.TraceInformation($"Parsed checksum '{checksum}' for '{fileName}'");
             }
 
             return checksumEntries;

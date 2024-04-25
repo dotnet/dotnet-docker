@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -36,14 +37,12 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 if (imageData.IsArm)
                 {
-                    // PowerShell needs support for Arm-based Alpine (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)
-                    reason = "PowerShell does not have Alpine arm images, skip testing";
+                    reason = "PowerShell does not support Arm-based Alpine, skip testing (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)";
                     return false;
                 }
-                else if (imageData.Version.Major == 6 && imageData.OS.Contains("3.18"))
+                else if (imageData.Version.Major == 6 && imageData.OS.Contains("3.19"))
                 {
-                    // PowerShell does not support Alpine 3.18 yet (https://github.com/PowerShell/PowerShell/issues/19703)
-                    reason = "Powershell does not support Alpine 3.18 yet, skip testing";
+                    reason = "Powershell does not support Alpine 3.19 yet, skip testing (https://github.com/PowerShell/PowerShell/issues/20945)";
                     return false;
                 }
             }
@@ -59,6 +58,38 @@ namespace Microsoft.DotNet.Docker.Tests
                 // Filter the image data down to the distinct SDK OSes
                 .Distinct(new SdkImageDataEqualityComparer())
                 .Select(imageData => new object[] { imageData });
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public async void VerifyBlazorWasmScenario(ProductImageData imageData)
+        {
+            // Disable test since `dotnet workload install` does not work with an empty NuGet config.
+            return;
+
+            bool isAlpine = imageData.OS.StartsWith(OS.Alpine);
+
+            // Microsoft.NETCore.App.Runtime.Mono.linux-musl-arm* package does not exist
+            if (isAlpine && imageData.IsArm)
+            {
+                return;
+            }
+
+            // `wasm-tools` workload does not work on .NET 6 with CBL Mariner 2.0.
+            // Re-enable when issue is resolved: https://github.com/dotnet/aspnetcore/issues/53469
+            if (imageData.OS.Contains(OS.Mariner) && imageData.Version.Major == 6)
+            {
+                return;
+            }
+
+            // `wasm-tools` workload does not work on ARM
+            // `wasm-tools` is also not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
+            int[] unsupportedVersionsForAlpine = [6, 7, 8];
+            bool isSupportedVersionForAlpine = !unsupportedVersionsForAlpine.Contains(imageData.Version.Major);
+            bool useWasmTools = !imageData.IsArm && (!isAlpine || isSupportedVersionForAlpine);
+
+            using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
+            await testScenario.ExecuteAsync();
         }
 
         [LinuxImageTheory]
@@ -218,7 +249,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyInstalledPackages(ProductImageData imageData)
         {
-            RuntimeDepsImageTests.VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper);
+            ProductImageTests.VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper);
         }
 
         [DotNetTheory]

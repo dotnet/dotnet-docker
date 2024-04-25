@@ -26,6 +26,8 @@ jobs:
     imageBuilderDockerRunExtraOptions: $(build.imageBuilderDockerRunExtraOptions)
     versionsRepoPath: versions
     sbomDirectory: $(Build.ArtifactStagingDirectory)/sbom
+    imageInfoHostDir: $(Build.ArtifactStagingDirectory)/imageInfo
+    imageInfoContainerDir: $(artifactsPath)/imageInfo
     ${{ if eq(parameters.noCache, false) }}:
       versionsBasePath: $(versionsRepoPath)/
       pipelineDisabledCache: false
@@ -75,9 +77,11 @@ jobs:
       }
       echo "##vso[task.setvariable variable=baseContainerRepoPath]$baseContainerRepoPath"
     displayName: Set Base Container Repo Path
-  - template: ${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}
+  - template: /eng/common/templates/jobs/${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}@self
+    parameters:
+      cleanupDocker: true
   - ${{ parameters.customInitSteps }}
-  - template: ../steps/set-image-info-path-var.yml
+  - template: /eng/common/templates/steps/set-image-info-path-var.yml@self
     parameters:
       publicSourceBranch: $(publicSourceBranch)
   - powershell: echo "##vso[task.setvariable variable=imageBuilderBuildArgs]"
@@ -90,7 +94,8 @@ jobs:
       # to escape the single quotes that are in the string which would need to be done outside the context of PowerShell. Since
       # all we need is for that value to be in a PowerShell variable, we can get that by the fact that AzDO automatically creates
       # the environment variable for us.
-      $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(artifactsPath)/$(legName)-image-info.json"
+      New-Item -Path $(imageInfoHostDir) -ItemType Directory -Force
+      $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(imageInfoContainerDir)/$(legName)-image-info.json"
       if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}" -and $env:BUILD_REASON -ne "PullRequest") {
         $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push --registry-creds ""$(acr.server)=$(acr.userName);$(acr.password)"""
       }
@@ -121,9 +126,13 @@ jobs:
       $(imageBuilderBuildArgs)
     name: BuildImages
     displayName: Build Images
-  - publish: $(Build.ArtifactStagingDirectory)/$(legName)-image-info.json
-    artifact: $(legName)-image-info-$(System.JobAttempt)
-    displayName: Publish Image Info File Artifact
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(imageInfoHostDir)
+      artifactName: $(legName)-image-info-$(System.JobAttempt)
+      displayName: Publish Image Info File Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
   - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
       # Define the task here to load it into the agent so that we can invoke the tool manually
       # TODO: Revert the build-specific pinned version when https://github.com/dotnet/docker-tools/issues/1152 is fixed
@@ -135,14 +144,19 @@ jobs:
     - powershell: |
         $images = "$(BuildImages.builtImages)"
         if (-not $images) { return 0 }
+
         # There can be leftover versions of the task left on the agent if it's not fresh. So find the latest version.
         $taskDir = $(Get-ChildItem -Recurse -Directory -Filter "ManifestGeneratorTask*" -Path '$(Agent.WorkFolder)')[-1].FullName
-        $manifestToolDllPath = $(Get-ChildItem -Recurse -File -Filter "Microsoft.ManifestTool.dll" -Path $taskDir).FullName
+
+        # There may be multiple version directories within the task directory. Use the latest.
+        $taskVersionDir = $(Get-ChildItem -Directory $taskDir | Sort-Object)[-1].FullName
+
+        $manifestToolDllPath = $(Get-ChildItem -Recurse -File -Filter "Microsoft.ManifestTool.dll" -Path $taskVersionDir).FullName
 
         # Check whether the manifest task installed its own version of .NET.
         # To be more robust, we'll handle varying implementations that it's had.
         # First check for a dotnet folder in the task location
-        $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "dotnet-*" -Path $taskDir).FullName
+        $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "dotnet-*" -Path $taskVersionDir).FullName
         if (-not $dotnetDir) {
           # If it's not there, check in the agent tools location
           $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "*dotnet-*" -Path "$(Agent.ToolsDirectory)").FullName
@@ -172,17 +186,20 @@ jobs:
             -PackageVersion '$(Build.BuildNumber)' `
             -ManifestDirPath $sbomChildDir `
             -DockerImagesToScan $_ `
-            -Verbosity Information 
+            -Verbosity Information
         }
       displayName: Generate SBOMs
       condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-    - template: ${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}
+    - template: /eng/common/templates/jobs/${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}@self
       parameters:
         condition: ne(variables.testScriptPath, '')
-  - template: ${{ format('../steps/cleanup-docker-{0}.yml', parameters.dockerClientOS) }}
   - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-    - publish: $(sbomDirectory)
-      artifact: $(legName)-sboms
-      displayName: Publish SBOM
-      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
+    - template: /eng/common/templates/steps/publish-artifact.yml@self
+      parameters:
+        path: $(sbomDirectory)
+        artifactName: $(legName)-sboms
+        displayName: Publish SBOM
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publicProjectName: ${{ parameters.publicProjectName }}
+        condition: ne(variables['BuildImages.builtImages'], '')

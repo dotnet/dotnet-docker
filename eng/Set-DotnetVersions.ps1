@@ -31,6 +31,11 @@ param(
     [string]
     $MonitorVersion,
 
+    # Build verison of the .NET Aspire Dashboard
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetAspireDashboard')]
+    [string]
+    $AspireVersion,
+
     # Compute the checksum if a published checksum cannot be found
     [Switch]
     $ComputeShas,
@@ -49,8 +54,14 @@ param(
 
     # SAS query string used to access files in the checksum blob container
     [string]
-    $ChecksumSasQueryString
+    $ChecksumSasQueryString,
+
+    # File containing checksums for each product asset; used to override the behavior of locating the checksums from blob storage accounts.
+    [string]
+    $ChecksumsFile
 )
+
+Import-Module -force $PSScriptRoot/DependencyManagement.psm1
 
 $updateDepsArgs = @($ProductVersion)
 
@@ -77,6 +88,11 @@ if ($MonitorVersion) {
     }
 }
 
+if ($AspireVersion) {
+    $updateDepsArgs += @("--product-version", "aspire-dashboard=$AspireVersion")
+    $productMajorVersion = $ProductVersion.Split('.', 2)[0]
+}
+
 if ($ComputeShas) {
     $updateDepsArgs += "--compute-shas"
 }
@@ -89,6 +105,10 @@ if ($ChecksumSasQueryString) {
     $updateDepsArgs += "--checksum-sas=$ChecksumSasQueryString"
 }
 
+if ($ChecksumsFile) {
+    $updateDepsArgs += "--checksums-file=$ChecksumsFile"
+}
+
 if ($UseStableBranding) {
     $updateDepsArgs += "--stable-branding"
 }
@@ -96,6 +116,7 @@ if ($UseStableBranding) {
 $versionSourceName = switch ($PSCmdlet.ParameterSetName) {
     "DotnetInstaller" { "dotnet/installer" }
     "DotnetMonitor" { "dotnet/dotnet-monitor/$ProductVersion" }
+    "DotnetAspireDashboard" { "dotnet/aspire-dashboard/$ProductVersion" }
     default { Write-Error -Message "Unknown version source" -ErrorAction Stop }
 }
 
@@ -103,8 +124,7 @@ if ($versionSourceName) {
     $updateDepsArgs += "--version-source-name=$versionSourceName"
 }
 
-$branch = & $PSScriptRoot/Get-Branch.ps1
-$updateDepsArgs += "--source-branch=$branch"
+$updateDepsArgs += "--source-branch=$(Get-Branch)"
 
 if ($AzdoVariableName) {
     Write-Host "##vso[task.setvariable variable=$AzdoVariableName]$updateDepsArgs"

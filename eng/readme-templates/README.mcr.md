@@ -6,6 +6,8 @@
 
 {{InsertTemplate("RelatedRepos.md", commonArgs)}}
 
-{{InsertTemplate("Use.md", commonArgs)}}
+{{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "aspire") < 0):
+
+{{InsertTemplate("About.variants.md", commonArgs)}}}}
 
 {{InsertTemplate("Support.md", commonArgs)}}

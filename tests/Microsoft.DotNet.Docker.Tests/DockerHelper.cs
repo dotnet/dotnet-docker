@@ -79,23 +79,32 @@ namespace Microsoft.DotNet.Docker.Tests
             // version of the runtime-deps image get the correct image.
             ProductImageData runtimeDepsImageData = new()
             {
-                Version = imageData.VersionFamily,
+                // Special case for .NET 8.0 Aspire Dashboard images - the Dashboard is in preview even though
+                // .NET 8.0 is not. The distroless helper image should not be built with the preview version.
+                Version = imageData.Version == ImageVersion.V8_0_Preview ? ImageVersion.V8_0 : imageData.VersionFamily,
                 OS = imageData.OS,
-                Arch = imageData.Arch
+                Arch = imageData.Arch,
             };
+
+            // Make sure we don't try to get an image that we don't need before we specify that we want the distro-full
+            // version. The image might not be on disk. The correct, distro-full versino will be pulled in the helper
+            // image build.
             string baseImageTag = runtimeDepsImageData
-                .GetImage(DotNetImageRepo.Runtime_Deps, this)
+                .GetImage(DotNetImageRepo.Runtime_Deps, this, skipPull: true)
                 .Replace("-distroless", string.Empty)
                 .Replace("-chiseled", string.Empty);
 
             string tag = imageData.GetIdentifier("distroless-helper");
+
             Build(tag, dockerfile, null, TestArtifactsDir, false,
-                buildArgs: new string[]
-                {
+                platform: imageData.Platform,
+                buildArgs:
+                [
                     $"distroless_image={distrolessImageTag}",
                     $"base_image={baseImageTag}",
                     $"root_destination={rootDestination}"
-                });
+                ]);
+
             return tag;
         }
 
@@ -112,6 +121,11 @@ namespace Microsoft.DotNet.Docker.Tests
                     ExecuteWithLogging($"logs {container}", ignoreErrors: true);
                 }
 
+                // If a container is already stopped, running `docker stop` again has no adverse effects.
+                // This prevents some issues where containers could fail to be forcibly removed while they're running.
+                // e.g. https://github.com/dotnet/dotnet-docker/issues/5127
+                StopContainer(container);
+
                 ExecuteWithLogging($"container rm -f {container}");
             }
         }
@@ -121,6 +135,14 @@ namespace Microsoft.DotNet.Docker.Tests
             if (ImageExists(tag))
             {
                 ExecuteWithLogging($"image rm -f {tag}");
+            }
+        }
+
+        private void StopContainer(string container)
+        {
+            if (ContainerExists(container))
+            {
+                ExecuteWithLogging($"stop {container}", autoRetry: true);
             }
         }
 

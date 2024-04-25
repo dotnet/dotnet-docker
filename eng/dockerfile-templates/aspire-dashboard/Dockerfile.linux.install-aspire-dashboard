@@ -1,0 +1,26 @@
+{{
+    set aspireMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set buildVersion to VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|build-version")] ^
+    set aspireVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
+    set aspireVersion to VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|", aspireVersionVariable)] ^
+    _ When build and product versions are the same and they are stable versions, use account from main branch e.g. dotnetcli
+      Otherwise, use the account that is associated with the current branch. ^
+    set urlBranch to when(find(aspireVersion, "-") >= 0 || buildVersion != aspireVersion, VARIABLES["branch"], "main") ^
+    set versionFolder to when(buildVersion != aspireVersion, buildVersion, '$dotnet_aspire_version') ^
+    set aspireBaseUrl to cat(VARIABLES[cat("base-url|", aspireMajorMinor, "-aspire-dashboard|", urlBranch)], "/aspire/", versionFolder, "/") ^
+    set files to [
+        [
+            "filename": "aspire_dashboard.zip",
+            "url": cat(aspireBaseUrl, "aspire-dashboard-linux-", ARCH_SHORT, ".zip"),
+            "sha": VARIABLES[join(["aspire-dashboard", aspireMajorMinor, "linux", ARCH_SHORT, "sha"], "|")],
+            "sha-var-name": "aspire_dashboard_sha512"
+        ]
+    ]
+}}RUN dotnet_aspire_version={{aspireVersion}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-and-install",
+        [
+            "files": files,
+            "install-dir": "/app",
+            "create-install-dir": "true",
+            "is-zip": "true"
+        ], "    ")}}

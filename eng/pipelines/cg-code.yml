@@ -1,3 +1,5 @@
+# This pipelines builds all projects in the repository outside of Dockerfiles so that the artifacts
+# can be scanned by SDL steps.  SDL steps do not scan artifacts that are built within Dockerfiles.
 trigger:
   branches:
     include:
@@ -5,19 +7,16 @@ trigger:
     - nightly
 pr: none
 
-parameters:
-- name: TSAEnabled
-  displayName: Publish CodeQL results to TSA
-  type: boolean
-  default: true
-
 variables:
-- template: ../common/templates/variables/codeql.yml
-  parameters:
-    TSAEnabled: ${{ parameters.TSAEnabled }}
-- template: ../common/templates/variables/common.yml
-- name: cgBuildGrepArgs
-  value: -v -e 'samples/' -e 'tests/'
+- template: /eng/common/templates/variables/common.yml@self
+- name: skipComponentGovernanceDetection
+  value: false
 
-jobs:
-- template: ../common/templates/jobs/cg-detection.yml
+extends:
+  template: /eng/common/templates/1es-official.yml@self
+  parameters:
+    stages:
+    - stage: CgDetection
+      displayName: CG Detection
+      jobs:
+      - template: /eng/common/templates/jobs/cg-build-projects.yml@self

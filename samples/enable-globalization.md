@@ -15,6 +15,7 @@ In many scenarios, globalization support with ICU is required, for example, to c
 - Alpine `sdk` images
 - Debian images
 - Ubuntu images
+- All [`extra` variant](../documentation/image-variants.md) images
 
 .NET container images that do not include ICU:
 
@@ -88,7 +89,7 @@ RUN apk add --no-cache tzdata
 `tzdata` can be added to a .NET Ubuntu image with the following `Dockerfile` fragment.
 
 ```bash
-apt update && DEBIAN_FRONTEND=noninteractive && apt install -y tzdata && rm -rf /var/lib/apt/lists/*
+apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && rm -rf /var/lib/apt/lists/*
 ```
 
 ### Launching a container with timezone information

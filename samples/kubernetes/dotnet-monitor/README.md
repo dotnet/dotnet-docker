@@ -82,28 +82,6 @@ microsoftaspnetcorehosting_failed_requests 0 1681509076290
 
 Port `52325` is special since it limits access to just the `metrics` endpoint, making it safe to expose to external systems. The other endpoints -- only accessible on port `52323` -- may provide access to privileged data, like dumps. This is why port `52323` is configured for the loopback interface, making it only accessible to the pod.
 
-## Generate load
-
-You may want to generate more traffic to demonstrate that `dotnet-monitor` can work well in production.
-
-Apply the [`load-test.yaml`](load-test.yaml) manifest. Start collecting `livemetrics` just before doing (in another terminal).
-
-```bash
-% curl "http://localhost:52323/livemetrics?pid=1"
-{"timestamp":"2023-04-11T02:16:37.4180174+00:00","provider":"Microsoft.AspNetCore.Hosting","name":"requests-per-second","displayName":"Request Rate","unit":"count","counterType":"Rate","tags":"","value":31937}
-{"timestamp":"2023-04-11T02:16:37.4180254+00:00","provider":"Microsoft.AspNetCore.Hosting","name":"total-requests","displayName":"Total Requests","unit":"","counterType":"Metric","tags":"","value":409508}
-{"timestamp":"2023-04-11T02:16:37.418029+00:00","provider":"Microsoft.AspNetCore.Hosting","name":"current-requests","displayName":"Current Requests","unit":"","counterType":"Metric","tags":"","value":9}
-{"timestamp":"2023-04-11T02:16:37.4180323+00:00","provider":"Microsoft.AspNetCore.Hosting","name":"failed-requests","displayName":"Failed Requests","unit":"","counterType":"Metric","tags":"","value":0}
-```
-
-Delete the job.
-
-```bash
-kubectl delete -f load-test.yaml
-```
-
-Note: The job must be deleted and then re-applied to be run again.
-
 ## Monitor with Prometheus
 
 [Prometheus](https://prometheus.io/) is a popular monitoring solution. `dotnet-monitor` exports metrics data in [Prometheus exposition format](https://prometheus.io/docs/instrumenting/exposition_formats/) via its `metrics` endpoint. That makes it straightforward to connect the two systems.
@@ -128,8 +106,6 @@ kubectl port-forward service/prometheus 9090
 
 View the Prometheus site at `http://localhost:9090`.
 
-You can re-run the load-test job on the `aspnetapp` site to generate data for Prometheus to collect via `dotnet-monitor`. You can run it multiple times to generate more traffic. It runs for a minute. The job needs to be deleted before it can be re-applied.
-
 It should looks something like the following image.
 
 <img width="1191" alt="image" src="https://user-images.githubusercontent.com/2608468/231349237-69bd3b08-57fd-4d87-9e16-1fdaf6087b34.png">
@@ -141,7 +117,6 @@ The "metrics explorer" icon to the left of the "Execute" button provides a list 
 Delete the resources (remote URL or local manifest).
 
 ```bash
-kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/dotnet-monitor.yaml
-kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/load-test.yaml
-kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/prometheus-app.yaml
+kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/dotnet-monitor.yaml
+kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/dotnet-monitor/prometheus-app.yaml
 ```

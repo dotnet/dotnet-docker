@@ -21,7 +21,7 @@ kubectl apply -f replica-health.yaml
 Look at the replicas created.
 
 ```bash
-% kubectl get po
+$ kubectl get po
 NAME                                     READY   STATUS    RESTARTS   AGE
 dotnet-replica-health-64d49554c9-f8mlp   1/1     Running   0          8s
 dotnet-replica-health-64d49554c9-fz5ms   1/1     Running   0          8s
@@ -33,7 +33,7 @@ There should be three.
 Look at the events for one of the replicas.
 
 ```bash
-% kubectl describe pod dotnet-replica-health-64d49554c9-f8mlp
+$ kubectl describe pod dotnet-replica-health-64d49554c9-f8mlp
 Name:             dotnet-replica-health-64d49554c9-f8mlp
 Namespace:        default
 Events:
@@ -61,13 +61,6 @@ Much of the output has been removed in this example. The key part is the events.
 
 It is the `Unhealthy` Reason that is used when a liveness probe fails. The container will be killed after that.
 
-You can call the health check manually with the following pattern.
-
-```bash
-$ kubectl exec dotnet-replica-health-64d49554c9-f8mlp -- wget -qO- -t1 http://localhost:80/healthz
-Healthy
-```
-
 Create a proxy to the service.
 
 ```bash
@@ -75,6 +68,25 @@ kubectl port-forward service/dotnet-replica-health 8080
 ```
 
 View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
+
+You can call the `healthz` endpoint to test the liveness probe.
+
+```bash
+$ curl http://localhost:8080/healthz
+Healthy
+```
+
+Depending on the image, you may be able to call the health check manually with the following `kubectl exec` pattern.
+
+```bash
+$ kubectl get po   
+NAME                                     READY   STATUS    RESTARTS   AGE
+dotnet-replica-health-78c5c58799-cgdgz   1/1     Running   0          16s
+dotnet-replica-health-78c5c58799-vpmzj   1/1     Running   0          16s
+dotnet-replica-health-78c5c58799-xl4mg   1/1     Running   0          16s
+$ kubectl exec dotnet-replica-health-78c5c58799-cgdgz -- wget -qO- -t1 http://localhost:8080/healthz
+Healthy                                              
+```
 
 Delete the resources (remote URL or local manifest).
 

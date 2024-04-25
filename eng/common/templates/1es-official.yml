@@ -1,0 +1,48 @@
+# When extending this template, pipelines using a repository resource containing versions files for image caching must
+# do the following:
+#
+# - Do not rely on any source code from the versions repo so as to not circumvent SDL and CG guidelines
+# - The versions repo resource must be named `InternalVersionsRepo` or `PublicVersionsRepo` to avoid SDL scans
+# - The versions repo must be checked out to `$(Build.SourcesDirectory)/versions` to avoid CG scans
+#
+# If the pipeline is not using a separate repository resource, ensure that there is no source code checked out in
+# `$(Build.SourcesDirectory)/versions`, as it will not be scanned.
+#
+# The `cgDryRun` parameter will run CG but not submit the results, for testing purposes.
+
+parameters:
+- name: cgDryRun
+  type: boolean
+  default: false
+- name: stages
+  type: stageList
+  default: []
+  # 1ES Pipeline Template parameters
+- name: pool
+  type: object
+  default:
+    name: NetCore1ESPool-Internal
+    image: 1es-windows-2022
+    os: windows
+
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool: ${{ parameters.pool }}
+    sdl:
+      componentgovernance:
+        ignoreDirectories: $(Build.SourcesDirectory)/versions
+        whatIf: ${{ parameters.cgDryRun }}
+        showAlertLink: true
+      sourceRepositoriesToScan:
+        exclude:
+        - repository: InternalVersionsRepo
+        - repository: PublicVersionsRepo
+    stages: ${{ parameters.stages }}

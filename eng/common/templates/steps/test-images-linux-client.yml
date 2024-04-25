@@ -5,11 +5,13 @@ parameters:
   customInitSteps: []
 
 steps:
-- template: init-docker-linux.yml
+- template: /eng/common/templates/steps/init-docker-linux.yml@self
   parameters:
     setupImageBuilder: false
     setupTestRunner: true
-    cleanupDocker: ${{ and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}
+    # Clean only up when we're running an internal build, not a PR, and not doing pre-build validation.
+    # i.e. when we're building something important.
+    cleanupDocker: ${{ and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.preBuildValidation, 'false')) }}
     condition: ${{ parameters.condition }}
 - ${{ parameters.customInitSteps }}
 - script: |
@@ -33,8 +35,8 @@ steps:
     docker run -t -d
     -v /var/run/docker.sock:/var/run/docker.sock
     -v $(Build.ArtifactStagingDirectory):$(artifactsPath)
-    -e RUNNING_TESTS_IN_CONTAINER=true
     -e DOCKER_BUILDKIT=1
+    -e RUNNING_TESTS_IN_CONTAINER=true
     --name $(testRunner.container)
     $(imageNames.testRunner.withrepo)
   displayName: Start Test Runner Container
@@ -47,12 +49,12 @@ steps:
     displayName: Docker login
     condition: and(succeeded(), ${{ parameters.condition }})
   - ${{ if eq(parameters.preBuildValidation, 'false') }}:
-    - template: ../steps/download-build-artifact.yml
+    - template: /eng/common/templates/steps/download-build-artifact.yml@self
       parameters:
         targetPath: $(Build.ArtifactStagingDirectory)
         artifactName: image-info
         condition: ${{ parameters.condition }}
-- template: parse-test-arg-arrays.yml
+- template: /eng/common/templates/steps/parse-test-arg-arrays.yml@self
 - powershell: >
     $(test.init);
     docker exec
@@ -71,16 +73,21 @@ steps:
     displayName: Docker logout
     condition: and(always(), ${{ parameters.condition }})
     continueOnError: true
-- script: >
-    docker cp
-    $(testRunner.container):/repo/$(testResultsDirectory)
-    $(Common.TestResultsDirectory)/.
+- powershell: |
+    $hasTestResults = Test-Path $(Common.TestResultsDirectory)/$(testResultsDirectory)
+    echo "##vso[task.setvariable variable=hasTestResults]$hasTestResults"
+    if ($hasTestResults) {
+      docker cp $(testRunner.container):/repo/$(testResultsDirectory) $(Common.TestResultsDirectory)/.
+    }
+    else {
+      echo "There were no test outputs in $(Common.TestResultsDirectory)/$(testResultsDirectory). Skipping test result publishing."
+    }
   displayName: Copy Test Results
   condition: and(always(), ${{ parameters.condition }})
   continueOnError: true
 - task: PublishTestResults@2
   displayName: Publish Test Results
-  condition: and(always(), ${{ parameters.condition }})
+  condition: and(always(), ${{ parameters.condition }}, eq(variables['hasTestResults'], 'True'))
   continueOnError: true
   inputs:
     testRunner: vSTest
@@ -96,7 +103,3 @@ steps:
   displayName: Cleanup TestRunner Container
   condition: and(always(), ${{ parameters.condition }})
   continueOnError: true
-- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: cleanup-docker-linux.yml
-    parameters:
-      condition: ${{ parameters.condition }}

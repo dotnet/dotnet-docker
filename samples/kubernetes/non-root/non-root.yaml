@@ -12,14 +12,15 @@ spec:
       labels:
         app: aspnetapp
     spec:
+      securityContext:
+        runAsNonRoot: true
       containers:
       - name: aspnetapp
-        image: dotnetnonroot.azurecr.io/aspnetapp
+        image: mcr.microsoft.com/dotnet/samples:aspnetapp-chiseled
         ports:
         - containerPort: 8080
         securityContext:
           allowPrivilegeEscalation: false
-          runAsNonRoot: true
 ---
 apiVersion: v1
 kind: Service

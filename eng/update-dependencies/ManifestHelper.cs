@@ -24,16 +24,22 @@ public static class ManifestHelper
     /// <param name="manifestVariables">JSON object of the variables from the manifest.</param>
     /// <param name="options">Configured options from the app.</param>
     public static string GetBaseUrl(JObject manifestVariables, Options options) =>
-        GetVariableValue(GetBaseUrlVariableName(options.DockerfileVersion, options.SourceBranch, options.VersionSourceName), manifestVariables);
+        ResolveVariableValue(GetBaseUrlVariableName(options.DockerfileVersion, options.SourceBranch, options.VersionSourceName), manifestVariables);
 
     /// <summary>
     /// Consstructs the name of the base URL variable.
     /// </summary>
     /// <param name="dockerfileVersion">Dockerfile version.</param>
     /// <param name="branch">Name of the branch.</param>
-    public static string GetBaseUrlVariableName(string dockerfileVersion, string branch, string versionSourceName)
+    public static string GetBaseUrlVariableName(string dockerfileVersion, string branch, string? versionSourceName)
     {
-        string version = versionSourceName?.Contains("dotnet-monitor") == true ? $"{dockerfileVersion}-monitor" : dockerfileVersion;
+        string version = versionSourceName switch
+        {
+            string v when v.Contains("dotnet-monitor") => $"{dockerfileVersion}-monitor",
+            string v when v.Contains("aspire-dashboard") => $"{dockerfileVersion}-aspire-dashboard",
+            _ => dockerfileVersion,
+        };
+
         return $"base-url|{version}|{branch}";
     }
 
@@ -45,20 +51,26 @@ public static class ManifestHelper
     /// </summary>
     /// <param name="variableName">Name of the variable.</param>
     /// <param name="variables">JSON object of the variables from the manifest.</param>
-    public static string TryGetVariableValue(string variableName, JObject variables)
-        => variables.ContainsKey(variableName) ? GetVariableValue(variableName, variables) : "";
+    public static string TryResolveVariableValue(string variableName, JObject variables)
+        => variables.ContainsKey(variableName) ? ResolveVariableValue(variableName, variables) : "";
 
     /// <summary>
-    /// Gets the value of a manifest variable.
+    /// Resolves the value of a manifest variable, recursively resolving any variables referenced in the value
     /// </summary>
     /// <param name="variableName">Name of the variable.</param>
     /// <param name="variables">JSON object of the variables from the manifest.</param>
-    public static string GetVariableValue(string variableName, JObject variables)
+    public static string ResolveVariableValue(string variableName, JObject variables)
     {
-        string variableValue = (string?) variables[variableName]
-            ?? throw new ArgumentException($"Manifest does not contain a value for {variableName}");
+        string variableValue = GetVariableValue(variableName, variables);
         return ResolveVariables(variableValue, variables);
     }
+
+    public static string TryGetVariableValue(string variableName, JObject variables)
+        => variables.ContainsKey(variableName) ? GetVariableValue(variableName, variables) : "";
+
+    public static string GetVariableValue(string variableName, JObject variables)
+        => (string?) variables[variableName]
+            ?? throw new ArgumentException($"Manifest does not contain a value for {variableName}");
 
     /// <summary>
     /// Loads the manifest from the given filename.
@@ -91,7 +103,7 @@ public static class ManifestHelper
         foreach (Match match in matches)
         {
             string variableName = match.Groups[VariableGroupName].Value;
-            string variableValue = GetVariableValue(variableName, variables);
+            string variableValue = ResolveVariableValue(variableName, variables);
             value = value.Replace(match.Value, variableValue);
         }
 

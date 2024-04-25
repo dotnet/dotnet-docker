@@ -9,10 +9,13 @@ resources:
     name: dotnet/versions
 
 variables:
-- template: variables/samples.yml
+- template: /eng/pipelines/variables/samples.yml@self
 
-stages:
-- template: stages/build-test-publish-repo.yml
+extends:
+  template: /eng/common/templates/1es-official.yml@self
   parameters:
-    internalProjectName: ${{ variables.internalProjectName }}
-    publicProjectName: ${{ variables.publicProjectName }}
+    stages:
+    - template: /eng/pipelines/stages/build-test-publish-repo.yml@self
+      parameters:
+        internalProjectName: ${{ variables.internalProjectName }}
+        publicProjectName: ${{ variables.publicProjectName }}

@@ -33,8 +33,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            ImageScenarioVerifier verifier = new ImageScenarioVerifier(imageData, DockerHelper, OutputHelper);
-            await verifier.Execute();
+            using ConsoleAppScenario testScenario = new(imageData, DockerHelper, OutputHelper);
+            await testScenario.ExecuteAsync();
         }
 
         [DotNetTheory]
@@ -62,6 +62,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 imageData,
                 GetExpectedRpmPackagesInstalled(imageData)
                     .Concat(RuntimeDepsImageTests.GetExpectedRpmPackagesInstalled(imageData)));
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyInstalledPackages(ProductImageData imageData)
+        {
+            ProductImageTests.VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper);
         }
 
         [LinuxImageTheory]

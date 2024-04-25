@@ -3,15 +3,17 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class ProductImageData : ImageData
+    public record ProductImageData : ImageData
     {
         private string _sdkOS;
         private string _osTag;
+        private string _osDir;
         private ImageVersion? _versionFamily;
 
         public bool HasCustomSdk => _sdkOS != null;
@@ -31,8 +33,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string OSTag
         {
-            get => _osTag != null ? _osTag : OS;
+            get => _osTag ?? OS;
             init => _osTag = value;
+        }
+
+        public string OSDir
+        {
+            get => _osDir ?? OSTag;
+            init => _osDir = value;
         }
 
         public ImageVersion Version { get; init; }
@@ -57,8 +65,20 @@ namespace Microsoft.DotNet.Docker.Tests
         public override int? NonRootUID =>
             OS == Tests.OS.Mariner20Distroless && (Version.Major == 6 || Version.Major == 7) ? 101 : base.NonRootUID;
 
-        public string GetDockerfilePath(DotNetImageRepo imageRepo) =>
-            $"src/{GetImageRepoName(imageRepo)}{GetVariantSuffix()}/{Version}/{OSTag}/{GetArchLabel()}";
+        public string GetDockerfilePath(DotNetImageRepo imageRepo)
+        {
+            IEnumerable<string> pathComponents =
+            [
+                "src",
+                GetImageRepoName(imageRepo) + GetVariantSuffix(),
+                Version.ToString(),
+                OSDir,
+                GetArchLabel()
+            ];
+
+            // Don't use Path.Join since it will use Windows path separators when run locally.
+            return string.Join('/', pathComponents);
+        }
 
         private string GetVariantSuffix() =>
             ImageVariant == DotNetImageVariant.None ? "" : $"-{GetImageVariantName(ImageVariant)}";
@@ -68,10 +88,20 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string GetImageRepoName(DotNetImageRepo imageRepo) =>
             Enum.GetName(typeof(DotNetImageRepo), imageRepo).ToLowerInvariant().Replace('_', '-');
 
-        public static string GetImageVariantName(DotNetImageVariant imageVariant) => imageVariant == DotNetImageVariant.None
-            ? "" : Enum.GetName(typeof(DotNetImageVariant), imageVariant).ToLowerInvariant();
+        public static string GetImageVariantName(DotNetImageVariant imageVariant)
+        {
+            IEnumerable<string> imageVariants = [];
+            foreach (DotNetImageVariant enumValue in Enum.GetValues(typeof(DotNetImageVariant)))
+            {
+                if (enumValue != DotNetImageVariant.None && imageVariant.HasFlag(enumValue))
+                {
+                    imageVariants = imageVariants.Append(Enum.GetName(typeof(DotNetImageVariant), enumValue).ToLowerInvariant());
+                }
+            }
+            return string.Join('-', imageVariants);
+        }
 
-        public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper)
+        public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper, bool skipPull = false)
         {
             // ASP.NET composite includes its own runtime that we want to test.
             if (ImageVariant.HasFlag(DotNetImageVariant.Composite) && imageRepo == DotNetImageRepo.Runtime)
@@ -88,7 +118,11 @@ namespace Microsoft.DotNet.Docker.Tests
             string tag = GetTagName(imageRepo);
             string imageName = GetImageName(tag, GetImageRepoName(imageRepo));
 
-            PullImageIfNecessary(imageName, dockerHelper);
+            if (!skipPull)
+            {
+                // Pull the image to ensure it exists
+                PullImageIfNecessary(imageName, dockerHelper);
+            }
 
             return imageName;
         }
@@ -146,6 +180,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 case DotNetImageRepo.Aspnet:
                 case DotNetImageRepo.Runtime_Deps:
                 case DotNetImageRepo.Monitor:
+                case DotNetImageRepo.Aspire_Dashboard:
                     imageVersion = Version;
                     os = OSTag;
                     break;

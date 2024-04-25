@@ -1,0 +1,5 @@
+$(McrTagsYmlRepo:aspire-dashboard)
+$(McrTagsYmlTagGroup:8.0-preview-amd64)
+    customSubTableTitle: .NET Aspire Dashboard Preview Tags
+$(McrTagsYmlTagGroup:8.0-preview-arm64v8)
+    customSubTableTitle: .NET Aspire Dashboard Preview Tags

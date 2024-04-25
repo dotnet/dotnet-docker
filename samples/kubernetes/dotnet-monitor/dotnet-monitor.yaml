@@ -16,13 +16,17 @@ spec:
       - name: aspnetapp
         image: mcr.microsoft.com/dotnet/samples:aspnetapp
         ports:
-        - containerPort: 80     
+        - containerPort: 8080
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 1654
         env:
         - name: DOTNET_DiagnosticPorts
           value: /diag/dotnet-monitor.sock
         volumeMounts:
         - mountPath: /diag
-          name: diagvol        
+          name: diagvol
         resources:
           requests:
             memory: "60Mi"
@@ -62,7 +66,7 @@ spec:
             memory: 256Mi
       volumes:
       - name: diagvol
-        emptyDir: {}            
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
@@ -76,7 +80,6 @@ spec:
   - name: aspnetapp
     protocol: TCP
     port: 8080
-    targetPort: 80
   - name: monitor
     protocol: TCP
     port: 52323

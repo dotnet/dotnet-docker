@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.DotNet.VersionTools.Dependencies;
 
 #nullable enable
@@ -30,6 +31,12 @@ internal class ChiselToolUpdater : VariableUpdaterBase
             return "";
         }
 
+        // Don't overwrite versions that are set to other variables
+        if (Regex.IsMatch(currentChiselToolVersion, @"^\$\(.*\)$"))
+        {
+            return currentChiselToolVersion;
+        }
+
         // Avoid updating the chisel tooling if we are updating a runtime
         // version that doesn't ship chiseled images
         if (runtimeDependencyInfo is null)
@@ -41,7 +48,7 @@ internal class ChiselToolUpdater : VariableUpdaterBase
         // rebuilding at least the runtime images, since changing the chisel
         // tool shouldn't make a difference in the output image.
         string runtimeVariableName = ManifestHelper.GetVersionVariableName(VersionType.Build, "runtime", _dockerfileVersion);
-        string currentRuntimeVersion = ManifestHelper.GetVariableValue(runtimeVariableName, ManifestVariables.Value);
+        string currentRuntimeVersion = ManifestHelper.ResolveVariableValue(runtimeVariableName, ManifestVariables.Value);
         if (runtimeDependencyInfo.SimpleVersion == currentRuntimeVersion)
         {
             return currentChiselToolVersion;

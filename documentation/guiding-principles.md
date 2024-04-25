@@ -37,7 +37,8 @@ See the [supported tags](supported-tags.md) for the tagging practices and polici
 
 1. Images will be included as part of the .NET release process. The Docker images will be released at the same time as the core product.
 
-1. Images will be rebuilt within hours of base image changes. For example, suppose a particular version of Alpine is patched. The .NET images based on this version of Alpine will be rebuilt with this new base image within hours of its release.
+1. Images will be rebuilt only as necessary in order to limit downstream image rebuilds and deployments for consumers of .NET images.
+The [Image Update Policy](https://github.com/dotnet/dotnet-docker/blob/main/README.md#image-update-policy) section of the README contains the exact guidelines for when images will be updated.
 
 1. Images will never be deleted from the [official Docker repositories](https://hub.docker.com/_/microsoft-dotnet/). This does not apply to the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md).
 

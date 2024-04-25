@@ -4,6 +4,8 @@ param(
     [string]$Branch
 )
 
+Import-Module -force $PSScriptRoot/../DependencyManagement.psm1
+
 if ($Validate) {
     $customImageBuilderArgs = " --validate"
 }
@@ -19,7 +21,7 @@ $onDockerfilesGenerated = {
 }
 
 if (!$Branch) {
-    $Branch = & $PSScriptRoot/../Get-Branch.ps1
+    $Branch = Get-Branch
 }
 
 & $PSScriptRoot/../common/Invoke-ImageBuilder.ps1 `

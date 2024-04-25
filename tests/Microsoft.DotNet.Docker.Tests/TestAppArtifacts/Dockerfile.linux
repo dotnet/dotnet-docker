@@ -21,6 +21,42 @@ COPY app/ .
 RUN dotnet build --no-restore
 
 
+FROM $sdk_image as blazorwasm_build
+
+ARG rid
+ARG NuGetFeedPassword
+ARG port
+
+EXPOSE $port
+
+WORKDIR /source
+COPY NuGet.config .
+
+RUN dotnet workload install --configfile NuGet.config --skip-manifest-update wasm-tools \
+    && . /etc/os-release \
+    && case $ID in \
+        alpine) apk add --no-cache python3 ;; \
+        debian | ubuntu) apt-get update \
+            && apt-get install -y --no-install-recommends python3 \
+            && rm -rf /var/lib/apt/lists/* ;; \
+        mariner) tdnf install -y python3 \
+            && tdnf clean all ;; \
+    esac
+
+WORKDIR /source/app
+COPY app/*.csproj .
+RUN dotnet restore -r $rid
+
+COPY app/ .
+RUN dotnet build --no-restore
+
+
+FROM blazorwasm_build as blazorwasm_publish
+
+ARG rid
+RUN dotnet publish -r $rid -c Release --self-contained true -o out
+
+
 FROM build AS test
 
 ARG rid

@@ -71,8 +71,8 @@ Alternatively, you can persist your password across logins with the following te
 Login on Windows:
 
 ```console
-az acr credential show -n richlander --query passwords[0].value --output tsv > %USERPROFILE%\password-acr.txt
-type %USERPROFILE%\password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
+az acr credential show -n richlander --query passwords[0].value --output tsv > $env:USERPROFILE\password-acr.txt
+type $env:USERPROFILE\password-acr.txt | docker login richlander.azurecr.io -u richlander --password-stdin
 ```
 
 Login on macOS or Linux:

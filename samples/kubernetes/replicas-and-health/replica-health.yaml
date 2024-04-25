@@ -16,17 +16,18 @@ spec:
       - name: aspnetapp
         image: mcr.microsoft.com/dotnet/samples:aspnetapp
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         resources:
           requests:
-            memory: "80Mi"
+            memory: "60Mi"
+            cpu: "250m" # same as 0.25
           limits:
             memory: "100Mi"
-            cpu: "1"
+            cpu: "500m" # same as 0.5
         livenessProbe:
           httpGet:
             path: /healthz
-            port: 80
+            port: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -40,4 +41,3 @@ spec:
   - name: aspnetapp
     protocol: TCP
     port: 8080
-    targetPort: 80
