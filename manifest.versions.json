@@ -3,7 +3,7 @@
     "aspire-dashboard|8.0|build-version": "8.0.0-preview.6.24214.1",
     "aspire-dashboard|8.0|product-version": "8.0.0-preview.6",
     "aspire-dashboard|8.0|fixed-tag": "$(aspire-dashboard|8.0|product-version)",
-    "aspire-dashboard|8.0|floating-tag": "8.0-preview",
+    "aspire-dashboard|8.0|minor-tag": "8.0-preview",
     "aspire-dashboard|8.0|linux|x64|sha": "aae0b7d83b1de16b0f08a6dd5a3533e4155ca2462a215725fb4e67b0b1b09b46ce0086838744f7644ec1ea398947e53384995c637cf1710b70255e69b11aa108",
     "aspire-dashboard|8.0|linux|arm64|sha": "5cd0b486435bd330fd855345eb247b984fc82a540eb3178eda060e4a0da4c706328ec9836594823fcfbcae8978e0b526a35b73334b945db61164fbef1a1bcc9d",
 
@@ -104,7 +104,7 @@
     "dotnet|8.0|product-version": "8.0.4",
     "dotnet|9.0|product-version": "9.0.0-preview.4",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
-    "dotnet|9.0|floating-tag": "9.0-preview",
+    "dotnet|9.0|minor-tag": "9.0-preview",
 
     "libicu|bionic": 60,
     "libicu|bookworm": 72,
@@ -143,39 +143,33 @@
 
     "monitor|8.0|build-version": "8.0.1",
     "monitor|8.0|product-version": "8.0.1",
-
-    "monitor|9.0|build-version": "9.0.0-preview.4.24223.9",
-    "monitor|9.0|product-version": "9.0.0-preview.4",
-
-    "monitor-base|9.0|linux|x64|sha": "1652a57c72925d1fb6542f619a0581ae9720aeb0a62a2d8a11d0f98cbbce28ee3f0f70076451f68e6f917a78f787e2a39d9171dd888daca254f0ad5102305ba6",
-    "monitor-base|9.0|linux|arm64|sha": "facbcd1caaa956838f3a2572ebc8ec65000d4882efcab0dbfd678dbb222466010e8e8095e8aa03eda7d16ed8842793563bd6a65eec76b161b2bbd93377d18056",
-
-    "monitor-ext-azureblobstorage|9.0|linux|x64|sha": "cd27f75a25d16f4f22c88ed50b1597439bb93e8b6d6844f4d5055f45bf64a94d1e557db8c8aabaa9f1c47fef1c7fcc7647fa42e336e35f29d0bec133c996c87a",
-    "monitor-ext-azureblobstorage|9.0|linux|arm64|sha": "a5b5dab7f2d7b3834e5d3444f8b2a1836417e86df3eb4afb52be42320532deb7fcb1096649d8db694766cfae4c6d87606ab869ae780eedce7146929db96e5cbe",
-
-    "monitor-ext-s3storage|9.0|linux|x64|sha": "5c267311df627c85282727f014702f0852a55df5df579763c2c23e050d992d91c6240168b4549a85e746ab0bc23bf61000e27e8c9db11ec00277b7095e4f99e1",
-    "monitor-ext-s3storage|9.0|linux|arm64|sha": "8466825d03a42a6ec81bfd9e6cc987f8dcd1c8fa46ec36b73d5340cceaf47033f2c93e1dbf0f6cd8b67b7bbe7bc5cf845b5ea591af316496b189090623480b69",
-
     "monitor-base|8.0|linux|x64|sha": "014b3530f626aeae0bdf7f9c806808d177d623801f126e927390f13c5be88e1deb6402af72fc54133ee38e08ed66c8bbbffd662c4c68ecce71ed72c94e1ebc0d",
     "monitor-base|8.0|linux|arm64|sha": "7ea89124d4fe58fb83bc74f9c5575d6d924871221f12c8e056538b296eec81ebf32df0b4f24f9fc32b6757e93e40966551c6ab91d0b8c62615775af9141a942d",
-
     "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "eb4bd78fe0d8490ba08e424d3b7e2c223d18d7e58c6df84e0e763e1844f163263b396c49e3025554395245168e6f9298313b7ac4c9e8ea117f256717b497e9a4",
     "monitor-ext-azureblobstorage|8.0|linux|arm64|sha": "c80d97f7c198d4fa6a90075c8f7fb91902fceb2143f8ef11f670551904dcab5def9623ac18b6a61d8404d80632adaa82097c2ac0eeeb89fa34f11ffa54e89122",
-
     "monitor-ext-s3storage|8.0|linux|x64|sha": "45f380a7e358a5a5bb3a851dcfea69ad35827e08cba96ad569b8f11c4963a7f4bb65674ab0c8d581e0b5fce3596ce2ff9def3a8267a9ba60267485d5795b28be",
     "monitor-ext-s3storage|8.0|linux|arm64|sha": "3ed6ceeebbcfaed84d03e519a5b571a822e1d1706773e29129a3fa81c74de96f23f7e0d5f010080ecad33e85fa53bdeda018d37dc48a6552650e6090e694eeb1",
 
     "monitor|8.1|build-version": "8.1.0-alpha.1.24223.8",
     "monitor|8.1|product-version": "8.1.0-alpha.1",
-
     "monitor-base|8.1|linux|x64|sha": "31a95bdafa4b28d7013511a1a5b955196fc46593802ed93ae2665404895464ee929e409ebc44504b3a011fe89e23db165686e6deeced26c21af2d2a511f839cc",
     "monitor-base|8.1|linux|arm64|sha": "cf3d77c0dfa6780cf071353bc39a19c7381145fb815325e16dadac534461f3078ebf26a1278f21f29f50a8919e00a768706261dc4979fdf13a0d6916bec83628",
-
     "monitor-ext-azureblobstorage|8.1|linux|x64|sha": "d12b9e4eaef3b05f4275d0ae39972437c772ede1a1604cba419528a2edd7e89dc33eb9b493449db1779ca394d3bb66341394c41c0c4229cf073206243563156e",
     "monitor-ext-azureblobstorage|8.1|linux|arm64|sha": "db724f5d2f25f738ef9961c53307f19140b57ecc7973f511a7d0d88c5f4ca5cc7b9fbaa076ece1e972c019c994a3ea13486d1b74406f12b8d2bc3e985dee4a94",
-
     "monitor-ext-s3storage|8.1|linux|x64|sha": "262b9bc1a443b68b71e72b864ffdd2d0222eab3630c883ead551fc7fcd1841ec6dfccde5d0f08629ed0da0443d981ab719967afe9ebc6852720053eefe061f6f",
     "monitor-ext-s3storage|8.1|linux|arm64|sha": "57efddf3cb91fb830ba4bcd751c644d87641f59023d9030405a8a38941740dafce0a73ba1bb444e290746b818970564e3da6c59da5655d9630a0b32a57c50780",
+
+    "monitor|9.0|build-version": "9.0.0-preview.4.24223.9",
+    "monitor|9.0|product-version": "9.0.0-preview.4",
+    "monitor|9.0|fixed-tag": "$(monitor|9.0|product-version)",
+    "monitor|9.0|minor-tag": "9.0-preview",
+    "monitor|9.0|major-tag": "9-preview",
+    "monitor-base|9.0|linux|x64|sha": "1652a57c72925d1fb6542f619a0581ae9720aeb0a62a2d8a11d0f98cbbce28ee3f0f70076451f68e6f917a78f787e2a39d9171dd888daca254f0ad5102305ba6",
+    "monitor-base|9.0|linux|arm64|sha": "facbcd1caaa956838f3a2572ebc8ec65000d4882efcab0dbfd678dbb222466010e8e8095e8aa03eda7d16ed8842793563bd6a65eec76b161b2bbd93377d18056",
+    "monitor-ext-azureblobstorage|9.0|linux|x64|sha": "cd27f75a25d16f4f22c88ed50b1597439bb93e8b6d6844f4d5055f45bf64a94d1e557db8c8aabaa9f1c47fef1c7fcc7647fa42e336e35f29d0bec133c996c87a",
+    "monitor-ext-azureblobstorage|9.0|linux|arm64|sha": "a5b5dab7f2d7b3834e5d3444f8b2a1836417e86df3eb4afb52be42320532deb7fcb1096649d8db694766cfae4c6d87606ab869ae780eedce7146929db96e5cbe",
+    "monitor-ext-s3storage|9.0|linux|x64|sha": "5c267311df627c85282727f014702f0852a55df5df579763c2c23e050d992d91c6240168b4549a85e746ab0bc23bf61000e27e8c9db11ec00277b7095e4f99e1",
+    "monitor-ext-s3storage|9.0|linux|arm64|sha": "8466825d03a42a6ec81bfd9e6cc987f8dcd1c8fa46ec36b73d5340cceaf47033f2c93e1dbf0f6cd8b67b7bbe7bc5cf845b5ea591af316496b189090623480b69",
 
     "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha": "fab41a86b9182b276992795247868c093890c6b3d5739376374a302430229624944998e054de0ff99bddd9459fc9543636df1ebd5392db069ae953ac17ea2880",
 
@@ -300,7 +294,7 @@
     "sdk|9.0|build-version": "9.0.100-preview.4.24224.3",
     "sdk|9.0|product-version": "9.0.100-preview.4",
     "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)",
-    "sdk|9.0|floating-tag": "$(dotnet|9.0|floating-tag)",
+    "sdk|9.0|minor-tag": "$(dotnet|9.0|minor-tag)",
     "sdk|9.0|linux-musl|arm|sha": "28d67f037722f38f7aaf52a744daf99669bcafd9014eaa23f424286915906e64e7e17d916729dfa49881c9edd15f99c966cd5582fad62e36c34dedb76f27ae35",
     "sdk|9.0|linux-musl|arm64|sha": "b073d38dca54764823b83e1a9af34a80daa0034be78d27bc6f05b515f68f12d3641f24159f96b5161bbf81b416627fca1cd570f1cc806cabdd03613807f1b052",
     "sdk|9.0|linux-musl|x64|sha": "3aab87142c017f43fe85a1e97c3aa5f2f070509fd86e73614b7fcee67d85f5b4671b3d571026e2a5bdbb9505cbbdf1ce604ffc58526ac72bc80a1933ee0406b1",
