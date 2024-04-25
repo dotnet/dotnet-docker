@@ -48,6 +48,8 @@ $ curl http://localhost/Environment
 {"runtimeVersion":".NET 8.0.4","osVersion":"Ubuntu 22.04.4 LTS","osArchitecture":"Arm64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":54845440,"hostName":"hello-dotnet-bd5fdfcfb-f5vjq"}
 ```
 
+The following example uses minikube.
+
 ```bash
 $ kubectl apply -f hello-dotnet-loadbalancer.yaml 
 deployment.apps/hello-dotnet created
