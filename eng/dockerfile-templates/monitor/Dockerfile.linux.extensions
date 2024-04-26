@@ -1,8 +1,6 @@
 {{
-    _ .NET major version matches the major version of dotnet-monitor ^
-    set dotnetMajor to split(PRODUCT_VERSION, ".")[0] ^
-    set dotnetMajorMinor to cat(dotnetMajor, ".0") ^
     set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
+    set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >=0 ^
     set monitorBaseTagOs to when(isAzureLinux,
         cat(when(find(OS_VERSION, "3.0") >= 0, "azurelinux-distroless", "cbl-mariner-distroless")),
@@ -10,7 +8,7 @@
     set monitorBaseTagHasOs to monitorMajor = "6" || monitorMajor = "8" ^
     set monitorBaseTagOsSuffix to when(monitorBaseTagHasOs, cat("-", monitorBaseTagOs), "") ^
     set monitorBaseTag to
-        cat("$REPO:", VARIABLES[cat("monitor|", dotnetMajorMinor, "|product-version")], "-", monitorBaseTagOs, ARCH_TAG_SUFFIX) ^
+        cat("$REPO:", VARIABLES[cat("monitor|", monitorMajorMinor, "|product-version")], monitorBaseTagOsSuffix, ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set installerImageTag to when(isAzureLinux,
         cat(when(find(OS_VERSION, "3.0") >= 0, "azurelinuxpreview.azurecr.io/public/azurelinux", "mcr.microsoft.com/cbl-mariner"),
