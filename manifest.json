@@ -11446,49 +11446,10 @@
         {
           "productVersion": "$(monitor|9.0|product-version)",
           "sharedTags": {
-            "$(monitor|9.0|fixed-tag)-ubuntu-chiseled": {},
-            "$(monitor|9.0|minor-tag)-ubuntu-chiseled": {},
             "$(monitor|9.0|fixed-tag)": {},
             "$(monitor|9.0|minor-tag)": {},
             "$(monitor|9.0|major-tag)": {},
             "latest": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/monitor-base/9.0/ubuntu-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "noble-chiseled",
-              "tags": {
-                "$(monitor|9.0|fixed-tag)-ubuntu-chiseled-amd64": {},
-                "$(monitor|9.0|minor-tag)-ubuntu-chiseled-amd64": {}
-              }
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/monitor-base/9.0/ubuntu-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "noble-chiseled",
-              "tags": {
-                "$(monitor|9.0|fixed-tag)-ubuntu-chiseled-arm64v8": {},
-                "$(monitor|9.0|minor-tag)-ubuntu-chiseled-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(monitor|9.0|product-version)",
-          "sharedTags": {
-            "$(monitor|9.0|fixed-tag)-azurelinux-distroless": {},
-            "$(monitor|9.0|minor-tag)-azurelinux-distroless": {}
           },
           "platforms": [
             {
@@ -11500,8 +11461,8 @@
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|fixed-tag)-azurelinux-distroless-amd64": {},
-                "$(monitor|9.0|minor-tag)-azurelinux-distroless-amd64": {}
+                "$(monitor|9.0|fixed-tag)-amd64": {},
+                "$(monitor|9.0|minor-tag)-amd64": {}
               }
             },
             {
@@ -11514,8 +11475,8 @@
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|fixed-tag)-azurelinux-distroless-arm64v8": {},
-                "$(monitor|9.0|minor-tag)-azurelinux-distroless-arm64v8": {}
+                "$(monitor|9.0|fixed-tag)-arm64v8": {},
+                "$(monitor|9.0|minor-tag)-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -12026,49 +11987,10 @@
         {
           "productVersion": "$(monitor|9.0|product-version)",
           "sharedTags": {
-            "$(monitor|9.0|fixed-tag)-ubuntu-chiseled": {},
-            "$(monitor|9.0|minor-tag)-ubuntu-chiseled": {},
             "$(monitor|9.0|fixed-tag)": {},
             "$(monitor|9.0|minor-tag)": {},
             "$(monitor|9.0|major-tag)": {},
             "latest": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:monitor-base)"
-              },
-              "dockerfile": "src/monitor/9.0/ubuntu-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
-              "os": "linux",
-              "osVersion": "noble-chiseled",
-              "tags": {
-                "$(monitor|9.0|fixed-tag)-ubuntu-chiseled-amd64": {},
-                "$(monitor|9.0|minor-tag)-ubuntu-chiseled-amd64": {}
-              }
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:monitor-base)"
-              },
-              "dockerfile": "src/monitor/9.0/ubuntu-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
-              "os": "linux",
-              "osVersion": "noble-chiseled",
-              "tags": {
-                "$(monitor|9.0|fixed-tag)-ubuntu-chiseled-arm64v8": {},
-                "$(monitor|9.0|minor-tag)-ubuntu-chiseled-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(monitor|9.0|product-version)",
-          "sharedTags": {
-            "$(monitor|9.0|fixed-tag)-azurelinux-distroless": {},
-            "$(monitor|9.0|minor-tag)-azurelinux-distroless": {}
           },
           "platforms": [
             {
@@ -12080,8 +12002,8 @@
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|fixed-tag)-azurelinux-distroless-amd64": {},
-                "$(monitor|9.0|minor-tag)-azurelinux-distroless-amd64": {}
+                "$(monitor|9.0|fixed-tag)-amd64": {},
+                "$(monitor|9.0|minor-tag)-amd64": {}
               }
             },
             {
@@ -12094,8 +12016,8 @@
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|fixed-tag)-azurelinux-distroless-arm64v8": {},
-                "$(monitor|9.0|minor-tag)-azurelinux-distroless-arm64v8": {}
+                "$(monitor|9.0|fixed-tag)-arm64v8": {},
+                "$(monitor|9.0|minor-tag)-arm64v8": {}
               },
               "variant": "v8"
             }
