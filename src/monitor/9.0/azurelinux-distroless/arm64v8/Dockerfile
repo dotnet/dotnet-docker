@@ -27,6 +27,6 @@ RUN dotnet_monitor_extension_version=9.0.0-preview.4.24223.9 \
 
 
 # .NET Monitor image
-FROM $REPO:9.0.0-preview.4-azurelinux-distroless-arm64v8
+FROM $REPO:9.0.0-preview.4-arm64v8
 
 COPY --from=installer ["/app", "/app"]

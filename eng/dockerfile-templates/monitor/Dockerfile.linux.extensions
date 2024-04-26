@@ -5,8 +5,10 @@
     set monitorBaseTagOs to when(isAzureLinux,
         cat(when(find(OS_VERSION, "3.0") >= 0, "azurelinux-distroless", "cbl-mariner-distroless")),
         "ubuntu-chiseled") ^
+    set monitorBaseTagHasOs to monitorMajor = "6" || monitorMajor = "7" || monitorMajor = "8" ^
+    set monitorBaseTagOsSuffix to when(monitorBaseTagHasOs, cat("-", monitorBaseTagOs), "") ^
     set monitorBaseTag to
-        cat("$REPO:", VARIABLES[cat("monitor|", monitorMajorMinor, "|product-version")], "-", monitorBaseTagOs, ARCH_TAG_SUFFIX) ^
+        cat("$REPO:", VARIABLES[cat("monitor|", monitorMajorMinor, "|product-version")], monitorBaseTagOsSuffix, ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set installerImageTag to when(isAzureLinux,
         cat(when(find(OS_VERSION, "3.0") >= 0, "azurelinuxpreview.azurecr.io/public/azurelinux", "mcr.microsoft.com/cbl-mariner"),
