@@ -17,8 +17,13 @@ parameters:
 - name: stages
   type: stageList
   default: []
-  # 1ES Pipeline Template parameters
 - name: pool
+  type: object
+  default:
+    name: NetCore1ESPool-Internal
+    image: 1es-ubuntu-2204
+    os: linux
+- name: sourceAnalysisPool
   type: object
   default:
     name: NetCore1ESPool-Internal
@@ -45,4 +50,5 @@ extends:
         exclude:
         - repository: InternalVersionsRepo
         - repository: PublicVersionsRepo
+      sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
     stages: ${{ parameters.stages }}
