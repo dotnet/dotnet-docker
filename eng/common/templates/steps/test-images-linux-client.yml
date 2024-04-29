@@ -73,21 +73,16 @@ steps:
     displayName: Docker logout
     condition: and(always(), ${{ parameters.condition }})
     continueOnError: true
-- powershell: |
-    $hasTestResults = Test-Path $(Common.TestResultsDirectory)/$(testResultsDirectory)
-    echo "##vso[task.setvariable variable=hasTestResults]$hasTestResults"
-    if ($hasTestResults) {
-      docker cp $(testRunner.container):/repo/$(testResultsDirectory) $(Common.TestResultsDirectory)/.
-    }
-    else {
-      echo "There were no test outputs in $(Common.TestResultsDirectory)/$(testResultsDirectory). Skipping test result publishing."
-    }
+- powershell: >
+    docker cp
+    $(testRunner.container):/repo/$(testResultsDirectory)
+    $(Common.TestResultsDirectory)/.
   displayName: Copy Test Results
   condition: and(always(), ${{ parameters.condition }})
   continueOnError: true
 - task: PublishTestResults@2
   displayName: Publish Test Results
-  condition: and(always(), ${{ parameters.condition }}, eq(variables['hasTestResults'], 'True'))
+  condition: and(always(), ${{ parameters.condition }})
   continueOnError: true
   inputs:
     testRunner: vSTest
