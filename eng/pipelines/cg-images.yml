@@ -13,7 +13,7 @@ schedules:
 variables:
 - template: /eng/common/templates/variables/common.yml@self
 - name: ComponentDetection.Timeout
-  value: 3600 # 1 hour in seconds
+  value: 7200 # 2 hours in seconds
 
 extends:
   template: /eng/common/templates/1es-official.yml@self
