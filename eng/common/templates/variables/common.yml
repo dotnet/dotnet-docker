@@ -55,3 +55,11 @@ variables:
   value: windows-2019
 - name: defaultWindows2022PoolImage
   value: windows-2022
+
+# Define these as placeholder values to allow string validation to succeed since we don't have the
+# variable group with the actual values in public builds. For internal builds, the variable group
+# will cause these values to be overridden with the real values.
+- name: acr.servicePrincipalTenant
+  value: 00000000-0000-0000-0000-000000000000
+- name: acr.subscription
+  value: 00000000-0000-0000-0000-000000000000
