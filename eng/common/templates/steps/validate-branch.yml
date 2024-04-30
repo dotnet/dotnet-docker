@@ -4,11 +4,25 @@ parameters:
 steps:
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
   - powershell: |
-      if (-not "$(officialBranches)".Split(',').Contains("$(sourceBranch)") `
-          -and "$(officialBranches)".Split(',').Contains("$(publishRepoPrefix)") `
-          -and "$(overrideOfficialBranchValidation)" -ne "true")
+      if ("$(officialBranches)".Split(',').Contains("$(sourceBranch)") `
+          -and "$(officialRepoPrefixes)".Split(',').Contains("$(publishRepoPrefix)"))
       {
-        echo "##vso[task.logissue type=error]Official builds must be done from an official branch: $(officialBranches)"
-        exit 1
+        echo "Conditions met for official build, continuing..."
+        exit 0
       }
+
+      if (-not "$(officialRepoPrefixes)".Split(',').Contains("$(publishRepoPrefix)"))
+      {
+        echo "This build is a test build, continuing..."
+        exit 0
+      }
+
+      if ("$(overrideOfficialBranchValidation)" -eq "true")
+      {
+        echo "Variable overrideOfficialBranchValidation is set to true, continuing..."
+        exit 0
+      }
+
+      echo "##vso[task.logissue type=error]Official builds must be done from an official branch ($(officialBranches)) and repo prefix ($(officialRepoPrefixes))."
+      exit 1
     displayName: Validate Branch
