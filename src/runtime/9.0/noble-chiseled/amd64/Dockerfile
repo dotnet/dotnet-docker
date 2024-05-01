@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.0-preview.4.24223.11 \
+RUN dotnet_version=9.0.0-preview.4.24227.4 \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='bf350edaecea17e445c1782a8164c35d9add3a520e719cfb0d8ba7250bc7ffe85b9be8a4a75ab75f9b90d00b7731014f0ef8048f6db35e30577e002ae9f03e53' \
+    && dotnet_sha512='f329af35a3a42a06d0a8220d9ad13d24b8b0d841970f1a19be26ca11c22c052ec08a9fa44c731ab45962965bff66f0715ea979809bac7269d14386dc4bda36ce' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
@@ -20,7 +20,7 @@ RUN mkdir /dotnet-symlink \
 FROM $REPO:9.0.0-preview.4-noble-chiseled-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.0-preview.4.24223.11
+ENV DOTNET_VERSION=9.0.0-preview.4.24227.4
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
