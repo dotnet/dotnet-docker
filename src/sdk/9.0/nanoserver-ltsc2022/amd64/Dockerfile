@@ -10,8 +10,8 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.44.0.windows.1/MinGit-2.44.0-64-bit.zip; `
-        $mingit_sha256 = 'ed4e74e171c59c9c9d418743c7109aa595e0cc0d1c80cac574d69ed5e571ae59'; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.45.0.windows.1/MinGit-2.45.0-64-bit.zip; `
+        $mingit_sha256 = 'f607bbd459bae73369e6509fe849c4c48152f4d33b0021d5881e1e9e7ae79e26'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -25,9 +25,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '9.0.100-preview.4.24224.3'; `
+        $sdk_version = '9.0.100-preview.4.24230.8'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = 'b19eec987f1f74f3d6d5aca00e336944202d73afbae58fe39b8eddc73ddcca5c2df776fd0fe52af690d98cd718c60d696d2a577c314ed94026a6fc0c52433771'; `
+        $dotnet_sha512 = '008cf539bfa9bafecf10bdf915f8f184f1c5f1da2e47879c8e8960fa7bba5d5995ef0251455416a3799b4f9372ea1b33a233aca42bfcc3ee22a0adcb538cce29'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -64,7 +64,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=9.0.100-preview.4.24224.3 `
+    DOTNET_SDK_VERSION=9.0.100-preview.4.24230.8 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
