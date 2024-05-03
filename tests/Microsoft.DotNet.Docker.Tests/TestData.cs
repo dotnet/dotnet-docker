@@ -285,7 +285,14 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V9_0, OS = OS.Alpine319,           Arch = Arch.Arm64,   SdkOS = OS.Alpine319, SdkImageVariant = DotNetImageVariant.AOT,
                     ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
 
-            new ProductImageData { Version = V9_0, OS = OS.BookwormSlim,        Arch = Arch.Arm }
+            new ProductImageData { Version = V9_0, OS = OS.BookwormSlim,        Arch = Arch.Arm },
+            new ProductImageData { Version = V9_0, OS = OS.Alpine319,           Arch = Arch.Arm },
+            new ProductImageData { Version = V9_0, OS = OS.Alpine319,           Arch = Arch.Arm,     SdkOS = OS.Alpine319,
+                    ImageVariant = DotNetImageVariant.Composite, SupportedImageRepos = DotNetImageRepo.Aspnet },
+            new ProductImageData { Version = V9_0, OS = OS.Alpine319,           Arch = Arch.Arm,     SdkOS = OS.Alpine319,
+                    ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
+            new ProductImageData { Version = V9_0, OS = OS.Alpine319,           Arch = Arch.Arm,     SdkOS = OS.Alpine319, SdkImageVariant = DotNetImageVariant.AOT,
+                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps }
             // Disabled due to https://github.com/dotnet/runtime/issues/101444. Re-enable when fixed.
             // new ProductImageData { Version = V9_0, OS = OS.Noble,               Arch = Arch.Arm },
             // new ProductImageData { Version = V9_0, OS = OS.NobleChiseled,       Arch = Arch.Arm,     SdkOS = OS.Noble },
@@ -297,15 +304,6 @@ namespace Microsoft.DotNet.Docker.Tests
             //         ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
             // new ProductImageData { Version = V9_0, OS = OS.NobleChiseled,       Arch = Arch.Arm,     SdkOS = OS.Noble, SdkImageVariant = DotNetImageVariant.AOT,
             //         ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
-
-            // Disabled due to https://github.com/dotnet/runtime/issues/100536. Re-enable when fixed.
-            // new ProductImageData { Version = V9_0, OS = OS.Alpine319,           Arch = Arch.Arm },
-            // new ProductImageData { Version = V9_0, OS = OS.Alpine319,           Arch = Arch.Arm,     SdkOS = OS.Alpine319,
-            //         ImageVariant = DotNetImageVariant.Composite, SupportedImageRepos = DotNetImageRepo.Aspnet },
-            // new ProductImageData { Version = V9_0, OS = OS.Alpine319,           Arch = Arch.Arm,     SdkOS = OS.Alpine319,
-            //         ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
-            // new ProductImageData { Version = V9_0, OS = OS.Alpine319,           Arch = Arch.Arm,     SdkOS = OS.Alpine319, SdkImageVariant = DotNetImageVariant.AOT,
-            //         ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps }
         };
 
         private static readonly ProductImageData[] s_windowsTestData =
