@@ -31,23 +31,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected override DotNetImageRepo ImageRepo => DotNetImageRepo.SDK;
 
-        private bool IsPowerShellSupported(ProductImageData imageData, out string reason)
+        private static bool IsPowerShellSupported(ProductImageData imageData, out string reason)
         {
-            if (imageData.OS.Contains("alpine"))
+            if (imageData.OS.Contains("alpine") && imageData.IsArm)
             {
-                if (imageData.IsArm)
-                {
-                    reason = "PowerShell does not support Arm-based Alpine, skip testing (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)";
-                    return false;
-                }
-                else if (imageData.Version.Major == 6 && imageData.OS.Contains("3.19"))
-                {
-                    reason = "Powershell does not support Alpine 3.19 yet, skip testing (https://github.com/PowerShell/PowerShell/issues/20945)";
-                    return false;
-                }
+                reason = "PowerShell does not support Arm-based Alpine, skip testing (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)";
+                return false;
             }
 
-            reason = null;
+            reason = "";
             return true;
         }
 
