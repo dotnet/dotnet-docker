@@ -8,7 +8,7 @@ parameters:
   customTestInitSteps: []
   customPublishInitSteps: []
   customPublishVariables: []
-  
+
   linuxAmdBuildJobTimeout: 60
   linuxArmBuildJobTimeout: 60
   windowsAmdBuildJobTimeout: 60
@@ -70,7 +70,8 @@ stages:
       pool: ${{ parameters.linuxAmd64Pool }}
       additionalOptions: "--manifest '$(manifest)' $(imageBuilder.pathArgs) $(manifestVariables)"
       publicProjectName: ${{ parameters.publicProjectName }}
-      customInitSteps: ${{ parameters.customCopyBaseImagesInitSteps}}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      customInitSteps: ${{ parameters.customCopyBaseImagesInitSteps }}
   - template: /eng/common/templates/jobs/generate-matrix.yml@self
     parameters:
       matrixType: ${{ parameters.buildMatrixType }}
