@@ -107,25 +107,30 @@ jobs:
 
       echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
     displayName: Set Image Builder Build Args
-  - powershell: >
-      $(runImageBuilderCmd) build
-      --manifest $(manifest)
-      $(imageBuilderPaths)
-      $(osVersions)
-      --os-type $(osType)
-      --architecture $(architecture)
-      --retry
-      --source-repo $(publicGitRepoUri)
-      --digests-out-var 'builtImages'
-      --acr-subscription '$(acr.subscription)'
-      --acr-resource-group '$(acr.resourceGroup)'
-      --acr-client-id '$(acr.servicePrincipalName)'
-      --acr-password '$(acr.servicePrincipalPassword)'
-      --acr-tenant '$(acr.servicePrincipalTenant)'
-      $(manifestVariables)
-      $(imageBuilderBuildArgs)
-    name: BuildImages
-    displayName: Build Images
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      name: BuildImages
+      displayName: Build Images
+      serviceConnection: $(acr.serviceConnectionName)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      dockerClientOS: ${{ parameters.dockerClientOS }}
+      args: >
+        build
+        --manifest $(manifest)
+        $(imageBuilderPaths)
+        $(osVersions)
+        --os-type $(osType)
+        --architecture $(architecture)
+        --retry
+        --source-repo $(publicGitRepoUri)
+        --digests-out-var 'builtImages'
+        --acr-subscription '$(acr.subscription)'
+        --acr-resource-group '$(acr.resourceGroup)'
+        --acr-client-id '$(acr.servicePrincipalName)'
+        --acr-password '$(acr.servicePrincipalPassword)'
+        --acr-tenant '$(acr.servicePrincipalTenant)'
+        $(manifestVariables)
+        $(imageBuilderBuildArgs)
   - template: /eng/common/templates/steps/publish-artifact.yml@self
     parameters:
       path: $(imageInfoHostDir)
