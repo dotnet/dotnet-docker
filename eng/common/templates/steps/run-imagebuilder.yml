@@ -1,4 +1,7 @@
 parameters:
+- name: name
+  type: string
+  default: "RunImageBuilder"
 - name: displayName
   type: string
   default: "Run ImageBuilder"
@@ -14,16 +17,23 @@ parameters:
 - name: continueOnError
   type: boolean
   default: false
+- name: dockerClientOS
+  type: string
+  default: "linux"
 
 steps:
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.serviceConnection, '')) }}:
   - task: AzureCLI@2
+    name: ${{ parameters.name }}
     displayName: ${{ parameters.displayName }}
     continueOnError: ${{ parameters.continueOnError }}
     inputs:
       azureSubscription: ${{ parameters.serviceConnection }}
       addSpnToEnvironment: true
-      scriptType: 'pscore'
+      ${{ if eq(parameters.dockerClientOS, 'windows') }}:
+        scriptType: 'ps'
+      ${{ else }}:
+        scriptType: 'pscore'
       scriptLocation: 'inlineScript'
       inlineScript: >
         $env:idToken | Out-File -FilePath $(tokenHostFilePath);
@@ -31,6 +41,7 @@ steps:
         Remove-Item -Path $(tokenHostFilePath) -Force
 - ${{ else }}:
   - task: PowerShell@2
+    name: ${{ parameters.name }}
     displayName: ${{ parameters.displayName }}
     continueOnError: ${{ parameters.continueOnError }}
     inputs:

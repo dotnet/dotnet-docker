@@ -71,7 +71,7 @@ stages:
       additionalOptions: "--manifest '$(manifest)' $(imageBuilder.pathArgs) $(manifestVariables)"
       publicProjectName: ${{ parameters.publicProjectName }}
       internalProjectName: ${{ parameters.internalProjectName }}
-      customInitSteps: ${{ parameters.customCopyBaseImagesInitSteps }}
+      customInitSteps: ${{ parameters.customCopyBaseImagesInitSteps}}
   - template: /eng/common/templates/jobs/generate-matrix.yml@self
     parameters:
       matrixType: ${{ parameters.buildMatrixType }}
