@@ -1,0 +1,39 @@
+parameters:
+- name: displayName
+  type: string
+  default: "Run ImageBuilder"
+- name: serviceConnection
+  type: string
+  default: ""
+- name: internalProjectName
+  type: string
+  default: null
+- name: args
+  type: string
+  default: null
+- name: continueOnError
+  type: boolean
+  default: false
+
+steps:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.serviceConnection, '')) }}:
+  - task: AzureCLI@2
+    displayName: ${{ parameters.displayName }}
+    continueOnError: ${{ parameters.continueOnError }}
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      addSpnToEnvironment: true
+      scriptType: 'pscore'
+      scriptLocation: 'inlineScript'
+      inlineScript: >
+        $env:idToken | Out-File -FilePath $(tokenHostFilePath);
+        $(runAuthedImageBuilderCmd) ${{ parameters.args }};
+        Remove-Item -Path $(tokenHostFilePath) -Force
+- ${{ else }}:
+  - task: PowerShell@2
+    displayName: ${{ parameters.displayName }}
+    continueOnError: ${{ parameters.continueOnError }}
+    inputs:
+      targetType: 'inline'
+      script: >
+        $(runImageBuilderCmd) ${{ parameters.args }}
