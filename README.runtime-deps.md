@@ -204,6 +204,9 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.0-preview.4-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.0-preview.4, 9.0.0-preview.4-bookworm-slim, 9.0-preview, 9.0-preview-bookworm-slim, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.0-preview.4-alpine3.19-arm32v7, 9.0-preview-alpine3.19-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.0-preview.4-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
+9.0.0-preview.4-alpine3.19-aot-arm32v7, 9.0-preview-alpine3.19-aot-arm32v7, 9.0-preview-alpine-aot-arm32v7, 9.0.0-preview.4-alpine3.19-aot, 9.0-preview-alpine3.19-aot, 9.0-preview-alpine-aot | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/alpine3.19-aot/arm32v7/Dockerfile) | Alpine 3.19
+9.0.0-preview.4-alpine3.19-extra-arm32v7, 9.0-preview-alpine3.19-extra-arm32v7, 9.0-preview-alpine-extra-arm32v7, 9.0.0-preview.4-alpine3.19-extra, 9.0-preview-alpine3.19-extra, 9.0-preview-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/alpine3.19-extra/arm32v7/Dockerfile) | Alpine 3.19
 
 You can retrieve a list of all available tags for dotnet/nightly/runtime-deps at https://mcr.microsoft.com/v2/dotnet/nightly/runtime-deps/tags/list.
 <!--End of generated tags-->
