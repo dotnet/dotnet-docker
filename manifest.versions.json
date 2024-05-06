@@ -127,12 +127,12 @@
     "mingit|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.45.0.windows.1/MinGit-2.45.0-64-bit.zip",
     "mingit|x64|sha": "f607bbd459bae73369e6509fe849c4c48152f4d33b0021d5881e1e9e7ae79e26",
 
-    "monitor|6.3|build-version": "6.3.5",
-    "monitor|6.3|linux-musl|x64|sha": "fdfcac194efd44e62ef642d5a82c568a0b2d4b08f627263e9cab4a5586c7b20713307a57a7547e7a659824bb935e90eadd0dedc96b143975148b046ea8f44a00",
-    "monitor|6.3|linux-musl|arm64|sha": "3590323ab4b30093d73ca5d9459988908b1952a67e0b4dd228a37731a93b164b91734f7d3dc47e7e30232e30e3d4b36f545533fe64fee93bc413bd22c1dc4fb0",
-    "monitor|6.3|linux|x64|sha": "4834f0f2a0d0037b3c3cbb4cc25875a3da175b54866ba7c731c1e967c3dfdde40def8ac434b71bbf8e591ed69df6bc89c9772cf688fa444ea1daf655bfd2a5e3",
-    "monitor|6.3|linux|arm64|sha": "f33f22f1d47155d738fc379b85537d6da096b319d4fbbd58badbd7286e07124078c15d410cfb2082027741f3b9c65d7ffdb0e65088f5bfc7aa8f4429351361f2",
-    "monitor|6.3|product-version": "6.3.5",
+    "monitor|6.3|build-version": "6.3.6-servicing.24256.3",
+    "monitor|6.3|linux-musl|x64|sha": "075c31d173d11b5cc16f6309c3f28ae0ad5a4027b162849aeecd583e161c7f66d307ac4754d2021118d22ee033a44866727c7b1730f83423b155cf1bc63617fa",
+    "monitor|6.3|linux-musl|arm64|sha": "4dced6f5f97651f2cbb8606615a7505b1310c0f3218d707d8209ce36359595541dfe4b237cd05e571a9ac650901261517277cfb93d44960d14b60b94973ebbd2",
+    "monitor|6.3|linux|x64|sha": "e0d35162af7bc871baaef18a3b4f84aa8483252c8b2180d42759ab0f8e55ef7c63d4acfa838192c35bc0dbaf908416e06a1f79dd6c7a5bd0e71a3e16dee25cc8",
+    "monitor|6.3|linux|arm64|sha": "b8fe09b85001351caebbeba4d2a07c8de7025dfab3247cbaa96959ec511062da7cfb85841c0585ebf0fa58dbf8d9f5f4b032c5d811ee7703d2e38373642648cc",
+    "monitor|6.3|product-version": "6.3.6",
 
     "monitor|7.3|build-version": "7.3.3",
     "monitor|7.3|linux-musl|x64|sha": "f600b324bd1a00f7e944ba71e53ef780004b2b82eda115bc85ad1041772fb2eeccb29b0e0bd1149afc7e5fe9e9ae6c1bc8b73c172635d5e3ff512a65991d086d",
