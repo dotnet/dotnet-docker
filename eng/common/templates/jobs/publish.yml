@@ -64,22 +64,23 @@ jobs:
       $(runImageBuilderCmd) trimUnchangedPlatforms
       '$(imageInfoContainerDir)/image-info.json'
     displayName: Trim Unchanged Images
-  - script: >
-      $(runImageBuilderCmd) copyAcrImages
-      '$(acr.servicePrincipalName)'
-      '$(acr.servicePrincipalPassword)'
-      '$(acr.servicePrincipalTenant)'
-      '$(acr.subscription)'
-      '$(acr.resourceGroup)'
-      '$(stagingRepoPrefix)'
-      --os-type '*'
-      --architecture '*'
-      --repo-prefix '$(publishRepoPrefix)'
-      --image-info '$(imageInfoContainerDir)/image-info.json'
-      $(dryRunArg)
-      $(imageBuilder.pathArgs)
-      $(imageBuilder.commonCmdArgs)
-    displayName: Copy Images
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Copy Images
+      serviceConnection: $(acr.serviceConnectionName)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      args: >
+        copyAcrImages
+        '$(acr.subscription)'
+        '$(acr.resourceGroup)'
+        '$(stagingRepoPrefix)'
+        --os-type '*'
+        --architecture '*'
+        --repo-prefix '$(publishRepoPrefix)'
+        --image-info '$(imageInfoContainerDir)/image-info.json'
+        $(dryRunArg)
+        $(imageBuilder.pathArgs)
+        $(imageBuilder.commonCmdArgs)
   - script: >
       $(runImageBuilderCmd) publishManifest
       '$(imageInfoContainerDir)/image-info.json'

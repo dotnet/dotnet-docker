@@ -10,9 +10,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Monitor Base
-RUN dotnet_monitor_version=9.0.0-preview.4.24255.2 \
+RUN dotnet_monitor_version=9.0.0-preview.4.24256.7 \
     && curl -fSL --output dotnet-monitor-base.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz \
-    && dotnet_monitor_base_sha512='63cec01a00caf0f3dedaa473fefb01361683ff8788d31e1996dab25d780eed054bfe1488288b3f3d368285d425c5944cfe3f8dd33df37e26b06c73911150fcff' \
+    && dotnet_monitor_base_sha512='6615912b8753517a5484f3878287ea16178f92425a8390395f819fe5b74dd51823a8224c0fae3b87863047ed25ac930ffd5f617363cff3790e4a2bd7360f4572' \
     && echo "$dotnet_monitor_base_sha512  dotnet-monitor-base.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor-base.tar.gz -C /app \
