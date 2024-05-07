@@ -61,8 +61,8 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.1-ubuntu-chiseled-amd64, 8.0-ubuntu-chiseled-amd64, 8.0.1-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.1, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-8.0.1-cbl-mariner-distroless-amd64, 8.0-cbl-mariner-distroless-amd64, 8.0.1-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+8.0.2-ubuntu-chiseled-amd64, 8.0-ubuntu-chiseled-amd64, 8.0.2-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.2, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+8.0.2-cbl-mariner-distroless-amd64, 8.0-cbl-mariner-distroless-amd64, 8.0.2-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 7.3.4-alpine-amd64, 7.3-alpine-amd64, 7-alpine-amd64, 7.3.4-alpine, 7.3-alpine, 7-alpine, 7.3.4, 7.3, 7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/7.3/alpine/amd64/Dockerfile) | Alpine 3.19
 7.3.4-ubuntu-chiseled-amd64, 7.3-ubuntu-chiseled-amd64, 7-ubuntu-chiseled-amd64, 7.3.4-ubuntu-chiseled, 7.3-ubuntu-chiseled, 7-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/7.3/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 7.3.4-cbl-mariner-amd64, 7.3-cbl-mariner-amd64, 7-cbl-mariner-amd64, 7.3.4-cbl-mariner, 7.3-cbl-mariner, 7-cbl-mariner | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/7.3/cbl-mariner/amd64/Dockerfile) | CBL-Mariner 2.0
@@ -82,8 +82,8 @@ Tags | Dockerfile | OS Version
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.1-ubuntu-chiseled-arm64v8, 8.0-ubuntu-chiseled-arm64v8, 8.0.1-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.1, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.1-cbl-mariner-distroless-arm64v8, 8.0-cbl-mariner-distroless-arm64v8, 8.0.1-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+8.0.2-ubuntu-chiseled-arm64v8, 8.0-ubuntu-chiseled-arm64v8, 8.0.2-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.2, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.2-cbl-mariner-distroless-arm64v8, 8.0-cbl-mariner-distroless-arm64v8, 8.0.2-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 7.3.4-alpine-arm64v8, 7.3-alpine-arm64v8, 7-alpine-arm64v8, 7.3.4-alpine, 7.3-alpine, 7-alpine, 7.3.4, 7.3, 7 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/7.3/alpine/arm64v8/Dockerfile) | Alpine 3.19
 7.3.4-ubuntu-chiseled-arm64v8, 7.3-ubuntu-chiseled-arm64v8, 7-ubuntu-chiseled-arm64v8, 7.3.4-ubuntu-chiseled, 7.3-ubuntu-chiseled, 7-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/7.3/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 7.3.4-cbl-mariner-arm64v8, 7.3-cbl-mariner-arm64v8, 7-cbl-mariner-arm64v8, 7.3.4-cbl-mariner, 7.3-cbl-mariner, 7-cbl-mariner | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/7.3/cbl-mariner/arm64v8/Dockerfile) | CBL-Mariner 2.0
