@@ -115,13 +115,13 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 ##### .NET Aspire Dashboard Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.6-amd64, 8.0-preview-amd64, 8.0.0-preview.6, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+8.0.0-preview.7-amd64, 8.0-preview-amd64, 8.0.0-preview.7, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
 ## Linux arm64 Tags
 ##### .NET Aspire Dashboard Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.0-preview.6-arm64v8, 8.0-preview-arm64v8, 8.0.0-preview.6, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+8.0.0-preview.7-arm64v8, 8.0-preview-arm64v8, 8.0.0-preview.7, 8.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 
 You can retrieve a list of all available tags for dotnet/nightly/aspire-dashboard at https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list.
 <!--End of generated tags-->
