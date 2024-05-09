@@ -5,8 +5,8 @@ FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor Base
 RUN dotnet_monitor_version=8.0.2 \
-    && curl -fSL --output dotnet-monitor-base.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/8.0.2-servicing.24256.5/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz \
-    && dotnet_monitor_base_sha512='f884071b334c68406fc1276d6dcf4956c9e39f1e03eb992fd3aa9f0a353281d5673d75378348ad74ccfab177924a34c417a56d1fc4bb9978d160be611d5fe399' \
+    && curl -fSL --output dotnet-monitor-base.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/8.0.2-servicing.24258.10/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz \
+    && dotnet_monitor_base_sha512='44adbf8812fa7f7e1ea7c83e7708f25edfb65fb73038666bba4798bda0ea7137da9d7b3a1bef15f907ec191a35fe567eda1c6598d7808904f2f654bdf0e9a032' \
     && echo "$dotnet_monitor_base_sha512  dotnet-monitor-base.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor-base.tar.gz -C /app \
