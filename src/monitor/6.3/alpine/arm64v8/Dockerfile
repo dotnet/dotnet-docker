@@ -23,9 +23,9 @@ ENV \
     PATH="/app:${PATH}"
 
 # Install .NET Monitor
-RUN dotnet_monitor_version=6.3.5 \
-    && wget -O dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-musl-arm64.tar.gz \
-    && dotnet_monitor_sha512='3590323ab4b30093d73ca5d9459988908b1952a67e0b4dd228a37731a93b164b91734f7d3dc47e7e30232e30e3d4b36f545533fe64fee93bc413bd22c1dc4fb0' \
+RUN dotnet_monitor_version=6.3.6 \
+    && wget -O dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/6.3.6-servicing.24258.3/dotnet-monitor-$dotnet_monitor_version-linux-musl-arm64.tar.gz \
+    && dotnet_monitor_sha512='1cd45c63d1a689f1bd6a2020c70cfcfd0879ab551758c28adf5802d0e56641803cf1d51c096ceb1aeec099b46b7fc82a10c7f3d69ada371bb82a2d83cc9a60c7' \
     && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor.tar.gz -C /app \
