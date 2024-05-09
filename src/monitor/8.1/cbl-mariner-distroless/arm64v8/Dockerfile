@@ -10,13 +10,13 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Monitor extensions
-RUN dotnet_monitor_extension_version=8.1.0-alpha.1.24257.5 \
+RUN dotnet_monitor_extension_version=8.1.0-alpha.1.24258.12 \
     && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
-    && dotnet_monitor_extension_sha512='6068705b71348f5a5ca3d7da899c9ce470b4946cbab161b58c3b0e42bf1bf80998eb424e86fca04ffd12dae7b187fb30d596f1a9e82407017239eb8d401d2746' \
+    && dotnet_monitor_extension_sha512='1a9f10e11d5cb27c438323edc7603fefc6850d16cb60e302054f21fa6730c055437769d5bf03532c81a0897539a9e3289621e7c92e1f8cd6bd060a0ab7481d64' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
-    && dotnet_monitor_extension_sha512='597591bef84d9611c65cc03ef5f3a4499943faae9eefb3563c43661a3c3363ecf72c9a74bd405cda5ccd333c6c76af67af4374f20767363ec4184a5e734ce318' \
+    && dotnet_monitor_extension_sha512='2313beb098bf6e0e828351a97996bdbc3ecf2d30491e8bb47de105e62b802f836533a4cc66f8e7d43c85e8ba5d2f7f2bbf19521ee6a32d9b954d8531fdd73f98' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
     \
     && mkdir -p /app \
