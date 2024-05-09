@@ -5,12 +5,12 @@ FROM amd64/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor extensions
 RUN dotnet_monitor_extension_version=8.0.2 \
-    && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/8.0.2-servicing.24256.5/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
-    && dotnet_monitor_extension_sha512='db29902824b96f62d251ab8f3b4e1646b000a82901db56ca5b38ce11127ac835dc87142fe794228807e5d871a6d697ec813f1144c37801c4bf392ebac5d1f01c' \
+    && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/8.0.2-servicing.24258.10/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
+    && dotnet_monitor_extension_sha512='4b29c75ed6a8b2bb522147f02308128a6cf9c80732274f993b99cd9f6b149311c5ef4effca4916eac0e3578255984a65245aa42452d03f23468b442bdeb79762' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
     \
-    && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/8.0.2-servicing.24256.5/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
-    && dotnet_monitor_extension_sha512='1bfb8dff86dd9433bcb6073a99104e78b96a70f4bf96a20b54cae0e30d41597f33e2ade5aad4172ded6557034c7298de033c2550ee3da37123396684ba3bd858' \
+    && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/8.0.2-servicing.24258.10/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
+    && dotnet_monitor_extension_sha512='bce5dbee21ae3f71cb8d457da8d69622e5beebdebc011f517f05bb6c63cd45aa57679e304e41509f8371aef5753dfc4e08e0f0a5231c537a6a5f595ecff0a36e' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
     \
     && mkdir -p /app \
