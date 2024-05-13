@@ -132,7 +132,7 @@
     "monitor|6.3|linux|arm64|sha": "74d70619a6b2729d31f2f2d0df55d2c50da0c4d8a573141c2aa43e60a3cab967e51d10102d82db455ec6766b57105a3288a3b73f0fe19c2735520a49110f8b56",
     "monitor|6.3|product-version": "6.3.6",
 
-    "monitor|7.3|build-version": "7.3.4-servicing.24258.8",
+    "monitor|7.3|build-version": "7.3.4",
     "monitor|7.3|linux-musl|x64|sha": "c9d8497fd10fa2e15b806345370f93d12c16c49b3805410b7780e1af86ce8c9e1ed4cd3a5586d8d6f92e3d5302664d88ca8b48650de84ae233202e54ccfec933",
     "monitor|7.3|linux-musl|arm64|sha": "1533e3cebd8c5b2fe7b7a345a9c51b0fe16ef806cc5539f0ba97df383dafa4cfb7badf00bdf675d7cd86fe28a291fb8e8047ff50a9d78188c6ed334946ca3487",
     "monitor|7.3|linux|x64|sha": "b0d2ababc7b3ab80c2616aea2621a91aac247cc566d3a57488916b7414eeb87c751cc45ba944339f5ec0cc961696333c54bfef7e2a548c845a89cb3edbbbaa6c",
