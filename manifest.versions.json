@@ -139,7 +139,7 @@
     "monitor|7.3|linux|arm64|sha": "b9479b69d4e338604ee38ce8c5f1889a600dc5629bab45e7656dd73653e4aeff6c9d6c3760f4320b2850650ff3c1916abcea3fbc7d11884accb4420e884617e8",
     "monitor|7.3|product-version": "7.3.4",
 
-    "monitor|8.0|build-version": "8.0.2-servicing.24258.10",
+    "monitor|8.0|build-version": "8.0.2",
     "monitor|8.0|product-version": "8.0.2",
 
     "monitor|9.0|build-version": "9.0.0-preview.3.24205.3",
