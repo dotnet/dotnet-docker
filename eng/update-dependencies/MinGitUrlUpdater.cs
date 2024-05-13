@@ -17,7 +17,7 @@ internal class MinGitUrlUpdater : MinGitUpdater
         : base(
             repoRoot,
             latestMinGitRelease,
-            "mingit|x64|url")
+            "mingit|latest|x64|url")
     {
     }
 

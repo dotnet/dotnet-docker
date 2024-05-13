@@ -16,7 +16,7 @@ internal class MinGitShaUpdater : MinGitUpdater
         : base(
             repoRoot,
             latestMinGitRelease,
-            "mingit|x64|sha")
+            "mingit|latest|x64|sha")
     {
     }
 
