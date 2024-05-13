@@ -5,8 +5,8 @@ RUN apt-get update \
         ca-certificates \
         file
 
-RUN go install github.com/canonical/chisel/cmd/chisel@v0.9.0 \
-    && wget -O /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.0.0/chisel-wrapper \
+RUN go install github.com/canonical/chisel/cmd/chisel@v0.9.1 \
+    && wget -O /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
 
 RUN groupadd \
