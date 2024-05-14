@@ -19,10 +19,11 @@ spec:
         - containerPort: 8080
         resources:
           requests:
-            memory: "80Mi"
+            memory: "60Mi"
+            cpu: "250m" # same as 0.25
           limits:
             memory: "100Mi"
-            cpu: "1"
+            cpu: "500m" # same as 0.5
         livenessProbe:
           httpGet:
             path: /healthz
