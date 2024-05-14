@@ -12,13 +12,15 @@
     set rocksToolboxUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
     set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|ref")] ^
 
+    set opensslPkg to when(match(osVersionBase, "noble"), "libssl3t64", "libssl3") ^
+
     set basePkgs to [
             "base-files_base",
             "base-files_release-info",
             "ca-certificates_data",
             "libc6_libs",
             "libgcc-s1_libs",
-            "libssl3_libs",
+            cat(opensslPkg, "_libs"),
             "zlib1g_libs"
         ] ^
 
@@ -26,12 +28,19 @@
         but does not change the key value. In order to have the right index in the
         array, we must call `cat` again to reset the indices (keys) in the map. ^
     set standardPkgs to cat(sort(cat(basePkgs, [ "libstdc++6_libs" ]))) ^
-    set extraPkgs to cat(sort(cat(standardPkgs,
-            [
-                cat("libicu", VARIABLES[cat("libicu|", osVersionBase)], "_libs"),
-                "tzdata_zoneinfo",
-                "tzdata_zoneinfo-icu"
-            ]))) ^
+
+    _ tzdata package layout changed greatly between jammy and noble. tzdata_zoneinfo-icu is no longer necessary.
+        See https://github.com/canonical/chisel-releases/pull/91. ^
+    set tzdataPkgs to when(match(osVersionBase, "jammy"),
+        [
+            "tzdata_zoneinfo",
+            "tzdata_zoneinfo-icu"
+        ],
+        [
+            "tzdata_zoneinfo"
+        ]) ^
+    set icuPkgs to [ cat("libicu", VARIABLES[cat("libicu|", osVersionBase)], "_libs") ] ^
+    set extraPkgs to cat(sort(cat(standardPkgs, tzdataPkgs, icuPkgs))) ^
 
     set pkgs to when(ARGS["is-extra"],
             extraPkgs,

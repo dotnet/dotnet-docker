@@ -28,8 +28,10 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string Bionic = "bionic";
         public const string Focal = "focal";
         public const string Jammy = "jammy";
-        public const string JammyChiseled = $"{Jammy}-chiseled";
-        public const string UbuntuChiseled = "ubuntu-chiseled";
+        public const string JammyChiseled = $"{Jammy}{ChiseledSuffix}";
+        public const string Noble = "noble";
+        public const string NobleChiseled = $"{Noble}{ChiseledSuffix}";
+        public const string UbuntuChiseled = $"ubuntu{ChiseledSuffix}";
 
         // Windows
         public const string NanoServer = "nanoserver";
@@ -40,6 +42,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string ServerCoreLtsc2022 = $"{ServerCore}-ltsc2022";
 
         // Helpers
+        public const string ChiseledSuffix = "-chiseled";
         public const string SlimSuffix = "-slim";
     }
 }
