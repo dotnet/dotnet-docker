@@ -139,13 +139,8 @@ jobs:
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
   - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-      # Define the task here to load it into the agent so that we can invoke the tool manually
-      # TODO: Revert the build-specific pinned version when https://github.com/dotnet/docker-tools/issues/1152 is fixed
-    - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0.197.56
-      inputs:
-        BuildDropPath: $(Build.ArtifactStagingDirectory)
-      displayName: Load Manifest Generator
-      condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
+    # The following task depends on the SBOM Manifest Generator task installed on the agent.
+    # This task is auto-injected by 1ES Pipeline Templates so we don't need to install it ourselves.
     - powershell: |
         $images = "$(BuildImages.builtImages)"
         if (-not $images) { return 0 }
