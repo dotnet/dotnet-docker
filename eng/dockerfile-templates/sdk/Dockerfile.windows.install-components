@@ -40,8 +40,8 @@ RUN powershell -Command " `
         {{InsertTemplate("../Dockerfile.windows.download-file",
             [
                 "out-file": "mingit.zip",
-                "url": VARIABLES[cat("mingit|", ARCH_SHORT, "|url")],
-                "sha": VARIABLES[cat("mingit|", ARCH_SHORT, "|sha")],
+                "url": VARIABLES[cat("mingit|", dotnetVersion, "|", ARCH_SHORT, "|url")],
+                "sha": VARIABLES[cat("mingit|", dotnetVersion, "|", ARCH_SHORT, "|sha")],
                 "sha-var-name": "mingit_sha256",
                 "hash-algorithm": "sha256"
             ], "        ")}}; `
