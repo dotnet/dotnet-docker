@@ -183,7 +183,7 @@ Starting test execution, please wait...
 A total of 1 test files matched the specified pattern.
 Results File: /source/tests/TestResults/_886d04dbf347_2021-09-02_18_30_59.trx
 
-Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 2 ms - /source/tests/bin/Debug/net7.0/tests.dll (net7.0)
+Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 2 ms - /source/tests/bin/Debug/net8.0/tests.dll (net8.0)
 Removing intermediate container 4678e2e6456d
  ---> 6deeeacdaaf2
 Step 24/24 : ENTRYPOINT ["dotnet","complexapp.dll"]

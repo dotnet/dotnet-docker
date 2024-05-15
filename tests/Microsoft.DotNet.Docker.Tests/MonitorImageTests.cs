@@ -120,7 +120,7 @@ namespace Microsoft.DotNet.Docker.Tests
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
             variables.AddRange(ProductImageTests.GetCommonEnvironmentVariables());
 
-            if (imageData.Version.Major <= 7) {
+            if (imageData.Version.Major == 6) {
                 // ASPNETCORE_URLS has been unset to allow the default URL binding to occur.
                 variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty));
             } else {
@@ -605,13 +605,13 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             const char spaceChar = ' ';
 
-            // This determines if we are going to add the default args that are included in the entrypoint in images before 7.0
-            // This flag should be thought of as "We want to add anything to the commandline and are 7.0+".
-            // This is required for 7.0+ images when command line arguments are being appended because docker
+            // This determines if we are going to add the default args that are included in the entrypoint in 6.0 images
+            // This flag should be thought of as "We want to add anything to the commandline and are > 6.0".
+            // This is required for > 6.0 images when command line arguments are being appended because docker
             // will treat the presence of any commandline args as overriding the entire CMD block in the DockerFile.
             bool addDefaultArgs =
-                // We are version 7.0+, this will never apply to 6.x images
-                imageData.Version.Major >= 7 &&
+                // We are > 6.0
+                imageData.Version.Major > 6 &&
                 // We are adding anything to the command line. When additional flags are added to this method, `noAuthentication`
                 // should be replaced something like `(noAuthentication || myNewFlag || mySetting != Setting.Default)`
                 noAuthentication;

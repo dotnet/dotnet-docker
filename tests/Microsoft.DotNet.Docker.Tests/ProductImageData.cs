@@ -19,8 +19,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public bool HasCustomSdk => _sdkOS != null;
 
         public bool GlobalizationInvariantMode => (!ImageVariant.HasFlag(DotNetImageVariant.Extra)
-                    || Version.Major == 6
-                    || Version.Major == 7)
+                    || Version.Major == 6)
                 && (IsDistroless || OS.Contains(Tests.OS.Alpine));
 
         public string SdkOS
@@ -60,10 +59,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string VersionString => Version.ToString();
 
-        public override int DefaultPort => (IsDistroless || (Version.Major != 6 && Version.Major != 7)) ? 8080 : 80;
+        public override int DefaultPort => (IsDistroless || Version.Major != 6) ? 8080 : 80;
 
         public override int? NonRootUID =>
-            OS == Tests.OS.Mariner20Distroless && (Version.Major == 6 || Version.Major == 7) ? 101 : base.NonRootUID;
+            OS == Tests.OS.Mariner20Distroless && Version.Major == 6 ? 101 : base.NonRootUID;
 
         public string GetDockerfilePath(DotNetImageRepo imageRepo)
         {
