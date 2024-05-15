@@ -28,8 +28,6 @@ For more information, see the [composite images section in the Image Variants do
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:9.0-preview`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:8.0`
-* `7.0` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:7.0`
 * `6.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:6.0`
 
