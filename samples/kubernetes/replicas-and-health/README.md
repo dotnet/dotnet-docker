@@ -91,5 +91,5 @@ Healthy
 Delete the resources (remote URL or local manifest).
 
 ```bash
-kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/replicas-and-health/replica-health.yaml
+kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/replicas-and-health/replica-health.yaml
 ```

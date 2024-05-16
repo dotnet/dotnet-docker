@@ -28,14 +28,14 @@ You can query the app.
 
 ```bash
 % curl http://localhost:8080/Environment
-{"runtimeVersion":".NET 7.0.5","osVersion":"Linux 5.15.49-linuxkit #1 SMP PREEMPT Tue Sep 13 07:51:32 UTC 2022","osArchitecture":"Arm64","user":"root","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":28311552}
+{"runtimeVersion":".NET 8.0.5","osVersion":"Alpine Linux v3.19","osArchitecture":"X64","user":"root","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":34238464,"hostName":"dotnet-resource-limits-8685bd4b75-jltn5"}
 ```
 
 You can query basic information from `dotnet-monitor` with the following approach.
 
 ```bash
-% curl http://localhost:52323/info           
-{"version":"7.1.0-rtm.23153.4+97a9c61787944de12efc766ca6ac825b3b9424f3","runtimeVersion":"7.0.4","diagnosticPortMode":"Listen","diagnosticPortName":"/diag/dotnet-monitor.sock"}
+% curl http://localhost:52323/info
+{"version":"8.0.2-servicing.24258.10+25e00f40ba2a55512ea59365e73ddb4b27c73280","runtimeVersion":"8.0.5","diagnosticPortMode":"Listen","diagnosticPortName":"/diag/dotnet-monitor.sock"}
  % curl http://localhost:52323/processes
 [{"pid":1,"uid":"6dd610b6-bc0c-4bf1-a882-4fa0afea34d2","name":"aspnetapp","isDefault":true}]   
 % curl "http://localhost:52323/processes?pid=1"
