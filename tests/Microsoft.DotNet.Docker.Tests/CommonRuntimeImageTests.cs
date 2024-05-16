@@ -29,12 +29,12 @@ namespace Microsoft.DotNet.Docker.Tests
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
             variables.AddRange(GetCommonEnvironmentVariables());
 
-            if (!imageData.IsWindows && imageData.Version.Major != 6 && imageData.Version.Major != 7)
+            if (!imageData.IsWindows && imageData.Version.Major != 6)
             {
                 variables.Add(new EnvironmentVariableInfo("APP_UID", imageData.NonRootUID?.ToString()));
             }
 
-            if (imageData.VersionFamily.Major <= 7)
+            if (imageData.VersionFamily.Major == 6)
             {
                 variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", $"http://+:{imageData.DefaultPort}"));
             }

@@ -133,7 +133,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected void VerifyNonRootUID(ProductImageData imageData)
         {
-            if (((imageData.Version.Major == 6 || imageData.Version.Major == 7) && (!imageData.IsDistroless || imageData.OS.StartsWith(OS.Mariner)))
+            if ((imageData.Version.Major == 6 && (!imageData.IsDistroless || imageData.OS.StartsWith(OS.Mariner)))
                 || imageData.IsWindows)
             {
                 OutputHelper.WriteLine("UID check is only relevant for Linux images running .NET versions >= 8.0 and distroless images besides CBL Mariner.");
@@ -352,7 +352,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Extra)
-                || (imageRepo == DotNetImageRepo.SDK && imageData.Version.Major != 6 && imageData.Version.Major != 7))
+                || (imageRepo == DotNetImageRepo.SDK && imageData.Version.Major != 6))
             {
                 expectedPackages = [..expectedPackages, ..GetExtraPackages(imageData)];
             }
@@ -388,7 +388,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private static IEnumerable<string> GetAotDepsPackages(ProductImageData imageData) => imageData switch
             {
                 { OS: OS.Mariner20Distroless, Version: ImageVersion version }
-                        when version.Major == 6 || version.Major == 7 => new[]
+                        when version.Major == 6 => new[]
                     {
                         "e2fsprogs-libs",
                         "glibc",
@@ -400,7 +400,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "zlib"
                     },
                 { OS: OS.Mariner20, Version: ImageVersion version }
-                        when version.Major == 6 || version.Major == 7 => new[]
+                        when version.Major == 6 => new[]
                     {
                         "glibc",
                         "icu",

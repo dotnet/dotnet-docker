@@ -23,8 +23,6 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:9.0-preview`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:8.0`
-* `7.0` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:7.0`
 * `6.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:6.0`
 

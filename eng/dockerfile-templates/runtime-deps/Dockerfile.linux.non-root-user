@@ -14,7 +14,7 @@
     set isDistrolessAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+-distroless$")) ^
     set isChiseledUbuntu to find(OS_VERSION, "chiseled") >= 0 ^
     set addUserCommand to when(isDebian || isUbuntu || isAzureLinux, "useradd -l", "adduser") ^
-    set isSystemUser to isDistrolessAzureLinux && (dotnetVersion = "6.0" || dotnetVersion = "7.0") ^
+    set isSystemUser to isDistrolessAzureLinux && (dotnetVersion = "6.0") ^
     set uid to when(len(ARGS["uid"]) > 0, ARGS["uid"], "$APP_UID") ^
     set gid to when(len(ARGS["gid"]) > 0, ARGS["gid"], "$APP_UID")
 }}{{if isAlpine:addgroup^else:groupadd}} \{{if isSystemUser:
@@ -25,7 +25,7 @@
         --uid={{uid}} \
         {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid={{gid}}}} \{{if ARGS["no-shell"]:
         --shell /bin/false \}}{{if ARGS["no-create-home"]:
-        --no-create-home \^elif dotnetVersion != "6.0" && dotnetVersion != "7.0" && (find(addUserCommand, "useradd") >= 0) && !isChiseledUbuntu:
+        --no-create-home \^elif dotnetVersion != "6.0" && (find(addUserCommand, "useradd") >= 0) && !isChiseledUbuntu:
         --create-home \}}{{if isSystemUser:
         --system \}}{{if isAlpine:
         --disabled-password \}}
