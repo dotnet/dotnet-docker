@@ -45,7 +45,7 @@ View the sample app at http://localhost:8080/ or call `curl http://localhost:808
 
 ```bash
 % curl http://localhost:8080/Environment
-{"runtimeVersion":".NET 7.0.5","osVersion":"Linux 5.15.49-linuxkit #1 SMP PREEMPT Tue Sep 13 07:51:32 UTC 2022","osArchitecture":"Arm64","user":"root","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":31354880}
+{"runtimeVersion":".NET 8.0.5","osVersion":"Alpine Linux v3.19","osArchitecture":"X64","user":"root","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":34095104,"hostName":"dotnet-resource-limits-8685bd4b75-jltn5"}
 ```
 
 `processorCount` is display as `1`, as expected.
@@ -53,5 +53,5 @@ View the sample app at http://localhost:8080/ or call `curl http://localhost:808
 Delete the resources (remote URL or local manifest).
 
 ```bash
-kubectrl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/resource-limits/resource-limits.yaml
+kubectl delete -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/resource-limits/resource-limits.yaml
 ```

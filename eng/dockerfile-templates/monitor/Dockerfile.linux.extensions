@@ -7,6 +7,8 @@
     set monitorBaseTagOs to when(isMariner,
         "cbl-mariner-distroless",
         "ubuntu-chiseled") ^
+    set monitorBaseTagHasOs to monitorMajor = "6" || monitorMajor = "8" ^
+    set monitorBaseTagOsSuffix to when(monitorBaseTagHasOs, cat("-", monitorBaseTagOs), "") ^
     set monitorBaseTag to
         cat("$REPO:", VARIABLES[cat("monitor|", dotnetMajorMinor, "|product-version")], "-", monitorBaseTagOs, ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^

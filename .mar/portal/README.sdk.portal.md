@@ -14,8 +14,6 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/sdk:8.0`
-* `7.0` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/sdk:7.0`
 * `6.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/sdk:6.0`
 

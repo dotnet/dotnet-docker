@@ -7,7 +7,7 @@
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set isRpmInstall to isFullMariner && dotnetVersion = "6.0" ^
-    set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "7.0" || dotnetVersion = "8.0",
+    set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "8.0",
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
         VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
     set baseImageTag to cat("$REPO:", tagVersion, "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
@@ -20,7 +20,7 @@
         baseImageTag,
         cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
     set pkgs to filter(when(isAlpine,
-        when (dotnetVersion = "6.0" || dotnetVersion = "7.0",
+        when (dotnetVersion = "6.0",
             [
                 "curl",
                 "git",
@@ -44,7 +44,7 @@
                     "tzdata",
                 ])),
         when(isMariner,
-            when (dotnetVersion = "6.0" || dotnetVersion = "7.0",
+            when (dotnetVersion = "6.0",
                 [
                     "git",
                     "tar",
@@ -55,7 +55,7 @@
                     "tar",
                 ]
             ),
-            when (dotnetVersion = "6.0" || dotnetVersion = "7.0",
+            when (dotnetVersion = "6.0",
                 [
                     "curl",
                     "git",

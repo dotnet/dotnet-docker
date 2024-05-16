@@ -83,7 +83,7 @@ Note: We are enabling the following model in a future release: https://github.co
 
 ## .NET and QEMU
 
-Docker Desktop uses [QEMU](https://www.qemu.org/) for emulation, for example running x64 code on an Arm64 machine. [.NET doesn't support being run in QEMU](https://github.com/dotnet/core/blob/main/release-notes/7.0/supported-os.md#qemu). That means that the SDK needs to always be run natively, to enable [multi-stage build](https://docs.docker.com/build/building/multi-stage/). Multi-stage build is used by all of our samples.
+Docker Desktop uses [QEMU](https://www.qemu.org/) for emulation, for example running x64 code on an Arm64 machine. [.NET doesn't support being run in QEMU](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md#qemu). That means that the SDK needs to always be run natively, to enable [multi-stage build](https://docs.docker.com/build/building/multi-stage/). Multi-stage build is used by all of our samples.
 
 As a result, we need a reliable pattern that can produce multiple variants of images on one machine, but that doesn't use emulation. That's what this document describes.
 

@@ -22,7 +22,7 @@
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isMariner, OS_VERSION_NUMBER, OS_VERSION) ^
     set isRpmInstall to isMariner && dotnetVersion = "6.0" ^
-    set nonRootUserSupported to dotnetVersion != "6.0" && dotnetVersion != "7.0" ^
+    set nonRootUserSupported to dotnetVersion != "6.0" ^
     set isMultiStage to (isRpmInstall && isInternal) || (isMariner && nonRootUserSupported) ^
     set firstStageName to when(isRpmInstall, "installer", "base") ^
     set secondStageName to when(isMultiStage && nonRootUserSupported, "installer") ^

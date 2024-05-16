@@ -76,7 +76,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             // `wasm-tools` workload does not work on ARM
             // `wasm-tools` is also not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
-            int[] unsupportedVersionsForAlpine = [6, 7, 8];
+            int[] unsupportedVersionsForAlpine = [6, 8];
             bool isSupportedVersionForAlpine = !unsupportedVersionsForAlpine.Contains(imageData.Version.Major);
             bool useWasmTools = !imageData.IsArm && (!isAlpine || isSupportedVersionForAlpine);
 
@@ -260,7 +260,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             if (!DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major == 6)
             {
-                OutputHelper.WriteLine("Git is not installed on Windows containers older than .NET 7");
+                OutputHelper.WriteLine("Git is not installed on Windows containers older than .NET 6");
                 return;
             }
 

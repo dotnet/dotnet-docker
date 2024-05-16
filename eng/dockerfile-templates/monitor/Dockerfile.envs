@@ -2,7 +2,7 @@
     _ .NET major version matches the major version of dotnet-monitor ^
     set dotnetMajor to split(PRODUCT_VERSION, ".")[0]
 }}ENV \
-    {{if dotnetMajor != "6" && dotnetMajor != "7":# Unset ASPNETCORE_HTTP_PORTS from aspnet base image
+    {{if dotnetMajor != "6":# Unset ASPNETCORE_HTTP_PORTS from aspnet base image
     ASPNETCORE_HTTP_PORTS= \^else:# Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= \}}
     # Disable debugger and profiler diagnostics to avoid diagnosing self.
