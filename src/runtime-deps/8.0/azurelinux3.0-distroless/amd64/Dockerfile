@@ -17,6 +17,8 @@ RUN mkdir /staging \
         libstdc++ \
         openssl-libs \
         zlib \
+    && tdnf remove -y --releasever=3.0 --installroot /staging \
+        symcrypt-openssl \
     && tdnf clean all --releasever=3.0 --installroot /staging
 
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
