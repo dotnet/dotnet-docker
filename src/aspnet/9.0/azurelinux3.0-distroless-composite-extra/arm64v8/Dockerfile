@@ -10,9 +10,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=9.0.0-preview.4.24267.6  \
+RUN aspnetcore_version=9.0.0-preview.5.24270.27  \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
-    && dotnet_sha512='29acf67b87c29ea9e02ba05a48052ea323494d91c6c07cda8c82cca4704b60b12683fc05e8fde803fcbf00a2810d1e9581bd90125eb748a6b556b05b55f2e236' \
+    && dotnet_sha512='b7701a632454328ec793b461f39d95d29ad9e9f98536755996db4c0e17c305cc453f1f3161cd332071588659e875ab3584b4fbeb9b4eff9b7f7818977487ae57' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
@@ -23,13 +23,13 @@ RUN mkdir /dotnet-symlink \
 
 
 # ASP.NET Composite Image
-FROM $REPO:9.0.0-preview.4-azurelinux3.0-distroless-arm64v8
+FROM $REPO:9.0.0-preview.5-azurelinux3.0-distroless-arm64v8
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=9.0.0-preview.4.24266.19 \
+    DOTNET_VERSION=9.0.0-preview.5.24268.2 \
     # ASP.NET Core version
-    ASPNET_VERSION=9.0.0-preview.4.24267.6
+    ASPNET_VERSION=9.0.0-preview.5.24270.27
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
