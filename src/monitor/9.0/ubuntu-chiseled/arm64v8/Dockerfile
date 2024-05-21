@@ -1,16 +1,16 @@
 ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 
 # Installer image
-FROM arm64v8/buildpack-deps:jammy-curl AS installer
+FROM arm64v8/buildpack-deps:noble-curl AS installer
 
 # Retrieve .NET Monitor extensions
-RUN dotnet_monitor_extension_version=9.0.0-preview.3.24205.3 \
+RUN dotnet_monitor_extension_version=9.0.0-preview.4.24270.1 \
     && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
-    && dotnet_monitor_extension_sha512='b4a385bf0c6a00eff77945a37ed575ce8bbc05174b782c2c3e063d22ff685e53e9d13ddb0b5c4a4a2602efd8cc6980baca0a7484408c7eee944369ecfb023521' \
+    && dotnet_monitor_extension_sha512='c7f69defc7498d41365de94eb14d438f024d05517b0c117c0deace04c5833541cdd1e393aa0a4a62d7cc5348f83713acb8101d85fc1395095f880e3653842df5' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
-    && dotnet_monitor_extension_sha512='afc060f810139836511049237b4cbd1a51dd0aee6fbc30b5d4d7fd02924679103eb815aab22716062d578871f973bb080bd5b2105769f362b309177fa7faa727' \
+    && dotnet_monitor_extension_sha512='c206c7aed4abc2999322c1bcea1f754e4b7c1468e6fe3b256ce8e466426ebe3af5cc70f57895b7542ca1a6c1e8f3e70847c15a7c4b32d26c3c0289607f7c55ff' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
     \
     && mkdir -p /app \
@@ -21,6 +21,6 @@ RUN dotnet_monitor_extension_version=9.0.0-preview.3.24205.3 \
 
 
 # .NET Monitor image
-FROM $REPO:9.0.0-preview.3-ubuntu-chiseled-arm64v8
+FROM $REPO:9.0.0-preview.4-ubuntu-chiseled-arm64v8
 
 COPY --from=installer ["/app", "/app"]

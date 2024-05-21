@@ -1,12 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM amd64/buildpack-deps:jammy-curl AS installer
+FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Retrieve .NET Monitor Base
-RUN dotnet_monitor_version=9.0.0-preview.3.24205.3 \
+RUN dotnet_monitor_version=9.0.0-preview.4.24270.1 \
     && curl -fSL --output dotnet-monitor-base.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz \
-    && dotnet_monitor_base_sha512='afd02384ba4908f3689709b6c77bf586d7c6d5695683f5bcc4af6eb57c60196a41a510f8d67b55b270111372589ab2bd49319f92bb5047d7b4d945e3cf381f49' \
+    && dotnet_monitor_base_sha512='b6feeee7225f0f44f39382477e2952e41a604ce46a4a37f16a602dbb52a717879063833235d5c1d242d47520cc1458faa403a4b7ea6468a102f5229f6d9e84b1' \
     && echo "$dotnet_monitor_base_sha512  dotnet-monitor-base.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor-base.tar.gz -C /app \
@@ -14,7 +14,7 @@ RUN dotnet_monitor_version=9.0.0-preview.3.24205.3 \
 
 
 # .NET Monitor Base image
-FROM $REPO:9.0.0-preview.3-jammy-chiseled-amd64
+FROM $REPO:9.0.0-preview.4-noble-chiseled-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
