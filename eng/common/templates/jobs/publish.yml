@@ -81,17 +81,21 @@ jobs:
         $(dryRunArg)
         $(imageBuilder.pathArgs)
         $(imageBuilder.commonCmdArgs)
-  - script: >
-      $(runImageBuilderCmd) publishManifest
-      '$(imageInfoContainerDir)/image-info.json'
-      --repo-prefix '$(publishRepoPrefix)'
-      --registry-creds '$(acr.server)=$(acr.userName);$(acr.password)'
-      --os-type '*'
-      --architecture '*'
-      $(dryRunArg)
-      $(imageBuilder.pathArgs)
-      $(imageBuilder.commonCmdArgs)
-    displayName: Publish Manifest
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Publish Manifest
+      serviceConnection: $(acr.serviceConnectionName)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      dockerClientOS: ${{ parameters.dockerClientOS }}
+      args: >
+        publishManifest
+        '$(imageInfoContainerDir)/image-info.json'
+        --repo-prefix '$(publishRepoPrefix)'
+        --os-type '*'
+        --architecture '*'
+        $(dryRunArg)
+        $(imageBuilder.pathArgs)
+        $(imageBuilder.commonCmdArgs)
   - template: /eng/common/templates/steps/publish-artifact.yml@self
     parameters:
       path: $(imageInfoHostDir)
@@ -130,9 +134,6 @@ jobs:
       '$(kusto.database)'
       '$(kusto.imageTable)'
       '$(kusto.layerTable)'
-      '$(kusto.servicePrincipalName)'
-      '$(kusto.servicePrincipalPassword)'
-      '$(kusto.servicePrincipalTenant)'
       --os-type '*'
       --architecture '*'
       $(dryRunArg)
@@ -152,11 +153,11 @@ jobs:
       '$(gitHubNotificationsRepoInfo.org)'
       '$(gitHubNotificationsRepoInfo.repo)'
       --repo-prefix '$(publishRepoPrefix)'
-      --task "Copy Images"
-      --task "Publish Manifest"
-      --task "Wait for Image Ingestion"
+      --task "Copy Images (Authenticated)"
+      --task "Publish Manifest (Authenticated)"
+      --task "Wait for Image Ingestion (Authenticated)"
       --task "Publish Readmes"
-      --task "Wait for MCR Doc Ingestion"
+      --task "Wait for MCR Doc Ingestion (Authenticated)"
       --task "Publish Image Info"
       --task "Ingest Kusto Image Info"
       $(dryRunArg)
