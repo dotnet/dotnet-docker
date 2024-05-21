@@ -86,10 +86,10 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-preview.3-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.100-preview.3-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.3, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-9.0.100-preview.3-alpine3.19-amd64, 9.0-preview-alpine3.19-amd64, 9.0-preview-alpine-amd64, 9.0.100-preview.3-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
-9.0.100-preview.3-noble-amd64, 9.0-preview-noble-amd64, 9.0.100-preview.3-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-9.0.100-preview.3-cbl-mariner2.0-amd64, 9.0-preview-cbl-mariner2.0-amd64, 9.0.100-preview.3-cbl-mariner2.0, 9.0-preview-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
+9.0.100-preview.4-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.100-preview.4-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.4, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.100-preview.4-alpine3.19-amd64, 9.0-preview-alpine3.19-amd64, 9.0-preview-alpine-amd64, 9.0.100-preview.4-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
+9.0.100-preview.4-noble-amd64, 9.0-preview-noble-amd64, 9.0.100-preview.4-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+9.0.100-preview.4-cbl-mariner2.0-amd64, 9.0-preview-cbl-mariner2.0-amd64, 9.0.100-preview.4-cbl-mariner2.0, 9.0-preview-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -117,10 +117,10 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-preview.3-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.100-preview.3-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.3, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-9.0.100-preview.3-alpine3.19-arm64v8, 9.0-preview-alpine3.19-arm64v8, 9.0-preview-alpine-arm64v8, 9.0.100-preview.3-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
-9.0.100-preview.3-noble-arm64v8, 9.0-preview-noble-arm64v8, 9.0.100-preview.3-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.100-preview.3-cbl-mariner2.0-arm64v8, 9.0-preview-cbl-mariner2.0-arm64v8, 9.0.100-preview.3-cbl-mariner2.0, 9.0-preview-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
+9.0.100-preview.4-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.100-preview.4-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.4, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.100-preview.4-alpine3.19-arm64v8, 9.0-preview-alpine3.19-arm64v8, 9.0-preview-alpine-arm64v8, 9.0.100-preview.4-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
+9.0.100-preview.4-noble-arm64v8, 9.0-preview-noble-arm64v8, 9.0.100-preview.4-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.100-preview.4-cbl-mariner2.0-arm64v8, 9.0-preview-cbl-mariner2.0-arm64v8, 9.0.100-preview.4-cbl-mariner2.0, 9.0-preview-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
 
 ## Linux arm32 Tags
 Tags | Dockerfile | OS Version
@@ -144,8 +144,8 @@ Tags | Dockerfile | OS Version
 ##### .NET 9 Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-preview.3-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-preview.3-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.3, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-9.0.100-preview.3-alpine3.19-arm32v7, 9.0-preview-alpine3.19-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.100-preview.3-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
+9.0.100-preview.4-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-preview.4-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.4, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.100-preview.4-alpine3.19-arm32v7, 9.0-preview-alpine3.19-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.100-preview.4-alpine3.19, 9.0-preview-alpine3.19, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
 
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
@@ -157,7 +157,7 @@ Tag | Dockerfile
 ##### .NET 9 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-9.0.100-preview.3-nanoserver-ltsc2022, 9.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
+9.0.100-preview.4-nanoserver-ltsc2022, 9.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ## Windows Server Core 2022 amd64 Tags
 Tag | Dockerfile
@@ -169,7 +169,7 @@ Tag | Dockerfile
 ##### .NET 9 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-9.0.100-preview.3-windowsservercore-ltsc2022, 9.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+9.0.100-preview.4-windowsservercore-ltsc2022, 9.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ## Nano Server, version 1809 amd64 Tags
 Tag | Dockerfile
@@ -181,7 +181,7 @@ Tag | Dockerfile
 ##### .NET 9 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-9.0.100-preview.3-nanoserver-1809, 9.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/nanoserver-1809/amd64/Dockerfile)
+9.0.100-preview.4-nanoserver-1809, 9.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/nanoserver-1809/amd64/Dockerfile)
 
 ## Windows Server Core 2019 amd64 Tags
 Tag | Dockerfile
@@ -193,7 +193,7 @@ Tag | Dockerfile
 ##### .NET 9 Preview Tags
 Tag | Dockerfile
 ---------| ---------------
-9.0.100-preview.3-windowsservercore-ltsc2019, 9.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+9.0.100-preview.4-windowsservercore-ltsc2019, 9.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
 You can retrieve a list of all available tags for dotnet/sdk at https://mcr.microsoft.com/v2/dotnet/sdk/tags/list.
 <!--End of generated tags-->
