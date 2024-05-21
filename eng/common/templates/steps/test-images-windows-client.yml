@@ -10,11 +10,16 @@ steps:
       cleanupDocker: true
       setupImageBuilder: false
       condition: ${{ parameters.condition }}
-  - powershell: >
-      $(engCommonPath)/Invoke-WithRetry.ps1
-      "cmd /c 'docker login -u $(acr.userName) --password $(acr.password) $(acr.server) 2>&1'"
-    displayName: Docker login
-    condition: and(succeeded(), ${{ parameters.condition }})
+  - template: /eng/common/templates/steps/run-pwsh-with-auth.yml@self
+    parameters:
+      displayName: Docker login
+      serviceConnection: $(acr.serviceConnectionName)
+      dockerClientOS: windows
+      condition: and(succeeded(), ${{ parameters.condition }})
+      command: >
+        az login --service-principal --tenant $env:tenantId -u $env:servicePrincipalId --federated-token $env:idToken;
+        $accessToken = $(az acr login -n $(acr.server) --expose-token --query accessToken --output tsv);
+        docker login $(acr.server) -u 00000000-0000-0000-0000-000000000000 -p $accessToken
 - ${{ parameters.customInitSteps }}
 - powershell: |
     if ("${{ variables['System.TeamProject'] }}" -eq "${{ parameters.internalProjectName }}" -and "${{ variables['Build.Reason'] }}" -ne "PullRequest") {

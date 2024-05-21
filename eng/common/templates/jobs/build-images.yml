@@ -97,7 +97,7 @@ jobs:
       New-Item -Path $(imageInfoHostDir) -ItemType Directory -Force
       $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(imageInfoContainerDir)/$(legName)-image-info.json"
       if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}" -and $env:BUILD_REASON -ne "PullRequest") {
-        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push --registry-creds ""$(acr.server)=$(acr.userName);$(acr.password)"""
+        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push"
       }
 
       # If the pipeline isn't configured to disable the cache and a build variable hasn't been set to disable the cache
@@ -126,9 +126,6 @@ jobs:
         --digests-out-var 'builtImages'
         --acr-subscription '$(acr.subscription)'
         --acr-resource-group '$(acr.resourceGroup)'
-        --acr-client-id '$(acr.servicePrincipalName)'
-        --acr-password '$(acr.servicePrincipalPassword)'
-        --acr-tenant '$(acr.servicePrincipalTenant)'
         $(manifestVariables)
         $(imageBuilderBuildArgs)
   - template: /eng/common/templates/steps/publish-artifact.yml@self
