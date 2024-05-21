@@ -6,8 +6,8 @@
 
 # Featured Tags
 
-* `8.0-preview` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.0-preview`
+* `8.0`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.0`
 
 # About
 
@@ -112,13 +112,11 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 # Full Tag Listing
 
 ## Linux amd64 Tags
-##### .NET Aspire Dashboard Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-amd64, 8.0-amd64, 8.0.0, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
 ## Linux arm64 Tags
-##### .NET Aspire Dashboard Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.0-arm64v8, 8.0-arm64v8, 8.0.0, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
