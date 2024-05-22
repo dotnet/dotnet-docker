@@ -127,19 +127,23 @@ jobs:
       $(imageBuilder.commonCmdArgs)
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
     displayName: Publish Image Info
-  - script: >
-      $(runImageBuilderCmd) ingestKustoImageInfo
-      '$(imageInfoContainerDir)/image-info.json'
-      '$(kusto.cluster)'
-      '$(kusto.database)'
-      '$(kusto.imageTable)'
-      '$(kusto.layerTable)'
-      --os-type '*'
-      --architecture '*'
-      $(dryRunArg)
-      $(imageBuilder.commonCmdArgs)
-    displayName: Ingest Kusto Image Info
-    condition: and(succeeded(), eq(variables['ingestKustoImageInfo'], 'true'))
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Ingest Kusto Image Info
+      serviceConnection: $(kusto.serviceConnectionName)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      condition: and(succeeded(), eq(variables['ingestKustoImageInfo'], 'true'))
+      args: >
+        ingestKustoImageInfo
+        '$(imageInfoContainerDir)/image-info.json'
+        '$(kusto.cluster)'
+        '$(kusto.database)'
+        '$(kusto.imageTable)'
+        '$(kusto.layerTable)'
+        --os-type '*'
+        --architecture '*'
+        $(dryRunArg)
+        $(imageBuilder.commonCmdArgs)
   - script: >
       $(runImageBuilderCmd) postPublishNotification
       '$(publishNotificationRepoName)'
@@ -159,7 +163,7 @@ jobs:
       --task "Publish Readmes"
       --task "Wait for MCR Doc Ingestion (Authenticated)"
       --task "Publish Image Info"
-      --task "Ingest Kusto Image Info"
+      --task "Ingest Kusto Image Info (Authenticated)"
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Post Publish Notification
