@@ -106,19 +106,27 @@ function ResolveSdkUrl([string]$sdkVersion, [string]$queryString, [bool]$useStab
     return $sdkUrl
 }
 
-function GetVersionDetails([string]$commitSha) {
+function GetVersionDetails([string]$commitSha, [string]$dockerfileVersion) {
     $versionDetailsPath="eng/Version.Details.xml"
 
-    if ($UseInternalBuild) {
-        $dotnetInstallerRepoId="c20f712b-f093-40de-9013-d6b084c1ff30"
-        $versionDetailsUrl="https://dev.azure.com/dnceng/internal/_apis/git/repositories/$dotnetInstallerRepoId/items?scopePath=/$versionDetailsPath&api-version=6.0&version=$commitSha&versionType=commit"
+    if (([Version]$dockerfileVersion).Major -le 8) {
+        $repoName = "installer"
+        $repoId = "c20f712b-f093-40de-9013-d6b084c1ff30"
+    }
+    else {
+        $repoName = "sdk"
+        $repoId = "7fa5dddb-89e8-4b26-8595-a6d15593e354"
+    }
+
+    if ($UseInternalBuild) {       
+        $versionDetailsUrl="https://dev.azure.com/dnceng/internal/_apis/git/repositories/$repoId/items?scopePath=/$versionDetailsPath&api-version=6.0&version=$commitSha&versionType=commit"
         $base64AccessToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$AzdoVersionsRepoInfoAccessToken"))
         $headers = @{
             "Authorization" = "Basic $base64AccessToken"
         }
     }
     else {
-        $versionDetailsUrl="https://raw.githubusercontent.com/dotnet/installer/$commitSha/$versionDetailsPath"
+        $versionDetailsUrl="https://raw.githubusercontent.com/dotnet/$repoName/$commitSha/$versionDetailsPath"
         $headers = @{}
     }
 
@@ -171,7 +179,10 @@ foreach ($sdkVersion in $SdkVersions)
 Write-Host "Resolved SDK versions: $SdkVersions"
 $versionInfos = @()
 foreach ($sdkVersionInfo in $SdkVersionInfos) {
-    $versionDetails = GetVersionDetails $sdkVersionInfo.CommitSha
+    $sdkVersionParts = $sdkVersionInfo.Version -split "\."
+    $dockerfileVersion = "$($sdkVersionParts[0]).$($sdkVersionParts[1])"
+
+    $versionDetails = GetVersionDetails $sdkVersionInfo.CommitSha $dockerfileVersion
 
     $runtimeVersion = GetDependencyVersion "VS.Redist.Common.NetCore.SharedFramework.x64" $versionDetails
 
@@ -186,9 +197,6 @@ foreach ($sdkVersionInfo in $SdkVersionInfos) {
         Write-Error "Unable to resolve the ASP.NET Core runtime version"
         exit 1
     }
-
-    $sdkVersionParts = $sdkVersionInfo.Version -split "\."
-    $dockerfileVersion = "$($sdkVersionParts[0]).$($sdkVersionParts[1])"
 
     Write-Host "Dockerfile version: $dockerfileVersion"
     Write-Host "SDK version: $($sdkVersionInfo.Version)"
