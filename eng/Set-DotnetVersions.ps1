@@ -12,17 +12,17 @@ param(
     $ProductVersion,
 
     # Build version of the SDK
-    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetInstaller')]
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetSdk')]
     [string]
     $SdkVersion,
 
     # Build version of ASP.NET Core
-    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetInstaller')]
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetSdk')]
     [string]
     $AspnetVersion,
 
     # Build version of the .NET runtime
-    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetInstaller')]
+    [Parameter(Mandatory = $false, ParameterSetName = 'DotnetSdk')]
     [string]
     $RuntimeVersion,
 
@@ -114,7 +114,7 @@ if ($UseStableBranding) {
 }
 
 $versionSourceName = switch ($PSCmdlet.ParameterSetName) {
-    "DotnetInstaller" { "dotnet/installer" }
+    "DotnetSdk" { "dotnet/sdk" }
     "DotnetMonitor" { "dotnet/dotnet-monitor/$ProductVersion" }
     "DotnetAspireDashboard" { "dotnet/aspire-dashboard/$ProductVersion" }
     default { Write-Error -Message "Unknown version source" -ErrorAction Stop }

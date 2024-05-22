@@ -9,7 +9,7 @@ stages:
 - stage: DotNet
   jobs:
   - job: UpdateDependencies
-    displayName: Update Dependencies (dotnet/installer)
+    displayName: Update Dependencies (dotnet/sdk)
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
