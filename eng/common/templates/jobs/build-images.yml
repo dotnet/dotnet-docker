@@ -97,7 +97,7 @@ jobs:
       New-Item -Path $(imageInfoHostDir) -ItemType Directory -Force
       $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(imageInfoContainerDir)/$(legName)-image-info.json"
       if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}" -and $env:BUILD_REASON -ne "PullRequest") {
-        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push --registry-creds ""$(acr.server)=$(acr.userName);$(acr.password)"""
+        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push"
       }
 
       # If the pipeline isn't configured to disable the cache and a build variable hasn't been set to disable the cache
@@ -107,25 +107,27 @@ jobs:
 
       echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
     displayName: Set Image Builder Build Args
-  - powershell: >
-      $(runImageBuilderCmd) build
-      --manifest $(manifest)
-      $(imageBuilderPaths)
-      $(osVersions)
-      --os-type $(osType)
-      --architecture $(architecture)
-      --retry
-      --source-repo $(publicGitRepoUri)
-      --digests-out-var 'builtImages'
-      --acr-subscription '$(acr.subscription)'
-      --acr-resource-group '$(acr.resourceGroup)'
-      --acr-client-id '$(acr.servicePrincipalName)'
-      --acr-password '$(acr.servicePrincipalPassword)'
-      --acr-tenant '$(acr.servicePrincipalTenant)'
-      $(manifestVariables)
-      $(imageBuilderBuildArgs)
-    name: BuildImages
-    displayName: Build Images
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      name: BuildImages
+      displayName: Build Images
+      serviceConnection: $(acr.serviceConnectionName)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      dockerClientOS: ${{ parameters.dockerClientOS }}
+      args: >
+        build
+        --manifest $(manifest)
+        $(imageBuilderPaths)
+        $(osVersions)
+        --os-type $(osType)
+        --architecture $(architecture)
+        --retry
+        --source-repo $(publicGitRepoUri)
+        --digests-out-var 'builtImages'
+        --acr-subscription '$(acr.subscription)'
+        --acr-resource-group '$(acr.resourceGroup)'
+        $(manifestVariables)
+        $(imageBuilderBuildArgs)
   - template: /eng/common/templates/steps/publish-artifact.yml@self
     parameters:
       path: $(imageInfoHostDir)

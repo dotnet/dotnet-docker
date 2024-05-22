@@ -4,13 +4,14 @@ parameters:
   dryRunArg: ""
 
 steps:
-- script: >
-    $(runImageBuilderCmd) waitForMcrDocIngestion
-    '${{ parameters.commitDigest }}'
-    '$(mcrStatus.servicePrincipalName)'
-    '$(mcrStatus.servicePrincipalPassword)'
-    '$(mcrStatus.servicePrincipalTenant)'
-    --timeout '$(mcrDocIngestionTimeout)'
-    ${{ parameters.dryRunArg }}
-  displayName: Wait for MCR Doc Ingestion
-  condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
+- template: /eng/common/templates/steps/run-imagebuilder.yml@self
+  parameters:
+    displayName: Wait for MCR Doc Ingestion
+    condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
+    serviceConnection: $(marStatus.serviceConnectionName)
+    internalProjectName: 'internal'
+    args: >
+      waitForMcrDocIngestion
+      '${{ parameters.commitDigest }}'
+      --timeout '$(mcrDocIngestionTimeout)'
+      ${{ parameters.dryRunArg }}

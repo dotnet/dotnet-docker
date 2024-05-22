@@ -5,17 +5,18 @@ parameters:
   dryRunArg: ""
 
 steps:
-- script: >
-    $(runImageBuilderCmd) waitForMcrImageIngestion
-    '${{ parameters.imageInfoPath }}'
-    '$(mcrStatus.servicePrincipalName)'
-    '$(mcrStatus.servicePrincipalPassword)'
-    '$(mcrStatus.servicePrincipalTenant)'
-    --manifest '$(manifest)'
-    --repo-prefix '$(publishRepoPrefix)'
-    --min-queue-time '${{ parameters.minQueueTime }}'
-    --timeout '$(mcrImageIngestionTimeout)'
-    $(manifestVariables)
-    ${{ parameters.dryRunArg }}
-  displayName: Wait for Image Ingestion
-  condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
+- template: /eng/common/templates/steps/run-imagebuilder.yml@self
+  parameters:
+    displayName: Wait for Image Ingestion
+    condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
+    serviceConnection: $(marStatus.serviceConnectionName)
+    internalProjectName: 'internal'
+    args: >
+      waitForMcrImageIngestion
+      '${{ parameters.imageInfoPath }}'
+      --manifest '$(manifest)'
+      --repo-prefix '$(publishRepoPrefix)'
+      --min-queue-time '${{ parameters.minQueueTime }}'
+      --timeout '$(mcrImageIngestionTimeout)'
+      $(manifestVariables)
+      ${{ parameters.dryRunArg }}

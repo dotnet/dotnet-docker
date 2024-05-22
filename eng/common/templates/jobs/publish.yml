@@ -64,33 +64,38 @@ jobs:
       $(runImageBuilderCmd) trimUnchangedPlatforms
       '$(imageInfoContainerDir)/image-info.json'
     displayName: Trim Unchanged Images
-  - script: >
-      $(runImageBuilderCmd) copyAcrImages
-      '$(acr.servicePrincipalName)'
-      '$(acr.servicePrincipalPassword)'
-      '$(acr.servicePrincipalTenant)'
-      '$(acr.subscription)'
-      '$(acr.resourceGroup)'
-      '$(stagingRepoPrefix)'
-      --os-type '*'
-      --architecture '*'
-      --repo-prefix '$(publishRepoPrefix)'
-      --image-info '$(imageInfoContainerDir)/image-info.json'
-      $(dryRunArg)
-      $(imageBuilder.pathArgs)
-      $(imageBuilder.commonCmdArgs)
-    displayName: Copy Images
-  - script: >
-      $(runImageBuilderCmd) publishManifest
-      '$(imageInfoContainerDir)/image-info.json'
-      --repo-prefix '$(publishRepoPrefix)'
-      --registry-creds '$(acr.server)=$(acr.userName);$(acr.password)'
-      --os-type '*'
-      --architecture '*'
-      $(dryRunArg)
-      $(imageBuilder.pathArgs)
-      $(imageBuilder.commonCmdArgs)
-    displayName: Publish Manifest
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Copy Images
+      serviceConnection: $(acr.serviceConnectionName)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      args: >
+        copyAcrImages
+        '$(acr.subscription)'
+        '$(acr.resourceGroup)'
+        '$(stagingRepoPrefix)'
+        --os-type '*'
+        --architecture '*'
+        --repo-prefix '$(publishRepoPrefix)'
+        --image-info '$(imageInfoContainerDir)/image-info.json'
+        $(dryRunArg)
+        $(imageBuilder.pathArgs)
+        $(imageBuilder.commonCmdArgs)
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Publish Manifest
+      serviceConnection: $(acr.serviceConnectionName)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      dockerClientOS: ${{ parameters.dockerClientOS }}
+      args: >
+        publishManifest
+        '$(imageInfoContainerDir)/image-info.json'
+        --repo-prefix '$(publishRepoPrefix)'
+        --os-type '*'
+        --architecture '*'
+        $(dryRunArg)
+        $(imageBuilder.pathArgs)
+        $(imageBuilder.commonCmdArgs)
   - template: /eng/common/templates/steps/publish-artifact.yml@self
     parameters:
       path: $(imageInfoHostDir)
@@ -122,22 +127,23 @@ jobs:
       $(imageBuilder.commonCmdArgs)
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
     displayName: Publish Image Info
-  - script: >
-      $(runImageBuilderCmd) ingestKustoImageInfo
-      '$(imageInfoContainerDir)/image-info.json'
-      '$(kusto.cluster)'
-      '$(kusto.database)'
-      '$(kusto.imageTable)'
-      '$(kusto.layerTable)'
-      '$(kusto.servicePrincipalName)'
-      '$(kusto.servicePrincipalPassword)'
-      '$(kusto.servicePrincipalTenant)'
-      --os-type '*'
-      --architecture '*'
-      $(dryRunArg)
-      $(imageBuilder.commonCmdArgs)
-    displayName: Ingest Kusto Image Info
-    condition: and(succeeded(), eq(variables['ingestKustoImageInfo'], 'true'))
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Ingest Kusto Image Info
+      serviceConnection: $(kusto.serviceConnectionName)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      condition: and(succeeded(), eq(variables['ingestKustoImageInfo'], 'true'))
+      args: >
+        ingestKustoImageInfo
+        '$(imageInfoContainerDir)/image-info.json'
+        '$(kusto.cluster)'
+        '$(kusto.database)'
+        '$(kusto.imageTable)'
+        '$(kusto.layerTable)'
+        --os-type '*'
+        --architecture '*'
+        $(dryRunArg)
+        $(imageBuilder.commonCmdArgs)
   - script: >
       $(runImageBuilderCmd) postPublishNotification
       '$(publishNotificationRepoName)'
@@ -151,13 +157,13 @@ jobs:
       '$(gitHubNotificationsRepoInfo.org)'
       '$(gitHubNotificationsRepoInfo.repo)'
       --repo-prefix '$(publishRepoPrefix)'
-      --task "Copy Images"
-      --task "Publish Manifest"
-      --task "Wait for Image Ingestion"
+      --task "Copy Images (Authenticated)"
+      --task "Publish Manifest (Authenticated)"
+      --task "Wait for Image Ingestion (Authenticated)"
       --task "Publish Readmes"
-      --task "Wait for MCR Doc Ingestion"
+      --task "Wait for MCR Doc Ingestion (Authenticated)"
       --task "Publish Image Info"
-      --task "Ingest Kusto Image Info"
+      --task "Ingest Kusto Image Info (Authenticated)"
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Post Publish Notification
