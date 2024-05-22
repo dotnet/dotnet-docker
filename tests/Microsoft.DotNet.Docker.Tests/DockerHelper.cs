@@ -81,7 +81,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 // Special case for .NET 8.0 Aspire Dashboard images - the Dashboard is in preview even though
                 // .NET 8.0 is not. The distroless helper image should not be built with the preview version.
-                Version = imageData.Version == ImageVersion.V8_0_Preview ? ImageVersion.V8_0 : imageData.VersionFamily,
+                Version = imageData.VersionFamily,
                 OS = imageData.OS,
                 Arch = imageData.Arch,
             };
