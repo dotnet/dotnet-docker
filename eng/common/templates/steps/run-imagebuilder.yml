@@ -1,0 +1,52 @@
+parameters:
+- name: name
+  type: string
+  default: ""
+- name: displayName
+  type: string
+  default: "Run ImageBuilder"
+- name: serviceConnection
+  type: string
+  default: ""
+- name: internalProjectName
+  type: string
+  default: null
+- name: args
+  type: string
+  default: null
+- name: condition
+  type: string
+  default: succeeded()
+- name: continueOnError
+  type: boolean
+  default: false
+- name: dockerClientOS
+  type: string
+  default: "linux"
+
+steps:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.serviceConnection, '')) }}:
+  - template: /eng/common/templates/steps/run-pwsh-with-auth.yml@self
+    parameters:
+      ${{ if ne(parameters.name, '') }}:
+        name: ${{ parameters.name }}
+      displayName: ${{ parameters.displayName }}
+      serviceConnection: ${{ parameters.serviceConnection }}
+      continueOnError: ${{ parameters.continueOnError }}
+      dockerClientOS: ${{ parameters.dockerClientOS }}
+      condition: ${{ parameters.condition }}
+      command: >
+        $env:idToken | Out-File -FilePath $(tokenHostFilePath);
+        $(runAuthedImageBuilderCmd) ${{ parameters.args }};
+        Remove-Item -Path $(tokenHostFilePath) -Force
+- ${{ else }}:
+  - task: PowerShell@2
+    ${{ if ne(parameters.name, '') }}:
+      name: ${{ parameters.name }}
+    displayName: ${{ parameters.displayName }}
+    continueOnError: ${{ parameters.continueOnError }}
+    condition: ${{ parameters.condition }}
+    inputs:
+      targetType: 'inline'
+      script: >
+        $(runImageBuilderCmd) ${{ parameters.args }}

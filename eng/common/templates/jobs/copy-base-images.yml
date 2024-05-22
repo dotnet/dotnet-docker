@@ -3,6 +3,7 @@ parameters:
   pool: {}
   additionalOptions: null
   publicProjectName: null
+  internalProjectName: null
   customInitSteps: []
 
 jobs:
@@ -15,4 +16,5 @@ jobs:
     parameters:
       additionalOptions: ${{ parameters.additionalOptions }}
       publicProjectName: ${{ parameters.publicProjectName }}
+      internalProjectName: ${{ parameters.internalProjectName }}
       continueOnError: true
