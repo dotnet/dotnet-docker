@@ -11,6 +11,11 @@ param(
     [string]
     $Channel,
 
+    # The release channel to use for determining the latest .NET build.
+    [Parameter(ParameterSetName = "BuildId")]
+    [string]
+    $BuildId,
+
     [Parameter(ParameterSetName = "Explicit")]
     # SDK versions to target
     [string[]]
@@ -140,6 +145,30 @@ function GetDependencyVersion([string]$dependencyName, [xml]$versionDetails) {
     return $result.Node.Value
 }
 
+function GetVersionInfoFromBuildId([string]$buildId) {
+    $configPath = "$tempDir/config.json";
+    $setVersionsScript = "$tempDir/Set-DotnetVersions.ps1"
+
+    try {
+        az pipelines runs artifact download --organization https://dev.azure.com/dnceng/ --project internal --run-id $buildId --path $tempDir --artifact-name drop
+
+        $config = $(Get-Content -Path $configPath | Out-String) | ConvertFrom-Json
+
+        $isStableVersion = Get-IsStableBranding -Version $config.Sdk_Builds[0]
+
+        return [PSCustomObject]@{
+            DockerfileVersion = $config.Channel
+            SdkVersion = $config.Sdks[0]
+            RuntimeVersion = $config.Runtime
+            AspnetVersion = $config.Asp
+            StableBranding = $isStableVersion
+        }
+    }
+    finally {
+        Remove-Item -Force $configPath
+    }
+}
+
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 Set-StrictMode -Version 2.0
@@ -176,8 +205,13 @@ foreach ($sdkVersion in $SdkVersions)
     $sdkVersionInfos += $sdkVersionInfo
 }
 
-Write-Host "Resolved SDK versions: $SdkVersions"
 $versionInfos = @()
+if ($BuildId) {
+    $versionInfos += GetVersionInfoFromBuildId($BuildId)
+}
+
+Write-Host "Resolved SDK versions: $SdkVersions"
+
 foreach ($sdkVersionInfo in $SdkVersionInfos) {
     $sdkVersionParts = $sdkVersionInfo.Version -split "\."
     $dockerfileVersion = "$($sdkVersionParts[0]).$($sdkVersionParts[1])"
