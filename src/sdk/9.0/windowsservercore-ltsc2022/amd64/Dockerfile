@@ -47,9 +47,9 @@ RUN powershell -Command " `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.5.0-preview.2'; `
+        $powershell_version = '7.5.0-preview.3'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = '4e6c6b9e65813cddb6d4376ca655044de098edeee7979e6148cb7d6bf63d713b9b195780481a21e759b9473e4c954bbdc725739b79bc7ed9597a7178775ec74c'; `
+        $powershell_sha512 = '03a7379a0f7814b7ba6de7ea725fd1acb0e8e44bbe6ee33d621b2705d8242bd3b41047d08667eb04db15dd4ee3ebebf421cd1ca3a43b4b41d9d18071b00d7a8c'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
