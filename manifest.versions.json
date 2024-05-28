@@ -99,7 +99,6 @@
     "libicu|noble": 74,
 
     "libssl|alpine3.19": "3",
-    "libssl|alpine3.18": "3",
     "libssl|bookworm": "3",
     "libssl|bullseye": "1.1",
     "libssl|focal": "1.1",

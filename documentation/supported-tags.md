@@ -25,11 +25,11 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `6.0.25-jammy-amd64`
-- `6.0.25-jammy-arm64v8`
-- `6.0.25-nanoserver-ltsc2022`
-- `8.0.0-alpine3.18-arm64v8`
-- `8.0.0-bookworm-slim-arm32v7`
+- `6.0.30-jammy-amd64`
+- `6.0.30-jammy-arm64v8`
+- `6.0.30-nanoserver-ltsc2022`
+- `8.0.5-alpine3.19-arm64v8`
+- `8.0.5-bookworm-slim-arm32v7`
 
 ### `<Major.Minor .NET Version>-<OS>-<Architecture>`
 
@@ -40,7 +40,7 @@ Examples:
 - `6.0-jammy-arm64v8`
 - `6.0-jammy-amd64`
 - `6.0-nanoserver-ltsc2022`
-- `8.0-alpine3.18-arm64v8`
+- `8.0-alpine3.19-arm64v8`
 - `8.0-bookworm-slim-arm32v7`
 
 ## Multi-platform tags
@@ -68,8 +68,8 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `6.0.25-jammy`
-- `8.0.0-alpine3.18`
+- `6.0.30-jammy`
+- `8.0.5-alpine3.19`
 
 ### `<Major.Minor .NET Version>-<OS version>`
 
@@ -77,7 +77,7 @@ These "floating version" tags reference an image with a specific `Major.Minor` (
 
 Examples:
 
-- `6.0-alpine3.18`
+- `6.0-alpine3.19`
 - `8.0-jammy`
 
 ### `<Major.Minor .NET Version>-alpine`
@@ -91,7 +91,7 @@ Examples:
 
 Notes:
 
-- New versions of Alpine will be published with version-specific tags (e.g. `6.0-alpine3.18`).
+- New versions of Alpine will be published with version-specific tags (e.g. `6.0-alpine3.19`).
 - Floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version a month later.
 - Tag changes will be [announced](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) so that users know when the tags they want are available.
 
@@ -101,8 +101,8 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `6.0.25`
-- `8.0.0`
+- `6.0.30`
+- `8.0.5`
 
 ### `<Major.Minor .NET Version>`
 
@@ -121,8 +121,8 @@ You can use these variants by appending the variant name (e.g. `extra`, `chisele
 Examples:
 
 - `8.0-jammy-chiseled`
-- `8.0.0-jammy-chiseled-extra`
-- `8.0.0-alpine3.18-extra`
+- `8.0.5-jammy-chiseled-extra`
+- `8.0.5-alpine3.19-extra`
 
 For more information, see the [Image Variants documentation](./image-variants.md).
 
@@ -145,8 +145,8 @@ The following policies are used for the tag patterns we use.
 
 Examples:
 
-- `6.0.25`
-- `8.0.0-alpine3.18`
+- `6.0.30`
+- `8.0.5-alpine3.19`
 
 Notes:
 
@@ -162,7 +162,7 @@ Notes:
 Examples:
 
 - `6.0`
-- `8.0-alpine3.18`
+- `8.0-alpine3.19`
 
 Notes:
 
@@ -177,7 +177,7 @@ Version-specific operating system tags reference an image with a specific OS ver
 Examples:
 
 - `6.0-jammy`
-- `8.0-alpine3.18`
+- `8.0-alpine3.19`
 
 Notes:
 
