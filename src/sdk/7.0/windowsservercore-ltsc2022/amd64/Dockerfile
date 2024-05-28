@@ -1,7 +1,7 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:7.0.20-windowsservercore-ltsc2022
+FROM $REPO:7.0.19-windowsservercore-ltsc2022
 
 ENV `
     # Unset ASPNETCORE_URLS from aspnet base image
@@ -11,7 +11,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=7.0.410 `
+    DOTNET_SDK_VERSION=7.0.409 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -24,8 +24,8 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.45.1.windows.1/MinGit-2.45.1-64-bit.zip; `
-        $mingit_sha256 = 'f7ba0e2acdc603cf8893b446f6871c869b7644b88a1116b00d6b30fb30f18c74'; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.45.0.windows.1/MinGit-2.45.0-64-bit.zip; `
+        $mingit_sha256 = 'f607bbd459bae73369e6509fe849c4c48152f4d33b0021d5881e1e9e7ae79e26'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -40,7 +40,7 @@ RUN powershell -Command " `
         `
         # Retrieve .NET SDK
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetcli.azureedge.net/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-        $dotnet_sha512 = 'bfaf5a3da6c8cdc7e82c7ad86ed1282ed050b689e02a65c32c57aa64292283bca710b2f1fe1bab62ab7b9bfe126fbab27fa4d2c59f9f96f4b32698b06b46dde7'; `
+        $dotnet_sha512 = 'fc70f39afa566349200dca003aab4dd388df40cd898ec3d6c960fced1e9e219f50dbe9e6538893fdf4024d04b37a1d2c8aeebc695151e78f8852c91f572ef416'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `

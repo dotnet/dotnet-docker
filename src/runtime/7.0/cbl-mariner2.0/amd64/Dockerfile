@@ -1,16 +1,16 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:7.0.20-cbl-mariner2.0-amd64 AS installer
+FROM $REPO:7.0.19-cbl-mariner2.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=7.0.20 \
+RUN dotnet_version=7.0.19 \
     && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='87855297338555a7b577d7e314e5dbf2c2350f8c867a489cd1e535634bad5c123a1871464d37fc9421837ff5d426c2eadecbe0f60bbf3fd32bc2461f47790a40' \
+    && dotnet_sha512='4e556c1437a58d2325e3eeb5a5c4b718599dff206af957a80490ef2945b1a2f5114d25b808b4c9ea233cc4eb2e5ce40932bb249e198319e97f3b5cc443612e6f' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -18,10 +18,10 @@ RUN dotnet_version=7.0.20 \
 
 
 # .NET runtime image
-FROM $REPO:7.0.20-cbl-mariner2.0-amd64
+FROM $REPO:7.0.19-cbl-mariner2.0-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=7.0.20
+ENV DOTNET_VERSION=7.0.19
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
