@@ -44,8 +44,3 @@ variables:
   value: $(dotnetDockerBot.userName)
 - name: gitHubVersionsRepoInfo.email
   value: $(dotnetDockerBot.email)
-
-- name: kusto.servicePrincipalPassword
-  value: $(app-DotnetDockerTelemetryIngestion-client-secret)
-- name: mcrStatus.servicePrincipalPassword
-  value: $(app-DotnetDockerMcrStatusApi-client-secret)
