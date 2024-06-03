@@ -15,6 +15,6 @@ RUN apk add --upgrade --no-cache \
         krb5-libs \
         libgcc \
         libintl \
-        libssl \
+        libssl3 \
         libstdc++ \
         zlib

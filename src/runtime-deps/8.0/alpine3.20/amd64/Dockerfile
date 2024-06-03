@@ -15,7 +15,7 @@ RUN apk add --upgrade --no-cache \
         \
         # .NET dependencies
         libgcc \
-        libssl \
+        libssl3 \
         libstdc++ \
         zlib
 
