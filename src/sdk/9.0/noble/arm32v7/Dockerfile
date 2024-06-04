@@ -1,17 +1,4 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-# Installer image
-FROM arm32v7/buildpack-deps:jammy-curl AS installer
-
-# Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/9.0.100-preview.5.24304.3/dotnet-sdk-9.0.100-preview.5.24304.3-linux-arm.tar.gz \
-    && dotnet_sha512='8985390178c1cbcd312957360deb318cc7113ad2a8f2e8d352fb0a200f38da75a1aa9ad941a1055acc1dcd364542448c4ded2e90ce0db3d20081a972f6f4af88' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz
-
-
-# .NET SDK image
 FROM $REPO:9.0.0-preview.5-noble-arm32v7
 
 ENV \
@@ -36,10 +23,15 @@ RUN apt-get update \
         wget \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
-
-# Trigger first run experience by running arbitrary cmd
-RUN dotnet help
+# Install .NET SDK
+RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-arm.tar.gz \
+    && dotnet_sha512='8985390178c1cbcd312957360deb318cc7113ad2a8f2e8d352fb0a200f38da75a1aa9ad941a1055acc1dcd364542448c4ded2e90ce0db3d20081a972f6f4af88' \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /usr/share/dotnet \
+    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm dotnet.tar.gz \
+    # Trigger first run experience by running arbitrary cmd
+    && dotnet help
 
 # Install PowerShell global tool
 RUN powershell_version=7.5.0-preview.3 \

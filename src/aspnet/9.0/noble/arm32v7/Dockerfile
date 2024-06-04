@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM arm32v7/buildpack-deps:jammy-curl AS installer
+FROM arm32v7/buildpack-deps:noble-curl AS installer
 
 # Retrieve ASP.NET Core
 RUN aspnetcore_version=9.0.0-preview.5.24303.2 \

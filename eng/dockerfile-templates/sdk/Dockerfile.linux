@@ -11,14 +11,9 @@
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
         VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
     set baseImageTag to cat("$REPO:", tagVersion, "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
-
-    _ Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed. ^
-    set useNobleArm32Workaround to OS_VERSION_BASE = "noble" && ARCH_SHORT = "arm" ^
-    set osVersionBase to when(useNobleArm32Workaround, "jammy", OS_VERSION_BASE) ^
-
     set internalInstallerBase to when(isAlpine || isAzureLinux,
         baseImageTag,
-        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
+        cat(ARCH_VERSIONED, "/buildpack-deps:", OS_VERSION_BASE, "-curl")) ^
     set pkgs to filter(when(isAlpine,
         when (dotnetVersion = "6.0",
             [
@@ -69,10 +64,10 @@
                 ]
             ))), len)
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
-{{if isInternal || useNobleArm32Workaround:# Installer image
-FROM {{internalInstallerBase}} AS installer{{if isInternal:
+{{if isInternal:# Installer image
+FROM {{internalInstallerBase}} AS installer
 
-ARG SAS_QUERY_STRING}}
+ARG SAS_QUERY_STRING
 {{if isFullAzureLinux && !isRpmInstall:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
@@ -83,10 +78,8 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "install-method": when(isRpmInstall, "download", "download-and-install"),
         "is-internal": isInternal,
-        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
-        "is-rpm-install": isRpmInstall,
-        "disable-first-run-experience": useNobleArm32Workaround,
-        "no-version-env-var": useNobleArm32Workaround
+        "url-suffix": "$SAS_QUERY_STRING",
+        "is-rpm-install": isRpmInstall
     ])}}
 
 
@@ -100,7 +93,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     "pkgs": pkgs
 ])}}
 
-{{if isInternal || useNobleArm32Workaround:{{
+{{if isInternal:{{
 if isRpmInstall:{{InsertTemplate("Dockerfile.linux.install-sdk",
     [
         "install-method": "copy-and-install",
