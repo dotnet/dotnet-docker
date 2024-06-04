@@ -19,8 +19,6 @@ RUN tdnf install -y \
         openssl-libs \
         tzdata \
         zlib \
-    && tdnf remove -y \
-        symcrypt-openssl \
     && tdnf clean all
 
 
