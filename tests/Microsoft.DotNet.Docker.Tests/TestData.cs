@@ -260,7 +260,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V9_0, OS = OS.Alpine320,           Arch = Arch.Arm,     SdkOS = OS.Alpine320,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V9_0, OS = OS.Alpine320,           Arch = Arch.Arm,     SdkOS = OS.Alpine320, SdkImageVariant = DotNetImageVariant.AOT,
-                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps }
+                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V9_0, OS = OS.Alpine319,           Arch = Arch.Arm,     SdkOS = OS.Alpine319, SdkImageVariant = DotNetImageVariant.AOT,
                     ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
             new ProductImageData { Version = V9_0, OS = OS.Noble,               Arch = Arch.Arm },
@@ -272,7 +272,7 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V9_0, OS = OS.NobleChiseled,       Arch = Arch.Arm,     SdkOS = OS.Noble,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V9_0, OS = OS.NobleChiseled,       Arch = Arch.Arm,     SdkOS = OS.Noble, SdkImageVariant = DotNetImageVariant.AOT,
-                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
+                    ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps }
         };
 
         private static readonly ProductImageData[] s_windowsTestData =
