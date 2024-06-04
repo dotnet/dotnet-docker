@@ -6,7 +6,11 @@
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
         url-suffix (optional): Suffix string to append the end of the URL.
         installer-stage (optional): Name of the Dockerfile stage responsible for installation
-        is-rpm-install (optional): Whether to install RPM versus tarball ^
+        is-rpm-install (optional): Whether to install RPM versus tarball
+
+        Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed.
+        disable-first-run-experience (optional): Force skipping the first-run experience regardless of other conditions
+        no-version-env-var (optional): Force reading the from the versions file instead of using DOTNET_SDK_VERSION env var ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
@@ -18,7 +22,7 @@
         "/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-", platform, "-", ARCH_SHORT, ".tar.gz") ^
     set sdkVersionDir to when(ARGS["use-local-version-var"],
         "$sdk_version",
-        when(ARGS["is-internal"],
+        when(ARGS["is-internal"] || ARGS["no-version-env-var"],
             VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]
             "$DOTNET_SDK_VERSION")) ^
     set isInternalStableBranding to ARGS["is-internal"] &&
@@ -120,5 +124,5 @@ if isFullAzureLinux:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion
         "skip-install": !installEnabled,
         "install-dir": installDir,
         "create-install-dir": !isFullAzureLinux
-    ], "    ")}}{{if !ARGS["is-internal"] || (ARGS["is-rpm-install"] && installEnabled): \
+    ], "    ")}}{{if !ARGS["disable-first-run-experience"] && (!ARGS["is-internal"] || (ARGS["is-rpm-install"] && installEnabled)): \
     {{InsertTemplate("Dockerfile.linux.first-run", ["append-cmd": "true"], "    ")}}}}
