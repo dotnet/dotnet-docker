@@ -10,7 +10,6 @@
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
-    set isAzureLinux3 to isAzureLinux && find(OS_VERSION, "3.0") >= 0 ^
     set isDistrolessAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+-distroless$")) ^
     set isFullAzureLinux to isAzureLinux && !isDistrolessAzureLinux ^
     set useLegacyPackageLayout to dotnetVersion = "6.0" ^
@@ -129,17 +128,12 @@
         "") ^
     set pkgMgrOpts to when(isDistrolessAzureLinux,
         cat(" --releasever=", OS_VERSION_NUMBER, pkgMgrOpts),
-        pkgMgrOpts) ^
-
-    _ Workaround for https://github.com/dotnet/dotnet-docker/issues/5479. Remove when completed ^
-    set useSymCryptOpenSslWorkaround to isAzureLinux3 ^
-    set removePkgs to when(useSymCryptOpenSslWorkaround, ["symcrypt-openssl"])
+        pkgMgrOpts)
 
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",
     [
         "pkgs": pkgs,
         "noninteractive": (OS_VERSION = "focal"),
         "pkg-mgr": when(isDistrolessAzureLinux, "tdnf", ""),
-        "pkg-mgr-opts": pkgMgrOpts,
-        "remove-pkgs": removePkgs
+        "pkg-mgr-opts": pkgMgrOpts
     ])}}
