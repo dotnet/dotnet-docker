@@ -1,4 +1,4 @@
-FROM azurelinuxpreview.azurecr.io/public/azurelinux/base/core:3.0 AS base
+FROM azurelinuxpreview.azurecr.io/public/azurelinux/base/core:3.0
 
 ENV \
     # UID of the non-root user 'app'
@@ -21,31 +21,17 @@ RUN tdnf install -y \
         zlib \
     && tdnf clean all
 
-
-FROM base AS installer
-
+# Create a non-root user and group
 RUN tdnf install -y \
         shadow-utils \
-    && tdnf clean all
-
-# Create a non-root user and group
-RUN groupadd \
+    && groupadd \
         --gid=$APP_UID \
         app \
     && useradd -l \
         --uid=$APP_UID \
         --gid=$APP_UID \
-        --no-create-home \
+        --create-home \
         app \
-    && mkdir -p "/staging/etc" \
-    # Copy user/group info to staging
-    && cp /etc/passwd /staging/etc/passwd \
-    && cp /etc/group /staging/etc/group
-
-
-# Final image
-FROM base
-
-COPY --from=installer /staging/ /
-
-RUN install -d -m 0755 -o $APP_UID -g $APP_UID "/home/app"
+    && tdnf autoremove -y \
+        shadow-utils \
+    && tdnf clean all
