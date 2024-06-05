@@ -142,7 +142,6 @@ Tags | Dockerfile | OS Version
 8.0.301-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.301-bookworm-slim, 8.0-bookworm-slim, 8.0.301, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.301-alpine3.20-arm32v7, 8.0-alpine3.20-arm32v7, 8.0.301-alpine3.20, 8.0-alpine3.20 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
 8.0.301-alpine3.19-arm32v7, 8.0-alpine3.19-arm32v7, 8.0-alpine-arm32v7, 8.0.301-alpine3.19, 8.0-alpine3.19, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
-8.0.301-noble-arm32v7, 8.0-noble-arm32v7, 8.0.301-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 8.0.301-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.301-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.423-bookworm-slim-arm32v7, 6.0-bookworm-slim-arm32v7, 6.0.423-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 6.0.423-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.423-bullseye-slim, 6.0-bullseye-slim, 6.0.423, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
