@@ -127,6 +127,16 @@ $(McrTagsYmlTagGroup:9.0-preview-alpine3.20-arm32v7)
     customSubTableTitle: .NET 9 Preview Tags
 $(McrTagsYmlTagGroup:9.0-preview-alpine3.20-composite-arm32v7)
     customSubTableTitle: .NET 9 Preview Tags
+$(McrTagsYmlTagGroup:9.0-preview-noble-arm32v7)
+    customSubTableTitle: .NET 9 Preview Tags
+$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-arm32v7)
+    customSubTableTitle: .NET 9 Preview Tags
+$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-extra-arm32v7)
+    customSubTableTitle: .NET 9 Preview Tags
+$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-composite-arm32v7)
+    customSubTableTitle: .NET 9 Preview Tags
+$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-composite-extra-arm32v7)
+    customSubTableTitle: .NET 9 Preview Tags
 $(McrTagsYmlTagGroup:8.0-bookworm-slim-arm32v7)
 $(McrTagsYmlTagGroup:8.0-alpine3.20-arm32v7)
 $(McrTagsYmlTagGroup:8.0-alpine3.20-composite-arm32v7)

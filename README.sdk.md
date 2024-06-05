@@ -155,6 +155,7 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.100-preview.5-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-preview.5-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.5, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 9.0.100-preview.5-alpine3.20-arm32v7, 9.0-preview-alpine3.20-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.100-preview.5-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
+9.0.100-preview.5-noble-arm32v7, 9.0-preview-noble-arm32v7, 9.0.100-preview.5-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
