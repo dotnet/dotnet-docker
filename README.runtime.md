@@ -155,6 +155,9 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.0-preview.4-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.0-preview.4-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.0-preview.4, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 9.0.0-preview.4-alpine3.20-arm32v7, 9.0-preview-alpine3.20-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.0-preview.4-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
+9.0.0-preview.4-noble-arm32v7, 9.0-preview-noble-arm32v7, 9.0.0-preview.4-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.0-preview.4-noble-chiseled-arm32v7, 9.0-preview-noble-chiseled-arm32v7, 9.0.0-preview.4-noble-chiseled, 9.0-preview-noble-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.0-preview.4-noble-chiseled-extra-arm32v7, 9.0-preview-noble-chiseled-extra-arm32v7, 9.0.0-preview.4-noble-chiseled-extra, 9.0-preview-noble-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
 
 ## Nano Server 2022 amd64 Tags
 Tag | Dockerfile
