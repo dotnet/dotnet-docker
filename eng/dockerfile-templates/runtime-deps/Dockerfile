@@ -8,7 +8,8 @@
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
-    set isAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
+    set isCblMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
+    set isAzureLinux to isCblMariner || defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
 
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
@@ -26,7 +27,7 @@
     set baseImageTag to when(isAlpine || isAzureLinux, OS_VERSION_NUMBER, OS_VERSION) ^
     set isRpmInstall to isAzureLinux && dotnetVersion = "6.0" ^
     set nonRootUserSupported to dotnetVersion != "6.0" ^
-    set isMultiStage to (isRpmInstall && isInternal) || (isAzureLinux && nonRootUserSupported) ^
+    set isMultiStage to (isRpmInstall && isInternal) || (isCblMariner && nonRootUserSupported) ^
     set firstStageName to when(isRpmInstall, "installer", "base") ^
     set secondStageName to when(isMultiStage && nonRootUserSupported, "installer") ^
     set stagingDir to "/staging" ^
