@@ -20,8 +20,6 @@ For more information, see the [composite images section in the Image Variants do
 
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/aspnet:8.0`
-* `7.0` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/aspnet:7.0`
 * `6.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/aspnet:6.0`
 

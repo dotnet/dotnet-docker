@@ -12,8 +12,6 @@
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp-chiseled`^
 elif match(SHORT_REPO, "monitor"):* `8` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8`
-* `7` (Standard Support)
-  * `docker pull {{FULL_REPO}}:7`
 * `6` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:6`^
 elif match(REPO, "monitor/base"):* `8` (Long-Term Support)
@@ -24,7 +22,5 @@ else:{{if VARIABLES["branch"] = "nightly":* `9.0-preview` (Preview)
   * `docker pull {{FULL_REPO}}:9.0-preview`
 }}* `8.0` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8.0`
-* `7.0` (Standard Support)
-  * `docker pull {{FULL_REPO}}:7.0`
 * `6.0` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:6.0`}}

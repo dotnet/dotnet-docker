@@ -8,8 +8,8 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         // Alpine
         public const string Alpine = "alpine";
-        public const string Alpine318 = $"{Alpine}3.18";
         public const string Alpine319 = $"{Alpine}3.19";
+        public const string Alpine320 = $"{Alpine}3.20";
 
         // Debian
         public const string Bookworm = "bookworm";

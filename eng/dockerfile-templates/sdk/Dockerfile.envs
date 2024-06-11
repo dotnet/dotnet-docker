@@ -3,7 +3,7 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
     set lineContinuation to when(isWindows, "`", "\")
-}}ENV {{lineContinuation}}{{if dotnetVersion = "6.0" || dotnetVersion = "7.0":
+}}ENV {{lineContinuation}}{{if dotnetVersion = "6.0":
     # Unset ASPNETCORE_URLS from aspnet base image
     ASPNETCORE_URLS= {{lineContinuation}}}}
     # Do not generate certificate

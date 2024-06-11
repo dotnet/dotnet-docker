@@ -17,8 +17,6 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 
 * `8` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/monitor:8`
-* `7` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/monitor:7`
 * `6` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/monitor:6`
 

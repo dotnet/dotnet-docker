@@ -15,8 +15,6 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime:8.0`
-* `7.0` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/runtime:7.0`
 * `6.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime:6.0`
 

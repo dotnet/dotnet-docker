@@ -3,7 +3,7 @@
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
     set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
-    set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "7.0" || dotnetVersion = "8.0",
+    set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "8.0",
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
         VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
     set runtimeBaseTag to cat("$REPO:", tagVersion, "-", OS_VERSION)

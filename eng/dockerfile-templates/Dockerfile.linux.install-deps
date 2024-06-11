@@ -8,10 +8,10 @@
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
-    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
-    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) ^
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
+    set isDistrolessMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+-distroless$")) ^
     set isFullMariner to isMariner && !isDistrolessMariner ^
-    set useLegacyPackageLayout to dotnetVersion = "6.0" || dotnetVersion = "7.0" ^
+    set useLegacyPackageLayout to dotnetVersion = "6.0" ^
 
     set dotnetDepsComment to "# .NET dependencies" ^
 
@@ -108,7 +108,7 @@
 
     set certsPkgName to when(isDistrolessMariner,
         "prebuilt-ca-certificates",
-        when(isAlpine && dotnetVersion != "6.0" && dotnetVersion != "7.0",
+        when(isAlpine && dotnetVersion != "6.0",
             "ca-certificates-bundle",
             "ca-certificates"
         )) ^
