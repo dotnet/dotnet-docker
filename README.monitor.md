@@ -63,8 +63,7 @@ Tags | Dockerfile | OS Version
 ##### .NET Monitor Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.4-ubuntu-chiseled-amd64, 9.0-preview-ubuntu-chiseled-amd64, 9.0.0-preview.4-ubuntu-chiseled, 9.0-preview-ubuntu-chiseled, 9.0.0-preview.4, 9.0-preview, 9-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/9.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.4-cbl-mariner-distroless-amd64, 9.0-preview-cbl-mariner-distroless-amd64, 9.0.0-preview.4-cbl-mariner-distroless, 9.0-preview-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/9.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+9.0.0-preview.5-amd64, 9.0-preview-amd64, 9.0.0-preview.5, 9.0-preview, 9-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -79,8 +78,7 @@ Tags | Dockerfile | OS Version
 ##### .NET Monitor Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.4-ubuntu-chiseled-arm64v8, 9.0-preview-ubuntu-chiseled-arm64v8, 9.0.0-preview.4-ubuntu-chiseled, 9.0-preview-ubuntu-chiseled, 9.0.0-preview.4, 9.0-preview, 9-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/9.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.4-cbl-mariner-distroless-arm64v8, 9.0-preview-cbl-mariner-distroless-arm64v8, 9.0.0-preview.4-cbl-mariner-distroless, 9.0-preview-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/9.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+9.0.0-preview.5-arm64v8, 9.0-preview-arm64v8, 9.0.0-preview.5, 9.0-preview, 9-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 
 You can retrieve a list of all available tags for dotnet/monitor at https://mcr.microsoft.com/v2/dotnet/monitor/tags/list.
 <!--End of generated tags-->

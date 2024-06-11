@@ -66,7 +66,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            if (imageData.OS == OS.Mariner20Distroless)
+            if (imageData.OS == OS.Mariner20Distroless || imageData.OS == OS.AzureLinux30Distroless)
             {
                 OutputHelper.WriteLine("Temporarily disable due to bash being installed. See https://github.com/dotnet/dotnet-docker/issues/3526");
                 return;

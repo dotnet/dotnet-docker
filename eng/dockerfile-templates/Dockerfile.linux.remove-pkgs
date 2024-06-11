@@ -7,23 +7,39 @@
         no-clean (optional): skip package manager cleanup after install ^
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isAzureLinux to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
+
     set isDnf to ARGS["pkg-mgr"] = "dnf" ^
-    set isTdnf to ARGS["pkg-mgr"] = "tdnf" || (!isDnf && isMariner) ^
-    set isApk to ARGS["pkg-mgr"] = "apk" || isAlpine
+    set isTdnf to ARGS["pkg-mgr"] = "tdnf" || (!isDnf && isAzureLinux) ^
+    set isTdnf3_4 to isTdnf && find(OS_VERSION, "3.0") >= 0 ^
+    set isApk to ARGS["pkg-mgr"] = "apk" || isAlpine ^
+    set isApt to ARGS["pkg-mgr"] = "apt-get" || (!isDnf && !isTdnf && !isApk) ^
+
+    set removeCmd to
+        when(isApk,
+            "apk del",
+        when(isDnf,
+            "dnf remove -y",
+        when(isTdnf3_4,
+            "tdnf autoremove -y",
+        when(isTdnf,
+            "tdnf remove -y",
+        when (ARGS["noninteractive"],
+            "DEBIAN_FRONTEND=noninteractive apt-get remove -y",
+            "apt-get remove -y"
+        ))))) ^
+
+    set cleanCmd to
+        when(isApk,
+            "apk del",
+        when(isTdnf,
+            "tdnf clean all",
+            "apt-get autoremove \
+&& rm -rf /var/lib/apt/lists/*"))
+
 }}{{
-if isDnf:dnf remove -y{{ARGS["pkg-mgr-opts"]}} \^
-elif isApk:apk del{{ARGS["pkg-mgr-opts"]}} \^
-elif isTdnf:tdnf remove -y{{ARGS["pkg-mgr-opts"]}} \^
-else:apt-get remove \
-&&{{if ARGS["noninteractive"]: DEBIAN_FRONTEND=noninteractive}} apt-get remove -y {{ARGS["pkg-mgr-opts"]}} \}}{{
+removeCmd}}{{ARGS["pkg-mgr-opts"]}} \{{
 for index, pkg in ARGS["pkgs"]:
-    {{pkg}} \}}{{if !no-clean:{{
-if isTdnf:
-&& tdnf clean all{{ARGS["pkg-mgr-opts"]}}^
-elif isDnf:
-&& dnf autoremove{{ARGS["pkg-mgr-opts"]}} \
-&& dnf clean all{{ARGS["pkg-mgr-opts"]}}^
-elif !isApk:
-&& apt-get autoremove \
-&& rm -rf /var/lib/apt/lists/*}}}}
+    {{pkg}} \}}{{
+if !no-clean:
+&& {{cleanCmd}}}}

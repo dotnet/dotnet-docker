@@ -106,7 +106,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string expectedUser;
             if (imageData.IsDistroless && ImageRepo != DotNetImageRepo.SDK)
             {
-                if (imageData.OS.Contains("cbl-mariner"))
+                if (imageData.OS.StartsWith(OS.Mariner) || imageData.OS.StartsWith(OS.AzureLinux))
                 {
                     expectedUser = "app";
                 }
@@ -194,6 +194,12 @@ namespace Microsoft.DotNet.Docker.Tests
         protected void VerifyExpectedInstalledRpmPackages(
             ProductImageData imageData, IEnumerable<string> expectedPackages)
         {
+            if ((!imageData.OS.StartsWith(OS.Mariner) && !imageData.OS.StartsWith(OS.AzureLinux))
+                || imageData.IsDistroless || imageData.Version.Major > 6)
+            {
+                return;
+            }
+
             if (imageData.Arch == Arch.Arm64)
             {
                 OutputHelper.WriteLine("Skip test until Arm64 Dockerfiles install packages instead of tarballs");
@@ -356,6 +362,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<string> GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
             {
+                { OS: string os } when os.Contains(OS.AzureLinux) => new[]
+                    {
+                        "azurelinux-release",
+                        "distroless-packages-minimal",
+                        "filesystem",
+                        "prebuilt-ca-certificates",
+                        "tzdata"
+                    },
                 { OS: string os } when os.Contains(OS.Mariner) => new[]
                     {
                         "distroless-packages-minimal",
@@ -395,7 +409,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-libs",
                         "zlib"
                     },
-                { OS: string os } when os.Contains(OS.Mariner) => new[]
+                { OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) => new[]
                     {
                         "glibc",
                         "libgcc",
@@ -459,7 +473,7 @@ namespace Microsoft.DotNet.Docker.Tests
             };
 
         private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
-            string libstdcppPkgName = imageData.OS.Contains(OS.Mariner) || imageData.OS.Contains(OS.Alpine)
+            string libstdcppPkgName = imageData.OS.Contains(OS.Mariner) || imageData.OS.Contains(OS.AzureLinux) || imageData.OS.Contains(OS.Alpine)
                 ? "libstdc++"
                 : "libstdc++6";
             return GetAotDepsPackages(imageData).Append(libstdcppPkgName);
@@ -467,7 +481,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
-                { IsDistroless: true, OS: string os } when os.Contains(OS.Mariner) => new[]
+                { IsDistroless: true, OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) => new[]
                     {
                         "icu",
                         "tzdata"

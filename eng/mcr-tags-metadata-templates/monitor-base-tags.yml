@@ -1,11 +1,7 @@
 $(McrTagsYmlRepo:monitor-base)
-$(McrTagsYmlTagGroup:9.0-preview-ubuntu-chiseled-amd64)
+$(McrTagsYmlTagGroup:9.0-preview-amd64)
     customSubTableTitle: .NET Monitor Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-ubuntu-chiseled-arm64v8)
-    customSubTableTitle: .NET Monitor Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-cbl-mariner-distroless-amd64)
-    customSubTableTitle: .NET Monitor Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-cbl-mariner-distroless-arm64v8)
+$(McrTagsYmlTagGroup:9.0-preview-arm64v8)
     customSubTableTitle: .NET Monitor Preview Tags
 $(McrTagsYmlTagGroup:8.0-ubuntu-chiseled-amd64)
 $(McrTagsYmlTagGroup:8.0-ubuntu-chiseled-arm64v8)
