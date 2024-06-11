@@ -159,7 +159,6 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, OS = OS.Alpine320,           Arch = Arch.Arm64,   SdkOS = OS.Alpine320, SdkImageVariant = DotNetImageVariant.AOT,
                     ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
 
-
             new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,        Arch = Arch.Arm },
             new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Arm },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm,     SdkOS = OS.Jammy },
@@ -216,7 +215,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     ImageVariant = DotNetImageVariant.Composite | DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V9_0, OS = OS.AzureLinux30Distroless, Arch = Arch.Amd64,   SdkOS = OS.AzureLinux30, SdkImageVariant = DotNetImageVariant.AOT,
                     ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
-
 
             new ProductImageData { Version = V9_0, OS = OS.AzureLinux30,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V9_0, OS = OS.AzureLinux30Distroless, Arch = Arch.Arm64,   SdkOS = OS.AzureLinux30 },
