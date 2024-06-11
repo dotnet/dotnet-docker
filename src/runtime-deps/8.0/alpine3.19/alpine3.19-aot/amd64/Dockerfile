@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/runtime-deps/8.0/alpine3.19/alpine3.19-aot/amd64/Dockerfile
 FROM amd64/alpine:3.19
+========
+FROM amd64/alpine:3.20
+>>>>>>>> upstream/main:src/runtime-deps/8.0/alpine3.20-aot/amd64/Dockerfile
 
 ENV \
     # UID of the non-root user 'app'

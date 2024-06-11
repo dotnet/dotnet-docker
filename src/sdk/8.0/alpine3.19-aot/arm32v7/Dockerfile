@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:8.0.6-alpine3.20-arm64v8
+FROM $REPO:8.0.6-alpine3.19-arm32v7
 
 ENV \
     # Do not generate certificate
@@ -7,7 +7,11 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
+<<<<<<< HEAD
+    DOTNET_SDK_VERSION=8.0.301 \
+=======
     DOTNET_SDK_VERSION=8.0.302 \
+>>>>>>> upstream/main
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -15,7 +19,7 @@ ENV \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Alpine-3.20-arm64
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Alpine-3.19-arm32
 
 RUN apk add --upgrade --no-cache \
         curl \
@@ -25,8 +29,12 @@ RUN apk add --upgrade --no-cache \
         tzdata
 
 # Install .NET SDK
-RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='bc504f76a5eb984373f96520c3ae0d439da9778bc4ba39455f89b809e203543ca164f3c27523b84245a5223ae7eed64931ea78a136041eecb1d1a226cd60471b' \
+RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-arm.tar.gz \
+<<<<<<< HEAD
+    && dotnet_sha512='19c32bf5cc14452cd0eaa40eceb0f5d63730c80ee9045cd9ee9057bb78b3add430b7337c2e2ddc05902777ba6517f879c10572c32da0ce21877ce1d9523a753b' \
+=======
+    && dotnet_sha512='ad01cf664b42e85bfaa1f8cd13b159266b5b332e4b9c54b8f01e0d08da85c151437be30e142661b38e90b5896c17db30e086c78c47d1f3bb6b57c17e52c1483b' \
+>>>>>>> upstream/main
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
