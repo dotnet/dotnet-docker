@@ -1,21 +1,25 @@
 parameters:
   repo: null
+  subscription: null
+  resourceGroup: null
+  acr: null
   action: null
   age: null
   customArgs: ""
+  serviceConnection: null
   internalProjectName: null
 steps:
   - template: /eng/common/templates/steps/run-imagebuilder.yml@self
     parameters:
       displayName: Clean ACR Images - ${{ parameters.repo }}
-      serviceConnection: $(acr.serviceConnectionName)
+      serviceConnection: ${{ parameters.serviceConnection }}
       internalProjectName: ${{ parameters.internalProjectName }}
       args: >
         cleanAcrImages
         ${{ parameters.repo }}
-        $(acr.subscription)
-        $(acr.resourceGroup)
-        $(acr.server)
+        ${{ parameters.subscription }}
+        ${{ parameters.resourceGroup }}
+        ${{ parameters.acr }}
         --action ${{ parameters.action }}
         --age ${{ parameters.age }}
         ${{ parameters.customArgs }}

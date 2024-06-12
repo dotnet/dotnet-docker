@@ -74,6 +74,7 @@ jobs:
         '$(acr.subscription)'
         '$(acr.resourceGroup)'
         '$(stagingRepoPrefix)'
+        '$(acr-staging.server)'
         --os-type '*'
         --architecture '*'
         --repo-prefix '$(publishRepoPrefix)'

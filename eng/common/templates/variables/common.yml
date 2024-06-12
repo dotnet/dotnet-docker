@@ -63,3 +63,5 @@ variables:
 # will cause these values to be overridden with the real values.
 - name: acr.subscription
   value: 00000000-0000-0000-0000-000000000000
+- name: acr-staging.subscription
+  value: 00000000-0000-0000-0000-000000000000
