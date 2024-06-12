@@ -59,7 +59,8 @@ Add due dates to each of the issues so that we don't lose track of them.
     - [ ] Move `latest` tags in `manifest.json` to the new version
         - Relevant issue: https://github.com/dotnet/dotnet-docker/issues/2316
     - [ ] Add the new .NET version to the .NET Framework SDK image
-        - https://github.com/microsoft/dotnet-framework-docker/blob/6a3c9d048f75c1e69c0e1059564cd56a90bf9e3c/eng/dockerfile-templates/sdk/Dockerfile#L56-L59
+        - [ ] https://github.com/microsoft/dotnet-framework-docker/blob/6a3c9d048f75c1e69c0e1059564cd56a90bf9e3c/eng/dockerfile-templates/sdk/Dockerfile#L56-L59
+        - [ ] https://github.com/microsoft/dotnet-framework-docker/blob/58a18cf958883c6a67ae888854bd9bb09f085e83/eng/dockerfile-templates/sdk/Dockerfile.ltsc2016#L80-L81
     - [ ] Post a new announcement on the [GitHub Discussions page](https://github.com/dotnet/dotnet-docker/discussions/new?category=announcements) page and pin the announcement
         - Include new .NET Docker features and breaking changes and defer to other official .NET documentation/announcements for other features
         - Example announcement: https://github.com/dotnet/dotnet-docker/discussions/4995
@@ -72,5 +73,6 @@ Add due dates to each of the issues so that we don't lose track of them.
     - [ ] Search for and simplify conditions including the EOL .NET Version in the Dockerfile templates and tests
     - [ ] Replace all references to the EOL .NET version in documentation with a new .NET version
     - [ ] Remove the EOL .NET version from the .NET Framework SDK images
-        - https://github.com/microsoft/dotnet-framework-docker/blob/6a3c9d048f75c1e69c0e1059564cd56a90bf9e3c/eng/dockerfile-templates/sdk/Dockerfile#L56-L59
+        - [ ] https://github.com/microsoft/dotnet-framework-docker/blob/6a3c9d048f75c1e69c0e1059564cd56a90bf9e3c/eng/dockerfile-templates/sdk/Dockerfile#L56-L59
+        - [ ] https://github.com/microsoft/dotnet-framework-docker/blob/58a18cf958883c6a67ae888854bd9bb09f085e83/eng/dockerfile-templates/sdk/Dockerfile.ltsc2016#L80-L81
     - [ ] Post a new announcement on the [GitHub Discussions page](https://github.com/dotnet/dotnet-docker/discussions/new?category=announcements)
