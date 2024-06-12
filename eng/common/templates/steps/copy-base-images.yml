@@ -10,7 +10,7 @@ steps:
 - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   parameters:
     displayName: Copy Base Images
-    serviceConnection: $(acr.serviceConnectionName)
+    serviceConnection: $(acr-staging.serviceConnectionName)
     continueOnError: ${{ parameters.continueOnError }}
     internalProjectName: ${{ parameters.internalProjectName }}
     # Use environment variable to reference $(dryRunArg). Since $(dryRunArg) might be undefined,
@@ -18,12 +18,12 @@ steps:
     # error
     args: >
       copyBaseImages
-      '$(acr.subscription)'
-      '$(acr.resourceGroup)'
+      '$(acr-staging.subscription)'
+      '$(acr-staging.resourceGroup)'
       $(dockerHubRegistryCreds)
       $(customCopyBaseImagesArgs)
       --repo-prefix $(mirrorRepoPrefix)
-      --registry-override '$(acr.server)'
+      --registry-override '$(acr-staging.server)'
       --os-type 'linux'
       --architecture '*'
       $env:DRYRUNARG
