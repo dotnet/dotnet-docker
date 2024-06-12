@@ -13,17 +13,17 @@ steps:
   - template: /eng/common/templates/steps/run-pwsh-with-auth.yml@self
     parameters:
       displayName: Docker login
-      serviceConnection: $(acr.serviceConnectionName)
+      serviceConnection: $(acr-staging.serviceConnectionName)
       dockerClientOS: windows
       condition: and(succeeded(), ${{ parameters.condition }})
       command: >
         az login --service-principal --tenant $env:tenantId -u $env:servicePrincipalId --federated-token $env:idToken;
-        $accessToken = $(az acr login -n $(acr.server) --expose-token --query accessToken --output tsv);
-        docker login $(acr.server) -u 00000000-0000-0000-0000-000000000000 -p $accessToken
+        $accessToken = $(az acr login -n $(acr-staging.server) --expose-token --query accessToken --output tsv);
+        docker login $(acr-staging.server) -u 00000000-0000-0000-0000-000000000000 -p $accessToken
 - ${{ parameters.customInitSteps }}
 - powershell: |
     if ("${{ variables['System.TeamProject'] }}" -eq "${{ parameters.internalProjectName }}" -and "${{ variables['Build.Reason'] }}" -ne "PullRequest") {
-      $optionalTestArgs="$optionalTestArgs -PullImages -Registry $env:ACR_SERVER -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info.json"
+      $optionalTestArgs="$optionalTestArgs -PullImages -Registry $env:ACR-STAGING_SERVER -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info.json"
     }
     if ($env:REPOTESTARGS) {
       $optionalTestArgs += " $env:REPOTESTARGS"
@@ -50,7 +50,7 @@ steps:
   displayName: Test Images
   condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-  - script: docker logout $(acr.server)
+  - script: docker logout $(acr-staging.server)
     displayName: Docker logout
     condition: and(always(), ${{ parameters.condition }})
     continueOnError: true
