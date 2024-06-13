@@ -97,7 +97,7 @@ jobs:
       New-Item -Path $(imageInfoHostDir) -ItemType Directory -Force
       $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(imageInfoContainerDir)/$(legName)-image-info.json"
       if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}" -and $env:BUILD_REASON -ne "PullRequest") {
-        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push"
+        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr-staging.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push"
       }
 
       # If the pipeline isn't configured to disable the cache and a build variable hasn't been set to disable the cache
@@ -111,7 +111,7 @@ jobs:
     parameters:
       name: BuildImages
       displayName: Build Images
-      serviceConnection: $(acr.serviceConnectionName)
+      serviceConnection: $(acr-staging.serviceConnectionName)
       internalProjectName: ${{ parameters.internalProjectName }}
       dockerClientOS: ${{ parameters.dockerClientOS }}
       args: >
@@ -124,8 +124,8 @@ jobs:
         --retry
         --source-repo $(publicGitRepoUri)
         --digests-out-var 'builtImages'
-        --acr-subscription '$(acr.subscription)'
-        --acr-resource-group '$(acr.resourceGroup)'
+        --acr-subscription '$(acr-staging.subscription)'
+        --acr-resource-group '$(acr-staging.resourceGroup)'
         $(manifestVariables)
         $(imageBuilderBuildArgs)
   - template: /eng/common/templates/steps/publish-artifact.yml@self
@@ -172,7 +172,7 @@ jobs:
         # Manifest tool docs: https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/secure-supply-chain/custom-sbom-generation-workflows
         $images -Split ',' | ForEach-Object {
           echo "Generating SBOM for $_";
-          $formattedImageName = $_.Replace('$(acr.server)/$(stagingRepoPrefix)', "").Replace('/', '_').Replace(':', '_');
+          $formattedImageName = $_.Replace('$(acr-staging.server)/$(stagingRepoPrefix)', "").Replace('/', '_').Replace(':', '_');
           $sbomChildDir = "$(sbomDirectory)/$formattedImageName";
           New-Item -Type Directory -Path $sbomChildDir > $null;
           & $dotnetPath "$manifestToolDllPath" `
