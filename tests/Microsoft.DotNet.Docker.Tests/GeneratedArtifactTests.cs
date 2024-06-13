@@ -29,7 +29,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 $"The Dockerfiles are out of sync with the templates.  Update the Dockerfiles by running `{generateDockerfilesScript}`.");
         }
 
-        [Fact]
+        // Disable due to https://github.com/dotnet/dotnet-docker/issues/5561
+        //[Fact]
         public void VerifyReadmeTemplates()
         {
             string generateTagsDocumentationScript = Path.Combine(Config.SourceRepoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1");
