@@ -23,7 +23,7 @@ steps:
 - ${{ parameters.customInitSteps }}
 - powershell: |
     if ("${{ variables['System.TeamProject'] }}" -eq "${{ parameters.internalProjectName }}" -and "${{ variables['Build.Reason'] }}" -ne "PullRequest") {
-      $optionalTestArgs="$optionalTestArgs -PullImages -Registry $env:ACR-STAGING_SERVER -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info.json"
+      $optionalTestArgs="$optionalTestArgs -PullImages -Registry ${env:ACR-STAGING_SERVER} -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info.json"
     }
     if ($env:REPOTESTARGS) {
       $optionalTestArgs += " $env:REPOTESTARGS"
