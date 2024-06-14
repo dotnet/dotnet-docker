@@ -1,29 +1,44 @@
 parameters:
-  additionalOptions: null
-  publicProjectName: null
-  internalProjectName: null
-  continueOnError: false
+- name: acr
+  type: object
+  default:
+    server: ""
+    serviceConnection: ""
+    subscription: ""
+    resourceGroup: ""
+- name: repoPrefix
+  type: string
+  default: null
+- name: additionalOptions
+  type: string
+  default: ""
+- name: continueOnError
+  type: string
+  default: false
+- name: forceDryRun
+  type: boolean
+  default: false
 
 steps:
-- ${{ if or(eq(variables['System.TeamProject'], parameters.publicProjectName), eq(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: /eng/common/templates/steps/set-dry-run.yml@self
+- ${{ if or(eq(parameters.forceDryRun, true), eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest')) }}:
+  - script: echo "##vso[task.setvariable variable=dryRunArg]--dry-run"
 - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   parameters:
     displayName: Copy Base Images
-    serviceConnection: $(acr-staging.serviceConnectionName)
+    serviceConnection: '${{ parameters.acr.serviceConnection }}'
     continueOnError: ${{ parameters.continueOnError }}
-    internalProjectName: ${{ parameters.internalProjectName }}
+    internalProjectName: 'internal'
     # Use environment variable to reference $(dryRunArg). Since $(dryRunArg) might be undefined,
     # PowerShell will treat the Azure Pipelines variable macro syntax as a command and throw an
     # error
     args: >
       copyBaseImages
-      '$(acr-staging.subscription)'
-      '$(acr-staging.resourceGroup)'
+      '${{ parameters.acr.subscription }}'
+      '${{ parameters.acr.resourceGroup }}'
       $(dockerHubRegistryCreds)
       $(customCopyBaseImagesArgs)
-      --repo-prefix $(mirrorRepoPrefix)
-      --registry-override '$(acr-staging.server)'
+      --repo-prefix '${{ parameters.repoPrefix }}'
+      --registry-override '${{ parameters.acr.server }}'
       --os-type 'linux'
       --architecture '*'
       $env:DRYRUNARG
