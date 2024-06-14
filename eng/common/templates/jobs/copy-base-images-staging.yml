@@ -1,0 +1,30 @@
+parameters:
+- name: name
+  type: string
+  default: null
+- name: pool
+  type: object
+  default: {}
+- name: customInitSteps
+  type: stepList
+  default: []
+- name: additionalOptions
+  type: string
+  default: ''
+- name: continueOnError
+  type: string
+  default: false
+
+jobs:
+- template: /eng/common/templates/jobs/copy-base-images.yml@self
+  parameters:
+    name: ${{ parameters.name }}
+    pool: ${{ parameters.pool }}
+    customInitSteps: ${{ parameters.customInitSteps }}
+    additionalOptions: ${{ parameters.additionalOptions }}
+    acr:
+      server: $(acr-staging.server)
+      serviceConnection: $(acr-staging.serviceConnectionName)
+      subscription: $(acr-staging.subscription)
+      resourceGroup: $(acr-staging.resourceGroup)
+    repoPrefix: $(mirrorRepoPrefix)

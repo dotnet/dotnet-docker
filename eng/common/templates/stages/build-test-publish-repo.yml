@@ -64,13 +64,11 @@ stages:
             echo "##vso[task.setvariable variable=osVersions]"
             echo "##vso[task.setvariable variable=architecture]"
           displayName: Initialize Test Variables
-  - template: /eng/common/templates/jobs/copy-base-images.yml@self
+  - template: /eng/common/templates/jobs/copy-base-images-staging.yml@self
     parameters:
       name: CopyBaseImages
       pool: ${{ parameters.linuxAmd64Pool }}
       additionalOptions: "--manifest '$(manifest)' $(imageBuilder.pathArgs) $(manifestVariables)"
-      publicProjectName: ${{ parameters.publicProjectName }}
-      internalProjectName: ${{ parameters.internalProjectName }}
       customInitSteps: ${{ parameters.customCopyBaseImagesInitSteps }}
   - template: /eng/common/templates/jobs/generate-matrix.yml@self
     parameters:
