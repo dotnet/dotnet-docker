@@ -23,7 +23,7 @@
           "templatePath": "eng/readme-templates/README.md"
         },
         {
-          "path": ".mar/portal/README.runtime-deps.portal.md",
+          "path": ".mar/README.runtime-deps.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -2507,7 +2507,7 @@
           "templatePath": "eng/readme-templates/README.md"
         },
         {
-          "path": ".mar/portal/README.runtime.portal.md",
+          "path": ".mar/README.runtime.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -4754,7 +4754,7 @@
           "templatePath": "eng/readme-templates/README.md"
         },
         {
-          "path": ".mar/portal/README.aspnet.portal.md",
+          "path": ".mar/README.aspnet.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -7873,7 +7873,7 @@
           "templatePath": "eng/readme-templates/README.md"
         },
         {
-          "path": ".mar/portal/README.sdk.portal.md",
+          "path": ".mar/README.sdk.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -9480,7 +9480,7 @@
           "templatePath": "eng/readme-templates/README.md"
         },
         {
-          "path": ".mar/portal/README.monitor-base.portal.md",
+          "path": ".mar/README.monitor-base.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -9695,7 +9695,7 @@
           "templatePath": "eng/readme-templates/README.md"
         },
         {
-          "path": ".mar/portal/README.monitor.portal.md",
+          "path": ".mar/README.monitor.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -10073,7 +10073,7 @@
           "templatePath": "eng/readme-templates/README.md"
         },
         {
-          "path": ".mar/portal/README.aspire-dashboard.portal.md",
+          "path": ".mar/README.aspire-dashboard.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
