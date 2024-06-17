@@ -7,6 +7,6 @@ variables:
 - name: dockerHubRegistryCreds
   value: --registry-creds 'docker.io=$(dotnetDockerHubBot.userName);$(BotAccount-dotnet-dockerhub-bot-PAT)'
 
+- group: DotNet-Docker-Common
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-  - group: DotNet-Docker-Common
   - group: DotNet-Docker-Secrets-WIF
