@@ -9,6 +9,6 @@ when(ARGS["readme-host"] = "mar",
     when(ARGS["is-product-family"],
         cat("https://mcr.microsoft.com/catalog?search=", ARGS["repo"]),
         cat("https://mcr.microsoft.com/product/", ARGS["repo"], "/about")),
-    when(ARGS["readme-host"] = "dockerhub",
+    when(ARGS["readme-host"] = "github",
         cat("https://hub.docker.com/_/microsoft-", join(split(ARGS["repo"], "/"), "-"), "/"),
         cat("UNKNOWN HOST: ", ARGS["readme-host"])))}}
