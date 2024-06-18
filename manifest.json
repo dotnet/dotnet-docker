@@ -1,7 +1,7 @@
 {
   "readme": {
     "path": "README.md",
-    "templatePath": "eng/readme-templates/README.md"
+    "templatePath": "eng/readme-templates/README.github.md"
   },
   "registry": "mcr.microsoft.com",
   "variables": {
@@ -20,7 +20,11 @@
       "readmes": [
         {
           "path": "README.runtime-deps.md",
-          "templatePath": "eng/readme-templates/README.md"
+          "templatePath": "eng/readme-templates/README.github.md"
+        },
+        {
+          "path": ".mar/README.runtime-deps.md",
+          "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
           "path": ".mar/README.runtime-deps.portal.md",
@@ -2504,7 +2508,11 @@
       "readmes": [
         {
           "path": "README.runtime.md",
-          "templatePath": "eng/readme-templates/README.md"
+          "templatePath": "eng/readme-templates/README.github.md"
+        },
+        {
+          "path": ".mar/README.runtime.md",
+          "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
           "path": ".mar/README.runtime.portal.md",
@@ -4751,7 +4759,11 @@
       "readmes": [
         {
           "path": "README.aspnet.md",
-          "templatePath": "eng/readme-templates/README.md"
+          "templatePath": "eng/readme-templates/README.github.md"
+        },
+        {
+          "path": ".mar/README.aspnet.md",
+          "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
           "path": ".mar/README.aspnet.portal.md",
@@ -7870,7 +7882,11 @@
       "readmes": [
         {
           "path": "README.sdk.md",
-          "templatePath": "eng/readme-templates/README.md"
+          "templatePath": "eng/readme-templates/README.github.md"
+        },
+        {
+          "path": ".mar/README.sdk.md",
+          "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
           "path": ".mar/README.sdk.portal.md",
@@ -9477,7 +9493,11 @@
       "readmes": [
         {
           "path": "README.monitor-base.md",
-          "templatePath": "eng/readme-templates/README.md"
+          "templatePath": "eng/readme-templates/README.github.md"
+        },
+        {
+          "path": ".mar/README.monitor-base.md",
+          "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
           "path": ".mar/README.monitor-base.portal.md",
@@ -9692,7 +9712,11 @@
       "readmes": [
         {
           "path": "README.monitor.md",
-          "templatePath": "eng/readme-templates/README.md"
+          "templatePath": "eng/readme-templates/README.github.md"
+        },
+        {
+          "path": ".mar/README.monitor.md",
+          "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
           "path": ".mar/README.monitor.portal.md",
@@ -10070,7 +10094,11 @@
       "readmes": [
         {
           "path": "README.aspire-dashboard.md",
-          "templatePath": "eng/readme-templates/README.md"
+          "templatePath": "eng/readme-templates/README.github.md"
+        },
+        {
+          "path": ".mar/README.aspire-dashboard.md",
+          "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
           "path": ".mar/README.aspire-dashboard.portal.md",
