@@ -15,6 +15,7 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 * [dotnet/runtime]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/runtime" ])}}): .NET Runtime
 * [dotnet/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/runtime-deps" ])}}): .NET Runtime Dependencies
 * [dotnet/monitor]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/monitor" ])}}): .NET Monitor Tool
+* [dotnet/aspire-dashboard]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/aspire-dashboard" ])}}): .NET Aspire Dashboard
 * [dotnet/samples]({{InsertTemplate("Url.md", [ "readme-host": "dockerhub", "repo": "dotnet/samples" ])}}): .NET Samples
 ^elif IS_PRODUCT_FAMILY && VARIABLES["branch"] = "nightly"
 :# Featured Repos
