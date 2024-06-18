@@ -5,6 +5,7 @@
 * [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/monitor](https://hub.docker.com/_/microsoft-dotnet-monitor/): .NET Monitor Tool
+* [dotnet/aspire-dashboard](https://hub.docker.com/_/microsoft-dotnet-aspire-dashboard/): .NET Aspire Dashboard
 * [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
 
 # About
