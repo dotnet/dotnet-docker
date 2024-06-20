@@ -10,11 +10,11 @@
           "templatePath": "eng/readme-templates/README.github.md"
         },
         {
-          "path": ".mar/README.samples.md",
+          "path": ".portal-docs/README.samples.md",
           "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
-          "path": ".mar/README.samples.portal.md",
+          "path": ".portal-docs/README.samples.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
