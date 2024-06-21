@@ -1,5 +1,5 @@
 steps:
-- powershell: >
+- powershell: |
     $additionalPublishMcrDocsArgs = "--root /repo/.portal-docs"
     if ($env:SOURCEBRANCH -eq "nightly" -or $env:SYSTEM_PULLREQUEST_TARGETBRANCH -eq "nightly") {
         $additionalPublishMcrDocsArgs += " --exclude-product-family"
