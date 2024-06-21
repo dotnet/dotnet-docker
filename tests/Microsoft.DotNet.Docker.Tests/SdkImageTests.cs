@@ -52,8 +52,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Select(imageData => new object[] { imageData });
         }
 
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
+        // TODO: Enable when https://github.com/dotnet/dotnet-docker/issues/5592 is fixed
+        // [LinuxImageTheory]
+        // [MemberData(nameof(GetImageData))]
         public async void VerifyBlazorWasmScenario(ProductImageData imageData)
         {
             bool isAlpine = imageData.OS.StartsWith(OS.Alpine);
