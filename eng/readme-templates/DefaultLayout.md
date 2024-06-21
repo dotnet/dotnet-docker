@@ -40,6 +40,6 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 
 }}*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
 ^elif ARGS["readme-host"] = "dockerhub":
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/${{REPO}}/tags) or on [Docker Hub](https://github.com/dotnet/dotnet-docker/blob/{{if isNightlyRepo:nightly^else:main/README.{{SHORT_REPO}}.md}}).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/{{REPO}}/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/{{if isNightlyRepo:nightly^else:main}}/README.{{SHORT_REPO}}.md#full-tag-listing).
 }}}}
 {{InsertTemplate("Support.md", commonArgs)}}

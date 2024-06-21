@@ -73,7 +73,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/$dotnet/samples/tags) or on [Docker Hub](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/samples/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md#full-tag-listing).
 
 # Support
 
