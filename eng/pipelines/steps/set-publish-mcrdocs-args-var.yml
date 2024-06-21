@@ -1,10 +1,8 @@
 steps:
-- powershell: >
+- powershell: |
+    $additionalPublishMcrDocsArgs = "--root /repo/.portal-docs"
     if ($env:SOURCEBRANCH -eq "nightly" -or $env:SYSTEM_PULLREQUEST_TARGETBRANCH -eq "nightly") {
-        $additionalPublishMcrDocsArgs = "--exclude-product-family"
-    }
-    else {
-        $additionalPublishMcrDocsArgs = ""
+        $additionalPublishMcrDocsArgs += " --exclude-product-family"
     }
 
     echo "##vso[task.setvariable variable=additionalPublishMcrDocsArgs]$additionalPublishMcrDocsArgs"
