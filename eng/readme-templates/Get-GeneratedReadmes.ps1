@@ -32,14 +32,24 @@ $onDockerfilesGenerated = {
         CopyReadme $ContainerName "README.samples.md"
         CopyReadme $ContainerName "README.sdk.md"
 
-        CopyReadme $ContainerName ".mar/portal/README.aspire-dashboard.portal.md"
-        CopyReadme $ContainerName ".mar/portal/README.aspnet.portal.md"
-        CopyReadme $ContainerName ".mar/portal/README.monitor.portal.md"
-        CopyReadme $ContainerName ".mar/portal/README.monitor-base.portal.md"
-        CopyReadme $ContainerName ".mar/portal/README.runtime-deps.portal.md"
-        CopyReadme $ContainerName ".mar/portal/README.runtime.portal.md"
-        CopyReadme $ContainerName ".mar/portal/README.samples.portal.md"
-        CopyReadme $ContainerName ".mar/portal/README.sdk.portal.md"
+        CopyReadme $ContainerName ".portal-docs/README.aspire-dashboard.md"
+        CopyReadme $ContainerName ".portal-docs/README.aspnet.md"
+        CopyReadme $ContainerName ".portal-docs/README.md"
+        CopyReadme $ContainerName ".portal-docs/README.monitor.md"
+        CopyReadme $ContainerName ".portal-docs/README.monitor-base.md"
+        CopyReadme $ContainerName ".portal-docs/README.runtime-deps.md"
+        CopyReadme $ContainerName ".portal-docs/README.runtime.md"
+        CopyReadme $ContainerName ".portal-docs/README.samples.md"
+        CopyReadme $ContainerName ".portal-docs/README.sdk.md"
+
+        CopyReadme $ContainerName ".portal-docs/README.aspire-dashboard.portal.md"
+        CopyReadme $ContainerName ".portal-docs/README.aspnet.portal.md"
+        CopyReadme $ContainerName ".portal-docs/README.monitor.portal.md"
+        CopyReadme $ContainerName ".portal-docs/README.monitor-base.portal.md"
+        CopyReadme $ContainerName ".portal-docs/README.runtime-deps.portal.md"
+        CopyReadme $ContainerName ".portal-docs/README.runtime.portal.md"
+        CopyReadme $ContainerName ".portal-docs/README.samples.portal.md"
+        CopyReadme $ContainerName ".portal-docs/README.sdk.portal.md"
     }
 }
 
