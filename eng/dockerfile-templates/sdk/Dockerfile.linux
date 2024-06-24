@@ -1,8 +1,8 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isAlpine319 to find(OS_VERSION, "alpine3.19") >= 0 ^
-    set isAzureLinux to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
+    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
+    set isAzureLinux to isMariner || find(OS_VERSION, "azurelinux") >= 0 ^
     set isFullAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
@@ -44,17 +44,23 @@
                     "tzdata",
                 ])),
         when(isAzureLinux,
-            when (dotnetVersion = "6.0",
+            when (isMariner,
+                when (dotnetVersion = "6.0",
+                    [
+                        "git",
+                        "tar",
+                    ],
+                    [
+                        "git",
+                        "libatomic_ops",
+                        "tar",
+                    ]
+                ),
                 [
                     "git",
+                    "libgcc-atomic",
                     "tar",
-                ],
-                [
-                    "git",
-                    "libatomic_ops",
-                    "tar",
-                ]
-            ),
+                ]),
             when (dotnetVersion = "6.0",
                 [
                     "curl",
