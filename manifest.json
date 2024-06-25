@@ -23,11 +23,11 @@
           "templatePath": "eng/readme-templates/README.github.md"
         },
         {
-          "path": ".portal-docs/README.runtime-deps.md",
+          "path": ".portal-docs/docker-hub/README.runtime-deps.md",
           "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
-          "path": ".portal-docs/README.runtime-deps.portal.md",
+          "path": ".portal-docs/mar/README.runtime-deps.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -1800,11 +1800,11 @@
           "templatePath": "eng/readme-templates/README.github.md"
         },
         {
-          "path": ".portal-docs/README.runtime.md",
+          "path": ".portal-docs/docker-hub/README.runtime.md",
           "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
-          "path": ".portal-docs/README.runtime.portal.md",
+          "path": ".portal-docs/mar/README.runtime.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -3890,11 +3890,11 @@
           "templatePath": "eng/readme-templates/README.github.md"
         },
         {
-          "path": ".portal-docs/README.aspnet.md",
+          "path": ".portal-docs/docker-hub/README.aspnet.md",
           "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
-          "path": ".portal-docs/README.aspnet.portal.md",
+          "path": ".portal-docs/mar/README.aspnet.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -6728,11 +6728,11 @@
           "templatePath": "eng/readme-templates/README.github.md"
         },
         {
-          "path": ".portal-docs/README.sdk.md",
+          "path": ".portal-docs/docker-hub/README.sdk.md",
           "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
-          "path": ".portal-docs/README.sdk.portal.md",
+          "path": ".portal-docs/mar/README.sdk.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -7900,11 +7900,11 @@
           "templatePath": "eng/readme-templates/README.github.md"
         },
         {
-          "path": ".portal-docs/README.monitor-base.md",
+          "path": ".portal-docs/docker-hub/README.monitor-base.md",
           "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
-          "path": ".portal-docs/README.monitor-base.portal.md",
+          "path": ".portal-docs/mar/README.monitor-base.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -8043,11 +8043,11 @@
           "templatePath": "eng/readme-templates/README.github.md"
         },
         {
-          "path": ".portal-docs/README.monitor.md",
+          "path": ".portal-docs/docker-hub/README.monitor.md",
           "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
-          "path": ".portal-docs/README.monitor.portal.md",
+          "path": ".portal-docs/mar/README.monitor.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
@@ -8349,11 +8349,11 @@
           "templatePath": "eng/readme-templates/README.github.md"
         },
         {
-          "path": ".portal-docs/README.aspire-dashboard.md",
+          "path": ".portal-docs/docker-hub/README.aspire-dashboard.md",
           "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
-          "path": ".portal-docs/README.aspire-dashboard.portal.md",
+          "path": ".portal-docs/mar/README.aspire-dashboard.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
