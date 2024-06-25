@@ -1,6 +1,6 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set baseImageTag to cat("$REPO:", VARIABLES[cat("sdk|", dotnetVersion, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+    set baseImageTag to cat("$REPO:", VARIABLES[cat("sdk|", dotnetVersion, "|product-version")], when(dotnetVersion = "8.0" && find(OS_VERSION, "azurelinux") < 0, "-1", ""), "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
