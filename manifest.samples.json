@@ -7,10 +7,14 @@
       "readmes": [
         {
           "path": "README.samples.md",
-          "templatePath": "eng/readme-templates/README.md"
+          "templatePath": "eng/readme-templates/README.github.md"
         },
         {
-          "path": ".mar/portal/README.samples.portal.md",
+          "path": ".portal-docs/docker-hub/README.samples.md",
+          "templatePath": "eng/readme-templates/README.dockerhub.md"
+        },
+        {
+          "path": ".portal-docs/mar/README.samples.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],

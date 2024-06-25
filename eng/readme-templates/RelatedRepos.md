@@ -7,7 +7,7 @@
 
 .NET:
 
-{{if (!IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly") && ARGS["readme-host"] = "dockerhub"
+{{if (!IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly") && ARGS["readme-host"] = "github"
     :* [dotnet]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet", "is-product-family": "true" ])}}): .NET
 }}{{if (!IS_PRODUCT_FAMILY && !isNightlyRepo && SHORT_REPO != "sdk")
     :* [dotnet/sdk]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/sdk" ])}}): .NET SDK
@@ -21,7 +21,7 @@
     :* [dotnet/monitor]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/monitor" ])}}): .NET Monitor Tool
 }}{{if (!IS_PRODUCT_FAMILY && !isNightlyRepo && SHORT_REPO = "monitor")
     :* [dotnet/monitor/base]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/monitor/base" ])}}): .NET Monitor Base
-}}{{if (!IS_PRODUCT_FAMILY && !isNightlyRepo && SHORT_REPO != "aspire-dashboard" && ARGS["readme-host"] != "dockerhub")
+}}{{if (!IS_PRODUCT_FAMILY && !isNightlyRepo && SHORT_REPO != "aspire-dashboard")
     :* [dotnet/aspire-dashboard]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/aspire-dashboard" ])}}): .NET Aspire Dashboard
 }}{{if ((!IS_PRODUCT_FAMILY || VARIABLES["branch"] = "nightly") && SHORT_REPO != "samples")
     :* [dotnet/samples]({{InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": "dotnet/samples" ])}}): .NET Samples
