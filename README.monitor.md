@@ -40,6 +40,7 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 * [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/monitor/base](https://hub.docker.com/_/microsoft-dotnet-monitor-base/): .NET Monitor Base
+* [dotnet/aspire-dashboard](https://hub.docker.com/_/microsoft-dotnet-aspire-dashboard/): .NET Aspire Dashboard
 * [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples/): .NET Samples
 * [dotnet/nightly/monitor](https://hub.docker.com/_/microsoft-dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
 
