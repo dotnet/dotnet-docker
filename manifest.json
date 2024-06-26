@@ -6754,7 +6754,7 @@
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-1-bullseye-slim-amd64": {},
+                "$(sdk|6.0|product-version)-bullseye-slim-amd64": {},
                 "6.0-bullseye-slim-amd64": {}
               }
             },
@@ -6768,7 +6768,7 @@
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-1-bullseye-slim-arm32v7": {},
+                "$(sdk|6.0|product-version)-bullseye-slim-arm32v7": {},
                 "6.0-bullseye-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -6783,7 +6783,7 @@
               "os": "linux",
               "osVersion": "bullseye-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-1-bullseye-slim-arm64v8": {},
+                "$(sdk|6.0|product-version)-bullseye-slim-arm64v8": {},
                 "6.0-bullseye-slim-arm64v8": {}
               },
               "variant": "v8"
@@ -6797,7 +6797,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(sdk|6.0|product-version)-1-nanoserver-1809": {},
+                "$(sdk|6.0|product-version)-nanoserver-1809": {},
                 "6.0-nanoserver-1809": {}
               }
             },
@@ -6810,7 +6810,7 @@
               "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
-                "$(sdk|6.0|product-version)-1-nanoserver-ltsc2022": {},
+                "$(sdk|6.0|product-version)-nanoserver-ltsc2022": {},
                 "6.0-nanoserver-ltsc2022": {}
               }
             }
@@ -6820,7 +6820,7 @@
           "id": "bullseye-slim",
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-1-bullseye-slim": {},
+            "$(sdk|6.0|product-version)-bullseye-slim": {},
             "6.0-bullseye-slim": {}
           },
           "platforms": [
@@ -6863,7 +6863,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-1-bookworm-slim": {},
+            "$(sdk|6.0|product-version)-bookworm-slim": {},
             "6.0-bookworm-slim": {}
           },
           "platforms": [
@@ -6876,7 +6876,7 @@
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-1-bookworm-slim-amd64": {},
+                "$(sdk|6.0|product-version)-bookworm-slim-amd64": {},
                 "6.0-bookworm-slim-amd64": {}
               }
             },
@@ -6890,7 +6890,7 @@
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-1-bookworm-slim-arm32v7": {},
+                "$(sdk|6.0|product-version)-bookworm-slim-arm32v7": {},
                 "6.0-bookworm-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -6905,7 +6905,7 @@
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {
-                "$(sdk|6.0|product-version)-1-bookworm-slim-arm64v8": {},
+                "$(sdk|6.0|product-version)-bookworm-slim-arm64v8": {},
                 "6.0-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
@@ -6915,7 +6915,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-1-alpine3.19": {},
+            "$(sdk|6.0|product-version)-alpine3.19": {},
             "6.0-alpine3.19": {},
             "6.0-alpine": {}
           },
@@ -6929,7 +6929,7 @@
               "os": "linux",
               "osVersion": "alpine3.19",
               "tags": {
-                "$(sdk|6.0|product-version)-1-alpine3.19-amd64": {},
+                "$(sdk|6.0|product-version)-alpine3.19-amd64": {},
                 "6.0-alpine3.19-amd64": {},
                 "6.0-alpine-amd64": {}
               }
@@ -6944,7 +6944,7 @@
               "os": "linux",
               "osVersion": "alpine3.19",
               "tags": {
-                "$(sdk|6.0|product-version)-1-alpine3.19-arm32v7": {},
+                "$(sdk|6.0|product-version)-alpine3.19-arm32v7": {},
                 "6.0-alpine3.19-arm32v7": {},
                 "6.0-alpine-arm32v7": {}
               },
@@ -6960,7 +6960,7 @@
               "os": "linux",
               "osVersion": "alpine3.19",
               "tags": {
-                "$(sdk|6.0|product-version)-1-alpine3.19-arm64v8": {},
+                "$(sdk|6.0|product-version)-alpine3.19-arm64v8": {},
                 "6.0-alpine3.19-arm64v8": {},
                 "6.0-alpine-arm64v8": {}
               },
@@ -6971,7 +6971,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-1-alpine3.20": {},
+            "$(sdk|6.0|product-version)-alpine3.20": {},
             "6.0-alpine3.20": {}
           },
           "platforms": [
@@ -6984,7 +6984,7 @@
               "os": "linux",
               "osVersion": "alpine3.20",
               "tags": {
-                "$(sdk|6.0|product-version)-1-alpine3.20-amd64": {},
+                "$(sdk|6.0|product-version)-alpine3.20-amd64": {},
                 "6.0-alpine3.20-amd64": {}
               }
             },
@@ -6998,7 +6998,7 @@
               "os": "linux",
               "osVersion": "alpine3.20",
               "tags": {
-                "$(sdk|6.0|product-version)-1-alpine3.20-arm32v7": {},
+                "$(sdk|6.0|product-version)-alpine3.20-arm32v7": {},
                 "6.0-alpine3.20-arm32v7": {}
               },
               "variant": "v7"
@@ -7013,7 +7013,7 @@
               "os": "linux",
               "osVersion": "alpine3.20",
               "tags": {
-                "$(sdk|6.0|product-version)-1-alpine3.20-arm64v8": {},
+                "$(sdk|6.0|product-version)-alpine3.20-arm64v8": {},
                 "6.0-alpine3.20-arm64v8": {}
               },
               "variant": "v8"
@@ -7023,7 +7023,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-1-focal": {},
+            "$(sdk|6.0|product-version)-focal": {},
             "6.0-focal": {}
           },
           "platforms": [
@@ -7036,7 +7036,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|6.0|product-version)-1-focal-amd64": {},
+                "$(sdk|6.0|product-version)-focal-amd64": {},
                 "6.0-focal-amd64": {}
               }
             },
@@ -7050,7 +7050,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|6.0|product-version)-1-focal-arm32v7": {},
+                "$(sdk|6.0|product-version)-focal-arm32v7": {},
                 "6.0-focal-arm32v7": {}
               },
               "variant": "v7"
@@ -7065,7 +7065,7 @@
               "os": "linux",
               "osVersion": "focal",
               "tags": {
-                "$(sdk|6.0|product-version)-1-focal-arm64v8": {},
+                "$(sdk|6.0|product-version)-focal-arm64v8": {},
                 "6.0-focal-arm64v8": {}
               },
               "variant": "v8"
@@ -7075,7 +7075,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-1-jammy": {},
+            "$(sdk|6.0|product-version)-jammy": {},
             "6.0-jammy": {}
           },
           "platforms": [
@@ -7088,7 +7088,7 @@
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
-                "$(sdk|6.0|product-version)-1-jammy-amd64": {},
+                "$(sdk|6.0|product-version)-jammy-amd64": {},
                 "6.0-jammy-amd64": {}
               }
             },
@@ -7102,7 +7102,7 @@
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
-                "$(sdk|6.0|product-version)-1-jammy-arm32v7": {},
+                "$(sdk|6.0|product-version)-jammy-arm32v7": {},
                 "6.0-jammy-arm32v7": {}
               },
               "variant": "v7"
@@ -7117,7 +7117,7 @@
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
-                "$(sdk|6.0|product-version)-1-jammy-arm64v8": {},
+                "$(sdk|6.0|product-version)-jammy-arm64v8": {},
                 "6.0-jammy-arm64v8": {}
               },
               "variant": "v8"
@@ -7127,7 +7127,7 @@
         {
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
-            "$(sdk|6.0|product-version)-1-cbl-mariner2.0": {},
+            "$(sdk|6.0|product-version)-cbl-mariner2.0": {},
             "6.0-cbl-mariner2.0": {},
             "6.0-cbl-mariner": {
               "docType": "Undocumented"
@@ -7143,7 +7143,7 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(sdk|6.0|product-version)-1-cbl-mariner2.0-amd64": {},
+                "$(sdk|6.0|product-version)-cbl-mariner2.0-amd64": {},
                 "6.0-cbl-mariner2.0-amd64": {},
                 "6.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
@@ -7160,7 +7160,7 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(sdk|6.0|product-version)-1-cbl-mariner2.0-arm64v8": {},
+                "$(sdk|6.0|product-version)-cbl-mariner2.0-arm64v8": {},
                 "6.0-cbl-mariner2.0-arm64v8": {},
                 "6.0-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
@@ -7182,7 +7182,7 @@
               "os": "windows",
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
-                "$(sdk|6.0|product-version)-1-windowsservercore-ltsc2019": {},
+                "$(sdk|6.0|product-version)-windowsservercore-ltsc2019": {},
                 "6.0-windowsservercore-ltsc2019": {}
               }
             }
@@ -7200,7 +7200,7 @@
               "os": "windows",
               "osVersion": "windowsservercore-ltsc2022",
               "tags": {
-                "$(sdk|6.0|product-version)-1-windowsservercore-ltsc2022": {},
+                "$(sdk|6.0|product-version)-windowsservercore-ltsc2022": {},
                 "6.0-windowsservercore-ltsc2022": {}
               }
             }
@@ -7209,7 +7209,7 @@
         {
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
-            "$(sdk|8.0|product-version)-1-bookworm-slim": {},
+            "$(sdk|8.0|product-version)-bookworm-slim": {},
             "8.0-bookworm-slim": {},
             "$(sdk|8.0|product-version)-1": {},
             "8.0": {},
@@ -7225,7 +7225,7 @@
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {
-                "$(sdk|8.0|product-version)-1-bookworm-slim-amd64": {},
+                "$(sdk|8.0|product-version)-bookworm-slim-amd64": {},
                 "8.0-bookworm-slim-amd64": {}
               }
             },
@@ -7239,7 +7239,7 @@
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {
-                "$(sdk|8.0|product-version)-1-bookworm-slim-arm32v7": {},
+                "$(sdk|8.0|product-version)-bookworm-slim-arm32v7": {},
                 "8.0-bookworm-slim-arm32v7": {}
               },
               "variant": "v7"
@@ -7254,7 +7254,7 @@
               "os": "linux",
               "osVersion": "bookworm-slim",
               "tags": {
-                "$(sdk|8.0|product-version)-1-bookworm-slim-arm64v8": {},
+                "$(sdk|8.0|product-version)-bookworm-slim-arm64v8": {},
                 "8.0-bookworm-slim-arm64v8": {}
               },
               "variant": "v8"
@@ -7264,7 +7264,7 @@
         {
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
-            "$(sdk|8.0|product-version)-1-alpine3.19": {},
+            "$(sdk|8.0|product-version)-alpine3.19": {},
             "8.0-alpine3.19": {},
             "8.0-alpine": {}
           },
@@ -7278,7 +7278,7 @@
               "os": "linux",
               "osVersion": "alpine3.19",
               "tags": {
-                "$(sdk|8.0|product-version)-1-alpine3.19-amd64": {},
+                "$(sdk|8.0|product-version)-alpine3.19-amd64": {},
                 "8.0-alpine3.19-amd64": {},
                 "8.0-alpine-amd64": {}
               }
@@ -7293,7 +7293,7 @@
               "os": "linux",
               "osVersion": "alpine3.19",
               "tags": {
-                "$(sdk|8.0|product-version)-1-alpine3.19-arm32v7": {},
+                "$(sdk|8.0|product-version)-alpine3.19-arm32v7": {},
                 "8.0-alpine3.19-arm32v7": {},
                 "8.0-alpine-arm32v7": {}
               },
@@ -7309,7 +7309,7 @@
               "os": "linux",
               "osVersion": "alpine3.19",
               "tags": {
-                "$(sdk|8.0|product-version)-1-alpine3.19-arm64v8": {},
+                "$(sdk|8.0|product-version)-alpine3.19-arm64v8": {},
                 "8.0-alpine3.19-arm64v8": {},
                 "8.0-alpine-arm64v8": {}
               },
@@ -7333,7 +7333,7 @@
               "os": "linux",
               "osVersion": "alpine3.20",
               "tags": {
-                "$(sdk|8.0|product-version)-1-alpine3.20-amd64": {},
+                "$(sdk|8.0|product-version)-alpine3.20-amd64": {},
                 "8.0-alpine3.20-amd64": {}
               }
             },
@@ -7347,7 +7347,7 @@
               "os": "linux",
               "osVersion": "alpine3.20",
               "tags": {
-                "$(sdk|8.0|product-version)-1-alpine3.20-arm32v7": {},
+                "$(sdk|8.0|product-version)-alpine3.20-arm32v7": {},
                 "8.0-alpine3.20-arm32v7": {}
               },
               "variant": "v7"
@@ -7362,7 +7362,7 @@
               "os": "linux",
               "osVersion": "alpine3.20",
               "tags": {
-                "$(sdk|8.0|product-version)-1-alpine3.20-arm64v8": {},
+                "$(sdk|8.0|product-version)-alpine3.20-arm64v8": {},
                 "8.0-alpine3.20-arm64v8": {}
               },
               "variant": "v8"
@@ -7385,7 +7385,7 @@
               "os": "linux",
               "osVersion": "noble",
               "tags": {
-                "$(sdk|8.0|product-version)-1-noble-amd64": {},
+                "$(sdk|8.0|product-version)-noble-amd64": {},
                 "8.0-noble-amd64": {}
               }
             },
@@ -7399,7 +7399,7 @@
               "os": "linux",
               "osVersion": "noble",
               "tags": {
-                "$(sdk|8.0|product-version)-1-noble-arm64v8": {},
+                "$(sdk|8.0|product-version)-noble-arm64v8": {},
                 "8.0-noble-arm64v8": {}
               },
               "variant": "v8"
@@ -7422,7 +7422,7 @@
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
-                "$(sdk|8.0|product-version)-1-jammy-amd64": {},
+                "$(sdk|8.0|product-version)-jammy-amd64": {},
                 "8.0-jammy-amd64": {}
               }
             },
@@ -7436,7 +7436,7 @@
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
-                "$(sdk|8.0|product-version)-1-jammy-arm32v7": {},
+                "$(sdk|8.0|product-version)-jammy-arm32v7": {},
                 "8.0-jammy-arm32v7": {}
               },
               "variant": "v7"
@@ -7451,7 +7451,7 @@
               "os": "linux",
               "osVersion": "jammy",
               "tags": {
-                "$(sdk|8.0|product-version)-1-jammy-arm64v8": {},
+                "$(sdk|8.0|product-version)-jammy-arm64v8": {},
                 "8.0-jammy-arm64v8": {}
               },
               "variant": "v8"
@@ -7477,7 +7477,7 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(sdk|8.0|product-version)-1-cbl-mariner2.0-amd64": {},
+                "$(sdk|8.0|product-version)-cbl-mariner2.0-amd64": {},
                 "8.0-cbl-mariner2.0-amd64": {},
                 "8.0-cbl-mariner-amd64": {
                   "docType": "Undocumented"
@@ -7494,7 +7494,7 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(sdk|8.0|product-version)-1-cbl-mariner2.0-arm64v8": {},
+                "$(sdk|8.0|product-version)-cbl-mariner2.0-arm64v8": {},
                 "8.0-cbl-mariner2.0-arm64v8": {},
                 "8.0-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
@@ -7516,7 +7516,7 @@
               "os": "windows",
               "osVersion": "nanoserver-1809",
               "tags": {
-                "$(sdk|8.0|product-version)-1-nanoserver-1809": {},
+                "$(sdk|8.0|product-version)-nanoserver-1809": {},
                 "8.0-nanoserver-1809": {}
               }
             }
@@ -7534,7 +7534,7 @@
               "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
-                "$(sdk|8.0|product-version)-1-nanoserver-ltsc2022": {},
+                "$(sdk|8.0|product-version)-nanoserver-ltsc2022": {},
                 "8.0-nanoserver-ltsc2022": {}
               }
             }
@@ -7552,7 +7552,7 @@
               "os": "windows",
               "osVersion": "windowsservercore-ltsc2019",
               "tags": {
-                "$(sdk|8.0|product-version)-1-windowsservercore-ltsc2019": {},
+                "$(sdk|8.0|product-version)-windowsservercore-ltsc2019": {},
                 "8.0-windowsservercore-ltsc2019": {}
               }
             }
@@ -7570,7 +7570,7 @@
               "os": "windows",
               "osVersion": "windowsservercore-ltsc2022",
               "tags": {
-                "$(sdk|8.0|product-version)-1-windowsservercore-ltsc2022": {},
+                "$(sdk|8.0|product-version)-windowsservercore-ltsc2022": {},
                 "8.0-windowsservercore-ltsc2022": {}
               }
             }
