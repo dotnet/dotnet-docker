@@ -47,17 +47,6 @@ jobs:
     parameters:
       publicSourceBranch: $(publicSourceBranch)
   - template: /eng/common/templates/steps/set-dry-run.yml@self
-  - powershell: |
-      New-Item -ItemType Directory -Path $(sourceBuildIdOutputDir)
-      Set-Content -Path $(sourceBuildIdOutputDir)/source-build-id.txt -Value $(sourceBuildId)
-    displayName: Write Source Build ID to File
-  - template: /eng/common/templates/steps/publish-artifact.yml@self
-    parameters:
-      path: $(sourceBuildIdOutputDir)
-      artifactName: source-build-id
-      displayName: Publish Source Build ID Artifact
-      internalProjectName: ${{ parameters.internalProjectName }}
-      publicProjectName: ${{ parameters.publicProjectName }}
   - script: echo "##vso[task.setvariable variable=imageQueueTime]$(date --rfc-2822)"
     displayName: Set Publish Variables
   - script: >
@@ -169,3 +158,15 @@ jobs:
       $(imageBuilder.commonCmdArgs)
     displayName: Post Publish Notification
     condition: and(always(), eq(variables['publishNotificationsEnabled'], 'true'))
+  - powershell: |
+      New-Item -ItemType Directory -Path $(sourceBuildIdOutputDir)
+      Set-Content -Path $(sourceBuildIdOutputDir)/source-build-id.txt -Value $(sourceBuildId)
+    condition: succeeded()
+    displayName: Write Source Build ID to File
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(sourceBuildIdOutputDir)
+      artifactName: source-build-id
+      displayName: Publish Source Build ID Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
