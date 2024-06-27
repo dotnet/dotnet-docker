@@ -10,5 +10,5 @@ when(ARGS["readme-host"] = "mar",
         cat("https://mcr.microsoft.com/catalog?search=", ARGS["repo"]),
         cat("https://mcr.microsoft.com/product/", ARGS["repo"], "/about")),
     when(ARGS["readme-host"] = "github" || ARGS["readme-host"] = "dockerhub",
-        cat("https://hub.docker.com/_/microsoft-", join(split(ARGS["repo"], "/"), "-"), "/"),
+        cat("https://hub.docker.com/r/microsoft/", join(split(ARGS["repo"], "/"), "-"), "/"),
         cat("UNKNOWN HOST: ", ARGS["readme-host"])))}}
