@@ -177,13 +177,13 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
             IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
 
-            using TempFileContext actualFiles = FileHelper.UseTempFile();
-            using TempFileContext expectedFiles = FileHelper.UseTempFile();
+            using TempFileContext actualFilesContext = FileHelper.UseTempFile();
+            using TempFileContext expectedFilesContext = FileHelper.UseTempFile();
 
-            File.WriteAllLines(actualFiles.Path, actualDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
-            File.WriteAllLines(expectedFiles.Path, expectedDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
+            File.WriteAllLines(actualFilesContext.Path, actualDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
+            File.WriteAllLines(expectedFilesContext.Path, expectedDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
 
-            bool filesMatch = FileHelper.CompareFiles(expectedFiles.Path, actualFiles.Path, OutputHelper);
+            bool filesMatch = FileHelper.CompareFiles(expectedFilesContext.Path, actualFilesContext.Path, OutputHelper);
 
             Assert.True(filesMatch, "Differences found in the dotnet folder contents.");
         }
