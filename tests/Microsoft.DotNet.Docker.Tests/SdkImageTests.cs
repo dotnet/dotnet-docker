@@ -277,7 +277,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string containerFileList = DockerHelper.Run(
                 image: imageData.GetImage(ImageRepo, DockerHelper),
                 command: command,
-                name: imageData.GetIdentifier("DotnetFolder"));
+                name: imageData.GetIdentifier("DotnetFolder"),
+                silenceOutput: true);
 
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = containerFileList
                 .Replace("\r\n", "\n")

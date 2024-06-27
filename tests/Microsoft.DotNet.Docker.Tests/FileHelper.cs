@@ -40,8 +40,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (!string.IsNullOrEmpty(diffOutput))
             {
-                outputHelper.WriteLine($"Files differ:");
-                outputHelper.WriteLine(diffOutput);
                 return false;
             }
 
