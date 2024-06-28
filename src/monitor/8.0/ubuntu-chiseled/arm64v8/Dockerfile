@@ -5,12 +5,12 @@ FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor extensions
 RUN dotnet_monitor_extension_version=8.0.2 \
-    && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
-    && dotnet_monitor_extension_sha512='17f0e734e0531dc1e33b90d324350eb126ac36a6d51448ce915d0c34f089d381e6cf1d946b7d31acac9dc0a075ba00e4a8709bc8e7e8cb32a7f94a1eb9d20885' \
+    && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/8.0.2-servicing.24328.6/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
+    && dotnet_monitor_extension_sha512='c574017953d4206857bf3fad4f167657d2e4910301e748f1b75b88bd1b3acd2fb2d3724f907c24033328b4ce5af23f10fab613f159c4a8236c98860cff646fe2' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
     \
-    && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
-    && dotnet_monitor_extension_sha512='8dff2818dded027d3b4c02cd0a316a78d64be8b5a4616d505300ca5288cab534400a4cf5468e9a343453b7969c4367f5110f0cd33f96152930fff9e9e0f0035a' \
+    && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/8.0.2-servicing.24328.6/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
+    && dotnet_monitor_extension_sha512='b9d1b691a04c4c413cf3a63c89f1cd8dd8ffdeb4ad8288e121a5e10fca927ebfbeb91e1e11407d6c68af4d648eb47fb10e2dda404f61cc54c21194a7bee68acd' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
     \
     && mkdir -p /app \
