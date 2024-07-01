@@ -56,7 +56,7 @@ jobs:
   - template: /eng/common/templates/steps/run-imagebuilder.yml@self
     parameters:
       displayName: Copy Images
-      serviceConnection: $(acr.serviceConnectionName)
+      serviceConnection: $(publish.serviceConnectionName)
       internalProjectName: ${{ parameters.internalProjectName }}
       args: >
         copyAcrImages
@@ -74,7 +74,7 @@ jobs:
   - template: /eng/common/templates/steps/run-imagebuilder.yml@self
     parameters:
       displayName: Publish Manifest
-      serviceConnection: $(acr.serviceConnectionName)
+      serviceConnection: $(publish.serviceConnectionName)
       internalProjectName: ${{ parameters.internalProjectName }}
       dockerClientOS: ${{ parameters.dockerClientOS }}
       args: >

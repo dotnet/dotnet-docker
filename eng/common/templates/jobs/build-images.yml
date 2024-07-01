@@ -117,7 +117,7 @@ jobs:
     parameters:
       name: BuildImages
       displayName: Build Images
-      serviceConnection: $(acr-staging.serviceConnectionName)
+      serviceConnection: $(build.serviceConnectionName)
       internalProjectName: ${{ parameters.internalProjectName }}
       dockerClientOS: ${{ parameters.dockerClientOS }}
       args: >
