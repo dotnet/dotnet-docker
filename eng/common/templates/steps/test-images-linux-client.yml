@@ -45,7 +45,7 @@ steps:
   - template: /eng/common/templates/steps/run-pwsh-with-auth.yml@self
     parameters:
       displayName: Docker login
-      serviceConnection: $(acr-staging.serviceConnectionName)
+      serviceConnection: $(test.serviceConnectionName)
       condition: and(succeeded(), ${{ parameters.condition }})
       command: >
         $azLoginArgs = '--service-principal --tenant $env:AZURE_TENANT_ID -u $env:AZURE_CLIENT_ID --federated-token $env:AZURE_FEDERATED_TOKEN';
