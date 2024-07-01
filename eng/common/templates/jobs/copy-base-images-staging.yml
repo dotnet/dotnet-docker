@@ -24,7 +24,7 @@ jobs:
     additionalOptions: ${{ parameters.additionalOptions }}
     acr:
       server: $(acr-staging.server)
-      serviceConnection: $(acr-staging.serviceConnectionName)
+      serviceConnection: $(internal-mirror.serviceConnectionName)
       subscription: $(acr-staging.subscription)
       resourceGroup: $(acr-staging.resourceGroup)
     repoPrefix: $(mirrorRepoPrefix)

@@ -25,7 +25,7 @@ steps:
 - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   parameters:
     displayName: Copy Base Images
-    serviceConnection: '$(internal-mirror.serviceConnectionName)'
+    serviceConnection: ${{ parameters.acr.serviceConnection }}
     continueOnError: ${{ parameters.continueOnError }}
     internalProjectName: 'internal'
     # Use environment variable to reference $(dryRunArg). Since $(dryRunArg) might be undefined,
