@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm64v8/buildpack-deps:noble-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.0-preview.6.24321.8 \
+RUN dotnet_version=9.0.0-preview.6.24327.7 \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
-    && dotnet_sha512='d07fb51cb7afc25314b8547ee255127b01b61149528f3470dc510b04ae02ec54ecfff5ae9c53638454e1ca019f843925ef9d29bdd15c8a23c5e85a920f78bb24' \
+    && dotnet_sha512='755961903291c262a1f5f7b70543016c8f85f6993e861a6f83f8509fd2a828f4a34f4161a3b9f15114663e8073b37937748befeef9ea9818d513aea1b27f944c' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -17,7 +17,7 @@ RUN dotnet_version=9.0.0-preview.6.24321.8 \
 FROM $REPO:9.0.0-preview.6-noble-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.0-preview.6.24321.8
+ENV DOTNET_VERSION=9.0.0-preview.6.24327.7
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
