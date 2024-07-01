@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -178,41 +177,15 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
             IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
 
-            bool hasCountDifference = expectedDotnetFiles.Count() != actualDotnetFiles.Count();
+            using TempFileContext actualFilesContext = FileHelper.UseTempFile();
+            using TempFileContext expectedFilesContext = FileHelper.UseTempFile();
 
-            bool hasFileContentDifference = false;
+            File.WriteAllLines(actualFilesContext.Path, actualDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
+            File.WriteAllLines(expectedFilesContext.Path, expectedDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
 
-            int fileCount = expectedDotnetFiles.Count();
-            for (int i = 0; i < fileCount; i++)
-            {
-                if (expectedDotnetFiles.ElementAt(i).CompareTo(actualDotnetFiles.ElementAt(i)) != 0)
-                {
-                    hasFileContentDifference = true;
-                    break;
-                }
-            }
+            bool filesMatch = FileHelper.CompareFiles(expectedFilesContext.Path, actualFilesContext.Path, OutputHelper);
 
-            if (hasCountDifference || hasFileContentDifference)
-            {
-                OutputHelper.WriteLine(string.Empty);
-                OutputHelper.WriteLine("EXPECTED FILES:");
-                foreach (SdkContentFileInfo file in expectedDotnetFiles)
-                {
-                    OutputHelper.WriteLine($"Path: {file.Path}");
-                    OutputHelper.WriteLine($"Checksum: {file.Sha512}");
-                }
-
-                OutputHelper.WriteLine(string.Empty);
-                OutputHelper.WriteLine("ACTUAL FILES:");
-                foreach (SdkContentFileInfo file in actualDotnetFiles)
-                {
-                    OutputHelper.WriteLine($"Path: {file.Path}");
-                    OutputHelper.WriteLine($"Checksum: {file.Sha512}");
-                }
-            }
-
-            Assert.Equal(expectedDotnetFiles.Count(), actualDotnetFiles.Count());
-            Assert.False(hasFileContentDifference, "There are file content differences. Check the log output.");
+            Assert.True(filesMatch, "Differences found in the dotnet folder contents.");
         }
 
         [DotNetTheory]
@@ -304,7 +277,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string containerFileList = DockerHelper.Run(
                 image: imageData.GetImage(ImageRepo, DockerHelper),
                 command: command,
-                name: imageData.GetIdentifier("DotnetFolder"));
+                name: imageData.GetIdentifier("DotnetFolder"),
+                silenceOutput: true);
 
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = containerFileList
                 .Replace("\r\n", "\n")
