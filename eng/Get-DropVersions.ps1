@@ -25,6 +25,10 @@ param(
     [switch]
     $UseInternalBuild,
 
+    # Whether to call Set-DotnetVersions with the new versions
+    [switch]
+    $UpdateDependencies,
+
     # SAS query string used to access the internal blob storage location of the build
     [string]
     $BlobStorageSasQueryString,
@@ -147,7 +151,6 @@ function GetDependencyVersion([string]$dependencyName, [xml]$versionDetails) {
 
 function GetVersionInfoFromBuildId([string]$buildId) {
     $configPath = Join-Path $tempDir "config.json"
-    $setVersionsScript = Join-Path $tempDir "Set-DotnetVersions.ps1"
 
     try {
         az pipelines runs artifact download --organization https://dev.azure.com/dnceng/ --project internal --run-id $buildId --path $tempDir --artifact-name drop
@@ -215,8 +218,6 @@ if ($BuildId) {
     $versionInfos += GetVersionInfoFromBuildId($BuildId)
 }
 
-Write-Host "Resolved SDK versions: $SdkVersions"
-
 foreach ($sdkVersionInfo in $SdkVersionInfos) {
     $sdkVersionParts = $sdkVersionInfo.Version -split "\."
     $dockerfileVersion = "$($sdkVersionParts[0]).$($sdkVersionParts[1])"
@@ -252,4 +253,24 @@ foreach ($sdkVersionInfo in $SdkVersionInfos) {
     }
 }
 
-Write-Output "##vso[task.setvariable variable=versionInfos]$($versionInfos | ConvertTo-Json -Compress -AsArray)"
+if ($UpdateDependencies)
+{
+    foreach ($versionInfo in $versionInfos) {
+        Write-Host "Dockerfile version: $($versionInfo.DockerfileVersion)"
+        Write-Host "SDK version: $($versionInfo.SdkVersion)"
+        Write-Host "Runtime version: $($versionInfo.RuntimeVersion)"
+        Write-Host "ASP.NET Core version: $($versionInfo.AspnetVersion)"
+        Write-Host
+
+        $setVersionsScript = Join-Path $PSScriptRoot "Set-DotnetVersions.ps1"
+        & $setVersionsScript `
+            -ProductVersion $versionInfo.DockerfileVersion `
+            -RuntimeVersion $versionInfo.RuntimeVersion `
+            -AspnetVersion $versionInfo.AspnetVersion `
+            -SdkVersion $versionInfo.SdkVersion `
+
+        Write-Host "`r`nDone: Updates for .NET ${versionInfo.RuntimeVersion}/${versionInfo.SdkVersion}`r`n"
+    }
+} else {
+    Write-Output "##vso[task.setvariable variable=versionInfos]$($versionInfos | ConvertTo-Json -Compress -AsArray)"
+}
