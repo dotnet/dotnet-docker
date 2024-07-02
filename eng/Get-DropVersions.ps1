@@ -11,7 +11,7 @@ param(
     [string]
     $Channel,
 
-    # The release channel to use for determining the latest .NET build.
+    # The pipeline run ID of the .NET release staging build.
     [Parameter(ParameterSetName = "BuildId")]
     [string]
     $BuildId,
@@ -146,8 +146,8 @@ function GetDependencyVersion([string]$dependencyName, [xml]$versionDetails) {
 }
 
 function GetVersionInfoFromBuildId([string]$buildId) {
-    $configPath = "$tempDir/config.json";
-    $setVersionsScript = "$tempDir/Set-DotnetVersions.ps1"
+    $configPath = Join-Path $tempDir "config.json"
+    $setVersionsScript = Join-Path $tempDir "Set-DotnetVersions.ps1"
 
     try {
         az pipelines runs artifact download --organization https://dev.azure.com/dnceng/ --project internal --run-id $buildId --path $tempDir --artifact-name drop
@@ -158,11 +158,16 @@ function GetVersionInfoFromBuildId([string]$buildId) {
 
         return [PSCustomObject]@{
             DockerfileVersion = $config.Channel
-            SdkVersion = $config.Sdks[0]
+            SdkVersion = ($config.Sdks | Sort-Object -Descending)[0]
             RuntimeVersion = $config.Runtime
             AspnetVersion = $config.Asp
             StableBranding = $isStableVersion
         }
+    }
+    catch [System.Management.Automation.CommandNotFoundException] {
+        Write-Error "Azure CLI is not installed. Please visit https://learn.microsoft.com/cli/azure/install-azure-cli."
+        Write-Host "Original Exception: $_"
+        exit 1
     }
     finally {
         Remove-Item -Force $configPath
@@ -173,7 +178,7 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 Set-StrictMode -Version 2.0
 
-$tempDir = "$([System.IO.Path]::GetTempPath())/dotnet-docker-get-dropversions"
+$tempDir = Join-Path ([System.IO.Path]::GetTempPath()) "dotnet-docker-get-dropversions" ([System.Guid]::NewGuid())
 
 if ($UseInternalBuild) {
     if ($Channel)
