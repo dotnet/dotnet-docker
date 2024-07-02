@@ -125,8 +125,7 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)-alpine3.19": {},
-            "6.0-alpine3.19": {},
-            "6.0-alpine": {}
+            "6.0-alpine3.19": {}
           },
           "platforms": [
             {
@@ -136,8 +135,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.19-amd64": {},
-                "6.0-alpine3.19-amd64": {},
-                "6.0-alpine-amd64": {}
+                "6.0-alpine3.19-amd64": {}
               }
             },
             {
@@ -148,8 +146,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.19-arm32v7": {},
-                "6.0-alpine3.19-arm32v7": {},
-                "6.0-alpine-arm32v7": {}
+                "6.0-alpine3.19-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -161,8 +158,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.19-arm64v8": {},
-                "6.0-alpine3.19-arm64v8": {},
-                "6.0-alpine-arm64v8": {}
+                "6.0-alpine3.19-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -172,7 +168,8 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)-alpine3.20": {},
-            "6.0-alpine3.20": {}
+            "6.0-alpine3.20": {},
+            "6.0-alpine": {}
           },
           "platforms": [
             {
@@ -182,7 +179,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.20-amd64": {},
-                "6.0-alpine3.20-amd64": {}
+                "6.0-alpine3.20-amd64": {},
+                "6.0-alpine-amd64": {}
               }
             },
             {
@@ -193,7 +191,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.20-arm32v7": {},
-                "6.0-alpine3.20-arm32v7": {}
+                "6.0-alpine3.20-arm32v7": {},
+                "6.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -205,7 +204,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.20-arm64v8": {},
-                "6.0-alpine3.20-arm64v8": {}
+                "6.0-alpine3.20-arm64v8": {},
+                "6.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -584,8 +584,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-alpine3.19": {},
-            "8.0-alpine3.19": {},
-            "8.0-alpine": {}
+            "8.0-alpine3.19": {}
           },
           "platforms": [
             {
@@ -595,8 +594,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.19-amd64": {},
-                "8.0-alpine3.19-amd64": {},
-                "8.0-alpine-amd64": {}
+                "8.0-alpine3.19-amd64": {}
               }
             },
             {
@@ -607,8 +605,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.19-arm32v7": {},
-                "8.0-alpine3.19-arm32v7": {},
-                "8.0-alpine-arm32v7": {}
+                "8.0-alpine3.19-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -620,8 +617,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.19-arm64v8": {},
-                "8.0-alpine3.19-arm64v8": {},
-                "8.0-alpine-arm64v8": {}
+                "8.0-alpine3.19-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -780,7 +776,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-alpine3.20": {},
-            "8.0-alpine3.20": {}
+            "8.0-alpine3.20": {},
+            "8.0-alpine": {}
           },
           "platforms": [
             {
@@ -790,7 +787,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.20-amd64": {},
-                "8.0-alpine3.20-amd64": {}
+                "8.0-alpine3.20-amd64": {},
+                "8.0-alpine-amd64": {}
               }
             },
             {
@@ -801,7 +799,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.20-arm32v7": {},
-                "8.0-alpine3.20-arm32v7": {}
+                "8.0-alpine3.20-arm32v7": {},
+                "8.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -813,7 +812,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.20-arm64v8": {},
-                "8.0-alpine3.20-arm64v8": {}
+                "8.0-alpine3.20-arm64v8": {},
+                "8.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2693,8 +2693,7 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)-alpine3.19": {},
-            "6.0-alpine3.19": {},
-            "6.0-alpine": {}
+            "6.0-alpine3.19": {}
           },
           "platforms": [
             {
@@ -2707,8 +2706,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.19-amd64": {},
-                "6.0-alpine3.19-amd64": {},
-                "6.0-alpine-amd64": {}
+                "6.0-alpine3.19-amd64": {}
               }
             },
             {
@@ -2722,8 +2720,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.19-arm32v7": {},
-                "6.0-alpine3.19-arm32v7": {},
-                "6.0-alpine-arm32v7": {}
+                "6.0-alpine3.19-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -2738,8 +2735,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.19-arm64v8": {},
-                "6.0-alpine3.19-arm64v8": {},
-                "6.0-alpine-arm64v8": {}
+                "6.0-alpine3.19-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2749,7 +2745,8 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)-alpine3.20": {},
-            "6.0-alpine3.20": {}
+            "6.0-alpine3.20": {},
+            "6.0-alpine": {}
           },
           "platforms": [
             {
@@ -2762,7 +2759,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.20-amd64": {},
-                "6.0-alpine3.20-amd64": {}
+                "6.0-alpine3.20-amd64": {},
+                "6.0-alpine-amd64": {}
               }
             },
             {
@@ -2776,7 +2774,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.20-arm32v7": {},
-                "6.0-alpine3.20-arm32v7": {}
+                "6.0-alpine3.20-arm32v7": {},
+                "6.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -2791,7 +2790,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.20-arm64v8": {},
-                "6.0-alpine3.20-arm64v8": {}
+                "6.0-alpine3.20-arm64v8": {},
+                "6.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -3278,8 +3278,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-alpine3.19": {},
-            "8.0-alpine3.19": {},
-            "8.0-alpine": {}
+            "8.0-alpine3.19": {}
           },
           "platforms": [
             {
@@ -3292,8 +3291,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.19-amd64": {},
-                "8.0-alpine3.19-amd64": {},
-                "8.0-alpine-amd64": {}
+                "8.0-alpine3.19-amd64": {}
               }
             },
             {
@@ -3307,8 +3305,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.19-arm32v7": {},
-                "8.0-alpine3.19-arm32v7": {},
-                "8.0-alpine-arm32v7": {}
+                "8.0-alpine3.19-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -3323,8 +3320,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.19-arm64v8": {},
-                "8.0-alpine3.19-arm64v8": {},
-                "8.0-alpine-arm64v8": {}
+                "8.0-alpine3.19-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -3334,7 +3330,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-alpine3.20": {},
-            "8.0-alpine3.20": {}
+            "8.0-alpine3.20": {},
+            "8.0-alpine": {}
           },
           "platforms": [
             {
@@ -3347,7 +3344,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.20-amd64": {},
-                "8.0-alpine3.20-amd64": {}
+                "8.0-alpine3.20-amd64": {},
+                "8.0-alpine-amd64": {}
               }
             },
             {
@@ -3361,7 +3359,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.20-arm32v7": {},
-                "8.0-alpine3.20-arm32v7": {}
+                "8.0-alpine3.20-arm32v7": {},
+                "8.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -3376,7 +3375,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.20-arm64v8": {},
-                "8.0-alpine3.20-arm64v8": {}
+                "8.0-alpine3.20-arm64v8": {},
+                "8.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -4950,8 +4950,7 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)-alpine3.19": {},
-            "6.0-alpine3.19": {},
-            "6.0-alpine": {}
+            "6.0-alpine3.19": {}
           },
           "platforms": [
             {
@@ -4964,8 +4963,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.19-amd64": {},
-                "6.0-alpine3.19-amd64": {},
-                "6.0-alpine-amd64": {}
+                "6.0-alpine3.19-amd64": {}
               }
             },
             {
@@ -4979,8 +4977,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.19-arm32v7": {},
-                "6.0-alpine3.19-arm32v7": {},
-                "6.0-alpine-arm32v7": {}
+                "6.0-alpine3.19-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -4995,8 +4992,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.19-arm64v8": {},
-                "6.0-alpine3.19-arm64v8": {},
-                "6.0-alpine-arm64v8": {}
+                "6.0-alpine3.19-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5006,7 +5002,8 @@
           "productVersion": "$(dotnet|6.0|product-version)",
           "sharedTags": {
             "$(dotnet|6.0|product-version)-alpine3.20": {},
-            "6.0-alpine3.20": {}
+            "6.0-alpine3.20": {},
+            "6.0-alpine": {}
           },
           "platforms": [
             {
@@ -5019,7 +5016,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.20-amd64": {},
-                "6.0-alpine3.20-amd64": {}
+                "6.0-alpine3.20-amd64": {},
+                "6.0-alpine-amd64": {}
               }
             },
             {
@@ -5033,7 +5031,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.20-arm32v7": {},
-                "6.0-alpine3.20-arm32v7": {}
+                "6.0-alpine3.20-arm32v7": {},
+                "6.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -5048,7 +5047,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|6.0|product-version)-alpine3.20-arm64v8": {},
-                "6.0-alpine3.20-arm64v8": {}
+                "6.0-alpine3.20-arm64v8": {},
+                "6.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5541,8 +5541,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-alpine3.19": {},
-            "8.0-alpine3.19": {},
-            "8.0-alpine": {}
+            "8.0-alpine3.19": {}
           },
           "platforms": [
             {
@@ -5555,8 +5554,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.19-amd64": {},
-                "8.0-alpine3.19-amd64": {},
-                "8.0-alpine-amd64": {}
+                "8.0-alpine3.19-amd64": {}
               }
             },
             {
@@ -5570,8 +5568,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.19-arm32v7": {},
-                "8.0-alpine3.19-arm32v7": {},
-                "8.0-alpine-arm32v7": {}
+                "8.0-alpine3.19-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -5586,8 +5583,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.19-arm64v8": {},
-                "8.0-alpine3.19-arm64v8": {},
-                "8.0-alpine-arm64v8": {}
+                "8.0-alpine3.19-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5653,7 +5649,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|product-version)-alpine3.20": {},
-            "8.0-alpine3.20": {}
+            "8.0-alpine3.20": {},
+            "8.0-alpine": {}
           },
           "platforms": [
             {
@@ -5666,7 +5663,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.20-amd64": {},
-                "8.0-alpine3.20-amd64": {}
+                "8.0-alpine3.20-amd64": {},
+                "8.0-alpine-amd64": {}
               }
             },
             {
@@ -5680,7 +5678,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.20-arm32v7": {},
-                "8.0-alpine3.20-arm32v7": {}
+                "8.0-alpine3.20-arm32v7": {},
+                "8.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -5695,7 +5694,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|product-version)-alpine3.20-arm64v8": {},
-                "8.0-alpine3.20-arm64v8": {}
+                "8.0-alpine3.20-arm64v8": {},
+                "8.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8073,8 +8073,7 @@
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
             "$(sdk|6.0|product-version)-alpine3.19": {},
-            "6.0-alpine3.19": {},
-            "6.0-alpine": {}
+            "6.0-alpine3.19": {}
           },
           "platforms": [
             {
@@ -8087,8 +8086,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|6.0|product-version)-alpine3.19-amd64": {},
-                "6.0-alpine3.19-amd64": {},
-                "6.0-alpine-amd64": {}
+                "6.0-alpine3.19-amd64": {}
               }
             },
             {
@@ -8102,8 +8100,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|6.0|product-version)-alpine3.19-arm32v7": {},
-                "6.0-alpine3.19-arm32v7": {},
-                "6.0-alpine-arm32v7": {}
+                "6.0-alpine3.19-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -8118,8 +8115,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|6.0|product-version)-alpine3.19-arm64v8": {},
-                "6.0-alpine3.19-arm64v8": {},
-                "6.0-alpine-arm64v8": {}
+                "6.0-alpine3.19-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8129,7 +8125,8 @@
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
             "$(sdk|6.0|product-version)-alpine3.20": {},
-            "6.0-alpine3.20": {}
+            "6.0-alpine3.20": {},
+            "6.0-alpine": {}
           },
           "platforms": [
             {
@@ -8142,7 +8139,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|6.0|product-version)-alpine3.20-amd64": {},
-                "6.0-alpine3.20-amd64": {}
+                "6.0-alpine3.20-amd64": {},
+                "6.0-alpine-amd64": {}
               }
             },
             {
@@ -8156,7 +8154,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|6.0|product-version)-alpine3.20-arm32v7": {},
-                "6.0-alpine3.20-arm32v7": {}
+                "6.0-alpine3.20-arm32v7": {},
+                "6.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -8171,7 +8170,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|6.0|product-version)-alpine3.20-arm64v8": {},
-                "6.0-alpine3.20-arm64v8": {}
+                "6.0-alpine3.20-arm64v8": {},
+                "6.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8421,8 +8421,7 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|product-version)-alpine3.19": {},
-            "8.0-alpine3.19": {},
-            "8.0-alpine": {}
+            "8.0-alpine3.19": {}
           },
           "platforms": [
             {
@@ -8435,8 +8434,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|8.0|product-version)-alpine3.19-amd64": {},
-                "8.0-alpine3.19-amd64": {},
-                "8.0-alpine-amd64": {}
+                "8.0-alpine3.19-amd64": {}
               }
             },
             {
@@ -8450,8 +8448,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|8.0|product-version)-alpine3.19-arm32v7": {},
-                "8.0-alpine3.19-arm32v7": {},
-                "8.0-alpine-arm32v7": {}
+                "8.0-alpine3.19-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -8466,8 +8463,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|8.0|product-version)-alpine3.19-arm64v8": {},
-                "8.0-alpine3.19-arm64v8": {},
-                "8.0-alpine-arm64v8": {}
+                "8.0-alpine3.19-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8535,7 +8531,8 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|product-version)-alpine3.20": {},
-            "8.0-alpine3.20": {}
+            "8.0-alpine3.20": {},
+            "8.0-alpine": {}
           },
           "platforms": [
             {
@@ -8548,7 +8545,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|8.0|product-version)-alpine3.20-amd64": {},
-                "8.0-alpine3.20-amd64": {}
+                "8.0-alpine3.20-amd64": {},
+                "8.0-alpine-amd64": {}
               }
             },
             {
@@ -8562,7 +8560,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|8.0|product-version)-alpine3.20-arm32v7": {},
-                "8.0-alpine3.20-arm32v7": {}
+                "8.0-alpine3.20-arm32v7": {},
+                "8.0-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -8577,7 +8576,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|8.0|product-version)-alpine3.20-arm64v8": {},
-                "8.0-alpine3.20-arm64v8": {}
+                "8.0-alpine3.20-arm64v8": {},
+                "8.0-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -9743,7 +9743,7 @@
               "dockerfile": "src/monitor/6.3/alpine/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.19",
+              "osVersion": "alpine3.20",
               "tags": {
                 "$(monitor|6.3|product-version)-alpine-amd64": {},
                 "6.3-alpine-amd64": {},
@@ -9758,7 +9758,7 @@
               "dockerfile": "src/monitor/6.3/alpine/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.19",
+              "osVersion": "alpine3.20",
               "tags": {
                 "$(monitor|6.3|product-version)-alpine-arm64v8": {},
                 "6.3-alpine-arm64v8": {},
