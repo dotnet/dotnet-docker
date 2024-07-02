@@ -11,14 +11,11 @@ EOF
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY *.csproj .
-COPY *.config .
-RUN dotnet restore -r linux-$TARGETARCH
-
-# copy and publish app and libraries
 COPY . .
-RUN dotnet publish -a $TARGETARCH --sc --no-restore -o /app releasesapi.csproj
-RUN rm /app/*.dbg /app/*.Development.json
+RUN --mount=type=cache,target=/root/.nuget \
+    --mount=type=cache,target=/source/bin \
+    --mount=type=cache,target=/source/obj \
+    dotnet publish -a $TARGETARCH -o /app releasesapi.csproj
 
 
 # final stage/image
