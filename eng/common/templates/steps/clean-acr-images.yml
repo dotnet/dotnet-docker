@@ -6,13 +6,12 @@ parameters:
   action: null
   age: null
   customArgs: ""
-  serviceConnection: null
   internalProjectName: null
 steps:
   - template: /eng/common/templates/steps/run-imagebuilder.yml@self
     parameters:
       displayName: Clean ACR Images - ${{ parameters.repo }}
-      serviceConnection: ${{ parameters.serviceConnection }}
+      serviceConnection: $(clean.serviceConnectionName)
       internalProjectName: ${{ parameters.internalProjectName }}
       args: >
         cleanAcrImages

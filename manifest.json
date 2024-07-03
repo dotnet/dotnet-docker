@@ -9743,7 +9743,7 @@
               "dockerfile": "src/monitor/6.3/alpine/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.19",
+              "osVersion": "alpine3.20",
               "tags": {
                 "$(monitor|6.3|fixed-tag)-alpine-amd64": {},
                 "$(monitor|6.3|minor-tag)-alpine-amd64": {},
@@ -9758,7 +9758,7 @@
               "dockerfile": "src/monitor/6.3/alpine/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "alpine3.19",
+              "osVersion": "alpine3.20",
               "tags": {
                 "$(monitor|6.3|fixed-tag)-alpine-arm64v8": {},
                 "$(monitor|6.3|minor-tag)-alpine-arm64v8": {},
