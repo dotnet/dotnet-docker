@@ -14,7 +14,7 @@ steps:
     parameters:
       name: AnnotateEOLImages
       displayName: Annotate EOL Images
-      serviceConnection: $(acr.serviceConnectionName)
+      serviceConnection: $(publish.serviceConnectionName)
       internalProjectName: ${{ parameters.internalProjectName }}
       args: >
         annotateEolDigests

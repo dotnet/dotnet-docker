@@ -128,6 +128,8 @@ View the current tags at the [Microsoft Artifact Registry portal](https://mcr.mi
 * **AND** the CVE is in a package that is added in our Dockerfile layers (meaning the CVE is in a package we explicitly install or any transitive dependencies of those packages)
 * **AND** there is a CVE fix for the package available in the affected base image's package repository.
 
+Please refer to the [Security Policy](https://github.com/dotnet/dotnet-docker/blob/main/SECURITY.md) and [Container Vulnerability Workflow](https://github.com/dotnet/dotnet-docker/blob/main/documentation/vulnerability-reporting.md) for more detail about what to do when a CVE is encountered in a .NET image.
+
 ## Feedback
 
 * [File an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose)

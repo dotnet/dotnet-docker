@@ -13,7 +13,7 @@ steps:
   - template: /eng/common/templates/steps/run-pwsh-with-auth.yml@self
     parameters:
       displayName: Docker login
-      serviceConnection: $(acr-staging.serviceConnectionName)
+      serviceConnection: $(test.serviceConnectionName)
       dockerClientOS: windows
       condition: and(succeeded(), ${{ parameters.condition }})
       command: >
