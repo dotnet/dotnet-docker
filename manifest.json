@@ -8073,8 +8073,7 @@
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
             "$(sdk|6.0|fixed-tag)-alpine3.19": {},
-            "$(sdk|6.0|minor-tag)-alpine3.19": {},
-            "$(sdk|6.0|minor-tag)-alpine": {}
+            "$(sdk|6.0|minor-tag)-alpine3.19": {}
           },
           "platforms": [
             {
@@ -8087,8 +8086,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|6.0|fixed-tag)-alpine3.19-amd64": {},
-                "$(sdk|6.0|minor-tag)-alpine3.19-amd64": {},
-                "$(sdk|6.0|minor-tag)-alpine-amd64": {}
+                "$(sdk|6.0|minor-tag)-alpine3.19-amd64": {}
               }
             },
             {
@@ -8102,8 +8100,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|6.0|fixed-tag)-alpine3.19-arm32v7": {},
-                "$(sdk|6.0|minor-tag)-alpine3.19-arm32v7": {},
-                "$(sdk|6.0|minor-tag)-alpine-arm32v7": {}
+                "$(sdk|6.0|minor-tag)-alpine3.19-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -8118,8 +8115,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|6.0|fixed-tag)-alpine3.19-arm64v8": {},
-                "$(sdk|6.0|minor-tag)-alpine3.19-arm64v8": {},
-                "$(sdk|6.0|minor-tag)-alpine-arm64v8": {}
+                "$(sdk|6.0|minor-tag)-alpine3.19-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8129,7 +8125,8 @@
           "productVersion": "$(sdk|6.0|product-version)",
           "sharedTags": {
             "$(sdk|6.0|fixed-tag)-alpine3.20": {},
-            "$(sdk|6.0|minor-tag)-alpine3.20": {}
+            "$(sdk|6.0|minor-tag)-alpine3.20": {},
+            "$(sdk|6.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -8142,7 +8139,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|6.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(sdk|6.0|minor-tag)-alpine3.20-amd64": {}
+                "$(sdk|6.0|minor-tag)-alpine3.20-amd64": {},
+                "$(sdk|6.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -8156,7 +8154,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|6.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(sdk|6.0|minor-tag)-alpine3.20-arm32v7": {}
+                "$(sdk|6.0|minor-tag)-alpine3.20-arm32v7": {},
+                "$(sdk|6.0|minor-tag)-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -8171,7 +8170,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|6.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(sdk|6.0|minor-tag)-alpine3.20-arm64v8": {}
+                "$(sdk|6.0|minor-tag)-alpine3.20-arm64v8": {},
+                "$(sdk|6.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8421,8 +8421,7 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|fixed-tag)-alpine3.19": {},
-            "$(sdk|8.0|minor-tag)-alpine3.19": {},
-            "$(sdk|8.0|minor-tag)-alpine": {}
+            "$(sdk|8.0|minor-tag)-alpine3.19": {}
           },
           "platforms": [
             {
@@ -8435,8 +8434,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.19-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine3.19-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine-amd64": {}
+                "$(sdk|8.0|minor-tag)-alpine3.19-amd64": {}
               }
             },
             {
@@ -8450,8 +8448,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.19-arm32v7": {},
-                "$(sdk|8.0|minor-tag)-alpine3.19-arm32v7": {},
-                "$(sdk|8.0|minor-tag)-alpine-arm32v7": {}
+                "$(sdk|8.0|minor-tag)-alpine3.19-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -8466,8 +8463,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.19-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine3.19-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine-arm64v8": {}
+                "$(sdk|8.0|minor-tag)-alpine3.19-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8477,8 +8473,7 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|fixed-tag)-alpine3.19-aot": {},
-            "$(sdk|8.0|minor-tag)-alpine3.19-aot": {},
-            "$(sdk|8.0|minor-tag)-alpine-aot": {}
+            "$(sdk|8.0|minor-tag)-alpine3.19-aot": {}
           },
           "platforms": [
             {
@@ -8491,8 +8486,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.19-aot-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine3.19-aot-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine-aot-amd64": {}
+                "$(sdk|8.0|minor-tag)-alpine3.19-aot-amd64": {}
               },
               "customBuildLegGroups": [
                 {
@@ -8515,8 +8509,7 @@
               "osVersion": "alpine3.19",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.19-aot-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine3.19-aot-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine-aot-arm64v8": {}
+                "$(sdk|8.0|minor-tag)-alpine3.19-aot-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -8535,7 +8528,8 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|fixed-tag)-alpine3.20": {},
-            "$(sdk|8.0|minor-tag)-alpine3.20": {}
+            "$(sdk|8.0|minor-tag)-alpine3.20": {},
+            "$(sdk|8.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -8548,7 +8542,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine3.20-amd64": {}
+                "$(sdk|8.0|minor-tag)-alpine3.20-amd64": {},
+                "$(sdk|8.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -8562,7 +8557,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(sdk|8.0|minor-tag)-alpine3.20-arm32v7": {}
+                "$(sdk|8.0|minor-tag)-alpine3.20-arm32v7": {},
+                "$(sdk|8.0|minor-tag)-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -8577,7 +8573,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine3.20-arm64v8": {}
+                "$(sdk|8.0|minor-tag)-alpine3.20-arm64v8": {},
+                "$(sdk|8.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8587,7 +8584,8 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|fixed-tag)-alpine3.20-aot": {},
-            "$(sdk|8.0|minor-tag)-alpine3.20-aot": {}
+            "$(sdk|8.0|minor-tag)-alpine3.20-aot": {},
+            "$(sdk|8.0|minor-tag)-alpine-aot": {}
           },
           "platforms": [
             {
@@ -8600,7 +8598,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.20-aot-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine3.20-aot-amd64": {}
+                "$(sdk|8.0|minor-tag)-alpine3.20-aot-amd64": {},
+                "$(sdk|8.0|minor-tag)-alpine-aot-amd64": {}
               },
               "customBuildLegGroups": [
                 {
@@ -8623,7 +8622,8 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.20-aot-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine3.20-aot-arm64v8": {}
+                "$(sdk|8.0|minor-tag)-alpine3.20-aot-arm64v8": {},
+                "$(sdk|8.0|minor-tag)-alpine-aot-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
