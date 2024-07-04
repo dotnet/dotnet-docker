@@ -85,7 +85,13 @@
     "chisel|6.0|ref": "v0.9.1",
 
     "dotnet|6.0|product-version": "6.0.31",
+    "dotnet|6.0|fixed-tag": "$(dotnet|6.0|product-version)",
+    "dotnet|6.0|minor-tag": "6.0",
+
     "dotnet|8.0|product-version": "8.0.6",
+    "dotnet|8.0|fixed-tag": "$(dotnet|8.0|product-version)",
+    "dotnet|8.0|minor-tag": "8.0",
+
     "dotnet|9.0|product-version": "9.0.0-preview.5",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
     "dotnet|9.0|minor-tag": "9.0-preview",
@@ -112,14 +118,20 @@
     "mingit|9.0|x64|sha": "$(mingit|latest|x64|sha)",
 
     "monitor|6.3|build-version": "6.3.6",
+    "monitor|6.3|product-version": "6.3.6",
+    "monitor|6.3|fixed-tag": "$(monitor|6.3|product-version)",
+    "monitor|6.3|minor-tag": "6.3",
+    "monitor|6|major-tag": "6",
     "monitor|6.3|linux-musl|x64|sha": "d41548410035a72f0b885ed81bd124b4603f5262be8f5189f56aa7769604b2eb2264247cf0b87c6530308c0af4c0f574eacd85b680d0fe001406465ad7509c07",
     "monitor|6.3|linux-musl|arm64|sha": "1cd45c63d1a689f1bd6a2020c70cfcfd0879ab551758c28adf5802d0e56641803cf1d51c096ceb1aeec099b46b7fc82a10c7f3d69ada371bb82a2d83cc9a60c7",
     "monitor|6.3|linux|x64|sha": "f4bf67d431741716d7f2ee64f2b9224f88ac180f5a3d2399398272964d40c810b46ef64691575d4142f5a0291f2bb3e796c9f5bf4fd8be7f4d739d2c94c11802",
     "monitor|6.3|linux|arm64|sha": "74d70619a6b2729d31f2f2d0df55d2c50da0c4d8a573141c2aa43e60a3cab967e51d10102d82db455ec6766b57105a3288a3b73f0fe19c2735520a49110f8b56",
-    "monitor|6.3|product-version": "6.3.6",
 
     "monitor|8.0|build-version": "8.0.2",
     "monitor|8.0|product-version": "8.0.2",
+    "monitor|8.0|fixed-tag": "$(monitor|8.0|product-version)",
+    "monitor|8.0|minor-tag": "8.0",
+    "monitor|8|major-tag": "8",
     "monitor-base|8.0|linux|x64|sha": "b3241a1bb9156ed7c6040bad2c8c146a47cfc3f8ce55495ae5544e1f672edd4247d2b5ce8bad9da1500e3b9f2cc3b1f65305ac1c872024800b8333a1fc3728ce",
     "monitor-base|8.0|linux|arm64|sha": "44adbf8812fa7f7e1ea7c83e7708f25edfb65fb73038666bba4798bda0ea7137da9d7b3a1bef15f907ec191a35fe567eda1c6598d7808904f2f654bdf0e9a032",
     "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "4b29c75ed6a8b2bb522147f02308128a6cf9c80732274f993b99cd9f6b149311c5ef4effca4916eac0e3578255984a65245aa42452d03f23468b442bdeb79762",
@@ -131,7 +143,7 @@
     "monitor|9.0|product-version": "9.0.0-preview.5",
     "monitor|9.0|fixed-tag": "$(monitor|9.0|product-version)",
     "monitor|9.0|minor-tag": "9.0-preview",
-    "monitor|9.0|major-tag": "9-preview",
+    "monitor|9|major-tag": "9-preview",
     "monitor-base|9.0|linux|x64|sha": "4f290b3a2d9dd0a1deaecb66cc09121ba344b3aba014d2381706f49ccd87dc37a0e0bee55280d5f5e5b01684667e46a27d776cd5dcfc1248ed47332b03c4fd56",
     "monitor-base|9.0|linux|arm64|sha": "88301976f5e52ab08ab24536359a0d5f062f026432e0171983c0802f31533bf7363680be2155cea5c64685e17b691ae7762c9a87fdf3bb21d25af2d89f9d75f6",
     "monitor-ext-azureblobstorage|9.0|linux|x64|sha": "a63d0ef00aee003c1159d3325c9efa47355703a106c60327834cd611962b9847847051d24d3db8d905927481a3bcba9b47320567235528221972524122a301c0",
@@ -213,6 +225,8 @@
 
     "sdk|6.0|build-version": "6.0.423",
     "sdk|6.0|product-version": "6.0.423",
+    "sdk|6.0|fixed-tag": "$(sdk|6.0|product-version)",
+    "sdk|6.0|minor-tag": "$(dotnet|6.0|minor-tag)",
     "sdk|6.0|linux-musl|arm|sha": "d37fa2001d563411e911ec1820224991116ed628939fde4a98687a37293a36c7114ecd2d1a70c2e40890f5dce0d494c9d1b7d23745463f1899a36d5aa1a78102",
     "sdk|6.0|linux-musl|arm64|sha": "701827824c27688ac3f4834b379261c5c78a0727880b279cf90a425b9476030782f9b0162497757674ee9f154a6c81b1e4054f338be73f1bb70a271280855cd5",
     "sdk|6.0|linux-musl|x64|sha": "64806b7ea059403e8e66276cfd05f72551371ea3a6bc3ba5d4638bdf7ec19eea793b4e4cff1bf3aa0c305801cffb7dddf9020491ea9eb859d858b8e01f64b3f3",
@@ -225,6 +239,8 @@
 
     "sdk|8.0|build-version": "8.0.302",
     "sdk|8.0|product-version": "8.0.302",
+    "sdk|8.0|fixed-tag": "$(sdk|8.0|product-version)",
+    "sdk|8.0|minor-tag": "$(dotnet|8.0|minor-tag)",
     "sdk|8.0|linux-musl|arm|sha": "ad01cf664b42e85bfaa1f8cd13b159266b5b332e4b9c54b8f01e0d08da85c151437be30e142661b38e90b5896c17db30e086c78c47d1f3bb6b57c17e52c1483b",
     "sdk|8.0|linux-musl|arm64|sha": "bc504f76a5eb984373f96520c3ae0d439da9778bc4ba39455f89b809e203543ca164f3c27523b84245a5223ae7eed64931ea78a136041eecb1d1a226cd60471b",
     "sdk|8.0|linux-musl|x64|sha": "8b5c2f13162ab667c84b371c5a9826173872f2485f806826b9df252537ca77c354b32cc58532e497fdf619f666413b1627e84d18bad616165b5454a8e2d110d2",
