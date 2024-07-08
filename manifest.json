@@ -3790,6 +3790,13 @@
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):$(dotnet|9.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
                 }
               ]
             },
@@ -6492,6 +6499,13 @@
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
                 }
               ]
             },
@@ -6513,6 +6527,13 @@
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
@@ -6616,6 +6637,13 @@
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
                   ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
                 }
               ]
             },
@@ -6637,6 +6665,13 @@
                 {
                   "name": "pr-build",
                   "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
