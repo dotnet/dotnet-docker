@@ -20,7 +20,7 @@ RUN dotnet_monitor_version=8.1.0-alpha.1.24357.1 \
 
 
 # .NET Monitor Base image
-FROM $REPO:8.0.6-cbl-mariner2.0-distroless-arm64v8
+FROM $REPO:8.0.7-cbl-mariner2.0-distroless-arm64v8
 
 WORKDIR /app
 COPY --from=installer /app .
