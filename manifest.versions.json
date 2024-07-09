@@ -77,6 +77,10 @@
     "base-url|9.0-monitor|main": "$(base-url|public|main)",
     "base-url|9.0-monitor|nightly": "$(base-url|public|nightly)",
 
+    "chisel|9.0|golang-version": "1.20",
+    "chisel|8.0|golang-version": "$(chisel|9.0|golang-version)",
+    "chisel|6.0|golang-version": "$(chisel|9.0|golang-version)",
+
     "chisel|6.0|url": "github.com/canonical/chisel",
     "chisel|8.0|url": "$(chisel|6.0|url)",
     "chisel|9.0|url": "$(chisel|6.0|url)",
