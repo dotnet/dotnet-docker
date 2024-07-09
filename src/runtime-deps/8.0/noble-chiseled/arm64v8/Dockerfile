@@ -1,4 +1,4 @@
-FROM arm64v8/golang:1.20 as chisel
+FROM arm64v8/golang:1.21 as chisel
 
 RUN apt-get update \
     && apt-get install -y \
