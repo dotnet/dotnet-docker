@@ -275,8 +275,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly ProductImageData[] s_linuxMonitorTestData =
         {
-            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Alpine319,              OSTag = OS.Alpine,            Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Alpine319,              OSTag = OS.Alpine,            Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
+            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Alpine320,              OSTag = OS.Alpine,            Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
+            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Alpine320,              OSTag = OS.Alpine,            Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Mariner20,              OSTag = OS.Mariner,           Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },

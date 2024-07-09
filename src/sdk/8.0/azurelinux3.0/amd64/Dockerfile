@@ -17,7 +17,7 @@ ENV \
 
 RUN tdnf install -y \
         git \
-        libatomic_ops \
+        libgcc-atomic \
         tar \
     && tdnf clean all
 

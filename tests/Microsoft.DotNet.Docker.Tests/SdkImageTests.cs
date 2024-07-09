@@ -38,6 +38,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 return false;
             }
 
+            if (imageData.Arch == Arch.Arm && imageData.Version.Major == 9)
+            {
+                reason = "https://github.com/dotnet/dotnet-docker/issues/5592";
+                return false;
+            }
+
             reason = "";
             return true;
         }
