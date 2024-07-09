@@ -5,7 +5,7 @@ FROM amd64/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor
 RUN dotnet_monitor_version=6.3.7 \
-    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/6.3.7-servicing.24351.5/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
+    && curl -fSL --output dotnet-monitor.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-$dotnet_monitor_version-linux-x64.tar.gz \
     && dotnet_monitor_sha512='8d2ef9d3546faa1e487a4c8a547c8a09ff1908d29c98b3daacad77188f4113b5cb66ef4702c0cc0fc4c54e1879fcb2f63bcdc7fc33ae8fe1e9bc85491913473d' \
     && echo "$dotnet_monitor_sha512  dotnet-monitor.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
@@ -14,7 +14,7 @@ RUN dotnet_monitor_version=6.3.7 \
 
 
 # .NET Monitor image
-FROM $REPO:6.0.31-jammy-chiseled-amd64
+FROM $REPO:6.0.32-jammy-chiseled-amd64
 
 COPY --from=installer ["/app", "/app"]
 

@@ -3,9 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Diagnostics;
+using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
@@ -16,32 +16,45 @@ namespace Microsoft.DotNet.Docker.Tests
             return new TempFolderContext();
         }
 
-        /// <summary>
-        /// Returns a value indicating whether the two lists are equivalent (order does not matter).
-        /// </summary>
-        public static bool CompareLists(IList<string> expectedItems, IList<string> items)
+        public static TempFileContext UseTempFile()
         {
-            if (items.Count != expectedItems.Count)
+            return new TempFileContext();
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether the two files are equal.
+        /// </summary>
+        public static bool CompareFiles(string expectedFilePath, string actualFilePath, ITestOutputHelper outputHelper)
+        {
+            if (!File.Exists(expectedFilePath))
+            {
+                throw new FileNotFoundException($"Expected file not found: {expectedFilePath}");
+            }
+
+            if (!File.Exists(actualFilePath))
+            {
+                throw new FileNotFoundException($"Actual file not found: {actualFilePath}");
+            }
+
+            string diffOutput = DiffFiles(expectedFilePath, actualFilePath, outputHelper);
+
+            if (!string.IsNullOrEmpty(diffOutput))
             {
                 return false;
             }
 
-            items = items
-                .OrderBy(p => p)
-                .ToList();
-            expectedItems = expectedItems
-                .OrderBy(p => p)
-                .ToList();
-
-            for (int i = 0; i < items.Count; i++)
-            {
-                if (items[i] != expectedItems[i])
-                {
-                    return false;
-                }
-            }
-
             return true;
+        }
+
+        /// <summary>
+        /// Runs a git diff of two files and returns the output.
+        /// </summary>
+        public static string DiffFiles(string file1Path, string file2Path, ITestOutputHelper outputHelper)
+        {
+            (Process Process, string StdOut, string StdErr) diffResult =
+                ExecuteHelper.ExecuteProcess("git", $"diff --no-index {file1Path} {file2Path}", outputHelper);
+
+            return diffResult.StdOut;
         }
     }
 
@@ -65,6 +78,29 @@ namespace Microsoft.DotNet.Docker.Tests
         public void Dispose()
         {
             Directory.Delete(Path, true);
+        }
+    }
+
+    public class TempFileContext : IDisposable
+    {
+        public TempFileContext()
+        {
+            do
+            {
+                Path = System.IO.Path.Combine(
+                    System.IO.Path.GetTempPath(),
+                    Guid.NewGuid().ToString());
+            }
+            while (File.Exists(Path));
+
+            File.Create(Path).Dispose();
+        }
+
+        public string Path { get; }
+
+        public void Dispose()
+        {
+            File.Delete(Path);
         }
     }
 }
