@@ -1,21 +1,37 @@
-# Azure Linux Distroless Support
+# Azure Linux Distroless
 
-Distroless containers contain only the minimal set of packages your application needs, with anything extra removed (i.e. package manager, libraries and shell).
-Both Qualys and Trivy support vulnerability scanning in Mariner distroless containers.
+Azure Linux Distroless container images contain only the minimal set of packages .NET needs, with everything else removed.
 
-Due to their limited set of packages, distroless containers have a minimized security attack surface as well as reduced noise from vulnerability scanners.
-This generally translates to a reduced overhead of patching vulnerabilities, allowing developers to focus on building their application.
-Lastly, the smaller size provides higher performance.
+Due to their limited set of packages, distroless containers have a minimized security attack surface, smaller deployment sizes, and faster start-up time compared to non-distroless images.
 
-Azure Linux distroless .NET images are available starting in .NET 6.
+Azure Linux distroless .NET images are available for all supported .NET versions in the following image repos:
+
+- [`mcr.microsoft.com/dotnet/runtime`](../README.runtime.md)
+- [`mcr.microsoft.com/dotnet/aspnet`](../README.aspnet.md)
+- [`mcr.microsoft.com/dotnet/runtime-deps`](../README.runtime-deps.md) (for self-contained apps)
+
 You can use the following image tags (SDK is not available for distroless):
 
-- `mcr.microsoft.com/dotnet/<image-type>:6.0-cbl-mariner2.0-distroless`
-- `mcr.microsoft.com/dotnet/<image-type>:8.0-cbl-mariner2.0-distroless`
+- `6.0-cbl-mariner2.0-distroless`
+- `8.0-cbl-mariner2.0-distroless`
+
+## Vulnerability Scanning
+
+Azure Linux Distroless images maintain a detailed list of packages installed in the `/var/lib/rpmmanifest/container-manifest-1` and `/var/lib/rpmmanifest/container-manifest-2` files, which is supported by major image scanners like Qualys, Trivy, and Syft.
+
+## Globalization
+
+Since Azure Linux Distroless images are focused on providing a small deployment size, they do not include `icu` or `tzdata` libraries by default.
+However, we offer an `extra` image variant that includes `icu` and `tzdata`.
+You can use this in place of the default chiseled image by appending the `-extra` suffix to the image tag like so:
+
+- `mcr.microsoft.com/dotnet/runtime-deps:8.0-cbl-mariner-distroless-extra`
+- `mcr.microsoft.com/dotnet/runtime:8.0-cbl-mariner-distroless-extra`
+- `mcr.microsoft.com/dotnet/aspnet:8.0-cbl-mariner-distroless-extra`
 
 ## Installing Additional Packages
 
-If you require additional packages to be installed in your Azure Linux Distroless image, you can follow the same pattern that .NET uses to install the .NET runtime dependencies.
+If your app requires additional packages besides `icu` and `tzdata`, you can follow the same pattern that .NET uses to install the .NET runtime dependencies. For example:
 
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-cbl-mariner2.0-distroless AS base
@@ -69,64 +85,3 @@ FROM base
 
 COPY --from=installer /staging2/ /
 ```
-
-## Debugging with Container Fast Mode
-
-To reduce both the size and attack surface of the Mariner image, the runtime images do not contain the tools required to debug the container using Visual Studio.
-The easiest way to enable local Visual Studio debugging while not modifying the production image is to create a new stage based off the `base` stage (called `debug` in the example),
-that contains the debugging tools, and then point the VS Fast Mode tools to that debug stage.
-
-Here's an example chart showing the inheritance of the build stages: 
-
-```mermaid
-flowchart TD
-    base --> debug
-    base --> final
-    build --> publish
-```
-
-And here's an example configuration:
-
-**.csproj**
-```xml
-<DockerfileFastModeStage>debug</DockerfileFastModeStage>
-```
-
-**Dockerfile**
-```Dockerfile
-# Learn about building .NET container images:
-# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-cbl-mariner2.0 as base
-WORKDIR /app
-EXPOSE 8080
-EXPOSE 443
-
-
-# this stage is used by VS for fast local debugging; it does not appear in the final image
-FROM base AS debug
-RUN tdnf install -y procps-ng # <-- Install tools needed for debugging (e.g. the `pidof` command)
-
-
-# build stage
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-cbl-mariner2.0 AS build
-ARG TARGETARCH
-WORKDIR /source
-
-# copy csproj and restore as distinct layers
-COPY aspnetapp/*.csproj .
-RUN dotnet restore -a $TARGETARCH
-
-# copy and publish app and libraries
-COPY aspnetapp/. .
-RUN dotnet publish -a $TARGETARCH --no-restore -o /app
-
-
-# final stage/image
-FROM base AS final
-COPY --from=build /app .
-USER $APP_UID
-ENTRYPOINT ["./aspnetapp"]
-```
-
-If this example doesn't work for your scenario, see [Container Tools build properties](https://docs.microsoft.com/en-us/visualstudio/containers/container-msbuild-properties?view=vs-2022) for more information on
-customizing the Fast Mode stage, or setting a custom `DockerDebuggeeKillProgram`.
