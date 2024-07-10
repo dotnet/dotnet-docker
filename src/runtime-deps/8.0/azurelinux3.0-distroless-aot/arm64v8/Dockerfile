@@ -69,4 +69,4 @@ COPY --from=installer /staging/ /
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=installer --chown=1654:1654 /staging/home/app /home/app
 
-USER app
+USER $APP_UID
