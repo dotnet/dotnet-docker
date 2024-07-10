@@ -1,11 +1,11 @@
-FROM amd64/golang:1.20 as chisel
+FROM amd64/golang:1.21 as chisel
 
 RUN apt-get update \
     && apt-get install -y \
         ca-certificates \
         file
 
-RUN go install github.com/canonical/chisel/cmd/chisel@v0.9.1 \
+RUN go install github.com/canonical/chisel/cmd/chisel@v0.10.0 \
     && wget -O /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
 
