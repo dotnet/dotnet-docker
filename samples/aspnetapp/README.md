@@ -36,7 +36,7 @@ ASPNETCORE_HTTP_PORTS=80
 Supported with .NET Core 1.0+
 
 ```bash
-ASPNETCORE_URLS=http://+:80
+ASPNETCORE_URLS=http://+:80 
 ```
 
 Note: `ASPNETCORE_URLS` overwrites `ASPNETCORE_HTTP_PORTS` if set.
@@ -78,7 +78,7 @@ You may notice that the sample includes a [health check](../enable-healthchecks.
 
 ## Build image with the SDK
 
-The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds).
+The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds). 
 
 ```console
 dotnet publish /p:PublishProfile=DefaultContainer

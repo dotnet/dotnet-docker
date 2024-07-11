@@ -1,19 +1,19 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:9.0.0-preview.6-alpine3.20-arm32v7
+FROM $REPO:9.0.0-preview.7-alpine3.20-arm32v7
 
 # .NET globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
 # by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=9.0.0-preview.6.24327.7 \
+    DOTNET_VERSION=9.0.0-preview.7.24357.2 \
     # ASP.NET Core version
-    ASPNET_VERSION=9.0.0-preview.6.24328.4
+    ASPNET_VERSION=9.0.0-preview.7.24360.7
 
 
 # Install ASP.NET Composite Runtime
 RUN wget -O dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-composite-$ASPNET_VERSION-linux-musl-arm.tar.gz \
-    && dotnet_sha512='bd2d95e485d363156931c7fd451937e88fab482aa1fab8d2425bd2b02192afb1513289ee7b121850f82ab19aaa66a952aeea69deb5e5806321f02ef22ca338ee' \
+    && dotnet_sha512='b08dc0e19470fc3fa3c9c00b91f49b4fead2214bc8f0195e87ac60244682f23411b08cee124d03a4f6678427dfdb5b0688648791f0ae1b66f9b8076627054d09' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \

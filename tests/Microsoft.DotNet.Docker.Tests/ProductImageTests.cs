@@ -106,7 +106,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string expectedUser;
             if (imageData.IsDistroless && ImageRepo != DotNetImageRepo.SDK)
             {
-                if (imageData.OS.StartsWith(OS.Mariner) || imageData.OS.StartsWith(OS.AzureLinux))
+                if (imageData.OS.StartsWith(OS.Mariner))
                 {
                     expectedUser = "app";
                 }
@@ -429,6 +429,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "ca-certificates",
                         "libc6",
                         "libgcc-s1",
+                        "gcc-14-base",
                         "libssl3t64",
                         "zlib1g"
                     },
