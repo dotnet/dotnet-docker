@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm64v8/buildpack-deps:noble-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=9.0.0-preview.7.24359.10  \
+RUN aspnetcore_version=9.0.0-preview.7.24360.7  \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
-    && dotnet_sha512='1b182b4595ad80301dde528987b6c9d21773c1e1c984d8125a987c5a632a54bf225e61bd3fb81b913a1dedfa8dcd943d553cc9f4e42bba8168baac9bbf6677e7' \
+    && dotnet_sha512='f7bb85c10ab2cbd6a5f2130a1b82829fc7cb6cc5e15158560b7467d0156f4b18712a06f33ea524169ac41ef0a74f6b4c903229f201c9c5e3d9c625f70532851c' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
@@ -23,7 +23,7 @@ ENV \
     # .NET Runtime version
     DOTNET_VERSION=9.0.0-preview.7.24357.2 \
     # ASP.NET Core version
-    ASPNET_VERSION=9.0.0-preview.7.24359.10
+    ASPNET_VERSION=9.0.0-preview.7.24360.7
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
