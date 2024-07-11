@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.6
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-jammy-aot AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/nightly/sdk:8.0-jammy-aot AS build
 ARG TARGETARCH
 WORKDIR /source
 
