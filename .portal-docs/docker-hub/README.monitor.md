@@ -40,6 +40,7 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 
 .NET:
 
+* [dotnet](https://hub.docker.com/r/microsoft/dotnet/): .NET
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 * [dotnet/nightly/sdk](https://hub.docker.com/r/microsoft/dotnet-nightly-sdk/): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://hub.docker.com/r/microsoft/dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)

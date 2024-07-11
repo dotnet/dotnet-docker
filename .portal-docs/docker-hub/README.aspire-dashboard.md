@@ -96,6 +96,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 
 .NET:
 
+* [dotnet](https://hub.docker.com/r/microsoft/dotnet/): .NET
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 * [dotnet/nightly/sdk](https://hub.docker.com/r/microsoft/dotnet-nightly-sdk/): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://hub.docker.com/r/microsoft/dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
