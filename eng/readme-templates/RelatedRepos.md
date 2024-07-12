@@ -65,7 +65,7 @@
         ["dotnet/framework/samples", ".NET Framework, ASP.NET and WCF Samples"]
     ] ^
 
-    _ Create final set of repos to display
+    _ Create final set of repos to display ^
 
     set currentRepo to cat(filter(repos, isCurrentRepo)) ^
     set commonRepos to filter(commonRepos, isNotCurrentRepo) ^
@@ -96,5 +96,5 @@
 {{getRepoBulletPoint(r)}}}}
 
 .NET Framework:
-{{for i, r in frameworkRepos:
+{{for r in frameworkRepos:
 {{getRepoBulletPoint(r)}}}}
