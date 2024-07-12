@@ -1,7 +1,14 @@
 {{
     _ ARGS:
       top-header: The string to use as the top-level header.
-      readme-host: Moniker of the site that will host the readme ^
+      readme-host: Moniker of the site that will host the readmes
+      repos: List of normal .NET product repos
+      common-repos: List of other non-product repos (e.g. samples)
+      framework-repos: List of .NET Framework repos ^
+
+    set repos to ARGS["repos"] ^
+    set commonRepos to ARGS["common-repos"] ^
+    set frameworkRepos to ARGS["framework-repos"] ^
 
     _ Common functions to help with repo rendering ^
 
@@ -32,38 +39,9 @@
         ]
     }} ^
 
-    set getRepoBulletPoint(repo) to:{{
-        set repoName to repo[0] ^
-        set displayName to repo[1] ^
-        set isProductFamilyRepo to repo[2] ^
-        set url to InsertTemplate("Url.md", [ "readme-host": ARGS["readme-host"], "repo": repoName, "is-product-family": isProductFamilyRepo ]) ^
-        return join(["* [", repoName, "](", url, "): ", displayName])
-    }} ^
-
     set filterMonitorRepo(repo) to:{{
         return when(SHORT_REPO != "monitor", find(repo[0], "base") < 0, 1)
     }} ^
-
-    _ Lists of repos to render
-      Format: [repoName, displayName, isProductFamilyRepo] ^
-
-    set repos to [
-        ["dotnet/sdk", ".NET SDK"],
-        ["dotnet/aspnet", "ASP.NET Core Runtime"],
-        ["dotnet/runtime", ".NET Runtime"],
-        ["dotnet/runtime-deps", ".NET Runtime Dependencies"],
-        ["dotnet/monitor", ".NET Monitor Tool"],
-        ["dotnet/monitor/base", ".NET Monitor Base"],
-        ["dotnet/aspire-dashboard", ".NET Aspire Dashboard"]
-    ] ^
-    set commonRepos to [
-        ["dotnet", ".NET", 1],
-        ["dotnet/samples", ".NET Samples"]
-    ] ^
-    set frameworkRepos to [
-        ["dotnet/framework", ".NET Framework, ASP.NET and WCF", 1],
-        ["dotnet/framework/samples", ".NET Framework, ASP.NET and WCF Samples"]
-    ] ^
 
     _ Create final set of repos to display ^
 
@@ -92,9 +70,7 @@
 }}{{ARGS["top-header"]}} Related Repositories
 
 .NET:
-{{for r in repos:
-{{getRepoBulletPoint(r)}}}}
+{{InsertTemplate("RepoList.md", [ "readme-host": ARGS["readme-host"], "repos": repos ])}}
 
 .NET Framework:
-{{for r in frameworkRepos:
-{{getRepoBulletPoint(r)}}}}
+{{InsertTemplate("RepoList.md", [ "readme-host": ARGS["readme-host"], "repos": frameworkRepos ])}}
