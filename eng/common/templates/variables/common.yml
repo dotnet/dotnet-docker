@@ -32,8 +32,6 @@ variables:
 - name: officialBranches
   # comma-delimited list of branch names
   value: main
-- name: overrideOfficialBranchValidation
-  value: false
 - name: mirrorRepoPrefix
   value: 'mirror/'
 - name: cgBuildGrepArgs
