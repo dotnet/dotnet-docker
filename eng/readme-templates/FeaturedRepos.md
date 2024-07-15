@@ -6,6 +6,16 @@
       common-repos: List of other non-product repos (e.g. samples)
       framework-repos: List of .NET Framework repos ^
 
+    set isCurrentRepo(repo) to:{{
+        set repoNameParts to split(repo[0], "/") ^
+        set shortRepo to repoNameParts[len(repoNameParts) - 1] ^
+        return shortRepo = SHORT_REPO
+    }} ^
+
+    set isNotCurrentRepo(repo) to:{{
+        return not(isCurrentRepo(repo))
+    }} ^
+
     set isNightlyRepo to VARIABLES["branch"] = "nightly" ^
 
     set insertNightlyRepoName(repoName) to:{{
@@ -27,7 +37,8 @@
         return when(SHORT_REPO != "monitor", find(repo[0], "base") < 0, 1)
     }} ^
 
-    set repos to ARGS["repos"] ^
+    set repos to cat(ARGS["repos"], ARGS["common-repos"]) ^
+    set repos to filter(repos, isNotCurrentRepo) ^
     set repos to filter(repos, filterMonitorRepo) ^
     set repos to when(isNightlyRepo, map(repos, insertNightly), repos)
 
