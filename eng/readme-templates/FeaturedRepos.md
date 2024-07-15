@@ -2,19 +2,10 @@
     _ ARGS:
       top-header: The string to use as the top-level header.
       readme-host: Moniker of the site that will host the readmes
-      repos: List of normal .NET product repos
-      common-repos: List of other non-product repos (e.g. samples)
+      product-repos: List of .NET product repos
+      product-family-repos: List of .NET product family repos
+      samples-repos: List of .NET samples repos
       framework-repos: List of .NET Framework repos ^
-
-    set isCurrentRepo(repo) to:{{
-        set repoNameParts to split(repo[0], "/") ^
-        set shortRepo to repoNameParts[len(repoNameParts) - 1] ^
-        return shortRepo = SHORT_REPO
-    }} ^
-
-    set isNotCurrentRepo(repo) to:{{
-        return not(isCurrentRepo(repo))
-    }} ^
 
     set isNightlyRepo to VARIABLES["branch"] = "nightly" ^
 
@@ -37,10 +28,9 @@
         return when(SHORT_REPO != "monitor", find(repo[0], "base") < 0, 1)
     }} ^
 
-    set repos to cat(ARGS["repos"], ARGS["common-repos"]) ^
-    set repos to filter(repos, isNotCurrentRepo) ^
-    set repos to filter(repos, filterMonitorRepo) ^
-    set repos to when(isNightlyRepo, map(repos, insertNightly), repos)
+    set repos to filter(ARGS["product-repos"], filterMonitorRepo) ^
+    set repos to when(isNightlyRepo, map(repos, insertNightly), repos) ^
+    set repos to cat(repos, ARGS["samples-repos"])
 
 }}{{ARGS["top-header"]}} Featured Repos
 {{InsertTemplate("RepoList.md", [ "readme-host": ARGS["readme-host"], "repos": repos ])}}

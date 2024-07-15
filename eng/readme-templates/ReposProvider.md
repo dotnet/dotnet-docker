@@ -6,7 +6,7 @@
       readme-host: Moniker of the site that will host the readme
       template: Template to pass the repo lists to ^
 
-    set repos to [
+    set productRepos to [
         ["dotnet/sdk", ".NET SDK"],
         ["dotnet/aspnet", "ASP.NET Core Runtime"],
         ["dotnet/runtime", ".NET Runtime"],
@@ -15,8 +15,10 @@
         ["dotnet/monitor/base", ".NET Monitor Base"],
         ["dotnet/aspire-dashboard", ".NET Aspire Dashboard"]
     ] ^
-    set commonRepos to [
+    set productFamilyRepos to [
         ["dotnet", ".NET", 1],
+    ] ^
+    set samplesRepos to [
         ["dotnet/samples", ".NET Samples"]
     ] ^
     set frameworkRepos to [
@@ -27,7 +29,8 @@
 }}{{InsertTemplate(ARGS["template"], [
     "top-header": ARGS["top-header"],
     "readme-host": ARGS["readme-host"],
-    "repos": repos,
-    "common-repos": commonRepos,
+    "product-repos": productRepos,
+    "product-family-repos": productFamilyRepos,
+    "samples-repos": samplesRepos,
     "framework-repos": frameworkRepos
 ])}}

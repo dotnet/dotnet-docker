@@ -2,12 +2,14 @@
     _ ARGS:
       top-header: The string to use as the top-level header.
       readme-host: Moniker of the site that will host the readmes
-      repos: List of normal .NET product repos
-      common-repos: List of other non-product repos (e.g. samples)
+      product-repos: List of .NET product repos
+      product-family-repos: List of .NET product family repos
+      samples-repos: List of .NET samples repos
       framework-repos: List of .NET Framework repos ^
 
-    set repos to ARGS["repos"] ^
-    set commonRepos to ARGS["common-repos"] ^
+    set repos to ARGS["product-repos"] ^
+    set productFamilyRepos to ARGS["product-family-repos"] ^
+    set samplesRepos to ARGS["samples-repos"] ^
     set frameworkRepos to ARGS["framework-repos"] ^
 
     _ Common functions to help with repo rendering ^
@@ -46,21 +48,21 @@
     _ Create final set of repos to display ^
 
     set currentRepo to cat(filter(repos, isCurrentRepo)) ^
-    set commonRepos to filter(commonRepos, isNotCurrentRepo) ^
 
     _ Exclude monitor/base from repos besides monitor ^
     set repos to filter(repos, filterMonitorRepo) ^
-    _ Exclude this repo from its own readme ^
-    set repos to filter(repos, isNotCurrentRepo) ^
 
     set repos to
         when(isNightlyRepo,
             when(IS_PRODUCT_FAMILY,
-                cat(commonRepos, repos),
-                cat(commonRepos, map(repos, insertNightly))),
+                cat(productFamilyRepos, repos, samplesRepos),
+                cat(productFamilyRepos, map(repos, insertNightly), samplesRepos)),
             when(IS_PRODUCT_FAMILY,
-                map(repos, insertNightly),
-                cat(commonRepos, repos))) ^
+                cat(map(repos, insertNightly), samplesRepos),
+                cat(productFamilyRepos, repos, samplesRepos))) ^
+
+    _ Exclude this repo from its own readme ^
+    set repos to filter(repos, isNotCurrentRepo) ^
 
     _ For non-nightly product repos, show the nightly version ^
     set repos to when(!isNightlyRepo && !IS_PRODUCT_FAMILY,
