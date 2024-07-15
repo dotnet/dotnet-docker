@@ -30,7 +30,7 @@
 
     set repos to filter(ARGS["product-repos"], filterMonitorRepo) ^
     set repos to when(isNightlyRepo, map(repos, insertNightly), repos) ^
-    set repos to cat(repos, ARGS["samples-repos"])
+    set repos to when(!IS_PRODUCT_FAMILY, cat(repos, ARGS["samples-repos"]), repos)
 
 }}{{ARGS["top-header"]}} Featured Repos
 {{InsertTemplate("RepoList.md", [ "readme-host": ARGS["readme-host"], "repos": repos ])}}

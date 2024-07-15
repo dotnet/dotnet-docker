@@ -58,7 +58,7 @@
                 cat(productFamilyRepos, repos, samplesRepos),
                 cat(productFamilyRepos, map(repos, insertNightly), samplesRepos)),
             when(IS_PRODUCT_FAMILY,
-                cat(map(repos, insertNightly), samplesRepos),
+                cat(map(repos, insertNightly)),
                 cat(productFamilyRepos, repos, samplesRepos))) ^
 
     _ Exclude this repo from its own readme ^
