@@ -21,7 +21,7 @@ FROM $REPO:9.0.0-preview.7-noble-chiseled-extra-arm32v7
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=9.0.0-preview.7.24357.2 \
+    DOTNET_VERSION=9.0.0-preview.7.24363.5 \
     # ASP.NET Core version
     ASPNET_VERSION=9.0.0-preview.7.24360.7
 
