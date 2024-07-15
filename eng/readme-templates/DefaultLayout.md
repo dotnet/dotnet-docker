@@ -1,31 +1,21 @@
 {{
-  set commonArgs to [
-    "top-header": "#"
-    "readme-host": ARGS["readme-host"]
-  ] ^
-  set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
-  set isMonitor to find(split(REPO, "/"), "monitor") >= 0 ^
-  set isAspireDashboard to find(split(REPO, "/"), "aspire-dashboard") >= 0
+    set commonArgs to [
+        "top-header": "#"
+        "readme-host": ARGS["readme-host"]
+    ] ^
+
+    set insertReposListTemplate(template) to:{{
+        return InsertTemplate("ReposProvider.md", union([ "template": template ], commonArgs))
+    }} ^
+
+    set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
+    set isMonitor to find(split(REPO, "/"), "monitor") >= 0 ^
+    set isAspireDashboard to find(split(REPO, "/"), "aspire-dashboard") >= 0
+
 }}{{InsertTemplate("Announcement.md", union(commonArgs, [ "trailing-line-break": "true" ]))}}{{
 if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
-}}{{if IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main":# Featured Repos
-
-* [dotnet/sdk]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/sdk" ])}}): .NET SDK
-* [dotnet/aspnet]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/aspnet" ])}}): ASP.NET Core Runtime
-* [dotnet/runtime]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/runtime" ])}}): .NET Runtime
-* [dotnet/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/runtime-deps" ])}}): .NET Runtime Dependencies
-* [dotnet/monitor]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/monitor" ])}}): .NET Monitor Tool
-* [dotnet/aspire-dashboard]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/aspire-dashboard" ])}}): .NET Aspire Dashboard
-* [dotnet/samples]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/samples" ])}}): .NET Samples
-^elif IS_PRODUCT_FAMILY && VARIABLES["branch"] = "nightly"
-:# Featured Repos
-
-* [dotnet/nightly/sdk]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/sdk" ])}}): .NET SDK (Preview)
-* [dotnet/nightly/aspnet]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/aspnet" ])}}): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/runtime" ])}}): .NET Runtime (Preview)
-* [dotnet/nightly/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/runtime-deps" ])}}): .NET Runtime Dependencies (Preview)
-* [dotnet/nightly/monitor]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/monitor" ])}}): .NET Monitor Tool (Preview)
-* [dotnet/nightly/aspire-dashboard]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/aspire-dashboard" ])}}): .NET Aspire Dashboard (Preview)
+}}{{if IS_PRODUCT_FAMILY:{{
+    insertReposListTemplate("FeaturedRepos.md")}}
 }}
 {{InsertTemplate("About.md", commonArgs)}}
 
@@ -33,7 +23,7 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 
 {{InsertTemplate("About.variants.md", commonArgs)}}}}
 
-{{InsertTemplate("RelatedRepos.md", commonArgs)}}
+{{insertReposListTemplate("RelatedRepos.md")}}
 {{if !IS_PRODUCT_FAMILY:
 # Full Tag Listing
 {{if ARGS["readme-host"] = "github":<!--End of generated tags-->

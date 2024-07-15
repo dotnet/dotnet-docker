@@ -1,18 +1,36 @@
-{{if IS_PRODUCT_FAMILY && VARIABLES["branch"] = "main":# Featured Repos
+{{
+    _ ARGS:
+      top-header: The string to use as the top-level header.
+      readme-host: Moniker of the site that will host the readmes
+      product-repos: List of .NET product repos
+      product-family-repos: List of .NET product family repos
+      samples-repos: List of .NET samples repos
+      framework-repos: List of .NET Framework repos ^
 
-* [dotnet/sdk]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/sdk" ])}}): .NET SDK
-* [dotnet/aspnet]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/aspnet" ])}}): ASP.NET Core Runtime
-* [dotnet/runtime]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/runtime" ])}}): .NET Runtime
-* [dotnet/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/runtime-deps" ])}}): .NET Runtime Dependencies
-* [dotnet/monitor]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/monitor" ])}}): .NET Monitor Tool
-* [dotnet/samples]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/samples" ])}}): .NET Samples
-^elif IS_PRODUCT_FAMILY && VARIABLES["branch"] = "nightly"
-:# Featured Repos
+    set isNightlyRepo to VARIABLES["branch"] = "nightly" ^
 
-* [dotnet/nightly/sdk]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/sdk" ])}}): .NET SDK (Preview)
-* [dotnet/nightly/aspnet]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/aspnet" ])}}): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/runtime" ])}}): .NET Runtime (Preview)
-* [dotnet/nightly/runtime-deps]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/runtime-deps" ])}}): .NET Runtime Dependencies (Preview)
-* [dotnet/nightly/monitor]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/monitor" ])}}): .NET Monitor Tool (Preview)
-* [dotnet/nightly/aspire-dashboard]({{InsertTemplate("Url.md", [ "readme-host": "github", "repo": "dotnet/nightly/aspire-dashboard" ])}}): .NET Aspire Dashboard (Preview)
-}}
+    set insertNightlyRepoName(repoName) to:{{
+        return token(repoName, "/", 0, "dotnet/nightly")
+    }} ^
+
+    set insertNightlyRepoDisplayName(displayName) to:{{
+        return join([displayName, "(Preview)"], " ")
+    }} ^
+
+    set insertNightly(repo) to:{{
+        return [
+            insertNightlyRepoName(repo[0]),
+            insertNightlyRepoDisplayName(repo[1])
+        ]
+    }} ^
+
+    set filterMonitorRepo(repo) to:{{
+        return when(SHORT_REPO != "monitor", find(repo[0], "base") < 0, 1)
+    }} ^
+
+    set repos to filter(ARGS["product-repos"], filterMonitorRepo) ^
+    set repos to when(isNightlyRepo, map(repos, insertNightly), repos) ^
+    set repos to when(!IS_PRODUCT_FAMILY, cat(repos, ARGS["samples-repos"]), repos)
+
+}}{{ARGS["top-header"]}} Featured Repos
+{{InsertTemplate("RepoList.md", [ "readme-host": ARGS["readme-host"], "repos": repos ])}}
