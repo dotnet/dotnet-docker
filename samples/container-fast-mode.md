@@ -1,6 +1,6 @@
 # Debugging with Container Fast Mode
 
-In order to reduce image size and attack surface, .NET Runtime images do not contain the tools required to debug .NET apps using Visual Studio.
+In order to reduce image size and attack surface, Azure Linux .NET Runtime images do not contain the tools required to debug .NET apps using Visual Studio.
 The easiest way to enable local Visual Studio debugging while not modifying the production image is to use [Container Fast Mode](https://learn.microsoft.com/en-us/visualstudio/containers/container-build#debugging).
 
 To enable Container Fast Mode debugging without affecting your app's production image, you can create a new stage based off the `base` stage (called `debug` in the example) that contains the debugging tools, and then point the VS Fast Mode tools to that debug stage.
