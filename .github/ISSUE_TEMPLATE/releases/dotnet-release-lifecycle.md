@@ -71,6 +71,7 @@ Add due dates to each of the issues so that we don't lose track of them.
 - [ ] Remove EOL .NET version from `main` and `nightly` branches (one issue)
     - [ ] Remove all entries for the EOL .NET version in `manifest.json`, `manifest.versions.json`, [ImageVersion.cs](https://github.com/dotnet/dotnet-docker/blob/nightly/tests/Microsoft.DotNet.Docker.Tests/ImageVersion.cs), [TestData.cs](https://github.com/dotnet/dotnet-docker/blob/nightly/tests/Microsoft.DotNet.Docker.Tests/TestData.cs), [MCR tags metadata templates](https://github.com/dotnet/dotnet-docker/tree/main/eng/mcr-tags-metadata-templates), and delete the Dockerfiles
     - [ ] Search for and simplify conditions including the EOL .NET Version in the Dockerfile templates and tests
+    - [ ] Update the path variable appropriately for the [dotnet-docker-nightly-pr-no-cache](https://dev.azure.com/dnceng-public/public/_build?definitionId=184) pipeline so that it continues to target active Dockerfiles.
     - [ ] Replace all references to the EOL .NET version in documentation with a new .NET version
     - [ ] Remove the EOL .NET version from the .NET Framework SDK images
         - [ ] https://github.com/microsoft/dotnet-framework-docker/blob/6a3c9d048f75c1e69c0e1059564cd56a90bf9e3c/eng/dockerfile-templates/sdk/Dockerfile#L56-L59

@@ -69,7 +69,7 @@ docker pull mcr.microsoft.com/dotnet/runtime:6.0-alpine
 
 * Shares Debian's codebase.
 * Feature-rich.
-* Less stable compared to Debain.
+* Less stable compared to Debian.
 
 #### [Alpine](https://www.alpinelinux.org)
 

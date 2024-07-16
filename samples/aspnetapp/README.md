@@ -74,11 +74,11 @@ CONTAINER ID   IMAGE                                        COMMAND         CREA
 d79edc6bfcb6   mcr.microsoft.com/dotnet/samples:aspnetapp   "./aspnetapp"   35 seconds ago   Up 34 seconds (healthy)   0.0.0.0:8080->8080/tcp   nice_curran
 ```
 
-You may notice that the sample includes a [health check](../enable-healthchecks.md), indicated in the "STATUS" column.
+You may notice that the sample includes a [health check](https://learn.microsoft.com/aspnet/core/host-and-deploy/health-checks), indicated in the "STATUS" column.
 
 ## Build image with the SDK
 
-The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds). 
+The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds).
 
 ```console
 dotnet publish /p:PublishProfile=DefaultContainer
