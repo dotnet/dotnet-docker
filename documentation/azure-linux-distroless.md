@@ -17,7 +17,7 @@ You can use the following image tags (SDK is not available for distroless):
 
 ## Vulnerability Scanning
 
-Azure Linux Distroless images maintain a detailed list of packages installed in the `/var/lib/rpmmanifest/container-manifest-1` and `/var/lib/rpmmanifest/container-manifest-2` files, which is supported by major image scanners like Qualys, Trivy, and Syft.
+Azure Linux Distroless images are supported by many major image scanners like Qualys, Trivy, and Syft.
 
 ## Globalization
 
