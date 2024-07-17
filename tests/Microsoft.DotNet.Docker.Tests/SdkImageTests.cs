@@ -63,15 +63,26 @@ namespace Microsoft.DotNet.Docker.Tests
             // Microsoft.NETCore.App.Runtime.Mono.linux-musl-arm* package does not exist
             failureExpected |= isAlpine && imageData.IsArm;
 
+            bool useWasmTools = true;
+
             // `wasm-tools` workload does not work on .NET 6 with CBL Mariner 2.0.
             // Re-enable when issue is resolved: https://github.com/dotnet/aspnetcore/issues/53469
-            failureExpected |= imageData.OS.Contains(OS.Mariner) && imageData.Version.Major == 6;
+            if (imageData.OS.Contains(OS.Mariner) && imageData.Version.Major == 6)
+            {
+                useWasmTools = false;
+            }
 
             // `wasm-tools` workload does not work on ARM
-            // `wasm-tools` is also not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
-            int[] unsupportedVersionsForAlpine = [6, 8];
-            bool isSupportedVersionForAlpine = !unsupportedVersionsForAlpine.Contains(imageData.Version.Major);
-            bool useWasmTools = !imageData.IsArm && (!isAlpine || isSupportedVersionForAlpine);
+            if (!imageData.IsArm)
+            {
+                useWasmTools = false;
+            }
+
+            // `wasm-tools` is not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
+            if (isAlpine && (imageData.Version.Major == 6 || imageData.Version.Major == 8))
+            {
+                useWasmTools = false;
+            }
 
             using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
             await testScenario.ExecuteAsync(shouldThrow: failureExpected);
