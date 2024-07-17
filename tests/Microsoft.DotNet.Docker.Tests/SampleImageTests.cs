@@ -113,13 +113,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 string output = DockerHelper.Run(appTag, containerName);
                 Assert.StartsWith("string: The quick brown fox jumps over the lazy dog", output);
 
-                if (!DockerHelper.IsLinuxContainerModeEnabled &&
-                    DockerHelper.DockerArchitecture.StartsWith("arm", StringComparison.OrdinalIgnoreCase))
-                {
-                    // Skipping run app tests due to a .NET issue: https://github.com/dotnet/runtime/issues/2082
-                    return;
-                }
-
                 // Run the app's tests
                 DockerHelper.Build(testTag, dockerfilePath, target: "test", contextDir: sampleFolder);
                 DockerHelper.Run(testTag, testContainerName, skipAutoCleanup: true);
