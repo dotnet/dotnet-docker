@@ -52,8 +52,10 @@
 
     set username to "app" ^
     set uid to 1654 ^
-    set gid to uid
-}}FROM {{ARCH_VERSIONED}}/golang:{{golangVersion}} as chisel
+    set gid to uid ^
+
+    set as to when(dotnetVersion = "9.0", "as", "AS")
+}}FROM {{ARCH_VERSIONED}}/golang:{{golangVersion}} {{as}} chisel
 
 RUN apt-get update \
     && apt-get install -y \

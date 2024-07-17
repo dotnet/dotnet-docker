@@ -427,9 +427,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 { OS: string os } when os.Contains(OS.Noble) => new[]
                     {
                         "ca-certificates",
+                        "gcc-14-base",
                         "libc6",
                         "libgcc-s1",
                         "libssl3t64",
+                        "openssl",
                         "zlib1g"
                     },
                 { OS: OS.Focal } => new[]

@@ -1,4 +1,4 @@
-FROM amd64/golang:1.20 as chisel
+FROM amd64/golang:1.20 AS chisel
 
 RUN apt-get update \
     && apt-get install -y \
