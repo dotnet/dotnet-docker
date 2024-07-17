@@ -150,9 +150,8 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            // Skip test due to https://github.com/dotnet/dotnet-docker/issues/4841
-            // Re-enable for release in main branch.
-            if (imageData.IsWindows)
+            // Skip test in nightly due to https://github.com/dotnet/dotnet-docker/issues/4841
+            if (imageData.IsWindows && Config.IsNightlyRepo)
             {
                 return;
             }
