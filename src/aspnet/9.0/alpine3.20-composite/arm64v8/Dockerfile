@@ -8,12 +8,12 @@ ENV \
     # .NET Runtime version
     DOTNET_VERSION=9.0.0-preview.7.24365.1 \
     # ASP.NET Core version
-    ASPNET_VERSION=9.0.0-preview.7.24365.9
+    ASPNET_VERSION=9.0.0-preview.7.24366.1
 
 
 # Install ASP.NET Composite Runtime
 RUN wget -O dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-composite-$ASPNET_VERSION-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='5d50691afb465d2b5c90192c7f475d9860d58ac12c630c001419a31cd8fa23c88b1b3642f7d51b0fa336c49e00f055bf51ed5325759960aa27f150c5d30daab0' \
+    && dotnet_sha512='d09f3a6b7c16881df30202fded6bd1323564d27507e1ecb0d5786e1516188c1bdb7efa4f411b0816e4ccdf0b13bb44e0b75228a81c0b44efc2fc1b90f636d934' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
