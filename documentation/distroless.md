@@ -25,7 +25,7 @@ If you have a compelling use case for a distroless SDK image, please leave a com
 ### How do I use globalization with distroless images?
 
 Our distroless images are focused on size. That means the default distroless images do not include the `icu` or `tzdata`
-libraries from Ubuntu. However, we offer an `extra` image variant that includes `tzdata` and `icu` by default.
+libraries. However, we offer an `extra` image variant that includes `tzdata` and `icu` by default.
 You can use this in place of the default distroless images by appending the `-extra` suffix to the image tag like so:
 
 **Ubuntu**:
