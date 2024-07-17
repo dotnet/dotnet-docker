@@ -33,6 +33,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 .NET:
 
+* [dotnet](https://hub.docker.com/r/microsoft/dotnet/): .NET
 * [dotnet/sdk](https://hub.docker.com/r/microsoft/dotnet-sdk/): .NET SDK
 * [dotnet/aspnet](https://hub.docker.com/r/microsoft/dotnet-aspnet/): ASP.NET Core Runtime
 * [dotnet/runtime](https://hub.docker.com/r/microsoft/dotnet-runtime/): .NET Runtime

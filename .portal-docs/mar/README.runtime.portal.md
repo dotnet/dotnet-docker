@@ -22,6 +22,7 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 
 .NET:
 
+* [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
 * [dotnet/sdk](https://mcr.microsoft.com/product/dotnet/sdk/about): .NET SDK
 * [dotnet/aspnet](https://mcr.microsoft.com/product/dotnet/aspnet/about): ASP.NET Core Runtime
 * [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies

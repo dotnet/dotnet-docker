@@ -27,6 +27,7 @@ For more information, see the [composite images section in the Image Variants do
 
 .NET:
 
+* [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
 * [dotnet/sdk](https://mcr.microsoft.com/product/dotnet/sdk/about): .NET SDK
 * [dotnet/runtime](https://mcr.microsoft.com/product/dotnet/runtime/about): .NET Runtime
 * [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies
