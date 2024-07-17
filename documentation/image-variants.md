@@ -2,24 +2,23 @@
 
 .NET container images offer several image variants.
 
-.NET images for Ubuntu, Debian, Windows Server Core, and Nano Server images are full-featured and include ICU libraries which provide Unicode and globalization support.
+.NET images for Ubuntu, Debian, Azure Linux, Windows Server Core, and Nano Server images are full-featured and include ICU libraries which provide Unicode and globalization support.
 As of .NET 8, we also guarantee these images include time zone information (e.g. `tzdata` in Linux).
 These images are intended to satisfy the most common use cases of .NET developers.
 
 Alpine and [Ubuntu Chiseled](#ubuntu-chiseled-net-60) .NET images are focused on size.
 By default, these images do not include `icu` or `tzdata`, meaning that these images only work with apps that are configured for [globalization-invariant mode](https://learn.microsoft.com/dotnet/core/runtime-config/globalization).
 Apps that require globalization support can use the `extra` image variant of the [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) images. Because this is only available with `runtime-deps` images, it requires a [self-contained deployment](https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained) of the application.
-Alpine and Chiseled images also come in `extra`, `composite`, and `aot` variants (see below).
+Alpine, Azure Linux, and Ubuntu Chiseled images also come in `extra`, `composite`, and `aot` variants (see below).
 
-### `chiseled`
+### Distroless
 
-[Ubuntu Chiseled](https://ubuntu.com/engage/chiselled-ubuntu-images-for-containers) is Ubuntu's take on "distroless" container images.
-The Ubuntu Chiseled .NET images include the minimum set of libraries necessary to run .NET applications.
-For more information, see the [Ubuntu Chiseled .NET Containers documentation](./ubuntu-chiseled.md).
+[Ubuntu Chiseled](https://ubuntu.com/engage/chiselled-ubuntu-images-for-containers) and [Azure Linux](./azurelinux.md) distroless .NET images contain only the minimum set of libraries necessary to run .NET applications with everything else removed.
+For more information, see the [Distroless .NET images documentation](./distroless.md).
 
 ### `extra` (.NET 8.0+)
 
-For apps that depend on globalization functionality, the `extra` image variant is offered for [Ubuntu Chiseled](./ubuntu-chiseled.md) `runtime-deps`, `runtime`, and `aspnet` images as well as `runtime-deps` images for Alpine Linux and CBL Mariner distroless.
+For apps that depend on globalization functionality, the `extra` image variant is offered for [Ubuntu Chiseled](./ubuntu-chiseled.md) and [Azure Linux](./azurelinux.md) distroless `runtime-deps`, `runtime`, and `aspnet` images as well as `runtime-deps` images for Alpine Linux.
 These `extra` images contain everything that the default images do, plus `icu` and `tzdata`.
 
 ### `composite` (.NET 8.0+)
