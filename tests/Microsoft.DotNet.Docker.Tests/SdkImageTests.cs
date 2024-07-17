@@ -73,7 +73,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             // `wasm-tools` workload does not work on ARM
-            if (!imageData.IsArm)
+            if (imageData.IsArm)
             {
                 useWasmTools = false;
             }
