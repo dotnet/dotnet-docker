@@ -1,11 +1,7 @@
-FROM amd64/golang:1.21 AS chisel
+FROM amd64/buildpack-deps:jammy-curl AS chisel
 
-RUN apt-get update \
-    && apt-get install -y \
-        ca-certificates \
-        file
-
-RUN go install github.com/canonical/chisel/cmd/chisel@v0.10.0 \
+RUN wget -O chisel.tar.gz https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_amd64.tar.gz \
+    && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
     && wget -O /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
 
