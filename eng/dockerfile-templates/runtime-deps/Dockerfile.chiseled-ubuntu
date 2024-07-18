@@ -58,6 +58,8 @@
     set gid to uid
 }}FROM {{installerImageTag}} AS chisel
 
+RUN apt-get update && apt-get install -y file
+
 RUN wget -O chisel.tar.gz https://{{chiselUrl}}/releases/download/{{chiselRef}}/chisel_{{chiselRef}}_linux_{{chiselArch}}.tar.gz \
     && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
     && wget -O /usr/bin/chisel-wrapper {{rocksToolboxUrl}}/{{rocksToolboxRef}}/chisel-wrapper \
