@@ -61,26 +61,28 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async void VerifyBlazorWasmScenario(ProductImageData imageData)
         {
-            // Disable test since `dotnet workload install` does not work with an empty NuGet config.
-            return;
+            // Test will fail on main branch since `dotnet workload install` does not work with an empty NuGet config.
+            bool failureExpected = !Config.IsNightlyRepo;
 
             bool isAlpine = imageData.OS.StartsWith(OS.Alpine);
 
             // Microsoft.NETCore.App.Runtime.Mono.linux-musl-arm* package does not exist
-            if (isAlpine && imageData.IsArm)
-            {
-                return;
-            }
+            failureExpected |= isAlpine && imageData.IsArm;
+
+            bool useWasmTools = true;
 
             // `wasm-tools` workload does not work on .NET 6 with CBL Mariner 2.0.
             // Re-enable when issue is resolved: https://github.com/dotnet/aspnetcore/issues/53469
             if (imageData.OS.Contains(OS.Mariner) && imageData.Version.Major == 6)
             {
-                return;
+                useWasmTools = false;
             }
 
             // `wasm-tools` workload does not work on ARM
-            bool useWasmTools = !imageData.IsArm;
+            if (imageData.IsArm)
+            {
+                useWasmTools = false;
+            }
 
             // `wasm-tools` is not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
             if (isAlpine && (imageData.Version.Major == 6 || imageData.Version.Major == 8))
@@ -89,7 +91,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
-            await testScenario.ExecuteAsync();
+            await testScenario.ExecuteAsync(shouldThrow: failureExpected);
         }
 
         [LinuxImageTheory]
@@ -165,6 +167,12 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
+            // Skip test in nightly due to https://github.com/dotnet/dotnet-docker/issues/4841
+            if (imageData.IsWindows && Config.IsNightlyRepo)
+            {
+                return;
+            }
+
             if (!IsPowerShellSupported(imageData, out string powerShellReason))
             {
                 OutputHelper.WriteLine(powerShellReason);
