@@ -17,8 +17,7 @@ RUN apk add --upgrade --no-cache \
         libgcc \
         libssl3 \
         libstdc++ \
-        tzdata \
-        zlib
+        tzdata
 
 # Create a non-root user and group
 RUN addgroup \

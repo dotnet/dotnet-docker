@@ -18,7 +18,6 @@ RUN tdnf install -y \
         libstdc++ \
         openssl-libs \
         tzdata \
-        zlib \
     && tdnf clean all
 
 # Create a non-root user and group

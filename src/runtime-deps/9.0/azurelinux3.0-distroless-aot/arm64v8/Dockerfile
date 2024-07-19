@@ -15,7 +15,6 @@ RUN mkdir /staging \
         glibc \
         libgcc \
         openssl-libs \
-        zlib \
     && tdnf clean all --releasever=3.0 --installroot /staging
 
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
