@@ -8,12 +8,10 @@
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
 
-    set chiselUrl to VARIABLES[cat("chisel|", dotnetVersion, "|url")] ^
-    set chiselRef to VARIABLES[cat("chisel|", dotnetVersion, "|ref")] ^
-    set chiselArch to when(ARCH_SHORT = "x64", "amd64", ARCH_SHORT) ^
+    set chiselUrl to VARIABLES[cat("chisel|", dotnetVersion, "|", ARCH_SHORT, "|url")] ^
+    set chiselSha to VARIABLES[cat("chisel|", dotnetVersion, "|", ARCH_SHORT, "|sha")] ^
     set rocksToolboxUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
-    set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|ref")] ^
-    set golangVersion to VARIABLES[cat("chisel|", dotnetVersion, "|golang-version")] ^
+    set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|version")] ^
 
     set installerImageTag to cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl") ^
 
@@ -60,9 +58,19 @@
 
 RUN apt-get update && apt-get install -y file
 
-RUN wget -O chisel.tar.gz https://{{chiselUrl}}/releases/download/{{chiselRef}}/chisel_{{chiselRef}}_linux_{{chiselArch}}.tar.gz \
+RUN {{InsertTemplate("../Dockerfile.linux.download-file",
+    [
+        "out-file": "chisel.tar.gz",
+        "url": chiselUrl,
+        "sha": chiselSha,
+        "sha-var-name": "chisel_sha512"
+    ], "    ")}} \
     && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
-    && wget -O /usr/bin/chisel-wrapper {{rocksToolboxUrl}}/{{rocksToolboxRef}}/chisel-wrapper \
+    && {{InsertTemplate("../Dockerfile.linux.download-file",
+    [
+        "out-file": "/usr/bin/chisel-wrapper",
+        "url": cat(rocksToolboxUrl, "/", rocksToolboxRef, "/chisel-wrapper")
+    ], "    ")}} \
     && chmod 755 /usr/bin/chisel-wrapper
 
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged", [

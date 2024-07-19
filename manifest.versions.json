@@ -211,9 +211,9 @@
     "rocks-toolbox|9.0|url": "$(rocks-toolbox|latest|url)",
 
     "rocks-toolbox|latest|version": "v1.1.2",
-    "rocks-toolbox|6.0|version": "$(rocks-toolbox|latest|ref)",
-    "rocks-toolbox|8.0|version": "$(rocks-toolbox|latest|ref)",
-    "rocks-toolbox|9.0|version": "$(rocks-toolbox|latest|ref)",
+    "rocks-toolbox|6.0|version": "$(rocks-toolbox|latest|version)",
+    "rocks-toolbox|8.0|version": "$(rocks-toolbox|latest|version)",
+    "rocks-toolbox|9.0|version": "$(rocks-toolbox|latest|version)",
 
     "runtime|6.0|build-version": "6.0.32",
     "runtime|6.0|targeting-pack-version": "$(runtime|6.0|build-version)",
