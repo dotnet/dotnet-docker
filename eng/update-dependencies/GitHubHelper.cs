@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Octokit;
 
 #nullable enable
 namespace Dotnet.Docker;
@@ -36,11 +37,29 @@ public static class GitHubHelper
         return response;
     }
 
+    public static Task<Release> GetLatestReleaseWithOctokitAsync(string owner, string repo)
+    {
+        IReleasesClient releasesClient = GetReleasesClient();
+        return releasesClient.GetLatest(owner, repo);
+    }
+
+    private static IReleasesClient GetReleasesClient() 
+    {
+        GitHubClient client = new(productInformation: GetProductHeaderValue());
+        return client.Repository.Release;
+    }
+
+    private static Octokit.ProductHeaderValue GetProductHeaderValue()
+    {
+        const string AppName = "dotnet-docker-update-dependencies";
+        return new Octokit.ProductHeaderValue(AppName);
+    }
+
     private static async Task<JObject> Get(string request) {
         string responseString = await s_httpClient.GetStringAsync(request);
         JObject response = (JObject)(JsonConvert.DeserializeObject(responseString) ??
             throw new InvalidOperationException($"Unable to deserialize response from '{s_httpClient.BaseAddress}{request}' as JSON."));
         return response;
     }
+
 }
-#nullable disable
