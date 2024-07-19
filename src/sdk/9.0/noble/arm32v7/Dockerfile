@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/9.0.100-preview.7.24368.2/dotnet-sdk-9.0.100-preview.7.24368.2-linux-arm.tar.gz \
-    && dotnet_sha512='ab4794c289999e9d608f20c8e3f926b67f5e1d0fcd114ac1891b0857de8e9a545cd6bc246e52e0ca6ba7479721ad8db46577dd0094d1677e8a34ea00b59720f1' \
+RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/9.0.100-preview.7.24368.5/dotnet-sdk-9.0.100-preview.7.24368.5-linux-arm.tar.gz \
+    && dotnet_sha512='6fe8605d21f3badc7a43e075f71324ce92014b5052f363d30e97ec7b3608059f13a38de1a45958361fceabb012c0b3a606e03ed332f4ce77127e7d197409b63d' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -20,7 +20,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=9.0.100-preview.7.24368.2 \
+    DOTNET_SDK_VERSION=9.0.100-preview.7.24368.5 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
