@@ -357,11 +357,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 expectedPackages = [..expectedPackages, ..GetExtraPackages(imageData)];
             }
 
-            if (imageData.Version.Major == 9)
-            {
-                expectedPackages = expectedPackages.Where(package => !package.Contains("zlib"));
-            }
-
             return expectedPackages.Distinct().OrderBy(s => s);
         }
 
