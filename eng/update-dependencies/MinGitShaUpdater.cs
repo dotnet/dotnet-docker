@@ -10,7 +10,7 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Updates the MinGit SHA checksum in the manifest.versions.json file.
 /// </summary>
-internal class MinGitShaUpdater(string repoRoot, Release release)
+internal sealed class MinGitShaUpdater(string repoRoot, Release release)
     : MinGitUrlUpdater(repoRoot, release, "sha")
 {
     protected override string GetValue()
