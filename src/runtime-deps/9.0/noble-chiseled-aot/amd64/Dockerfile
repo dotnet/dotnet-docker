@@ -31,8 +31,7 @@ RUN mkdir -p /rootfs/var/lib/dpkg/ \
             ca-certificates_data \
             libc6_libs \
             libgcc-s1_libs \
-            libssl3t64_libs \
-            zlib1g_libs
+            libssl3t64_libs
 
 
 FROM scratch

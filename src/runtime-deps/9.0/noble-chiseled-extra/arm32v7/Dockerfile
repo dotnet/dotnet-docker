@@ -34,8 +34,7 @@ RUN mkdir -p /rootfs/var/lib/dpkg/ \
             libicu74_libs \
             libssl3t64_libs \
             libstdc++6_libs \
-            tzdata_zoneinfo \
-            zlib1g_libs
+            tzdata_zoneinfo
 
 
 FROM scratch
