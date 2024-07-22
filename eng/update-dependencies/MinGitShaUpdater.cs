@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Text.RegularExpressions;
-using Newtonsoft.Json.Linq;
+using Octokit;
 
 #nullable enable
 namespace Dotnet.Docker;
@@ -10,30 +10,20 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Updates the MinGit SHA checksum in the manifest.versions.json file.
 /// </summary>
-internal class MinGitShaUpdater : MinGitUpdater
+internal class MinGitShaUpdater(string repoRoot, Release release)
+    : MinGitUrlUpdater(repoRoot, release, "sha")
 {
-    public MinGitShaUpdater(string repoRoot, JObject latestMinGitRelease)
-        : base(
-            repoRoot,
-            latestMinGitRelease,
-            "mingit|latest|x64|sha")
-    {
-    }
-
     protected override string GetValue()
     {
-        JObject asset = MinGitUrlUpdater.GetMinGitAsset(LatestMinGitRelease);
+        ReleaseAsset asset = GetReleaseAsset();
 
         // The SHA for the MinGit zip file is contained in the body description of the MinGit release as a table listing.
-
-        string name = asset.GetRequiredToken<JValue>("name").ToString();
-        string body = LatestMinGitRelease.GetRequiredToken<JValue>("body").ToString();
+        string name = asset.Name.ToString();
+        string body = Release.Body;
 
         const string ShaGroupName = "sha";
         Regex shaRegex = new(@$"{Regex.Escape(name)}\s\|\s(?<{ShaGroupName}>[0-9|a-f]+)");
         string sha = shaRegex.Match(body).Groups[ShaGroupName].Value;
         return sha;
     }
-
 }
-#nullable disable

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Octokit;
@@ -6,10 +8,47 @@ using Octokit;
 #nullable enable
 namespace Dotnet.Docker;
 
+/// <summary>
+/// Updates to the latest download URL when runtime dependencies are being updated.
+/// </summary>
+internal class GitHubReleaseUrlUpdater(string repoRoot, string variableName, Release release, string DependencyInfoToUse, Regex assetRegex)
+    : GitHubReleaseVersionUpdater(repoRoot, variableName, release, DependencyInfoToUse)
+{
+    private readonly string _variableName = variableName;
+    private readonly Regex _assetRegex = assetRegex;
+
+    protected override string? GetValue() => GetReleaseAsset().BrowserDownloadUrl;
+
+    protected ReleaseAsset GetReleaseAsset()
+    {
+        return Release.Assets.FirstOrDefault(asset => _assetRegex.IsMatch(asset.Name))
+            ?? throw new Exception($"Could not find release asset for {_variableName} matching regex {_assetRegex}");
+    }
+}
+
+/// <summary>
+/// Updates to the latest release tag name when runtime dependencies are being updated.
+/// </summary>
+internal class GitHubReleaseVersionUpdater(string repoRoot, string variableName, Release release, string dependencyInfoToUse)
+    : GitHubReleaseUpdaterBase(repoRoot, variableName, release)
+{
+    private readonly string _dependencyInfoToUse = dependencyInfoToUse;
+
+    protected override string? GetValue()
+    {
+        return Release.TagName;
+    }
+
+    protected sealed override IDependencyInfo? GetDependencyInfoToUse(IEnumerable<IDependencyInfo> dependencyInfos)
+    {
+        return dependencyInfos.FirstOrDefault(info => info.SimpleName == _dependencyInfoToUse);
+    }
+}
+
 internal abstract partial class GitHubReleaseUpdaterBase(string repoRoot, string variableName, Release release)
     : VariableUpdaterBase(repoRoot, variableName)
 {
-    protected abstract IDependencyInfo? GetDependencyInfosToUse(IEnumerable<IDependencyInfo> dependencyInfos);
+    protected abstract IDependencyInfo? GetDependencyInfoToUse(IEnumerable<IDependencyInfo> dependencyInfos);
 
     protected abstract string? GetValue();
 
@@ -27,7 +66,7 @@ internal abstract partial class GitHubReleaseUpdaterBase(string repoRoot, string
             return "";
         }
 
-        IDependencyInfo? usedDependencyInfo = GetDependencyInfosToUse(dependencyInfos);
+        IDependencyInfo? usedDependencyInfo = GetDependencyInfoToUse(dependencyInfos);
         if (usedDependencyInfo is null)
         {
             return currentVersion;

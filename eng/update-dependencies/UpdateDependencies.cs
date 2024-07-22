@@ -18,7 +18,6 @@ using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
 using Microsoft.TeamFoundation.SourceControl.WebApi;
 using Microsoft.VisualStudio.Services.Common;
 using Microsoft.VisualStudio.Services.WebApi;
-using Newtonsoft.Json.Linq;
 
 #nullable enable
 namespace Dotnet.Docker
@@ -412,15 +411,14 @@ namespace Dotnet.Docker
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
 
-            JObject minGitRelease = await GitHubHelper.GetLatestReleaseAsync("git-for-windows", "git");
+            IEnumerable<IDependencyUpdater> minGitUpdaters = await MinGitUpdater.GetMinGitUpdatersAsync(RepoRoot);
             IEnumerable<IDependencyUpdater> chiselUpdaters = await ChiselUpdater.GetChiselUpdatersAsync(RepoRoot, Options.DockerfileVersion);
 
             List<IDependencyUpdater> updaters =
             [
                 new NuGetConfigUpdater(RepoRoot, Options),
                 new BaseUrlUpdater(RepoRoot, Options),
-                new MinGitUrlUpdater(RepoRoot, minGitRelease),
-                new MinGitShaUpdater(RepoRoot, minGitRelease),
+                ..minGitUpdaters,
                 // Chisel updaters must be listed before runtime version
                 // updaters because they check the manifest for whether the
                 // runtime versions are being updated or not
