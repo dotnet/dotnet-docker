@@ -425,23 +425,23 @@ namespace Dotnet.Docker
                 ..chiselUpdaters
             ];
 
-            foreach (string productName in Options.ProductVersions.Keys)
-            {
-                updaters.Add(new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot, Options));
-                updaters.Add(new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, RepoRoot, Options));
+            // foreach (string productName in Options.ProductVersions.Keys)
+            // {
+            //     updaters.Add(new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot, Options));
+            //     updaters.Add(new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, RepoRoot, Options));
 
-                foreach (IDependencyUpdater shaUpdater in DockerfileShaUpdater.CreateUpdaters(productName, Options.DockerfileVersion, RepoRoot, Options))
-                {
-                    updaters.Add(shaUpdater);
-                }
-            }
+            //     foreach (IDependencyUpdater shaUpdater in DockerfileShaUpdater.CreateUpdaters(productName, Options.DockerfileVersion, RepoRoot, Options))
+            //     {
+            //         updaters.Add(shaUpdater);
+            //     }
+            // }
 
-            updaters =
-            [
-                ..updaters,
-                ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
-                ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
-            ];
+            // updaters =
+            // [
+            //     ..updaters,
+            //     ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
+            //     ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
+            // ];
 
             return updaters;
         }
