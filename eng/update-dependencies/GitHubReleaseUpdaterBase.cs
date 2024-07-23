@@ -34,7 +34,7 @@ internal abstract partial class GitHubReleaseUpdaterBase(string repoRoot, string
         }
 
         // Don't overwrite versions that are set to other variables
-        if (AnyVariableRegex().IsMatch(currentVersion))
+        if (ManifestHelper.IsManifestVariable(currentVersion))
         {
             return currentVersion;
         }
@@ -42,7 +42,4 @@ internal abstract partial class GitHubReleaseUpdaterBase(string repoRoot, string
         usedDependencyInfos = [ usedDependencyInfo ];
         return GetValue();
     }
-
-    [GeneratedRegex(@"^\$\(.*\)$")]
-    private static partial Regex AnyVariableRegex();
 }
