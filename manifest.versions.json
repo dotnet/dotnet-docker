@@ -1,11 +1,12 @@
 {
   "variables": {
-    "aspire-dashboard|8.0|build-version": "8.1.0",
-    "aspire-dashboard|8.0|product-version": "8.1.0",
-    "aspire-dashboard|8.0|fixed-tag": "$(aspire-dashboard|8.0|product-version)",
-    "aspire-dashboard|8.0|minor-tag": "8.0",
-    "aspire-dashboard|8.0|linux|x64|sha": "d823c3177dc1f1acc87cff7f252b90f9bc9b215522749b61e540c747801f697ba60a0defd94dccad7b144fa165fd736c4c6ed97f9c5a123170bb46200e122831",
-    "aspire-dashboard|8.0|linux|arm64|sha": "96e78fc6ab0da4fce82f01f725633820db36fd04fb1f20ab923afe68bb0f155e3d547b4102ad8f95cfbc0fb2d3d7b9103a68f439801aedac6a5973cb34272699",
+    "aspire-dashboard|8|build-version": "8.1.0",
+    "aspire-dashboard|8|product-version": "8.1.0",
+    "aspire-dashboard|8|fixed-tag": "$(aspire-dashboard|8|product-version)",
+    "aspire-dashboard|8|minor-tag": "8.1",
+    "aspire-dashboard|8|major-tag": "8",
+    "aspire-dashboard|8|linux|x64|sha": "d823c3177dc1f1acc87cff7f252b90f9bc9b215522749b61e540c747801f697ba60a0defd94dccad7b144fa165fd736c4c6ed97f9c5a123170bb46200e122831",
+    "aspire-dashboard|8|linux|arm64|sha": "96e78fc6ab0da4fce82f01f725633820db36fd04fb1f20ab923afe68bb0f155e3d547b4102ad8f95cfbc0fb2d3d7b9103a68f439801aedac6a5973cb34272699",
 
     "aspnet|6.0|build-version": "6.0.32",
     "aspnet|6.0|targeting-pack-version": "$(aspnet|6.0|build-version)",
@@ -66,8 +67,8 @@
     "base-url|9.0|main": "$(base-url|public|main)",
     "base-url|9.0|nightly": "$(base-url|public|nightly)",
 
-    "base-url|8.0-aspire-dashboard|main": "$(base-url|public|nightly)",
-    "base-url|8.0-aspire-dashboard|nightly": "$(base-url|public|nightly)",
+    "base-url|8-aspire-dashboard|main": "$(base-url|public|nightly)",
+    "base-url|8-aspire-dashboard|nightly": "$(base-url|public|nightly)",
 
     "base-url|6.3-monitor|main": "$(base-url|public|maintenance|main)",
     "base-url|6.3-monitor|nightly": "$(base-url|public|nightly)",

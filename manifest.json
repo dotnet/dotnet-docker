@@ -10108,10 +10108,11 @@
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/aspire-dashboard-tags.yml",
       "images": [
         {
-          "productVersion": "$(aspire-dashboard|8.0|product-version)",
+          "productVersion": "$(aspire-dashboard|8|product-version)",
           "sharedTags": {
-            "$(aspire-dashboard|8.0|fixed-tag)": {},
-            "$(aspire-dashboard|8.0|minor-tag)": {},
+            "$(aspire-dashboard|8|fixed-tag)": {},
+            "$(aspire-dashboard|8|minor-tag)": {},
+            "$(aspire-dashboard|8|major-tag)": {},
             "latest": {}
           },
           "platforms": [
@@ -10124,8 +10125,9 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(aspire-dashboard|8.0|fixed-tag)-amd64": {},
-                "$(aspire-dashboard|8.0|minor-tag)-amd64": {}
+                "$(aspire-dashboard|8|fixed-tag)-amd64": {},
+                "$(aspire-dashboard|8|minor-tag)-amd64": {},
+                "$(aspire-dashboard|8|major-tag)-amd64": {}
               }
             },
             {
@@ -10138,8 +10140,9 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(aspire-dashboard|8.0|fixed-tag)-arm64v8": {},
-                "$(aspire-dashboard|8.0|minor-tag)-arm64v8": {}
+                "$(aspire-dashboard|8|fixed-tag)-arm64v8": {},
+                "$(aspire-dashboard|8|minor-tag)-arm64v8": {},
+                "$(aspire-dashboard|8|major-tag)-arm64v8": {}
               },
               "variant": "v8"
             }
