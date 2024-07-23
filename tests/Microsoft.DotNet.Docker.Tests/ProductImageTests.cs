@@ -422,6 +422,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libc6",
                         "libgcc-s1",
                         "libssl3",
+                        "openssl",
                         "zlib1g"
                     },
                 { OS: string os } when os.Contains(OS.Noble) => new[]
