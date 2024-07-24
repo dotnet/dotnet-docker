@@ -22,7 +22,7 @@ RUN powershell -Command " `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.2.21'; `
+        $powershell_version = '7.2.22'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
         $powershell_sha512 = '485a5afb9c4450cf1052b9649353eb5aaad4ea9fe57197f513278087297b5c235cea638ec179cced6fa83fb8870f88763f8858215a3c110e6a8687d07b973984'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
