@@ -22,7 +22,10 @@ steps:
       optionalTestArgs="$optionalTestArgs -TestCategories pre-build"
     else
       if [ "${{ variables['System.TeamProject'] }}" == "${{ parameters.internalProjectName }}" ] && [ "${{ variables['Build.Reason'] }}" != "PullRequest" ]; then
-        optionalTestArgs="$optionalTestArgs -PullImages -Registry $(acr-staging.server) -RepoPrefix $(stagingRepoPrefix) -ImageInfoPath $(artifactsPath)/image-info.json"
+        optionalTestArgs="$optionalTestArgs -PullImages -Registry $(acr-staging.server) -CacheRegistry $(public-mirror.server) -RepoPrefix $(stagingRepoPrefix) -ImageInfoPath $(artifactsPath)/image-info.json"
+      fi
+      if [ "${{ variables['System.TeamProject'] }}" != "${{ parameters.internalProjectName }}" ]; then
+        optionalTestArgs="$optionalTestArgs -CacheRegistry $(public-mirror.server)"
       fi
       if [ "$REPOTESTARGS" != "" ]; then
         optionalTestArgs="$optionalTestArgs $REPOTESTARGS"
