@@ -1,9 +1,9 @@
-FROM arm32v7/buildpack-deps:noble-curl AS chisel
+FROM arm64v8/buildpack-deps:noble-curl AS chisel
 
 RUN apt-get update && apt-get install -y file
 
-RUN curl -fSL --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_arm.tar.gz \
-    && chisel_sha512='3e11d2b21eecb1e1ef4414b3aabfdf229f45d1b15f7ebf59fb387db15e055ddbe24dea0c6791219234fecbd27f78e95cb1c499eefcf63742073783ce0d3c2066' \
+RUN curl -fSL --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_arm64.tar.gz \
+    && chisel_sha512='0793124925000cc0103bce1b0f689520866565ba6d0841a3f5dcf4c1c6ffd753d059d9aa068d901f9422b4742fa51c9aa8e848f0751257329a35d99435d5cc1b' \
     && echo "$chisel_sha512  chisel.tar.gz" | sha512sum -c - \
     && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
     && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \
@@ -31,8 +31,10 @@ RUN mkdir -p /rootfs/var/lib/dpkg/ \
             ca-certificates_data \
             libc6_libs \
             libgcc-s1_libs \
+            libicu74_libs \
             libssl3t64_libs \
-            libstdc++6_libs
+            libstdc++6_libs \
+            tzdata_zoneinfo
 
 
 FROM scratch
@@ -45,9 +47,7 @@ ENV \
     # Configure web servers to bind to port 8080 when present
     ASPNETCORE_HTTP_PORTS=8080 \
     # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true \
-    # Set the invariant mode since ICU package isn't included (see https://github.com/dotnet/announcements/issues/20)
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+    DOTNET_RUNNING_IN_CONTAINER=true
 
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=chisel --chown=$APP_UID:$APP_UID /rootfs/home/app /home/app

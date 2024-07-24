@@ -23,9 +23,10 @@
             "ca-certificates_data",
             "libc6_libs",
             "libgcc-s1_libs",
-            cat(opensslPkg, "_libs"),
-            "zlib1g_libs"
+            cat(opensslPkg, "_libs")
         ] ^
+
+    set basePkgs to when (dotnetVersion = "6.0" || dotnetVersion = "8.0", cat(basePkgs, ["zlib1g_libs"]), basePkgs) ^
 
     _ Arrays in cottle are actually key-value maps. Sorting the array sorts by value
         but does not change the key value. In order to have the right index in the

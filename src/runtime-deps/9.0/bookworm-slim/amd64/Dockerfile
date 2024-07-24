@@ -1,4 +1,4 @@
-FROM ubuntu.azurecr.io/ubuntu:noble
+FROM amd64/debian:bookworm-slim
 
 ENV \
     # UID of the non-root user 'app'
@@ -15,8 +15,8 @@ RUN apt-get update \
         # .NET dependencies
         libc6 \
         libgcc-s1 \
-        libicu74 \
-        libssl3t64 \
+        libicu72 \
+        libssl3 \
         libstdc++6 \
         tzdata \
     && rm -rf /var/lib/apt/lists/*
