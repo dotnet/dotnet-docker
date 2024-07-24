@@ -1,4 +1,4 @@
-FROM ubuntu.azurecr.io/ubuntu:noble
+FROM azurelinuxpreview.azurecr.io/public/azurelinux/base/core:3.0
 
 ENV \
     # UID of the non-root user 'app'
@@ -8,25 +8,29 @@ ENV \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+RUN tdnf install -y \
         ca-certificates \
         \
         # .NET dependencies
-        libc6 \
-        libgcc-s1 \
-        libicu74 \
-        libssl3t64 \
-        libstdc++6 \
+        glibc \
+        icu \
+        libgcc \
+        libstdc++ \
+        openssl-libs \
         tzdata \
-    && rm -rf /var/lib/apt/lists/*
+    && tdnf clean all
 
 # Create a non-root user and group
-RUN groupadd \
+RUN tdnf install -y \
+        shadow-utils \
+    && groupadd \
         --gid=$APP_UID \
         app \
     && useradd -l \
         --uid=$APP_UID \
         --gid=$APP_UID \
         --create-home \
-        app
+        app \
+    && tdnf autoremove -y \
+        shadow-utils \
+    && tdnf clean all
