@@ -23,7 +23,6 @@ stages:
 
     # Template paths must be relative to the YAML job that executes them
     customBuildInitSteps:
-    - template: /eng/pipelines/steps/set-imagebuilder-build-args-var.yml@self
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     - powershell: |
         $imageBuilderBuildArgs = "$(imageBuilderBuildArgs)"
