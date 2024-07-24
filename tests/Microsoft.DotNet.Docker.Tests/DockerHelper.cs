@@ -259,6 +259,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public void Pull(string image) => ExecuteWithLogging($"pull {image}", autoRetry: true);
 
+        public void PullExternalImage(string image)
+        {
+            if (!string.IsNullOrEmpty(Config.CacheRegistry))
+            {
+                image = $"{Config.CacheRegistry}/{image}";
+            }
+
+            Pull(image);
+        }
+
         public string GetHistory(string image) =>
             ExecuteWithLogging($"history --no-trunc --format \"{{{{ .CreatedBy }}}}\" {image}");
 
