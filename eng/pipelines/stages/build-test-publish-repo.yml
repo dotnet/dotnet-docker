@@ -25,7 +25,7 @@ stages:
     customBuildInitSteps:
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     - powershell: |
-        $imageBuilderBuildArgs = "$(imageBuilderBuildArgs)"
+        $imageBuilderBuildArgs = "$IMAGEBUILDERBUILDARGS"
         if ("$(publishRepoPrefix)".Contains("internal/")) {
           $sasQueryString = "$(dotnetstage-account-sas-read-token)"
           $imageBuilderBuildArgs += " --build-arg SAS_QUERY_STRING='$sasQueryString'"
