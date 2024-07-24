@@ -49,13 +49,6 @@ namespace Dotnet.Docker
             string productName, string dockerfileVersion, string? buildVersion, string arch, string os, string versions, Options options)
         {
             _productName = productName;
-
-            // Allow major-version only strings
-            if (dockerfileVersion.Split('.').Length == 1)
-            {
-                dockerfileVersion += ".0";
-            }
-
             _dockerfileVersion = new Version(dockerfileVersion);
             _buildVersion = buildVersion;
             _arch = arch;
