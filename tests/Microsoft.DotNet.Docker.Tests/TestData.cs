@@ -353,6 +353,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             new() {
                 Version = V8_1,
+                VersionFamily = V8_0,
                 OS = OS.Mariner20Distroless,
                 OSTag = "",
                 OSDir = OS.MarinerDistroless,
@@ -361,6 +362,7 @@ namespace Microsoft.DotNet.Docker.Tests
             },
             new() {
                 Version = V8_1,
+                VersionFamily = V8_0,
                 OS = OS.Mariner20Distroless,
                 OSTag = "",
                 OSDir = OS.MarinerDistroless,
