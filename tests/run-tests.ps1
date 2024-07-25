@@ -18,6 +18,8 @@ param(
 
     [string]$Registry,
 
+    [string]$CacheRegistry,
+
     [string]$RepoPrefix,
 
     [switch]$DisableHttpVerification,
@@ -111,6 +113,7 @@ Try {
     $env:IMAGE_ARCH = $Architecture
     $env:IMAGE_OS_NAMES = $($OSVersions -Join ",")
     $env:REGISTRY = $Registry
+    $env:CACHE_REGISTRY = $CacheRegistry
     $env:REPO_PREFIX = $RepoPrefix
     $env:IMAGE_INFO_PATH = $ImageInfoPath
     $env:SOURCE_REPO_ROOT = (Get-Item "$PSScriptRoot").Parent.FullName
