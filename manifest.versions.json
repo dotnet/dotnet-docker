@@ -3,6 +3,7 @@
     "aspire-dashboard|8.1|build-version": "8.1.0",
     "aspire-dashboard|8.1|product-version": "8.1.0",
     "aspire-dashboard|8.1|fixed-tag": "$(aspire-dashboard|8.1|product-version)",
+    "aspire-dashboard|8.1|minor-tag": "8.1",
     "aspire-dashboard|8|major-tag": "8",
     "aspire-dashboard|8.1|linux|x64|sha": "d823c3177dc1f1acc87cff7f252b90f9bc9b215522749b61e540c747801f697ba60a0defd94dccad7b144fa165fd736c4c6ed97f9c5a123170bb46200e122831",
     "aspire-dashboard|8.1|linux|arm64|sha": "96e78fc6ab0da4fce82f01f725633820db36fd04fb1f20ab923afe68bb0f155e3d547b4102ad8f95cfbc0fb2d3d7b9103a68f439801aedac6a5973cb34272699",
