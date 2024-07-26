@@ -337,10 +337,10 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.Mariner20Distroless,    OSTag = OS.MarinerDistroless, Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.Mariner20Distroless,    OSTag = OS.MarinerDistroless, Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.Mariner20Distroless,    OSTag = OS.MarinerDistroless, Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.Mariner20Distroless,    OSTag = OS.MarinerDistroless, Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
+            new ProductImageData { Version = V8_1_Preview, VersionFamily = V8_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
+            new ProductImageData { Version = V8_1_Preview, VersionFamily = V8_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
+            new ProductImageData { Version = V8_1_Preview, VersionFamily = V8_0, OS = OS.Mariner20Distroless,    OSTag = OS.MarinerDistroless, Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
+            new ProductImageData { Version = V8_1_Preview, VersionFamily = V8_0, OS = OS.Mariner20Distroless,    OSTag = OS.MarinerDistroless, Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V9_0, VersionFamily = V9_0, OS = OS.AzureLinux30Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V9_0, VersionFamily = V9_0, OS = OS.AzureLinux30Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor }
         };
@@ -352,7 +352,8 @@ namespace Microsoft.DotNet.Docker.Tests
         private static readonly ProductImageData[] s_AspireDashboardTestData =
         {
             new() {
-                Version = V8_0,
+                Version = V8_1,
+                VersionFamily = V8_0,
                 OS = OS.Mariner20Distroless,
                 OSTag = "",
                 OSDir = OS.MarinerDistroless,
@@ -360,7 +361,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard,
             },
             new() {
-                Version = V8_0,
+                Version = V8_1,
+                VersionFamily = V8_0,
                 OS = OS.Mariner20Distroless,
                 OSTag = "",
                 OSDir = OS.MarinerDistroless,
