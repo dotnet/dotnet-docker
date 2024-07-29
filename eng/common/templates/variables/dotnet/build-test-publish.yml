@@ -11,8 +11,6 @@ variables:
   value: ./tests/run-tests.ps1
 - name: testResultsDirectory
   value: tests/Microsoft.DotNet.Docker.Tests/TestResults/
-- name: optionalTestArgs
-  value: -CacheRegistry $(public-mirror.server)
 - name: officialRepoPrefixes
   value: public/,internal/private/
 
