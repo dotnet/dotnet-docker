@@ -1,7 +1,7 @@
 # Featured Tags
 
-* `8.0`
-  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:8.0`
+* `8.1`
+  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:8.1`
 
 # About
 
@@ -24,7 +24,8 @@ The dashboard shows:
 The dashboard must be configured when it is started. The configuration is done via environment variables. The following environment variables are supported:
 
 - `ASPNETCORE_URLS` specifies one or more HTTP endpoints through which the dashboard frontend is served. The frontend endpoint is used to view the dashboard in a browser. Defaults to http://localhost:18888.
-- `DOTNET_DASHBOARD_OTLP_ENDPOINT_URL` specifies the OTLP endpoint. OTLP endpoint hosts an OTLP service and recevies telemetry. Defaults to http://localhost:18889.
+- `DOTNET_DASHBOARD_OTLP_ENDPOINT_URL` specifies the [OTLP/gRPC](https://opentelemetry.io/docs/specs/otlp/#otlpgrpc) endpoint. This endpoint hosts an OTLP service and receives telemetry using gRPC. When the dashboard is launched by the .NET Aspire app host this address is secured with HTTPS. Securing the dashboard with HTTPS is recommended. Defaults to http://localhost:18889.
+- `DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL` specifies the [OTLP/HTTP](https://opentelemetry.io/docs/specs/otlp/#otlphttp) endpoint. This endpoint hosts an OTLP service and receives telemetry using Protobuf over HTTP. Defaults to http://localhost:18890.
 - `DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS` specifies the dashboard doesn't use authentication and accepts anonymous access. This setting is a shortcut to configuring `Dashboard:Frontend:AuthMode` and `Dashboard:Otlp:AuthMode` to `Unsecured`.
 - `DOTNET_DASHBOARD_CONFIG_FILE_PATH` specifies the path for an optional JSON configuration file.
 
@@ -109,12 +110,12 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.2-amd64, 8.0-amd64, 8.0.2, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspire-dashboard/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+8.1.0-amd64, 8.1-amd64, 8-amd64, 8.1.0, 8.1, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspire-dashboard/8.1/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.2-arm64v8, 8.0-arm64v8, 8.0.2, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspire-dashboard/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+8.1.0-arm64v8, 8.1-arm64v8, 8-arm64v8, 8.1.0, 8.1, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspire-dashboard/8.1/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 
 You can retrieve a list of all available tags for dotnet/aspire-dashboard at https://mcr.microsoft.com/v2/dotnet/aspire-dashboard/tags/list.
 <!--End of generated tags-->

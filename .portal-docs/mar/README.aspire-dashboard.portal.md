@@ -6,8 +6,8 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `8.0`
-  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:8.0`
+* `8.1`
+  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:8.1`
 
 ## Related Repositories
 
@@ -42,7 +42,8 @@ The dashboard shows:
 The dashboard must be configured when it is started. The configuration is done via environment variables. The following environment variables are supported:
 
 - `ASPNETCORE_URLS` specifies one or more HTTP endpoints through which the dashboard frontend is served. The frontend endpoint is used to view the dashboard in a browser. Defaults to http://localhost:18888.
-- `DOTNET_DASHBOARD_OTLP_ENDPOINT_URL` specifies the OTLP endpoint. OTLP endpoint hosts an OTLP service and recevies telemetry. Defaults to http://localhost:18889.
+- `DOTNET_DASHBOARD_OTLP_ENDPOINT_URL` specifies the [OTLP/gRPC](https://opentelemetry.io/docs/specs/otlp/#otlpgrpc) endpoint. This endpoint hosts an OTLP service and receives telemetry using gRPC. When the dashboard is launched by the .NET Aspire app host this address is secured with HTTPS. Securing the dashboard with HTTPS is recommended. Defaults to http://localhost:18889.
+- `DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL` specifies the [OTLP/HTTP](https://opentelemetry.io/docs/specs/otlp/#otlphttp) endpoint. This endpoint hosts an OTLP service and receives telemetry using Protobuf over HTTP. Defaults to http://localhost:18890.
 - `DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS` specifies the dashboard doesn't use authentication and accepts anonymous access. This setting is a shortcut to configuring `Dashboard:Frontend:AuthMode` and `Dashboard:Otlp:AuthMode` to `Unsecured`.
 - `DOTNET_DASHBOARD_CONFIG_FILE_PATH` specifies the path for an optional JSON configuration file.
 

@@ -17,7 +17,9 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
 
     private const int DashboardWebPort = 18888;
 
-    private const int DashboardOTLPPort = 18889;
+    private const int DashboardOtlpPort = 18889;
+
+    private const int DashboardOtlpHttpPort = 18890;
 
     protected override DotNetImageRepo ImageRepo => DotNetImageRepo.Aspire_Dashboard;
 
@@ -45,7 +47,8 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
             // to have a base URL of 0.0.0.0 due to a bug in the Aspire Dashboard.
             // Change the format when https://github.com/dotnet/dotnet-docker/issues/5190 is closed.
             new EnvironmentVariableInfo("ASPNETCORE_URLS", $"http://0.0.0.0:{DashboardWebPort}"),
-            new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_ENDPOINT_URL", $"http://0.0.0.0:{DashboardOTLPPort}"),
+            new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_ENDPOINT_URL", $"http://0.0.0.0:{DashboardOtlpPort}"),
+            new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL", $"http://0.0.0.0:{DashboardOtlpHttpPort}"),
         ];
 
         string imageTag = imageData.GetImage(ImageRepo, DockerHelper);
