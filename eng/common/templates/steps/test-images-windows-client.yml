@@ -23,12 +23,9 @@ steps:
 - ${{ parameters.customInitSteps }}
 - powershell: |
     if ("${{ variables['System.TeamProject'] }}" -eq "${{ parameters.internalProjectName }}" -and "${{ variables['Build.Reason'] }}" -ne "PullRequest") {
-      $optionalTestArgs="$optionalTestArgs -PullImages -Registry ${env:ACR-STAGING_SERVER} -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info.json"
+      $additionalTestArgs="$env:ADDITIONALTESTARGS -PullImages -Registry ${env:ACR-STAGING_SERVER} -RepoPrefix $env:STAGINGREPOPREFIX -ImageInfoPath $(artifactsPath)/image-info.json"
     }
-    if ($env:REPOTESTARGS) {
-      $optionalTestArgs += " $env:REPOTESTARGS"
-    }
-    echo "##vso[task.setvariable variable=optionalTestArgs]$optionalTestArgs"
+    echo "##vso[task.setvariable variable=additionalTestArgs]$additionalTestArgs"
   displayName: Set Test Variables
   condition: and(succeeded(), ${{ parameters.condition }})
 - powershell: Get-ChildItem -Path tests -r | Where {$_.Extension -match "trx"} | Remove-Item
@@ -46,7 +43,7 @@ steps:
     $(testScriptPath)
     -Paths $(imageBuilderPathsArrayInitStr)
     -OSVersions $(osVersionsArrayInitStr)
-    $(optionalTestArgs)
+    $(additionalTestArgs)
   displayName: Test Images
   condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
