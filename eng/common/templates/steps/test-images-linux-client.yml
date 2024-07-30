@@ -23,6 +23,9 @@ steps:
     else
       if [ "${{ variables['System.TeamProject'] }}" == "${{ parameters.internalProjectName }}" ] && [ "${{ variables['Build.Reason'] }}" != "PullRequest" ]; then
         additionalTestArgs="$additionalTestArgs -PullImages -Registry $(acr-staging.server) -RepoPrefix $(stagingRepoPrefix) -ImageInfoPath $(artifactsPath)/image-info.json"
+        if [ "$TESTCATEGORIESOVERRIDE" != "" ]; then
+          additionalTestArgs="$additionalTestArgs -TestCategories $TESTCATEGORIESOVERRIDE"
+        fi
       fi
     fi
     echo "##vso[task.setvariable variable=additionalTestArgs]$additionalTestArgs"
