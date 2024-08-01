@@ -1,7 +1,0 @@
-trigger: none
-pr: none
-
-variables:
-- template: variables/core.yml
-jobs:
-- template: ../common/templates/jobs/wait-for-ingestion.yml
