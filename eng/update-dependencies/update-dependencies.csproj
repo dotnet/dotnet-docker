@@ -18,6 +18,7 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
 
     <!-- CVE-2024-38095: Upgrade version of System.Formats.Asn1 implicitly referenced by Microsoft.DotNet.VersionTools -->
+    <!-- Tracking issue for Arcade: https://github.com/dotnet/dnceng/issues/3336 -->
     <PackageReference Include="System.Formats.Asn1" Version="6.0.1" />
   </ItemGroup>
 </Project>
