@@ -220,4 +220,3 @@ docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_EN
 After the application starts, navigate to `https://localhost:8001` in your web browser.
 
 > In the case of using https, be sure to check the certificate you're using is trusted on the host. You can start with navigating to https://localhost:8001 in the browser. If you're looking to test https with a domain name (e.g. https://contoso.com:8001), the certificate would also need the appropiate Subject Alternative Name included, and the DNS settings on the host would need to be updated. In the case of using the generated dev certificate, the trusted certificate will be issued from localhost and will not have the SAN added.
-

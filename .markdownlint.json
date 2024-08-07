@@ -6,27 +6,16 @@
     // Follow-up work will be done to enable these rules and clean up the violations.
     "MD001": false, // heading-increment Heading levels should only increment by one level at a time 
     "MD004": false, // ul-style Unordered list style
-    "MD005": false, // list-indent Inconsistent indentation for list items at the same level
-    "MD007": false, // ul-indent Unordered list indentation
-    "MD009": false, // no-trailing-spaces Trailing spaces
-    "MD010": false, // no-hard-tabs Hard tabs
-    "MD011": false, // no-reversed-links Reversed link syntax
-    "MD012": false, // no-multiple-blanks Multiple consecutive blank lines
     "MD013": false, // line length
     "MD014": false, // commands-show-output Dollar signs used before commands without showing output
     "MD022": false, // blanks-around-headings Headings should be surrounded by blank lines
     "MD024": false, // no-duplicate-heading Multiple headings with the same content
     "MD025": false, // single-title/single-h1 Multiple top-level headings in the same document
-    "MD026": false, // no-trailing-punctuation Trailing punctuation in heading
     "MD028": false, // no-blanks-blockquote Blank line inside blockquote
-    "MD031": false, // blanks-around-fences Fenced code blocks should be surrounded by blank lines
-    "MD032": false, // blanks-around-lists Lists should be surrounded by blank lines
     "MD034": false, // no-bare-urls Bare URL used
     "MD036": false, // no-emphasis-as-heading Emphasis used instead of a heading
     "MD037": false, // no-space-in-emphasis Spaces inside emphasis markers
     "MD040": false, // fenced-code-language Fenced code blocks should have a language specified 
     "MD041": false, // first-line-heading/first-line-h1 First line in a file should be a top-level heading
-    "MD047": false, // single-trailing-newline Files should end with a single newline character
     "MD049": false, // emphasis-style Emphasis style
-    "MD051": false, // link-fragments Link fragments should be valid
 }
