@@ -30,7 +30,7 @@ Some users want to add ICU to one of the image types that doesn't include it. It
 
 When using `Microsoft.Data.SqlClient` or Entity Framework Core without ICU installed, the following exception may be thrown when attempting to connect to a database:
 
-```
+```text
 System.Globalization.CultureNotFoundException: Only the invariant culture is supported in globalization-invariant mode. See https://aka.ms/GlobalizationInvariantMode for more information. (Parameter 'name')
 en-us is an invalid culture identifier.
 ```

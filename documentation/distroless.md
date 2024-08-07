@@ -113,7 +113,7 @@ COPY --from=build /somefile-extracted .
 
 If your app writes to the disk, you may encounter permission issues at runtime, such as:
 
-```
+```text
 System.UnauthorizedAccessException: Access to the path "<path>" is denied
 ```
 
@@ -139,13 +139,13 @@ You can check the user ID that a container will use by running the following com
 
 **Ubuntu**:
 
-```
+```console
 docker image inspect mcr.microsoft.com/dotnet/runtime-deps:8.0-noble-chiseled -f "{{ .Config.User }}"
 ```
 
 **Azure Linux**:
 
-```
+```console
 docker image inspect mcr.microsoft.com/dotnet/runtime-deps:8.0-cbl-mariner2.0-distroless -f "{{ .Config.User }}"
 ```
 

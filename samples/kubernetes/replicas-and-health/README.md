@@ -67,7 +67,7 @@ Create a proxy to the service.
 kubectl port-forward service/dotnet-replica-health 8080
 ```
 
-View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
+View the sample app at `http://localhost:8080/` or call `curl http://localhost:8080/Environment`.
 
 You can call the `healthz` endpoint to test the liveness probe.
 

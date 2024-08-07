@@ -39,7 +39,7 @@ Supported with .NET Core 1.0+
 ASPNETCORE_URLS=http://+:80 
 ```
 
-Note: `ASPNETCORE_URLS` overwrites `ASPNETCORE_HTTP_PORTS` if set.
+> Note: `ASPNETCORE_URLS` overwrites `ASPNETCORE_HTTP_PORTS` if set.
 
 These environment variables are used in [.NET 8](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7C5-L7C31) and [.NET 6](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/6.0/bookworm-slim/amd64/Dockerfile#L5) Dockerfiles, respectively.
 
