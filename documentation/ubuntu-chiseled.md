@@ -24,6 +24,7 @@ If you have a compelling use case for a distroless SDK image, please leave a com
 ## How do I use Ubuntu Chiseled .NET images?
 
 Please see our sample Dockerfiles for examples on how to use Ubuntu Chiseled .NET images:
+
 - [aspnetapp](../samples/aspnetapp/Dockerfile.chiseled)
 - [dotnetapp](../samples/dotnetapp/Dockerfile.chiseled)
 - [releasesapi](../samples/releasesapi/Dockerfile.ubuntu-chiseled) (and [icu version](../samples/releasesapi/Dockerfile.ubuntu-chiseled-icu))

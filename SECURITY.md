@@ -15,4 +15,3 @@ Reports via MSRC may qualify for the .NET Core Bug Bounty. Details of the .NET C
 Please do not open issues for anything you think might have a security implication.
 
 If you're reporting the presence of a disclosed security vulnerability, such as a CVE reported in one of our container images, please follow the documented guidance on vulnerability reporting in [vulnerability-reporting.md](https://github.com/dotnet/dotnet-docker/blob/main/documentation/vulnerability-reporting.md).
-
