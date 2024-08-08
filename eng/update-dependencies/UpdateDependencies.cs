@@ -415,6 +415,7 @@ namespace Dotnet.Docker
             JObject minGitRelease = await GitHubHelper.GetLatestReleaseAsync("git-for-windows", "git");
             string chiselRef = await GitHubHelper.GetLatestReleaseTagAsync("canonical", "chisel");
             string rocksToolboxRef = await GitHubHelper.GetLatestReleaseTagAsync("canonical", "rocks-toolbox");
+            string syftRef = await GitHubHelper.GetLatestReleaseTagAsync("anchore", "syft");
 
             List<IDependencyUpdater> updaters =
             [
@@ -426,7 +427,8 @@ namespace Dotnet.Docker
                 // updaters because they check the manifest for whether the
                 // runtime versions are being updated or not
                 new ChiselRefUpdater(RepoRoot, Options.DockerfileVersion, chiselRef),
-                new RocksToolboxRefUpdater(RepoRoot, Options.DockerfileVersion, rocksToolboxRef)
+                new RocksToolboxRefUpdater(RepoRoot, Options.DockerfileVersion, rocksToolboxRef),
+                new SyftRefUpdater(RepoRoot, syftRef)
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)
