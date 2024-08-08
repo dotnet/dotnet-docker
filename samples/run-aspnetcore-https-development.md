@@ -146,8 +146,6 @@ Generate cert and configure local machine:
 dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p <CREDENTIAL_PLACEHOLDER>
 ```
 
-> Note: `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. It is likely that you need to trust the certificate in your browser.
-
 > Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
 
 > Note: `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
