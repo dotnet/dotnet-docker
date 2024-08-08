@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:6.0.32-alpine3.20-amd64
+FROM $REPO:6.0.33-alpine3.20-amd64
 
 WORKDIR /app
 
