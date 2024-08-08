@@ -1,0 +1,12 @@
+ARG sdk_image
+
+FROM $sdk_image AS sdk_stage
+
+FROM ubuntu:20.04
+
+ARG sdk_content_path
+ARG sdk_copy_path
+
+RUN mkdir -p $sdk_copy_path
+
+COPY --from=sdk_stage $sdk_content_path $sdk_copy_path
