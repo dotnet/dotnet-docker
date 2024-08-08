@@ -33,8 +33,8 @@ Test the pattern with a single replica deployment. This test requires multiple t
 First terminal:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-dotnet/hello-dotnet.yaml
-$ kubectl port-forward service/hello-dotnet 8080:80
+kubectl apply -f https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/kubernetes/hello-dotnet/hello-dotnet.yaml
+kubectl port-forward service/hello-dotnet 8080:80
 ```
 
 Second terminal:

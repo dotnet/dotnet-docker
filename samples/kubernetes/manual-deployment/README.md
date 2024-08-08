@@ -25,7 +25,7 @@ Create a proxy to the service.
 kubectl port-forward service/dotnet-app 8080:8080
 ```
 
-View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
+View the sample app at `http://localhost:8080/` or call `curl http://localhost:8080/Environment`.
 
 Should look like:
 

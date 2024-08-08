@@ -22,7 +22,7 @@ Create a proxy to the service, on all three ports.
 kubectl port-forward service/dotnet-monitor 8080 52323 52325
 ```
 
-View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`.
+View the sample app at `http://localhost:8080/` or call `curl http://localhost:8080/Environment`.
 
 You can query the app.
 

@@ -52,7 +52,7 @@ They include:
 - Debian, unless specified (like `8.0-alpine`).
 - All [supported architectures](supported-platforms.md#architectures).
 
-**Note:** Since .NET 8, these multi-platform tags **specifically exclude all Windows versions** due to `containerd`'s platform matching algorithm for Windows hosts.
+> Note: Since .NET 8, these multi-platform tags **specifically exclude all Windows versions** due to `containerd`'s platform matching algorithm for Windows hosts.
 Please see [#4492 (Switch multi-platform tags to Linux only)](https://github.com/dotnet/dotnet-docker/issues/4492) for more context.
 If you are using Windows, you will need to explicitly specify an OS Version with a single-platform tag like so:
 

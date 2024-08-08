@@ -5,10 +5,10 @@
 .NET's Ubuntu Chiseled images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
 These images offer dramatically smaller deployment sizes and attack surface compared to our "full" Ubuntu images that are based on the Ubuntu base images. This is achieved through the following features:
 
-- Minimal set of packages required to run a .NET application
-- Non-root user by default
-- No package manager
-- No shell
+* Minimal set of packages required to run a .NET application
+* Non-root user by default
+* No package manager
+* No shell
 
 ## Featured Tags
 
@@ -25,9 +25,9 @@ If you have a compelling use case for a distroless SDK image, please leave a com
 
 Please see our sample Dockerfiles for examples on how to use Ubuntu Chiseled .NET images:
 
-- [aspnetapp](../samples/aspnetapp/Dockerfile.chiseled)
-- [dotnetapp](../samples/dotnetapp/Dockerfile.chiseled)
-- [releasesapi](../samples/releasesapi/Dockerfile.ubuntu-chiseled) (and [icu version](../samples/releasesapi/Dockerfile.ubuntu-chiseled-icu))
-- [releasesapp](../samples/releasesapp/Dockerfile.chiseled)
+* [aspnetapp](../samples/aspnetapp/Dockerfile.chiseled)
+* [dotnetapp](../samples/dotnetapp/Dockerfile.chiseled)
+* [releasesapi](../samples/releasesapi/Dockerfile.ubuntu-chiseled) (and [icu version](../samples/releasesapi/Dockerfile.ubuntu-chiseled-icu))
+* [releasesapp](../samples/releasesapp/Dockerfile.chiseled)
 
 If your app's Dockerfile doesn't install any additional Linux packages or depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our full Ubuntu or Debian images.
