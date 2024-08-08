@@ -1,11 +1,13 @@
-# Featured Tags
+# .NET SDK
+
+## Featured Tags
 
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/sdk:8.0`
 * `6.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/sdk:6.0`
 
-# About
+## About
 
 This image contains the .NET SDK which is comprised of three parts:
 
@@ -17,16 +19,16 @@ Use this image for your development process (developing, building and testing ap
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-# Usage
+## Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-## Building .NET Apps with Docker
+### Building .NET Apps with Docker
 
 * [.NET Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
 * [ASP.NET Core Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
 
-## Develop .NET Apps in a Container
+### Develop .NET Apps in a Container
 
 The following samples show how to develop, build and test .NET applications with Docker without the need to install the .NET SDK.
 
@@ -34,12 +36,12 @@ The following samples show how to develop, build and test .NET applications with
 * [Test .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-tests-in-sdk-container.md)
 * [Run .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-in-sdk-container.md)
 
-# Image Variants
+## Image Variants
 
 .NET container images have several variants that offer different combinations of flexibility and deployment size.
 The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
 
-# Related Repositories
+## Related Repositories
 
 .NET:
 
@@ -57,9 +59,10 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 * [dotnet/framework](https://hub.docker.com/r/microsoft/dotnet-framework/): .NET Framework, ASP.NET and WCF
 * [dotnet/framework/samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/): .NET Framework, ASP.NET and WCF Samples
 
-# Full Tag Listing
+## Full Tag Listing
 
-## Linux amd64 Tags
+### Linux amd64 Tags
+
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.303-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.303-bookworm-slim, 8.0-bookworm-slim, 8.0.303, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
@@ -76,7 +79,8 @@ Tags | Dockerfile | OS Version
 6.0.424-cbl-mariner2.0-amd64, 6.0-cbl-mariner2.0-amd64, 6.0.424-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
 6.0.424-focal-amd64, 6.0-focal-amd64, 6.0.424-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
-##### .NET 9 Preview Tags
+#### .NET 9 Preview Tags
+
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.100-preview.6-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.100-preview.6-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.6, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
@@ -84,7 +88,8 @@ Tags | Dockerfile | OS Version
 9.0.100-preview.6-noble-amd64, 9.0-preview-noble-amd64, 9.0.100-preview.6-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 9.0.100-preview.6-azurelinux3.0-amd64, 9.0-preview-azurelinux3.0-amd64, 9.0.100-preview.6-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 
-## Linux arm64 Tags
+### Linux arm64 Tags
+
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.303-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.303-bookworm-slim, 8.0-bookworm-slim, 8.0.303, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
@@ -101,7 +106,8 @@ Tags | Dockerfile | OS Version
 6.0.424-cbl-mariner2.0-arm64v8, 6.0-cbl-mariner2.0-arm64v8, 6.0.424-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
 6.0.424-focal-arm64v8, 6.0-focal-arm64v8, 6.0.424-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
-##### .NET 9 Preview Tags
+#### .NET 9 Preview Tags
+
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.100-preview.6-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.100-preview.6-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.6, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
@@ -109,7 +115,8 @@ Tags | Dockerfile | OS Version
 9.0.100-preview.6-noble-arm64v8, 9.0-preview-noble-arm64v8, 9.0.100-preview.6-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 9.0.100-preview.6-azurelinux3.0-arm64v8, 9.0-preview-azurelinux3.0-arm64v8, 9.0.100-preview.6-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 
-## Linux arm32 Tags
+### Linux arm32 Tags
+
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.303-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.303-bookworm-slim, 8.0-bookworm-slim, 8.0.303, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
@@ -123,77 +130,84 @@ Tags | Dockerfile | OS Version
 6.0.424-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.424-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.424-focal-arm32v7, 6.0-focal-arm32v7, 6.0.424-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
-##### .NET 9 Preview Tags
+#### .NET 9 Preview Tags
+
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.100-preview.6-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-preview.6-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.6, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 9.0.100-preview.6-alpine3.20-arm32v7, 9.0-preview-alpine3.20-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.100-preview.6-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
 9.0.100-preview.6-noble-arm32v7, 9.0-preview-noble-arm32v7, 9.0.100-preview.6-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 
-## Nano Server 2022 amd64 Tags
+### Nano Server 2022 amd64 Tags
+
 Tag | Dockerfile
 ---------| ---------------
 8.0.303-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
 6.0.424-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.424, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
-##### .NET 9 Preview Tags
+#### .NET 9 Preview Tags
+
 Tag | Dockerfile
 ---------| ---------------
 9.0.100-preview.6-nanoserver-ltsc2022, 9.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
-## Windows Server Core 2022 amd64 Tags
+### Windows Server Core 2022 amd64 Tags
+
 Tag | Dockerfile
 ---------| ---------------
 8.0.303-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 6.0.424-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
-##### .NET 9 Preview Tags
+#### .NET 9 Preview Tags
+
 Tag | Dockerfile
 ---------| ---------------
 9.0.100-preview.6-windowsservercore-ltsc2022, 9.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
-## Nano Server, version 1809 amd64 Tags
+### Nano Server, version 1809 amd64 Tags
+
 Tag | Dockerfile
 ---------| ---------------
 8.0.303-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/nanoserver-1809/amd64/Dockerfile)
 6.0.424-nanoserver-1809, 6.0-nanoserver-1809, 6.0.424, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-1809/amd64/Dockerfile)
 
-##### .NET 9 Preview Tags
+#### .NET 9 Preview Tags
+
 Tag | Dockerfile
 ---------| ---------------
 9.0.100-preview.6-nanoserver-1809, 9.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/nanoserver-1809/amd64/Dockerfile)
 
-## Windows Server Core 2019 amd64 Tags
+### Windows Server Core 2019 amd64 Tags
+
 Tag | Dockerfile
 ---------| ---------------
 8.0.303-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 6.0.424-windowsservercore-ltsc2019, 6.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 
-##### .NET 9 Preview Tags
+#### .NET 9 Preview Tags
+
 Tag | Dockerfile
 ---------| ---------------
 9.0.100-preview.6-windowsservercore-ltsc2019, 9.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
-
-You can retrieve a list of all available tags for dotnet/sdk at https://mcr.microsoft.com/v2/dotnet/sdk/tags/list.
 <!--End of generated tags-->
 
-*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
+*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/sdk/tags/list) for all supported and unsupported tags.*
 
-# Support
+## Support
 
-## Lifecycle
+### Lifecycle
 
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 
-## Image Update Policy
+### Image Update Policy
 
 * We update supported .NET images within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
 * We re-build all .NET images as part of releasing new versions of .NET including new major/minor versions and servicing.
 * Distroless images such as Ubuntu Chiseled have no base image, and as such will only be updated with .NET releases and CVE fixes as described below.
 
-### CVE Update Policy
+#### CVE Update Policy
 
 .NET container images are regularly monitored for the presence of CVEs. A given image will be rebuilt to pick up fixes for a CVE when:
 
@@ -203,12 +217,12 @@ You can retrieve a list of all available tags for dotnet/sdk at https://mcr.micr
 
 Please refer to the [Security Policy](https://github.com/dotnet/dotnet-docker/blob/main/SECURITY.md) and [Container Vulnerability Workflow](https://github.com/dotnet/dotnet-docker/blob/main/documentation/vulnerability-reporting.md) for more detail about what to do when a CVE is encountered in a .NET image.
 
-## Feedback
+### Feedback
 
 * [File an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose)
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/)
 
-# License
+## License
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 * [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)
