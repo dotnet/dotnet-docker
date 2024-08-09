@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
+public abstract class ProjectTemplateTestScenario : TestScenario, IDisposable
 {
     private bool _disposed;
 
@@ -117,7 +117,7 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
         return tag;
     }
 
-    public async Task ExecuteAsync()
+    protected override async Task ExecuteInternalAsync()
     {
         List<string> tags = [];
 

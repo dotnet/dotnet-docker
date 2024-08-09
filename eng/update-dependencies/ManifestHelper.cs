@@ -13,7 +13,7 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Helper class for interacting with manifest files.
 /// </summary>
-public static class ManifestHelper
+public static partial class ManifestHelper
 {
     private const string VariableGroupName = "variable";
     private const string VariablePattern = $"\\$\\((?<{VariableGroupName}>[\\w:\\-.|]+)\\)";
@@ -93,6 +93,14 @@ public static class ManifestHelper
         new($"\"{Regex.Escape(variableName)}\": \"{valuePattern}\"", options);
 
     /// <summary>
+    /// Determines if the given value matches the pattern manifest variable. Does not check if the variable is defined
+    /// in the manifest.
+    /// </summary>
+    /// <param name="value">The value to check.</param>
+    /// <returns>True if the value is a manifest variable, false otherwise.</returns>
+    public static bool IsManifestVariable(string value) => AnyVariableRegex().IsMatch(value);
+
+    /// <summary>
     /// Resolves the value of a variable, recursively resolving any variables referenced in the value.
     /// </summary>
     /// <param name="value">Variable value to be resolved.</param>
@@ -109,5 +117,7 @@ public static class ManifestHelper
 
         return value;
     }
+
+    [GeneratedRegex(@"^\$\(.*\)$")]
+    private static partial Regex AnyVariableRegex();
 }
-#nullable disable

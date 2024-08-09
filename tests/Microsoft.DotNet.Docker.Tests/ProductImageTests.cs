@@ -106,7 +106,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string expectedUser;
             if (imageData.IsDistroless && ImageRepo != DotNetImageRepo.SDK)
             {
-                if (imageData.OS.StartsWith(OS.Mariner) || imageData.OS.StartsWith(OS.AzureLinux))
+                if (imageData.OS.StartsWith(OS.Mariner))
                 {
                     expectedUser = "app";
                 }
@@ -289,7 +289,7 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<string> extraExcludePaths = null)
         {
             string syftImage = $"{Config.GetVariableValue("syft|repo")}:{Config.GetVariableValue("syft|tag")}";
-            dockerHelper.Pull(syftImage);
+            dockerHelper.PullExternalImage(syftImage);
 
             string imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
 
@@ -385,11 +385,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 _ => throw new NotSupportedException()
             };
 
-        private static IEnumerable<string> GetAotDepsPackages(ProductImageData imageData) => imageData switch
+        private static IEnumerable<string> GetAotDepsPackages(ProductImageData imageData)
+        {
+            IEnumerable<string> packages = imageData switch
             {
                 { OS: OS.Mariner20Distroless, Version: ImageVersion version }
-                        when version.Major == 6 => new[]
-                    {
+                        when version.Major == 6 =>
+                    [
                         "e2fsprogs-libs",
                         "glibc",
                         "krb5",
@@ -397,80 +399,90 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "openssl-libs",
                         "prebuilt-ca-certificates",
-                        "zlib"
-                    },
+                    ],
                 { OS: OS.Mariner20, Version: ImageVersion version }
-                        when version.Major == 6 => new[]
-                    {
+                        when version.Major == 6 =>
+                    [
                         "glibc",
                         "icu",
                         "krb5",
                         "libgcc",
                         "openssl-libs",
-                        "zlib"
-                    },
-                { OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) => new[]
-                    {
+                    ],
+                { OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) =>
+                    [
                         "glibc",
                         "libgcc",
                         "openssl-libs",
-                        "zlib"
-                    },
-                { OS: string os } when os.Contains(OS.Jammy) => new[]
-                    {
+                    ],
+                { OS: string os } when os.Contains(OS.Jammy) =>
+                    [
                         "ca-certificates",
                         "libc6",
                         "libgcc-s1",
                         "libssl3",
-                        "zlib1g"
-                    },
-                { OS: string os } when os.Contains(OS.Noble) => new[]
-                    {
+                        "openssl",
+                    ],
+                { OS: string os } when os.Contains(OS.Noble) =>
+                    [
                         "ca-certificates",
+                        "gcc-14-base",
                         "libc6",
                         "libgcc-s1",
                         "libssl3t64",
-                        "zlib1g"
-                    },
-                { OS: OS.Focal } => new[]
-                    {
+                        "openssl",
+                    ],
+                { OS: OS.Focal } =>
+                    [
                         "ca-certificates",
                         "libc6",
                         "libgcc-s1",
                         "libgssapi-krb5-2",
                         "libicu66",
                         "libssl1.1",
-                        "zlib1g"
-                    },
-                { OS: string os } when os.Contains(OS.Alpine) => new[]
-                    {
+                    ],
+                { OS: string os } when os.Contains(OS.Alpine) =>
+                    [
                         "ca-certificates-bundle",
                         "libgcc",
                         "libssl3",
-                        "zlib"
-                    },
-                { OS: OS.BookwormSlim } => new[]
-                    {
+                    ],
+                { OS: OS.BookwormSlim } =>
+                    [
                         "ca-certificates",
                         "libc6",
                         "libgcc-s1",
                         "libicu72",
                         "libssl3",
                         "tzdata",
-                        "zlib1g"
-                    },
-                { OS: OS.BullseyeSlim } => new[]
-                    {
+                    ],
+                { OS: OS.BullseyeSlim } =>
+                    [
                         "ca-certificates",
                         "libc6",
                         "libgcc-s1", // Listed as libgcc1 in the Dockerfile
                         "libgssapi-krb5-2",
                         "libicu67",
                         "libssl1.1",
-                        "zlib1g"
-                    },
+                    ],
                 _ => throw new NotSupportedException()
             };
+
+            // zlib is not required for .NET 9+
+            // https://github.com/dotnet/dotnet-docker/issues/5687
+            if (imageData.Version.Major <= 8)
+            {
+                packages = [..packages, GetZLibPackage(imageData.OS)];
+            }
+
+            return packages;
+        }
+
+        private static string GetZLibPackage(string os)
+        {
+            string[] unversionedZLibOSes = [OS.Alpine, OS.AzureLinux, OS.Mariner];
+            return unversionedZLibOSes.Where(os.Contains).Any() ? "zlib" : "zlib1g";
+        }
 
         private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
             string libstdcppPkgName = imageData.OS.Contains(OS.Mariner) || imageData.OS.Contains(OS.AzureLinux) || imageData.OS.Contains(OS.Alpine)

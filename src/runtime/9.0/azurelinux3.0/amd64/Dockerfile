@@ -1,14 +1,14 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:9.0.0-preview.6-azurelinux3.0-amd64 AS installer
+FROM $REPO:9.0.0-preview.7-azurelinux3.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.0-preview.6.24327.7 \
+RUN dotnet_version=9.0.0-preview.7.24405.7 \
     && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
     && dotnet_sha512='09aa8c4e6ae3ada1a265a5cd2b46779a763163e4dd9a1892b44606b89cf147339e10b7c584dbcaf5404af0553f0ef6c5801436c217f4fe1a5d3bdb6d74aef1d1' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
@@ -18,10 +18,10 @@ RUN dotnet_version=9.0.0-preview.6.24327.7 \
 
 
 # .NET runtime image
-FROM $REPO:9.0.0-preview.6-azurelinux3.0-amd64
+FROM $REPO:9.0.0-preview.7-azurelinux3.0-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.0-preview.6.24327.7
+ENV DOTNET_VERSION=9.0.0-preview.7.24405.7
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

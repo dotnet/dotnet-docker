@@ -12,30 +12,36 @@
     set isAzureLinux to find(OS_VERSION, "cbl-mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
     set isDistrolessAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+-distroless$")) ^
     set isFullAzureLinux to isAzureLinux && !isDistrolessAzureLinux ^
-    set useLegacyPackageLayout to dotnetVersion = "6.0" ^
 
     set dotnetDepsComment to "# .NET dependencies" ^
+
+    set zlibPkg to when(isUbuntu || isDebian, "zlib1g", "zlib") ^
+    set caCertsPkg to when(isDistrolessAzureLinux,
+        "prebuilt-ca-certificates",
+        when(isAlpine && dotnetVersion != "6.0",
+            "ca-certificates-bundle",
+            "ca-certificates"
+        )) ^
 
     set basePkgs to when(isAzureLinux,
         [
             "glibc",
             "libgcc",
-            "openssl-libs",
-            "zlib"
+            "openssl-libs"
         ],
         when(isAlpine,
             [
                 "libgcc",
-                cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
-                "zlib"
+                cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)])
             ],
             [
                 "libc6",
                 "libgcc-s1",
-                cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
-                "zlib1g"
+                cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)])
             ]
         )) ^
+    set basePkgs to when(dotnetVersion = "6.0" || dotnetVersion = "8.0", cat(basePkgs, [zlibPkg]), basePkgs) ^
+
     set standardPkgs to sort(cat(basePkgs,
         when(isAzureLinux || isAlpine,
             [
@@ -45,6 +51,7 @@
                 "libstdc++6",
             ]
         ))) ^
+
     set extraPkgs to sort(cat(standardPkgs,
         when (isAzureLinux,
             [
@@ -63,7 +70,7 @@
                 ]
             )))) ^
 
-    set legacyPkgs to when(isAlpine,
+    set net6Pkgs to when(isAlpine,
         [
             "krb5-libs",
             "libgcc",
@@ -101,22 +108,16 @@
                 "zlib1g"
             ])) ^
 
-    set pkgs to when(useLegacyPackageLayout,
-        legacyPkgs,
+    set pkgs to when(dotnetVersion = "6.0",
+        net6Pkgs,
         when(ARGS["is-aot"],
             basePkgs,
             when(ARGS["is-extra"] || isDebian || isUbuntu || isFullAzureLinux,
                 extraPkgs,
                 standardPkgs))) ^
 
-    set certsPkgName to when(isDistrolessAzureLinux,
-        "prebuilt-ca-certificates",
-        when(isAlpine && dotnetVersion != "6.0",
-            "ca-certificates-bundle",
-            "ca-certificates"
-        )) ^
     set prefixPkgs to [
-            certsPkgName,
+            caCertsPkg,
             "",
             dotnetDepsComment
         ] ^

@@ -4,11 +4,23 @@
 
 #nullable enable
 
+using System;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public interface ITestScenario
+public abstract class TestScenario
 {
-    public Task ExecuteAsync();
+    public Task ExecuteAsync(bool shouldThrow = false)
+    {
+        if (shouldThrow)
+        {
+            return Assert.ThrowsAnyAsync<Exception>(ExecuteInternalAsync);
+        }
+
+        return ExecuteInternalAsync();
+    }
+
+    protected abstract Task ExecuteInternalAsync();
 }
