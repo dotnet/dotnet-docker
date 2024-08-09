@@ -68,9 +68,9 @@ namespace Microsoft.DotNet.Docker.Tests
         /// this helper image stores the entire root of the distroless filesystem at the specified destination path within
         /// the built container image.
         /// </remarks>
-        public string BuildDistrolessHelper(DotNetImageRepo imageRepo, ProductImageData imageData, string rootDestination)
+        public string BuildDistrolessHelper(DotNetImageRepo imageRepo, ProductImageData imageData, string copyDestination, string copyOrigin = "/")
         {
-            string dockerfile = Path.Combine(TestArtifactsDir, "Dockerfile.distroless");
+            string dockerfile = Path.Combine(TestArtifactsDir, "Dockerfile.copy");
             string distrolessImageTag = imageData.GetImage(imageRepo, this);
 
             // Use the runtime-deps image as the target of the filesyste copy.
@@ -100,9 +100,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 platform: imageData.Platform,
                 buildArgs:
                 [
-                    $"distroless_image={distrolessImageTag}",
+                    $"copy_image={distrolessImageTag}",
                     $"base_image={baseImageTag}",
-                    $"root_destination={rootDestination}"
+                    $"copy_origin={copyOrigin}",
+                    $"copy_destination={copyDestination}"
                 ]);
 
             return tag;
