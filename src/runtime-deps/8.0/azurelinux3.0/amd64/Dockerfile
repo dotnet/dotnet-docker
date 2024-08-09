@@ -1,4 +1,4 @@
-FROM azurelinuxpreview.azurecr.io/public/azurelinux/base/core:3.0
+FROM mcr.microsoft.com/azurelinux/base/core:3.0
 
 ENV \
     # UID of the non-root user 'app'
