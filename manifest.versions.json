@@ -38,7 +38,7 @@
     "aspnet-composite|8.0|linux-musl|arm|sha": "f115d139bbd635eb83818d78caa85b68725a1c35404985c077a1a0c696698cf4e6068635a25b053251139ddf80738acbe97168c109fc890f1dea4fcf9df86cdc",
     "aspnet-composite|8.0|linux-musl|arm64|sha": "02e92e451ecfa4fe2e6c9483323fd60b974c62f24e7f6910ca28a977233315029566e440f44acbb8beb23bf7691c9a7812a0e2670be3446158362279a08be752",
 
-    "aspnet|9.0|build-version": "9.0.0-preview.6.24328.4",
+    "aspnet|9.0|build-version": "9.0.0-preview.7.24406.2",
     "aspnet|9.0|linux-musl|x64|sha": "c95601ea6775f229a7de6daf8ae92b947ae7942b134de7cb7073eab22114c940738b44273f6ddaafbabc5363c9f4cde1eff7423781b5a821eb9b0aa2535a3952",
     "aspnet|9.0|linux-musl|arm|sha": "836212e6c83f790096bcbc131f7bea1175a0ab17898c8e872e88bcb0e27b52e5f94cf27dcde815e54e102610cf2d002ffed4f325da815d3b6be416d2425f0d46",
     "aspnet|9.0|linux-musl|arm64|sha": "f7e0e8c258d4199c3e79fbdfd12f2ccd02cf57afa9bd53add921f40e05bf300c29dde18589eb446e1a13fb0833eabecf46fe15ce04fe5cba915fcab6ad1091ac",
@@ -111,7 +111,7 @@
     "dotnet|8.0|fixed-tag": "$(dotnet|8.0|product-version)",
     "dotnet|8.0|minor-tag": "8.0",
 
-    "dotnet|9.0|product-version": "9.0.0-preview.6",
+    "dotnet|9.0|product-version": "9.0.0-preview.7",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
     "dotnet|9.0|minor-tag": "9.0-preview",
 
@@ -133,8 +133,8 @@
     "mingit|latest|x64|sha": "9f3c58e50e265043b1dd7bdaea9db4e2f23b939c189aa0fc820eb8dcfee523be",
     "mingit|8.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|8.0|x64|sha": "$(mingit|latest|x64|sha)",
-    "mingit|9.0|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.45.2.windows.1/MinGit-2.45.2-64-bit.zip",
-    "mingit|9.0|x64|sha": "7ed2a3ce5bbbf8eea976488de5416894ca3e6a0347cee195a7d768ac146d5290",
+    "mingit|9.0|x64|url": "$(mingit|latest|x64|url)",
+    "mingit|9.0|x64|sha": "$(mingit|latest|x64|sha)",
 
     "monitor|6.3|build-version": "6.3.8",
     "monitor|6.3|product-version": "6.3.8",
@@ -235,7 +235,7 @@
     "runtime|8.0|linux|arm64|sha": "246fb7e5edb51db93421c6bb7420f7a358430b98b224a71fb70e71a2bce0bc91f853aa89109f2188b0ab28532a245c3d52baac163463e01a02019dea37fd39f2",
     "runtime|8.0|win|x64|sha": "cca24d8c1d8a8af7496fd29bf8fa1750f438207181bd3add128aa5083e6ddb159d5d7de8f3bed3b30618c8886b4380dc55ee15b03e71feb345011c48a08d27bd",
 
-    "runtime|9.0|build-version": "9.0.0-preview.6.24327.7",
+    "runtime|9.0|build-version": "9.0.0-preview.7.24405.7",
     "runtime|9.0|linux-musl|x64|sha": "7c477a29faed51ea6bc01a1314b3c8d5907d41b2bebce28b52db453722bee703e3edf167e3143b316eca572a1e976619f3925cfd965953376cda38157e9395c1",
     "runtime|9.0|linux-musl|arm|sha": "cd49793061602577d7d1017c2e0f43c205bc48eff50b9234ff8a56d2a873ffb1167429f5f132e5ac201a460efeed83c82c404e47ae87fe336970fd04b3cff697",
     "runtime|9.0|linux-musl|arm64|sha": "643fcc319138f31bb2cc7e7896e14caead677e16fa79b2d5031f339103f2bb5dbb9994485ed24281c93ecd32bea179861330c69e75d03db30a58d46fc932dad6",
@@ -270,8 +270,8 @@
     "sdk|8.0|linux|x64|sha": "8a4c637746177c4da6ceec63e23a1f499d61d050aa72bc599841550557ff7b1a15a034044c3987b230fdca4e5113de12b1676f5a2366e9946bd94aec1e51a42b",
     "sdk|8.0|win|x64|sha": "3b3b402f9402af4b80ba12d04787a083d1950c741fb64b06b3e215f6e5b3db2f86aee8014848c955ea17f9b699d302271a934ab2d5db1b35dfbb9d22405032dc",
 
-    "sdk|9.0|build-version": "9.0.100-preview.6.24328.19",
-    "sdk|9.0|product-version": "9.0.100-preview.6",
+    "sdk|9.0|build-version": "9.0.100-preview.7.24407.12",
+    "sdk|9.0|product-version": "9.0.100-preview.7",
     "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)",
     "sdk|9.0|minor-tag": "$(dotnet|9.0|minor-tag)",
     "sdk|9.0|linux-musl|arm|sha": "b3e1bfb0f46c5d49fb44a38bd1725cf6cf2660f34ee3457fea7b73d477f41b686e34b363ebd5000e2d8e16e49f9fb800721106cf5546fc6c4f5fefccaa2ad955",

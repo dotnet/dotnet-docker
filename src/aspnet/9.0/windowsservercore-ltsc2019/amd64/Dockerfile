@@ -1,10 +1,10 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-FROM $REPO:9.0.0-preview.6-windowsservercore-ltsc2019
+FROM $REPO:9.0.0-preview.7-windowsservercore-ltsc2019
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=9.0.0-preview.6.24328.4
+ENV ASPNET_VERSION=9.0.0-preview.7.24406.2
 
 # Install ASP.NET Core Runtime
 RUN powershell -Command `
