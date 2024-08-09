@@ -9550,8 +9550,12 @@
           "sharedTags": {
             "$(monitor|8.0|fixed-tag)-azurelinux-distroless": {},
             "$(monitor|8.0|minor-tag)-azurelinux-distroless": {},
-            "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless": { "docType": "Undocumented" },
-            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": { "docType": "Undocumented" }
+            "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -9565,8 +9569,12 @@
               "tags": {
                 "$(monitor|8.0|fixed-tag)-azurelinux-distroless-amd64": {},
                 "$(monitor|8.0|minor-tag)-azurelinux-distroless-amd64": {},
-                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-amd64": { "docType": "Undocumented" },
-                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-amd64": { "docType": "Undocumented" }
+                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9581,8 +9589,12 @@
               "tags": {
                 "$(monitor|8.0|fixed-tag)-azurelinux-distroless-arm64v8": {},
                 "$(monitor|8.0|minor-tag)-azurelinux-distroless-arm64v8": {},
-                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": { "docType": "Undocumented" },
-                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": { "docType": "Undocumented" }
+                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -9637,9 +9649,15 @@
             "$(monitor|8.1|fixed-tag)-azurelinux-distroless": {},
             "$(monitor|8.1|minor-tag)-azurelinux-distroless": {},
             "$(monitor|8|major-tag)-azurelinux-distroless": {},
-            "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless": { "docType": "Undocumented" },
-            "$(monitor|8.1|minor-tag)-cbl-mariner-distroless": { "docType": "Undocumented" },
-            "$(monitor|8|major-tag)-cbl-mariner-distroless": { "docType": "Undocumented" }
+            "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(monitor|8.1|minor-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(monitor|8|major-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -9654,9 +9672,15 @@
                 "$(monitor|8.1|fixed-tag)-azurelinux-distroless-amd64": {},
                 "$(monitor|8.1|minor-tag)-azurelinux-distroless-amd64": {},
                 "$(monitor|8|major-tag)-azurelinux-distroless-amd64": {},
-                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-amd64": { "docType": "Undocumented" },
-                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-amd64": { "docType": "Undocumented" },
-                "$(monitor|8|major-tag)-cbl-mariner-distroless-amd64": { "docType": "Undocumented" }
+                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8|major-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9672,9 +9696,15 @@
                 "$(monitor|8.1|fixed-tag)-azurelinux-distroless-arm64v8": {},
                 "$(monitor|8.1|minor-tag)-azurelinux-distroless-arm64v8": {},
                 "$(monitor|8|major-tag)-azurelinux-distroless-arm64v8": {},
-                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-arm64v8": { "docType": "Undocumented" },
-                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-arm64v8": { "docType": "Undocumented" },
-                "$(monitor|8|major-tag)-cbl-mariner-distroless-arm64v8": { "docType": "Undocumented" }
+                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8|major-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -9947,8 +9977,12 @@
           "sharedTags": {
             "$(monitor|8.0|fixed-tag)-azurelinux-distroless": {},
             "$(monitor|8.0|minor-tag)-azurelinux-distroless": {},
-            "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless": { "docType": "Undocumented" },
-            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": { "docType": "Undocumented" }
+            "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -9962,8 +9996,12 @@
               "tags": {
                 "$(monitor|8.0|fixed-tag)-azurelinux-distroless-amd64": {},
                 "$(monitor|8.0|minor-tag)-azurelinux-distroless-amd64": {},
-                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-amd64": { "docType": "Undocumented" },
-                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-amd64": { "docType": "Undocumented" }
+                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9978,8 +10016,12 @@
               "tags": {
                 "$(monitor|8.0|fixed-tag)-azurelinux-distroless-arm64v8": {},
                 "$(monitor|8.0|minor-tag)-azurelinux-distroless-arm64v8": {},
-                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": { "docType": "Undocumented" },
-                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": { "docType": "Undocumented" }
+                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -10034,7 +10076,9 @@
             "$(monitor|8.1|fixed-tag)-azurelinux-distroless": {},
             "$(monitor|8.1|minor-tag)-azurelinux-distroless": {},
             "$(monitor|8|major-tag)-azurelinux-distroless": {},
-            "$(monitor|8|major-tag)-cbl-mariner-distroless": { "docType": "Undocumented" }
+            "$(monitor|8|major-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -10049,7 +10093,9 @@
                 "$(monitor|8.1|fixed-tag)-azurelinux-distroless-amd64": {},
                 "$(monitor|8.1|minor-tag)-azurelinux-distroless-amd64": {},
                 "$(monitor|8|major-tag)-azurelinux-distroless-amd64": {},
-                "$(monitor|8|major-tag)-cbl-mariner-distroless-amd64": { "docType": "Undocumented" }
+                "$(monitor|8|major-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -10065,7 +10111,9 @@
                 "$(monitor|8.1|fixed-tag)-azurelinux-distroless-arm64v8": {},
                 "$(monitor|8.1|minor-tag)-azurelinux-distroless-arm64v8": {},
                 "$(monitor|8|major-tag)-azurelinux-distroless-arm64v8": {},
-                "$(monitor|8|major-tag)-cbl-mariner-distroless-arm64v8": { "docType": "Undocumented" }
+                "$(monitor|8|major-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
