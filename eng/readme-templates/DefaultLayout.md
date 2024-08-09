@@ -27,9 +27,7 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 {{if !IS_PRODUCT_FAMILY:
 # Full Tag Listing
 {{if ARGS["readme-host"] = "github":<!--End of generated tags-->
-{{if !(isMonitor || isAspireDashboard):For tags contained in the old dotnet/core{{if isNightlyRepo:-nightly}}/{{SHORT_REPO}} repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core{{if isNightlyRepo:-nightly}}/{{SHORT_REPO}}/tags/list.
-
-}}*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
+*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
 ^elif ARGS["readme-host"] = "dockerhub":
 View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/{{REPO}}/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/{{if isNightlyRepo:nightly^else:main}}/README.{{SHORT_REPO}}.md#full-tag-listing).
 }}}}
