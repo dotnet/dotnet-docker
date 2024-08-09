@@ -10120,10 +10120,10 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/aspire-dashboard/8.1/cbl-mariner-distroless/amd64",
+              "dockerfile": "src/aspire-dashboard/8.1/azurelinux-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspire-dashboard/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(aspire-dashboard|8.1|fixed-tag)-amd64": {},
                 "$(aspire-dashboard|8.1|minor-tag)-amd64": {},
@@ -10135,10 +10135,10 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/aspire-dashboard/8.1/cbl-mariner-distroless/arm64v8",
+              "dockerfile": "src/aspire-dashboard/8.1/azurelinux-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspire-dashboard/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(aspire-dashboard|8.1|fixed-tag)-arm64v8": {},
                 "$(aspire-dashboard|8.1|minor-tag)-arm64v8": {},

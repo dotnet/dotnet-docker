@@ -115,12 +115,12 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 ## Linux amd64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.1.0-amd64, 8.1-amd64, 8-amd64, 8.1.0, 8.1, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.1/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+8.1.0-amd64, 8.1-amd64, 8-amd64, 8.1.0, 8.1, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.1.0-arm64v8, 8.1-arm64v8, 8-arm64v8, 8.1.0, 8.1, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.1/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+8.1.0-arm64v8, 8.1-arm64v8, 8-arm64v8, 8.1.0, 8.1, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 
 You can retrieve a list of all available tags for dotnet/nightly/aspire-dashboard at https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list.
 <!--End of generated tags-->
