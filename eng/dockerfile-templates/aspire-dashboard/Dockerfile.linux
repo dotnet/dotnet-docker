@@ -6,8 +6,8 @@
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, "-extra", ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set installerImageTag to when(isAzureLinux,
-        cat(
-            when(find(OS_VERSION, "3.0") >= 0, "azurelinuxpreview.azurecr.io/public/azurelinux", "mcr.microsoft.com/cbl-mariner"),
+        cat("mcr.microsoft.com/",
+            when(find(OS_VERSION, "3.0") >= 0, "azurelinux", "cbl-mariner"),
             "/base/core:",
             OS_VERSION_NUMBER),
         cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))

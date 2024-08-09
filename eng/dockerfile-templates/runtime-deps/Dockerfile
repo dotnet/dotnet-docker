@@ -21,7 +21,7 @@
                 "ubuntu.azurecr.io/ubuntu",
                 when(isAzureLinux,
                     when(find(OS_VERSION_NUMBER, "3.0") >= 0, 
-                        "azurelinuxpreview.azurecr.io/public/azurelinux/base/core",
+                        "mcr.microsoft.com/azurelinux/base/core",
                         "mcr.microsoft.com/cbl-mariner/base/core"),
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isAzureLinux, OS_VERSION_NUMBER, OS_VERSION) ^
