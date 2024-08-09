@@ -6,7 +6,7 @@
 
     set isAzureLinux3 to find(OS_VERSION_NUMBER, "3.0") >= 0 ^ 
     set distrolessStagingDir to "/staging" ^
-    set marinerRepo to when(isAzureLinux3, "azurelinuxpreview.azurecr.io/public/azurelinux", "mcr.microsoft.com/cbl-mariner") ^
+    set marinerRepo to when(isAzureLinux3, "mcr.microsoft.com/azurelinux", "mcr.microsoft.com/cbl-mariner") ^
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set baseImage to cat(marinerRepo, "/distroless/minimal:", OS_VERSION_NUMBER) ^
     set username to "app" ^
