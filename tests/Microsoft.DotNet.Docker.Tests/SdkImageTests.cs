@@ -259,7 +259,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             else
             {
-                dotnetPath = "Program Files\\dotnet";
+                dotnetPath = "\"Program Files\\dotnet\"";
             }
 
             string tag = imageData.GetIdentifier("SdkContents").ToLower();
