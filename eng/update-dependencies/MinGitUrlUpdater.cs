@@ -1,9 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Linq;
-using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
+using Octokit;
 
 #nullable enable
 namespace Dotnet.Docker;
@@ -11,37 +10,13 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Updates the MinGit version in the manifest.versions.json file.
 /// </summary>
-internal class MinGitUrlUpdater : MinGitUpdater
+internal partial class MinGitUrlUpdater(string repoRoot, Release release, string type = "url")
+    : GitHubReleaseUrlUpdater(repoRoot, GetManifestVariableName(type), release, DependencyInfoToUse, MinGitUrlRegex())
 {
-    public MinGitUrlUpdater(string repoRoot, JObject latestMinGitRelease)
-        : base(
-            repoRoot,
-            latestMinGitRelease,
-            "mingit|latest|x64|url")
-    {
-    }
+    private const string DependencyInfoToUse = "sdk";
 
-    protected override string GetValue()
-    {
-        JObject mingitAsset = GetMinGitAsset(LatestMinGitRelease);
-        return mingitAsset.GetRequiredToken<JValue>("browser_download_url").ToString();
-    }
+    protected static string GetManifestVariableName(string type) => "mingit|latest|x64|" + type;
 
-    internal static JObject GetMinGitAsset(JObject release)
-    {
-        JArray assets = release.GetRequiredToken<JArray>("assets");
-
-        JObject mingitAsset = (JObject)(assets.FirstOrDefault(asset => IsMinGit64BitAsset((JObject)asset)) ??
-            throw new InvalidOperationException("Can't find 64-bit MinGit asset."));
-        return mingitAsset;
-    }
-
-    private static bool IsMinGit64BitAsset(JObject asset)
-    {
-        string name = asset.GetRequiredToken<JValue>("name").ToString();
-        return name.StartsWith("MinGit", StringComparison.OrdinalIgnoreCase) &&
-            name.Contains("64-bit", StringComparison.OrdinalIgnoreCase) &&
-            name.EndsWith(".zip", StringComparison.OrdinalIgnoreCase);
-    }
+    [GeneratedRegex(@"^MinGit.*64-bit.*\.zip$")]
+    protected static partial Regex MinGitUrlRegex();
 }
-#nullable disable

@@ -289,7 +289,7 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<string> extraExcludePaths = null)
         {
             string syftImage = $"{Config.GetVariableValue("syft|repo")}:{Config.GetVariableValue("syft|tag")}";
-            dockerHelper.Pull(syftImage);
+            dockerHelper.PullExternalImage(syftImage);
 
             string imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
 
@@ -422,14 +422,17 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libc6",
                         "libgcc-s1",
                         "libssl3",
+                        "openssl",
                         "zlib1g"
                     },
                 { OS: string os } when os.Contains(OS.Noble) => new[]
                     {
                         "ca-certificates",
+                        "gcc-14-base",
                         "libc6",
                         "libgcc-s1",
                         "libssl3t64",
+                        "openssl",
                         "zlib1g"
                     },
                 { OS: OS.Focal } => new[]

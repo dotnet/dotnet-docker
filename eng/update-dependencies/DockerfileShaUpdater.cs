@@ -301,40 +301,11 @@ namespace Dotnet.Docker
             return sha;
         }
 
-        private async Task<string?> ComputeChecksumShaAsync(string downloadUrl)
+        private Task<string?> ComputeChecksumShaAsync(string downloadUrl)
         {
-            if (!_options.ComputeChecksums)
-            {
-                return null;
-            }
-
-            string? sha = null;
-
             Trace.TraceInformation($"Downloading '{downloadUrl}'.");
-            using (HttpResponseMessage response = await s_httpClient.GetAsync(ApplySasQueryStringIfNecessary(downloadUrl, _options.BinarySasQueryString)))
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    using (Stream httpStream = await response.Content.ReadAsStreamAsync())
-                    using (SHA512 hash = SHA512.Create())
-                    {
-                        byte[] hashedInputBytes = hash.ComputeHash(httpStream);
-
-                        StringBuilder stringBuilder = new StringBuilder(128);
-                        foreach (byte b in hashedInputBytes)
-                        {
-                            stringBuilder.Append(b.ToString("X2"));
-                        }
-                        sha = stringBuilder.ToString();
-                    }
-                }
-                else
-                {
-                    Trace.TraceInformation($"Failed to download {downloadUrl}.");
-                }
-            }
-
-            return sha;
+            return ChecksumHelper.ComputeChecksumShaAsync(
+                s_httpClient, ApplySasQueryStringIfNecessary(downloadUrl, _options.BinarySasQueryString));
         }
 
         private static bool IsInternalUrl(string url)

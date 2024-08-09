@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public class AspireDashboardBasicScenario : ITestScenario
+public class AspireDashboardBasicScenario : TestScenario
 {
     private readonly DockerHelper _dockerHelper;
 
@@ -31,7 +31,7 @@ public class AspireDashboardBasicScenario : ITestScenario
         _imageTag = _imageData.GetImage(DotNetImageRepo.Aspire_Dashboard, _dockerHelper);
     }
 
-    public async Task ExecuteAsync()
+    protected override async Task ExecuteInternalAsync()
     {
         string containerName = _imageData.GetIdentifier(nameof(AspireDashboardBasicScenario));
 

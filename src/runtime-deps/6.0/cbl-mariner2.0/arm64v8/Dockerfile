@@ -20,9 +20,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install dotnet-runtime-deps package
-RUN dotnet_version=6.0.32 \
+RUN dotnet_version=6.0.33 \
     && curl -fSL --output dotnet-runtime-deps.rpm https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-deps-$dotnet_version-cm.2-aarch64.rpm \
-    && dotnet_sha512='d78536efa5c9e4a7ddcd3ef7a5e0f90c671d72802eeba669cfa9bb01a187ca8bcaf0d144fe0318c52e3b90065f2b8c70bc53df45936a8efcf1317886c185d4db' \
+    && dotnet_sha512='f4b37f8ddf2ca5c3a799a8d54e5742e0512ee4ac3e05fcbb84e73b8a7a9f109ceaa8c88afc6db46d9c5f75834191c6db5aa5f3ba2c12225495830104a5894e89' \
     && echo "$dotnet_sha512  dotnet-runtime-deps.rpm" | sha512sum -c - \
     && tdnf install -y --disablerepo=* dotnet-runtime-deps.rpm \
     && rm dotnet-runtime-deps.rpm

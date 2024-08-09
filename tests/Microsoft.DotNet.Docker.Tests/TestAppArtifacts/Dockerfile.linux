@@ -3,7 +3,7 @@ ARG runtime_image
 ARG runtime_deps_image
 
 
-FROM $sdk_image as build
+FROM $sdk_image AS build
 
 ARG rid
 ARG NuGetFeedPassword
@@ -21,7 +21,7 @@ COPY app/ .
 RUN dotnet build --no-restore
 
 
-FROM $sdk_image as blazorwasm_build
+FROM $sdk_image AS blazorwasm_build
 
 ARG rid
 ARG NuGetFeedPassword
@@ -51,7 +51,7 @@ COPY app/ .
 RUN dotnet build --no-restore
 
 
-FROM blazorwasm_build as blazorwasm_publish
+FROM blazorwasm_build AS blazorwasm_publish
 
 ARG rid
 RUN dotnet publish -r $rid -c Release --self-contained true -o out
@@ -71,7 +71,7 @@ COPY tests/ .
 ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore"]
 
 
-FROM build as publish_fx_dependent
+FROM build AS publish_fx_dependent
 RUN dotnet publish --no-restore -c Release -o out
 
 
@@ -85,7 +85,7 @@ COPY --from=publish_fx_dependent /source/app/out ./
 ENTRYPOINT ["dotnet", "app.dll"]
 
 
-FROM build as publish_self_contained
+FROM build AS publish_self_contained
 ARG rid
 RUN dotnet publish -r $rid -c Release --self-contained true -o out
 
@@ -100,7 +100,7 @@ COPY --from=publish_self_contained /source/app/out ./
 ENTRYPOINT ["./app"]
 
 
-FROM build as publish_aot
+FROM build AS publish_aot
 
 RUN dotnet publish -r $rid --no-restore -o /app
 
