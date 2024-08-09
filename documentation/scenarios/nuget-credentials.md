@@ -207,7 +207,8 @@ COPY --from=build /app/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```
 
-_Note that a script is called to install the Credential Provider. When `dotnet restore` is run, the Credential Provider is invoked to resolve the credentials and it retrieves them from the `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable._
+> [!NOTE]
+> A script is called to install the Credential Provider. When `dotnet restore` is run, the Credential Provider is invoked to resolve the credentials and it retrieves them from the `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable.
 
 Before running `docker build`, first populate the `FEED_ACCESSTOKEN` environment variable with a [personal access token](https://docs.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate). Then, this Dockerfile would be built using this command:
 
