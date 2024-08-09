@@ -60,7 +60,7 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.4-ubuntu-chiseled-amd64, 8.0-ubuntu-chiseled-amd64, 8.0.4-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.4, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-8.0.4-cbl-mariner-distroless-amd64, 8.0-cbl-mariner-distroless-amd64, 8.0.4-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+8.0.4-azurelinux-distroless-amd64, 8.0-azurelinux-distroless-amd64, 8.0.4-azurelinux-distroless, 8.0-azurelinux-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 6.3.8-alpine-amd64, 6.3-alpine-amd64, 6-alpine-amd64, 6.3.8-alpine, 6.3-alpine, 6-alpine, 6.3.8, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/alpine/amd64/Dockerfile) | Alpine 3.20
 6.3.8-ubuntu-chiseled-amd64, 6.3-ubuntu-chiseled-amd64, 6-ubuntu-chiseled-amd64, 6.3.8-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 6.3.8-cbl-mariner-amd64, 6.3-cbl-mariner-amd64, 6-cbl-mariner-amd64, 6.3.8-cbl-mariner, 6.3-cbl-mariner, 6-cbl-mariner | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/cbl-mariner/amd64/Dockerfile) | CBL-Mariner 2.0
@@ -71,13 +71,13 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.0-preview.7-amd64, 9.0-preview-amd64, 9.0.0-preview.7, 9.0-preview, 9-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 8.1.0-alpha.1-ubuntu-chiseled-amd64, 8.1-preview-ubuntu-chiseled-amd64, 8-ubuntu-chiseled-amd64, 8.1.0-alpha.1-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0-alpha.1, 8.1-preview, 8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.1/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-8.1.0-alpha.1-cbl-mariner-distroless-amd64, 8.1-preview-cbl-mariner-distroless-amd64, 8-cbl-mariner-distroless-amd64, 8.1.0-alpha.1-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.1/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+8.1.0-alpha.1-azurelinux-distroless-amd64, 8.1-preview-azurelinux-distroless-amd64, 8-azurelinux-distroless-amd64, 8.1.0-alpha.1-azurelinux-distroless, 8.1-preview-azurelinux-distroless, 8-azurelinux-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.0.4-ubuntu-chiseled-arm64v8, 8.0-ubuntu-chiseled-arm64v8, 8.0.4-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.4, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.4-cbl-mariner-distroless-arm64v8, 8.0-cbl-mariner-distroless-arm64v8, 8.0.4-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+8.0.4-azurelinux-distroless-arm64v8, 8.0-azurelinux-distroless-arm64v8, 8.0.4-azurelinux-distroless, 8.0-azurelinux-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 6.3.8-alpine-arm64v8, 6.3-alpine-arm64v8, 6-alpine-arm64v8, 6.3.8-alpine, 6.3-alpine, 6-alpine, 6.3.8, 6.3, 6 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/alpine/arm64v8/Dockerfile) | Alpine 3.20
 6.3.8-ubuntu-chiseled-arm64v8, 6.3-ubuntu-chiseled-arm64v8, 6-ubuntu-chiseled-arm64v8, 6.3.8-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 6.3.8-cbl-mariner-arm64v8, 6.3-cbl-mariner-arm64v8, 6-cbl-mariner-arm64v8, 6.3.8-cbl-mariner, 6.3-cbl-mariner, 6-cbl-mariner | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/6.3/cbl-mariner/arm64v8/Dockerfile) | CBL-Mariner 2.0
@@ -88,7 +88,7 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.0-preview.7-arm64v8, 9.0-preview-arm64v8, 9.0.0-preview.7, 9.0-preview, 9-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 8.1.0-alpha.1-ubuntu-chiseled-arm64v8, 8.1-preview-ubuntu-chiseled-arm64v8, 8-ubuntu-chiseled-arm64v8, 8.1.0-alpha.1-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0-alpha.1, 8.1-preview, 8 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.1/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-8.1.0-alpha.1-cbl-mariner-distroless-arm64v8, 8.1-preview-cbl-mariner-distroless-arm64v8, 8-cbl-mariner-distroless-arm64v8, 8.1.0-alpha.1-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.1/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+8.1.0-alpha.1-azurelinux-distroless-arm64v8, 8.1-preview-azurelinux-distroless-arm64v8, 8-azurelinux-distroless-arm64v8, 8.1.0-alpha.1-azurelinux-distroless, 8.1-preview-azurelinux-distroless, 8-azurelinux-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor/8.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 
 You can retrieve a list of all available tags for dotnet/nightly/monitor at https://mcr.microsoft.com/v2/dotnet/nightly/monitor/tags/list.
 <!--End of generated tags-->

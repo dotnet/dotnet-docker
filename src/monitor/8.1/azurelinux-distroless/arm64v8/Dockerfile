@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 
 # Installer image
-FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
+FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
 RUN tdnf install -y \
         ca-certificates \
@@ -27,6 +27,6 @@ RUN dotnet_monitor_extension_version=8.1.0-alpha.1.24401.5 \
 
 
 # .NET Monitor image
-FROM $REPO:8.1.0-alpha.1-cbl-mariner-distroless-arm64v8
+FROM $REPO:8.1.0-alpha.1-azurelinux-distroless-arm64v8
 
 COPY --from=installer ["/app", "/app"]
