@@ -13,7 +13,7 @@ docker build --pull -t app .
 docker run --rm app
 ```
 
-It will produce output similar to: https://gist.github.com/richlander/4701a33592abd021f767644974c0ced6
+It will produce output similar to [this](https://gist.github.com/richlander/4701a33592abd021f767644974c0ced6).
 
 ## App
 

@@ -144,7 +144,7 @@ The `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable is a well-known var
 
 Instead, the credentials for `customfeed` are defined in the Dockerfile by making use of an `ARG` for the access token:
 
-_Linux_
+### Linux
 
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
@@ -170,7 +170,7 @@ COPY --from=build /app/out ./
 ENTRYPOINT ["dotnet", "dotnetapp.dll"]
 ```
 
-_Windows_
+### Windows
 
 ```Dockerfile
 # escape=`
