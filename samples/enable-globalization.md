@@ -54,7 +54,7 @@ RUN apk add --no-cache \
 
 ### Ubuntu chiseled images
 
-ICU can be added to an Ubuntu chiseled image, as demonstrated in [this chisel issue](https://github.com/ubuntu-rocks/dotnet/issues/21).
+ICU can be added to an Ubuntu chiseled image, as demonstrated in this [chisel issue](https://github.com/ubuntu-rocks/dotnet/issues/21).
 
 ## Tzdata
 
