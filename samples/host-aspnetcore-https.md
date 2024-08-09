@@ -51,6 +51,12 @@ docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_Ke
 
 ### macOS or Linux
 
+Create a certificate directory with appropriate permissions:
+
+```console
+mkdir -p -m 700 ${HOME}/.aspnet/https
+```
+
 Generate cert and configure local machine:
 
 ```console

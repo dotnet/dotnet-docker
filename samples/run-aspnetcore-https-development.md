@@ -97,7 +97,13 @@ After the application starts, navigate to `https://localhost:8001` in your web b
 ### macOS
 
 ```console
-cd samples\aspnetapp
+cd samples/aspnetapp
+```
+
+Create a certificate directory with appropriate permissions:
+
+```console
+mkdir -p -m 700 ${HOME}/.aspnet/https
 ```
 
 Generate cert and configure local machine:
@@ -137,7 +143,13 @@ After the application starts, navigate to `https://localhost:8001` in your web b
 ### Linux
 
 ```console
-cd samples\aspnetapp
+cd samples/aspnetapp
+```
+
+Create a certificate directory with appropriate permissions:
+
+```console
+mkdir -p -m 700 ${HOME}/.aspnet/https
 ```
 
 Generate cert and configure local machine:
