@@ -9,7 +9,6 @@
     "MD022": false, // blanks-around-headings Headings should be surrounded by blank lines
     "MD024": false, // no-duplicate-heading Multiple headings with the same content
     "MD025": false, // single-title/single-h1 Multiple top-level headings in the same document
-    "MD028": false, // no-blanks-blockquote Blank line inside blockquote
     "MD034": false, // no-bare-urls Bare URL used
     "MD036": false, // no-emphasis-as-heading Emphasis used instead of a heading
     "MD041": false, // first-line-heading/first-line-h1 First line in a file should be a top-level heading

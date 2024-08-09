@@ -100,8 +100,9 @@ FROM mcr.microsoft.com/cbl-mariner/base/core:2.0
 COPY --from=distroless / /distroless
 ```
 
-Note the last instruction copies the entire contents of the distroless container's filesystem to the `/distroless` directory in the wrapper.
-This will be the target location used when executing commands.
+> [!NOTE]
+> The last instruction copies the entire contents of the distroless container's filesystem to the `/distroless` directory in the wrapper.
+> This will be the target location used when executing commands.
 
 Next, build the Dockerfile, specifying the distroless image tag you wish to inspect:
 

@@ -79,7 +79,8 @@ The `--platform` argument is the best way to specify the desired architecture. T
 
 In addition, Docker [Buildkit exposes multiple environment variables](https://github.com/dotnet/dotnet-docker/pull/4387#issuecomment-1416565213) that can be used to further conditionalize behavior. These environment variables can be controlled with the pattern demonstrated in [Dockerfile](https://github.com/mthalman/dredge/blob/main/src/Valleysoft.Dredge/Dockerfile). As mentioned, .NET doesn't support being run in emulation. The pattern in that Dockerfile results in the SDK always being run natively while the final image is affected by the `--platform` switch. This model also has the best performance since the bulk of computation is run natively.
 
-> Note: We are enabling the following model in a future release: https://github.com/dotnet/dotnet-docker/issues/4388#issuecomment-1421401384.
+> [!NOTE]
+> We are enabling the following model in a future release: https://github.com/dotnet/dotnet-docker/issues/4388#issuecomment-1421401384.
 
 ## .NET and QEMU
 
