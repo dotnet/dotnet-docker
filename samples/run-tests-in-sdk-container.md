@@ -22,7 +22,8 @@ Container scenarios that use volume mounting can produce conflicts between the `
 curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-docker/main/samples/Directory.Build.props
 ```
 
-> Note: You may need to remove `bin` and `obj` directories if you run these instructions on Windows in both Windows and Linux container modes.
+> [!NOTE]
+> You may need to remove `bin` and `obj` directories if you run these instructions on Windows in both Windows and Linux container modes.
 
 ## Running tests
 

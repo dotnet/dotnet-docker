@@ -18,7 +18,8 @@ docker build --pull -t aspnetapp -f Dockerfile .
 
 Create an ACR registry per the instructions at [Push Docker Images to Azure Container Registry](push-image-to-acr.md). The following is a summarized version of those instructions.
 
-> Note: Change the password location and the user account ("rich" and "richlander") example values in your environment.
+> [!NOTE]
+> Change the password location and the user account ("rich" and "richlander") example values in your environment.
 
 ```console
 az login
