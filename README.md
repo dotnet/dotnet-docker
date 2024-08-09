@@ -23,7 +23,7 @@ You can use C# or F# to write .NET apps.
 
 You are invited to [contribute new features](https://github.com/dotnet/core/blob/master/CONTRIBUTING.md), fixes, or updates, large or small; we are always thrilled to receive pull requests, and do our best to process them as fast as we can.
 
-> https://docs.microsoft.com/dotnet/core/
+> [.NET Documentation](https://docs.microsoft.com/dotnet/core/)
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
