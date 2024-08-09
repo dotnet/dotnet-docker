@@ -107,7 +107,8 @@ public class DelayedShutdownHostLifetime : IHostLifetime, IDisposable
 }
 ```
 
-> Note: do not confuse `IHostLifetime` with `IHostApplicationLifetime`--they are related, but different interfaces. It is the `IHostLifetime` instance that listens for signals, including `SIGTERM`, and once a signal arrives, it calls into `IHostApplicationLifetime` instance to orchestrate application shutdown. For more information see [generic host shutdown documentation](https://learn.microsoft.com/dotnet/core/extensions/generic-host#host-shutdown)
+> [!NOTE]
+> Do not confuse `IHostLifetime` with `IHostApplicationLifetime`--they are related, but different interfaces. It is the `IHostLifetime` instance that listens for signals, including `SIGTERM`, and once a signal arrives, it calls into `IHostApplicationLifetime` instance to orchestrate application shutdown. For more information see [generic host shutdown documentation](https://learn.microsoft.com/dotnet/core/extensions/generic-host#host-shutdown)
 
 Make ASP.NET use `DelayedShutdownHostLifetime` by adding it to the dependency injection container:
 

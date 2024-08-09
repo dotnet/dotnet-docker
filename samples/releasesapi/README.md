@@ -2,7 +2,8 @@
 
 This app demonstrates publishing an app as [native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) in containers.
 
-> Note: The base images used by this sample are in preview.
+> [!NOTE]
+> The base images used by this sample are in preview.
 
 A similar console app sample supports [single file deployment](../releasesapp/README.md) (non-AOT scenario). This app could also be deployed that way.
 
