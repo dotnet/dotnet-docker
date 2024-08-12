@@ -113,8 +113,6 @@ aspnetapp-8.0-nanoserver-1809, aspnetapp-nanoserver-1809, aspnetapp-8.0, aspneta
 You can retrieve a list of all available tags for dotnet/samples at https://mcr.microsoft.com/v2/dotnet/samples/tags/list.
 <!--End of generated tags-->
 
-For tags contained in the old dotnet/core/samples repository, you can retrieve a list of those tags at https://mcr.microsoft.com/v2/dotnet/core/samples/tags/list.
-
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
 
 # Support
