@@ -53,13 +53,13 @@ You can test this working by simply editing [Program.cs](dotnetapp/Program.cs). 
 
 The following instructions demonstrate this scenario in various environments.
 
-## Linux or macOS
+### Linux or macOS
 
 ```console
 docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run
 ```
 
-## Windows using Linux containers
+### Windows using Linux containers
 
 This example uses PowerShell.
 
@@ -67,7 +67,7 @@ This example uses PowerShell.
 docker run --rm -it -v ${pwd}:/app/ -w /app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run
 ```
 
-## Windows using Windows containers
+### Windows using Windows containers
 
 This example uses PowerShell.
 
