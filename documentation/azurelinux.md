@@ -18,20 +18,20 @@ General distroless .NET containers documentation is available [here](./distroles
 
 Azure Linux distroless .NET images are available for all supported .NET versions in the following image repos:
 
-- [`mcr.microsoft.com/dotnet/runtime`](../README.runtime.md)
-- [`mcr.microsoft.com/dotnet/aspnet`](../README.aspnet.md)
-- [`mcr.microsoft.com/dotnet/runtime-deps`](../README.runtime-deps.md) (for self-contained or AOT apps)
+* [`mcr.microsoft.com/dotnet/runtime`](../README.runtime.md)
+* [`mcr.microsoft.com/dotnet/aspnet`](../README.aspnet.md)
+* [`mcr.microsoft.com/dotnet/runtime-deps`](../README.runtime-deps.md) (for self-contained or AOT apps)
 
 You can use the following image tags:
 
-- `8.0-cbl-mariner2.0-distroless`
-- `6.0-cbl-mariner2.0-distroless`
+* `8.0-cbl-mariner2.0-distroless`
+* `6.0-cbl-mariner2.0-distroless`
 
 ### Installing Additional Packages
 
 If your app requires additional packages besides `icu` and `tzdata`, you can follow the same pattern that .NET uses to install the .NET runtime dependencies.
 
-#### Azure Linux 3.0 (Preview):
+#### Azure Linux 3.0 (Preview)
 
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/nightly/aspnet:8.0-azurelinux3.0-distroless AS base
@@ -82,7 +82,7 @@ FROM base
 COPY --from=installer /staging2/ /
 ```
 
-#### Azure Linux 2.0:
+#### Azure Linux 2.0
 
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-cbl-mariner2.0-distroless AS base
@@ -141,7 +141,7 @@ The easiest way to enable local Visual Studio debugging while not modifying the 
 
 To enable Container Fast Mode debugging without affecting your app's production image, you can create a new stage based off the `base` stage (called `debug` in the example) that contains the debugging tools, and then point the VS Fast Mode tools to that debug stage.
 
-Here's an example chart showing the inheritance of the build stages: 
+Here's an example chart showing the inheritance of the build stages:
 
 ```mermaid
 flowchart TD
@@ -152,7 +152,8 @@ flowchart TD
 
 Here's an example configuration based off of a simple ASP.NET Core app:
 
-**.csproj**
+### *.csproj
+
 ```diff
 <PropertyGroup>
   ...
@@ -161,7 +162,8 @@ Here's an example configuration based off of a simple ASP.NET Core app:
 </PropertyGroup>
 ```
 
-**Dockerfile**
+### Dockerfile
+
 ```diff
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md

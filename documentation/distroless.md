@@ -12,6 +12,7 @@ They contain the following features:
 We offer distroless .NET images for two operating systems: [Ubuntu Chiseled](./ubuntu-chiseled.md) and [Azure Linux](./azurelinux.md).
 
 .NET distroless images are available for the following image repos:
+
 - [`mcr.microsoft.com/dotnet/runtime`](../README.runtime.md)
 - [`mcr.microsoft.com/dotnet/aspnet`](../README.aspnet.md)
 - [`mcr.microsoft.com/dotnet/runtime-deps`](../README.runtime-deps.md) (for self-contained or AOT apps)
@@ -112,7 +113,7 @@ COPY --from=build /somefile-extracted .
 
 If your app writes to the disk, you may encounter permission issues at runtime, such as:
 
-```
+```text
 System.UnauthorizedAccessException: Access to the path "<path>" is denied
 ```
 
@@ -138,13 +139,13 @@ You can check the user ID that a container will use by running the following com
 
 **Ubuntu**:
 
-```
+```console
 docker image inspect mcr.microsoft.com/dotnet/runtime-deps:8.0-noble-chiseled -f "{{ .Config.User }}"
 ```
 
 **Azure Linux**:
 
-```
+```console
 docker image inspect mcr.microsoft.com/dotnet/runtime-deps:8.0-cbl-mariner2.0-distroless -f "{{ .Config.User }}"
 ```
 

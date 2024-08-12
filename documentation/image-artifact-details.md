@@ -100,12 +100,13 @@ FROM mcr.microsoft.com/cbl-mariner/base/core:2.0
 COPY --from=distroless / /distroless
 ```
 
-Note the last instruction copies the entire contents of the distroless container's filesystem to the `/distroless` directory in the wrapper.
-This will be the target location used when executing commands.
+> [!NOTE]
+> The last instruction copies the entire contents of the distroless container's filesystem to the `/distroless` directory in the wrapper.
+> This will be the target location used when executing commands.
 
 Next, build the Dockerfile, specifying the distroless image tag you wish to inspect:
 
-```
+```console
 docker build -t distroless-wrapper --build-arg DISTROLESS_IMAGE=mcr.microsoft.com/dotnet/aspnet:6.0-cbl-mariner2.0-distroless .
 ```
 
@@ -113,14 +114,14 @@ Now that you've got the wrapper image, you can execute the [commands that are do
 
 For example, instead of executing this command as documented:
 
-```
-docker run --rm mcr.microsoft.com/dotnet/aspnet:6.0-cbl-mariner2.0-distroless /bin/sh -c "find ./usr/share/dotnet | grep -i third"
+```console
+$ docker run --rm mcr.microsoft.com/dotnet/aspnet:6.0-cbl-mariner2.0-distroless /bin/sh -c "find ./usr/share/dotnet | grep -i third"
 ./usr/share/dotnet/ThirdPartyNotices.txt
 ```
 
 You would actually execute this command to use the distroless wrapper image (note the difference in the image tag and path parameter):
 
-```
-docker run --rm distroless-wrapper /bin/sh -c "find ./distroless/usr/share/dotnet | grep -i third"
+```console
+$ docker run --rm distroless-wrapper /bin/sh -c "find ./distroless/usr/share/dotnet | grep -i third"
 ./distroless/usr/share/dotnet/ThirdPartyNotices.txt
 ```

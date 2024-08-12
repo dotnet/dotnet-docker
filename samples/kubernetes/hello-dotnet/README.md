@@ -15,7 +15,7 @@ Forwarding from 127.0.0.1:8080 -> 8080
 Forwarding from [::1]:8080 -> 8080
 ```
 
-View the sample app at http://localhost:8080/ and call `curl http://localhost:8080/Environment`.
+View the sample app at `http://localhost:8080/` and call `curl http://localhost:8080/Environment`.
 
 ```bash
 $ curl http://localhost:8080/Environment 
