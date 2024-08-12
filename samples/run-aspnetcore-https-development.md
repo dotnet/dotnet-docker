@@ -100,7 +100,13 @@ After the application starts, navigate to `https://localhost:8001` in your web b
 ### macOS
 
 ```console
-cd samples\aspnetapp
+cd samples/aspnetapp
+```
+
+Create a certificate directory with appropriate permissions:
+
+```console
+mkdir -p -m 700 ${HOME}/.aspnet/https
 ```
 
 Generate cert and configure local machine:
@@ -142,7 +148,13 @@ After the application starts, navigate to `https://localhost:8001` in your web b
 ### Linux
 
 ```console
-cd samples\aspnetapp
+cd samples/aspnetapp
+```
+
+Create a certificate directory with appropriate permissions:
+
+```console
+mkdir -p -m 700 ${HOME}/.aspnet/https
 ```
 
 Generate cert and configure local machine:
@@ -153,7 +165,6 @@ dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p <CREDENTIAL_PL
 
 > [!NOTE]
 >
-> - `dotnet dev-certs https --trust` is only supported on macOS and Windows. You need to trust certs on Linux in the way that is supported by your distro. It is likely that you need to trust the certificate in your browser.
 > - The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
 > - `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
 
