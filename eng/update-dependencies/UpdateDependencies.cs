@@ -413,6 +413,7 @@ namespace Dotnet.Docker
 
             IEnumerable<IDependencyUpdater> minGitUpdaters = await MinGitUpdater.GetMinGitUpdatersAsync(RepoRoot);
             IEnumerable<IDependencyUpdater> chiselUpdaters = await ChiselUpdater.GetChiselUpdatersAsync(RepoRoot, Options.DockerfileVersion);
+            IDependencyUpdater syftUpdater = await SyftUpdater.GetSyftUpdaterAsync(RepoRoot);
 
             List<IDependencyUpdater> updaters =
             [
@@ -422,7 +423,8 @@ namespace Dotnet.Docker
                 // Chisel updaters must be listed before runtime version
                 // updaters because they check the manifest for whether the
                 // runtime versions are being updated or not
-                ..chiselUpdaters
+                ..chiselUpdaters,
+                syftUpdater
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)
