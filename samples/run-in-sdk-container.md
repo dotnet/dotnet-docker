@@ -53,13 +53,13 @@ You can test this working by simply editing [Program.cs](dotnetapp/Program.cs). 
 
 The following instructions demonstrate this scenario in various environments.
 
-## Linux or macOS
+### Linux or macOS
 
 ```console
 docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run
 ```
 
-## Windows using Linux containers
+### Windows using Linux containers
 
 This example uses PowerShell.
 
@@ -67,7 +67,7 @@ This example uses PowerShell.
 docker run --rm -it -v ${pwd}:/app/ -w /app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run
 ```
 
-## Windows using Windows containers
+### Windows using Windows containers
 
 This example uses PowerShell.
 
@@ -123,7 +123,7 @@ This example uses PowerShell.
 docker run --rm -it -p 8000:8080 -v ${pwd}:C:\app\ -w \app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:8.0 dotnet run --no-launch-profile
 ```
 
-### Using a launch profile to configure ASP.NET Core
+## Using a launch profile to configure ASP.NET Core
 
 The examples above use environment variables to configure ASP.NET Core. You can instead [configure ASP.NET Core with a launchSettings.json file](https://docs.microsoft.com/aspnet/core/fundamentals/environments). The [launchSettings.json file](aspnetapp/aspnetapp/Properties/launchSettings.json) in this app has been updated with a `container` profile that can be used instead of specifying environment variables with the docker CLI.
 
