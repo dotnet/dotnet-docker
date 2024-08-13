@@ -25,11 +25,11 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `6.0.30-jammy-amd64`
-- `6.0.30-jammy-arm64v8`
-- `6.0.30-nanoserver-ltsc2022`
-- `8.0.5-alpine3.19-arm64v8`
-- `8.0.5-bookworm-slim-arm32v7`
+- `6.0.32-jammy-amd64`
+- `6.0.32-jammy-arm64v8`
+- `6.0.32-nanoserver-ltsc2022`
+- `8.0.7-alpine3.20-arm64v8`
+- `8.0.7-bookworm-slim-arm32v7`
 
 ### `<Major.Minor .NET Version>-<OS>-<Architecture>`
 
@@ -40,7 +40,7 @@ Examples:
 - `6.0-jammy-arm64v8`
 - `6.0-jammy-amd64`
 - `6.0-nanoserver-ltsc2022`
-- `8.0-alpine3.19-arm64v8`
+- `8.0-alpine3.20-arm64v8`
 - `8.0-bookworm-slim-arm32v7`
 
 ## Multi-platform tags
@@ -49,12 +49,15 @@ These tags reference images for [multiple platforms](https://docs.docker.com/bui
 
 They include:
 
-- Debian, unless specified (like `6.0-alpine`).
+- Debian, unless specified (like `8.0-alpine`).
 - All [supported architectures](supported-platforms.md#architectures).
 
-**Note:** Since .NET 8, these multi-platform tags **specifically exclude all Windows versions** due to `containerd`'s platform matching algorithm for Windows hosts.
+> [!NOTE]
+> Since .NET 8, these multi-platform tags **specifically exclude all Windows versions** due to `containerd`'s platform matching algorithm for Windows hosts.
+
 Please see [#4492 (Switch multi-platform tags to Linux only)](https://github.com/dotnet/dotnet-docker/issues/4492) for more context.
 If you are using Windows, you will need to explicitly specify an OS Version with a single-platform tag like so:
+
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-ltsc2022
 FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-1809
@@ -68,8 +71,8 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `6.0.30-jammy`
-- `8.0.5-alpine3.19`
+- `6.0.32-jammy`
+- `8.0.7-alpine3.20`
 
 ### `<Major.Minor .NET Version>-<OS version>`
 
@@ -77,7 +80,7 @@ These "floating version" tags reference an image with a specific `Major.Minor` (
 
 Examples:
 
-- `6.0-alpine3.19`
+- `6.0-alpine3.20`
 - `8.0-jammy`
 
 ### `<Major.Minor .NET Version>-alpine`
@@ -89,11 +92,11 @@ Examples:
 - `6.0-alpine`
 - `8.0-alpine`
 
-Notes:
-
-- New versions of Alpine will be published with version-specific tags (e.g. `6.0-alpine3.19`).
-- Floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version a month later.
-- Tag changes will be [announced](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) so that users know when the tags they want are available.
+> [!NOTE]
+>
+> - New versions of Alpine will be published with version-specific tags (e.g. `6.0-alpine3.20`).
+> - Floating tag (e.g. `6.0-alpine`) will be updated with the new Alpine version a month later.
+> - Tag changes will be [announced](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) so that users know when the tags they want are available.
 
 ### `<Major.Minor.Patch .NET Version>`
 
@@ -101,8 +104,8 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `6.0.30`
-- `8.0.5`
+- `6.0.32`
+- `8.0.7`
 
 ### `<Major.Minor .NET Version>`
 
@@ -115,14 +118,14 @@ Examples:
 
 ### Image Variants
 
-Starting with 8.0, .NET offers several image variants that provide different features for the size-focused OSes, Alpine and Ubuntu Chiseled.
+Starting with 8.0, .NET offers several image variants that provide different features for the size-focused OSes, Alpine, Azure Linux, and Ubuntu Chiseled.
 You can use these variants by appending the variant name (e.g. `extra`, `chiseled`) to the OS name.
 
 Examples:
 
-- `8.0-jammy-chiseled`
-- `8.0.5-jammy-chiseled-extra`
-- `8.0.5-alpine3.19-extra`
+- `8.0-noble-chiseled`
+- `8.0.7-noble-chiseled-extra`
+- `8.0.7-alpine3.20-extra`
 
 For more information, see the [Image Variants documentation](./image-variants.md).
 
@@ -130,10 +133,10 @@ For more information, see the [Image Variants documentation](./image-variants.md
 
 These "floating version" `latest` tag references an image with the latest `Major.Minor.Patch` .NET version, while operating system and architecture will be chosen based on the requesting environment.
 
-Notes:
-
-- The `latest` tag references the latest stable release.
-- In the `nightly` image repo, it may reference the latest preview release.
+> [!NOTE]
+>
+> - The `latest` tag references the latest stable release.
+> - In the `nightly` image repo, it may reference the latest preview release.
 
 ## Tag policies
 
@@ -145,15 +148,15 @@ The following policies are used for the tag patterns we use.
 
 Examples:
 
-- `6.0.30`
-- `8.0.5-alpine3.19`
+- `6.0.32`
+- `8.0.7-alpine3.20`
 
-Notes:
-
-- These tags are considered _fixed tags_ since they reference a specific .NET patch version.
-- They are updated in response to base image updates (like a Debian base image) for the supported life of the image (typically one month).
-- The .NET components within the image will not be updated.
-- In the rare event that .NET components are updated before the next regular .NET service release, then a new image with a `-1` tag will be created. The same practice will repeat itself if necessary (with `-2` and then `-3` tags).
+> [!NOTE]
+>
+> - These tags are considered _fixed tags_ since they reference a specific .NET patch version.
+> - They are updated in response to base image updates (like a Debian base image) for the supported life of the image (typically one month).
+> - The .NET components within the image will not be updated.
+> - In the rare event that .NET components are updated before the next regular .NET service release, then a new image with a `-1` tag will be created. The same practice will repeat itself if necessary (with `-2` and then `-3` tags).
 
 ### Floating version tags
 
@@ -162,13 +165,13 @@ Notes:
 Examples:
 
 - `6.0`
-- `8.0-alpine3.19`
+- `8.0-alpine3.20`
 
-Notes:
-
-- These tags are considered _floating tags_ since they do not reference a specific .NET patch version.
-- They are updated in response to base image updates (like a Debian base image) for the supported life of the .NET release.
-- The .NET components within the image will be updated, which typically occurs on Patch Tuesday.
+> [!NOTE]
+>
+> - These tags are considered _floating tags_ since they do not reference a specific .NET patch version.
+> - They are updated in response to base image updates (like a Debian base image) for the supported life of the .NET release.
+> - The .NET components within the image will be updated, which typically occurs on Patch Tuesday.
 
 ### OS tags and base image updates
 
@@ -177,14 +180,14 @@ Version-specific operating system tags reference an image with a specific OS ver
 Examples:
 
 - `6.0-jammy`
-- `8.0-alpine3.19`
+- `8.0-alpine3.20`
 
-Notes:
-
-- These tags are updated in response to base image updates (like an Ubuntu base image) for the supported life of the .NET release.
-- Digest pinning is required to request a specific patch of an operating system (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
-- If an image is only available for one operating system, then the operating system will be omitted from the tag.
-- For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used instead of version numbers.
+> [!NOTE]
+>
+> - These tags are updated in response to base image updates (like an Ubuntu base image) for the supported life of the .NET release.
+> - Digest pinning is required to request a specific patch of an operating system (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
+> - If an image is only available for one operating system, then the operating system will be omitted from the tag.
+> - For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used instead of version numbers.
 
 ### Windows tags
 

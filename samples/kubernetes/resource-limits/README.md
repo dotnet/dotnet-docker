@@ -41,7 +41,7 @@ Create a proxy to the service.
 kubectl port-forward service/dotnet-resource-limits 8080
 ```
 
-View the sample app at http://localhost:8080/ or call `curl http://localhost:8080/Environment`. You can see memory and CPU usage displayed. CPU is reported as an integer and always rounded up to the next whole integer (for example, `0.25` is rounded up to `1`).
+View the sample app at `http://localhost:8080/` or call `curl http://localhost:8080/Environment`. You can see memory and CPU usage displayed. CPU is reported as an integer and always rounded up to the next whole integer (for example, `0.25` is rounded up to `1`).
 
 ```bash
 % curl http://localhost:8080/Environment
