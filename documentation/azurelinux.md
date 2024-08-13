@@ -152,7 +152,7 @@ flowchart TD
 
 Here's an example configuration based off of a simple ASP.NET Core app:
 
-**.csproj**
+### *.csproj
 
 ```diff
 <PropertyGroup>
@@ -162,7 +162,7 @@ Here's an example configuration based off of a simple ASP.NET Core app:
 </PropertyGroup>
 ```
 
-**Dockerfile**
+### Dockerfile
 
 ```diff
 # Learn about building .NET container images:

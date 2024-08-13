@@ -6,7 +6,7 @@ FROM amd64/buildpack-deps:noble-curl AS installer
 # Retrieve ASP.NET Core
 RUN aspnetcore_version=9.0.0-preview.7.24406.2 \
     && curl -fSL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='4e178bbd26c70a3f1690c2b84b01c5a43cbf546adc878617fdf4c39d10e8063684420126261aacabcaa7f72c697290c1c06d3e93d9f3babe57c72d5fe98346fb' \
+    && aspnetcore_sha512='44f86c407b501a700aaeae2ce95cf544d85c08b41cdd12cee22bfcfdd03c4f6a16e495d9f8315f5e56a66b7e6187a4fc39d899f967a65f73883e40172343275c' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \

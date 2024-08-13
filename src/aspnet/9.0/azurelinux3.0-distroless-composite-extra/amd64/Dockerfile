@@ -12,7 +12,7 @@ RUN tdnf install -y \
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=9.0.0-preview.7.24406.2  \
     && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
-    && dotnet_sha512='30249d6228d37f5a76ea75a130afedc71c62b7e7618474dd25aaf87734bdf39758bf4ba318924e74e3d955cf511e6b537f016cb88a30685fcd00e783aeb0ecef' \
+    && dotnet_sha512='5a580a89c144a268ceeaf2171f2a60f31ab99c3c1879d043920cf4a0a70eb5d3aa0419029408f64ddb1930ebf830e4988d9356dd7dd7819fde570622aeeab7b5' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
