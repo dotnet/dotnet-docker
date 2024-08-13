@@ -1,5 +1,8 @@
 steps:
 - powershell: |
+    # Use public cache registry for pulling external images during tests
+    $additionalTestArgs = "$env:ADDITIONALTESTARGS -CacheRegistry $(public-mirror.server)"
+
     # Forward team project name for consumption by test script
     $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT'"
     $testInit=""
@@ -19,6 +22,7 @@ steps:
       }
     }
     
+    echo "##vso[task.setvariable variable=additionalTestArgs]$additionalTestArgs"
     echo "##vso[task.setvariable variable=testRunner.options]$testRunnerOptions"
     echo "##vso[task.setvariable variable=test.init]$testInit"
   displayName: Set Custom Test Variables

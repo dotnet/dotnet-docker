@@ -11,6 +11,11 @@ param(
     [string]
     $Channel,
 
+    # The pipeline run ID of the .NET release staging build.
+    [Parameter(ParameterSetName = "BuildId")]
+    [string]
+    $BuildId,
+
     [Parameter(ParameterSetName = "Explicit")]
     # SDK versions to target
     [string[]]
@@ -19,6 +24,10 @@ param(
     # Whether to target an internal .NET build
     [switch]
     $UseInternalBuild,
+
+    # Whether to call Set-DotnetVersions with the new versions
+    [switch]
+    $UpdateDependencies,
 
     # SAS query string used to access the internal blob storage location of the build
     [string]
@@ -140,11 +149,39 @@ function GetDependencyVersion([string]$dependencyName, [xml]$versionDetails) {
     return $result.Node.Value
 }
 
+function GetVersionInfoFromBuildId([string]$buildId) {
+    $configPath = Join-Path $tempDir "config.json"
+
+    try {
+        az pipelines runs artifact download --organization https://dev.azure.com/dnceng/ --project internal --run-id $buildId --path $tempDir --artifact-name drop
+
+        $config = $(Get-Content -Path $configPath | Out-String) | ConvertFrom-Json
+
+        $isStableVersion = Get-IsStableBranding -Version $config.Sdk_Builds[0]
+
+        return [PSCustomObject]@{
+            DockerfileVersion = $config.Channel
+            SdkVersion = ($config.Sdks | Sort-Object -Descending)[0]
+            RuntimeVersion = $config.Runtime
+            AspnetVersion = $config.Asp
+            StableBranding = $isStableVersion
+        }
+    }
+    catch [System.Management.Automation.CommandNotFoundException] {
+        Write-Error "Azure CLI is not installed. Please visit https://learn.microsoft.com/cli/azure/install-azure-cli."
+        Write-Host "Original Exception: $_"
+        exit 1
+    }
+    finally {
+        Remove-Item -Force $configPath
+    }
+}
+
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 Set-StrictMode -Version 2.0
 
-$tempDir = "$([System.IO.Path]::GetTempPath())/dotnet-docker-get-dropversions"
+$tempDir = Join-Path ([System.IO.Path]::GetTempPath()) "dotnet-docker-get-dropversions" ([System.Guid]::NewGuid())
 
 if ($UseInternalBuild) {
     if ($Channel)
@@ -176,8 +213,11 @@ foreach ($sdkVersion in $SdkVersions)
     $sdkVersionInfos += $sdkVersionInfo
 }
 
-Write-Host "Resolved SDK versions: $SdkVersions"
 $versionInfos = @()
+if ($BuildId) {
+    $versionInfos += GetVersionInfoFromBuildId($BuildId)
+}
+
 foreach ($sdkVersionInfo in $SdkVersionInfos) {
     $sdkVersionParts = $sdkVersionInfo.Version -split "\."
     $dockerfileVersion = "$($sdkVersionParts[0]).$($sdkVersionParts[1])"
@@ -213,4 +253,24 @@ foreach ($sdkVersionInfo in $SdkVersionInfos) {
     }
 }
 
-Write-Output "##vso[task.setvariable variable=versionInfos]$($versionInfos | ConvertTo-Json -Compress -AsArray)"
+if ($UpdateDependencies)
+{
+    foreach ($versionInfo in $versionInfos) {
+        Write-Host "Dockerfile version: $($versionInfo.DockerfileVersion)"
+        Write-Host "SDK version: $($versionInfo.SdkVersion)"
+        Write-Host "Runtime version: $($versionInfo.RuntimeVersion)"
+        Write-Host "ASP.NET Core version: $($versionInfo.AspnetVersion)"
+        Write-Host
+
+        $setVersionsScript = Join-Path $PSScriptRoot "Set-DotnetVersions.ps1"
+        & $setVersionsScript `
+            -ProductVersion $versionInfo.DockerfileVersion `
+            -RuntimeVersion $versionInfo.RuntimeVersion `
+            -AspnetVersion $versionInfo.AspnetVersion `
+            -SdkVersion $versionInfo.SdkVersion `
+
+        Write-Host "`r`nDone: Updates for .NET ${versionInfo.RuntimeVersion}/${versionInfo.SdkVersion}`r`n"
+    }
+} else {
+    Write-Output "##vso[task.setvariable variable=versionInfos]$($versionInfos | ConvertTo-Json -Compress -AsArray)"
+}
