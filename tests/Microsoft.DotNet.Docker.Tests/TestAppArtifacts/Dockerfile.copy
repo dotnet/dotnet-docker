@@ -1,0 +1,10 @@
+ARG base_image
+ARG copy_image
+
+FROM $copy_image AS copy_image
+
+FROM $base_image
+
+ARG copy_origin
+ARG copy_destination
+COPY --from=copy_image $copy_origin $copy_destination

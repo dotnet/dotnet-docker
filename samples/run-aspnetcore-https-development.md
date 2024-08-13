@@ -36,13 +36,15 @@ You can add the element manually or use Visual Studio to do it for you. The foll
 
 The format of the `UserSecretsId` content doesn't matter. The sample in this repo used [Random String Generator](https://www.random.org/strings/?num=6&len=20&digits=on&unique=on&format=html&rnd=new) to produce a unique string.
 
-> Note: `User Secrets` and `Application Secrets` terms are used interchangebly.
+> [!NOTE]
+> `User Secrets` and `Application Secrets` terms are used interchangebly.
 
 ## Building and Running the Sample with HTTPS
 
 Use the following instructions, for your operating system configuration. The commands assume that you are in the root of the repository.
 
-> Note: The sample includes a banner to accept a cookie policy. When switching between HTTP and HTTPS, you may see the banner repeatedly. Delete the cookie for the site in `Developer Tools` in this case.
+> [!NOTE]
+> The sample includes a banner to accept a cookie policy. When switching between HTTP and HTTPS, you may see the banner repeatedly. Delete the cookie for the site in `Developer Tools` in this case.
 
 ![Developer Tools -- Delete cookie](https://user-images.githubusercontent.com/2608468/40246148-875fee5a-5a7c-11e8-9728-7da89a491014.png)
 
@@ -65,11 +67,11 @@ dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p <CRED
 dotnet dev-certs https --trust
 ```
 
-> Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
-
-> Note: `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
-
-> Note: If console returns "A valid HTTPS certificate is already present.", a trusted certificate already exists in your store. It can be exported using MMC Console.
+> [!NOTE]
+>
+> - The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
+> - `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
+> - If console returns "A valid HTTPS certificate is already present.", a trusted certificate already exists in your store. It can be exported using MMC Console.
 
 Configure application secrets, for the certificate:
 
@@ -78,7 +80,8 @@ dotnet user-secrets init -p aspnetapp\aspnetapp.csproj
 dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
-> Note: The password must match the password used for the certificate.
+> [!NOTE]
+> The password must match the password used for the certificate.
 
 Build a container image:
 
@@ -113,9 +116,10 @@ dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p <CREDENTIAL_PL
 dotnet dev-certs https --trust
 ```
 
-> Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
-
-> Note: `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
+> [!NOTE]
+>
+> - The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
+> - `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
 
 Configure application secrets, for the certificate:
 
@@ -124,7 +128,8 @@ dotnet user-secrets init -p aspnetapp/aspnetapp.csproj
 dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
-> Note: The password must match the password used for the certificate.
+> [!NOTE]
+> The password must match the password used for the certificate.
 
 Build a container image:
 
@@ -158,9 +163,10 @@ Generate cert and configure local machine:
 dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p <CREDENTIAL_PLACEHOLDER>
 ```
 
-> Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
-
-> Note: `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
+> [!NOTE]
+>
+> - The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
+> - `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
 
 Configure application secrets, for the certificate:
 
@@ -200,11 +206,11 @@ dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p <CRED
 dotnet dev-certs https --trust
 ```
 
-> Note: The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
-
-> Note: `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
-
-> Note: If console returns "A valid HTTPS certificate is already present.", a trusted certificate already exists in your store. It can be exported using MMC Console.
+> [!NOTE]
+>
+> - The certificate name, in this case *aspnetapp*.pfx must match the project assembly name.
+> - `<CREDENTIAL_PLACEHOLDER>` is used as a stand-in for a password of your own choosing.
+> - If console returns "A valid HTTPS certificate is already present.", a trusted certificate already exists in your store. It can be exported using MMC Console.
 
 Configure application secrets, for the certificate:
 
@@ -213,7 +219,8 @@ dotnet user-secrets init -p aspnetapp/aspnetapp.csproj
 dotnet user-secrets -p aspnetapp\aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
-> Note: The password must match the password used for the certificate.
+> [!NOTE]
+> The password must match the password used for the certificate.
 
 Build a container image:
 
@@ -229,5 +236,4 @@ docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_EN
 
 After the application starts, navigate to `https://localhost:8001` in your web browser.
 
-> In the case of using https, be sure to check the certificate you're using is trusted on the host. You can start with navigating to https://localhost:8001 in the browser. If you're looking to test https with a domain name (e.g. https://contoso.com:8001), the certificate would also need the appropiate Subject Alternative Name included, and the DNS settings on the host would need to be updated. In the case of using the generated dev certificate, the trusted certificate will be issued from localhost and will not have the SAN added.
-
+> In the case of using https, be sure to check the certificate you're using is trusted on the host. You can start with navigating to `https://localhost:8001` in the browser. If you're looking to test https with a domain name (e.g. `https://contoso.com:8001`), the certificate would also need the appropiate Subject Alternative Name included, and the DNS settings on the host would need to be updated. In the case of using the generated dev certificate, the trusted certificate will be issued from localhost and will not have the SAN added.

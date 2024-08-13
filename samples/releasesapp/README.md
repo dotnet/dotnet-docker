@@ -13,11 +13,11 @@ docker build --pull -t app .
 docker run --rm app
 ```
 
-It will produce output similar to: https://gist.github.com/richlander/4701a33592abd021f767644974c0ced6
+It will produce output similar to this [example app output](https://gist.github.com/richlander/4701a33592abd021f767644974c0ced6).
 
 ## App
 
-The app is intended as a sort of compliance report for .NET. The report includes supported major releases and those recently out of support. It includes the latest and latest security patch versions for each of those major releases. 
+The app is intended as a sort of compliance report for .NET. The report includes supported major releases and those recently out of support. It includes the latest and latest security patch versions for each of those major releases.
 
 This same information is available from the [release JSON](https://github.com/dotnet/core/blob/main/release-notes/releases-index.json) files that the team maintains, but that requires a bit of code to provide the same report.
 

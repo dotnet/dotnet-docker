@@ -34,7 +34,8 @@ You need to [login to Docker Hub](https://docs.docker.com/docker-hub/accounts/) 
 
 There are a couple ways of passing a password to `docker login`. These instructions [pass the password to stdin](https://github.com/docker/cli/pull/218) via a text file called password-dh.txt. Make sure to save to a location not managed by source control (to avoid accidental disclosure).
 
-> Note: The instructions use example values that need to be changed to for your environment, specifically the password location, and the user account. More simply, make sure to change "rich" and "richlander" to something else.
+> [!NOTE]
+> The instructions use example values that need to be changed to for your environment, specifically the password location, and the user account. More simply, make sure to change "rich" and "richlander" to something else.
 
 Login on Windows:
 
