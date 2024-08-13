@@ -9,7 +9,7 @@ ENV ASPNET_VERSION=9.0.0-preview.7.24406.2
 
 # Install ASP.NET Core
 RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-arm.tar.gz \
-    && aspnetcore_sha512='836212e6c83f790096bcbc131f7bea1175a0ab17898c8e872e88bcb0e27b52e5f94cf27dcde815e54e102610cf2d002ffed4f325da815d3b6be416d2425f0d46' \
+    && aspnetcore_sha512='08b67ca34122f063370d0f24606174026d3e67f8767ac2e4c4393c214e608d47d82dad177a97c5e6e28d089412403f75012c00cdaabb109e461e266ad6a620c5' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz

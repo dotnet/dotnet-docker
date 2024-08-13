@@ -12,7 +12,7 @@ RUN powershell -Command `
         `
         $aspnetcore_version = '9.0.0-preview.7.24406.2'; `
         Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
-        $aspnetcore_sha512 = '6fbb3aee8c4844b0d578edadb4f4120b4ddeaaee1f5925a7c986746227a50a7586993879b338e93e932c7bc2145285e096e67cab374a71b5617e1ad1111453c1'; `
+        $aspnetcore_sha512 = 'ce32f77bfb17c15c85968bd3062d6d628ce5d7b1b1bc5d1cab1c7b659253ad869c264b6e98773a57ce80cb818c22db5da79ed6b32affe6f8be0f1952069c7714'; `
         if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `

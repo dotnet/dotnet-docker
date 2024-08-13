@@ -27,7 +27,7 @@ RUN apk add --upgrade --no-cache \
 
 # Install .NET SDK
 RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='6e57001dac6b78de5976529543709b05d5cf57790a72904c72ad35215646a03c9f1219aeb6c4e979a7a86d6ca20f65b4febfe87f12291f61b52704291d40ff87' \
+    && dotnet_sha512='f558d4d3e8ae430ce544a8157197f9084849998f8788e26b9a20f742761ac1ab09c12423e0d1eed1d3bed7a25788b717e3525586b10977f9bec414ae76ac3515' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \

@@ -4,7 +4,7 @@ FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Install .NET SDK
 RUN curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/9.0.100-preview.7.24407.12/dotnet-sdk-9.0.100-preview.7.24407.12-linux-arm.tar.gz \
-    && dotnet_sha512='9e57776a5fbb257e39318d485d02ec7a0b07c680cc6cf9dfc8a6cbebd98c6eb70f39131c3bdc1ea1a34a4df2c9cc9ed4f512ee4be8156f3ecd9f36c32e371e77' \
+    && dotnet_sha512='b97c357cf8a2e129b222748e23b59343c4264b6dc9dbe00c5a01bf2d3f57c1a6bc61e5ec053b75ce0d17434977e1616d3efb7c4642aca18d8bb5fe7b6c0f906d' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
