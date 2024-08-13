@@ -59,7 +59,7 @@ Tags | Dockerfile | OS Version
 ##### .NET Monitor Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.6-amd64, 9.0-preview-amd64, 9.0.0-preview.6, 9.0-preview, 9-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor-base/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+9.0.0-preview.7-amd64, 9.0-preview-amd64, 9.0.0-preview.7, 9.0-preview, 9-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor-base/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 ## Linux arm64 Tags
 Tags | Dockerfile | OS Version
@@ -70,7 +70,7 @@ Tags | Dockerfile | OS Version
 ##### .NET Monitor Preview Tags
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.6-arm64v8, 9.0-preview-arm64v8, 9.0.0-preview.6, 9.0-preview, 9-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor-base/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.0-preview.7-arm64v8, 9.0-preview-arm64v8, 9.0.0-preview.7, 9.0-preview, 9-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor-base/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 
 You can retrieve a list of all available tags for dotnet/monitor/base at https://mcr.microsoft.com/v2/dotnet/monitor/base/tags/list.
 <!--End of generated tags-->

@@ -16,7 +16,6 @@ RUN mkdir /staging \
         libgcc \
         libstdc++ \
         openssl-libs \
-        zlib \
     && tdnf clean all --releasever=3.0 --installroot /staging
 
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
@@ -70,4 +69,4 @@ COPY --from=installer /staging/ /
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=installer --chown=1654:1654 /staging/home/app /home/app
 
-USER app
+USER $APP_UID

@@ -32,8 +32,7 @@ RUN mkdir -p /rootfs/var/lib/dpkg/ \
             libc6_libs \
             libgcc-s1_libs \
             libssl3t64_libs \
-            libstdc++6_libs \
-            zlib1g_libs
+            libstdc++6_libs
 
 
 FROM scratch
