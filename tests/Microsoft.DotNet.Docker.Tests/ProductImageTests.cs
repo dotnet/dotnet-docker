@@ -392,6 +392,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 { OS: OS.Mariner20Distroless, Version: ImageVersion version }
                         when version.Major == 6 =>
                     [
+                        "e2fsprogs",
                         "e2fsprogs-libs",
                         "glibc",
                         "krb5",
@@ -407,12 +408,14 @@ namespace Microsoft.DotNet.Docker.Tests
                         "icu",
                         "krb5",
                         "libgcc",
+                        "openssl",
                         "openssl-libs",
                     ],
                 { OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) =>
                     [
                         "glibc",
                         "libgcc",
+                        "openssl",
                         "openssl-libs",
                     ],
                 { OS: string os } when os.Contains(OS.Jammy) =>
