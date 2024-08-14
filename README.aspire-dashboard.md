@@ -107,17 +107,17 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 
 # Full Tag Listing
 
-## Linux amd64 Tags
+### Linux amd64 Tags
+
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.1.0-amd64, 8.1-amd64, 8-amd64, 8.1.0, 8.1, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspire-dashboard/8.1/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
-## Linux arm64 Tags
+### Linux arm64 Tags
+
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.1.0-arm64v8, 8.1-arm64v8, 8-arm64v8, 8.1.0, 8.1, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/aspire-dashboard/8.1/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
-
-You can retrieve a list of all available tags for dotnet/aspire-dashboard at https://mcr.microsoft.com/v2/dotnet/aspire-dashboard/tags/list.
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
