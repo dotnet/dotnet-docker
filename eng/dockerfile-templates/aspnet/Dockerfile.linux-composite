@@ -20,7 +20,8 @@
     set osVersionBase to when(osVersionBase = "noble" && ARCH_VERSIONED = "arm32v7", "jammy", osVersionBase) ^
 
     set installerImageTag to when(isDistrolessAzureLinux,
-        cat(when(find(OS_VERSION_NUMBER, "3.0") >= 0, "azurelinuxpreview.azurecr.io/public/azurelinux", "mcr.microsoft.com/cbl-mariner"),
+        cat("mcr.microsoft.com/",
+            when(find(OS_VERSION_NUMBER, "3.0") >= 0, "azurelinux", "cbl-mariner"),
             "/base/core:",
             OS_VERSION_NUMBER),
         when(isAlpine || isFullAzureLinux,
