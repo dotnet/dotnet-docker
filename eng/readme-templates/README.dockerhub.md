@@ -1,1 +1,1 @@
-{{InsertTemplate("DefaultLayout.md", ["readme-host": "dockerhub"])}}
+{{InsertTemplate("DefaultLayout.md", ["top-header": "#", "readme-host": "dockerhub"])}}

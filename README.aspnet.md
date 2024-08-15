@@ -1,10 +1,12 @@
+# ASP.NET Core Runtime
+
 **IMPORTANT**
 
 **The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
 
 **See [dotnet](https://hub.docker.com/r/microsoft/dotnet-aspnet/) for images with official releases of [.NET](https://github.com/dotnet/core).**
 
-# Featured Tags
+## Featured Tags
 
 * `9.0-preview` (Preview)
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:9.0-preview`
@@ -13,29 +15,29 @@
 * `6.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:6.0`
 
-# About
+## About
 
 This image contains the ASP.NET Core and .NET runtimes and libraries and is optimized for running ASP.NET Core apps in production.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-## New: Ubuntu Chiseled Images
+### New: Ubuntu Chiseled Images
 
 Ubuntu Chiseled .NET images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
 These images offer dramatically smaller deployment sizes and attack surface by including only the minimal set of packages required to run .NET applications.
 
 Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) documentation page for more info.
 
-## ASP.NET Core Composite Images
+### ASP.NET Core Composite Images
 
 Starting from .NET 8, ASP.NET Core Composite images are optimized for performance using [ReadyToRun (R2R) compilation](https://learn.microsoft.com/dotnet/core/deploying/ready-to-run).
 For more information, see the [composite images section in the Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md#composite-net-80).
 
-# Usage
+## Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-## Container sample: Run a web application
+### Container sample: Run a web application
 
 You can quickly run a container with a pre-built [.NET Docker image](https://hub.docker.com/r/microsoft/dotnet-samples/), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md).
 
@@ -51,12 +53,12 @@ After the application starts, navigate to `http://localhost:8000` in your web br
 
 See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotnet/dotnet-docker/blob/main/samples/host-aspnetcore-https.md) to use HTTPS with this image.
 
-# Image Variants
+## Image Variants
 
 .NET container images have several variants that offer different combinations of flexibility and deployment size.
 The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
 
-# Related Repositories
+## Related Repositories
 
 .NET:
 
@@ -73,7 +75,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 * [dotnet/framework](https://hub.docker.com/r/microsoft/dotnet-framework/): .NET Framework, ASP.NET and WCF
 * [dotnet/framework/samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/): .NET Framework, ASP.NET and WCF Samples
 
-# Full Tag Listing
+## Full Tag Listing
 
 ### Linux amd64 Tags
 
@@ -280,23 +282,23 @@ Tag | Dockerfile
 9.0.0-preview.7-windowsservercore-ltsc2019, 9.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 <!--End of generated tags-->
 
-*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
+*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/aspnet/tags/list) for all supported and unsupported tags.*
 
-# Support
+## Support
 
-## Lifecycle
+### Lifecycle
 
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 
-## Image Update Policy
+### Image Update Policy
 
 * We update supported .NET images within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
 * We re-build all .NET images as part of releasing new versions of .NET including new major/minor versions and servicing.
 * Distroless images such as Ubuntu Chiseled have no base image, and as such will only be updated with .NET releases and CVE fixes as described below.
 
-### CVE Update Policy
+#### CVE Update Policy
 
 .NET container images are regularly monitored for the presence of CVEs. A given image will be rebuilt to pick up fixes for a CVE when:
 
@@ -306,12 +308,12 @@ Tag | Dockerfile
 
 Please refer to the [Security Policy](https://github.com/dotnet/dotnet-docker/blob/main/SECURITY.md) and [Container Vulnerability Workflow](https://github.com/dotnet/dotnet-docker/blob/main/documentation/vulnerability-reporting.md) for more detail about what to do when a CVE is encountered in a .NET image.
 
-## Feedback
+### Feedback
 
 * [File an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose)
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/)
 
-# License
+## License
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 * [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)

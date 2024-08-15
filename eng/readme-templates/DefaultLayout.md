@@ -1,6 +1,6 @@
 {{
     set commonArgs to [
-        "top-header": "#"
+        "top-header": ARGS["top-header"]
         "readme-host": ARGS["readme-host"]
     ] ^
 
@@ -25,9 +25,9 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 
 {{insertReposListTemplate("RelatedRepos.md")}}
 {{if !IS_PRODUCT_FAMILY:
-# Full Tag Listing
+{{ARGS["top-header"]}} Full Tag Listing
 {{if ARGS["readme-host"] = "github":<!--End of generated tags-->
-*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
+*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/{{REPO}}/tags/list) for all supported and unsupported tags.*
 ^elif ARGS["readme-host"] = "dockerhub":
 View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/{{REPO}}/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/{{if isNightlyRepo:nightly^else:main}}/README.{{SHORT_REPO}}.md#full-tag-listing).
 }}}}
