@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "microsoft.dnceng.secretmanager": {
+      "version": "1.1.0-beta.24413.3",
+      "commands": [
+        "secret-manager"
+      ],
+      "rollForward": false
+    }
+  }
+}
