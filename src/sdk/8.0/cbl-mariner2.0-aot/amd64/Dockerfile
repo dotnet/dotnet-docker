@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG REPO=mcr.microsoft.com/dotnet/sdk
-FROM $REPO:8.0.400-cbl-mariner2.0-amd64
+FROM $REPO:8.0.401-cbl-mariner2.0-amd64
 
 RUN tdnf install -y \
         build-essential \

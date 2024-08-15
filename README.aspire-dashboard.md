@@ -1,21 +1,23 @@
+# .NET Aspire Dashboard
+
 **IMPORTANT**
 
 **The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
 
 **See [dotnet](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/) for images with official releases of [.NET](https://github.com/dotnet/core).**
 
-# Featured Tags
+## Featured Tags
 
 * `8.1`
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.1`
 
-# About
+## About
 
 This image contains the .NET Aspire Dashboard.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-# Usage
+## Usage
 
 The .NET Aspire Dashboard is a browser-based app to view run-time information about your distributed application.
 
@@ -25,7 +27,7 @@ The dashboard shows:
 * Live console logs of resources.
 * Live telemetry, such as structured logs, traces and metrics.
 
-## Configuration
+### Configuration
 
 The dashboard must be configured when it is started. The configuration is done via environment variables. The following environment variables are supported:
 
@@ -35,7 +37,7 @@ The dashboard must be configured when it is started. The configuration is done v
 * `DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS` specifies the dashboard doesn't use authentication and accepts anonymous access. This setting is a shortcut to configuring `Dashboard:Frontend:AuthMode` and `Dashboard:Otlp:AuthMode` to `Unsecured`.
 * `DOTNET_DASHBOARD_CONFIG_FILE_PATH` specifies the path for an optional JSON configuration file.
 
-### Frontend authentication
+#### Frontend authentication
 
 The dashboard's frontend supports OpenID Connect (OIDC). Set `Dashboard__Frontend__AuthMode` to `OpenIdConnect`, then add the following configuration:
 
@@ -46,7 +48,7 @@ The dashboard's frontend supports OpenID Connect (OIDC). Set `Dashboard__Fronten
 
 It may also be run unsecured. Set `Dashboard__Frontend__AuthMode` to `Unsecured`. The frontend endpoint will allow anonymous access. This setting is used during local development, but is not recommended if you attempt to host the dashboard in other settings.
 
-## OTLP authentication
+### OTLP authentication
 
 The OTLP endpoint can be secured with [client certificate](https://learn.microsoft.com/aspnet/core/security/authentication/certauth) or API key authentication.
 
@@ -59,7 +61,7 @@ For API key authentication, set `Dashboard__Otlp__AuthMode` to `ApiKey`, then ad
 
 It may also be run unsecured. Set `Dashboard__Otlp__AuthMode` to `Unsecured`. The OTLP endpoint will allow anonymous access. This setting is used during local development, but is not recommended if you attempt to host the dashboard in other settings.
 
-## Resources
+### Resources
 
 * `Dashboard__ResourceServiceClient__Url` specifies the gRPC endpoint to which the dashboard connects for its data. There's no default. If this variable is unspecified, the dashboard shows OTEL data but no resource list or console logs.
 
@@ -76,7 +78,7 @@ The resource service client supports certificates. Set `Dashboard__ResourceServi
 
 To opt-out of authentication, set `Dashboard__ResourceServiceClient__AuthMode` to `Unsecured`. This completely disables all security for the resource service client. This setting is used during local development, but is not recommended if you attempt to host the dashboard in other settings.
 
-### Telemetry Limits
+#### Telemetry Limits
 
 Telemetry is stored in-memory. To avoid excessive memory usage, the dashboard has limits on the count and size of stored telemetry. When a count limit is reached, new telemetry is added, and the oldest telemetry is removed. When a size limit is reached, data is truncated to the limit.
 
@@ -89,11 +91,11 @@ Telemetry is stored in-memory. To avoid excessive memory usage, the dashboard ha
 
 Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures the dashboard to store up to 10,000 log entries per-resource.
 
-## Other
+### Other
 
 * `Dashboard__ApplicationName` specifies the application name to be displayed in the UI. This applies only when no resource service URL is specified. When a resource service exists, the service specifies the application name.
 
-# Related Repositories
+## Related Repositories
 
 .NET:
 
@@ -110,7 +112,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 * [dotnet/framework](https://hub.docker.com/r/microsoft/dotnet-framework/): .NET Framework, ASP.NET and WCF
 * [dotnet/framework/samples](https://hub.docker.com/r/microsoft/dotnet-framework-samples/): .NET Framework, ASP.NET and WCF Samples
 
-# Full Tag Listing
+## Full Tag Listing
 
 ### Linux amd64 Tags
 
@@ -125,23 +127,23 @@ Tags | Dockerfile | OS Version
 8.1.0-arm64v8, 8.1-arm64v8, 8-arm64v8, 8.1.0, 8.1, 8, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspire-dashboard/8.1/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 <!--End of generated tags-->
 
-*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)*
+*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list) for all supported and unsupported tags.*
 
-# Support
+## Support
 
-## Lifecycle
+### Lifecycle
 
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 
-## Image Update Policy
+### Image Update Policy
 
 * We update supported .NET images within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
 * We re-build all .NET images as part of releasing new versions of .NET including new major/minor versions and servicing.
 * Distroless images such as Ubuntu Chiseled have no base image, and as such will only be updated with .NET releases and CVE fixes as described below.
 
-### CVE Update Policy
+#### CVE Update Policy
 
 .NET container images are regularly monitored for the presence of CVEs. A given image will be rebuilt to pick up fixes for a CVE when:
 
@@ -151,12 +153,12 @@ Tags | Dockerfile | OS Version
 
 Please refer to the [Security Policy](https://github.com/dotnet/dotnet-docker/blob/main/SECURITY.md) and [Container Vulnerability Workflow](https://github.com/dotnet/dotnet-docker/blob/main/documentation/vulnerability-reporting.md) for more detail about what to do when a CVE is encountered in a .NET image.
 
-## Feedback
+### Feedback
 
 * [File an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose)
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/)
 
-# License
+## License
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 * [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)
