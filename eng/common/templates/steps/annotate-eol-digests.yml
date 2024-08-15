@@ -1,23 +1,32 @@
 parameters:
-  internalProjectName: null
-  force: false
   dataFile: null
 steps:
-  - script: |
-      optionalArgs=""
-      if [ "${{ lower(parameters.force) }}" == "true" ]; then
-        optionalArgs="$optionalArgs --force"
-      fi
-      echo "##vso[task.setvariable variable=optionalArgs]$optionalArgs"
-    displayName: Set Optional Args
+  - script: mkdir -p $(Build.ArtifactStagingDirectory)/annotation-digests
+    displayName: Create Annotation Digests Directory
   - template: /eng/common/templates/steps/run-imagebuilder.yml@self
     parameters:
       name: AnnotateEOLImages
       displayName: Annotate EOL Images
       serviceConnection: $(publish.serviceConnectionName)
-      internalProjectName: ${{ parameters.internalProjectName }}
+      internalProjectName: internal
       args: >
         annotateEolDigests
         /repo/${{ parameters.dataFile }}
         $(acr.server)
-        $(optionalArgs)
+        $(publishRepoPrefix)
+        $(artifactsPath)/annotation-digests/annotation-digests.txt
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(Build.ArtifactStagingDirectory)/annotation-digests
+      artifactName: annotation-digests-$(System.JobAttempt)
+      displayName: Publish Annotation Digests List
+      internalProjectName: internal
+      publicProjectName: public
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Wait for Annotation Ingestion
+      serviceConnection: $(marStatus.serviceConnectionName)
+      internalProjectName: internal
+      args: >
+        waitForMarAnnotationIngestion
+        $(artifactsPath)/annotation-digests/annotation-digests.txt
