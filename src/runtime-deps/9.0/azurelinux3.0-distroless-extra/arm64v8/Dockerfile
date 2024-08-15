@@ -1,5 +1,5 @@
 # Installer image
-FROM azurelinuxpreview.azurecr.io/public/azurelinux/base/core:3.0 AS installer
+FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
 RUN tdnf install -y \
         gawk \
@@ -18,11 +18,10 @@ RUN mkdir /staging \
         libstdc++ \
         openssl-libs \
         tzdata \
-        zlib \
     && tdnf clean all --releasever=3.0 --installroot /staging
 
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
-COPY --from=azurelinuxpreview.azurecr.io/public/azurelinux/distroless/minimal:3.0 /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
+COPY --from=mcr.microsoft.com/azurelinux/distroless/minimal:3.0 /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
 RUN tmpManifestPath="/tmp/rpmmanifest" \
     && rpm --query --all --queryformat "%{NAME}\t%{VERSION}-%{RELEASE}\t%{INSTALLTIME}\t%{BUILDTIME}\t%{VENDOR}\t%{EPOCH}\t%{SIZE}\t%{ARCH}\t%{EPOCHNUM}\t%{SOURCERPM}\n" --root /staging | grep -v gpg-pubkey >> $tmpManifestPath \
     && mkdir -p /staging/var/lib/rpmmanifest \
@@ -55,7 +54,7 @@ RUN rm -rf /staging/etc/tdnf \
 
 
 # .NET runtime-deps image
-FROM azurelinuxpreview.azurecr.io/public/azurelinux/distroless/minimal:3.0
+FROM mcr.microsoft.com/azurelinux/distroless/minimal:3.0
 
 ENV \
     # UID of the non-root user 'app'
@@ -70,4 +69,4 @@ COPY --from=installer /staging/ /
 # Workaround for https://github.com/moby/moby/issues/38710
 COPY --from=installer --chown=1654:1654 /staging/home/app /home/app
 
-USER app
+USER $APP_UID

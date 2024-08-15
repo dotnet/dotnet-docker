@@ -1,6 +1,8 @@
 {
     "default": true,
     "MD013": false, // line length
-    "MD024": false, // no-duplicate-heading Multiple headings with the same content
+    "MD024": { // no-duplicate-heading Multiple headings with the same content
+        "siblings_only": true
+    },
     "MD033": false, // no inline HTML
 }

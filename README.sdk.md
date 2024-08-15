@@ -65,124 +65,152 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.303-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.303-bookworm-slim, 8.0-bookworm-slim, 8.0.303, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-8.0.303-alpine3.20-amd64, 8.0-alpine3.20-amd64, 8.0-alpine-amd64, 8.0.303-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
-8.0.303-alpine3.19-amd64, 8.0-alpine3.19-amd64, 8.0.303-alpine3.19, 8.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
-8.0.303-noble-amd64, 8.0-noble-amd64, 8.0.303-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-8.0.303-jammy-amd64, 8.0-jammy-amd64, 8.0.303-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-8.0.303-cbl-mariner2.0-amd64, 8.0-cbl-mariner2.0-amd64, 8.0.303-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
-6.0.424-bookworm-slim-amd64, 6.0-bookworm-slim-amd64, 6.0.424-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-6.0.424-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.424-bullseye-slim, 6.0-bullseye-slim, 6.0.424, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
-6.0.424-alpine3.20-amd64, 6.0-alpine3.20-amd64, 6.0-alpine-amd64, 6.0.424-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
-6.0.424-alpine3.19-amd64, 6.0-alpine3.19-amd64, 6.0.424-alpine3.19, 6.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
-6.0.424-jammy-amd64, 6.0-jammy-amd64, 6.0.424-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-6.0.424-cbl-mariner2.0-amd64, 6.0-cbl-mariner2.0-amd64, 6.0.424-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
-6.0.424-focal-amd64, 6.0-focal-amd64, 6.0.424-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
+8.0.400-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.400-bookworm-slim, 8.0-bookworm-slim, 8.0.400, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.400-alpine3.20-amd64, 8.0-alpine3.20-amd64, 8.0-alpine-amd64, 8.0.400-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
+8.0.400-alpine3.19-amd64, 8.0-alpine3.19-amd64, 8.0.400-alpine3.19, 8.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
+8.0.400-noble-amd64, 8.0-noble-amd64, 8.0.400-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+8.0.400-jammy-amd64, 8.0-jammy-amd64, 8.0.400-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+8.0.400-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.400-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+8.0.400-cbl-mariner2.0-amd64, 8.0-cbl-mariner2.0-amd64, 8.0.400-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
+6.0.425-bookworm-slim-amd64, 6.0-bookworm-slim-amd64, 6.0.425-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+6.0.425-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.425-bullseye-slim, 6.0-bullseye-slim, 6.0.425, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
+6.0.425-alpine3.20-amd64, 6.0-alpine3.20-amd64, 6.0-alpine-amd64, 6.0.425-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
+6.0.425-alpine3.19-amd64, 6.0-alpine3.19-amd64, 6.0.425-alpine3.19, 6.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
+6.0.425-jammy-amd64, 6.0-jammy-amd64, 6.0.425-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+6.0.425-cbl-mariner2.0-amd64, 6.0-cbl-mariner2.0-amd64, 6.0.425-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
+6.0.425-focal-amd64, 6.0-focal-amd64, 6.0.425-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
+
+#### .NET 9 Preview Tags
 
 #### .NET 9 Preview Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-preview.6-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.100-preview.6-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.6, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-9.0.100-preview.6-alpine3.20-amd64, 9.0-preview-alpine3.20-amd64, 9.0-preview-alpine-amd64, 9.0.100-preview.6-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
-9.0.100-preview.6-noble-amd64, 9.0-preview-noble-amd64, 9.0.100-preview.6-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-9.0.100-preview.6-azurelinux3.0-amd64, 9.0-preview-azurelinux3.0-amd64, 9.0.100-preview.6-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+9.0.100-preview.7-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.100-preview.7-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.7, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.100-preview.7-alpine3.20-amd64, 9.0-preview-alpine3.20-amd64, 9.0-preview-alpine-amd64, 9.0.100-preview.7-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
+9.0.100-preview.7-noble-amd64, 9.0-preview-noble-amd64, 9.0.100-preview.7-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+9.0.100-preview.7-azurelinux3.0-amd64, 9.0-preview-azurelinux3.0-amd64, 9.0.100-preview.7-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+
+### Linux arm64 Tags
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.303-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.303-bookworm-slim, 8.0-bookworm-slim, 8.0.303, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-8.0.303-alpine3.20-arm64v8, 8.0-alpine3.20-arm64v8, 8.0-alpine-arm64v8, 8.0.303-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
-8.0.303-alpine3.19-arm64v8, 8.0-alpine3.19-arm64v8, 8.0.303-alpine3.19, 8.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
-8.0.303-noble-arm64v8, 8.0-noble-arm64v8, 8.0.303-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-8.0.303-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.303-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.303-cbl-mariner2.0-arm64v8, 8.0-cbl-mariner2.0-arm64v8, 8.0.303-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
-6.0.424-bookworm-slim-arm64v8, 6.0-bookworm-slim-arm64v8, 6.0.424-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-6.0.424-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.424-bullseye-slim, 6.0-bullseye-slim, 6.0.424, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
-6.0.424-alpine3.20-arm64v8, 6.0-alpine3.20-arm64v8, 6.0-alpine-arm64v8, 6.0.424-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
-6.0.424-alpine3.19-arm64v8, 6.0-alpine3.19-arm64v8, 6.0.424-alpine3.19, 6.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
-6.0.424-jammy-arm64v8, 6.0-jammy-arm64v8, 6.0.424-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-6.0.424-cbl-mariner2.0-arm64v8, 6.0-cbl-mariner2.0-arm64v8, 6.0.424-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
-6.0.424-focal-arm64v8, 6.0-focal-arm64v8, 6.0.424-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+8.0.400-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.400-bookworm-slim, 8.0-bookworm-slim, 8.0.400, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.400-alpine3.20-arm64v8, 8.0-alpine3.20-arm64v8, 8.0-alpine-arm64v8, 8.0.400-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
+8.0.400-alpine3.19-arm64v8, 8.0-alpine3.19-arm64v8, 8.0.400-alpine3.19, 8.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
+8.0.400-noble-arm64v8, 8.0-noble-arm64v8, 8.0.400-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+8.0.400-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.400-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.400-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.400-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+8.0.400-cbl-mariner2.0-arm64v8, 8.0-cbl-mariner2.0-arm64v8, 8.0.400-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
+6.0.425-bookworm-slim-arm64v8, 6.0-bookworm-slim-arm64v8, 6.0.425-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+6.0.425-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.425-bullseye-slim, 6.0-bullseye-slim, 6.0.425, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
+6.0.425-alpine3.20-arm64v8, 6.0-alpine3.20-arm64v8, 6.0-alpine-arm64v8, 6.0.425-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
+6.0.425-alpine3.19-arm64v8, 6.0-alpine3.19-arm64v8, 6.0.425-alpine3.19, 6.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
+6.0.425-jammy-arm64v8, 6.0-jammy-arm64v8, 6.0.425-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+6.0.425-cbl-mariner2.0-arm64v8, 6.0-cbl-mariner2.0-arm64v8, 6.0.425-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
+6.0.425-focal-arm64v8, 6.0-focal-arm64v8, 6.0.425-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
+
+#### .NET 9 Preview Tags
 
 #### .NET 9 Preview Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-preview.6-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.100-preview.6-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.6, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-9.0.100-preview.6-alpine3.20-arm64v8, 9.0-preview-alpine3.20-arm64v8, 9.0-preview-alpine-arm64v8, 9.0.100-preview.6-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
-9.0.100-preview.6-noble-arm64v8, 9.0-preview-noble-arm64v8, 9.0.100-preview.6-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.100-preview.6-azurelinux3.0-arm64v8, 9.0-preview-azurelinux3.0-arm64v8, 9.0.100-preview.6-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.100-preview.7-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.100-preview.7-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.7, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.100-preview.7-alpine3.20-arm64v8, 9.0-preview-alpine3.20-arm64v8, 9.0-preview-alpine-arm64v8, 9.0.100-preview.7-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
+9.0.100-preview.7-noble-arm64v8, 9.0-preview-noble-arm64v8, 9.0.100-preview.7-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.100-preview.7-azurelinux3.0-arm64v8, 9.0-preview-azurelinux3.0-arm64v8, 9.0.100-preview.7-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+
+### Linux arm32 Tags
 
 ### Linux arm32 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.0.303-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.303-bookworm-slim, 8.0-bookworm-slim, 8.0.303, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-8.0.303-alpine3.20-arm32v7, 8.0-alpine3.20-arm32v7, 8.0-alpine-arm32v7, 8.0.303-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
-8.0.303-alpine3.19-arm32v7, 8.0-alpine3.19-arm32v7, 8.0.303-alpine3.19, 8.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
-8.0.303-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.303-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
-6.0.424-bookworm-slim-arm32v7, 6.0-bookworm-slim-arm32v7, 6.0.424-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-6.0.424-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.424-bullseye-slim, 6.0-bullseye-slim, 6.0.424, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
-6.0.424-alpine3.20-arm32v7, 6.0-alpine3.20-arm32v7, 6.0-alpine-arm32v7, 6.0.424-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
-6.0.424-alpine3.19-arm32v7, 6.0-alpine3.19-arm32v7, 6.0.424-alpine3.19, 6.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
-6.0.424-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.424-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
-6.0.424-focal-arm32v7, 6.0-focal-arm32v7, 6.0.424-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+8.0.400-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.400-bookworm-slim, 8.0-bookworm-slim, 8.0.400, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.400-alpine3.20-arm32v7, 8.0-alpine3.20-arm32v7, 8.0-alpine-arm32v7, 8.0.400-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
+8.0.400-alpine3.19-arm32v7, 8.0-alpine3.19-arm32v7, 8.0.400-alpine3.19, 8.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
+8.0.400-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.400-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+6.0.425-bookworm-slim-arm32v7, 6.0-bookworm-slim-arm32v7, 6.0.425-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+6.0.425-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.425-bullseye-slim, 6.0-bullseye-slim, 6.0.425, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
+6.0.425-alpine3.20-arm32v7, 6.0-alpine3.20-arm32v7, 6.0-alpine-arm32v7, 6.0.425-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
+6.0.425-alpine3.19-arm32v7, 6.0-alpine3.19-arm32v7, 6.0.425-alpine3.19, 6.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
+6.0.425-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.425-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+6.0.425-focal-arm32v7, 6.0-focal-arm32v7, 6.0.425-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
+
+#### .NET 9 Preview Tags
 
 #### .NET 9 Preview Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-preview.6-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-preview.6-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.6, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-9.0.100-preview.6-alpine3.20-arm32v7, 9.0-preview-alpine3.20-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.100-preview.6-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
-9.0.100-preview.6-noble-arm32v7, 9.0-preview-noble-arm32v7, 9.0.100-preview.6-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.100-preview.7-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.100-preview.7-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.100-preview.7, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.100-preview.7-alpine3.20-arm32v7, 9.0-preview-alpine3.20-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.100-preview.7-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
+9.0.100-preview.7-noble-arm32v7, 9.0-preview-noble-arm32v7, 9.0.100-preview.7-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+
+### Nano Server 2022 amd64 Tags
 
 ### Nano Server 2022 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
-8.0.303-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
-6.0.424-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.424, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
+8.0.400-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
+6.0.425-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.425, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
+
+#### .NET 9 Preview Tags
 
 #### .NET 9 Preview Tags
 
 Tag | Dockerfile
 ---------| ---------------
-9.0.100-preview.6-nanoserver-ltsc2022, 9.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
+9.0.100-preview.7-nanoserver-ltsc2022, 9.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
+
+### Windows Server Core 2022 amd64 Tags
 
 ### Windows Server Core 2022 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
-8.0.303-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-6.0.424-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+8.0.400-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+6.0.425-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+
+#### .NET 9 Preview Tags
 
 #### .NET 9 Preview Tags
 
 Tag | Dockerfile
 ---------| ---------------
-9.0.100-preview.6-windowsservercore-ltsc2022, 9.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+9.0.100-preview.7-windowsservercore-ltsc2022, 9.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+
+### Nano Server, version 1809 amd64 Tags
 
 ### Nano Server, version 1809 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
-8.0.303-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/nanoserver-1809/amd64/Dockerfile)
-6.0.424-nanoserver-1809, 6.0-nanoserver-1809, 6.0.424, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-1809/amd64/Dockerfile)
+8.0.400-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/nanoserver-1809/amd64/Dockerfile)
+6.0.425-nanoserver-1809, 6.0-nanoserver-1809, 6.0.425, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/nanoserver-1809/amd64/Dockerfile)
+
+#### .NET 9 Preview Tags
 
 #### .NET 9 Preview Tags
 
 Tag | Dockerfile
 ---------| ---------------
-9.0.100-preview.6-nanoserver-1809, 9.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/nanoserver-1809/amd64/Dockerfile)
+9.0.100-preview.7-nanoserver-1809, 9.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/nanoserver-1809/amd64/Dockerfile)
+
+### Windows Server Core 2019 amd64 Tags
 
 ### Windows Server Core 2019 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
-8.0.303-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
-6.0.424-windowsservercore-ltsc2019, 6.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+8.0.400-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+6.0.425-windowsservercore-ltsc2019, 6.0-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+
+#### .NET 9 Preview Tags
 
 #### .NET 9 Preview Tags
 

@@ -1,7 +1,7 @@
 ARG sdk_image
 ARG runtime_image
 
-FROM $sdk_image as build
+FROM $sdk_image AS build
 
 ENV NUGET_EXPERIMENTAL_CHAIN_BUILD_RETRY_POLICY="3,1000"
 
@@ -35,7 +35,7 @@ COPY tests/ .
 ENTRYPOINT ["dotnet", "test", "--logger:trx", "--no-restore"]
 
 
-FROM build as publish_fx_dependent
+FROM build AS publish_fx_dependent
 RUN dotnet publish --no-restore -c Release -o out
 
 

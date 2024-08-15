@@ -1298,6 +1298,149 @@
           ]
         },
         {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0": {},
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/8.0/azurelinux3.0/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "azurelinux3.0",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-amd64": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/8.0/azurelinux3.0/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
+              "os": "linux",
+              "osVersion": "azurelinux3.0",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless": {},
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/8.0/azurelinux3.0-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-amd64": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/8.0/azurelinux3.0-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-extra": {},
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-extra": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "src/runtime-deps/8.0/azurelinux3.0-distroless-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner.extra",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-extra-amd64": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "src/runtime-deps/8.0/azurelinux3.0-distroless-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner.extra",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-extra-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)": {},
@@ -1307,7 +1450,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/8.0/bookworm-slim/amd64",
+              "dockerfile": "src/runtime-deps/9.0/bookworm-slim/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bookworm-slim",
@@ -1318,7 +1461,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "src/runtime-deps/8.0/bookworm-slim/arm32v7",
+              "dockerfile": "src/runtime-deps/9.0/bookworm-slim/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bookworm-slim",
@@ -1330,7 +1473,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/bookworm-slim/arm64v8",
+              "dockerfile": "src/runtime-deps/9.0/bookworm-slim/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "bookworm-slim",
@@ -1351,7 +1494,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/8.0/alpine3.20/amd64",
+              "dockerfile": "src/runtime-deps/9.0/alpine3.20/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.20",
@@ -1363,7 +1506,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "src/runtime-deps/8.0/alpine3.20/arm32v7",
+              "dockerfile": "src/runtime-deps/9.0/alpine3.20/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.20",
@@ -1376,7 +1519,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/alpine3.20/arm64v8",
+              "dockerfile": "src/runtime-deps/9.0/alpine3.20/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "alpine3.20",
@@ -1398,7 +1541,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/8.0/alpine3.20-extra/amd64",
+              "dockerfile": "src/runtime-deps/9.0/alpine3.20-extra/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.extra",
               "os": "linux",
               "osVersion": "alpine3.20",
@@ -1419,7 +1562,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "src/runtime-deps/8.0/alpine3.20-extra/arm32v7",
+              "dockerfile": "src/runtime-deps/9.0/alpine3.20-extra/arm32v7",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.extra",
               "os": "linux",
               "osVersion": "alpine3.20",
@@ -1441,7 +1584,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/alpine3.20-extra/arm64v8",
+              "dockerfile": "src/runtime-deps/9.0/alpine3.20-extra/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.extra",
               "os": "linux",
               "osVersion": "alpine3.20",
@@ -1471,7 +1614,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/8.0/noble/amd64",
+              "dockerfile": "src/runtime-deps/9.0/noble/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "noble",
@@ -1494,7 +1637,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/noble/arm64v8",
+              "dockerfile": "src/runtime-deps/9.0/noble/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
               "os": "linux",
               "osVersion": "noble",
@@ -1514,7 +1657,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/8.0/noble-chiseled/amd64",
+              "dockerfile": "src/runtime-deps/9.0/noble-chiseled/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu",
               "os": "linux",
               "osVersion": "noble-chiseled",
@@ -1541,7 +1684,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/noble-chiseled/arm64v8",
+              "dockerfile": "src/runtime-deps/9.0/noble-chiseled/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu",
               "os": "linux",
               "osVersion": "noble-chiseled",
@@ -1598,7 +1741,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "src/runtime-deps/8.0/noble-chiseled-extra/amd64",
+              "dockerfile": "src/runtime-deps/9.0/noble-chiseled-extra/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.extra",
               "os": "linux",
               "osVersion": "noble-chiseled",
@@ -1618,7 +1761,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/noble-chiseled-extra/arm64v8",
+              "dockerfile": "src/runtime-deps/9.0/noble-chiseled-extra/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.extra",
               "os": "linux",
               "osVersion": "noble-chiseled",
@@ -3231,6 +3374,153 @@
         },
         {
           "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0": {},
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/azurelinux3.0/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-amd64": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/azurelinux3.0/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless": {},
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/azurelinux3.0-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-amd64": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/azurelinux3.0-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-extra": {},
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/azurelinux3.0-distroless-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-extra-amd64": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/runtime/8.0/azurelinux3.0-distroless-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-extra-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
           "platforms": [
             {
               "dockerfile": "src/runtime/8.0/nanoserver-1809/amd64",
@@ -3820,6 +4110,13 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                },
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:runtime):$(dotnet|9.0|minor-tag)-azurelinux3.0-arm64v8"
                   ]
                 }
               ]
@@ -5754,6 +6051,263 @@
         },
         {
           "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0": {},
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/azurelinux3.0/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-amd64": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/azurelinux3.0/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless": {},
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/azurelinux3.0-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-amd64": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/azurelinux3.0-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-extra": {},
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/azurelinux3.0-distroless-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-extra-amd64": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/azurelinux3.0-distroless-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux.extra",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-extra-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-composite": {},
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-composite": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/azurelinux3.0-distroless-composite/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-composite-amd64": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-composite-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/azurelinux3.0-distroless-composite/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-composite-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-composite-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "sharedTags": {
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-composite-extra": {},
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-composite-extra": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/azurelinux3.0-distroless-composite-extra/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite.extra",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-composite-extra-amd64": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-composite-extra-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:runtime-deps)"
+              },
+              "dockerfile": "src/aspnet/8.0/azurelinux3.0-distroless-composite-extra/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite.extra",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-composite-extra-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-composite-extra-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "pr-build",
+                  "type": "Supplemental",
+                  "dependencies": [
+                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
           "platforms": [
             {
               "buildArgs": {
@@ -7534,6 +8088,43 @@
                 "$(sdk|8.0|minor-tag)-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|8.0|product-version)",
+          "sharedTags": {
+            "$(sdk|8.0|fixed-tag)-azurelinux3.0": {},
+            "$(sdk|8.0|minor-tag)-azurelinux3.0": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/8.0/azurelinux3.0/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0",
+              "tags": {
+                "$(sdk|8.0|fixed-tag)-azurelinux3.0-amd64": {},
+                "$(sdk|8.0|minor-tag)-azurelinux3.0-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/8.0/azurelinux3.0/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0",
+              "tags": {
+                "$(sdk|8.0|fixed-tag)-azurelinux3.0-arm64v8": {},
+                "$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8": {}
               },
               "variant": "v8"
             }

@@ -10,9 +10,9 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '8.0.7'; `
+        $aspnetcore_version = '8.0.8'; `
         Invoke-WebRequest -OutFile aspnetcore.zip https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
-        $aspnetcore_sha512 = 'e745cd0eb11ff4f5dbfcea2966542dbfec57cb0d6025e1fd0a8f0d500c1246d9636f780b72586a55a3c8bac657a07443e4073eb9503b9f4eefa7aab336b6000c'; `
+        $aspnetcore_sha512 = 'c5ad87fdf6cac37234317109fcbc6649aeb0adef3ffc2583af6e044e8934862aa37d17a6071d5383917ca92c01691c8c0680270fa5b6f1aeb43a0fb1d6cab4f6'; `
         if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -24,9 +24,9 @@ RUN powershell -Command `
 
 
 # ASP.NET Core image
-FROM $REPO:8.0.7-nanoserver-ltsc2022
+FROM $REPO:8.0.8-nanoserver-ltsc2022
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.7
+ENV ASPNET_VERSION=8.0.8
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

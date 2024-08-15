@@ -2,7 +2,7 @@ variables:
 - template: ../../common/templates/variables/dotnet/build-test-publish.yml
 - name: manifest
   value: manifest.samples.json
-- name: repoTestArgs
-  value: -TestCategories sample
+- name: testCategoriesOverride
+  value: sample
 - name: imageInfoVariant
   value: "-samples"

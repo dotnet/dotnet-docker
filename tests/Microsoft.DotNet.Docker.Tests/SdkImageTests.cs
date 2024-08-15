@@ -38,12 +38,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 return false;
             }
 
-            if (imageData.Arch == Arch.Arm && imageData.Version.Major == 9)
-            {
-                reason = "https://github.com/dotnet/dotnet-docker/issues/5592";
-                return false;
-            }
-
             reason = "";
             return true;
         }
@@ -61,32 +55,44 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async void VerifyBlazorWasmScenario(ProductImageData imageData)
         {
-            // Disable test since `dotnet workload install` does not work with an empty NuGet config.
-            return;
+            // Test will fail on main branch since `dotnet workload install` does not work with an empty NuGet config.
+            bool failureExpected = !Config.IsNightlyRepo;
 
             bool isAlpine = imageData.OS.StartsWith(OS.Alpine);
 
             // Microsoft.NETCore.App.Runtime.Mono.linux-musl-arm* package does not exist
-            if (isAlpine && imageData.IsArm)
-            {
-                return;
-            }
+            failureExpected |= isAlpine && imageData.IsArm;
+
+            bool useWasmTools = true;
 
             // `wasm-tools` workload does not work on .NET 6 with CBL Mariner 2.0.
             // Re-enable when issue is resolved: https://github.com/dotnet/aspnetcore/issues/53469
             if (imageData.OS.Contains(OS.Mariner) && imageData.Version.Major == 6)
             {
-                return;
+                useWasmTools = false;
             }
 
             // `wasm-tools` workload does not work on ARM
-            // `wasm-tools` is also not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
-            int[] unsupportedVersionsForAlpine = [6, 8];
-            bool isSupportedVersionForAlpine = !unsupportedVersionsForAlpine.Contains(imageData.Version.Major);
-            bool useWasmTools = !imageData.IsArm && (!isAlpine || isSupportedVersionForAlpine);
+            if (imageData.IsArm)
+            {
+                useWasmTools = false;
+            }
+
+            // `wasm-tools` is not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
+            if (isAlpine && (imageData.Version.Major == 6 || imageData.Version.Major == 8))
+            {
+                useWasmTools = false;
+            }
+
+            // Workaround to get tests passing in main while alternative solution to
+            // https://github.com/dotnet/dotnet-docker/issues/5704 is worked on
+            if (failureExpected)
+            {
+                return;
+            }
 
             using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
-            await testScenario.ExecuteAsync();
+            await testScenario.ExecuteAsync(shouldThrow: failureExpected);
         }
 
         [LinuxImageTheory]
@@ -162,20 +168,9 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            if (!IsPowerShellSupported(imageData, out string powerShellReason))
-            {
-                OutputHelper.WriteLine(powerShellReason);
-                return;
-            }
-
             // Skip test on CBL-Mariner. Since installation is done via RPM package, we just need to verify the package installation
             // was done (handled by VerifyPackageInstallation test). There's no need to check the actual contents of the package.
             if (imageData.OS.StartsWith(OS.Mariner) || imageData.OS.StartsWith(OS.AzureLinux))
-            {
-                return;
-            }
-
-            if (!imageData.SdkOS.StartsWith(OS.Alpine) && DockerHelper.IsLinuxContainerModeEnabled)
             {
                 return;
             }
@@ -263,40 +258,57 @@ namespace Microsoft.DotNet.Docker.Tests
         private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
         {
             string dotnetPath;
+            string destinationPath;
+            string command;
 
             if (DockerHelper.IsLinuxContainerModeEnabled)
             {
                 dotnetPath = "/usr/share/dotnet";
+                destinationPath = "/sdk";
+                command = $"find {destinationPath} -type f -exec sha512sum {{}} +";
             }
             else
             {
-                dotnetPath = "Program Files\\dotnet";
+                dotnetPath = "\"Program Files\\dotnet\"";
+                destinationPath = "C:\\sdk";
+                string powerShellCommand =
+                    $"Get-ChildItem -File -Force -Recurse '{destinationPath}' " +
+                    "| Get-FileHash -Algorithm SHA512 " +
+                    "| select @{name='Value'; expression={$_.Hash + '  ' +$_.Path}} " +
+                    "| select -ExpandProperty Value";
+                command = $"pwsh -Command \"{powerShellCommand}\"";
             }
 
-            string powerShellCommand =
-                $"Get-ChildItem -File -Force -Recurse '{dotnetPath}' " +
-                "| Get-FileHash -Algorithm SHA512 " +
-                "| select @{name='Value'; expression={$_.Hash + '  ' +$_.Path}} " +
-                "| select -ExpandProperty Value";
-            string command = $"pwsh -Command \"{powerShellCommand}\"";
+            string baseImage = imageData.GetImage(ImageRepo, DockerHelper);
+            string tag = imageData.GetIdentifier("SdkContents").ToLower();
+
+            DockerHelper.Build(
+                tag: tag,
+                dockerfile: Path.Combine(DockerHelper.TestArtifactsDir, "Dockerfile.copy"),
+                contextDir: DockerHelper.TestArtifactsDir,
+                platform: imageData.Platform,
+                buildArgs:
+                [
+                    $"copy_image={baseImage}",
+                    $"base_image={baseImage}",
+                    $"copy_origin={dotnetPath}",
+                    $"copy_destination={destinationPath}"
+                ]);
 
             string containerFileList = DockerHelper.Run(
-                image: imageData.GetImage(ImageRepo, DockerHelper),
+                image: tag,
+                name: tag,
                 command: command,
-                name: imageData.GetIdentifier("DotnetFolder"),
                 silenceOutput: true);
 
-            IEnumerable<SdkContentFileInfo> actualDotnetFiles = containerFileList
-                .Replace("\r\n", "\n")
+            return containerFileList
                 .Split("\n")
-                .Select(output =>
+                .Select(line =>
                 {
-                    string[] outputParts = output.Split("  ");
-                    return new SdkContentFileInfo(outputParts[1], outputParts[0]);
+                    string[] parts = line.Split("  ").Select(part => part.Trim()).ToArray();
+                    return new SdkContentFileInfo(Path.GetRelativePath(destinationPath, parts[1]), parts[0]);
                 })
-                .OrderBy(fileInfo => fileInfo.Path)
-                .ToArray();
-            return actualDotnetFiles;
+                .OrderBy(fileInfo => fileInfo.Path);
         }
 
         private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string path)

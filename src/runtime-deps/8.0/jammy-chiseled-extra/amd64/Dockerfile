@@ -1,12 +1,12 @@
-FROM amd64/golang:1.20 as chisel
+FROM amd64/buildpack-deps:jammy-curl AS chisel
 
-RUN apt-get update \
-    && apt-get install -y \
-        ca-certificates \
-        file
+RUN apt-get update && apt-get install -y file
 
-RUN go install github.com/canonical/chisel/cmd/chisel@v0.9.1 \
-    && wget -O /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \
+RUN curl -fSL --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_amd64.tar.gz \
+    && chisel_sha512='5c863d41e9b0829a3af57de444bdb7d1638612e5caa0a289511b5f46ec5728795152381257d30bbff012bcb5c533b6cfbc17b17b93569fd5c0e194ce2c6e0fc5' \
+    && echo "$chisel_sha512  chisel.tar.gz" | sha512sum -c - \
+    && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
+    && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
 
 RUN groupadd \
