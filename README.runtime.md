@@ -91,8 +91,6 @@ Tags | Dockerfile | OS Version
 
 #### .NET 9 Preview Tags
 
-#### .NET 9 Preview Tags
-
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.0-preview.7-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.0-preview.7-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.0-preview.7, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
@@ -103,8 +101,6 @@ Tags | Dockerfile | OS Version
 9.0.0-preview.7-azurelinux3.0-amd64, 9.0-preview-azurelinux3.0-amd64, 9.0.0-preview.7-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 9.0.0-preview.7-azurelinux3.0-distroless-amd64, 9.0-preview-azurelinux3.0-distroless-amd64, 9.0.0-preview.7-azurelinux3.0-distroless, 9.0-preview-azurelinux3.0-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
 9.0.0-preview.7-azurelinux3.0-distroless-extra-amd64, 9.0-preview-azurelinux3.0-distroless-extra-amd64, 9.0.0-preview.7-azurelinux3.0-distroless-extra, 9.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
-
-### Linux arm64 Tags
 
 ### Linux arm64 Tags
 
@@ -138,8 +134,6 @@ Tags | Dockerfile | OS Version
 
 #### .NET 9 Preview Tags
 
-#### .NET 9 Preview Tags
-
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.0-preview.7-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.0-preview.7-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.0-preview.7, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
@@ -150,8 +144,6 @@ Tags | Dockerfile | OS Version
 9.0.0-preview.7-azurelinux3.0-arm64v8, 9.0-preview-azurelinux3.0-arm64v8, 9.0.0-preview.7-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.0-preview.7-azurelinux3.0-distroless-arm64v8, 9.0-preview-azurelinux3.0-distroless-arm64v8, 9.0.0-preview.7-azurelinux3.0-distroless, 9.0-preview-azurelinux3.0-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.0-preview.7-azurelinux3.0-distroless-extra-arm64v8, 9.0-preview-azurelinux3.0-distroless-extra-arm64v8, 9.0.0-preview.7-azurelinux3.0-distroless-extra, 9.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-
-### Linux arm32 Tags
 
 ### Linux arm32 Tags
 
@@ -174,8 +166,6 @@ Tags | Dockerfile | OS Version
 
 #### .NET 9 Preview Tags
 
-#### .NET 9 Preview Tags
-
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.0-preview.7-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.0-preview.7-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.0-preview.7, 9.0-preview | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
@@ -186,8 +176,6 @@ Tags | Dockerfile | OS Version
 
 ### Nano Server 2022 amd64 Tags
 
-### Nano Server 2022 amd64 Tags
-
 Tag | Dockerfile
 ---------| ---------------
 8.0.8-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
@@ -195,13 +183,9 @@ Tag | Dockerfile
 
 #### .NET 9 Preview Tags
 
-#### .NET 9 Preview Tags
-
 Tag | Dockerfile
 ---------| ---------------
 9.0.0-preview.7-nanoserver-ltsc2022, 9.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
-
-### Windows Server Core 2022 amd64 Tags
 
 ### Windows Server Core 2022 amd64 Tags
 
@@ -212,13 +196,9 @@ Tag | Dockerfile
 
 #### .NET 9 Preview Tags
 
-#### .NET 9 Preview Tags
-
 Tag | Dockerfile
 ---------| ---------------
 9.0.0-preview.7-windowsservercore-ltsc2022, 9.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-
-### Nano Server, version 1809 amd64 Tags
 
 ### Nano Server, version 1809 amd64 Tags
 
@@ -229,13 +209,9 @@ Tag | Dockerfile
 
 #### .NET 9 Preview Tags
 
-#### .NET 9 Preview Tags
-
 Tag | Dockerfile
 ---------| ---------------
 9.0.0-preview.7-nanoserver-1809, 9.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/nanoserver-1809/amd64/Dockerfile)
-
-### Windows Server Core 2019 amd64 Tags
 
 ### Windows Server Core 2019 amd64 Tags
 
@@ -246,11 +222,9 @@ Tag | Dockerfile
 
 #### .NET 9 Preview Tags
 
-#### .NET 9 Preview Tags
-
 Tag | Dockerfile
 ---------| ---------------
-9.0.0-preview.6-windowsservercore-ltsc2019, 9.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+9.0.0-preview.7-windowsservercore-ltsc2019, 9.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/runtime/tags/list) for all supported and unsupported tags.*
