@@ -1,0 +1,31 @@
+name: Lint Code Base
+
+on:
+  pull_request: null
+
+permissions: {}
+
+jobs:
+  run-lint:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+      - name: Lint Code Base
+        uses: github/super-linter@v6 # https://github.com/github/super-linter
+        env:
+          DEFAULT_BRANCH: main
+          FILTER_REGEX_EXCLUDE: eng/common/.*|eng/readme-templates/.*
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_MARKDOWN: true
