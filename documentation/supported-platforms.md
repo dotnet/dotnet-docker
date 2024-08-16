@@ -4,7 +4,7 @@ This document describes the platforms (OS and architectures) supported by the of
 
 ## Operating Systems
 
-.NET tries to [support a broad set of operating systems and versions](https://github.com/dotnet/core/blob/master/os-lifecycle-policy.md). With containers, it’s too expensive and confusing to support the full matrix of options. In practice, images are produced for a select set of operating systems and versions. If official .NET Docker images aren't provided for your choice OS, you'll need to [author your own Dockerfile which installs .NET](scenarios/installing-dotnet.md).
+.NET supports [a broad set of operating systems and versions](https://github.com/dotnet/core/blob/master/os-lifecycle-policy.md). When producing container images, it’s impractical to support the full matrix of OS, arch, and .NET version combinations. In practice, images are produced for a select set of operating systems and versions. If official .NET container images aren't provided for your preferred OS, [let us know by opening a discussion](https://github.com/dotnet/dotnet-docker/discussions). Alternatively, you can [author your own .NET images](scenarios/installing-dotnet.md).
 
 ### Linux
 
@@ -17,9 +17,13 @@ Each distribution (distro) has a unique approach to releasing, schedule, and end
 
 Pre-release versions of the supported distros will be made available within the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) based on the availability of pre-release OS base images.
 
+## FedRAMP Compliance
+
+For [.NET appliance images](./supported-tags.md#net-appliance-images) based on Azure Linux, base image OS upgrades will be delayed until the new version of Azure Linux has FedRAMP approval.
+
 ### Windows
 
-The official .NET images support Nano Server as well as LTS versions of Windows Server Core for .NET 5.0 and higher. Nano Server is the best Windows SKU to run .NET apps from a performance perspective. In order for Nano Server to perform well and remain lightweight, it doesn't have support for every scenario. In case your scenario isn't supported by Nano Server, you may need to use one of the .NET images based on Windows Server Core. For scenarios where the official .NET images don't meet your needs, you will need to manage your own custom .NET images based on [Windows Server Core](https://hub.docker.com/_/microsoft-windows-servercore) or [Windows](https://hub.docker.com/_/microsoft-windows).
+The official .NET images support Nano Server as well as LTS versions of Windows Server Core for .NET 5.0 and higher. Nano Server is the best Windows SKU to run .NET apps from a performance perspective. In order for Nano Server to perform well and remain lightweight, it doesn't have support for every scenario. In case your scenario isn't supported by Nano Server, you may need to use one of the .NET images based on Windows Server Core. For scenarios where the official .NET images don't meet your needs, you will need to manage your own custom .NET images based on [Windows Server Core](https://hub.docker.com/r/microsoft/windows-servercore) or [Windows](https://hub.docker.com/r/microsoft/windows).
 
 - Nano Server - support all supported versions with each .NET version.
 - Windows Server Core - support all LTS versions (Windows Server 2019 and above) starting with .NET 5.0.
