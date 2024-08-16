@@ -161,7 +161,7 @@ function GetVersionInfoFromBuildId([string]$buildId) {
 
         return [PSCustomObject]@{
             DockerfileVersion = $config.Channel
-            SdkVersion = ($config.Sdks | Sort-Object -Descending)[0]
+            SdkVersion = @($config.Sdks | Sort-Object -Descending)[0]
             RuntimeVersion = $config.Runtime
             AspnetVersion = $config.Asp
             StableBranding = $isStableVersion
@@ -269,7 +269,7 @@ if ($UpdateDependencies)
             -AspnetVersion $versionInfo.AspnetVersion `
             -SdkVersion $versionInfo.SdkVersion `
 
-        Write-Host "`r`nDone: Updates for .NET ${versionInfo.RuntimeVersion}/${versionInfo.SdkVersion}`r`n"
+        Write-Host "`r`nDone: Updates for .NET $($versionInfo.RuntimeVersion)/$($versionInfo.SdkVersion)`r`n"
     }
 } else {
     Write-Output "##vso[task.setvariable variable=versionInfos]$($versionInfos | ConvertTo-Json -Compress -AsArray)"
