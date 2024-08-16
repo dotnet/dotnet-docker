@@ -19,7 +19,7 @@ Pre-release versions of the supported distros will be made available within the 
 
 ## FedRAMP Compliance
 
-For [tooling and application images](./supported-tags.md#tooling-and-application-images) based on Azure Linux, base image OS upgrades will be delayed until the new version of Azure Linux has FedRAMP approval.
+For [.NET appliance images](./supported-tags.md#net-appliance-images) based on Azure Linux, base image OS upgrades will be delayed until the new version of Azure Linux has FedRAMP approval.
 
 ### Windows
 
