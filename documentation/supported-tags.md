@@ -189,6 +189,20 @@ Examples:
 > - If an image is only available for one operating system, then the operating system will be omitted from the tag.
 > - For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used instead of version numbers.
 
+### .NET appliance images
+
+.NET produces several appliance images containing useful diagnostic tools and applications:
+
+- [.NET Monitor](../README.monitor.md#full-tag-listing)
+- [.NET Monitor Base](../README.monitor-base.md#full-tag-listing)
+- [.NET Aspire Dashboard](../README.aspire-dashboard.md#full-tag-listing)
+
+These appliance images provide value based on the .NET apps they include.
+Their base operating system is an implementation detail and should not affect the intended use or behavior of these images.
+They use [distroless](./distroless.md) operating systems whenever possible, further reducing the importance of the base image OS.
+These images may receive base image OS upgrades in the middle of major or minor version releases, provided this doesn't cause any breaking changes to the image's functionality.
+As such, these images may have tags that don't specify an OS version, or in some cases won't even refer to an OS at all.
+
 ### Windows tags
 
 For Windows, `amd64` is the only architecture supported and is excluded from the tag name.
