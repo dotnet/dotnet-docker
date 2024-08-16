@@ -56,12 +56,13 @@ namespace Microsoft.DotNet.Docker.Tests
         public async void VerifyBlazorWasmScenario(ProductImageData imageData)
         {
             // Test will fail on main branch since `dotnet workload install` does not work with an empty NuGet config.
-            bool failureExpected = !Config.IsNightlyRepo;
+            // Skip test for now, re-enable when https://github.com/dotnet/dotnet-docker/issues/5787 is closed.
+            if (!Config.IsNightlyRepo)
+            {
+                return;
+            }
 
             bool isAlpine = imageData.OS.StartsWith(OS.Alpine);
-
-            // Microsoft.NETCore.App.Runtime.Mono.linux-musl-arm* package does not exist
-            failureExpected |= isAlpine && imageData.IsArm;
 
             bool useWasmTools = true;
 
@@ -84,15 +85,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 useWasmTools = false;
             }
 
-            // Workaround to get tests passing in main while alternative solution to
-            // https://github.com/dotnet/dotnet-docker/issues/5704 is worked on
-            if (failureExpected)
-            {
-                return;
-            }
-
             using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
-            await testScenario.ExecuteAsync(shouldThrow: failureExpected);
+            await testScenario.ExecuteAsync();
         }
 
         [LinuxImageTheory]
