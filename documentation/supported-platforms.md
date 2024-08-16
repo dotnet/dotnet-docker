@@ -17,7 +17,7 @@ Each distribution (distro) has a unique approach to releasing, schedule, and end
 
 Pre-release versions of the supported distros will be made available within the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) based on the availability of pre-release OS base images.
 
-## FedRAMP Compliance
+#### FedRAMP Compliance
 
 For [.NET appliance images](./supported-tags.md#net-appliance-images) based on Azure Linux, base image OS upgrades will be delayed until the new version of Azure Linux has FedRAMP approval.
 
