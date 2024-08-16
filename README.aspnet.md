@@ -121,19 +121,19 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.7-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.0-preview.7-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.0-preview.7, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-9.0.0-preview.7-alpine3.20-amd64, 9.0-preview-alpine3.20-amd64, 9.0-preview-alpine-amd64, 9.0.0-preview.7-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
-9.0.0-preview.7-alpine3.20-composite-amd64, 9.0-preview-alpine3.20-composite-amd64, 9.0-preview-alpine-composite-amd64, 9.0.0-preview.7-alpine3.20-composite, 9.0-preview-alpine3.20-composite, 9.0-preview-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20-composite/amd64/Dockerfile) | Alpine 3.20
-9.0.0-preview.7-noble-amd64, 9.0-preview-noble-amd64, 9.0.0-preview.7-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-amd64, 9.0-preview-noble-chiseled-amd64, 9.0.0-preview.7-noble-chiseled, 9.0-preview-noble-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-extra-amd64, 9.0-preview-noble-chiseled-extra-amd64, 9.0.0-preview.7-noble-chiseled-extra, 9.0-preview-noble-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-composite-amd64, 9.0-preview-noble-chiseled-composite-amd64, 9.0.0-preview.7-noble-chiseled-composite, 9.0-preview-noble-chiseled-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-composite-extra-amd64, 9.0-preview-noble-chiseled-composite-extra-amd64, 9.0.0-preview.7-noble-chiseled-composite-extra, 9.0-preview-noble-chiseled-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-azurelinux3.0-amd64, 9.0-preview-azurelinux3.0-amd64, 9.0.0-preview.7-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-9.0.0-preview.7-azurelinux3.0-distroless-amd64, 9.0-preview-azurelinux3.0-distroless-amd64, 9.0.0-preview.7-azurelinux3.0-distroless, 9.0-preview-azurelinux3.0-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
-9.0.0-preview.7-azurelinux3.0-distroless-extra-amd64, 9.0-preview-azurelinux3.0-distroless-extra-amd64, 9.0.0-preview.7-azurelinux3.0-distroless-extra, 9.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
-9.0.0-preview.7-azurelinux3.0-distroless-composite-amd64, 9.0-preview-azurelinux3.0-distroless-composite-amd64, 9.0.0-preview.7-azurelinux3.0-distroless-composite, 9.0-preview-azurelinux3.0-distroless-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
-9.0.0-preview.7-azurelinux3.0-distroless-composite-extra-amd64, 9.0-preview-azurelinux3.0-distroless-composite-extra-amd64, 9.0.0-preview.7-azurelinux3.0-distroless-composite-extra, 9.0-preview-azurelinux3.0-distroless-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.1-bookworm-slim-amd64, 9.0-preview-bookworm-slim-amd64, 9.0.0-rc.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.0-rc.1, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.0-rc.1-alpine3.20-amd64, 9.0-preview-alpine3.20-amd64, 9.0-preview-alpine-amd64, 9.0.0-rc.1-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
+9.0.0-rc.1-alpine3.20-composite-amd64, 9.0-preview-alpine3.20-composite-amd64, 9.0-preview-alpine-composite-amd64, 9.0.0-rc.1-alpine3.20-composite, 9.0-preview-alpine3.20-composite, 9.0-preview-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20-composite/amd64/Dockerfile) | Alpine 3.20
+9.0.0-rc.1-noble-amd64, 9.0-preview-noble-amd64, 9.0.0-rc.1-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-amd64, 9.0-preview-noble-chiseled-amd64, 9.0.0-rc.1-noble-chiseled, 9.0-preview-noble-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-extra-amd64, 9.0-preview-noble-chiseled-extra-amd64, 9.0.0-rc.1-noble-chiseled-extra, 9.0-preview-noble-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-composite-amd64, 9.0-preview-noble-chiseled-composite-amd64, 9.0.0-rc.1-noble-chiseled-composite, 9.0-preview-noble-chiseled-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-composite-extra-amd64, 9.0-preview-noble-chiseled-composite-extra-amd64, 9.0.0-rc.1-noble-chiseled-composite-extra, 9.0-preview-noble-chiseled-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-azurelinux3.0-amd64, 9.0-preview-azurelinux3.0-amd64, 9.0.0-rc.1-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.1-azurelinux3.0-distroless-amd64, 9.0-preview-azurelinux3.0-distroless-amd64, 9.0.0-rc.1-azurelinux3.0-distroless, 9.0-preview-azurelinux3.0-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.1-azurelinux3.0-distroless-extra-amd64, 9.0-preview-azurelinux3.0-distroless-extra-amd64, 9.0.0-rc.1-azurelinux3.0-distroless-extra, 9.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.1-azurelinux3.0-distroless-composite-amd64, 9.0-preview-azurelinux3.0-distroless-composite-amd64, 9.0.0-rc.1-azurelinux3.0-distroless-composite, 9.0-preview-azurelinux3.0-distroless-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.1-azurelinux3.0-distroless-composite-extra-amd64, 9.0-preview-azurelinux3.0-distroless-composite-extra-amd64, 9.0.0-rc.1-azurelinux3.0-distroless-composite-extra, 9.0-preview-azurelinux3.0-distroless-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
@@ -179,19 +179,19 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.7-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.0-preview.7-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.0-preview.7, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-9.0.0-preview.7-alpine3.20-arm64v8, 9.0-preview-alpine3.20-arm64v8, 9.0-preview-alpine-arm64v8, 9.0.0-preview.7-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
-9.0.0-preview.7-alpine3.20-composite-arm64v8, 9.0-preview-alpine3.20-composite-arm64v8, 9.0-preview-alpine-composite-arm64v8, 9.0.0-preview.7-alpine3.20-composite, 9.0-preview-alpine3.20-composite, 9.0-preview-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20-composite/arm64v8/Dockerfile) | Alpine 3.20
-9.0.0-preview.7-noble-arm64v8, 9.0-preview-noble-arm64v8, 9.0.0-preview.7-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-arm64v8, 9.0-preview-noble-chiseled-arm64v8, 9.0.0-preview.7-noble-chiseled, 9.0-preview-noble-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-extra-arm64v8, 9.0-preview-noble-chiseled-extra-arm64v8, 9.0.0-preview.7-noble-chiseled-extra, 9.0-preview-noble-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-composite-arm64v8, 9.0-preview-noble-chiseled-composite-arm64v8, 9.0.0-preview.7-noble-chiseled-composite, 9.0-preview-noble-chiseled-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-composite-extra-arm64v8, 9.0-preview-noble-chiseled-composite-extra-arm64v8, 9.0.0-preview.7-noble-chiseled-composite-extra, 9.0-preview-noble-chiseled-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-azurelinux3.0-arm64v8, 9.0-preview-azurelinux3.0-arm64v8, 9.0.0-preview.7-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.0-preview.7-azurelinux3.0-distroless-arm64v8, 9.0-preview-azurelinux3.0-distroless-arm64v8, 9.0.0-preview.7-azurelinux3.0-distroless, 9.0-preview-azurelinux3.0-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.0-preview.7-azurelinux3.0-distroless-extra-arm64v8, 9.0-preview-azurelinux3.0-distroless-extra-arm64v8, 9.0.0-preview.7-azurelinux3.0-distroless-extra, 9.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.0-preview.7-azurelinux3.0-distroless-composite-arm64v8, 9.0-preview-azurelinux3.0-distroless-composite-arm64v8, 9.0.0-preview.7-azurelinux3.0-distroless-composite, 9.0-preview-azurelinux3.0-distroless-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.0-preview.7-azurelinux3.0-distroless-composite-extra-arm64v8, 9.0-preview-azurelinux3.0-distroless-composite-extra-arm64v8, 9.0.0-preview.7-azurelinux3.0-distroless-composite-extra, 9.0-preview-azurelinux3.0-distroless-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.1-bookworm-slim-arm64v8, 9.0-preview-bookworm-slim-arm64v8, 9.0.0-rc.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.0-rc.1, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.0-rc.1-alpine3.20-arm64v8, 9.0-preview-alpine3.20-arm64v8, 9.0-preview-alpine-arm64v8, 9.0.0-rc.1-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
+9.0.0-rc.1-alpine3.20-composite-arm64v8, 9.0-preview-alpine3.20-composite-arm64v8, 9.0-preview-alpine-composite-arm64v8, 9.0.0-rc.1-alpine3.20-composite, 9.0-preview-alpine3.20-composite, 9.0-preview-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20-composite/arm64v8/Dockerfile) | Alpine 3.20
+9.0.0-rc.1-noble-arm64v8, 9.0-preview-noble-arm64v8, 9.0.0-rc.1-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-arm64v8, 9.0-preview-noble-chiseled-arm64v8, 9.0.0-rc.1-noble-chiseled, 9.0-preview-noble-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-extra-arm64v8, 9.0-preview-noble-chiseled-extra-arm64v8, 9.0.0-rc.1-noble-chiseled-extra, 9.0-preview-noble-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-composite-arm64v8, 9.0-preview-noble-chiseled-composite-arm64v8, 9.0.0-rc.1-noble-chiseled-composite, 9.0-preview-noble-chiseled-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-composite-extra-arm64v8, 9.0-preview-noble-chiseled-composite-extra-arm64v8, 9.0.0-rc.1-noble-chiseled-composite-extra, 9.0-preview-noble-chiseled-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-azurelinux3.0-arm64v8, 9.0-preview-azurelinux3.0-arm64v8, 9.0.0-rc.1-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.1-azurelinux3.0-distroless-arm64v8, 9.0-preview-azurelinux3.0-distroless-arm64v8, 9.0.0-rc.1-azurelinux3.0-distroless, 9.0-preview-azurelinux3.0-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.1-azurelinux3.0-distroless-extra-arm64v8, 9.0-preview-azurelinux3.0-distroless-extra-arm64v8, 9.0.0-rc.1-azurelinux3.0-distroless-extra, 9.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.1-azurelinux3.0-distroless-composite-arm64v8, 9.0-preview-azurelinux3.0-distroless-composite-arm64v8, 9.0.0-rc.1-azurelinux3.0-distroless-composite, 9.0-preview-azurelinux3.0-distroless-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.1-azurelinux3.0-distroless-composite-extra-arm64v8, 9.0-preview-azurelinux3.0-distroless-composite-extra-arm64v8, 9.0.0-rc.1-azurelinux3.0-distroless-composite-extra, 9.0-preview-azurelinux3.0-distroless-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm32 Tags
 
@@ -220,14 +220,14 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-preview.7-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.0-preview.7-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.0-preview.7, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-9.0.0-preview.7-alpine3.20-arm32v7, 9.0-preview-alpine3.20-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.0-preview.7-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
-9.0.0-preview.7-alpine3.20-composite-arm32v7, 9.0-preview-alpine3.20-composite-arm32v7, 9.0-preview-alpine-composite-arm32v7, 9.0.0-preview.7-alpine3.20-composite, 9.0-preview-alpine3.20-composite, 9.0-preview-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20-composite/arm32v7/Dockerfile) | Alpine 3.20
-9.0.0-preview.7-noble-arm32v7, 9.0-preview-noble-arm32v7, 9.0.0-preview.7-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-arm32v7, 9.0-preview-noble-chiseled-arm32v7, 9.0.0-preview.7-noble-chiseled, 9.0-preview-noble-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-extra-arm32v7, 9.0-preview-noble-chiseled-extra-arm32v7, 9.0.0-preview.7-noble-chiseled-extra, 9.0-preview-noble-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-composite-arm32v7, 9.0-preview-noble-chiseled-composite-arm32v7, 9.0.0-preview.7-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
-9.0.0-preview.7-noble-chiseled-composite-extra-arm32v7, 9.0-preview-noble-chiseled-composite-extra-arm32v7, 9.0.0-preview.7-noble-chiseled-composite-extra, 9.0-preview-noble-chiseled-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-bookworm-slim-arm32v7, 9.0-preview-bookworm-slim-arm32v7, 9.0.0-rc.1-bookworm-slim, 9.0-preview-bookworm-slim, 9.0.0-rc.1, 9.0-preview, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.0-rc.1-alpine3.20-arm32v7, 9.0-preview-alpine3.20-arm32v7, 9.0-preview-alpine-arm32v7, 9.0.0-rc.1-alpine3.20, 9.0-preview-alpine3.20, 9.0-preview-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
+9.0.0-rc.1-alpine3.20-composite-arm32v7, 9.0-preview-alpine3.20-composite-arm32v7, 9.0-preview-alpine-composite-arm32v7, 9.0.0-rc.1-alpine3.20-composite, 9.0-preview-alpine3.20-composite, 9.0-preview-alpine-composite | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/alpine3.20-composite/arm32v7/Dockerfile) | Alpine 3.20
+9.0.0-rc.1-noble-arm32v7, 9.0-preview-noble-arm32v7, 9.0.0-rc.1-noble, 9.0-preview-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-arm32v7, 9.0-preview-noble-chiseled-arm32v7, 9.0.0-rc.1-noble-chiseled, 9.0-preview-noble-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-extra-arm32v7, 9.0-preview-noble-chiseled-extra-arm32v7, 9.0.0-rc.1-noble-chiseled-extra, 9.0-preview-noble-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-composite-arm32v7, 9.0-preview-noble-chiseled-composite-arm32v7, 9.0.0-rc.1-azurelinux3.0, 9.0-preview-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.0-rc.1-noble-chiseled-composite-extra-arm32v7, 9.0-preview-noble-chiseled-composite-extra-arm32v7, 9.0.0-rc.1-noble-chiseled-composite-extra, 9.0-preview-noble-chiseled-composite-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
 
 ### Nano Server 2022 amd64 Tags
 
@@ -240,7 +240,7 @@ Tag | Dockerfile
 
 Tag | Dockerfile
 ---------| ---------------
-9.0.0-preview.7-nanoserver-ltsc2022, 9.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
+9.0.0-rc.1-nanoserver-ltsc2022, 9.0-preview-nanoserver-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ### Windows Server Core 2022 amd64 Tags
 
@@ -253,7 +253,7 @@ Tag | Dockerfile
 
 Tag | Dockerfile
 ---------| ---------------
-9.0.0-preview.7-windowsservercore-ltsc2022, 9.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+9.0.0-rc.1-windowsservercore-ltsc2022, 9.0-preview-windowsservercore-ltsc2022 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ### Nano Server, version 1809 amd64 Tags
 
@@ -266,7 +266,7 @@ Tag | Dockerfile
 
 Tag | Dockerfile
 ---------| ---------------
-9.0.0-preview.7-nanoserver-1809, 9.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/nanoserver-1809/amd64/Dockerfile)
+9.0.0-rc.1-nanoserver-1809, 9.0-preview-nanoserver-1809 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/nanoserver-1809/amd64/Dockerfile)
 
 ### Windows Server Core 2019 amd64 Tags
 
@@ -279,7 +279,7 @@ Tag | Dockerfile
 
 Tag | Dockerfile
 ---------| ---------------
-9.0.0-preview.7-windowsservercore-ltsc2019, 9.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+9.0.0-rc.1-windowsservercore-ltsc2019, 9.0-preview-windowsservercore-ltsc2019 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/aspnet/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/aspnet/tags/list) for all supported and unsupported tags.*
