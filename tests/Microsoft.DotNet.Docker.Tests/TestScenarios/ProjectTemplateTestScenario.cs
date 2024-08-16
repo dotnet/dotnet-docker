@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
 
@@ -15,31 +16,25 @@ public abstract class ProjectTemplateTestScenario : TestScenario, IDisposable
 {
     private bool _disposed;
 
+    protected static string OSDockerfileSuffix { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "windows";
     protected static string? AdminUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "root" : null;
-
     protected static string? NonRootUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "app" : "ContainerUser";
 
     protected DockerHelper DockerHelper { get; }
-
     protected ProductImageData ImageData { get; }
-
     protected ITestOutputHelper OutputHelper { get; }
-
     protected TestSolution TestSolution { get; }
 
-    protected bool NonRootUserSupported { get; init; }
+    protected bool NonRootUserSupported { get; }
+
+    protected virtual string Dockerfile { get; } = $"Dockerfile.{OSDockerfileSuffix}";
+    protected virtual string[] CustomDockerBuildArgs { get; } = [];
 
     protected abstract string SampleName { get; }
-
-    // Target stages refer to stages in TestAppArtifacts/Dockerfile.linux
     protected abstract string BuildStageTarget { get; }
-
     protected abstract string? TestStageTarget { get; }
-
     protected abstract string[] AppStageTargets { get; }
-
     protected abstract DotNetImageRepo RuntimeImageRepo { get; }
-
     protected abstract DotNetImageRepo SdkImageRepo { get; }
 
     public ProjectTemplateTestScenario(
@@ -101,6 +96,7 @@ public abstract class ProjectTemplateTestScenario : TestScenario, IDisposable
         {
             DockerHelper.Build(
                 tag: tag,
+                dockerfile: Path.Combine(DockerHelper.TestArtifactsDir, Dockerfile),
                 target: stageTarget,
                 contextDir: TestSolution.SolutionDir,
                 platform: ImageData.Platform,
@@ -128,7 +124,7 @@ public abstract class ProjectTemplateTestScenario : TestScenario, IDisposable
             // publish command with a different RID than the default would end up restoring images. This is not
             // what we'd want and plus it would fail in that case if it was targeting a private NuGet feed because
             // the password isn't necessarily provided in that stage.
-            string[] customBuildArgs = [ $"rid={ImageData.Rid}" ];
+            string[] customBuildArgs = [ ..CustomDockerBuildArgs, $"rid={ImageData.Rid}" ];
 
             // Build and run app on SDK image
             string buildTag = Build(BuildStageTarget, customBuildArgs);

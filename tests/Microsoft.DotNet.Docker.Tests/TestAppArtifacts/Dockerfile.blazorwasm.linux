@@ -1,0 +1,43 @@
+ARG sdk_image
+ARG use_wasm_tools
+
+
+FROM $sdk_image AS pre_build_wasm_tools_false
+ARG port
+EXPOSE $port
+WORKDIR /source
+COPY NuGet.config .
+
+
+FROM pre_build_wasm_tools_false AS pre_build_wasm_tools_true
+WORKDIR /source
+COPY NuGet.config .
+RUN dotnet workload install --configfile NuGet.config --skip-manifest-update wasm-tools \
+    && . /etc/os-release \
+    && case $ID in \
+        alpine) apk add --no-cache python3 ;; \
+        debian | ubuntu) apt-get update \
+            && apt-get install -y --no-install-recommends python3 \
+            && rm -rf /var/lib/apt/lists/* ;; \
+        mariner | azurelinux) tdnf install -y python3 \
+            && tdnf clean all ;; \
+    esac
+
+
+FROM pre_build_wasm_tools_${use_wasm_tools} AS build
+WORKDIR /source/app
+COPY app/*.csproj .
+RUN dotnet restore
+COPY app/ .
+RUN dotnet build --no-restore
+
+
+FROM build AS publish_wasmtools_true
+RUN dotnet publish -r browser-wasm -c Release --self-contained true -o out
+
+
+FROM build AS publish_wasmtools_false
+RUN dotnet publish --no-restore -c Release -o out
+
+
+FROM publish_wasmtools_${use_wasm_tools} AS final
