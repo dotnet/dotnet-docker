@@ -36,6 +36,5 @@ stages:
     customTestInitSteps:
     - template: /eng/pipelines/steps/set-custom-test-variables.yml@self
     customPublishInitSteps:
-    - template: /eng/pipelines/steps/validate-secrets.yml@self
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     - template: /eng/pipelines/steps/set-publish-mcrdocs-args-var.yml@self
