@@ -168,9 +168,9 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            // Skip test on CBL-Mariner. Since installation is done via RPM package, we just need to verify the package installation
+            // Skip test on CBL-Mariner with .NET 6.0. Since installation is done via RPM package, we just need to verify the package installation
             // was done (handled by VerifyPackageInstallation test). There's no need to check the actual contents of the package.
-            if (imageData.OS.StartsWith(OS.Mariner) || imageData.OS.StartsWith(OS.AzureLinux))
+            if (imageData.OS.StartsWith(OS.Mariner) && imageData.Version.Major == 6)
             {
                 return;
             }
