@@ -81,7 +81,7 @@ You may notice that the sample includes a [health check](https://learn.microsoft
 
 ## Build image with the SDK
 
-The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds). 
+The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds).
 
 ```console
 dotnet publish /p:PublishProfile=DefaultContainer
