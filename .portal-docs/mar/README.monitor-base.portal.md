@@ -1,10 +1,8 @@
 ## About
 
-**IMPORTANT**
-
-**The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).**
-
-**See [dotnet](https://mcr.microsoft.com/product/dotnet/monitor/base/about) for images with official releases of [.NET](https://github.com/dotnet/core).**
+> **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
+>
+> See [dotnet](https://mcr.microsoft.com/product/dotnet/monitor/base/about) for images with official releases of [.NET](https://github.com/dotnet/core).
 
 This image contains the .NET Monitor Base installation.
 
