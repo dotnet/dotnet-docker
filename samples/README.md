@@ -61,5 +61,5 @@ docker run --rm -it -p 8000:8080 mcr.microsoft.com/dotnet/samples:aspnetapp
 
 You can find .NET container images at the following Docker repositories:
 
-* [dotnet](https://hub.docker.com/_/microsoft-dotnet/): .NET
-* [dotnet/framework](https://hub.docker.com/_/microsoft-dotnet-framework/): .NET Framework
+* [dotnet](https://hub.docker.com/r/microsoft/dotnet/): .NET
+* [dotnet/framework](https://hub.docker.com/r/microsoft/dotnet-framework/): .NET Framework

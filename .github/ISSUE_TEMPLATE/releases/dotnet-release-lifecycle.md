@@ -23,7 +23,7 @@ Add due dates to each of the issues so that we don't lose track of them.
     - Adjust existing templates or add new templates in `eng/dockerfile-templates/` if necessary
     - If there are no major changes between .NET versions, the new images can share `runtime-deps` layers with the previous .NET version
     - Include only the latest/LTS version of each operating system according to our [supported operating systems documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md#operating-systems).
-      - If adding a new OS version, follow the guidelines in [new-distro-release.md](https://raw.githubusercontent.com/dotnet/dotnet-docker/main/.github/ISSUE_TEMPLATE/releases/new-distro-release.md)
+      - If adding a new OS version, follow the guidelines in [new-distro-release.md](../new-distro-release.md)
     - If PowerShell is not yet supported or functional on the new .NET version, file an issue at [PowerShell/PowerShell](https://github.com/PowerShell/PowerShell/issues) or link to an existing issue, exclude PowerShell from the new SDK images, and [file an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose) to re-enable PowerShell in .NET Docker images
   - [ ] Update tests
     - [ ] Add new version info to [ImageVersion.cs](https://github.com/dotnet/dotnet-docker/blob/nightly/tests/Microsoft.DotNet.Docker.Tests/ImageVersion.cs)
