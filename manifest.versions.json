@@ -115,7 +115,7 @@
 
     "dotnet|9.0|product-version": "9.0.0-rc.1",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
-    "dotnet|9.0|minor-tag": "9.0-preview",
+    "dotnet|9.0|minor-tag": "9.0",
 
     "libicu|bookworm": 72,
     "libicu|bullseye": 67,
@@ -174,8 +174,8 @@
     "monitor|9.0|build-version": "9.0.0-rc.1.24419.4",
     "monitor|9.0|product-version": "9.0.0-rc.1",
     "monitor|9.0|fixed-tag": "$(monitor|9.0|product-version)",
-    "monitor|9.0|minor-tag": "9.0-preview",
-    "monitor|9|major-tag": "9-preview",
+    "monitor|9.0|minor-tag": "9.0",
+    "monitor|9|major-tag": "9",
     "monitor-base|9.0|linux|x64|sha": "8cf3ef4bd44b7a8d620a972eaca76528a7846b8835a2b1efe37d39530ae72cb7836dfd47b17222eb31c216fefeaa96f2db7b29d0e6e4f9d8cf12370a63543cb2",
     "monitor-base|9.0|linux|arm64|sha": "436b78bddcf1a6ef774ef06a678faf858342ab0e7f444c21b899ea841551a774a5dfd3faaf1136ac27fa9dc86787a1c68f1e1ec47f0764f49fad8d31f78f6f83",
     "monitor-ext-azureblobstorage|9.0|linux|x64|sha": "16336c8312ba2309ed28ab52d7b0477bc3a355ba8e62ef980761e9191a22225bc5ea9c4b11d8774886e00fab40d5e150ac54653db5677221de93894484a75267",
