@@ -1,7 +1,7 @@
 {
   "variables": {
-    "base-url|public|daily|main": "https://dotnetcli.azureedge.net/dotnet",
-    "base-url|public|daily|nightly": "https://dotnetbuilds.azureedge.net/public",
+    "base-url|public|preview|main": "https://dotnetcli.azureedge.net/dotnet",
+    "base-url|public|preview|nightly": "https://dotnetbuilds.azureedge.net/public",
     "base-url|public|maintenance|main": "https://dotnetcli.azureedge.net/dotnet",
     "base-url|public|maintenance|nightly": "https://dotnetcli.azureedge.net/dotnet",
 
@@ -12,8 +12,8 @@
     "aspire-dashboard|8|major-tag": "8",
     "aspire-dashboard|8.1|linux|x64|sha": "d823c3177dc1f1acc87cff7f252b90f9bc9b215522749b61e540c747801f697ba60a0defd94dccad7b144fa165fd736c4c6ed97f9c5a123170bb46200e122831",
     "aspire-dashboard|8.1|linux|arm64|sha": "96e78fc6ab0da4fce82f01f725633820db36fd04fb1f20ab923afe68bb0f155e3d547b4102ad8f95cfbc0fb2d3d7b9103a68f439801aedac6a5973cb34272699",
-    "aspire-dashboard|8.1|base-url|main": "$(base-url|public|daily|nightly)",
-    "aspire-dashboard|8.1|base-url|nightly": "$(base-url|public|daily|nightly)",
+    "aspire-dashboard|8.1|base-url|main": "$(base-url|public|preview|nightly)",
+    "aspire-dashboard|8.1|base-url|nightly": "$(base-url|public|preview|nightly)",
 
     "aspnet|6.0|build-version": "6.0.33",
     "aspnet|6.0|targeting-pack-version": "$(aspnet|6.0|build-version)",
@@ -102,8 +102,8 @@
     "dotnet|9.0|product-version": "9.0.0-rc.1",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
     "dotnet|9.0|minor-tag": "9.0-preview",
-    "dotnet|9.0|base-url|main": "$(base-url|public|daily|main)",
-    "dotnet|9.0|base-url|nightly": "$(base-url|public|daily|nightly)",
+    "dotnet|9.0|base-url|main": "$(base-url|public|preview|main)",
+    "dotnet|9.0|base-url|nightly": "$(base-url|public|preview|nightly)",
 
     "libicu|bookworm": 72,
     "libicu|bullseye": 67,
@@ -156,8 +156,8 @@
     "monitor|8.1|product-version": "8.1.0-alpha.1",
     "monitor|8.1|fixed-tag": "$(monitor|8.1|product-version)",
     "monitor|8.1|minor-tag": "8.1-preview",
-    "monitor|8.1|base-url|main": "$(base-url|public|daily|main)",
-    "monitor|8.1|base-url|nightly": "$(base-url|public|daily|nightly)",
+    "monitor|8.1|base-url|main": "$(base-url|public|preview|main)",
+    "monitor|8.1|base-url|nightly": "$(base-url|public|preview|nightly)",
     "monitor-base|8.1|linux|x64|sha": "a91301d6a5f6b18616a6e3270e7c2b83f97d3281291d642636189cc6e8e6625699c3e42ed2be69943c9fab76a7e43bce150a1f76b434d5dcacb75e83acc529b9",
     "monitor-base|8.1|linux|arm64|sha": "07176cd7cd67fa32db73180282b0c40dae0ce834be8a391561ce90ea93bc948a3ba2e54ed054cb75586d665ffbb4f578947eceb2044eedd42ed76aaf5a7e5249",
     "monitor-ext-azureblobstorage|8.1|linux|x64|sha": "f0653109934fdca5e9755d56f3edc104460199d8e03bb914d18245201e407e9a2338474b2917cae6f8280550eb268b0ccc38d25a6b9fa55c3af53089e6d21887",
@@ -170,8 +170,8 @@
     "monitor|9.0|fixed-tag": "$(monitor|9.0|product-version)",
     "monitor|9.0|minor-tag": "9.0-preview",
     "monitor|9|major-tag": "9-preview",
-    "monitor|9.0|base-url|main": "$(base-url|public|daily|main)",
-    "monitor|9.0|base-url|nightly": "$(base-url|public|daily|nightly)",
+    "monitor|9.0|base-url|main": "$(base-url|public|preview|main)",
+    "monitor|9.0|base-url|nightly": "$(base-url|public|preview|nightly)",
     "monitor-base|9.0|linux|x64|sha": "8cf3ef4bd44b7a8d620a972eaca76528a7846b8835a2b1efe37d39530ae72cb7836dfd47b17222eb31c216fefeaa96f2db7b29d0e6e4f9d8cf12370a63543cb2",
     "monitor-base|9.0|linux|arm64|sha": "436b78bddcf1a6ef774ef06a678faf858342ab0e7f444c21b899ea841551a774a5dfd3faaf1136ac27fa9dc86787a1c68f1e1ec47f0764f49fad8d31f78f6f83",
     "monitor-ext-azureblobstorage|9.0|linux|x64|sha": "16336c8312ba2309ed28ab52d7b0477bc3a355ba8e62ef980761e9191a22225bc5ea9c4b11d8774886e00fab40d5e150ac54653db5677221de93894484a75267",
