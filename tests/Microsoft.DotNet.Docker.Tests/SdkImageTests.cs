@@ -14,6 +14,7 @@ using SharpCompress.Common;
 using SharpCompress.Readers;
 using Xunit;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
@@ -166,6 +167,14 @@ namespace Microsoft.DotNet.Docker.Tests
             // was done (handled by VerifyPackageInstallation test). There's no need to check the actual contents of the package.
             if (imageData.OS.StartsWith(OS.Mariner) || imageData.OS.StartsWith(OS.AzureLinux))
             {
+                return;
+            }
+
+            if (imageData.IsWindows && Config.IsNightlyRepo)
+            {
+                OutputHelper.WriteLine(
+                    "Skipping test for nightly Windows SDK images due to freqently incoherent nightly builds. " +
+                    "Tracking issue: https://github.com/dotnet/dotnet-docker/issues/4841");
                 return;
             }
 
