@@ -6,10 +6,6 @@ labels: docker
 assignees: lbussell
 ---
 
-# New Windows Release
-
-Windows version: &lt;version&gt;
-
 ## Main Branch Tasks
 
 1. - [ ] Ensure a ["New Windows Release" issue](https://github.com/dotnet/docker-tools/blob/main/.github/ISSUE_TEMPLATE/releases/new-windows-release.md) exists for docker-tools repo
