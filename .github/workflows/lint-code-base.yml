@@ -25,7 +25,6 @@ jobs:
         uses: github/super-linter@v6 # https://github.com/github/super-linter
         env:
           DEFAULT_BRANCH: main
-          FILTER_REGEX_EXCLUDE: eng/common/.*|eng/readme-templates/.*
+          FILTER_REGEX_EXCLUDE: eng/common/.*|eng/readme-templates/.*|.portal-docs/.*
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: false
           VALIDATE_MARKDOWN: true
