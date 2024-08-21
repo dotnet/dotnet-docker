@@ -18,7 +18,7 @@
     set platform to when(isAlpine, "linux-musl", "linux") ^
     set installDir to "/usr/share/dotnet" ^
     set url to cat(
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
+        VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
         "/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-", platform, "-", ARCH_SHORT, ".tar.gz") ^
     set sdkVersionDir to when(ARGS["use-local-version-var"],
         "$sdk_version",
@@ -41,7 +41,7 @@
     set aspnetTargetingPackVersionFile to when(isInternalStableBranding,
         split(VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")], "-")[0],
         VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")]) ^
-    set baseUrl to VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])] ^
+    set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set commonShaVarName to "dotnet_sha512" ^
     set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set rpms to [
