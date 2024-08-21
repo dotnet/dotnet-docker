@@ -23,7 +23,7 @@
         VARIABLES[cat("sdk|", dotnetVersion, "|product-version")],
         sdkVersionDir) ^
     set url to cat(
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
+        VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
         "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-win-x64.zip", ARGS["url-suffix"]) ^
     
     _ The sdk-extract-groups arg is an array of maps. We want to reduce that to just a single array of formatted

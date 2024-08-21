@@ -19,7 +19,7 @@
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         aspnetVersion) ^
     set url to cat(
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
+        VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
         "/aspnetcore/Runtime/", aspnetVersion, "/aspnetcore-runtime-", aspnetVersionFile, "-win-x64.zip", ARGS["url-suffix"])
 }}# Install ASP.NET Core Runtime
 RUN powershell -Command `

@@ -1,5 +1,10 @@
 {
   "variables": {
+    "base-url|public|maintenance|main": "https://dotnetcli.azureedge.net/dotnet",
+    "base-url|public|maintenance|nightly": "https://dotnetcli.azureedge.net/dotnet",
+    "base-url|public|preview|main": "$(base-url|public|maintenance|main)",
+    "base-url|public|preview|nightly": "https://dotnetbuilds.azureedge.net/public",
+
     "aspire-dashboard|8.1|build-version": "8.1.0",
     "aspire-dashboard|8.1|product-version": "8.1.0",
     "aspire-dashboard|8.1|fixed-tag": "$(aspire-dashboard|8.1|product-version)",
@@ -7,6 +12,8 @@
     "aspire-dashboard|8|major-tag": "8",
     "aspire-dashboard|8.1|linux|x64|sha": "d823c3177dc1f1acc87cff7f252b90f9bc9b215522749b61e540c747801f697ba60a0defd94dccad7b144fa165fd736c4c6ed97f9c5a123170bb46200e122831",
     "aspire-dashboard|8.1|linux|arm64|sha": "96e78fc6ab0da4fce82f01f725633820db36fd04fb1f20ab923afe68bb0f155e3d547b4102ad8f95cfbc0fb2d3d7b9103a68f439801aedac6a5973cb34272699",
+    "aspire-dashboard|8.1|base-url|main": "$(base-url|public|preview|nightly)",
+    "aspire-dashboard|8.1|base-url|nightly": "$(base-url|public|preview|nightly)",
 
     "aspnet|6.0|build-version": "6.0.33",
     "aspnet|6.0|targeting-pack-version": "$(aspnet|6.0|build-version)",
@@ -54,31 +61,6 @@
     "aspnet-composite|9.0|linux-musl|arm|sha": "01b947c8f8b653af216a88b56222f8a05d8401bb1ed539934232a8198140cc32066336cb21811511537f76bd27df9b2dd3c660ce9cc4b537913feef78282920a",
     "aspnet-composite|9.0|linux-musl|arm64|sha": "018f007ea4c98c1493e26390dd589cd8276b71c5848c9ed5b12ab19361d0dc9061580e2862503cc849be2975ad3b1d74cb58c27ee3f2dfce847c20b9d994a2ea",
 
-    "base-url|public|main": "https://dotnetcli.azureedge.net/dotnet",
-    "base-url|public|nightly": "https://dotnetbuilds.azureedge.net/public",
-
-    "base-url|public|maintenance|main": "$(base-url|public|main)",
-    "base-url|public|maintenance|nightly": "https://dotnetcli.azureedge.net/dotnet",
-
-    "base-url|6.0|main": "$(base-url|public|maintenance|main)",
-    "base-url|6.0|nightly": "$(base-url|public|maintenance|nightly)",
-    "base-url|8.0|main": "$(base-url|public|maintenance|main)",
-    "base-url|8.0|nightly": "$(base-url|public|maintenance|nightly)",
-    "base-url|9.0|main": "$(base-url|public|main)",
-    "base-url|9.0|nightly": "$(base-url|public|nightly)",
-
-    "base-url|8.1-aspire-dashboard|main": "$(base-url|public|nightly)",
-    "base-url|8.1-aspire-dashboard|nightly": "$(base-url|public|nightly)",
-
-    "base-url|6.3-monitor|main": "$(base-url|public|maintenance|main)",
-    "base-url|6.3-monitor|nightly": "$(base-url|public|nightly)",
-    "base-url|8.0-monitor|main": "$(base-url|public|maintenance|main)",
-    "base-url|8.0-monitor|nightly": "$(base-url|public|nightly)",
-    "base-url|8.1-monitor|main": "$(base-url|public|main)",
-    "base-url|8.1-monitor|nightly": "$(base-url|public|nightly)",
-    "base-url|9.0-monitor|main": "$(base-url|public|main)",
-    "base-url|9.0-monitor|nightly": "$(base-url|public|nightly)",
-
     "chisel|latest|x64|url": "https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_amd64.tar.gz",
     "chisel|latest|arm|url": "https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_arm.tar.gz",
     "chisel|latest|arm64|url": "https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_arm64.tar.gz",
@@ -108,14 +90,20 @@
     "dotnet|6.0|product-version": "6.0.33",
     "dotnet|6.0|fixed-tag": "$(dotnet|6.0|product-version)",
     "dotnet|6.0|minor-tag": "6.0",
+    "dotnet|6.0|base-url|main": "$(base-url|public|maintenance|main)",
+    "dotnet|6.0|base-url|nightly": "$(base-url|public|maintenance|nightly)",
 
     "dotnet|8.0|product-version": "8.0.8",
     "dotnet|8.0|fixed-tag": "$(dotnet|8.0|product-version)",
     "dotnet|8.0|minor-tag": "8.0",
+    "dotnet|8.0|base-url|main": "$(base-url|public|maintenance|main)",
+    "dotnet|8.0|base-url|nightly": "$(base-url|public|maintenance|nightly)",
 
     "dotnet|9.0|product-version": "9.0.0-rc.1",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
     "dotnet|9.0|minor-tag": "9.0-preview",
+    "dotnet|9.0|base-url|main": "$(base-url|public|preview|main)",
+    "dotnet|9.0|base-url|nightly": "$(base-url|public|preview|nightly)",
 
     "libicu|bookworm": 72,
     "libicu|bullseye": 67,
@@ -147,12 +135,16 @@
     "monitor|6.3|linux-musl|arm64|sha": "0f66e915e920a287863b6c6c2af3e0114e97ae764b3e2f43efea0da3ea7ffd7e5d60d30d02bd01c978ba08dbcff1eed1c39b667bdf5f867bb3cddd87912761df",
     "monitor|6.3|linux|x64|sha": "64978db9bde09c9f4ebfeff1fc92a82f6b1aee17e6463d264e1b11d9f538dc12eeb2431ac6a6678cba301d3512ccd250f6010f8e8b2821793443d61eb66e48c0",
     "monitor|6.3|linux|arm64|sha": "9b3acda88f7dc68d1f58c307d66206d8d2e390b75e787a2f97f325d94f52c5e352c38ffd02fcf4573607f54b76fc071c2a8f8df80ffdb38dce8249451b4a5f26",
+    "monitor|6.3|base-url|main": "$(base-url|public|maintenance|main)",
+    "monitor|6.3|base-url|nightly": "$(base-url|public|maintenance|nightly)",
 
     "monitor|8.0|build-version": "8.0.4",
     "monitor|8.0|product-version": "8.0.4",
     "monitor|8.0|fixed-tag": "$(monitor|8.0|product-version)",
     "monitor|8.0|minor-tag": "8.0",
     "monitor|8|major-tag": "8",
+    "monitor|8.0|base-url|main": "$(base-url|public|maintenance|main)",
+    "monitor|8.0|base-url|nightly": "$(base-url|public|maintenance|nightly)",
     "monitor-base|8.0|linux|x64|sha": "3bbc2f8864fd7dad2eb19349362e9337cca2407b6b81411bac18cbe0bcc453a1e3137f01006e89165c8be5e15ff31a2e189c9d6ee3e61cffb0a7ffaeed4028a0",
     "monitor-base|8.0|linux|arm64|sha": "b4f200c2b32b5db75ca86180386cb7f8358c8a3e26731e721342ec4d0c081a871e3aca658942162211afa4d206f1584201ba5e98e70307c8910f0dfcf62cf6fb",
     "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "0c5efb1f64372bc3b9a3076b19e4a143f8e6dfa86406a3130ae8d02120d3e2f437329c94ed5abedcf2158ebec7cfb049b3505d96c54184507680403d4fb66c78",
@@ -164,6 +156,8 @@
     "monitor|8.1|product-version": "8.1.0-alpha.1",
     "monitor|8.1|fixed-tag": "$(monitor|8.1|product-version)",
     "monitor|8.1|minor-tag": "8.1-preview",
+    "monitor|8.1|base-url|main": "$(base-url|public|preview|main)",
+    "monitor|8.1|base-url|nightly": "$(base-url|public|preview|nightly)",
     "monitor-base|8.1|linux|x64|sha": "aa1ae7865d7d5e5114e6d1f8a4885decdac194ad7567ab58ead92cfd0240c36d6e4e9e48d72004bb054f986058d25749b95876023c4a585637d740089797dcc1",
     "monitor-base|8.1|linux|arm64|sha": "2fead09179d82774c8da20d68aa7fdb8ad004d6b67ed4770186d63e95c839378e2c531a44c73dcec0e431e4563db42f5149c34c46f63af0691dea70d3228eb98",
     "monitor-ext-azureblobstorage|8.1|linux|x64|sha": "f2573c3cbf78b1fa94a8e52efa61009ef37892e6428cefd0c62cbd554256dab65d57a196d0c6abbf1a9a86f7d3510a29d62fb31ec73c3e871dd332365fc59460",
@@ -176,6 +170,8 @@
     "monitor|9.0|fixed-tag": "$(monitor|9.0|product-version)",
     "monitor|9.0|minor-tag": "9.0-preview",
     "monitor|9|major-tag": "9-preview",
+    "monitor|9.0|base-url|main": "$(base-url|public|preview|main)",
+    "monitor|9.0|base-url|nightly": "$(base-url|public|preview|nightly)",
     "monitor-base|9.0|linux|x64|sha": "f966d88ca373a1ef01b478a07c8b3227cc9bb6b4c84c718527edc0e1ca63786ed56abf2abf9198fdc8061e35abd5147d3fdfdc11f9057535c5a4a11c19ad5c80",
     "monitor-base|9.0|linux|arm64|sha": "32e17a6d21b56db268ac1a537b1bd957cb7d9c65044fe8008ca1229b5283842cd53a5d7e9b417e6c2ad313529a9febe9938a5cc03b74629b4574954866e31b86",
     "monitor-ext-azureblobstorage|9.0|linux|x64|sha": "100202a7eb17817a10150a7254fc55990a6220088fabcd4cd55f013fb51cd1118b78addf7130505317862253a1b9cadb4aa82903b0dd8ddfb670497aebf95742",

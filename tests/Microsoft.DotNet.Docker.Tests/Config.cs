@@ -79,7 +79,7 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         public static string GetBaseUrl(string dotnetVersion) =>
-            GetVariableValue($"base-url|{dotnetVersion}|{Config.SourceBranch}", (JObject)ManifestVersions.Value["variables"]);
+            GetVariableValue($"dotnet|{dotnetVersion}|base-url|{Config.SourceBranch}", (JObject)ManifestVersions.Value["variables"]);
 
         public static string GetBuildVersion(DotNetImageRepo imageRepo, string dotnetVersion)
         {
