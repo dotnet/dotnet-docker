@@ -1,20 +1,17 @@
 {
     "ignorePatterns": [
-        // Microsoft internal links used in release issue checklists
         {
             "pattern": "^https://dev.azure.com/dnceng/internal/_build\\?definitionId=359"
         },
         {
             "pattern": "^https://github.com/dotnet/release/blob/main/.github/ISSUE_TEMPLATE/dotnet-docker-servicing-release.md"
         },
-        // No support to exclude files (e.g. readme templates): https://github.com/gaurav-nelson/github-action-markdown-link-check/issues/103
         {
             "pattern": "^https://mcr.microsoft.com/v2/\\{\\{REPO\\}\\}/tags/list"
         },
         {
             "pattern": "^https://github.com/dotnet/dotnet-docker/blob/\\{\\{if"
         },
-        // Anchors ending with ? are not supported: https://github.com/tcort/markdown-link-check/issues/360
         {
             "pattern": "^l-is-the-package-in-the-linux-distro-base-image"
         }
