@@ -32,4 +32,4 @@ assignees: lbussell
 
 ## Nightly Branch Tasks
 
-- [ ] Merge these changes to the nightly branch as part of the nightly branch [release process](dotnet-release.md) for the next .NET release.
+- [ ] Merge these changes to the nightly branch as part of the nightly branch [release process](releases/dotnet-release-lifecycle.md) for the next .NET release.

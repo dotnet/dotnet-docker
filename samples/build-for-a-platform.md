@@ -62,8 +62,8 @@ Another approach is to always build for one platform with Dockerfiles that refer
 
 The following are examples of this model:
 
-- [Dockerfile.debian-x64](aspnetapp/Dockerfile.debian-x64)
-- [Dockerfile.alpine-arm64](aspnetapp/Dockerfile.alpine-arm64)
+- [Dockerfile.debian](aspnetapp/Dockerfile.debian)
+- [Dockerfile.alpine](aspnetapp/Dockerfile.alpine)
 
 They can be built with the following pattern:
 
@@ -77,7 +77,7 @@ This pattern results in, for example, x64 images always being used. Those images
 
 The `--platform` argument is the best way to specify the desired architecture. The `--platform` argument doesn't switch Docker to a special mode, but specifies the platform to request for multi-platform tags. Single-architecture tags are unaffected by this argument. That approach enables users to lock some tags to a platform, if desired, and to enable other tags to be affected by the platform switch.
 
-In addition, Docker [Buildkit exposes multiple environment variables](https://github.com/dotnet/dotnet-docker/pull/4387#issuecomment-1416565213) that can be used to further conditionalize behavior. These environment variables can be controlled with the pattern demonstrated in [Dockerfile](https://github.com/mthalman/dredge/blob/main/src/Valleysoft.Dredge/Dockerfile). As mentioned, .NET doesn't support being run in emulation. The pattern in that Dockerfile results in the SDK always being run natively while the final image is affected by the `--platform` switch. This model also has the best performance since the bulk of computation is run natively.
+In addition, Docker [Buildkit exposes multiple environment variables](https://docs.docker.com/reference/dockerfile/#automatic-platform-args-in-the-global-scope) that can be used to further conditionalize behavior. These environment variables can be controlled with the pattern demonstrated in [Dockerfile](https://github.com/mthalman/dredge/blob/main/src/Dockerfile). As mentioned, .NET doesn't support being run in emulation. The pattern in that Dockerfile results in the SDK always being run natively while the final image is affected by the `--platform` switch. This model also has the best performance since the bulk of computation is run natively.
 
 > [!NOTE]
 > We are enabling this [model](https://github.com/dotnet/dotnet-docker/issues/4388#issuecomment-1421401384) in a future release.

@@ -6,17 +6,17 @@ You can use the referenced images and tags with the docker CLI, for example with
 
 ## .NET Docker repos
 
-There are multiple [.NET Docker repos](https://hub.docker.com/_/microsoft-dotnet) that expose various layers of the .NET platform.
+There are multiple [.NET Docker repos](https://hub.docker.com/r/microsoft/dotnet) that expose various layers of the .NET platform.
 
-* [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) -- Linux-only images that contains the native dependencies of .NET. Best used for self-contained applications.
-* [dotnet/runtime](https://hub.docker.com/_/microsoft-dotnet-runtime/) -- Images that contains the .NET runtime. Best used for console applications. On Linux, depends on the `runtime-deps` image.
-* [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/) -- Images that contains the ASP.NET Core runtime. Best used for web applications and services. Depends on the `runtime` image.
-* [dotnet/sdk](https://hub.docker.com/_/microsoft-dotnet-sdk/) -- An image that contains the .NET SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/aspnet](https://hub.docker.com/_/microsoft-dotnet-aspnet/) for Alpine and on [windows/nanoserver](https://hub.docker.com/_/microsoft-windows-nanoserver) for Windows.
+* [dotnet/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-runtime-deps/) -- Linux-only images that contains the native dependencies of .NET. Best used for self-contained applications.
+* [dotnet/runtime](https://hub.docker.com/r/microsoft/dotnet-runtime/) -- Images that contains the .NET runtime. Best used for console applications. On Linux, depends on the `runtime-deps` image.
+* [dotnet/aspnet](https://hub.docker.com/r/microsoft/dotnet-aspnet/) -- Images that contains the ASP.NET Core runtime. Best used for web applications and services. Depends on the `runtime` image.
+* [dotnet/sdk](https://hub.docker.com/r/microsoft/dotnet-sdk/) -- An image that contains the .NET SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/aspnet](https://hub.docker.com/r/microsoft/dotnet-aspnet/) for Alpine and on [windows/nanoserver](https://hub.docker.com/r/microsoft/windows-nanoserver) for Windows.
 
 The repos above are commonly used on the command line and in Dockerfiles. There are two more repos that may be useful to you:
 
 * [dotnet/nightly](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) -- A duplicate structure of repos which contain the latest pre-released versions of .NET. (which are not supported in production).
-* [dotnet/samples](https://hub.docker.com/_/microsoft-dotnet-samples) -- A set of samples that demonstrate .NET being used in console and web scenarios.
+* [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples) -- A set of samples that demonstrate .NET being used in console and web scenarios.
 
 ## Tags that work everywhere
 
