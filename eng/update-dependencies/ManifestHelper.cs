@@ -27,20 +27,20 @@ public static partial class ManifestHelper
         ResolveVariableValue(GetBaseUrlVariableName(options.DockerfileVersion, options.SourceBranch, options.VersionSourceName), manifestVariables);
 
     /// <summary>
-    /// Consstructs the name of the base URL variable.
+    /// Constructs the name of the base URL variable.
     /// </summary>
     /// <param name="dockerfileVersion">Dockerfile version.</param>
     /// <param name="branch">Name of the branch.</param>
     public static string GetBaseUrlVariableName(string dockerfileVersion, string branch, string? versionSourceName)
     {
-        string version = versionSourceName switch
+        string product = versionSourceName switch
         {
-            string v when v.Contains("dotnet-monitor") => $"{dockerfileVersion}-monitor",
-            string v when v.Contains("aspire-dashboard") => $"{dockerfileVersion}-aspire-dashboard",
-            _ => dockerfileVersion,
+            string v when v.Contains("dotnet-monitor") => $"monitor",
+            string v when v.Contains("aspire-dashboard") => $"aspire-dashboard",
+            _ => "dotnet",
         };
 
-        return $"base-url|{version}|{branch}";
+        return $"{product}|{dockerfileVersion}|base-url|{branch}";
     }
 
     public static string GetVersionVariableName(VersionType versionType, string productName, string dockerfileVersion) =>

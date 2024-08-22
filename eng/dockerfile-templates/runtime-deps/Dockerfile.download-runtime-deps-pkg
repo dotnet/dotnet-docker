@@ -18,7 +18,7 @@
 && {{InsertTemplate("../Dockerfile.linux.download-file",
     [
         "out-file": ARGS["filename"],
-        "url": cat(VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])], "/Runtime/$dotnet_version/dotnet-runtime-deps-", runtimeVersionFile, "-cm.", marinerMajorVersion, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
+        "url": cat(VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])], "/Runtime/$dotnet_version/dotnet-runtime-deps-", runtimeVersionFile, "-cm.", marinerMajorVersion, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
         "sha": VARIABLES[cat("runtime-deps-cm.", marinerMajorVersion, "|", dotnetVersion, "|linux-rpm|", ARCH_SHORT, "|sha")],
         "sha-var-name": "dotnet_sha512"
     ])}}

@@ -9,7 +9,7 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set varPlatform to when(isAlpine, "linux-musl", "linux") ^
     set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$dotnet_monitor_version') ^
-    set monitorBaseUrl to cat(VARIABLES[cat("base-url|", monitorMajorMinor, "-monitor|", urlBranch)], "/diagnostics/monitor/", versionFolder, "/") ^
+    set monitorBaseUrl to cat(VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|", urlBranch)], "/diagnostics/monitor/", versionFolder, "/") ^
     set files to [
         [
             "filename": "dotnet-monitor.tar.gz",

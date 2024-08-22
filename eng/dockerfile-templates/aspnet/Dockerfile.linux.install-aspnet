@@ -31,7 +31,7 @@
         aspnetVersionDir) ^
     set fileArch to when(ARGS["is-rpm-install"] && ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set url to cat(
-        VARIABLES[cat("base-url|", dotnetVersion, "|", VARIABLES["branch"])],
+        VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
         "/aspnetcore/Runtime/", aspnetVersionDir, "/aspnetcore-runtime-", aspnetVersionFile,
         filePlatform, "-", fileArch, ".", fileExt, ARGS["url-suffix"]) ^
     set files to [
