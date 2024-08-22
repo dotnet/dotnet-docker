@@ -16,5 +16,5 @@
             "pattern": "^l-is-the-package-in-the-linux-distro-base-image"
         }
     ],
-    "aliveStatusCodes": [406]
+    "aliveStatusCodes": [200, 406]
 }
