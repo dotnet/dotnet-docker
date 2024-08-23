@@ -27,4 +27,5 @@ jobs:
           DEFAULT_BRANCH: main
           FILTER_REGEX_EXCLUDE: eng/common/.*|eng/readme-templates/.*|.portal-docs/.*
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_DOCKERFILE_HADOLINT: true
           VALIDATE_MARKDOWN: true
