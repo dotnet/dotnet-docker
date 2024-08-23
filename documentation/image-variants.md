@@ -8,7 +8,7 @@ These images are intended to satisfy the most common use cases of .NET developer
 
 Alpine and [Ubuntu Chiseled](./ubuntu-chiseled.md) .NET images are focused on size.
 By default, these images do not include `icu` or `tzdata`, meaning that these images only work with apps that are configured for [globalization-invariant mode](https://learn.microsoft.com/dotnet/core/runtime-config/globalization).
-Apps that require globalization support can use the `extra` image variant of the [dotnet/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) images. Because this is only available with `runtime-deps` images, it requires a [self-contained deployment](https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained) of the application.
+Apps that require globalization support can use the `extra` image variant of the [dotnet/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-runtime-deps/) images. Because this is only available with `runtime-deps` images, it requires a [self-contained deployment](https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained) of the application.
 Alpine, Azure Linux, and Ubuntu Chiseled images also come in `extra`, `composite`, and `aot` variants (see below).
 
 ## Distroless
@@ -36,6 +36,6 @@ Please see ["Limitations of Native AOT deployment"](https://learn.microsoft.com/
 They also require the use of the `aot` SDK image which include extra libraries needed for Native AOT compilation.
 
 > [!NOTE]
-> `aot` images are only available as a preview in the [dotnet/nightly/sdk](https://hub.docker.com/_/microsoft-dotnet-nightly-sdk/) and [dotnet/nightly/runtime-deps](https://hub.docker.com/_/microsoft-dotnet-nightly-runtime-deps/) repos.
+> `aot` images are only available as a preview in the [dotnet/nightly/sdk](https://hub.docker.com/r/microsoft/dotnet-nightly-sdk/) and [dotnet/nightly/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime-deps/) repos.
 > Native AOT compiled apps will function exactly the same on the existing `runtime-deps` (non-`aot`) images, but with a larger deployment size.
 > Please try out these new, smaller images and give us feedback!

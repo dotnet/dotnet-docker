@@ -6,10 +6,6 @@ labels: docker
 assignees: lbussell
 ---
 
-# New Windows Release
-
-Windows version: &lt;version&gt;
-
 ## Main Branch Tasks
 
 1. - [ ] Ensure a ["New Windows Release" issue](https://github.com/dotnet/docker-tools/blob/main/.github/ISSUE_TEMPLATE/releases/new-windows-release.md) exists for docker-tools repo
@@ -36,4 +32,4 @@ Windows version: &lt;version&gt;
 
 ## Nightly Branch Tasks
 
-- [ ] Merge these changes to the nightly branch as part of the nightly branch [release process](dotnet-release.md) for the next .NET release.
+- [ ] Merge these changes to the nightly branch as part of the nightly branch [release process](releases/dotnet-release-lifecycle.md) for the next .NET release.
