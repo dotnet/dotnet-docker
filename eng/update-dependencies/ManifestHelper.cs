@@ -27,7 +27,7 @@ public static partial class ManifestHelper
         ResolveVariableValue(GetBaseUrlVariableName(options.DockerfileVersion, options.SourceBranch, options.VersionSourceName), manifestVariables);
 
     /// <summary>
-    /// Constructs the name of the base URL variable.
+    /// Constructs the name of the product version base URL variable.
     /// </summary>
     /// <param name="dockerfileVersion">Dockerfile version.</param>
     /// <param name="branch">Name of the branch.</param>
@@ -41,6 +41,23 @@ public static partial class ManifestHelper
         };
 
         return $"{product}|{dockerfileVersion}|base-url|{branch}";
+    }
+
+    /// <summary>
+    /// Constructs the name of the shared base URL variable.
+    /// </summary>
+    /// <param name="releaseState">Release state of the product assets.</param>
+    /// <param name="branch">Name of the branch.</param>
+    public static string GetBaseUrlVariableName(ReleaseState releaseState, string branch)
+    {
+        string qualityString = releaseState switch
+        {
+            ReleaseState.Prerelease => "preview",
+            ReleaseState.Release => "maintenance",
+            _ => throw new NotSupportedException()
+        };
+
+        return $"base-url|public|{qualityString}|{branch}";
     }
 
     public static string GetVersionVariableName(VersionType versionType, string productName, string dockerfileVersion) =>

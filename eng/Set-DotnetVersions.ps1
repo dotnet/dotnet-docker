@@ -58,7 +58,12 @@ param(
 
     # File containing checksums for each product asset; used to override the behavior of locating the checksums from blob storage accounts.
     [string]
-    $ChecksumsFile
+    $ChecksumsFile,
+
+    # The release state of the product assets
+    [ValidateSet("Prerelease", "Release")]
+    [string]
+    $ReleaseState
 )
 
 Import-Module -force $PSScriptRoot/DependencyManagement.psm1
@@ -111,6 +116,10 @@ if ($ChecksumsFile) {
 
 if ($UseStableBranding) {
     $updateDepsArgs += "--stable-branding"
+}
+
+if ($ReleaseState) {
+    $updateDepsArgs += "--release-state=$ReleaseState"
 }
 
 $versionSourceName = switch ($PSCmdlet.ParameterSetName) {

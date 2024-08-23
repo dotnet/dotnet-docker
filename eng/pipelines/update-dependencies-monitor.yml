@@ -35,6 +35,7 @@ stages:
           MonitorVersion = "$(monitorVer)"
           AzdoVariableName = 'updateDepsArgs'
           UseStableBranding = [bool]::Parse("$(stableBranding)")
+          ReleaseState = $(Get-ProductReleaseState)
         }
 
         $(engPath)/Set-DotnetVersions.ps1 @scriptArgs

@@ -25,3 +25,7 @@ function Resolve-DotnetProductUrl([string] $akaMsUrl) {
     Write-Host "Resolved URL: $resolvedUrl"
     return $resolvedUrl
 }
+
+function Get-ProductReleaseState() {
+    return $(Get-Branch) -ieq 'main' ? 'Release' : 'Prerelease'
+}
