@@ -30,7 +30,7 @@ namespace Microsoft.DotNet.Docker.Tests
             await scenario.ExecuteAsync();
         }
 
-        [DotNetTheory]
+        [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifySelfContainedAppScenario(ProductImageData imageData)
         {
