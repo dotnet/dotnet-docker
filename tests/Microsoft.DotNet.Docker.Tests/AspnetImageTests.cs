@@ -24,11 +24,22 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public async Task VerifyAppScenario(ProductImageData imageData)
+        public async Task VerifyFxDependentAppScenario(ProductImageData imageData)
         {
-            using ProjectTemplateTestScenario scenario = imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite)
-                ? new WebScenarioComposite(imageData, DockerHelper, OutputHelper)
-                : new WebScenario(imageData, DockerHelper, OutputHelper);
+            using WebScenario scenario = new WebScenario.FxDependent(imageData, DockerHelper, OutputHelper);
+            await scenario.ExecuteAsync();
+        }
+
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifySelfContainedAppScenario(ProductImageData imageData)
+        {
+            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite))
+            {
+                return;
+            }
+
+            using WebScenario scenario = new WebScenario.SelfContained(imageData, DockerHelper, OutputHelper);
             await scenario.ExecuteAsync();
         }
 

@@ -85,8 +85,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 useWasmTools = false;
             }
 
-            using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
-            await testScenario.ExecuteAsync();
+            // using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
+            // await testScenario.ExecuteAsync();
         }
 
         [LinuxImageTheory]

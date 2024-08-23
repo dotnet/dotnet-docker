@@ -40,8 +40,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            using WebApiAotScenario testScenario = new(imageData, DockerHelper, OutputHelper);
-            await testScenario.ExecuteAsync();
+            using WebScenario scenario = new WebScenario.Aot(imageData, DockerHelper, OutputHelper);
+            await scenario.ExecuteAsync();
         }
 
         [LinuxImageTheory]
