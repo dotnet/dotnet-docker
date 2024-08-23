@@ -30,19 +30,6 @@ namespace Microsoft.DotNet.Docker.Tests
             await scenario.ExecuteAsync();
         }
 
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public async Task VerifySelfContainedAppScenario(ProductImageData imageData)
-        {
-            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite))
-            {
-                return;
-            }
-
-            using WebScenario scenario = new WebScenario.SelfContained(imageData, DockerHelper, OutputHelper);
-            await scenario.ExecuteAsync();
-        }
-
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)

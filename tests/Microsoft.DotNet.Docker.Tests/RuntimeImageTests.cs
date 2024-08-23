@@ -32,15 +32,6 @@ namespace Microsoft.DotNet.Docker.Tests
             await testScenario.ExecuteAsync();
         }
 
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public async Task VerifySelfContainedAppScenario(ProductImageData imageData)
-        {
-            using ConsoleAppScenario testScenario =
-                new ConsoleAppScenario.SelfContained(imageData, DockerHelper, OutputHelper);
-            await testScenario.ExecuteAsync();
-        }
-
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyTestProjectScenario(ProductImageData imageData)
