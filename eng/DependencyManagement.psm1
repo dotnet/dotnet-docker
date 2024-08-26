@@ -27,5 +27,9 @@ function Resolve-DotnetProductUrl([string] $akaMsUrl) {
 }
 
 function Get-ProductReleaseState() {
-    return $(Get-Branch) -ieq 'main' ? 'Release' : 'Prerelease'
+    if ($(Get-Branch) -ieq 'main') {
+        return 'Release'
+    } else {
+        return 'Prerelease'
+    }
 }
