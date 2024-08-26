@@ -3,11 +3,8 @@
     set buildVersion to VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|build-version")] ^
     set aspireVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
     set aspireVersion to VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|", aspireVersionVariable)] ^
-    _ When build and product versions are the same and they are stable versions, use account from main branch e.g. dotnetcli
-      Otherwise, use the account that is associated with the current branch. ^
-    set urlBranch to when(find(aspireVersion, "-") >= 0 || buildVersion != aspireVersion, VARIABLES["branch"], "main") ^
     set versionFolder to when(buildVersion != aspireVersion, buildVersion, '$dotnet_aspire_version') ^
-    set aspireBaseUrl to cat(VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|base-url|", urlBranch)], "/aspire/", versionFolder, "/") ^
+    set aspireBaseUrl to cat(VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|base-url|", VARIABLES["branch"])], "/aspire/", versionFolder, "/") ^
     set files to [
         [
             "filename": "aspire_dashboard.zip",
