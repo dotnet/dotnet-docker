@@ -26,6 +26,8 @@ steps:
     $(engPath)/Get-DropVersions.ps1 @args
   displayName: Get Versions
 - powershell: |
+    Import-Module -force $(engPath)/DependencyManagement.psm1
+
     $versionInfos = '$(versionInfos)' | ConvertFrom-Json
 
     $index=0

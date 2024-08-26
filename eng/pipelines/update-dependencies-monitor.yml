@@ -30,6 +30,8 @@ stages:
     - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -BuildVersionFilePath "$(Pipeline.Workspace)/dotnet-monitor/Build_Info/dotnet-monitor.nupkg.buildversion"
       displayName: Get Versions
     - powershell: |
+        Import-Module -force $(engPath)/DependencyManagement.psm1
+
         $scriptArgs = @{
           ProductVersion = "$(monitorMajorMinorVersion)"
           MonitorVersion = "$(monitorVer)"
