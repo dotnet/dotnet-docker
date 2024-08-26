@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
@@ -36,13 +37,19 @@ public class TestDockerfile(IEnumerable<string> args, IEnumerable<string> layers
 
 public static class TestDockerfileBuilder
 {
+    private const string CopyNuGetConfigCommands = 
+        """
+        WORKDIR /source
+        COPY NuGet.config .
+        """;
+
     private static DockerOS s_os = DockerHelper.IsLinuxContainerModeEnabled
         ? DockerOS.Linux
         : DockerOS.Windows;
 
     private static bool s_useNuGetConfig = Config.IsNightlyRepo;
 
-    private static string[] s_args = [
+    private static string[] s_commonArgs = [
         "sdk_image",
         "runtime_image",
         "runtime_deps_image",
@@ -50,13 +57,12 @@ public static class TestDockerfileBuilder
 
     public static TestDockerfile GetDefaultDockerfile(PublishConfig publishConfig)
     {
-        string publishLayerFromLine = $"FROM {TestDockerfile.BuildStageName} AS {TestDockerfile.PublishStageName}";
         string[] publishAndAppLayers = publishConfig switch
         {
             PublishConfig.Aot =>
                 [
                     $"""
-                    {publishLayerFromLine}
+                    FROM {TestDockerfile.BuildStageName} AS {TestDockerfile.PublishStageName}
                     RUN dotnet publish -r {FormatArg("rid")} --no-restore -o /app
                     """,
                     $"""
@@ -70,7 +76,7 @@ public static class TestDockerfileBuilder
             PublishConfig.FxDependent =>
                 [
                     $"""
-                    {publishLayerFromLine}
+                    FROM {TestDockerfile.BuildStageName} AS {TestDockerfile.PublishStageName}
                     RUN dotnet publish --no-restore -c Release -o out
                     """,
                     $"""
@@ -85,7 +91,7 @@ public static class TestDockerfileBuilder
             PublishConfig.SelfContained =>
                 [
                     $"""
-                    {publishLayerFromLine}
+                    FROM {TestDockerfile.BuildStageName} AS {TestDockerfile.PublishStageName}
                     ARG rid
                     RUN dotnet publish -r {FormatArg("rid")} -c Release --self-contained true -o out
                     """,
@@ -102,7 +108,7 @@ public static class TestDockerfileBuilder
         };
 
         return new TestDockerfile(
-            args: s_args,
+            args: s_commonArgs,
             layers: [ GetDefaultBuildLayer(), ..publishAndAppLayers ]);
     }
 
@@ -121,25 +127,109 @@ public static class TestDockerfileBuilder
             """;
 
         return new TestDockerfile(
-            args: s_args,
+            args: s_commonArgs,
             layers: [ GetDefaultBuildLayer(), testLayer ]);
     }
 
-    private static string GetDefaultBuildLayer() =>
-        $"""
-        FROM $sdk_image AS {TestDockerfile.BuildStageName}
-        ARG rid
-        ARG NuGetFeedPassword
-        ARG port
-        EXPOSE $port
-        WORKDIR /source
-        COPY NuGet.config .
-        WORKDIR /source/app
-        COPY app/*.csproj .
-        RUN dotnet restore -r {FormatArg("rid")}
-        COPY app/ .
-        RUN dotnet build --no-restore
-        """;
+    public static TestDockerfile GetBlazorWasmDockerfile(bool useWasmTools)
+    {
+        string nugetConfigFileOption = s_useNuGetConfig
+            ? "--configfile NuGet.config"
+            : string.Empty;
+
+        StringBuilder buildLayerBuilder = new(
+            $"""
+            FROM $sdk_image AS {TestDockerfile.BuildStageName}
+            ARG port
+            EXPOSE $port
+            """);
+        
+        if (s_useNuGetConfig)
+        {
+            buildLayerBuilder.AppendLine();
+            buildLayerBuilder.AppendLine(CopyNuGetConfigCommands);
+        }
+
+        if (useWasmTools)
+        {
+            buildLayerBuilder.AppendLine();
+            buildLayerBuilder.AppendLine(
+                $"""
+                RUN dotnet workload install {nugetConfigFileOption} --skip-manifest-update wasm-tools \
+                    && . /etc/os-release \
+                    && case $ID in \
+                        alpine) apk add --no-cache python3 ;; \
+                        debian | ubuntu) apt-get update \
+                            && apt-get install -y --no-install-recommends python3 \
+                            && rm -rf /var/lib/apt/lists/* ;; \
+                        mariner | azurelinux) tdnf install -y python3 \
+                            && tdnf clean all ;; \
+                    esac
+                """);
+        }
+
+        buildLayerBuilder.AppendLine();
+        buildLayerBuilder.AppendLine(
+            """
+            WORKDIR /source/app
+            COPY app/*.csproj .
+            RUN dotnet restore
+            COPY app/ .
+            RUN dotnet build --no-restore
+            """);
+
+        string buildLayer = buildLayerBuilder.ToString();
+
+        StringBuilder publishLayerBuilder = new(
+            $"""
+            FROM {TestDockerfile.BuildStageName} AS {TestDockerfile.PublishStageName}
+            ARG rid
+            """);
+        
+        publishLayerBuilder.AppendLine();
+        publishLayerBuilder.AppendLine(useWasmTools
+            ? "RUN dotnet publish -r browser-wasm -c Release --self-contained true -o out"
+            : "RUN dotnet publish --no-restore -c Release -o out");
+        
+        string publishLayer = publishLayerBuilder.ToString();
+
+        // Blazor WASM output is a static site - there are no runtime executables to be ran in the app stage.
+        // Endpoint access is verified in the build stage in the SDK dockerfile.
+        // App stage can remain empty in order to test publish functionality.
+        string appLayer = $"""FROM $runtime_deps_image AS {TestDockerfile.AppStageName}""";
+        
+        return new TestDockerfile(s_commonArgs, layers: [ buildLayer, publishLayer, appLayer ]);
+    }
+
+    private static string GetDefaultBuildLayer()
+    {
+        StringBuilder buildLayerBuilder = new(
+            $"""
+            FROM $sdk_image AS {TestDockerfile.BuildStageName}
+            ARG rid
+            ARG NuGetFeedPassword
+            ARG port
+            EXPOSE $port
+            """);        
+
+        if (s_useNuGetConfig)
+        {
+            buildLayerBuilder.AppendLine();
+            buildLayerBuilder.AppendLine(CopyNuGetConfigCommands);
+        }
+
+        buildLayerBuilder.AppendLine();
+        buildLayerBuilder.AppendLine(
+            $"""
+            WORKDIR /source/app
+            COPY app/*.csproj .
+            RUN dotnet restore -r {FormatArg("rid")}
+            COPY app/ .
+            RUN dotnet build --no-restore
+            """);
+
+        return buildLayerBuilder.ToString();
+    }
 
     private static string FormatArg(string arg) => s_os == DockerOS.Windows ? $"%{arg}%" : $"${arg}";
 }

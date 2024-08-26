@@ -28,6 +28,7 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
     protected virtual bool NonRootUserSupported => _nonRootUserSupported;
 
     protected virtual bool InjectCustomTestCode { get; } = false;
+    protected virtual bool OutputIsStatic { get; } = false;
     protected virtual string[] CustomDockerBuildArgs { get; } = [];
 
     protected abstract string SampleName { get; }
@@ -52,13 +53,7 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
     {
         const string DockerfileName = "Dockerfile";
         string dockerfilePath = Path.Combine(DockerHelper.TestArtifactsDir, DockerfileName);
-        string dockerfileContent = Dockerfile.Content;
-        OutputHelper.WriteLine(
-            $"""
-            Generated Dockerfile content:
-            {dockerfileContent}
-            """);
-        File.WriteAllText(dockerfilePath, dockerfileContent);
+        File.WriteAllText(dockerfilePath, Dockerfile.Content);
 
         string tag = ImageData.GetIdentifier(stageTarget);
 
@@ -151,10 +146,14 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
             string tag = Build(TestDockerfile.AppStageName, customBuildArgs);
             tags.Add(tag);
 
-            await RunAsync(tag, AdminUser);
-            if (NonRootUserSupported)
+            // Don't run the app if the build output is not executable
+            if (!OutputIsStatic)
             {
-                await RunAsync(tag, NonRootUser);
+                await RunAsync(tag, AdminUser);
+                if (NonRootUserSupported)
+                {
+                    await RunAsync(tag, NonRootUser);
+                }
             }
         }
         finally
