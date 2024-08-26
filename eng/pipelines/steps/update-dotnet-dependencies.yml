@@ -26,6 +26,8 @@ steps:
     $(engPath)/Get-DropVersions.ps1 @args
   displayName: Get Versions
 - powershell: |
+    Import-Module -force $(engPath)/DependencyManagement.psm1
+
     $versionInfos = '$(versionInfos)' | ConvertFrom-Json
 
     $index=0
@@ -43,6 +45,8 @@ steps:
       if ("${{ parameters.useInternalBuild }}" -eq "true") {
         $args["ChecksumSasQueryString"] = '"$(dotnetchecksumsstage-account-sas-read-token)"'
         $args["BinarySasQueryString"] = '"$(dotnetstage-account-sas-read-token)"'
+      } else {
+        $args["ReleaseState"] = $(Get-ProductReleaseState)
       }
 
       Write-Host "Executing Set-DotnetVersions.ps1 for $($versionInfo.DockerfileVersion)"
