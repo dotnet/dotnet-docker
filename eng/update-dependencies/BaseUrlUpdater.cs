@@ -51,6 +51,10 @@ internal class BaseUrlUpdater : FileRegexUpdater
 
             unresolvedBaseUrl = $"https://dotnetstage.blob.core.windows.net/{sdkVersion}-internal";
         }
+        else if (_options.ReleaseState.HasValue)
+        {
+            unresolvedBaseUrl = $"$({ManifestHelper.GetBaseUrlVariableName(_options.ReleaseState.Value, _options.TargetBranch)})";
+        }
         else
         {
             // Modifying the URL from internal to public is not suppported because it's not possible to know
