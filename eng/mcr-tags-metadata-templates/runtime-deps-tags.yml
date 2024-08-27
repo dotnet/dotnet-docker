@@ -1,28 +1,16 @@
 $(McrTagsYmlRepo:runtime-deps)
-$(McrTagsYmlTagGroup:9.0-preview-bookworm-slim-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-alpine3.20-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-alpine3.20-aot-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-alpine3.20-extra-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-aot-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-extra-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-azurelinux3.0-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-azurelinux3.0-distroless-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-azurelinux3.0-distroless-aot-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-azurelinux3.0-distroless-extra-amd64)
-    customSubTableTitle: .NET 9 Preview Tags
+$(McrTagsYmlTagGroup:9.0-bookworm-slim-amd64)
+$(McrTagsYmlTagGroup:9.0-alpine3.20-amd64)
+$(McrTagsYmlTagGroup:9.0-alpine3.20-aot-amd64)
+$(McrTagsYmlTagGroup:9.0-alpine3.20-extra-amd64)
+$(McrTagsYmlTagGroup:9.0-noble-amd64)
+$(McrTagsYmlTagGroup:9.0-noble-chiseled-amd64)
+$(McrTagsYmlTagGroup:9.0-noble-chiseled-aot-amd64)
+$(McrTagsYmlTagGroup:9.0-noble-chiseled-extra-amd64)
+$(McrTagsYmlTagGroup:9.0-azurelinux3.0-amd64)
+$(McrTagsYmlTagGroup:9.0-azurelinux3.0-distroless-amd64)
+$(McrTagsYmlTagGroup:9.0-azurelinux3.0-distroless-aot-amd64)
+$(McrTagsYmlTagGroup:9.0-azurelinux3.0-distroless-extra-amd64)
 $(McrTagsYmlTagGroup:8.0-bookworm-slim-amd64)
 $(McrTagsYmlTagGroup:8.0-alpine3.20-amd64)
 $(McrTagsYmlTagGroup:8.0-alpine3.20-aot-amd64)
@@ -56,30 +44,18 @@ $(McrTagsYmlTagGroup:6.0-jammy-chiseled-extra-amd64)
 $(McrTagsYmlTagGroup:6.0-cbl-mariner2.0-amd64)
 $(McrTagsYmlTagGroup:6.0-cbl-mariner2.0-distroless-amd64)
 $(McrTagsYmlTagGroup:6.0-focal-amd64)
-$(McrTagsYmlTagGroup:9.0-preview-bookworm-slim-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-alpine3.20-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-alpine3.20-aot-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-alpine3.20-extra-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-aot-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-extra-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-azurelinux3.0-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-azurelinux3.0-distroless-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-azurelinux3.0-distroless-aot-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-azurelinux3.0-distroless-extra-arm64v8)
-    customSubTableTitle: .NET 9 Preview Tags
+$(McrTagsYmlTagGroup:9.0-bookworm-slim-arm64v8)
+$(McrTagsYmlTagGroup:9.0-alpine3.20-arm64v8)
+$(McrTagsYmlTagGroup:9.0-alpine3.20-aot-arm64v8)
+$(McrTagsYmlTagGroup:9.0-alpine3.20-extra-arm64v8)
+$(McrTagsYmlTagGroup:9.0-noble-arm64v8)
+$(McrTagsYmlTagGroup:9.0-noble-chiseled-arm64v8)
+$(McrTagsYmlTagGroup:9.0-noble-chiseled-aot-arm64v8)
+$(McrTagsYmlTagGroup:9.0-noble-chiseled-extra-arm64v8)
+$(McrTagsYmlTagGroup:9.0-azurelinux3.0-arm64v8)
+$(McrTagsYmlTagGroup:9.0-azurelinux3.0-distroless-arm64v8)
+$(McrTagsYmlTagGroup:9.0-azurelinux3.0-distroless-aot-arm64v8)
+$(McrTagsYmlTagGroup:9.0-azurelinux3.0-distroless-extra-arm64v8)
 $(McrTagsYmlTagGroup:8.0-bookworm-slim-arm64v8)
 $(McrTagsYmlTagGroup:8.0-alpine3.20-arm64v8)
 $(McrTagsYmlTagGroup:8.0-alpine3.20-aot-arm64v8)
@@ -113,22 +89,14 @@ $(McrTagsYmlTagGroup:6.0-jammy-chiseled-extra-arm64v8)
 $(McrTagsYmlTagGroup:6.0-cbl-mariner2.0-arm64v8)
 $(McrTagsYmlTagGroup:6.0-cbl-mariner2.0-distroless-arm64v8)
 $(McrTagsYmlTagGroup:6.0-focal-arm64v8)
-$(McrTagsYmlTagGroup:9.0-preview-bookworm-slim-arm32v7)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-alpine3.20-arm32v7)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-alpine3.20-aot-arm32v7)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-alpine3.20-extra-arm32v7)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-arm32v7)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-arm32v7)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-aot-arm32v7)
-    customSubTableTitle: .NET 9 Preview Tags
-$(McrTagsYmlTagGroup:9.0-preview-noble-chiseled-extra-arm32v7)
-    customSubTableTitle: .NET 9 Preview Tags
+$(McrTagsYmlTagGroup:9.0-bookworm-slim-arm32v7)
+$(McrTagsYmlTagGroup:9.0-alpine3.20-arm32v7)
+$(McrTagsYmlTagGroup:9.0-alpine3.20-aot-arm32v7)
+$(McrTagsYmlTagGroup:9.0-alpine3.20-extra-arm32v7)
+$(McrTagsYmlTagGroup:9.0-noble-arm32v7)
+$(McrTagsYmlTagGroup:9.0-noble-chiseled-arm32v7)
+$(McrTagsYmlTagGroup:9.0-noble-chiseled-aot-arm32v7)
+$(McrTagsYmlTagGroup:9.0-noble-chiseled-extra-arm32v7)
 $(McrTagsYmlTagGroup:8.0-bookworm-slim-arm32v7)
 $(McrTagsYmlTagGroup:8.0-alpine3.20-arm32v7)
 $(McrTagsYmlTagGroup:8.0-alpine3.20-aot-arm32v7)
