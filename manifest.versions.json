@@ -101,7 +101,7 @@
 
     "dotnet|9.0|product-version": "9.0.0-preview.7",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
-    "dotnet|9.0|minor-tag": "9.0-preview",
+    "dotnet|9.0|minor-tag": "9.0",
     "dotnet|9.0|base-url|main": "$(base-url|public|preview|main)",
     "dotnet|9.0|base-url|nightly": "$(base-url|public|preview|nightly)",
 
@@ -155,8 +155,8 @@
     "monitor|9.0|build-version": "9.0.0-preview.7.24408.4",
     "monitor|9.0|product-version": "9.0.0-preview.7",
     "monitor|9.0|fixed-tag": "$(monitor|9.0|product-version)",
-    "monitor|9.0|minor-tag": "9.0-preview",
-    "monitor|9|major-tag": "9-preview",
+    "monitor|9.0|minor-tag": "9.0",
+    "monitor|9|major-tag": "9",
     "monitor|9.0|base-url|main": "$(base-url|public|preview|main)",
     "monitor|9.0|base-url|nightly": "$(base-url|public|preview|nightly)",
     "monitor-base|9.0|linux|x64|sha": "97e008386b6731080098a5c103a289fe82c20e043900cfe0c1549524f9074fb78beab2e52ddef06d62e398524ee24bfaa4bfcd64a05ee50dda7e96761c25599c",
