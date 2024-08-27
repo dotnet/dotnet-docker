@@ -19,7 +19,7 @@ You can see these components installed in the [runtime](https://github.com/dotne
 
 ### .NET Runtime Image
 
-The [.NET runtime image](https://hub.docker.com/_/microsoft-dotnet-runtime/) includes the .NET runtime, with an associated license and third party notice file.
+The [.NET runtime image](https://hub.docker.com/r/microsoft/dotnet-runtime/) includes the .NET runtime, with an associated license and third party notice file.
 
 ```console
 $ docker run --rm mcr.microsoft.com/dotnet/runtime:6.0-bullseye-slim /bin/sh -c "find ./usr/share/dotnet | grep LICENSE"
@@ -54,7 +54,7 @@ $ docker run --rm mcr.microsoft.com/dotnet/runtime:6.0-bullseye-slim /bin/sh -c 
 
 ### ASP.NET Core Image
 
-The [ASP.NET Core image](https://hub.docker.com/_/microsoft-dotnet-aspnet/) includes ASP.NET Core in addition to .NET, with associated licenses and third party notice files.
+The [ASP.NET Core image](https://hub.docker.com/r/microsoft/dotnet-aspnet/) includes ASP.NET Core in addition to .NET, with associated licenses and third party notice files.
 
 ```console
 $ docker run --rm mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim /bin/sh -c "find ./usr/share/dotnet | grep LICENSE"
@@ -66,7 +66,7 @@ $ docker run --rm mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim /bin/sh -c "
 
 ### .NET SDK Image
 
-The [SDK image](https://hub.docker.com/_/microsoft-dotnet-sdk/) includes the .NET SDK, which includes various .NET components, with associated licenses and third party notice files.
+The [SDK image](https://hub.docker.com/r/microsoft/dotnet-sdk/) includes the .NET SDK, which includes various .NET components, with associated licenses and third party notice files.
 
 ```console
 $ docker run --rm mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim /bin/sh -c "find ./usr/share/dotnet ./usr/share/powershell | grep LICENSE"

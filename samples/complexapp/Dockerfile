@@ -1,4 +1,4 @@
-# https://hub.docker.com/_/microsoft-dotnet
+# https://hub.docker.com/r/microsoft/dotnet
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 

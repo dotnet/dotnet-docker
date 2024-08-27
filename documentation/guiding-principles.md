@@ -40,7 +40,7 @@ See the [supported tags](supported-tags.md) for the tagging practices and polici
 1. Images will be rebuilt only as necessary in order to limit downstream image rebuilds and deployments for consumers of .NET images.
 The [Image Update Policy](https://github.com/dotnet/dotnet-docker/blob/main/README.md#image-update-policy) section of the README contains the exact guidelines for when images will be updated.
 
-1. Images will never be deleted from the [official Docker repositories](https://hub.docker.com/_/microsoft-dotnet/). This does not apply to the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md).
+1. Images will never be deleted from the [official Docker repositories](https://hub.docker.com/r/microsoft/dotnet/). This does not apply to the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md).
 
 1. The [Dockerfiles](https://github.com/dotnet/dotnet-docker/search?q=filename%3ADockerfile) used to produce all of the images will be publicly available. Customers will be able to take the Dockerfiles and build them to produce their own equivalent images. No special build steps or permissions should be needed to build the Dockerfiles.
 
