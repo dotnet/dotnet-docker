@@ -7,6 +7,7 @@ parameters:
 jobs:
 - job: Publish
   pool: ${{ parameters.pool }}
+  timeoutInMinutes: 90
   variables:
   - name: imageBuilder.commonCmdArgs
     value: >
@@ -27,6 +28,8 @@ jobs:
     value: $(artifactsPath)/imageInfo
   - name: sourceBuildIdOutputDir
     value: $(Build.ArtifactStagingDirectory)/sourceBuildId
+  - name: imageInfoRawContentUrl
+    value: https://raw.githubusercontent.com/$(gitHubVersionsRepoInfo.org)/$(gitHubVersionsRepoInfo.repo)/$(gitHubVersionsRepoInfo.branch)/$(gitHubImageInfoVersionsPath)
   - ${{ parameters.customPublishVariables }}
   steps:
   - template: /eng/common/templates/steps/retain-build.yml@self
@@ -103,6 +106,10 @@ jobs:
     parameters:
       dryRunArg: $(dryRunArg)
       condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
+  - script: |
+      mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
+      curl -fSL --output $(Build.ArtifactStagingDirectory)/eol-annotation-data/image-info-old.json $(imageInfoRawContentUrl)
+    displayName: Download Original Image Info File
   - script: >
       $(runImageBuilderCmd) publishImageInfo
       '$(imageInfoContainerDir)/image-info.json'
@@ -117,6 +124,8 @@ jobs:
       $(imageBuilder.commonCmdArgs)
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
     displayName: Publish Image Info
+  - script: curl -fSL --output $(Build.ArtifactStagingDirectory)/eol-annotation-data/image-info-new.json $(imageInfoRawContentUrl)
+    displayName: Download Updated Image Info File
   - template: /eng/common/templates/steps/run-imagebuilder.yml@self
     parameters:
       displayName: Ingest Kusto Image Info
@@ -134,6 +143,33 @@ jobs:
         --architecture '*'
         $(dryRunArg)
         $(imageBuilder.commonCmdArgs)
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Generate EOL Annotation Data
+      serviceConnection: $(publish.serviceConnectionName)
+      internalProjectName: internal
+      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
+      args: >
+        generateEolAnnotationData
+        '$(artifactsPath)/eol-annotation-data/eol-annotation-data.json'
+        '$(artifactsPath)/eol-annotation-data/image-info-old.json'
+        '$(artifactsPath)/eol-annotation-data/image-info-new.json'
+        '$(publishRepoPrefix)'
+        '$(acr.server)'
+        $(generateEolAnnotationDataExtraOptions)
+        $(dryRunArg)
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(Build.ArtifactStagingDirectory)/eol-annotation-data
+      artifactName: eol-annotation-data
+      displayName: Publish EOL Annotation Data Artifact
+      internalProjectName: internal
+      publicProjectName: public
+      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
+  - template: /eng/common/templates/steps/annotate-eol-digests.yml@self
+    parameters:
+      internalProjectName: ${{ parameters.internalProjectName }}
+      dataFile: $(artifactsPath)/eol-annotation-data/eol-annotation-data.json
   - script: >
       $(runImageBuilderCmd) postPublishNotification
       '$(publishNotificationRepoName)'
@@ -154,6 +190,9 @@ jobs:
       --task "Wait for MCR Doc Ingestion (Authenticated)"
       --task "Publish Image Info"
       --task "Ingest Kusto Image Info (Authenticated)"
+      --task "Generate EOL Annotation Data (Authenticated)"
+      --task "Annotate EOL Images (Authenticated)"
+      --task "Wait for Annotation Ingestion (Authenticated)"
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Post Publish Notification
