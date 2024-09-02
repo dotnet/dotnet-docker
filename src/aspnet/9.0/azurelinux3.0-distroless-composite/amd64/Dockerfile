@@ -27,7 +27,7 @@ FROM $REPO:9.0.0-rc.1-azurelinux3.0-distroless-amd64
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=9.0.0-rc.1.24421.1 \
+    DOTNET_VERSION=9.0.0-rc.1.24431.7 \
     # ASP.NET Core version
     ASPNET_VERSION=9.0.0-rc.1.24416.6
 
