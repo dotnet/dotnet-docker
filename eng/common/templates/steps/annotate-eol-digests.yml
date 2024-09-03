@@ -16,6 +16,7 @@ steps:
         $(acr.server)
         $(publishRepoPrefix)
         $(artifactsPath)/annotation-digests/annotation-digests.txt
+        $(dryRunArg)
   - template: /eng/common/templates/steps/publish-artifact.yml@self
     parameters:
       path: $(Build.ArtifactStagingDirectory)/annotation-digests
