@@ -1,0 +1,20 @@
+# escape=`
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+ARG TAG=ltsc2022
+FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-$TAG AS build
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY *.csproj .
+RUN dotnet restore --ucr
+
+# copy and publish app and libraries
+COPY . .
+RUN dotnet publish --ucr --no-restore -o /app 
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/runtime:8.0-nanoserver-$TAG
+WORKDIR /app
+COPY --from=build /app .
+ENTRYPOINT ["dotnetapp"]
