@@ -17,8 +17,8 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 
 ## Featured Tags
 
-* `9.0-preview` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime:9.0-preview`
+* `9.0` (Release Candidate)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime:8.0`
 * `6.0` (Long-Term Support)

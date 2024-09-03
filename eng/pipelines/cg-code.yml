@@ -7,6 +7,14 @@ trigger:
     - nightly
 pr: none
 
+parameters:
+# Setting CG Dry Run will run detection and submit results, but only for non-production branches, preventing scan
+# results from being officially registered.
+- name: cgDryRun
+  type: boolean
+  default: false
+  displayName: CG Dry Run
+
 variables:
 - template: /eng/common/templates/variables/common.yml@self
 - name: skipComponentGovernanceDetection
@@ -20,3 +28,5 @@ extends:
       displayName: CG Detection
       jobs:
       - template: /eng/common/templates/jobs/cg-build-projects.yml@self
+        parameters:
+          cgDryRun: ${{ parameters.cgDryRun }}

@@ -10,17 +10,21 @@
 * `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp-chiseled`^
-elif match(SHORT_REPO, "monitor"):* `8` (Long-Term Support)
+elif match(SHORT_REPO, "monitor"):* `9` (Release Candidate)
+  * `docker pull {{FULL_REPO}}:9`
+* `8` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8`
 * `6` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:6`^
-elif match(REPO, "monitor/base"):* `8` (Long-Term Support)
+elif match(REPO, "monitor/base"):* `9` (Release Candidate)
+  * `docker pull {{FULL_REPO}}:9`
+* `8` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8`^
 elif match(REPO, "aspire-dashboard"):* `8.1`
   * `docker pull {{FULL_REPO}}:8.1`^
-else:{{if VARIABLES["branch"] = "nightly":* `9.0-preview` (Preview)
-  * `docker pull {{FULL_REPO}}:9.0-preview`
-}}* `8.0` (Long-Term Support)
+else:* `9.0` (Release Candidate)
+  * `docker pull {{FULL_REPO}}:9.0`
+* `8.0` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8.0`
 * `6.0` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:6.0`}}
