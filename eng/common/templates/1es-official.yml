@@ -20,14 +20,14 @@ parameters:
 - name: pool
   type: object
   default:
-    name: NetCore1ESPool-Internal
-    image: 1es-ubuntu-2204
+    name: $(default1ESInternalPoolName)
+    image: $(default1ESInternalPoolImage)
     os: linux
 - name: sourceAnalysisPool
   type: object
   default:
-    name: NetCore1ESPool-Internal
-    image: 1es-windows-2022
+    name: $(defaultSourceAnalysisPoolName)
+    image: $(defaultSourceAnalysisPoolImage)
     os: windows
 
 resources:

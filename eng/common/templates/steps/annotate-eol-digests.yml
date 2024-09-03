@@ -9,9 +9,10 @@ steps:
       displayName: Annotate EOL Images
       serviceConnection: $(publish.serviceConnectionName)
       internalProjectName: internal
+      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
       args: >
         annotateEolDigests
-        /repo/${{ parameters.dataFile }}
+        ${{ parameters.dataFile }}
         $(acr.server)
         $(publishRepoPrefix)
         $(artifactsPath)/annotation-digests/annotation-digests.txt
@@ -22,11 +23,13 @@ steps:
       displayName: Publish Annotation Digests List
       internalProjectName: internal
       publicProjectName: public
+      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
   - template: /eng/common/templates/steps/run-imagebuilder.yml@self
     parameters:
       displayName: Wait for Annotation Ingestion
       serviceConnection: $(marStatus.serviceConnectionName)
       internalProjectName: internal
+      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
       args: >
         waitForMarAnnotationIngestion
         $(artifactsPath)/annotation-digests/annotation-digests.txt
