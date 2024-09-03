@@ -20,14 +20,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public StaticTagTests(ITestOutputHelper outputHelper) => OutputHelper = outputHelper;
 
-        public static IEnumerable<object[]> GetRepoObjects() => ManifestHelper.GetManifest().Repos.Select(repo => new object[] { repo }).ToArray();
+        public static IEnumerable<object[]> GetRepoObjects() =>
+            ManifestHelper.GetManifest().Repos.Select(repo => new object[] { repo }).ToArray();
 
         [Theory]
         [MemberData(nameof(GetRepoObjects))]
         private void LatestTag_OnePerRepo(ManifestHelper.Repo repo)
         {
             var latestTagImages = repo.Images
-                .Where(image => image.GetSharedTags().Contains(LatestTagValue))
+                .Where(image => ManifestHelper.GetResolvedSharedTags(image).Contains(LatestTagValue))
                 .ToList();
 
             Assert.Single(latestTagImages);
@@ -40,7 +41,7 @@ namespace Microsoft.DotNet.Docker.Tests
             foreach (var image in repo.Images)
             {
                 var latestTagPlatforms = image.Platforms
-                    .Where(platform => platform.GetTags().Contains(LatestTagValue))
+                    .Where(platform => ManifestHelper.GetResolvedTags(platform).Contains(LatestTagValue))
                     .ToList();
 
                 Assert.Empty(latestTagPlatforms);
@@ -52,18 +53,21 @@ namespace Microsoft.DotNet.Docker.Tests
         private void LatestTag_OnCorrectMajorVersion(ManifestHelper.Repo repo)
         {
             var latestImage = repo.Images
-                .Where(image => image.GetSharedTags().Contains(LatestTagValue))
+                .Where(image => ManifestHelper.GetResolvedSharedTags(image).Contains(LatestTagValue))
                 .First();
 
             var expectedMajorVersion = GetExpectedMajorVersion(repo);
-            var actualMajorVersion = latestImage.ProductVersion.Split('.')[0];
+            var actualMajorVersion = ManifestHelper.GetResolvedProductVersion(latestImage).Split('.')[0];
 
             Assert.Equal(expectedMajorVersion, actualMajorVersion);
         }
 
         private string GetExpectedMajorVersion(ManifestHelper.Repo repo)
         {
-            List<string> productVersions = repo.Images.Select(image => image.ProductVersion).Distinct().ToList();
+            List<string> productVersions = repo.Images
+                .Select(image => ManifestHelper.GetResolvedProductVersion(image))
+                .Distinct()
+                .ToList();
 
             Assert.NotEmpty(productVersions);
 
