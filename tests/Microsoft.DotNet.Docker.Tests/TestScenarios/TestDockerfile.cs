@@ -11,25 +11,25 @@ using System.Text;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public class TestDockerfile(IEnumerable<string> args, IEnumerable<string> layers)
+public class TestDockerfile(IEnumerable<string> args, IEnumerable<string> stages)
 {
     public const string BuildStageName = "build";
     public const string PublishStageName = "publish";
     public const string AppStageName = "app";
 
-    public string Content { get; } = GetContent(args, layers);
+    public string Content { get; } = GetContent(args, stages);
 
-    private static string GetContent(IEnumerable<string> args, IEnumerable<string> layers)
+    private static string GetContent(IEnumerable<string> args, IEnumerable<string> stages)
     {
         IEnumerable<string> argsLines = args.Select(arg => "ARG " + arg);
         string argsContent = string.Join(Environment.NewLine, argsLines);
 
-        IEnumerable<string> layerContents = layers.Select(layerContent =>
-            string.Join(Environment.NewLine, layerContent));
+        IEnumerable<string> stageContents = stages.Select(stageContent =>
+            string.Join(Environment.NewLine, stageContent));
 
         string dockerfileContent = string.Join(
             Environment.NewLine + Environment.NewLine,
-            [ argsContent, ..layerContents ]);
+            [ argsContent, ..stageContents ]);
 
         return dockerfileContent;
     }
@@ -57,7 +57,7 @@ public static class TestDockerfileBuilder
 
     public static TestDockerfile GetDefaultDockerfile(PublishConfig publishConfig)
     {
-        string[] publishAndAppLayers = publishConfig switch
+        string[] publishAndAppStages = publishConfig switch
         {
             PublishConfig.Aot =>
                 [
@@ -109,12 +109,12 @@ public static class TestDockerfileBuilder
 
         return new TestDockerfile(
             args: s_commonArgs,
-            layers: [ GetDefaultBuildLayer(), ..publishAndAppLayers ]);
+            stages: [ GetDefaultBuildStage(), ..publishAndAppStages ]);
     }
 
     public static TestDockerfile GetTestProjectDockerfile()
     {
-        string testLayer =
+        string testStage =
             $"""
             FROM {TestDockerfile.BuildStageName} AS {TestDockerfile.AppStageName}
             ARG rid
@@ -128,7 +128,7 @@ public static class TestDockerfileBuilder
 
         return new TestDockerfile(
             args: s_commonArgs,
-            layers: [ GetDefaultBuildLayer(), testLayer ]);
+            stages: [ GetDefaultBuildStage(), testStage ]);
     }
 
     public static TestDockerfile GetBlazorWasmDockerfile(bool useWasmTools)
@@ -137,7 +137,7 @@ public static class TestDockerfileBuilder
             ? "--configfile NuGet.config"
             : string.Empty;
 
-        StringBuilder buildLayerBuilder = new(
+        StringBuilder buildStageBuilder = new(
             $"""
             FROM $sdk_image AS {TestDockerfile.BuildStageName}
             ARG port
@@ -146,14 +146,14 @@ public static class TestDockerfileBuilder
         
         if (s_useNuGetConfig)
         {
-            buildLayerBuilder.AppendLine();
-            buildLayerBuilder.AppendLine(CopyNuGetConfigCommands);
+            buildStageBuilder.AppendLine();
+            buildStageBuilder.AppendLine(CopyNuGetConfigCommands);
         }
 
         if (useWasmTools)
         {
-            buildLayerBuilder.AppendLine();
-            buildLayerBuilder.AppendLine(
+            buildStageBuilder.AppendLine();
+            buildStageBuilder.AppendLine(
                 $"""
                 RUN dotnet workload install {nugetConfigFileOption} --skip-manifest-update wasm-tools \
                     && . /etc/os-release \
@@ -168,8 +168,8 @@ public static class TestDockerfileBuilder
                 """);
         }
 
-        buildLayerBuilder.AppendLine();
-        buildLayerBuilder.AppendLine(
+        buildStageBuilder.AppendLine();
+        buildStageBuilder.AppendLine(
             """
             WORKDIR /source/app
             COPY app/*.csproj .
@@ -178,32 +178,32 @@ public static class TestDockerfileBuilder
             RUN dotnet build --no-restore
             """);
 
-        string buildLayer = buildLayerBuilder.ToString();
+        string buildStage = buildStageBuilder.ToString();
 
-        StringBuilder publishLayerBuilder = new(
+        StringBuilder publishStageBuilder = new(
             $"""
             FROM {TestDockerfile.BuildStageName} AS {TestDockerfile.PublishStageName}
             ARG rid
             """);
         
-        publishLayerBuilder.AppendLine();
-        publishLayerBuilder.AppendLine(useWasmTools
+        publishStageBuilder.AppendLine();
+        publishStageBuilder.AppendLine(useWasmTools
             ? "RUN dotnet publish -r browser-wasm -c Release --self-contained true -o out"
             : "RUN dotnet publish --no-restore -c Release -o out");
         
-        string publishLayer = publishLayerBuilder.ToString();
+        string publishStage = publishStageBuilder.ToString();
 
         // Blazor WASM output is a static site - there are no runtime executables to be ran in the app stage.
         // Endpoint access is verified in the build stage in the SDK dockerfile.
         // App stage can remain empty in order to test publish functionality.
-        string appLayer = $"""FROM $runtime_deps_image AS {TestDockerfile.AppStageName}""";
+        string appStage = $"""FROM $runtime_deps_image AS {TestDockerfile.AppStageName}""";
         
-        return new TestDockerfile(s_commonArgs, layers: [ buildLayer, publishLayer, appLayer ]);
+        return new TestDockerfile(s_commonArgs, stages: [ buildStage, publishStage, appStage ]);
     }
 
-    private static string GetDefaultBuildLayer()
+    private static string GetDefaultBuildStage()
     {
-        StringBuilder buildLayerBuilder = new(
+        StringBuilder buildStageBuilder = new(
             $"""
             FROM $sdk_image AS {TestDockerfile.BuildStageName}
             ARG rid
@@ -214,12 +214,12 @@ public static class TestDockerfileBuilder
 
         if (s_useNuGetConfig)
         {
-            buildLayerBuilder.AppendLine();
-            buildLayerBuilder.AppendLine(CopyNuGetConfigCommands);
+            buildStageBuilder.AppendLine();
+            buildStageBuilder.AppendLine(CopyNuGetConfigCommands);
         }
 
-        buildLayerBuilder.AppendLine();
-        buildLayerBuilder.AppendLine(
+        buildStageBuilder.AppendLine();
+        buildStageBuilder.AppendLine(
             $"""
             WORKDIR /source/app
             COPY app/*.csproj .
@@ -228,7 +228,7 @@ public static class TestDockerfileBuilder
             RUN dotnet build --no-restore
             """);
 
-        return buildLayerBuilder.ToString();
+        return buildStageBuilder.ToString();
     }
 
     private static string FormatArg(string arg) => s_os == DockerOS.Windows ? $"%{arg}%" : $"${arg}";
