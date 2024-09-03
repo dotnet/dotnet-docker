@@ -24,24 +24,17 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetRepoObjects))]
-        public void ValidateLatestTag(ManifestHelper.Repo repo)
-        {
-            LatestTag_OnePerRepo(repo);
-            LatestTag_IsNotPlatformSpecific(repo);
-            LatestTag_OnCorrectMajorVersion(repo);
-        }
-
         private void LatestTag_OnePerRepo(ManifestHelper.Repo repo)
         {
             var latestTagImages = repo.Images
                 .Where(image => image.GetSharedTags().Contains(LatestTagValue))
                 .ToList();
 
-            Assert.True(
-                latestTagImages.Count == 1,
-                $"Expected a single image with the shared latest tag, but found {latestTagImages.Count}.");
+            Assert.Single(latestTagImages);
         }
 
+        [Theory]
+        [MemberData(nameof(GetRepoObjects))]
         private void LatestTag_IsNotPlatformSpecific(ManifestHelper.Repo repo)
         {
             foreach (var image in repo.Images)
@@ -50,13 +43,12 @@ namespace Microsoft.DotNet.Docker.Tests
                     .Where(platform => platform.GetTags().Contains(LatestTagValue))
                     .ToList();
 
-                Assert.True(
-                    latestTagPlatforms.Count == 0,
-                    $"Expected no platforms with a specific latest tag, but found {latestTagPlatforms.Count}: \n" +
-                    $"  {string.Join("\n", latestTagPlatforms.Select(platform => platform.Dockerfile))}");
+                Assert.Empty(latestTagPlatforms);
             }
         }
 
+        [Theory]
+        [MemberData(nameof(GetRepoObjects))]
         private void LatestTag_OnCorrectMajorVersion(ManifestHelper.Repo repo)
         {
             var latestImage = repo.Images
@@ -71,21 +63,30 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private string GetExpectedMajorVersion(ManifestHelper.Repo repo)
         {
-            List<string> productVersions = repo.Images.Select(image => image.ProductVersion.Split('.')[0]).Distinct().ToList();
+            List<string> productVersions = repo.Images.Select(image => image.ProductVersion).Distinct().ToList();
 
-            Assert.True(productVersions.Count > 0, "No product versions found for repo.");
+            Assert.NotEmpty(productVersions);
 
             if (productVersions.Count == 1)
             {
-                return productVersions[0];
+                return productVersions[0].Split('.')[0];
             }
             else if (Config.IsNightlyRepo)
             {
-                return productVersions.Max()!;
+                List<string> majorVersions = productVersions
+                    .Select(version => version.Split('.')[0])
+                    .Distinct()
+                    .ToList();
+                return majorVersions.Max()!;
             }
             else
             {
-                return productVersions.OrderByDescending(version => version).ElementAt(1);
+                List<string> gaVersions = productVersions
+                    .Where(version => !version.Contains("-"))
+                    .Select(version => version.Split('.')[0])
+                    .Distinct()
+                    .ToList();
+                return gaVersions.Max()!;
             }
         }
     }
