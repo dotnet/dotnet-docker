@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
@@ -25,24 +26,22 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetRepoObjects))]
-        private void LatestTag_OnePerRepo(ManifestHelper.Repo repo)
+        private void LatestTag_OnePerRepo(Repo repo)
         {
-            var latestTagImages = repo.Images
-                .Where(image => ManifestHelper.GetResolvedSharedTags(image).Contains(LatestTagValue))
-                .ToList();
+            IEnumerable<Image> latestTagImages = repo.Images
+                .Where(image => ManifestHelper.GetResolvedSharedTags(image).Contains(LatestTagValue));
 
             Assert.Single(latestTagImages);
         }
 
         [Theory]
         [MemberData(nameof(GetRepoObjects))]
-        private void LatestTag_IsNotPlatformSpecific(ManifestHelper.Repo repo)
+        private void LatestTag_IsNotPlatformSpecific(Repo repo)
         {
-            foreach (var image in repo.Images)
+            foreach (Image image in repo.Images)
             {
-                var latestTagPlatforms = image.Platforms
-                    .Where(platform => ManifestHelper.GetResolvedTags(platform).Contains(LatestTagValue))
-                    .ToList();
+                IEnumerable<Platform> latestTagPlatforms = image.Platforms
+                    .Where(platform => ManifestHelper.GetResolvedTags(platform).Contains(LatestTagValue));
 
                 Assert.Empty(latestTagPlatforms);
             }
@@ -50,22 +49,22 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [Theory]
         [MemberData(nameof(GetRepoObjects))]
-        private void LatestTag_OnCorrectMajorVersion(ManifestHelper.Repo repo)
+        private void LatestTag_OnCorrectMajorVersion(Repo repo)
         {
-            var latestImage = repo.Images
+            Image latestImage = repo.Images
                 .Where(image => ManifestHelper.GetResolvedSharedTags(image).Contains(LatestTagValue))
                 .First();
 
-            var expectedMajorVersion = GetExpectedMajorVersion(repo);
-            var actualMajorVersion = ManifestHelper.GetResolvedProductVersion(latestImage).Split('.')[0];
+            string expectedMajorVersion = GetExpectedMajorVersion(repo);
+            string actualMajorVersion = GetMajorVersion(ManifestHelper.GetResolvedProductVersion(latestImage));
 
             Assert.Equal(expectedMajorVersion, actualMajorVersion);
         }
 
-        private string GetExpectedMajorVersion(ManifestHelper.Repo repo)
+        private static string GetExpectedMajorVersion(Repo repo)
         {
             List<string> productVersions = repo.Images
-                .Select(image => ManifestHelper.GetResolvedProductVersion(image))
+                .Select(ManifestHelper.GetResolvedProductVersion)
                 .Distinct()
                 .ToList();
 
@@ -73,25 +72,32 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (productVersions.Count == 1)
             {
-                return productVersions[0].Split('.')[0];
+                // Use the first product version if there is only one
+                return GetMajorVersion(productVersions[0]);
             }
-            else if (Config.IsNightlyRepo)
+            
+            if (Config.IsNightlyRepo)
             {
+                // Use the latest major version on the nightly branch
                 List<string> majorVersions = productVersions
-                    .Select(version => version.Split('.')[0])
+                    .Select(GetMajorVersion)
                     .Distinct()
                     .ToList();
-                return majorVersions.Max()!;
+
+                return majorVersions.Max() ?? throw new Exception("No latest product versions found.");
             }
-            else
-            {
-                List<string> gaVersions = productVersions
-                    .Where(version => !version.Contains("-"))
-                    .Select(version => version.Split('.')[0])
-                    .Distinct()
-                    .ToList();
-                return gaVersions.Max()!;
-            }
+
+            // Use the latest GA major version on the main branch
+            List<string> gaVersions = productVersions
+                .Where(version => !version.Contains('-'))
+                .Select(GetMajorVersion)
+                .Distinct()
+                .ToList();
+
+            return gaVersions.Max() ?? throw new Exception("No GA product versions found.");
         }
+
+        private static string GetMajorVersion(string version) =>
+            version.Split('.')[0];
     }
 }
