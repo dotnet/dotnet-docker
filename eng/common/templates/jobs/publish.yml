@@ -161,7 +161,7 @@ jobs:
   - template: /eng/common/templates/steps/publish-artifact.yml@self
     parameters:
       path: $(Build.ArtifactStagingDirectory)/eol-annotation-data
-      artifactName: eol-annotation-data
+      artifactName: eol-annotation-data-$(System.JobAttempt)
       displayName: Publish EOL Annotation Data Artifact
       internalProjectName: internal
       publicProjectName: public
