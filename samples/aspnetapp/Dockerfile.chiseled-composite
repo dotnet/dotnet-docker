@@ -1,6 +1,6 @@
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM --platform=$BUILDPLATFORM  mcr.microsoft.com/dotnet/nightly/sdk:9.0-jammy AS build
+FROM --platform=$BUILDPLATFORM  mcr.microsoft.com/dotnet/nightly/sdk:9.0-noble AS build
 ARG TARGETARCH
 WORKDIR /source
 
@@ -15,7 +15,7 @@ RUN dotnet publish -a $TARGETARCH --no-restore -o /app
 
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/nightly/nightly/aspnet:9.0-jammy-chiseled-composite
+FROM mcr.microsoft.com/dotnet/nightly/nightly/aspnet:9.0-noble-chiseled-composite
 EXPOSE 8080
 WORKDIR /app
 COPY --link --from=build /app .
