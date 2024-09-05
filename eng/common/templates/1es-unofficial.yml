@@ -23,8 +23,14 @@ parameters:
 - name: pool
   type: object
   default:
-    name: NetCore1ESPool-Internal
-    image: 1es-windows-2022
+    name: $(default1ESInternalPoolName)
+    image: $(default1ESInternalPoolImage)
+    os: linux
+- name: sourceAnalysisPool
+  type: object
+  default:
+    name: $(defaultSourceAnalysisPoolName)
+    image: $(defaultSourceAnalysisPoolImage)
     os: windows
 
 resources:
@@ -50,4 +56,5 @@ extends:
         exclude:
         - repository: InternalVersionsRepo
         - repository: PublicVersionsRepo
+      sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
     stages: ${{ parameters.stages }}
