@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddHealthChecks();
 
+// Uncomment if using System.Text.Json source generation
 // builder.Services.ConfigureHttpJsonOptions(options =>
 // {
 //     options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
@@ -55,7 +56,7 @@ app.MapGet("/Delay/{value}", async (int value) =>
     catch(TaskCanceledException)
     {
     }
-    
+
     return new Operation(value);
 });
 

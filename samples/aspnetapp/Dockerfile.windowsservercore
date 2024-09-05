@@ -1,20 +1,21 @@
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS build
+FROM mcr.microsoft.com/dotnet/nightly/sdk:9.0-windowsservercore-ltsc2022 AS build
 WORKDIR /source
 
-# copy csproj and restore as distinct layers
-COPY aspnetapp/*.csproj .
+# Copy project file and restore as distinct layers
+COPY --link aspnetapp/NuGet.config .
+COPY --link aspnetapp/*.csproj .
 RUN dotnet restore --ucr
 
 # copy everything else and build app
-COPY aspnetapp/. .
+COPY --link aspnetapp/. .
 RUN dotnet publish --ucr --no-restore -o /app
 
-# final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-windowsservercore-ltsc2022
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:9.0-windowsservercore-ltsc2022
 EXPOSE 8080
 WORKDIR /app
-COPY --from=build /app .
+COPY --link --from=build /app .
 USER ContainerUser
 ENTRYPOINT ["aspnetapp"]

@@ -1,3 +1,5 @@
+TODO: Update this...
+
 # Building images for a specific platform
 
 Docker exposes [multiple ways to interact with platforms](https://docs.docker.com/build/building/multi-platform/). Sometimes this will result in the images you want and sometimes not depending on how you structure your Dockerfiles and your use of the `docker` CLI. The most common scenario for needing to pay attention to platform targeting is if you have an Arm64 development machine (like Apple M1/M*) and are pushing images to an x64 cloud. This equally applies to `docker run` and `docker build`.
