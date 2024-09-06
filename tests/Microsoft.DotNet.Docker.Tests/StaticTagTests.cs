@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Xunit;
-using Xunit.Abstractions;
 
 #nullable enable
 
@@ -52,13 +51,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Where(image => ManifestHelper.GetResolvedSharedTags(image).Contains(LatestTagValue))
                 .First();
 
-            string expectedMajorVersion = GetExpectedMajorVersion(repo);
-            string actualMajorVersion = GetMajorVersion(ManifestHelper.GetResolvedProductVersion(latestImage));
+            int expectedMajorVersion = GetExpectedMajorVersion(repo);
+            int actualMajorVersion = GetMajorVersion(ManifestHelper.GetResolvedProductVersion(latestImage));
 
             Assert.Equal(expectedMajorVersion, actualMajorVersion);
         }
 
-        private static string GetExpectedMajorVersion(Repo repo)
+        private static int GetExpectedMajorVersion(Repo repo)
         {
             List<string> productVersions = repo.Images
                 .Select(ManifestHelper.GetResolvedProductVersion)
@@ -76,25 +75,27 @@ namespace Microsoft.DotNet.Docker.Tests
             if (Config.IsNightlyRepo)
             {
                 // Use the latest major version on the nightly branch
-                List<string> majorVersions = productVersions
+                List<int> majorVersions = productVersions
                     .Select(GetMajorVersion)
                     .Distinct()
                     .ToList();
 
-                return majorVersions.Max() ?? throw new Exception("No latest product versions found.");
+                return majorVersions.Max();
             }
 
             // Use the latest GA major version on the main branch
-            List<string> gaVersions = productVersions
+            // Assumes that non-GA versions have a hyphen in them
+            // e.g. non GA: 5.0.0-preview.1, GA: 5.0.0
+            List<int> gaVersions = productVersions
                 .Where(version => !version.Contains('-'))
                 .Select(GetMajorVersion)
                 .Distinct()
                 .ToList();
 
-            return gaVersions.Max() ?? throw new Exception("No GA product versions found.");
+            return gaVersions.Max();
         }
 
-        private static string GetMajorVersion(string version) =>
-            version.Split('.')[0];
+        private static int GetMajorVersion(string version) =>
+            int.Parse(version.Split('.')[0]);
     }
 }

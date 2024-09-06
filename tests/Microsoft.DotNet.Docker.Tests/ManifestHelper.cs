@@ -29,15 +29,13 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static string GetVariableValue(string input)
         {
-            string variablePattern = @"\$\(.+\)";
-            var match = Regex.Match(input, variablePattern);
-            if (!match.Success)
+            string variablePattern = @"\$\((?<variable>.+)\)";
+            foreach (Match match in Regex.Matches(input, variablePattern))
             {
-                return input;
+                string variableName = Config.GetVariableValue(match.Groups["variable"].Value);
+                input = input.Replace(match.Value, variableName);
             }
-            string variableName = match.Value.Replace("$(", string.Empty).Replace(")", string.Empty);
-            string remainingString = input.Split(match.Value)[1];
-            return Config.GetVariableValue(variableName) + remainingString;
+            return input;
         }
     }
 }
