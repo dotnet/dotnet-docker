@@ -25,7 +25,7 @@ public class TestSolution : IDisposable
 
     public string SolutionDir => _solutionDir;
 
-    public TestSolution(ProductImageData imageData, string sampleName, DockerHelper dockerHelper, bool excludeTests = false)
+    public TestSolution(ProductImageData imageData, string sampleName, DockerHelper dockerHelper, bool injectCustomTestCode = false)
     {
         SampleName = sampleName;
         _imageData = imageData;
@@ -37,7 +37,7 @@ public class TestSolution : IDisposable
 
         CreateTestSolutionWithSdkImage(_solutionDir, sampleName);
 
-        if (!excludeTests)
+        if (injectCustomTestCode)
         {
             InjectCustomTestCode(_appProjectDir);
         }
@@ -55,12 +55,6 @@ public class TestSolution : IDisposable
 
             CreateProjectWithSdkImage("xunit", _testProjectDir, testProjectContainerName);
             File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, "UnitTests.cs"), Path.Combine(_testProjectDir, "UnitTests.cs"));
-
-            string sourceDockerfileName = $"Dockerfile.{DockerHelper.DockerOS.ToLower()}";
-
-            File.Copy(
-                Path.Combine(DockerHelper.TestArtifactsDir, sourceDockerfileName),
-                Path.Combine(solutionDir, "Dockerfile"));
 
             string nuGetConfigFileName = "NuGet.config";
             if (Config.IsNightlyRepo)
