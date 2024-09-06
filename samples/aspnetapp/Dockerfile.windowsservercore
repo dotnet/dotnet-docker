@@ -4,18 +4,18 @@ FROM mcr.microsoft.com/dotnet/nightly/sdk:9.0-windowsservercore-ltsc2022 AS buil
 WORKDIR /source
 
 # Copy project file and restore as distinct layers
-COPY --link aspnetapp/NuGet.config .
-COPY --link aspnetapp/*.csproj .
+COPY aspnetapp/NuGet.config .
+COPY aspnetapp/*.csproj .
 RUN dotnet restore --ucr
 
 # copy everything else and build app
-COPY --link aspnetapp/. .
+COPY aspnetapp/. .
 RUN dotnet publish --ucr --no-restore -o /app
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/nightly/aspnet:9.0-windowsservercore-ltsc2022
 EXPOSE 8080
 WORKDIR /app
-COPY --link --from=build /app .
+COPY --from=build /app .
 USER ContainerUser
 ENTRYPOINT ["aspnetapp"]
