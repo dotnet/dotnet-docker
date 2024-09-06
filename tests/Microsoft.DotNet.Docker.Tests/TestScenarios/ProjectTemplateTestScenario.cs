@@ -15,6 +15,7 @@ namespace Microsoft.DotNet.Docker.Tests;
 public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
 {
     private bool _disposed;
+    private bool _nonRootUserSupported;
 
     protected static string OSDockerfileSuffix { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "windows";
     protected static string? AdminUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "root" : null;
@@ -25,15 +26,14 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
     protected ITestOutputHelper OutputHelper { get; }
     protected TestSolution TestSolution { get; }
 
-    protected bool NonRootUserSupported { get; }
+    protected virtual bool NonRootUserSupported => _nonRootUserSupported;
 
-    protected virtual string Dockerfile { get; } = $"Dockerfile.{OSDockerfileSuffix}";
+    protected virtual bool InjectCustomTestCode { get; } = false;
+    protected virtual bool OutputIsStatic { get; } = false;
     protected virtual string[] CustomDockerBuildArgs { get; } = [];
 
     protected abstract string SampleName { get; }
-    protected abstract string BuildStageTarget { get; }
-    protected abstract string? TestStageTarget { get; }
-    protected abstract string[] AppStageTargets { get; }
+    protected abstract TestDockerfile Dockerfile { get; }
     protected abstract DotNetImageRepo RuntimeImageRepo { get; }
     protected abstract DotNetImageRepo SdkImageRepo { get; }
 
@@ -45,13 +45,17 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
         DockerHelper = dockerHelper;
         ImageData = imageData;
         OutputHelper = outputHelper;
-        NonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && ImageData.Version.Major > 6;
+        _nonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && ImageData.Version.Major > 6;
 
-        TestSolution = new(imageData, SampleName, dockerHelper, excludeTests: string.IsNullOrEmpty(TestStageTarget));
+        TestSolution = new(imageData, SampleName, dockerHelper, injectCustomTestCode: InjectCustomTestCode);
     }
 
     protected string Build(string stageTarget, string[]? customBuildArgs)
     {
+        const string DockerfileName = "Dockerfile";
+        string dockerfilePath = Path.Combine(DockerHelper.TestArtifactsDir, DockerfileName);
+        File.WriteAllText(dockerfilePath, Dockerfile.Content);
+
         string tag = ImageData.GetIdentifier(stageTarget);
 
         List<string> buildArgs =
@@ -96,7 +100,7 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
         {
             DockerHelper.Build(
                 tag: tag,
-                dockerfile: Path.Combine(DockerHelper.TestArtifactsDir, Dockerfile),
+                dockerfile: dockerfilePath,
                 target: stageTarget,
                 contextDir: TestSolution.SolutionDir,
                 platform: ImageData.Platform,
@@ -119,6 +123,14 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
 
         try
         {
+            OutputHelper.WriteLine(
+                $"""
+
+                Executing test with generated Dockerfile content:
+                {Dockerfile.Content}
+
+                """);
+
             // Need to include the RID for all build stages because they all rely on "dotnet restore". We should
             // always provide RID when running restore because it's RID-dependent. If we don't then a call to the
             // publish command with a different RID than the default would end up restoring images. This is not
@@ -127,27 +139,18 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
             string[] customBuildArgs = [ ..CustomDockerBuildArgs, $"rid={ImageData.Rid}" ];
 
             // Build and run app on SDK image
-            string buildTag = Build(BuildStageTarget, customBuildArgs);
+            string buildTag = Build(TestDockerfile.BuildStageName, customBuildArgs);
             tags.Add(buildTag);
             await RunAsync(buildTag, command: "dotnet run");
 
-            // Build and run tests on SDK image
-            // Tests must run as admin user in order to write the test results to the output directory in the
-            // project directory
-            if (!string.IsNullOrEmpty(TestStageTarget))
-            {
-                string unitTestTag = Build(TestStageTarget, customBuildArgs);
-                tags.Add(unitTestTag);
-                await RunAsync(unitTestTag);
-            }
+            // Build and run app stage
+            string tag = Build(TestDockerfile.AppStageName, customBuildArgs);
+            tags.Add(tag);
 
-            // Build and run all other projects for each user and target stage
-            foreach (string target in AppStageTargets)
+            // Don't run the app if the build output is not executable
+            if (!OutputIsStatic)
             {
-                string tag = Build(target, customBuildArgs);
-                tags.Add(tag);
                 await RunAsync(tag, AdminUser);
-
                 if (NonRootUserSupported)
                 {
                     await RunAsync(tag, NonRootUser);
