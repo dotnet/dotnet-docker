@@ -17,9 +17,6 @@ namespace Microsoft.DotNet.Docker.Tests
     public class StaticTagTests
     {
         private const string LatestTagValue = "latest";
-        private ITestOutputHelper OutputHelper { get; }
-
-        public StaticTagTests(ITestOutputHelper outputHelper) => OutputHelper = outputHelper;
 
         public static IEnumerable<object[]> GetRepoObjects() =>
             ManifestHelper.GetManifest().Repos.Select(repo => new object[] { repo }).ToArray();
